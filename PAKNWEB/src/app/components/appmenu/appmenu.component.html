@@ -3,17 +3,20 @@
         ***********************************-->
 <div class="deznav shadow-none pt-0">
   <div class="deznav-scroll pl-0 pl-lg-4 pr-3" style="margin-top: -50px">
-    <ul class="metismenu mm-show" id="menu">
-      <li class="mm-active"><a class="ai-icon" href="/quan-tri/ban-lam-viec" aria-expanded="false">
+    <ul class="metismenu" id="menu">
+      <li class="border-0 bg-transparent" routerLinkActive="mm-active">
+        <a class="ai-icon"
+          routerLink="./quan-tri/trang-chu" aria-expanded="false">
           <i class="bi bi-grid"></i>
           <span class="nav-text">Bảng điều khiển</span>
         </a>
       </li>
-      <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+      <li routerLinkActive="mm-active" [routerLinkActiveOptions]="{exact: false}">
+        <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
           <i class="bi bi-file-earmark-medical"></i>
           <span class="nav-text">Phản ánh, Kiến nghị</span>
         </a>
-        <ul aria-expanded="false" class="mm-collapse">
+        <ul aria-expanded="false">
           <li><a href="#">Danh sách tổng hợp</a></li>
           <li><a href="#">Chờ xử lý</a></li>
           <li><a href="#">Tiếp nhận xử lý</a></li>
@@ -27,30 +30,33 @@
           <li><a href="#">PAKN chứa ảnh giả</a></li>
         </ul>
       </li>
-      <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+      <li routerLinkActive="mm-active" [routerLinkActiveOptions]="{exact: false}">
+        <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
           <i class="bi bi-file-earmark-ruled"></i>
           <span class="nav-text">Thủ tục hành chính</span>
         </a>
-        <ul aria-expanded="false" class="mm-collapse">
+        <ul aria-expanded="false">
           <li><a href="#">Danh sách tổng hợp</a></li>
           <li><a href="#">Đã công bố</a></li>
           <li><a href="#">Đã gửi đơn vị, cơ quan</a></li>
         </ul>
       </li>
-      <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+      <li routerLinkActive="mm-active" [routerLinkActiveOptions]="{exact: false}">
+        <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
           <i class="bi bi-newspaper"></i>
           <span class="nav-text">Tin tức, Sự kiện</span>
         </a>
-        <ul aria-expanded="false" class="mm-collapse">
+        <ul aria-expanded="false">
           <li><a href="#">Danh sách tổng hợp</a></li>
           <li><a href="#">Đã công bố</a></li>
         </ul>
       </li>
-      <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+      <li routerLinkActive="mm-active" [routerLinkActiveOptions]="{exact: false}">
+        <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
           <i class="bi bi-people"></i>
           <span class="nav-text">Cá nhân, DN</span>
         </a>
-        <ul aria-expanded="false" class="mm-collapse">
+        <ul aria-expanded="false">
           <li><a href="#">QL cá nhân</a></li>
           <li><a href="#">QL Doanh nghiệp</a></li>
         </ul>
@@ -60,22 +66,24 @@
           <span class="nav-text">Thư mời</span>
         </a>
       </li>
-      <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+      <li routerLinkActive="mm-active" [routerLinkActiveOptions]="{exact: false}">
+        <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
           <i class="bi bi-chat-right-dots"></i>
           <span class="nav-text">Email/SMS</span>
         </a>
-        <ul aria-expanded="false" class="mm-collapse">
+        <ul aria-expanded="false">
           <li><a href="#">Dự thảo Email</a></li>
           <li><a href="#">Email đã gửi</a></li>
           <li><a href="#">Dự thảo SMS</a></li>
           <li><a href="#">SMS đã gửi</a></li>
         </ul>
       </li>
-      <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+      <li routerLinkActive="mm-active" [routerLinkActiveOptions]="{exact: false}">
+        <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
           <i class="bi bi-distribute-vertical"></i>
           <span class="nav-text">Danh mục</span>
         </a>
-        <ul aria-expanded="false" class="mm-collapse">
+        <ul aria-expanded="false">
           <li><a href="#">Chức vụ</a></li>
           <li><a href="#">Lĩnh vực</a></li>
           <li><a href="#">Loại tin tức</a></li>
@@ -85,11 +93,12 @@
           <li><a href="#">Hashtag</a></li>
         </ul>
       </li>
-      <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+      <li routerLinkActive="mm-active" [routerLinkActiveOptions]="{exact: false}">
+        <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
           <i class="bi bi-diagram-2"></i>
           <span class="nav-text">Hệ thống</span>
         </a>
-        <ul aria-expanded="false" class="mm-collapse">
+        <ul aria-expanded="false">
           <li><a href="#">Cấu hình Email</a></li>
           <li><a href="#">Cấu hình SMS thương hiệu</a></li>
           <li><a href="#">Cơ cấu tổ chức</a></li>
@@ -98,33 +107,36 @@
           <li><a href="#">Lịch sử hệ thống</a></li>
         </ul>
       </li>
-      <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+      <li routerLinkActive="mm-active" [routerLinkActiveOptions]="{exact: false}">
+        <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
           <i class="bi bi-pie-chart"></i>
           <span class="nav-text">Thống kê</span>
         </a>
-        <ul aria-expanded="false" class="mm-collapse">
+        <ul aria-expanded="false">
           <li><a href="#">Sub menu</a></li>
           <li><a href="#">Sub menu</a></li>
           <li><a href="#">Sub menu</a></li>
           <li><a href="#">Sub menu</a></li>
         </ul>
       </li>
-      <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+      <li routerLinkActive="mm-active" [routerLinkActiveOptions]="{exact: false}">
+        <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
           <i class="bi bi-file-earmark-text"></i>
           <span class="nav-text">Báo cáo</span>
         </a>
-        <ul aria-expanded="false" class="mm-collapse">
+        <ul aria-expanded="false">
           <li><a href="#">Sub menu</a></li>
           <li><a href="#">Sub menu</a></li>
           <li><a href="#">Sub menu</a></li>
           <li><a href="#">Sub menu</a></li>
         </ul>
       </li>
-      <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+      <li routerLinkActive="mm-active" [routerLinkActiveOptions]="{exact: false}">
+        <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
           <i class="bi bi-layout-text-sidebar-reverse"></i>
           <span class="nav-text">Thiết lập chung</span>
         </a>
-        <ul aria-expanded="false" class="mm-collapse">
+        <ul aria-expanded="false">
           <li><a href="#">Giới thiệu phần mềm</a></li>
           <li><a href="#">Chức năng, nhiệm vụ, quyền hạn của tổ chức</a></li>
           <li><a href="#">Lãnh đạo đương nhiệm</a></li>
@@ -132,11 +144,12 @@
           <li><a href="#">Thông tin liên hệ</a></li>
         </ul>
       </li>
-      <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+      <li routerLinkActive="mm-active" [routerLinkActiveOptions]="{exact: false}">
+        <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
           <i class="bi bi-life-preserver"></i>
           <span class="nav-text">Hỗ trợ</span>
         </a>
-        <ul aria-expanded="false" class="mm-collapse">
+        <ul aria-expanded="false">
           <li><a href="#">Tài liệu hướng dẫn sử dụng</a></li>
           <li><a href="#">Video hướng dẫn sử dụng</a></li>
         </ul>
@@ -146,7 +159,7 @@
 </div>
 <!--**********************************
           Sidebar end
-        ***********************************-->
+      ***********************************-->
 <!-- <aside class="main-sidebar">
   <section class="sidebar" style="height: auto;">
     <ul class="sidebar-menu tree" data-widget="tree">
