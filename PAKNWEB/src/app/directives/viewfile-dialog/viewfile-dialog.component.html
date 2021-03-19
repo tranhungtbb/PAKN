@@ -1,0 +1,19 @@
+
+<div class="panel panel-warning" style="margin:0!important; width: 99vw !important; height: 95vh; overflow: hidden">
+  <div class="panel-heading" style="padding: 5px 15px; min-height: 35px;">
+    <span class="title-ct uppercase no-margin hidden-xs">Xem tệp đính kèm</span>
+    <button mat-dialog-close class="btn btn-default btn-xs pull-right" style="min-height: 24px;margin-left:5px"><i class="fa fa-times"></i> Hủy</button>
+    <button class="btn btn-success btn-xs pull-right" (click)="DownloadFile()" style="min-height: 24px;margin-left:15px"><i class="far fa-download"></i> Tải về</button>
+  </div>
+  <div class="modal-body" style="width:100%;height:96%">
+    <iframe *ngIf="!IsPDF && !IsIMG" id="viewfile" class="no-border" style="width:100%;height:100%;text-align:center" src=""></iframe>
+    <ng2-pdfjs-viewer *ngIf="IsPDF && !IsIMG" #pdfViewer></ng2-pdfjs-viewer>
+    <div id="idOnHTML" *ngIf="IsIMG">
+      <app-image-viewer [images]="listImg"
+                        [idContainer]="'idOnHTML'"
+                        [loadOnInit]="false"
+                        [showPDFOnlyOption]="false"
+                        [download]="false"></app-image-viewer>
+    </div>
+  </div>
+</div>

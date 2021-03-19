@@ -1,28 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Project\\TL_Project\\pakn\\PAKNAPI\\PAKNAPI.csproj": {}
+    "E:\\SV_2021\\PhanAnhKienNghi\\Source\\pakn\\PAKNAPI\\PAKNAPI.csproj": {}
   },
   "projects": {
-    "D:\\Project\\TL_Project\\pakn\\PAKNAPI\\PAKNAPI.csproj": {
+    "E:\\SV_2021\\PhanAnhKienNghi\\Source\\pakn\\PAKNAPI\\PAKNAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Project\\TL_Project\\pakn\\PAKNAPI\\PAKNAPI.csproj",
+        "projectUniqueName": "E:\\SV_2021\\PhanAnhKienNghi\\Source\\pakn\\PAKNAPI\\PAKNAPI.csproj",
         "projectName": "PAKNAPI",
-        "projectPath": "D:\\Project\\TL_Project\\pakn\\PAKNAPI\\PAKNAPI.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\Project\\TL_Project\\pakn\\PAKNAPI\\obj\\",
+        "projectPath": "E:\\SV_2021\\PhanAnhKienNghi\\Source\\pakn\\PAKNAPI\\PAKNAPI.csproj",
+        "packagesPath": "C:\\Users\\mrRicardo\\.nuget\\packages\\",
+        "outputPath": "E:\\SV_2021\\PhanAnhKienNghi\\Source\\pakn\\PAKNAPI\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 18.2.config",
+          "C:\\Users\\mrRicardo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 18.1.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\DevExpress 18.2\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files (x86)\\DevExpress 18.1\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files (x86)\\DevExpress 18.1\\Components\\System\\Components\\packages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -97,7 +101,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

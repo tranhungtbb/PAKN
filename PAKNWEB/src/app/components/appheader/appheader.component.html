@@ -1,0 +1,406 @@
+
+<!-- <header class="main-header">
+  <span>
+    <a href="#" class="sidebar-toggle no-border" data-toggle="push-menu" role="button">
+      <i>
+        <img style="width: 30px;" src="../../../../../assets/dist/img/image/logologin_ktnn.png">
+      </i>
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span style="padding-left: 10px;">KIỂM TOÁN NHÀ NƯỚC</span>
+    </a>
+  </span>
+
+  <nav class="navbar navbar-static-top">
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <li class="user user-menu">
+          <div id="input-date" class="input-group date">
+            <input type="text" class="form-control has-error" bsDatepicker #fdGroup="bsDatepicker"
+              [bsConfig]="{ minMode:'year', adaptivePosition: true, dateInputFormat: 'YYYY',containerClass:'theme-dark-blue' }"
+              [(ngModel)]="year" (change)="isInvalidNam($event)" (bsValueChange)="isInvalidNam($event)">
+            <div class="input-group-addon" (click)="fdGroup.toggle()" [attr.aria-expanded]="fdGroup.isOpen">
+              <i class="fa fa-calendar"></i>
+            </div>
+          </div>
+        </li>
+        <li class="dropdown notifications-menu notifications">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Thông báo">
+            <i class="far fa-bell"></i>
+            <span class="label label-danger">{{totalThongBao}}</span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <div class="header">
+                <div class="notify-number">
+                  <div>Thông báo</div>
+                  <div>
+                    Có
+                    <span class="text-danger">{{totalThongBao}}</span> thông báo mới
+                  </div>
+                </div>
+                <div class="view-all">
+                  <a class="sv-pointer" routerLink="/business/business-management/notifications/list">
+                    Xem tất cả <i class="far fa-long-arrow-alt-right"></i>
+                  </a>
+                </div>
+              </div>
+            </li>
+            <li>
+              <ul class="menu" (scroll)="onScroll($event)">
+                <li *ngFor="let item of listThongBao">
+                  <div class="icon">
+                    <span class="bg-icon" [ngClass]="{'xanh':item.typeColor == 1, 'do':item.typeColor == 2, 'vang':item.typeColor == 3}">
+                      <i class="far fa-briefcase" *ngIf="item.type == 1 || item.type == 2 || item.type == 3 || item.type == 18 || item.type == 19 || item.type == 20"></i>
+                      <i class="fal fa-users-class" *ngIf="item.type == 4"></i>
+                      <i class="far fa-file-alt" *ngIf="item.type == 5 || item.type == 6 || item.type == 17"></i>
+                      <i class="fal fa-envelope-open-text" *ngIf="item.type == 7 || item.type == 8 || item.type == 13 || item.type == 14"></i>
+                      <i class="far fa-user-chart" *ngIf="item.type == 9 || item.type == 10 || item.type == 11"></i>
+                      <i class="fas fa-newspaper" *ngIf="item.type == 12 || item.type == 15 || item.type == 16"></i>
+                    </span>
+                  </div>
+                  <div class="content" (click)="onViewThongBao(item)">
+                    <span>{{item.thoiGianThongBao | date: 'HH:mm dd/MM/yyyy'}}</span>
+                    <span class="text-uppercase">{{item.tenChucNang}}</span>
+                    <span title="{{item.tenThongBao}}" [ngClass]="{'text-bold': !item.isView}">
+                      {{item.tenThongBao}}
+                    </span>
+                  </div>
+                  <div class="close-notity">
+                    <a (click)="onDeleteNotification(item)">
+                      <i class="far fa-times"></i>
+                    </a>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="user user-menu">
+          <a class="dropdown-toggle" data-toggle="dropdown">
+            <span>{{ userName }}</span>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="user-footer">
+              <div class="row">
+                <div class="col-md-12">
+                  <a class="item-users"
+                     data-placement="top" (click)="preUpdate()">
+                    <i class="far fa-key-skeleton"></i> Thông tin cá nhân
+                  </a>
+                </div>
+                <div class="col-md-12">
+                  <a class="item-users" (click)="signOut()">
+                    <i class="far fa-sign-out"></i> Đăng xuất
+                  </a>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<app-appmenu></app-appmenu>
+
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="panel panel-default">
+      <div class="modal-header">
+        <button class="close btn-close-modal" data-dismiss="modal">
+          ×
+        </button>
+        <p class="no-margin">Thay đổi mật khẩu</p>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form" id="createChangePassForm" [formGroup]="userForm" #formDir="ngForm" novalidate>
+          <div class="row form-group">
+            <div class="col-sm-12">
+              <label class="control-label">Nhập mật khẩu cũ <i class="text-danger">*</i></label>
+              <input type="password" class="form-control" id="oldpassword" tabindex="1" formControlName="oldpassword">
+              <div *ngIf="(submitted && oldpassword.invalid) || (oldpassword.invalid && (oldpassword.dirty || oldpassword.touched))" class="has-error">
+                <div *ngIf="oldpassword.errors.required" class="help-block">
+                  Trường dữ liệu không được để trống
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-sm-12">
+              <label class="control-label">Nhập mật khẩu mới <i class="text-danger">*</i></label>
+              <input type="password" class="form-control" id="newpassword" tabindex="2" formControlName="newpassword">
+              <div *ngIf="(submitted && newpassword.invalid) || (newpassword.invalid && (newpassword.dirty || newpassword.touched))" class="has-error">
+                <div *ngIf="newpassword.errors.required" class="help-block">
+                  Trường dữ liệu không được để trống
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-sm-12">
+              <label class="control-label">Nhập lại mật khẩu mới <i class="text-danger">*</i></label>
+              <input type="password" class="form-control" id="confirmpassword" tabindex="3" formControlName="confirmpassword">
+              <div *ngIf="(submitted && confirmpassword.invalid) || (confirmpassword.invalid && (confirmpassword.dirty || confirmpassword.touched))" class="has-error">
+                <div *ngIf="confirmpassword.errors.required" class="help-block">
+                  Trường dữ liệu không được để trống
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-save btn-sm" (click)="Save()" tabindex="4">
+          <i class="fal fa-save"></i> Lưu
+        </button>
+        <button class="btn btn-default btn-sm" data-dismiss="modal" tabindex="5"><i class="far fa-times"></i> Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalUpdate">
+  <div class="modal-dialog" style="min-width: 50%">
+    <div class="panel panel-default no-margin">
+      <div class="modal-header">
+        <button class="close btn-close-modal" data-dismiss="modal">
+          ×
+        </button>
+        <p class="no-margin">Cập nhật thông tin cá nhân</p>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" [formGroup]="updateForm" #formDir="ngForm">
+          <div class="row">
+            <div class="form-group text-center">
+              <label for="input-image">
+                <img id="anhDaiDien" src="../../../assets/dist/img/image/DefaultAvatar.png" class="user-avatar" />
+              </label>
+              <input style="display: none" id="input-image" type="file" accept="image/*" (change)="selectImage($event)" />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-sm-6">
+              <label class="control-label">Tên người dùng <span class="text-danger">*</span></label>
+              <input class="form-control" type="text" id="hoTen" formControlName="hoTen" [(ngModel)]="model.hoTen" maxlength="100" tabindex="1" />
+              <div *ngIf="(submitted && f.hoTen.invalid)||(f.hoTen.invalid && (f.hoTen.dirty || f.hoTen.touched))" class="has-error m-b-12">
+                <div *ngIf="f.hoTen.errors.required">
+                  <span class="help-block">Trường dữ liệu này không để trống</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label class="control-label">Tên đăng nhập <span class="text-danger">*</span></label>
+              <input class="form-control" formControlName="tenDangNhap" readonly [(ngModel)]="model.tenDangNhap" maxlength="20" />
+              <div *ngIf="(submitted && f.tenDangNhap.invalid)||(f.tenDangNhap.invalid && (f.tenDangNhap.dirty || f.tenDangNhap.touched))" class="has-error m-b-12">
+                <div *ngIf="f.tenDangNhap.errors.required">
+                  <span class="help-block">Trường dữ liệu này không để trống</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-sm-6">
+              <label class="control-label">Giới tính <span class="text-danger">*</span></label>
+              <ng-select [items]="listSexs" bindValue="value" bindLabel="text" id="gioiTinh" formControlName="gioiTinh" [(ngModel)]="model.gioiTinh" [closeOnSelect]="true" tabindex="2">
+              </ng-select>
+              <div *ngIf="(submitted && f.gioiTinh.invalid) || (f.gioiTinh.invalid && (f.gioiTinh.dirty || f.gioiTinh.touched))" class="has-error m-b-12">
+                <div *ngIf="f.gioiTinh.errors.required">
+                  <span class="help-block">Trường dữ liệu này không để trống</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label class="control-label">Email <span class="text-danger">*</span></label>
+              <input class="form-control" id="homThu" formControlName="homThu" [(ngModel)]="model.homThu" maxlength="50" tabindex="3" />
+              <div *ngIf="(submitted && f.homThu.invalid)||(f.homThu.invalid && (f.homThu.dirty || f.homThu.touched))" class="has-error m-b-12">
+                <div *ngIf="f.homThu.errors.required">
+                  <span class="help-block">Trường dữ liệu này không để trống</span>
+                </div>
+                <div *ngIf="f.homThu.errors.email">
+                  <span class="help-block">Dữ liệu không hợp lệ</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-sm-6">
+              <label class="control-label">Địa chỉ</label>
+              <input class="form-control" type="text" id="diaChi" formControlName="diaChi" [(ngModel)]="model.diaChi" maxlength="500" tabindex="4" />
+            </div>
+            <div class="col-sm-6">
+              <label class="control-label">Số điện thoại</label>
+              <input class="form-control" maxlength="11" id="dienThoai" formControlName="dienThoai" [(ngModel)]="model.dienThoai" numbersOnly tabindex="5" />
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-sm-6">
+              <label class="control-label">Chức vụ <span class="text-danger">*</span></label>
+              <ng-select [items]="lstChucVu"
+                         formControlName="maChucVu"
+                         bindLabel="text" bindValue="value"
+                         [(ngModel)]="model.maChucVu"
+                         [closeOnSelect]="true">
+                <ng-template ng-option-tmp let-item="item">
+                  <div title="{{item.text}}">{{item.text}}</div>
+                </ng-template>
+              </ng-select>
+              <div *ngIf="(submitted && f.maChucVu.invalid)||(f.maChucVu.invalid && (f.maChucVu.dirty || f.maChucVu.touched))" class="has-error m-b-12">
+                <div *ngIf="f.maChucVu.errors.required">
+                  <span class="help-block">Trường dữ liệu này không được để trống</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label class="control-label">Phòng ban <span class="text-danger">*</span></label>
+              <ng-select [items]="lstPhongBan"
+                         formControlName="listPhongBan"
+                         bindLabel="text" bindValue="value"
+                         [(ngModel)]="model.listPhongBan"
+                         [multiple]="true"
+                         [closeOnSelect]="false">
+                <ng-template ng-option-tmp let-item="item">
+                  <div title="{{item.text}}">{{item.text}}</div>
+                </ng-template>
+              </ng-select>
+              <div *ngIf="(submitted && f.listPhongBan.invalid)||(f.listPhongBan.invalid && (f.listPhongBan.dirty || f.listPhongBan.touched))" class="has-error m-b-12">
+                <div *ngIf="f.listPhongBan.errors.required">
+                  <span class="help-block">Trường dữ liệu này không được để trống</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-save btn-sm" (click)="onUpdate()" tabindex="6">
+          <i class="fal fa-save"></i> Lưu
+        </button>
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal" tabindex="7">
+          <i class="far fa-times"></i> Hủy
+        </button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+		<!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header-ad header-dashboard pl-0">
+          <div class="header-content align-items-start pt-0 pt-lg-4">
+              <nav class="navbar h-auto navbar-expand">
+                  <div class="collapse navbar-collapse justify-content-between">
+                      <div class="header-left">
+                          <a href="dashboard.html"><img class="img-fluid d-none d-md-block logo-db" src="../../../../../assets/dist/images/logo-nd.png" alt=""></a>
+                          <a href="dashboard.html"><img class="img-fluid d-block d-md-none logo-mb" src="../../../../../assets/dist/images/logo.png" alt=""></a>
+                      </div>
+                      <div class="nav-control">
+                          <div class="hamburger">
+                              <span class="line"></span><span class="line"></span><span class="line"></span>
+                          </div>
+                      </div>
+
+                      <ul class="navbar-nav header-right align-items-center">
+            <li class="nav-item dropdown notification_dropdown d-none d-lg-block">
+                              <a class="nav-link dz-fullscreen text-white bg-transparent" href="#">
+                <i class="bi bi-arrows-fullscreen"></i>
+                              </a>
+            </li>
+            <li class="nav-item dropdown notification_dropdown">
+                              <a class="nav-link text-white ai-icon bg-transparent" href="#">
+                                  <i class="bi bi-chat-left"></i>
+                              </a>
+            </li>
+                          <li class="nav-item dropdown notification_dropdown">
+                              <a class="nav-link text-white ai-icon bg-transparent" href="#" role="button" data-toggle="dropdown">
+                                  <i class="bi bi-bell"></i>
+                                  <div class="pulse-css"></div>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right">
+                                  <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:380px;">
+                                      <ul class="timeline">
+                                          <li>
+                                              <a href="#" class="timeline-panel">
+                                                  <div class="media mr-2 grd-brown">
+                                                      <i class="bi bi-file-earmark-medical cl-brown"></i>
+                                                  </div>
+                                                  <div class="media-body">
+                                                      <small class="d-block">Vừa xong</small>
+                                                      <p class="mb-0 text-uppercase">PAKN chờ xử lý</p>
+                                                      <p class="mb-1 h4">Nguyễn Thị Liêm gửi một phản ánh, kiến nghị về lĩnh vực Y tế</p>
+                                                  </div>
+                                              </a>
+                                          </li>
+                                          <li>
+                                              <a href="#" class="timeline-panel">
+                                                  <div class="media mr-2 grd-brown">
+                                                      <i class="bi bi-file-earmark-medical cl-brown"></i>
+                                                  </div>
+                                                  <div class="media-body">
+                                                      <small class="d-block">30 phút trước</small>
+                                                      <p class="mb-0 text-uppercase cl-blue2">PAKN đã được tiếp nhận</p>
+                                                      <p class="mb-1 h4">Công an thành phố Nha Trang đã tiếp nhận kiến nghị số 10007.23</p>
+                                                  </div>
+                                              </a>
+                                          </li>
+                                          <li>
+                                              <a href="#" class="timeline-panel">
+                                                  <div class="media mr-2 grd-brown">
+                                                      <i class="bi bi-file-earmark-medical cl-brown"></i>
+                                                  </div>
+                                                  <div class="media-body">
+                                                      <small class="d-block">12 giờ trước</small>
+                                                      <p class="mb-0 text-uppercase cl-blue">PAKN đã giải quyết</p>
+                                                      <p class="mb-1 h4">Công an thành phố Nha Trang đã giải quyết xong kiến nghị số 10007.23</p>
+                                                  </div>
+                                              </a>
+                                          </li>
+                                          <li>
+                                              <a href="#" class="timeline-panel">
+                                                  <div class="media mr-2 grd-brown">
+                                                      <i class="bi bi-file-earmark-medical cl-brown"></i>
+                                                  </div>
+                                                  <div class="media-body">
+                                                      <small class="d-block">1 ngày trước</small>
+                                                      <p class="mb-0 text-uppercase cl-red">PAKN bị từ chối</p>
+                                                      <p class="mb-1 h4">Công an thành phố Nha Trang đã từ chối kiến nghị số 10007.23</p>
+                                                  </div>
+                                              </a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                                  <a class="all-notification" href="#">Xem tất cả thông báo <i class="ti-arrow-right"></i></a>
+                              </div>
+                          </li>
+                          <li class="nav-item dropdown header-profile">
+                              <a class="nav-link bg-transparent px-0" href="#" role="button" data-toggle="dropdown">
+                                  <div class="avatar-circle">
+                                      <i class="bi bi-person-fill cl-brown" style="font-size: 24px"></i>
+                                  </div>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right">
+                                  <a href="#" class="dropdown-item ai-icon">
+                                      <i class="bi bi-person-square"></i>
+                                      <span class="ml-2">Thông tin cá nhân </span>
+                                  </a>
+                                  <a href="#" class="dropdown-item ai-icon">
+                                      <i class="bi bi-key"></i>
+                                      <span class="ml-2">Đổi mật khẩu </span>
+                                  </a>
+                                  <a href="./ĐăngNhập.html" class="dropdown-item ai-icon">
+                                      <i class="bi bi-box-arrow-right"></i>
+                                      <span class="ml-2">Đăng xuất </span>
+                                  </a>
+                              </div>
+                          </li>
+                      </ul>
+                  </div>
+              </nav>
+          </div>
+      </div>
+      <!--**********************************
+          Header end ti-comment-alt
+      ***********************************-->

@@ -1,0 +1,273 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <span>Danh sách danh mục Nhóm người nhận</span>
+  </div>
+  <p-table #dataTable [value]="lstCatalogValue" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true"
+           [rows]="pagesize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]" [responsive]="true"
+           autoLayout="true">
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="text-center" style="width: 30%;">
+          Tên nhóm người nhận
+          <a class="pull-right" data-toggle="collapse" data-target="#collapse1" aria-expanded="false"
+             aria-controls="collapse1" title="Tìm theo tên nhóm người nhận">
+            <i class="fa fa-filter"></i>
+          </a>
+          <div class="collapse" id="collapse1">
+            <input [(ngModel)]="nameSearch" (keydown.enter)="dataStateChange()" type="text" placeholder="Nhập tên..."
+                   class="form-control textFilter" />
+          </div>
+        </th>
+        <th class="text-center" style="width: 80px;">
+          Mã
+          <a class="pull-right" data-toggle="collapse" data-target="#collapse2" aria-expanded="false"
+             aria-controls="collapse1" title="Tìm mã nhóm người nhận">
+            <i class="fa fa-filter"></i>
+          </a>
+          <div class="collapse" id="collapse2">
+            <input [(ngModel)]="codeSearch" (keydown.enter)="dataStateChange()" type="text" placeholder="Nhập mã..."
+                   class="form-control textFilter" />
+          </div>
+        </th>
+        <th class="text-center" style="width: 80px">
+          STT
+          <a class="pull-right" data-toggle="collapse" data-target="#collapse6" aria-expanded="false"
+             aria-controls="collapse6" title="Tìm theo stt">
+            <i class="fa fa-filter"></i>
+          </a>
+          <div class="collapse" id="collapse6">
+            <input [(ngModel)]="stt" (keydown.enter)="dataStateChange()" type="text" placeholder="Nhập stt..."
+                   class="form-control textFilter" />
+          </div>
+        </th>
+        <th class="text-center" style="width: 80px">
+          Loại
+          <a class="pull-right" data-toggle="collapse" data-target="#collapse3" aria-expanded="false"
+             aria-controls="collapse3" title="Tìm theo loại">
+            <i class="fa fa-filter"></i>
+          </a>
+          <div class="collapse" id="collapse3">
+            <select class="form-control" [(ngModel)]="Loai" (change)="changeLoai($event)">
+              <option [value]="null">--Tất cả--</option>
+              <option [value]="1">PTM</option>
+              <option [value]="0">Học viên</option>
+            </select>
+          </div>
+        </th>
+        <th class="text-center" style="width: 30%;">
+          Mô tả
+        </th>
+        <th class="text-center" style="width: 80px">
+          Sử dụng
+          <a class="pull-right" data-toggle="collapse" data-target="#collapse5" aria-expanded="false"
+             aria-controls="collapse1" title="Tìm theo trạng thái">
+            <i class="fa fa-filter"></i>
+          </a>
+          <div class="collapse" id="collapse5" style="width: 120px">
+            <select class="form-control" [(ngModel)]="TrangThai" (change)="changeState($event)">
+              <option [value]="null">--Tất cả--</option>
+              <option [value]="1">Đang sử dụng</option>
+              <option [value]="0">Không sử dụng</option>
+            </select>
+          </div>
+        </th>
+        <th class="text-center" style="width: 80px">Hành động</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-nhomnguoidung>
+      <tr>
+        <td>{{nhomnguoidung.tenDuLieu}}</td>
+        <td>{{nhomnguoidung.code}}</td>
+        <td>{{nhomnguoidung.stt}}</td>
+        <td class="text-center">
+          <div *ngIf="nhomnguoidung.loai"> PTM </div>
+          <div *ngIf="!nhomnguoidung.loai"> Học viên </div>
+        </td>
+        <td>{{nhomnguoidung.moTa}}</td>
+        <td class="text-center">
+          <a class="option-button" *ngIf="nhomnguoidung.trangThai" title="Đang sử dụng">
+            <i class="fa fa-lock"
+               style="color:rgb(240, 112, 48)"></i>
+          </a>
+          <a class="option-button" *ngIf="!nhomnguoidung.trangThai" title="Không sử dụng"><i class="fa fa-lock"></i></a>
+        </td>
+        <td class="text-center" style="width: 80px">
+          <a *hasPermission="['3', 'B_XIII_2']" class="option-button sv-pointer" title="Cập nhật nhóm người nhận"
+             data-toggle="modal" data-target="#modalEdit" (click)="preUpdate(nhomnguoidung)"><i class="far fa-pen"></i></a>
+          <a class="option-button sv-pointer" *ngIf="nhomnguoidung.trangThai" title="Thêm người dùng vào nhóm"
+             data-toggle="modal" data-target="#modalAddNguoiDung" (click)="preCreateNguoiDungNhomNguoiDung(nhomnguoidung.id)"><i class="fa fa-user-plus"></i></a>
+          <a *hasPermission="['3', 'B_XIII_3']" class="option-button sv-pointer option-red" title="Xóa"
+             (appConfirmClick)="preDelete(nhomnguoidung)"><i class="far fa-trash"></i></a>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorright">
+      Tổng số {{totalRecords}} bản ghi
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="20">
+          Không tìm thấy dữ liệu
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<!-- /.box-body -->
+
+<div class="modal fade" id="modalEdit" tabindex="-1">
+  <div class="modal-dialog" style="min-width:60%">
+    <form class="form-horizontal" id="updateForm" [formGroup]="updateForm" #formDir="ngForm">
+      <div class="panel panel-default no-margin">
+        <div class="panel-heading">
+          <button type="button" class="close btn-close-moda pull-right" data-dismiss="modal" tabindex="8" style="font-size: 24px !important;margin-top: -3px;
+    opacity: 0.9;font-weight: 400;">
+            ×
+          </button>
+          <p class="title-ct uppercase no-margin">Thông tin danh mục nhóm người nhận</p>
+        </div>
+        <div class="modal-body no-padding-bottom">
+          <div class="row form-group">
+            <div class="col-sm-2 control-label padding-xs"><i style="color: red">*</i> Tên nhóm người nhận:</div>
+            <div class="col-sm-4">
+              <input class="form-control has-error" formControlName="tenDuLieu" type="text" [(ngModel)]="data.tenDuLieu"
+                     maxlength="200" required />
+              <div *ngIf="(submitted && f.tenDuLieu.invalid)||(f.tenDuLieu.invalid && (f.tenDuLieu.dirty || f.tenDuLieu.touched))"
+                   class="has-error m-b-12">
+                <div *ngIf="f.tenDuLieu.errors.required">
+                  <span class="help-block">Trường dữ liệu này không được để trống</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2 control-label padding-xs"><i style="color: red">*</i> Mã nhóm người nhận:</div>
+            <div class="col-sm-4">
+              <input class="form-control has-error" formControlName="code" type="text" [(ngModel)]="data.code"
+                     maxlength="20" required />
+              <div *ngIf="(submitted && f.code.invalid)||(f.code.invalid && (f.code.dirty || f.code.touched))"
+                   class="has-error m-b-12">
+                <div *ngIf="f.code.errors.required">
+                  <span class="help-block">Trường dữ liệu này không được để trống</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-sm-2 control-label padding-xs">Loại:</div>
+            <div class="col-sm-4">
+              <select class="form-control" formControlName="loai" [(ngModel)]="data.loai">
+                <option value="true">PTM</option>
+                <option value="false">Học viên</option>
+              </select>
+            </div>
+
+            <div class="col-sm-2 control-label padding-xs">Trạng thái:</div>
+            <div class="col-sm-4">
+              <select class="form-control" formControlName="trangThai" [(ngModel)]="data.trangThai">
+                <option value="true">Hiệu lực</option>
+                <option value="false">Hết hiệu lực</option>
+              </select>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-sm-2 control-label padding-xs"><i style="color: red">*</i>Thứ tự</div>
+            <div class="col-sm-4">
+              <input class="form-control has-error" numbersOnly formControlName="stt" type="text" [(ngModel)]="data.stt"
+                     maxlength="4" required />
+              <div *ngIf="(submitted && f.stt.invalid)||(f.stt.invalid && (f.stt.dirty || f.stt.touched))"
+                   class="has-error m-b-12">
+                <div *ngIf="f.stt.errors.required">
+                  <span class="help-block">Trường dữ liệu này không được để trống</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-sm-2 control-label padding-xs">Mô tả:</div>
+            <div class="col-sm-10">
+              <textarea class="form-control has-error" style="resize:vertical" formControlName="moTa" type="text"
+                        rows="3" [(ngModel)]="data.moTa" maxlength="255"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button *hasPermission="['3', 'B_XIII_2']" type="button" class="btn btn-success btn-sm" (click)="onSave()">
+            <i class="fa fa-save"></i> Lưu
+          </button>
+          <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">
+            <i class="fa fa-times"></i>
+            Hủy
+          </button>
+        </div>
+      </div>
+    </form>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+
+<div class="modal fade no-padding" id="modalAddNguoiDung" tabindex="1">
+  <div class="modal-dialog" style="width:90%">
+    <div class="panel panel-default">
+      <div _ngcontent-c9="" class="panel-heading">
+        <button type="button" class="close btn-close-modal" id="closech" data-dismiss="modal" tabindex="8" style="font-size: 24px !important;margin: -3px 5px;
+                                                                                                  opacity: 0.9;font-weight: 400;">
+          ×
+        </button><p _ngcontent-c9="" class="title-ct uppercase no-margin">Danh sách người dùng</p>
+      </div>
+      <div class="modal-body">
+        <div class="row form-group form-horizontal">
+          <div class="col-md-2 control-label">Chọn người dùng:</div>
+          <div class="col-md-10">
+            <div class="input-group">
+              <ng-select [multiple]="true"
+                         [items]="lstUsers"
+                          bindLabel="text"
+                          bindValue="value"
+                          [(ngModel)]="lstNguoiDungNhomNguoiDungSelected"
+                         placeholder=""></ng-select>
+              <div class="input-group-addon no-border no-padding-right">
+                <a class="btn btn-primary btn-sm inline" title="Thêm" (click)="onCreateNguoiDungNhomNguoiDung()">
+                  <i class="fal fa-plus"></i> Thêm
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr class="info">
+                    <th class="text-center">Tên Người Dùng</th>
+                    <th class="text-center">Tên Đăng Nhập</th>
+                    <th class="text-center">Trạng Thái</th>
+                    <th class="text-center">Chức Năng </th>
+                  </tr>
+                </thead>
+
+                <tr *ngFor="let sp of lstNguoiDungNhomNguoiDung;let i = index">
+                  <td class="text-left">{{sp.hoTen}}</td>
+                  <td class="text-left">{{sp.tenDangNhap}}</td>
+                  <td class="text-left" *ngIf="sp.kichHoat">Đang sử dụng</td>
+                  <td class="text-left" *ngIf="!sp.kichHoat">Không sử dụng</td>
+                  <td class="text-center">
+                    <a class="btn btn-purple btn-xs" data-toggle="modal" (appConfirmClick)="onDeleteNguoiDungNhomNguoiDung(sp.id)" title="Xóa">
+                      <i class="far fa-trash"></i>
+                    </a>
+                    <!--<a class="btn btn-purple btn-xs" data-toggle="modal" (appConfirmClick)="confirmDeleteUserFromGroup(sp.ma)" title="Xóa">
+                      <i class="fa fa-trash"></i>
+                    </a>-->
+                  </td>
+                </tr>
+
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
