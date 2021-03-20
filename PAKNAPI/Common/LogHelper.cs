@@ -60,8 +60,21 @@ namespace PAKNAPI.Common
 			//Get User from Claims
 			//string userId = logHelper.claim.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.GivenName).Value;
 
-			//string userId = logHelper.claim.Claims.FirstOrDefault(c => c.Type == "Id").Value;
-			//SYUserGetByIDFull sYUser = (await new SYUserGetByIDFull(_appSetting).SYUserGetByIDFullDAO((long?)long.Parse(userId))).FirstOrDefault();
+			string userId = logHelper.claim.Claims.FirstOrDefault(c => c.Type == "Id").Value;
+			SYUser sYUser = await new SYUser(_appSetting).SYUserGetByID((long?)long.Parse(userId));
+
+			SYLOGInsertIN sYSystemLogInsertIN = new SYLOGInsertIN
+			{
+				UserId = sYUser.Id,
+				FullName = sYUser.FullName,
+				Action = logHelper.logAction,
+				IPAddress = logHelper.ipAddress,
+				MACAddress = logHelper.macAddress,
+				Description = logHelper.logAction + " " + logHelper.logObject,
+				CreatedDate = DateTime.Now,
+				Exception = logHelper.e != null ? logHelper.e.Message + " - " + logHelper.e.InnerException : null
+			};
+			await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
 			//DynamicParameters DP = new DynamicParameters();
 			//DP.Add("TenNguoiDung", sYUser.FullName);
 			//DP.Add("NgayHanhDong", DateTime.Now);
@@ -75,7 +88,6 @@ namespace PAKNAPI.Common
 			//DP.Add("NoiDung", logHelper.logAction + " " + logHelper.logObject);
 
 			//await _sQLCon.ExecuteNonQueryDapperAsync("TenStoredInsertLog", DP);
-
 		}
 
 		public BaseRequest ReadBodyFromRequest(HttpRequest httpRequest)

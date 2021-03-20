@@ -655,12 +655,14 @@ namespace PAKNAPI.ModelBase
 	{
 		public long Id { get; set; }
 		public long UserId { get; set; }
+		public string FullName { get; set; }
 		public string IPAddress { get; set; }
 		public string MACAddress { get; set; }
 		public string Description { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public byte Status { get; set; }
 		public string Action { get; set; }
+		public string Exception { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -679,12 +681,14 @@ namespace PAKNAPI.ModelBase
 
 		public long Id { get; set; }
 		public long UserId { get; set; }
+		public string FullName { get; set; }
 		public string IPAddress { get; set; }
 		public string MACAddress { get; set; }
 		public string Description { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public byte Status { get; set; }
 		public string Action { get; set; }
+		public string Exception { get; set; }
 
 		public async Task<SYSystemLog> SYSystemLogGetByID(long? Id)
 		{
@@ -716,6 +720,8 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UserId", _sYSystemLog.UserId);
 			DP.Add("Status", _sYSystemLog.Status);
 			DP.Add("Action", _sYSystemLog.Action);
+			DP.Add("Exception", _sYSystemLog.Exception);
+			DP.Add("FullName", _sYSystemLog.FullName);
 			DP.Add("IPAddress", _sYSystemLog.IPAddress);
 			DP.Add("MACAddress", _sYSystemLog.MACAddress);
 			DP.Add("Description", _sYSystemLog.Description);
@@ -731,6 +737,8 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UserId", _sYSystemLog.UserId);
 			DP.Add("Status", _sYSystemLog.Status);
 			DP.Add("Action", _sYSystemLog.Action);
+			DP.Add("Exception", _sYSystemLog.Exception);
+			DP.Add("FullName", _sYSystemLog.FullName);
 			DP.Add("IPAddress", _sYSystemLog.IPAddress);
 			DP.Add("MACAddress", _sYSystemLog.MACAddress);
 			DP.Add("Description", _sYSystemLog.Description);

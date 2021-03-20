@@ -1,1 +1,1 @@
-SY,CA,SYUSR,SYUser
+SY,CA,SYUser,SYLog,SYCategory
