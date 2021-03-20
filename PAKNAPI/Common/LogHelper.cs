@@ -1,7 +1,7 @@
 ﻿using Dapper;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using SampleAPI.ModelBase;
+using PAKNAPI.ModelBase;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,7 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SampleAPI.Common
+namespace PAKNAPI.Common
 {
 	public class LogHelper
 	{
