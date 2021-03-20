@@ -13,13 +13,13 @@ namespace PAKNAPI.ModelBase
 {
 	public class CAPositionOnPage
 	{
-		public int Id { get; set; }
-		public int? OrderNumber { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-		public string Description { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
+		public int Id;
+		public int? OrderNumber;
+		public string Name;
+		public string Code;
+		public string Description;
+		public bool IsActived;
+		public bool IsDeleted;
 		public int? RowNumber; // int, null
 	}
 
@@ -36,13 +36,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id { get; set; }
-		public int? OrderNumber { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-		public string Description { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
+		public int Id;
+		public int? OrderNumber;
+		public string Name;
+		public string Code;
+		public string Description;
+		public bool IsActived;
+		public bool IsDeleted;
 
 		public async Task<CAPosition> CAPositionGetByID(int? Id)
 		{

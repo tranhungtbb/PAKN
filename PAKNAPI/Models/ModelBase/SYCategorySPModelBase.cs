@@ -24,14 +24,14 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber { get; set; }
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
-		public string Description { get; set; }
-		public int? OrderNumber { get; set; }
+		public int? RowNumber;
+		public int Id;
+		public string Name;
+		public string Code;
+		public bool IsActived;
+		public bool IsDeleted;
+		public string Description;
+		public int? OrderNumber;
 
 		public async Task<List<SYCAPositionGetOnPage>> SYCAPositionGetOnPageDAO(int? PageSize, int? PageIndex, string Search)
 		{
@@ -57,17 +57,17 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber { get; set; }
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public byte UnitLevel { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
-		public int? ParentId { get; set; }
-		public string Description { get; set; }
-		public string Email { get; set; }
-		public string Phone { get; set; }
-		public string Address { get; set; }
+		public int? RowNumber;
+		public int Id;
+		public string Name;
+		public byte UnitLevel;
+		public bool IsActived;
+		public bool IsDeleted;
+		public int? ParentId;
+		public string Description;
+		public string Email;
+		public string Phone;
+		public string Address;
 
 		public async Task<List<SYCAUnitGetOnPage>> SYCAUnitGetOnPageDAO(int? PageSize, int? PageIndex, string Search)
 		{

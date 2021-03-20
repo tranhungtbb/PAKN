@@ -1,15 +1,16 @@
-﻿using PAKNAPI.Common;
-using PAKNAPI.ModelBase;
-using PAKNAPI.Models.Results;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using PAKNAPI.Common;
+using PAKNAPI.ModelBase;
+using PAKNAPI.Models.Results;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,6 +51,7 @@ namespace PAKNAPI.Controllers
 					if (hasher.AuthenticateUser(loginIN.Password, user[0].Password, user[0].Salt))
 					{
 						var tokenString = GenerateJSONWebToken(user[0]);
+						List<SYUSRGetPermissionByUserId> permission = await new SYUSRGetPermissionByUserId(_appSetting).SYUSRGetPermissionByUserIdDAO((long?)user[0].Id);
 						IDictionary<string, object> json = new Dictionary<string, object>
 						{
 							{ "Id", user[0].Id },
@@ -57,6 +59,7 @@ namespace PAKNAPI.Controllers
 							{ "FullName", user[0].FullName },
 							{ "Email", user[0].Email },
 							{ "Phone", user[0].Phone },
+							{ "permission", permission },
 							{ "Token", tokenString},
 						};
 						return JsonConvert.SerializeObject(json);

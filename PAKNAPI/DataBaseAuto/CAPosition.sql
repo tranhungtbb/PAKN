@@ -56,7 +56,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[CAPositionGetAllOnPage]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[CA_PositionGetAllOnPage]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [CA_PositionGetAllOnPage];
 GO
@@ -87,7 +87,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[CAPositionInsert]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[CA_PositionInsert]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [CA_PositionInsert];
 GO
@@ -127,7 +127,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[CAPositionUpdate]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[CA_PositionUpdate]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [CA_PositionUpdate];
 GO
@@ -158,7 +158,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[CAPositionDelete]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[CA_PositionDelete]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [CA_PositionDelete];
 GO
@@ -177,7 +177,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[CAPositionDeleteAll]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[CA_PositionDeleteAll]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [CA_PositionDeleteAll];
 GO
