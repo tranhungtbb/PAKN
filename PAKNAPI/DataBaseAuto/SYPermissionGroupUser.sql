@@ -46,7 +46,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYPermissionGroupUserGetAllOnPage]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_PermissionGroupUserGetAllOnPage]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_PermissionGroupUserGetAllOnPage];
 GO
@@ -72,7 +72,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYPermissionGroupUserInsert]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_PermissionGroupUserInsert]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_PermissionGroupUserInsert];
 GO
@@ -94,7 +94,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYPermissionGroupUserUpdate]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_PermissionGroupUserUpdate]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_PermissionGroupUserUpdate];
 GO
@@ -114,7 +114,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYPermissionGroupUserDelete]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_PermissionGroupUserDelete]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_PermissionGroupUserDelete];
 GO
@@ -133,7 +133,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYPermissionGroupUserDeleteAll]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_PermissionGroupUserDeleteAll]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_PermissionGroupUserDeleteAll];
 GO

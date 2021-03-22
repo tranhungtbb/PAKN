@@ -1,23 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from '../../../../services/authentication.service';
-import { UserInfoStorageService } from '../../../../commons/user-info-storage.service';
-import { LoginUserObject } from '../../../../models/loginUserObject';
-import { ToastrService } from 'ngx-toastr';
-import { DataService } from '../../../../services/sharedata.service';
+import { Component, OnInit } from '@angular/core'
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
+import { HttpClient } from '@angular/common/http'
+import { ActivatedRoute, Router } from '@angular/router'
+import { AuthenticationService } from '../../../../services/authentication.service'
+import { UserInfoStorageService } from '../../../../commons/user-info-storage.service'
+import { LoginUserObject } from '../../../../models/loginUserObject'
+import { ToastrService } from 'ngx-toastr'
+import { DataService } from '../../../../services/sharedata.service'
 
-declare var $: any;
+declare var $: any
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+	selector: 'app-login',
+	templateUrl: './login.component.html',
+	styleUrls: ['./login.component.css'],
 })
-
 export class LoginComponent implements OnInit {
-
   user: LoginUserObject = {
     UserName: '',
     Password: ''

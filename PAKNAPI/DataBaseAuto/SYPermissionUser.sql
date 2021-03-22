@@ -9,7 +9,7 @@ IF EXISTS
 DROP PROCEDURE [SY_PermissionUserGetByID];
 GO
 CREATE PROCEDURE [dbo].[SY_PermissionUserGetByID]
-	@UserId int = null
+	@UserId bigint = null
 AS
 BEGIN
 	SELECT
@@ -50,7 +50,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYPermissionUserGetAllOnPage]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_PermissionUserGetAllOnPage]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_PermissionUserGetAllOnPage];
 GO
@@ -78,7 +78,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYPermissionUserInsert]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_PermissionUserInsert]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_PermissionUserInsert];
 GO
@@ -106,12 +106,12 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYPermissionUserUpdate]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_PermissionUserUpdate]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_PermissionUserUpdate];
 GO
 CREATE PROCEDURE [dbo].[SY_PermissionUserUpdate]
-	@UserId int = null,
+	@UserId bigint = null,
 	@PermissionId smallint = null,
 	@FunctionId smallint = null,
 	@CategoryId smallint = null
@@ -130,12 +130,12 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYPermissionUserDelete]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_PermissionUserDelete]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_PermissionUserDelete];
 GO
 CREATE PROCEDURE [dbo].[SY_PermissionUserDelete]
-	@UserId int = null
+	@UserId bigint = null
 AS
 BEGIN
 	DELETE [SY_PermissionUser]
@@ -149,7 +149,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYPermissionUserDeleteAll]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_PermissionUserDeleteAll]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_PermissionUserDeleteAll];
 GO

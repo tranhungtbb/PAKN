@@ -62,7 +62,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYSystemLogGetAllOnPage]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_SystemLogGetAllOnPage]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_SystemLogGetAllOnPage];
 GO
@@ -96,7 +96,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYSystemLogInsert]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_SystemLogInsert]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_SystemLogInsert];
 GO
@@ -145,7 +145,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYSystemLogUpdate]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_SystemLogUpdate]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_SystemLogUpdate];
 GO
@@ -182,7 +182,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYSystemLogDelete]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_SystemLogDelete]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_SystemLogDelete];
 GO
@@ -201,7 +201,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYSystemLogDeleteAll]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_SystemLogDeleteAll]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_SystemLogDeleteAll];
 GO
