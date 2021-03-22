@@ -11,5 +11,5 @@
 /PAKNAPI/.vs/PAKNAPI/v16/.suo.LOCAL.suo
 /PAKNAPI/.vs/PAKNAPI/v16/.suo.REMOTE.suo
 /PAKNAPI/.vs/PAKNAPI/v16/.suo~c5bee701cd9f4abdf2bac91c44f7bb38412a519c
-/PAKNAPI/bin/Debug/netcoreapp3.1
-/PAKNAPI/obj/Debug/netcoreapp3.1
+/PAKNAPI/obj
+/PAKNAPI/bin
