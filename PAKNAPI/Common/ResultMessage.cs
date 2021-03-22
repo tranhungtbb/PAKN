@@ -1,6 +1,6 @@
 ﻿namespace PAKNAPI.Common
 {
-	public static class ResultSuccess
+	public static class ResultCode
 	{
 		public const string OK = "OK";
 		public const string ORROR = "ORROR";

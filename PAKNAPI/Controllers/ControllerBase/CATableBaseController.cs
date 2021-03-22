@@ -41,7 +41,7 @@ namespace PAKNAPI.ControllerBase
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultSuccess.ORROR, Message = ex.Message };
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
 
@@ -58,7 +58,7 @@ namespace PAKNAPI.ControllerBase
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultSuccess.ORROR, Message = ex.Message };
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
 
@@ -83,7 +83,7 @@ namespace PAKNAPI.ControllerBase
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultSuccess.ORROR, Message = ex.Message };
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
 
@@ -100,7 +100,7 @@ namespace PAKNAPI.ControllerBase
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultSuccess.ORROR, Message = ex.Message };
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
 
@@ -137,7 +137,7 @@ namespace PAKNAPI.ControllerBase
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultSuccess.ORROR, Message = ex.Message };
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
 
@@ -155,14 +155,14 @@ namespace PAKNAPI.ControllerBase
 				}
 				else
 				{
-					return new ResultApi { Success = ResultSuccess.ORROR, Message = ResultMessage.ORROR };
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultSuccess.ORROR, Message = ex.Message };
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
 
@@ -180,14 +180,14 @@ namespace PAKNAPI.ControllerBase
 				}
 				else
 				{
-					return new ResultApi { Success = ResultSuccess.ORROR, Message = ResultMessage.ORROR };
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultSuccess.ORROR, Message = ex.Message };
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
 
@@ -224,7 +224,7 @@ namespace PAKNAPI.ControllerBase
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultSuccess.ORROR, Message = ex.Message };
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
 
@@ -242,14 +242,14 @@ namespace PAKNAPI.ControllerBase
 				}
 				else
 				{
-					return new ResultApi { Success = ResultSuccess.ORROR, Message = ResultMessage.ORROR };
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultSuccess.ORROR, Message = ex.Message };
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
 

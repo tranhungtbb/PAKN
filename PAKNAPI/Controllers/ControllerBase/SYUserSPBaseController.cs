@@ -44,7 +44,7 @@ namespace PAKNAPI.ControllerBase
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultSuccess.ORROR, Message = ex.Message };
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
 	}
