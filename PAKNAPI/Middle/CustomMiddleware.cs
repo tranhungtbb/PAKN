@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SampleAPI.Middle
+namespace PAKNAPI.Middle
 {
 	public class CustomMiddleware : IMiddleware
 	{

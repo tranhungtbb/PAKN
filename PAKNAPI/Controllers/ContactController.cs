@@ -32,75 +32,62 @@ namespace PAKNAPI.Controllers
 			_context = context;
 			_config = config;
 		}
-		
-		[Route("Login")]
-		[HttpPost]
-		[AllowAnonymous]
-		public async Task<ActionResult<object>> LoginThe(LoginIN loginIN)
-		{
-			var httpRequest = _context.HttpContext.Request;
-
-			List<SYLogin> user = await new SYLogin(_appSetting).SYLoginDAO(loginIN.UserName, loginIN.Password);
-
-			if (user != null && user.Count > 0)
-			{
-				var tokenString = GenerateJSONWebToken(user[0]);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{ "Id", user[0].Id },
-						{ "UserName", user[0].UserName },
-						{ "FullName", user[0].FullName },
-						{ "Email", user[0].Email },
-						{ "Phone", user[0].Phone },
-						{ "Token", tokenString},
-					};
-				return JsonConvert.SerializeObject(json);
-			}
-			else
-			{
-				return new ResultApi { Message = "User/Pass not found", };
-			}
-		}
 
 		[Route("Login")]
 		[HttpPost]
 		[AllowAnonymous]
 		public async Task<ActionResult<object>> Login(LoginIN loginIN)
 		{
-			var httpRequest = _context.HttpContext.Request;
-
-			List<SYLogin> user = await new SYLogin(_appSetting).SYLoginDAO(loginIN.UserName, loginIN.Password);
-
-			if (user != null && user.Count > 0)
+			try
 			{
-				var tokenString = GenerateJSONWebToken(user[0]);
-				IDictionary<string, object> json = new Dictionary<string, object>
+				var httpRequest = _context.HttpContext.Request;
+
+				List<SYUSRLogin> user = await new SYUSRLogin(_appSetting).SYUSRLoginDAO(loginIN.UserName);
+
+				if (user != null && user.Count > 0)
+				{
+					PasswordHasher hasher = new PasswordHasher();
+					if (hasher.AuthenticateUser(loginIN.Password, user[0].Password, user[0].Salt))
 					{
-						{ "Id", user[0].Id },
-						{ "UserName", user[0].UserName },
-						{ "FullName", user[0].FullName },
-						{ "Email", user[0].Email },
-						{ "Phone", user[0].Phone },
-						{ "Token", tokenString},
-					};
-				return JsonConvert.SerializeObject(json);
+						var tokenString = GenerateJSONWebToken(user[0]);
+						IDictionary<string, object> json = new Dictionary<string, object>
+						{
+							{ "Id", user[0].Id },
+							{ "UserName", user[0].UserName },
+							{ "FullName", user[0].FullName },
+							{ "Email", user[0].Email },
+							{ "Phone", user[0].Phone },
+							{ "Token", tokenString},
+						};
+						return JsonConvert.SerializeObject(json);
+					}
+					else
+					{
+						return new ResultApi { Message = "User/Pass not found", };
+					}
+				}
+				else
+				{
+					return new ResultApi { Message = "User/Pass not found", };
+				}
 			}
-			else
+			catch (Exception ex)
 			{
-				return new ResultApi { Message = "User/Pass not found", };
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				return new ResultApi { Message = "An error occurred", };
 			}
 		}
 
-		private string GenerateJSONWebToken(SYLogin userInfo)
+		private string GenerateJSONWebToken(SYUSRLogin userInfo)
 		{
 			var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
 			var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
 			var claims = new[] {
-				new Claim(JwtRegisteredClaimNames.Sub, userInfo.UserName),
-				new Claim(JwtRegisteredClaimNames.UniqueName, userInfo.FullName),
-				new Claim(JwtRegisteredClaimNames.FamilyName, userInfo.Email),
-				new Claim(JwtRegisteredClaimNames.GivenName, userInfo.Id.ToString())
+				new Claim("UserName", userInfo.UserName),
+				new Claim("FullName", userInfo.FullName),
+				new Claim("Email", userInfo.Email),
+				new Claim("Id", userInfo.Id.ToString())
 			};
 
 			var token = new JwtSecurityToken(
