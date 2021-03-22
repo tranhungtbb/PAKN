@@ -1,0 +1,278 @@
+
+/* Start SY_UserGetByID */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[SY_UserGetByID]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [SY_UserGetByID];
+GO
+CREATE PROCEDURE [dbo].[SY_UserGetByID]
+	@Id bigint = null
+AS
+BEGIN
+	SELECT
+		[Id],
+		[FullName],
+		[UserName],
+		[Password],
+		[Salt],
+		[IsActived],
+		[IsDeleted],
+		[Gender],
+		[Type],
+		[IsSuperAdmin],
+		[Email],
+		[Phone],
+		[UnitId],
+		[CountLock],
+		[LockEndOut],
+		[Avatar],
+		[Address],
+		[PositionId]
+	FROM [SY_User]
+	WHERE [Id] = @Id
+END
+GO
+/* End SY_UserGetByID */
+
+/* Start SY_UserGetAll */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[SY_UserGetAll]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [SY_UserGetAll];
+GO
+CREATE PROCEDURE [dbo].[SY_UserGetAll]
+AS
+BEGIN
+	SELECT
+		[Id],
+		[FullName],
+		[UserName],
+		[Password],
+		[Salt],
+		[IsActived],
+		[IsDeleted],
+		[Gender],
+		[Type],
+		[IsSuperAdmin],
+		[Email],
+		[Phone],
+		[UnitId],
+		[CountLock],
+		[LockEndOut],
+		[Avatar],
+		[Address],
+		[PositionId]
+	FROM [SY_User]
+END
+GO
+/* End SY_UserGetAll */
+
+/* Start SY_UserGetAllOnPage */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[SYUserGetAllOnPage]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [SY_UserGetAllOnPage];
+GO
+CREATE PROCEDURE [dbo].[SY_UserGetAllOnPage]
+	@PageSize int = null,
+	@PageIndex int = null
+AS
+BEGIN
+	SELECT
+		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
+		[Id],
+		[FullName],
+		[UserName],
+		[Password],
+		[Salt],
+		[IsActived],
+		[IsDeleted],
+		[Gender],
+		[Type],
+		[IsSuperAdmin],
+		[Email],
+		[Phone],
+		[UnitId],
+		[CountLock],
+		[LockEndOut],
+		[Avatar],
+		[Address],
+		[PositionId]
+	FROM [SY_User]
+	ORDER BY [Id]
+	OFFSET (@PageIndex-1) * @PageSize ROWS
+	FETCH NEXT @PageSize ROWS ONLY
+END
+GO
+/* End SY_UserGetAllOnPage */
+
+/* Start SY_UserInsert */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[SYUserInsert]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [SY_UserInsert];
+GO
+CREATE PROCEDURE [dbo].[SY_UserInsert]
+	@FullName nvarchar(256) = null,
+	@UserName nvarchar(100) = null,
+	@Password nvarchar(500) = null,
+	@Salt nvarchar(500) = null,
+	@IsActived bit = null,
+	@IsDeleted bit = null,
+	@Gender bit = null,
+	@Type tinyint = null,
+	@IsSuperAdmin bit = null,
+	@Email nvarchar(256) = null,
+	@Phone varchar(11) = null,
+	@UnitId int = null,
+	@CountLock tinyint = null,
+	@LockEndOut datetime = null,
+	@Avatar nvarchar(255) = null,
+	@Address nvarchar(500) = null,
+	@PositionId int = null
+AS
+BEGIN
+	INSERT INTO [SY_User]
+	(
+		[FullName],
+		[UserName],
+		[Password],
+		[Salt],
+		[IsActived],
+		[IsDeleted],
+		[Gender],
+		[Type],
+		[IsSuperAdmin],
+		[Email],
+		[Phone],
+		[UnitId],
+		[CountLock],
+		[LockEndOut],
+		[Avatar],
+		[Address],
+		[PositionId]
+	)
+	VALUES
+	(
+		@FullName,
+		@UserName,
+		@Password,
+		@Salt,
+		@IsActived,
+		@IsDeleted,
+		@Gender,
+		@Type,
+		@IsSuperAdmin,
+		@Email,
+		@Phone,
+		@UnitId,
+		@CountLock,
+		@LockEndOut,
+		@Avatar,
+		@Address,
+		@PositionId
+	)
+END
+GO
+/* End SY_UserGetByID */
+
+/* Start SY_UserUpdate */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[SYUserUpdate]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [SY_UserUpdate];
+GO
+CREATE PROCEDURE [dbo].[SY_UserUpdate]
+	@Id bigint = null,
+	@FullName nvarchar(256) = null,
+	@UserName nvarchar(100) = null,
+	@Password nvarchar(500) = null,
+	@Salt nvarchar(500) = null,
+	@IsActived bit = null,
+	@IsDeleted bit = null,
+	@Gender bit = null,
+	@Type tinyint = null,
+	@IsSuperAdmin bit = null,
+	@Email nvarchar(256) = null,
+	@Phone varchar(11) = null,
+	@UnitId int = null,
+	@CountLock tinyint = null,
+	@LockEndOut datetime = null,
+	@Avatar nvarchar(255) = null,
+	@Address nvarchar(500) = null,
+	@PositionId int = null
+AS
+BEGIN
+	UPDATE [SY_User] SET
+		[FullName] = @FullName,
+		[UserName] = @UserName,
+		[Password] = @Password,
+		[Salt] = @Salt,
+		[IsActived] = @IsActived,
+		[IsDeleted] = @IsDeleted,
+		[Gender] = @Gender,
+		[Type] = @Type,
+		[IsSuperAdmin] = @IsSuperAdmin,
+		[Email] = @Email,
+		[Phone] = @Phone,
+		[UnitId] = @UnitId,
+		[CountLock] = @CountLock,
+		[LockEndOut] = @LockEndOut,
+		[Avatar] = @Avatar,
+		[Address] = @Address,
+		[PositionId] = @PositionId
+	WHERE [Id] = @Id
+END
+GO
+/* End SY_UserUpdate */
+
+/* Start SY_UserDelete */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[SYUserDelete]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [SY_UserDelete];
+GO
+CREATE PROCEDURE [dbo].[SY_UserDelete]
+	@Id bigint = null
+AS
+BEGIN
+	DELETE [SY_User]
+	WHERE [Id] = @Id
+END
+GO
+/* End SY_UserDelete */
+
+/* Start SY_UserDeleteAll */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[SYUserDeleteAll]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [SY_UserDeleteAll];
+GO
+CREATE PROCEDURE [dbo].[SY_UserDeleteAll]
+AS
+BEGIN
+	DELETE [SY_User]
+END
+GO
+/* End SY_UserDeleteAll */
