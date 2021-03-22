@@ -56,7 +56,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYRoleGetAllOnPage]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_RoleGetAllOnPage]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_RoleGetAllOnPage];
 GO
@@ -87,7 +87,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYRoleInsert]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_RoleInsert]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_RoleInsert];
 GO
@@ -127,7 +127,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYRoleUpdate]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_RoleUpdate]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_RoleUpdate];
 GO
@@ -158,7 +158,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYRoleDelete]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_RoleDelete]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_RoleDelete];
 GO
@@ -177,7 +177,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYRoleDeleteAll]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_RoleDeleteAll]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_RoleDeleteAll];
 GO

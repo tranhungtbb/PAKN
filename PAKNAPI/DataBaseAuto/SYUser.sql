@@ -78,7 +78,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYUserGetAllOnPage]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_UserGetAllOnPage]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_UserGetAllOnPage];
 GO
@@ -120,7 +120,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYUserInsert]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_UserInsert]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_UserInsert];
 GO
@@ -193,7 +193,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYUserUpdate]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_UserUpdate]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_UserUpdate];
 GO
@@ -246,7 +246,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYUserDelete]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_UserDelete]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_UserDelete];
 GO
@@ -265,7 +265,7 @@ IF EXISTS
 (
 	SELECT *
 	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SYUserDeleteAll]') AND type IN ( N'P', N'PC' )
+	WHERE object_id = OBJECT_ID(N'[SY_UserDeleteAll]') AND type IN ( N'P', N'PC' )
 )
 DROP PROCEDURE [SY_UserDeleteAll];
 GO

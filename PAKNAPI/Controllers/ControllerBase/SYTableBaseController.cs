@@ -1176,7 +1176,7 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize]
 		[Route("SYPermissionUserGetByID")]
-		public async Task<ActionResult<object>> SYPermissionUserGetByID(int? UserId)
+		public async Task<ActionResult<object>> SYPermissionUserGetByID(long? UserId)
 		{
 			try
 			{

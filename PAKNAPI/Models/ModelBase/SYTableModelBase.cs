@@ -13,15 +13,15 @@ namespace PAKNAPI.ModelBase
 {
 	public class SYGroupUserOnPage
 	{
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-		public int? UnitId { get; set; }
-		public int? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
-		public string Description { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
+		public int Id;
+		public string Name;
+		public string Code;
+		public int? UnitId;
+		public int? CreatedBy;
+		public DateTime? CreatedDate;
+		public string Description;
+		public bool IsActived;
+		public bool IsDeleted;
 		public int? RowNumber; // int, null
 	}
 
@@ -38,15 +38,15 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-		public int? UnitId { get; set; }
-		public int? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
-		public string Description { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
+		public int Id;
+		public string Name;
+		public string Code;
+		public int? UnitId;
+		public int? CreatedBy;
+		public DateTime? CreatedDate;
+		public string Description;
+		public bool IsActived;
+		public bool IsDeleted;
 
 		public async Task<SYGroupUser> SYGroupUserGetByID(int? Id)
 		{
@@ -121,11 +121,11 @@ namespace PAKNAPI.ModelBase
 
 	public class SYPermissionOnPage
 	{
-		public short Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-		public short FunctionId { get; set; }
-		public short? ParentId { get; set; }
+		public short Id;
+		public string Name;
+		public string Code;
+		public short FunctionId;
+		public short? ParentId;
 		public int? RowNumber; // int, null
 	}
 
@@ -142,11 +142,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public short Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-		public short FunctionId { get; set; }
-		public short? ParentId { get; set; }
+		public short Id;
+		public string Name;
+		public string Code;
+		public short FunctionId;
+		public short? ParentId;
 
 		public async Task<SYPermission> SYPermissionGetByID(short? Id)
 		{
@@ -213,9 +213,9 @@ namespace PAKNAPI.ModelBase
 
 	public class SYPermissionCategoryOnPage
 	{
-		public short Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
+		public short Id;
+		public string Name;
+		public string Code;
 		public int? RowNumber; // int, null
 	}
 
@@ -232,9 +232,9 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public short Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
+		public short Id;
+		public string Name;
+		public string Code;
 
 		public async Task<SYPermissionCategory> SYPermissionCategoryGetByID(short? Id)
 		{
@@ -297,10 +297,10 @@ namespace PAKNAPI.ModelBase
 
 	public class SYPermissionFunctionOnPage
 	{
-		public short Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-		public short CategoryId { get; set; }
+		public short Id;
+		public string Name;
+		public string Code;
+		public short CategoryId;
 		public int? RowNumber; // int, null
 	}
 
@@ -317,10 +317,10 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public short Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-		public short CategoryId { get; set; }
+		public short Id;
+		public string Name;
+		public string Code;
+		public short CategoryId;
 
 		public async Task<SYPermissionFunction> SYPermissionFunctionGetByID(short? Id)
 		{
@@ -385,8 +385,8 @@ namespace PAKNAPI.ModelBase
 
 	public class SYPermissionGroupUserOnPage
 	{
-		public short PermissionId { get; set; }
-		public short GroupUserId { get; set; }
+		public short PermissionId;
+		public short GroupUserId;
 		public int? RowNumber; // int, null
 	}
 
@@ -403,8 +403,8 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public short PermissionId { get; set; }
-		public short GroupUserId { get; set; }
+		public short PermissionId;
+		public short GroupUserId;
 
 		public async Task<SYPermissionGroupUser> SYPermissionGroupUserGetByID(short? PermissionId)
 		{
@@ -465,10 +465,10 @@ namespace PAKNAPI.ModelBase
 
 	public class SYPermissionUserOnPage
 	{
-		public int UserId { get; set; }
-		public short PermissionId { get; set; }
-		public short FunctionId { get; set; }
-		public short CategoryId { get; set; }
+		public long UserId;
+		public short PermissionId;
+		public short FunctionId;
+		public short CategoryId;
 		public int? RowNumber; // int, null
 	}
 
@@ -485,12 +485,12 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int UserId { get; set; }
-		public short PermissionId { get; set; }
-		public short FunctionId { get; set; }
-		public short CategoryId { get; set; }
+		public long UserId;
+		public short PermissionId;
+		public short FunctionId;
+		public short CategoryId;
 
-		public async Task<SYPermissionUser> SYPermissionUserGetByID(int? UserId)
+		public async Task<SYPermissionUser> SYPermissionUserGetByID(long? UserId)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("UserId", UserId);
@@ -553,13 +553,13 @@ namespace PAKNAPI.ModelBase
 
 	public class SYRoleOnPage
 	{
-		public int Id { get; set; }
-		public string OrderNumber { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-		public string Description { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
+		public int Id;
+		public string OrderNumber;
+		public string Name;
+		public string Code;
+		public string Description;
+		public bool IsActived;
+		public bool IsDeleted;
 		public int? RowNumber; // int, null
 	}
 
@@ -576,13 +576,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id { get; set; }
-		public string OrderNumber { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-		public string Description { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
+		public int Id;
+		public string OrderNumber;
+		public string Name;
+		public string Code;
+		public string Description;
+		public bool IsActived;
+		public bool IsDeleted;
 
 		public async Task<SYRole> SYRoleGetByID(int? Id)
 		{
@@ -653,16 +653,16 @@ namespace PAKNAPI.ModelBase
 
 	public class SYSystemLogOnPage
 	{
-		public long Id { get; set; }
-		public long UserId { get; set; }
-		public string FullName { get; set; }
-		public string IPAddress { get; set; }
-		public string MACAddress { get; set; }
-		public string Description { get; set; }
-		public DateTime? CreatedDate { get; set; }
-		public byte Status { get; set; }
-		public string Action { get; set; }
-		public string Exception { get; set; }
+		public long Id;
+		public long UserId;
+		public string FullName;
+		public string IPAddress;
+		public string MACAddress;
+		public string Description;
+		public DateTime? CreatedDate;
+		public byte Status;
+		public string Action;
+		public string Exception;
 		public int? RowNumber; // int, null
 	}
 
@@ -679,16 +679,16 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public long Id { get; set; }
-		public long UserId { get; set; }
-		public string FullName { get; set; }
-		public string IPAddress { get; set; }
-		public string MACAddress { get; set; }
-		public string Description { get; set; }
-		public DateTime? CreatedDate { get; set; }
-		public byte Status { get; set; }
-		public string Action { get; set; }
-		public string Exception { get; set; }
+		public long Id;
+		public long UserId;
+		public string FullName;
+		public string IPAddress;
+		public string MACAddress;
+		public string Description;
+		public DateTime? CreatedDate;
+		public byte Status;
+		public string Action;
+		public string Exception;
 
 		public async Task<SYSystemLog> SYSystemLogGetByID(long? Id)
 		{
@@ -765,16 +765,16 @@ namespace PAKNAPI.ModelBase
 
 	public class SYUnitOnPage
 	{
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public byte UnitLevel { get; set; }
-		public int? ParentId { get; set; }
-		public string Description { get; set; }
-		public string Email { get; set; }
-		public string Phone { get; set; }
-		public string Address { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
+		public int Id;
+		public string Name;
+		public byte UnitLevel;
+		public int? ParentId;
+		public string Description;
+		public string Email;
+		public string Phone;
+		public string Address;
+		public bool IsActived;
+		public bool IsDeleted;
 		public int? RowNumber; // int, null
 	}
 
@@ -791,16 +791,16 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public byte UnitLevel { get; set; }
-		public int? ParentId { get; set; }
-		public string Description { get; set; }
-		public string Email { get; set; }
-		public string Phone { get; set; }
-		public string Address { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
+		public int Id;
+		public string Name;
+		public byte UnitLevel;
+		public int? ParentId;
+		public string Description;
+		public string Email;
+		public string Phone;
+		public string Address;
+		public bool IsActived;
+		public bool IsDeleted;
 
 		public async Task<SYUnit> SYUnitGetByID(int? Id)
 		{
@@ -877,24 +877,24 @@ namespace PAKNAPI.ModelBase
 
 	public class SYUserOnPage
 	{
-		public long Id { get; set; }
-		public string FullName { get; set; }
-		public string UserName { get; set; }
-		public string Password { get; set; }
-		public string Salt { get; set; }
-		public int? PositionId { get; set; }
-		public string Email { get; set; }
-		public string Phone { get; set; }
-		public int? UnitId { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
-		public bool Gender { get; set; }
-		public string Avatar { get; set; }
-		public string Address { get; set; }
-		public byte Type { get; set; }
-		public bool IsSuperAdmin { get; set; }
-		public byte? CountLock { get; set; }
-		public DateTime? LockEndOut { get; set; }
+		public long Id;
+		public string FullName;
+		public string UserName;
+		public string Password;
+		public string Salt;
+		public int? PositionId;
+		public string Email;
+		public string Phone;
+		public int? UnitId;
+		public bool IsActived;
+		public bool IsDeleted;
+		public bool Gender;
+		public string Avatar;
+		public string Address;
+		public byte Type;
+		public bool IsSuperAdmin;
+		public byte? CountLock;
+		public DateTime? LockEndOut;
 		public int? RowNumber; // int, null
 	}
 
@@ -911,24 +911,24 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public long Id { get; set; }
-		public string FullName { get; set; }
-		public string UserName { get; set; }
-		public string Password { get; set; }
-		public string Salt { get; set; }
-		public int? PositionId { get; set; }
-		public string Email { get; set; }
-		public string Phone { get; set; }
-		public int? UnitId { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
-		public bool Gender { get; set; }
-		public string Avatar { get; set; }
-		public string Address { get; set; }
-		public byte Type { get; set; }
-		public bool IsSuperAdmin { get; set; }
-		public byte? CountLock { get; set; }
-		public DateTime? LockEndOut { get; set; }
+		public long Id;
+		public string FullName;
+		public string UserName;
+		public string Password;
+		public string Salt;
+		public int? PositionId;
+		public string Email;
+		public string Phone;
+		public int? UnitId;
+		public bool IsActived;
+		public bool IsDeleted;
+		public bool Gender;
+		public string Avatar;
+		public string Address;
+		public byte Type;
+		public bool IsSuperAdmin;
+		public byte? CountLock;
+		public DateTime? LockEndOut;
 
 		public async Task<SYUser> SYUserGetByID(long? Id)
 		{
@@ -1021,9 +1021,9 @@ namespace PAKNAPI.ModelBase
 
 	public class SYUserGroupUserOnPage
 	{
-		public int Id { get; set; }
-		public int UserId { get; set; }
-		public short GroupUserId { get; set; }
+		public int Id;
+		public int UserId;
+		public short GroupUserId;
 		public int? RowNumber; // int, null
 	}
 
@@ -1040,9 +1040,9 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id { get; set; }
-		public int UserId { get; set; }
-		public short GroupUserId { get; set; }
+		public int Id;
+		public int UserId;
+		public short GroupUserId;
 
 		public async Task<SYUserGroupUser> SYUserGroupUserGetByID(int? Id)
 		{
@@ -1105,11 +1105,11 @@ namespace PAKNAPI.ModelBase
 
 	public class SYUserUnitOnPage
 	{
-		public int Id { get; set; }
-		public int UserId { get; set; }
-		public short UnitId { get; set; }
-		public short? PositionId { get; set; }
-		public bool? IsMain { get; set; }
+		public int Id;
+		public int UserId;
+		public short UnitId;
+		public short? PositionId;
+		public bool? IsMain;
 		public int? RowNumber; // int, null
 	}
 
@@ -1126,11 +1126,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id { get; set; }
-		public int UserId { get; set; }
-		public short UnitId { get; set; }
-		public short? PositionId { get; set; }
-		public bool? IsMain { get; set; }
+		public int Id;
+		public int UserId;
+		public short UnitId;
+		public short? PositionId;
+		public bool? IsMain;
 
 		public async Task<SYUserUnit> SYUserUnitGetByID(int? Id)
 		{

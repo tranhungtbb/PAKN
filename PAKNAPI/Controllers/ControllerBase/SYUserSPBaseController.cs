@@ -29,7 +29,7 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize]
 		[Route("SYUSRGetPermissionByUserIdBase")]
-		public async Task<ActionResult<object>> SYUSRGetPermissionByUserIdBase(int? UserId)
+		public async Task<ActionResult<object>> SYUSRGetPermissionByUserIdBase(long? UserId)
 		{
 			try
 			{
