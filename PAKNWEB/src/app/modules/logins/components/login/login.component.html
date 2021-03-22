@@ -34,13 +34,19 @@
                   </div>
                   <div class="form-group captcha-form bg-white rounded-xl pt-5 border border-brown position-relative">
                     <div class="bg-white captcha d-flex justify-content-between align-items-center rounded-xl shadow position-absolute">
-                      <img class="img-fluid rounded-xl" style="max-height: 70px; max-width: 70%;"
-                        src="assets/dist/images/captcha.jpg" alt="">
-                      <button type="button" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat"
+                      <img class="img-fluid rounded-xl" style="max-height: 70px; max-width: 70%; padding-left: 50px;" 
+                        id="img-captcha" [src]="captchaImage"/>
+                      <button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat"
                           style="font-size: 34px"></i></button>
                     </div>
-                    <input type="text" style="font-size: 20px" placeholder="Nhập mã xác thực..."
+                    <input type="text" formControlName="captcha" [(ngModel)]="captchaCode" maxlength="5" style="font-size: 20px" placeholder="Nhập mã xác thực..."
                       class="form-control bg-transparent px-4 border-0" value="">
+                    <div *ngIf="captcha.invalid && (captcha.dirty || captcha.touched)" 
+                          class="has-error m-b-12">
+                      <div *ngIf="captcha.errors.required">
+                        <span class="help-block">Vui lòng nhập mã captcha</span>
+                      </div>
+                    </div>
                   </div>
                   <div class="form-row d-flex justify-content-between align-items-center mt-4 mb-2">
                     <div class="form-group">
@@ -50,7 +56,7 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <a href="page-forgot-password.html">Quên mật khẩu?</a>
+                      <a (click)="forgetPassWord()">Quên mật khẩu?</a>
                     </div>
                   </div>
                   <div class="text-center">

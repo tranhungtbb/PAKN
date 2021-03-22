@@ -15,6 +15,10 @@ export class Api {
   public static CHANGEPASSWORD = 'Contact/ChangePassword';
   public static RESTORE_ACCOUNT = 'Contact/UnlockAccount';
 
+  // Captcha Controller
+  public static ValidateCaptcha = "Captcha/ValidatorCaptcha";
+  public static getImageCaptcha = "Captcha/GetCaptchaImage";
+
   //Department
   public static GET_DEPARTMENT_TREE = 'Department/Index';
   public static CHECK_EXISTED_CODE = 'Department/CheckExistedCode';

@@ -119,12 +119,12 @@ namespace PAKNAPI.Controllers
 		public async Task<ActionResult<object>> LogOut(EditUserRequest request)
 		{
             try
-            {
-
-            }
+			{
+				return new ResultApi { Success = ResultCode.OK };
+			}
             catch (Exception ex)
 			{
-				return new ResultApi { Message = "An error occurred", };
+				return new ResultApi { Success = ResultCode.ORROR, Message = "An error occurred", };
 			}
 		}
 	}

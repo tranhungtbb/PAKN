@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UserObject } from '../../models/UserObject';
 import { UserService } from '../../services/user.service';
 import { DataService } from '../../services/sharedata.service';
+import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS';
 
 declare var $: any;
 @HostListener("window:scroll", ["$event"])
@@ -257,19 +258,16 @@ export class AppheaderComponent implements OnInit {
   }
 
   signOut(): void {
-    this.userService.getCreateUserDatas({ EditUserId: this.model.ma }).subscribe(success => {
-      this.model = success.user;
       this.userService.logOut({
-        User: this.model
+        UserId: this.model.ma
       }).subscribe(success => {
-        if (success.status == 1) {
+        if (success.success == RESPONSE_STATUS.success) {
           this.sharedataService.setIsLogin(false);
           this.storageService.setReturnUrl('');
           this.storageService.clearStoreage();
           this._router.navigate(['/login']);
         }
       });
-    })
   }
 
   get newpassword() { return this.userForm.get('newpassword'); }
