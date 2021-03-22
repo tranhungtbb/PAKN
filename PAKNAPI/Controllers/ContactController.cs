@@ -62,7 +62,9 @@ namespace PAKNAPI.Controllers
 							{ "AccessToken", tokenString},
 							{ "Permissions", rsSYUSRGetPermissionByUserId},
 						};
-						return new LoginResponse { 
+						new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+						return new LoginResponse
+						{
 							Success = ResultCode.OK,
 							UserName = user[0].UserName,
 							FullName = user[0].FullName,
