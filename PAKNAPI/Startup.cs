@@ -1,4 +1,4 @@
-using PAKNAPI.Common;
+using SampleAPI.Common;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -11,9 +11,9 @@ using Microsoft.IdentityModel.Tokens;
 //using Microsoft.OpenApi.Models;
 using System.Linq;
 using System.Text;
-using PAKNAPI.Authorize;
+using SampleAPI.Authorize;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using PAKNAPI.Middle;
+using SampleAPI.Middle;
 
 namespace BookLibAPI
 {

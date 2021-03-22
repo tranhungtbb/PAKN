@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using PAKNAPI.ModelBase;
+using SampleAPI.ModelBase;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace PAKNAPI.Common
+namespace SampleAPI.Common
 {
 	public class BaseRequest
 	{
