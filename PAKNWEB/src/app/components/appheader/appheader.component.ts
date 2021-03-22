@@ -73,7 +73,6 @@ export class AppheaderComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
-    this.storageService.setYear(this.year.getFullYear());
 
     this.userName = this.storageService.getFullName();
     this.userForm = new FormGroup({
@@ -160,7 +159,6 @@ export class AppheaderComponent implements OnInit {
     }
     var data = this.userForm.value;
     this.user = data;
-    this.user.LoginId = this.storageService.getUserId();
     this.authenService.chagepassword(this.user).subscribe((data) => {
       if (data.status === 1) {
         $("#myModal").modal("hide");
@@ -176,7 +174,6 @@ export class AppheaderComponent implements OnInit {
   preUpdate() {
     this.GetListChucVuAndListPhongBan();
     let request = {
-      UserId: this.storageService.getAccountId()
     }
     this.userService.getUserById(request).subscribe(response => {
       if (response.status == 1) {
@@ -260,7 +257,6 @@ export class AppheaderComponent implements OnInit {
   }
 
   signOut(): void {
-    this.model.ma = this.storageService.getAccountId();
     this.userService.getCreateUserDatas({ EditUserId: this.model.ma }).subscribe(success => {
       this.model = success.user;
       this.userService.logOut({
@@ -375,10 +371,6 @@ export class AppheaderComponent implements OnInit {
 
     if (test == 'Invalid Date') {
       event = new Date();
-    }
-    if (event) {
-      this.storageService.setYear(event.getFullYear());
-      //this.inspectionService.yearEvent.emit(event.getFullYear());
     }
   }
 

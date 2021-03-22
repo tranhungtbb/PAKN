@@ -7,6 +7,7 @@ import { UserInfoStorageService } from '../../../../commons/user-info-storage.se
 import { LoginUserObject } from '../../../../models/loginUserObject'
 import { ToastrService } from 'ngx-toastr'
 import { DataService } from '../../../../services/sharedata.service'
+import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 
 declare var $: any
 
@@ -60,7 +61,7 @@ export class LoginComponent implements OnInit {
       if (ReturnlUrl != undefined && ReturnlUrl != '' && ReturnlUrl != null && ReturnlUrl.includes("business")) {
         this._router.navigateByUrl(ReturnlUrl);
       } else {
-        this._router.navigate(['/business']);
+        this._router.navigate(['/quan-tri']);
       }
       return;
     }
@@ -86,15 +87,10 @@ export class LoginComponent implements OnInit {
       return;
     } else {
       this.authenService.login(this.user).subscribe((data) => {
-        if (data.status === 1) {
+        if (data.success === RESPONSE_STATUS.success) {
           this.shareData.setIsLogin(true);
-          this.storeageService.setUserName(data.userName);
           this.storeageService.setAccessToken(data.accessToken);
           this.storeageService.setUserId(data.userId);
-          this.storeageService.setIsSuperAdmin(data.isSuperAdmin);
-          this.storeageService.setDeparmentId(data.deparmentId);
-          this.storeageService.setUnitId(data.unitId);
-          this.storeageService.setAccountId(data.accountId);
           this.storeageService.setPermissionCategories(data.permissionCategories);
           this.storeageService.setFunctions(data.functions);
           this.storeageService.setPermissions(data.permissions);
@@ -103,8 +99,6 @@ export class LoginComponent implements OnInit {
           this.storeageService.setIsHaveToken(data.isHaveToken);
           this.storeageService.setRole(data.role);
           this.storeageService.setFullName(data.fullName);
-          this.storeageService.setEmail(data.email);
-          localStorage.setItem('anhDaiDien', data.anhDaiDien);
           if (this.isSaveLogin) {
             this.storeageService.setKeyRemember(btoa(this.user.Password));
           } else {
@@ -116,9 +110,9 @@ export class LoginComponent implements OnInit {
                 this.storeageService.setIpAddress(data.ip);
               }
             })
-          this._router.navigate(['/business']);
+          this._router.navigate(['/quan-tri']);
 
-        } else if (data.status === 2) {
+        } else if (data.success === RESPONSE_STATUS.orror) {
           this.toastr.error(data.message, "Đăng nhập thất bại");
         }
       }, error => {

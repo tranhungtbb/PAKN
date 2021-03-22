@@ -72,7 +72,7 @@ export class DepartmentsListComponent implements OnInit {
 
   ngOnInit() {
     this.getDepartmentTree();
-    this.isAdmin = this.storeageService.getIsSuperAdmin();
+    this.isAdmin = true;
 
     $("#isAdmin").prop('checked', this.isAdmin);
   }
@@ -358,7 +358,7 @@ export class DepartmentsListComponent implements OnInit {
     this.permissions = val.slice(1);
 
     let hasPermission = false;
-    let isAdmin = this.storeageService.getIsSuperAdmin();
+    let isAdmin = true;
 
     let isLogin = this.storeageService.getAccessToken();
     if (isLogin == '' || isLogin == null || isLogin == undefined) {

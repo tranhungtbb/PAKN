@@ -50,10 +50,9 @@ export class ViewUserComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
-    this.isSuperAdmin = this.localStorage.getIsSuperAdmin();
+    this.isSuperAdmin = true
     this.isSuperAdmin ? this.createUserForm.get('unit').enable() : this.createUserForm.get('unit').disable();
-
-    this.isSuperAdmin = this.localStorage.getIsSuperAdmin();
+ 
     this.isSuperAdmin ? this.createUserForm.get('unit').enable() : this.createUserForm.get('unit').disable();
 
     this.route.params.subscribe(

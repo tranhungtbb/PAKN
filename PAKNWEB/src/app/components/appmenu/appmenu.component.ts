@@ -13,7 +13,6 @@ export class AppmenuComponent implements OnInit {
   isSuperAdmin: boolean = false;
   constructor(private userStorage: UserInfoStorageService, private _router: Router) { }
 
-  ngOnInit() {
-    this.isSuperAdmin = this.userStorage.getIsSuperAdmin();
+  ngOnInit() { 
   }
 }

@@ -20,7 +20,7 @@ export class RoleGuardService implements CanActivate  {
       this.userService.setReturnUrl(returnUrl);
     } else {
       let currentUserPermissions = this.userService.getPermissions().split(',');
-      let isAdmin = this.userService.getIsSuperAdmin();
+      let isAdmin = 0;
       if (isAdmin || currentUserPermissions.includes(next.data.role)) {
         return true;
       } else {

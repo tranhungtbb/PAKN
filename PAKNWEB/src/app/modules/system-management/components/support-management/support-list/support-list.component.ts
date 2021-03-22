@@ -22,7 +22,7 @@ export class SupportListComponent implements OnInit {
   urlUser: string = '';
   ngOnInit() {
     var request = {
-      UserId: this.localStorage.getAccountId()
+      UserId: 1
     }
     this._systemConfigService.getFileSupport(request).
       subscribe(data => {

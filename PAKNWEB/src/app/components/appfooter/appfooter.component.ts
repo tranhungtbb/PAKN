@@ -15,8 +15,6 @@ export class AppfooterComponent implements OnInit {
   constructor(private localStorage: UserInfoStorageService,private service: DepartmentService, private _router: Router) { }
 
   ngOnInit() {
-    this.deptId = this.localStorage.getUnitId();
-    //this.getDepartmentTree();
     this.ten = this.localStorage.getUnitName();
   }
 

@@ -68,7 +68,7 @@ export class UsersListComponent implements OnInit {
 
   getDepartment() {
     this.depService.getDepartmentByUnit({
-      ParentUnitId: +this.userStorageService.getUnitId()
+      ParentUnitId: 1
     }).subscribe(data => {
       if (data.status == 1) {
         this.listDepartments = data.departments;

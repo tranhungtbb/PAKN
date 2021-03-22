@@ -59,10 +59,18 @@ namespace PAKNAPI.Controllers
 							{ "FullName", user[0].FullName },
 							{ "Email", user[0].Email },
 							{ "Phone", user[0].Phone },
-							{ "Token", tokenString},
-							{ "Permission", rsSYUSRGetPermissionByUserId},
+							{ "AccessToken", tokenString},
+							{ "Permissions", rsSYUSRGetPermissionByUserId},
 						};
-						return JsonConvert.SerializeObject(json);
+						return new LoginResponse { 
+							Success = ResultCode.OK,
+							UserName = user[0].UserName,
+							FullName = user[0].FullName,
+							Email = user[0].Email,
+							Phone = user[0].UserName,
+							AccessToken = tokenString,
+							Permissions = rsSYUSRGetPermissionByUserId,
+						};
 					}
 					else
 					{
@@ -102,11 +110,20 @@ namespace PAKNAPI.Controllers
 
 			return new JwtSecurityTokenHandler().WriteToken(token);
 		}
-	}
 
-	public class LoginIN
-	{
-		public string Password { get; set; }
-		public string UserName { get; set; }
+		[HttpPost]
+		[Route("LogOut")]
+		[Authorize]
+		public async Task<ActionResult<object>> LogOut(EditUserRequest request)
+		{
+            try
+            {
+
+            }
+            catch (Exception ex)
+			{
+				return new ResultApi { Message = "An error occurred", };
+			}
+		}
 	}
 }

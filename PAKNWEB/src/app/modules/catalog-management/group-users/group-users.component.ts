@@ -31,9 +31,7 @@ export class GroupUsersComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
-    this.departmentId = this.localStorage.getUnitId();
   }
-
   ngAfterViewInit() {
     this._shareData.seteventnotificationDropdown();
   }

@@ -62,10 +62,7 @@ export class SystemConfigListComponent implements OnInit, OnChanges {
     private localStorage: UserInfoStorageService) {
   }
 
-  ngOnInit() {
-    this.userLoginId = this.localStorage.getUserId();
-    this.departmentId = this.localStorage.getUnitId();
-
+  ngOnInit() { 
     this.buildForm();
     this.buildViewForm();
     //this.GetbyDepartmentId();

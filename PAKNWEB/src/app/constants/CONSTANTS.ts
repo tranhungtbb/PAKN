@@ -4,6 +4,11 @@ export class CONSTANTS {
   public static PAGE_INDEX = 1;
 }
 
+export class RESPONSE_STATUS{
+  public static success = 'OK';
+  public static orror = 'ORROR';
+}
+
 export const FILETYPE = [
   { text: "application/msword", value: 1 },
   { text: "text/plain", value: 1 },

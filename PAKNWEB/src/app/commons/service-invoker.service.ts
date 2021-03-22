@@ -29,11 +29,6 @@ export class ServiceInvokerService {
   constructor(private http: HttpClient,
     public snackBar: MatSnackBar,
     private storeageService: UserInfoStorageService) {
-    this.userId = this.storeageService.getUserId();
-    this.isSuperAdmin = this.storeageService.getIsSuperAdmin();
-    this.deparmentId = this.storeageService.getDeparmentId();
-    this.unitId = this.storeageService.getUnitId();
-    this.accountId = this.storeageService.getAccountId();
   }
 
   /* Get array */
@@ -63,11 +58,6 @@ export class ServiceInvokerService {
       element = {};
     }
 
-    element.UserId = this.storeageService.getUserId();
-    element.IsSuperAdmin = this.storeageService.getIsSuperAdmin();
-    element.UnitId = this.storeageService.getUnitId();
-    element.AccountId = this.storeageService.getAccountId();
-    element.DeparmentId = this.storeageService.getDeparmentId();
     element.IpAddress = this.storeageService.getIpAddress();
     element.Role = this.storeageService.getRole();
     const httpPackage = {

@@ -31,9 +31,6 @@ export class UserService {
 
   createUser(data: any): Observable<any> {
     const uploadData = new FormData();
-    data.User.UserId = this.localStronageService.getUserId();
-    data.User.AccountId = this.localStronageService.getAccountId();
-    data.User.IpAddress = this.localStronageService.getIpAddress();
 
     if (data.listFile != null) {
       for (var i = 0; i < data.listFile.length; i++) {
@@ -61,10 +58,6 @@ export class UserService {
   editUser(data: any): Observable<any> {
 
     const uploadData = new FormData();
-    data.User.UserId = this.localStronageService.getUserId();
-    data.User.AccountId = this.localStronageService.getAccountId();
-    data.User.IpAddress = this.localStronageService.getIpAddress();
-
     if (data.listFile != null) {
       for (var i = 0; i < data.listFile.length; i++) {
         uploadData.append('DinhKemUser' + i, data.listFile[i], data.listFile[i].name);
@@ -84,12 +77,6 @@ export class UserService {
   }
 
   updateUserLogin(data: any, file: any): Observable<any> {
-    data.User.UserId = this.localStronageService.getUserId();
-    data.User.IsSuperAdmin = this.localStronageService.getIsSuperAdmin();
-    data.User.UnitId = this.localStronageService.getUnitId();
-    data.User.DeparmentId = this.localStronageService.getDeparmentId();
-    data.User.AccountId = this.localStronageService.getAccountId();
-    data.User.IpAddress = this.localStronageService.getIpAddress();
     var formData = new FormData();
     formData.append('User', JSON.stringify(data.User));
     formData.append('Files', file);

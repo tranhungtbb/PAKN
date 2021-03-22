@@ -18,8 +18,8 @@ export class UploadFileService {
     public snackBar: MatSnackBar) { }
 
   uploadFiles(files: any, docId: number, historyId: number, module: string) {
-    var unitId = this.localStorage.getUnitId();
-    var accountId = this.localStorage.getAccountId();
+    var unitId = 0;
+    var accountId = 0;
     if (files) {
       if (files.length > 0) {
         var request = {
@@ -53,8 +53,8 @@ export class UploadFileService {
   }
 
   uploadFiles2(files: any, docId: number, historyId: number, module: string): Observable<any> {
-    var unitId = this.localStorage.getUnitId();
-    var accountId = this.localStorage.getAccountId();
+    var unitId = 0;
+    var accountId = 0;
     if (files) {
       if (files.length > 0) {
         var request = {
