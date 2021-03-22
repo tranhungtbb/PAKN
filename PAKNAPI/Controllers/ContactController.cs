@@ -62,6 +62,7 @@ namespace PAKNAPI.Controllers
 							{ "Token", tokenString},
 							{ "Permission", rsSYUSRGetPermissionByUserId},
 						};
+						new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 						return JsonConvert.SerializeObject(json);
 					}
 					else
