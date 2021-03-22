@@ -87,10 +87,7 @@ export class LoginComponent implements OnInit {
 
       return;
     } else {
-      var model = {
-        Userlg: this.user
-      }
-      this.authenService.login(model).subscribe((data) => {
+      this.authenService.login(this.user).subscribe((data) => {
         if (data.status === 1) {
           this.shareData.setIsLogin(true);
           this.storeageService.setUserName(data.userName);

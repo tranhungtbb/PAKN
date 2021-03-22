@@ -9,11 +9,11 @@ export class Api {
   public static DashBoardGetYear = "DashBoard/DashBoardGetYear";
   public static DashBoardCount = "DashBoard/DashBoardCount";
   //Account
-  public static LOGIN = 'Account/Login';
-  public static REGISTER = 'Account/Register';
-  public static FORGETPASSWORD = 'Account/Forgetpassword';
-  public static CHANGEPASSWORD = 'Account/ChangePassword';
-  public static RESTORE_ACCOUNT = 'Account/UnlockAccount';
+  public static LOGIN = 'Contact/Login';
+  public static REGISTER = 'Contact/Register';
+  public static FORGETPASSWORD = 'Contact/Forgetpassword';
+  public static CHANGEPASSWORD = 'Contact/ChangePassword';
+  public static RESTORE_ACCOUNT = 'Contact/UnlockAccount';
 
   //Department
   public static GET_DEPARTMENT_TREE = 'Department/Index';

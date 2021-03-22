@@ -49,7 +49,9 @@ namespace PAKNAPI.Controllers
 					PasswordHasher hasher = new PasswordHasher();
 					if (hasher.AuthenticateUser(loginIN.Password, user[0].Password, user[0].Salt))
 					{
+
 						var tokenString = GenerateJSONWebToken(user[0]);
+						List<SYUSRGetPermissionByUserId> rsSYUSRGetPermissionByUserId = await new SYUSRGetPermissionByUserId(_appSetting).SYUSRGetPermissionByUserIdDAO(Int32.Parse(user[0].Id.ToString()));
 						IDictionary<string, object> json = new Dictionary<string, object>
 						{
 							{ "Id", user[0].Id },
@@ -58,6 +60,7 @@ namespace PAKNAPI.Controllers
 							{ "Email", user[0].Email },
 							{ "Phone", user[0].Phone },
 							{ "Token", tokenString},
+							{ "Permission", rsSYUSRGetPermissionByUserId},
 						};
 						return JsonConvert.SerializeObject(json);
 					}

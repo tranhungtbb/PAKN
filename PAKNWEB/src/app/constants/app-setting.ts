@@ -1,8 +1,8 @@
 export class AppSettings {
   public static HostingAddress = 'http://localhost';
 
-  public static API_ADDRESS = 'http://localhost/ktnn.api/api/';
-  public static API_DOWNLOADFILES = 'http://localhost/ktnn.api';
+  public static API_ADDRESS = 'http://localhost:51046/api/';
+  public static API_DOWNLOADFILES = 'http://localhost:51046';
   public static VIEW_FILE = 'http://14.177.236.88:6062/DocViewer?fileurl=';
 
   //public static API_ADDRESS = 'https://42.112.21.232:2001/api/'; 
