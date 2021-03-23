@@ -60,7 +60,7 @@ export class DepartmentService {
   }
 
   DeleteDepartment(id: number): Observable<any> {
-    var UserId = this.storeageService.getUserId();
+    var UserId = 1;
     var Request = {
       id: id,
       Account: UserId
@@ -130,11 +130,7 @@ export class DepartmentService {
   }
 
   getDropDown(id: number): Observable<any> {
-    var UnintId = this.storeageService.getUnitId();
-    var IsNguoiDaiDien = this.storeageService.getIsSuperAdmin();
-    if (IsNguoiDaiDien) {
-      UnintId = 0;
-    }
+    var UnintId = 1
     var Request = {
       id: id,
       UnintId: UnintId

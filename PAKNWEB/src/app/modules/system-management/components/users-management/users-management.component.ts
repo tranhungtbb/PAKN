@@ -20,8 +20,7 @@ export class UsersManagementComponent implements OnInit {
   constructor(private router: Router, private userStorageService: UserInfoStorageService, private localeService: BsLocaleService) { }
 
   ngOnInit() {
-    this.localeService.use('vi');
-    this.departmentId = this.userStorageService.getUnitId();
+    this.localeService.use('vi'); 
   }
 
   onMainDepartmentMenuClick(data: MenuPassingObject) {

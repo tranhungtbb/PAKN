@@ -56,7 +56,7 @@ export class CreateUserComponent implements OnInit {
     //this.isSuperAdmin ? this.createUserForm.get('unit').enable() : this.createUserForm.get('unit').disable();
     this.route.params.subscribe(
       params => {
-        this.model.unitId = +this.localStorage.getUnitId();
+        this.model.unitId = 1;
         this.userService.getCreateUserDatas({ DepartmentId: this.model.unitId }).subscribe(success => {
           this.listUnits = success.units;
           this.listPosistions = success.posistions;

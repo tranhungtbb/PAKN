@@ -29,15 +29,11 @@ export class ServiceInvokerService {
   constructor(private http: HttpClient,
     public snackBar: MatSnackBar,
     private storeageService: UserInfoStorageService) {
-    this.userId = this.storeageService.getUserId();
-    this.isSuperAdmin = this.storeageService.getIsSuperAdmin();
-    this.deparmentId = this.storeageService.getDeparmentId();
-    this.unitId = this.storeageService.getUnitId();
-    this.accountId = this.storeageService.getAccountId();
   }
 
   /* Get array */
   get(element: any, url): Observable<any> {
+    element.IpAddress = this.storeageService.getIpAddress();
     const httpPackage = {
       params: element
     };
@@ -63,11 +59,6 @@ export class ServiceInvokerService {
       element = {};
     }
 
-    element.UserId = this.storeageService.getUserId();
-    element.IsSuperAdmin = this.storeageService.getIsSuperAdmin();
-    element.UnitId = this.storeageService.getUnitId();
-    element.AccountId = this.storeageService.getAccountId();
-    element.DeparmentId = this.storeageService.getDeparmentId();
     element.IpAddress = this.storeageService.getIpAddress();
     element.Role = this.storeageService.getRole();
     const httpPackage = {
@@ -84,6 +75,7 @@ export class ServiceInvokerService {
     if (element == undefined || element == '') {
       element = {};
     }
+    element.IpAddress = this.storeageService.getIpAddress();
 
     const httpPackage = {
       params: element
@@ -108,12 +100,6 @@ export class ServiceInvokerService {
     if (element == undefined || element == '') {
       element = {};
     }
-    element.UserId = this.userId;
-    element.IsSuperAdmin = this.isSuperAdmin;
-    element.IsTongHop = this.isTongHop;
-    element.DeparmentId = this.deparmentId;
-    element.UnitId = this.unitId;
-    element.AccountId = this.accountId;
 
     const httpPackage = {
       params: element

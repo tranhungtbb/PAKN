@@ -522,8 +522,7 @@ export class RegionCatalogComponent implements OnInit {
     this.mode = val[0];
     this.permissions = val.slice(1);
 
-    let hasPermission = false;
-    let isAdmin = this.storeageService.getIsSuperAdmin();
+    let hasPermission = false,isAdmin = false;
 
     let isLogin = this.storeageService.getAccessToken();
     if (isLogin == '' || isLogin == null || isLogin == undefined) {

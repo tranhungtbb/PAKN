@@ -56,9 +56,7 @@ export class ViewGroupUserComponent implements OnInit {
       trangThai: ['', []],
       xoa: ['', []],
       //maDonVi: ['', [Validators.required]],
-    });
-
-    this.isSuperAdmin = this.localStorage.getIsSuperAdmin();
+    }); 
     //this.isSuperAdmin ? this.updateGroupUserForm.get('maDonVi').enable() : this.updateGroupUserForm.get('maDonVi').disable();
 
     this.route.params.subscribe(

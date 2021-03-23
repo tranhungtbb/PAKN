@@ -48,7 +48,7 @@ export class EditUserComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
-    this.unitId = this.localStorage.getUnitId();
+    this.unitId = 1;
     //this.isSuperAdmin = this.localStorage.getIsSuperAdmin();
     //this.isSuperAdmin ? this.createUserForm.get('unit').enable() : this.createUserForm.get('unit').disable();
     this.route.params.subscribe(

@@ -1,0 +1,42 @@
+{
+	"vetur.format.defaultFormatter.html": "js-beautify-html",
+	"vetur.format.defaultFormatterOptions": {
+		"prettier": {
+			// Prettier option here
+			"semi": false
+		}
+	},
+	"git.ignoreLimitWarning": true,
+	"editor.formatOnSave": true,
+	"prettier.jsxSingleQuote": true,
+	"typescript.preferences.quoteStyle": "single",
+	"vetur.format.options.useTabs": true,
+	"beautify.config": "",
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"html.format.indentInnerHtml": true,
+	"editor.tabSize": 2,
+	// "workbench.iconTheme": "vscode-icons",
+	// "tslint.autoFixOnSave": true,
+	// "javascript.validate.enable": false,
+	// "javascript.format.enable": false,
+	"editor.renderWhitespace": "boundary",
+	// "[jsonc]": {
+	//     "editor.defaultFormatter": "HookyQR.beautify"
+	// },
+	"[html]": {
+		"editor.defaultFormatter": "HookyQR.beautify"
+	},
+	"prettier.useTabs": true,
+	"prettier.singleQuote": true,
+	"[json]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"editor.defaultFormatter": "esbenp.prettier-vscode"
+	// "emmet.extensionsPath": "",
+	// "html.format.contentUnformatted": "",
+	// "html.format.extraLiners": "head, body, /html",
+	// "html.format.indentHandlebars": true,
+	// "html.format.unformatted": "",
+}

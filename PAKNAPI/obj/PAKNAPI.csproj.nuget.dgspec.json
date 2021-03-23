@@ -75,6 +75,10 @@
             "NSwag.AspNetCore": {
               "target": "Package",
               "version": "[13.8.2, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[5.0.2, )"
             }
           },
           "imports": [

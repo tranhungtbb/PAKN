@@ -129,7 +129,6 @@ export class SystemconfigService {
           uploadData.append('nam', data.nam);
           uploadData.append('type', type.toString());
           uploadData.append('xoa', data.xoa);
-          uploadData.append('userId', this.storageService.getUserId());
           uploadData.append('ipAddress', this.storageService.getIpAddress());
         }
         return this.http.post(AppSettings.API_ADDRESS + Api.UPDATE_FORM_CATALOG, uploadData);
@@ -272,7 +271,6 @@ export class SystemconfigService {
           uploadData.append('nam', data.nam);
           uploadData.append('type', type.toString());
           uploadData.append('xoa', data.xoa);
-          uploadData.append('userId', this.storageService.getUserId());
           uploadData.append('ipAddress', this.storageService.getIpAddress());
         }
         return this.http.post(AppSettings.API_ADDRESS + Api.CREATE_FORM_CATALOG, uploadData);
@@ -396,7 +394,6 @@ export class SystemconfigService {
           uploadData.append('nam', data.nam);
           uploadData.append('type', type.toString());
           uploadData.append('xoa', data.xoa);
-          uploadData.append('userId', this.storageService.getUserId());
           uploadData.append('ipAddress', this.storageService.getIpAddress());
         }
         return this.http.post(AppSettings.API_ADDRESS + Api.DELETE_FORM_CATALOG, uploadData);

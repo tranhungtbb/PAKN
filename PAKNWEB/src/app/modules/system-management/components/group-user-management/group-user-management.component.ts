@@ -25,7 +25,6 @@ export class GroupUserManagementComponent implements OnInit {
 
   ngOnInit() {
     this.type = DepartmentMenuType.DanhSachNhomNguoiDung;
-    this.departmentId = this.userStorageService.getUnitId();
   }
 
   onMainDepartmentMenuClick(data: MenuPassingObject) {

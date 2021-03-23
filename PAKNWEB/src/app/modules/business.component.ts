@@ -62,7 +62,6 @@ export class BusinessComponent implements OnInit {
   ngOnInit() {
 
     this.localeService.use('vi');
-    this.userId = this.userInfoService.getAccountId();
     this.userInfoService.setReturnUrl('');
     
     this.loadScript('assets/dist/js/custom.min.js');

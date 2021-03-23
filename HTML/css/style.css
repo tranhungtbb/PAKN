@@ -9225,7 +9225,7 @@ svg.pulse-svg {
   border-radius: 3.5rem;
   height: .4rem;
   position: absolute;
-  background: #f2df2f;
+  background: #25A7D0;
   right: 10px;
   top: .6rem;
   width: .4rem; }
@@ -9239,7 +9239,7 @@ svg.pulse-svg {
     right: 0;
     bottom: 0;
     left: -.2rem;
-    background-color: #f2df2f;
+    background-color: #25A7D0;
     margin: auto;
     -webkit-transform: scale(0.3);
     transform: scale(0.3);
@@ -9346,7 +9346,7 @@ svg.pulse-svg {
     min-width: 170px;
     min-height: 40px;
     border-color: transparent;
-    color: #6e6e6e !important;
+    color: #222 !important;
     border-top-left-radius: 0.375rem;
     border-bottom-left-radius: 0.375rem;
     border-top-right-radius: 0;
@@ -12004,7 +12004,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
         right: 1.5rem; } }
 [data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .nav-header {
   width: 5rem;
-  z-index: 999; }
+  z-index: 5; }
   [data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .nav-header .brand-logo {
     padding-left: 0;
     padding-right: 0;
@@ -21531,7 +21531,7 @@ svg text {
 .form-control {
   background: #fff;
   border: 1px solid #f0f1f5;
-  color: #6e6e6e;
+  color: #222;
   height: 56px; }
   @media only screen and (max-width: 1199px) {
     .form-control {
@@ -21539,7 +21539,7 @@ svg text {
   .form-control:hover, .form-control:focus, .form-control.active {
     box-shadow: none;
     background: #fff;
-    color: #6e6e6e; }
+    color: #222; }
 
 .input-rounded {
   border-radius: 100px; }
@@ -21989,7 +21989,7 @@ input[type="checkbox"]:checked:after {
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
   line-height: 40px;
-  color: #7e7e7e;
+  color: #222;
   padding-left: 15px;
   min-height: 40px; }
 

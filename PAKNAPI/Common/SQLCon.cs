@@ -99,7 +99,7 @@ namespace PAKNAPI.Common
 			}
 		}
 
-		public int ExecuteNonQueryString(string sqlText, params SqlParameter[] param)
+		public int c(string sqlText, params SqlParameter[] param)
 		{
 			using (SqlConnection conn = GetConnection())
 			using (SqlCommand cmd = new SqlCommand(sqlText, conn))

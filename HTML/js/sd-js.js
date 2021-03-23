@@ -1,3 +1,9 @@
+$(document).ready(function() {
+    $('.select2').select2();
+});
+
+
+
 $('.owl-carousel').owlCarousel({
     loop:true,
     margin:30,
@@ -17,3 +23,4 @@ $('.owl-carousel').owlCarousel({
         }
     }
 })
+

@@ -81,13 +81,8 @@ export class GroupUsersListComponent implements OnInit {
     private _systemConfigService: SystemconfigService) {
   }
 
-  ngOnInit() {
-
-    this.userLoginId = this.localStorage.getUserId();
-    //this.GetDocumentTypeDepartmentId();
+  ngOnInit() { 
     this.buildForm();
-    this.departmentId = this.localStorage.getUnitId();
-
   }
 
   getNhomNguoiDungNguoiDung() {

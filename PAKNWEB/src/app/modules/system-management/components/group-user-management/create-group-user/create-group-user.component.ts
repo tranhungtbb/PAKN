@@ -70,10 +70,6 @@ export class CreateGroupUserComponent implements OnInit {
       trangThai: ['', []],
       xoa: ['', []]
     });
-
-    this.isSuperAdmin = this.localStorage.getIsSuperAdmin();
-    //this.isSuperAdmin ? this.createGroupUserForm.get('maDonVi').enable() : this.createGroupUserForm.get('maDonVi').disable();
-
     this.route.params.subscribe(
       params => {
         this.departmentId = params['id'];
@@ -128,7 +124,6 @@ export class CreateGroupUserComponent implements OnInit {
     var request = {
       GroupUser: data,
       PermissionCategories: this.listPermissionCategories,
-      UserLoginId: this.localStorage.getUserId()
     }
 
     this.groupUserservice.CreateGroupUser(request)

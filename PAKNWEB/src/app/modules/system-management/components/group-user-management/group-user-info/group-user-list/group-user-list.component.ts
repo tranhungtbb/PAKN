@@ -92,8 +92,6 @@ export class GroupUserListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.userLoginId = this.localStorage.getUserId();
-    this.departmentId = this.localStorage.getUnitId();
     this.getGroupUserByDepartment();
     $('.select2').select2({
       width: 'resolve',
