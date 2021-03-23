@@ -11,6 +11,178 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
+	public class CAFieldDelete
+	{
+		private SQLCon _sQLCon;
+
+		public CAFieldDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAFieldDelete()
+		{
+		}
+
+
+		public async Task<int> CAFieldDeleteDAO(CAFieldDeleteIN _cAFieldDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAFieldDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldDelete", DP));
+		}
+	}
+
+	public class CAFieldDeleteIN
+	{
+		public int? Id { get; set; }
+	}
+
+	public class CAFieldGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public CAFieldGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAFieldGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
+		public int? OrderNumber { get; set; }
+
+		public async Task<List<CAFieldGetAllOnPage>> CAFieldGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Code, string Description, bool? IsActived)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("Name", Name);
+			DP.Add("Code", Code);
+			DP.Add("Description", Description);
+			DP.Add("IsActived", IsActived);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAFieldGetAllOnPage>("CA_FieldGetAllOnPage", DP)).ToList();
+		}
+	}
+
+	public class CAFieldGetByID
+	{
+		private SQLCon _sQLCon;
+
+		public CAFieldGetByID(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAFieldGetByID()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
+		public int? OrderNumber { get; set; }
+
+		public async Task<List<CAFieldGetByID>> CAFieldGetByIDDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAFieldGetByID>("CA_FieldGetByID", DP)).ToList();
+		}
+	}
+
+	public class CAFieldInsert
+	{
+		private SQLCon _sQLCon;
+
+		public CAFieldInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAFieldInsert()
+		{
+		}
+
+
+		public async Task<int> CAFieldInsertDAO(CAFieldInsertIN _cAFieldInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _cAFieldInsertIN.Name);
+			DP.Add("Code", _cAFieldInsertIN.Code);
+			DP.Add("IsActived", _cAFieldInsertIN.IsActived);
+			DP.Add("IsDeleted", _cAFieldInsertIN.IsDeleted);
+			DP.Add("Description", _cAFieldInsertIN.Description);
+			DP.Add("OrderNumber", _cAFieldInsertIN.OrderNumber);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldInsert", DP));
+		}
+	}
+
+	public class CAFieldInsertIN
+	{
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public string Description { get; set; }
+		public int? OrderNumber { get; set; }
+	}
+
+	public class CAFieldUpdate
+	{
+		private SQLCon _sQLCon;
+
+		public CAFieldUpdate(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAFieldUpdate()
+		{
+		}
+
+
+		public async Task<int> CAFieldUpdateDAO(CAFieldUpdateIN _cAFieldUpdateIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAFieldUpdateIN.Id);
+			DP.Add("Name", _cAFieldUpdateIN.Name);
+			DP.Add("Code", _cAFieldUpdateIN.Code);
+			DP.Add("IsActived", _cAFieldUpdateIN.IsActived);
+			DP.Add("IsDeleted", _cAFieldUpdateIN.IsDeleted);
+			DP.Add("Description", _cAFieldUpdateIN.Description);
+			DP.Add("OrderNumber", _cAFieldUpdateIN.OrderNumber);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldUpdate", DP));
+		}
+	}
+
+	public class CAFieldUpdateIN
+	{
+		public int? Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public string Description { get; set; }
+		public int? OrderNumber { get; set; }
+	}
+
 	public class CAPositionDelete
 	{
 		private SQLCon _sQLCon;
@@ -52,14 +224,14 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber;
-		public int Id;
-		public string Name;
-		public string Code;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string Description;
-		public int? OrderNumber;
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
+		public int? OrderNumber { get; set; }
 
 		public async Task<List<CAPositionGetAllOnPage>> CAPositionGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Code, string Description, bool? IsActived)
 		{
@@ -88,13 +260,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public string Code;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string Description;
-		public int? OrderNumber;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
+		public int? OrderNumber { get; set; }
 
 		public async Task<List<CAPositionGetByID>> CAPositionGetByIDDAO(int? Id)
 		{
@@ -224,17 +396,17 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber;
-		public int Id;
-		public string Name;
-		public byte UnitLevel;
-		public bool IsActived;
-		public bool IsDeleted;
-		public int? ParentId;
-		public string Description;
-		public string Email;
-		public string Phone;
-		public string Address;
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public byte UnitLevel { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public int? ParentId { get; set; }
+		public string Description { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Address { get; set; }
 
 		public async Task<List<CAUnitGetAllOnPage>> CAUnitGetAllOnPageDAO(int? PageSize, int? PageIndex, string Sort, int? ParentId, byte? Level, string SearchName, string SearchPhone, string SearchEmail, string SearchAddress, bool? SearchActive)
 		{
@@ -267,16 +439,16 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public byte UnitLevel;
-		public bool IsActived;
-		public bool IsDeleted;
-		public int? ParentId;
-		public string Description;
-		public string Email;
-		public string Phone;
-		public string Address;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public byte UnitLevel { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public int? ParentId { get; set; }
+		public string Description { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Address { get; set; }
 
 		public async Task<List<CAUnitGetByID>> CAUnitGetByIDDAO(int? Id)
 		{

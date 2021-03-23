@@ -33,7 +33,9 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return new ResultApi { Success = ResultCode.OK, Result = new SYCaptChaDelete(_appSetting).SYCaptChaDeleteDAO(_sYCaptChaDeleteIN) };
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYCaptChaDelete(_appSetting).SYCaptChaDeleteDAO(_sYCaptChaDeleteIN) };
 			}
 			catch (Exception ex)
 			{
@@ -70,6 +72,8 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -87,7 +91,9 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return new ResultApi { Success = ResultCode.OK, Result = new SYCaptChaInsertData(_appSetting).SYCaptChaInsertDataDAO(_sYCaptChaInsertDataIN) };
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYCaptChaInsertData(_appSetting).SYCaptChaInsertDataDAO(_sYCaptChaInsertDataIN) };
 			}
 			catch (Exception ex)
 			{
@@ -124,6 +130,8 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 				return Ok(json);
 			}
 			catch (Exception ex)

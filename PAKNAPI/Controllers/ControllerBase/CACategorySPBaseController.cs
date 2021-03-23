@@ -28,12 +28,232 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
+		[Route("CAFieldDeleteBase")]
+		public async Task<ActionResult<object>> CAFieldDeleteBase(CAFieldDeleteIN _cAFieldDeleteIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldDelete(_appSetting).CAFieldDeleteDAO(_cAFieldDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAFieldDeleteListBase")]
+		public async Task<ActionResult<object>> CAFieldDeleteListBase(List<CAFieldDeleteIN> _cAFieldDeleteINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _cAFieldDeleteIN in _cAFieldDeleteINs)
+				{
+					var result = await new CAFieldDelete(_appSetting).CAFieldDeleteDAO(_cAFieldDeleteIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAFieldGetAllOnPageBase")]
+		public async Task<ActionResult<object>> CAFieldGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Code, string Description, bool? IsActived)
+		{
+			try
+			{
+				List<CAFieldGetAllOnPage> rsCAFieldGetAllOnPage = await new CAFieldGetAllOnPage(_appSetting).CAFieldGetAllOnPageDAO(PageSize, PageIndex, Name, Code, Description, IsActived);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAFieldGetAllOnPage", rsCAFieldGetAllOnPage},
+					};
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAFieldGetByIDBase")]
+		public async Task<ActionResult<object>> CAFieldGetByIDBase(int? Id)
+		{
+			try
+			{
+				List<CAFieldGetByID> rsCAFieldGetByID = await new CAFieldGetByID(_appSetting).CAFieldGetByIDDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAFieldGetByID", rsCAFieldGetByID},
+					};
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAFieldInsertBase")]
+		public async Task<ActionResult<object>> CAFieldInsertBase(CAFieldInsertIN _cAFieldInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldInsert(_appSetting).CAFieldInsertDAO(_cAFieldInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAFieldInsertListBase")]
+		public async Task<ActionResult<object>> CAFieldInsertListBase(List<CAFieldInsertIN> _cAFieldInsertINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _cAFieldInsertIN in _cAFieldInsertINs)
+				{
+					var result = await new CAFieldInsert(_appSetting).CAFieldInsertDAO(_cAFieldInsertIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAFieldUpdateBase")]
+		public async Task<ActionResult<object>> CAFieldUpdateBase(CAFieldUpdateIN _cAFieldUpdateIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldUpdate(_appSetting).CAFieldUpdateDAO(_cAFieldUpdateIN) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAFieldUpdateListBase")]
+		public async Task<ActionResult<object>> CAFieldUpdateListBase(List<CAFieldUpdateIN> _cAFieldUpdateINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _cAFieldUpdateIN in _cAFieldUpdateINs)
+				{
+					var result = await new CAFieldUpdate(_appSetting).CAFieldUpdateDAO(_cAFieldUpdateIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
 		[Route("CAPositionDeleteBase")]
 		public async Task<ActionResult<object>> CAPositionDeleteBase(CAPositionDeleteIN _cAPositionDeleteIN)
 		{
 			try
 			{
-				return new ResultApi { Success = ResultCode.OK, Result = new CAPositionDelete(_appSetting).CAPositionDeleteDAO(_cAPositionDeleteIN) };
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAPositionDelete(_appSetting).CAPositionDeleteDAO(_cAPositionDeleteIN) };
 			}
 			catch (Exception ex)
 			{
@@ -70,6 +290,8 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -131,7 +353,9 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return new ResultApi { Success = ResultCode.OK, Result = new CAPositionInsert(_appSetting).CAPositionInsertDAO(_cAPositionInsertIN) };
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAPositionInsert(_appSetting).CAPositionInsertDAO(_cAPositionInsertIN) };
 			}
 			catch (Exception ex)
 			{
@@ -168,6 +392,8 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -185,7 +411,9 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return new ResultApi { Success = ResultCode.OK, Result = new CAPositionUpdate(_appSetting).CAPositionUpdateDAO(_cAPositionUpdateIN) };
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAPositionUpdate(_appSetting).CAPositionUpdateDAO(_cAPositionUpdateIN) };
 			}
 			catch (Exception ex)
 			{
@@ -222,6 +450,8 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -239,7 +469,9 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return new ResultApi { Success = ResultCode.OK, Result = new CAUnitDelete(_appSetting).CAUnitDeleteDAO(_cAUnitDeleteIN) };
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAUnitDelete(_appSetting).CAUnitDeleteDAO(_cAUnitDeleteIN) };
 			}
 			catch (Exception ex)
 			{
@@ -276,6 +508,8 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -337,7 +571,9 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return new ResultApi { Success = ResultCode.OK, Result = new CAUnitInsert(_appSetting).CAUnitInsertDAO(_cAUnitInsertIN) };
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAUnitInsert(_appSetting).CAUnitInsertDAO(_cAUnitInsertIN) };
 			}
 			catch (Exception ex)
 			{
@@ -374,6 +610,8 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -391,7 +629,9 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return new ResultApi { Success = ResultCode.OK, Result = new CAUnitUpdate(_appSetting).CAUnitUpdateDAO(_cAUnitUpdateIN) };
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAUnitUpdate(_appSetting).CAUnitUpdateDAO(_cAUnitUpdateIN) };
 			}
 			catch (Exception ex)
 			{
@@ -428,6 +668,8 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 				return Ok(json);
 			}
 			catch (Exception ex)
