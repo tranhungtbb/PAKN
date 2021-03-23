@@ -11,6 +11,106 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
+	public class CAFieldOnPage
+	{
+		public int Id { get; set; }
+		public int? OrderNumber { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public int? RowNumber; // int, null
+	}
+
+	public class CAField
+	{
+		private SQLCon _sQLCon;
+
+		public CAField(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAField()
+		{
+		}
+
+		public int Id { get; set; }
+		public int? OrderNumber { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+
+		public async Task<CAField> CAFieldGetByID(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAField>("CA_FieldGetByID", DP)).ToList().FirstOrDefault();
+		}
+
+		public async Task<List<CAField>> CAFieldGetAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAField>("CA_FieldGetAll", DP)).ToList();
+		}
+
+		public async Task<List<CAFieldOnPage>> CAFieldGetAllOnPage(int PageSize, int PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			return (await _sQLCon.ExecuteListDapperAsync<CAFieldOnPage>("CA_FieldGetAllOnPage", DP)).ToList();
+		}
+
+		public async Task<int?> CAFieldInsert(CAField _cAField)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _cAField.Name);
+			DP.Add("Code", _cAField.Code);
+			DP.Add("IsActived", _cAField.IsActived);
+			DP.Add("IsDeleted", _cAField.IsDeleted);
+			DP.Add("Description", _cAField.Description);
+			DP.Add("OrderNumber", _cAField.OrderNumber);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldInsert", DP));
+		}
+
+		public async Task<int> CAFieldUpdate(CAField _cAField)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAField.Id);
+			DP.Add("Name", _cAField.Name);
+			DP.Add("Code", _cAField.Code);
+			DP.Add("IsActived", _cAField.IsActived);
+			DP.Add("IsDeleted", _cAField.IsDeleted);
+			DP.Add("Description", _cAField.Description);
+			DP.Add("OrderNumber", _cAField.OrderNumber);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldUpdate", DP));
+		}
+
+		public async Task<int> CAFieldDelete(CAField _cAField)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAField.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldDelete", DP));
+		}
+
+		public async Task<int> CAFieldDeleteAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldDeleteAll", DP));
+		}
+	}
+
 	public class CAPositionOnPage
 	{
 		public int Id { get; set; }

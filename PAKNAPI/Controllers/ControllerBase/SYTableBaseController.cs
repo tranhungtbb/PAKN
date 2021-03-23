@@ -94,8 +94,6 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return await new SYCaptCha(_appSetting).SYCaptChaInsert(_sYCaptCha);
 			}
 			catch (Exception ex)
@@ -133,8 +131,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -159,8 +155,6 @@ namespace PAKNAPI.ControllerBase
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -182,14 +176,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYCaptCha(_appSetting).SYCaptChaDelete(_sYCaptCha);
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -228,8 +218,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -250,14 +238,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYCaptCha(_appSetting).SYCaptChaDeleteAll();
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -339,8 +323,6 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return await new SYGroupUser(_appSetting).SYGroupUserInsert(_sYGroupUser);
 			}
 			catch (Exception ex)
@@ -378,8 +360,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -404,8 +384,6 @@ namespace PAKNAPI.ControllerBase
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -427,14 +405,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYGroupUser(_appSetting).SYGroupUserDelete(_sYGroupUser);
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -473,8 +447,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -495,14 +467,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYGroupUser(_appSetting).SYGroupUserDeleteAll();
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -584,8 +552,6 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return await new SYPermission(_appSetting).SYPermissionInsert(_sYPermission);
 			}
 			catch (Exception ex)
@@ -623,8 +589,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -649,8 +613,6 @@ namespace PAKNAPI.ControllerBase
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -672,14 +634,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYPermission(_appSetting).SYPermissionDelete(_sYPermission);
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -718,8 +676,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -740,14 +696,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYPermission(_appSetting).SYPermissionDeleteAll();
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -829,8 +781,6 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return await new SYPermissionCategory(_appSetting).SYPermissionCategoryInsert(_sYPermissionCategory);
 			}
 			catch (Exception ex)
@@ -868,8 +818,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -894,8 +842,6 @@ namespace PAKNAPI.ControllerBase
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -917,14 +863,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYPermissionCategory(_appSetting).SYPermissionCategoryDelete(_sYPermissionCategory);
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -963,8 +905,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -985,14 +925,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYPermissionCategory(_appSetting).SYPermissionCategoryDeleteAll();
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -1074,8 +1010,6 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return await new SYPermissionFunction(_appSetting).SYPermissionFunctionInsert(_sYPermissionFunction);
 			}
 			catch (Exception ex)
@@ -1113,8 +1047,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -1139,8 +1071,6 @@ namespace PAKNAPI.ControllerBase
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -1162,14 +1092,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYPermissionFunction(_appSetting).SYPermissionFunctionDelete(_sYPermissionFunction);
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -1208,8 +1134,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -1230,14 +1154,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYPermissionFunction(_appSetting).SYPermissionFunctionDeleteAll();
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -1319,8 +1239,6 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return await new SYPermissionGroupUser(_appSetting).SYPermissionGroupUserInsert(_sYPermissionGroupUser);
 			}
 			catch (Exception ex)
@@ -1358,8 +1276,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -1384,8 +1300,6 @@ namespace PAKNAPI.ControllerBase
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -1407,14 +1321,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYPermissionGroupUser(_appSetting).SYPermissionGroupUserDelete(_sYPermissionGroupUser);
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -1453,8 +1363,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -1475,14 +1383,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYPermissionGroupUser(_appSetting).SYPermissionGroupUserDeleteAll();
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -1564,8 +1468,6 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return await new SYPermissionUser(_appSetting).SYPermissionUserInsert(_sYPermissionUser);
 			}
 			catch (Exception ex)
@@ -1603,8 +1505,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -1629,8 +1529,6 @@ namespace PAKNAPI.ControllerBase
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -1652,14 +1550,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYPermissionUser(_appSetting).SYPermissionUserDelete(_sYPermissionUser);
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -1698,8 +1592,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -1720,14 +1612,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYPermissionUser(_appSetting).SYPermissionUserDeleteAll();
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -1809,8 +1697,6 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return await new SYRole(_appSetting).SYRoleInsert(_sYRole);
 			}
 			catch (Exception ex)
@@ -1848,8 +1734,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -1874,8 +1758,6 @@ namespace PAKNAPI.ControllerBase
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -1897,14 +1779,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYRole(_appSetting).SYRoleDelete(_sYRole);
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -1943,8 +1821,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -1965,14 +1841,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYRole(_appSetting).SYRoleDeleteAll();
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -2054,8 +1926,6 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return await new SYSystemLog(_appSetting).SYSystemLogInsert(_sYSystemLog);
 			}
 			catch (Exception ex)
@@ -2093,8 +1963,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -2119,8 +1987,6 @@ namespace PAKNAPI.ControllerBase
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -2142,14 +2008,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYSystemLog(_appSetting).SYSystemLogDelete(_sYSystemLog);
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -2188,8 +2050,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -2210,14 +2070,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYSystemLog(_appSetting).SYSystemLogDeleteAll();
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -2299,8 +2155,6 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return await new SYUnit(_appSetting).SYUnitInsert(_sYUnit);
 			}
 			catch (Exception ex)
@@ -2338,8 +2192,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -2364,8 +2216,6 @@ namespace PAKNAPI.ControllerBase
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -2387,14 +2237,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYUnit(_appSetting).SYUnitDelete(_sYUnit);
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -2433,8 +2279,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -2455,14 +2299,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYUnit(_appSetting).SYUnitDeleteAll();
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -2544,8 +2384,6 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return await new SYUser(_appSetting).SYUserInsert(_sYUser);
 			}
 			catch (Exception ex)
@@ -2583,8 +2421,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -2609,8 +2445,6 @@ namespace PAKNAPI.ControllerBase
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -2632,14 +2466,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYUser(_appSetting).SYUserDelete(_sYUser);
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -2678,8 +2508,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -2700,14 +2528,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYUser(_appSetting).SYUserDeleteAll();
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -2789,8 +2613,6 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return await new SYUserGroupUser(_appSetting).SYUserGroupUserInsert(_sYUserGroupUser);
 			}
 			catch (Exception ex)
@@ -2828,8 +2650,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -2854,8 +2674,6 @@ namespace PAKNAPI.ControllerBase
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -2877,14 +2695,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYUserGroupUser(_appSetting).SYUserGroupUserDelete(_sYUserGroupUser);
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -2923,8 +2737,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -2945,14 +2757,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYUserGroupUser(_appSetting).SYUserGroupUserDeleteAll();
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -3034,8 +2842,6 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return await new SYUserUnit(_appSetting).SYUserUnitInsert(_sYUserUnit);
 			}
 			catch (Exception ex)
@@ -3073,8 +2879,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -3099,8 +2903,6 @@ namespace PAKNAPI.ControllerBase
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -3122,14 +2924,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYUserUnit(_appSetting).SYUserUnitDelete(_sYUserUnit);
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -3168,8 +2966,6 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -3190,14 +2986,10 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYUserUnit(_appSetting).SYUserUnitDeleteAll();
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return count;
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
