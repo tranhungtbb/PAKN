@@ -17,7 +17,6 @@ import { NationComponent } from './nation/nation.component'
 import { ResolutionTypeComponent } from './resolution-type/resolution-type.component'
 import { RecommendationsTypeComponent } from './recommendations-type/recommendations-type.component'
 import { UnitComponent } from './unit/unit.component'
-import { PositionGroupComponent } from './position-group/position-group.component'
 
 const routes: Routes = [
 	{
@@ -25,7 +24,7 @@ const routes: Routes = [
 		component: CatalogManagementComponent,
 		children: [
 			{
-				path: 'position',
+				path: 'chuc-vu',
 				component: PositionComponent,
 				canActivate: [RoleGuardService],
 				data: { role: 'B_I_0' },
@@ -103,12 +102,6 @@ const routes: Routes = [
 			{
 				path: 'unit-ktnn',
 				component: UnitComponent,
-				canActivate: [RoleGuardService],
-				data: { role: 'B_XIII_0' },
-			},
-			{
-				path: 'position-group',
-				component: PositionGroupComponent,
 				canActivate: [RoleGuardService],
 				data: { role: 'B_XIII_0' },
 			},

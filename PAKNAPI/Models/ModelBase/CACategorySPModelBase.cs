@@ -52,14 +52,14 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber { get; set; }
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
-		public string Description { get; set; }
-		public int? OrderNumber { get; set; }
+		public int? RowNumber;
+		public int Id;
+		public string Name;
+		public string Code;
+		public bool IsActived;
+		public bool IsDeleted;
+		public string Description;
+		public int? OrderNumber;
 
 		public async Task<List<CAPositionGetAllOnPage>> CAPositionGetAllOnPageDAO(int? PageSize, int? PageIndex)
 		{
@@ -84,13 +84,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
-		public string Description { get; set; }
-		public int? OrderNumber { get; set; }
+		public int Id;
+		public string Name;
+		public string Code;
+		public bool IsActived;
+		public bool IsDeleted;
+		public string Description;
+		public int? OrderNumber;
 
 		public async Task<List<CAPositionGetByID>> CAPositionGetByIDDAO(int? Id)
 		{
