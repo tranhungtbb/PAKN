@@ -61,11 +61,15 @@ namespace PAKNAPI.ModelBase
 		public string Description;
 		public int? OrderNumber;
 
-		public async Task<List<CAPositionGetAllOnPage>> CAPositionGetAllOnPageDAO(int? PageSize, int? PageIndex)
+		public async Task<List<CAPositionGetAllOnPage>> CAPositionGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Code, string Description, bool? IsActived)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
+			DP.Add("Name", Name);
+			DP.Add("Code", Code);
+			DP.Add("Description", Description);
+			DP.Add("IsActived", IsActived);
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAPositionGetAllOnPage>("CA_PositionGetAllOnPage", DP)).ToList();
 		}
