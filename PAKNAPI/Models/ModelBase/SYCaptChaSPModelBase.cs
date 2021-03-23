@@ -30,7 +30,7 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Code", _sYCaptChaDeleteIN.Code);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_CaptCha_Delete", DP));
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_CaptChaDelete", DP));
 		}
 	}
 
@@ -58,7 +58,7 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Code", _sYCaptChaInsertDataIN.Code);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_CaptCha_InsertData", DP));
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_CaptChaInsertData", DP));
 		}
 	}
 
