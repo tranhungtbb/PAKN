@@ -13,15 +13,15 @@ namespace PAKNAPI.ModelBase
 {
 	public class CADepartmentOnPage
 	{
-		public int Id;
-		public int? DepartmentGroupId;
-		public string Name;
-		public string Code;
-		public string Email;
-		public string Phone;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public int? DepartmentGroupId { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -38,15 +38,15 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int? DepartmentGroupId;
-		public string Name;
-		public string Code;
-		public string Email;
-		public string Phone;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public int? DepartmentGroupId { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CADepartment> CADepartmentGetByID(int? Id)
 		{
@@ -128,12 +128,12 @@ namespace PAKNAPI.ModelBase
 
 	public class CADepartmentGroupOnPage
 	{
-		public int Id;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -150,12 +150,12 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CADepartmentGroup> CADepartmentGroupGetByID(int? Id)
 		{
@@ -231,11 +231,11 @@ namespace PAKNAPI.ModelBase
 
 	public class CADistrictOnPage
 	{
-		public int Id;
-		public int ProvinceId;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public int ProvinceId { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -252,11 +252,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int ProvinceId;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public int ProvinceId { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CADistrict> CADistrictGetByID(int? Id)
 		{
@@ -330,13 +330,13 @@ namespace PAKNAPI.ModelBase
 
 	public class CAFieldOnPage
 	{
-		public int Id;
-		public int? OrderNumber;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public int? OrderNumber { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -353,13 +353,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int? OrderNumber;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public int? OrderNumber { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CAField> CAFieldGetByID(int? Id)
 		{
@@ -437,12 +437,12 @@ namespace PAKNAPI.ModelBase
 
 	public class CAHashtagOnPage
 	{
-		public int Id;
-		public string Name;
-		public string Code;
-		public int? Quantity;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public int? Quantity { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -459,12 +459,12 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public string Code;
-		public int? Quantity;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public int? Quantity { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CAHashtag> CAHashtagGetByID(int? Id)
 		{
@@ -540,12 +540,12 @@ namespace PAKNAPI.ModelBase
 
 	public class CANewsTypeOnPage
 	{
-		public int Id;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -562,12 +562,12 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CANewsType> CANewsTypeGetByID(int? Id)
 		{
@@ -643,13 +643,13 @@ namespace PAKNAPI.ModelBase
 
 	public class CAPositionOnPage
 	{
-		public int Id;
-		public int? OrderNumber;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public int? OrderNumber { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -666,13 +666,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int? OrderNumber;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public int? OrderNumber { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CAPosition> CAPositionGetByID(int? Id)
 		{
@@ -750,10 +750,10 @@ namespace PAKNAPI.ModelBase
 
 	public class CAProvinceOnPage
 	{
-		public int Id;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -770,10 +770,10 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CAProvince> CAProvinceGetByID(int? Id)
 		{
@@ -845,11 +845,11 @@ namespace PAKNAPI.ModelBase
 
 	public class CAWardsOnPage
 	{
-		public int Id;
-		public int DistrictId;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public int DistrictId { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -866,11 +866,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int DistrictId;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public int DistrictId { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CAWards> CAWardsGetByID(int? Id)
 		{
@@ -944,12 +944,12 @@ namespace PAKNAPI.ModelBase
 
 	public class CAWordOnPage
 	{
-		public int Id;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -966,12 +966,12 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CAWord> CAWordGetByID(int? Id)
 		{
@@ -1042,308 +1042,6 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteDapperAsync<int>("CA_WordCount", DP));
-		}
-	}
-
-	public class SYBusinessOnPage
-	{
-		public long Id;
-		public int? ProvinceId;
-		public int WardsId;
-		public int DistrictId;
-		public string Name;
-		public string Code;
-		public string Address;
-		public string Email;
-		public string Phone;
-		public string Representative;
-		public string IDCard;
-		public string Place;
-		public string NativePlace;
-		public string PermanentPlace;
-		public string Nation;
-		public DateTime? BirthDay;
-		public bool? Gender;
-		public bool IsActived;
-		public bool IsDeleted;
-		public int? RowNumber; // int, null
-	}
-
-	public class SYBusiness
-	{
-		private SQLCon _sQLCon;
-
-		public SYBusiness(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public SYBusiness()
-		{
-		}
-
-		public long Id;
-		public int? ProvinceId;
-		public int WardsId;
-		public int DistrictId;
-		public string Name;
-		public string Code;
-		public string Address;
-		public string Email;
-		public string Phone;
-		public string Representative;
-		public string IDCard;
-		public string Place;
-		public string NativePlace;
-		public string PermanentPlace;
-		public string Nation;
-		public DateTime? BirthDay;
-		public bool? Gender;
-		public bool IsActived;
-		public bool IsDeleted;
-
-		public async Task<SYBusiness> SYBusinessGetByID(long? Id)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-
-			return (await _sQLCon.ExecuteListDapperAsync<SYBusiness>("SY_BusinessGetByID", DP)).ToList().FirstOrDefault();
-		}
-
-		public async Task<List<SYBusiness>> SYBusinessGetAll()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<SYBusiness>("SY_BusinessGetAll", DP)).ToList();
-		}
-
-		public async Task<List<SYBusinessOnPage>> SYBusinessGetAllOnPage(int PageSize, int PageIndex)
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			return (await _sQLCon.ExecuteListDapperAsync<SYBusinessOnPage>("SY_BusinessGetAllOnPage", DP)).ToList();
-		}
-
-		public async Task<int?> SYBusinessInsert(SYBusiness _sYBusiness)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("WardsId", _sYBusiness.WardsId);
-			DP.Add("DistrictId", _sYBusiness.DistrictId);
-			DP.Add("Name", _sYBusiness.Name);
-			DP.Add("Code", _sYBusiness.Code);
-			DP.Add("IsActived", _sYBusiness.IsActived);
-			DP.Add("IsDeleted", _sYBusiness.IsDeleted);
-			DP.Add("ProvinceId", _sYBusiness.ProvinceId);
-			DP.Add("Address", _sYBusiness.Address);
-			DP.Add("Email", _sYBusiness.Email);
-			DP.Add("Phone", _sYBusiness.Phone);
-			DP.Add("Representative", _sYBusiness.Representative);
-			DP.Add("IDCard", _sYBusiness.IDCard);
-			DP.Add("Place", _sYBusiness.Place);
-			DP.Add("NativePlace", _sYBusiness.NativePlace);
-			DP.Add("PermanentPlace", _sYBusiness.PermanentPlace);
-			DP.Add("Nation", _sYBusiness.Nation);
-			DP.Add("BirthDay", _sYBusiness.BirthDay);
-			DP.Add("Gender", _sYBusiness.Gender);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_BusinessInsert", DP));
-		}
-
-		public async Task<int> SYBusinessUpdate(SYBusiness _sYBusiness)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("WardsId", _sYBusiness.WardsId);
-			DP.Add("DistrictId", _sYBusiness.DistrictId);
-			DP.Add("Name", _sYBusiness.Name);
-			DP.Add("Code", _sYBusiness.Code);
-			DP.Add("Id", _sYBusiness.Id);
-			DP.Add("IsActived", _sYBusiness.IsActived);
-			DP.Add("IsDeleted", _sYBusiness.IsDeleted);
-			DP.Add("ProvinceId", _sYBusiness.ProvinceId);
-			DP.Add("Address", _sYBusiness.Address);
-			DP.Add("Email", _sYBusiness.Email);
-			DP.Add("Phone", _sYBusiness.Phone);
-			DP.Add("Representative", _sYBusiness.Representative);
-			DP.Add("IDCard", _sYBusiness.IDCard);
-			DP.Add("Place", _sYBusiness.Place);
-			DP.Add("NativePlace", _sYBusiness.NativePlace);
-			DP.Add("PermanentPlace", _sYBusiness.PermanentPlace);
-			DP.Add("Nation", _sYBusiness.Nation);
-			DP.Add("BirthDay", _sYBusiness.BirthDay);
-			DP.Add("Gender", _sYBusiness.Gender);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_BusinessUpdate", DP));
-		}
-
-		public async Task<int> SYBusinessDelete(SYBusiness _sYBusiness)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _sYBusiness.Id);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_BusinessDelete", DP));
-		}
-
-		public async Task<int> SYBusinessDeleteAll()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_BusinessDeleteAll", DP));
-		}
-
-		public async Task<int> SYBusinessCount()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteDapperAsync<int>("SY_BusinessCount", DP));
-		}
-	}
-
-	public class SYIndividualOnPage
-	{
-		public long Id;
-		public int WardsId;
-		public int DistrictId;
-		public string FullName;
-		public string Code;
-		public string Address;
-		public string Email;
-		public string Phone;
-		public string IDCard;
-		public string Place;
-		public string NativePlace;
-		public string PermanentPlace;
-		public string Nation;
-		public DateTime? BirthDay;
-		public bool? Gender;
-		public bool IsActived;
-		public bool IsDeleted;
-		public int? RowNumber; // int, null
-	}
-
-	public class SYIndividual
-	{
-		private SQLCon _sQLCon;
-
-		public SYIndividual(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public SYIndividual()
-		{
-		}
-
-		public long Id;
-		public int WardsId;
-		public int DistrictId;
-		public string FullName;
-		public string Code;
-		public string Address;
-		public string Email;
-		public string Phone;
-		public string IDCard;
-		public string Place;
-		public string NativePlace;
-		public string PermanentPlace;
-		public string Nation;
-		public DateTime? BirthDay;
-		public bool? Gender;
-		public bool IsActived;
-		public bool IsDeleted;
-
-		public async Task<SYIndividual> SYIndividualGetByID(long? Id)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-
-			return (await _sQLCon.ExecuteListDapperAsync<SYIndividual>("SY_IndividualGetByID", DP)).ToList().FirstOrDefault();
-		}
-
-		public async Task<List<SYIndividual>> SYIndividualGetAll()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<SYIndividual>("SY_IndividualGetAll", DP)).ToList();
-		}
-
-		public async Task<List<SYIndividualOnPage>> SYIndividualGetAllOnPage(int PageSize, int PageIndex)
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			return (await _sQLCon.ExecuteListDapperAsync<SYIndividualOnPage>("SY_IndividualGetAllOnPage", DP)).ToList();
-		}
-
-		public async Task<int?> SYIndividualInsert(SYIndividual _sYIndividual)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("WardsId", _sYIndividual.WardsId);
-			DP.Add("DistrictId", _sYIndividual.DistrictId);
-			DP.Add("FullName", _sYIndividual.FullName);
-			DP.Add("Code", _sYIndividual.Code);
-			DP.Add("IsActived", _sYIndividual.IsActived);
-			DP.Add("IsDeleted", _sYIndividual.IsDeleted);
-			DP.Add("Address", _sYIndividual.Address);
-			DP.Add("Email", _sYIndividual.Email);
-			DP.Add("Phone", _sYIndividual.Phone);
-			DP.Add("IDCard", _sYIndividual.IDCard);
-			DP.Add("Place", _sYIndividual.Place);
-			DP.Add("NativePlace", _sYIndividual.NativePlace);
-			DP.Add("PermanentPlace", _sYIndividual.PermanentPlace);
-			DP.Add("Nation", _sYIndividual.Nation);
-			DP.Add("BirthDay", _sYIndividual.BirthDay);
-			DP.Add("Gender", _sYIndividual.Gender);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_IndividualInsert", DP));
-		}
-
-		public async Task<int> SYIndividualUpdate(SYIndividual _sYIndividual)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _sYIndividual.Id);
-			DP.Add("WardsId", _sYIndividual.WardsId);
-			DP.Add("DistrictId", _sYIndividual.DistrictId);
-			DP.Add("FullName", _sYIndividual.FullName);
-			DP.Add("Code", _sYIndividual.Code);
-			DP.Add("IsActived", _sYIndividual.IsActived);
-			DP.Add("IsDeleted", _sYIndividual.IsDeleted);
-			DP.Add("Address", _sYIndividual.Address);
-			DP.Add("Email", _sYIndividual.Email);
-			DP.Add("Phone", _sYIndividual.Phone);
-			DP.Add("IDCard", _sYIndividual.IDCard);
-			DP.Add("Place", _sYIndividual.Place);
-			DP.Add("NativePlace", _sYIndividual.NativePlace);
-			DP.Add("PermanentPlace", _sYIndividual.PermanentPlace);
-			DP.Add("Nation", _sYIndividual.Nation);
-			DP.Add("BirthDay", _sYIndividual.BirthDay);
-			DP.Add("Gender", _sYIndividual.Gender);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_IndividualUpdate", DP));
-		}
-
-		public async Task<int> SYIndividualDelete(SYIndividual _sYIndividual)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _sYIndividual.Id);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_IndividualDelete", DP));
-		}
-
-		public async Task<int> SYIndividualDeleteAll()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_IndividualDeleteAll", DP));
-		}
-
-		public async Task<int> SYIndividualCount()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteDapperAsync<int>("SY_IndividualCount", DP));
 		}
 	}
 }
