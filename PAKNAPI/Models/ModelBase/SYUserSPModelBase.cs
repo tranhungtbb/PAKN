@@ -24,6 +24,8 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
+		public short Id;
+		public string Name;
 		public string Code;
 
 		public async Task<List<SYUSRGetPermissionByUserId>> SYUSRGetPermissionByUserIdDAO(long? UserId)

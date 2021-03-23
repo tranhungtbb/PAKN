@@ -26,6 +26,235 @@ namespace PAKNAPI.ControllerBase
 			_appSetting = appSetting;
 		}
 
+		#region SYCaptCha
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYCaptChaGetByID")]
+		public async Task<ActionResult<object>> SYCaptChaGetByID(int? Id)
+		{
+			try
+			{
+				return await new SYCaptCha(_appSetting).SYCaptChaGetByID(Id);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYCaptChaGetAll")]
+		public async Task<ActionResult<object>> SYCaptChaGetAll()
+		{
+			try
+			{
+				return await new SYCaptCha(_appSetting).SYCaptChaGetAll();
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYCaptChaGetAllOnPage")]
+		public async Task<ActionResult<object>> SYCaptChaGetAllOnPage(int PageSize, int PageIndex)
+		{
+			try
+			{
+				List<SYCaptChaOnPage> rsSYCaptChaOnPage = await new SYCaptCha(_appSetting).SYCaptChaGetAllOnPage(PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYCaptCha", rsSYCaptChaOnPage},
+						{"TotalCount", rsSYCaptChaOnPage != null && rsSYCaptChaOnPage.Count > 0 ? rsSYCaptChaOnPage[0].RowNumber : 0},
+						{"PageIndex", rsSYCaptChaOnPage != null && rsSYCaptChaOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsSYCaptChaOnPage != null && rsSYCaptChaOnPage.Count > 0 ? PageSize : 0},
+					};
+				return Ok(json);
+				}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYCaptChaInsert")]
+		public async Task<ActionResult<object>> SYCaptChaInsert(SYCaptCha _sYCaptCha)
+		{
+			try
+			{
+				return await new SYCaptCha(_appSetting).SYCaptChaInsert(_sYCaptCha);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYCaptChaListInsert")]
+		public async Task<ActionResult<object>> SYCaptChaListInsert(List<SYCaptCha> _sYCaptChas)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (SYCaptCha _sYCaptCha in _sYCaptChas)
+				{
+					int? result = await new SYCaptCha(_appSetting).SYCaptChaInsert(_sYCaptCha);
+					if (result != null)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYCaptChaUpdate")]
+		public async Task<ActionResult<object>> SYCaptChaUpdate(SYCaptCha _sYCaptCha)
+		{
+			try
+			{
+				int count = await new SYCaptCha(_appSetting).SYCaptChaUpdate(_sYCaptCha);
+				if (count > 0)
+				{
+					return count;
+				}
+				else
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYCaptChaDelete")]
+		public async Task<ActionResult<object>> SYCaptChaDelete(SYCaptCha _sYCaptCha)
+		{
+			try
+			{
+				int count = await new SYCaptCha(_appSetting).SYCaptChaDelete(_sYCaptCha);
+				if (count > 0)
+				{
+					return count;
+				}
+				else
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYCaptChaListDelete")]
+		public async Task<ActionResult<object>> SYCaptChaListDelete(List<SYCaptCha> _sYCaptChas)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (SYCaptCha _sYCaptCha in _sYCaptChas)
+				{
+					var result = await new SYCaptCha(_appSetting).SYCaptChaDelete(_sYCaptCha);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYCaptChaDeleteAll")]
+		public async Task<ActionResult<object>> SYCaptChaDeleteAll()
+		{
+			try
+			{
+				int count = await new SYCaptCha(_appSetting).SYCaptChaDeleteAll();
+				if (count > 0)
+				{
+					return count;
+				}
+				else
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		#endregion SYCaptCha
+
 		#region SYGroupUser
 
 		[HttpGet]

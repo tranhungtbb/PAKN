@@ -11,6 +11,90 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
+	public class SYCaptChaOnPage
+	{
+		public int Id;
+		public string CaptchaCode;
+		public DateTime? CreateTime;
+		public int? RowNumber; // int, null
+	}
+
+	public class SYCaptCha
+	{
+		private SQLCon _sQLCon;
+
+		public SYCaptCha(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYCaptCha()
+		{
+		}
+
+		public int Id;
+		public string CaptchaCode;
+		public DateTime? CreateTime;
+
+		public async Task<SYCaptCha> SYCaptChaGetByID(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYCaptCha>("SY_CaptChaGetByID", DP)).ToList().FirstOrDefault();
+		}
+
+		public async Task<List<SYCaptCha>> SYCaptChaGetAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYCaptCha>("SY_CaptChaGetAll", DP)).ToList();
+		}
+
+		public async Task<List<SYCaptChaOnPage>> SYCaptChaGetAllOnPage(int PageSize, int PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			return (await _sQLCon.ExecuteListDapperAsync<SYCaptChaOnPage>("SY_CaptChaGetAllOnPage", DP)).ToList();
+		}
+
+		public async Task<int?> SYCaptChaInsert(SYCaptCha _sYCaptCha)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("CaptchaCode", _sYCaptCha.CaptchaCode);
+			DP.Add("CreateTime", _sYCaptCha.CreateTime);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_CaptChaInsert", DP));
+		}
+
+		public async Task<int> SYCaptChaUpdate(SYCaptCha _sYCaptCha)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYCaptCha.Id);
+			DP.Add("CaptchaCode", _sYCaptCha.CaptchaCode);
+			DP.Add("CreateTime", _sYCaptCha.CreateTime);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_CaptChaUpdate", DP));
+		}
+
+		public async Task<int> SYCaptChaDelete(SYCaptCha _sYCaptCha)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYCaptCha.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_CaptChaDelete", DP));
+		}
+
+		public async Task<int> SYCaptChaDeleteAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_CaptChaDeleteAll", DP));
+		}
+	}
+
 	public class SYGroupUserOnPage
 	{
 		public int Id;
