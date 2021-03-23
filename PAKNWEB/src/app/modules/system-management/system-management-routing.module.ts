@@ -21,19 +21,13 @@ const routes: Routes = [
 			},
 			{
 				path: 'vai-tro',
-				loadChildren: './components/group-user-management/group-user-management.module#GroupUserManagementModule',
+				component: OrgnizationComponent,
+				//canActivate: [RoleGuardService],
+				//data: { role: 'A_II_0' }
 			},
 			{
 				path: 'support-management',
 				loadChildren: './components/support-management/support-management.module#SupportManagementModule',
-			},
-			{
-				path: 'cau-hinh-he-thong',
-				component: SystemConfigComponent,
-			},
-			{
-				path: 'lich-su-he-thong',
-				component: SystemLogComponent,
 			},
 		],
 	},

@@ -112,6 +112,8 @@ namespace PAKNAPI.Common
 			//}
 			BaseRequest baseRequest = logHelper.ReadBodyFromRequest(httpContext.Request);
 
+			if (baseRequest == null) return;
+
 			logHelper.InsertSystemLogging(new Logs
 			{
 				logAction = baseRequest.logAction,
