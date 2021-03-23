@@ -5,8 +5,8 @@ export class AppSettings {
   public static API_DOWNLOADFILES = 'http://localhost:51046';
   public static VIEW_FILE = 'http://14.177.236.88:6062/DocViewer?fileurl=';
 
-  //public static API_ADDRESS = 'https://42.112.21.232:2001/api/'; 
-  //public static API_DOWNLOADFILES = 'https://42.112.21.232:2001';
-  //public static VIEW_FILE = 'https://42.112.21.232:2002/DocViewer?fileurl=';
+  //public static API_ADDRESS = 'http://14.177.236.88:6161/api/'; 
+  //public static API_DOWNLOADFILES = 'http://42.112.21.232:6161';
+  //public static VIEW_FILE = 'http://42.112.21.232:6162/DocViewer?fileurl=';
 
 }

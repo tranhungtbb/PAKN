@@ -62,7 +62,24 @@ namespace PAKNAPI.Controllers
 							{ "AccessToken", tokenString},
 							{ "Permissions", rsSYUSRGetPermissionByUserId},
 						};
-						new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+						//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+						BaseRequest baseRequest = new LogHelper(_appSetting).ReadBodyFromRequest(HttpContext.Request);
+						
+						SYLOGInsertIN sYSystemLogInsertIN = new SYLOGInsertIN
+						{
+							UserId = user[0].Id,
+							FullName = user[0].FullName,
+							Action = baseRequest.logAction,
+							IPAddress = baseRequest.ipAddress,
+							MACAddress = baseRequest.macAddress,
+							Description = baseRequest.logAction + " " + baseRequest.logObject,
+							CreatedDate = DateTime.Now,
+							Exception = null
+						};
+						await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
+
+
 						return new LoginResponse
 						{
 							Success = ResultCode.OK,

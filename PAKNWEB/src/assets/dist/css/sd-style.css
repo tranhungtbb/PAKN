@@ -703,6 +703,10 @@ transition: all .3s ease-in-out;
 .card-header {
     padding: 1rem 1.875rem;
 }
+.header-right .header-profile .dropdown-item {
+    color: #222;
+    cursor: pointer;
+}
 .header-right .header-profile .dropdown-menu a:hover, .header-right .header-profile .dropdown-menu a:focus, .header-right .header-profile .dropdown-menu a.active {
     color: #DA2222;
 }

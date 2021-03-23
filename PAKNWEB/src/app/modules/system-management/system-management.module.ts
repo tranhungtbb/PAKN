@@ -23,6 +23,7 @@ import { TreeModule } from 'primeng/tree';
 import { TooltipModule } from 'primeng/tooltip';
 import { GMapModule } from 'primeng/gmap';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DepartmentComponent } from './components/department/department.component';
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     SystemConfigListComponent,
     SystemLogComponent,
     SystemlogListComponent,
+    DepartmentComponent,
   ]
 })
-export class SystemManagementModule { }
+    export class SystemManagementModule { }

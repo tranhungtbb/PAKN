@@ -24,15 +24,21 @@ export class LoginComponent implements OnInit {
 		UserName: '',
 		Password: '',
 	}
+	userProduct: LoginUserObject = {
+		UserName: '',
+		Password: '',
+	}
 	isAbleCaptcha: any = ''
 	isSaveLogin: boolean = false
 	loginForm: FormGroup
+	loginFormProduct: FormGroup
 	lang: any = 'vi'
 	theme: any = 'light'
 	size: any = 'normal'
 	type: any = 'image'
 	siteKey: any = '6LdcUHgUAAAAAOoPO7q4P2s4YFU2N3khp4DBf3Dh'
 	submitted: boolean = false
+	submittedProduct: boolean = false
 	configcaptcha: any = {
 		theme: this.theme,
 		type: this.type,
@@ -59,6 +65,19 @@ export class LoginComponent implements OnInit {
 			]),
 			isRemember: new FormControl(this.isSaveLogin, []),
 		})
+		this.loginFormProduct = new FormGroup({
+			name: new FormControl(this.userProduct.UserName, [Validators.required]),
+			pass: new FormControl(this.userProduct.Password, [Validators.required]),
+			captcha: new FormControl(this.captchaCode, [
+				// Validators.required
+			]),
+			isRemember: new FormControl(this.isSaveLogin, []),
+		})
+		this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((data) => {
+			if (data != null) {
+				this.storeageService.setIpAddress(data.ip)
+			}
+		})
 		if (this.storeageService.getAccessToken()) {
 			var ReturnlUrl = this.storeageService.getReturnUrl()
 			if (ReturnlUrl != undefined && ReturnlUrl != '' && ReturnlUrl != null && ReturnlUrl.includes('business')) {
@@ -76,7 +95,6 @@ export class LoginComponent implements OnInit {
 	}
 
 	login() {
-		localStorage.clear()
 		this.submitted = true
 		if (this.loginForm.invalid) {
 			if (this.loginForm.controls.name.status == 'INVALID') {
@@ -98,6 +116,7 @@ export class LoginComponent implements OnInit {
 					this.authenService.login(this.user).subscribe(
 						(data) => {
 							if (data.success === RESPONSE_STATUS.success) {
+								localStorage.clear()
 								this.shareData.setIsLogin(true)
 								this.storeageService.setAccessToken(data.accessToken)
 								this.storeageService.setUserId(data.userId)
@@ -109,16 +128,16 @@ export class LoginComponent implements OnInit {
 								this.storeageService.setIsHaveToken(data.isHaveToken)
 								this.storeageService.setRole(data.role)
 								this.storeageService.setFullName(data.fullName)
-								if (this.isSaveLogin) {
-									this.storeageService.setKeyRemember(btoa(this.user.Password))
-								} else {
-									this.storeageService.setKeyRemember('')
-								}
 								this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((data) => {
 									if (data != null) {
 										this.storeageService.setIpAddress(data.ip)
 									}
 								})
+								if (this.isSaveLogin) {
+									this.storeageService.setKeyRemember(btoa(this.user.Password))
+								} else {
+									this.storeageService.setKeyRemember('')
+								}
 								this._router.navigate(['/quan-tri'])
 							} else if (data.success === RESPONSE_STATUS.orror) {
 								this.toastr.error(data.message, 'Đăng nhập thất bại')
@@ -141,6 +160,72 @@ export class LoginComponent implements OnInit {
 		}
 	}
 
+	loginProduct() {
+		this.submittedProduct = true
+		if (this.loginFormProduct.invalid) {
+			if (this.loginFormProduct.controls.name.status == 'INVALID') {
+				$('#name').focus()
+				return
+			}
+			if (this.loginFormProduct.controls.pass.status == 'INVALID') {
+				$('#pass').focus()
+				return
+			}
+
+			return
+		} else {
+			var constdata = {
+				CaptchaCode: this.captchaCodeProduct,
+			}
+			this.captchaService.send(constdata).subscribe((result) => {
+				if (result.success === RESPONSE_STATUS.success) {
+					this.authenService.login(this.user).subscribe(
+						(data) => {
+							if (data.success === RESPONSE_STATUS.success) {
+								localStorage.clear()
+								this.shareData.setIsLogin(true)
+								this.storeageService.setAccessToken(data.accessToken)
+								this.storeageService.setUserId(data.userId)
+								this.storeageService.setPermissionCategories(data.permissionCategories)
+								this.storeageService.setFunctions(data.functions)
+								this.storeageService.setPermissions(data.permissions)
+								this.storeageService.setUnitName(data.unitName)
+								this.storeageService.setSaveLogin(this.isSaveLogin)
+								this.storeageService.setIsHaveToken(data.isHaveToken)
+								this.storeageService.setRole(data.role)
+								this.storeageService.setFullName(data.fullName)
+								this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((data) => {
+									if (data != null) {
+										this.storeageService.setIpAddress(data.ip)
+									}
+								})
+								if (this.isSaveLogin) {
+									this.storeageService.setKeyRemember(btoa(this.user.Password))
+								} else {
+									this.storeageService.setKeyRemember('')
+								}
+								this._router.navigate(['/quan-tri'])
+							} else if (data.success === RESPONSE_STATUS.orror) {
+								this.toastr.error(data.message, 'Đăng nhập thất bại')
+							}
+						},
+						(error) => {
+							console.error(error)
+							this.reloadImage()
+							this.captchaCodeProduct = ''
+						}
+					)
+				} else {
+					this.toastr.warning('Vui lòng nhập lại mã captcha')
+					this.reloadImage()
+
+					this.captchaCodeProduct = ''
+					//   this.captchaEl.nativeElement.focus();
+				}
+			})
+		}
+	}
+
 	get name() {
 		return this.loginForm.get('name')
 	}
@@ -151,6 +236,18 @@ export class LoginComponent implements OnInit {
 
 	get captcha() {
 		return this.loginForm.get('captcha')
+	}
+
+	get nameProduct() {
+		return this.loginFormProduct.get('name')
+	}
+
+	get passProduct() {
+		return this.loginFormProduct.get('pass')
+	}
+
+	get captchaProduct() {
+		return this.loginFormProduct.get('captcha')
 	}
 
 	forgetPassWord(): void {
@@ -173,5 +270,11 @@ export class LoginComponent implements OnInit {
 	captchaImage: any = ''
 	reloadImage() {
 		this.captchaImage = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?' + Math.random() * 100000000000000000000
+	}
+
+	captchaCodeProduct: string = null
+	captchaImageProduct: any = ''
+	reloadImageProduct() {
+		this.captchaImageProduct = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?' + Math.random() * 100000000000000000000
 	}
 }

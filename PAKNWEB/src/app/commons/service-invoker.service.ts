@@ -33,6 +33,7 @@ export class ServiceInvokerService {
 
   /* Get array */
   get(element: any, url): Observable<any> {
+    element.IpAddress = this.storeageService.getIpAddress();
     const httpPackage = {
       params: element
     };
@@ -74,6 +75,7 @@ export class ServiceInvokerService {
     if (element == undefined || element == '') {
       element = {};
     }
+    element.IpAddress = this.storeageService.getIpAddress();
 
     const httpPackage = {
       params: element
@@ -98,12 +100,6 @@ export class ServiceInvokerService {
     if (element == undefined || element == '') {
       element = {};
     }
-    element.UserId = this.userId;
-    element.IsSuperAdmin = this.isSuperAdmin;
-    element.IsTongHop = this.isTongHop;
-    element.DeparmentId = this.deparmentId;
-    element.UnitId = this.unitId;
-    element.AccountId = this.accountId;
 
     const httpPackage = {
       params: element
