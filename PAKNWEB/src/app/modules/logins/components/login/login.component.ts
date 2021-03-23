@@ -128,9 +128,9 @@ export class LoginComponent implements OnInit {
 								this.storeageService.setIsHaveToken(data.isHaveToken)
 								this.storeageService.setRole(data.role)
 								this.storeageService.setFullName(data.fullName)
-								this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((data) => {
-									if (data != null) {
-										this.storeageService.setIpAddress(data.ip)
+								this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((dataIP) => {
+									if (dataIP != null) {
+										this.storeageService.setIpAddress(dataIP.ip)
 									}
 								})
 								if (this.isSaveLogin) {
@@ -138,9 +138,10 @@ export class LoginComponent implements OnInit {
 								} else {
 									this.storeageService.setKeyRemember('')
 								}
-								this._router.navigate(['/quan-tri'])
-							} else if (data.success === RESPONSE_STATUS.orror) {
-								this.toastr.error(data.message, 'Đăng nhập thất bại')
+								//this._router.navigate(['/quan-tri'])
+								location.href = '/quan-tri'
+							} else if (data.success === RESPONSE_STATUS.incorrect) {
+								this.toastr.error(data.message, 'Tên tài khoản hoặc mật khẩu không chính xác')
 							}
 						},
 						(error) => {
@@ -194,9 +195,9 @@ export class LoginComponent implements OnInit {
 								this.storeageService.setIsHaveToken(data.isHaveToken)
 								this.storeageService.setRole(data.role)
 								this.storeageService.setFullName(data.fullName)
-								this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((data) => {
-									if (data != null) {
-										this.storeageService.setIpAddress(data.ip)
+								this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((dataIP) => {
+									if (dataIP != null) {
+										this.storeageService.setIpAddress(dataIP.ip)
 									}
 								})
 								if (this.isSaveLogin) {
@@ -204,9 +205,10 @@ export class LoginComponent implements OnInit {
 								} else {
 									this.storeageService.setKeyRemember('')
 								}
-								this._router.navigate(['/quan-tri'])
-							} else if (data.success === RESPONSE_STATUS.orror) {
-								this.toastr.error(data.message, 'Đăng nhập thất bại')
+								//this._router.navigate(['/quan-tri'])
+								location.href = '/quan-tri'
+							} else if (data.success === RESPONSE_STATUS.incorrect) {
+								this.toastr.error(data.message, 'Tên tài khoản hoặc mật khẩu không chính xác')
 							}
 						},
 						(error) => {

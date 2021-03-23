@@ -5,6 +5,7 @@
 		public const string OK = "OK";
 		public const string ORROR = "ORROR";
 		public const string ALREADY_EXISTS = "ALREADY_EXISTS";
+		public const string INCORRECT = "INCORRECT";
 	}
 	public static class ResultMessage
 	{

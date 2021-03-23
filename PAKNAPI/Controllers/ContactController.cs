@@ -70,11 +70,12 @@ namespace PAKNAPI.Controllers
 						{
 							UserId = user[0].Id,
 							FullName = user[0].FullName,
-							Action = baseRequest.logAction,
+							Action = "Login",
 							IPAddress = baseRequest.ipAddress,
 							MACAddress = baseRequest.macAddress,
 							Description = baseRequest.logAction + " " + baseRequest.logObject,
 							CreatedDate = DateTime.Now,
+							Status = 1,
 							Exception = null
 						};
 						await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
@@ -93,18 +94,18 @@ namespace PAKNAPI.Controllers
 					}
 					else
 					{
-						return new ResultApi { Message = "User/Pass not found", };
+						return new ResultApi { Success = ResultCode.INCORRECT, Message = "User/Pass not found", };
 					}
 				}
 				else
 				{
-					return new ResultApi { Message = "User/Pass not found", };
+					return new ResultApi { Success = ResultCode.INCORRECT, Message = "User/Pass not found", };
 				}
 			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-				return new ResultApi { Message = "An error occurred", };
+				return new ResultApi { Success = ResultCode.ORROR, Message = "ERROR: " + ex.Message, };
 			}
 		}
 
