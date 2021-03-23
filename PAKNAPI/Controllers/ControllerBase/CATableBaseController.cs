@@ -94,6 +94,8 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 				return await new CAPosition(_appSetting).CAPositionInsert(_cAPosition);
 			}
 			catch (Exception ex)
@@ -131,6 +133,8 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -155,6 +159,8 @@ namespace PAKNAPI.ControllerBase
 				}
 				else
 				{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -176,10 +182,14 @@ namespace PAKNAPI.ControllerBase
 				int count = await new CAPosition(_appSetting).CAPositionDelete(_cAPosition);
 				if (count > 0)
 				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 					return count;
 				}
 				else
 				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
@@ -218,6 +228,8 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 				return Ok(json);
 			}
 			catch (Exception ex)
@@ -238,10 +250,14 @@ namespace PAKNAPI.ControllerBase
 				int count = await new CAPosition(_appSetting).CAPositionDeleteAll();
 				if (count > 0)
 				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 					return count;
 				}
 				else
 				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
