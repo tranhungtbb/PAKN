@@ -336,6 +336,109 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class CAHashtagOnPage
+	{
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public int? Quantity { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public int? RowNumber; // int, null
+	}
+
+	public class CAHashtag
+	{
+		private SQLCon _sQLCon;
+
+		public CAHashtag(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAHashtag()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public int? Quantity { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+
+		public async Task<CAHashtag> CAHashtagGetByID(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAHashtag>("CA_HashtagGetByID", DP)).ToList().FirstOrDefault();
+		}
+
+		public async Task<List<CAHashtag>> CAHashtagGetAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAHashtag>("CA_HashtagGetAll", DP)).ToList();
+		}
+
+		public async Task<List<CAHashtagOnPage>> CAHashtagGetAllOnPage(int PageSize, int PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			return (await _sQLCon.ExecuteListDapperAsync<CAHashtagOnPage>("CA_HashtagGetAllOnPage", DP)).ToList();
+		}
+
+		public async Task<int?> CAHashtagInsert(CAHashtag _cAHashtag)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _cAHashtag.Name);
+			DP.Add("Code", _cAHashtag.Code);
+			DP.Add("IsActived", _cAHashtag.IsActived);
+			DP.Add("IsDeleted", _cAHashtag.IsDeleted);
+			DP.Add("Quantity", _cAHashtag.Quantity);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_HashtagInsert", DP));
+		}
+
+		public async Task<int> CAHashtagUpdate(CAHashtag _cAHashtag)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAHashtag.Id);
+			DP.Add("Name", _cAHashtag.Name);
+			DP.Add("Code", _cAHashtag.Code);
+			DP.Add("IsActived", _cAHashtag.IsActived);
+			DP.Add("IsDeleted", _cAHashtag.IsDeleted);
+			DP.Add("Quantity", _cAHashtag.Quantity);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_HashtagUpdate", DP));
+		}
+
+		public async Task<int> CAHashtagDelete(CAHashtag _cAHashtag)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAHashtag.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_HashtagDelete", DP));
+		}
+
+		public async Task<int> CAHashtagDeleteAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_HashtagDeleteAll", DP));
+		}
+
+		public async Task<int> CAHashtagCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("CA_HashtagCount", DP));
+		}
+	}
+
 	public class CANewsTypeOnPage
 	{
 		public int Id { get; set; }

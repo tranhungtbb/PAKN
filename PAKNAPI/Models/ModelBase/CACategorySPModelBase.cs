@@ -11,6 +11,314 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
+	public class CADepartmentDelete
+	{
+		private SQLCon _sQLCon;
+
+		public CADepartmentDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CADepartmentDelete()
+		{
+		}
+
+
+		public async Task<int> CADepartmentDeleteDAO(CADepartmentDeleteIN _cADepartmentDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cADepartmentDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_DepartmentDelete", DP));
+		}
+	}
+
+	public class CADepartmentDeleteIN
+	{
+		public int? Id { get; set; }
+	}
+
+	public class CADepartmentGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public CADepartmentGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CADepartmentGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Phone { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
+		public string Email { get; set; }
+		public int? DepartmentGroupId { get; set; }
+
+		public async Task<List<CADepartmentGetAllOnPage>> CADepartmentGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Code, string Description, bool? IsActived)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("Name", Name);
+			DP.Add("Code", Code);
+			DP.Add("Description", Description);
+			DP.Add("IsActived", IsActived);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CADepartmentGetAllOnPage>("CA_DepartmentGetAllOnPage", DP)).ToList();
+		}
+	}
+
+	public class CADepartmentGetByID
+	{
+		private SQLCon _sQLCon;
+
+		public CADepartmentGetByID(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CADepartmentGetByID()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Phone { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
+		public string Email { get; set; }
+		public int? DepartmentGroupId { get; set; }
+
+		public async Task<List<CADepartmentGetByID>> CADepartmentGetByIDDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CADepartmentGetByID>("CA_DepartmentGetByID", DP)).ToList();
+		}
+	}
+
+	public class CADepartmentGroupDelete
+	{
+		private SQLCon _sQLCon;
+
+		public CADepartmentGroupDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CADepartmentGroupDelete()
+		{
+		}
+
+
+		public async Task<int> CADepartmentGroupDeleteDAO(CADepartmentGroupDeleteIN _cADepartmentGroupDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cADepartmentGroupDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_DepartmentGroupDelete", DP));
+		}
+	}
+
+	public class CADepartmentGroupDeleteIN
+	{
+		public int? Id { get; set; }
+	}
+
+	public class CADepartmentGroupGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public CADepartmentGroupGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CADepartmentGroupGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
+
+		public async Task<List<CADepartmentGroupGetAllOnPage>> CADepartmentGroupGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Code, string Description, bool? IsActived)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("Name", Name);
+			DP.Add("Code", Code);
+			DP.Add("Description", Description);
+			DP.Add("IsActived", IsActived);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CADepartmentGroupGetAllOnPage>("CA_DepartmentGroupGetAllOnPage", DP)).ToList();
+		}
+	}
+
+	public class CADepartmentGroupGetByID
+	{
+		private SQLCon _sQLCon;
+
+		public CADepartmentGroupGetByID(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CADepartmentGroupGetByID()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
+
+		public async Task<List<CADepartmentGroupGetByID>> CADepartmentGroupGetByIDDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CADepartmentGroupGetByID>("CA_DepartmentGroupGetByID", DP)).ToList();
+		}
+	}
+
+	public class CADepartmentGroupInsert
+	{
+		private SQLCon _sQLCon;
+
+		public CADepartmentGroupInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CADepartmentGroupInsert()
+		{
+		}
+
+
+		public async Task<int> CADepartmentGroupInsertDAO(CADepartmentGroupInsertIN _cADepartmentGroupInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _cADepartmentGroupInsertIN.Name);
+			DP.Add("Code", _cADepartmentGroupInsertIN.Code);
+			DP.Add("IsActived", _cADepartmentGroupInsertIN.IsActived);
+			DP.Add("IsDeleted", _cADepartmentGroupInsertIN.IsDeleted);
+			DP.Add("Description", _cADepartmentGroupInsertIN.Description);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_DepartmentGroupInsert", DP));
+		}
+	}
+
+	public class CADepartmentGroupInsertIN
+	{
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public string Description { get; set; }
+	}
+
+	public class CADepartmentGroupUpdate
+	{
+		private SQLCon _sQLCon;
+
+		public CADepartmentGroupUpdate(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CADepartmentGroupUpdate()
+		{
+		}
+
+
+		public async Task<int> CADepartmentGroupUpdateDAO(CADepartmentGroupUpdateIN _cADepartmentGroupUpdateIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cADepartmentGroupUpdateIN.Id);
+			DP.Add("Name", _cADepartmentGroupUpdateIN.Name);
+			DP.Add("Code", _cADepartmentGroupUpdateIN.Code);
+			DP.Add("IsActived", _cADepartmentGroupUpdateIN.IsActived);
+			DP.Add("IsDeleted", _cADepartmentGroupUpdateIN.IsDeleted);
+			DP.Add("Description", _cADepartmentGroupUpdateIN.Description);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_DepartmentGroupUpdate", DP));
+		}
+	}
+
+	public class CADepartmentGroupUpdateIN
+	{
+		public int? Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public string Description { get; set; }
+	}
+
+	public class CADepartmentUpdate
+	{
+		private SQLCon _sQLCon;
+
+		public CADepartmentUpdate(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CADepartmentUpdate()
+		{
+		}
+
+
+		public async Task<int> CADepartmentUpdateDAO(CADepartmentUpdateIN _cADepartmentUpdateIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cADepartmentUpdateIN.Id);
+			DP.Add("Name", _cADepartmentUpdateIN.Name);
+			DP.Add("Code", _cADepartmentUpdateIN.Code);
+			DP.Add("Phone", _cADepartmentUpdateIN.Phone);
+			DP.Add("IsActived", _cADepartmentUpdateIN.IsActived);
+			DP.Add("IsDeleted", _cADepartmentUpdateIN.IsDeleted);
+			DP.Add("Description", _cADepartmentUpdateIN.Description);
+			DP.Add("Email", _cADepartmentUpdateIN.Email);
+			DP.Add("DepartmentGroupId", _cADepartmentUpdateIN.DepartmentGroupId);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_DepartmentUpdate", DP));
+		}
+	}
+
+	public class CADepartmentUpdateIN
+	{
+		public int? Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Phone { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public string Description { get; set; }
+		public string Email { get; set; }
+		public int? DepartmentGroupId { get; set; }
+	}
+
 	public class CAFieldDelete
 	{
 		private SQLCon _sQLCon;
@@ -181,6 +489,337 @@ namespace PAKNAPI.ModelBase
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
 		public int? OrderNumber { get; set; }
+	}
+
+	public class CAHashtagDelete
+	{
+		private SQLCon _sQLCon;
+
+		public CAHashtagDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAHashtagDelete()
+		{
+		}
+
+
+		public async Task<int> CAHashtagDeleteDAO(CAHashtagDeleteIN _cAHashtagDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAHashtagDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_HashtagDelete", DP));
+		}
+	}
+
+	public class CAHashtagDeleteIN
+	{
+		public int? Id { get; set; }
+	}
+
+	public class CAHashtagGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public CAHashtagGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAHashtagGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public int? Quantity { get; set; }
+
+		public async Task<List<CAHashtagGetAllOnPage>> CAHashtagGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Code, bool? IsActived)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("Name", Name);
+			DP.Add("Code", Code);
+			DP.Add("IsActived", IsActived);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAHashtagGetAllOnPage>("CA_HashtagGetAllOnPage", DP)).ToList();
+		}
+	}
+
+	public class CAHashtagGetByID
+	{
+		private SQLCon _sQLCon;
+
+		public CAHashtagGetByID(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAHashtagGetByID()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public int? Quantity { get; set; }
+
+		public async Task<List<CAHashtagGetByID>> CAHashtagGetByIDDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAHashtagGetByID>("CA_HashtagGetByID", DP)).ToList();
+		}
+	}
+
+	public class CAHashtagInsert
+	{
+		private SQLCon _sQLCon;
+
+		public CAHashtagInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAHashtagInsert()
+		{
+		}
+
+
+		public async Task<int> CAHashtagInsertDAO(CAHashtagInsertIN _cAHashtagInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _cAHashtagInsertIN.Name);
+			DP.Add("Code", _cAHashtagInsertIN.Code);
+			DP.Add("IsActived", _cAHashtagInsertIN.IsActived);
+			DP.Add("IsDeleted", _cAHashtagInsertIN.IsDeleted);
+			DP.Add("Quantity", _cAHashtagInsertIN.Quantity);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_HashtagInsert", DP));
+		}
+	}
+
+	public class CAHashtagInsertIN
+	{
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public int? Quantity { get; set; }
+	}
+
+	public class CAHashtagUpdate
+	{
+		private SQLCon _sQLCon;
+
+		public CAHashtagUpdate(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAHashtagUpdate()
+		{
+		}
+
+
+		public async Task<int> CAHashtagUpdateDAO(CAHashtagUpdateIN _cAHashtagUpdateIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAHashtagUpdateIN.Id);
+			DP.Add("Name", _cAHashtagUpdateIN.Name);
+			DP.Add("Code", _cAHashtagUpdateIN.Code);
+			DP.Add("IsActived", _cAHashtagUpdateIN.IsActived);
+			DP.Add("IsDeleted", _cAHashtagUpdateIN.IsDeleted);
+			DP.Add("Quantity", _cAHashtagUpdateIN.Quantity);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_HashtagUpdate", DP));
+		}
+	}
+
+	public class CAHashtagUpdateIN
+	{
+		public int? Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public int? Quantity { get; set; }
+	}
+
+	public class CANewsTypeDelete
+	{
+		private SQLCon _sQLCon;
+
+		public CANewsTypeDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CANewsTypeDelete()
+		{
+		}
+
+
+		public async Task<int> CANewsTypeDeleteDAO(CANewsTypeDeleteIN _cANewsTypeDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cANewsTypeDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_NewsTypeDelete", DP));
+		}
+	}
+
+	public class CANewsTypeDeleteIN
+	{
+		public int? Id { get; set; }
+	}
+
+	public class CANewsTypeGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public CANewsTypeGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CANewsTypeGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
+
+		public async Task<List<CANewsTypeGetAllOnPage>> CANewsTypeGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Code, string Description, bool? IsActived)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("Name", Name);
+			DP.Add("Code", Code);
+			DP.Add("Description", Description);
+			DP.Add("IsActived", IsActived);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CANewsTypeGetAllOnPage>("CA_NewsTypeGetAllOnPage", DP)).ToList();
+		}
+	}
+
+	public class CANewsTypeGetByID
+	{
+		private SQLCon _sQLCon;
+
+		public CANewsTypeGetByID(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CANewsTypeGetByID()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
+
+		public async Task<List<CANewsTypeGetByID>> CANewsTypeGetByIDDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CANewsTypeGetByID>("CA_NewsTypeGetByID", DP)).ToList();
+		}
+	}
+
+	public class CANewsTypeInsert
+	{
+		private SQLCon _sQLCon;
+
+		public CANewsTypeInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CANewsTypeInsert()
+		{
+		}
+
+
+		public async Task<int> CANewsTypeInsertDAO(CANewsTypeInsertIN _cANewsTypeInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _cANewsTypeInsertIN.Name);
+			DP.Add("Code", _cANewsTypeInsertIN.Code);
+			DP.Add("IsActived", _cANewsTypeInsertIN.IsActived);
+			DP.Add("IsDeleted", _cANewsTypeInsertIN.IsDeleted);
+			DP.Add("Description", _cANewsTypeInsertIN.Description);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_NewsTypeInsert", DP));
+		}
+	}
+
+	public class CANewsTypeInsertIN
+	{
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public string Description { get; set; }
+	}
+
+	public class CANewsTypeUpdate
+	{
+		private SQLCon _sQLCon;
+
+		public CANewsTypeUpdate(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CANewsTypeUpdate()
+		{
+		}
+
+
+		public async Task<int> CANewsTypeUpdateDAO(CANewsTypeUpdateIN _cANewsTypeUpdateIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cANewsTypeUpdateIN.Id);
+			DP.Add("Name", _cANewsTypeUpdateIN.Name);
+			DP.Add("Code", _cANewsTypeUpdateIN.Code);
+			DP.Add("IsActived", _cANewsTypeUpdateIN.IsActived);
+			DP.Add("IsDeleted", _cANewsTypeUpdateIN.IsDeleted);
+			DP.Add("Description", _cANewsTypeUpdateIN.Description);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_NewsTypeUpdate", DP));
+		}
+	}
+
+	public class CANewsTypeUpdateIN
+	{
+		public int? Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public string Description { get; set; }
 	}
 
 	public class CAPositionDelete
@@ -547,5 +1186,171 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
+	}
+
+	public class CAWordDelete
+	{
+		private SQLCon _sQLCon;
+
+		public CAWordDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAWordDelete()
+		{
+		}
+
+
+		public async Task<int> CAWordDeleteDAO(CAWordDeleteIN _cAWordDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAWordDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_WordDelete", DP));
+		}
+	}
+
+	public class CAWordDeleteIN
+	{
+		public int? Id { get; set; }
+	}
+
+	public class CAWordGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public CAWordGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAWordGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
+
+		public async Task<List<CAWordGetAllOnPage>> CAWordGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Code, string Description, bool? IsActived)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("Name", Name);
+			DP.Add("Code", Code);
+			DP.Add("Description", Description);
+			DP.Add("IsActived", IsActived);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAWordGetAllOnPage>("CA_WordGetAllOnPage", DP)).ToList();
+		}
+	}
+
+	public class CAWordGetByID
+	{
+		private SQLCon _sQLCon;
+
+		public CAWordGetByID(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAWordGetByID()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
+
+		public async Task<List<CAWordGetByID>> CAWordGetByIDDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAWordGetByID>("CA_WordGetByID", DP)).ToList();
+		}
+	}
+
+	public class CAWordInsert
+	{
+		private SQLCon _sQLCon;
+
+		public CAWordInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAWordInsert()
+		{
+		}
+
+
+		public async Task<int> CAWordInsertDAO(CAWordInsertIN _cAWordInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _cAWordInsertIN.Name);
+			DP.Add("Code", _cAWordInsertIN.Code);
+			DP.Add("IsActived", _cAWordInsertIN.IsActived);
+			DP.Add("IsDeleted", _cAWordInsertIN.IsDeleted);
+			DP.Add("Description", _cAWordInsertIN.Description);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_WordInsert", DP));
+		}
+	}
+
+	public class CAWordInsertIN
+	{
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public string Description { get; set; }
+	}
+
+	public class CAWordUpdate
+	{
+		private SQLCon _sQLCon;
+
+		public CAWordUpdate(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAWordUpdate()
+		{
+		}
+
+
+		public async Task<int> CAWordUpdateDAO(CAWordUpdateIN _cAWordUpdateIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAWordUpdateIN.Id);
+			DP.Add("Name", _cAWordUpdateIN.Name);
+			DP.Add("Code", _cAWordUpdateIN.Code);
+			DP.Add("IsActived", _cAWordUpdateIN.IsActived);
+			DP.Add("IsDeleted", _cAWordUpdateIN.IsDeleted);
+			DP.Add("Description", _cAWordUpdateIN.Description);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_WordUpdate", DP));
+		}
+	}
+
+	public class CAWordUpdateIN
+	{
+		public int? Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public string Description { get; set; }
 	}
 }

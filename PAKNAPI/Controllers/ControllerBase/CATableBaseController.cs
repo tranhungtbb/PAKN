@@ -812,6 +812,268 @@ namespace PAKNAPI.ControllerBase
 
 		#endregion CAField
 
+		#region CAHashtag
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAHashtagGetByID")]
+		public async Task<ActionResult<object>> CAHashtagGetByID(int? Id)
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAHashtag(_appSetting).CAHashtagGetByID(Id) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAHashtagGetAll")]
+		public async Task<ActionResult<object>> CAHashtagGetAll()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAHashtag(_appSetting).CAHashtagGetAll() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAHashtagGetAllOnPage")]
+		public async Task<ActionResult<object>> CAHashtagGetAllOnPage(int PageSize, int PageIndex)
+		{
+			try
+			{
+				List<CAHashtagOnPage> rsCAHashtagOnPage = await new CAHashtag(_appSetting).CAHashtagGetAllOnPage(PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAHashtag", rsCAHashtagOnPage},
+						{"TotalCount", rsCAHashtagOnPage != null && rsCAHashtagOnPage.Count > 0 ? rsCAHashtagOnPage[0].RowNumber : 0},
+						{"PageIndex", rsCAHashtagOnPage != null && rsCAHashtagOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsCAHashtagOnPage != null && rsCAHashtagOnPage.Count > 0 ? PageSize : 0},
+					};
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAHashtagInsert")]
+		public async Task<ActionResult<object>> CAHashtagInsert(CAHashtag _cAHashtag)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAHashtag(_appSetting).CAHashtagInsert(_cAHashtag) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAHashtagListInsert")]
+		public async Task<ActionResult<object>> CAHashtagListInsert(List<CAHashtag> _cAHashtags)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (CAHashtag _cAHashtag in _cAHashtags)
+				{
+					int? result = await new CAHashtag(_appSetting).CAHashtagInsert(_cAHashtag);
+					if (result != null)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAHashtagUpdate")]
+		public async Task<ActionResult<object>> CAHashtagUpdate(CAHashtag _cAHashtag)
+		{
+			try
+			{
+				int count = await new CAHashtag(_appSetting).CAHashtagUpdate(_cAHashtag);
+				if (count > 0)
+				{
+					return count;
+				}
+				else
+				{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAHashtagDelete")]
+		public async Task<ActionResult<object>> CAHashtagDelete(CAHashtag _cAHashtag)
+		{
+			try
+			{
+				int count = await new CAHashtag(_appSetting).CAHashtagDelete(_cAHashtag);
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return count;
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAHashtagListDelete")]
+		public async Task<ActionResult<object>> CAHashtagListDelete(List<CAHashtag> _cAHashtags)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (CAHashtag _cAHashtag in _cAHashtags)
+				{
+					var result = await new CAHashtag(_appSetting).CAHashtagDelete(_cAHashtag);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAHashtagDeleteAll")]
+		public async Task<ActionResult<object>> CAHashtagDeleteAll()
+		{
+			try
+			{
+				int count = await new CAHashtag(_appSetting).CAHashtagDeleteAll();
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return count;
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAHashtagCount")]
+		public async Task<ActionResult<object>> CAHashtagCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAHashtag(_appSetting).CAHashtagCount() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		#endregion CAHashtag
+
 		#region CANewsType
 
 		[HttpGet]
