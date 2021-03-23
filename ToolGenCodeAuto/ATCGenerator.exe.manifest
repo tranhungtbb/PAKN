@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ATCGenerator.exe" size="219152">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ATCGenerator.exe" size="219664">
       <assemblyIdentity name="ATCGenerator" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>5jnB1P0GFDLcN09EsUQ53911CfJIez9aiWZa3jJXGQ0=</dsig:DigestValue>
+        <dsig:DigestValue>tYdaxmU6r0z7nUHVP2RkJx9kjTMIqpM5qu2A8Q1J0Ck=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
