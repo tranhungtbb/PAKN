@@ -1,25 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "E:\\SV_2021\\PhanAnhKienNghi\\Source\\pakn\\PAKNAPI\\PAKNAPI.csproj": {}
+    "C:\\Users\\ohleo\\OneDrive\\Desktop\\pakn\\PAKNAPI\\PAKNAPI.csproj": {}
   },
   "projects": {
-    "E:\\SV_2021\\PhanAnhKienNghi\\Source\\pakn\\PAKNAPI\\PAKNAPI.csproj": {
+    "C:\\Users\\ohleo\\OneDrive\\Desktop\\pakn\\PAKNAPI\\PAKNAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\SV_2021\\PhanAnhKienNghi\\Source\\pakn\\PAKNAPI\\PAKNAPI.csproj",
+        "projectUniqueName": "C:\\Users\\ohleo\\OneDrive\\Desktop\\pakn\\PAKNAPI\\PAKNAPI.csproj",
         "projectName": "PAKNAPI",
-        "projectPath": "E:\\SV_2021\\PhanAnhKienNghi\\Source\\pakn\\PAKNAPI\\PAKNAPI.csproj",
-        "packagesPath": "C:\\Users\\mrRicardo\\.nuget\\packages\\",
-        "outputPath": "E:\\SV_2021\\PhanAnhKienNghi\\Source\\pakn\\PAKNAPI\\obj\\",
+        "projectPath": "C:\\Users\\ohleo\\OneDrive\\Desktop\\pakn\\PAKNAPI\\PAKNAPI.csproj",
+        "packagesPath": "C:\\Users\\ohleo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ohleo\\OneDrive\\Desktop\\pakn\\PAKNAPI\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\mrRicardo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ohleo\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 18.1.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.1.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -27,14 +23,11 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\DevExpress 18.1\\Components\\System\\Components\\Packages": {},
-          "C:\\Program Files (x86)\\DevExpress 18.1\\Components\\System\\Components\\packages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "D:\\DevExpress\\Components\\System\\Components\\Packages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -46,7 +39,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Dapper": {
               "target": "Package",
@@ -103,7 +95,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
