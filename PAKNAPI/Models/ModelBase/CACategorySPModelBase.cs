@@ -178,4 +178,198 @@ namespace PAKNAPI.ModelBase
 		public string Description { get; set; }
 		public int? OrderNumber { get; set; }
 	}
+
+	public class CAUnitDelete
+	{
+		private SQLCon _sQLCon;
+
+		public CAUnitDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAUnitDelete()
+		{
+		}
+
+
+		public async Task<int> CAUnitDeleteDAO(CAUnitDeleteIN _cAUnitDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAUnitDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_UnitDelete", DP));
+		}
+	}
+
+	public class CAUnitDeleteIN
+	{
+		public int? Id { get; set; }
+	}
+
+	public class CAUnitGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public CAUnitGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAUnitGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber;
+		public int Id;
+		public string Name;
+		public byte UnitLevel;
+		public bool IsActived;
+		public bool IsDeleted;
+		public int? ParentId;
+		public string Description;
+		public string Email;
+		public string Phone;
+		public string Address;
+
+		public async Task<List<CAUnitGetAllOnPage>> CAUnitGetAllOnPageDAO(int? PageSize, int? PageIndex, string Sort, int? ParentId, byte? Level, string SearchName, string SearchPhone, string SearchEmail, string SearchAddress, bool? SearchActive)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("Sort", Sort);
+			DP.Add("ParentId", ParentId);
+			DP.Add("Level", Level);
+			DP.Add("SearchName", SearchName);
+			DP.Add("SearchPhone", SearchPhone);
+			DP.Add("SearchEmail", SearchEmail);
+			DP.Add("SearchAddress", SearchAddress);
+			DP.Add("SearchActive", SearchActive);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAUnitGetAllOnPage>("CA_UnitGetAllOnPage", DP)).ToList();
+		}
+	}
+
+	public class CAUnitGetByID
+	{
+		private SQLCon _sQLCon;
+
+		public CAUnitGetByID(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAUnitGetByID()
+		{
+		}
+
+		public int Id;
+		public string Name;
+		public byte UnitLevel;
+		public bool IsActived;
+		public bool IsDeleted;
+		public int? ParentId;
+		public string Description;
+		public string Email;
+		public string Phone;
+		public string Address;
+
+		public async Task<List<CAUnitGetByID>> CAUnitGetByIDDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAUnitGetByID>("CA_UnitGetByID", DP)).ToList();
+		}
+	}
+
+	public class CAUnitInsert
+	{
+		private SQLCon _sQLCon;
+
+		public CAUnitInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAUnitInsert()
+		{
+		}
+
+
+		public async Task<int> CAUnitInsertDAO(CAUnitInsertIN _cAUnitInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _cAUnitInsertIN.Name);
+			DP.Add("UnitLevel", _cAUnitInsertIN.UnitLevel);
+			DP.Add("ParentId", _cAUnitInsertIN.ParentId);
+			DP.Add("Description", _cAUnitInsertIN.Description);
+			DP.Add("Email", _cAUnitInsertIN.Email);
+			DP.Add("Phone", _cAUnitInsertIN.Phone);
+			DP.Add("Address", _cAUnitInsertIN.Address);
+			DP.Add("IsActived", _cAUnitInsertIN.IsActived);
+			DP.Add("IsDeleted", _cAUnitInsertIN.IsDeleted);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_UnitInsert", DP));
+		}
+	}
+
+	public class CAUnitInsertIN
+	{
+		public string Name { get; set; }
+		public byte? UnitLevel { get; set; }
+		public int? ParentId { get; set; }
+		public string Description { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Address { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+	}
+
+	public class CAUnitUpdate
+	{
+		private SQLCon _sQLCon;
+
+		public CAUnitUpdate(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAUnitUpdate()
+		{
+		}
+
+
+		public async Task<int> CAUnitUpdateDAO(CAUnitUpdateIN _cAUnitUpdateIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAUnitUpdateIN.Id);
+			DP.Add("Name", _cAUnitUpdateIN.Name);
+			DP.Add("UnitLevel", _cAUnitUpdateIN.UnitLevel);
+			DP.Add("ParentId", _cAUnitUpdateIN.ParentId);
+			DP.Add("Description", _cAUnitUpdateIN.Description);
+			DP.Add("Email", _cAUnitUpdateIN.Email);
+			DP.Add("Phone", _cAUnitUpdateIN.Phone);
+			DP.Add("Address", _cAUnitUpdateIN.Address);
+			DP.Add("IsActived", _cAUnitUpdateIN.IsActived);
+			DP.Add("IsDeleted", _cAUnitUpdateIN.IsDeleted);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_UnitUpdate", DP));
+		}
+	}
+
+	public class CAUnitUpdateIN
+	{
+		public int? Id { get; set; }
+		public string Name { get; set; }
+		public byte? UnitLevel { get; set; }
+		public int? ParentId { get; set; }
+		public string Description { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Address { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+	}
 }

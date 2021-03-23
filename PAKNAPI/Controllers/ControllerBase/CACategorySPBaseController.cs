@@ -231,5 +231,211 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAUnitDeleteBase")]
+		public async Task<ActionResult<object>> CAUnitDeleteBase(CAUnitDeleteIN _cAUnitDeleteIN)
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = new CAUnitDelete(_appSetting).CAUnitDeleteDAO(_cAUnitDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAUnitDeleteListBase")]
+		public async Task<ActionResult<object>> CAUnitDeleteListBase(List<CAUnitDeleteIN> _cAUnitDeleteINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _cAUnitDeleteIN in _cAUnitDeleteINs)
+				{
+					var result = await new CAUnitDelete(_appSetting).CAUnitDeleteDAO(_cAUnitDeleteIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAUnitGetAllOnPageBase")]
+		public async Task<ActionResult<object>> CAUnitGetAllOnPageBase(int? PageSize, int? PageIndex, string Sort, int? ParentId, byte? Level, string SearchName, string SearchPhone, string SearchEmail, string SearchAddress, bool? SearchActive)
+		{
+			try
+			{
+				List<CAUnitGetAllOnPage> rsCAUnitGetAllOnPage = await new CAUnitGetAllOnPage(_appSetting).CAUnitGetAllOnPageDAO(PageSize, PageIndex, Sort, ParentId, Level, SearchName, SearchPhone, SearchEmail, SearchAddress, SearchActive);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAUnitGetAllOnPage", rsCAUnitGetAllOnPage},
+					};
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAUnitGetByIDBase")]
+		public async Task<ActionResult<object>> CAUnitGetByIDBase(int? Id)
+		{
+			try
+			{
+				List<CAUnitGetByID> rsCAUnitGetByID = await new CAUnitGetByID(_appSetting).CAUnitGetByIDDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAUnitGetByID", rsCAUnitGetByID},
+					};
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAUnitInsertBase")]
+		public async Task<ActionResult<object>> CAUnitInsertBase(CAUnitInsertIN _cAUnitInsertIN)
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = new CAUnitInsert(_appSetting).CAUnitInsertDAO(_cAUnitInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAUnitInsertListBase")]
+		public async Task<ActionResult<object>> CAUnitInsertListBase(List<CAUnitInsertIN> _cAUnitInsertINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _cAUnitInsertIN in _cAUnitInsertINs)
+				{
+					var result = await new CAUnitInsert(_appSetting).CAUnitInsertDAO(_cAUnitInsertIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAUnitUpdateBase")]
+		public async Task<ActionResult<object>> CAUnitUpdateBase(CAUnitUpdateIN _cAUnitUpdateIN)
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = new CAUnitUpdate(_appSetting).CAUnitUpdateDAO(_cAUnitUpdateIN) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAUnitUpdateListBase")]
+		public async Task<ActionResult<object>> CAUnitUpdateListBase(List<CAUnitUpdateIN> _cAUnitUpdateINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _cAUnitUpdateIN in _cAUnitUpdateINs)
+				{
+					var result = await new CAUnitUpdate(_appSetting).CAUnitUpdateDAO(_cAUnitUpdateIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 	}
 }
