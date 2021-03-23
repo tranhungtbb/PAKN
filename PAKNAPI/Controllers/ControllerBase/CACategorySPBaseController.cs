@@ -33,7 +33,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new CAPositionDelete(_appSetting).CAPositionDeleteDAO(_cAPositionDeleteIN);
+				return new ResultApi { Success = ResultCode.OK, Result = new CAPositionDelete(_appSetting).CAPositionDeleteDAO(_cAPositionDeleteIN) };
 			}
 			catch (Exception ex)
 			{
@@ -131,7 +131,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new CAPositionInsert(_appSetting).CAPositionInsertDAO(_cAPositionInsertIN);
+				return new ResultApi { Success = ResultCode.OK, Result = new CAPositionInsert(_appSetting).CAPositionInsertDAO(_cAPositionInsertIN) };
 			}
 			catch (Exception ex)
 			{
@@ -185,7 +185,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new CAPositionUpdate(_appSetting).CAPositionUpdateDAO(_cAPositionUpdateIN);
+				return new ResultApi { Success = ResultCode.OK, Result = new CAPositionUpdate(_appSetting).CAPositionUpdateDAO(_cAPositionUpdateIN) };
 			}
 			catch (Exception ex)
 			{

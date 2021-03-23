@@ -49,7 +49,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>hpFECTCLYYo1eakjYu/y45B/FjBkw8E7lOeo+Mx2Ul4=</dsig:DigestValue>
+        <dsig:DigestValue>5jnB1P0GFDLcN09EsUQ53911CfJIez9aiWZa3jJXGQ0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -66,14 +66,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Db.dll" size="279552">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Db.dll" size="280064">
       <assemblyIdentity name="Db" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>vC89bPbo+19hwM8rLyoaX3ohNW5gBrzsBdB96vVwAzM=</dsig:DigestValue>
+        <dsig:DigestValue>nDuuE2iuOpFMfeqohi/+/jE5Oog6ExL2uYvGTdFVGWM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

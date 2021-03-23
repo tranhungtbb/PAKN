@@ -109,6 +109,13 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldDeleteAll", DP));
 		}
+
+		public async Task<int> CAFieldCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("CA_FieldCount", DP));
+		}
 	}
 
 	public class CAPositionOnPage
@@ -208,6 +215,13 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_PositionDeleteAll", DP));
+		}
+
+		public async Task<int> CAPositionCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("CA_PositionCount", DP));
 		}
 	}
 }

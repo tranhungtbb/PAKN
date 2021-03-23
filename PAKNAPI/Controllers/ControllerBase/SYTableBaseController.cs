@@ -35,7 +35,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYCaptCha(_appSetting).SYCaptChaGetByID(Id);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYCaptCha(_appSetting).SYCaptChaGetByID(Id) };
 			}
 			catch (Exception ex)
 			{
@@ -52,7 +52,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYCaptCha(_appSetting).SYCaptChaGetAll();
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYCaptCha(_appSetting).SYCaptChaGetAll() };
 			}
 			catch (Exception ex)
 			{
@@ -78,7 +78,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageSize", rsSYCaptChaOnPage != null && rsSYCaptChaOnPage.Count > 0 ? PageSize : 0},
 					};
 				return Ok(json);
-				}
+			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
@@ -94,7 +94,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYCaptCha(_appSetting).SYCaptChaInsert(_sYCaptCha);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYCaptCha(_appSetting).SYCaptChaInsert(_sYCaptCha) };
 			}
 			catch (Exception ex)
 			{
@@ -253,6 +253,23 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("SYCaptChaCount")]
+		public async Task<ActionResult<object>> SYCaptChaCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYCaptCha(_appSetting).SYCaptChaCount() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion SYCaptCha
 
 		#region SYGroupUser
@@ -264,7 +281,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYGroupUser(_appSetting).SYGroupUserGetByID(Id);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYGroupUser(_appSetting).SYGroupUserGetByID(Id) };
 			}
 			catch (Exception ex)
 			{
@@ -281,7 +298,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYGroupUser(_appSetting).SYGroupUserGetAll();
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYGroupUser(_appSetting).SYGroupUserGetAll() };
 			}
 			catch (Exception ex)
 			{
@@ -307,7 +324,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageSize", rsSYGroupUserOnPage != null && rsSYGroupUserOnPage.Count > 0 ? PageSize : 0},
 					};
 				return Ok(json);
-				}
+			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
@@ -323,7 +340,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYGroupUser(_appSetting).SYGroupUserInsert(_sYGroupUser);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYGroupUser(_appSetting).SYGroupUserInsert(_sYGroupUser) };
 			}
 			catch (Exception ex)
 			{
@@ -482,6 +499,23 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("SYGroupUserCount")]
+		public async Task<ActionResult<object>> SYGroupUserCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYGroupUser(_appSetting).SYGroupUserCount() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion SYGroupUser
 
 		#region SYPermission
@@ -493,7 +527,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYPermission(_appSetting).SYPermissionGetByID(Id);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermission(_appSetting).SYPermissionGetByID(Id) };
 			}
 			catch (Exception ex)
 			{
@@ -510,7 +544,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYPermission(_appSetting).SYPermissionGetAll();
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermission(_appSetting).SYPermissionGetAll() };
 			}
 			catch (Exception ex)
 			{
@@ -536,7 +570,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageSize", rsSYPermissionOnPage != null && rsSYPermissionOnPage.Count > 0 ? PageSize : 0},
 					};
 				return Ok(json);
-				}
+			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
@@ -552,7 +586,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYPermission(_appSetting).SYPermissionInsert(_sYPermission);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermission(_appSetting).SYPermissionInsert(_sYPermission) };
 			}
 			catch (Exception ex)
 			{
@@ -711,6 +745,23 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("SYPermissionCount")]
+		public async Task<ActionResult<object>> SYPermissionCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermission(_appSetting).SYPermissionCount() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion SYPermission
 
 		#region SYPermissionCategory
@@ -722,7 +773,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYPermissionCategory(_appSetting).SYPermissionCategoryGetByID(Id);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionCategory(_appSetting).SYPermissionCategoryGetByID(Id) };
 			}
 			catch (Exception ex)
 			{
@@ -739,7 +790,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYPermissionCategory(_appSetting).SYPermissionCategoryGetAll();
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionCategory(_appSetting).SYPermissionCategoryGetAll() };
 			}
 			catch (Exception ex)
 			{
@@ -765,7 +816,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageSize", rsSYPermissionCategoryOnPage != null && rsSYPermissionCategoryOnPage.Count > 0 ? PageSize : 0},
 					};
 				return Ok(json);
-				}
+			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
@@ -781,7 +832,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYPermissionCategory(_appSetting).SYPermissionCategoryInsert(_sYPermissionCategory);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionCategory(_appSetting).SYPermissionCategoryInsert(_sYPermissionCategory) };
 			}
 			catch (Exception ex)
 			{
@@ -940,6 +991,23 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("SYPermissionCategoryCount")]
+		public async Task<ActionResult<object>> SYPermissionCategoryCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionCategory(_appSetting).SYPermissionCategoryCount() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion SYPermissionCategory
 
 		#region SYPermissionFunction
@@ -951,7 +1019,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYPermissionFunction(_appSetting).SYPermissionFunctionGetByID(Id);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionFunction(_appSetting).SYPermissionFunctionGetByID(Id) };
 			}
 			catch (Exception ex)
 			{
@@ -968,7 +1036,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYPermissionFunction(_appSetting).SYPermissionFunctionGetAll();
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionFunction(_appSetting).SYPermissionFunctionGetAll() };
 			}
 			catch (Exception ex)
 			{
@@ -994,7 +1062,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageSize", rsSYPermissionFunctionOnPage != null && rsSYPermissionFunctionOnPage.Count > 0 ? PageSize : 0},
 					};
 				return Ok(json);
-				}
+			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
@@ -1010,7 +1078,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYPermissionFunction(_appSetting).SYPermissionFunctionInsert(_sYPermissionFunction);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionFunction(_appSetting).SYPermissionFunctionInsert(_sYPermissionFunction) };
 			}
 			catch (Exception ex)
 			{
@@ -1169,6 +1237,23 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("SYPermissionFunctionCount")]
+		public async Task<ActionResult<object>> SYPermissionFunctionCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionFunction(_appSetting).SYPermissionFunctionCount() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion SYPermissionFunction
 
 		#region SYPermissionGroupUser
@@ -1180,7 +1265,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYPermissionGroupUser(_appSetting).SYPermissionGroupUserGetByID(PermissionId);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionGroupUser(_appSetting).SYPermissionGroupUserGetByID(PermissionId) };
 			}
 			catch (Exception ex)
 			{
@@ -1197,7 +1282,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYPermissionGroupUser(_appSetting).SYPermissionGroupUserGetAll();
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionGroupUser(_appSetting).SYPermissionGroupUserGetAll() };
 			}
 			catch (Exception ex)
 			{
@@ -1223,7 +1308,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageSize", rsSYPermissionGroupUserOnPage != null && rsSYPermissionGroupUserOnPage.Count > 0 ? PageSize : 0},
 					};
 				return Ok(json);
-				}
+			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
@@ -1239,7 +1324,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYPermissionGroupUser(_appSetting).SYPermissionGroupUserInsert(_sYPermissionGroupUser);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionGroupUser(_appSetting).SYPermissionGroupUserInsert(_sYPermissionGroupUser) };
 			}
 			catch (Exception ex)
 			{
@@ -1398,6 +1483,23 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("SYPermissionGroupUserCount")]
+		public async Task<ActionResult<object>> SYPermissionGroupUserCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionGroupUser(_appSetting).SYPermissionGroupUserCount() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion SYPermissionGroupUser
 
 		#region SYPermissionUser
@@ -1409,7 +1511,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYPermissionUser(_appSetting).SYPermissionUserGetByID(UserId);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionUser(_appSetting).SYPermissionUserGetByID(UserId) };
 			}
 			catch (Exception ex)
 			{
@@ -1426,7 +1528,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYPermissionUser(_appSetting).SYPermissionUserGetAll();
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionUser(_appSetting).SYPermissionUserGetAll() };
 			}
 			catch (Exception ex)
 			{
@@ -1452,7 +1554,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageSize", rsSYPermissionUserOnPage != null && rsSYPermissionUserOnPage.Count > 0 ? PageSize : 0},
 					};
 				return Ok(json);
-				}
+			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
@@ -1468,7 +1570,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYPermissionUser(_appSetting).SYPermissionUserInsert(_sYPermissionUser);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionUser(_appSetting).SYPermissionUserInsert(_sYPermissionUser) };
 			}
 			catch (Exception ex)
 			{
@@ -1627,6 +1729,23 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("SYPermissionUserCount")]
+		public async Task<ActionResult<object>> SYPermissionUserCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionUser(_appSetting).SYPermissionUserCount() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion SYPermissionUser
 
 		#region SYRole
@@ -1638,7 +1757,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYRole(_appSetting).SYRoleGetByID(Id);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYRole(_appSetting).SYRoleGetByID(Id) };
 			}
 			catch (Exception ex)
 			{
@@ -1655,7 +1774,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYRole(_appSetting).SYRoleGetAll();
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYRole(_appSetting).SYRoleGetAll() };
 			}
 			catch (Exception ex)
 			{
@@ -1681,7 +1800,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageSize", rsSYRoleOnPage != null && rsSYRoleOnPage.Count > 0 ? PageSize : 0},
 					};
 				return Ok(json);
-				}
+			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
@@ -1697,7 +1816,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYRole(_appSetting).SYRoleInsert(_sYRole);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYRole(_appSetting).SYRoleInsert(_sYRole) };
 			}
 			catch (Exception ex)
 			{
@@ -1856,6 +1975,23 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("SYRoleCount")]
+		public async Task<ActionResult<object>> SYRoleCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYRole(_appSetting).SYRoleCount() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion SYRole
 
 		#region SYSystemLog
@@ -1867,7 +2003,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYSystemLog(_appSetting).SYSystemLogGetByID(Id);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYSystemLog(_appSetting).SYSystemLogGetByID(Id) };
 			}
 			catch (Exception ex)
 			{
@@ -1884,7 +2020,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYSystemLog(_appSetting).SYSystemLogGetAll();
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYSystemLog(_appSetting).SYSystemLogGetAll() };
 			}
 			catch (Exception ex)
 			{
@@ -1910,7 +2046,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageSize", rsSYSystemLogOnPage != null && rsSYSystemLogOnPage.Count > 0 ? PageSize : 0},
 					};
 				return Ok(json);
-				}
+			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
@@ -1926,7 +2062,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYSystemLog(_appSetting).SYSystemLogInsert(_sYSystemLog);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYSystemLog(_appSetting).SYSystemLogInsert(_sYSystemLog) };
 			}
 			catch (Exception ex)
 			{
@@ -2085,6 +2221,23 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("SYSystemLogCount")]
+		public async Task<ActionResult<object>> SYSystemLogCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYSystemLog(_appSetting).SYSystemLogCount() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion SYSystemLog
 
 		#region SYUnit
@@ -2096,7 +2249,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYUnit(_appSetting).SYUnitGetByID(Id);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUnit(_appSetting).SYUnitGetByID(Id) };
 			}
 			catch (Exception ex)
 			{
@@ -2113,7 +2266,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYUnit(_appSetting).SYUnitGetAll();
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUnit(_appSetting).SYUnitGetAll() };
 			}
 			catch (Exception ex)
 			{
@@ -2139,7 +2292,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageSize", rsSYUnitOnPage != null && rsSYUnitOnPage.Count > 0 ? PageSize : 0},
 					};
 				return Ok(json);
-				}
+			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
@@ -2155,7 +2308,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYUnit(_appSetting).SYUnitInsert(_sYUnit);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUnit(_appSetting).SYUnitInsert(_sYUnit) };
 			}
 			catch (Exception ex)
 			{
@@ -2314,6 +2467,23 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("SYUnitCount")]
+		public async Task<ActionResult<object>> SYUnitCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUnit(_appSetting).SYUnitCount() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion SYUnit
 
 		#region SYUser
@@ -2325,7 +2495,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYUser(_appSetting).SYUserGetByID(Id);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUser(_appSetting).SYUserGetByID(Id) };
 			}
 			catch (Exception ex)
 			{
@@ -2342,7 +2512,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYUser(_appSetting).SYUserGetAll();
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUser(_appSetting).SYUserGetAll() };
 			}
 			catch (Exception ex)
 			{
@@ -2368,7 +2538,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageSize", rsSYUserOnPage != null && rsSYUserOnPage.Count > 0 ? PageSize : 0},
 					};
 				return Ok(json);
-				}
+			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
@@ -2384,7 +2554,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYUser(_appSetting).SYUserInsert(_sYUser);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUser(_appSetting).SYUserInsert(_sYUser) };
 			}
 			catch (Exception ex)
 			{
@@ -2543,6 +2713,23 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("SYUserCount")]
+		public async Task<ActionResult<object>> SYUserCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUser(_appSetting).SYUserCount() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion SYUser
 
 		#region SYUserGroupUser
@@ -2554,7 +2741,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYUserGroupUser(_appSetting).SYUserGroupUserGetByID(Id);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserGroupUser(_appSetting).SYUserGroupUserGetByID(Id) };
 			}
 			catch (Exception ex)
 			{
@@ -2571,7 +2758,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYUserGroupUser(_appSetting).SYUserGroupUserGetAll();
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserGroupUser(_appSetting).SYUserGroupUserGetAll() };
 			}
 			catch (Exception ex)
 			{
@@ -2597,7 +2784,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageSize", rsSYUserGroupUserOnPage != null && rsSYUserGroupUserOnPage.Count > 0 ? PageSize : 0},
 					};
 				return Ok(json);
-				}
+			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
@@ -2613,7 +2800,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYUserGroupUser(_appSetting).SYUserGroupUserInsert(_sYUserGroupUser);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserGroupUser(_appSetting).SYUserGroupUserInsert(_sYUserGroupUser) };
 			}
 			catch (Exception ex)
 			{
@@ -2772,6 +2959,23 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("SYUserGroupUserCount")]
+		public async Task<ActionResult<object>> SYUserGroupUserCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserGroupUser(_appSetting).SYUserGroupUserCount() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion SYUserGroupUser
 
 		#region SYUserUnit
@@ -2783,7 +2987,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYUserUnit(_appSetting).SYUserUnitGetByID(Id);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserUnit(_appSetting).SYUserUnitGetByID(Id) };
 			}
 			catch (Exception ex)
 			{
@@ -2800,7 +3004,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYUserUnit(_appSetting).SYUserUnitGetAll();
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserUnit(_appSetting).SYUserUnitGetAll() };
 			}
 			catch (Exception ex)
 			{
@@ -2826,7 +3030,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageSize", rsSYUserUnitOnPage != null && rsSYUserUnitOnPage.Count > 0 ? PageSize : 0},
 					};
 				return Ok(json);
-				}
+			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
@@ -2842,7 +3046,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new SYUserUnit(_appSetting).SYUserUnitInsert(_sYUserUnit);
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserUnit(_appSetting).SYUserUnitInsert(_sYUserUnit) };
 			}
 			catch (Exception ex)
 			{
@@ -2992,6 +3196,23 @@ namespace PAKNAPI.ControllerBase
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYUserUnitCount")]
+		public async Task<ActionResult<object>> SYUserUnitCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserUnit(_appSetting).SYUserUnitCount() };
 			}
 			catch (Exception ex)
 			{

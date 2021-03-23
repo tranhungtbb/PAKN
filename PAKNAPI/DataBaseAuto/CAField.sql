@@ -188,3 +188,21 @@ BEGIN
 END
 GO
 /* End CA_FieldDeleteAll */
+
+/* Start CA_FieldCount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[CA_FieldCount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [CA_FieldCount];
+GO
+CREATE PROCEDURE [dbo].[CA_FieldCount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [CA_Field]
+END
+GO
+/* End CA_FieldCount */

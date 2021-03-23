@@ -93,6 +93,13 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_CaptChaDeleteAll", DP));
 		}
+
+		public async Task<int> SYCaptChaCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("SY_CaptChaCount", DP));
+		}
 	}
 
 	public class SYGroupUserOnPage
@@ -201,6 +208,13 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_GroupUserDeleteAll", DP));
 		}
+
+		public async Task<int> SYGroupUserCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("SY_GroupUserCount", DP));
+		}
 	}
 
 	public class SYPermissionOnPage
@@ -293,6 +307,13 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_PermissionDeleteAll", DP));
 		}
+
+		public async Task<int> SYPermissionCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("SY_PermissionCount", DP));
+		}
 	}
 
 	public class SYPermissionCategoryOnPage
@@ -376,6 +397,13 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_PermissionCategoryDeleteAll", DP));
+		}
+
+		public async Task<int> SYPermissionCategoryCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("SY_PermissionCategoryCount", DP));
 		}
 	}
 
@@ -465,6 +493,13 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_PermissionFunctionDeleteAll", DP));
 		}
+
+		public async Task<int> SYPermissionFunctionCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("SY_PermissionFunctionCount", DP));
+		}
 	}
 
 	public class SYPermissionGroupUserOnPage
@@ -544,6 +579,13 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_PermissionGroupUserDeleteAll", DP));
+		}
+
+		public async Task<int> SYPermissionGroupUserCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("SY_PermissionGroupUserCount", DP));
 		}
 	}
 
@@ -632,6 +674,13 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_PermissionUserDeleteAll", DP));
+		}
+
+		public async Task<int> SYPermissionUserCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("SY_PermissionUserCount", DP));
 		}
 	}
 
@@ -732,6 +781,13 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_RoleDeleteAll", DP));
+		}
+
+		public async Task<int> SYRoleCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("SY_RoleCount", DP));
 		}
 	}
 
@@ -845,6 +901,13 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_SystemLogDeleteAll", DP));
 		}
+
+		public async Task<int> SYSystemLogCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("SY_SystemLogCount", DP));
+		}
 	}
 
 	public class SYUnitOnPage
@@ -956,6 +1019,13 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UnitDeleteAll", DP));
+		}
+
+		public async Task<int> SYUnitCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("SY_UnitCount", DP));
 		}
 	}
 
@@ -1101,6 +1171,13 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserDeleteAll", DP));
 		}
+
+		public async Task<int> SYUserCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("SY_UserCount", DP));
+		}
 	}
 
 	public class SYUserGroupUserOnPage
@@ -1184,6 +1261,13 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserGroupUserDeleteAll", DP));
+		}
+
+		public async Task<int> SYUserGroupUserCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("SY_UserGroupUserCount", DP));
 		}
 	}
 
@@ -1276,6 +1360,13 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserUnitDeleteAll", DP));
+		}
+
+		public async Task<int> SYUserUnitCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("SY_UserUnitCount", DP));
 		}
 	}
 }

@@ -35,7 +35,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new CAField(_appSetting).CAFieldGetByID(Id);
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAField(_appSetting).CAFieldGetByID(Id) };
 			}
 			catch (Exception ex)
 			{
@@ -52,7 +52,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new CAField(_appSetting).CAFieldGetAll();
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAField(_appSetting).CAFieldGetAll() };
 			}
 			catch (Exception ex)
 			{
@@ -78,7 +78,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageSize", rsCAFieldOnPage != null && rsCAFieldOnPage.Count > 0 ? PageSize : 0},
 					};
 				return Ok(json);
-				}
+			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
@@ -94,7 +94,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new CAField(_appSetting).CAFieldInsert(_cAField);
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAField(_appSetting).CAFieldInsert(_cAField) };
 			}
 			catch (Exception ex)
 			{
@@ -253,6 +253,23 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("CAFieldCount")]
+		public async Task<ActionResult<object>> CAFieldCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAField(_appSetting).CAFieldCount() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion CAField
 
 		#region CAPosition
@@ -264,7 +281,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new CAPosition(_appSetting).CAPositionGetByID(Id);
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAPosition(_appSetting).CAPositionGetByID(Id) };
 			}
 			catch (Exception ex)
 			{
@@ -281,7 +298,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new CAPosition(_appSetting).CAPositionGetAll();
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAPosition(_appSetting).CAPositionGetAll() };
 			}
 			catch (Exception ex)
 			{
@@ -307,7 +324,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageSize", rsCAPositionOnPage != null && rsCAPositionOnPage.Count > 0 ? PageSize : 0},
 					};
 				return Ok(json);
-				}
+			}
 			catch (Exception ex)
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
@@ -323,7 +340,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				return await new CAPosition(_appSetting).CAPositionInsert(_cAPosition);
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAPosition(_appSetting).CAPositionInsert(_cAPosition) };
 			}
 			catch (Exception ex)
 			{
@@ -473,6 +490,23 @@ namespace PAKNAPI.ControllerBase
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAPositionCount")]
+		public async Task<ActionResult<object>> CAPositionCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAPosition(_appSetting).CAPositionCount() };
 			}
 			catch (Exception ex)
 			{

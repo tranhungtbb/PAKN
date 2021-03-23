@@ -160,3 +160,21 @@ BEGIN
 END
 GO
 /* End SY_PermissionUserDeleteAll */
+
+/* Start SY_PermissionUserCount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[SY_PermissionUserCount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [SY_PermissionUserCount];
+GO
+CREATE PROCEDURE [dbo].[SY_PermissionUserCount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [SY_PermissionUser]
+END
+GO
+/* End SY_PermissionUserCount */

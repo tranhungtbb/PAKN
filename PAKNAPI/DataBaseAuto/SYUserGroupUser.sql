@@ -156,3 +156,21 @@ BEGIN
 END
 GO
 /* End SY_UserGroupUserDeleteAll */
+
+/* Start SY_UserGroupUserCount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[SY_UserGroupUserCount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [SY_UserGroupUserCount];
+GO
+CREATE PROCEDURE [dbo].[SY_UserGroupUserCount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [SY_UserGroupUser]
+END
+GO
+/* End SY_UserGroupUserCount */

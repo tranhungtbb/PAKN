@@ -212,3 +212,21 @@ BEGIN
 END
 GO
 /* End SY_SystemLogDeleteAll */
+
+/* Start SY_SystemLogCount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[SY_SystemLogCount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [SY_SystemLogCount];
+GO
+CREATE PROCEDURE [dbo].[SY_SystemLogCount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [SY_SystemLog]
+END
+GO
+/* End SY_SystemLogCount */

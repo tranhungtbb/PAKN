@@ -156,3 +156,21 @@ BEGIN
 END
 GO
 /* End SY_CaptChaDeleteAll */
+
+/* Start SY_CaptChaCount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[SY_CaptChaCount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [SY_CaptChaCount];
+GO
+CREATE PROCEDURE [dbo].[SY_CaptChaCount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [SY_CaptCha]
+END
+GO
+/* End SY_CaptChaCount */

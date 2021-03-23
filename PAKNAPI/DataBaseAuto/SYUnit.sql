@@ -212,3 +212,21 @@ BEGIN
 END
 GO
 /* End SY_UnitDeleteAll */
+
+/* Start SY_UnitCount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[SY_UnitCount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [SY_UnitCount];
+GO
+CREATE PROCEDURE [dbo].[SY_UnitCount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [SY_Unit]
+END
+GO
+/* End SY_UnitCount */

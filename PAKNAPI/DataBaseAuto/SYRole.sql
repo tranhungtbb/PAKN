@@ -188,3 +188,21 @@ BEGIN
 END
 GO
 /* End SY_RoleDeleteAll */
+
+/* Start SY_RoleCount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[SY_RoleCount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [SY_RoleCount];
+GO
+CREATE PROCEDURE [dbo].[SY_RoleCount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [SY_Role]
+END
+GO
+/* End SY_RoleCount */

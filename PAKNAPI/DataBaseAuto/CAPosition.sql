@@ -188,3 +188,21 @@ BEGIN
 END
 GO
 /* End CA_PositionDeleteAll */
+
+/* Start CA_PositionCount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[CA_PositionCount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [CA_PositionCount];
+GO
+CREATE PROCEDURE [dbo].[CA_PositionCount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [CA_Position]
+END
+GO
+/* End CA_PositionCount */
