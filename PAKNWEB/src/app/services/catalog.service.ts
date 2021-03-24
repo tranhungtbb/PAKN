@@ -19,10 +19,11 @@ export class CatalogService {
 	}
 	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService) {}
 
-	fieldGetList(request: any, params: string): Observable<any> {
-		request.logAction = LOG_ACTION.GETLIST
-		request.logObject = LOG_OBJECT.CA_FIELD
-		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.FieldGetList + params)
+	fieldGetList(request: any): Observable<any> {
+		let body: any = {}
+		body.logAction = LOG_ACTION.GETLIST
+		body.logObject = LOG_OBJECT.CA_FIELD
+		return this.serviceInvoker.getBody(request, body, AppSettings.API_ADDRESS + Api.FieldGetList)
 	}
 
 	fieldGetById(request: any): Observable<any> {

@@ -1044,3 +1044,19 @@ transition: all .3s ease-in-out;
 	}
 
 }
+
+
+
+
+
+.form-control.ng-select{	
+	padding: 15px;
+}
+.ng-select.ng-select-opened .ng-select-container{
+	min-height: 39px;
+}
+.help-block{	
+	color: red;
+	font-style: italic;
+	font-size: 14px;
+}
