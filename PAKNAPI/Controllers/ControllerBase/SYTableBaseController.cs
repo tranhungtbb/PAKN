@@ -77,7 +77,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsSYCaptChaOnPage != null && rsSYCaptChaOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsSYCaptChaOnPage != null && rsSYCaptChaOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -135,7 +135,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -155,11 +155,11 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYCaptCha(_appSetting).SYCaptChaUpdate(_sYCaptCha);
 				if (count > 0)
 				{
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
@@ -184,7 +184,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -228,9 +228,9 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -252,7 +252,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -339,7 +339,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsSYGroupUserOnPage != null && rsSYGroupUserOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsSYGroupUserOnPage != null && rsSYGroupUserOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -397,7 +397,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -417,11 +417,11 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYGroupUser(_appSetting).SYGroupUserUpdate(_sYGroupUser);
 				if (count > 0)
 				{
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
@@ -446,7 +446,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -490,9 +490,9 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -514,7 +514,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -601,7 +601,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsSYPermissionOnPage != null && rsSYPermissionOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsSYPermissionOnPage != null && rsSYPermissionOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -659,7 +659,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -679,11 +679,11 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYPermission(_appSetting).SYPermissionUpdate(_sYPermission);
 				if (count > 0)
 				{
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
@@ -708,7 +708,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -752,9 +752,9 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -776,7 +776,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -863,7 +863,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsSYPermissionCategoryOnPage != null && rsSYPermissionCategoryOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsSYPermissionCategoryOnPage != null && rsSYPermissionCategoryOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -921,7 +921,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -941,11 +941,11 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYPermissionCategory(_appSetting).SYPermissionCategoryUpdate(_sYPermissionCategory);
 				if (count > 0)
 				{
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
@@ -970,7 +970,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -1014,9 +1014,9 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1038,7 +1038,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -1125,7 +1125,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsSYPermissionFunctionOnPage != null && rsSYPermissionFunctionOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsSYPermissionFunctionOnPage != null && rsSYPermissionFunctionOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1183,7 +1183,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1203,11 +1203,11 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYPermissionFunction(_appSetting).SYPermissionFunctionUpdate(_sYPermissionFunction);
 				if (count > 0)
 				{
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
@@ -1232,7 +1232,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -1276,9 +1276,9 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1300,7 +1300,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -1387,7 +1387,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsSYPermissionGroupUserOnPage != null && rsSYPermissionGroupUserOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsSYPermissionGroupUserOnPage != null && rsSYPermissionGroupUserOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1445,7 +1445,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1465,11 +1465,11 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYPermissionGroupUser(_appSetting).SYPermissionGroupUserUpdate(_sYPermissionGroupUser);
 				if (count > 0)
 				{
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
@@ -1494,7 +1494,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -1538,9 +1538,9 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1562,7 +1562,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -1649,7 +1649,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsSYPermissionUserOnPage != null && rsSYPermissionUserOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsSYPermissionUserOnPage != null && rsSYPermissionUserOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1707,7 +1707,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1727,11 +1727,11 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYPermissionUser(_appSetting).SYPermissionUserUpdate(_sYPermissionUser);
 				if (count > 0)
 				{
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
@@ -1756,7 +1756,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -1800,9 +1800,9 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1824,7 +1824,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -1911,7 +1911,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsSYRoleOnPage != null && rsSYRoleOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsSYRoleOnPage != null && rsSYRoleOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1969,7 +1969,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1989,11 +1989,11 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYRole(_appSetting).SYRoleUpdate(_sYRole);
 				if (count > 0)
 				{
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
@@ -2018,7 +2018,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -2062,9 +2062,9 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -2086,7 +2086,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -2173,7 +2173,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsSYSystemLogOnPage != null && rsSYSystemLogOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsSYSystemLogOnPage != null && rsSYSystemLogOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -2231,7 +2231,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -2251,11 +2251,11 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYSystemLog(_appSetting).SYSystemLogUpdate(_sYSystemLog);
 				if (count > 0)
 				{
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
@@ -2280,7 +2280,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -2324,9 +2324,9 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -2348,7 +2348,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -2435,7 +2435,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsSYUnitOnPage != null && rsSYUnitOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsSYUnitOnPage != null && rsSYUnitOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -2493,7 +2493,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -2513,11 +2513,11 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYUnit(_appSetting).SYUnitUpdate(_sYUnit);
 				if (count > 0)
 				{
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
@@ -2542,7 +2542,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -2586,9 +2586,9 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -2610,7 +2610,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -2697,7 +2697,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsSYUserOnPage != null && rsSYUserOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsSYUserOnPage != null && rsSYUserOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -2755,7 +2755,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -2775,11 +2775,11 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYUser(_appSetting).SYUserUpdate(_sYUser);
 				if (count > 0)
 				{
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
@@ -2804,7 +2804,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -2848,9 +2848,9 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -2872,7 +2872,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -2959,7 +2959,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsSYUserGroupUserOnPage != null && rsSYUserGroupUserOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsSYUserGroupUserOnPage != null && rsSYUserGroupUserOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -3017,7 +3017,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -3037,11 +3037,11 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYUserGroupUser(_appSetting).SYUserGroupUserUpdate(_sYUserGroupUser);
 				if (count > 0)
 				{
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
@@ -3066,7 +3066,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -3110,9 +3110,9 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -3134,7 +3134,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -3221,7 +3221,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsSYUserUnitOnPage != null && rsSYUserUnitOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsSYUserUnitOnPage != null && rsSYUserUnitOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -3279,7 +3279,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -3299,11 +3299,11 @@ namespace PAKNAPI.ControllerBase
 				int count = await new SYUserUnit(_appSetting).SYUserUnitUpdate(_sYUserUnit);
 				if (count > 0)
 				{
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
@@ -3328,7 +3328,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -3372,9 +3372,9 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -3396,7 +3396,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{

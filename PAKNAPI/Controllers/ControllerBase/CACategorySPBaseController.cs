@@ -74,7 +74,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -99,7 +99,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsCADepartmentGetAllOnPage != null && rsCADepartmentGetAllOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsCADepartmentGetAllOnPage != null && rsCADepartmentGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -121,7 +121,7 @@ namespace PAKNAPI.ControllerBase
 					{
 						{"CADepartmentGetByID", rsCADepartmentGetByID},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -179,7 +179,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -204,7 +204,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsCADepartmentGroupGetAllOnPage != null && rsCADepartmentGroupGetAllOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsCADepartmentGroupGetAllOnPage != null && rsCADepartmentGroupGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -226,7 +226,7 @@ namespace PAKNAPI.ControllerBase
 					{
 						{"CADepartmentGroupGetByID", rsCADepartmentGroupGetByID},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -284,7 +284,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -342,7 +342,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -400,7 +400,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -458,7 +458,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -483,7 +483,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsCAFieldGetAllOnPage != null && rsCAFieldGetAllOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsCAFieldGetAllOnPage != null && rsCAFieldGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -505,7 +505,7 @@ namespace PAKNAPI.ControllerBase
 					{
 						{"CAFieldGetByID", rsCAFieldGetByID},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -563,7 +563,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -621,7 +621,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -679,7 +679,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -704,7 +704,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsCAHashtagGetAllOnPage != null && rsCAHashtagGetAllOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsCAHashtagGetAllOnPage != null && rsCAHashtagGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -726,7 +726,7 @@ namespace PAKNAPI.ControllerBase
 					{
 						{"CAHashtagGetByID", rsCAHashtagGetByID},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -784,7 +784,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -842,7 +842,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -900,7 +900,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -925,7 +925,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsCANewsTypeGetAllOnPage != null && rsCANewsTypeGetAllOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsCANewsTypeGetAllOnPage != null && rsCANewsTypeGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -947,7 +947,7 @@ namespace PAKNAPI.ControllerBase
 					{
 						{"CANewsTypeGetByID", rsCANewsTypeGetByID},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1005,7 +1005,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1063,7 +1063,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1121,7 +1121,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1143,7 +1143,7 @@ namespace PAKNAPI.ControllerBase
 					{
 						{"CAPositionGetAllOnPage", rsCAPositionGetAllOnPage},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1165,7 +1165,7 @@ namespace PAKNAPI.ControllerBase
 					{
 						{"CAPositionGetByID", rsCAPositionGetByID},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1223,7 +1223,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1281,7 +1281,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1339,7 +1339,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1364,7 +1364,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsCAUnitGetAllOnPage != null && rsCAUnitGetAllOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsCAUnitGetAllOnPage != null && rsCAUnitGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1386,7 +1386,7 @@ namespace PAKNAPI.ControllerBase
 					{
 						{"CAUnitGetByID", rsCAUnitGetByID},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1444,7 +1444,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1502,7 +1502,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1560,7 +1560,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1585,7 +1585,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsCAWordGetAllOnPage != null && rsCAWordGetAllOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsCAWordGetAllOnPage != null && rsCAWordGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1607,7 +1607,7 @@ namespace PAKNAPI.ControllerBase
 					{
 						{"CAWordGetByID", rsCAWordGetByID},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1665,7 +1665,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1723,7 +1723,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{

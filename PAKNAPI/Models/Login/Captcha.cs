@@ -43,7 +43,7 @@ namespace PAKNAPI.Models.Results
             var isValid = false;
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Code", userInputCaptcha);
-            var result =  _sQLCon.ExecuteListDapper<int> ("SY_CaptCha_Validator", parameters).FirstOrDefault();
+            var result =  _sQLCon.ExecuteListDapper<int> ("SY_CaptChaValidator", parameters).FirstOrDefault();
             if (result > 0)
             {
                 isValid = true;
@@ -57,7 +57,7 @@ namespace PAKNAPI.Models.Results
             {
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@Code", captcha);
-                _sQLCon.ExecuteNonQueryDapper("SY_CaptCha_InsertData", parameters);
+                _sQLCon.ExecuteNonQueryDapper("SY_CaptChaInsertData", parameters);
             }
             catch (Exception ex)
             {
@@ -70,7 +70,7 @@ namespace PAKNAPI.Models.Results
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Code", captcha);
-            _sQLCon.ExecuteNonQueryDapper("SY_CaptCha_Delete", parameters);
+            _sQLCon.ExecuteNonQueryDapper("SY_CaptChaDelete", parameters);
         }
 
         public CaptchaResult GenerateCaptchaImage(int width, int height, string captchaCode)
