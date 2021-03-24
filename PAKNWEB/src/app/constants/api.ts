@@ -28,5 +28,7 @@ export class Api {
 	public static FieldGetById = 'CACategorySPBase/CAFieldGetByIDBase'
 	public static FieldInsert = 'CACategorySPBase/CAFieldInsertBase'
 	public static FieldUpdate = 'CACategorySPBase/CAFieldUpdateBase'
+	public static FieldUpdateStatus = 'CACategorySPBase/CAFieldUpdateBase'
 	public static FieldDelete = 'CACategorySPBase/CAFieldDeleteBase'
+	public static FieldExport = 'CACategorySPBase/CAFieldExportBase'
 }
