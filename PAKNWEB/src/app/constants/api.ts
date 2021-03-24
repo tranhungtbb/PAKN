@@ -13,6 +13,16 @@ export class Api {
 	public static ValidateCaptcha = 'Captcha/ValidatorCaptcha'
 	public static getImageCaptcha = 'Captcha/GetCaptchaImage'
 
+	// FileUpload/Download
+	public static DownloadApp = 'UploadFiles/DownloadApp'
+	public static GetEncryptedPath = 'UploadFiles/GetEncryptedPath'
+	public static download = 'UploadFiles/DownloadFile'
+	public static DownloadFilebyId = 'UploadFiles/DownloadFilebyId'
+	public static downloadFileSupport = 'UploadFiles/DownloadFileSupport'
+	public static GetFile = 'UploadFiles/GetFile'
+	public static uploadfiles = 'UploadFiles/Uploadfiles'
+	public static getFileImage = 'UploadFiles/GetFile'
+
 	//Field
 	public static FieldGetList = 'CACategorySPBase/CAFieldGetAllOnPageBase'
 	public static FieldGetById = 'CACategorySPBase/CAFieldGetByIDBase'

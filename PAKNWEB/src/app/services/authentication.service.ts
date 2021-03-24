@@ -21,6 +21,10 @@ export class AuthenticationService {
 		return this.serviceInvoker.postlogin(user, AppSettings.API_ADDRESS + Api.LOGIN)
 	}
 
+	logOut(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.logOut)
+	}
+
 	register(user: any): Observable<any> {
 		return this.serviceInvoker.post(user, AppSettings.API_ADDRESS + Api.REGISTER)
 	}

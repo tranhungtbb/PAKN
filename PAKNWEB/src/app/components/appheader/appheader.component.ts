@@ -168,42 +168,42 @@ export class AppheaderComponent implements OnInit {
 	preUpdate() {
 		this.GetListChucVuAndListPhongBan()
 		let request = {}
-		this.userService.getUserById(request).subscribe(
-			(response) => {
-				if (response.status == 1) {
-					//this.buildForm();
-					this.reBuildForm()
-					this.submitted = false
-					this.model = response.user
-					if (this.model.anhDaiDien) {
-						this.loadImage(this.model.anhDaiDien)
-					}
-					$('#modalUpdate').modal('show')
-				} else {
-					this.toastr.error(response.message)
-				}
-			},
-			(error) => {
-				console.error(error)
-				alert(error)
-			}
-		)
+		// this.userService.getUserById(request).subscribe(
+		// 	(response) => {
+		// 		if (response.status == 1) {
+		// 			//this.buildForm();
+		// 			this.reBuildForm()
+		// 			this.submitted = false
+		// 			this.model = response.user
+		// 			if (this.model.anhDaiDien) {
+		// 				this.loadImage(this.model.anhDaiDien)
+		// 			}
+		// 			$('#modalUpdate').modal('show')
+		// 		} else {
+		// 			this.toastr.error(response.message)
+		// 		}
+		// 	},
+		// 	(error) => {
+		// 		console.error(error)
+		// 		alert(error)
+		// 	}
+		// )
 	}
 
 	loadImage(path: string) {
 		let request = {
 			filePath: path,
 		}
-		this.userService.LoadImage(request).subscribe((response) => {
-			if (response != undefined && response != null) {
-				var blob = new Blob([response], { type: response.type })
-				var url = URL.createObjectURL(blob)
-				if (url != null) {
-					var avatar = document.getElementById('anhDaiDien')
-					avatar.setAttribute('src', url)
-				}
-			}
-		})
+		// this.userService.LoadImage(request).subscribe((response) => {
+		// 	if (response != undefined && response != null) {
+		// 		var blob = new Blob([response], { type: response.type })
+		// 		var url = URL.createObjectURL(blob)
+		// 		if (url != null) {
+		// 			var avatar = document.getElementById('anhDaiDien')
+		// 			avatar.setAttribute('src', url)
+		// 		}
+		// 	}
+		// })
 	}
 
 	selectImage(event: any) {
@@ -235,23 +235,23 @@ export class AppheaderComponent implements OnInit {
 		var request = {
 			User: this.model,
 		}
-		this.userService.updateUserLogin(request, this.files).subscribe((success) => {
-			if (success.status == 1) {
-				$('#modalUpdate').modal('hide')
-				this.storageService.setIsHaveToken(this.model.isHaveToken)
-				this.storageService.setFullName(fullName)
-				this.toastr.success('Cập nhật thành công')
-				this.userName = fullName
-			} else if (success.status == 3) {
-				this.toastr.error('Email đã tồn tại')
-			} else {
-				this.toastr.error(success.message)
-			}
-		})
+		// this.userService.updateUserLogin(request, this.files).subscribe((success) => {
+		// 	if (success.status == 1) {
+		// 		$('#modalUpdate').modal('hide')
+		// 		this.storageService.setIsHaveToken(this.model.isHaveToken)
+		// 		this.storageService.setFullName(fullName)
+		// 		this.toastr.success('Cập nhật thành công')
+		// 		this.userName = fullName
+		// 	} else if (success.status == 3) {
+		// 		this.toastr.error('Email đã tồn tại')
+		// 	} else {
+		// 		this.toastr.error(success.message)
+		// 	}
+		// })
 	}
 
 	signOut(): void {
-		this.userService
+		this.authenService
 			.logOut({
 				UserId: this.model.ma,
 			})
@@ -342,19 +342,19 @@ export class AppheaderComponent implements OnInit {
 	}
 
 	GetListChucVuAndListPhongBan() {
-		this.userService.GetListChucVuAndListPhongBan({}).subscribe((res) => {
-			if (res.status == 1) {
-				this.lstChucVu = []
-				this.lstPhongBan = []
-				this.lstChucVu = res.lstChucVu
-				this.lstPhongBan = res.lstPhongBan
-			} else {
-				this.toastr.error(res.message)
-			}
-		}),
-			(err) => {
-				console.error(err)
-			}
+		// this.userService.GetListChucVuAndListPhongBan({}).subscribe((res) => {
+		// 	if (res.status == 1) {
+		// 		this.lstChucVu = []
+		// 		this.lstPhongBan = []
+		// 		this.lstChucVu = res.lstChucVu
+		// 		this.lstPhongBan = res.lstPhongBan
+		// 	} else {
+		// 		this.toastr.error(res.message)
+		// 	}
+		// }),
+		// 	(err) => {
+		// 		console.error(err)
+		// 	}
 	}
 
 	isInvalidNam(event) {
