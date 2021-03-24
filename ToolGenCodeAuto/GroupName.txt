@@ -1,1 +1,1 @@
-SY,CA,SYUser,SYLog,SYCaptCha,CACategory
+SY,CA,SYUser,SYLog,SYCaptCha,CACategory,BI,

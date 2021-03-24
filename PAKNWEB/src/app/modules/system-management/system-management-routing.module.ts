@@ -1,46 +1,23 @@
 import { NgModule, Component } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
-import { SystemManagemenetComponent } from './system-managemenet.component'
-import { OrgnizationComponent } from './components/orgnization/orgnization.component'
-import { SystemConfigComponent } from './components/system-config/system-config.component'
-import { SystemLogComponent } from './components/system-log/system-log.component'
 import { RoleGuardService } from '../../guards/role-guard.service'
+import { SystemManagemenetComponent } from './system-managemenet.component'
+import { SystemLogComponent } from './components/system-log/system-log.component'
+import { EmailSettingComponent } from './components/email-setting/email-setting.component'
+import { SmsSettingComponent } from './components/sms-setting/sms-setting.component'
+import { GroupUserComponent } from './components/group-user/group-user.component'
+import { UserComponent } from './components/user/user.component'
 
 const routes: Routes = [
 	{
 		path: '',
 		component: SystemManagemenetComponent,
 		children: [
-			{
-				path: 'organization',
-				component: OrgnizationComponent,
-				//canActivate: [RoleGuardService],
-				//data: { role: 'A_II_0' }
-			},
-			{
-				path: 'user',
-				loadChildren: './components/users-management/users-management.module#UsersManagementModule',
-			},
-			{
-				path: 'group-user-management',
-				loadChildren: './components/group-user-management/group-user-management.module#GroupUserManagementModule',
-			},
-			{
-				path: 'support-management',
-				loadChildren: './components/support-management/support-management.module#SupportManagementModule',
-			},
-			{
-				path: 'system-config',
-				component: SystemConfigComponent,
-			},
-			{
-				path: 'system-log',
-				component: SystemLogComponent,
-			},
-			{
-				path: 'don-vi',
-				loadChildren: './components/unit-management/unit-management.module#UnitManagementModule',
-			},
+			{ path: 'cau-hinh-email', component: EmailSettingComponent },
+			{ path: 'cau-hinh-sms', component: SmsSettingComponent },
+			{ path: 'vai-tro', component: GroupUserComponent },
+			{ path: 'nguoi-dung', component: UserComponent },
+			{ path: 'lich-su-he-thong', component: SystemLogComponent },
 		],
 	},
 ]
