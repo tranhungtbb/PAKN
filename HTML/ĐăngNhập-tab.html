@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>TRUNG TÂM TIẾP NHẬN PHẢN ÁNH, KIẾN NGHỊ TỈNH KHÁNH HOÀ</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+    <link href="./css/style.css" rel="stylesheet">
+    <link href="./css/bootstrap-icons.css" rel="stylesheet">
+    <link href="./css/sd-style.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="authincation bg-login">
+        <div class="container-fluid min-vh-100">
+            <div class="row min-vh-100 justify-content-center align-items-center">
+                <div class="col">
+                    <div class="authincation-content bg-transparent shadow-none">
+                        <div class="row no-gutters">
+                             <div class="col-md-6 border-right border-brown remove-boder-right">
+                                <div class="auth-form text-center pt-3">
+                                    <a href="index.html"><img class="img-fluid d-none d-lg-inline-flex" style="max-height: 85vh" src="./images/img-login.png" alt=""></a>
+                                    <a href="index.html"><img class="img-fluid d-block d-lg-none" src="./images/img-login-mb.png" alt=""></a>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 d-flex justify-content-center">
+                                <div class="auth-form p-0" style="max-width: 400px">
+                                    <div class="custom-tab-1">
+                                        <ul class="nav nav-tabs nav-tabs-register bg-transparent border-bottom-0 justify-content-between">
+                                            <li class="nav-item mr-4">
+                                                <a class="nav-link text-uppercase px-0 pb-3 bg-transparent active" data-toggle="tab" href="#login-cndn">Cá nhân, Doanh nghiệp</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link px-0 pb-3 bg-transparent text-uppercase" data-toggle="tab" href="#login-cbql">Cán bộ quản lý</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content pt-3">
+                                            <div class="tab-pane fade show active" id="login-cndn" role="tabpanel">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="auth-form p-0">
+                                                            <p class="text-center cl-brown">Đăng nhập và sử dụng hệ thống dành cho cá nhân và các tổ chức, doanh nghiệp.</p>
+                                                            <form action="index.html">
+                                                                <div class="form-group mb-4">
+                                                                    <input type="email" placeholder="Nhập số điện thoại..." class="form-control px-4 border-brown" style="font-size: 20px" value="">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="password" placeholder="Mật khẩu..." class="form-control px-4 border-brown" style="font-size: 20px" value="">
+                                                                </div>
+                                                                <div class="form-group captcha-form bg-white rounded-xl pt-5 border border-brown position-relative">
+                                                                    <div class="bg-white captcha d-flex justify-content-between align-items-center rounded-xl shadow position-absolute">
+                                                                        <img class="img-fluid rounded-xl" style="max-height: 70px; max-width: 70%;" src="images/captcha.jpg" alt="">
+                                                                        <button type="button" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat" style="font-size: 34px"></i></button>
+                                                                    </div>
+                                                                    <input type="text" style="font-size: 20px" placeholder="Nhập mã xác thực..." class="form-control bg-transparent px-4 border-0" value="">
+                                                                </div>
+                                                                <div class="d-flex justify-content-between align-items-center mt-4 mb-2">
+                                                                    <div class="form-group">
+                                                                       <div class="custom-control custom-checkbox ml-1">
+                                                                            <input type="checkbox" class="custom-control-input" id="basic_checkbox_1">
+                                                                            <label class="custom-control-label" for="basic_checkbox_1">Nhớ tài khoản</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <a href="page-forgot-password.html">Quên mật khẩu?</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="text-center">
+                                                                    <button type="submit" class="btn text-white grd-red text-uppercase font-weight-normal btn-block d-block border-0 rounded-xl" style="font-size: 20px">Đăng nhập</button>
+                                                                </div>
+                                                            </form>
+                                                            <div class="new-account mt-3">
+                                                                <p class="text-right">Chưa có tài khoản? <a class="cl-blue2" href="./page-register.html">Đăng ký</a></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="login-cbql">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="auth-form p-0">
+                                                            <p class="text-center cl-brown">Đăng nhập và sử dụng hệ thống dành cho cán bộ, người có thẩm quyền.</p>
+                                                            <form action="index.html">
+                                                                <div class="form-group mb-4">
+                                                                    <input type="email" placeholder="Nhập tài khoản, email..." class="form-control px-4 border-brown" style="font-size: 20px" value="">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="password" placeholder="Mật khẩu..." class="form-control px-4 border-brown" style="font-size: 20px" value="">
+                                                                </div>
+                                                                <div class="form-group captcha-form bg-white rounded-xl pt-5 border border-brown position-relative">
+                                                                    <div class="bg-white captcha d-flex justify-content-between align-items-center rounded-xl shadow position-absolute">
+                                                                        <img class="img-fluid rounded-xl" style="max-height: 70px; max-width: 70%;" src="images/captcha.jpg" alt="">
+                                                                        <button type="button" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat" style="font-size: 34px"></i></button>
+                                                                    </div>
+                                                                    <input type="text" style="font-size: 20px" placeholder="Nhập mã xác thực..." class="form-control bg-transparent px-4 border-0" value="">
+                                                                </div>
+                                                                <div class="d-flex justify-content-between align-items-center mt-4 mb-2">
+                                                                    <div class="form-group">
+                                                                       <div class="custom-control custom-checkbox ml-1">
+                                                                            <input type="checkbox" class="custom-control-input" id="basic_checkbox_1">
+                                                                            <label class="custom-control-label" for="basic_checkbox_1">Nhớ tài khoản</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <a href="page-forgot-password.html">Quên mật khẩu?</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="text-center mb-3">
+                                                                    <button type="submit" class="btn btn-red text-white text-uppercase font-weight-normal btn-block d-block border-0 rounded-xl" style="font-size: 20px">Đăng nhập</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="./vendor/global/global.min.js"></script>
+	<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="./js/custom.min.js"></script>
+    <script src="./js/deznav-init.js"></script>
+
+</body>
+
+</html>
