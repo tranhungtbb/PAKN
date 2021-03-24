@@ -550,6 +550,268 @@ namespace PAKNAPI.ControllerBase
 
 		#endregion CADepartmentGroup
 
+		#region CADistrict
+
+		[HttpGet]
+		[Authorize]
+		[Route("CADistrictGetByID")]
+		public async Task<ActionResult<object>> CADistrictGetByID(int? Id)
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new CADistrict(_appSetting).CADistrictGetByID(Id) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CADistrictGetAll")]
+		public async Task<ActionResult<object>> CADistrictGetAll()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new CADistrict(_appSetting).CADistrictGetAll() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CADistrictGetAllOnPage")]
+		public async Task<ActionResult<object>> CADistrictGetAllOnPage(int PageSize, int PageIndex)
+		{
+			try
+			{
+				List<CADistrictOnPage> rsCADistrictOnPage = await new CADistrict(_appSetting).CADistrictGetAllOnPage(PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CADistrict", rsCADistrictOnPage},
+						{"TotalCount", rsCADistrictOnPage != null && rsCADistrictOnPage.Count > 0 ? rsCADistrictOnPage[0].RowNumber : 0},
+						{"PageIndex", rsCADistrictOnPage != null && rsCADistrictOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsCADistrictOnPage != null && rsCADistrictOnPage.Count > 0 ? PageSize : 0},
+					};
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CADistrictInsert")]
+		public async Task<ActionResult<object>> CADistrictInsert(CADistrict _cADistrict)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CADistrict(_appSetting).CADistrictInsert(_cADistrict) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CADistrictListInsert")]
+		public async Task<ActionResult<object>> CADistrictListInsert(List<CADistrict> _cADistricts)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (CADistrict _cADistrict in _cADistricts)
+				{
+					int? result = await new CADistrict(_appSetting).CADistrictInsert(_cADistrict);
+					if (result != null)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CADistrictUpdate")]
+		public async Task<ActionResult<object>> CADistrictUpdate(CADistrict _cADistrict)
+		{
+			try
+			{
+				int count = await new CADistrict(_appSetting).CADistrictUpdate(_cADistrict);
+				if (count > 0)
+				{
+					return count;
+				}
+				else
+				{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CADistrictDelete")]
+		public async Task<ActionResult<object>> CADistrictDelete(CADistrict _cADistrict)
+		{
+			try
+			{
+				int count = await new CADistrict(_appSetting).CADistrictDelete(_cADistrict);
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return count;
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CADistrictListDelete")]
+		public async Task<ActionResult<object>> CADistrictListDelete(List<CADistrict> _cADistricts)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (CADistrict _cADistrict in _cADistricts)
+				{
+					var result = await new CADistrict(_appSetting).CADistrictDelete(_cADistrict);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CADistrictDeleteAll")]
+		public async Task<ActionResult<object>> CADistrictDeleteAll()
+		{
+			try
+			{
+				int count = await new CADistrict(_appSetting).CADistrictDeleteAll();
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return count;
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CADistrictCount")]
+		public async Task<ActionResult<object>> CADistrictCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new CADistrict(_appSetting).CADistrictCount() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		#endregion CADistrict
+
 		#region CAField
 
 		[HttpGet]
@@ -1597,6 +1859,530 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		#endregion CAPosition
+
+		#region CAProvince
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAProvinceGetByID")]
+		public async Task<ActionResult<object>> CAProvinceGetByID(int? Id)
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAProvince(_appSetting).CAProvinceGetByID(Id) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAProvinceGetAll")]
+		public async Task<ActionResult<object>> CAProvinceGetAll()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAProvince(_appSetting).CAProvinceGetAll() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAProvinceGetAllOnPage")]
+		public async Task<ActionResult<object>> CAProvinceGetAllOnPage(int PageSize, int PageIndex)
+		{
+			try
+			{
+				List<CAProvinceOnPage> rsCAProvinceOnPage = await new CAProvince(_appSetting).CAProvinceGetAllOnPage(PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAProvince", rsCAProvinceOnPage},
+						{"TotalCount", rsCAProvinceOnPage != null && rsCAProvinceOnPage.Count > 0 ? rsCAProvinceOnPage[0].RowNumber : 0},
+						{"PageIndex", rsCAProvinceOnPage != null && rsCAProvinceOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsCAProvinceOnPage != null && rsCAProvinceOnPage.Count > 0 ? PageSize : 0},
+					};
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAProvinceInsert")]
+		public async Task<ActionResult<object>> CAProvinceInsert(CAProvince _cAProvince)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAProvince(_appSetting).CAProvinceInsert(_cAProvince) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAProvinceListInsert")]
+		public async Task<ActionResult<object>> CAProvinceListInsert(List<CAProvince> _cAProvinces)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (CAProvince _cAProvince in _cAProvinces)
+				{
+					int? result = await new CAProvince(_appSetting).CAProvinceInsert(_cAProvince);
+					if (result != null)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAProvinceUpdate")]
+		public async Task<ActionResult<object>> CAProvinceUpdate(CAProvince _cAProvince)
+		{
+			try
+			{
+				int count = await new CAProvince(_appSetting).CAProvinceUpdate(_cAProvince);
+				if (count > 0)
+				{
+					return count;
+				}
+				else
+				{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAProvinceDelete")]
+		public async Task<ActionResult<object>> CAProvinceDelete(CAProvince _cAProvince)
+		{
+			try
+			{
+				int count = await new CAProvince(_appSetting).CAProvinceDelete(_cAProvince);
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return count;
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAProvinceListDelete")]
+		public async Task<ActionResult<object>> CAProvinceListDelete(List<CAProvince> _cAProvinces)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (CAProvince _cAProvince in _cAProvinces)
+				{
+					var result = await new CAProvince(_appSetting).CAProvinceDelete(_cAProvince);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAProvinceDeleteAll")]
+		public async Task<ActionResult<object>> CAProvinceDeleteAll()
+		{
+			try
+			{
+				int count = await new CAProvince(_appSetting).CAProvinceDeleteAll();
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return count;
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAProvinceCount")]
+		public async Task<ActionResult<object>> CAProvinceCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAProvince(_appSetting).CAProvinceCount() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		#endregion CAProvince
+
+		#region CAWards
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAWardsGetByID")]
+		public async Task<ActionResult<object>> CAWardsGetByID(int? Id)
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAWards(_appSetting).CAWardsGetByID(Id) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAWardsGetAll")]
+		public async Task<ActionResult<object>> CAWardsGetAll()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAWards(_appSetting).CAWardsGetAll() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAWardsGetAllOnPage")]
+		public async Task<ActionResult<object>> CAWardsGetAllOnPage(int PageSize, int PageIndex)
+		{
+			try
+			{
+				List<CAWardsOnPage> rsCAWardsOnPage = await new CAWards(_appSetting).CAWardsGetAllOnPage(PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAWards", rsCAWardsOnPage},
+						{"TotalCount", rsCAWardsOnPage != null && rsCAWardsOnPage.Count > 0 ? rsCAWardsOnPage[0].RowNumber : 0},
+						{"PageIndex", rsCAWardsOnPage != null && rsCAWardsOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsCAWardsOnPage != null && rsCAWardsOnPage.Count > 0 ? PageSize : 0},
+					};
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAWardsInsert")]
+		public async Task<ActionResult<object>> CAWardsInsert(CAWards _cAWards)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAWards(_appSetting).CAWardsInsert(_cAWards) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAWardsListInsert")]
+		public async Task<ActionResult<object>> CAWardsListInsert(List<CAWards> _cAWardss)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (CAWards _cAWards in _cAWardss)
+				{
+					int? result = await new CAWards(_appSetting).CAWardsInsert(_cAWards);
+					if (result != null)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAWardsUpdate")]
+		public async Task<ActionResult<object>> CAWardsUpdate(CAWards _cAWards)
+		{
+			try
+			{
+				int count = await new CAWards(_appSetting).CAWardsUpdate(_cAWards);
+				if (count > 0)
+				{
+					return count;
+				}
+				else
+				{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAWardsDelete")]
+		public async Task<ActionResult<object>> CAWardsDelete(CAWards _cAWards)
+		{
+			try
+			{
+				int count = await new CAWards(_appSetting).CAWardsDelete(_cAWards);
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return count;
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAWardsListDelete")]
+		public async Task<ActionResult<object>> CAWardsListDelete(List<CAWards> _cAWardss)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (CAWards _cAWards in _cAWardss)
+				{
+					var result = await new CAWards(_appSetting).CAWardsDelete(_cAWards);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return Ok(json);
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAWardsDeleteAll")]
+		public async Task<ActionResult<object>> CAWardsDeleteAll()
+		{
+			try
+			{
+				int count = await new CAWards(_appSetting).CAWardsDeleteAll();
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return count;
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAWardsCount")]
+		public async Task<ActionResult<object>> CAWardsCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAWards(_appSetting).CAWardsCount() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		#endregion CAWards
 
 		#region CAWord
 

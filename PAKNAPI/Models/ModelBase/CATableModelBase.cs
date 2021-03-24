@@ -229,6 +229,105 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class CADistrictOnPage
+	{
+		public int Id { get; set; }
+		public int ProvinceId { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public int? RowNumber; // int, null
+	}
+
+	public class CADistrict
+	{
+		private SQLCon _sQLCon;
+
+		public CADistrict(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CADistrict()
+		{
+		}
+
+		public int Id { get; set; }
+		public int ProvinceId { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+
+		public async Task<CADistrict> CADistrictGetByID(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CADistrict>("CA_DistrictGetByID", DP)).ToList().FirstOrDefault();
+		}
+
+		public async Task<List<CADistrict>> CADistrictGetAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<CADistrict>("CA_DistrictGetAll", DP)).ToList();
+		}
+
+		public async Task<List<CADistrictOnPage>> CADistrictGetAllOnPage(int PageSize, int PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			return (await _sQLCon.ExecuteListDapperAsync<CADistrictOnPage>("CA_DistrictGetAllOnPage", DP)).ToList();
+		}
+
+		public async Task<int?> CADistrictInsert(CADistrict _cADistrict)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ProvinceId", _cADistrict.ProvinceId);
+			DP.Add("Name", _cADistrict.Name);
+			DP.Add("IsActived", _cADistrict.IsActived);
+			DP.Add("IsDeleted", _cADistrict.IsDeleted);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_DistrictInsert", DP));
+		}
+
+		public async Task<int> CADistrictUpdate(CADistrict _cADistrict)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cADistrict.Id);
+			DP.Add("ProvinceId", _cADistrict.ProvinceId);
+			DP.Add("Name", _cADistrict.Name);
+			DP.Add("IsActived", _cADistrict.IsActived);
+			DP.Add("IsDeleted", _cADistrict.IsDeleted);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_DistrictUpdate", DP));
+		}
+
+		public async Task<int> CADistrictDelete(CADistrict _cADistrict)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cADistrict.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_DistrictDelete", DP));
+		}
+
+		public async Task<int> CADistrictDeleteAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_DistrictDeleteAll", DP));
+		}
+
+		public async Task<int> CADistrictCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("CA_DistrictCount", DP));
+		}
+	}
+
 	public class CAFieldOnPage
 	{
 		public int Id;
@@ -646,6 +745,200 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteDapperAsync<int>("CA_PositionCount", DP));
+		}
+	}
+
+	public class CAProvinceOnPage
+	{
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public int? RowNumber; // int, null
+	}
+
+	public class CAProvince
+	{
+		private SQLCon _sQLCon;
+
+		public CAProvince(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAProvince()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+
+		public async Task<CAProvince> CAProvinceGetByID(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAProvince>("CA_ProvinceGetByID", DP)).ToList().FirstOrDefault();
+		}
+
+		public async Task<List<CAProvince>> CAProvinceGetAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAProvince>("CA_ProvinceGetAll", DP)).ToList();
+		}
+
+		public async Task<List<CAProvinceOnPage>> CAProvinceGetAllOnPage(int PageSize, int PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			return (await _sQLCon.ExecuteListDapperAsync<CAProvinceOnPage>("CA_ProvinceGetAllOnPage", DP)).ToList();
+		}
+
+		public async Task<int?> CAProvinceInsert(CAProvince _cAProvince)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _cAProvince.Name);
+			DP.Add("IsActived", _cAProvince.IsActived);
+			DP.Add("IsDeleted", _cAProvince.IsDeleted);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_ProvinceInsert", DP));
+		}
+
+		public async Task<int> CAProvinceUpdate(CAProvince _cAProvince)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAProvince.Id);
+			DP.Add("Name", _cAProvince.Name);
+			DP.Add("IsActived", _cAProvince.IsActived);
+			DP.Add("IsDeleted", _cAProvince.IsDeleted);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_ProvinceUpdate", DP));
+		}
+
+		public async Task<int> CAProvinceDelete(CAProvince _cAProvince)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAProvince.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_ProvinceDelete", DP));
+		}
+
+		public async Task<int> CAProvinceDeleteAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_ProvinceDeleteAll", DP));
+		}
+
+		public async Task<int> CAProvinceCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("CA_ProvinceCount", DP));
+		}
+	}
+
+	public class CAWardsOnPage
+	{
+		public int Id { get; set; }
+		public int DistrictId { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public int? RowNumber; // int, null
+	}
+
+	public class CAWards
+	{
+		private SQLCon _sQLCon;
+
+		public CAWards(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAWards()
+		{
+		}
+
+		public int Id { get; set; }
+		public int DistrictId { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+
+		public async Task<CAWards> CAWardsGetByID(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAWards>("CA_WardsGetByID", DP)).ToList().FirstOrDefault();
+		}
+
+		public async Task<List<CAWards>> CAWardsGetAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAWards>("CA_WardsGetAll", DP)).ToList();
+		}
+
+		public async Task<List<CAWardsOnPage>> CAWardsGetAllOnPage(int PageSize, int PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			return (await _sQLCon.ExecuteListDapperAsync<CAWardsOnPage>("CA_WardsGetAllOnPage", DP)).ToList();
+		}
+
+		public async Task<int?> CAWardsInsert(CAWards _cAWards)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("DistrictId", _cAWards.DistrictId);
+			DP.Add("Name", _cAWards.Name);
+			DP.Add("IsActived", _cAWards.IsActived);
+			DP.Add("IsDeleted", _cAWards.IsDeleted);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_WardsInsert", DP));
+		}
+
+		public async Task<int> CAWardsUpdate(CAWards _cAWards)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAWards.Id);
+			DP.Add("DistrictId", _cAWards.DistrictId);
+			DP.Add("Name", _cAWards.Name);
+			DP.Add("IsActived", _cAWards.IsActived);
+			DP.Add("IsDeleted", _cAWards.IsDeleted);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_WardsUpdate", DP));
+		}
+
+		public async Task<int> CAWardsDelete(CAWards _cAWards)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAWards.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_WardsDelete", DP));
+		}
+
+		public async Task<int> CAWardsDeleteAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_WardsDeleteAll", DP));
+		}
+
+		public async Task<int> CAWardsCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("CA_WardsCount", DP));
 		}
 	}
 

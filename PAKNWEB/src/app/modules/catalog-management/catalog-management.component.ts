@@ -1,21 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { defineLocale } from 'ngx-bootstrap/chronos';
-import { viLocale } from 'ngx-bootstrap/locale';
-import { BsLocaleService } from 'ngx-bootstrap/datepicker';
-defineLocale('vi', viLocale);
+import { Component, OnInit } from '@angular/core'
+import { defineLocale } from 'ngx-bootstrap/chronos'
+import { viLocale } from 'ngx-bootstrap/locale'
+import { BsLocaleService } from 'ngx-bootstrap/datepicker'
+defineLocale('vi', viLocale)
 @Component({
-  selector: 'app-catalog-management',
-  template: `
-            <router-outlet>
-                </router-outlet>
-            `
+	selector: 'app-catalog-management',
+	template: ` <div class="content-body"><router-outlet> </router-outlet></div> `,
 })
 export class CatalogManagementComponent implements OnInit {
+	constructor(private localeService: BsLocaleService) {}
 
-  constructor(private localeService: BsLocaleService) { }
-
-  ngOnInit() {
-    this.localeService.use('vi');
-  }
-
+	ngOnInit() {
+		this.localeService.use('vi')
+	}
 }
