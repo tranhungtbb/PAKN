@@ -1,0 +1,14 @@
+.margin-bot-unset {
+	margin-bottom: unset;
+}
+.collapse-header-title {
+	text-transform: uppercase;
+	font-weight: normal;
+}
+.text-uppercase {
+	text-transform: uppercase;
+}
+.paging-input {
+	min-width: unset;
+	width: 30px;
+}
