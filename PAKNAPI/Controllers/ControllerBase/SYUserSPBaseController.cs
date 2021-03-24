@@ -38,7 +38,7 @@ namespace PAKNAPI.ControllerBase
 					{
 						{"SYUSRGetPermissionByUserId", rsSYUSRGetPermissionByUserId},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{

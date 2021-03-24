@@ -77,7 +77,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsBIBusinessOnPage != null && rsBIBusinessOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsBIBusinessOnPage != null && rsBIBusinessOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -135,7 +135,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -155,11 +155,11 @@ namespace PAKNAPI.ControllerBase
 				int count = await new BIBusiness(_appSetting).BIBusinessUpdate(_bIBusiness);
 				if (count > 0)
 				{
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
@@ -184,7 +184,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -228,9 +228,9 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -252,7 +252,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -339,7 +339,7 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsBIIndividualOnPage != null && rsBIIndividualOnPage.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsBIIndividualOnPage != null && rsBIIndividualOnPage.Count > 0 ? PageSize : 0},
 					};
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -397,7 +397,7 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -417,11 +417,11 @@ namespace PAKNAPI.ControllerBase
 				int count = await new BIIndividual(_appSetting).BIIndividualUpdate(_bIIndividual);
 				if (count > 0)
 				{
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
@@ -446,7 +446,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
@@ -490,9 +490,9 @@ namespace PAKNAPI.ControllerBase
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return Ok(json);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -514,7 +514,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return count;
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
