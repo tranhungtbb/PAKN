@@ -141,5 +141,27 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYCaptChaValidatorBase")]
+		public async Task<ActionResult<object>> SYCaptChaValidatorBase(string Code)
+		{
+			try
+			{
+				List<SYCaptChaValidator> rsSYCaptChaValidator = await new SYCaptChaValidator(_appSetting).SYCaptChaValidatorDAO(Code);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYCaptChaValidator", rsSYCaptChaValidator},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 	}
 }

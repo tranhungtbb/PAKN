@@ -515,54 +515,18 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpPost]
+		[HttpGet]
 		[Authorize]
 		[Route("CAFieldInsertBase")]
-		public async Task<ActionResult<object>> CAFieldInsertBase(CAFieldInsertIN _cAFieldInsertIN)
+		public async Task<ActionResult<object>> CAFieldInsertBase(string Name, bool? IsActived, bool? IsDeleted, string Description)
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldInsert(_appSetting).CAFieldInsertDAO(_cAFieldInsertIN) };
-			}
-			catch (Exception ex)
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("CAFieldInsertListBase")]
-		public async Task<ActionResult<object>> CAFieldInsertListBase(List<CAFieldInsertIN> _cAFieldInsertINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _cAFieldInsertIN in _cAFieldInsertINs)
-				{
-					var result = await new CAFieldInsert(_appSetting).CAFieldInsertDAO(_cAFieldInsertIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
+				List<CAFieldInsert> rsCAFieldInsert = await new CAFieldInsert(_appSetting).CAFieldInsertDAO(Name, IsActived, IsDeleted, Description);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
+						{"CAFieldInsert", rsCAFieldInsert},
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
@@ -573,54 +537,18 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpPost]
+		[HttpGet]
 		[Authorize]
 		[Route("CAFieldUpdateBase")]
-		public async Task<ActionResult<object>> CAFieldUpdateBase(CAFieldUpdateIN _cAFieldUpdateIN)
+		public async Task<ActionResult<object>> CAFieldUpdateBase(int? Id, string Name, bool? IsActived, bool? IsDeleted, string Description)
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldUpdate(_appSetting).CAFieldUpdateDAO(_cAFieldUpdateIN) };
-			}
-			catch (Exception ex)
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("CAFieldUpdateListBase")]
-		public async Task<ActionResult<object>> CAFieldUpdateListBase(List<CAFieldUpdateIN> _cAFieldUpdateINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _cAFieldUpdateIN in _cAFieldUpdateINs)
-				{
-					var result = await new CAFieldUpdate(_appSetting).CAFieldUpdateDAO(_cAFieldUpdateIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
+				List<CAFieldUpdate> rsCAFieldUpdate = await new CAFieldUpdate(_appSetting).CAFieldUpdateDAO(Id, Name, IsActived, IsDeleted, Description);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
+						{"CAFieldUpdate", rsCAFieldUpdate},
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
@@ -1175,54 +1103,18 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpPost]
+		[HttpGet]
 		[Authorize]
 		[Route("CAPositionInsertBase")]
-		public async Task<ActionResult<object>> CAPositionInsertBase(CAPositionInsertIN _cAPositionInsertIN)
+		public async Task<ActionResult<object>> CAPositionInsertBase(string Name, string Code, bool? IsActived, bool? IsDeleted, string Description, int? OrderNumber)
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new CAPositionInsert(_appSetting).CAPositionInsertDAO(_cAPositionInsertIN) };
-			}
-			catch (Exception ex)
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("CAPositionInsertListBase")]
-		public async Task<ActionResult<object>> CAPositionInsertListBase(List<CAPositionInsertIN> _cAPositionInsertINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _cAPositionInsertIN in _cAPositionInsertINs)
-				{
-					var result = await new CAPositionInsert(_appSetting).CAPositionInsertDAO(_cAPositionInsertIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
+				List<CAPositionInsert> rsCAPositionInsert = await new CAPositionInsert(_appSetting).CAPositionInsertDAO(Name, Code, IsActived, IsDeleted, Description, OrderNumber);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
+						{"CAPositionInsert", rsCAPositionInsert},
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
@@ -1233,54 +1125,18 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpPost]
+		[HttpGet]
 		[Authorize]
 		[Route("CAPositionUpdateBase")]
-		public async Task<ActionResult<object>> CAPositionUpdateBase(CAPositionUpdateIN _cAPositionUpdateIN)
+		public async Task<ActionResult<object>> CAPositionUpdateBase(int? Id, string Name, string Code, bool? IsActived, bool? IsDeleted, string Description, int? OrderNumber)
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new CAPositionUpdate(_appSetting).CAPositionUpdateDAO(_cAPositionUpdateIN) };
-			}
-			catch (Exception ex)
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("CAPositionUpdateListBase")]
-		public async Task<ActionResult<object>> CAPositionUpdateListBase(List<CAPositionUpdateIN> _cAPositionUpdateINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _cAPositionUpdateIN in _cAPositionUpdateINs)
-				{
-					var result = await new CAPositionUpdate(_appSetting).CAPositionUpdateDAO(_cAPositionUpdateIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
+				List<CAPositionUpdate> rsCAPositionUpdate = await new CAPositionUpdate(_appSetting).CAPositionUpdateDAO(Id, Name, Code, IsActived, IsDeleted, Description, OrderNumber);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
+						{"CAPositionUpdate", rsCAPositionUpdate},
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)

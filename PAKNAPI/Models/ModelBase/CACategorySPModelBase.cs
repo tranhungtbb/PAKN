@@ -24,7 +24,6 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-
 		public async Task<int> CADepartmentDeleteDAO(CADepartmentDeleteIN _cADepartmentDeleteIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -122,7 +121,6 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-
 		public async Task<int> CADepartmentGroupDeleteDAO(CADepartmentGroupDeleteIN _cADepartmentGroupDeleteIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -214,7 +212,6 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-
 		public async Task<int> CADepartmentGroupInsertDAO(CADepartmentGroupInsertIN _cADepartmentGroupInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -249,7 +246,6 @@ namespace PAKNAPI.ModelBase
 		public CADepartmentGroupUpdate()
 		{
 		}
-
 
 		public async Task<int> CADepartmentGroupUpdateDAO(CADepartmentGroupUpdateIN _cADepartmentGroupUpdateIN)
 		{
@@ -287,7 +283,6 @@ namespace PAKNAPI.ModelBase
 		public CADepartmentUpdate()
 		{
 		}
-
 
 		public async Task<int> CADepartmentUpdateDAO(CADepartmentUpdateIN _cADepartmentUpdateIN)
 		{
@@ -331,7 +326,6 @@ namespace PAKNAPI.ModelBase
 		public CAFieldDelete()
 		{
 		}
-
 
 		public async Task<int> CAFieldDeleteDAO(CAFieldDeleteIN _cAFieldDeleteIN)
 		{
@@ -421,7 +415,6 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-
 		public async Task<int> CAFieldInsertDAO(CAFieldInsertIN _cAFieldInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -430,7 +423,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cAFieldInsertIN.IsDeleted);
 			DP.Add("Description", _cAFieldInsertIN.Description);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldInsert", DP));
+			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_FieldInsert", DP);
 		}
 	}
 
@@ -455,7 +448,6 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-
 		public async Task<int> CAFieldUpdateDAO(CAFieldUpdateIN _cAFieldUpdateIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -465,7 +457,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cAFieldUpdateIN.IsDeleted);
 			DP.Add("Description", _cAFieldUpdateIN.Description);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldUpdate", DP));
+			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_FieldUpdate", DP);
 		}
 	}
 
@@ -490,7 +482,6 @@ namespace PAKNAPI.ModelBase
 		public CAHashtagDelete()
 		{
 		}
-
 
 		public async Task<int> CAHashtagDeleteDAO(CAHashtagDeleteIN _cAHashtagDeleteIN)
 		{
@@ -582,7 +573,6 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-
 		public async Task<int> CAHashtagInsertDAO(CAHashtagInsertIN _cAHashtagInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -617,7 +607,6 @@ namespace PAKNAPI.ModelBase
 		public CAHashtagUpdate()
 		{
 		}
-
 
 		public async Task<int> CAHashtagUpdateDAO(CAHashtagUpdateIN _cAHashtagUpdateIN)
 		{
@@ -655,7 +644,6 @@ namespace PAKNAPI.ModelBase
 		public CANewsTypeDelete()
 		{
 		}
-
 
 		public async Task<int> CANewsTypeDeleteDAO(CANewsTypeDeleteIN _cANewsTypeDeleteIN)
 		{
@@ -748,7 +736,6 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-
 		public async Task<int> CANewsTypeInsertDAO(CANewsTypeInsertIN _cANewsTypeInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -783,7 +770,6 @@ namespace PAKNAPI.ModelBase
 		public CANewsTypeUpdate()
 		{
 		}
-
 
 		public async Task<int> CANewsTypeUpdateDAO(CANewsTypeUpdateIN _cANewsTypeUpdateIN)
 		{
@@ -821,7 +807,6 @@ namespace PAKNAPI.ModelBase
 		public CAPositionDelete()
 		{
 		}
-
 
 		public async Task<int> CAPositionDeleteDAO(CAPositionDeleteIN _cAPositionDeleteIN)
 		{
@@ -916,7 +901,6 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-
 		public async Task<int> CAPositionInsertDAO(CAPositionInsertIN _cAPositionInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -927,7 +911,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Description", _cAPositionInsertIN.Description);
 			DP.Add("OrderNumber", _cAPositionInsertIN.OrderNumber);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_PositionInsert", DP));
+			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_PositionInsert", DP);
 		}
 	}
 
@@ -954,7 +938,6 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-
 		public async Task<int> CAPositionUpdateDAO(CAPositionUpdateIN _cAPositionUpdateIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -966,7 +949,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Description", _cAPositionUpdateIN.Description);
 			DP.Add("OrderNumber", _cAPositionUpdateIN.OrderNumber);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_PositionUpdate", DP));
+			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_PositionUpdate", DP);
 		}
 	}
 
@@ -993,7 +976,6 @@ namespace PAKNAPI.ModelBase
 		public CAUnitDelete()
 		{
 		}
-
 
 		public async Task<int> CAUnitDeleteDAO(CAUnitDeleteIN _cAUnitDeleteIN)
 		{
@@ -1097,7 +1079,6 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-
 		public async Task<int> CAUnitInsertDAO(CAUnitInsertIN _cAUnitInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -1140,7 +1121,6 @@ namespace PAKNAPI.ModelBase
 		public CAUnitUpdate()
 		{
 		}
-
 
 		public async Task<int> CAUnitUpdateDAO(CAUnitUpdateIN _cAUnitUpdateIN)
 		{
@@ -1186,7 +1166,6 @@ namespace PAKNAPI.ModelBase
 		public CAWordDelete()
 		{
 		}
-
 
 		public async Task<int> CAWordDeleteDAO(CAWordDeleteIN _cAWordDeleteIN)
 		{
@@ -1279,7 +1258,6 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-
 		public async Task<int> CAWordInsertDAO(CAWordInsertIN _cAWordInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -1314,7 +1292,6 @@ namespace PAKNAPI.ModelBase
 		public CAWordUpdate()
 		{
 		}
-
 
 		public async Task<int> CAWordUpdateDAO(CAWordUpdateIN _cAWordUpdateIN)
 		{

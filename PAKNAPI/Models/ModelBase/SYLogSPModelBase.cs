@@ -57,7 +57,6 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-
 		public async Task<int> SYLOGInsertDAO(SYLOGInsertIN _sYLOGInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
