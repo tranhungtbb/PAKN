@@ -1131,13 +1131,14 @@ body .ui-table .ui-table-thead > tr > th{
 }
 
 .form-control.ng-select{	
-	padding: 15px;
+	padding: 15px 0;
 }
 .form-control-sm .ng-select, .ng-select input{	
 	padding: 2px 0;
 }
 .form-control.ng-select .ng-select-container{
 	min-height: 35px;
+	padding-left: 13px;
 }
 .form-control-sm .ng-select .ng-select-container{
 	min-height: 28px;
