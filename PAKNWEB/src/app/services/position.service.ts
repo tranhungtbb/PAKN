@@ -17,4 +17,16 @@ export class PositionService {
   CreatePosition(data: any): Observable<any> {
     return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.PositionInsert);
   }
+  UpdatePosition(data: any): Observable<any> {
+    return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.PositionUpdate);
+  }
+  positionGetList(request: any): Observable<any> {
+    return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.PositionGetList)
+  }
+  positionDelete(request: any): Observable<any> {
+    return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.PositionDelete)
+  }
+  positionGetById(request: any): Observable<any> {
+    return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.PositionGetById)
+  }
 }
