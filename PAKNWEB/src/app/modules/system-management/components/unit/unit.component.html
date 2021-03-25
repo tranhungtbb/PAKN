@@ -14,7 +14,7 @@
 					<label class="radio-inline mr-5"><input (click)="changeLevel(2)" type="radio" name="optradio"> Cấp huyện</label>
 					<label class="radio-inline"><input (click)="changeLevel(3)" type="radio" name="optradio"> Cấp xã</label>
 				</div>
-				<form [formGroup]="createUnitFrom" (ngSubmit)="onSaveUnit()">
+				<form id="createUnitFrom" [formGroup]="createUnitFrom" (ngSubmit)="onSaveUnit()">
 					<input hidden formControlName="unitLevel" [(ngModel)]="modelUnit.unitLevel">
 					<div class="form-row">
 						<div class="col-12 col-lg-8 form-group" [ngClass]="{'col-lg-4':modelUnit.unitLevel > 1,'col-lg-8':modelUnit.unitLevel == 1}">
@@ -82,7 +82,7 @@
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-				<button type="submit" class="btn btn-danger border-0 px-5 grd-blue">Xác nhận</button>
+				<button type="button" (click)="trigSubmitUnitFrom()" class="btn btn-danger border-0 px-5 grd-blue">Xác nhận</button>
 			</div>
 		</div>
 	</div>
@@ -121,7 +121,7 @@
 						{{unitObject.name}}
 					</p>
 					<div class="d-flex align-items-center">
-						<button type="button" class="btn grd-brown text-dark border-0 mr-3 py-2 px-3" (click)="modalCreateOrUpdate(unitObject.id)"><i
+						<button type="button" class="btn grd-brown text-dark border-0 mr-3 py-2 px-3" (click)="modalCreateOrUpdate(0)"><i
 								class="bi bi-pencil-square mr-2"></i>Sửa</button>
 						<button type="button" class="btn grd-red text-white border-0 py-2 px-3"><i class="bi bi-trash mr-2"></i>Xóa</button>
 					</div>
@@ -171,7 +171,7 @@
 									</svg>
 									Xuất excel
 								</button>
-								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalCreateOrUpdate(unitObject.id)">
+								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalCreateOrUpdate(0)">
 									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 										<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 									</svg>
@@ -380,7 +380,7 @@
 										</td>
 										<td>
 											<div class="d-flex justify-content-end">
-												<a href="javascript:void(0);" class="btn-icon grd-brown text-brown mr-2" (click)="modalCreateOrUpdate(unitObject.id)"><i
+												<a href="javascript:void(0);" class="btn-icon grd-brown text-brown mr-2" (click)="modalCreateOrUpdate(item.id)"><i
 														class="bi bi-pencil-square"></i></a>
 												<a href="javascript:void(0);" class="btn-icon grd-red text-white"><i class="bi bi-trash"></i></a>
 											</div>

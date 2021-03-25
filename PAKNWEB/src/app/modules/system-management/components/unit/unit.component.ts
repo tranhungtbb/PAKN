@@ -112,7 +112,7 @@ export class UnitComponent implements OnInit {
 	}
 
 	modalCreateOrUpdateTitle: string = 'Thêm cơ quan, đơn vị'
-	modalCreateOrUpdate(id: any, level: any) {
+	modalCreateOrUpdate(id: any, level: any = 1) {
 		if (id == 0) this.modalCreateOrUpdateTitle = 'Thêm cơ quan, đơn vị'
 		else this.modalCreateOrUpdateTitle = 'Thêm cơ quan, đơn vị'
 		$('#modal-create-or-update').modal('show')
@@ -130,6 +130,9 @@ export class UnitComponent implements OnInit {
 			return
 		}
 		//this.unitService.create()
+	}
+	trigSubmitUnitFrom() {
+		$('#createUnitFrom')
 	}
 	changeLevel(level: number) {
 		this.modelUnit.unitLevel = level
