@@ -26,7 +26,7 @@ export class FieldComponent implements OnInit {
 	form: FormGroup
 	model: any = new FieldObject()
 	submitted: boolean = false
-	isActived: boolean = true
+	isActived: boolean
 	title: string = ''
 	code: string = ''
 	name: string = ''
