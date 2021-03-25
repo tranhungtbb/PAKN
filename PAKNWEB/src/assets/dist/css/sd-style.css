@@ -856,6 +856,7 @@ transition: all .3s ease-in-out;
 }
 .label-thead{
 	cursor: pointer;
+	text-transform: uppercase;
 }
 .caret-tb{
 	width: 10px;

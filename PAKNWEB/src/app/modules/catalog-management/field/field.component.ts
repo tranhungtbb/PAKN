@@ -5,8 +5,7 @@ import { FieldObject } from 'src/app/models/fieldObject'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
-import { LOG_ACTION, LOG_OBJECT, MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { HttpHeaders } from '@angular/common/http'
+import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 
 declare var $: any
 

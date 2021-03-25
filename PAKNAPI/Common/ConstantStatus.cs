@@ -5,7 +5,7 @@
 		public const int CREATED = 1;
 		public const int RECEIVE_WAIT = 2;//2 Chờ xử lý
 		public const int RECEIVE_DENY = 3;//3 Từ chối xử lý
-		public const int RECEIVE_APPROVED = 4;//4 Tiếp nhận xử lý
+		public const int RECEIVE_APPROVED = 4;//4 Đã tiếp nhận
 		public const int PROCESS_WAIT = 5;//5 Chờ giải quyết
 		public const int PROCESS_DENY = 6;//6 Từ chối giải quyết
 		public const int PROCESSING = 7;//7 Đang giải quyết

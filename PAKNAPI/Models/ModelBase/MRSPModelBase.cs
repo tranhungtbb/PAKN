@@ -54,7 +54,6 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-
 		public async Task<int> HISRecommendationInsertDAO(HISRecommendationInsertIN _hISRecommendationInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -92,7 +91,6 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-
 		public async Task<int> MRRecommendationDeleteDAO(MRRecommendationDeleteIN _mRRecommendationDeleteIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -126,8 +124,8 @@ namespace PAKNAPI.ModelBase
 		public string Title { get; set; }
 		public string Content { get; set; }
 		public int? Field { get; set; }
-		public string UnitId { get; set; }
-		public bool? TypeObject { get; set; }
+		public int? UnitId { get; set; }
+		public short? TypeObject { get; set; }
 		public long? SendId { get; set; }
 		public string Name { get; set; }
 		public byte? Status { get; set; }
@@ -151,153 +149,5 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetAllOnPage>("MR_RecommendationGetAllOnPage", DP)).ToList();
 		}
-	}
-
-	public class MRRecommendationGetByID
-	{
-		private SQLCon _sQLCon;
-
-		public MRRecommendationGetByID(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public MRRecommendationGetByID()
-		{
-		}
-
-		public int Id { get; set; }
-		public string Code { get; set; }
-		public string Title { get; set; }
-		public string Content { get; set; }
-		public int? Field { get; set; }
-		public string UnitId { get; set; }
-		public bool? TypeObject { get; set; }
-		public long? SendId { get; set; }
-		public string Name { get; set; }
-		public byte? Status { get; set; }
-		public DateTime? SendDate { get; set; }
-		public long? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
-		public long? UpdatedBy { get; set; }
-		public DateTime? UpdatedDate { get; set; }
-
-		public async Task<List<MRRecommendationGetByID>> MRRecommendationGetByIDDAO(int? Id)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-
-			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByID>("MR_RecommendationGetByID", DP)).ToList();
-		}
-	}
-
-	public class MRRecommendationInsert
-	{
-		private SQLCon _sQLCon;
-
-		public MRRecommendationInsert(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public MRRecommendationInsert()
-		{
-		}
-
-
-		public async Task<int> MRRecommendationInsertDAO(MRRecommendationInsertIN _mRRecommendationInsertIN)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Code", _mRRecommendationInsertIN.Code);
-			DP.Add("Title", _mRRecommendationInsertIN.Title);
-			DP.Add("Content", _mRRecommendationInsertIN.Content);
-			DP.Add("Field", _mRRecommendationInsertIN.Field);
-			DP.Add("UnitId", _mRRecommendationInsertIN.UnitId);
-			DP.Add("TypeObject", _mRRecommendationInsertIN.TypeObject);
-			DP.Add("SendId", _mRRecommendationInsertIN.SendId);
-			DP.Add("Name", _mRRecommendationInsertIN.Name);
-			DP.Add("Status", _mRRecommendationInsertIN.Status);
-			DP.Add("SendDate", _mRRecommendationInsertIN.SendDate);
-			DP.Add("CreatedBy", _mRRecommendationInsertIN.CreatedBy);
-			DP.Add("CreatedDate", _mRRecommendationInsertIN.CreatedDate);
-			DP.Add("UpdatedBy", _mRRecommendationInsertIN.UpdatedBy);
-			DP.Add("UpdatedDate", _mRRecommendationInsertIN.UpdatedDate);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationInsert", DP));
-		}
-	}
-
-	public class MRRecommendationInsertIN
-	{
-		public string Code { get; set; }
-		public string Title { get; set; }
-		public string Content { get; set; }
-		public int? Field { get; set; }
-		public string UnitId { get; set; }
-		public bool? TypeObject { get; set; }
-		public long? SendId { get; set; }
-		public string Name { get; set; }
-		public byte? Status { get; set; }
-		public DateTime? SendDate { get; set; }
-		public long? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
-		public long? UpdatedBy { get; set; }
-		public DateTime? UpdatedDate { get; set; }
-	}
-
-	public class MRRecommendationUpdate
-	{
-		private SQLCon _sQLCon;
-
-		public MRRecommendationUpdate(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public MRRecommendationUpdate()
-		{
-		}
-
-
-		public async Task<int> MRRecommendationUpdateDAO(MRRecommendationUpdateIN _mRRecommendationUpdateIN)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _mRRecommendationUpdateIN.Id);
-			DP.Add("Code", _mRRecommendationUpdateIN.Code);
-			DP.Add("Title", _mRRecommendationUpdateIN.Title);
-			DP.Add("Content", _mRRecommendationUpdateIN.Content);
-			DP.Add("Field", _mRRecommendationUpdateIN.Field);
-			DP.Add("UnitId", _mRRecommendationUpdateIN.UnitId);
-			DP.Add("TypeObject", _mRRecommendationUpdateIN.TypeObject);
-			DP.Add("SendId", _mRRecommendationUpdateIN.SendId);
-			DP.Add("Name", _mRRecommendationUpdateIN.Name);
-			DP.Add("Status", _mRRecommendationUpdateIN.Status);
-			DP.Add("SendDate", _mRRecommendationUpdateIN.SendDate);
-			DP.Add("CreatedBy", _mRRecommendationUpdateIN.CreatedBy);
-			DP.Add("CreatedDate", _mRRecommendationUpdateIN.CreatedDate);
-			DP.Add("UpdatedBy", _mRRecommendationUpdateIN.UpdatedBy);
-			DP.Add("UpdatedDate", _mRRecommendationUpdateIN.UpdatedDate);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdate", DP));
-		}
-	}
-
-	public class MRRecommendationUpdateIN
-	{
-		public int? Id { get; set; }
-		public string Code { get; set; }
-		public string Title { get; set; }
-		public string Content { get; set; }
-		public int? Field { get; set; }
-		public string UnitId { get; set; }
-		public bool? TypeObject { get; set; }
-		public long? SendId { get; set; }
-		public string Name { get; set; }
-		public byte? Status { get; set; }
-		public DateTime? SendDate { get; set; }
-		public long? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
-		public long? UpdatedBy { get; set; }
-		public DateTime? UpdatedDate { get; set; }
 	}
 }
