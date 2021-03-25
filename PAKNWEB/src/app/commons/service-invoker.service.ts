@@ -7,6 +7,7 @@ import { AppSettings } from '../constants/app-setting'
 import { Observable, of } from 'rxjs'
 import { tap, catchError } from 'rxjs/operators'
 import { UserInfoStorageService } from './user-info-storage.service'
+import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 
 const httpOptions = {
 	headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -37,14 +38,31 @@ export class ServiceInvokerService {
 	}
 
 	/* Get array */
-	getBody(element: any, body: any, url): Observable<any> {
-		//element.IpAddress = this.storeageService.getIpAddress()
-		let headers = new Headers({ 'Content-Type': 'application/json' })
+	getwithHeaders(element: any, url, headers: any): Observable<any> {
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
+			macAddress: '',
+			logAction: headers.logAction,
+			logObject: headers.logObject,
+		})
 		const httpPackage = {
 			params: element,
-			body: body,
+			headers: tempheaders,
 		}
+
 		return this.http.get(url, httpPackage).pipe(catchError(this.handleError<any>()))
+	}
+
+	/* Get array */
+	getFilewithHeaders(element: any, url, headers: any): Observable<any> {
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
+			macAddress: '',
+			logAction: headers.logAction,
+			logObject: headers.logObject,
+		})
+
+		return this.http.get(url, { responseType: 'blob', params: element, headers: tempheaders }).pipe(tap(), catchError(this.handleError<Blob>()))
 	}
 
 	/* Put */
@@ -66,6 +84,26 @@ export class ServiceInvokerService {
 		const httpPackage = {
 			params: element,
 		}
+		var result = this.http.post(url, element, httpPackage).pipe(catchError(this.handleError<any>()))
+		return result
+	}
+
+	/* Post */
+	postwithHeaders(element: any, url: string, headers: any): Observable<any> {
+		if (element == undefined || element == '') {
+			element = {}
+		}
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
+			macAddress: '',
+			logAction: headers.logAction,
+			logObject: headers.logObject,
+		})
+		const httpPackage = {
+			params: element,
+			headers: tempheaders,
+		}
+
 		var result = this.http.post(url, element, httpPackage).pipe(catchError(this.handleError<any>()))
 		return result
 	}

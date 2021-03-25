@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { ServiceInvokerService } from '../commons/service-invoker.service'
 import { Observable, of } from 'rxjs'
 import { AppSettings } from '../constants/app-setting'
@@ -20,45 +20,59 @@ export class CatalogService {
 	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService) {}
 
 	fieldGetList(request: any): Observable<any> {
-		let body: any = {}
-		body.logAction = LOG_ACTION.GETLIST
-		body.logObject = LOG_OBJECT.CA_FIELD
-		return this.serviceInvoker.getBody(request, body, AppSettings.API_ADDRESS + Api.FieldGetList)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldGetList, headers)
 	}
 
 	fieldGetById(request: any): Observable<any> {
-		request.logAction = LOG_ACTION.GETINFO
-		request.logObject = LOG_OBJECT.CA_FIELD
-		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.FieldGetById)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETINFO),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldGetById, headers)
 	}
 
 	fieldInsert(request: any): Observable<any> {
-		request.logAction = LOG_ACTION.INSERT
-		request.logObject = LOG_OBJECT.CA_FIELD
-		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.FieldInsert)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldInsert, headers)
 	}
 
 	fieldUpdate(request: any): Observable<any> {
-		request.logAction = LOG_ACTION.UPDATE
-		request.logObject = LOG_OBJECT.CA_FIELD
-		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.FieldUpdate)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldUpdate, headers)
 	}
 
 	fieldUpdateStatus(request: any): Observable<any> {
-		request.logAction = LOG_ACTION.UPDATESTATUS
-		request.logObject = LOG_OBJECT.CA_FIELD
-		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.FieldUpdateStatus)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldUpdateStatus, headers)
 	}
 
 	fieldDelete(request: any): Observable<any> {
-		request.logAction = LOG_ACTION.DELETE
-		request.logObject = LOG_OBJECT.CA_FIELD
-		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.FieldDelete)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldDelete, headers)
 	}
 
 	fieldExportExcel(request): Observable<any> {
-		request.logAction = LOG_ACTION.EXPORT
-		request.logObject = LOG_OBJECT.CA_FIELD
-		return this.http.get(AppSettings.API_ADDRESS + Api.FieldExport, { responseType: 'blob', params: request }).pipe(tap(), catchError(this.handleError<Blob>()))
+		let headers = new HttpHeaders({
+			logAction: encodeURIComponent(LOG_ACTION.EXPORT),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		})
+
+		return this.serviceInvoker.getFilewithHeaders(request, AppSettings.API_ADDRESS + Api.FieldExport, headers)
 	}
 }

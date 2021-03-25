@@ -40,4 +40,7 @@ export class Api {
 	public static UnitDelete = 'CACategorySPBase/CAUnitDeleteBase'
 
 	public static FieldExport = 'CACategorySPBase/CAFieldExportBase'
+
+	//Position
+	public static PositionInsert = 'CACategorySPBase/CAPositionInsertBase'
 }

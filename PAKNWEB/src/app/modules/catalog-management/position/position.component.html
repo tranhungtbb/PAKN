@@ -4,8 +4,10 @@
 			<div class="nav-table">
 				<div class="d-flex align-items-center">
 					<button type="button" class="btn btn-outline-secondary mr-2 p-2">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
-							<path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-chevron-left" viewBox="0 0 16 16">
+							<path fill-rule="evenodd"
+								d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
 						</svg>
 					</button>
 					<div class="border d-flex align-items-center border-dark px-2 rounded">
@@ -13,15 +15,18 @@
 						<span>/20</span>
 					</div>
 					<button type="button" class="btn btn-outline-secondary ml-2 p-2">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-							<path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-chevron-right" viewBox="0 0 16 16">
+							<path fill-rule="evenodd"
+								d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
 						</svg>
 					</button>
 				</div>
 			</div>
 			<div class="btn-group" role="group">
 				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+						class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
 						<path
 							d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
 						<path
@@ -29,12 +34,91 @@
 					</svg>
 					Xuất excel
 				</button>
-				<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white">
-					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+				<button type="button" class="btn grd-blue border-0 p-2 btn-sm text-white" data-toggle="modal"
+					data-target="#modal-tm-cqdv">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus"
+						viewBox="0 0 16 16">
+						<path
+							d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 					</svg>
 					Thêm mới
 				</button>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="modal-tm-cqdv">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+			<div class="modal-content rounded">
+				<div class="modal-header border-bottom-0">
+					<p class="modal-title h3">Thêm chức vụ</p>
+					<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+					</button>
+				</div>
+				<div class="modal-body pb-0">
+					<form class="form-horizontal" [formGroup]="createDataForm" (ngSubmit)="onSave()">
+						<div class="form-row">
+							<div class="col-12 col-lg-8 form-group"
+								[ngClass]="{ 'has-error': (submitted && f.positionName.errors) ||(f.positionName.invalid && (f.positionName.dirty || f.positionName.touched)) }">
+								<label class="mb-1">Tên chức vụ <span class="cl-red">(*)</span></label>
+								<input svTrim type="text" formControlName="positionName" class="form-control" placeholder="Nhập..."
+									[(ngModel)]="model.name" required />
+								<div
+									*ngIf="(submitted && f.positionName.invalid)||(f.positionName.invalid && (f.positionName.dirty || f.positionName.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="f.positionName.errors.required">
+										<span class="help-block">Trường dữ liệu này không được để trống</span>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-12 col-lg-4 form-group">
+								<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
+								<select formControlName="status" [(ngModel)]="model.isActived" class="form-control">
+									<option value="true" selected>Hiệu lực</option>
+									<option value="false">Hết hiệu lực</option>
+								</select>
+							</div>
+							<div class="col-12 col-lg-8 form-group"
+								[ngClass]="{ 'has-error': (submitted && f.ma.errors) ||(f.ma.invalid && (f.ma.dirty || f.ma.touched)) }">
+								<label class="mb-1">Code <span class="cl-red">(*)</span></label>
+								<input svTrim type="text" formControlName="ma" class="form-control" placeholder="Nhập..."
+									[(ngModel)]="model.code" required />
+								<div *ngIf="(submitted && f.ma.invalid)||(f.ma.invalid && (f.ma.dirty || f.ma.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="f.ma.errors.required">
+										<span class="help-block">Trường dữ liệu này không được để trống</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-lg-4 form-group"
+								[ngClass]="{ 'has-error': (submitted && f.orderNum.errors) ||(f.orderNum.invalid && (f.orderNum.dirty || f.orderNum.touched)) }">
+								<label class="mb-1">Thứ tự hiển thị <span class="cl-red">(*)</span></label>
+								<input svTrim type="text" formControlName="orderNum" class="form-control" placeholder="Nhập..."
+									[(ngModel)]="model.orderNumber" required />
+								<div
+									*ngIf="(submitted && f.orderNum.invalid)||(f.orderNum.invalid && (f.orderNum.dirty || f.orderNum.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="f.orderNum.errors.required">
+										<span class="help-block">Trường dữ liệu này không được để trống</span>
+									</div>
+									<div *ngIf="f.orderNum.errors.pattern">
+										<span class="help-block">Chỉ chứa các ký tự 0-9</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 form-group">
+								<label class="mb-1">Mô tả</label>
+								<textarea formControlName="description" [(ngModel)]="model.description" class="form-control" rows="4"
+									placeholder="Nhập mô tả..."></textarea>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer border-top-0">
+					<button type="button" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+					<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onSave()">Xác nhận</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -101,7 +185,8 @@
 								</td>
 								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
 								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam corporis quo magnam quas cum, temporibus
+									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
+										corporis quo magnam quas cum, temporibus
 										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
 								</td>
 								<td>Sở Khoa học và Công nghệ</td>
@@ -111,10 +196,12 @@
 								</td>
 								<td>
 									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon grd-xanhngoc text-white mr-2"><i class="bi bi-file-earmark-check"></i></a>
-										<a href="#" class="btn-icon grd-red text-white mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
-												class="bi bi-file-earmark-break"></i></a>
-										<a href="#" class="btn-icon" data-toggle="modal" data-target="#modal-history-pakn"><i class="bi bi-clock-history"></i></a>
+										<a href="#" class="btn-icon grd-xanhngoc text-white mr-2"><i
+												class="bi bi-file-earmark-check"></i></a>
+										<a href="#" class="btn-icon grd-red text-white mr-2" data-toggle="modal"
+											data-target="#modal-tc-pakn"><i class="bi bi-file-earmark-break"></i></a>
+										<a href="#" class="btn-icon" data-toggle="modal" data-target="#modal-history-pakn"><i
+												class="bi bi-clock-history"></i></a>
 									</div>
 								</td>
 							</tr>
@@ -124,7 +211,8 @@
 								</td>
 								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
 								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam corporis quo magnam quas cum, temporibus
+									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
+										corporis quo magnam quas cum, temporibus
 										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
 								</td>
 								<td>Sở Khoa học và Công nghệ</td>
@@ -151,7 +239,8 @@
 								</td>
 								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
 								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam corporis quo magnam quas cum, temporibus
+									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
+										corporis quo magnam quas cum, temporibus
 										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
 								</td>
 								<td>Sở Khoa học và Công nghệ</td>
@@ -178,7 +267,8 @@
 								</td>
 								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
 								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam corporis quo magnam quas cum, temporibus
+									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
+										corporis quo magnam quas cum, temporibus
 										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
 								</td>
 								<td>Sở Khoa học và Công nghệ</td>
@@ -198,7 +288,8 @@
 								</td>
 								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
 								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam corporis quo magnam quas cum, temporibus
+									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
+										corporis quo magnam quas cum, temporibus
 										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
 								</td>
 								<td>Sở Khoa học và Công nghệ</td>
@@ -218,7 +309,8 @@
 								</td>
 								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
 								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam corporis quo magnam quas cum, temporibus
+									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
+										corporis quo magnam quas cum, temporibus
 										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
 								</td>
 								<td>Sở Khoa học và Công nghệ</td>
@@ -238,7 +330,8 @@
 								</td>
 								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
 								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam corporis quo magnam quas cum, temporibus
+									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
+										corporis quo magnam quas cum, temporibus
 										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
 								</td>
 								<td>Sở Khoa học và Công nghệ</td>
@@ -258,7 +351,8 @@
 								</td>
 								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
 								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam corporis quo magnam quas cum, temporibus
+									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
+										corporis quo magnam quas cum, temporibus
 										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
 								</td>
 								<td>Sở Khoa học và Công nghệ</td>
@@ -278,7 +372,8 @@
 								</td>
 								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
 								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam corporis quo magnam quas cum, temporibus
+									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
+										corporis quo magnam quas cum, temporibus
 										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
 								</td>
 								<td>Sở Khoa học và Công nghệ</td>
@@ -288,7 +383,8 @@
 								</td>
 								<td>
 									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon grd-xanhngoc text-white mr-2"><i class="bi bi-file-earmark-check"></i></a>
+										<a href="#" class="btn-icon grd-xanhngoc text-white mr-2"><i
+												class="bi bi-file-earmark-check"></i></a>
 										<a href="#" class="btn-icon grd-red text-white mr-2"><i class="bi bi-file-earmark-break"></i></a>
 										<a href="#" class="btn-icon"><i class="bi bi-clock-history"></i></a>
 									</div>
@@ -300,7 +396,8 @@
 								</td>
 								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
 								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam corporis quo magnam quas cum, temporibus
+									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
+										corporis quo magnam quas cum, temporibus
 										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
 								</td>
 								<td>Sở Khoa học và Công nghệ</td>
@@ -327,7 +424,8 @@
 								</td>
 								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
 								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam corporis quo magnam quas cum, temporibus
+									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
+										corporis quo magnam quas cum, temporibus
 										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
 								</td>
 								<td>Sở Khoa học và Công nghệ</td>
@@ -347,7 +445,8 @@
 								</td>
 								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
 								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam corporis quo magnam quas cum, temporibus
+									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
+										corporis quo magnam quas cum, temporibus
 										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
 								</td>
 								<td>Sở Khoa học và Công nghệ</td>
@@ -367,7 +466,8 @@
 								</td>
 								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
 								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam corporis quo magnam quas cum, temporibus
+									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
+										corporis quo magnam quas cum, temporibus
 										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
 								</td>
 								<td>Sở Khoa học và Công nghệ</td>
@@ -387,7 +487,8 @@
 								</td>
 								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
 								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam corporis quo magnam quas cum, temporibus
+									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
+										corporis quo magnam quas cum, temporibus
 										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
 								</td>
 								<td>Sở Khoa học và Công nghệ</td>
@@ -407,7 +508,8 @@
 								</td>
 								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
 								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam corporis quo magnam quas cum, temporibus
+									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
+										corporis quo magnam quas cum, temporibus
 										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
 								</td>
 								<td>Sở Khoa học và Công nghệ</td>
