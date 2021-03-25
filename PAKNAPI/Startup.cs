@@ -14,6 +14,7 @@ using System.Text;
 using PAKNAPI.Authorize;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using PAKNAPI.Middle;
+using Bugsnag.AspNet.Core;
 
 namespace BookLibAPI
 {
@@ -107,6 +108,10 @@ namespace BookLibAPI
 			services.Configure<IISServerOptions>(options =>
 			{
 				options.AllowSynchronousIO = true;
+			});
+
+			services.AddBugsnag(configuration => {
+				configuration.ApiKey = "fca4587c9f0af572934ea16ad1b20708";
 			});
 		}
 
