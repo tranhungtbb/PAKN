@@ -149,9 +149,17 @@ export class FieldComponent implements OnInit {
 		if (this.model.id == 0 || this.model.id == null) {
 			this._service.fieldInsert(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
-					$('#modal').modal('hide')
-					this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
-					this.getList()
+					if (response.result == -1) {
+						this._toastr.error(MESSAGE_COMMON.EXISTED_CODE)
+						return
+					} else if (response.result == -2) {
+						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
+						return
+					} else {
+						$('#modal').modal('hide')
+						this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
+						this.getList()
+					}
 				} else {
 					this._toastr.error(response.message)
 				}
@@ -163,9 +171,17 @@ export class FieldComponent implements OnInit {
 		} else {
 			this._service.fieldUpdate(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
-					$('#modal').modal('hide')
-					this._toastr.success(MESSAGE_COMMON.UPDATE_SUCCESS)
-					this.getList()
+					if (response.result == -1) {
+						this._toastr.error(MESSAGE_COMMON.EXISTED_CODE)
+						return
+					} else if (response.result == -2) {
+						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
+						return
+					} else {
+						$('#modal').modal('hide')
+						this._toastr.success(MESSAGE_COMMON.UPDATE_SUCCESS)
+						this.getList()
+					}
 				} else {
 					this._toastr.error(response.message)
 				}

@@ -40,7 +40,7 @@ export class CatalogService {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
 			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
 		}
-		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldGetById, headers)
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldInsert, headers)
 	}
 
 	fieldUpdate(request: any): Observable<any> {
@@ -48,7 +48,7 @@ export class CatalogService {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
 			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
 		}
-		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldGetById, headers)
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldUpdate, headers)
 	}
 
 	fieldUpdateStatus(request: any): Observable<any> {
@@ -56,7 +56,7 @@ export class CatalogService {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
 			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
 		}
-		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldGetById, headers)
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldUpdateStatus, headers)
 	}
 
 	fieldDelete(request: any): Observable<any> {
@@ -64,7 +64,7 @@ export class CatalogService {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
 			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
 		}
-		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldGetById, headers)
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldDelete, headers)
 	}
 
 	fieldExportExcel(request): Observable<any> {

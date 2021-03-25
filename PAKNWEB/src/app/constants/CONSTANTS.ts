@@ -36,6 +36,8 @@ export class MESSAGE_COMMON {
 	public static DELETE_FAILED = 'Xóa thất bại'
 	public static UPDATE_FAILED = 'Cập nhật thất bại'
 	public static PUBLISH_SUCCESS = 'Công bố thành công'
+	public static EXISTED_CODE = 'Mã đã tồn tại'
+	public static EXISTED_NAME = 'Tên đã tồn tại'
 	public static WITHDRAW_SUCCESS = 'Thu hồi thành công'
 	public static SEND_SUCCESS = 'Gửi thành công'
 }
