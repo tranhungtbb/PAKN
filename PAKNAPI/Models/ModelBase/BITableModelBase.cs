@@ -13,27 +13,27 @@ namespace PAKNAPI.ModelBase
 {
 	public class BIBusinessOnPage
 	{
-		public long Id;
-		public int? ProvinceId;
-		public int WardsId;
-		public int DistrictId;
-		public string Name;
-		public string Code;
-		public string Address;
-		public string Email;
-		public string Phone;
-		public string Representative;
-		public string IDCard;
-		public string Place;
-		public string NativePlace;
-		public string PermanentPlace;
-		public string Nation;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string BusinessRegistration;
-		public string DecisionOfEstablishing;
-		public DateTime? DateOfIssue;
-		public string Tax;
+		public long Id { get; set; }
+		public int? ProvinceId { get; set; }
+		public int WardsId { get; set; }
+		public int DistrictId { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Address { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Representative { get; set; }
+		public string IDCard { get; set; }
+		public string Place { get; set; }
+		public string NativePlace { get; set; }
+		public string PermanentPlace { get; set; }
+		public string Nation { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string BusinessRegistration { get; set; }
+		public string DecisionOfEstablishing { get; set; }
+		public DateTime? DateOfIssue { get; set; }
+		public string Tax { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -50,27 +50,27 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public long Id;
-		public int? ProvinceId;
-		public int WardsId;
-		public int DistrictId;
-		public string Name;
-		public string Code;
-		public string Address;
-		public string Email;
-		public string Phone;
-		public string Representative;
-		public string IDCard;
-		public string Place;
-		public string NativePlace;
-		public string PermanentPlace;
-		public string Nation;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string BusinessRegistration;
-		public string DecisionOfEstablishing;
-		public DateTime? DateOfIssue;
-		public string Tax;
+		public long Id { get; set; }
+		public int? ProvinceId { get; set; }
+		public int WardsId { get; set; }
+		public int DistrictId { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Address { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Representative { get; set; }
+		public string IDCard { get; set; }
+		public string Place { get; set; }
+		public string NativePlace { get; set; }
+		public string PermanentPlace { get; set; }
+		public string Nation { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string BusinessRegistration { get; set; }
+		public string DecisionOfEstablishing { get; set; }
+		public DateTime? DateOfIssue { get; set; }
+		public string Tax { get; set; }
 
 		public async Task<BIBusiness> BIBusinessGetByID(long? Id)
 		{
@@ -176,25 +176,25 @@ namespace PAKNAPI.ModelBase
 
 	public class BIIndividualOnPage
 	{
-		public long Id;
-		public int? ProvinceId;
-		public int? WardsId;
-		public int? DistrictId;
-		public string FullName;
-		public string Code;
-		public string Address;
-		public string Email;
-		public string Phone;
-		public string IDCard;
-		public string IssuedPlace;
-		public string NativePlace;
-		public string PermanentPlace;
-		public string Nation;
-		public DateTime? BirthDay;
-		public bool? Gender;
-		public bool IsActived;
-		public bool IsDeleted;
-		public DateTime? DateOfIssue;
+		public long Id { get; set; }
+		public int? ProvinceId { get; set; }
+		public int? WardsId { get; set; }
+		public int? DistrictId { get; set; }
+		public string FullName { get; set; }
+		public string Code { get; set; }
+		public string Address { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string IDCard { get; set; }
+		public string IssuedPlace { get; set; }
+		public string NativePlace { get; set; }
+		public string PermanentPlace { get; set; }
+		public string Nation { get; set; }
+		public DateTime? BirthDay { get; set; }
+		public bool? Gender { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public DateTime? DateOfIssue { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -211,25 +211,25 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public long Id;
-		public int? ProvinceId;
-		public int? WardsId;
-		public int? DistrictId;
-		public string FullName;
-		public string Code;
-		public string Address;
-		public string Email;
-		public string Phone;
-		public string IDCard;
-		public string IssuedPlace;
-		public string NativePlace;
-		public string PermanentPlace;
-		public string Nation;
-		public DateTime? BirthDay;
-		public bool? Gender;
-		public bool IsActived;
-		public bool IsDeleted;
-		public DateTime? DateOfIssue;
+		public long Id { get; set; }
+		public int? ProvinceId { get; set; }
+		public int? WardsId { get; set; }
+		public int? DistrictId { get; set; }
+		public string FullName { get; set; }
+		public string Code { get; set; }
+		public string Address { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string IDCard { get; set; }
+		public string IssuedPlace { get; set; }
+		public string NativePlace { get; set; }
+		public string PermanentPlace { get; set; }
+		public string Nation { get; set; }
+		public DateTime? BirthDay { get; set; }
+		public bool? Gender { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public DateTime? DateOfIssue { get; set; }
 
 		public async Task<BIIndividual> BIIndividualGetByID(long? Id)
 		{

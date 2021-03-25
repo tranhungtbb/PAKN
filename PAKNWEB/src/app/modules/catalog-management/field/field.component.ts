@@ -68,7 +68,7 @@ export class FieldComponent implements OnInit {
 
 		let request = {
 			Name: this.name,
-			isActived: this.isActived ? this.isActived : '',
+			isActived: this.isActived != null ? this.isActived : '',
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
