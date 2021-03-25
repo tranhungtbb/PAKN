@@ -30,6 +30,15 @@ export class Api {
 	public static FieldUpdate = 'CACategorySPBase/CAFieldUpdateBase'
 	public static FieldUpdateStatus = 'CACategorySPBase/CAFieldUpdateBase'
 	public static FieldDelete = 'CACategorySPBase/CAFieldDeleteBase'
+
+	//Unit
+	public static UnitGetPagedList = 'CACategorySPBase/CAUnitGetAllOnPageBase'
+	public static UnitGetById = 'CACategorySPBase/CAUnitGetByIDBase'
+	public static UnitInsert = 'CACategorySPBase/CAUnitInsertBase'
+	public static UnitUpdate = 'CACategorySPBase/CAUnitUpdateBase'
+	public static UnitDeleteList = 'CACategorySPBase/CAUnitDeleteListBase'
+	public static UnitDelete = 'CACategorySPBase/CAUnitDeleteBase'
+
 	public static FieldExport = 'CACategorySPBase/CAFieldExportBase'
 
 	//Position

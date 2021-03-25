@@ -5,7 +5,8 @@ import { FieldObject } from 'src/app/models/fieldObject'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
-import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { LOG_ACTION, LOG_OBJECT, MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { HttpHeaders } from '@angular/common/http'
 
 declare var $: any
 
@@ -25,7 +26,7 @@ export class FieldComponent implements OnInit {
 	form: FormGroup
 	model: any = new FieldObject()
 	submitted: boolean = false
-	isActived: boolean = true
+	isActived: boolean
 	title: string = ''
 	code: string = ''
 	name: string = ''
@@ -70,17 +71,16 @@ export class FieldComponent implements OnInit {
 	getList() {
 		this.code = this.code.trim()
 		this.name = this.name.trim()
-		let baserequest = {
+
+		let request = {
 			Code: this.code,
 			Name: this.name,
-			isActived: this.isActived,
+			isActived: this.isActived ? this.isActived : '',
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
-		let request =
-			'?Code=' + this.code + '&Name=' + this.name + '&isActived=' + (this.isActived != null ? this.isActived : '') + '&PageIndex=' + this.pageIndex + '&PageSize=' + this.pageSize
 
-		this._service.fieldGetList(baserequest).subscribe((response) => {
+		this._service.fieldGetList(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
@@ -149,9 +149,17 @@ export class FieldComponent implements OnInit {
 		if (this.model.id == 0 || this.model.id == null) {
 			this._service.fieldInsert(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
-					$('#modal').modal('hide')
-					this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
-					this.getList()
+					if (response.result == -1) {
+						this._toastr.error(MESSAGE_COMMON.EXISTED_CODE)
+						return
+					} else if (response.result == -2) {
+						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
+						return
+					} else {
+						$('#modal').modal('hide')
+						this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
+						this.getList()
+					}
 				} else {
 					this._toastr.error(response.message)
 				}
@@ -163,9 +171,17 @@ export class FieldComponent implements OnInit {
 		} else {
 			this._service.fieldUpdate(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
-					$('#modal').modal('hide')
-					this._toastr.success(MESSAGE_COMMON.UPDATE_SUCCESS)
-					this.getList()
+					if (response.result == -1) {
+						this._toastr.error(MESSAGE_COMMON.EXISTED_CODE)
+						return
+					} else if (response.result == -2) {
+						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
+						return
+					} else {
+						$('#modal').modal('hide')
+						this._toastr.success(MESSAGE_COMMON.UPDATE_SUCCESS)
+						this.getList()
+					}
 				} else {
 					this._toastr.error(response.message)
 				}

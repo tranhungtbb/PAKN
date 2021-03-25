@@ -20,7 +20,8 @@ import { EmailSettingComponent } from './components/email-setting/email-setting.
 import { SmsSettingComponent } from './components/sms-setting/sms-setting.component'
 import { OrganizationalStructureComponent } from './components/organizational-structure/organizational-structure.component'
 import { GroupUserComponent } from './components/group-user/group-user.component'
-import { UserComponent } from './components/user/user.component'
+import { UserComponent } from './components/user/user.component';
+import { UnitComponent } from './components/unit/unit.component'
 
 @NgModule({
 	imports: [
@@ -41,6 +42,6 @@ import { UserComponent } from './components/user/user.component'
 		MatCheckboxModule,
 		CKEditorModule,
 	],
-	declarations: [SystemManagemenetComponent, SystemLogComponent, EmailSettingComponent, SmsSettingComponent, OrganizationalStructureComponent, GroupUserComponent, UserComponent],
+	declarations: [SystemManagemenetComponent, SystemLogComponent, EmailSettingComponent, SmsSettingComponent, OrganizationalStructureComponent, GroupUserComponent, UserComponent, UnitComponent],
 })
 export class SystemManagementModule {}
