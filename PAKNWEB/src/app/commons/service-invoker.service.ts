@@ -40,7 +40,7 @@ export class ServiceInvokerService {
 	/* Get array */
 	getwithHeaders(element: any, url, headers: any): Observable<any> {
 		let tempheaders = new HttpHeaders({
-			ipAddress: this.storeageService.getIpAddress(),
+			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
 			logAction: headers.logAction,
 			logObject: headers.logObject,
@@ -56,7 +56,7 @@ export class ServiceInvokerService {
 	/* Get array */
 	getFilewithHeaders(element: any, url, headers: any): Observable<any> {
 		let tempheaders = new HttpHeaders({
-			ipAddress: this.storeageService.getIpAddress(),
+			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
 			logAction: headers.logAction,
 			logObject: headers.logObject,
@@ -94,7 +94,7 @@ export class ServiceInvokerService {
 			element = {}
 		}
 		let tempheaders = new HttpHeaders({
-			ipAddress: this.storeageService.getIpAddress(),
+			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
 			logAction: headers.logAction,
 			logObject: headers.logObject,
