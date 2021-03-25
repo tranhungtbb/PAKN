@@ -475,6 +475,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				List<CAFieldGetAllOnPage> rsCAFieldGetAllOnPage = await new CAFieldGetAllOnPage(_appSetting).CAFieldGetAllOnPageDAO(PageSize, PageIndex, Name, Code, Description, IsActived);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
