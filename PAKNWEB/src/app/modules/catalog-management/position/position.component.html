@@ -1,28 +1,7 @@
 <div class="container-fluid p-0">
 	<div class="row">
 		<div class="col-lg-12">
-			<div class="nav-table">
-				<div class="d-flex align-items-center">
-					<button type="button" class="btn btn-outline-secondary mr-2 p-2">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-chevron-left" viewBox="0 0 16 16">
-							<path fill-rule="evenodd"
-								d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
-						</svg>
-					</button>
-					<div class="border d-flex align-items-center border-dark px-2 rounded">
-						<input type="number" value="1" class="border-0 p-0 number-page-table text-right">
-						<span>/20</span>
-					</div>
-					<button type="button" class="btn btn-outline-secondary ml-2 p-2">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-chevron-right" viewBox="0 0 16 16">
-							<path fill-rule="evenodd"
-								d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-						</svg>
-					</button>
-				</div>
-			</div>
+
 			<div class="btn-group" role="group">
 				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -34,8 +13,7 @@
 					</svg>
 					Xuất excel
 				</button>
-				<button type="button" class="btn grd-blue border-0 p-2 btn-sm text-white" data-toggle="modal"
-					data-target="#modal-tm-cqdv">
+				<button type="button" class="btn grd-blue border-0 p-2 btn-sm text-white" (click)="preCreate()">
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus"
 						viewBox="0 0 16 16">
 						<path
@@ -51,7 +29,7 @@
 		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 			<div class="modal-content rounded">
 				<div class="modal-header border-bottom-0">
-					<p class="modal-title h3">Thêm chức vụ</p>
+					<p class="modal-title h3">{{title}}</p>
 					<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
 					</button>
 				</div>
@@ -59,14 +37,13 @@
 					<form class="form-horizontal" [formGroup]="createDataForm" (ngSubmit)="onSave()">
 						<div class="form-row">
 							<div class="col-12 col-lg-8 form-group"
-								[ngClass]="{ 'has-error': (submitted && f.positionName.errors) ||(f.positionName.invalid && (f.positionName.dirty || f.positionName.touched)) }">
+								[ngClass]="{ 'has-error': (submitted && f.name.errors) ||(f.name.invalid && (f.name.dirty || f.name.touched)) }">
 								<label class="mb-1">Tên chức vụ <span class="cl-red">(*)</span></label>
-								<input svTrim type="text" formControlName="positionName" class="form-control" placeholder="Nhập..."
+								<input svTrim type="text" formControlName="name" class="form-control" placeholder="Nhập..."
 									[(ngModel)]="model.name" required />
-								<div
-									*ngIf="(submitted && f.positionName.invalid)||(f.positionName.invalid && (f.positionName.dirty || f.positionName.touched))"
+								<div *ngIf="(submitted && f.name.invalid)||(f.name.invalid && (f.name.dirty || f.name.touched))"
 									class="has-error m-b-12">
-									<div *ngIf="f.positionName.errors.required">
+									<div *ngIf="f.name.errors.required">
 										<span class="help-block">Trường dữ liệu này không được để trống</span>
 									</div>
 								</div>
@@ -74,35 +51,35 @@
 
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
-								<select formControlName="status" [(ngModel)]="model.isActived" class="form-control">
+								<select formControlName="isActived" [(ngModel)]="model.isActived" class="form-control">
 									<option value="true" selected>Hiệu lực</option>
 									<option value="false">Hết hiệu lực</option>
 								</select>
 							</div>
 							<div class="col-12 col-lg-8 form-group"
-								[ngClass]="{ 'has-error': (submitted && f.ma.errors) ||(f.ma.invalid && (f.ma.dirty || f.ma.touched)) }">
+								[ngClass]="{ 'has-error': (submitted && f.code.errors) ||(f.code.invalid && (f.code.dirty || f.code.touched)) }">
 								<label class="mb-1">Code <span class="cl-red">(*)</span></label>
-								<input svTrim type="text" formControlName="ma" class="form-control" placeholder="Nhập..."
+								<input svTrim type="text" formControlName="code" class="form-control" placeholder="Nhập..."
 									[(ngModel)]="model.code" required />
-								<div *ngIf="(submitted && f.ma.invalid)||(f.ma.invalid && (f.ma.dirty || f.ma.touched))"
+								<div *ngIf="(submitted && f.code.invalid)||(f.code.invalid && (f.code.dirty || f.code.touched))"
 									class="has-error m-b-12">
-									<div *ngIf="f.ma.errors.required">
+									<div *ngIf="f.code.errors.required">
 										<span class="help-block">Trường dữ liệu này không được để trống</span>
 									</div>
 								</div>
 							</div>
 							<div class="col-12 col-lg-4 form-group"
-								[ngClass]="{ 'has-error': (submitted && f.orderNum.errors) ||(f.orderNum.invalid && (f.orderNum.dirty || f.orderNum.touched)) }">
+								[ngClass]="{ 'has-error': (submitted && f.orderNumber.errors) ||(f.orderNumber.invalid && (f.orderNumber.dirty || f.orderNumber.touched)) }">
 								<label class="mb-1">Thứ tự hiển thị <span class="cl-red">(*)</span></label>
-								<input svTrim type="text" formControlName="orderNum" class="form-control" placeholder="Nhập..."
+								<input svTrim type="text" formControlName="orderNumber" class="form-control" placeholder="Nhập..."
 									[(ngModel)]="model.orderNumber" required />
 								<div
-									*ngIf="(submitted && f.orderNum.invalid)||(f.orderNum.invalid && (f.orderNum.dirty || f.orderNum.touched))"
+									*ngIf="(submitted && f.orderNumber.invalid)||(f.orderNumber.invalid && (f.orderNumber.dirty || f.orderNumber.touched))"
 									class="has-error m-b-12">
-									<div *ngIf="f.orderNum.errors.required">
+									<div *ngIf="f.orderNumber.errors.required">
 										<span class="help-block">Trường dữ liệu này không được để trống</span>
 									</div>
-									<div *ngIf="f.orderNum.errors.pattern">
+									<div *ngIf="f.orderNumber.errors.pattern">
 										<span class="help-block">Chỉ chứa các ký tự 0-9</span>
 									</div>
 								</div>
@@ -126,407 +103,100 @@
 		<div class="col-lg-12">
 			<div class="card mb-0 shadow-none">
 				<div class="table-responsive">
-					<table class="table table-sd table-responsive-md table-striped mb-0">
-						<thead class="bg-thead">
+
+					<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true"
+						[showCurrentPageReport]="true" currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize"
+						[totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]" [responsive]="true" autoLayout="true"
+						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
-								<th style="width: 150px">
+								<th style="width: 50px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Mã số PAKN</strong>
-										<span class="caret-tb"></span>
+										<strong>STT</strong>
 									</p>
-									<input type="text" class="form-control form-control-sm">
 								</th>
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Tên CN/DN</strong>
+										<strong>Tên chức vụ</strong>
 										<span class="caret-tb"></span>
 									</p>
-									<input type="text" class="form-control form-control-sm">
+									<input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100"
+										(keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
 								</th>
 								<th style="width: 350px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Nội dung</strong>
+										<strong>Mô tả</strong>
 										<span class="caret-tb"></span>
 									</p>
-									<input type="text" class="form-control form-control-sm">
-								</th>
-								<th>
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>ĐV tiếp nhận</strong>
-										<span class="caret-tb"></span>
-									</p>
-									<select class="form-control form-control-sm">
-										<option>Option 1</option>
-										<option>Option 2</option>
-										<option>Option 3</option>
-									</select>
-								</th>
-								<th>
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>lĩnh vực</strong>
-										<span class="caret-tb"></span>
-									</p>
-									<input type="text" class="form-control form-control-sm">
+									<input class="form-control form-control-sm" [(ngModel)]="description" maxlength="100"
+										(keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
 								</th>
 								<th style="width: 160px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Trạng thái</strong>
 										<span class="caret-tb"></span>
 									</p>
-									<input type="text" class="form-control form-control-sm">
+									<div class="dropdown bootstrap-select form-control form-control-sm">
+										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text"
+											bindValue="value" [(ngModel)]="isActived" [closeOnSelect]="true" (change)="dataStateChange()">
+										</ng-select>
+									</div>
 								</th>
 								<th class="text-right"><strong>Thao tác</strong></th>
 							</tr>
-						</thead>
-						<tbody>
+						</ng-template>
+						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 							<tr>
+								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									<strong>1.005321</strong>
+									<strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
 								</td>
-								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
+								<td>{{item.description}}</td>
 								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
-										corporis quo magnam quas cum, temporibus
-										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
-								</td>
-								<td>Sở Khoa học và Công nghệ</td>
-								<td>Sở hữu trí tuệ</td>
-								<td>
-									<span class="badge rounded-pill badge-outline-light bg-white">Chờ xử lý</span>
+									<span *ngIf="item.isActived == true" class="badge rounded-pill bg-blue2">Hiệu lực</span>
+									<span *ngIf="item.isActived == false" class="badge rounded-pill badge-outline-light bg-white">Hết hiệu
+										lực</span>
 								</td>
 								<td>
 									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon grd-xanhngoc text-white mr-2"><i
-												class="bi bi-file-earmark-check"></i></a>
-										<a href="#" class="btn-icon grd-red text-white mr-2" data-toggle="modal"
-											data-target="#modal-tc-pakn"><i class="bi bi-file-earmark-break"></i></a>
-										<a href="#" class="btn-icon" data-toggle="modal" data-target="#modal-history-pakn"><i
-												class="bi bi-clock-history"></i></a>
+										<a (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i
+												class="bi bi-pencil-square"></i></a>
+										<a (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal"
+											data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
 									</div>
 								</td>
 							</tr>
-							<tr>
-								<td>
-									<strong>1.005323</strong>
-								</td>
-								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
-								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
-										corporis quo magnam quas cum, temporibus
-										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
-								</td>
-								<td>Sở Khoa học và Công nghệ</td>
-								<td>Sở hữu trí tuệ</td>
-								<td>
-									<span class="badge rounded-pill bg-blue2">Đã tiếp nhận</span>
-								</td>
-								<td>
-									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon grd-blue text-white mr-2">
-											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-												<path
-													d="M13.5938 0.125927L0.468823 7.69624C-0.205005 8.08589 -0.137622 9.07905 0.580151 9.37495L4.68757 11.0742V14.0625C4.68757 14.9472 5.795 15.331 6.34871 14.6572L8.12703 12.4951L11.8302 14.0244C12.3897 14.2558 13.0225 13.9013 13.1134 13.3007L14.9884 1.081C15.1085 0.298778 14.2677 -0.263722 13.5938 0.125927ZM5.62507 14.0625V11.4609L7.22175 12.1201L5.62507 14.0625ZM12.1876 13.1572L6.14656 10.6611L11.9913 3.75288C12.1319 3.58882 11.9063 3.36616 11.7423 3.50679L4.26277 9.88179L0.937573 8.51069L14.0626 0.93745L12.1876 13.1572Z"
-													fill="white" />
-											</svg>
-										</a>
-										<a href="#" class="btn-icon"><i class="bi bi-clock-history"></i></a>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>1.005323</strong>
-								</td>
-								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
-								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
-										corporis quo magnam quas cum, temporibus
-										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
-								</td>
-								<td>Sở Khoa học và Công nghệ</td>
-								<td>Sở hữu trí tuệ</td>
-								<td>
-									<span class="badge rounded-pill bg-blue2">Đã tiếp nhận</span>
-								</td>
-								<td>
-									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon grd-blue text-white mr-2">
-											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-												<path
-													d="M13.5938 0.125927L0.468823 7.69624C-0.205005 8.08589 -0.137622 9.07905 0.580151 9.37495L4.68757 11.0742V14.0625C4.68757 14.9472 5.795 15.331 6.34871 14.6572L8.12703 12.4951L11.8302 14.0244C12.3897 14.2558 13.0225 13.9013 13.1134 13.3007L14.9884 1.081C15.1085 0.298778 14.2677 -0.263722 13.5938 0.125927ZM5.62507 14.0625V11.4609L7.22175 12.1201L5.62507 14.0625ZM12.1876 13.1572L6.14656 10.6611L11.9913 3.75288C12.1319 3.58882 11.9063 3.36616 11.7423 3.50679L4.26277 9.88179L0.937573 8.51069L14.0626 0.93745L12.1876 13.1572Z"
-													fill="white" />
-											</svg>
-										</a>
-										<a href="#" class="btn-icon"><i class="bi bi-clock-history"></i></a>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>1.005323</strong>
-								</td>
-								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
-								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
-										corporis quo magnam quas cum, temporibus
-										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
-								</td>
-								<td>Sở Khoa học và Công nghệ</td>
-								<td>Sở hữu trí tuệ</td>
-								<td>
-									<span class="badge rounded-pill bg-red">Từ chối tiếp nhận</span>
-								</td>
-								<td>
-									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon"><i class="bi bi-clock-history"></i></a>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>1.005323</strong>
-								</td>
-								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
-								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
-										corporis quo magnam quas cum, temporibus
-										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
-								</td>
-								<td>Sở Khoa học và Công nghệ</td>
-								<td>Sở hữu trí tuệ</td>
-								<td>
-									<span class="badge rounded-pill badge-outline-green2">Chờ giải quyết</span>
-								</td>
-								<td>
-									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon"><i class="bi bi-clock-history"></i></a>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>1.005323</strong>
-								</td>
-								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
-								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
-										corporis quo magnam quas cum, temporibus
-										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
-								</td>
-								<td>Sở Khoa học và Công nghệ</td>
-								<td>Sở hữu trí tuệ</td>
-								<td>
-									<span class="badge rounded-pill badge-outline-blue">Đang giải quyết</span>
-								</td>
-								<td>
-									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon"><i class="bi bi-clock-history"></i></a>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>1.005323</strong>
-								</td>
-								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
-								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
-										corporis quo magnam quas cum, temporibus
-										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
-								</td>
-								<td>Sở Khoa học và Công nghệ</td>
-								<td>Sở hữu trí tuệ</td>
-								<td>
-									<span class="badge rounded-pill badge-outline-success">Chờ phê duyệt</span>
-								</td>
-								<td>
-									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon"><i class="bi bi-clock-history"></i></a>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>1.005323</strong>
-								</td>
-								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
-								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
-										corporis quo magnam quas cum, temporibus
-										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
-								</td>
-								<td>Sở Khoa học và Công nghệ</td>
-								<td>Sở hữu trí tuệ</td>
-								<td>
-									<span class="badge rounded-pill badge-success">Đã giải quyết</span>
-								</td>
-								<td>
-									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon"><i class="bi bi-clock-history"></i></a>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>1.005323</strong>
-								</td>
-								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
-								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
-										corporis quo magnam quas cum, temporibus
-										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
-								</td>
-								<td>Sở Khoa học và Công nghệ</td>
-								<td>Sở hữu trí tuệ</td>
-								<td>
-									<span class="badge rounded-pill  badge-outline-light bg-white">Chờ xử lý</span>
-								</td>
-								<td>
-									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon grd-xanhngoc text-white mr-2"><i
-												class="bi bi-file-earmark-check"></i></a>
-										<a href="#" class="btn-icon grd-red text-white mr-2"><i class="bi bi-file-earmark-break"></i></a>
-										<a href="#" class="btn-icon"><i class="bi bi-clock-history"></i></a>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>1.005323</strong>
-								</td>
-								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
-								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
-										corporis quo magnam quas cum, temporibus
-										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
-								</td>
-								<td>Sở Khoa học và Công nghệ</td>
-								<td>Sở hữu trí tuệ</td>
-								<td>
-									<span class="badge rounded-pill bg-blue2">Đã tiếp nhận</span>
-								</td>
-								<td>
-									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon grd-blue text-white mr-2">
-											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-												<path
-													d="M13.5938 0.125927L0.468823 7.69624C-0.205005 8.08589 -0.137622 9.07905 0.580151 9.37495L4.68757 11.0742V14.0625C4.68757 14.9472 5.795 15.331 6.34871 14.6572L8.12703 12.4951L11.8302 14.0244C12.3897 14.2558 13.0225 13.9013 13.1134 13.3007L14.9884 1.081C15.1085 0.298778 14.2677 -0.263722 13.5938 0.125927ZM5.62507 14.0625V11.4609L7.22175 12.1201L5.62507 14.0625ZM12.1876 13.1572L6.14656 10.6611L11.9913 3.75288C12.1319 3.58882 11.9063 3.36616 11.7423 3.50679L4.26277 9.88179L0.937573 8.51069L14.0626 0.93745L12.1876 13.1572Z"
-													fill="white" />
-											</svg>
-										</a>
-										<a href="#" class="btn-icon"><i class="bi bi-clock-history"></i></a>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>1.005323</strong>
-								</td>
-								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
-								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
-										corporis quo magnam quas cum, temporibus
-										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
-								</td>
-								<td>Sở Khoa học và Công nghệ</td>
-								<td>Sở hữu trí tuệ</td>
-								<td>
-									<span class="badge rounded-pill bg-red">Từ chối tiếp nhận</span>
-								</td>
-								<td>
-									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon"><i class="bi bi-clock-history"></i></a>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>1.005323</strong>
-								</td>
-								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
-								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
-										corporis quo magnam quas cum, temporibus
-										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
-								</td>
-								<td>Sở Khoa học và Công nghệ</td>
-								<td>Sở hữu trí tuệ</td>
-								<td>
-									<span class="badge rounded-pill badge-outline-green2">Chờ giải quyết</span>
-								</td>
-								<td>
-									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon"><i class="bi bi-clock-history"></i></a>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>1.005323</strong>
-								</td>
-								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
-								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
-										corporis quo magnam quas cum, temporibus
-										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
-								</td>
-								<td>Sở Khoa học và Công nghệ</td>
-								<td>Sở hữu trí tuệ</td>
-								<td>
-									<span class="badge rounded-pill badge-outline-blue">Đang giải quyết</span>
-								</td>
-								<td>
-									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon"><i class="bi bi-clock-history"></i></a>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>1.005323</strong>
-								</td>
-								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
-								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
-										corporis quo magnam quas cum, temporibus
-										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
-								</td>
-								<td>Sở Khoa học và Công nghệ</td>
-								<td>Sở hữu trí tuệ</td>
-								<td>
-									<span class="badge rounded-pill badge-outline-success">Chờ phê duyệt</span>
-								</td>
-								<td>
-									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon"><i class="bi bi-clock-history"></i></a>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>1.005323</strong>
-								</td>
-								<td><strong>Công ty cổ phần công nghệ Abc</strong></td>
-								<td>
-									<p class="text-2line mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis totam
-										corporis quo magnam quas cum, temporibus
-										obcaecati, corrupti, unde esse ea accusamus, nisi hic atque ad minus vitae autem commodi!</p>
-								</td>
-								<td>Sở Khoa học và Công nghệ</td>
-								<td>Sở hữu trí tuệ</td>
-								<td>
-									<span class="badge rounded-pill badge-success">Đã giải quyết</span>
-								</td>
-								<td>
-									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon"><i class="bi bi-clock-history"></i></a>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+						</ng-template>
+					</p-table>
 				</div>
 			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="modalConfirmDelete">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">Xác nhận</p>
+					</div>
+					<div class="modal-body no-padding-bottom">
+						<div>
+							<p>Anh/Chị có chắc chắn thực hiện hành động này?</p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
+							data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác
+							nhận</button>
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>
