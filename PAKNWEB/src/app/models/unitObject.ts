@@ -17,6 +17,7 @@ export class UnitObject {
 	constructor() {
 		this.isActived = true
 		this.isDeleted = false
+		this.unitLevel = 1
 	}
 	id: number
 	name: string

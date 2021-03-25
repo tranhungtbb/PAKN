@@ -10,15 +10,34 @@
 			<div class="modal-body pb-0">
 				<div class="align-items-center form-group mb-4 border-bottom pb-3">
 					<strong class="h4 mr-5">Cấp đơn vị:</strong>
-					<label class="radio-inline mr-5"><input class="radio-danger" type="radio" name="optradio" checked> Cấp tỉnh</label>
-					<label class="radio-inline mr-5"><input type="radio" name="optradio"> Cấp huyện</label>
-					<label class="radio-inline"><input type="radio" name="optradio"> Cấp xã</label>
+					<label class="radio-inline mr-5"><input (click)="changeLevel(1)" class="radio-danger" type="radio" name="optradio" checked> Cấp tỉnh</label>
+					<label class="radio-inline mr-5"><input (click)="changeLevel(2)" type="radio" name="optradio"> Cấp huyện</label>
+					<label class="radio-inline"><input (click)="changeLevel(3)" type="radio" name="optradio"> Cấp xã</label>
 				</div>
-				<form>
+				<form [formGroup]="createUnitFrom" (ngSubmit)="onSaveUnit()">
+					<input hidden formControlName="unitLevel" [(ngModel)]="modelUnit.unitLevel">
 					<div class="form-row">
-						<div class="col-12 col-lg-8 form-group">
+						<div class="col-12 col-lg-8 form-group" [ngClass]="{'col-lg-4':modelUnit.unitLevel > 1,'col-lg-8':modelUnit.unitLevel == 1}">
 							<label class="mb-1">Tên đơn vị <span class="cl-red">(*)</span></label>
-							<input type="text" class="form-control" placeholder="Nhập...">
+							<input formControlName="name" [(ngModel)]="modelUnit.name" type="text" class="form-control" placeholder="Nhập...">
+							<!-- <div *ngIf="(unitFormSubmitted && fUnit.name.invalid)||(fUnit.name.invalid && (fUnit.name.dirty || fUnit.name.touched))" class="has-error m-b-12">
+								<div *ngIf="fUnit.name.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div> -->
+						</div>
+						<div class="col-12 col-lg-4 form-group" *ngIf="modelUnit.unitLevel > 1">
+							<label formControlName="parentId" [(ngModel)]="modelUnit.parentId" class="mb-1">Đơn vị cấp trên <span class="cl-red">(*)</span></label>
+							<select class="form-control">
+								<option *ngFor="let item of getUnitParent" [value]="item.id">{{item.name}}</option>
+
+							</select>
+							<!-- <div *ngIf="(unitFormSubmitted && fUnit.parentId.invalid)||(fUnit.parentId.invalid && (fUnit.parentId.dirty || fUnit.parentId.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="fUnit.parentId.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div> -->
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
@@ -29,15 +48,30 @@
 						</div>
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">Email <span class="cl-red">(*)</span></label>
-							<input type="mail" class="form-control" placeholder="Nhập...">
+							<input formControlName="email" [(ngModel)]="modelUnit.email" type="mail" class="form-control" placeholder="Nhập...">
+							<!-- <div *ngIf="(unitFormSubmitted && fUnit.email.invalid)||(fUnit.email.invalid && (fUnit.email.dirty || fUnit.email.touched))" class="has-error m-b-12">
+								<div *ngIf="fUnit.email.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div> -->
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
-							<input type="text" class="form-control" placeholder="Nhập...">
+							<input formControlName="phone" [(ngModel)]="modelUnit.phone" type="text" class="form-control" placeholder="Nhập...">
+							<!-- <div *ngIf="(unitFormSubmitted && fUnit.phone.invalid)||(fUnit.phone.invalid && (fUnit.phone.dirty || fUnit.phone.touched))" class="has-error m-b-12">
+								<div *ngIf="fUnit.phone.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div> -->
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Địa chỉ <span class="cl-red">(*)</span></label>
-							<input type="mail" class="form-control" placeholder="Nhập...">
+							<input formControlName="address" [(ngModel)]="modelUnit.address" type="text" class="form-control" placeholder="Nhập...">
+							<!-- <div *ngIf="(unitFormSubmitted && fUnit.address.invalid)||(fUnit.address.invalid && (fUnit.address.dirty || fUnit.address.touched))" class="has-error m-b-12">
+								<div *ngIf="fUnit.address.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div> -->
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Mô tả</label>
@@ -48,7 +82,7 @@
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 px-5 grd-blue">Xác nhận</button>
+				<button type="submit" class="btn btn-danger border-0 px-5 grd-blue">Xác nhận</button>
 			</div>
 		</div>
 	</div>

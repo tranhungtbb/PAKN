@@ -1,6 +1,7 @@
 import { NullTemplateVisitor } from '@angular/compiler'
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms'
+import { ToastrService } from 'ngx-toastr'
 
 import { UnitService } from '../../../../services/unit.service'
 import { UserService } from '../../../../services/user.service'
@@ -40,11 +41,24 @@ export class UnitComponent implements OnInit {
 	activeParent: number
 	activeLevel: number = 1
 
-	constructor(private unitService: UnitService) {}
+	constructor(private unitService: UnitService, private formBuilder: FormBuilder, private _toastr: ToastrService) {}
 
 	ngOnInit() {
 		this.initialTreeViewJs()
 		this.getAllUnitShortInfo()
+
+		/*unit form*/
+		this.createUnitFrom = this.formBuilder.group({
+			name: ['', Validators.required],
+			unitLevel: ['', [Validators.required]],
+			isActived: [''],
+			isDeleted: [''],
+			parentId: [''],
+			description: [''],
+			email: ['', [Validators.required, Validators.pattern('^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$')]],
+			phone: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')]],
+			address: ['', [Validators.required]],
+		})
 	}
 
 	getUnitPagedList(): void {
@@ -102,6 +116,27 @@ export class UnitComponent implements OnInit {
 		if (id == 0) this.modalCreateOrUpdateTitle = 'Thêm cơ quan, đơn vị'
 		else this.modalCreateOrUpdateTitle = 'Thêm cơ quan, đơn vị'
 		$('#modal-create-or-update').modal('show')
+	}
+
+	// get fUnit() {
+	// 	return this.createUnitFrom.controls
+	// }
+	unitFormSubmitted = false
+	onSaveUnit() {
+		this.unitFormSubmitted = true
+		if (this.createUnitFrom.invalid) {
+			this._toastr.error('Các trường sao đỏ không được bỏ trống')
+			console.log('not valid')
+			return
+		}
+		//this.unitService.create()
+	}
+	changeLevel(level: number) {
+		this.modelUnit.unitLevel = level
+	}
+	get getUnitParent(): any[] {
+		if (!this.listUnitTreeview) return []
+		return this.listUnitTreeview.filter((c) => c.unitLevel == this.modelUnit.unitLevel - 1)
 	}
 
 	private loadTreeArray(arr): void {
