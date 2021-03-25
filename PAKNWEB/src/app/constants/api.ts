@@ -43,4 +43,8 @@ export class Api {
 
 	//Position
 	public static PositionInsert = 'CACategorySPBase/CAPositionInsertBase'
+	public static PositionGetList = 'CACategorySPBase/CAPositionGetAllOnPageBase'
+	public static PositionDelete = 'CACategorySPBase/CAPositionDeleteBase'
+	public static PositionGetById = 'CACategorySPBase/CAPositionGetByIDBase'
+	public static PositionUpdate = 'CACategorySPBase/CAPositionUpdateBase'
 }

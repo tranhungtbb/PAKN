@@ -24,7 +24,6 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-
 		public async Task<int> SYCaptChaDeleteDAO(SYCaptChaDeleteIN _sYCaptChaDeleteIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -51,7 +50,6 @@ namespace PAKNAPI.ModelBase
 		public SYCaptChaInsertData()
 		{
 		}
-
 
 		public async Task<int> SYCaptChaInsertDataDAO(SYCaptChaInsertDataIN _sYCaptChaInsertDataIN)
 		{
@@ -80,5 +78,12 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
+		public async Task<List<SYCaptChaValidator>> SYCaptChaValidatorDAO(string Code)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Code", Code);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYCaptChaValidator>("SY_CaptChaValidator", DP)).ToList();
+		}
 	}
 }
