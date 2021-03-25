@@ -1,1 +1,1 @@
-{"SPExcludeList":[],"TableExcludeList":[]}
+{"SPExcludeList":["SY_UserGetByID"],"TableExcludeList":[]}
