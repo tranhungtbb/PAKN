@@ -24,14 +24,18 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 		// }
 
 		if (request.url != 'https://jsonip.com/' && request.url != AppSettings.API_ADDRESS + Api.GetFile) {
+			let logAction = request.headers.get('logAction') && request.headers.get('logAction') != 'null' ? request.headers.get('logAction') : ''
+			let logObject = request.headers.get('logObject') && request.headers.get('logObject') != 'null' ? request.headers.get('logObject') : ''
+			let ipAddress = request.headers.get('ipAddress') && request.headers.get('ipAddress') != 'null' ? request.headers.get('ipAddress') : ''
+			let macAddress = request.headers.get('macAddress') && request.headers.get('macAddress') != 'null' ? request.headers.get('macAddress') : ''
 			request = request.clone({
 				headers: new HttpHeaders({
 					'Access-Control-Allow-Origin': '*',
 					Authorization: `Bearer ${this.storeageService.getAccessToken()}`,
-					logAction: request.headers.get('logAction'),
-					logObject: request.headers.get('logObject'),
-					ipAddress: request.headers.get('ipAddress'),
-					macAddress: request.headers.get('macAddress'),
+					logAction: logAction,
+					logObject: logObject,
+					ipAddress: ipAddress,
+					macAddress: macAddress,
 				}),
 			})
 		}
