@@ -102,22 +102,29 @@ namespace PAKNAPI.Common
 			return JsonConvert.DeserializeObject<BaseRequest>(str);
 		}
 
+		public BaseRequest ReadHeaderFromRequest(HttpRequest httpRequest)
+		{
+			return new BaseRequest
+			{
+				logAction = httpRequest.Headers["logAction"],
+				logObject = httpRequest.Headers["logObject"],
+				ipAddress = httpRequest.Headers["ipAddress"],
+				macAddress = httpRequest.Headers["macAddress"],
+			};
+		}
+
 		public void ProcessInsertLogAsync(HttpContext httpContext, Exception ex)
 		{
 			LogHelper logHelper = new LogHelper(_appSetting);
 
-			//if (baseRequest == null)
-			//{
-			//	baseRequest = logHelper.ReadBodyFromRequest(httpContext.Request);
-			//}
-			BaseRequest baseRequest = logHelper.ReadBodyFromRequest(httpContext.Request);
+			BaseRequest baseRequest = logHelper.ReadHeaderFromRequest(httpContext.Request);
 
 			if (baseRequest == null) return;
 
 			logHelper.InsertSystemLogging(new Logs
 			{
-				logAction = baseRequest.logAction,
-				logObject = baseRequest.logObject,
+				logAction = System.Uri.UnescapeDataString(baseRequest.logAction),
+				logObject = System.Uri.UnescapeDataString(baseRequest.logObject),
 				ipAddress = baseRequest.ipAddress,
 				macAddress = baseRequest.macAddress,
 				e = ex,

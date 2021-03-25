@@ -6,6 +6,7 @@ import { CatalogService } from 'src/app/services/catalog.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { HttpHeaders } from '@angular/common/http'
 
 declare var $: any
 
@@ -67,9 +68,24 @@ export class FieldComponent implements OnInit {
 	getList() {
 		this.code = this.code.trim()
 		this.name = this.name.trim()
-		let request = '?Code=' + this.code + '&Name=' + this.name + '&isActived=' + this.isActived + '&PageIndex=' + this.pageIndex + '&PageSize=' + this.pageSize
+		// let request = '?Code=' + this.code + '&Name=' + this.name + '&isActived=' + (this.isActived ? this.isActived : '') + '&PageIndex=' + this.pageIndex + '&PageSize=' + this.pageSize
+		let request = {
+			Code: this.code,
+			Name: this.name,
+			isActived: this.isActived ? this.isActived : '',
+			PageIndex: this.pageIndex,
+			PageSize: this.pageSize,
+		}
 
-		this._service.fieldGetList({}, request).subscribe((response) => {
+		let headers = {
+			logAction: 'Add',
+			logObject: 'Thanh tra',
+			ipAddress: '123.13.12.12',
+			macAddress: '67.68.54.34.34',
+			location: 'Quaản lý thanh tra',
+		}
+
+		this._service.fieldGetList(request, headers).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
