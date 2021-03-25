@@ -1,23 +1,16 @@
 ﻿namespace PAKNAPI.Common
 {
-	public static class ResultCode
+	public static class STATUS_RECOMMENDATION
 	{
-		public const string OK = "OK";
-		public const string ORROR = "ORROR";
-		public const string ALREADY_EXISTS = "ALREADY_EXISTS";
-		public const string INCORRECT = "INCORRECT";
-	}
-	public static class ResultMessage
-	{
-		public const string OK = "Success";
-		public const string ORROR = "Some error occured, please try again";
-		public const string ALREADY_EXISTS = "Already exists";
-		public const string NOTSUPPORTED_FILETYPE = "Not Supported File Type";
-		public const string FILESIZE_EXCEED = "Please Upload a file upto 1 mb.";
-	}
-	public class RestrictFileTypeMIME
-	{
-		public static readonly string[] acceptedFile = { ".doc", ".docx", ".xls", ".xlsx", ".pdf", ".jpeg", ".png" };
-		public static readonly string[] acceptedImage = { ".jpeg", ".png", ".jpg", ".gif", ".bmp" };
+		public const int CREATED = 1;
+		//public const int ;//2 Chờ xử lý
+		//public const int ;//3 Từ chối xử lý
+		//public const int ;//4 Tiếp nhận xử lý
+		//public const int ;//5 Chờ giải quyết
+		//public const int ;//6 Từ chối giải quyết
+		//public const int ;//7 Đang giải quyết
+		//public const int ;//8 Chờ phê duyệt
+		//public const int ;//9 Từ chối phê duyệt
+		//public const int ;//10 Đã giải quyết
 	}
 }
