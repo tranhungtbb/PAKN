@@ -31,4 +31,7 @@ export class Api {
 	public static FieldUpdateStatus = 'CACategorySPBase/CAFieldUpdateBase'
 	public static FieldDelete = 'CACategorySPBase/CAFieldDeleteBase'
 	public static FieldExport = 'CACategorySPBase/CAFieldExportBase'
+
+	//Position
+	public static PositionInsert = 'CACategorySPBase/CAPositionInsertBase'
 }

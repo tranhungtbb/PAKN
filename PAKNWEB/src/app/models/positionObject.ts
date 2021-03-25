@@ -1,16 +1,15 @@
 export class PositionObject {
   constructor() {
     this.id = 0;
-    this.xoa = false;
-    this.trangThai = true;
-    this.moTa = '';
+    this.isDeleted = false;
+    this.isActived = true;
+    this.description = '';
   }
   id: number;
-  stt: number;
-  tenDuLieu: string;
+  name: string;
   code: string;
-  moTa: string;
-  trangThai: boolean;
-  xoa: boolean;
-  tenDonVi: string;
+  isActived: boolean;
+  isDeleted: boolean;
+  description: string;
+  orderNumber: number
 }
