@@ -24,7 +24,75 @@
 		<div class="col-lg-12">
 			<div class="card mb-0 shadow-none">
 				<div class="table-responsive">
-					<table class="table table-sd table-responsive-md table-striped mb-0">
+
+					<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+						currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]" [responsive]="true"
+						autoLayout="true">
+						<ng-template pTemplate="header">
+							<tr>
+								<th style="width: 50px">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>STT</strong>
+									</p>
+								</th>
+								<th style="width: 150px">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>Mã lĩnh vực</strong>
+										<span class="caret-tb"></span>
+									</p>
+									<input class="form-control form-control-sm" [(ngModel)]="code" maxlength="50" (keydown.enter)="dataStateChange()" placeholder="Nhập mã..." />
+								</th>
+								<th>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>Tên lĩnh vực</strong>
+										<span class="caret-tb"></span>
+									</p>
+									<input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+								</th>
+								<th style="width: 350px">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>Mô tả</strong>
+										<span class="caret-tb"></span>
+									</p>
+									<input type="text" class="form-control form-control-sm">
+								</th>
+								<th style="width: 160px">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>Trạng thái</strong>
+										<span class="caret-tb"></span>
+									</p>
+									<ng-select appendTo="body" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="isActived"
+										[closeOnSelect]="true" (change)="dataStateChange()">
+									</ng-select>
+								</th>
+								<th class="text-right"><strong>Thao tác</strong></th>
+							</tr>
+						</ng-template>
+						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+							<tr>
+								<td class="text-center">{{rowIndex + 1}}</td>
+								<td>
+									<strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
+								</td>
+								<td>
+									<strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
+								</td>
+								<td>{{item.description}}</td>
+								<td>
+									<span *ngIf="item.isActived == true" class="badge rounded-pill bg-blue2">Sử dụng</span>
+									<span *ngIf="item.isActived == false" class="badge rounded-pill badge-outline-light bg-white">Không sử dụng</span>
+								</td>
+								<td>
+									<div class="d-flex justify-content-end">
+										<a (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
+										<a (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
+												class="bi bi-trash"></i></a>
+									</div>
+								</td>
+							</tr>
+						</ng-template>
+					</p-table>
+					<!-- <table class="table table-sd table-responsive-md table-striped mb-0">
 						<thead class="bg-thead">
 							<tr>
 								<th style="width: 50px">
@@ -58,7 +126,7 @@
 										<strong>Trạng thái</strong>
 										<span class="caret-tb"></span>
 									</p>
-									<ng-select class="form-control form-control-sm" [items]="listisActived" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
+									<ng-select class="form-control form-control-sm" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
 										[(ngModel)]="isActived" [closeOnSelect]="true" (change)="dataStateChange()">
 									</ng-select>
 								</th>
@@ -67,7 +135,7 @@
 						</thead>
 						<tbody>
 							<tr *ngFor="let item of listData">
-								<td class="text-center">{{item.stt}}</td>
+								<td class="text-center">{{item.rowNumber}}</td>
 								<td>
 									<strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
 								</td>
@@ -76,27 +144,26 @@
 								</td>
 								<td>{{item.description}}</td>
 								<td>
-									<span class="badge rounded-pill badge-outline-light bg-white">Sử dụng</span>
-									<span class="badge rounded-pill badge-outline-light bg-white">Không sử dụng</span>
+									<span *ngIf="item.isActived == true" class="badge rounded-pill bg-blue2">Sử dụng</span>
+									<span *ngIf="item.isActived == false" class="badge rounded-pill badge-outline-light bg-white">Không sử dụng</span>
 								</td>
 								<td>
 									<div class="d-flex justify-content-end">
-										<a href="#" class="btn-icon grd-xanhngoc text-white mr-2"><i class="bi bi-file-earmark-check"></i></a>
-										<a href="#" class="btn-icon grd-red text-white mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
-												class="bi bi-file-earmark-break"></i></a>
-										<a href="#" class="btn-icon" data-toggle="modal" data-target="#modal-history-pakn"><i class="bi bi-clock-history"></i></a>
+										<a (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
+										<a (appConfirmClick)="onDelete(item)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
+												class="bi bi-trash"></i></a>
 									</div>
 								</td>
 							</tr>
 						</tbody>
-					</table>
+					</table> -->
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <div class="modal fade" id="modal">
-	<div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 60%" role="document">
 		<div class="modal-content rounded">
 			<form class="form-horizontal" [formGroup]="form" #formDir="ngForm">
 				<div class="panel panel-default no-margin">
@@ -104,7 +171,7 @@
 						<button class="close btn-close-modal" data-dismiss="modal">
 							×
 						</button>
-						<p class="title-ct uppercase no-margin">{{title}}</p>
+						<p class="modal-title h3">{{title}}</p>
 					</div>
 					<div class="modal-body no-padding-bottom">
 						<div class="row form-group">
@@ -130,11 +197,12 @@
 						<div class="row form-group">
 							<div class="col-sm-6">
 								<label class="control-label">STT</label>
-								<input class="form-control" formControlName="orderNo" [(ngModel)]="model.orderNo" maxlength="4" />
+								<input class="form-control" formControlName="orderNumber" [(ngModel)]="model.orderNumber" maxlength="4" />
 							</div>
 							<div class="col-sm-6">
 								<label class="control-label">Trạng thái <span class="text-danger">*</span></label>
-								<ng-select [items]="listStatus" bindValue="value" bindLabel="text" formControlName="isActived" [(ngModel)]="model.isActived">
+								<ng-select class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
+									[(ngModel)]="model.isActived">
 								</ng-select>
 								<div *ngIf="(submitted && f.isActived.invalid) || (f.isActived.invalid && (f.isActived.dirty || f.isActived.touched))" class="has-error m-b-12">
 									<div *ngIf="f.isActived.errors.required">
@@ -150,9 +218,9 @@
 							</div>
 						</div>
 					</div>
-					<div class="modal-footer">
-						<button class="btn btn-save btn-sm" (click)="onSave()"><i class="fa fa-save"></i> Lưu</button>
-						<button data-dismiss="modal" class="btn btn-danger btn-sm"><i class="far fa-times"></i> Hủy</button>
+					<div class="modal-footer border-top-0">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onSave()">Xác nhận</button>
 					</div>
 				</div>
 			</form>
@@ -161,7 +229,7 @@
 </div>
 
 <div class="modal fade" id="modalDetail">
-	<div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 60%" role="document">
 		<div class="modal-content rounded">
 			<form class="form-horizontal">
 				<div class="panel panel-default no-margin">
@@ -169,7 +237,7 @@
 						<button class="close btn-close-modal" data-dismiss="modal">
 							×
 						</button>
-						<p class="title-ct uppercase no-margin">Thông tin lĩnh vực</p>
+						<p class="modal-title h3">Thông tin lĩnh vực</p>
 					</div>
 					<div class="modal-body no-padding-bottom">
 						<div class="row">
@@ -185,8 +253,8 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<label class="control-label lb600">Trạng thái</label>
-								<p *ngIf="model.isActived == 0">Hết hiệu lực</p>
-								<p *ngIf="model.isActived == 1">Hiệu lực</p>
+								<p *ngIf="model.isActived == 0">Sử dụng</p>
+								<p *ngIf="model.isActived == 1">Không sử dụng</p>
 							</div>
 						</div>
 						<div class="row">
@@ -200,6 +268,32 @@
 						<button data-dismiss="modal" class="btn btn-default btn-sm">
 							<i class="far fa-times"></i> Hủy
 						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalConfirmDelete">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">Xác nhận</p>
+					</div>
+					<div class="modal-body no-padding-bottom">
+						<div>
+							<p>Anh/Chị có chắc chắn thực hiện hành động này?</p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác nhận</button>
 					</div>
 				</div>
 			</form>

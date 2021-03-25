@@ -5,7 +5,7 @@ import { FieldObject } from 'src/app/models/fieldObject'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
-import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { LOG_ACTION, LOG_OBJECT, MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { HttpHeaders } from '@angular/common/http'
 
 declare var $: any
@@ -20,21 +20,24 @@ export class FieldComponent implements OnInit {
 
 	listData = new Array<FieldObject>()
 	listStatus: any = [
-		{ value: true, text: 'Hiệu lực' },
-		{ value: false, text: 'Hết hiệu lực' },
+		{ value: true, text: 'Sử dụng' },
+		{ value: false, text: 'Không sử dụng' },
 	]
 	form: FormGroup
 	model: any = new FieldObject()
 	submitted: boolean = false
-	isActived: boolean = null
+	isActived: boolean = true
 	title: string = ''
 	code: string = ''
 	name: string = ''
 	pageIndex: number = 1
 	pageSize: number = 20
+	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
+	idDelete: number = 0
 	ngOnInit() {
 		this.buildForm()
+		this.getList()
 	}
 
 	ngAfterViewInit() {
@@ -51,7 +54,7 @@ export class FieldComponent implements OnInit {
 			name: [this.model.name, Validators.required],
 			description: [this.model.description],
 			isActived: [this.model.isActived, Validators.required],
-			orderNo: [this.model.orderNo],
+			orderNumber: [this.model.orderNumber],
 		})
 	}
 
@@ -61,14 +64,14 @@ export class FieldComponent implements OnInit {
 			name: this.model.name,
 			isActived: this.model.isActived,
 			description: this.model.description,
-			orderNo: this.model.orderNo,
+			orderNumber: this.model.orderNumber,
 		})
 	}
 
 	getList() {
 		this.code = this.code.trim()
 		this.name = this.name.trim()
-		// let request = '?Code=' + this.code + '&Name=' + this.name + '&isActived=' + (this.isActived ? this.isActived : '') + '&PageIndex=' + this.pageIndex + '&PageSize=' + this.pageSize
+
 		let request = {
 			Code: this.code,
 			Name: this.name,
@@ -77,15 +80,7 @@ export class FieldComponent implements OnInit {
 			PageSize: this.pageSize,
 		}
 
-		let headers = {
-			logAction: 'Add',
-			logObject: 'Thanh tra',
-			ipAddress: '123.13.12.12',
-			macAddress: '67.68.54.34.34',
-			location: 'Quaản lý thanh tra',
-		}
-
-		this._service.fieldGetList(request, headers).subscribe((response) => {
+		this._service.fieldGetList(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
@@ -110,6 +105,7 @@ export class FieldComponent implements OnInit {
 
 	dataStateChange() {
 		this.pageIndex = 1
+		this.table.first = 0
 		this.getList()
 	}
 
@@ -147,8 +143,8 @@ export class FieldComponent implements OnInit {
 		if (this.form.invalid) {
 			return
 		}
-		if (this.model.orderNo <= 0 && this.model.orderNo != null && this.model.orderNo.toString() != '') {
-			this.model.orderNo = 1
+		if (this.model.orderNumber <= 0 && this.model.orderNumber != null && this.model.orderNumber.toString() != '') {
+			this.model.orderNumber = 1
 		}
 		if (this.model.id == 0 || this.model.id == null) {
 			this._service.fieldInsert(this.model).subscribe((response) => {
@@ -190,7 +186,7 @@ export class FieldComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.rebuilForm()
 				this.title = 'Chỉnh sửa lĩnh vực'
-				this.model = response.catalog
+				this.model = response.result.CAFieldGetByID[0]
 				$('#modal').modal('show')
 			} else {
 				this._toastr.error(response.message)
@@ -201,15 +197,19 @@ export class FieldComponent implements OnInit {
 				alert(error)
 			}
 	}
+	preDelete(id: number) {
+		this.idDelete = id
+		$('#modalConfirmDelete').modal('show')
+	}
 
-	onDelete(data) {
+	onDelete(id: number) {
 		let request = {
-			Type: 1,
-			Id: data.id,
+			Id: id,
 		}
 		this._service.fieldDelete(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
+				$('#modalConfirmDelete').modal('hide')
 				this.getList()
 			} else {
 				this._toastr.error(response.message)
@@ -250,7 +250,7 @@ export class FieldComponent implements OnInit {
 		let request = {
 			Code: this.code,
 			Name: this.name,
-			//orderNo: this.orderNo,
+			//orderNumber: this.orderNumber,
 			IsActived: this.isActived,
 		}
 
