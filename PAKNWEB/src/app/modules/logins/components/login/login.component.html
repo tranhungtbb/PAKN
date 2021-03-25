@@ -1,140 +1,134 @@
 <div class="authincation h-100 bg-login">
-  <div class="container-fluid h-100">
-    <div class="row justify-content-center h-100 align-items-center">
-      <div class="col">
-        <div class="authincation-content bg-transparent shadow-none">
-          <div class="row no-gutters">
-            <div class="col-xl-5 border-right border-brown remove-boder-right">
-              <div class="auth-form text-center">
-                <a href="index.html"><img class="img-fluid" src="assets/dist/images/img-login.png" alt=""></a>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md border-right border-brown remove-boder-right">
-              <div class="auth-form">
-                <h2 class="text-center mb-4 text-uppercase cl-brown">Cán bộ quản lý</h2>
-                <p class="text-center cl-brown">Đăng nhập và sử dụng hệ thống dành cho cán bộ, người có thẩm quyền.</p>
-                <form [formGroup]="loginForm" #formDir="ngForm" (ngSubmit)="login()">
-                  <div class="form-group mb-4">
-                    <input class="form-control px-4 border-brown" style="font-size: 20px" placeholder="Nhập tài khoản, email..." type="text" id="name" formControlName="name"
-                      [(ngModel)]="user.UserName" required>
-                    <div *ngIf="name.invalid && (name.dirty || name.touched || submitted)" class="has-error m-b-12">
-                      <div *ngIf="name.errors.required">
-                        <span class="help-block">Trường này không được để trống</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control px-4 border-brown" type="password" style="font-size: 20px" id="pass" placeholder="Mật khẩu..." formControlName="pass"
-                      [(ngModel)]="user.Password" required>
-                    <div *ngIf="pass.invalid && (pass.dirty || pass.touched || submitted)" class="has-error m-b-12">
-                      <div *ngIf="pass.errors.required">
-                        <span class="help-block">Trường này không được để trống</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group captcha-form bg-white rounded-xl pt-5 border border-brown position-relative">
-                    <div class="bg-white captcha d-flex justify-content-between align-items-center rounded-xl shadow position-absolute">
-                      <img class="img-fluid rounded-xl" style="max-height: 70px; max-width: 70%; padding-left: 50px;" 
-                        id="img-captcha" [src]="captchaImage"/>
-                      <button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat"
-                          style="font-size: 34px"></i></button>
-                    </div>
-                    <input type="text" formControlName="captcha" [(ngModel)]="captchaCode" maxlength="5" style="font-size: 20px" placeholder="Nhập mã xác thực..."
-                      class="form-control bg-transparent px-4 border-0" value="">
-                    <div *ngIf="captcha.invalid && (captcha.dirty || captcha.touched)" 
-                          class="has-error m-b-12">
-                      <div *ngIf="captcha.errors.required">
-                        <span class="help-block">Vui lòng nhập mã captcha</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-row d-flex justify-content-between align-items-center mt-4 mb-2">
-                    <div class="form-group">
-                      <div class="custom-control custom-checkbox ml-1">
-                        <input type="checkbox" class="custom-control-input" id="basic_checkbox_1">
-                        <label class="custom-control-label" for="basic_checkbox_1">Nhớ tài khoản</label>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <a (click)="forgetPassWord()">Quên mật khẩu?</a>
-                    </div>
-                  </div>
-                  <div class="text-center">
-                    <button type="submit"
-                      class="btn btn-red text-white text-uppercase font-weight-normal btn-block border-0 rounded-xl"
-                      style="font-size: 20px">Đăng nhập</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <div class="col-sm-12 col-md">
-              <div class="auth-form">
-                <h2 class="text-center mb-4 text-uppercase cl-brown">Cá nhân, Doanh nghiệp</h2>
-                <p class="text-center cl-brown">Đăng nhập và sử dụng hệ thống dành cho cá nhân và các tổ chức, doanh
-                  nghiệp.</p>
-                  <form [formGroup]="loginFormProduct" #formDir="ngForm" (ngSubmit)="loginProduct()">
-                    <div class="form-group mb-4">
-                      <input class="form-control px-4 border-brown" style="font-size: 20px" placeholder="Nhập số điện thoại..." type="text" id="name" formControlName="name"
-                        [(ngModel)]="userProduct.UserName" required>
-                      <div *ngIf="name.invalid && (name.dirty || name.touched || submitted)" class="has-error m-b-12">
-                        <div *ngIf="name.errors.required">
-                          <span class="help-block">Trường này không được để trống</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <input class="form-control px-4 border-brown" type="password" style="font-size: 20px" id="pass" placeholder="Mật khẩu..." formControlName="pass"
-                        [(ngModel)]="userProduct.Password" required>
-                      <div *ngIf="pass.invalid && (pass.dirty || pass.touched || submitted)" class="has-error m-b-12">
-                        <div *ngIf="pass.errors.required">
-                          <span class="help-block">Trường này không được để trống</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group captcha-form bg-white rounded-xl pt-5 border border-brown position-relative">
-                      <div class="bg-white captcha d-flex justify-content-between align-items-center rounded-xl shadow position-absolute">
-                        <img class="img-fluid rounded-xl" style="max-height: 70px; max-width: 70%; padding-left: 50px;" 
-                          id="img-captcha" [src]="captchaImage"/>
-                        <button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat"
-                            style="font-size: 34px"></i></button>
-                      </div>
-                      <input type="text" formControlName="captcha" [(ngModel)]="captchaCodeProduct" maxlength="5" style="font-size: 20px" placeholder="Nhập mã xác thực..."
-                        class="form-control bg-transparent px-4 border-0" value="">
-                      <div *ngIf="captcha.invalid && (captcha.dirty || captcha.touched)" 
-                            class="has-error m-b-12">
-                        <div *ngIf="captcha.errors.required">
-                          <span class="help-block">Vui lòng nhập mã captcha</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-row d-flex justify-content-between align-items-center mt-4 mb-2">
-                      <div class="form-group">
-                        <div class="custom-control custom-checkbox ml-1">
-                          <input type="checkbox" class="custom-control-input" id="basic_checkbox_1">
-                          <label class="custom-control-label" for="basic_checkbox_1">Nhớ tài khoản</label>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <a (click)="forgetPassWord()">Quên mật khẩu?</a>
-                      </div>
-                    </div>
-                  <div class="text-center">
-                    <button type="submit"
-                      class="btn text-dark grd-yellow1 text-uppercase font-weight-normal btn-block border-0 rounded-xl"
-                      style="font-size: 20px">Đăng nhập</button>
-                  </div>
-                </form>
-                <div class="new-account mt-3">
-                  <p class="text-right">Chưa có tài khoản? <a class="cl-blue2" href="./page-register.html">Đăng ký</a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="container-fluid h-100">
+		<div class="row justify-content-center h-100 align-items-center">
+			<div class="col">
+				<div class="authincation-content bg-transparent shadow-none">
+					<div class="row no-gutters">
+						<div class="col-xl-5 border-right border-brown remove-boder-right">
+							<div class="auth-form text-center">
+								<a href="index.html"><img class="img-fluid" src="assets/dist/images/img-login.png" alt=""></a>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md border-right border-brown remove-boder-right">
+							<div class="auth-form">
+								<h2 class="text-center mb-4 text-uppercase cl-brown">Cán bộ quản lý</h2>
+								<p class="text-center cl-brown">Đăng nhập và sử dụng hệ thống dành cho cán bộ, người có thẩm quyền.</p>
+								<form [formGroup]="loginForm" #formDir="ngForm" (ngSubmit)="login()">
+									<div class="form-group mb-4">
+										<input class="form-control px-4 border-brown" style="font-size: 20px" placeholder="Nhập tài khoản, email..." type="text" id="name"
+											formControlName="name" [(ngModel)]="user.UserName" required>
+										<div *ngIf="name.invalid && (name.dirty || name.touched || submitted)" class="has-error m-b-12">
+											<div *ngIf="name.errors.required">
+												<span class="help-block">Trường này không được để trống</span>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<input class="form-control px-4 border-brown" type="password" style="font-size: 20px" id="pass" placeholder="Mật khẩu..."
+											formControlName="pass" [(ngModel)]="user.Password" required>
+										<div *ngIf="pass.invalid && (pass.dirty || pass.touched || submitted)" class="has-error m-b-12">
+											<div *ngIf="pass.errors.required">
+												<span class="help-block">Trường này không được để trống</span>
+											</div>
+										</div>
+									</div>
+									<div class="form-group captcha-form bg-white rounded-xl pt-5 border border-brown position-relative">
+										<div class="bg-white captcha d-flex justify-content-between align-items-center rounded-xl shadow position-absolute">
+											<img class="img-fluid rounded-xl" style="max-height: 70px; max-width: 70%; padding-left: 50px;" id="img-captcha" [src]="captchaImage" />
+											<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat"
+													style="font-size: 34px"></i></button>
+										</div>
+										<input type="text" formControlName="captcha" [(ngModel)]="captchaCode" maxlength="5" style="font-size: 20px"
+											placeholder="Nhập mã xác thực..." class="form-control bg-transparent px-4 border-0" value="">
+									</div>
+									<div *ngIf="captcha.invalid && (captcha.dirty || captcha.touched || submitted)" class="has-error m-b-12">
+										<div *ngIf="captcha.errors.required">
+											<span class="help-block">Vui lòng nhập mã captcha</span>
+										</div>
+									</div>
+									<div class="form-row d-flex justify-content-between align-items-center mt-4 mb-2">
+										<div class="form-group">
+											<div class="custom-control custom-checkbox ml-1">
+												<input type="checkbox" class="custom-control-input" id="basic_checkbox_1">
+												<label class="custom-control-label" for="basic_checkbox_1">Nhớ tài khoản</label>
+											</div>
+										</div>
+										<div class="form-group">
+											<a (click)="forgetPassWord()">Quên mật khẩu?</a>
+										</div>
+									</div>
+									<div class="text-center">
+										<button type="submit" class="btn btn-red text-white text-uppercase font-weight-normal btn-block border-0 rounded-xl"
+											style="font-size: 20px">Đăng nhập</button>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md">
+							<div class="auth-form">
+								<h2 class="text-center mb-4 text-uppercase cl-brown">Cá nhân, Doanh nghiệp</h2>
+								<p class="text-center cl-brown">Đăng nhập và sử dụng hệ thống dành cho cá nhân và các tổ chức, doanh
+									nghiệp.</p>
+								<form [formGroup]="loginFormProduct" #formDir="ngForm" (ngSubmit)="loginProduct()">
+									<div class="form-group mb-4">
+										<input class="form-control px-4 border-brown" style="font-size: 20px" placeholder="Nhập số điện thoại..." type="text" id="name"
+											formControlName="name" [(ngModel)]="userProduct.UserName" required>
+										<div *ngIf="name.invalid && (name.dirty || name.touched || submitted)" class="has-error m-b-12">
+											<div *ngIf="name.errors.required">
+												<span class="help-block">Trường này không được để trống</span>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<input class="form-control px-4 border-brown" type="password" style="font-size: 20px" id="pass" placeholder="Mật khẩu..."
+											formControlName="pass" [(ngModel)]="userProduct.Password" required>
+										<div *ngIf="pass.invalid && (pass.dirty || pass.touched || submitted)" class="has-error m-b-12">
+											<div *ngIf="pass.errors.required">
+												<span class="help-block">Trường này không được để trống</span>
+											</div>
+										</div>
+									</div>
+									<div class="form-group captcha-form bg-white rounded-xl pt-5 border border-brown position-relative">
+										<div class="bg-white captcha d-flex justify-content-between align-items-center rounded-xl shadow position-absolute">
+											<img class="img-fluid rounded-xl" style="max-height: 70px; max-width: 70%; padding-left: 50px;" id="img-captcha" [src]="captchaImage" />
+											<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat"
+													style="font-size: 34px"></i></button>
+										</div>
+										<input type="text" formControlName="captcha" [(ngModel)]="captchaCodeProduct" maxlength="5" style="font-size: 20px"
+											placeholder="Nhập mã xác thực..." class="form-control bg-transparent px-4 border-0" value="">
+									</div>
+									<div *ngIf="captcha.invalid && (captcha.dirty || captcha.touched || submitted)" class="has-error m-b-12">
+										<div *ngIf="captcha.errors.required">
+											<span class="help-block">Vui lòng nhập mã captcha</span>
+										</div>
+									</div>
+									<div class="form-row d-flex justify-content-between align-items-center mt-4 mb-2">
+										<div class="form-group">
+											<div class="custom-control custom-checkbox ml-1">
+												<input type="checkbox" class="custom-control-input" id="basic_checkbox_1">
+												<label class="custom-control-label" for="basic_checkbox_1">Nhớ tài khoản</label>
+											</div>
+										</div>
+										<div class="form-group">
+											<a (click)="forgetPassWord()">Quên mật khẩu?</a>
+										</div>
+									</div>
+									<div class="text-center">
+										<button type="submit" class="btn text-dark grd-yellow1 text-uppercase font-weight-normal btn-block border-0 rounded-xl"
+											style="font-size: 20px">Đăng nhập</button>
+									</div>
+								</form>
+								<div class="new-account mt-3">
+									<p class="text-right">Chưa có tài khoản? <a class="cl-blue2" href="./page-register.html">Đăng ký</a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 

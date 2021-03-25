@@ -28,7 +28,6 @@ export class FieldComponent implements OnInit {
 	submitted: boolean = false
 	isActived: boolean
 	title: string = ''
-	code: string = ''
 	name: string = ''
 	pageIndex: number = 1
 	pageSize: number = 20
@@ -50,32 +49,26 @@ export class FieldComponent implements OnInit {
 
 	buildForm() {
 		this.form = this._fb.group({
-			code: [this.model.code, Validators.required],
 			name: [this.model.name, Validators.required],
 			description: [this.model.description],
 			isActived: [this.model.isActived, Validators.required],
-			orderNumber: [this.model.orderNumber],
 		})
 	}
 
 	rebuilForm() {
 		this.form.reset({
-			code: this.model.code,
 			name: this.model.name,
 			isActived: this.model.isActived,
 			description: this.model.description,
-			orderNumber: this.model.orderNumber,
 		})
 	}
 
 	getList() {
-		this.code = this.code.trim()
 		this.name = this.name.trim()
 
 		let request = {
-			Code: this.code,
 			Name: this.name,
-			isActived: this.isActived ? this.isActived : '',
+			isActived: this.isActived != null ? this.isActived : '',
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
@@ -143,16 +136,10 @@ export class FieldComponent implements OnInit {
 		if (this.form.invalid) {
 			return
 		}
-		if (this.model.orderNumber <= 0 && this.model.orderNumber != null && this.model.orderNumber.toString() != '') {
-			this.model.orderNumber = 1
-		}
 		if (this.model.id == 0 || this.model.id == null) {
 			this._service.fieldInsert(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
-						this._toastr.error(MESSAGE_COMMON.EXISTED_CODE)
-						return
-					} else if (response.result == -2) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
 						return
 					} else {
@@ -172,9 +159,6 @@ export class FieldComponent implements OnInit {
 			this._service.fieldUpdate(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
-						this._toastr.error(MESSAGE_COMMON.EXISTED_CODE)
-						return
-					} else if (response.result == -2) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
 						return
 					} else {
@@ -264,9 +248,7 @@ export class FieldComponent implements OnInit {
 	}
 	exportExcel() {
 		let request = {
-			Code: this.code,
 			Name: this.name,
-			//orderNumber: this.orderNumber,
 			IsActived: this.isActived,
 		}
 

@@ -231,11 +231,11 @@ namespace PAKNAPI.ModelBase
 
 	public class CADistrictOnPage
 	{
-		public int Id { get; set; }
-		public int ProvinceId { get; set; }
-		public string Name { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
+		public int Id;
+		public int ProvinceId;
+		public string Name;
+		public bool IsActived;
+		public bool IsDeleted;
 		public int? RowNumber; // int, null
 	}
 
@@ -252,11 +252,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id { get; set; }
-		public int ProvinceId { get; set; }
-		public string Name { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
+		public int Id;
+		public int ProvinceId;
+		public string Name;
+		public bool IsActived;
+		public bool IsDeleted;
 
 		public async Task<CADistrict> CADistrictGetByID(int? Id)
 		{
@@ -331,9 +331,7 @@ namespace PAKNAPI.ModelBase
 	public class CAFieldOnPage
 	{
 		public int Id;
-		public int? OrderNumber;
 		public string Name;
-		public string Code;
 		public string Description;
 		public bool IsActived;
 		public bool IsDeleted;
@@ -354,9 +352,7 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int Id;
-		public int? OrderNumber;
 		public string Name;
-		public string Code;
 		public string Description;
 		public bool IsActived;
 		public bool IsDeleted;
@@ -389,11 +385,9 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cAField.Name);
-			DP.Add("Code", _cAField.Code);
 			DP.Add("IsActived", _cAField.IsActived);
 			DP.Add("IsDeleted", _cAField.IsDeleted);
 			DP.Add("Description", _cAField.Description);
-			DP.Add("OrderNumber", _cAField.OrderNumber);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldInsert", DP));
 		}
@@ -403,11 +397,9 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _cAField.Id);
 			DP.Add("Name", _cAField.Name);
-			DP.Add("Code", _cAField.Code);
 			DP.Add("IsActived", _cAField.IsActived);
 			DP.Add("IsDeleted", _cAField.IsDeleted);
 			DP.Add("Description", _cAField.Description);
-			DP.Add("OrderNumber", _cAField.OrderNumber);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldUpdate", DP));
 		}
@@ -750,10 +742,10 @@ namespace PAKNAPI.ModelBase
 
 	public class CAProvinceOnPage
 	{
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
+		public int Id;
+		public string Name;
+		public bool IsActived;
+		public bool IsDeleted;
 		public int? RowNumber; // int, null
 	}
 
@@ -770,10 +762,10 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
+		public int Id;
+		public string Name;
+		public bool IsActived;
+		public bool IsDeleted;
 
 		public async Task<CAProvince> CAProvinceGetByID(int? Id)
 		{
@@ -845,11 +837,11 @@ namespace PAKNAPI.ModelBase
 
 	public class CAWardsOnPage
 	{
-		public int Id { get; set; }
-		public int DistrictId { get; set; }
-		public string Name { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
+		public int Id;
+		public int DistrictId;
+		public string Name;
+		public bool IsActived;
+		public bool IsDeleted;
 		public int? RowNumber; // int, null
 	}
 
@@ -866,11 +858,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id { get; set; }
-		public int DistrictId { get; set; }
-		public string Name { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
+		public int Id;
+		public int DistrictId;
+		public string Name;
+		public bool IsActived;
+		public bool IsDeleted;
 
 		public async Task<CAWards> CAWardsGetByID(int? Id)
 		{
