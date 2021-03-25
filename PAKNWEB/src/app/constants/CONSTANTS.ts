@@ -12,10 +12,32 @@ export class RESPONSE_STATUS {
 
 export class LOG_ACTION {
 	public static login = 'Đăng nhập'
+	public static GETLIST = 'Trả về danh sách'
+	public static GETINFO = 'Trả về thông tin'
+	public static INSERT = 'Thêm mới'
+	public static UPDATE = 'Cập nhật'
+	public static UPDATESTATUS = 'Cập nhật trạng thái'
+	public static DELETE = 'Xóa'
+	public static EXPORT = 'Xuất danh sách'
 }
 
 export class LOG_OBJECT {
 	public static login = 'Đăng nhập'
+	public static CA_FIELD = 'Danh mục lĩnh vực'
+}
+
+export class MESSAGE_COMMON {
+	public static ADD_SUCCESS = 'Thêm mới thành công'
+	public static DELETE_SUCCESS = 'Xóa thành công'
+	public static UPDATE_SUCCESS = 'Cập nhật thành công'
+	public static UNLOCK_SUCCESS = 'Mở khóa thành công'
+	public static LOCK_SUCCESS = 'Khóa thành công'
+	public static ADD_FAILED = 'Thêm mới thất bại'
+	public static DELETE_FAILED = 'Xóa thất bại'
+	public static UPDATE_FAILED = 'Cập nhật thất bại'
+	public static PUBLISH_SUCCESS = 'Công bố thành công'
+	public static WITHDRAW_SUCCESS = 'Thu hồi thành công'
+	public static SEND_SUCCESS = 'Gửi thành công'
 }
 
 export const FILETYPE = [

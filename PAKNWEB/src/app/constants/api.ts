@@ -28,6 +28,7 @@ export class Api {
 	public static FieldGetById = 'CACategorySPBase/CAFieldGetByIDBase'
 	public static FieldInsert = 'CACategorySPBase/CAFieldInsertBase'
 	public static FieldUpdate = 'CACategorySPBase/CAFieldUpdateBase'
+	public static FieldUpdateStatus = 'CACategorySPBase/CAFieldUpdateBase'
 	public static FieldDelete = 'CACategorySPBase/CAFieldDeleteBase'
 
 	//Unit
@@ -37,4 +38,6 @@ export class Api {
 	public static UnitUpdate = 'CACategorySPBase/CAUnitUpdateBase'
 	public static UnitDeleteList = 'CACategorySPBase/CAUnitDeleteListBase'
 	public static UnitDelete = 'CACategorySPBase/CAUnitDeleteBase'
+
+	public static FieldExport = 'CACategorySPBase/CAFieldExportBase'
 }
