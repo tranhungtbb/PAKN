@@ -60,7 +60,7 @@ export class UnitComponent implements OnInit {
 			isDeleted: [''],
 			parentId: [''],
 			description: [''],
-			email: ['', [Validators.required]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
+			email: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
 			phone: ['', [Validators.required, Validators.pattern('^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$')]],
 			address: ['', [Validators.required]],
 		})
@@ -136,8 +136,10 @@ export class UnitComponent implements OnInit {
 	/*modal thêm / sửa đơn vị*/
 	modalCreateOrUpdateTitle: string = 'Thêm cơ quan, đơn vị'
 	modalCreateOrUpdate(id: any, level: any = 1, parentId: any = 0) {
-		if (id == 0) this.modalCreateOrUpdateTitle = 'Thêm cơ quan, đơn vị'
-		else {
+		if (id == 0) {
+			this.modalCreateOrUpdateTitle = 'Thêm cơ quan, đơn vị'
+			this.modelUnit = new UnitObject()
+		} else {
 			this.modalCreateOrUpdateTitle = 'Thêm cơ quan, đơn vị'
 			this.unitService.getById({ id }).subscribe((res) => {
 				if (res.success != 'OK') return
