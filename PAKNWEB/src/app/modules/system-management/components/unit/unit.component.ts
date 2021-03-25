@@ -2,10 +2,14 @@ import { NullTemplateVisitor } from '@angular/compiler'
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
+import { MatDialog, throwMatDialogContentAlreadyAttachedError } from '@angular/material'
 
 import { UnitService } from '../../../../services/unit.service'
 import { UserService } from '../../../../services/user.service'
 
+import { ConfirmDialogComponent } from '../../../../directives/confirm-dialog/confirm-dialog.component'
+
+import { COMMONS } from 'src/app/commons/commons'
 import { UnitObject } from 'src/app/models/unitObject'
 
 declare var jquery: any
@@ -37,16 +41,17 @@ export class UnitComponent implements OnInit {
 		address: '',
 		isActive: '',
 	}
-	totalCount: number = 0
+	totalCount_Unit: number = 0
+	unitPageCount: number = 0
 	activeParent: number
 	activeLevel: number = 1
 
-	constructor(private unitService: UnitService, private formBuilder: FormBuilder, private _toastr: ToastrService) {}
+	constructor(private unitService: UnitService, private formBuilder: FormBuilder, private _toastr: ToastrService, private dialog: MatDialog) {}
 
 	ngOnInit() {
 		this.initialTreeViewJs()
 		this.getAllUnitShortInfo()
-
+		console.log(this.unitObject)
 		/*unit form*/
 		this.createUnitFrom = this.formBuilder.group({
 			name: ['', Validators.required],
@@ -66,17 +71,34 @@ export class UnitComponent implements OnInit {
 			(res) => {
 				if (res.success != 'OK') return
 				this.listUnitPaged = res.result.CAUnitGetAllOnPage
-				this.totalCount = res.totalCount
+				if (this.totalCount_Unit <= 0) this.totalCount_Unit = res.result.TotalCount
+				this.unitPageCount = Math.ceil(this.totalCount_Unit / this.query.pageSize)
 			},
 			(err) => {}
 		)
 	}
+	unitFilterChange(): void {
+		this.getUnitPagedList()
+	}
+	changePage(page: number): void {
+		this.query.pageIndex += page
+		if (this.query.pageIndex < 1) {
+			this.query.pageIndex = 1
+			return
+		}
+		if (this.query.pageIndex > this.unitPageCount) {
+			this.query.pageIndex = this.unitPageCount
+			return
+		}
+		this.getUnitPagedList()
+	}
 
 	timeout: any
 	loadUnitChildren(parentId: number, level: number): any[] {
-		// if (!$('#tree1').hasClass('tree')) {
-		// 	$('#tree1').treed()
-		// }
+		if (!$('#tree1').hasClass('tree')) {
+			$('#tree1').treed()
+		}
+
 		if (!this.listUnitTreeview) return []
 		return this.listUnitTreeview.filter((c) => c.parentId == parentId && c.unitLevel == level)
 	}
@@ -111,11 +133,20 @@ export class UnitComponent implements OnInit {
 			)
 	}
 
+	/*modal thêm / sửa đơn vị*/
 	modalCreateOrUpdateTitle: string = 'Thêm cơ quan, đơn vị'
-	modalCreateOrUpdate(id: any, level: any = 1) {
+	modalCreateOrUpdate(id: any, level: any = 1, parentId: any = 0) {
 		if (id == 0) this.modalCreateOrUpdateTitle = 'Thêm cơ quan, đơn vị'
-		else this.modalCreateOrUpdateTitle = 'Thêm cơ quan, đơn vị'
+		else {
+			this.modalCreateOrUpdateTitle = 'Thêm cơ quan, đơn vị'
+			this.unitService.getById({ id }).subscribe((res) => {
+				if (res.success != 'OK') return
+				this.modelUnit = res.result.CAUnitGetByID[0]
+			})
+		}
 		$('#modal-create-or-update').modal('show')
+		this.modelUnit.unitLevel = level
+		if (parentId > 0) this.modelUnit.parentId = parentId
 	}
 
 	get fUnit() {
@@ -124,20 +155,81 @@ export class UnitComponent implements OnInit {
 	unitFormSubmitted = false
 	onSaveUnit() {
 		this.unitFormSubmitted = true
+		this.modelUnit.parentId = $('#f_parentId').val()
+
 		if (this.createUnitFrom.invalid) {
 			return
 		}
-		this.unitService.create(this.modelUnit).subscribe((res) => {
-			console.log(res)
-		})
+
+		if (this.modelUnit.id != null && this.modelUnit.id > 0) {
+			this.unitService.update(this.modelUnit).subscribe((res) => {
+				if (res.success != 'OK') {
+					this._toastr.error(COMMONS.UPDATE_FAILED)
+					return
+				}
+				this._toastr.success(COMMONS.UPDATE_SUCCESS)
+				this.getAllUnitShortInfo()
+				this.getUnitPagedList()
+				this.modelUnit = new UnitObject()
+				$('#modal-create-or-update').modal('hide')
+			})
+		} else {
+			this.unitService.create(this.modelUnit).subscribe((res) => {
+				if (res.success != 'OK') {
+					this._toastr.error(COMMONS.ADD_FAILED)
+					return
+				}
+				this._toastr.success(COMMONS.ADD_SUCCESS)
+				this.getAllUnitShortInfo()
+				this.getUnitPagedList()
+				this.modelUnit = new UnitObject()
+				$('#modal-create-or-update').modal('hide')
+			})
+		}
 	}
 
 	changeLevel(level: number) {
 		this.modelUnit.unitLevel = level
+		//this.modelUnit.parentId = 0
 	}
 	get getUnitParent(): any[] {
 		if (!this.listUnitTreeview) return []
+		//if (!this.unitObject.parentId) return this.listUnitTreeview.filter((c) => c.unitLevel == this.modelUnit.unitLevel - 1 && c.parentId == this.unitObject.parentId)
 		return this.listUnitTreeview.filter((c) => c.unitLevel == this.modelUnit.unitLevel - 1)
+	}
+
+	/*start - chức năng xác nhận hành động xóa*/
+	delType = 'unit'
+	delId: number = 0
+	onOpenConfirmModal(id: any, type = 'unit') {
+		$('#modal-confirm').modal('show')
+		this.delType = type
+		this.delId = id
+	}
+	acceptConfirm() {
+		if (this.delType == 'unit') {
+			this.onDeleteUnit(this.delId)
+		} else if (this.delType == 'user') {
+		}
+
+		$('#modal-confirm').modal('hide')
+	}
+	onDeleteUnit(id) {
+		let item = this.listUnitPaged.find((c) => c.id == this.delId)
+		this.unitService.delete(item).subscribe((res) => {
+			if (res.success != 'OK') {
+				this._toastr.error(COMMONS.DELETE_FAILED)
+				return
+			}
+			this._toastr.success(COMMONS.DELETE_SUCCESS)
+			this.getAllUnitShortInfo()
+			this.getUnitPagedList()
+		})
+	}
+	/*end - chức năng xác nhận hành động xóa*/
+
+	modalCreateOrUpdateUser(id: number) {
+		let unitId = this.unitObject.id
 	}
 
 	private loadTreeArray(arr): void {
@@ -170,6 +262,10 @@ export class UnitComponent implements OnInit {
 	}
 
 	private initialTreeViewJs(): void {
+		$('[data-dismiss="modal"]').click((e) => {
+			$(e.currentTarget).parents('.modal').modal('hide')
+		})
+
 		$.fn.extend({
 			treed: function (o) {
 				var openedClass = 'bi-dash-circle-fill'
@@ -193,6 +289,7 @@ export class UnitComponent implements OnInit {
 					.each(function () {
 						var branch = $(this) //li with children ul
 						branch.prepend("<i class='bi " + closedClass + "'></i>")
+
 						branch.addClass('branch')
 						branch.on('click', function (e) {
 							if (this == e.target) {

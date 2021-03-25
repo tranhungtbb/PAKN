@@ -20,16 +20,16 @@ export class UnitService {
 	getById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UnitGetById)
 	}
-	// create(data: any): Observable<any> {
-	// 	return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UnitInsert)
-	// }
 	create(data: any): Observable<any> {
-		return this.http.post(AppSettings.API_ADDRESS + Api.UnitInsert, data)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UnitInsert)
 	}
+	// create(data: any): Observable<any> {
+	// 	return this.http.post(AppSettings.API_ADDRESS + Api.UnitInsert, data)
+	// }
 	update(data: any): Observable<any> {
-		return this.serviceInvoker.get(data, AppSettings.API_ADDRESS + Api.UnitUpdate)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UnitUpdate)
 	}
 	delete(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UnitGetById)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UnitDelete)
 	}
 }

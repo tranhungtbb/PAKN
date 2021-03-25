@@ -24,7 +24,7 @@ export class UnitObject {
 	unitLevel: number
 	isActived: boolean
 	isDeleted: boolean
-	parentId: number
+	parentId: any
 	description: string
 	email: string
 	phone: string

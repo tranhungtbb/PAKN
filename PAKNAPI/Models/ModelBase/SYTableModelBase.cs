@@ -922,6 +922,7 @@ namespace PAKNAPI.ModelBase
 		public string Address;
 		public bool IsActived;
 		public bool IsDeleted;
+		public bool IsMain;
 		public int? RowNumber; // int, null
 	}
 
@@ -948,6 +949,7 @@ namespace PAKNAPI.ModelBase
 		public string Address;
 		public bool IsActived;
 		public bool IsDeleted;
+		public bool IsMain;
 
 		public async Task<SYUnit> SYUnitGetByID(int? Id)
 		{
@@ -980,6 +982,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UnitLevel", _sYUnit.UnitLevel);
 			DP.Add("IsActived", _sYUnit.IsActived);
 			DP.Add("IsDeleted", _sYUnit.IsDeleted);
+			DP.Add("IsMain", _sYUnit.IsMain);
 			DP.Add("ParentId", _sYUnit.ParentId);
 			DP.Add("Description", _sYUnit.Description);
 			DP.Add("Email", _sYUnit.Email);
@@ -997,6 +1000,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UnitLevel", _sYUnit.UnitLevel);
 			DP.Add("IsActived", _sYUnit.IsActived);
 			DP.Add("IsDeleted", _sYUnit.IsDeleted);
+			DP.Add("IsMain", _sYUnit.IsMain);
 			DP.Add("ParentId", _sYUnit.ParentId);
 			DP.Add("Description", _sYUnit.Description);
 			DP.Add("Email", _sYUnit.Email);

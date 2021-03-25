@@ -10,9 +10,10 @@
 			<div class="modal-body pb-0">
 				<div class="align-items-center form-group mb-4 border-bottom pb-3">
 					<strong class="h4 mr-5">Cấp đơn vị:</strong>
-					<label class="radio-inline mr-5"><input (click)="changeLevel(1)" class="radio-danger" type="radio" name="optradio" checked> Cấp tỉnh</label>
-					<label class="radio-inline mr-5"><input (click)="changeLevel(2)" type="radio" name="optradio"> Cấp huyện</label>
-					<label class="radio-inline"><input (click)="changeLevel(3)" type="radio" name="optradio"> Cấp xã</label>
+					<label class="radio-inline mr-5"><input (click)="changeLevel(1)" [checked]="modelUnit.unitLevel == 1" class="radio-danger" type="radio" name="optradio" checked>
+						Cấp tỉnh</label>
+					<label class="radio-inline mr-5"><input (click)="changeLevel(2)" [checked]="modelUnit.unitLevel == 2" type="radio" name="optradio"> Cấp huyện</label>
+					<label class="radio-inline"><input (click)="changeLevel(3)" [checked]="modelUnit.unitLevel == 3" type="radio" name="optradio"> Cấp xã</label>
 				</div>
 				<form id="createUnitFrom" [formGroup]="createUnitFrom" (ngSubmit)="onSaveUnit()">
 					<input hidden formControlName="unitLevel" [(ngModel)]="modelUnit.unitLevel">
@@ -28,9 +29,9 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group" *ngIf="modelUnit.unitLevel > 1">
 							<label formControlName="parentId" [(ngModel)]="modelUnit.parentId" class="mb-1">Đơn vị cấp trên <span class="cl-red">(*)</span></label>
-							<select class="form-control">
+							<select class="form-control" id="f_parentId">
+								<!-- <option value="" disabled>__Chọn đơn vị cấp trên__</option> -->
 								<option *ngFor="let item of getUnitParent" [value]="item.id">{{item.name}}</option>
-
 							</select>
 							<div *ngIf="(unitFormSubmitted && fUnit.parentId.invalid)||(fUnit.parentId.invalid && (fUnit.parentId.dirty || fUnit.parentId.touched))"
 								class="has-error m-b-12">
@@ -127,10 +128,11 @@
 						<span class="badge rounded-pill badge-light mr-3" *ngIf="!unitObject.isActived">Hết hiệu lực</span>
 						{{unitObject.name}}
 					</p>
-					<div class="d-flex align-items-center">
-						<button type="button" class="btn grd-brown text-dark border-0 mr-3 py-2 px-3" (click)="modalCreateOrUpdate(0)"><i
+					<div class="d-flex align-items-center" *ngIf="unitObject.id">
+						<button type="button" class="btn grd-brown text-dark border-0 mr-3 py-2 px-3" (click)="modalCreateOrUpdate(unitObject.id,unitObject.unitLevel)"><i
 								class="bi bi-pencil-square mr-2"></i>Sửa</button>
-						<button type="button" class="btn grd-red text-white border-0 py-2 px-3"><i class="bi bi-trash mr-2"></i>Xóa</button>
+						<button type="button" class="btn grd-red text-white border-0 py-2 px-3" (click)="onOpenConfirmModal(unitObject.id,'unit')"><i
+								class="bi bi-trash mr-2"></i>Xóa</button>
 					</div>
 				</div>
 				<div class="card-body pt-0 pb-3">
@@ -178,7 +180,7 @@
 									</svg>
 									Xuất excel
 								</button>
-								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalCreateOrUpdate(0)">
+								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalCreateOrUpdateUser(0)">
 									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 										<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 									</svg>
@@ -188,7 +190,7 @@
 						</div>
 						<span class="accordion__header--indicator style_two"></span>
 					</div>
-					<div id="bordered_no-gutter_collapseOne" class="collapse accordion__body show" data-parent="#accordion-four">
+					<div id="bordered_no-gutter_collapseOne" class="collapse accordion__body" data-parent="#accordion-four">
 						<div class="table-responsive">
 							<table class="table table-sd table-responsive-md table-striped mb-0">
 								<thead class="bg-thead">
@@ -234,7 +236,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
+									<!-- <tr>
 										<td>
 											<strong>1</strong>
 										</td>
@@ -242,7 +244,8 @@
 										<td><strong>Nguyễn Văn Nam</strong></td>
 										<td>0987654321</td>
 										<td>
-											<span class="badge rounded-pill badge-light">Hết hiệu lực</span>
+											<span class="badge rounded-pill badge-light" *ngIf="false">Hết hiệu lực</span>
+											<span class="badge rounded-pill badge-success" *ngIf="true">Hiệu lực</span>
 										</td>
 										<td>
 											<div class="d-flex justify-content-end">
@@ -250,24 +253,8 @@
 												<a href="#" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
 											</div>
 										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>1</strong>
-										</td>
-										<td><strong>namnv@khanhhoa</strong></td>
-										<td><strong>Nguyễn Văn Nam</strong></td>
-										<td>0987654321</td>
-										<td>
-											<span class="badge rounded-pill badge-success">Hiệu lực</span>
-										</td>
-										<td>
-											<div class="d-flex justify-content-end">
-												<a href="#" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-												<a href="#" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
-											</div>
-										</td>
-									</tr>
+									</tr> -->
+
 								</tbody>
 							</table>
 						</div>
@@ -280,17 +267,18 @@
 								dưới</span>
 							<div class="nav-table">
 								<div class="d-flex align-items-center">
-									<button type="button" class="btn btn-outline-secondary mr-2 p-2">
+									<button type="button" class="btn btn-outline-secondary mr-2 p-2" (click)="changePage(-1)">
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
 											<path fill-rule="evenodd"
 												d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
 										</svg>
 									</button>
 									<div class="border d-flex align-items-center border-dark px-2 rounded">
-										<input type="number" value="1" class="border-0 p-0 number-page-table text-right form-control form-control-sm" style="width: 40px">
-										<span>/20</span>
+										<input type="number" [value]="query.pageIndex" (change)="unitFilterChange()"
+											class="border-0 p-0 number-page-table text-right form-control form-control-sm" style="width: 40px">
+										<span>/{{unitPageCount}}</span>
 									</div>
-									<button type="button" class="btn btn-outline-secondary ml-2 p-2">
+									<button type="button" class="btn btn-outline-secondary ml-2 p-2" (click)="changePage(1)">
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
 											<path fill-rule="evenodd"
 												d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
@@ -308,7 +296,7 @@
 									</svg>
 									Xuất excel
 								</button>
-								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalCreateOrUpdate(0)">
+								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalCreateOrUpdate(0,unitObject.unitLevel+1,unitObject.id)">
 									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 										<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 									</svg>
@@ -318,7 +306,7 @@
 						</div>
 						<span class="accordion__header--indicator style_two"></span>
 					</div>
-					<div id="bordered_no-gutter_collapseTwo" class="collapse accordion__body" data-parent="#accordion-four">
+					<div id="bordered_no-gutter_collapseTwo" class="collapse accordion__body show" data-parent="#accordion-four">
 						<div class="table-responsive">
 							<table class="table table-sd table-responsive-md table-striped mb-0">
 								<thead class="bg-thead">
@@ -334,37 +322,38 @@
 												<strong>Tên đơn vị</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<input type="text" class="form-control form-control-sm">
+											<input type="text" [(ngModel)]="query.name" (change)="unitFilterChange()" class="form-control form-control-sm">
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Số điện thoại</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<input type="text" class="form-control form-control-sm">
+											<input type="text" [(ngModel)]="query.phone" (change)="unitFilterChange()" class="form-control form-control-sm">
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Email</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<input type="text" class="form-control form-control-sm">
+											<input type="text" [(ngModel)]="query.email" (change)="unitFilterChange()" class="form-control form-control-sm">
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Địa chỉ</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<input type="text" class="form-control form-control-sm">
+											<input type="text" [(ngModel)]="query.address" (change)="unitFilterChange()" class="form-control form-control-sm">
 										</th>
 										<th style="width: 160px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Trạng thái</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<select class="form-control form-control-sm">
-												<option selected="">Hiệu lực</option>
-												<option>Hết hiệu lực</option>
+											<select class="form-control form-control-sm" [(ngModel)]="query.isActive" (change)="unitFilterChange()">
+												<option value="">__ Toàn bộ __</option>
+												<option value="true">Hiệu lực</option>
+												<option value="false">Hết hiệu lực</option>
 											</select>
 										</th>
 										<th class="text-right"><strong>Thao tác</strong></th>
@@ -387,9 +376,10 @@
 										</td>
 										<td>
 											<div class="d-flex justify-content-end">
-												<a href="javascript:void(0);" class="btn-icon grd-brown text-brown mr-2" (click)="modalCreateOrUpdate(item.id)"><i
+												<a href="javascript:void(0);" class="btn-icon grd-brown text-brown mr-2" (click)="modalCreateOrUpdate(item.id,item.unitLevel)"><i
 														class="bi bi-pencil-square"></i></a>
-												<a href="javascript:void(0);" class="btn-icon grd-red text-white"><i class="bi bi-trash"></i></a>
+												<a href="javascript:void(0);" class="btn-icon grd-red text-white" (click)="onOpenConfirmModal(item.id)"><i
+														class="bi bi-trash"></i></a>
 											</div>
 										</td>
 									</tr>
@@ -398,6 +388,28 @@
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- confirm modal -->
+<div class="modal fade" id="modal-confirm">
+	<div class="modal-dialog modal-dialog-centered modal-md" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-0">
+				<span>
+					Anh/chị có chắc chắn thực hiện hành động này?
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="acceptConfirm()">Đồng ý</button>
 			</div>
 		</div>
 	</div>
