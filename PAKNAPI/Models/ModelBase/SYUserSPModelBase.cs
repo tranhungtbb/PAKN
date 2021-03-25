@@ -24,9 +24,9 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public short Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
+		public short Id;
+		public string Name;
+		public string Code;
 
 		public async Task<List<SYUSRGetPermissionByUserId>> SYUSRGetPermissionByUserIdDAO(long? UserId)
 		{
@@ -50,20 +50,20 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public long Id { get; set; }
-		public string Password { get; set; }
-		public string Salt { get; set; }
-		public string FullName { get; set; }
-		public string UserName { get; set; }
-		public string Address { get; set; }
-		public string Email { get; set; }
-		public string Avatar { get; set; }
-		public bool Gender { get; set; }
-		public string Phone { get; set; }
-		public int? PositionId { get; set; }
-		public string PositionName { get; set; }
-		public int? UnitId { get; set; }
-		public string UnitName { get; set; }
+		public long Id;
+		public string Password;
+		public string Salt;
+		public string FullName;
+		public string UserName;
+		public string Address;
+		public string Email;
+		public string Avatar;
+		public bool Gender;
+		public string Phone;
+		public int? PositionId;
+		public string PositionName;
+		public int? UnitId;
+		public string UnitName;
 
 		public async Task<List<SYUSRLogin>> SYUSRLoginDAO(string UserName)
 		{

@@ -7,6 +7,7 @@ import { EmailSettingComponent } from './components/email-setting/email-setting.
 import { SmsSettingComponent } from './components/sms-setting/sms-setting.component'
 import { GroupUserComponent } from './components/group-user/group-user.component'
 import { UserComponent } from './components/user/user.component'
+import { UnitComponent } from './components/unit/unit.component'
 
 const routes: Routes = [
 	{
@@ -18,6 +19,7 @@ const routes: Routes = [
 			{ path: 'vai-tro', component: GroupUserComponent },
 			{ path: 'nguoi-dung', component: UserComponent },
 			{ path: 'lich-su-he-thong', component: SystemLogComponent },
+			{ path: 'don-vi', component: UnitComponent },
 		],
 	},
 ]
