@@ -1240,6 +1240,28 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("CAUnitGetTreeBase")]
+		public async Task<ActionResult<object>> CAUnitGetTreeBase()
+		{
+			try
+			{
+				List<CAUnitGetTree> rsCAUnitGetTree = await new CAUnitGetTree(_appSetting).CAUnitGetTreeDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAUnitGetTree", rsCAUnitGetTree},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("CAUnitInsertBase")]
