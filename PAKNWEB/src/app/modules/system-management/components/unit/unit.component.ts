@@ -1,8 +1,11 @@
 import { NullTemplateVisitor } from '@angular/compiler'
 import { Component, OnInit } from '@angular/core'
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms'
 
 import { UnitService } from '../../../../services/unit.service'
 import { UserService } from '../../../../services/user.service'
+
+import { UnitObject } from 'src/app/models/unitObject'
 
 declare var jquery: any
 declare var $: any
@@ -14,10 +17,13 @@ declare var $: any
 export class UnitComponent implements OnInit {
 	listUnitPaged: any[] = []
 	unitObject: any = {}
-
+	listUser: any[]
 	listUnitTreeview: any[]
 
-	listUser: any[]
+	createUnitFrom: FormGroup
+	createUserForm: FormGroup
+
+	modelUnit: UnitObject = new UnitObject()
 
 	query: any = {
 		pageSize: 20,
@@ -93,7 +99,8 @@ export class UnitComponent implements OnInit {
 
 	modalCreateOrUpdateTitle: string = 'Thêm cơ quan, đơn vị'
 	modalCreateOrUpdate(id: any, level: any) {
-		if ((id = 0)) this.modalCreateOrUpdateTitle = 'Sửa cơ quan, đơn vị'
+		if (id == 0) this.modalCreateOrUpdateTitle = 'Thêm cơ quan, đơn vị'
+		else this.modalCreateOrUpdateTitle = 'Thêm cơ quan, đơn vị'
 		$('#modal-create-or-update').modal('show')
 	}
 

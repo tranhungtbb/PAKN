@@ -3,7 +3,7 @@
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0">
-				<p class="modal-title h3">Thêm cơ quan, đơn vị</p>
+				<p class="modal-title h3">{{modalCreateOrUpdateTitle}}</p>
 				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
 				</button>
 			</div>
@@ -59,7 +59,7 @@
 		<div class="col-auto treeView px-0">
 			<p class="p-3 h4 d-flex justify-content-between align-items-center shadow">
 				<span class="text-uppercase">Danh sách đơn vị</span>
-				<button type="button" class="btn grd-blue border-0 p-2 btn-sm text-white" data-toggle="modal" data-target="#modal-tm-cqdv">
+				<button type="button" class="btn grd-blue border-0 p-2 btn-sm text-white" (click)="modalCreateOrUpdate(0)">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
 					</svg>
@@ -68,7 +68,7 @@
 			<ul id="tree1" class="pt-3">
 				<li *ngFor="let item of loadUnitChildren(0,1)"><a href="javascript:void(0);" (click)="treeViewActive(item.id,1)">{{item.name}}</a>
 					<ul>
-						<li *ngFor="let itemV2 of loadUnitChildren(item.id,2)" (click)="treeViewActive(item.id,2)"><a href="javascript:void(0);">{{itemV2.name}}</a>
+						<li *ngFor="let itemV2 of loadUnitChildren(item.id,2)" (click)="treeViewActive(itemV2.id,2)"><a href="javascript:void(0);">{{itemV2.name}}</a>
 							<ul>
 								<li *ngFor="let itemV3 of loadUnitChildren(itemV2.id,3)"><a href="javascript:void(0);">{{itemV3.name}}</a>
 								</li>
