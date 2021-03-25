@@ -25,7 +25,7 @@ export class FieldComponent implements OnInit {
 	form: FormGroup
 	model: any = new FieldObject()
 	submitted: boolean = false
-	isActived: boolean = true
+	isActived: boolean
 	title: string = ''
 	code: string = ''
 	name: string = ''
@@ -73,13 +73,10 @@ export class FieldComponent implements OnInit {
 		let baserequest = {
 			Code: this.code,
 			Name: this.name,
-			isActived: this.isActived,
+			isActived: this.isActived != null ? this.isActived : '',
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
-		let request =
-			'?Code=' + this.code + '&Name=' + this.name + '&isActived=' + (this.isActived != null ? this.isActived : '') + '&PageIndex=' + this.pageIndex + '&PageSize=' + this.pageSize
-
 		this._service.fieldGetList(baserequest).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
