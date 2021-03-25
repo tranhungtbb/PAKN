@@ -1113,6 +1113,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Address", _cAUnitInsertIN.Address);
 			DP.Add("IsActived", _cAUnitInsertIN.IsActived);
 			DP.Add("IsDeleted", _cAUnitInsertIN.IsDeleted);
+			DP.Add("IsMain", _cAUnitInsertIN.IsMain);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_UnitInsert", DP));
 		}
@@ -1129,6 +1130,7 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
+		public bool? IsMain { get; set; }
 	}
 
 	public class CAUnitUpdate
@@ -1158,6 +1160,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Address", _cAUnitUpdateIN.Address);
 			DP.Add("IsActived", _cAUnitUpdateIN.IsActived);
 			DP.Add("IsDeleted", _cAUnitUpdateIN.IsDeleted);
+			DP.Add("IsMain", _cAUnitUpdateIN.IsMain);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_UnitUpdate", DP));
 		}
@@ -1175,6 +1178,7 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
+		public bool? IsMain { get; set; }
 	}
 
 	public class CAWordDelete

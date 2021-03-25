@@ -1190,3 +1190,9 @@ body .ui-table .ui-table-thead > tr > th{
 	text-transform: unset;
 }
 
+.group-button-table{	
+    position: fixed;
+    z-index: 9;
+    top: 15px;
+    right: 240px;
+}
