@@ -35,13 +35,6 @@
 										<strong>STT</strong>
 									</p>
 								</th>
-								<th style="width: 150px">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Mã lĩnh vực</strong>
-										<span class="caret-tb"></span>
-									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="code" maxlength="50" (keydown.enter)="dataStateChange()" placeholder="Nhập mã..." />
-								</th>
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Tên lĩnh vực</strong>
@@ -74,15 +67,12 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									<strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
-								</td>
-								<td>
 									<strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
 								</td>
 								<td>{{item.description}}</td>
 								<td>
 									<span *ngIf="item.isActived == true" class="badge rounded-pill bg-blue2">Sử dụng</span>
-									<span *ngIf="item.isActived == false" class="badge rounded-pill badge-outline-light bg-white">Không sử dụng</span>
+									<span *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Không sử dụng</span>
 								</td>
 								<td>
 									<div class="d-flex justify-content-end">
@@ -94,71 +84,6 @@
 							</tr>
 						</ng-template>
 					</p-table>
-					<!-- <table class="table table-sd table-responsive-md table-striped mb-0">
-						<thead class="bg-thead">
-							<tr>
-								<th style="width: 50px">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>STT</strong>
-									</p>
-								</th>
-								<th style="width: 150px">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Mã lĩnh vực</strong>
-										<span class="caret-tb"></span>
-									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="code" maxlength="50" (keydown.enter)="dataStateChange()" placeholder="Nhập mã..." />
-								</th>
-								<th>
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Tên lĩnh vực</strong>
-										<span class="caret-tb"></span>
-									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
-								</th>
-								<th style="width: 350px">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Mô tả</strong>
-										<span class="caret-tb"></span>
-									</p>
-									<input type="text" class="form-control form-control-sm">
-								</th>
-								<th style="width: 160px">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Trạng thái</strong>
-										<span class="caret-tb"></span>
-									</p>
-									<ng-select class="form-control form-control-sm" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
-										[(ngModel)]="isActived" [closeOnSelect]="true" (change)="dataStateChange()">
-									</ng-select>
-								</th>
-								<th class="text-right"><strong>Thao tác</strong></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr *ngFor="let item of listData">
-								<td class="text-center">{{item.rowNumber}}</td>
-								<td>
-									<strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
-								</td>
-								<td>
-									<strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
-								</td>
-								<td>{{item.description}}</td>
-								<td>
-									<span *ngIf="item.isActived == true" class="badge rounded-pill bg-blue2">Sử dụng</span>
-									<span *ngIf="item.isActived == false" class="badge rounded-pill badge-outline-light bg-white">Không sử dụng</span>
-								</td>
-								<td>
-									<div class="d-flex justify-content-end">
-										<a (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-										<a (appConfirmClick)="onDelete(item)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
-												class="bi bi-trash"></i></a>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table> -->
 				</div>
 			</div>
 		</div>
@@ -177,16 +102,7 @@
 					</div>
 					<div class="modal-body no-padding-bottom">
 						<div class="row form-group">
-							<div class="col-sm-6">
-								<label class="control-label">Mã lĩnh vực <span class="text-danger">*</span></label>
-								<input class="form-control" formControlName="code" [(ngModel)]="model.code" maxlength="20" />
-								<div *ngIf="(submitted && f.code.invalid) || (f.code.invalid && (f.code.dirty || f.code.touched))" class="has-error m-b-12">
-									<div *ngIf="f.code.errors.required">
-										<span class="help-block">Trường dữ liệu này không để trống</span>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-8">
 								<label class="control-label">Tên lĩnh vực <span class="text-danger">*</span></label>
 								<input class="form-control" formControlName="name" [(ngModel)]="model.name" maxlength="100" />
 								<div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))" class="has-error m-b-12">
@@ -195,13 +111,7 @@
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row form-group">
-							<div class="col-sm-6">
-								<label class="control-label">STT</label>
-								<input class="form-control" formControlName="orderNumber" [(ngModel)]="model.orderNumber" maxlength="4" />
-							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-4">
 								<label class="control-label">Trạng thái <span class="text-danger">*</span></label>
 								<ng-select class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
 									[(ngModel)]="model.isActived">
@@ -243,17 +153,11 @@
 					</div>
 					<div class="modal-body no-padding-bottom">
 						<div class="row">
-							<div class="col-sm-6">
-								<label class="control-label lb600">Mã lĩnh vực</label>
-								<p>{{model.code}}</p>
-							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-8">
 								<label class="control-label lb600">Tên lĩnh vực</label>
 								<p>{{model.name}}</p>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-6">
+							<div class="col-sm-4">
 								<label class="control-label lb600">Trạng thái</label>
 								<p *ngIf="model.isActived == 0">Sử dụng</p>
 								<p *ngIf="model.isActived == 1">Không sử dụng</p>

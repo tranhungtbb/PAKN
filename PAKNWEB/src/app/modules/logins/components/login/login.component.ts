@@ -60,17 +60,13 @@ export class LoginComponent implements OnInit {
 		this.loginForm = new FormGroup({
 			name: new FormControl(this.user.UserName, [Validators.required]),
 			pass: new FormControl(this.user.Password, [Validators.required]),
-			captcha: new FormControl(this.captchaCode, [
-				// Validators.required
-			]),
+			captcha: new FormControl(this.captchaCode, [Validators.required]),
 			isRemember: new FormControl(this.isSaveLogin, []),
 		})
 		this.loginFormProduct = new FormGroup({
 			name: new FormControl(this.userProduct.UserName, [Validators.required]),
 			pass: new FormControl(this.userProduct.Password, [Validators.required]),
-			captcha: new FormControl(this.captchaCode, [
-				// Validators.required
-			]),
+			captcha: new FormControl(this.captchaCode, [Validators.required]),
 			isRemember: new FormControl(this.isSaveLogin, []),
 		})
 		this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((data) => {
