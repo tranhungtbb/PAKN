@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="modal-tm-cqdv">
+<div class="modal fade" id="modal-create-or-update">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0">
@@ -66,59 +66,11 @@
 				</button>
 			</p>
 			<ul id="tree1" class="pt-3">
-				<li><a href="#">Đơn vị cấp tỉnh 1</a>
-
+				<li *ngFor="let item of loadUnitChildren(0,1)"><a href="javascript:void(0);" (click)="treeViewActive(item.id,1)">{{item.name}}</a>
 					<ul>
-						<li><a href="#">ĐV cấp huyện 01</a>
+						<li *ngFor="let itemV2 of loadUnitChildren(item.id,2)" (click)="treeViewActive(item.id,2)"><a href="javascript:void(0);">{{itemV2.name}}</a>
 							<ul>
-								<li><a href="#">ĐV cấp xã 001</a>
-									<ul>
-										<li><a href="#">ĐV cấp xã 002</a></li>
-										<li><a href="#">ĐV cấp xã 003</a></li>
-										<li><a href="#">ĐV cấp xã 004</a></li>
-										<li><a href="#">ĐV cấp xã 005</a></li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-						<li><a href="#">ĐV cấp huyện 02</a>
-							<ul>
-								<li><a href="#">ĐV cấp xã 001</a>
-									<ul>
-										<li><a href="#">ĐV cấp xã 002</a></li>
-										<li><a href="#">ĐV cấp xã 003</a></li>
-										<li><a href="#">ĐV cấp xã 004</a></li>
-										<li><a href="#">ĐV cấp xã 005</a></li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-				<li><a href="#">Đơn vị cấp tỉnh 2</a>
-
-					<ul>
-						<li><a href="#">ĐV cấp huyện 01</a>
-							<ul>
-								<li><a href="#">ĐV cấp xã 001</a>
-									<ul>
-										<li><a href="#">ĐV cấp xã 002</a></li>
-										<li><a href="#">ĐV cấp xã 003</a></li>
-										<li><a href="#">ĐV cấp xã 004</a></li>
-										<li><a href="#">ĐV cấp xã 005</a></li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-						<li><a href="#">ĐV cấp huyện 02</a>
-							<ul>
-								<li><a href="#">ĐV cấp xã 001</a>
-									<ul>
-										<li><a href="#">ĐV cấp xã 002</a></li>
-										<li><a href="#">ĐV cấp xã 003</a></li>
-										<li><a href="#">ĐV cấp xã 004</a></li>
-										<li><a href="#">ĐV cấp xã 005</a></li>
-									</ul>
+								<li *ngFor="let itemV3 of loadUnitChildren(itemV2.id,3)"><a href="javascript:void(0);">{{itemV3.name}}</a>
 								</li>
 							</ul>
 						</li>
@@ -129,28 +81,32 @@
 		<div class="col pl-lg-0">
 			<div class="card mb-0 border-bottom rounded-0">
 				<div class="card-header d-flex align-items-center">
-					<p class="card-title d-flex align-items-center mb-0"><span class="badge rounded-pill badge-success mr-3">Hiệu lực</span>Đơn vị cấp tỉnh: 1</p>
+					<p class="card-title d-flex align-items-center mb-0">
+						<span class="badge rounded-pill badge-success mr-3" *ngIf="unitObject.isActived">Hiệu lực</span>
+						<span class="badge rounded-pill badge-light mr-3" *ngIf="!unitObject.isActived">Hết hiệu lực</span>
+						{{unitObject.name}}
+					</p>
 					<div class="d-flex align-items-center">
-						<button type="button" class="btn grd-brown text-dark border-0 mr-3 py-2 px-3"><i class="bi bi-pencil-square mr-2"></i>Sửa</button>
+						<button type="button" class="btn grd-brown text-dark border-0 mr-3 py-2 px-3" (click)="modalCreateOrUpdate(unitObject.id)"><i
+								class="bi bi-pencil-square mr-2"></i>Sửa</button>
 						<button type="button" class="btn grd-red text-white border-0 py-2 px-3"><i class="bi bi-trash mr-2"></i>Xóa</button>
 					</div>
 				</div>
 				<div class="card-body pt-0 pb-3">
-					<p class="card-text">Lorem ipsum dolor sit, amet, consectetur adipisicing elit. Labore voluptatem id ea totam optio sequi repellendus tempore suscipit animi
-						deserunt. A, quaerat? Commodi ad at et, delectus culpa quam autem. Lorem ipsum dolor sit, amet, consectetur adipisicing elit. Labore voluptatem id ea
-						totam optio sequi repellendus tempore suscipit animi deserunt. A, quaerat? Commodi ad at et, delectus culpa quam autem.</p>
+					<p class="card-text">{{unitObject.description}}</p>
 				</div>
 				<div class="card-footer d-sm-flex align-items-center">
-					<p class="card-text text-dark mb-0 mr-4">Số ĐT: <strong>0987654321</strong></p>
-					<p class="card-text text-dark mb-0 mr-4">Email: <strong>donvicaptinh1@mail.com</strong></p>
-					<p class="card-text text-dark mb-0">Địa chỉ: <strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit</strong></p>
+					<p class="card-text text-dark mb-0 mr-4">Số ĐT: <strong title="{{unitObject.phone}}">{{unitObject.phone}}</strong></p>
+					<p class="card-text text-dark mb-0 mr-4">Email: <strong title="{{unitObject.email}}">{{unitObject.email}}</strong></p>
+					<p class="card-text text-dark mb-0">Địa chỉ: <strong title="{{unitObject.address}}">{{unitObject.address}}</strong></p>
 				</div>
 			</div>
 			<div id="accordion-four" class="accordion accordion-no-gutter accordion-bordered">
 				<div class="accordion__item">
-					<div class="accordion__header" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne">
+					<div class="accordion__header">
 						<div class="d-flex justify-content-between align-items-center pr-5">
-							<span class="accordion__header--text text-uppercase h4">Người dùng trong đơn vị</span>
+							<span class="accordion__header--text text-uppercase h4" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne">Người dùng trong đơn
+								vị</span>
 							<div class="nav-table">
 								<div class="d-flex align-items-center">
 									<button type="button" class="btn btn-outline-secondary mr-2 p-2">
@@ -181,7 +137,7 @@
 									</svg>
 									Xuất excel
 								</button>
-								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white">
+								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalCreateOrUpdate(unitObject.id)">
 									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 										<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 									</svg>
@@ -262,126 +218,7 @@
 										<td><strong>Nguyễn Văn Nam</strong></td>
 										<td>0987654321</td>
 										<td>
-											<span class="badge rounded-pill badge-light">Hết hiệu lực</span>
-										</td>
-										<td>
-											<div class="d-flex justify-content-end">
-												<a href="#" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-												<a href="#" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>1</strong>
-										</td>
-										<td><strong>namnv@khanhhoa</strong></td>
-										<td><strong>Nguyễn Văn Nam</strong></td>
-										<td>0987654321</td>
-										<td>
 											<span class="badge rounded-pill badge-success">Hiệu lực</span>
-										</td>
-										<td>
-											<div class="d-flex justify-content-end">
-												<a href="#" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-												<a href="#" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>1</strong>
-										</td>
-										<td><strong>namnv@khanhhoa</strong></td>
-										<td><strong>Nguyễn Văn Nam</strong></td>
-										<td>0987654321</td>
-										<td>
-											<span class="badge rounded-pill badge-light">Hết hiệu lực</span>
-										</td>
-										<td>
-											<div class="d-flex justify-content-end">
-												<a href="#" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-												<a href="#" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>1</strong>
-										</td>
-										<td><strong>namnv@khanhhoa</strong></td>
-										<td><strong>Nguyễn Văn Nam</strong></td>
-										<td>0987654321</td>
-										<td>
-											<span class="badge rounded-pill badge-success">Hiệu lực</span>
-										</td>
-										<td>
-											<div class="d-flex justify-content-end">
-												<a href="#" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-												<a href="#" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>1</strong>
-										</td>
-										<td><strong>namnv@khanhhoa</strong></td>
-										<td><strong>Nguyễn Văn Nam</strong></td>
-										<td>0987654321</td>
-										<td>
-											<span class="badge rounded-pill badge-success">Hiệu lực</span>
-										</td>
-										<td>
-											<div class="d-flex justify-content-end">
-												<a href="#" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-												<a href="#" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>1</strong>
-										</td>
-										<td><strong>namnv@khanhhoa</strong></td>
-										<td><strong>Nguyễn Văn Nam</strong></td>
-										<td>0987654321</td>
-										<td>
-											<span class="badge rounded-pill badge-success">Hiệu lực</span>
-										</td>
-										<td>
-											<div class="d-flex justify-content-end">
-												<a href="#" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-												<a href="#" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>1</strong>
-										</td>
-										<td><strong>namnv@khanhhoa</strong></td>
-										<td><strong>Nguyễn Văn Nam</strong></td>
-										<td>0987654321</td>
-										<td>
-											<span class="badge rounded-pill badge-light">Hết hiệu lực</span>
-										</td>
-										<td>
-											<div class="d-flex justify-content-end">
-												<a href="#" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-												<a href="#" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>1</strong>
-										</td>
-										<td><strong>namnv@khanhhoa</strong></td>
-										<td><strong>Nguyễn Văn Nam</strong></td>
-										<td>0987654321</td>
-										<td>
-											<span class="badge rounded-pill badge-light">Hết hiệu lực</span>
 										</td>
 										<td>
 											<div class="d-flex justify-content-end">
@@ -396,9 +233,10 @@
 					</div>
 				</div>
 				<div class="accordion__item">
-					<div class="accordion__header collapsed" data-toggle="collapse" data-target="#bordered_no-gutter_collapseTwo">
+					<div class="accordion__header collapsed">
 						<div class="d-flex justify-content-between align-items-center pr-5">
-							<span class="accordion__header--text text-uppercase h4">Danh sách đơn vị cấp dưới</span>
+							<span class="accordion__header--text text-uppercase h4" data-toggle="collapse" data-target="#bordered_no-gutter_collapseTwo">Danh sách đơn vị cấp
+								dưới</span>
 							<div class="nav-table">
 								<div class="d-flex align-items-center">
 									<button type="button" class="btn btn-outline-secondary mr-2 p-2">
@@ -429,7 +267,7 @@
 									</svg>
 									Xuất excel
 								</button>
-								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white">
+								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalCreateOrUpdate(0)">
 									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 										<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 									</svg>
@@ -492,163 +330,25 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
+									<tr *ngFor="let item of listUnitPaged">
 										<td>
 											<strong>1</strong>
 										</td>
-										<td><strong>ĐV cấp huyện 01</strong></td>
-										<td>0987654321</td>
-										<td>dvhuyen1@mail.com</td>
+										<td><strong>{{item.name}}</strong></td>
+										<td>{{item.phone}}</td>
+										<td>{{item.email}}</td>
 										<td>
-											Lorem ipsum dolor sit adipiscing elit. Erat cras nulla elementum
+											{{item.address}}
 										</td>
 										<td>
-											<span class="badge rounded-pill badge-success">Hiệu lực</span>
-										</td>
-										<td>
-											<div class="d-flex justify-content-end">
-												<a href="#" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-												<a href="#" class="btn-icon grd-red text-white"><i class="bi bi-trash"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>1</strong>
-										</td>
-										<td><strong>ĐV cấp huyện 02</strong></td>
-										<td>0987654321</td>
-										<td>dvhuyen1@mail.com</td>
-										<td>
-											Lorem ipsum dolor sit adipiscing elit. Erat cras nulla elementum
-										</td>
-										<td>
-											<span class="badge rounded-pill badge-light">Hết hiệu lực</span>
+											<span class="badge rounded-pill badge-success" *ngIf="item.isActived">Hiệu lực</span>
+											<span class="badge rounded-pill badge-light" *ngIf="!item.isActived">Hết hiệu lực</span>
 										</td>
 										<td>
 											<div class="d-flex justify-content-end">
-												<a href="#" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-												<a href="#" class="btn-icon grd-red text-white"><i class="bi bi-trash"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>1</strong>
-										</td>
-										<td><strong>ĐV cấp huyện 01</strong></td>
-										<td>0987654321</td>
-										<td>dvhuyen1@mail.com</td>
-										<td>
-											Lorem ipsum dolor sit adipiscing elit. Erat cras nulla elementum
-										</td>
-										<td>
-											<span class="badge rounded-pill badge-success">Hiệu lực</span>
-										</td>
-										<td>
-											<div class="d-flex justify-content-end">
-												<a href="#" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-												<a href="#" class="btn-icon grd-red text-white"><i class="bi bi-trash"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>1</strong>
-										</td>
-										<td><strong>ĐV cấp huyện 02</strong></td>
-										<td>0987654321</td>
-										<td>dvhuyen1@mail.com</td>
-										<td>
-											Lorem ipsum dolor sit adipiscing elit. Erat cras nulla elementum
-										</td>
-										<td>
-											<span class="badge rounded-pill badge-light">Hết hiệu lực</span>
-										</td>
-										<td>
-											<div class="d-flex justify-content-end">
-												<a href="#" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-												<a href="#" class="btn-icon grd-red text-white"><i class="bi bi-trash"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>1</strong>
-										</td>
-										<td><strong>ĐV cấp huyện 01</strong></td>
-										<td>0987654321</td>
-										<td>dvhuyen1@mail.com</td>
-										<td>
-											Lorem ipsum dolor sit adipiscing elit. Erat cras nulla elementum
-										</td>
-										<td>
-											<span class="badge rounded-pill badge-success">Hiệu lực</span>
-										</td>
-										<td>
-											<div class="d-flex justify-content-end">
-												<a href="#" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-												<a href="#" class="btn-icon grd-red text-white"><i class="bi bi-trash"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>1</strong>
-										</td>
-										<td><strong>ĐV cấp huyện 02</strong></td>
-										<td>0987654321</td>
-										<td>dvhuyen1@mail.com</td>
-										<td>
-											Lorem ipsum dolor sit adipiscing elit. Erat cras nulla elementum
-										</td>
-										<td>
-											<span class="badge rounded-pill badge-light">Hết hiệu lực</span>
-										</td>
-										<td>
-											<div class="d-flex justify-content-end">
-												<a href="#" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-												<a href="#" class="btn-icon grd-red text-white"><i class="bi bi-trash"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>1</strong>
-										</td>
-										<td><strong>ĐV cấp huyện 01</strong></td>
-										<td>0987654321</td>
-										<td>dvhuyen1@mail.com</td>
-										<td>
-											Lorem ipsum dolor sit adipiscing elit. Erat cras nulla elementum
-										</td>
-										<td>
-											<span class="badge rounded-pill badge-success">Hiệu lực</span>
-										</td>
-										<td>
-											<div class="d-flex justify-content-end">
-												<a href="#" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-												<a href="#" class="btn-icon grd-red text-white"><i class="bi bi-trash"></i></a>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong>1</strong>
-										</td>
-										<td><strong>ĐV cấp huyện 02</strong></td>
-										<td>0987654321</td>
-										<td>dvhuyen1@mail.com</td>
-										<td>
-											Lorem ipsum dolor sit adipiscing elit. Erat cras nulla elementum
-										</td>
-										<td>
-											<span class="badge rounded-pill badge-light">Hết hiệu lực</span>
-										</td>
-										<td>
-											<div class="d-flex justify-content-end">
-												<a href="#" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-												<a href="#" class="btn-icon grd-red text-white"><i class="bi bi-trash"></i></a>
+												<a href="javascript:void(0);" class="btn-icon grd-brown text-brown mr-2" (click)="modalCreateOrUpdate(unitObject.id)"><i
+														class="bi bi-pencil-square"></i></a>
+												<a href="javascript:void(0);" class="btn-icon grd-red text-white"><i class="bi bi-trash"></i></a>
 											</div>
 										</td>
 									</tr>
