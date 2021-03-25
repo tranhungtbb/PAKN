@@ -25,12 +25,14 @@ namespace PAKNAPI.Controllers
 		private readonly IHttpContextAccessor _context;
 
 		private IConfiguration _config;
+		private readonly Bugsnag.IClient _bugsnag;
 
-		public ContactController(IAppSetting appSetting, IHttpContextAccessor context, IConfiguration config)
+		public ContactController(IAppSetting appSetting, IHttpContextAccessor context, IConfiguration config, Bugsnag.IClient client)
 		{
 			_appSetting = appSetting;
 			_context = context;
 			_config = config;
+			_bugsnag = client;
 		}
 
 		[Route("Login")]
@@ -104,6 +106,7 @@ namespace PAKNAPI.Controllers
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 				return new ResultApi { Success = ResultCode.ORROR, Message = "ERROR: " + ex.Message, };
 			}
@@ -142,6 +145,7 @@ namespace PAKNAPI.Controllers
 			}
             catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				return new ResultApi { Success = ResultCode.ORROR, Message = "An error occurred", };
 			}
 		}
