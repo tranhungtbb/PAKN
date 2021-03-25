@@ -18,6 +18,7 @@ export class UnitObject {
 		this.isActived = true
 		this.isDeleted = false
 		this.unitLevel = 1
+		this.isMain = false
 	}
 	id: number
 	name: string
@@ -29,4 +30,5 @@ export class UnitObject {
 	email: string
 	phone: string
 	address: string
+	isMain: boolean
 }
