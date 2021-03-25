@@ -78,5 +78,12 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
+		public async Task<List<SYCaptChaValidator>> SYCaptChaValidatorDAO(string Code)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Code", Code);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYCaptChaValidator>("SY_CaptChaValidator", DP)).ToList();
+		}
 	}
 }
