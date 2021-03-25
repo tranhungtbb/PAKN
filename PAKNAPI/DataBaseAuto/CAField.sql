@@ -15,11 +15,9 @@ BEGIN
 	SELECT
 		[Id],
 		[Name],
-		[Code],
 		[IsActived],
 		[IsDeleted],
-		[Description],
-		[OrderNumber]
+		[Description]
 	FROM [CA_Field]
 	WHERE [Id] = @Id
 END
@@ -41,11 +39,9 @@ BEGIN
 	SELECT
 		[Id],
 		[Name],
-		[Code],
 		[IsActived],
 		[IsDeleted],
-		[Description],
-		[OrderNumber]
+		[Description]
 	FROM [CA_Field]
 END
 GO
@@ -69,11 +65,9 @@ BEGIN
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
 		[Id],
 		[Name],
-		[Code],
 		[IsActived],
 		[IsDeleted],
-		[Description],
-		[OrderNumber]
+		[Description]
 	FROM [CA_Field]
 	ORDER BY [Id]
 	OFFSET (@PageIndex-1) * @PageSize ROWS
@@ -93,30 +87,24 @@ DROP PROCEDURE [CA_FieldInsert];
 GO
 CREATE PROCEDURE [dbo].[CA_FieldInsert]
 	@Name nvarchar(100) = null,
-	@Code nvarchar(50) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
-	@Description nvarchar(1000) = null,
-	@OrderNumber int = null
+	@Description nvarchar(1000) = null
 AS
 BEGIN
 	INSERT INTO [CA_Field]
 	(
 		[Name],
-		[Code],
 		[IsActived],
 		[IsDeleted],
-		[Description],
-		[OrderNumber]
+		[Description]
 	)
 	VALUES
 	(
 		@Name,
-		@Code,
 		@IsActived,
 		@IsDeleted,
-		@Description,
-		@OrderNumber
+		@Description
 	)
 END
 GO
@@ -134,20 +122,16 @@ GO
 CREATE PROCEDURE [dbo].[CA_FieldUpdate]
 	@Id int = null,
 	@Name nvarchar(100) = null,
-	@Code nvarchar(50) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
-	@Description nvarchar(1000) = null,
-	@OrderNumber int = null
+	@Description nvarchar(1000) = null
 AS
 BEGIN
 	UPDATE [CA_Field] SET
 		[Name] = @Name,
-		[Code] = @Code,
 		[IsActived] = @IsActived,
 		[IsDeleted] = @IsDeleted,
-		[Description] = @Description,
-		[OrderNumber] = @OrderNumber
+		[Description] = @Description
 	WHERE [Id] = @Id
 END
 GO
