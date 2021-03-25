@@ -991,6 +991,35 @@ namespace PAKNAPI.ModelBase
 		public int? Id { get; set; }
 	}
 
+	public class CAUnitGetAll
+	{
+		private SQLCon _sQLCon;
+
+		public CAUnitGetAll(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAUnitGetAll()
+		{
+		}
+
+		public int? RowNumber;
+		public int Id;
+		public string Name;
+		public int? ParentId;
+		public byte UnitLevel;
+
+		public async Task<List<CAUnitGetAll>> CAUnitGetAllDAO(int? ParentId, byte? UnitLevel)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ParentId", ParentId);
+			DP.Add("UnitLevel", UnitLevel);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAUnitGetAll>("CA_UnitGetAll", DP)).ToList();
+		}
+	}
+
 	public class CAUnitGetAllOnPage
 	{
 		private SQLCon _sQLCon;

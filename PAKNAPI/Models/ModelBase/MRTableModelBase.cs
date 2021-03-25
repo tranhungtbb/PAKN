@@ -114,6 +114,7 @@ namespace PAKNAPI.ModelBase
 	public class MRRecommendationOnPage
 	{
 		public int Id;
+		public string Code;
 		public string Title;
 		public string Content;
 		public int? Field;
@@ -144,6 +145,7 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int Id;
+		public string Code;
 		public string Title;
 		public string Content;
 		public int? Field;
@@ -185,6 +187,7 @@ namespace PAKNAPI.ModelBase
 		public async Task<int?> MRRecommendationInsert(MRRecommendation _mRRecommendation)
 		{
 			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Code", _mRRecommendation.Code);
 			DP.Add("Title", _mRRecommendation.Title);
 			DP.Add("Content", _mRRecommendation.Content);
 			DP.Add("Field", _mRRecommendation.Field);
@@ -206,6 +209,7 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _mRRecommendation.Id);
+			DP.Add("Code", _mRRecommendation.Code);
 			DP.Add("Title", _mRRecommendation.Title);
 			DP.Add("Content", _mRRecommendation.Content);
 			DP.Add("Field", _mRRecommendation.Field);

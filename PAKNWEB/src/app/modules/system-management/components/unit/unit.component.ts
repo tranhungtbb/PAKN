@@ -126,8 +126,15 @@ export class UnitComponent implements OnInit {
 				(res) => {
 					if (res.success != 'OK') return
 					this.listUnitTreeview = res.result.CAUnitGetAllOnPage.map((e) => {
-						return { id: e.id, name: e.name, parentId: e.parentId == null ? 0 : e.parentId, unitLevel: e.unitLevel }
+						return {
+							id: e.id,
+							name: e.name,
+							parentId: e.parentId == null ? 0 : e.parentId,
+							unitLevel: e.unitLevel,
+							children: [],
+						}
 					})
+					//console.log(this.listUnitTreeview)
 				},
 				(err) => {}
 			)
@@ -234,7 +241,7 @@ export class UnitComponent implements OnInit {
 		let unitId = this.unitObject.id
 	}
 
-	private loadTreeArray(arr): void {
+	private unflatten(arr): any[] {
 		var tree = [],
 			mappedArr = {},
 			arrElem,
@@ -251,7 +258,7 @@ export class UnitComponent implements OnInit {
 			if (mappedArr.hasOwnProperty(id)) {
 				mappedElem = mappedArr[id]
 				// If the element is not at the root level, add it to its parent array of children.
-				if (mappedElem.parentid) {
+				if (mappedElem.parentId) {
 					mappedArr[mappedElem['parentid']]['children'].push(mappedElem)
 				}
 				// If the element is at the root level, add it to first level elements array.
@@ -260,7 +267,7 @@ export class UnitComponent implements OnInit {
 				}
 			}
 		}
-		this.listUnitTreeview = tree
+		return tree
 	}
 
 	private initialTreeViewJs(): void {
