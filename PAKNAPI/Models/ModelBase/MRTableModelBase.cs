@@ -11,106 +11,6 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
-	public class HISReommendationOnPage
-	{
-		public int Id { get; set; }
-		public int ObjectId { get; set; }
-		public int? Type { get; set; }
-		public string Content { get; set; }
-		public byte? Status { get; set; }
-		public long? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
-		public int? RowNumber; // int, null
-	}
-
-	public class HISReommendation
-	{
-		private SQLCon _sQLCon;
-
-		public HISReommendation(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public HISReommendation()
-		{
-		}
-
-		public int Id { get; set; }
-		public int ObjectId { get; set; }
-		public int? Type { get; set; }
-		public string Content { get; set; }
-		public byte? Status { get; set; }
-		public long? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
-
-		public async Task<HISReommendation> HISReommendationGetByID(int? Id)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-
-			return (await _sQLCon.ExecuteListDapperAsync<HISReommendation>("HIS_ReommendationGetByID", DP)).ToList().FirstOrDefault();
-		}
-
-		public async Task<List<HISReommendation>> HISReommendationGetAll()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<HISReommendation>("HIS_ReommendationGetAll", DP)).ToList();
-		}
-
-		public async Task<List<HISReommendationOnPage>> HISReommendationGetAllOnPage(int PageSize, int PageIndex)
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			return (await _sQLCon.ExecuteListDapperAsync<HISReommendationOnPage>("HIS_ReommendationGetAllOnPage", DP)).ToList();
-		}
-
-		public async Task<int?> HISReommendationInsert(HISReommendation _hISReommendation)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("ObjectId", _hISReommendation.ObjectId);
-			DP.Add("Type", _hISReommendation.Type);
-			DP.Add("Content", _hISReommendation.Content);
-			DP.Add("Status", _hISReommendation.Status);
-			DP.Add("CreatedBy", _hISReommendation.CreatedBy);
-			DP.Add("CreatedDate", _hISReommendation.CreatedDate);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("HIS_ReommendationInsert", DP));
-		}
-
-		public async Task<int> HISReommendationUpdate(HISReommendation _hISReommendation)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _hISReommendation.Id);
-			DP.Add("ObjectId", _hISReommendation.ObjectId);
-			DP.Add("Type", _hISReommendation.Type);
-			DP.Add("Content", _hISReommendation.Content);
-			DP.Add("Status", _hISReommendation.Status);
-			DP.Add("CreatedBy", _hISReommendation.CreatedBy);
-			DP.Add("CreatedDate", _hISReommendation.CreatedDate);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("HIS_ReommendationUpdate", DP));
-		}
-
-		public async Task<int> HISReommendationDelete(HISReommendation _hISReommendation)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _hISReommendation.Id);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("HIS_ReommendationDelete", DP));
-		}
-
-		public async Task<int> HISReommendationDeleteAll()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("HIS_ReommendationDeleteAll", DP));
-		}
-	}
-
 	public class MRRecommendationOnPage
 	{
 		public int Id { get; set; }
@@ -119,6 +19,7 @@ namespace PAKNAPI.ModelBase
 		public int? Field { get; set; }
 		public string UnitId { get; set; }
 		public bool? TypeObject { get; set; }
+		public long? SendId { get; set; }
 		public string Name { get; set; }
 		public byte? Status { get; set; }
 		public DateTime? SendDate { get; set; }
@@ -148,6 +49,7 @@ namespace PAKNAPI.ModelBase
 		public int? Field { get; set; }
 		public string UnitId { get; set; }
 		public bool? TypeObject { get; set; }
+		public long? SendId { get; set; }
 		public string Name { get; set; }
 		public byte? Status { get; set; }
 		public DateTime? SendDate { get; set; }
@@ -188,6 +90,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Field", _mRRecommendation.Field);
 			DP.Add("UnitId", _mRRecommendation.UnitId);
 			DP.Add("TypeObject", _mRRecommendation.TypeObject);
+			DP.Add("SendId", _mRRecommendation.SendId);
 			DP.Add("Name", _mRRecommendation.Name);
 			DP.Add("Status", _mRRecommendation.Status);
 			DP.Add("SendDate", _mRRecommendation.SendDate);
@@ -208,6 +111,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Field", _mRRecommendation.Field);
 			DP.Add("UnitId", _mRRecommendation.UnitId);
 			DP.Add("TypeObject", _mRRecommendation.TypeObject);
+			DP.Add("SendId", _mRRecommendation.SendId);
 			DP.Add("Name", _mRRecommendation.Name);
 			DP.Add("Status", _mRRecommendation.Status);
 			DP.Add("SendDate", _mRRecommendation.SendDate);
