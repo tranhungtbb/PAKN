@@ -415,15 +415,15 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<List<CAFieldInsert>> CAFieldInsertDAO(string Name, bool? IsActived, bool? IsDeleted, string Description)
+		public async Task<int> CAFieldInsertDAO(CAFieldInsertIN _cAFieldInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Name", Name);
-			DP.Add("IsActived", IsActived);
-			DP.Add("IsDeleted", IsDeleted);
-			DP.Add("Description", Description);
+			DP.Add("Name", _cAFieldInsertIN.Name);
+			DP.Add("IsActived", _cAFieldInsertIN.IsActived);
+			DP.Add("IsDeleted", _cAFieldInsertIN.IsDeleted);
+			DP.Add("Description", _cAFieldInsertIN.Description);
 
-			return (await _sQLCon.ExecuteListDapperAsync<CAFieldInsert>("CA_FieldInsert", DP)).ToList();
+			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_FieldInsert", DP);
 		}
 	}
 
@@ -448,16 +448,16 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<List<CAFieldUpdate>> CAFieldUpdateDAO(int? Id, string Name, bool? IsActived, bool? IsDeleted, string Description)
+		public async Task<int> CAFieldUpdateDAO(CAFieldUpdateIN _cAFieldUpdateIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-			DP.Add("Name", Name);
-			DP.Add("IsActived", IsActived);
-			DP.Add("IsDeleted", IsDeleted);
-			DP.Add("Description", Description);
+			DP.Add("Id", _cAFieldUpdateIN.Id);
+			DP.Add("Name", _cAFieldUpdateIN.Name);
+			DP.Add("IsActived", _cAFieldUpdateIN.IsActived);
+			DP.Add("IsDeleted", _cAFieldUpdateIN.IsDeleted);
+			DP.Add("Description", _cAFieldUpdateIN.Description);
 
-			return (await _sQLCon.ExecuteListDapperAsync<CAFieldUpdate>("CA_FieldUpdate", DP)).ToList();
+			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_FieldUpdate", DP);
 		}
 	}
 
@@ -901,17 +901,17 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<List<CAPositionInsert>> CAPositionInsertDAO(string Name, string Code, bool? IsActived, bool? IsDeleted, string Description, int? OrderNumber)
+		public async Task<int> CAPositionInsertDAO(CAPositionInsertIN _cAPositionInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Name", Name);
-			DP.Add("Code", Code);
-			DP.Add("IsActived", IsActived);
-			DP.Add("IsDeleted", IsDeleted);
-			DP.Add("Description", Description);
-			DP.Add("OrderNumber", OrderNumber);
+			DP.Add("Name", _cAPositionInsertIN.Name);
+			DP.Add("Code", _cAPositionInsertIN.Code);
+			DP.Add("IsActived", _cAPositionInsertIN.IsActived);
+			DP.Add("IsDeleted", _cAPositionInsertIN.IsDeleted);
+			DP.Add("Description", _cAPositionInsertIN.Description);
+			DP.Add("OrderNumber", _cAPositionInsertIN.OrderNumber);
 
-			return (await _sQLCon.ExecuteListDapperAsync<CAPositionInsert>("CA_PositionInsert", DP)).ToList();
+			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_PositionInsert", DP);
 		}
 	}
 
@@ -938,18 +938,18 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<List<CAPositionUpdate>> CAPositionUpdateDAO(int? Id, string Name, string Code, bool? IsActived, bool? IsDeleted, string Description, int? OrderNumber)
+		public async Task<int> CAPositionUpdateDAO(CAPositionUpdateIN _cAPositionUpdateIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-			DP.Add("Name", Name);
-			DP.Add("Code", Code);
-			DP.Add("IsActived", IsActived);
-			DP.Add("IsDeleted", IsDeleted);
-			DP.Add("Description", Description);
-			DP.Add("OrderNumber", OrderNumber);
+			DP.Add("Id", _cAPositionUpdateIN.Id);
+			DP.Add("Name", _cAPositionUpdateIN.Name);
+			DP.Add("Code", _cAPositionUpdateIN.Code);
+			DP.Add("IsActived", _cAPositionUpdateIN.IsActived);
+			DP.Add("IsDeleted", _cAPositionUpdateIN.IsDeleted);
+			DP.Add("Description", _cAPositionUpdateIN.Description);
+			DP.Add("OrderNumber", _cAPositionUpdateIN.OrderNumber);
 
-			return (await _sQLCon.ExecuteListDapperAsync<CAPositionUpdate>("CA_PositionUpdate", DP)).ToList();
+			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_PositionUpdate", DP);
 		}
 	}
 

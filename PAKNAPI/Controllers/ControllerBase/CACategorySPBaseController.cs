@@ -515,19 +515,16 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpGet]
+		[HttpPost]
 		[Authorize]
 		[Route("CAFieldInsertBase")]
-		public async Task<ActionResult<object>> CAFieldInsertBase(string Name, bool? IsActived, bool? IsDeleted, string Description)
+		public async Task<ActionResult<object>> CAFieldInsertBase(CAFieldInsertIN _cAFieldInsertIN)
 		{
 			try
 			{
-				List<CAFieldInsert> rsCAFieldInsert = await new CAFieldInsert(_appSetting).CAFieldInsertDAO(Name, IsActived, IsDeleted, Description);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CAFieldInsert", rsCAFieldInsert},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldInsert(_appSetting).CAFieldInsertDAO(_cAFieldInsertIN) };
 			}
 			catch (Exception ex)
 			{
@@ -537,19 +534,16 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpGet]
+		[HttpPost]
 		[Authorize]
 		[Route("CAFieldUpdateBase")]
-		public async Task<ActionResult<object>> CAFieldUpdateBase(int? Id, string Name, bool? IsActived, bool? IsDeleted, string Description)
+		public async Task<ActionResult<object>> CAFieldUpdateBase(CAFieldUpdateIN _cAFieldUpdateIN)
 		{
 			try
 			{
-				List<CAFieldUpdate> rsCAFieldUpdate = await new CAFieldUpdate(_appSetting).CAFieldUpdateDAO(Id, Name, IsActived, IsDeleted, Description);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CAFieldUpdate", rsCAFieldUpdate},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldUpdate(_appSetting).CAFieldUpdateDAO(_cAFieldUpdateIN) };
 			}
 			catch (Exception ex)
 			{
@@ -1103,19 +1097,16 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpGet]
+		[HttpPost]
 		[Authorize]
 		[Route("CAPositionInsertBase")]
-		public async Task<ActionResult<object>> CAPositionInsertBase(string Name, string Code, bool? IsActived, bool? IsDeleted, string Description, int? OrderNumber)
+		public async Task<ActionResult<object>> CAPositionInsertBase(CAPositionInsertIN _cAPositionInsertIN)
 		{
 			try
 			{
-				List<CAPositionInsert> rsCAPositionInsert = await new CAPositionInsert(_appSetting).CAPositionInsertDAO(Name, Code, IsActived, IsDeleted, Description, OrderNumber);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CAPositionInsert", rsCAPositionInsert},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAPositionInsert(_appSetting).CAPositionInsertDAO(_cAPositionInsertIN) };
 			}
 			catch (Exception ex)
 			{
@@ -1125,19 +1116,16 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpGet]
+		[HttpPost]
 		[Authorize]
 		[Route("CAPositionUpdateBase")]
-		public async Task<ActionResult<object>> CAPositionUpdateBase(int? Id, string Name, string Code, bool? IsActived, bool? IsDeleted, string Description, int? OrderNumber)
+		public async Task<ActionResult<object>> CAPositionUpdateBase(CAPositionUpdateIN _cAPositionUpdateIN)
 		{
 			try
 			{
-				List<CAPositionUpdate> rsCAPositionUpdate = await new CAPositionUpdate(_appSetting).CAPositionUpdateDAO(Id, Name, Code, IsActived, IsDeleted, Description, OrderNumber);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CAPositionUpdate", rsCAPositionUpdate},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAPositionUpdate(_appSetting).CAPositionUpdateDAO(_cAPositionUpdateIN) };
 			}
 			catch (Exception ex)
 			{
