@@ -912,6 +912,7 @@ namespace PAKNAPI.ModelBase
 
 	public class SYUnitOnPage
 	{
+
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public byte UnitLevel { get; set; }
@@ -922,6 +923,7 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
+		public bool IsMain { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -948,6 +950,7 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
+		public bool IsMain { get; set; }
 
 		public async Task<SYUnit> SYUnitGetByID(int? Id)
 		{
@@ -980,6 +983,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UnitLevel", _sYUnit.UnitLevel);
 			DP.Add("IsActived", _sYUnit.IsActived);
 			DP.Add("IsDeleted", _sYUnit.IsDeleted);
+			DP.Add("IsMain", _sYUnit.IsMain);
 			DP.Add("ParentId", _sYUnit.ParentId);
 			DP.Add("Description", _sYUnit.Description);
 			DP.Add("Email", _sYUnit.Email);
@@ -997,6 +1001,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UnitLevel", _sYUnit.UnitLevel);
 			DP.Add("IsActived", _sYUnit.IsActived);
 			DP.Add("IsDeleted", _sYUnit.IsDeleted);
+			DP.Add("IsMain", _sYUnit.IsMain);
 			DP.Add("ParentId", _sYUnit.ParentId);
 			DP.Add("Description", _sYUnit.Description);
 			DP.Add("Email", _sYUnit.Email);

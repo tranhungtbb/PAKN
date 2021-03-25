@@ -354,6 +354,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
+
 		public int? RowNumber { get; set; }
 		public int Id { get; set; }
 		public string Name { get; set; }
@@ -386,6 +387,7 @@ namespace PAKNAPI.ModelBase
 		public CAFieldGetByID()
 		{
 		}
+
 
 		public int Id { get; set; }
 		public string Name { get; set; }
@@ -1004,6 +1006,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
+
 		public int? RowNumber { get; set; }
 		public int Id { get; set; }
 		public string Name { get; set; }
@@ -1015,8 +1018,9 @@ namespace PAKNAPI.ModelBase
 		public string Email { get; set; }
 		public string Phone { get; set; }
 		public string Address { get; set; }
+		public bool IsMain { get; set; }
 
-		public async Task<List<CAUnitGetAllOnPage>> CAUnitGetAllOnPageDAO(int? PageSize, int? PageIndex, int? ParentId, byte? UnitLevel, string Name, string Phone, string Email, string Address, bool? IsActive)
+		public async Task<List<CAUnitGetAllOnPage>> CAUnitGetAllOnPageDAO(int? PageSize, int? PageIndex, int? ParentId, byte? UnitLevel, string Name, string Phone, string Email, string Address, bool? IsActive, bool? IsMain)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
@@ -1028,6 +1032,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Email", Email);
 			DP.Add("Address", Address);
 			DP.Add("IsActive", IsActive);
+			DP.Add("IsMain", IsMain);
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAUnitGetAllOnPage>("CA_UnitGetAllOnPage", DP)).ToList();
 		}
@@ -1046,6 +1051,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
+
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public byte UnitLevel { get; set; }
@@ -1056,6 +1062,7 @@ namespace PAKNAPI.ModelBase
 		public string Email { get; set; }
 		public string Phone { get; set; }
 		public string Address { get; set; }
+		public bool IsMain { get; set; }
 
 		public async Task<List<CAUnitGetByID>> CAUnitGetByIDDAO(int? Id)
 		{
@@ -1091,6 +1098,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Address", _cAUnitInsertIN.Address);
 			DP.Add("IsActived", _cAUnitInsertIN.IsActived);
 			DP.Add("IsDeleted", _cAUnitInsertIN.IsDeleted);
+			DP.Add("IsMain", _cAUnitInsertIN.IsMain);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_UnitInsert", DP));
 		}
@@ -1107,6 +1115,7 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
+		public bool? IsMain { get; set; }
 	}
 
 	public class CAUnitUpdate
@@ -1135,6 +1144,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Address", _cAUnitUpdateIN.Address);
 			DP.Add("IsActived", _cAUnitUpdateIN.IsActived);
 			DP.Add("IsDeleted", _cAUnitUpdateIN.IsDeleted);
+			DP.Add("IsMain", _cAUnitUpdateIN.IsMain);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_UnitUpdate", DP));
 		}
@@ -1152,6 +1162,7 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
+		public bool? IsMain { get; set; }
 	}
 
 	public class CAWordDelete
