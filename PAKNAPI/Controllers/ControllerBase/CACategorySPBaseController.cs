@@ -515,19 +515,16 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpGet]
+		[HttpPost]
 		[Authorize]
 		[Route("CAFieldInsertBase")]
-		public async Task<ActionResult<object>> CAFieldInsertBase(string Name, bool? IsActived, bool? IsDeleted, string Description)
+		public async Task<ActionResult<object>> CAFieldInsertBase(CAFieldInsertIN _cAFieldInsertIN)
 		{
 			try
 			{
-				List<CAFieldInsert> rsCAFieldInsert = await new CAFieldInsert(_appSetting).CAFieldInsertDAO(Name, IsActived, IsDeleted, Description);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CAFieldInsert", rsCAFieldInsert},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldInsert(_appSetting).CAFieldInsertDAO(_cAFieldInsertIN) };
 			}
 			catch (Exception ex)
 			{
@@ -537,19 +534,16 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpGet]
+		[HttpPost]
 		[Authorize]
 		[Route("CAFieldUpdateBase")]
-		public async Task<ActionResult<object>> CAFieldUpdateBase(int? Id, string Name, bool? IsActived, bool? IsDeleted, string Description)
+		public async Task<ActionResult<object>> CAFieldUpdateBase(CAFieldUpdateIN _cAFieldUpdateIN)
 		{
 			try
 			{
-				List<CAFieldUpdate> rsCAFieldUpdate = await new CAFieldUpdate(_appSetting).CAFieldUpdateDAO(Id, Name, IsActived, IsDeleted, Description);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CAFieldUpdate", rsCAFieldUpdate},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldUpdate(_appSetting).CAFieldUpdateDAO(_cAFieldUpdateIN) };
 			}
 			catch (Exception ex)
 			{
