@@ -8,6 +8,8 @@ import { TreeNode } from 'primeng/api'
 
 import { UnitService } from '../../../../services/unit.service'
 import { UserService } from '../../../../services/user.service'
+import { PositionService } from '../../../../services/position.service'
+// import { UserService } from '../../../../services/rol'
 
 import { ConfirmDialogComponent } from '../../../../directives/confirm-dialog/confirm-dialog.component'
 import { UserCreateOrUpdateComponent } from '../user/user-create-or-update/user-create-or-update.component'
@@ -24,11 +26,22 @@ declare var $: any
 	styleUrls: ['./unit.component.css'],
 })
 export class UnitComponent implements OnInit, AfterViewInit {
+	listStatus: any = [
+		{ value: true, text: 'Hiệu lực' },
+		{ value: false, text: 'Không hiệu lực' },
+	]
+	listGender: any = [
+		{ value: true, text: 'Nam' },
+		{ value: false, text: 'Nữ' },
+	]
+
 	treeUnit: TreeNode[]
 	listUnitPaged: any[] = []
 	unitObject: any = {}
 	listUserPaged: any[] = []
-	unitFlatlist: any[]
+	unitFlatlist: any[] = []
+	rolesList: any[] = []
+	positionsList: any[] = []
 
 	createUnitFrom: FormGroup
 	createUserForm: FormGroup
@@ -64,11 +77,17 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	totalCount_User: number = 0
 	userPageCount: number = 0
 
-	constructor(private unitService: UnitService, private userService: UserService, private formBuilder: FormBuilder, private _toastr: ToastrService, private dialog: MatDialog) {}
+	constructor(
+		private unitService: UnitService,
+		private userService: UserService,
+		private positionService: PositionService,
+		private formBuilder: FormBuilder,
+		private _toastr: ToastrService,
+		private dialog: MatDialog
+	) {}
 
 	ngOnInit() {
 		this.getAllUnitShortInfo()
-		console.log(this.unitObject)
 		/*unit form*/
 		this.createUnitFrom = this.formBuilder.group({
 			name: ['', Validators.required],
@@ -78,21 +97,31 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			parentId: [''],
 			description: [''],
 			email: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
-			phone: ['', [Validators.required, Validators.pattern('^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$')]],
+			phone: ['', [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
 			address: ['', [Validators.required]],
 		})
 		/*user form*/
 		this.createUserForm = this.formBuilder.group({
 			email: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')]],
-			fullName: ['', [Validators.required]],
+			fullName: ['', [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
 			phone: ['', [Validators.required]],
-			positionId: [''],
-			unitId: [''],
+			positionId: ['', [Validators.required]],
+			unitId: ['', [Validators.required]],
 			gender: ['', [Validators.required]],
-			roleId: [''],
+			roleId: ['', [Validators.required]],
 			isActived: [''],
 			address: [''],
 		})
+
+		this.positionService
+			.positionGetList({
+				pageIndex: 1,
+				pageSize: 1000,
+			})
+			.subscribe((res) => {
+				if (res.success != 'OK') return
+				this.positionsList = res.result.CAPositionGetAllOnPage
+			})
 	}
 	ngAfterViewInit() {}
 
@@ -163,8 +192,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 					})
 					this.unitFlatlist = listUnit
 					this.treeUnit = this.unflatten(listUnit)
-
-					console.log(this.unitFlatlist)
 				},
 				(err) => {}
 			)
@@ -178,7 +205,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			this.listUserPaged = res.result.SYUserGetAllOnPage
 			if (this.totalCount_User <= 0) this.totalCount_User = res.result.TotalCount
 			this.userPageCount = Math.ceil(this.totalCount_User / this.query.pageSize)
-			console.log(this.listUserPaged)
 		})
 	}
 	onUserFilterChange() {
@@ -219,7 +245,11 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 	userFormSubmitted = false
 	onSaveUser(): void {
-		this.userFromSubmited = true
+		this.userFormSubmitted = true
+
+		if (this.createUserForm.invalid) {
+			return
+		}
 	}
 
 	/*end user area*/

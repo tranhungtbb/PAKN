@@ -28,11 +28,13 @@
 							</div>
 						</div>
 						<div class="col-12 col-lg-4 form-group" *ngIf="modelUnit.unitLevel > 1">
-							<label formControlName="parentId" [(ngModel)]="modelUnit.parentId" class="mb-1">Đơn vị cấp trên <span class="cl-red">(*)</span></label>
-							<select class="form-control" id="f_parentId">
-								<!-- <option value="" disabled>__Chọn đơn vị cấp trên__</option> -->
+							<label class="mb-1">Đơn vị cấp trên <span class="cl-red">(*)</span></label>
+							<!-- <select class="form-control" id="f_parentId">
 								<option *ngFor="let item of getUnitParent" [value]="item.id">{{item.name}}</option>
-							</select>
+							</select> -->
+							<ng-select id="f_parentId" class="form-control" [items]="getUnitParent" placeholder="Đơn vị cấp trên ..." bindLabel="name" bindValue="id"
+								formControlName="parentId" [(ngModel)]="modelUnit.parentId" [closeOnSelect]="true">
+							</ng-select>
 							<div *ngIf="(unitFormSubmitted && fUnit.parentId.invalid)||(fUnit.parentId.invalid && (fUnit.parentId.dirty || fUnit.parentId.touched))"
 								class="has-error m-b-12">
 								<div *ngIf="fUnit.parentId.errors.required">
@@ -42,10 +44,9 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
-							<select class="form-control">
-								<option selected="">Hiệu lực</option>
-								<option>Hết hiệu lực</option>
-							</select>
+							<ng-select class="form-control" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" formControlName="isActived"
+								[(ngModel)]="modelUnit.isActived" [closeOnSelect]="true">
+							</ng-select>
 						</div>
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">Email <span class="cl-red">(*)</span></label>
@@ -54,7 +55,7 @@
 								<div *ngIf="fUnit.email.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
 								</div>
-								<div *ngIf="fUnit.phone.errors.pattern">
+								<div *ngIf="fUnit.email.errors.pattern">
 									<span class="help-block">Định dạng email không đúng</span>
 								</div>
 							</div>
@@ -127,7 +128,7 @@
 						</div>
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">Họ và tên <span class="cl-red">(*)</span></label>
-							<input formControlName="fullName" [(ngModel)]="modelUnit.fullName" type="text" class="form-control" placeholder="Nhập...">
+							<input formControlName="fullName" [(ngModel)]="modelUser.fullName" type="text" class="form-control" placeholder="Nhập...">
 							<div *ngIf="(userFormSubmitted && fUser.fullName.invalid)||(fUser.fullName.invalid && (fUser.fullName.dirty || fUser.fullName.touched))"
 								class="has-error m-b-12">
 								<div *ngIf="fUser.fullName.errors.required">
@@ -137,7 +138,7 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Điện thoại <span class="cl-red">(*)</span></label>
-							<input formControlName="phone" [(ngModel)]="modelUnit.phone" type="mail" class="form-control" placeholder="Nhập...">
+							<input formControlName="phone" [(ngModel)]="modelUser.phone" type="text" class="form-control" placeholder="Nhập...">
 							<div *ngIf="(userFormSubmitted && fUser.phone.invalid)||(fUser.phone.invalid && (fUser.phone.dirty || fUser.phone.touched))" class="has-error m-b-12">
 								<div *ngIf="fUser.phone.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -149,9 +150,9 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Chức vụ <span class="cl-red">(*)</span></label>
-							<select class="form-control" formControlName="positionId" [(ngModel)]="modelUser.positionId">
-								<option *ngFor="let item of positionsList" [value]="item.id">{{item.name}}</option>
-							</select>
+							<ng-select class="form-control" [items]="positionsList" placeholder="Chức vụ ..." bindLabel="name" bindValue="id" formControlName="positionId"
+								[(ngModel)]="modelUser.positionId" [closeOnSelect]="true">
+							</ng-select>
 							<div *ngIf="(userFormSubmitted && fUser.positionId.invalid)||(fUser.positionId.invalid && (fUser.positionId.dirty || fUser.positionId.touched))"
 								class="has-error m-b-12">
 								<div *ngIf="fUser.positionId.errors.required">
@@ -164,9 +165,10 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Đơn vị <span class="cl-red">(*)</span></label>
-							<select class="form-control" formControlName="unitId" [(ngModel)]="modelUser.unitId">
-								<option *ngFor="let item of unitsList" [value]="item.id">{{item.name}}</option>
-							</select>
+							<ng-select class="form-control" [items]="unitFlatlist" placeholder="Đơn vị ..." bindLabel="name" bindValue="id" [(ngModel)]="modelUser.unitId"
+								formControlName="unitId" [closeOnSelect]="true">
+							</ng-select>
+
 							<div *ngIf="(userFormSubmitted && fUser.unitId.invalid)||(fUser.unitId.invalid && (fUser.unitId.dirty || fUser.unitId.touched))"
 								class="has-error m-b-12">
 								<div *ngIf="fUser.unitId.errors.required">
@@ -176,23 +178,27 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Giới tính</label>
-							<select class="" formControlName="gender" [(ngModel)]="modelUser.gender">
-								<option [value]="true">Nam</option>
-								<option [value]="false">Nữ</option>
-							</select>
+							<ng-select class="form-control" [items]="listGender" placeholder="Giới tính ..." bindLabel="text" bindValue="value" [(ngModel)]="modelUser.gender"
+								formControlName="gender" [closeOnSelect]="true">
+							</ng-select>
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Vai trò <span class="cl-red">(*)</span></label>
-							<select class="form-control" formControlName="roleId" [(ngModel)]="modelUser.roleId">
-								<option *ngFor="let item of rolesList" [value]="item.id">{{item.name}}</option>
-							</select>
+							<ng-select class="form-control" [items]="rolesList" placeholder="Vai trò ..." bindLabel="name" bindValue="id" [(ngModel)]="modelUser.roleId"
+								formControlName="roleId" [closeOnSelect]="true">
+							</ng-select>
+							<div *ngIf="(userFormSubmitted && fUser.roleId.invalid)||(fUser.roleId.invalid && (fUser.roleId.dirty || fUser.roleId.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="fUser.roleId.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div>
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Trạng thái</label>
-							<select class="form-control" formControlName="isActived" [(ngModel)]="modelUser.isActived">
-								<option [value]="true">Hiệu lực</option>
-								<option [value]="false">Không hiệu lực</option>
-							</select>
+							<ng-select class="form-control" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" formControlName="isActived"
+								[(ngModel)]="modelUser.isActived" [closeOnSelect]="true">
+							</ng-select>
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Địa chỉ</label>
@@ -267,8 +273,8 @@
 										</svg>
 									</button>
 									<div class="border d-flex align-items-center border-dark px-2 rounded">
-										<input type="number" [value]="queryUser.pageIndex" class="border-0 p-0 number-page-table text-right form-control form-control-sm"
-											style="width: 40px">
+										<input type="number" (change)="onUserFilterChange()" [value]="queryUser.pageIndex"
+											class="border-0 p-0 number-page-table text-right form-control form-control-sm" style="width: 40px">
 										<span>/{{userPageCount}}</span>
 									</div>
 									<button type="button" class="btn btn-outline-secondary ml-2 p-2" (click)="onUserPageChange(-1)">
@@ -279,7 +285,7 @@
 									</button>
 								</div>
 							</div>
-							<div class="btn-group" role="group">
+							<div class="btn-group" role="group" *ngIf="unitObject.id">
 								<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
 										<path
@@ -289,7 +295,7 @@
 									</svg>
 									Xuất excel
 								</button>
-								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalUserCreateOrUpdate(0)">
+								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalUserCreateOrUpdate(null)">
 									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 										<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 									</svg>
@@ -315,32 +321,35 @@
 												<strong>Tên đăng nhập</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<input [(ngModel)]="queryUser.userName" type="text" class="form-control form-control-sm">
+											<input [(ngModel)]="queryUser.email" type="text" class="form-control form-control-sm" (change)="onUserFilterChange()">
 										</th>
 										<th style="width: 350px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Tên người dùng</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<input [(ngModel)]="queryUser.fullName" type="text" class="form-control form-control-sm">
+											<input [(ngModel)]="queryUser.fullName" type="text" class="form-control form-control-sm" (change)="onUserFilterChange()">
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Số điện thoại</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<input [(ngModel)]="queryUser.phone" type="text" class="form-control form-control-sm">
+											<input [(ngModel)]="queryUser.phone" type="text" class="form-control form-control-sm" (change)="onUserFilterChange()">
 										</th>
 										<th style="width: 160px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Trạng thái</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<select [(ngModel)]="queryUser.isActived" class="form-control form-control-sm">
+											<ng-select class="form-control form-control-sm" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
+												[(ngModel)]="queryUser.isActived" [closeOnSelect]="true" (change)="onUserFilterChange()">
+											</ng-select>
+											<!-- <select [(ngModel)]="queryUser.isActived" class="form-control form-control-sm">
 												<option value="">__Toàn bộ__</option>
 												<option value="true">Hiệu lực</option>
 												<option value="false">Hết hiệu lực</option>
-											</select>
+											</select> -->
 										</th>
 										<th class="text-right"><strong>Thao tác</strong></th>
 									</tr>
@@ -397,7 +406,7 @@
 									</button>
 								</div>
 							</div>
-							<div class="btn-group" role="group">
+							<div class="btn-group" role="group" *ngIf="unitObject.id">
 								<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
 										<path
@@ -461,11 +470,9 @@
 												<strong>Trạng thái</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<select class="form-control form-control-sm" [(ngModel)]="query.isActive" (change)="unitFilterChange()">
-												<option value="">__ Toàn bộ __</option>
-												<option value="true">Hiệu lực</option>
-												<option value="false">Hết hiệu lực</option>
-											</select>
+											<ng-select class="form-control form-control-sm" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
+												[closeOnSelect]="true" [(ngModel)]="query.isActive" (change)="unitFilterChange()">
+											</ng-select>
 										</th>
 										<th class="text-right"><strong>Thao tác</strong></th>
 									</tr>
