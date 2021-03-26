@@ -83,7 +83,7 @@ export class ListGeneralComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
-					this.listData = response.result.CAFieldGetAllOnPage
+					this.listData = response.result.MRRecommendationGetAllOnPage
 					this.totalRecords = response.result.TotalCount
 				}
 			} else {

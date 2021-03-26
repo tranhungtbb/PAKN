@@ -7,6 +7,8 @@ import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
+import { HashtagObject } from 'src/app/models/hashtagObject'
+import { CatalogService } from 'src/app/services/catalog.service'
 
 @Component({
 	selector: 'app-create-recommendation',
@@ -28,18 +30,21 @@ export class CreateRecommendationComponent implements OnInit {
 	lstBusiness: any[] = []
 	lstIndividual: any[] = []
 	lstObject: any[] = []
-	lstHashTag: any[] = []
-	txtHashtag: string = ''
+	lstHashtag: any[] = []
+	lstHashtagSelected: any[] = []
+	hashtagId: number = null
 	fileAccept = CONSTANTS.FILEACCEPT
 	files: any[] = []
 	lstXoaFile: any[] = []
 	submitted: boolean = false
+	modelHashTagAdd: HashtagObject = new HashtagObject()
 
 	@ViewChild('file', { static: false }) public file: ElementRef
 	constructor(
 		private toastr: ToastrService,
 		private fileService: UploadFileService,
 		private recommendationService: RecommendationService,
+		private _serviceCatalog: CatalogService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute
 	) {}
@@ -58,26 +63,53 @@ export class CreateRecommendationComponent implements OnInit {
 		})
 	}
 
-	onAddHashtag() {
-		if (this.txtHashtag.trim() != '') {
-			let isExist = false
-			for (let index = 0; index < this.lstHashTag.length; index++) {
-				if (this.lstHashTag[index].text == this.txtHashtag.trim()) {
+	onCreateHashtag(e) {
+		if (e.target.value != null && e.target.value != '' && e.target.value.trim() != '' && e.keyCode == 13) {
+			var isExist = false
+			for (var i = 0; i < this.lstHashtag.length; i++) {
+				if (this.lstHashtag[i].text.toUpperCase() == e.target.value) {
 					isExist = true
-					this.toastr.error('Từ khóa đã tồn tại')
 					break
 				}
 			}
-			if (!isExist) {
-				this.lstHashTag.push({ text: this.txtHashtag.trim() })
-				this.txtHashtag = ''
+			if (isExist == false) {
+				this.modelHashTagAdd = new HashtagObject()
+				this.modelHashTagAdd.name = e.target.value
+				this._serviceCatalog.hashtagInsert(this.modelHashTagAdd).subscribe((response) => {
+					if (response.success == RESPONSE_STATUS.success) {
+						this.hashtagId = response.result
+						this.getDropdown()
+					}
+				}),
+					(error) => {
+						console.error(error)
+						alert(error)
+					}
+			}
+		}
+	}
+
+	onAddHashtag() {
+		var isExist = false
+		for (var i = 0; i < this.lstHashtagSelected.length; i++) {
+			if (this.lstHashtagSelected[i].value == this.hashtagId) {
+				isExist = true
+				break
+			}
+		}
+		if (!isExist) {
+			for (var i = 0; i < this.lstHashtag.length; i++) {
+				if (this.lstHashtag[i].value == this.hashtagId) {
+					this.lstHashtagSelected.push(this.lstHashtag[i])
+					break
+				}
 			}
 		}
 	}
 	onRemoveHashtag(item: any) {
-		for (let index = 0; index < this.lstHashTag.length; index++) {
-			if (this.lstHashTag[index].text == item.text) {
-				this.lstHashTag.splice(index, 1)
+		for (let index = 0; index < this.lstHashtagSelected.length; index++) {
+			if (this.lstHashtagSelected[index].id == item.id) {
+				this.lstHashtagSelected.splice(index, 1)
 				break
 			}
 		}
@@ -110,6 +142,7 @@ export class CreateRecommendationComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.lstUnit = response.result.lstUnit
 				this.lstField = response.result.lstField
+				this.lstHashtag = response.result.lstHashTag
 				this.lstBusiness = response.result.lstBusiness
 				this.lstIndividual = response.result.lstIndividual
 				this.lstObject = response.result.lstIndividual
@@ -136,14 +169,14 @@ export class CreateRecommendationComponent implements OnInit {
 
 	builForm() {
 		this.form = new FormGroup({
-			code: new FormControl(this.model.code, [Validators.required]),
+			// code: new FormControl(this.model.code, [Validators.required]),
 			title: new FormControl(this.model.title, [Validators.required]),
 			content: new FormControl(this.model.content, [Validators.required]),
 			field: new FormControl(this.model.field, [Validators.required]),
 			unitId: new FormControl(this.model.unitId, [Validators.required]),
 			sendId: new FormControl(this.model.sendId, [Validators.required]),
 			sendDate: new FormControl(this.model.sendDate, [Validators.required]),
-			hashtag: new FormControl(this.txtHashtag),
+			hashtag: new FormControl(this.hashtagId),
 		})
 	}
 	get f() {
@@ -190,9 +223,14 @@ export class CreateRecommendationComponent implements OnInit {
 		if (this.form.invalid) {
 			return
 		}
+		if (this.lstHashtagSelected == null || this.lstHashtagSelected.length == 0) {
+			this.toastr.error('Vui lòng nhập hashtag')
+			return
+		}
 		this.model.status = RECOMMENDATION_STATUS.RECEIVE_APPROVED
 		const request = {
 			Data: this.model,
+			Hashtags: this.lstHashtagSelected,
 			Files: this.files,
 			LstXoaFile: this.lstXoaFile,
 		}

@@ -679,45 +679,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("CAHashtagInsertListBase")]
-		public async Task<ActionResult<object>> CAHashtagInsertListBase(List<CAHashtagInsertIN> _cAHashtagInsertINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _cAHashtagInsertIN in _cAHashtagInsertINs)
-				{
-					var result = await new CAHashtagInsert(_appSetting).CAHashtagInsertDAO(_cAHashtagInsertIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
 		[Route("CAHashtagUpdateBase")]
 		public async Task<ActionResult<object>> CAHashtagUpdateBase(CAHashtagUpdateIN _cAHashtagUpdateIN)
 		{

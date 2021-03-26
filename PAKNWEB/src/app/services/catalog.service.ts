@@ -17,7 +17,7 @@ export class CatalogService {
 			return of(result as T)
 		}
 	}
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService) { }
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService) {}
 
 	fieldGetList(request: any): Observable<any> {
 		let headers = {
@@ -74,6 +74,14 @@ export class CatalogService {
 		})
 
 		return this.serviceInvoker.getFilewithHeaders(request, AppSettings.API_ADDRESS + Api.FieldExport, headers)
+	}
+
+	hashtagInsert(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.HashtagInsert, headers)
 	}
 	//newstype
 	newsTypeGetList(request: any): Observable<any> {
@@ -171,5 +179,4 @@ export class CatalogService {
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.DepartmentGroupDelete, headers)
 	}
-
 }

@@ -557,13 +557,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> CAHashtagInsertDAO(CAHashtagInsertIN _cAHashtagInsertIN)
+		public async Task<decimal> CAHashtagInsertDAO(CAHashtagInsertIN _cAHashtagInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cAHashtagInsertIN.Name);
 			DP.Add("IsActived", _cAHashtagInsertIN.IsActived);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_HashtagInsert", DP));
+			return await _sQLCon.ExecuteScalarDapperAsync<decimal>("CA_HashtagInsert", DP);
 		}
 	}
 

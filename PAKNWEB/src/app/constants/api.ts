@@ -27,7 +27,7 @@ export class Api {
 	public static RecommendationGetDataForCreate = 'Recommendation/RecommendationGetDataForCreate'
 	public static RecommendationGetList = 'MRSPBase/MRRecommendationGetAllOnPageBase'
 	public static RecommendationGetById = 'MRSPBase/MRRecommendationGetByIDBase'
-	public static RecommendationInsert = 'MRSPBase/MRRecommendationInsertBase'
+	public static RecommendationInsert = 'Recommendation/RecommendationInsert'
 	public static RecommendationUpdate = 'MRSPBase/MRRecommendationUpdateBase'
 	public static RecommendationDelete = 'MRSPBase/MRRecommendationDeleteBase'
 	public static RecommendationExport = 'MRSPBase/MRRecommendationExportBase'
@@ -39,6 +39,14 @@ export class Api {
 	public static FieldUpdate = 'CACategorySPBase/CAFieldUpdateBase'
 	public static FieldUpdateStatus = 'CACategorySPBase/CAFieldUpdateBase'
 	public static FieldDelete = 'CACategorySPBase/CAFieldDeleteBase'
+
+	//Field
+	public static HashtagGetList = 'CACategorySPBase/CAHashtagGetAllOnPageBase'
+	public static HashtagGetById = 'CACategorySPBase/CAHashtagGetByIDBase'
+	public static HashtagInsert = 'CACategorySPBase/CAHashtagInsertBase'
+	public static HashtagUpdate = 'CACategorySPBase/CAHashtagUpdateBase'
+	public static HashtagUpdateStatus = 'CACategorySPBase/CAHashtagUpdateBase'
+	public static HashtagDelete = 'CACategorySPBase/CAHashtagDeleteBase'
 
 	//Unit
 	public static UnitGetPagedList = 'CACategorySPBase/CAUnitGetAllOnPageBase'

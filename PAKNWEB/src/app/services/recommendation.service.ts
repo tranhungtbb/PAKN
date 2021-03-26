@@ -6,6 +6,7 @@ import { AppSettings } from '../constants/app-setting'
 import { Api } from '../constants/api'
 import { catchError, tap } from 'rxjs/operators'
 import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
+import { UserInfoStorageService } from '../commons/user-info-storage.service'
 
 @Injectable({
 	providedIn: 'root',
@@ -17,7 +18,7 @@ export class RecommendationService {
 			return of(result as T)
 		}
 	}
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService) {}
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
 
 	recommendationGetDataForCreate(request: any): Observable<any> {
 		let headers = {
@@ -44,11 +45,31 @@ export class RecommendationService {
 	}
 
 	recommendationInsert(request: any): Observable<any> {
-		let headers = {
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
+			macAddress: '',
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
 			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		})
+		const form = new FormData()
+		form.append('Data', JSON.stringify(request.Data))
+		form.append('Hashtags', JSON.stringify(request.Hashtags))
+
+		if (request.Files) {
+			request.Files.forEach((item) => {
+				form.append('QD', item)
+			})
 		}
-		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationInsert, headers)
+		const httpPackage = {
+			headers: tempheaders,
+			body: form,
+		}
+		return this.http.post(AppSettings.API_ADDRESS + Api.RecommendationInsert, form)
+		// let headers = {
+		// 	logAction: encodeURIComponent(LOG_ACTION.INSERT),
+		// 	logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		// }
+		// return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationInsert, headers)
 	}
 
 	recommendationUpdate(request: any): Observable<any> {
