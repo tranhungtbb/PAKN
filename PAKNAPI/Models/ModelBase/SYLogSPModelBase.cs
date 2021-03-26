@@ -24,16 +24,16 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public long Id { get; set; }
-		public long UserId { get; set; }
-		public byte Status { get; set; }
-		public string Action { get; set; }
-		public string Exception { get; set; }
-		public string FullName { get; set; }
-		public string IPAddress { get; set; }
-		public string MACAddress { get; set; }
-		public string Description { get; set; }
-		public DateTime? CreatedDate { get; set; }
+		public long Id;
+		public long UserId;
+		public byte Status;
+		public string Action;
+		public string Exception;
+		public string FullName;
+		public string IPAddress;
+		public string MACAddress;
+		public string Description;
+		public DateTime? CreatedDate;
 
 		public async Task<List<SYLOGGetByID>> SYLOGGetByIDDAO(long? Id)
 		{

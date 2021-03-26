@@ -13,4 +13,20 @@ import { UserInfoStorageService } from '../commons/user-info-storage.service'
 })
 export class UserService {
 	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStronageService: UserInfoStorageService) {}
+
+	getAllPagedList(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetPagedList)
+	}
+	// getById(query: any): Observable<any> {
+	// 	return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UnitGetById)
+	// }
+	insert(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserInsert)
+	}
+	update(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserUpdate)
+	}
+	delete(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserDelete)
+	}
 }
