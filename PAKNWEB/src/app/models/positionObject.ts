@@ -7,9 +7,7 @@ export class PositionObject {
   }
   id: number;
   name: string;
-  code: string;
   isActived: boolean;
   isDeleted: boolean;
   description: string;
-  orderNumber: number
 }

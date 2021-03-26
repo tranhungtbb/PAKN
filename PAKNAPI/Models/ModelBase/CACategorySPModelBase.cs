@@ -838,11 +838,9 @@ namespace PAKNAPI.ModelBase
 		public int? RowNumber;
 		public int Id;
 		public string Name;
-		public string Code;
 		public bool IsActived;
 		public bool IsDeleted;
 		public string Description;
-		public int? OrderNumber;
 
 		public async Task<List<CAPositionGetAllOnPage>> CAPositionGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Code, string Description, bool? IsActived)
 		{
@@ -873,11 +871,9 @@ namespace PAKNAPI.ModelBase
 
 		public int Id;
 		public string Name;
-		public string Code;
 		public bool IsActived;
 		public bool IsDeleted;
 		public string Description;
-		public int? OrderNumber;
 
 		public async Task<List<CAPositionGetByID>> CAPositionGetByIDDAO(int? Id)
 		{
@@ -905,24 +901,20 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cAPositionInsertIN.Name);
-			DP.Add("Code", _cAPositionInsertIN.Code);
 			DP.Add("IsActived", _cAPositionInsertIN.IsActived);
 			DP.Add("IsDeleted", _cAPositionInsertIN.IsDeleted);
 			DP.Add("Description", _cAPositionInsertIN.Description);
-			DP.Add("OrderNumber", _cAPositionInsertIN.OrderNumber);
 
-			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_PositionInsert", DP);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_PositionInsert", DP));
 		}
 	}
 
 	public class CAPositionInsertIN
 	{
 		public string Name { get; set; }
-		public string Code { get; set; }
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
-		public int? OrderNumber { get; set; }
 	}
 
 	public class CAPositionUpdate
@@ -943,13 +935,11 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _cAPositionUpdateIN.Id);
 			DP.Add("Name", _cAPositionUpdateIN.Name);
-			DP.Add("Code", _cAPositionUpdateIN.Code);
 			DP.Add("IsActived", _cAPositionUpdateIN.IsActived);
 			DP.Add("IsDeleted", _cAPositionUpdateIN.IsDeleted);
 			DP.Add("Description", _cAPositionUpdateIN.Description);
-			DP.Add("OrderNumber", _cAPositionUpdateIN.OrderNumber);
 
-			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_PositionUpdate", DP);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_PositionUpdate", DP));
 		}
 	}
 
@@ -957,11 +947,9 @@ namespace PAKNAPI.ModelBase
 	{
 		public int? Id { get; set; }
 		public string Name { get; set; }
-		public string Code { get; set; }
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
-		public int? OrderNumber { get; set; }
 	}
 
 	public class CAUnitDelete
@@ -989,35 +977,6 @@ namespace PAKNAPI.ModelBase
 	public class CAUnitDeleteIN
 	{
 		public int? Id { get; set; }
-	}
-
-	public class CAUnitGetAll
-	{
-		private SQLCon _sQLCon;
-
-		public CAUnitGetAll(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public CAUnitGetAll()
-		{
-		}
-
-		public int? RowNumber;
-		public int Id;
-		public string Name;
-		public int? ParentId;
-		public byte UnitLevel;
-
-		public async Task<List<CAUnitGetAll>> CAUnitGetAllDAO(int? ParentId, byte? UnitLevel)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("ParentId", ParentId);
-			DP.Add("UnitLevel", UnitLevel);
-
-			return (await _sQLCon.ExecuteListDapperAsync<CAUnitGetAll>("CA_UnitGetAll", DP)).ToList();
-		}
 	}
 
 	public class CAUnitGetAllOnPage

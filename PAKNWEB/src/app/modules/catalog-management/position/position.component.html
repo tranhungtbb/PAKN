@@ -34,12 +34,12 @@
 					</button>
 				</div>
 				<div class="modal-body pb-0">
-					<form class="form-horizontal" [formGroup]="createDataForm" (ngSubmit)="onSave()">
+					<form class="form-horizontal" [formGroup]="createDataForm" #formDir="ngForm" (ngSubmit)="onSave()">
 						<div class="form-row">
 							<div class="col-12 col-lg-8 form-group"
 								[ngClass]="{ 'has-error': (submitted && f.name.errors) ||(f.name.invalid && (f.name.dirty || f.name.touched)) }">
 								<label class="mb-1">Tên chức vụ <span class="cl-red">(*)</span></label>
-								<input svTrim type="text" formControlName="name" class="form-control" placeholder="Nhập..."
+								<input type="text" formControlName="name" class="form-control" placeholder="Nhập..."
 									[(ngModel)]="model.name" required />
 								<div *ngIf="(submitted && f.name.invalid)||(f.name.invalid && (f.name.dirty || f.name.touched))"
 									class="has-error m-b-12">
@@ -51,39 +51,19 @@
 
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
-								<select formControlName="isActived" [(ngModel)]="model.isActived" class="form-control">
-									<option value="true" selected>Hiệu lực</option>
-									<option value="false">Hết hiệu lực</option>
-								</select>
-							</div>
-							<div class="col-12 col-lg-8 form-group"
-								[ngClass]="{ 'has-error': (submitted && f.code.errors) ||(f.code.invalid && (f.code.dirty || f.code.touched)) }">
-								<label class="mb-1">Code <span class="cl-red">(*)</span></label>
-								<input svTrim type="text" formControlName="code" class="form-control" placeholder="Nhập..."
-									[(ngModel)]="model.code" required />
-								<div *ngIf="(submitted && f.code.invalid)||(f.code.invalid && (f.code.dirty || f.code.touched))"
-									class="has-error m-b-12">
-									<div *ngIf="f.code.errors.required">
-										<span class="help-block">Trường dữ liệu này không được để trống</span>
-									</div>
-								</div>
-							</div>
-							<div class="col-12 col-lg-4 form-group"
-								[ngClass]="{ 'has-error': (submitted && f.orderNumber.errors) ||(f.orderNumber.invalid && (f.orderNumber.dirty || f.orderNumber.touched)) }">
-								<label class="mb-1">Thứ tự hiển thị <span class="cl-red">(*)</span></label>
-								<input svTrim type="text" formControlName="orderNumber" class="form-control" placeholder="Nhập..."
-									[(ngModel)]="model.orderNumber" required />
+								<ng-select formControlName="isActived" class="form-control" [items]="listStatus"
+									placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="model.isActived"
+									[closeOnSelect]="true">
+								</ng-select>
 								<div
-									*ngIf="(submitted && f.orderNumber.invalid)||(f.orderNumber.invalid && (f.orderNumber.dirty || f.orderNumber.touched))"
+									*ngIf="(submitted && f.isActived.invalid)||(f.isActived.invalid && (f.isActived.dirty || f.isActived.touched))"
 									class="has-error m-b-12">
-									<div *ngIf="f.orderNumber.errors.required">
+									<div *ngIf="f.isActived.errors.required">
 										<span class="help-block">Trường dữ liệu này không được để trống</span>
-									</div>
-									<div *ngIf="f.orderNumber.errors.pattern">
-										<span class="help-block">Chỉ chứa các ký tự 0-9</span>
 									</div>
 								</div>
 							</div>
+
 							<div class="col-12 form-group">
 								<label class="mb-1">Mô tả</label>
 								<textarea formControlName="description" [(ngModel)]="model.description" class="form-control" rows="4"

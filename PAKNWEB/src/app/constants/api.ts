@@ -23,6 +23,14 @@ export class Api {
 	public static uploadfiles = 'UploadFiles/Uploadfiles'
 	public static getFileImage = 'UploadFiles/GetFile'
 
+	//Recommendation
+	public static RecommendationGetList = 'MRSPBase/MRRecommendationGetAllOnPageBase'
+	public static RecommendationGetById = 'MRSPBase/MRRecommendationGetByIDBase'
+	public static RecommendationInsert = 'MRSPBase/MRRecommendationInsertBase'
+	public static RecommendationUpdate = 'MRSPBase/MRRecommendationUpdateBase'
+	public static RecommendationDelete = 'MRSPBase/MRRecommendationDeleteBase'
+	public static RecommendationExport = 'MRSPBase/MRRecommendationExportBase'
+
 	//Field
 	public static FieldGetList = 'CACategorySPBase/CAFieldGetAllOnPageBase'
 	public static FieldGetById = 'CACategorySPBase/CAFieldGetByIDBase'

@@ -118,8 +118,8 @@ namespace PAKNAPI.ModelBase
 		public string Title;
 		public string Content;
 		public int? Field;
-		public string UnitId;
-		public bool? TypeObject;
+		public int? UnitId;
+		public short? TypeObject;
 		public long? SendId;
 		public string Name;
 		public byte? Status;
@@ -149,8 +149,8 @@ namespace PAKNAPI.ModelBase
 		public string Title;
 		public string Content;
 		public int? Field;
-		public string UnitId;
-		public bool? TypeObject;
+		public int? UnitId;
+		public short? TypeObject;
 		public long? SendId;
 		public string Name;
 		public byte? Status;

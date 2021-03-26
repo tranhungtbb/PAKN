@@ -1118,6 +1118,45 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
+		[Route("CAPositionInsertListBase")]
+		public async Task<ActionResult<object>> CAPositionInsertListBase(List<CAPositionInsertIN> _cAPositionInsertINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _cAPositionInsertIN in _cAPositionInsertINs)
+				{
+					var result = await new CAPositionInsert(_appSetting).CAPositionInsertDAO(_cAPositionInsertIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
 		[Route("CAPositionUpdateBase")]
 		public async Task<ActionResult<object>> CAPositionUpdateBase(CAPositionUpdateIN _cAPositionUpdateIN)
 		{
@@ -1126,6 +1165,45 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new CAPositionUpdate(_appSetting).CAPositionUpdateDAO(_cAPositionUpdateIN) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAPositionUpdateListBase")]
+		public async Task<ActionResult<object>> CAPositionUpdateListBase(List<CAPositionUpdateIN> _cAPositionUpdateINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _cAPositionUpdateIN in _cAPositionUpdateINs)
+				{
+					var result = await new CAPositionUpdate(_appSetting).CAPositionUpdateDAO(_cAPositionUpdateIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1183,28 +1261,6 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize]
-		[Route("CAUnitGetAllBase")]
-		public async Task<ActionResult<object>> CAUnitGetAllBase(int? ParentId, byte? UnitLevel)
-		{
-			try
-			{
-				List<CAUnitGetAll> rsCAUnitGetAll = await new CAUnitGetAll(_appSetting).CAUnitGetAllDAO(ParentId, UnitLevel);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CAUnitGetAll", rsCAUnitGetAll},
-					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)

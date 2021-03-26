@@ -636,9 +636,7 @@ namespace PAKNAPI.ModelBase
 	public class CAPositionOnPage
 	{
 		public int Id;
-		public int? OrderNumber;
 		public string Name;
-		public string Code;
 		public string Description;
 		public bool IsActived;
 		public bool IsDeleted;
@@ -659,9 +657,7 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int Id;
-		public int? OrderNumber;
 		public string Name;
-		public string Code;
 		public string Description;
 		public bool IsActived;
 		public bool IsDeleted;
@@ -694,11 +690,9 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cAPosition.Name);
-			DP.Add("Code", _cAPosition.Code);
 			DP.Add("IsActived", _cAPosition.IsActived);
 			DP.Add("IsDeleted", _cAPosition.IsDeleted);
 			DP.Add("Description", _cAPosition.Description);
-			DP.Add("OrderNumber", _cAPosition.OrderNumber);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_PositionInsert", DP));
 		}
@@ -708,11 +702,9 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _cAPosition.Id);
 			DP.Add("Name", _cAPosition.Name);
-			DP.Add("Code", _cAPosition.Code);
 			DP.Add("IsActived", _cAPosition.IsActived);
 			DP.Add("IsDeleted", _cAPosition.IsDeleted);
 			DP.Add("Description", _cAPosition.Description);
-			DP.Add("OrderNumber", _cAPosition.OrderNumber);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_PositionUpdate", DP));
 		}
