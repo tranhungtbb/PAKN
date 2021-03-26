@@ -1184,7 +1184,8 @@ body .ui-table .ui-table-thead > tr > th{
     background: #ffffff;
     border-color: #f0f1f5 !important;
     box-shadow: 0px 0px 40px 0px rgb(82 63 105 / 10%);
-    background: #ffffff;
+    background: #ffffff;		
+    height: auto;
 	}
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
 	background-color: #fff;

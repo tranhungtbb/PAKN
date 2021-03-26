@@ -19,6 +19,14 @@ export class RecommendationService {
 	}
 	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService) {}
 
+	recommendationGetDataForCreate(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetDataForCreate, headers)
+	}
+
 	recommendationGetList(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETLIST),

@@ -24,6 +24,7 @@ export class Api {
 	public static getFileImage = 'UploadFiles/GetFile'
 
 	//Recommendation
+	public static RecommendationGetDataForCreate = 'Recommendation/RecommendationGetDataForCreate'
 	public static RecommendationGetList = 'MRSPBase/MRRecommendationGetAllOnPageBase'
 	public static RecommendationGetById = 'MRSPBase/MRRecommendationGetByIDBase'
 	public static RecommendationInsert = 'MRSPBase/MRRecommendationInsertBase'

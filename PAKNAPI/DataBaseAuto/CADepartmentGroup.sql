@@ -15,7 +15,6 @@ BEGIN
 	SELECT
 		[Id],
 		[Name],
-		[Code],
 		[IsActived],
 		[IsDeleted],
 		[Description]
@@ -40,7 +39,6 @@ BEGIN
 	SELECT
 		[Id],
 		[Name],
-		[Code],
 		[IsActived],
 		[IsDeleted],
 		[Description]
@@ -67,7 +65,6 @@ BEGIN
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
 		[Id],
 		[Name],
-		[Code],
 		[IsActived],
 		[IsDeleted],
 		[Description]
@@ -90,7 +87,6 @@ DROP PROCEDURE [CA_DepartmentGroupInsert];
 GO
 CREATE PROCEDURE [dbo].[CA_DepartmentGroupInsert]
 	@Name nvarchar(100) = null,
-	@Code nvarchar(100) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
 	@Description nvarchar(1000) = null
@@ -99,7 +95,6 @@ BEGIN
 	INSERT INTO [CA_DepartmentGroup]
 	(
 		[Name],
-		[Code],
 		[IsActived],
 		[IsDeleted],
 		[Description]
@@ -107,7 +102,6 @@ BEGIN
 	VALUES
 	(
 		@Name,
-		@Code,
 		@IsActived,
 		@IsDeleted,
 		@Description
@@ -128,7 +122,6 @@ GO
 CREATE PROCEDURE [dbo].[CA_DepartmentGroupUpdate]
 	@Id int = null,
 	@Name nvarchar(100) = null,
-	@Code nvarchar(100) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
 	@Description nvarchar(1000) = null
@@ -136,7 +129,6 @@ AS
 BEGIN
 	UPDATE [CA_DepartmentGroup] SET
 		[Name] = @Name,
-		[Code] = @Code,
 		[IsActived] = @IsActived,
 		[IsDeleted] = @IsDeleted,
 		[Description] = @Description

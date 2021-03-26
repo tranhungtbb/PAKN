@@ -42,6 +42,19 @@ export class MESSAGE_COMMON {
 	public static SEND_SUCCESS = 'Gửi thành công'
 }
 
+export class RECOMMENDATION_STATUS {
+	public static CREATED = 1
+	public static RECEIVE_WAIT = 2 //2 Chờ xử lý
+	public static RECEIVE_DENY = 3 //3 Từ chối xử lý
+	public static RECEIVE_APPROVED = 4 //4 Đã tiếp nhận
+	public static PROCESS_WAIT = 5 //5 Chờ giải quyết
+	public static PROCESS_DENY = 6 //6 Từ chối giải quyết
+	public static PROCESSING = 7 //7 Đang giải quyết
+	public static APPROVE_WAIT = 8 //8 Chờ phê duyệt
+	public static APPROVE_DENY = 9 //9 Từ chối phê duyệt
+	public static FINISED = 10 //10 Đã giải quyết
+}
+
 export const FILETYPE = [
 	{ text: 'application/msword', value: 1 },
 	{ text: 'text/plain', value: 1 },
