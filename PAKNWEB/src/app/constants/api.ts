@@ -62,4 +62,11 @@ export class Api {
 	public static NewsTypeUpdate = 'CACategorySPBase/CANewsTypeUpdateBase'
 	public static NewsTypeUpdateStatus = 'CACategorySPBase/CANewsTypeUpdateBase'
 	public static NewsTypeDelete = 'CACategorySPBase/CANewsTypeDeleteBase'
+	//DepartmentGroup
+	public static DepartmentGroupGetList = 'CACategorySPBase/CADepartmentGroupGetAllOnPageBase'
+	public static DepartmentGroupGetById = 'CACategorySPBase/CADepartmentGroupGetByIDBase'
+	public static DepartmentGroupInsert = 'CACategorySPBase/CADepartmentGroupInsertBase'
+	public static DepartmentGroupUpdate = 'CACategorySPBase/CADepartmentGroupUpdateBase'
+	public static DepartmentGroupUpdateStatus = 'CACategorySPBase/CADepartmentGroupUpdateBase'
+	public static DepartmentGroupDelete = 'CACategorySPBase/CADepartmentGroupDeleteBase'
 }

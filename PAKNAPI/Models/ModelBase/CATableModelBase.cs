@@ -13,15 +13,15 @@ namespace PAKNAPI.ModelBase
 {
 	public class CADepartmentOnPage
 	{
-		public int Id;
-		public int? DepartmentGroupId;
-		public string Name;
-		public string Code;
-		public string Email;
-		public string Phone;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public int? DepartmentGroupId { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -38,15 +38,15 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int? DepartmentGroupId;
-		public string Name;
-		public string Code;
-		public string Email;
-		public string Phone;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public int? DepartmentGroupId { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CADepartment> CADepartmentGetByID(int? Id)
 		{
@@ -128,12 +128,11 @@ namespace PAKNAPI.ModelBase
 
 	public class CADepartmentGroupOnPage
 	{
-		public int Id;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -150,12 +149,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CADepartmentGroup> CADepartmentGroupGetByID(int? Id)
 		{
@@ -185,7 +183,6 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cADepartmentGroup.Name);
-			DP.Add("Code", _cADepartmentGroup.Code);
 			DP.Add("IsActived", _cADepartmentGroup.IsActived);
 			DP.Add("IsDeleted", _cADepartmentGroup.IsDeleted);
 			DP.Add("Description", _cADepartmentGroup.Description);
@@ -198,7 +195,6 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _cADepartmentGroup.Id);
 			DP.Add("Name", _cADepartmentGroup.Name);
-			DP.Add("Code", _cADepartmentGroup.Code);
 			DP.Add("IsActived", _cADepartmentGroup.IsActived);
 			DP.Add("IsDeleted", _cADepartmentGroup.IsDeleted);
 			DP.Add("Description", _cADepartmentGroup.Description);
@@ -231,11 +227,11 @@ namespace PAKNAPI.ModelBase
 
 	public class CADistrictOnPage
 	{
-		public int Id;
-		public int ProvinceId;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public int ProvinceId { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -252,11 +248,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int ProvinceId;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public int ProvinceId { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CADistrict> CADistrictGetByID(int? Id)
 		{
@@ -330,11 +326,11 @@ namespace PAKNAPI.ModelBase
 
 	public class CAFieldOnPage
 	{
-		public int Id;
-		public string Name;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -351,11 +347,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CAField> CAFieldGetByID(int? Id)
 		{
@@ -429,12 +425,12 @@ namespace PAKNAPI.ModelBase
 
 	public class CAHashtagOnPage
 	{
-		public int Id;
-		public string Name;
-		public string Code;
-		public int? Quantity;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public int? Quantity { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -451,12 +447,12 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public string Code;
-		public int? Quantity;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public int? Quantity { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CAHashtag> CAHashtagGetByID(int? Id)
 		{
@@ -532,11 +528,11 @@ namespace PAKNAPI.ModelBase
 
 	public class CANewsTypeOnPage
 	{
-		public int Id;
-		public string Name;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -553,11 +549,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CANewsType> CANewsTypeGetByID(int? Id)
 		{
@@ -631,11 +627,11 @@ namespace PAKNAPI.ModelBase
 
 	public class CAPositionOnPage
 	{
-		public int Id;
-		public string Name;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -652,11 +648,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CAPosition> CAPositionGetByID(int? Id)
 		{
@@ -730,10 +726,10 @@ namespace PAKNAPI.ModelBase
 
 	public class CAProvinceOnPage
 	{
-		public int Id;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -750,10 +746,10 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CAProvince> CAProvinceGetByID(int? Id)
 		{
@@ -825,11 +821,11 @@ namespace PAKNAPI.ModelBase
 
 	public class CAWardsOnPage
 	{
-		public int Id;
-		public int DistrictId;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public int DistrictId { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -846,11 +842,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int DistrictId;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public int DistrictId { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CAWards> CAWardsGetByID(int? Id)
 		{
@@ -924,12 +920,12 @@ namespace PAKNAPI.ModelBase
 
 	public class CAWordOnPage
 	{
-		public int Id;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -946,12 +942,12 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CAWord> CAWordGetByID(int? Id)
 		{
