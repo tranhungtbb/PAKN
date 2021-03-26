@@ -57,12 +57,15 @@ export class Api {
 	public static PositionGetById = 'CACategorySPBase/CAPositionGetByIDBase'
 	public static PositionUpdate = 'CACategorySPBase/CAPositionUpdateBase'
 
-	// SY_Unit
+	// user
 	public static UserGetPagedList = 'SYUserSPBase/SYUserGetAllOnPageBase'
-	public static UserGetById = 'SYUserSPBase/SYUserGetAllOnPageBase'
+	public static UserGetById = 'SYUserSPBase/SYUserGetByIDBase'
 	public static UserInsert = 'SYUserSPBase/SYUserInsertBase'
 	public static UserUpdate = 'SYUserSPBase/SYUserUpdateBase'
 	public static UserDelete = 'SYUserSPBase/SYUserDeleteBase'
+
+	//SY_Role
+	public static RoleGetAll = 'SYSPBase/SYRoleGetAllBase'
 
 	//NewsType
 	public static NewsTypeGetList = 'CACategorySPBase/CANewsTypeGetAllOnPageBase'

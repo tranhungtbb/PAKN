@@ -9,7 +9,7 @@ import { TreeNode } from 'primeng/api'
 import { UnitService } from '../../../../services/unit.service'
 import { UserService } from '../../../../services/user.service'
 import { PositionService } from '../../../../services/position.service'
-// import { UserService } from '../../../../services/rol'
+import { RoleService } from '../../../../services/role.service'
 
 import { ConfirmDialogComponent } from '../../../../directives/confirm-dialog/confirm-dialog.component'
 import { UserCreateOrUpdateComponent } from '../user/user-create-or-update/user-create-or-update.component'
@@ -83,7 +83,8 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		private positionService: PositionService,
 		private formBuilder: FormBuilder,
 		private _toastr: ToastrService,
-		private dialog: MatDialog
+		private dialog: MatDialog,
+		private roleService: RoleService
 	) {}
 
 	ngOnInit() {
@@ -102,9 +103,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		})
 		/*user form*/
 		this.createUserForm = this.formBuilder.group({
+			userName: ['', [Validators.required]],
 			email: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')]],
-			fullName: ['', [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
-			phone: ['', [Validators.required]],
+			fullName: ['', [Validators.required]],
+			phone: ['', [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
 			positionId: ['', [Validators.required]],
 			unitId: ['', [Validators.required]],
 			gender: ['', [Validators.required]],
@@ -122,6 +124,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				if (res.success != 'OK') return
 				this.positionsList = res.result.CAPositionGetAllOnPage
 			})
+		this.roleService.getAll({}).subscribe((res) => {
+			if (res.success != 'OK') return
+			this.rolesList = res.result.SYRoleGetAll
+		})
 	}
 	ngAfterViewInit() {}
 
@@ -225,14 +231,13 @@ export class UnitComponent implements OnInit, AfterViewInit {
 
 	userFromSubmited = false
 	modalUserCreateOrUpdateTitle: string = 'Thông tin người dùng'
-	modalUserCreateOrUpdate(email: any) {
-		//let createUserDialog = this.dialog.open(UserCreateOrUpdateComponent, {})
-
-		if (email != null) {
-			this.queryUser.email = email
-			this.userService.getAllPagedList(this.queryUser).subscribe((res) => {
+	modalUserCreateOrUpdate(key: any) {
+		this.userFromSubmited = false
+		if (key != null) {
+			this.userService.getById({ id: key }).subscribe((res) => {
+				console.log(res)
 				if (res.success != 'OK') return
-				this.modelUser = res.result.SYUserGetAllOnPage[0]
+				this.modelUser = res.result.SYUserGetByID[0]
 			})
 		} else {
 			this.userFromSubmited = false
@@ -248,10 +253,47 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.userFormSubmitted = true
 
 		if (this.createUserForm.invalid) {
+			this._toastr.error('Dữ liệu không hợp lệ')
 			return
+		}
+
+		if (this.modelUser.id != null && this.modelUser.id > 0) {
+			this.userService.update(this.modelUser).subscribe((res) => {
+				if (res.success != 'OK') {
+					this._toastr.error(COMMONS.UPDATE_FAILED)
+					return
+				}
+				this._toastr.success(COMMONS.UPDATE_SUCCESS)
+				this.getUserPagedList()
+				this.modelUser = new UserObject()
+				$('#modal-user-create-or-update').modal('hide')
+			})
+		} else {
+			this.userService.insert(this.modelUser).subscribe((res) => {
+				if (res.success != 'OK') {
+					this._toastr.error(COMMONS.ADD_FAILED)
+					return
+				}
+				this._toastr.success(COMMONS.ADD_SUCCESS)
+				this.getUserPagedList()
+				this.modelUser = new UserObject()
+				$('#modal-user-create-or-update').modal('hide')
+			})
 		}
 	}
 
+	onDelUser(id: number) {
+		let userObj = this.listUserPaged.find((c) => c.id == id)
+
+		this.userService.delete(userObj).subscribe((res) => {
+			if (res.success != 'OK') {
+				this._toastr.error(COMMONS.DELETE_FAILED)
+				return
+			}
+			this._toastr.success(COMMONS.DELETE_SUCCESS)
+			this.getUserPagedList()
+		})
+	}
 	/*end user area*/
 
 	/*modal thêm / sửa đơn vị*/
@@ -334,6 +376,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		if (this.delType == 'unit') {
 			this.onDeleteUnit(this.delId)
 		} else if (this.delType == 'user') {
+			this.onDelUser(this.delId)
 		}
 
 		$('#modal-confirm').modal('hide')
