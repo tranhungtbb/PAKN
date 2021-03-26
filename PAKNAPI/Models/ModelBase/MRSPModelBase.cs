@@ -78,6 +78,94 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate { get; set; }
 	}
 
+	public class MRRecommendationFilesDelete
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationFilesDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationFilesDelete()
+		{
+		}
+
+		public async Task<int> MRRecommendationFilesDeleteDAO(MRRecommendationFilesDeleteIN _mRRecommendationFilesDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationFilesDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_FilesDelete", DP));
+		}
+	}
+
+	public class MRRecommendationFilesDeleteIN
+	{
+		public int? Id { get; set; }
+	}
+
+	public class MRRecommendationFilesGetByRecommendationId
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationFilesGetByRecommendationId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationFilesGetByRecommendationId()
+		{
+		}
+
+		public int Id { get; set; }
+		public int? RecommendationId { get; set; }
+		public string Name { get; set; }
+		public short? FileType { get; set; }
+		public string FilePath { get; set; }
+
+		public async Task<List<MRRecommendationFilesGetByRecommendationId>> MRRecommendationFilesGetByRecommendationIdDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationFilesGetByRecommendationId>("MR_Recommendation_FilesGetByRecommendationId", DP)).ToList();
+		}
+	}
+
+	public class MRRecommendationFilesInsert
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationFilesInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationFilesInsert()
+		{
+		}
+
+		public async Task<int> MRRecommendationFilesInsertDAO(MRRecommendationFilesInsertIN _mRRecommendationFilesInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationId", _mRRecommendationFilesInsertIN.RecommendationId);
+			DP.Add("Name", _mRRecommendationFilesInsertIN.Name);
+			DP.Add("FileType", _mRRecommendationFilesInsertIN.FileType);
+			DP.Add("FilePath", _mRRecommendationFilesInsertIN.FilePath);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_FilesInsert", DP));
+		}
+	}
+
+	public class MRRecommendationFilesInsertIN
+	{
+		public int? RecommendationId { get; set; }
+		public string Name { get; set; }
+		public short? FileType { get; set; }
+		public string FilePath { get; set; }
+	}
+
 	public class MRRecommendationDelete
 	{
 		private SQLCon _sQLCon;
