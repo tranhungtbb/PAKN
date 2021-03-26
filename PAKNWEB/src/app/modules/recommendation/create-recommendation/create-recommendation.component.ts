@@ -59,22 +59,28 @@ export class CreateRecommendationComponent implements OnInit {
 	}
 
 	onAddHashtag() {
-		this.lstHashTag.forEach((element) => {
-			if (element.text == this.txtHashtag.trim()) {
-				this.toastr.error('Từ khóa đã tồn tại')
-				return
+		if (this.txtHashtag.trim() != '') {
+			let isExist = false
+			for (let index = 0; index < this.lstHashTag.length; index++) {
+				if (this.lstHashTag[index].text == this.txtHashtag.trim()) {
+					isExist = true
+					this.toastr.error('Từ khóa đã tồn tại')
+					break
+				}
 			}
-		})
-		this.lstHashTag.push({ text: this.txtHashtag.trim() })
-		this.txtHashtag = ''
+			if (!isExist) {
+				this.lstHashTag.push({ text: this.txtHashtag.trim() })
+				this.txtHashtag = ''
+			}
+		}
 	}
 	onRemoveHashtag(item: any) {
-		this.lstHashTag.forEach((element) => {
-			if (element.text == item.text) {
-				this.lstHashTag.splice(element)
-				return
+		for (let index = 0; index < this.lstHashTag.length; index++) {
+			if (this.lstHashTag[index].text == item.text) {
+				this.lstHashTag.splice(index, 1)
+				break
 			}
-		})
+		}
 	}
 
 	getData() {

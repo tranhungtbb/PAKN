@@ -1213,3 +1213,6 @@ body .ui-table .ui-table-thead > tr > th{
   min-width: 100% !important;
   max-width: 430px;
 }
+.box-fileinput{
+	width: 100%;
+}
