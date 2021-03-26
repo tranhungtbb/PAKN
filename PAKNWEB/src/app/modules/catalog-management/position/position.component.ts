@@ -53,9 +53,7 @@ export class PositionComponent implements OnInit {
   buildForm() {
     this.createDataForm = this.formBuilder.group({
       name: [this.model.name, [Validators.required]],
-      code: [this.model.code, [Validators.required]],
-      orderNumber: [this.model.orderNumber, [Validators.required, Validators.pattern('[0-9]+')]],
-      isActived: [''],
+      isActived: [this.model.isActived, [Validators.required]],
       description: [this.model.description],
     })
   }
@@ -66,11 +64,9 @@ export class PositionComponent implements OnInit {
   rebuilForm() {
     console.log(this.model);
     this.createDataForm.reset({
-      code: this.model.code,
       name: this.model.name,
       isActived: this.model.isActived,
       description: this.model.description,
-      orderNumber: this.model.orderNumber,
     })
   }
   getList() {
@@ -80,11 +76,11 @@ export class PositionComponent implements OnInit {
     let request = {
       Name: this.name,
       Description: this.description,
-      isActived: this.isActived ? this.isActived : '',
+      isActived: this.isActived != null ? this.isActived : '',
       PageIndex: this.pageIndex,
       PageSize: this.pageSize,
     }
-
+    console.log(request)
     this.positionService.positionGetList(request).subscribe((response) => {
       if (response.success == RESPONSE_STATUS.success) {
         if (response.result != null) {
@@ -150,9 +146,9 @@ export class PositionComponent implements OnInit {
       }
   }
   preCreate() {
+    this.submitted = false
     this.model = new PositionObject()
     this.rebuilForm()
-    this.submitted = false
     this.title = 'Thêm mới lĩnh vực'
     $('#modal-tm-cqdv').modal('show')
   }

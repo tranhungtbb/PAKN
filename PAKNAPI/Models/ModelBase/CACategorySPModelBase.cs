@@ -905,7 +905,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cAPositionInsertIN.IsDeleted);
 			DP.Add("Description", _cAPositionInsertIN.Description);
 
-			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_PositionInsert", DP);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_PositionInsert", DP));
 		}
 	}
 
@@ -939,7 +939,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cAPositionUpdateIN.IsDeleted);
 			DP.Add("Description", _cAPositionUpdateIN.Description);
 
-			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_PositionUpdate", DP);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_PositionUpdate", DP));
 		}
 	}
 
