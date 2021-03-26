@@ -110,6 +110,7 @@ export class PositionComponent implements OnInit {
         } else {
           this.toastr.error(res.message)
         }
+        $('#modal-tm-cqdv').modal('hide')
       })
     }
     else {
@@ -121,6 +122,7 @@ export class PositionComponent implements OnInit {
         } else {
           this.toastr.error(res.message)
         }
+        $('#modal-tm-cqdv').modal('hide')
       })
     }
   }
@@ -149,7 +151,7 @@ export class PositionComponent implements OnInit {
     this.submitted = false
     this.model = new PositionObject()
     this.rebuilForm()
-    this.title = 'Thêm mới lĩnh vực'
+    this.title = 'Thêm mới chức vụ'
     $('#modal-tm-cqdv').modal('show')
   }
   preUpdate(data) {

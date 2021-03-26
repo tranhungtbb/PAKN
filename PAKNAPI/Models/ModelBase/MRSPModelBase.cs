@@ -24,13 +24,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id { get; set; }
-		public int ObjectId { get; set; }
-		public int? Type { get; set; }
-		public string Content { get; set; }
-		public byte? Status { get; set; }
-		public long? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
+		public int Id;
+		public int ObjectId;
+		public int? Type;
+		public string Content;
+		public byte? Status;
+		public long? CreatedBy;
+		public DateTime? CreatedDate;
 
 		public async Task<List<HISRecommendationGetByObjectId>> HISRecommendationGetByObjectIdDAO(int? Id)
 		{
@@ -118,24 +118,24 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber { get; set; }
-		public int Id { get; set; }
-		public string Code { get; set; }
-		public string Title { get; set; }
-		public string Content { get; set; }
-		public int? Field { get; set; }
-		public string FieldName { get; set; }
-		public int? UnitId { get; set; }
-		public string UnitName { get; set; }
-		public short? TypeObject { get; set; }
-		public long? SendId { get; set; }
-		public string Name { get; set; }
-		public byte? Status { get; set; }
-		public DateTime? SendDate { get; set; }
-		public long? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
-		public long? UpdatedBy { get; set; }
-		public DateTime? UpdatedDate { get; set; }
+		public int? RowNumber;
+		public int Id;
+		public string Code;
+		public string Title;
+		public string Content;
+		public int? Field;
+		public string FieldName;
+		public int? UnitId;
+		public string UnitName;
+		public short? TypeObject;
+		public long? SendId;
+		public string Name;
+		public byte? Status;
+		public DateTime? SendDate;
+		public long? CreatedBy;
+		public DateTime? CreatedDate;
+		public long? UpdatedBy;
+		public DateTime? UpdatedDate;
 
 		public async Task<List<MRRecommendationGetAllOnPage>> MRRecommendationGetAllOnPageDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex)
 		{
@@ -166,21 +166,21 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id { get; set; }
-		public string Code { get; set; }
-		public string Title { get; set; }
-		public string Content { get; set; }
-		public int? Field { get; set; }
-		public int? UnitId { get; set; }
-		public short? TypeObject { get; set; }
-		public long? SendId { get; set; }
-		public string Name { get; set; }
-		public byte? Status { get; set; }
-		public DateTime? SendDate { get; set; }
-		public long? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
-		public long? UpdatedBy { get; set; }
-		public DateTime? UpdatedDate { get; set; }
+		public int Id;
+		public string Code;
+		public string Title;
+		public string Content;
+		public int? Field;
+		public int? UnitId;
+		public short? TypeObject;
+		public long? SendId;
+		public string Name;
+		public byte? Status;
+		public DateTime? SendDate;
+		public long? CreatedBy;
+		public DateTime? CreatedDate;
+		public long? UpdatedBy;
+		public DateTime? UpdatedDate;
 
 		public async Task<List<MRRecommendationGetByID>> MRRecommendationGetByIDDAO(int? Id)
 		{

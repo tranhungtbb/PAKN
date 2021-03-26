@@ -55,4 +55,11 @@ export class Api {
 	public static PositionDelete = 'CACategorySPBase/CAPositionDeleteBase'
 	public static PositionGetById = 'CACategorySPBase/CAPositionGetByIDBase'
 	public static PositionUpdate = 'CACategorySPBase/CAPositionUpdateBase'
+	//NewsType
+	public static NewsTypeGetList = 'CACategorySPBase/CANewsTypeGetAllOnPageBase'
+	public static NewsTypeGetById = 'CACategorySPBase/CANewsTypeGetByIDBase'
+	public static NewsTypeInsert = 'CACategorySPBase/CANewsTypeInsertBase'
+	public static NewsTypeUpdate = 'CACategorySPBase/CANewsTypeUpdateBase'
+	public static NewsTypeUpdateStatus = 'CACategorySPBase/CANewsTypeUpdateBase'
+	public static NewsTypeDelete = 'CACategorySPBase/CANewsTypeDeleteBase'
 }

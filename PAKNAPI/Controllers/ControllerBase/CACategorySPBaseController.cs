@@ -835,11 +835,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize]
 		[Route("CANewsTypeGetAllOnPageBase")]
-		public async Task<ActionResult<object>> CANewsTypeGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Code, string Description, bool? IsActived)
+		public async Task<ActionResult<object>> CANewsTypeGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
 		{
 			try
 			{
-				List<CANewsTypeGetAllOnPage> rsCANewsTypeGetAllOnPage = await new CANewsTypeGetAllOnPage(_appSetting).CANewsTypeGetAllOnPageDAO(PageSize, PageIndex, Name, Code, Description, IsActived);
+				List<CANewsTypeGetAllOnPage> rsCANewsTypeGetAllOnPage = await new CANewsTypeGetAllOnPage(_appSetting).CANewsTypeGetAllOnPageDAO(PageSize, PageIndex, Name, Description, IsActived);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CANewsTypeGetAllOnPage", rsCANewsTypeGetAllOnPage},
