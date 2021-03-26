@@ -128,12 +128,12 @@ namespace PAKNAPI.ModelBase
 
 	public class CADepartmentGroupOnPage
 	{
-		public int Id;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -150,12 +150,12 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CADepartmentGroup> CADepartmentGroupGetByID(int? Id)
 		{
@@ -185,7 +185,6 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cADepartmentGroup.Name);
-			DP.Add("Code", _cADepartmentGroup.Code);
 			DP.Add("IsActived", _cADepartmentGroup.IsActived);
 			DP.Add("IsDeleted", _cADepartmentGroup.IsDeleted);
 			DP.Add("Description", _cADepartmentGroup.Description);
@@ -198,7 +197,6 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _cADepartmentGroup.Id);
 			DP.Add("Name", _cADepartmentGroup.Name);
-			DP.Add("Code", _cADepartmentGroup.Code);
 			DP.Add("IsActived", _cADepartmentGroup.IsActived);
 			DP.Add("IsDeleted", _cADepartmentGroup.IsDeleted);
 			DP.Add("Description", _cADepartmentGroup.Description);
@@ -532,12 +530,12 @@ namespace PAKNAPI.ModelBase
 
 	public class CANewsTypeOnPage
 	{
-		public int Id;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -554,12 +552,12 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public string Code;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
 		public async Task<CANewsType> CANewsTypeGetByID(int? Id)
 		{
@@ -589,7 +587,6 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cANewsType.Name);
-			DP.Add("Code", _cANewsType.Code);
 			DP.Add("IsActived", _cANewsType.IsActived);
 			DP.Add("IsDeleted", _cANewsType.IsDeleted);
 			DP.Add("Description", _cANewsType.Description);
@@ -602,7 +599,6 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _cANewsType.Id);
 			DP.Add("Name", _cANewsType.Name);
-			DP.Add("Code", _cANewsType.Code);
 			DP.Add("IsActived", _cANewsType.IsActived);
 			DP.Add("IsDeleted", _cANewsType.IsDeleted);
 			DP.Add("Description", _cANewsType.Description);

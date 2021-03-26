@@ -232,7 +232,7 @@ namespace PAKNAPI.ModelBase
 		public string Title { get; set; }
 		public string Content { get; set; }
 		public int? Field { get; set; }
-		public string UnitId { get; set; }
+		public int? UnitId { get; set; }
 		public bool? TypeObject { get; set; }
 		public long? SendId { get; set; }
 		public string Name { get; set; }
