@@ -16,7 +16,7 @@ declare var $: any
 	styleUrls: ['./field.component.css'],
 })
 export class FieldComponent implements OnInit {
-	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) {}
+	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) { }
 
 	listData = new Array<FieldObject>()
 	listStatus: any = [
@@ -72,7 +72,7 @@ export class FieldComponent implements OnInit {
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
-
+		console.log(request)
 		this._service.fieldGetList(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {

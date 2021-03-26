@@ -14,6 +14,7 @@ AS
 BEGIN
 	SELECT
 		[Id],
+		[Code],
 		[Title],
 		[Content],
 		[Field],
@@ -47,6 +48,7 @@ AS
 BEGIN
 	SELECT
 		[Id],
+		[Code],
 		[Title],
 		[Content],
 		[Field],
@@ -82,6 +84,7 @@ BEGIN
 	SELECT
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
 		[Id],
+		[Code],
 		[Title],
 		[Content],
 		[Field],
@@ -113,11 +116,12 @@ IF EXISTS
 DROP PROCEDURE [MR_RecommendationInsert];
 GO
 CREATE PROCEDURE [dbo].[MR_RecommendationInsert]
+	@Code nvarchar(50) = null,
 	@Title nvarchar(500) = null,
 	@Content ntext = null,
 	@Field int = null,
-	@UnitId nchar(10) = null,
-	@TypeObject bit = null,
+	@UnitId int = null,
+	@TypeObject smallint = null,
 	@SendId bigint = null,
 	@Name nvarchar(100) = null,
 	@Status tinyint = null,
@@ -130,6 +134,7 @@ AS
 BEGIN
 	INSERT INTO [MR_Recommendation]
 	(
+		[Code],
 		[Title],
 		[Content],
 		[Field],
@@ -146,6 +151,7 @@ BEGIN
 	)
 	VALUES
 	(
+		@Code,
 		@Title,
 		@Content,
 		@Field,
@@ -175,11 +181,12 @@ DROP PROCEDURE [MR_RecommendationUpdate];
 GO
 CREATE PROCEDURE [dbo].[MR_RecommendationUpdate]
 	@Id int = null,
+	@Code nvarchar(50) = null,
 	@Title nvarchar(500) = null,
 	@Content ntext = null,
 	@Field int = null,
-	@UnitId nchar(10) = null,
-	@TypeObject bit = null,
+	@UnitId int = null,
+	@TypeObject smallint = null,
 	@SendId bigint = null,
 	@Name nvarchar(100) = null,
 	@Status tinyint = null,
@@ -191,6 +198,7 @@ CREATE PROCEDURE [dbo].[MR_RecommendationUpdate]
 AS
 BEGIN
 	UPDATE [MR_Recommendation] SET
+		[Code] = @Code,
 		[Title] = @Title,
 		[Content] = @Content,
 		[Field] = @Field,
