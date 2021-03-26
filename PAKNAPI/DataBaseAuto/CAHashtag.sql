@@ -15,10 +15,7 @@ BEGIN
 	SELECT
 		[Id],
 		[Name],
-		[Code],
-		[IsActived],
-		[IsDeleted],
-		[Quantity]
+		[IsActived]
 	FROM [CA_Hashtag]
 	WHERE [Id] = @Id
 END
@@ -40,10 +37,7 @@ BEGIN
 	SELECT
 		[Id],
 		[Name],
-		[Code],
-		[IsActived],
-		[IsDeleted],
-		[Quantity]
+		[IsActived]
 	FROM [CA_Hashtag]
 END
 GO
@@ -67,10 +61,7 @@ BEGIN
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
 		[Id],
 		[Name],
-		[Code],
-		[IsActived],
-		[IsDeleted],
-		[Quantity]
+		[IsActived]
 	FROM [CA_Hashtag]
 	ORDER BY [Id]
 	OFFSET (@PageIndex-1) * @PageSize ROWS
@@ -89,28 +80,19 @@ IF EXISTS
 DROP PROCEDURE [CA_HashtagInsert];
 GO
 CREATE PROCEDURE [dbo].[CA_HashtagInsert]
-	@Name nvarchar(100) = null,
-	@Code nvarchar(100) = null,
-	@IsActived bit = null,
-	@IsDeleted bit = null,
-	@Quantity int = null
+	@Name nvarchar(50) = null,
+	@IsActived bit = null
 AS
 BEGIN
 	INSERT INTO [CA_Hashtag]
 	(
 		[Name],
-		[Code],
-		[IsActived],
-		[IsDeleted],
-		[Quantity]
+		[IsActived]
 	)
 	VALUES
 	(
 		@Name,
-		@Code,
-		@IsActived,
-		@IsDeleted,
-		@Quantity
+		@IsActived
 	)
 END
 GO
@@ -127,19 +109,13 @@ DROP PROCEDURE [CA_HashtagUpdate];
 GO
 CREATE PROCEDURE [dbo].[CA_HashtagUpdate]
 	@Id int = null,
-	@Name nvarchar(100) = null,
-	@Code nvarchar(100) = null,
-	@IsActived bit = null,
-	@IsDeleted bit = null,
-	@Quantity int = null
+	@Name nvarchar(50) = null,
+	@IsActived bit = null
 AS
 BEGIN
 	UPDATE [CA_Hashtag] SET
 		[Name] = @Name,
-		[Code] = @Code,
-		[IsActived] = @IsActived,
-		[IsDeleted] = @IsDeleted,
-		[Quantity] = @Quantity
+		[IsActived] = @IsActived
 	WHERE [Id] = @Id
 END
 GO

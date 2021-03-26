@@ -28,7 +28,8 @@ export class ListGeneralComponent implements OnInit {
 		{ value: 9, text: 'Từ chối phê duyệt' },
 		{ value: 10, text: 'Đã giải quyết' },
 	]
-	model: any = new RecommendationObject()
+	lstUnit: any = []
+	lstField: any = []
 	dataSearch: RecommendationSearchObject = new RecommendationSearchObject()
 	submitted: boolean = false
 	isActived: boolean
@@ -38,11 +39,29 @@ export class ListGeneralComponent implements OnInit {
 	totalRecords: number = 0
 	idDelete: number = 0
 	ngOnInit() {
+		this.getDataForCreate()
 		this.getList()
 	}
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
+	}
+
+	getDataForCreate() {
+		this._service.recommendationGetDataForCreate({}).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if (response.result != null) {
+					this.lstUnit = response.result.lstUnit
+					this.lstField = response.result.lstField
+				}
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(error) => {
+				console.log(error)
+				alert(error)
+			}
 	}
 
 	getList() {

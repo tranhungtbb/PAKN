@@ -6,7 +6,7 @@ export class RecommendationObject {
 		this.content = ''
 		this.field = null
 		this.unitId = null
-		this.typeObject = null
+		this.typeObject = true
 		this.sendId = null
 		this.name = ''
 		this.status = null
@@ -22,7 +22,7 @@ export class RecommendationObject {
 	content: string
 	field: number
 	unitId: number
-	typeObject: number
+	typeObject: boolean
 	sendId: number
 	name: string
 	status: number

@@ -10,7 +10,7 @@ const routes: Routes = [
 		component: RecommendationComponent,
 		children: [
 			{ path: 'danh-sach-tong-hop', component: ListGeneralComponent },
-			{ path: 'them-moi', component: CreateRecommendationComponent },
+			{ path: 'them-moi/:id', component: CreateRecommendationComponent },
 		],
 	},
 ]
