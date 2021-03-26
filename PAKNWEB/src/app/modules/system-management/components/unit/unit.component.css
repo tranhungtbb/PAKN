@@ -75,3 +75,9 @@
 	outline: 0;
 }
 /* ------------------------Tree View----------------------- */
+.form-control-sm.mod {
+	padding: unset;
+}
+.form-control.ng-select.mod {
+	padding: unset;
+}

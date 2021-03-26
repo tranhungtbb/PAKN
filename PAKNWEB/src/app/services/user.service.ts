@@ -17,9 +17,9 @@ export class UserService {
 	getAllPagedList(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetPagedList)
 	}
-	// getById(query: any): Observable<any> {
-	// 	return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UnitGetById)
-	// }
+	getById(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetById)
+	}
 	insert(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserInsert)
 	}
