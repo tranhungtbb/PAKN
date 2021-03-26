@@ -107,18 +107,11 @@
 					</svg>
 				</button>
 			</p>
-			<ul id="tree1" class="pt-3">
-				<li *ngFor="let item of loadUnitChildren(0,1)"><a href="javascript:void(0);" (click)="treeViewActive(item.id,1)">{{item.name}}</a>
-					<ul>
-						<li *ngFor="let itemV2 of loadUnitChildren(item.id,2)" (click)="treeViewActive(itemV2.id,2)"><a href="javascript:void(0);">{{itemV2.name}}</a>
-							<ul>
-								<li *ngFor="let itemV3 of loadUnitChildren(itemV2.id,3)"><a href="javascript:void(0);">{{itemV3.name}}</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-			</ul>
+			<p-tree [value]="treeUnit">
+				<ng-template let-node pTemplate="default">
+					<a (click)="treeViewActive(node.id, node.unitLevel)">{{node.name}}</a>
+				</ng-template>
+			</p-tree>
 		</div>
 		<div class="col pl-lg-0">
 			<div class="card mb-0 border-bottom rounded-0">

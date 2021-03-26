@@ -1,8 +1,10 @@
 import { NullTemplateVisitor } from '@angular/compiler'
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, AfterViewInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 import { MatDialog, throwMatDialogContentAlreadyAttachedError } from '@angular/material'
+import { TreeModule } from 'primeng/tree'
+import { TreeNode } from 'primeng/api'
 
 import { UnitService } from '../../../../services/unit.service'
 import { UserService } from '../../../../services/user.service'
@@ -19,11 +21,12 @@ declare var $: any
 	templateUrl: './unit.component.html',
 	styleUrls: ['./unit.component.css'],
 })
-export class UnitComponent implements OnInit {
+export class UnitComponent implements OnInit, AfterViewInit {
+	treeUnit: TreeNode[]
 	listUnitPaged: any[] = []
 	unitObject: any = {}
 	listUser: any[]
-	listUnitTreeview: any[]
+	unitFlatlist: any[]
 
 	createUnitFrom: FormGroup
 	createUserForm: FormGroup
@@ -49,7 +52,6 @@ export class UnitComponent implements OnInit {
 	constructor(private unitService: UnitService, private formBuilder: FormBuilder, private _toastr: ToastrService, private dialog: MatDialog) {}
 
 	ngOnInit() {
-		this.initialTreeViewJs()
 		this.getAllUnitShortInfo()
 		console.log(this.unitObject)
 		/*unit form*/
@@ -65,6 +67,7 @@ export class UnitComponent implements OnInit {
 			address: ['', [Validators.required]],
 		})
 	}
+	ngAfterViewInit() {}
 
 	getUnitPagedList(): void {
 		this.unitService.getAllPagedList(this.query).subscribe(
@@ -99,8 +102,8 @@ export class UnitComponent implements OnInit {
 			$('#tree1').treed()
 		}
 
-		if (!this.listUnitTreeview) return []
-		return this.listUnitTreeview.filter((c) => c.parentId == parentId && c.unitLevel == level)
+		if (!this.unitFlatlist) return []
+		return this.unitFlatlist.filter((c) => c.parentId == parentId && c.unitLevel == level)
 	}
 
 	treeViewActive(id, level) {
@@ -125,16 +128,25 @@ export class UnitComponent implements OnInit {
 			.subscribe(
 				(res) => {
 					if (res.success != 'OK') return
-					this.listUnitTreeview = res.result.CAUnitGetAllOnPage.map((e) => {
-						return {
+					let listUnit = res.result.CAUnitGetAllOnPage.map((e) => {
+						let item = {
 							id: e.id,
 							name: e.name,
 							parentId: e.parentId == null ? 0 : e.parentId,
 							unitLevel: e.unitLevel,
 							children: [],
 						}
+						if (e.unitLevel < 3) {
+							item['expandedIcon'] = 'pi bi-dash-circle-fill '
+							item['collapsedIcon'] = 'pi bi-plus-circle-fill'
+						}
+
+						return item
 					})
-					//console.log(this.listUnitTreeview)
+					this.unitFlatlist = listUnit
+					this.treeUnit = this.unflatten(listUnit)
+
+					console.log(this.unitFlatlist)
 				},
 				(err) => {}
 			)
@@ -202,9 +214,9 @@ export class UnitComponent implements OnInit {
 		//this.modelUnit.parentId = 0
 	}
 	get getUnitParent(): any[] {
-		if (!this.listUnitTreeview) return []
+		if (!this.unitFlatlist) return []
 		//if (!this.unitObject.parentId) return this.listUnitTreeview.filter((c) => c.unitLevel == this.modelUnit.unitLevel - 1 && c.parentId == this.unitObject.parentId)
-		return this.listUnitTreeview.filter((c) => c.unitLevel == this.modelUnit.unitLevel - 1)
+		return this.unitFlatlist.filter((c) => c.unitLevel == this.modelUnit.unitLevel - 1)
 	}
 
 	/*start - chức năng xác nhận hành động xóa*/
@@ -259,7 +271,8 @@ export class UnitComponent implements OnInit {
 				mappedElem = mappedArr[id]
 				// If the element is not at the root level, add it to its parent array of children.
 				if (mappedElem.parentId) {
-					mappedArr[mappedElem['parentid']]['children'].push(mappedElem)
+					if (!mappedArr[mappedElem['parentId']]) continue
+					mappedArr[mappedElem['parentId']]['children'].push(mappedElem)
 				}
 				// If the element is at the root level, add it to first level elements array.
 				else {
@@ -268,70 +281,5 @@ export class UnitComponent implements OnInit {
 			}
 		}
 		return tree
-	}
-
-	private initialTreeViewJs(): void {
-		$('[data-dismiss="modal"]').click((e) => {
-			$(e.currentTarget).parents('.modal').modal('hide')
-		})
-
-		$.fn.extend({
-			treed: function (o) {
-				var openedClass = 'bi-dash-circle-fill'
-				var closedClass = 'bi-plus-circle-fill'
-
-				if (typeof o != 'undefined') {
-					if (typeof o.openedClass != 'undefined') {
-						openedClass = o.openedClass
-					}
-					if (typeof o.closedClass != 'undefined') {
-						closedClass = o.closedClass
-					}
-				}
-
-				//initialize each of the top levels
-				var tree = $(this)
-				tree.addClass('tree')
-				tree
-					.find('li')
-					.has('ul')
-					.each(function () {
-						var branch = $(this) //li with children ul
-						branch.prepend("<i class='bi " + closedClass + "'></i>")
-
-						branch.addClass('branch')
-						branch.on('click', function (e) {
-							if (this == e.target) {
-								var icon = $(this).children('i:first')
-								icon.toggleClass(openedClass + ' ' + closedClass)
-								$(this).children().children().toggle()
-							}
-						})
-						branch.children().children().toggle()
-					})
-				//fire event from the dynamically added icon
-				tree.find('.branch .indicator').each(function () {
-					$(this).on('click', function () {
-						$(this).closest('li').click()
-					})
-				})
-				//fire event to open branch if the li contains an anchor instead of text
-				tree.find('.branch>a').each(function () {
-					$(this).on('click', function (e) {
-						$(this).closest('li').click()
-						e.preventDefault()
-					})
-				})
-				//fire event to open branch if the li contains a button instead of text
-				tree.find('.branch>button').each(function () {
-					$(this).on('click', function (e) {
-						$(this).closest('li').click()
-						e.preventDefault()
-					})
-				})
-			},
-		})
-
-		//Initialization of treeviews
 	}
 }
