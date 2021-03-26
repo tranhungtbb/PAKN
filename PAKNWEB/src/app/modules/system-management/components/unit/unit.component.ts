@@ -60,7 +60,7 @@ export class UnitComponent implements OnInit {
 			isDeleted: [''],
 			parentId: [''],
 			description: [''],
-			email: ['', [Validators.required]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
+			email: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
 			phone: ['', [Validators.required, Validators.pattern('^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$')]],
 			address: ['', [Validators.required]],
 		})
@@ -126,8 +126,15 @@ export class UnitComponent implements OnInit {
 				(res) => {
 					if (res.success != 'OK') return
 					this.listUnitTreeview = res.result.CAUnitGetAllOnPage.map((e) => {
-						return { id: e.id, name: e.name, parentId: e.parentId == null ? 0 : e.parentId, unitLevel: e.unitLevel }
+						return {
+							id: e.id,
+							name: e.name,
+							parentId: e.parentId == null ? 0 : e.parentId,
+							unitLevel: e.unitLevel,
+							children: [],
+						}
 					})
+					//console.log(this.listUnitTreeview)
 				},
 				(err) => {}
 			)
@@ -136,8 +143,10 @@ export class UnitComponent implements OnInit {
 	/*modal thêm / sửa đơn vị*/
 	modalCreateOrUpdateTitle: string = 'Thêm cơ quan, đơn vị'
 	modalCreateOrUpdate(id: any, level: any = 1, parentId: any = 0) {
-		if (id == 0) this.modalCreateOrUpdateTitle = 'Thêm cơ quan, đơn vị'
-		else {
+		if (id == 0) {
+			this.modalCreateOrUpdateTitle = 'Thêm cơ quan, đơn vị'
+			this.modelUnit = new UnitObject()
+		} else {
 			this.modalCreateOrUpdateTitle = 'Thêm cơ quan, đơn vị'
 			this.unitService.getById({ id }).subscribe((res) => {
 				if (res.success != 'OK') return
@@ -232,7 +241,7 @@ export class UnitComponent implements OnInit {
 		let unitId = this.unitObject.id
 	}
 
-	private loadTreeArray(arr): void {
+	private unflatten(arr): any[] {
 		var tree = [],
 			mappedArr = {},
 			arrElem,
@@ -249,7 +258,7 @@ export class UnitComponent implements OnInit {
 			if (mappedArr.hasOwnProperty(id)) {
 				mappedElem = mappedArr[id]
 				// If the element is not at the root level, add it to its parent array of children.
-				if (mappedElem.parentid) {
+				if (mappedElem.parentId) {
 					mappedArr[mappedElem['parentid']]['children'].push(mappedElem)
 				}
 				// If the element is at the root level, add it to first level elements array.
@@ -258,7 +267,7 @@ export class UnitComponent implements OnInit {
 				}
 			}
 		}
-		this.listUnitTreeview = tree
+		return tree
 	}
 
 	private initialTreeViewJs(): void {
