@@ -35,10 +35,11 @@ export class RecommendationObject {
 export class RecommendationSearchObject {
 	constructor() {
 		this.code = ''
+		this.name = ''
 		this.title = ''
+		this.content = ''
 		this.field = null
 		this.unitId = null
-		this.name = ''
 		this.status = null
 	}
 	code: string

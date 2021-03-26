@@ -13,7 +13,8 @@ import { TreeTableModule } from 'primeng/treetable'
 
 import { RecommendationRoutingModule } from './recommendation-routing.module'
 import { RecommendationComponent } from './recommendation.component'
-import { ListGeneralComponent } from './list-general/list-general.component'
+import { ListGeneralComponent } from './list-general/list-general.component';
+import { CreateRecommendationComponent } from './create-recommendation/create-recommendation.component'
 
 @NgModule({
 	imports: [
@@ -31,6 +32,6 @@ import { ListGeneralComponent } from './list-general/list-general.component'
 		NgSelectModule,
 		ContextMenuModule,
 	],
-	declarations: [RecommendationComponent, ListGeneralComponent],
+	declarations: [RecommendationComponent, ListGeneralComponent, CreateRecommendationComponent],
 })
 export class RecommendationModule {}

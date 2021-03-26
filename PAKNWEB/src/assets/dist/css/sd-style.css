@@ -936,6 +936,10 @@ transition: all .3s ease-in-out;
 
 @media (min-width: 993px) {
   
+	.table-responsive,
+	.ui-table-auto-layout>.ui-table-wrapper{
+		overflow-x: unset!important;
+	}
 }
 
 @media (max-width: 1366px) {
@@ -1201,4 +1205,10 @@ body .ui-table .ui-table-thead > tr > th{
     z-index: 9;
     top: 15px;
     right: 240px;
+}
+
+.ng-dropdown-panel {
+  width: auto !important;
+  min-width: 100% !important;
+  max-width: 430px;
 }

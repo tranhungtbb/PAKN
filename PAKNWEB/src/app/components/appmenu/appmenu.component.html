@@ -15,18 +15,18 @@
 					<i class="bi bi-file-earmark-medical"></i>
 					<span class="nav-text">Phản ánh, Kiến nghị</span>
 				</a>
-				<ul aria-expanded="false">
-					<li><a routerLink="/quan-tri/kien-nghi/danh-sach-tong-hop">Danh sách tổng hợp</a></li>
-					<li><a href="#">Chờ xử lý</a></li>
-					<li><a href="#">Tiếp nhận xử lý</a></li>
-					<li><a href="#">Từ chối tiếp nhận</a></li>
-					<li><a href="#">Chờ giải quyết</a></li>
-					<li><a href="#">Đang giải quyết</a></li>
-					<li><a href="#">Từ chối giải quyết</a></li>
-					<li><a href="#">Chờ phê duyệt</a></li>
-					<li><a href="#">Từ chối phê duyệt</a></li>
-					<li><a href="#">Đã giải quyết</a></li>
-					<li><a href="#">PAKN chứa ảnh giả</a></li>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/danh-sach-tong-hop">Danh sách tổng hợp</a></li>
+					<li><a routerLinkActive="mm-active" href="#">Chờ xử lý</a></li>
+					<li><a routerLinkActive="mm-active" href="#">Tiếp nhận xử lý</a></li>
+					<li><a routerLinkActive="mm-active" href="#">Từ chối tiếp nhận</a></li>
+					<li><a routerLinkActive="mm-active" href="#">Chờ giải quyết</a></li>
+					<li><a routerLinkActive="mm-active" href="#">Đang giải quyết</a></li>
+					<li><a routerLinkActive="mm-active" href="#">Từ chối giải quyết</a></li>
+					<li><a routerLinkActive="mm-active" href="#">Chờ phê duyệt</a></li>
+					<li><a routerLinkActive="mm-active" href="#">Từ chối phê duyệt</a></li>
+					<li><a routerLinkActive="mm-active" href="#">Đã giải quyết</a></li>
+					<li><a routerLinkActive="mm-active" href="#">PAKN chứa ảnh giả</a></li>
 				</ul>
 			</li>
 			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
@@ -34,7 +34,7 @@
 					<i class="bi bi-file-earmark-ruled"></i>
 					<span class="nav-text">Thủ tục hành chính</span>
 				</a>
-				<ul aria-expanded="false">
+				<ul routerLinkActive="mm-show" aria-expanded="false">
 					<li><a href="#">Danh sách tổng hợp</a></li>
 					<li><a href="#">Đã công bố</a></li>
 					<li><a href="#">Đã gửi đơn vị, cơ quan</a></li>
@@ -45,7 +45,7 @@
 					<i class="bi bi-newspaper"></i>
 					<span class="nav-text">Tin tức, Sự kiện</span>
 				</a>
-				<ul aria-expanded="false">
+				<ul routerLinkActive="mm-show" aria-expanded="false">
 					<li><a href="#">Danh sách tổng hợp</a></li>
 					<li><a href="#">Đã công bố</a></li>
 				</ul>
@@ -55,7 +55,7 @@
 					<i class="bi bi-people"></i>
 					<span class="nav-text">Cá nhân, DN</span>
 				</a>
-				<ul aria-expanded="false">
+				<ul routerLinkActive="mm-show" aria-expanded="false">
 					<li><a href="#">QL cá nhân</a></li>
 					<li><a href="#">QL Doanh nghiệp</a></li>
 				</ul>
@@ -70,7 +70,7 @@
 					<i class="bi bi-chat-right-dots"></i>
 					<span class="nav-text">Email/SMS</span>
 				</a>
-				<ul aria-expanded="false">
+				<ul routerLinkActive="mm-show" aria-expanded="false">
 					<li><a href="#">Dự thảo Email</a></li>
 					<li><a href="#">Email đã gửi</a></li>
 					<li><a href="#">Dự thảo SMS</a></li>
@@ -97,7 +97,7 @@
 					<i class="bi bi-diagram-2"></i>
 					<span class="nav-text">Hệ thống</span>
 				</a>
-				<ul aria-expanded="false">
+				<ul routerLinkActive="mm-show" aria-expanded="false">
 					<li><a routerLink="/quan-tri/he-thong/cau-hinh-email">Cấu hình Email</a></li>
 					<li><a routerLink="/quan-tri/he-thong/cau-hinh-sms">Cấu hình SMS thương hiệu</a></li>
 					<li><a routerLink="/quan-tri/he-thong/co-cau-to-chuc">Cơ cấu tổ chức</a></li>
@@ -111,7 +111,7 @@
 					<i class="bi bi-pie-chart"></i>
 					<span class="nav-text">Thống kê</span>
 				</a>
-				<ul aria-expanded="false">
+				<ul routerLinkActive="mm-show" aria-expanded="false">
 					<li><a href="#">Sub menu</a></li>
 					<li><a href="#">Sub menu</a></li>
 					<li><a href="#">Sub menu</a></li>
@@ -123,7 +123,7 @@
 					<i class="bi bi-file-earmark-text"></i>
 					<span class="nav-text">Báo cáo</span>
 				</a>
-				<ul aria-expanded="false">
+				<ul routerLinkActive="mm-show" aria-expanded="false">
 					<li><a href="#">Sub menu</a></li>
 					<li><a href="#">Sub menu</a></li>
 					<li><a href="#">Sub menu</a></li>
@@ -135,7 +135,7 @@
 					<i class="bi bi-layout-text-sidebar-reverse"></i>
 					<span class="nav-text">Thiết lập chung</span>
 				</a>
-				<ul aria-expanded="false">
+				<ul routerLinkActive="mm-show" aria-expanded="false">
 					<li><a href="#">Giới thiệu phần mềm</a></li>
 					<li><a href="#">Chức năng, nhiệm vụ, quyền hạn của tổ chức</a></li>
 					<li><a href="#">Lãnh đạo đương nhiệm</a></li>
@@ -148,7 +148,7 @@
 					<i class="bi bi-life-preserver"></i>
 					<span class="nav-text">Hỗ trợ</span>
 				</a>
-				<ul aria-expanded="false">
+				<ul routerLinkActive="mm-show" aria-expanded="false">
 					<li><a href="#">Tài liệu hướng dẫn sử dụng</a></li>
 					<li><a href="#">Video hướng dẫn sử dụng</a></li>
 				</ul>

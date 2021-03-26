@@ -8,7 +8,7 @@ using System.IO;
 namespace PAKNAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class CaptchaController : Controller
+    public class CaptchaController
     {
         private readonly IAppSetting _appSetting;
         public static List<CaptchaObject> captChaCode = new List<CaptchaObject>();

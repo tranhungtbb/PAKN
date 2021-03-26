@@ -52,9 +52,10 @@ export class ListGeneralComponent implements OnInit {
 		let request = {
 			Code: this.dataSearch.code,
 			SendName: this.dataSearch.name,
-			UnitId: this.dataSearch.unitId,
-			Field: this.dataSearch.field,
-			Status: this.dataSearch.status,
+			Content: this.dataSearch.content,
+			UnitId: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
+			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
+			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
