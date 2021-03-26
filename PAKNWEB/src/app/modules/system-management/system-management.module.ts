@@ -16,12 +16,14 @@ import { TreeModule } from 'primeng/tree'
 import { TooltipModule } from 'primeng/tooltip'
 import { GMapModule } from 'primeng/gmap'
 import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatDialog } from '@angular/material/dialog'
 import { EmailSettingComponent } from './components/email-setting/email-setting.component'
 import { SmsSettingComponent } from './components/sms-setting/sms-setting.component'
 import { OrganizationalStructureComponent } from './components/organizational-structure/organizational-structure.component'
 import { GroupUserComponent } from './components/group-user/group-user.component'
-import { UserComponent } from './components/user/user.component';
+import { UserComponent } from './components/user/user.component'
 import { UnitComponent } from './components/unit/unit.component'
+import { UserCreateOrUpdateComponent } from './components/user/user-create-or-update/user-create-or-update.component'
 
 @NgModule({
 	imports: [
@@ -42,6 +44,17 @@ import { UnitComponent } from './components/unit/unit.component'
 		MatCheckboxModule,
 		CKEditorModule,
 	],
-	declarations: [SystemManagemenetComponent, SystemLogComponent, EmailSettingComponent, SmsSettingComponent, OrganizationalStructureComponent, GroupUserComponent, UserComponent, UnitComponent],
+	declarations: [
+		SystemManagemenetComponent,
+		SystemLogComponent,
+		EmailSettingComponent,
+		SmsSettingComponent,
+		OrganizationalStructureComponent,
+		GroupUserComponent,
+		UserComponent,
+		UnitComponent,
+		UserCreateOrUpdateComponent,
+	],
+	entryComponents: [UserCreateOrUpdateComponent],
 })
 export class SystemManagementModule {}

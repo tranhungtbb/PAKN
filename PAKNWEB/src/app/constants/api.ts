@@ -56,4 +56,26 @@ export class Api {
 	public static PositionDelete = 'CACategorySPBase/CAPositionDeleteBase'
 	public static PositionGetById = 'CACategorySPBase/CAPositionGetByIDBase'
 	public static PositionUpdate = 'CACategorySPBase/CAPositionUpdateBase'
+
+	// SY_Unit
+	public static UserGetPagedList = 'SYUserSPBase/SYUserGetAllOnPageBase'
+	public static UserGetById = 'SYUserSPBase/SYUserGetAllOnPageBase'
+	public static UserInsert = 'SYUserSPBase/SYUserInsertBase'
+	public static UserUpdate = 'SYUserSPBase/SYUserUpdateBase'
+	public static UserDelete = 'SYUserSPBase/SYUserDeleteBase'
+
+	//NewsType
+	public static NewsTypeGetList = 'CACategorySPBase/CANewsTypeGetAllOnPageBase'
+	public static NewsTypeGetById = 'CACategorySPBase/CANewsTypeGetByIDBase'
+	public static NewsTypeInsert = 'CACategorySPBase/CANewsTypeInsertBase'
+	public static NewsTypeUpdate = 'CACategorySPBase/CANewsTypeUpdateBase'
+	public static NewsTypeUpdateStatus = 'CACategorySPBase/CANewsTypeUpdateBase'
+	public static NewsTypeDelete = 'CACategorySPBase/CANewsTypeDeleteBase'
+	//DepartmentGroup
+	public static DepartmentGroupGetList = 'CACategorySPBase/CADepartmentGroupGetAllOnPageBase'
+	public static DepartmentGroupGetById = 'CACategorySPBase/CADepartmentGroupGetByIDBase'
+	public static DepartmentGroupInsert = 'CACategorySPBase/CADepartmentGroupInsertBase'
+	public static DepartmentGroupUpdate = 'CACategorySPBase/CADepartmentGroupUpdateBase'
+	public static DepartmentGroupUpdateStatus = 'CACategorySPBase/CADepartmentGroupUpdateBase'
+	public static DepartmentGroupDelete = 'CACategorySPBase/CADepartmentGroupDeleteBase'
 }
