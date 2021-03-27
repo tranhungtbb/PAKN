@@ -17,6 +17,9 @@ export class UnitService {
 	getAllPagedList(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UnitGetPagedList)
 	}
+	getAll(query:any): Observable<any>{
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UnitGetAll)
+	}
 	getById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UnitGetById)
 	}

@@ -1234,6 +1234,28 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize]
+		[Route("CAUnitGetAllBase")]
+		public async Task<ActionResult<object>> CAUnitGetAllBase(int? ParentId, byte? UnitLevel)
+		{
+			try
+			{
+				List<CAUnitGetAll> rsCAUnitGetAll = await new CAUnitGetAll(_appSetting).CAUnitGetAllDAO(ParentId, UnitLevel);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAUnitGetAll", rsCAUnitGetAll},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
 		[Route("CAUnitGetAllOnPageBase")]
 		public async Task<ActionResult<object>> CAUnitGetAllOnPageBase(int? PageSize, int? PageIndex, int? ParentId, byte? UnitLevel, string Name, string Phone, string Email, string Address, bool? IsActive, bool? IsMain)
 		{

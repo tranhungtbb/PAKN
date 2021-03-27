@@ -50,6 +50,7 @@ export class Api {
 
 	//Unit
 	public static UnitGetPagedList = 'CACategorySPBase/CAUnitGetAllOnPageBase'
+	public static UnitGetAll = 'CACategorySPBase/CAUnitGetAllBase'
 	public static UnitGetById = 'CACategorySPBase/CAUnitGetByIDBase'
 	public static UnitInsert = 'CACategorySPBase/CAUnitInsertBase'
 	public static UnitUpdate = 'CACategorySPBase/CAUnitUpdateBase'

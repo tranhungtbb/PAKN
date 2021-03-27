@@ -16,7 +16,7 @@ import { TreeModule } from 'primeng/tree'
 import { TooltipModule } from 'primeng/tooltip'
 import { GMapModule } from 'primeng/gmap'
 import { MatCheckboxModule } from '@angular/material/checkbox'
-import { MatDialog } from '@angular/material/dialog'
+import { MatDialogModule } from '@angular/material/dialog'
 import { EmailSettingComponent } from './components/email-setting/email-setting.component'
 import { SmsSettingComponent } from './components/sms-setting/sms-setting.component'
 import { OrganizationalStructureComponent } from './components/organizational-structure/organizational-structure.component'
@@ -43,6 +43,7 @@ import { UserCreateOrUpdateComponent } from './components/user/user-create-or-up
 		GMapModule,
 		MatCheckboxModule,
 		CKEditorModule,
+		MatDialogModule
 	],
 	declarations: [
 		SystemManagemenetComponent,

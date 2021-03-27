@@ -19,7 +19,7 @@ const routes: Routes = [
 			{ path: 'vai-tro', component: GroupUserComponent },
 			{ path: 'nguoi-dung', component: UserComponent },
 			{ path: 'lich-su-he-thong', component: SystemLogComponent },
-			{ path: 'don-vi', component: UnitComponent },
+			{ path: 'co-cau-to-chuc', component: UnitComponent },
 		],
 	},
 ]

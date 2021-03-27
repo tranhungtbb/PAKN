@@ -1,5 +1,5 @@
 import { NullTemplateVisitor } from '@angular/compiler'
-import { Component, OnInit, AfterViewInit } from '@angular/core'
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core'
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 import { MatDialog, MatDialogModule } from '@angular/material'
@@ -11,7 +11,6 @@ import { UserService } from '../../../../services/user.service'
 import { PositionService } from '../../../../services/position.service'
 import { RoleService } from '../../../../services/role.service'
 
-import { ConfirmDialogComponent } from '../../../../directives/confirm-dialog/confirm-dialog.component'
 import { UserCreateOrUpdateComponent } from '../user/user-create-or-update/user-create-or-update.component'
 
 import { COMMONS } from 'src/app/commons/commons'
@@ -162,26 +161,23 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.getUnitInfo(id)
 		this.query.parentId = id
 		this.getUnitPagedList()
-		this.getUserPagedList()
 	}
 
 	getUnitInfo(id) {
 		this.unitService.getById({ id }).subscribe((res) => {
 			if (res.success != 'OK') return
 			this.unitObject = res.result.CAUnitGetByID[0]
+			this.getUserPagedList()
 		})
 	}
 
 	getAllUnitShortInfo() {
 		this.unitService
-			.getAllPagedList({
-				pageIndex: 1,
-				pageSize: 1000,
-			})
+			.getAll({})
 			.subscribe(
 				(res) => {
 					if (res.success != 'OK') return
-					let listUnit = res.result.CAUnitGetAllOnPage.map((e) => {
+					let listUnit = res.result.CAUnitGetAll.map((e) => {
 						let item = {
 							id: e.id,
 							name: e.name,
@@ -190,7 +186,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 							children: [],
 						}
 						if (e.unitLevel < 3) {
-							item['expandedIcon'] = 'pi bi-dash-circle-fill '
+							item['expandedIcon'] = 'pi bi-dash-circle-fill'
 							item['collapsedIcon'] = 'pi bi-plus-circle-fill'
 						}
 
@@ -205,7 +201,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 
 	/*start user area*/
 	getUserPagedList() {
-		this.queryUser.unitId = 1
+		this.queryUser.unitId = this.unitObject.id
 		this.userService.getAllPagedList(this.queryUser).subscribe((res) => {
 			if (res.success != 'OK') return
 			this.listUserPaged = res.result.SYUserGetAllOnPage
@@ -229,59 +225,11 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.getUserPagedList()
 	}
 
-	userFromSubmited = false
-	modalUserCreateOrUpdateTitle: string = 'Thông tin người dùng'
-	modalUserCreateOrUpdate(key: any) {
-		this.userFromSubmited = false
-		if (key != null) {
-			this.userService.getById({ id: key }).subscribe((res) => {
-				console.log(res)
-				if (res.success != 'OK') return
-				this.modelUser = res.result.SYUserGetByID[0]
-			})
-		} else {
-			this.userFromSubmited = false
-			this.modelUser = new UserObject2()
-		}
-		$('#modal-user-create-or-update').modal('show')
+	@ViewChild(UserCreateOrUpdateComponent,{static: false}) childCreateOrUpdateUser : UserCreateOrUpdateComponent;
+	modalUserCreateOrUpdate(key: any = 0){
+		this.childCreateOrUpdateUser.openModal(this.unitObject.id,key)
 	}
-	get fUser() {
-		return this.createUserForm.controls
-	}
-	userFormSubmitted = false
-	onSaveUser(): void {
-		this.userFormSubmitted = true
-
-		if (this.createUserForm.invalid) {
-			this._toastr.error('Dữ liệu không hợp lệ')
-			return
-		}
-
-		if (this.modelUser.id != null && this.modelUser.id > 0) {
-			this.userService.update(this.modelUser).subscribe((res) => {
-				if (res.success != 'OK') {
-					this._toastr.error(COMMONS.UPDATE_FAILED)
-					return
-				}
-				this._toastr.success(COMMONS.UPDATE_SUCCESS)
-				this.getUserPagedList()
-				this.modelUser = new UserObject2()
-				$('#modal-user-create-or-update').modal('hide')
-			})
-		} else {
-			this.userService.insert(this.modelUser).subscribe((res) => {
-				if (res.success != 'OK') {
-					this._toastr.error(COMMONS.ADD_FAILED)
-					return
-				}
-				this._toastr.success(COMMONS.ADD_SUCCESS)
-				this.getUserPagedList()
-				this.modelUser = new UserObject2()
-				$('#modal-user-create-or-update').modal('hide')
-			})
-		}
-	}
-
+	
 	onDelUser(id: number) {
 		let userObj = this.listUserPaged.find((c) => c.id == id)
 
@@ -321,12 +269,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	unitFormSubmitted = false
 	onSaveUnit() {
 		this.unitFormSubmitted = true
-		this.modelUnit.parentId = $('#f_parentId').val()
-
+		console.log(this.modelUnit);
 		if (this.createUnitFrom.invalid) {
 			return
 		}
-
 		if (this.modelUnit.id != null && this.modelUnit.id > 0) {
 			this.unitService.update(this.modelUnit).subscribe((res) => {
 				if (res.success != 'OK') {
