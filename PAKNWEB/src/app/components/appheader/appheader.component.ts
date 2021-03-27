@@ -78,7 +78,7 @@ export class AppheaderComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.buildForm()
+		// this.buildForm()
 
 		this.userName = this.storageService.getFullName()
 		this.userForm = new FormGroup({
@@ -100,34 +100,34 @@ export class AppheaderComponent implements OnInit {
 		return this.updateForm.controls
 	}
 
-	buildForm() {
-		this.updateForm = this._fb.group({
-			hoTen: ['', [Validators.required]],
-			tenDangNhap: [''],
-			dienThoai: [''],
-			gioiTinh: [true, Validators.required],
-			homThu: ['', [Validators.required, Validators.email]],
-			diaChi: [''],
-			isHaveToken: [''],
-			maChucVu: [this.model.maChucVu, [Validators.required]],
-			listPhongBan: ['', [Validators.required]],
-		})
-	}
+	// buildForm() {
+	// 	this.updateForm = this._fb.group({
+	// 		hoTen: ['', [Validators.required]],
+	// 		tenDangNhap: [''],
+	// 		dienThoai: [''],
+	// 		gioiTinh: [true, Validators.required],
+	// 		homThu: ['', [Validators.required, Validators.email]],
+	// 		diaChi: [''],
+	// 		isHaveToken: [''],
+	// 		maChucVu: [this.model.maChucVu, [Validators.required]],
+	// 		listPhongBan: ['', [Validators.required]],
+	// 	})
+	// }
 
-	reBuildForm() {
-		this.submitted = false
-		this.updateForm = this._fb.group({
-			hoTen: [this.model.hoTen, Validators.required],
-			tenDangNhap: [this.model.tenDangNhap, Validators.required],
-			dienThoai: this.model.dienThoai,
-			gioiTinh: [this.model.gioiTinh, Validators.required],
-			homThu: [this.model.homThu, Validators.required],
-			diaChi: this.model.diaChi,
-			isHaveToken: this.model.isHaveToken,
-			maChucVu: [this.model.maChucVu, Validators.required],
-			listPhongBan: [this.model.listPhongBan, Validators.required],
-		})
-	}
+	// reBuildForm() {
+	// 	this.submitted = false
+	// 	this.updateForm = this._fb.group({
+	// 		hoTen: [this.model.hoTen, Validators.required],
+	// 		tenDangNhap: [this.model.tenDangNhap, Validators.required],
+	// 		dienThoai: this.model.dienThoai,
+	// 		gioiTinh: [this.model.gioiTinh, Validators.required],
+	// 		homThu: [this.model.homThu, Validators.required],
+	// 		diaChi: this.model.diaChi,
+	// 		isHaveToken: this.model.isHaveToken,
+	// 		maChucVu: [this.model.maChucVu, Validators.required],
+	// 		listPhongBan: [this.model.listPhongBan, Validators.required],
+	// 	})
+	// }
 
 	Show() {
 		this.submitted = false
@@ -220,21 +220,21 @@ export class AppheaderComponent implements OnInit {
 	}
 
 	onUpdate() {
-		this.submitted = true
-		this.model.hoTen = this.model.hoTen.trim()
-		this.model.diaChi = this.model.diaChi.trim()
-		this.updateForm.controls.hoTen.setValue(this.updateForm.controls.hoTen.value.trim())
-		if (this.updateForm.invalid && this.updateForm.controls['tenDangNhap'].valid != false) {
-			return
-		}
-		if (this.model.gioiTinh == null) {
-			this.toastr.error('Giới tính không để trống')
-			return
-		}
-		let fullName = this.model.hoTen
-		var request = {
-			User: this.model,
-		}
+		// this.submitted = true
+		// this.model.hoTen = this.model.hoTen.trim()
+		// this.model.diaChi = this.model.diaChi.trim()
+		// this.updateForm.controls.hoTen.setValue(this.updateForm.controls.hoTen.value.trim())
+		// if (this.updateForm.invalid && this.updateForm.controls['tenDangNhap'].valid != false) {
+		// 	return
+		// }
+		// if (this.model.gioiTinh == null) {
+		// 	this.toastr.error('Giới tính không để trống')
+		// 	return
+		// }
+		// let fullName = this.model.hoTen
+		// var request = {
+		// 	User: this.model,
+		// }
 		// this.userService.updateUserLogin(request, this.files).subscribe((success) => {
 		// 	if (success.status == 1) {
 		// 		$('#modalUpdate').modal('hide')
@@ -251,19 +251,15 @@ export class AppheaderComponent implements OnInit {
 	}
 
 	signOut(): void {
-		this.authenService
-			.logOut({
-				UserId: this.model.ma,
-			})
-			.subscribe((success) => {
-				if (success.success == RESPONSE_STATUS.success) {
-					this.sharedataService.setIsLogin(false)
-					this.storageService.setReturnUrl('')
-					this.storageService.clearStoreage()
-					this._router.navigate(['/dang-nhap'])
-					//location.href = "/dang-nhap";
-				}
-			})
+		this.authenService.logOut({}).subscribe((success) => {
+			if (success.success == RESPONSE_STATUS.success) {
+				this.sharedataService.setIsLogin(false)
+				this.storageService.setReturnUrl('')
+				this.storageService.clearStoreage()
+				this._router.navigate(['/dang-nhap'])
+				//location.href = "/dang-nhap";
+			}
+		})
 	}
 
 	get newpassword() {

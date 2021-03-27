@@ -22,7 +22,11 @@ export class AuthenticationService {
 	}
 
 	logOut(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.logOut)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.logOut, headers)
 	}
 
 	register(user: any): Observable<any> {

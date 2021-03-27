@@ -70,7 +70,6 @@ namespace PAKNAPI.Controller
 				request.UserFullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
 				request.Data = JsonConvert.DeserializeObject<MRRecommendationInsertIN>(Request.Form["Data"].ToString(), jss);
 				request.Files = Request.Form.Files;
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				int? Id = Int32.Parse((await new MRRecommendationInsert(_appSetting).MRRecommendationInsertDAO(request.Data)).ToString());
                 if (Id > 0)
                 {
@@ -106,7 +105,7 @@ namespace PAKNAPI.Controller
 					hisData.CreatedDate = DateTime.Now;
 					await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
 				}
-
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK};
 			}
 			catch (Exception ex)

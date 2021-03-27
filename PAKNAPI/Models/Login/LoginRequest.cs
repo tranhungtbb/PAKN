@@ -11,6 +11,6 @@ namespace PAKNAPI.Models.Results
 	}
 	public class EditUserRequest : BaseRequest
     {
-        public long? UserId { get; set; }
+
     }
 }

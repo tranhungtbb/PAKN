@@ -27,4 +27,5 @@ export class UserObject {
 	avatar: string
 	address: string
 	positionId: number
+	roleId: number
 }
