@@ -117,6 +117,7 @@ namespace PAKNAPI.ModelBase
 		public string Avatar;
 		public string Address;
 		public int? PositionId;
+		public string RoleIds;
 
 		public async Task<List<SYUserGetByID>> SYUserGetByIDDAO(long? Id)
 		{
@@ -185,7 +186,7 @@ namespace PAKNAPI.ModelBase
 		public string Avatar { get; set; }
 		public string Address { get; set; }
 		public int? PositionId { get; set; }
-		public int[] RoleIds { get; set; }
+		public string RoleIds { get; set; }
 	}
 
 	public class SYUserUpdate
@@ -222,6 +223,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Avatar", _sYUserUpdateIN.Avatar);
 			DP.Add("Address", _sYUserUpdateIN.Address);
 			DP.Add("PositionId", _sYUserUpdateIN.PositionId);
+			DP.Add("RoleIds", _sYUserUpdateIN.RoleIds);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserUpdate", DP));
 		}
@@ -247,6 +249,7 @@ namespace PAKNAPI.ModelBase
 		public string Avatar { get; set; }
 		public string Address { get; set; }
 		public int? PositionId { get; set; }
+		public string RoleIds { get; set; }
 	}
 
 	public class SYUSRGetPermissionByUserId

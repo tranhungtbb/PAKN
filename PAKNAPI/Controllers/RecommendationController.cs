@@ -25,7 +25,7 @@ namespace PAKNAPI.Controller
 	public class RecommendationController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
-        private readonly IWebHostEnvironment _hostingEnvironment;
+		private readonly IWebHostEnvironment _hostingEnvironment;
 		public RecommendationController(IWebHostEnvironment hostingEnvironment, IAppSetting appSetting)
 		{
 			_appSetting = appSetting;
@@ -71,8 +71,8 @@ namespace PAKNAPI.Controller
 				request.Data = JsonConvert.DeserializeObject<MRRecommendationInsertIN>(Request.Form["Data"].ToString(), jss);
 				request.Files = Request.Form.Files;
 				int? Id = Int32.Parse((await new MRRecommendationInsert(_appSetting).MRRecommendationInsertDAO(request.Data)).ToString());
-                if (Id > 0)
-                {
+				if (Id > 0)
+				{
 					if (request.Files != null && request.Files.Count > 0)
 					{
 						string folder = "Upload\\Recommendation\\" + Id;
@@ -106,7 +106,7 @@ namespace PAKNAPI.Controller
 					await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
 				}
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-				return new ResultApi { Success = ResultCode.OK};
+				return new ResultApi { Success = ResultCode.OK };
 			}
 			catch (Exception ex)
 			{

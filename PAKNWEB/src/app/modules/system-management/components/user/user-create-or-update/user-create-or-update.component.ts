@@ -40,6 +40,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	positionsList:any[] = []
 	rolesList:any[] = []
 	unitsList:any[] = []
+	selectedRoles: Array<number>
 
 	listStatus: any = [
 		{ value: true, text: 'Hiệu lực' },
@@ -94,6 +95,8 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			this._toastr.error('Dữ liệu không hợp lệ')
 			return
 		}
+		this.modelUser.roleIds = this.selectedRoles.toString()
+
 		if (this.modelUser.id != null && this.modelUser.id > 0) {
 			this.userService.update(this.modelUser).subscribe((res) => {
 				if (res.success != 'OK') {
@@ -129,6 +132,10 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			this.userService.getById({ id: userId }).subscribe((res) => {
 				if (res.success != 'OK') return
 				this.modelUser = res.result.SYUserGetByID[0]
+				if(this.modelUser.roleIds)
+					this.selectedRoles = this.modelUser.roleIds.split(',').map(c=>parseInt(c))
+				else this.selectedRoles = []
+
 			})
 		}else{
 			this.modalTitle = "Sửa người dùng"
