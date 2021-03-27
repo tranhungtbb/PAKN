@@ -16,7 +16,7 @@ import { UserCreateOrUpdateComponent } from '../user/user-create-or-update/user-
 
 import { COMMONS } from 'src/app/commons/commons'
 import { UnitObject } from 'src/app/models/unitObject'
-import { UserObject } from 'src/app/models/UserObject'
+import { UserObject2 } from 'src/app/models/UserObject'
 
 declare var jquery: any
 declare var $: any
@@ -47,7 +47,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	createUserForm: FormGroup
 
 	modelUnit: UnitObject = new UnitObject()
-	modelUser: UserObject = new UserObject()
+	modelUser: UserObject2 = new UserObject2()
 
 	/*unit query*/
 	query: any = {
@@ -241,7 +241,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			})
 		} else {
 			this.userFromSubmited = false
-			this.modelUser = new UserObject()
+			this.modelUser = new UserObject2()
 		}
 		$('#modal-user-create-or-update').modal('show')
 	}
@@ -265,7 +265,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				}
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
 				this.getUserPagedList()
-				this.modelUser = new UserObject()
+				this.modelUser = new UserObject2()
 				$('#modal-user-create-or-update').modal('hide')
 			})
 		} else {
@@ -276,7 +276,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				}
 				this._toastr.success(COMMONS.ADD_SUCCESS)
 				this.getUserPagedList()
-				this.modelUser = new UserObject()
+				this.modelUser = new UserObject2()
 				$('#modal-user-create-or-update').modal('hide')
 			})
 		}
