@@ -141,12 +141,14 @@ namespace PAKNAPI.Controllers
 		{
             try
 			{
+				long? UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK };
 			}
             catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				return new ResultApi { Success = ResultCode.ORROR, Message = "An error occurred", };
+				return new ResultApi { Success = ResultCode.ORROR, Message = "An error occurred" };
 			}
 		}
 	}
