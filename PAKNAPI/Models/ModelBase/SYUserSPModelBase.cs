@@ -160,6 +160,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Avatar", _sYUserInsertIN.Avatar);
 			DP.Add("Address", _sYUserInsertIN.Address);
 			DP.Add("PositionId", _sYUserInsertIN.PositionId);
+			DP.Add("RoleIds", _sYUserInsertIN.RoleIds);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserInsert", DP));
 		}
@@ -184,6 +185,7 @@ namespace PAKNAPI.ModelBase
 		public string Avatar { get; set; }
 		public string Address { get; set; }
 		public int? PositionId { get; set; }
+		public int[] RoleIds { get; set; }
 	}
 
 	public class SYUserUpdate

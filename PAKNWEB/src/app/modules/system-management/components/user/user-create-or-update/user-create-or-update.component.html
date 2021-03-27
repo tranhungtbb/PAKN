@@ -60,7 +60,7 @@
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Chức vụ <span class="cl-red">(*)</span></label>
 							<ng-select class="form-control" [items]="positionsList" placeholder="Chức vụ ..." bindLabel="name" bindValue="id" formControlName="positionId"
-								[(ngModel)]="modelUser.positionId" [closeOnSelect]="true">
+								[(ngModel)]="modelUser.positionId" [closeOnSelect]="true" [multiple]="true">
 							</ng-select>
 							<div *ngIf="(userFormSubmitted && fUser.positionId.invalid)||(fUser.positionId.invalid && (fUser.positionId.dirty || fUser.positionId.touched))"
 								class="has-error m-b-12">
@@ -93,8 +93,8 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Vai trò <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" [items]="rolesList" placeholder="Vai trò ..." bindLabel="name" bindValue="id" [(ngModel)]="modelUser.roleId"
-								formControlName="roleId" [closeOnSelect]="true">
+							<ng-select class="form-control" [items]="rolesList" placeholder="Vai trò ..." bindLabel="name" bindValue="id" [(ngModel)]="modelUser.roleIds"
+								formControlName="roleId" [closeOnSelect]="true" [multiple]="true">
 							</ng-select>
 							<div *ngIf="(userFormSubmitted && fUser.roleId.invalid)||(fUser.roleId.invalid && (fUser.roleId.dirty || fUser.roleId.touched))"
 								class="has-error m-b-12">

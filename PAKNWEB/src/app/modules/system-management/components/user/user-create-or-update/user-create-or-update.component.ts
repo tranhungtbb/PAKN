@@ -90,12 +90,10 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	userFormSubmitted = false
 	onSaveUser(): void {
 		this.userFormSubmitted = true
-
 		if (this.createUserForm.invalid) {
 			this._toastr.error('Dữ liệu không hợp lệ')
 			return
 		}
-
 		if (this.modelUser.id != null && this.modelUser.id > 0) {
 			this.userService.update(this.modelUser).subscribe((res) => {
 				if (res.success != 'OK') {

@@ -78,5 +78,5 @@ export class UserObject2 {
 	avatar: string
 	address: string
 	positionId: number
-	roleId: number
+	roleIds: Array<number>
 }
