@@ -33,8 +33,11 @@
 							<!-- <select class="form-control" id="f_parentId">
 								<option *ngFor="let item of getUnitParent" [value]="item.id">{{item.name}}</option>
 							</select> -->
-							<ng-select id="f_parentId" class="form-control" [items]="getUnitParent" placeholder="Đơn vị cấp trên ..." bindLabel="name" bindValue="id"
-								formControlName="parentId" [(ngModel)]="modelUnit.parentId" [closeOnSelect]="true">
+							<!-- <ng-select id="f_parentId" class="form-control" [items]="unitFlatlist | unitFilter:modelUnit.unitLevel - 1" placeholder="Đơn vị cấp trên ..."
+								bindLabel="name" bindValue="id" formControlName="parentId" [(ngModel)]="modelUnit.parentId" [closeOnSelect]="true">
+							</ng-select> -->
+							<ng-select formControlName="parentId" [(ngModel)]="modelUnit.parentId" class="form-control">
+								<ng-option *ngFor="let item of unitFlatlist | unitFilter:modelUnit.unitLevel-1" [value]="item.id">{{item.name}}</ng-option>
 							</ng-select>
 							<div *ngIf="(unitFormSubmitted && fUnit.parentId.invalid)||(fUnit.parentId.invalid && (fUnit.parentId.dirty || fUnit.parentId.touched))"
 								class="has-error m-b-12">

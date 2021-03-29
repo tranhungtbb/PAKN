@@ -1186,18 +1186,16 @@ namespace PAKNAPI.ModelBase
 		public int? RowNumber;
 		public int Id;
 		public string Name;
-		public string Code;
 		public bool IsActived;
 		public bool IsDeleted;
 		public string Description;
 
-		public async Task<List<CAWordGetAllOnPage>> CAWordGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Code, string Description, bool? IsActived)
+		public async Task<List<CAWordGetAllOnPage>> CAWordGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
 			DP.Add("Name", Name);
-			DP.Add("Code", Code);
 			DP.Add("Description", Description);
 			DP.Add("IsActived", IsActived);
 
@@ -1220,7 +1218,6 @@ namespace PAKNAPI.ModelBase
 
 		public int Id;
 		public string Name;
-		public string Code;
 		public bool IsActived;
 		public bool IsDeleted;
 		public string Description;
@@ -1251,7 +1248,6 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cAWordInsertIN.Name);
-			DP.Add("Code", _cAWordInsertIN.Code);
 			DP.Add("IsActived", _cAWordInsertIN.IsActived);
 			DP.Add("IsDeleted", _cAWordInsertIN.IsDeleted);
 			DP.Add("Description", _cAWordInsertIN.Description);
@@ -1263,7 +1259,6 @@ namespace PAKNAPI.ModelBase
 	public class CAWordInsertIN
 	{
 		public string Name { get; set; }
-		public string Code { get; set; }
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -1287,7 +1282,6 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _cAWordUpdateIN.Id);
 			DP.Add("Name", _cAWordUpdateIN.Name);
-			DP.Add("Code", _cAWordUpdateIN.Code);
 			DP.Add("IsActived", _cAWordUpdateIN.IsActived);
 			DP.Add("IsDeleted", _cAWordUpdateIN.IsDeleted);
 			DP.Add("Description", _cAWordUpdateIN.Description);
@@ -1300,7 +1294,6 @@ namespace PAKNAPI.ModelBase
 	{
 		public int? Id { get; set; }
 		public string Name { get; set; }
-		public string Code { get; set; }
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }

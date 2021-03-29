@@ -24,6 +24,7 @@ import { GroupUserComponent } from './components/group-user/group-user.component
 import { UserComponent } from './components/user/user.component'
 import { UnitComponent } from './components/unit/unit.component'
 import { UserCreateOrUpdateComponent } from './components/user/user-create-or-update/user-create-or-update.component'
+import { UnitFilterPipe } from 'src/app/pipes/unit-filter.pipe'
 
 @NgModule({
 	imports: [
@@ -43,7 +44,7 @@ import { UserCreateOrUpdateComponent } from './components/user/user-create-or-up
 		GMapModule,
 		MatCheckboxModule,
 		CKEditorModule,
-		MatDialogModule
+		MatDialogModule,
 	],
 	declarations: [
 		SystemManagemenetComponent,
@@ -55,6 +56,7 @@ import { UserCreateOrUpdateComponent } from './components/user/user-create-or-up
 		UserComponent,
 		UnitComponent,
 		UserCreateOrUpdateComponent,
+		UnitFilterPipe,
 	],
 	entryComponents: [UserCreateOrUpdateComponent],
 })
