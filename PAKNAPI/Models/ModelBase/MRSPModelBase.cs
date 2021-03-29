@@ -127,8 +127,6 @@ namespace PAKNAPI.ModelBase
 		public int? Id { get; set; }
 	}
 
-<<<<<<< HEAD
-=======
 	public class MRRecommendationFilesGetByRecommendationId
 	{
 		private SQLCon _sQLCon;
@@ -157,7 +155,6 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
->>>>>>> 9efa010b4906a3b584309a0a16bdba8c3789765b
 	public class MRRecommendationFilesInsert
 	{
 		private SQLCon _sQLCon;

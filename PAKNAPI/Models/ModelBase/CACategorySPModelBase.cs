@@ -51,19 +51,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-<<<<<<< HEAD
-		public int? RowNumber;
-		public int Id;
-		public string Name;
-		public string Phone;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string Description;
-		public string Email;
-		public int? DepartmentGroupId;
-		public string Address;
-		public string Fax;
-=======
+
 		public int? RowNumber { get; set; }
 		public int Id { get; set; }
 		public string Name { get; set; }
@@ -75,7 +63,6 @@ namespace PAKNAPI.ModelBase
 		public int? DepartmentGroupId { get; set; }
 		public string Address { get; set; }
 		public string Fax { get; set; }
->>>>>>> 9efa010b4906a3b584309a0a16bdba8c3789765b
 
 		public async Task<List<CADepartmentGetAllOnPage>> CADepartmentGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
 		{
@@ -103,18 +90,6 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-<<<<<<< HEAD
-		public int Id;
-		public string Name;
-		public string Phone;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string Description;
-		public string Email;
-		public int? DepartmentGroupId;
-		public string Address;
-		public string Fax;
-=======
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Phone { get; set; }
@@ -125,7 +100,6 @@ namespace PAKNAPI.ModelBase
 		public int? DepartmentGroupId { get; set; }
 		public string Address { get; set; }
 		public string Fax { get; set; }
->>>>>>> 9efa010b4906a3b584309a0a16bdba8c3789765b
 
 		public async Task<List<CADepartmentGetByID>> CADepartmentGetByIDDAO(int? Id)
 		{
@@ -245,11 +219,8 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cADepartmentGroupInsertIN.IsDeleted);
 			DP.Add("Description", _cADepartmentGroupInsertIN.Description);
 
-<<<<<<< HEAD
-			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_DepartmentGroupInsert", DP);
-=======
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_DepartmentGroupInsert", DP);
->>>>>>> 9efa010b4906a3b584309a0a16bdba8c3789765b
+
 		}
 	}
 
