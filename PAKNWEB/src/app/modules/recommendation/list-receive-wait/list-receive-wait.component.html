@@ -1,0 +1,226 @@
+<div class="content-body">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="btn-group group-button-table" role="group">
+					<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
+							<path
+								d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
+							<path
+								d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+						</svg>
+						Xuất excel
+					</button>
+					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" [routerLink]="['/quan-tri/kien-nghi/them-moi/0']">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+						</svg>
+						Thêm mới
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card mb-0 shadow-none">
+					<div class="table-responsive">
+
+						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]"
+							[responsive]="true" autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+							<ng-template pTemplate="header" class="bg-thead">
+								<tr>
+									<th style="width: 150px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Mã số PAKN</strong>
+											<span class="caret-tb"></span>
+										</p>
+										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100" (keydown.enter)="dataStateChange()" />
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Tên CN/DN</strong>
+											<span class="caret-tb"></span>
+										</p>
+										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100" (keydown.enter)="dataStateChange()" />
+									</th>
+									<th style="width: 350px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Nội dung</strong>
+											<span class="caret-tb"></span>
+										</p>
+										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.content" maxlength="100" (keydown.enter)="dataStateChange()" />
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>ĐV tiếp nhận</strong>
+											<span class="caret-tb"></span>
+										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select class="" [items]="lstUnit" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.unitId" [closeOnSelect]="true"
+												(change)="dataStateChange()">
+											</ng-select>
+										</div>
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>lĩnh vực</strong>
+											<span class="caret-tb"></span>
+										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select class="" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field" [closeOnSelect]="true"
+												(change)="dataStateChange()">
+											</ng-select>
+										</div>
+									</th>
+									<th style="width: 160px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Trạng thái</strong>
+											<span class="caret-tb"></span>
+										</p>
+									</th>
+									<th class="text-right"><strong>Thao tác</strong></th>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+								<tr>
+									<td>
+										<strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
+									</td>
+									<td>
+										<strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
+									</td>
+									<td>
+										<p class="text-2line mb-0">{{item.content}}</p>
+									</td>
+									<td>{{item.unitName}}</td>
+									<td>{{item.fieldName}}</td>
+									<td>
+										<span *ngIf="item.status == 2" class="badge rounded-pill badge-outline-light bg-white">Chờ xử lý</span>
+										<span *ngIf="item.status == 3" class="badge rounded-pill bg-red">Từ chối xử lý</span>
+										<span *ngIf="item.status == 4" class="badge rounded-pill bg-blue2">Đã tiếp nhận</span>
+										<span *ngIf="item.status == 5" class="badge rounded-pill badge-outline-green2">Chờ giải quyết</span>
+										<span *ngIf="item.status == 6" class="badge rounded-pill bg-red">Từ chối giải quyết</span>
+										<span *ngIf="item.status == 7" class="badge rounded-pill badge-outline-blue">Đang giải quyết</span>
+										<span *ngIf="item.status == 8" class="badge rounded-pill badge-outline-success">Chờ phê duyệt</span>
+										<span *ngIf="item.status == 9" class="badge rounded-pill bg-red">Từ chối phê duyệt</span>
+										<span *ngIf="item.status == 10" class="badge rounded-pill badge-success">Đã giải quyết</span>
+									</td>
+									<td>
+										<div class="d-flex justify-content-end">
+											<a [routerLink]="['/quan-tri/kien-nghi/them-moi/', item.id]" *ngIf="item.status == 4 && item.createdBy == userLoginId"
+												class="btn-icon grd-brown text-brown mr-2" title="Cập nhật"><i class="bi bi-pencil-square"></i></a>
+											<a *ngIf="item.status == 2" class="btn-icon grd-xanhngoc text-white mr-2" title="Tiếp nhận xử lý"><i
+													class="bi bi-file-earmark-check"></i></a>
+											<a *ngIf="item.status == 2" href="#" class="btn-icon grd-red text-white mr-2" data-toggle="modal" data-target="#modal-tc-pakn"
+												title="Từ chối tiếp nhận"><i class="bi bi-file-earmark-break"></i></a>
+											<a class="btn-icon grd-red text-white" (click)="preDelete(item.id)" title="Xóa"><i class="bi bi-trash"></i></a>
+											<a class="btn-icon" data-toggle="modal" data-target="#modal-history-pakn" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
+										</div>
+									</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div class="modal fade" id="modalConfirmDelete">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">Xác nhận</p>
+					</div>
+					<div class="modal-body no-padding-bottom">
+						<div>
+							<p>Anh/Chị có chắc chắn thực hiện hành động này?</p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade pr-0" id="modal-history-pakn">
+	<div class="modal-dialog modal-dialog-right vh-100" role="document">
+		<div class="modal-content rounded-0 h-100">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4">Lịch sử quy trình xử lý</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body py-3">
+				<div id="DZ_W_TimeLine" class="widget-timeline h-100 dz-scroll">
+					<ul class="timeline">
+						<li>
+							<div class="timeline-badge success"></div>
+							<div class="timeline-panel">
+								<p class="mb-2 h5">Ông: <strong>Nguyễn Đức Lượng</strong></p>
+								<p class="mb-0 d-flex justify-content-between align-items-center">
+									<span class="badge rounded-pill badge-success mb-0">Đã giải quyết</span>
+									<span class="text-dark mb-0">10:30 | 30/03/2021</span>
+								</p>
+							</div>
+						</li>
+						<li>
+							<div class="timeline-badge info"></div>
+							<div class="timeline-panel" href="#">
+								<p class="mb-2 h5">Đơn vị: <strong>HĐ giải quyết PAKN tỉnh Khánh Hòa</strong></p>
+								<p class="mb-0 d-flex justify-content-between align-items-center">
+									<span class="badge rounded-pill badge-outline-info mb-0">Đã gửi phê duyệt</span>
+									<span class="text-dark mb-0">10:30 | 30/03/2021</span>
+								</p>
+							</div>
+						</li>
+						<li>
+							<div class="timeline-badge primary">
+							</div>
+							<div class="timeline-panel" href="#">
+								<p class="mb-2 h5">Bà: <strong>Phạm Thùy Linh</strong></p>
+								<p class="mb-0 d-flex justify-content-between align-items-center">
+									<span class="badge rounded-pill bg-blue2 mb-0">Đã tiếp nhận</span>
+									<span class="text-dark mb-0">10:30 | 30/03/2021</span>
+								</p>
+							</div>
+						</li>
+						<li>
+							<div class="timeline-badge danger">
+							</div>
+							<div class="timeline-panel" href="#">
+								<p class="mb-2 h5">Bà: <strong>Phạm Thùy Linh</strong></p>
+								<p class="mb-0 d-flex justify-content-between align-items-center">
+									<span class="badge rounded-pill bg-red mb-0">Từ chối tiếp nhận</span>
+									<span class="text-dark mb-0">10:30 | 30/03/2021</span>
+								</p>
+							</div>
+						</li>
+						<li>
+							<div class="timeline-badge primary">
+							</div>
+							<div class="timeline-panel" href="#">
+								<p class="mb-0 d-flex justify-content-between align-items-center">
+									<span class="badge rounded-pill badge-outline-light bg-white mb-0">Chờ xử lý</span>
+									<span class="text-dark">10:30 | 30/03/2021</span>
+								</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
