@@ -74,6 +74,7 @@ namespace PAKNAPI.Controller
 				int? Id = Int32.Parse((await new MRRecommendationInsert(_appSetting).MRRecommendationInsertDAO(request.Data)).ToString());
 				if (Id > 0)
 				{
+					await new MRRecommendationGenCodeUpdateNumber(_appSetting).MRRecommendationGenCodeUpdateNumberDAO();
 					if (request.Files != null && request.Files.Count > 0)
 					{
 						string folder = "Upload\\Recommendation\\" + Id;
