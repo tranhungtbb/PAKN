@@ -62,8 +62,9 @@ namespace PAKNAPI.ModelBase
 		public int? DepartmentGroupId { get; set; }
 		public string Address { get; set; }
 		public string Fax { get; set; }
+		public string GroupName { get; set; }
 
-		public async Task<List<CADepartmentGetAllOnPage>> CADepartmentGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
+		public async Task<List<CADepartmentGetAllOnPage>> CADepartmentGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived, int? DepartmentGroupId)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
@@ -71,6 +72,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Name", Name);
 			DP.Add("Description", Description);
 			DP.Add("IsActived", IsActived);
+			DP.Add("DepartmentGroupId", DepartmentGroupId);
 
 			return (await _sQLCon.ExecuteListDapperAsync<CADepartmentGetAllOnPage>("CA_DepartmentGetAllOnPage", DP)).ToList();
 		}
@@ -278,7 +280,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> CADepartmentInsertDAO(CADepartmentInsertIN _cADepartmentInsertIN)
+		public async Task<int?> CADepartmentInsertDAO(CADepartmentInsertIN _cADepartmentInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cADepartmentInsertIN.Name);
@@ -291,7 +293,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cADepartmentInsertIN.IsDeleted);
 			DP.Add("Description", _cADepartmentInsertIN.Description);
 
-			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_DepartmentInsert", DP);
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_DepartmentInsert", DP);
 		}
 	}
 

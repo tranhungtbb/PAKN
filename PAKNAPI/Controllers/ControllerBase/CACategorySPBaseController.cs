@@ -87,11 +87,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize]
 		[Route("CADepartmentGetAllOnPageBase")]
-		public async Task<ActionResult<object>> CADepartmentGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
+		public async Task<ActionResult<object>> CADepartmentGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived, int? DepartmentGroupId)
 		{
 			try
 			{
-				List<CADepartmentGetAllOnPage> rsCADepartmentGetAllOnPage = await new CADepartmentGetAllOnPage(_appSetting).CADepartmentGetAllOnPageDAO(PageSize, PageIndex, Name, Description, IsActived);
+				List<CADepartmentGetAllOnPage> rsCADepartmentGetAllOnPage = await new CADepartmentGetAllOnPage(_appSetting).CADepartmentGetAllOnPageDAO(PageSize, PageIndex, Name, Description, IsActived, DepartmentGroupId);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CADepartmentGetAllOnPage", rsCADepartmentGetAllOnPage},

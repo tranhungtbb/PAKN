@@ -41,10 +41,34 @@
                 </th>
                 <th>
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-                    <strong>Từ ngữ</strong>
+                    <strong>Tên sở ngành</strong>
                     <span class="caret-tb"></span>
                   </p>
                   <input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+                </th>
+                <th>
+                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+                    <strong>Nhóm sở ngành</strong>
+                    <span class="caret-tb"></span>
+                  </p>
+                  <input class="form-control form-control-sm" [(ngModel)]="groupName" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+                </th>
+                <th>
+                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+                    <strong>Phone</strong>
+                    <span class="caret-tb"></span>
+                  </p>
+                  <input class="form-control form-control-sm" [(ngModel)]="groupName" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+                </th>
+                <th>
+                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+                    <strong>Email</strong>
+                    <span class="caret-tb"></span>
+                  </p>
+                  <input class="form-control form-control-sm" [(ngModel)]="groupName" maxlength="100"
                     (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
                 </th>
                 <th style="width: 350px">
@@ -73,6 +97,16 @@
                 <td class="text-center">{{rowIndex + 1}}</td>
                 <td>
                   <strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
+                </td>
+                <td>
+                  <strong><a (click)="preView(item)" class="ellipsis"
+                      title="Xem chi tiết">{{item.groupName}}</a></strong>
+                </td>
+                <td>
+                  <strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.phone}}</a></strong>
+                </td>
+                <td>
+                  <strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.email}}</a></strong>
                 </td>
                 <td>{{item.description}}</td>
                 <td>

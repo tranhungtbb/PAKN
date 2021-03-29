@@ -97,11 +97,12 @@ export class DepartmentComponent implements OnInit {
       PageSize: this.pageSize,
     }
     console.log(request)
-    this._service.departmentGroupGetList(request).subscribe((response) => {
+    this._service.departmentGetList(request).subscribe((response) => {
       if (response.success == RESPONSE_STATUS.success) {
         if (response.result != null) {
           this.listData = []
-          this.listData = response.result.CADepartmentGroupGetAllOnPage
+          this.listData = response.result.CADepartmentGetAllOnPage
+          console.log(this.listData)
           this.totalRecords = response.result.TotalCount
         }
       } else {
