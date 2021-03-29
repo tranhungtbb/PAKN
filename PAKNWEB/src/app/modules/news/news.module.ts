@@ -1,14 +1,16 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'
+import { SharedModule } from '../../shared/shared.module'
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
+import { NgSelectModule } from '@ng-select/ng-select'
 
-import { NewsRoutingModule } from './news-routing.module';
+import { NewsRoutingModule } from './news-routing.module'
 import { NewsComponent } from './news.component';
+import { NewsCreateOrUpdateComponent } from './news-create-or-update/news-create-or-update.component'
 
 @NgModule({
-  declarations: [NewsComponent],
-  imports: [
-    CommonModule,
-    NewsRoutingModule
-  ]
+	declarations: [NewsComponent, NewsCreateOrUpdateComponent],
+	imports: [CommonModule, NewsRoutingModule, ReactiveFormsModule, FormsModule, SharedModule, BsDatepickerModule, NgSelectModule],
 })
-export class NewsModule { }
+export class NewsModule {}

@@ -1,1 +1,120 @@
-<p>news works!</p>
+<div class="header header-ql">
+	<div class="header-content px-3">
+		<nav class="navbar navbar-expand">
+			<div class="collapse navbar-collapse justify-content-between">
+				<div class="header-left w-100 justify-content-between pr-5">
+					<p class="mb-0 h3 text-uppercase">danh sách tin tức</p>
+					<div class="nav-table">
+						<div class="d-flex align-items-center">
+							<button type="button" class="btn btn-outline-secondary mr-2 p-2">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+									<path fill-rule="evenodd"
+										d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+								</svg>
+							</button>
+							<div class="border d-flex align-items-center border-dark px-2 rounded">
+								<input type="number" value="1" class="border-0 p-0 number-page-table text-right">
+								<span>/20</span>
+							</div>
+							<button type="button" class="btn btn-outline-secondary ml-2 p-2">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+									<path fill-rule="evenodd"
+										d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+								</svg>
+							</button>
+						</div>
+					</div>
+					<div class="btn-group" role="group">
+						<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
+								<path
+									d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
+								<path
+									d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+							</svg>
+							Xuất excel
+						</button>
+						<a [routerLink]="['./them-moi']" class="btn grd-xanhngoc btn-sm rounded border-0 text-white">
+							<i class="bi bi-plus"></i>&nbsp;
+							Thêm mới
+						</a>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</div>
+</div>
+<div class="content-body">
+
+	<!--  -->
+
+	<!-- row -->
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card mb-0 shadow-none">
+					<div class="table-responsive">
+						<table class="table table-sd table-responsive-md table-striped mb-0">
+							<thead class="bg-thead">
+								<tr>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Bài viết</strong>
+											<span class="caret-tb"></span>
+										</p>
+										<input [(ngModel)]="query.title" type="text" class="form-control form-control-sm">
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Loại tin tức</strong>
+											<span class="caret-tb"></span>
+										</p>
+										<ng-select class="form-control form-control-sm mod" placeholder="Loại tin tức ..." [items]="listNewCategories" bindLabel="name"
+											bindValue="id" [closeOnSelect]="true" [(ngModel)]="query.newType">
+										</ng-select>
+									</th>
+									<th style="width: 160px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Trạng thái</strong>
+											<span class="caret-tb"></span>
+										</p>
+										<ng-select class="form-control form-control-sm mod" placeholder="Trạng thái ..." [items]="listStatus" bindLabel="text" bindValue="value"
+											[closeOnSelect]="true" [(ngModel)]="query.status">
+										</ng-select>
+									</th>
+									<th class="text-right"><strong>Thao tác</strong></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<img width='60px' [src]="">
+										<strong>
+											Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+										</strong>
+									</td>
+									<td>
+										Lorem ipsum dolor
+									</td>
+									<td>
+										<span class="badge rounded-pill badge-outline-light bg-white">{{listStatus[2].text}}</span>
+										<span class="badge rounded-pill bg-green">{{listStatus[0].text}}</span>
+										<span class="badge rounded-pill bg-blue2">{{listStatus[1].text}}</span>
+									</td>
+									<td>
+										<div class="d-flex justify-content-end">
+											<button class="btn-icon grd-xanhngoc text-white mr-2"><i class="bi bi-box-arrow-up"></i></button>
+											<a [routerLink]="['./chinh-sua', '1']" class="btn-icon mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
+													class="bi bi-pencil-square"></i></a>
+											<button class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-history-pakn"><i class="bi bi-trash"></i></button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

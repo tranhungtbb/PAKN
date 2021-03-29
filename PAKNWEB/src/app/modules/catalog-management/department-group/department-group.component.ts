@@ -49,7 +49,7 @@ export class DepartmentGroupComponent implements OnInit {
 
   buildForm() {
     this.form = this._fb.group({
-      name: [this.model.name, Validators.required],
+      name: [this.model.name.trim(), Validators.required],
       description: [this.model.description],
       isActived: [this.model.isActived, Validators.required],
     })
