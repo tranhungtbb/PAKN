@@ -93,7 +93,7 @@ export class RecommendationService {
 			headers: tempheaders,
 			reportProgress: true,
 		}
-		return this.http.post(AppSettings.API_ADDRESS + Api.RecommendationInsert, form, httpPackage)
+		return this.http.post(AppSettings.API_ADDRESS + Api.RecommendationUpdate, form, httpPackage)
 		// let headers = {
 		// 	logAction: encodeURIComponent(LOG_ACTION.UPDATE),
 		// 	logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
