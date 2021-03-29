@@ -10,8 +10,8 @@
 							<i class="bi bi-arrow-left"></i>&nbsp;
 							Quay lại
 						</button>
-						<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3">Lưu</button>
-						<button class="btn btn-sm grd-green rounded text-white border-0">Công bố</button>
+						<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave($event)">Lưu</button>
+						<button class="btn btn-sm grd-green rounded text-white border-0" (click)="onPublished()">Công bố</button>
 					</div>
 				</div>
 			</div>
@@ -26,7 +26,7 @@
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">tiêu đề</span> <span class="cl-red">(*)</span></label>
 						<input formControlName="title" [(ngModel)]="model.title" type="text" class="form-control input-sm" placeholder="Nhập...">
-						<div *ngIf="(unitFormSubmitted && f.title.invalid)||(f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
+						<div *ngIf="(submitted && f.title.invalid)||(f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
 							<div *ngIf="f.title.errors.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
@@ -35,18 +35,33 @@
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">tóm tắt</span> <span class="cl-red">(*)</span></label>
 						<textarea class="form-control text-area-height" cols="10" formControlName="summary" [(ngModel)]="model.summary"></textarea>
-						<div *ngIf="(unitFormSubmitted && f.summary.invalid)||(f.summary.invalid && (f.summary.dirty || f.summary.touched))" class="has-error m-b-12">
+						<div *ngIf="(submitted && f.summary.invalid)||(f.summary.invalid && (f.summary.dirty || f.summary.touched))" class="has-error m-b-12">
 							<div *ngIf="f.summary.errors.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
 						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
-						<label class="mb-1"><span class="text-uppercase">bài viết liên quan</span> <span class="cl-red">(*)</span></label>
-
+						<div class="mb-3">
+							<label class="mb-1"><span class="text-uppercase">bài viết liên quan</span> <span class="cl-red">(*)</span></label>
+							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline"><i class="bi bi-list"></i> Thêm mới</button>
+						</div>
+						<div class="col-md-12 pr-0 pl-0">
+							<div class="btn btn-default p-3 border">
+								<img width="70" height="50" />
+								<span>
+									<strong>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio eos praesentium ex</strong>
+								</span>
+							</div>
+						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
-						<ckeditor [editor]="Editor" data="" (ready)="onReady($event)"></ckeditor>
+						<ckeditor [editor]="Editor" data="" (ready)="onReady($event)" (change)="onChangeEditor($event)"></ckeditor>
+						<div *ngIf="(submitted && f.content.invalid)||(f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error m-b-12">
+							<div *ngIf="f.content.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="col-md-3 col-lg-3">

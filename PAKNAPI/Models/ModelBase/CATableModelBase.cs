@@ -13,18 +13,6 @@ namespace PAKNAPI.ModelBase
 {
 	public class CADepartmentOnPage
 	{
-<<<<<<< HEAD
-		public int Id;
-		public int? DepartmentGroupId;
-		public string Name;
-		public string Email;
-		public string Phone;
-		public string Description;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string Address;
-		public string Fax;
-=======
 		public int Id { get; set; }
 		public int? DepartmentGroupId { get; set; }
 		public string Name { get; set; }
@@ -35,7 +23,6 @@ namespace PAKNAPI.ModelBase
 		public bool IsDeleted { get; set; }
 		public string Address { get; set; }
 		public string Fax { get; set; }
->>>>>>> 9efa010b4906a3b584309a0a16bdba8c3789765b
 		public int? RowNumber; // int, null
 	}
 

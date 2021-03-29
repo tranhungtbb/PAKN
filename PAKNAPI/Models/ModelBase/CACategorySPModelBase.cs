@@ -51,7 +51,6 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-
 		public int? RowNumber { get; set; }
 		public int Id { get; set; }
 		public string Name { get; set; }
@@ -220,7 +219,6 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Description", _cADepartmentGroupInsertIN.Description);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_DepartmentGroupInsert", DP);
-
 		}
 	}
 

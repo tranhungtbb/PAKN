@@ -97,4 +97,11 @@ export class Api {
 	public static WordUpdate = 'CACategorySPBase/CAWordUpdateBase'
 	public static WordUpdateStatus = 'CACategorySPBase/CAWordUpdateBase'
 	public static WordDelete = 'CACategorySPBase/CAWordDeleteBase'
+
+	//tin tuc
+	public static NewsGetAllOnPage = 'NESPBase/NENewsGetAllOnPageBase'
+	public static NewsGetById = 'NESPBase/NENewsGetByIDBase'
+	public static NewsInsert = 'NESPBase/NENewsInsertBase'
+	public static NewsUpdate = 'NESPBase​/NENewsUpdateBase'
+	public static NewsDelete = 'NESPBase/NENewsDeleteBase'
 }
