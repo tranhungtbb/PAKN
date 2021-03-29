@@ -5,6 +5,7 @@ import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
 declare var $: any
 
@@ -14,8 +15,8 @@ declare var $: any
 	styleUrls: ['./list-general.component.css'],
 })
 export class ListGeneralComponent implements OnInit {
-	constructor(private _service: RecommendationService, private _toastr: ToastrService, private _shareData: DataService) {}
-
+	constructor(private _service: RecommendationService, private storeageService: UserInfoStorageService, private _toastr: ToastrService, private _shareData: DataService) {}
+	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
 		{ value: 2, text: 'Chờ xử lý' },

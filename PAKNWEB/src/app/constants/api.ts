@@ -26,9 +26,9 @@ export class Api {
 	//Recommendation
 	public static RecommendationGetDataForCreate = 'Recommendation/RecommendationGetDataForCreate'
 	public static RecommendationGetList = 'MRSPBase/MRRecommendationGetAllOnPageBase'
-	public static RecommendationGetById = 'MRSPBase/MRRecommendationGetByIDBase'
+	public static RecommendationGetById = 'Recommendation/RecommendationGetById'
 	public static RecommendationInsert = 'Recommendation/RecommendationInsert'
-	public static RecommendationUpdate = 'MRSPBase/MRRecommendationUpdateBase'
+	public static RecommendationUpdate = 'Recommendation/RecommendationUpdate'
 	public static RecommendationDelete = 'MRSPBase/MRRecommendationDeleteBase'
 	public static RecommendationExport = 'MRSPBase/MRRecommendationExportBase'
 

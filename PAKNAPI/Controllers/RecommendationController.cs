@@ -51,6 +51,24 @@ namespace PAKNAPI.Controller
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("RecommendationGetByID")]
+		public async Task<ActionResult<object>> RecommendationGetByID(int? Id)
+		{
+			try
+			{
+				RecommendationGetByIDResponse data = new RecommendationGetByIDResponse();
+				return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationGetByID(Id) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 
 		[HttpPost]
 		[Authorize]
@@ -71,6 +89,8 @@ namespace PAKNAPI.Controller
 				request.Data = JsonConvert.DeserializeObject<MRRecommendationInsertIN>(Request.Form["Data"].ToString(), jss);
 				request.ListHashTag = JsonConvert.DeserializeObject<List<DropdownObject>>(Request.Form["Hashtags"].ToString(), jss);
 				request.Files = Request.Form.Files;
+				request.Data.CreatedBy = request.UserId;
+				request.Data.CreatedDate = DateTime.Now;
 				int? Id = Int32.Parse((await new MRRecommendationInsert(_appSetting).MRRecommendationInsertDAO(request.Data)).ToString());
 				if (Id > 0)
 				{
@@ -149,10 +169,14 @@ namespace PAKNAPI.Controller
 				request.LstXoaFile = JsonConvert.DeserializeObject<List<MRRecommendationFiles>>(Request.Form["LstXoaFile"].ToString(), jss);
 				request.ListHashTag = JsonConvert.DeserializeObject<List<DropdownObject>>(Request.Form["Hashtags"].ToString(), jss);
 				request.Files = Request.Form.Files;
+				request.Data.UpdatedBy = request.UserId;
+				request.Data.UpdatedDate = DateTime.Now;
 				await new MRRecommendationUpdate(_appSetting).MRRecommendationUpdateDAO(request.Data);
 
 				if (request.LstXoaFile.Count > 0)
 				{
+
+					Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
 					string webRootPath = _hostingEnvironment.ContentRootPath;
 
 					if (string.IsNullOrWhiteSpace(webRootPath))
@@ -162,7 +186,7 @@ namespace PAKNAPI.Controller
 
 					foreach (var item in request.LstXoaFile)
 					{
-						string filePath = Path.Combine(webRootPath, item.FilePath);
+						string filePath = Path.Combine(webRootPath, decrypt.DecryptData(item.FilePath));
 
 						if (System.IO.File.Exists(filePath))
 						{

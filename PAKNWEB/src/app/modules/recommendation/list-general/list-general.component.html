@@ -114,11 +114,14 @@
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
-											<a href="#" class="btn-icon grd-xanhngoc text-white mr-2"><i class="bi bi-file-earmark-check"></i></a>
-											<a href="#" class="btn-icon grd-red text-white mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
-													class="bi bi-file-earmark-break"></i></a>
-											<a class="btn-icon grd-red text-white" (click)="preDelete(item.id)"><i class="bi bi-trash"></i></a>
-											<a href="#" class="btn-icon" data-toggle="modal" data-target="#modal-history-pakn"><i class="bi bi-clock-history"></i></a>
+											<a [routerLink]="['/quan-tri/kien-nghi/them-moi/', item.id]" *ngIf="item.status == 4 && item.createdBy == userLoginId"
+												class="btn-icon grd-brown text-brown mr-2" title="Cập nhật"><i class="bi bi-pencil-square"></i></a>
+											<a *ngIf="item.status == 2" class="btn-icon grd-xanhngoc text-white mr-2" title="Tiếp nhận xử lý"><i
+													class="bi bi-file-earmark-check"></i></a>
+											<a *ngIf="item.status == 2" href="#" class="btn-icon grd-red text-white mr-2" data-toggle="modal" data-target="#modal-tc-pakn"
+												title="Từ chối tiếp nhận"><i class="bi bi-file-earmark-break"></i></a>
+											<a class="btn-icon grd-red text-white" (click)="preDelete(item.id)" title="Xóa"><i class="bi bi-trash"></i></a>
+											<a class="btn-icon" data-toggle="modal" data-target="#modal-history-pakn" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
 									</td>
 								</tr>

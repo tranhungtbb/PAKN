@@ -86,6 +86,7 @@ namespace PAKNAPI.Controllers
 						return new LoginResponse
 						{
 							Success = ResultCode.OK,
+							UserId = user[0].Id,
 							UserName = user[0].UserName,
 							FullName = user[0].FullName,
 							Email = user[0].Email,
