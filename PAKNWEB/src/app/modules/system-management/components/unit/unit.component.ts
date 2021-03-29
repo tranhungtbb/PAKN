@@ -3,7 +3,6 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core'
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 import { MatDialog, MatDialogModule } from '@angular/material'
-import { TreeModule } from 'primeng/tree'
 import { TreeNode } from 'primeng/api'
 
 import { UnitService } from '../../../../services/unit.service'
@@ -172,31 +171,29 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 
 	getAllUnitShortInfo() {
-		this.unitService
-			.getAll({})
-			.subscribe(
-				(res) => {
-					if (res.success != 'OK') return
-					let listUnit = res.result.CAUnitGetAll.map((e) => {
-						let item = {
-							id: e.id,
-							name: e.name,
-							parentId: e.parentId == null ? 0 : e.parentId,
-							unitLevel: e.unitLevel,
-							children: [],
-						}
-						if (e.unitLevel < 3) {
-							item['expandedIcon'] = 'pi bi-dash-circle-fill'
-							item['collapsedIcon'] = 'pi bi-plus-circle-fill'
-						}
+		this.unitService.getAll({}).subscribe(
+			(res) => {
+				if (res.success != 'OK') return
+				let listUnit = res.result.CAUnitGetAll.map((e) => {
+					let item = {
+						id: e.id,
+						name: e.name,
+						parentId: e.parentId == null ? 0 : e.parentId,
+						unitLevel: e.unitLevel,
+						children: [],
+					}
+					if (e.unitLevel < 3) {
+						item['expandedIcon'] = 'pi bi-dash-circle-fill'
+						item['collapsedIcon'] = 'pi bi-plus-circle-fill'
+					}
 
-						return item
-					})
-					this.unitFlatlist = listUnit
-					this.treeUnit = this.unflatten(listUnit)
-				},
-				(err) => {}
-			)
+					return item
+				})
+				this.unitFlatlist = listUnit
+				this.treeUnit = this.unflatten(listUnit)
+			},
+			(err) => {}
+		)
 	}
 
 	/*start user area*/
@@ -225,11 +222,11 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.getUserPagedList()
 	}
 
-	@ViewChild(UserCreateOrUpdateComponent,{static: false}) childCreateOrUpdateUser : UserCreateOrUpdateComponent;
-	modalUserCreateOrUpdate(key: any = 0){
-		this.childCreateOrUpdateUser.openModal(this.unitObject.id,key)
+	@ViewChild(UserCreateOrUpdateComponent, { static: false }) childCreateOrUpdateUser: UserCreateOrUpdateComponent
+	modalUserCreateOrUpdate(key: any = 0) {
+		this.childCreateOrUpdateUser.openModal(this.unitObject.id, key)
 	}
-	
+
 	onDelUser(id: number) {
 		let userObj = this.listUserPaged.find((c) => c.id == id)
 
@@ -269,7 +266,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	unitFormSubmitted = false
 	onSaveUnit() {
 		this.unitFormSubmitted = true
-		console.log(this.modelUnit);
+		console.log(this.modelUnit)
 		if (this.createUnitFrom.invalid) {
 			return
 		}
