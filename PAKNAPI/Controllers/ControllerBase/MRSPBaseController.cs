@@ -164,28 +164,6 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpGet]
-		[Authorize]
-		[Route("MRRecommendationFilesGetByRecommendationIdBase")]
-		public async Task<ActionResult<object>> MRRecommendationFilesGetByRecommendationIdBase(int? Id)
-		{
-			try
-			{
-				List<MRRecommendationFilesGetByRecommendationId> rsMRRecommendationFilesGetByRecommendationId = await new MRRecommendationFilesGetByRecommendationId(_appSetting).MRRecommendationFilesGetByRecommendationIdDAO(Id);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"MRRecommendationFilesGetByRecommendationId", rsMRRecommendationFilesGetByRecommendationId},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
 		[HttpPost]
 		[Authorize]
 		[Route("MRRecommendationFilesInsertBase")]

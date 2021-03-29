@@ -54,21 +54,21 @@ namespace PAKNAPI.ModelBase
 		public int? RowNumber;
 		public int Id;
 		public string Name;
-		public string Code;
 		public string Phone;
 		public bool IsActived;
 		public bool IsDeleted;
 		public string Description;
 		public string Email;
 		public int? DepartmentGroupId;
+		public string Address;
+		public string Fax;
 
-		public async Task<List<CADepartmentGetAllOnPage>> CADepartmentGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Code, string Description, bool? IsActived)
+		public async Task<List<CADepartmentGetAllOnPage>> CADepartmentGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
 			DP.Add("Name", Name);
-			DP.Add("Code", Code);
 			DP.Add("Description", Description);
 			DP.Add("IsActived", IsActived);
 
@@ -91,13 +91,14 @@ namespace PAKNAPI.ModelBase
 
 		public int Id;
 		public string Name;
-		public string Code;
 		public string Phone;
 		public bool IsActived;
 		public bool IsDeleted;
 		public string Description;
 		public string Email;
 		public int? DepartmentGroupId;
+		public string Address;
+		public string Fax;
 
 		public async Task<List<CADepartmentGetByID>> CADepartmentGetByIDDAO(int? Id)
 		{
@@ -217,7 +218,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cADepartmentGroupInsertIN.IsDeleted);
 			DP.Add("Description", _cADepartmentGroupInsertIN.Description);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_DepartmentGroupInsert", DP));
+			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_DepartmentGroupInsert", DP);
 		}
 	}
 
@@ -282,13 +283,14 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _cADepartmentUpdateIN.Id);
 			DP.Add("Name", _cADepartmentUpdateIN.Name);
-			DP.Add("Code", _cADepartmentUpdateIN.Code);
 			DP.Add("Phone", _cADepartmentUpdateIN.Phone);
 			DP.Add("IsActived", _cADepartmentUpdateIN.IsActived);
 			DP.Add("IsDeleted", _cADepartmentUpdateIN.IsDeleted);
 			DP.Add("Description", _cADepartmentUpdateIN.Description);
 			DP.Add("Email", _cADepartmentUpdateIN.Email);
 			DP.Add("DepartmentGroupId", _cADepartmentUpdateIN.DepartmentGroupId);
+			DP.Add("Address", _cADepartmentUpdateIN.Address);
+			DP.Add("Fax", _cADepartmentUpdateIN.Fax);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_DepartmentUpdate", DP));
 		}
@@ -298,13 +300,14 @@ namespace PAKNAPI.ModelBase
 	{
 		public int? Id { get; set; }
 		public string Name { get; set; }
-		public string Code { get; set; }
 		public string Phone { get; set; }
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
 		public string Email { get; set; }
 		public int? DepartmentGroupId { get; set; }
+		public string Address { get; set; }
+		public string Fax { get; set; }
 	}
 
 	public class CAFieldDelete
@@ -508,11 +511,13 @@ namespace PAKNAPI.ModelBase
 		public string Name;
 		public bool IsActived;
 
-		public async Task<List<CAHashtagGetAllOnPage>> CAHashtagGetAllOnPageDAO(int? PageSize, int? PageIndex)
+		public async Task<List<CAHashtagGetAllOnPage>> CAHashtagGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, bool? IsActived)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
+			DP.Add("Name", Name);
+			DP.Add("IsActived", IsActived);
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAHashtagGetAllOnPage>("CA_HashtagGetAllOnPage", DP)).ToList();
 		}

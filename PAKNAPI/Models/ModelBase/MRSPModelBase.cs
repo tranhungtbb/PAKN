@@ -105,34 +105,6 @@ namespace PAKNAPI.ModelBase
 		public int? Id { get; set; }
 	}
 
-	public class MRRecommendationFilesGetByRecommendationId
-	{
-		private SQLCon _sQLCon;
-
-		public MRRecommendationFilesGetByRecommendationId(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public MRRecommendationFilesGetByRecommendationId()
-		{
-		}
-
-		public int Id;
-		public int? RecommendationId;
-		public string Name;
-		public short? FileType;
-		public string FilePath;
-
-		public async Task<List<MRRecommendationFilesGetByRecommendationId>> MRRecommendationFilesGetByRecommendationIdDAO(int? Id)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-
-			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationFilesGetByRecommendationId>("MR_Recommendation_FilesGetByRecommendationId", DP)).ToList();
-		}
-	}
-
 	public class MRRecommendationFilesInsert
 	{
 		private SQLCon _sQLCon;

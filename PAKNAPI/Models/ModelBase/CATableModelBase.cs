@@ -16,12 +16,13 @@ namespace PAKNAPI.ModelBase
 		public int Id;
 		public int? DepartmentGroupId;
 		public string Name;
-		public string Code;
 		public string Email;
 		public string Phone;
 		public string Description;
 		public bool IsActived;
 		public bool IsDeleted;
+		public string Address;
+		public string Fax;
 		public int? RowNumber; // int, null
 	}
 
@@ -41,12 +42,13 @@ namespace PAKNAPI.ModelBase
 		public int Id;
 		public int? DepartmentGroupId;
 		public string Name;
-		public string Code;
 		public string Email;
 		public string Phone;
 		public string Description;
 		public bool IsActived;
 		public bool IsDeleted;
+		public string Address;
+		public string Fax;
 
 		public async Task<CADepartment> CADepartmentGetByID(int? Id)
 		{
@@ -76,11 +78,12 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cADepartment.Name);
-			DP.Add("Code", _cADepartment.Code);
-			DP.Add("Phone", _cADepartment.Phone);
 			DP.Add("IsActived", _cADepartment.IsActived);
 			DP.Add("IsDeleted", _cADepartment.IsDeleted);
+			DP.Add("Phone", _cADepartment.Phone);
 			DP.Add("Description", _cADepartment.Description);
+			DP.Add("Address", _cADepartment.Address);
+			DP.Add("Fax", _cADepartment.Fax);
 			DP.Add("Email", _cADepartment.Email);
 			DP.Add("DepartmentGroupId", _cADepartment.DepartmentGroupId);
 
@@ -92,11 +95,12 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _cADepartment.Id);
 			DP.Add("Name", _cADepartment.Name);
-			DP.Add("Code", _cADepartment.Code);
-			DP.Add("Phone", _cADepartment.Phone);
 			DP.Add("IsActived", _cADepartment.IsActived);
 			DP.Add("IsDeleted", _cADepartment.IsDeleted);
+			DP.Add("Phone", _cADepartment.Phone);
 			DP.Add("Description", _cADepartment.Description);
+			DP.Add("Address", _cADepartment.Address);
+			DP.Add("Fax", _cADepartment.Fax);
 			DP.Add("Email", _cADepartment.Email);
 			DP.Add("DepartmentGroupId", _cADepartment.DepartmentGroupId);
 
