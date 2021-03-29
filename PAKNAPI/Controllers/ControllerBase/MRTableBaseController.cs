@@ -1496,6 +1496,251 @@ namespace PAKNAPI.ControllerBase
 
 		#endregion MRRecommendationForward
 
+		#region MRRecommendationGenCode
+
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationGenCodeGetByID")]
+		public async Task<ActionResult<object>> MRRecommendationGenCodeGetByID(int? Id)
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationGenCode(_appSetting).MRRecommendationGenCodeGetByID(Id) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationGenCodeGetAll")]
+		public async Task<ActionResult<object>> MRRecommendationGenCodeGetAll()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationGenCode(_appSetting).MRRecommendationGenCodeGetAll() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationGenCodeGetAllOnPage")]
+		public async Task<ActionResult<object>> MRRecommendationGenCodeGetAllOnPage(int PageSize, int PageIndex)
+		{
+			try
+			{
+				List<MRRecommendationGenCodeOnPage> rsMRRecommendationGenCodeOnPage = await new MRRecommendationGenCode(_appSetting).MRRecommendationGenCodeGetAllOnPage(PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationGenCode", rsMRRecommendationGenCodeOnPage},
+						{"TotalCount", rsMRRecommendationGenCodeOnPage != null && rsMRRecommendationGenCodeOnPage.Count > 0 ? rsMRRecommendationGenCodeOnPage[0].RowNumber : 0},
+						{"PageIndex", rsMRRecommendationGenCodeOnPage != null && rsMRRecommendationGenCodeOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsMRRecommendationGenCodeOnPage != null && rsMRRecommendationGenCodeOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationGenCodeInsert")]
+		public async Task<ActionResult<object>> MRRecommendationGenCodeInsert(MRRecommendationGenCode _mRRecommendationGenCode)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationGenCode(_appSetting).MRRecommendationGenCodeInsert(_mRRecommendationGenCode) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationGenCodeListInsert")]
+		public async Task<ActionResult<object>> MRRecommendationGenCodeListInsert(List<MRRecommendationGenCode> _mRRecommendationGenCodes)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (MRRecommendationGenCode _mRRecommendationGenCode in _mRRecommendationGenCodes)
+				{
+					int? result = await new MRRecommendationGenCode(_appSetting).MRRecommendationGenCodeInsert(_mRRecommendationGenCode);
+					if (result != null)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationGenCodeUpdate")]
+		public async Task<ActionResult<object>> MRRecommendationGenCodeUpdate(MRRecommendationGenCode _mRRecommendationGenCode)
+		{
+			try
+			{
+				int count = await new MRRecommendationGenCode(_appSetting).MRRecommendationGenCodeUpdate(_mRRecommendationGenCode);
+				if (count > 0)
+				{
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationGenCodeDelete")]
+		public async Task<ActionResult<object>> MRRecommendationGenCodeDelete(MRRecommendationGenCode _mRRecommendationGenCode)
+		{
+			try
+			{
+				int count = await new MRRecommendationGenCode(_appSetting).MRRecommendationGenCodeDelete(_mRRecommendationGenCode);
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationGenCodeListDelete")]
+		public async Task<ActionResult<object>> MRRecommendationGenCodeListDelete(List<MRRecommendationGenCode> _mRRecommendationGenCodes)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (MRRecommendationGenCode _mRRecommendationGenCode in _mRRecommendationGenCodes)
+				{
+					var result = await new MRRecommendationGenCode(_appSetting).MRRecommendationGenCodeDelete(_mRRecommendationGenCode);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationGenCodeDeleteAll")]
+		public async Task<ActionResult<object>> MRRecommendationGenCodeDeleteAll()
+		{
+			try
+			{
+				int count = await new MRRecommendationGenCode(_appSetting).MRRecommendationGenCodeDeleteAll();
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		#endregion MRRecommendationGenCode
+
 		#region MRRecommendationHashtag
 
 		[HttpGet]

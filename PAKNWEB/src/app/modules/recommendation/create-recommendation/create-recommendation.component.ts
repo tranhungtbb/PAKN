@@ -50,9 +50,9 @@ export class CreateRecommendationComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
+		this.model = new RecommendationObject()
 		this.getDropdown()
 		this.activatedRoute.params.subscribe((params) => {
-			this.model = new RecommendationObject()
 			this.model.id = +params['id']
 			if (this.model.id != 0) {
 				this.getData()
@@ -146,6 +146,7 @@ export class CreateRecommendationComponent implements OnInit {
 				this.lstBusiness = response.result.lstBusiness
 				this.lstIndividual = response.result.lstIndividual
 				this.lstObject = response.result.lstIndividual
+				this.model.code = response.result.code
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -164,6 +165,16 @@ export class CreateRecommendationComponent implements OnInit {
 		} else {
 			this.titleObject = 'Doanh nghiệp'
 			this.lstObject = this.lstBusiness
+		}
+	}
+
+	changeObject() {
+		this.model.name = ''
+		if (this.model.sendId != null) {
+			for (let index = 0; index < this.lstObject.length; index++) {
+				if (this.model.sendId == this.lstObject[index].value) this.model.name = this.lstObject[index].text
+				break
+			}
 		}
 	}
 
@@ -238,7 +249,7 @@ export class CreateRecommendationComponent implements OnInit {
 			this.recommendationService.recommendationInsert(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.toastr.success(COMMONS.ADD_SUCCESS)
-					//	return this.router.navigate(['/business/business-management/letter/view/', this.model.idDonThu])
+					return this.router.navigate(['/quan-tri/kien-nghi/danh-sach-tong-hop'])
 				} else {
 					this.toastr.error(response.message)
 				}
@@ -250,7 +261,7 @@ export class CreateRecommendationComponent implements OnInit {
 			this.recommendationService.recommendationUpdate(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.toastr.success(COMMONS.UPDATE_SUCCESS)
-					//return this.router.navigate(['/business/business-management/letter/view/', this.model.idDonThu])
+					return this.router.navigate(['/quan-tri/kien-nghi/danh-sach-tong-hop'])
 				} else {
 					this.toastr.error(response.message)
 				}

@@ -210,7 +210,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> CADepartmentGroupInsertDAO(CADepartmentGroupInsertIN _cADepartmentGroupInsertIN)
+		public async Task<int?> CADepartmentGroupInsertDAO(CADepartmentGroupInsertIN _cADepartmentGroupInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cADepartmentGroupInsertIN.Name);
@@ -218,7 +218,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cADepartmentGroupInsertIN.IsDeleted);
 			DP.Add("Description", _cADepartmentGroupInsertIN.Description);
 
-			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_DepartmentGroupInsert", DP);
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_DepartmentGroupInsert", DP);
 		}
 	}
 
@@ -454,7 +454,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> CAFieldInsertDAO(CAFieldInsertIN _cAFieldInsertIN)
+		public async Task<int?> CAFieldInsertDAO(CAFieldInsertIN _cAFieldInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cAFieldInsertIN.Name);
@@ -462,7 +462,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cAFieldInsertIN.IsDeleted);
 			DP.Add("Description", _cAFieldInsertIN.Description);
 
-			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_FieldInsert", DP);
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_FieldInsert", DP);
 		}
 	}
 
@@ -487,7 +487,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> CAFieldUpdateDAO(CAFieldUpdateIN _cAFieldUpdateIN)
+		public async Task<int?> CAFieldUpdateDAO(CAFieldUpdateIN _cAFieldUpdateIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _cAFieldUpdateIN.Id);
@@ -496,7 +496,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cAFieldUpdateIN.IsDeleted);
 			DP.Add("Description", _cAFieldUpdateIN.Description);
 
-			return await _sQLCon.ExecuteScalarDapperAsync<int>("CA_FieldUpdate", DP);
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_FieldUpdate", DP);
 		}
 	}
 
@@ -605,13 +605,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<decimal> CAHashtagInsertDAO(CAHashtagInsertIN _cAHashtagInsertIN)
+		public async Task<decimal?> CAHashtagInsertDAO(CAHashtagInsertIN _cAHashtagInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cAHashtagInsertIN.Name);
 			DP.Add("IsActived", _cAHashtagInsertIN.IsActived);
 
-			return await _sQLCon.ExecuteScalarDapperAsync<decimal>("CA_HashtagInsert", DP);
+			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("CA_HashtagInsert", DP);
 		}
 	}
 

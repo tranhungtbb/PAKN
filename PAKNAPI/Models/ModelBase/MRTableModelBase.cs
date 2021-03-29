@@ -667,6 +667,90 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class MRRecommendationGenCodeOnPage
+	{
+		public int Id { get; set; }
+		public double CurrentNumber { get; set; }
+		public int Year { get; set; }
+		public int? RowNumber; // int, null
+	}
+
+	public class MRRecommendationGenCode
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGenCode(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGenCode()
+		{
+		}
+
+		public int Id { get; set; }
+		public double CurrentNumber { get; set; }
+		public int Year { get; set; }
+
+		public async Task<MRRecommendationGenCode> MRRecommendationGenCodeGetByID(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGenCode>("MR_Recommendation_GenCodeGetByID", DP)).ToList().FirstOrDefault();
+		}
+
+		public async Task<List<MRRecommendationGenCode>> MRRecommendationGenCodeGetAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGenCode>("MR_Recommendation_GenCodeGetAll", DP)).ToList();
+		}
+
+		public async Task<List<MRRecommendationGenCodeOnPage>> MRRecommendationGenCodeGetAllOnPage(int PageSize, int PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGenCodeOnPage>("MR_Recommendation_GenCodeGetAllOnPage", DP)).ToList();
+		}
+
+		public async Task<int?> MRRecommendationGenCodeInsert(MRRecommendationGenCode _mRRecommendationGenCode)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("CurrentNumber", _mRRecommendationGenCode.CurrentNumber);
+			DP.Add("Year", _mRRecommendationGenCode.Year);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_GenCodeInsert", DP));
+		}
+
+		public async Task<int> MRRecommendationGenCodeUpdate(MRRecommendationGenCode _mRRecommendationGenCode)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationGenCode.Id);
+			DP.Add("CurrentNumber", _mRRecommendationGenCode.CurrentNumber);
+			DP.Add("Year", _mRRecommendationGenCode.Year);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_GenCodeUpdate", DP));
+		}
+
+		public async Task<int> MRRecommendationGenCodeDelete(MRRecommendationGenCode _mRRecommendationGenCode)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationGenCode.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_GenCodeDelete", DP));
+		}
+
+		public async Task<int> MRRecommendationGenCodeDeleteAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_GenCodeDeleteAll", DP));
+		}
+	}
+
 	public class MRRecommendationHashtagOnPage
 	{
 		public long Id { get; set; }
