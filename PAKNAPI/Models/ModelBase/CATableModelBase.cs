@@ -910,7 +910,6 @@ namespace PAKNAPI.ModelBase
 	{
 		public int Id;
 		public string Name;
-		public string Code;
 		public string Description;
 		public bool IsActived;
 		public bool IsDeleted;
@@ -932,7 +931,6 @@ namespace PAKNAPI.ModelBase
 
 		public int Id;
 		public string Name;
-		public string Code;
 		public string Description;
 		public bool IsActived;
 		public bool IsDeleted;
@@ -965,7 +963,6 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cAWord.Name);
-			DP.Add("Code", _cAWord.Code);
 			DP.Add("IsActived", _cAWord.IsActived);
 			DP.Add("IsDeleted", _cAWord.IsDeleted);
 			DP.Add("Description", _cAWord.Description);
@@ -978,7 +975,6 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _cAWord.Id);
 			DP.Add("Name", _cAWord.Name);
-			DP.Add("Code", _cAWord.Code);
 			DP.Add("IsActived", _cAWord.IsActived);
 			DP.Add("IsDeleted", _cAWord.IsDeleted);
 			DP.Add("Description", _cAWord.Description);

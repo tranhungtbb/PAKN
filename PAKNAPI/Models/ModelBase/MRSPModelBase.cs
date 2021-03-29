@@ -24,13 +24,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id { get; set; }
-		public int ObjectId { get; set; }
-		public int? Type { get; set; }
-		public string Content { get; set; }
-		public byte? Status { get; set; }
-		public long? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
+		public int Id;
+		public int ObjectId;
+		public int? Type;
+		public string Content;
+		public byte? Status;
+		public long? CreatedBy;
+		public DateTime? CreatedDate;
 
 		public async Task<List<HISRecommendationGetByObjectId>> HISRecommendationGetByObjectIdDAO(int? Id)
 		{
@@ -78,94 +78,6 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate { get; set; }
 	}
 
-	public class MRRecommendationFilesDelete
-	{
-		private SQLCon _sQLCon;
-
-		public MRRecommendationFilesDelete(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public MRRecommendationFilesDelete()
-		{
-		}
-
-		public async Task<int> MRRecommendationFilesDeleteDAO(MRRecommendationFilesDeleteIN _mRRecommendationFilesDeleteIN)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _mRRecommendationFilesDeleteIN.Id);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_FilesDelete", DP));
-		}
-	}
-
-	public class MRRecommendationFilesDeleteIN
-	{
-		public int? Id { get; set; }
-	}
-
-	public class MRRecommendationFilesGetByRecommendationId
-	{
-		private SQLCon _sQLCon;
-
-		public MRRecommendationFilesGetByRecommendationId(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public MRRecommendationFilesGetByRecommendationId()
-		{
-		}
-
-		public int Id { get; set; }
-		public int? RecommendationId { get; set; }
-		public string Name { get; set; }
-		public short? FileType { get; set; }
-		public string FilePath { get; set; }
-
-		public async Task<List<MRRecommendationFilesGetByRecommendationId>> MRRecommendationFilesGetByRecommendationIdDAO(int? Id)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-
-			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationFilesGetByRecommendationId>("MR_Recommendation_FilesGetByRecommendationId", DP)).ToList();
-		}
-	}
-
-	public class MRRecommendationFilesInsert
-	{
-		private SQLCon _sQLCon;
-
-		public MRRecommendationFilesInsert(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public MRRecommendationFilesInsert()
-		{
-		}
-
-		public async Task<int> MRRecommendationFilesInsertDAO(MRRecommendationFilesInsertIN _mRRecommendationFilesInsertIN)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("RecommendationId", _mRRecommendationFilesInsertIN.RecommendationId);
-			DP.Add("Name", _mRRecommendationFilesInsertIN.Name);
-			DP.Add("FileType", _mRRecommendationFilesInsertIN.FileType);
-			DP.Add("FilePath", _mRRecommendationFilesInsertIN.FilePath);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_FilesInsert", DP));
-		}
-	}
-
-	public class MRRecommendationFilesInsertIN
-	{
-		public int? RecommendationId { get; set; }
-		public string Name { get; set; }
-		public short? FileType { get; set; }
-		public string FilePath { get; set; }
-	}
-
 	public class MRRecommendationDelete
 	{
 		private SQLCon _sQLCon;
@@ -206,24 +118,24 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber { get; set; }
-		public int Id { get; set; }
-		public string Code { get; set; }
-		public string Title { get; set; }
-		public string Content { get; set; }
-		public int? Field { get; set; }
-		public string FieldName { get; set; }
-		public int? UnitId { get; set; }
-		public string UnitName { get; set; }
-		public short? TypeObject { get; set; }
-		public long? SendId { get; set; }
-		public string Name { get; set; }
-		public byte? Status { get; set; }
-		public DateTime? SendDate { get; set; }
-		public long? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
-		public long? UpdatedBy { get; set; }
-		public DateTime? UpdatedDate { get; set; }
+		public int? RowNumber;
+		public int Id;
+		public string Code;
+		public string Title;
+		public string Content;
+		public int? Field;
+		public string FieldName;
+		public int? UnitId;
+		public string UnitName;
+		public short? TypeObject;
+		public long? SendId;
+		public string Name;
+		public byte? Status;
+		public DateTime? SendDate;
+		public long? CreatedBy;
+		public DateTime? CreatedDate;
+		public long? UpdatedBy;
+		public DateTime? UpdatedDate;
 
 		public async Task<List<MRRecommendationGetAllOnPage>> MRRecommendationGetAllOnPageDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex)
 		{
@@ -254,21 +166,21 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id { get; set; }
-		public string Code { get; set; }
-		public string Title { get; set; }
-		public string Content { get; set; }
-		public int? Field { get; set; }
-		public int? UnitId { get; set; }
-		public short? TypeObject { get; set; }
-		public long? SendId { get; set; }
-		public string Name { get; set; }
-		public byte? Status { get; set; }
-		public DateTime? SendDate { get; set; }
-		public long? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
-		public long? UpdatedBy { get; set; }
-		public DateTime? UpdatedDate { get; set; }
+		public int Id;
+		public string Code;
+		public string Title;
+		public string Content;
+		public int? Field;
+		public int? UnitId;
+		public short? TypeObject;
+		public long? SendId;
+		public string Name;
+		public byte? Status;
+		public DateTime? SendDate;
+		public long? CreatedBy;
+		public DateTime? CreatedDate;
+		public long? UpdatedBy;
+		public DateTime? UpdatedDate;
 
 		public async Task<List<MRRecommendationGetByID>> MRRecommendationGetByIDDAO(int? Id)
 		{
