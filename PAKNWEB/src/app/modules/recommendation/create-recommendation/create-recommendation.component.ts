@@ -83,7 +83,6 @@ export class CreateRecommendationComponent implements OnInit {
 				}),
 					(error) => {
 						console.error(error)
-						alert(error)
 					}
 			}
 		}
@@ -134,7 +133,6 @@ export class CreateRecommendationComponent implements OnInit {
 		}),
 			(error) => {
 				console.log(error)
-				alert(error)
 			}
 	}
 	getDropdown() {
@@ -154,7 +152,6 @@ export class CreateRecommendationComponent implements OnInit {
 		}),
 			(error) => {
 				console.log(error)
-				alert(error)
 			}
 	}
 
