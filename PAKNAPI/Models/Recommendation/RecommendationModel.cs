@@ -34,4 +34,10 @@ namespace PAKNAPI.Models.Recommendation
         public List<MRRecommendationFiles> LstXoaFile { get; set; }
         public IFormFileCollection Files { get; set; }
     }
+    public class RecommendationGetByIDResponse
+    {
+        public MRRecommendationGetByID Model { get; set; }
+        public List<MRRecommendationHashtagGetByRecommendationId> lstHashtag { get; set; }
+        public List<MRRecommendationFilesGetByRecommendationId> lstFiles { get; set; }
+    }
 }

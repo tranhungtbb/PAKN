@@ -57,7 +57,7 @@ export class CreateRecommendationComponent implements OnInit {
 			if (this.model.id != 0) {
 				this.getData()
 			} else {
-				this.model.typeObject = true
+				this.model.typeObject = 1
 			}
 			this.builForm()
 		})
@@ -121,8 +121,9 @@ export class CreateRecommendationComponent implements OnInit {
 		}
 		this.recommendationService.recommendationGetById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this.model = response.result.data
-				this.files = response.result.files
+				this.model = response.result.model
+				this.lstHashtagSelected = response.result.lstHashtag
+				this.files = response.result.lstFiles
 
 				if (this.model.sendDate) {
 					this.model.sendDate = new Date(this.model.sendDate)
@@ -157,9 +158,9 @@ export class CreateRecommendationComponent implements OnInit {
 			}
 	}
 
-	changeTypeObject(typeObject: boolean) {
+	changeTypeObject(typeObject: number) {
 		this.model.sendId = null
-		if (typeObject) {
+		if (typeObject == 1) {
 			this.titleObject = 'Cá nhân'
 			this.lstObject = this.lstIndividual
 		} else {
