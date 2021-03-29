@@ -78,6 +78,28 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate { get; set; }
 	}
 
+	public class MRRecommendationCheckExistedCode
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationCheckExistedCode(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationCheckExistedCode()
+		{
+		}
+
+		public async Task<List<MRRecommendationCheckExistedCode>> MRRecommendationCheckExistedCodeDAO(string Code)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Code", Code);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationCheckExistedCode>("MR_Recommendation_CheckExistedCode", DP)).ToList();
+		}
+	}
+
 	public class MRRecommendationFilesDelete
 	{
 		private SQLCon _sQLCon;
@@ -166,6 +188,48 @@ namespace PAKNAPI.ModelBase
 		public string FilePath { get; set; }
 	}
 
+	public class MRRecommendationGenCodeGetCode
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGenCodeGetCode(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGenCodeGetCode()
+		{
+		}
+
+		public async Task<string> MRRecommendationGenCodeGetCodeDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return await _sQLCon.ExecuteScalarDapperAsync<string>("MR_Recommendation_GenCode_GetCode", DP);
+		}
+	}
+
+	public class MRRecommendationGenCodeUpdateNumber
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGenCodeUpdateNumber(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGenCodeUpdateNumber()
+		{
+		}
+
+		public async Task<int> MRRecommendationGenCodeUpdateNumberDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_GenCode_UpdateNumber", DP));
+		}
+	}
+
 	public class MRRecommendationHashtagDeleteByRecommendationId
 	{
 		private SQLCon _sQLCon;
@@ -206,10 +270,10 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public long Id { get; set; }
-		public int RecommendationId { get; set; }
-		public int HashtagId { get; set; }
-		public string HashtagName { get; set; }
+		public long Id;
+		public int RecommendationId;
+		public int HashtagId;
+		public string HashtagName;
 
 		public async Task<List<MRRecommendationHashtagGetByRecommendationId>> MRRecommendationHashtagGetByRecommendationIdDAO(long? Id)
 		{
