@@ -110,7 +110,8 @@
             <div class="row form-group">
               <div class="col-sm-8">
                 <label class="control-label">Tên nhóm sở ngành <span class="text-danger">*</span></label>
-                <input class="form-control" formControlName="name" [(ngModel)]="model.name" maxlength="100" />
+                <input placeholder="Nhập tên..." svTrim class="form-control" formControlName="name"
+                  [(ngModel)]="model.name" maxlength="100" />
                 <div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))"
                   class="has-error m-b-12">
                   <div *ngIf="f.name.errors.required">
