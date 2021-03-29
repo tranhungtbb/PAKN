@@ -90,4 +90,11 @@ export class Api {
 	public static DepartmentGroupUpdate = 'CACategorySPBase/CADepartmentGroupUpdateBase'
 	public static DepartmentGroupUpdateStatus = 'CACategorySPBase/CADepartmentGroupUpdateBase'
 	public static DepartmentGroupDelete = 'CACategorySPBase/CADepartmentGroupDeleteBase'
+	//Word
+	public static WordGetList = 'CACategorySPBase/CAWordGetAllOnPageBase'
+	public static WordGetById = 'CACategorySPBase/CAWordGetByIDBase'
+	public static WordInsert = 'CACategorySPBase/CAWordInsertBase'
+	public static WordUpdate = 'CACategorySPBase/CAWordUpdateBase'
+	public static WordUpdateStatus = 'CACategorySPBase/CAWordUpdateBase'
+	public static WordDelete = 'CACategorySPBase/CAWordDeleteBase'
 }

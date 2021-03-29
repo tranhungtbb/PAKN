@@ -17,7 +17,7 @@ export class CatalogService {
 			return of(result as T)
 		}
 	}
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService) {}
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService) { }
 
 	fieldGetList(request: any): Observable<any> {
 		let headers = {
@@ -178,5 +178,53 @@ export class CatalogService {
 			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.DepartmentGroupDelete, headers)
+	}
+	//word
+	wordGetList(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.WordGetList, headers)
+	}
+
+	wordGetById(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETINFO),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.WordGetById, headers)
+	}
+
+	wordInsert(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.WordInsert, headers)
+	}
+
+	wordUpdate(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.WordUpdate, headers)
+	}
+
+	wordUpdateStatus(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.WordUpdateStatus, headers)
+	}
+
+	wordDelete(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.WordDelete, headers)
 	}
 }
