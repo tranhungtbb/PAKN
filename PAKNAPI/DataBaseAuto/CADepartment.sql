@@ -15,11 +15,12 @@ BEGIN
 	SELECT
 		[Id],
 		[Name],
-		[Code],
-		[Phone],
 		[IsActived],
 		[IsDeleted],
+		[Phone],
 		[Description],
+		[Address],
+		[Fax],
 		[Email],
 		[DepartmentGroupId]
 	FROM [CA_Department]
@@ -43,11 +44,12 @@ BEGIN
 	SELECT
 		[Id],
 		[Name],
-		[Code],
-		[Phone],
 		[IsActived],
 		[IsDeleted],
+		[Phone],
 		[Description],
+		[Address],
+		[Fax],
 		[Email],
 		[DepartmentGroupId]
 	FROM [CA_Department]
@@ -73,11 +75,12 @@ BEGIN
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
 		[Id],
 		[Name],
-		[Code],
-		[Phone],
 		[IsActived],
 		[IsDeleted],
+		[Phone],
 		[Description],
+		[Address],
+		[Fax],
 		[Email],
 		[DepartmentGroupId]
 	FROM [CA_Department]
@@ -99,11 +102,12 @@ DROP PROCEDURE [CA_DepartmentInsert];
 GO
 CREATE PROCEDURE [dbo].[CA_DepartmentInsert]
 	@Name nvarchar(100) = null,
-	@Code nvarchar(50) = null,
-	@Phone nvarchar(50) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
+	@Phone nvarchar(50) = null,
 	@Description nvarchar(1000) = null,
+	@Address nvarchar(200) = null,
+	@Fax nvarchar(50) = null,
 	@Email nvarchar(50) = null,
 	@DepartmentGroupId int = null
 AS
@@ -111,22 +115,24 @@ BEGIN
 	INSERT INTO [CA_Department]
 	(
 		[Name],
-		[Code],
-		[Phone],
 		[IsActived],
 		[IsDeleted],
+		[Phone],
 		[Description],
+		[Address],
+		[Fax],
 		[Email],
 		[DepartmentGroupId]
 	)
 	VALUES
 	(
 		@Name,
-		@Code,
-		@Phone,
 		@IsActived,
 		@IsDeleted,
+		@Phone,
 		@Description,
+		@Address,
+		@Fax,
 		@Email,
 		@DepartmentGroupId
 	)
@@ -146,22 +152,24 @@ GO
 CREATE PROCEDURE [dbo].[CA_DepartmentUpdate]
 	@Id int = null,
 	@Name nvarchar(100) = null,
-	@Code nvarchar(50) = null,
-	@Phone nvarchar(50) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
+	@Phone nvarchar(50) = null,
 	@Description nvarchar(1000) = null,
+	@Address nvarchar(200) = null,
+	@Fax nvarchar(50) = null,
 	@Email nvarchar(50) = null,
 	@DepartmentGroupId int = null
 AS
 BEGIN
 	UPDATE [CA_Department] SET
 		[Name] = @Name,
-		[Code] = @Code,
-		[Phone] = @Phone,
 		[IsActived] = @IsActived,
 		[IsDeleted] = @IsDeleted,
+		[Phone] = @Phone,
 		[Description] = @Description,
+		[Address] = @Address,
+		[Fax] = @Fax,
 		[Email] = @Email,
 		[DepartmentGroupId] = @DepartmentGroupId
 	WHERE [Id] = @Id

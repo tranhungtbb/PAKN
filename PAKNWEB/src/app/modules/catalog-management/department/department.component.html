@@ -147,38 +147,39 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row form-group">
-            <div class="col-sm-4">
-              <label class="control-label">Điện thoại <span class="text-danger">*</span></label>
-              <input svTrim placeholder="Nhập..." class="form-control" formControlName="name" [(ngModel)]="model.name"
-                maxlength="100" />
-              <div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))"
-                class="has-error m-b-12">
-                <div *ngIf="f.name.errors.required">
-                  <span class="help-block">Trường dữ liệu này không để trống</span>
+
+            <div class="row form-group">
+              <div class="col-sm-4">
+                <label class="control-label">Điện thoại <span class="text-danger">*</span></label>
+                <input svTrim placeholder="Nhập..." class="form-control" formControlName="name" [(ngModel)]="model.name"
+                  maxlength="100" />
+                <div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))"
+                  class="has-error m-b-12">
+                  <div *ngIf="f.name.errors.required">
+                    <span class="help-block">Trường dữ liệu này không để trống</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-sm-4">
-              <label class="control-label">Email <span class="text-danger">*</span></label>
-              <input svTrim placeholder="Nhập..." class="form-control" formControlName="name" [(ngModel)]="model.name"
-                maxlength="100" />
-              <div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))"
-                class="has-error m-b-12">
-                <div *ngIf="f.name.errors.required">
-                  <span class="help-block">Trường dữ liệu này không để trống</span>
+              <div class="col-sm-4">
+                <label class="control-label">Email <span class="text-danger">*</span></label>
+                <input svTrim placeholder="Nhập..." class="form-control" formControlName="name" [(ngModel)]="model.name"
+                  maxlength="100" />
+                <div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))"
+                  class="has-error m-b-12">
+                  <div *ngIf="f.name.errors.required">
+                    <span class="help-block">Trường dữ liệu này không để trống</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-sm-4">
-              <label class="control-label">Fax <span class="text-danger">*</span></label>
-              <input svTrim placeholder="Nhập..." class="form-control" formControlName="name" [(ngModel)]="model.name"
-                maxlength="100" />
-              <div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))"
-                class="has-error m-b-12">
-                <div *ngIf="f.name.errors.required">
-                  <span class="help-block">Trường dữ liệu này không để trống</span>
+              <div class="col-sm-4">
+                <label class="control-label">Fax <span class="text-danger">*</span></label>
+                <input svTrim placeholder="Nhập..." class="form-control" formControlName="name" [(ngModel)]="model.name"
+                  maxlength="100" />
+                <div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))"
+                  class="has-error m-b-12">
+                  <div *ngIf="f.name.errors.required">
+                    <span class="help-block">Trường dữ liệu này không để trống</span>
+                  </div>
                 </div>
               </div>
             </div>

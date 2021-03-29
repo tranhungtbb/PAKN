@@ -206,10 +206,10 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public long Id { get; set; }
-		public int RecommendationId { get; set; }
-		public int HashtagId { get; set; }
-		public string HashtagName { get; set; }
+		public long Id;
+		public int RecommendationId;
+		public int HashtagId;
+		public string HashtagName;
 
 		public async Task<List<MRRecommendationHashtagGetByRecommendationId>> MRRecommendationHashtagGetByRecommendationIdDAO(long? Id)
 		{
