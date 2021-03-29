@@ -16,12 +16,13 @@ namespace PAKNAPI.ModelBase
 		public int Id { get; set; }
 		public int? DepartmentGroupId { get; set; }
 		public string Name { get; set; }
-		public string Code { get; set; }
 		public string Email { get; set; }
 		public string Phone { get; set; }
 		public string Description { get; set; }
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
+		public string Address { get; set; }
+		public string Fax { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -41,12 +42,13 @@ namespace PAKNAPI.ModelBase
 		public int Id { get; set; }
 		public int? DepartmentGroupId { get; set; }
 		public string Name { get; set; }
-		public string Code { get; set; }
 		public string Email { get; set; }
 		public string Phone { get; set; }
 		public string Description { get; set; }
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
+		public string Address { get; set; }
+		public string Fax { get; set; }
 
 		public async Task<CADepartment> CADepartmentGetByID(int? Id)
 		{
@@ -76,11 +78,12 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cADepartment.Name);
-			DP.Add("Code", _cADepartment.Code);
-			DP.Add("Phone", _cADepartment.Phone);
 			DP.Add("IsActived", _cADepartment.IsActived);
 			DP.Add("IsDeleted", _cADepartment.IsDeleted);
+			DP.Add("Phone", _cADepartment.Phone);
 			DP.Add("Description", _cADepartment.Description);
+			DP.Add("Address", _cADepartment.Address);
+			DP.Add("Fax", _cADepartment.Fax);
 			DP.Add("Email", _cADepartment.Email);
 			DP.Add("DepartmentGroupId", _cADepartment.DepartmentGroupId);
 
@@ -92,11 +95,12 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _cADepartment.Id);
 			DP.Add("Name", _cADepartment.Name);
-			DP.Add("Code", _cADepartment.Code);
-			DP.Add("Phone", _cADepartment.Phone);
 			DP.Add("IsActived", _cADepartment.IsActived);
 			DP.Add("IsDeleted", _cADepartment.IsDeleted);
+			DP.Add("Phone", _cADepartment.Phone);
 			DP.Add("Description", _cADepartment.Description);
+			DP.Add("Address", _cADepartment.Address);
+			DP.Add("Fax", _cADepartment.Fax);
 			DP.Add("Email", _cADepartment.Email);
 			DP.Add("DepartmentGroupId", _cADepartment.DepartmentGroupId);
 

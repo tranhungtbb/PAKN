@@ -246,6 +246,25 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
+		[Route("MRRecommendationGenCodeGetCodeBase")]
+		public async Task<ActionResult<object>> MRRecommendationGenCodeGetCodeBase()
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationGenCodeGetCode(_appSetting).MRRecommendationGenCodeGetCodeDAO() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
 		[Route("MRRecommendationHashtagDeleteByRecommendationIdBase")]
 		public async Task<ActionResult<object>> MRRecommendationHashtagDeleteByRecommendationIdBase(MRRecommendationHashtagDeleteByRecommendationIdIN _mRRecommendationHashtagDeleteByRecommendationIdIN)
 		{
