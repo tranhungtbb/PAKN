@@ -1495,5 +1495,250 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		#endregion MRRecommendationForward
+
+		#region MRRecommendationHashtag
+
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationHashtagGetByID")]
+		public async Task<ActionResult<object>> MRRecommendationHashtagGetByID(long? Id)
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationHashtag(_appSetting).MRRecommendationHashtagGetByID(Id) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationHashtagGetAll")]
+		public async Task<ActionResult<object>> MRRecommendationHashtagGetAll()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationHashtag(_appSetting).MRRecommendationHashtagGetAll() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationHashtagGetAllOnPage")]
+		public async Task<ActionResult<object>> MRRecommendationHashtagGetAllOnPage(int PageSize, int PageIndex)
+		{
+			try
+			{
+				List<MRRecommendationHashtagOnPage> rsMRRecommendationHashtagOnPage = await new MRRecommendationHashtag(_appSetting).MRRecommendationHashtagGetAllOnPage(PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationHashtag", rsMRRecommendationHashtagOnPage},
+						{"TotalCount", rsMRRecommendationHashtagOnPage != null && rsMRRecommendationHashtagOnPage.Count > 0 ? rsMRRecommendationHashtagOnPage[0].RowNumber : 0},
+						{"PageIndex", rsMRRecommendationHashtagOnPage != null && rsMRRecommendationHashtagOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsMRRecommendationHashtagOnPage != null && rsMRRecommendationHashtagOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationHashtagInsert")]
+		public async Task<ActionResult<object>> MRRecommendationHashtagInsert(MRRecommendationHashtag _mRRecommendationHashtag)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationHashtag(_appSetting).MRRecommendationHashtagInsert(_mRRecommendationHashtag) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationHashtagListInsert")]
+		public async Task<ActionResult<object>> MRRecommendationHashtagListInsert(List<MRRecommendationHashtag> _mRRecommendationHashtags)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (MRRecommendationHashtag _mRRecommendationHashtag in _mRRecommendationHashtags)
+				{
+					int? result = await new MRRecommendationHashtag(_appSetting).MRRecommendationHashtagInsert(_mRRecommendationHashtag);
+					if (result != null)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationHashtagUpdate")]
+		public async Task<ActionResult<object>> MRRecommendationHashtagUpdate(MRRecommendationHashtag _mRRecommendationHashtag)
+		{
+			try
+			{
+				int count = await new MRRecommendationHashtag(_appSetting).MRRecommendationHashtagUpdate(_mRRecommendationHashtag);
+				if (count > 0)
+				{
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationHashtagDelete")]
+		public async Task<ActionResult<object>> MRRecommendationHashtagDelete(MRRecommendationHashtag _mRRecommendationHashtag)
+		{
+			try
+			{
+				int count = await new MRRecommendationHashtag(_appSetting).MRRecommendationHashtagDelete(_mRRecommendationHashtag);
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationHashtagListDelete")]
+		public async Task<ActionResult<object>> MRRecommendationHashtagListDelete(List<MRRecommendationHashtag> _mRRecommendationHashtags)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (MRRecommendationHashtag _mRRecommendationHashtag in _mRRecommendationHashtags)
+				{
+					var result = await new MRRecommendationHashtag(_appSetting).MRRecommendationHashtagDelete(_mRRecommendationHashtag);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationHashtagDeleteAll")]
+		public async Task<ActionResult<object>> MRRecommendationHashtagDeleteAll()
+		{
+			try
+			{
+				int count = await new MRRecommendationHashtag(_appSetting).MRRecommendationHashtagDeleteAll();
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		#endregion MRRecommendationHashtag
 	}
 }
