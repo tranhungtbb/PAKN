@@ -166,6 +166,91 @@ namespace PAKNAPI.ModelBase
 		public string FilePath { get; set; }
 	}
 
+	public class MRRecommendationHashtagDeleteByRecommendationId
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationHashtagDeleteByRecommendationId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationHashtagDeleteByRecommendationId()
+		{
+		}
+
+		public async Task<int> MRRecommendationHashtagDeleteByRecommendationIdDAO(MRRecommendationHashtagDeleteByRecommendationIdIN _mRRecommendationHashtagDeleteByRecommendationIdIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationHashtagDeleteByRecommendationIdIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_HashtagDeleteByRecommendationId", DP));
+		}
+	}
+
+	public class MRRecommendationHashtagDeleteByRecommendationIdIN
+	{
+		public int? Id { get; set; }
+	}
+
+	public class MRRecommendationHashtagGetByRecommendationId
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationHashtagGetByRecommendationId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationHashtagGetByRecommendationId()
+		{
+		}
+
+		public long Id { get; set; }
+		public int RecommendationId { get; set; }
+		public int HashtagId { get; set; }
+		public string HashtagName { get; set; }
+
+		public async Task<List<MRRecommendationHashtagGetByRecommendationId>> MRRecommendationHashtagGetByRecommendationIdDAO(long? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationHashtagGetByRecommendationId>("MR_Recommendation_HashtagGetByRecommendationId", DP)).ToList();
+		}
+	}
+
+	public class MRRecommendationHashtagInsert
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationHashtagInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationHashtagInsert()
+		{
+		}
+
+		public async Task<int> MRRecommendationHashtagInsertDAO(MRRecommendationHashtagInsertIN _mRRecommendationHashtagInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationId", _mRRecommendationHashtagInsertIN.RecommendationId);
+			DP.Add("HashtagId", _mRRecommendationHashtagInsertIN.HashtagId);
+			DP.Add("HashtagName", _mRRecommendationHashtagInsertIN.HashtagName);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_HashtagInsert", DP));
+		}
+	}
+
+	public class MRRecommendationHashtagInsertIN
+	{
+		public int? RecommendationId { get; set; }
+		public int? HashtagId { get; set; }
+		public string HashtagName { get; set; }
+	}
+
 	public class MRRecommendationDelete
 	{
 		private SQLCon _sQLCon;
