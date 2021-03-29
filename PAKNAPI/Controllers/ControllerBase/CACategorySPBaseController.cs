@@ -315,6 +315,25 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
+		[Route("CADepartmentInsertBase")]
+		public async Task<ActionResult<object>> CADepartmentInsertBase(CADepartmentInsertIN _cADepartmentInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CADepartmentInsert(_appSetting).CADepartmentInsertDAO(_cADepartmentInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
 		[Route("CADepartmentUpdateBase")]
 		public async Task<ActionResult<object>> CADepartmentUpdateBase(CADepartmentUpdateIN _cADepartmentUpdateIN)
 		{

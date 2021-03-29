@@ -14,5 +14,9 @@ export class DepartmentObject {
 	description: string
 	isActived: boolean
 	isDeleted: boolean
-  departmentGroup: number
+	departmentGroupId: number
+	phone: string
+	email: string
+	address: string
+	fax: string
 }

@@ -66,7 +66,11 @@ export class DepartmentComponent implements OnInit {
       name: [this.model.name, Validators.required],
       description: [this.model.description],
       isActived: [this.model.isActived, Validators.required],
-      departmentGroup: [this.model.departmentGroup, Validators.required],
+      departmentGroupId: [this.model.departmentGroup, Validators.required],
+      email: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
+      phone: ['', [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
+      address: [''],
+      fax: ['']
     })
   }
 
@@ -75,7 +79,11 @@ export class DepartmentComponent implements OnInit {
       name: this.model.name,
       isActived: this.model.isActived,
       description: this.model.description,
-      departmentGroup: this.model.departmentGroup
+      departmentGroupId: this.model.departmentGroup,
+      phone: this.model.phone,
+      email: this.model.email,
+      address: this.model.address,
+      fax: this.model.fax
     })
   }
 
@@ -153,7 +161,7 @@ export class DepartmentComponent implements OnInit {
       return
     }
     if (this.model.id == 0 || this.model.id == null) {
-      this._service.departmentGroupInsert(this.model).subscribe((response) => {
+      this._service.departmentInsert(this.model).subscribe((response) => {
         if (response.success == RESPONSE_STATUS.success) {
           if (response.result == -1) {
             this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
