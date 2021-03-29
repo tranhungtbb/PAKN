@@ -62,9 +62,9 @@ export class RecommendationService {
 		}
 		const httpPackage = {
 			headers: tempheaders,
-			body: form,
+			reportProgress: true,
 		}
-		return this.http.post(AppSettings.API_ADDRESS + Api.RecommendationInsert, form)
+		return this.http.post(AppSettings.API_ADDRESS + Api.RecommendationInsert, form, httpPackage)
 		// let headers = {
 		// 	logAction: encodeURIComponent(LOG_ACTION.INSERT),
 		// 	logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
@@ -73,11 +73,32 @@ export class RecommendationService {
 	}
 
 	recommendationUpdate(request: any): Observable<any> {
-		let headers = {
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
+			macAddress: '',
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
 			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		})
+		const form = new FormData()
+		form.append('Data', JSON.stringify(request.Data))
+		form.append('Hashtags', JSON.stringify(request.Hashtags))
+		form.append('LstXoaFile', JSON.stringify(request.LstXoaFile))
+
+		if (request.Files) {
+			request.Files.forEach((item) => {
+				form.append('QD', item)
+			})
 		}
-		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationUpdate, headers)
+		const httpPackage = {
+			headers: tempheaders,
+			reportProgress: true,
+		}
+		return this.http.post(AppSettings.API_ADDRESS + Api.RecommendationInsert, form, httpPackage)
+		// let headers = {
+		// 	logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+		// 	logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		// }
+		// return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationUpdate, headers)
 	}
 
 	recommendationDelete(request: any): Observable<any> {

@@ -6,13 +6,21 @@
 	<div class="container p-0">
 		<div class="row">
 			<div class="col align-items-center form-group mb-0 border-bottom pb-3 border-brown">
-				<strong class="h4 mr-5">Đối tượng:</strong>
-				<label class="radio-inline mr-5">
-					<input type="radio" name="optradio" (click)="changeTypeObject(true)" [value]="true" [(ngModel)]="model.typeObject"> Cá nhân
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="optradio" (change)="changeTypeObject(false)" [value]="false" [(ngModel)]="model.typeObject"> Doanh nghiệp
-				</label>
+				<div class="row">
+					<div class="col-md-6">
+						<strong class="h4 mr-5">Đối tượng:</strong>
+						<label class="radio-inline mr-5">
+							<input type="radio" name="optradio" (click)="changeTypeObject(true)" [value]="true" [(ngModel)]="model.typeObject"> Cá nhân
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="optradio" (click)="changeTypeObject(false)" [value]="false" [(ngModel)]="model.typeObject"> Doanh nghiệp
+						</label>
+					</div>
+					<div class="col-md-6">
+						Mã phản ánh/kiến nghị:
+						<strong class="h4 mr-5">{{model.code}}</strong>
+					</div>
+				</div>
 			</div>
 		</div>
 		<form [formGroup]="form">
@@ -21,7 +29,8 @@
 					<div class="row">
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">{{titleObject}} <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" [items]="lstObject" bindValue="value" bindLabel="text" formControlName="sendId" [(ngModel)]="model.sendId">
+							<ng-select class="form-control" [items]="lstObject" bindValue="value" bindLabel="text" (change)="changeObject()" formControlName="sendId"
+								[(ngModel)]="model.sendId">
 								<ng-template ng-option-tmp let-item="item">
 									<div title="{{item.text}}">{{item.text}}</div>
 								</ng-template>
