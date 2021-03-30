@@ -671,4 +671,33 @@ namespace PAKNAPI.ModelBase
 		public long? UpdatedBy { get; set; }
 		public DateTime? UpdatedDate { get; set; }
 	}
+
+	public class MRRecommendationUpdateStatus
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationUpdateStatus(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationUpdateStatus()
+		{
+		}
+
+		public async Task<int> MRRecommendationUpdateStatusDAO(MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationUpdateStatusIN.Id);
+			DP.Add("Status", _mRRecommendationUpdateStatusIN.Status);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateStatus", DP));
+		}
+	}
+
+	public class MRRecommendationUpdateStatusIN
+	{
+		public int? Id { get; set; }
+		public byte? Status { get; set; }
+	}
 }

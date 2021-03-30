@@ -281,5 +281,40 @@ namespace PAKNAPI.Controller
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+
+		[HttpPost]
+		[Authorize]
+		[Route("RecommendationForward")]
+		public async Task<ActionResult<object>> MRRecommendationForwardInsertBase(MRRecommendationForwardInsertIN _mRRecommendationForwardInsertIN)
+		{
+			try
+			{
+				_mRRecommendationForwardInsertIN.UserSendId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				_mRRecommendationForwardInsertIN.UnitSendId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+				await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_mRRecommendationForwardInsertIN);
+
+				MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
+				_mRRecommendationUpdateStatusIN.Status = _mRRecommendationForwardInsertIN.Status;
+				_mRRecommendationUpdateStatusIN.Id = _mRRecommendationForwardInsertIN.RecommendationId;
+				await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
+				HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
+				hisData.ObjectId = _mRRecommendationForwardInsertIN.RecommendationId;
+				hisData.Type = 1;
+				hisData.Content = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
+				hisData.Status = _mRRecommendationForwardInsertIN.Status;
+				hisData.CreatedBy = _mRRecommendationForwardInsertIN.UserSendId;
+				hisData.CreatedDate = DateTime.Now;
+				await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				return new ResultApi { Success = ResultCode.OK };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 	}
 }
