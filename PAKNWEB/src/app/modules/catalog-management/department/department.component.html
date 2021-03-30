@@ -45,54 +45,56 @@
                     <span class="caret-tb"></span>
                   </p>
                   <input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100"
-                    (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
                 </th>
                 <th>
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Nhóm sở ngành</strong>
                     <span class="caret-tb"></span>
                   </p>
-                  <input class="form-control form-control-sm" [(ngModel)]="groupName" maxlength="100"
-                    (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+                  <ng-select class="" [items]="listDepartmentGroup" placeholder="Nhóm sở ngành ..." bindLabel="name"
+                    bindValue="id" [(ngModel)]="groupName" (change)="dataStateChange()">
+                  </ng-select>
                 </th>
                 <th>
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Phone</strong>
                     <span class="caret-tb"></span>
                   </p>
-                  <input class="form-control form-control-sm" [(ngModel)]="groupName" maxlength="100"
-                    (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+                  <input class="form-control form-control-sm" [(ngModel)]="phone" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
                 </th>
                 <th>
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Email</strong>
                     <span class="caret-tb"></span>
                   </p>
-                  <input class="form-control form-control-sm" [(ngModel)]="groupName" maxlength="100"
-                    (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+                  <input class="form-control form-control-sm" [(ngModel)]="email" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
                 </th>
                 <th>
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Địa chỉ</strong>
                     <span class="caret-tb"></span>
                   </p>
-                  <input class="form-control form-control-sm" [(ngModel)]="groupName" maxlength="100"
-                    (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+                  <input class="form-control form-control-sm" [(ngModel)]="address" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
                 </th>
                 <th>
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Fax</strong>
                     <span class="caret-tb"></span>
                   </p>
-                  <input class="form-control form-control-sm" [(ngModel)]="groupName" maxlength="100"
-                    (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+                  <input class="form-control form-control-sm" [(ngModel)]="fax" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
                 </th>
                 <th style="width: 350px">
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Mô tả</strong>
                     <span class="caret-tb"></span>
                   </p>
-                  <input type="text" class="form-control form-control-sm">
+                  <input class="form-control form-control-sm" [(ngModel)]="description" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
                 </th>
                 <th style="width: 160px">
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">

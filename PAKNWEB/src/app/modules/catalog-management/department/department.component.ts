@@ -28,6 +28,12 @@ export class DepartmentComponent implements OnInit {
   isActived: boolean
   title: string = ''
   name: string = ''
+  groupName: number
+  phone: string = ''
+  email: string = ''
+  address: string = ''
+  fax: string = ''
+  description: string = ''
   pageIndex: number = 1
   pageSize: number = 20
   @ViewChild('table', { static: false }) table: any
@@ -91,7 +97,13 @@ export class DepartmentComponent implements OnInit {
     this.name = this.name.trim()
 
     let request = {
-      Name: this.name,
+      Name: this.name.trim(),
+      Phone: this.phone.trim(),
+      Email: this.email.trim(),
+      Address: this.address.trim(),
+      Fax: this.fax.trim(),
+      Description: this.description.trim(),
+      DepartmentGroupId: this.groupName,
       isActived: this.isActived != null ? this.isActived : '',
       PageIndex: this.pageIndex,
       PageSize: this.pageSize,

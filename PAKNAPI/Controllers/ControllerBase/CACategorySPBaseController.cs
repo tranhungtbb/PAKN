@@ -87,11 +87,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize]
 		[Route("CADepartmentGetAllOnPageBase")]
-		public async Task<ActionResult<object>> CADepartmentGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived, int? DepartmentGroupId)
+		public async Task<ActionResult<object>> CADepartmentGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived, int? DepartmentGroupId, string Phone, string Email, string Address, string Fax)
 		{
 			try
 			{
-				List<CADepartmentGetAllOnPage> rsCADepartmentGetAllOnPage = await new CADepartmentGetAllOnPage(_appSetting).CADepartmentGetAllOnPageDAO(PageSize, PageIndex, Name, Description, IsActived, DepartmentGroupId);
+				List<CADepartmentGetAllOnPage> rsCADepartmentGetAllOnPage = await new CADepartmentGetAllOnPage(_appSetting).CADepartmentGetAllOnPageDAO(PageSize, PageIndex, Name, Description, IsActived, DepartmentGroupId, Phone, Email, Address, Fax);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CADepartmentGetAllOnPage", rsCADepartmentGetAllOnPage},
@@ -304,25 +304,6 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("CADepartmentInsertBase")]
-		public async Task<ActionResult<object>> CADepartmentInsertBase(CADepartmentInsertIN _cADepartmentInsertIN)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new CADepartmentInsert(_appSetting).CADepartmentInsertDAO(_cADepartmentInsertIN) };
 			}
 			catch (Exception ex)
 			{
