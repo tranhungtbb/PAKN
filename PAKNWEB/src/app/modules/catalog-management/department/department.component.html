@@ -71,6 +71,22 @@
                   <input class="form-control form-control-sm" [(ngModel)]="groupName" maxlength="100"
                     (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
                 </th>
+                <th>
+                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+                    <strong>Địa chỉ</strong>
+                    <span class="caret-tb"></span>
+                  </p>
+                  <input class="form-control form-control-sm" [(ngModel)]="groupName" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+                </th>
+                <th>
+                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+                    <strong>Fax</strong>
+                    <span class="caret-tb"></span>
+                  </p>
+                  <input class="form-control form-control-sm" [(ngModel)]="groupName" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+                </th>
                 <th style="width: 350px">
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Mô tả</strong>
@@ -108,17 +124,25 @@
                 <td>
                   <strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.email}}</a></strong>
                 </td>
+                <td>
+                  <strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.address}}</a></strong>
+                </td>
+                <td>
+                  <strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.fax}}</a></strong>
+                </td>
                 <td>{{item.description}}</td>
                 <td>
-                  <span *ngIf="item.isActived == true" class="badge rounded-pill bg-blue2">Sử dụng</span>
-                  <span *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Không sử dụng</span>
+                  <span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == true"
+                    class="badge rounded-pill bg-blue2">Sử dụng</span>
+                  <span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == false"
+                    class="badge rounded-pill badge-light">Không sử dụng</span>
                 </td>
                 <td>
                   <div class="d-flex justify-content-end">
-                    <a (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i
+                    <a type="button" (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i
                         class="bi bi-pencil-square"></i></a>
-                    <a (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal"
-                      data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
+                    <a type="button" (click)="preDelete(item.id)" class="btn-icon grd-red text-white"
+                      data-toggle="modal" data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
                   </div>
                 </td>
               </tr>
