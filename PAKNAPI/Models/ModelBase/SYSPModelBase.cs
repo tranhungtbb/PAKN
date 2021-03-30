@@ -35,4 +35,27 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<SYRoleGetAll>("SY_RoleGetAll", DP)).ToList();
 		}
 	}
+
+	public class SYUnitGetMainId
+	{
+		private SQLCon _sQLCon;
+
+		public SYUnitGetMainId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUnitGetMainId()
+		{
+		}
+
+		public int Id;
+
+		public async Task<List<SYUnitGetMainId>> SYUnitGetMainIdDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUnitGetMainId>("SY_UnitGetMainId", DP)).ToList();
+		}
+	}
 }
