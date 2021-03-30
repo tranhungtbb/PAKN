@@ -28,6 +28,12 @@ export class DepartmentComponent implements OnInit {
   isActived: boolean
   title: string = ''
   name: string = ''
+  groupName: number = null
+  phone: string = ''
+  email: string = ''
+  address: string = ''
+  fax: string = ''
+  description: string = ''
   pageIndex: number = 1
   pageSize: number = 20
   @ViewChild('table', { static: false }) table: any
@@ -91,7 +97,13 @@ export class DepartmentComponent implements OnInit {
     this.name = this.name.trim()
 
     let request = {
-      Name: this.name,
+      Name: this.name.trim(),
+      Phone: this.phone.trim(),
+      Email: this.email.trim(),
+      Address: this.address.trim(),
+      Fax: this.fax.trim(),
+      Description: this.description.trim(),
+      DepartmentGroupId: this.groupName != null ? this.groupName : '',
       isActived: this.isActived != null ? this.isActived : '',
       PageIndex: this.pageIndex,
       PageSize: this.pageSize,
@@ -181,7 +193,7 @@ export class DepartmentComponent implements OnInit {
           alert(error)
         }
     } else {
-      this._service.departmentGroupUpdate(this.model).subscribe((response) => {
+      this._service.departmentUpdate(this.model).subscribe((response) => {
         if (response.success == RESPONSE_STATUS.success) {
           if (response.result == -1) {
             this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -207,11 +219,11 @@ export class DepartmentComponent implements OnInit {
       Id: data.id,
       Type: 1,
     }
-    this._service.departmentGroupGetById(request).subscribe((response) => {
+    this._service.departmentGetById(request).subscribe((response) => {
       if (response.success == RESPONSE_STATUS.success) {
         this.rebuilForm()
-        this.title = 'Chỉnh sửa nhóm sở ngành'
-        this.model = response.result.CADepartmentGroupGetByID[0]
+        this.title = 'Chỉnh sửa sở ngành'
+        this.model = response.result.CADepartmentGetByID[0]
         $('#modal').modal('show')
       } else {
         this._toastr.error(response.message)
@@ -231,7 +243,7 @@ export class DepartmentComponent implements OnInit {
     let request = {
       Id: id,
     }
-    this._service.departmentGroupDelete(request).subscribe((response) => {
+    this._service.departmentDelete(request).subscribe((response) => {
       if (response.success == RESPONSE_STATUS.success) {
         this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
         $('#modalConfirmDelete').modal('hide')
@@ -251,16 +263,20 @@ export class DepartmentComponent implements OnInit {
       Type: 1,
       Id: data.id,
     }
-    this._service.departmentGroupUpdateStatus(request).subscribe((res) => {
-      if (res.success == 1) {
-        if (data.isActive == true) {
+    data.isActived = !data.isActived
+    this._service.departmentUpdateStatus(data).subscribe((res) => {
+      if (res.result == 1) {
+        console.log(data)
+        if (data.isActived) {
           this._toastr.success(MESSAGE_COMMON.UNLOCK_SUCCESS)
         } else {
           this._toastr.success(MESSAGE_COMMON.LOCK_SUCCESS)
         }
+        this.getList()
       } else {
         this._toastr.error(res.message)
       }
+
     }),
       (error) => {
         console.error(error)

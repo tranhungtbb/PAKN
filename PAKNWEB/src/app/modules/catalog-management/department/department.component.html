@@ -45,38 +45,57 @@
                     <span class="caret-tb"></span>
                   </p>
                   <input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100"
-                    (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
                 </th>
                 <th>
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Nhóm sở ngành</strong>
                     <span class="caret-tb"></span>
                   </p>
-                  <input class="form-control form-control-sm" [(ngModel)]="groupName" maxlength="100"
-                    (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+                  <ng-select class="form-control form-control-sm" [items]="listDepartmentGroup"
+                    placeholder="Nhóm sở ngành ..." bindLabel="name" bindValue="id" [(ngModel)]="groupName"
+                    (change)="dataStateChange()">
+                  </ng-select>
                 </th>
                 <th>
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Phone</strong>
                     <span class="caret-tb"></span>
                   </p>
-                  <input class="form-control form-control-sm" [(ngModel)]="groupName" maxlength="100"
-                    (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+                  <input class="form-control form-control-sm" [(ngModel)]="phone" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
                 </th>
                 <th>
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Email</strong>
                     <span class="caret-tb"></span>
                   </p>
-                  <input class="form-control form-control-sm" [(ngModel)]="groupName" maxlength="100"
-                    (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+                  <input class="form-control form-control-sm" [(ngModel)]="email" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
+                </th>
+                <th>
+                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+                    <strong>Địa chỉ</strong>
+                    <span class="caret-tb"></span>
+                  </p>
+                  <input class="form-control form-control-sm" [(ngModel)]="address" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
+                </th>
+                <th>
+                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+                    <strong>Fax</strong>
+                    <span class="caret-tb"></span>
+                  </p>
+                  <input class="form-control form-control-sm" [(ngModel)]="fax" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
                 </th>
                 <th style="width: 350px">
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Mô tả</strong>
                     <span class="caret-tb"></span>
                   </p>
-                  <input type="text" class="form-control form-control-sm">
+                  <input class="form-control form-control-sm" [(ngModel)]="description" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
                 </th>
                 <th style="width: 160px">
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -96,29 +115,36 @@
               <tr>
                 <td class="text-center">{{rowIndex + 1}}</td>
                 <td>
-                  <strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
+                  <a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a>
                 </td>
                 <td>
-                  <strong><a (click)="preView(item)" class="ellipsis"
-                      title="Xem chi tiết">{{item.groupName}}</a></strong>
+                  <a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.groupName}}</a>
                 </td>
                 <td>
-                  <strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.phone}}</a></strong>
+                  <a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.phone}}</a>
                 </td>
                 <td>
-                  <strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.email}}</a></strong>
+                  <a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.email}}</a>
+                </td>
+                <td>
+                  <a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.address}}</a>
+                </td>
+                <td>
+                  <a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.fax}}</a>
                 </td>
                 <td>{{item.description}}</td>
                 <td>
-                  <span *ngIf="item.isActived == true" class="badge rounded-pill bg-blue2">Sử dụng</span>
-                  <span *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Không sử dụng</span>
+                  <span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == true"
+                    class="badge rounded-pill bg-blue2">Sử dụng</span>
+                  <span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == false"
+                    class="badge rounded-pill badge-light">Không sử dụng</span>
                 </td>
                 <td>
                   <div class="d-flex justify-content-end">
-                    <a (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i
+                    <a type="button" (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i
                         class="bi bi-pencil-square"></i></a>
-                    <a (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal"
-                      data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
+                    <a type="button" (click)="preDelete(item.id)" class="btn-icon grd-red text-white"
+                      data-toggle="modal" data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
                   </div>
                 </td>
               </tr>

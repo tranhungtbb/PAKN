@@ -64,7 +64,7 @@ export class BusinessComponent implements OnInit {
 		this.localeService.use('vi')
 		this.userInfoService.setReturnUrl('')
 
-		this.loadScript('assets/dist/vendor/global/global.min.js')
+		// this.loadScript('assets/dist/vendor/global/global.min.js')
 		this.loadScript('assets/dist/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')
 		this.loadScript('assets/dist/js/custom.min.js')
 		this.loadScript('assets/dist/js/deznav-init.js')

@@ -121,6 +121,8 @@ namespace PAKNAPI.Controllers
 			var claims = new[] {
 				new Claim("UserName", userInfo.UserName),
 				new Claim("FullName", userInfo.FullName),
+				new Claim("Type", userInfo.Type.ToString()),
+				new Claim("UnitId", userInfo.UnitId.ToString()),
 				new Claim("Email", userInfo.Email),
 				new Claim("Id", userInfo.Id.ToString())
 			};

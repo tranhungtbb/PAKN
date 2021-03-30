@@ -144,6 +144,21 @@ namespace PAKNAPI.Common
         {
             return long.Parse(httpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
         }
+
+        public int GetUnitIdFromRequest(HttpContext httpContext)
+        {
+            return int.Parse(httpContext.User.Claims.FirstOrDefault(c => c.Type == "UnitId").Value);
+        }
+
+        public bool GetIsMainFromRequest(HttpContext httpContext)
+        {
+            return bool.Parse(httpContext.User.Claims.FirstOrDefault(c => c.Type == "IsMain").Value);
+        }
+
+        public int GetTypeFromRequest(HttpContext httpContext)
+        {
+            return int.Parse(httpContext.User.Claims.FirstOrDefault(c => c.Type == "Type").Value);
+        }
     }
 
     public class Logs

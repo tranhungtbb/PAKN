@@ -85,16 +85,34 @@ namespace PAKNAPI.Controller
 				};
 				RecommendationInsertRequest request = new RecommendationInsertRequest();
 				request.UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				request.UserType = new LogHelper(_appSetting).GetTypeFromRequest(HttpContext);
 				request.UserFullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
 				request.Data = JsonConvert.DeserializeObject<MRRecommendationInsertIN>(Request.Form["Data"].ToString(), jss);
 				request.ListHashTag = JsonConvert.DeserializeObject<List<DropdownObject>>(Request.Form["Hashtags"].ToString(), jss);
 				request.Files = Request.Form.Files;
 				request.Data.CreatedBy = request.UserId;
 				request.Data.CreatedDate = DateTime.Now;
+				MRRecommendationCheckExistedCode rsMRRecommendationCheckExistedCode = (await new MRRecommendationCheckExistedCode(_appSetting).MRRecommendationCheckExistedCodeDAO(request.Data.Code)).FirstOrDefault();
+				if(rsMRRecommendationCheckExistedCode.Total > 0)
+                {
+					request.Data.Code = await new MRRecommendationGenCodeGetCode(_appSetting).MRRecommendationGenCodeGetCodeDAO();
+				}
 				int? Id = Int32.Parse((await new MRRecommendationInsert(_appSetting).MRRecommendationInsertDAO(request.Data)).ToString());
 				if (Id > 0)
 				{
 					await new MRRecommendationGenCodeUpdateNumber(_appSetting).MRRecommendationGenCodeUpdateNumberDAO();
+					if (request.UserType != 1)
+					{
+						MRRecommendationForwardInsertIN _mRRecommendationForwardInsertIN = new MRRecommendationForwardInsertIN();
+
+						_mRRecommendationForwardInsertIN.RecommendationId = Id;
+						_mRRecommendationForwardInsertIN.UserSendId =request.UserId;
+						_mRRecommendationForwardInsertIN.UnitReceiveId= request.Data.UnitId != null ? request.Data.UnitId : (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault().Id;
+						_mRRecommendationForwardInsertIN.Status = STATUS_RECOMMENDATION.RECEIVE_WAIT;
+						_mRRecommendationForwardInsertIN.SendDate = DateTime.Now;
+						_mRRecommendationForwardInsertIN.IsViewed = false;
+						await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_mRRecommendationForwardInsertIN);
+					}
 					if (request.Files != null && request.Files.Count > 0)
 					{
 						string folder = "Upload\\Recommendation\\" + Id;
@@ -131,11 +149,22 @@ namespace PAKNAPI.Controller
 					HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
 					hisData.ObjectId = Id;
 					hisData.Type = 1;
-					hisData.Content = "Người dùng " + request.UserFullName;
+					hisData.Content = request.UserFullName;
 					hisData.Status = STATUS_RECOMMENDATION.CREATED;
 					hisData.CreatedBy = request.UserId;
 					hisData.CreatedDate = DateTime.Now;
 					await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+					if (request.UserType != 1)
+					{
+						hisData = new HISRecommendationInsertIN();
+						hisData.ObjectId = Id;
+						hisData.Type = 1;
+						hisData.Content = request.UserFullName;
+						hisData.Status = STATUS_RECOMMENDATION.RECEIVE_WAIT;
+						hisData.CreatedBy = request.UserId;
+						hisData.CreatedDate = DateTime.Now;
+						await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+					}
 				}
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK };

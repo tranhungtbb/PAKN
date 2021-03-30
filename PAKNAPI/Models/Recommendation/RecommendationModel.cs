@@ -19,6 +19,7 @@ namespace PAKNAPI.Models.Recommendation
 	public class RecommendationInsertRequest
     {
         public long? UserId { get; set; }
+        public int? UserType { get; set; }
         public string UserFullName { get; set; }
         public MRRecommendationInsertIN Data { get; set; }
         public List<DropdownObject> ListHashTag { get; set; }

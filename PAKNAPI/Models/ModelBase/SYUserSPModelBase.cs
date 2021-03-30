@@ -51,25 +51,25 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber;
-		public long Id;
-		public string FullName;
-		public string UserName;
-		public string Password;
-		public string Salt;
-		public bool IsActived;
-		public bool IsDeleted;
-		public bool Gender;
-		public byte Type;
-		public bool IsSuperAdmin;
-		public string Email;
-		public string Phone;
-		public int? UnitId;
-		public byte? CountLock;
-		public DateTime? LockEndOut;
-		public string Avatar;
-		public string Address;
-		public int? PositionId;
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public string Password { get; set; }
+		public string Salt { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public bool Gender { get; set; }
+		public byte Type { get; set; }
+		public bool IsSuperAdmin { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public int? UnitId { get; set; }
+		public byte? CountLock { get; set; }
+		public DateTime? LockEndOut { get; set; }
+		public string Avatar { get; set; }
+		public string Address { get; set; }
+		public int? PositionId { get; set; }
 
 		public async Task<List<SYUserGetAllOnPage>> SYUserGetAllOnPageDAO(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActive, int? UnitId)
 		{
@@ -99,25 +99,25 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public long Id;
-		public string FullName;
-		public string UserName;
-		public string Password;
-		public string Salt;
-		public bool IsActived;
-		public bool IsDeleted;
-		public bool Gender;
-		public byte Type;
-		public bool IsSuperAdmin;
-		public string Email;
-		public string Phone;
-		public int? UnitId;
-		public byte? CountLock;
-		public DateTime? LockEndOut;
-		public string Avatar;
-		public string Address;
-		public int? PositionId;
-		public string RoleIds;
+		public long Id { get; set; }
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public string Password { get; set; }
+		public string Salt { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public bool Gender { get; set; }
+		public byte Type { get; set; }
+		public bool IsSuperAdmin { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public int? UnitId { get; set; }
+		public byte? CountLock { get; set; }
+		public DateTime? LockEndOut { get; set; }
+		public string Avatar { get; set; }
+		public string Address { get; set; }
+		public int? PositionId { get; set; }
+		public string RoleIds { get; set; }
 
 		public async Task<List<SYUserGetByID>> SYUserGetByIDDAO(long? Id)
 		{
@@ -265,9 +265,9 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public short Id;
-		public string Name;
-		public string Code;
+		public short Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
 
 		public async Task<List<SYUSRGetPermissionByUserId>> SYUSRGetPermissionByUserIdDAO(long? UserId)
 		{
@@ -291,20 +291,22 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public long Id;
-		public string Password;
-		public string Salt;
-		public string FullName;
-		public string UserName;
-		public string Address;
-		public string Email;
-		public string Avatar;
-		public bool Gender;
-		public string Phone;
-		public int? PositionId;
-		public string PositionName;
-		public int? UnitId;
-		public string UnitName;
+		public long Id { get; set; }
+		public string Password { get; set; }
+		public string Salt { get; set; }
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public string Address { get; set; }
+		public string Email { get; set; }
+		public string Avatar { get; set; }
+		public bool Gender { get; set; }
+		public string Phone { get; set; }
+		public int? PositionId { get; set; }
+		public byte Type { get; set; }
+		public string PositionName { get; set; }
+		public int? UnitId { get; set; }
+		public string UnitName { get; set; }
+		public bool? IsMain { get; set; }
 
 		public async Task<List<SYUSRLogin>> SYUSRLoginDAO(string UserName)
 		{

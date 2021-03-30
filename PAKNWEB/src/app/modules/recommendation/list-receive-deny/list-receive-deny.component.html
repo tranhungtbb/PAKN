@@ -27,8 +27,8 @@
 					<div class="table-responsive">
 
 						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]"
-							[responsive]="true" autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
 									<th style="width: 150px">
@@ -109,7 +109,7 @@
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
-											<a class="btn-icon" data-toggle="modal" data-target="#modal-history-pakn" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
+											<a class="btn-icon" (click)="getHistories(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
 									</td>
 								</tr>
