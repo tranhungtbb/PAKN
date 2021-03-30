@@ -266,6 +266,144 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationForwardGetByIDBase")]
+		public async Task<ActionResult<object>> MRRecommendationForwardGetByIDBase(int? Id)
+		{
+			try
+			{
+				List<MRRecommendationForwardGetByID> rsMRRecommendationForwardGetByID = await new MRRecommendationForwardGetByID(_appSetting).MRRecommendationForwardGetByIDDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationForwardGetByID", rsMRRecommendationForwardGetByID},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationForwardInsertBase")]
+		public async Task<ActionResult<object>> MRRecommendationForwardInsertBase(MRRecommendationForwardInsertIN _mRRecommendationForwardInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_mRRecommendationForwardInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationForwardInsertListBase")]
+		public async Task<ActionResult<object>> MRRecommendationForwardInsertListBase(List<MRRecommendationForwardInsertIN> _mRRecommendationForwardInsertINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _mRRecommendationForwardInsertIN in _mRRecommendationForwardInsertINs)
+				{
+					var result = await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_mRRecommendationForwardInsertIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationForwardUpdateBase")]
+		public async Task<ActionResult<object>> MRRecommendationForwardUpdateBase(MRRecommendationForwardUpdateIN _mRRecommendationForwardUpdateIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationForwardUpdate(_appSetting).MRRecommendationForwardUpdateDAO(_mRRecommendationForwardUpdateIN) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationForwardUpdateListBase")]
+		public async Task<ActionResult<object>> MRRecommendationForwardUpdateListBase(List<MRRecommendationForwardUpdateIN> _mRRecommendationForwardUpdateINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _mRRecommendationForwardUpdateIN in _mRRecommendationForwardUpdateINs)
+				{
+					var result = await new MRRecommendationForwardUpdate(_appSetting).MRRecommendationForwardUpdateDAO(_mRRecommendationForwardUpdateIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("MRRecommendationGenCodeGetCodeBase")]

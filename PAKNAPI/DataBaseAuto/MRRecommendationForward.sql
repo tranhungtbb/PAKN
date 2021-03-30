@@ -108,9 +108,9 @@ DROP PROCEDURE [MR_Recommendation_ForwardInsert];
 GO
 CREATE PROCEDURE [dbo].[MR_Recommendation_ForwardInsert]
 	@RecommendationId int = null,
-	@UserSendId int = null,
+	@UserSendId bigint = null,
 	@UnitSendId int = null,
-	@ReceiveId int = null,
+	@ReceiveId bigint = null,
 	@UnitReceiveId int = null,
 	@Status tinyint = null,
 	@Content nvarchar(max) = null,
@@ -164,9 +164,9 @@ GO
 CREATE PROCEDURE [dbo].[MR_Recommendation_ForwardUpdate]
 	@Id int = null,
 	@RecommendationId int = null,
-	@UserSendId int = null,
+	@UserSendId bigint = null,
 	@UnitSendId int = null,
-	@ReceiveId int = null,
+	@ReceiveId bigint = null,
 	@UnitReceiveId int = null,
 	@Status tinyint = null,
 	@Content nvarchar(max) = null,

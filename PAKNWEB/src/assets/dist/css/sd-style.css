@@ -1240,7 +1240,38 @@ body .ui-tree{
 }
 /* ------------------------end Tree View----------------------- */
 
+.deznav-scroll {
+	overflow-y: auto!important;
+	max-height: calc(100vh - 70px);
+}
 
+/* width */
+.deznav-scroll::-webkit-scrollbar {
+	width: 5px;
+}
+
+/* Track */
+.deznav-scroll::-webkit-scrollbar-track {
+	border-radius: 10px;
+}
+ 
+/* Handle */
+.deznav-scroll::-webkit-scrollbar-thumb {
+	background: #c2c2c2;
+	border-radius: 10px;
+}
+
+/* Handle on hover */
+.deznav-scroll::-webkit-scrollbar-thumb:hover {
+	background: #FFF8F2; 
+}
+
+a:not([href]):not([tabindex]){
+	color: #222;
+}
+.header-right .header-profile .dropdown-item{
+	cursor: pointer;
+}
 
 .table-sd thead,
 body .ui-table .ui-table-thead > tr > th{		
@@ -1358,4 +1389,18 @@ body .ui-paginator .ui-paginator-current{
 }
 .box-fileinput{
 	width: 100%;
+}
+.ng-select .ng-arrow-wrapper {
+	padding-right: 5px;
+	width: 25px;
+}
+.ng-select.ng-select-opened>.ng-select-container .ng-arrow {
+	top: -2px;
+	border-color: transparent transparent #999;
+	border-width: 0 5px 5px;
+}
+.ng-select .ng-arrow-wrapper .ng-arrow {
+	border-color: #999 transparent transparent;
+	border-style: solid;
+	border-width: 5px 5px 2.5px;
 }
