@@ -110,8 +110,9 @@ namespace BookLibAPI
 				options.AllowSynchronousIO = true;
 			});
 
-			services.AddBugsnag(configuration => {
-				configuration.ApiKey = "fca4587c9f0af572934ea16ad1b20708";
+			services.AddBugsnag(configuration =>
+			{
+				configuration.ApiKey = Configuration["BugsnagKey"];
 			});
 		}
 
