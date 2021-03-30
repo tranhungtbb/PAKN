@@ -65,7 +65,7 @@
                     </ng-select>
                   </div>
                 </th>
-                <th class="text-right"><strong>Thao tác</strong></th>
+                <th class="text-right" style="max-width: 100px;"><strong>Thao tác</strong></th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -77,11 +77,11 @@
                 <td>{{item.description}}</td>
                 <td>
                   <span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == true"
-                    class="badge rounded-pill bg-blue2">Sử dụng</span>
+                    class="badge rounded-pill bg-success">Hiệu lực</span>
                   <span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == false"
-                    class="badge rounded-pill badge-light">Không sử dụng</span>
+                    class="badge rounded-pill badge-light">Hết hiệu lực</span>
                 </td>
-                <td>
+                <td style="max-width: 100px;">
                   <div class="d-flex justify-content-end">
                     <a (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i
                         class="bi bi-pencil-square"></i></a>
@@ -112,7 +112,7 @@
             <div class="row form-group">
               <div class="col-sm-8">
                 <label class="control-label">Từ ngữ <span class="text-danger">*</span></label>
-                <input class="form-control" formControlName="name" [(ngModel)]="model.name" maxlength="100" />
+                <input svTrim class="form-control" formControlName="name" [(ngModel)]="model.name" maxlength="100" />
                 <div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))"
                   class="has-error m-b-12">
                   <div *ngIf="f.name.errors.required">

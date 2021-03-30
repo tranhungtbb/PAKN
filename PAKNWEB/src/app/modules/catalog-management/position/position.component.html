@@ -65,7 +65,7 @@
 										</ng-select>
 									</div>
 								</th>
-								<th class="text-right"><strong>Thao tác</strong></th>
+								<th class="text-right" style="max-width: 100px;"><strong>Thao tác</strong></th>
 							</tr>
 						</ng-template>
 						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -77,11 +77,11 @@
 								<td>{{item.description}}</td>
 								<td>
 									<span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == true"
-										class="badge rounded-pill bg-blue2">Sử dụng</span>
+										class="badge rounded-pill bg-success">Hiệu lực</span>
 									<span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == false"
-										class="badge rounded-pill badge-light">Không sử dụng</span>
+										class="badge rounded-pill badge-light">Hết hiệu lực</span>
 								</td>
-								<td>
+								<td style="max-width: 100px;">
 									<div class="d-flex justify-content-end">
 										<a (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i
 												class="bi bi-pencil-square"></i></a>
