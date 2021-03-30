@@ -551,12 +551,13 @@ namespace PAKNAPI.ModelBase
 	{
 		public int Id { get; set; }
 		public int RecommendationId { get; set; }
-		public int? UserSendId { get; set; }
+		public long? UserSendId { get; set; }
 		public int? UnitSendId { get; set; }
-		public int? ReceiveId { get; set; }
+		public long? ReceiveId { get; set; }
 		public int? UnitReceiveId { get; set; }
 		public byte? Status { get; set; }
 		public string Content { get; set; }
+		public string ReasonDeny { get; set; }
 		public DateTime? SendDate { get; set; }
 		public DateTime? ExpiredDate { get; set; }
 		public DateTime? ProcessingDate { get; set; }
@@ -579,12 +580,13 @@ namespace PAKNAPI.ModelBase
 
 		public int Id { get; set; }
 		public int RecommendationId { get; set; }
-		public int? UserSendId { get; set; }
+		public long? UserSendId { get; set; }
 		public int? UnitSendId { get; set; }
-		public int? ReceiveId { get; set; }
+		public long? ReceiveId { get; set; }
 		public int? UnitReceiveId { get; set; }
 		public byte? Status { get; set; }
 		public string Content { get; set; }
+		public string ReasonDeny { get; set; }
 		public DateTime? SendDate { get; set; }
 		public DateTime? ExpiredDate { get; set; }
 		public DateTime? ProcessingDate { get; set; }
@@ -624,6 +626,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UnitReceiveId", _mRRecommendationForward.UnitReceiveId);
 			DP.Add("Status", _mRRecommendationForward.Status);
 			DP.Add("Content", _mRRecommendationForward.Content);
+			DP.Add("ReasonDeny", _mRRecommendationForward.ReasonDeny);
 			DP.Add("SendDate", _mRRecommendationForward.SendDate);
 			DP.Add("ExpiredDate", _mRRecommendationForward.ExpiredDate);
 			DP.Add("ProcessingDate", _mRRecommendationForward.ProcessingDate);
@@ -643,6 +646,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UnitReceiveId", _mRRecommendationForward.UnitReceiveId);
 			DP.Add("Status", _mRRecommendationForward.Status);
 			DP.Add("Content", _mRRecommendationForward.Content);
+			DP.Add("ReasonDeny", _mRRecommendationForward.ReasonDeny);
 			DP.Add("SendDate", _mRRecommendationForward.SendDate);
 			DP.Add("ExpiredDate", _mRRecommendationForward.ExpiredDate);
 			DP.Add("ProcessingDate", _mRRecommendationForward.ProcessingDate);
