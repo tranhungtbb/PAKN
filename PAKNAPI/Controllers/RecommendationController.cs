@@ -53,6 +53,23 @@ namespace PAKNAPI.Controller
 
 		[HttpGet]
 		[Authorize]
+		[Route("RecommendationGetDataForForward")]
+		public async Task<ActionResult<object>> RecommendationGetDataForForward()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationGetDataForForward() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
 		[Route("RecommendationGetByID")]
 		public async Task<ActionResult<object>> RecommendationGetByID(int? Id)
 		{
@@ -292,6 +309,7 @@ namespace PAKNAPI.Controller
 			{
 				_mRRecommendationForwardInsertIN.UserSendId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
 				_mRRecommendationForwardInsertIN.UnitSendId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+				_mRRecommendationForwardInsertIN.SendDate = DateTime.Now;
 				await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_mRRecommendationForwardInsertIN);
 
 				MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();

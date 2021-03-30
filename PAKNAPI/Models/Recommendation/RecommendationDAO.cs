@@ -30,6 +30,14 @@ namespace PAKNAPI.Models.Recommendation
 			return data;
 		}
 
+		public async Task<RecommendationGetDataForForwardResponse> RecommendationGetDataForForward()
+		{
+			RecommendationGetDataForForwardResponse data = new RecommendationGetDataForForwardResponse();
+			DynamicParameters DP = new DynamicParameters();
+			data.lstUnitNotMain = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("SY_UnitGetDropdownNotMain", DP)).ToList();
+			return data;
+		}
+
 		public async Task<RecommendationGetByIDResponse> RecommendationGetByID(int? Id)
 		{
 			RecommendationGetByIDResponse data = new RecommendationGetByIDResponse();

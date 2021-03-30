@@ -1,29 +1,21 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
-import { RecommendationForwardObject, RecommendationObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
+import { RecommendationObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { COMMONS } from 'src/app/commons/commons'
 
 declare var $: any
 
 @Component({
-	selector: 'app-list-general',
-	templateUrl: './list-general.component.html',
-	styleUrls: ['./list-general.component.css'],
+	selector: 'app-list-process-deny',
+	templateUrl: './list-process-deny.component.html',
+	styleUrls: ['./list-process-deny.component.css'],
 })
-export class ListGeneralComponent implements OnInit {
-	constructor(
-		private _service: RecommendationService,
-		private storeageService: UserInfoStorageService,
-		private _fb: FormBuilder,
-		private _toastr: ToastrService,
-		private _shareData: DataService
-	) {}
+export class ListProcessDenyComponent implements OnInit {
+	constructor(private _service: RecommendationService, private storeageService: UserInfoStorageService, private _toastr: ToastrService, private _shareData: DataService) {}
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
@@ -37,8 +29,6 @@ export class ListGeneralComponent implements OnInit {
 		{ value: 9, text: 'Từ chối phê duyệt' },
 		{ value: 10, text: 'Đã giải quyết' },
 	]
-	formForward: FormGroup
-	lstUnitNotMain: any = []
 	lstUnit: any = []
 	lstField: any = []
 	dataSearch: RecommendationSearchObject = new RecommendationSearchObject()
@@ -46,13 +36,12 @@ export class ListGeneralComponent implements OnInit {
 	isActived: boolean
 	pageIndex: number = 1
 	pageSize: number = 20
+	lstHistories: any = []
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
-	lstHistories: any = []
-	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
 	ngOnInit() {
-		this.buildForm()
+		this.dataSearch.status = RECOMMENDATION_STATUS.PROCESS_DENY
 		this.getDataForCreate()
 		this.getList()
 	}
@@ -74,27 +63,8 @@ export class ListGeneralComponent implements OnInit {
 		}),
 			(error) => {
 				console.log(error)
+				alert(error)
 			}
-	}
-
-	get f() {
-		return this.formForward.controls
-	}
-
-	buildForm() {
-		this.formForward = this._fb.group({
-			unitReceiveId: [this.modelForward.unitReceiveId, Validators.required],
-			expiredDate: [this.modelForward.expiredDate],
-			content: [this.modelForward.content],
-		})
-	}
-
-	rebuilForm() {
-		this.formForward.reset({
-			unitReceiveId: this.modelForward.unitReceiveId,
-			expiredDate: this.modelForward.expiredDate,
-			content: this.modelForward.content,
-		})
 	}
 
 	getList() {
@@ -108,15 +78,16 @@ export class ListGeneralComponent implements OnInit {
 			UnitId: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
 			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
+			UnitProcessId: this.storeageService.getUnitId(),
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
 
-		this._service.recommendationGetList(request).subscribe((response) => {
+		this._service.recommendationGetListProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
-					this.listData = response.result.MRRecommendationGetAllOnPage
+					this.listData = response.result.MRRecommendationGetAllWithProcess
 					this.totalRecords = response.result.TotalCount
 				}
 			} else {
@@ -162,29 +133,6 @@ export class ListGeneralComponent implements OnInit {
 		}
 	}
 
-	preDelete(id: number) {
-		this.idDelete = id
-		$('#modalConfirmDelete').modal('show')
-	}
-
-	onDelete(id: number) {
-		let request = {
-			Id: id,
-		}
-		this._service.recommendationDelete(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
-				$('#modalConfirmDelete').modal('hide')
-				this.getList()
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.error(error)
-			}
-	}
-
 	getHistories(id: number) {
 		let request = {
 			Id: id,
@@ -199,43 +147,6 @@ export class ListGeneralComponent implements OnInit {
 		}),
 			(error) => {
 				console.log(error)
-			}
-	}
-	preForward(id: number) {
-		this.modelForward = new RecommendationForwardObject()
-		this.modelForward.recommendationId = id
-		this._service.recommendationGetDataForForward({}).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				if (response.result != null) {
-					this.lstUnitNotMain = response.result.lstUnitNotMain
-					$('#modal-tc-pakn').modal('show')
-				}
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.log(error)
-			}
-	}
-
-	onForward() {
-		this.modelForward.content = this.modelForward.content.trim()
-		this.submitted = true
-		if (this.formForward.invalid) {
-			return
-		}
-		this.modelForward.status = RECOMMENDATION_STATUS.PROCESS_WAIT
-		this._service.recommendationForward(this.modelForward).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				$('#modal-tc-pakn').modal('hide')
-				this._toastr.success(COMMONS.FORWARD_SUCCESS)
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(err) => {
-				console.error(err)
 			}
 	}
 
