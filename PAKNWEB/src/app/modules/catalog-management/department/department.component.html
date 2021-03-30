@@ -113,6 +113,11 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+              <tr *ngIf="(totalRecords == null || totalRecords == 0 || item == null)">
+                <td class="text-center" colspan="10">
+                  <span><i>Không có dữ liệu</i></span>
+                </td>
+              </tr>
               <tr>
                 <td class="text-center">{{rowIndex + 1}}</td>
                 <td>
