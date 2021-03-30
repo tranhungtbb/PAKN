@@ -51,20 +51,17 @@ export class RecommendationSearchObject {
 	status: number
 }
 export class RecommendationForwardObject {
-	constructor() {
-		this.code = ''
-		this.name = ''
-		this.title = ''
-		this.content = ''
-		this.field = null
-		this.unitId = null
-		this.status = null
-	}
-	code: string
-	name: string
-	title: string
-	content: string
-	unitId: number
-	field: number
-	status: number
+	id: number = 0
+	recommendationId: number = null
+	userSendId: number = null
+	unitSendId: number = null
+	receiveId: number = null
+	unitReceiveId: number = null
+	status: number = null
+	content: string = ''
+	reasonDeny: string = ''
+	sendDate: Date = null
+	expiredDate: Date = null
+	processingDate: Date = null
+	isViewed: boolean = false
 }

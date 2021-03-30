@@ -36,4 +36,7 @@ export class PositionService {
   positionGetById(request: any): Observable<any> {
     return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.PositionGetById)
   }
+  positionUpdateStatus(data: any): Observable<any> {
+    return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.PositionUpdate);
+  }
 }

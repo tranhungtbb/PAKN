@@ -665,6 +665,28 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize]
+		[Route("MRRecommendationGetAllWithProcessBase")]
+		public async Task<ActionResult<object>> MRRecommendationGetAllWithProcessBase(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, int? PageSize, int? PageIndex)
+		{
+			try
+			{
+				List<MRRecommendationGetAllWithProcess> rsMRRecommendationGetAllWithProcess = await new MRRecommendationGetAllWithProcess(_appSetting).MRRecommendationGetAllWithProcessDAO(Code, SendName, Content, UnitId, Field, Status, UnitProcessId, PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationGetAllWithProcess", rsMRRecommendationGetAllWithProcess},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
 		[Route("MRRecommendationGetByIDBase")]
 		public async Task<ActionResult<object>> MRRecommendationGetByIDBase(int? Id)
 		{
@@ -735,6 +757,64 @@ namespace PAKNAPI.ControllerBase
 				foreach (var _mRRecommendationUpdateIN in _mRRecommendationUpdateINs)
 				{
 					var result = await new MRRecommendationUpdate(_appSetting).MRRecommendationUpdateDAO(_mRRecommendationUpdateIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationUpdateStatusBase")]
+		public async Task<ActionResult<object>> MRRecommendationUpdateStatusBase(MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationUpdateStatusListBase")]
+		public async Task<ActionResult<object>> MRRecommendationUpdateStatusListBase(List<MRRecommendationUpdateStatusIN> _mRRecommendationUpdateStatusINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _mRRecommendationUpdateStatusIN in _mRRecommendationUpdateStatusINs)
+				{
+					var result = await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
 					if (result > 0)
 					{
 						count++;

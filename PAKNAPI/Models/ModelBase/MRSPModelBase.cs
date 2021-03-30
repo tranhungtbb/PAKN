@@ -526,6 +526,55 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class MRRecommendationGetAllWithProcess
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGetAllWithProcess(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGetAllWithProcess()
+		{
+		}
+
+		public int? RowNumber;
+		public int Id;
+		public string Code;
+		public string Title;
+		public string Content;
+		public int? Field;
+		public string FieldName;
+		public int? UnitId;
+		public string UnitName;
+		public short? TypeObject;
+		public long? SendId;
+		public string Name;
+		public byte? Status;
+		public DateTime? SendDate;
+		public long? CreatedBy;
+		public DateTime? CreatedDate;
+		public long? UpdatedBy;
+		public DateTime? UpdatedDate;
+
+		public async Task<List<MRRecommendationGetAllWithProcess>> MRRecommendationGetAllWithProcessDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Code", Code);
+			DP.Add("SendName", SendName);
+			DP.Add("Content", Content);
+			DP.Add("UnitId", UnitId);
+			DP.Add("Field", Field);
+			DP.Add("Status", Status);
+			DP.Add("UnitProcessId", UnitProcessId);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetAllWithProcess>("MR_RecommendationGetAllWithProcess", DP)).ToList();
+		}
+	}
+
 	public class MRRecommendationGetByID
 	{
 		private SQLCon _sQLCon;
@@ -670,5 +719,34 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate { get; set; }
 		public long? UpdatedBy { get; set; }
 		public DateTime? UpdatedDate { get; set; }
+	}
+
+	public class MRRecommendationUpdateStatus
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationUpdateStatus(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationUpdateStatus()
+		{
+		}
+
+		public async Task<int> MRRecommendationUpdateStatusDAO(MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationUpdateStatusIN.Id);
+			DP.Add("Status", _mRRecommendationUpdateStatusIN.Status);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateStatus", DP));
+		}
+	}
+
+	public class MRRecommendationUpdateStatusIN
+	{
+		public int? Id { get; set; }
+		public byte? Status { get; set; }
 	}
 }

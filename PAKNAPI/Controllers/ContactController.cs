@@ -91,6 +91,9 @@ namespace PAKNAPI.Controllers
 							FullName = user[0].FullName,
 							Email = user[0].Email,
 							Phone = user[0].UserName,
+							UnitId = user[0].UnitId,
+							UnitName = user[0].UnitName,
+							IsMain = user[0].IsMain,
 							AccessToken = tokenString,
 							Permissions = rsSYUSRGetPermissionByUserId,
 						};

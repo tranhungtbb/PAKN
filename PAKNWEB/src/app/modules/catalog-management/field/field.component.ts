@@ -225,9 +225,11 @@ export class FieldComponent implements OnInit {
 			Type: 1,
 			Id: data.id,
 		}
-		this._service.fieldUpdateStatus(request).subscribe((res) => {
-			if (res.success == 1) {
-				if (data.isActive == true) {
+		data.isActived = !data.isActived
+		this._service.fieldUpdateStatus(data).subscribe((res) => {
+			console.log(res);
+			if (res.success == "OK") {
+				if (data.isActived == true) {
 					this._toastr.success(MESSAGE_COMMON.UNLOCK_SUCCESS)
 				} else {
 					this._toastr.success(MESSAGE_COMMON.LOCK_SUCCESS)

@@ -81,15 +81,16 @@ export class DepartmentComponent implements OnInit {
   }
 
   rebuilForm() {
+    this.model = new DepartmentObject()
     this.form.reset({
-      name: this.model.name,
+      name: '',
       isActived: this.model.isActived,
-      description: this.model.description,
-      departmentGroupId: this.model.departmentGroup,
-      phone: this.model.phone,
-      email: this.model.email,
-      address: this.model.address,
-      fax: this.model.fax
+      description: '',
+      departmentGroupId: this.model.departmentGroupId,
+      phone: '',
+      email: '',
+      address: '',
+      fax: ''
     })
   }
 

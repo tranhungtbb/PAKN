@@ -25,11 +25,14 @@ export class Api {
 
 	//Recommendation
 	public static RecommendationGetDataForCreate = 'Recommendation/RecommendationGetDataForCreate'
+	public static RecommendationGetDataForForward = 'Recommendation/RecommendationGetDataForForward'
 	public static RecommendationGetList = 'MRSPBase/MRRecommendationGetAllOnPageBase'
+	public static RecommendationGetListProcess = 'MRSPBase/MRRecommendationGetAllWithProcessBase'
 	public static RecommendationGetById = 'Recommendation/RecommendationGetById'
 	public static RecommendationGetHistories = 'MRSPBase/HISRecommendationGetByObjectIdBase'
 	public static RecommendationInsert = 'Recommendation/RecommendationInsert'
 	public static RecommendationUpdate = 'Recommendation/RecommendationUpdate'
+	public static RecommendationForward = 'Recommendation/RecommendationForward'
 	public static RecommendationDelete = 'MRSPBase/MRRecommendationDeleteBase'
 	public static RecommendationExport = 'MRSPBase/MRRecommendationExportBase'
 
