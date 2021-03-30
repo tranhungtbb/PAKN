@@ -28,7 +28,7 @@ export class DepartmentComponent implements OnInit {
   isActived: boolean
   title: string = ''
   name: string = ''
-  groupName: number
+  groupName: number = null
   phone: string = ''
   email: string = ''
   address: string = ''
@@ -103,7 +103,7 @@ export class DepartmentComponent implements OnInit {
       Address: this.address.trim(),
       Fax: this.fax.trim(),
       Description: this.description.trim(),
-      DepartmentGroupId: this.groupName,
+      DepartmentGroupId: this.groupName != null ? this.groupName : '',
       isActived: this.isActived != null ? this.isActived : '',
       PageIndex: this.pageIndex,
       PageSize: this.pageSize,

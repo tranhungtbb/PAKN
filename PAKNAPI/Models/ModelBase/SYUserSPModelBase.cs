@@ -302,9 +302,11 @@ namespace PAKNAPI.ModelBase
 		public bool Gender { get; set; }
 		public string Phone { get; set; }
 		public int? PositionId { get; set; }
+		public byte Type { get; set; }
 		public string PositionName { get; set; }
 		public int? UnitId { get; set; }
 		public string UnitName { get; set; }
+		public bool? IsMain { get; set; }
 
 		public async Task<List<SYUSRLogin>> SYUSRLoginDAO(string UserName)
 		{

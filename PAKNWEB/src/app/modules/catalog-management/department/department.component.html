@@ -52,8 +52,9 @@
                     <strong>Nhóm sở ngành</strong>
                     <span class="caret-tb"></span>
                   </p>
-                  <ng-select class="" [items]="listDepartmentGroup" placeholder="Nhóm sở ngành ..." bindLabel="name"
-                    bindValue="id" [(ngModel)]="groupName" (change)="dataStateChange()">
+                  <ng-select class="form-control form-control-sm" [items]="listDepartmentGroup"
+                    placeholder="Nhóm sở ngành ..." bindLabel="name" bindValue="id" [(ngModel)]="groupName"
+                    (change)="dataStateChange()">
                   </ng-select>
                 </th>
                 <th>
@@ -114,23 +115,22 @@
               <tr>
                 <td class="text-center">{{rowIndex + 1}}</td>
                 <td>
-                  <strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
+                  <a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a>
                 </td>
                 <td>
-                  <strong><a (click)="preView(item)" class="ellipsis"
-                      title="Xem chi tiết">{{item.groupName}}</a></strong>
+                  <a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.groupName}}</a>
                 </td>
                 <td>
-                  <strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.phone}}</a></strong>
+                  <a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.phone}}</a>
                 </td>
                 <td>
-                  <strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.email}}</a></strong>
+                  <a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.email}}</a>
                 </td>
                 <td>
-                  <strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.address}}</a></strong>
+                  <a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.address}}</a>
                 </td>
                 <td>
-                  <strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.fax}}</a></strong>
+                  <a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.fax}}</a>
                 </td>
                 <td>{{item.description}}</td>
                 <td>
