@@ -226,8 +226,9 @@ export class DepartmentGroupComponent implements OnInit {
       Type: 1,
       Id: data.id,
     }
-    this._service.departmentGroupUpdateStatus(request).subscribe((res) => {
-      if (res.success == 1) {
+    data.isActived = !data.isActived
+    this._service.departmentGroupUpdateStatus(data).subscribe((res) => {
+      if (res.result == 1) {
         if (data.isActive == true) {
           this._toastr.success(MESSAGE_COMMON.UNLOCK_SUCCESS)
         } else {

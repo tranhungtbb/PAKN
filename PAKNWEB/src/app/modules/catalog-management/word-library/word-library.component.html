@@ -76,8 +76,10 @@
                 </td>
                 <td>{{item.description}}</td>
                 <td>
-                  <span *ngIf="item.isActived == true" class="badge rounded-pill bg-blue2">Sử dụng</span>
-                  <span *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Không sử dụng</span>
+                  <span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == true"
+                    class="badge rounded-pill bg-blue2">Sử dụng</span>
+                  <span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == false"
+                    class="badge rounded-pill badge-light">Không sử dụng</span>
                 </td>
                 <td>
                   <div class="d-flex justify-content-end">
@@ -160,30 +162,30 @@
             <button class="close btn-close-modal" data-dismiss="modal">
               ×
             </button>
-            <p class="modal-title h3">Thông tin lĩnh vực</p>
+            <p class="modal-title h3">Thư viện từ ngữ</p>
           </div>
           <div class="modal-body no-padding-bottom">
             <div class="row">
               <div class="col-sm-8">
-                <label class="control-label lb600">Tên lĩnh vực</label>
+                <strong class="control-label lb600">Từ ngữ</strong>
                 <p>{{model.name}}</p>
               </div>
               <div class="col-sm-4">
-                <label class="control-label lb600">Trạng thái</label>
+                <strong class="control-label lb600">Trạng thái</strong>
                 <p *ngIf="model.isActived == 0">Sử dụng</p>
                 <p *ngIf="model.isActived == 1">Không sử dụng</p>
               </div>
             </div>
             <div class="row">
               <div class="col-sm-12">
-                <label class="control-label lb600">Mô tả</label>
+                <strong class="control-label lb600">Mô tả</strong>
                 <p>{{model.description}}</p>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button data-dismiss="modal" class="btn btn-default btn-sm">
-              <i class="far fa-times"></i> Hủy
+            <button data-dismiss="modal" class="btn btn-success btn-sm">
+              <i class="fa fa-close"></i> Đóng
             </button>
           </div>
         </div>
