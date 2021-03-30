@@ -178,7 +178,7 @@
                 <label class="control-label">Tên sở ngành <span class="text-danger">*</span></label>
                 <input svTrim placeholder="Nhập tên..." class="form-control" formControlName="name"
                   [(ngModel)]="model.name" maxlength="100" />
-                <div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))"
+                <div *ngIf="(submitted && f.name.invalid)|| (f.name.invalid && (f.name.dirty || f.name.touched))"
                   class="has-error m-b-12">
                   <div *ngIf="f.name.errors.required">
                     <span class="help-block">Trường dữ liệu này không để trống</span>
