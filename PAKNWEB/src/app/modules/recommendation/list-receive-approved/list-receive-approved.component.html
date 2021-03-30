@@ -27,8 +27,8 @@
 					<div class="table-responsive">
 
 						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
-							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]"
+							[responsive]="true" autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
 									<th style="width: 150px">
@@ -79,11 +79,6 @@
 											<strong>Trạng thái</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
-												[closeOnSelect]="true" (change)="dataStateChange()">
-											</ng-select>
-										</div>
 									</th>
 									<th class="text-right"><strong>Thao tác</strong></th>
 								</tr>
@@ -114,14 +109,11 @@
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
-											<a [routerLink]="['/quan-tri/kien-nghi/them-moi/', item.id]" *ngIf="item.status == 4 && item.createdBy == userLoginId"
-												class="btn-icon grd-brown text-brown mr-2" title="Cập nhật"><i class="bi bi-pencil-square"></i></a>
 											<a *ngIf="item.status == 2" class="btn-icon grd-xanhngoc text-white mr-2" title="Tiếp nhận xử lý"><i
 													class="bi bi-file-earmark-check"></i></a>
 											<a *ngIf="item.status == 2" href="#" class="btn-icon grd-red text-white mr-2" data-toggle="modal" data-target="#modal-tc-pakn"
 												title="Từ chối tiếp nhận"><i class="bi bi-file-earmark-break"></i></a>
-											<a class="btn-icon grd-red text-white" (click)="preDelete(item.id)" title="Xóa"><i class="bi bi-trash"></i></a>
-											<a class="btn-icon" (click)="getHistories(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
+											<a class="btn-icon" data-toggle="modal" data-target="#modal-history-pakn" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
 									</td>
 								</tr>

@@ -4,17 +4,17 @@ import { RecommendationObject, RecommendationSearchObject } from 'src/app/models
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
-import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { MESSAGE_COMMON, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
 declare var $: any
 
 @Component({
-	selector: 'app-list-general',
-	templateUrl: './list-general.component.html',
-	styleUrls: ['./list-general.component.css'],
+	selector: 'app-list-receive-wait',
+	templateUrl: './list-receive-wait.component.html',
+	styleUrls: ['./list-receive-wait.component.css'],
 })
-export class ListGeneralComponent implements OnInit {
+export class ListReceiveWaitComponent implements OnInit {
 	constructor(private _service: RecommendationService, private storeageService: UserInfoStorageService, private _toastr: ToastrService, private _shareData: DataService) {}
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
@@ -36,11 +36,12 @@ export class ListGeneralComponent implements OnInit {
 	isActived: boolean
 	pageIndex: number = 1
 	pageSize: number = 20
+	lstHistories: any = []
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
-	lstHistories: any = []
 	ngOnInit() {
+		this.dataSearch.status = RECOMMENDATION_STATUS.RECEIVE_WAIT
 		this.getDataForCreate()
 		this.getList()
 	}

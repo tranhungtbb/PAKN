@@ -53,6 +53,8 @@ export class RECOMMENDATION_STATUS {
 	public static APPROVE_WAIT = 8 //8 Chờ phê duyệt
 	public static APPROVE_DENY = 9 //9 Từ chối phê duyệt
 	public static FINISED = 10 //10 Đã giải quyết
+
+	public static UPDATED = 11 //11 Chỉ để lưu log
 }
 
 export const FILETYPE = [

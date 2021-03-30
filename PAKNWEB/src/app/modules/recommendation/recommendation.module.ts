@@ -14,7 +14,10 @@ import { TreeTableModule } from 'primeng/treetable'
 import { RecommendationRoutingModule } from './recommendation-routing.module'
 import { RecommendationComponent } from './recommendation.component'
 import { ListGeneralComponent } from './list-general/list-general.component';
-import { CreateRecommendationComponent } from './create-recommendation/create-recommendation.component'
+import { CreateRecommendationComponent } from './create-recommendation/create-recommendation.component';
+import { ListReceiveWaitComponent } from './list-receive-wait/list-receive-wait.component';
+import { ListReceiveDenyComponent } from './list-receive-deny/list-receive-deny.component';
+import { ListReceiveApprovedComponent } from './list-receive-approved/list-receive-approved.component'
 
 @NgModule({
 	imports: [
@@ -32,6 +35,6 @@ import { CreateRecommendationComponent } from './create-recommendation/create-re
 		NgSelectModule,
 		ContextMenuModule,
 	],
-	declarations: [RecommendationComponent, ListGeneralComponent, CreateRecommendationComponent],
+	declarations: [RecommendationComponent, ListGeneralComponent, CreateRecommendationComponent, ListReceiveWaitComponent, ListReceiveDenyComponent, ListReceiveApprovedComponent],
 })
 export class RecommendationModule {}

@@ -91,6 +91,11 @@ namespace PAKNAPI.Controller
 				request.Files = Request.Form.Files;
 				request.Data.CreatedBy = request.UserId;
 				request.Data.CreatedDate = DateTime.Now;
+				MRRecommendationCheckExistedCode rsMRRecommendationCheckExistedCode = (await new MRRecommendationCheckExistedCode(_appSetting).MRRecommendationCheckExistedCodeDAO(request.Data.Code)).FirstOrDefault();
+				if(rsMRRecommendationCheckExistedCode.Total > 0)
+                {
+					request.Data.Code = await new MRRecommendationGenCodeGetCode(_appSetting).MRRecommendationGenCodeGetCodeDAO();
+				}
 				int? Id = Int32.Parse((await new MRRecommendationInsert(_appSetting).MRRecommendationInsertDAO(request.Data)).ToString());
 				if (Id > 0)
 				{
@@ -131,7 +136,7 @@ namespace PAKNAPI.Controller
 					HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
 					hisData.ObjectId = Id;
 					hisData.Type = 1;
-					hisData.Content = "Người dùng " + request.UserFullName + " đã khởi tạo phản ánh, kiến nghị";
+					hisData.Content = "Người dùng " + request.UserFullName;
 					hisData.Status = STATUS_RECOMMENDATION.CREATED;
 					hisData.CreatedBy = request.UserId;
 					hisData.CreatedDate = DateTime.Now;
@@ -237,8 +242,8 @@ namespace PAKNAPI.Controller
 				HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
 				hisData.ObjectId = request.Data.Id;
 				hisData.Type = 1;
-				hisData.Content = "Người dùng " + request.UserFullName + " đã cập nhật phản ánh, kiến nghị";
-				hisData.Status = STATUS_RECOMMENDATION.CREATED;
+				hisData.Content = request.UserFullName;
+				hisData.Status = STATUS_RECOMMENDATION.UPDATED;
 				hisData.CreatedBy = request.UserId;
 				hisData.CreatedDate = DateTime.Now;
 				await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
