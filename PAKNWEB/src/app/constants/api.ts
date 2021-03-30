@@ -103,8 +103,10 @@ export class Api {
 	public static NewsGetAllOnPage = 'NESPBase/NENewsGetAllOnPageBase'
 	public static NewsGetById = 'NESPBase/NENewsGetByIDBase'
 	public static NewsInsert = 'NESPBase/NENewsInsertBase'
-	public static NewsUpdate = 'NESPBase​/NENewsUpdateBase'
+	public static NewsUpdate = 'NESPBase/NENewsUpdateBase'
 	public static NewsDelete = 'NESPBase/NENewsDeleteBase'
+
+	
 
 	//Department
 	public static DepartmentGetList = 'CACategorySPBase/CADepartmentGetAllOnPageBase'

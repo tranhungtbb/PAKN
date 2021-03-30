@@ -91,6 +91,8 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
+		public int? Total;
+
 		public async Task<List<MRRecommendationCheckExistedCode>> MRRecommendationCheckExistedCodeDAO(string Code)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -269,7 +271,6 @@ namespace PAKNAPI.ModelBase
 		public MRRecommendationHashtagGetByRecommendationId()
 		{
 		}
-
 
 		public int Value;
 		public string Text;

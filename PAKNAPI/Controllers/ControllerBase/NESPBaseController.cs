@@ -16,12 +16,18 @@ using Newtonsoft.Json;
 
 namespace PAKNAPI.ControllerBase
 {
-	[Route("api/NESPBase")]
+	[Route("api/NE
+
+SPBase")]
 	[ApiController]
-	public class NESPBaseController : BaseApiController
+	public class NE
+
+SPBaseController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
-		public NESPBaseController(IAppSetting appSetting)
+		public NE
+
+SPBaseController(IAppSetting appSetting)
 		{
 			_appSetting = appSetting;
 		}

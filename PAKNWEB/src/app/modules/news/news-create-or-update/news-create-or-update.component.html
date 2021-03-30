@@ -3,13 +3,13 @@
 		<nav class="navbar navbar-expand">
 			<div class="collapse navbar-collapse justify-content-between">
 				<div class="header-left w-100 justify-content-between pr-5">
-					<p class="mb-0 h3">Trang chủ / tin tức / tạo tin tức</p>
+					<p class="mb-0 h3">Trang chủ / Tin tức / Tạo tin tức</p>
 
 					<div class="btn-group" role="group">
-						<button class="btn btn-sm btn-default rounded border-0 mr-3">
+						<a class="btn btn-sm btn-default rounded border-0 mr-3" [routerLink]="['/quan-tri','tin-tuc']">
 							<i class="bi bi-arrow-left"></i>&nbsp;
 							Quay lại
-						</button>
+						</a>
 						<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave($event)">Lưu</button>
 						<button class="btn btn-sm grd-green rounded text-white border-0" (click)="onPublished()">Công bố</button>
 					</div>
@@ -44,24 +44,24 @@
 					<div class="col-12 col-lg-12 form-group">
 						<div class="mb-3">
 							<label class="mb-1"><span class="text-uppercase">bài viết liên quan</span> <span class="cl-red">(*)</span></label>
-							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline"><i class="bi bi-list"></i> Thêm mới</button>
+							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline" (click)="onModalNewsRelate()"><i class="bi bi-list"></i> Thêm mới</button>
 						</div>
 						<div class="col-md-12 pr-0 pl-0">
-							<div class="btn btn-default p-3 border">
-								<img width="70" height="50" />
+							<div class="btn btn-default p-3 border" *ngFor="let relateItem of newsRelateChild.newsSelected">
+								<img width="70" height="50" src="{{relateItem.imagePath}}" />
 								<span>
-									<strong>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio eos praesentium ex</strong>
+									<strong>{{relateItem.title}}</strong>
 								</span>
 							</div>
 						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
-						<ckeditor [editor]="Editor" data="" (ready)="onReady($event)" (change)="onChangeEditor($event)"></ckeditor>
-						<div *ngIf="(submitted && f.content.invalid)||(f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error m-b-12">
+						<ckeditor [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents" (ready)="onReady($event)"></ckeditor>
+						<!-- <div *ngIf="(submitted && f.content.invalid)||(f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error m-b-12">
 							<div *ngIf="f.content.errors.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 				<div class="col-md-3 col-lg-3">
@@ -84,7 +84,7 @@
 						<label class="mb-1"><span class="text-uppercase">ảnh đại diện</span></label>
 						<input type="file" [hidden]="true">
 						<div class="news-avatar">
-							<img src="" alt="">
+							<img src="assets/dist/images/no.jpg" alt="">
 						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
@@ -108,3 +108,4 @@
 		</div>
 	</form>
 </div>
+<app-news-relate-modal></app-news-relate-modal>

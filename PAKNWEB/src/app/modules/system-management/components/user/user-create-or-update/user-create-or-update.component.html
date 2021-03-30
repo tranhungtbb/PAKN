@@ -60,7 +60,7 @@
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Chức vụ <span class="cl-red">(*)</span></label>
 							<ng-select class="form-control" [items]="positionsList" placeholder="Chức vụ ..." bindLabel="name" bindValue="id" formControlName="positionId"
-								[(ngModel)]="modelUser.positionId" [closeOnSelect]="true" [multiple]="true">
+								[(ngModel)]="modelUser.positionId" [closeOnSelect]="true">
 							</ng-select>
 							<div *ngIf="(userFormSubmitted && fUser.positionId.invalid)||(fUser.positionId.invalid && (fUser.positionId.dirty || fUser.positionId.touched))"
 								class="has-error m-b-12">
