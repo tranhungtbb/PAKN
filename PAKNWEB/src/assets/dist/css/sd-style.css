@@ -1249,7 +1249,39 @@ body .ui-table .ui-table-thead > tr > th{
 .table tbody tr td, body .ui-paginator {
 	border-color: #f0f1f5!important;
 }
-
+body .ui-paginator{
+	background-color: #ffffff;
+	margin-bottom: 15px;
+	border: none;
+}
+body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+	background-color: transparent;
+	border: 0;
+	color: #0283E1;
+	box-shadow: none;
+	font-size: 1.8rem;
+	line-height: 42px;
+}
+body .ui-paginator .ui-paginator-first:not(.ui-state-disabled):not(.ui-state-active):hover, 
+body .ui-paginator .ui-paginator-prev:not(.ui-state-disabled):not(.ui-state-active):hover, 
+body .ui-paginator .ui-paginator-next:not(.ui-state-disabled):not(.ui-state-active):hover, 
+body .ui-paginator .ui-paginator-last:not(.ui-state-disabled):not(.ui-state-active):hover,
+body .ui-paginator .ui-paginator-pages .ui-paginator-page:not(.ui-state-active):hover {
+	background: transparent;
+	color: #0283E1;
+}
+body .ui-paginator .ui-paginator-pages .ui-paginator-page{
+	font-size: 1.2rem;
+	background: transparent;
+	color: #6e6e6e;
+	border: 0;
+}
+.ui-paginator .ui-paginator-icon{
+	margin-top: 0!important;
+}
+body .ui-paginator .ui-paginator-current{
+	line-height: 48px;
+}
 .form-control.ng-select{	
 	padding: 0;
 }

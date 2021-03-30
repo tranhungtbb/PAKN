@@ -44,6 +44,14 @@ export class RecommendationService {
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetById, headers)
 	}
 
+	recommendationGetHistories(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETINFO),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetHistories, headers)
+	}
+
 	recommendationInsert(request: any): Observable<any> {
 		let tempheaders = new HttpHeaders({
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',

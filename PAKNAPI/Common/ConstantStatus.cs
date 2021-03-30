@@ -12,5 +12,9 @@
 		public const int APPROVE_WAIT = 8;//8 Chờ phê duyệt
 		public const int APPROVE_DENY = 9;//9 Từ chối phê duyệt
 		public const int FINISED = 10;//10 Đã giải quyết
+
+
+		//Action
+		public const int UPDATED = 11;
 	}
 }
