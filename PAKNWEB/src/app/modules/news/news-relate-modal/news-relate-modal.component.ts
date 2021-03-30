@@ -64,9 +64,9 @@ export class NewsRelateModalComponent implements OnInit {
 		this.getListPaged()
 	}
 
-	openModal(newsLate:any[]){
-		if(newsLate)
-			this.newsSelected = newsLate
+	openModal(newsRelate:any[]){
+		if(newsRelate)
+			this.newsSelected = newsRelate
 		$('#modal-news-relate').modal('show');
 	}
 }

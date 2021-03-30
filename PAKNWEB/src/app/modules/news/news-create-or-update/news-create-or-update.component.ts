@@ -34,18 +34,21 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		{ text: 'thường', value: true, checked: true },
 		{ text: 'nổi bật', value: false, checked: false },
 	]
-
+	newsRelatesSelected: any[] = []
 	categoriesSelected: any[]
 	ngOnInit() {
 		this.newsFrom = this.formBuilder.group({
 			title: ['', [Validators.required]],
-			summary: [this.model.contents, [Validators.required]],
+			summary: ['', [Validators.required]],
 			contents: [''],
 			newsType: [''],
 			postType: [''],
 			pushNotify: [''],
 
-		})
+		}),
+
+
+
 		this.activatedRoute.params.subscribe(params => {
 			if (params['id']) {
 				this.newsService.getById({ id: params['id']}).subscribe(res => {
@@ -53,8 +56,16 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 						return
 					}
 					this.model=res.result.NENewsGetByID[0]
-					this.Editor
 				});
+
+				this.newsService.getAllNewsRelates({id:params['id']}).subscribe(res=>{
+					if (res.success != 'OK') {
+						return
+					}
+					if(res.result.NERelateGetAll){
+						this.model.newsIdRelates = res.result.NERelateGetAll.map(e=>e.NewsIdRelate)
+					}
+				})
 			}
 	    });
 	}
@@ -96,13 +107,39 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	}
 
 	onModalNewsRelate(){
-		//this.dialog.open(NewsRelateModalComponent,{width:'500px'});
-		this.newsRelateChild.openModal(this.model.newsRelates)
+		this.newsRelateChild.openModal(this.model.newsIdRelates)
 	}
 	onModalNewsRelate_Close(){
-		this.model.newsRelates = this.newsRelateChild.newsSelected;
-		console.log(this.model)
+		this.model.newsIdRelates = this.newsRelateChild.newsSelected;
+		this.newsService.getAllPagedList({
+			pageIndex:1,
+			pageSize:1000,
+			ids:this.newsRelateChild.newsSelected.toString()
+		}).subscribe(res=>{
+			if (res.success != 'OK') return
+			if(res.result.NENewsGetAllOnPage)
+				this.newsRelatesSelected = res.result.NENewsGetAllOnPage
+		})
 	}
+
+	onChangeAvatar(){
+		$('#avatar-image').click();
+	}
+	onAvatarChange(event:any){
+		console.log(event)
+		var file = event.target.files[0]
+		let formData = new FormData()
+		formData.append('file',file, file.name)
+
+		this.newsService.uploadFile(formData).subscribe(res=>{
+			if(res.success != "OK"){
+				this.toast.error("Xảy ra lỗi trong quá trình xử lý");
+				return;
+			}
+			this.model.imagePath = res.result.path
+		})
+	}
+
 
 	public onChangeEditor({ editor }: any) {
 		let data = editor.getData()

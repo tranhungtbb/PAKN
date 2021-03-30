@@ -1,9 +1,10 @@
 export class NewsModel {
 	constructor() {
-		this.postType = true,
-		this.isPublished = false,
+		this.postType = true
+		this.isPublished = false
 		this.status = 2 // 0: đã thu hồi | 1: đã công bố | 2: đang soạn thảo
 		this.imagePath = ' '
+		this.newsIdRelates = []
 	}
 	id: number
 	title: string
@@ -15,7 +16,7 @@ export class NewsModel {
 	isPublished:boolean
 	status:number
 
-	newsRelates: any[]
+	newsIdRelates: any[]
 
 	//system field
 	createdAt: string

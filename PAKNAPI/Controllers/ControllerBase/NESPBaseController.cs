@@ -16,18 +16,12 @@ using Newtonsoft.Json;
 
 namespace PAKNAPI.ControllerBase
 {
-	[Route("api/NE
-
-SPBase")]
+	[Route("api/NESPBase")]
 	[ApiController]
-	public class NE
-
-SPBaseController : BaseApiController
+	public class NESPBaseController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
-		public NE
-
-SPBaseController(IAppSetting appSetting)
+		public NESPBaseController(IAppSetting appSetting)
 		{
 			_appSetting = appSetting;
 		}
@@ -93,11 +87,11 @@ SPBaseController(IAppSetting appSetting)
 		[HttpGet]
 		[Authorize]
 		[Route("NENewsGetAllOnPageBase")]
-		public async Task<ActionResult<object>> NENewsGetAllOnPageBase(int? PageSize, int? PageIndex, string Title, int? NewType, int? Status)
+		public async Task<ActionResult<object>> NENewsGetAllOnPageBase(string Ids, int? PageSize, int? PageIndex, string Title, int? NewType, int? Status)
 		{
 			try
 			{
-				List<NENewsGetAllOnPage> rsNENewsGetAllOnPage = await new NENewsGetAllOnPage(_appSetting).NENewsGetAllOnPageDAO(PageSize, PageIndex, Title, NewType, Status);
+				List<NENewsGetAllOnPage> rsNENewsGetAllOnPage = await new NENewsGetAllOnPage(_appSetting).NENewsGetAllOnPageDAO(Ids, PageSize, PageIndex, Title, NewType, Status);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"NENewsGetAllOnPage", rsNENewsGetAllOnPage},
@@ -242,6 +236,28 @@ SPBaseController(IAppSetting appSetting)
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("NERelateGetAllBase")]
+		public async Task<ActionResult<object>> NERelateGetAllBase(int? NewsId)
+		{
+			try
+			{
+				List<NERelateGetAll> rsNERelateGetAll = await new NERelateGetAll(_appSetting).NERelateGetAllDAO(NewsId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"NERelateGetAll", rsNERelateGetAll},
+					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)

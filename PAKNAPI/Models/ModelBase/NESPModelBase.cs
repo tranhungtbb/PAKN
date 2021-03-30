@@ -72,9 +72,10 @@ namespace PAKNAPI.ModelBase
 		public DateTime? WithdrawDate;
 		public int? RowNumber; // int, null
 
-		public async Task<List<NENewsGetAllOnPage>> NENewsGetAllOnPageDAO(int? PageSize, int? PageIndex, string Title, int? NewType, int? Status)
+		public async Task<List<NENewsGetAllOnPage>> NENewsGetAllOnPageDAO(string Ids, int? PageSize, int? PageIndex, string Title, int? NewType, int? Status)
 		{
 			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Ids", Ids);
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
 			DP.Add("Title", Title);
@@ -249,5 +250,31 @@ namespace PAKNAPI.ModelBase
 		public DateTime? PublishedDate { get; set; }
 		public int? WithdrawBy { get; set; }
 		public DateTime? WithdrawDate { get; set; }
+	}
+
+	public class NERelateGetAll
+	{
+		private SQLCon _sQLCon;
+
+		public NERelateGetAll(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public NERelateGetAll()
+		{
+		}
+
+		public int Id;
+		public int? NewsId;
+		public int? NewsIdRelate;
+
+		public async Task<List<NERelateGetAll>> NERelateGetAllDAO(int? NewsId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("NewsId", NewsId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<NERelateGetAll>("NE_RelateGetAll", DP)).ToList();
+		}
 	}
 }

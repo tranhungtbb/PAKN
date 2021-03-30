@@ -105,6 +105,8 @@ export class Api {
 	public static NewsInsert = 'NESPBase/NENewsInsertBase'
 	public static NewsUpdate = 'NESPBase/NENewsUpdateBase'
 	public static NewsDelete = 'NESPBase/NENewsDeleteBase'
+	public static NewsUploadFile = 'files/upload?folder=News'
+	public static NewsRelatesGetAll = 'NESPBase/NERelateGetAllBase'
 
 	
 

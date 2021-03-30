@@ -29,4 +29,10 @@ export class NewsService {
 	delete(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.NewsDelete)
 	}
+	getAllNewsRelates(data:any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.NewsRelatesGetAll)
+	}
+	uploadFile(data:any): Observable<any> {
+		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.NewsUploadFile)
+	}
 }

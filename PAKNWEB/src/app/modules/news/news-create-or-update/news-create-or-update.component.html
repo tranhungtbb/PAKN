@@ -41,27 +41,22 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-12 form-group">
-						<div class="mb-3">
+					<div class="col-12 col-lg-12 form-group mb-6">
+						<div class="clearfix">
 							<label class="mb-1"><span class="text-uppercase">bài viết liên quan</span> <span class="cl-red">(*)</span></label>
-							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline" (click)="onModalNewsRelate()"><i class="bi bi-list"></i> Thêm mới</button>
+							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline pull-right" (click)="onModalNewsRelate()"><i class="bi bi-list"></i> Thêm mới</button>
 						</div>
-						<!-- <div class="col-md-12 pr-0 pl-0">
-							<div class="btn btn-default p-3 border" *ngFor="let relateItem of newsRelateChild.newsSelected">
+						<div class="col-md-12 pr-0 pl-0">
+							<div class="btn btn-default p-3 border" *ngFor="let relateItem of newsRelatesSelected">
 								<img width="70" height="50" src="{{relateItem.imagePath}}" />
 								<span>
 									<strong>{{relateItem.title}}</strong>
 								</span>
 							</div>
-						</div> -->
+						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
 						<ckeditor [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents" (ready)="onReady($event)"></ckeditor>
-						<!-- <div *ngIf="(submitted && f.content.invalid)||(f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error m-b-12">
-							<div *ngIf="f.content.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
-							</div>
-						</div> -->
 					</div>
 				</div>
 				<div class="col-md-3 col-lg-3">
@@ -82,13 +77,16 @@
 					</div>
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">ảnh đại diện</span></label>
-						<input type="file" [hidden]="true">
-						<div class="news-avatar">
+						<input type="file" [hidden]="true" id="avatar-image" (change)="onAvatarChange($event)">
+						<div class="news-avatar" (click)="onChangeAvatar()">
 							<img src="assets/dist/images/no.jpg" alt="">
 						</div>
 					</div>
-					<div class="col-12 col-lg-12 form-group">
-						<label class="mb-1"><span class="text-uppercase">upload media</span></label>
+					<!-- <div class="col-12 col-lg-12 form-group mb-6">
+						<label class="mb-1">
+							<span class="text-uppercase">upload media</span>
+							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline pull-right"><i class="bi bi-upload"></i> Thêm mới</button>
+						</label>
 						<input type="file" [hidden]="true">
 						<div class="col-sm-12 col-md-12 pl-0 pr-0">
 							<div class="btn btn-sm-btn-default border p-2">
@@ -96,7 +94,7 @@
 								<span>File 01</span>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">thông báo</span></label>
 						<div class="checkbox">
