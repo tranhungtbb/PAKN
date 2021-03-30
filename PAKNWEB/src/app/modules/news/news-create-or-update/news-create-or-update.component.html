@@ -46,14 +46,14 @@
 							<label class="mb-1"><span class="text-uppercase">bài viết liên quan</span> <span class="cl-red">(*)</span></label>
 							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline" (click)="onModalNewsRelate()"><i class="bi bi-list"></i> Thêm mới</button>
 						</div>
-						<div class="col-md-12 pr-0 pl-0">
+						<!-- <div class="col-md-12 pr-0 pl-0">
 							<div class="btn btn-default p-3 border" *ngFor="let relateItem of newsRelateChild.newsSelected">
 								<img width="70" height="50" src="{{relateItem.imagePath}}" />
 								<span>
 									<strong>{{relateItem.title}}</strong>
 								</span>
 							</div>
-						</div>
+						</div> -->
 					</div>
 					<div class="col-12 col-lg-12 form-group">
 						<ckeditor [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents" (ready)="onReady($event)"></ckeditor>
