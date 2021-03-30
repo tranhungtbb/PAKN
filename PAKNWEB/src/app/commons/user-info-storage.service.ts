@@ -62,6 +62,14 @@ export class UserInfoStorageService {
 		localStorage.setItem('unitName', value)
 	}
 
+	setUnitId(value): void {
+		localStorage.setItem('unitId', value)
+	}
+
+	setIsMain(value): void {
+		localStorage.setItem('isMain', value)
+	}
+
 	getKeyRemember(): string {
 		return localStorage.getItem('KeyRework')
 	}
@@ -70,8 +78,16 @@ export class UserInfoStorageService {
 		return localStorage.getItem('unitName')
 	}
 
+	getUnitId(): number {
+		return localStorage.getItem('unitId') as any
+	}
+
 	getUserId(): number {
 		return localStorage.getItem('userId') as any
+	}
+
+	getIsMain(): boolean {
+		return localStorage.getItem('isMain') as any
 	}
 
 	getReturnUrl(): string {

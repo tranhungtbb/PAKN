@@ -16,6 +16,11 @@ namespace PAKNAPI.Models.Recommendation
         public List<DropdownObject> lstBusiness { get; set; }
         public List<DropdownObject> lstHashTag { get; set; }
     }
+
+	public class RecommendationGetDataForForwardResponse
+    {
+        public List<DropdownObject> lstUnitNotMain { get; set; }
+    }
 	public class RecommendationInsertRequest
     {
         public long? UserId { get; set; }
