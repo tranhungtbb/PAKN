@@ -50,3 +50,21 @@ export class RecommendationSearchObject {
 	field: number
 	status: number
 }
+export class RecommendationForwardObject {
+	constructor() {
+		this.code = ''
+		this.name = ''
+		this.title = ''
+		this.content = ''
+		this.field = null
+		this.unitId = null
+		this.status = null
+	}
+	code: string
+	name: string
+	title: string
+	content: string
+	unitId: number
+	field: number
+	status: number
+}
