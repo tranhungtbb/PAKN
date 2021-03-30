@@ -228,7 +228,7 @@ export class PositionComponent implements OnInit {
     data.isActived = !data.isActived
     this._service.positionUpdateStatus(data).subscribe((res) => {
       if (res.result == 1) {
-        if (data.isActive == true) {
+        if (data.isActived == true) {
           this._toastr.success(MESSAGE_COMMON.UNLOCK_SUCCESS)
         } else {
           this._toastr.success(MESSAGE_COMMON.LOCK_SUCCESS)
