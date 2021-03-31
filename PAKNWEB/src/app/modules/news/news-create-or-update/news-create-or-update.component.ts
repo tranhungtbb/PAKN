@@ -28,9 +28,10 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private dialog: MatDialog
 	) {}
+	allowImageExtend = ['image/jpeg', 'image/png']
 	public Editor = ClassicEditor
 	model: NewsModel = new NewsModel()
-	newsFrom: FormGroup
+	newsForm: FormGroup
 	listNewsCategories: Array<any>
 	postTypes: any[] = [
 		{ text: 'thường', value: true, checked: true },
@@ -38,54 +39,63 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	]
 	newsRelatesSelected: any[] = []
 	categoriesSelected: any[]
-	avatarUrl: string
+	avatarUrl: string = 'assets/dist/images/no.jpg'
 
 	ngOnInit() {
-		;(this.newsFrom = this.formBuilder.group({
+		this.newsForm = this.formBuilder.group({
 			title: ['', [Validators.required]],
 			summary: ['', [Validators.required]],
 			contents: [''],
 			newsType: [''],
 			postType: [''],
 			pushNotify: [''],
-		})),
-			this.activatedRoute.params.subscribe((params) => {
-				if (params['id']) {
-					this.newsService.getById({ id: params['id'] }).subscribe((res) => {
-						if (res.success != 'OK') {
-							return
-						}
-						this.model = res.result.NENewsGetByID[0]
-						if (this.model.imagePath == null || this.model.imagePath.trim() == '') {
-							this.avatarUrl = 'assets/dist/images/no.jpg'
-						}
-					})
+		})
 
-					this.newsService.getAllNewsRelates({ id: params['id'] }).subscribe((res) => {
-						if (res.success != 'OK') {
-							return
-						}
-						if (res.result.NERelateGetAll) {
-							this.model.newsIdRelates = res.result.NERelateGetAll.map((e) => e.NewsIdRelate)
-						}
-					})
-				}
-			})
+		this.activatedRoute.params.subscribe((params) => {
+			if (params['id']) {
+				this.newsService.getById({ id: params['id'] }).subscribe((res) => {
+					if (res.success != 'OK') {
+						return
+					}
+					this.model = res.result.NENewsGetByID[0]
+					if (this.model.imagePath == null || this.model.imagePath.trim() == '') {
+						this.avatarUrl = 'assets/dist/images/no.jpg'
+					}
+				})
+
+				this.newsService.getAllNewsRelates({ id: params['id'] }).subscribe((res) => {
+					if (res.success != 'OK') {
+						return
+					}
+					if (res.result.NERelateGetAll) {
+						this.model.newsIdRelates = res.result.NERelateGetAll.map((e) => e.NewsIdRelate)
+					}
+				})
+			}
+		})
 	}
 
 	get f() {
-		return this.newsFrom.controls
+		return this.newsForm.controls
 	}
 
 	submitted = false
 	onSave(event) {
 		this.submitted = true
-		if (this.newsFrom.invalid) {
+		if (this.newsForm.invalid) {
 			return
+		}
+		// if(this.model.imagePath == null || this.model.imagePath == ""){
+		// 	this.toast.error()
+		// 	return
+		// }
+		let formData = new FormData()
+		for (let key in this.model) {
+			formData.append(key, this.model[key])
 		}
 
 		if (this.model.id && this.model.id > 0) {
-			this.newsService.update(this.model).subscribe((res) => {
+			this.newsService.update(formData).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error(COMMONS.UPDATE_FAILED)
 					return
@@ -94,7 +104,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				this.router.navigate(['/quan-tri/tin-tuc'])
 			})
 		} else {
-			this.newsService.create(this.model).subscribe((res) => {
+			this.newsService.create(formData).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error(COMMONS.ADD_FAILED)
 					return
@@ -132,6 +142,12 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	onAvatarChange(event: any) {
 		console.log(event)
 		var file = event.target.files[0]
+
+		if (!this.allowImageExtend.includes(file.type)) {
+			this.toast.error('Chỉ chọn tệp tin ảnh')
+			return
+		}
+
 		let formData = new FormData()
 		formData.append('file', file, file.name)
 
