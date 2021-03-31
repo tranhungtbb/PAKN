@@ -178,8 +178,8 @@
 							<div *ngIf="item.status == 10" class="timeline-badge success"></div>
 							<div *ngIf="item.status == 11" class="timeline-badge info"></div>
 							<div class="timeline-panel">
-								<p class="mb-2 h5">Người dùng: <strong>{{item.content}}</strong></p>
-								<p class="mb-0 d-flex justify-content-between align-items-center">
+								<p class="mb-2 h5">Người dùng: <strong>{{item.createdByName}}</strong></p>
+								<p class="mb-2 d-flex justify-content-between align-items-center">
 									<span *ngIf="item.status == 1" class="badge rounded-pill mb-0 badge-outline-light bg-white">Đã khởi tạo</span>
 									<span *ngIf="item.status == 2" class="badge rounded-pill mb-0 badge-outline-info">Gửi xử lý</span>
 									<span *ngIf="item.status == 3" class="badge rounded-pill mb-0 bg-red">Từ chối xử lý</span>
@@ -193,6 +193,7 @@
 									<span *ngIf="item.status == 11" class="badge rounded-pill mb-0 badge-outline-light bg-white">Đã cập nhật</span>
 									<span class="text-dark mb-0">{{item.createdDate | date:'HH:mm | dd/MM/yyyy'}}</span>
 								</p>
+								<p class="mb-0 h5"><strong>{{item.content}}</strong></p>
 							</div>
 						</li>
 					</ul>
