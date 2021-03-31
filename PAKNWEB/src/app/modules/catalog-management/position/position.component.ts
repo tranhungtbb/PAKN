@@ -73,13 +73,13 @@ export class PositionComponent implements OnInit {
       PageIndex: this.pageIndex,
       PageSize: this.pageSize,
     }
-    console.log(request)
     this._service.positionGetList(request).subscribe((response) => {
       if (response.success == RESPONSE_STATUS.success) {
         if (response.result != null) {
           this.listData = []
           this.listData = response.result.CAPositionGetAllOnPage
-          this.totalRecords = response.result.CAPositionGetAllOnPage[0].rowNumber
+          console.log(response)
+          this.totalRecords = response.result.CAPositionGetAllOnPage.length != 0 ? response.result.CAPositionGetAllOnPage[0].rowNumber : 0
         }
       } else {
         this._toastr.error(response.message)
