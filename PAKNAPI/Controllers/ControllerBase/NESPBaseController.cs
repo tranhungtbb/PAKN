@@ -17,251 +17,246 @@ using Bugsnag;
 
 namespace PAKNAPI.ControllerBase
 {
-	[Route("api/NE
+    [Route("api/NESPBase")]
+    [ApiController]
 
-SPBase")]
-	[ApiController]
-	public class NE
-
-SPBaseController : BaseApiController
+    public class NESPBaseController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
-		private readonly IClient _bugsnag;
+    private readonly IClient _bugsnag;
 
-		public NE
+    public NESPBaseController(IAppSetting appSetting, IClient bugsnag)
+    {
+        _appSetting = appSetting;
+        _bugsnag = bugsnag;
+    }
 
-SPBaseController(IAppSetting appSetting, IClient bugsnag)
-		{
-			_appSetting = appSetting;
-			_bugsnag = bugsnag;
-		}
+    [HttpPost]
+    [Authorize]
+    [Route("NENewsDeleteBase")]
+    public async Task<ActionResult<object>> NENewsDeleteBase(NENewsDeleteIN _nENewsDeleteIN)
+    {
+        try
+        {
+            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-		[HttpPost]
-		[Authorize]
-		[Route("NENewsDeleteBase")]
-		public async Task<ActionResult<object>> NENewsDeleteBase(NENewsDeleteIN _nENewsDeleteIN)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+            return new ResultApi { Success = ResultCode.OK, Result = await new NENewsDelete(_appSetting).NENewsDeleteDAO(_nENewsDeleteIN) };
+        }
+        catch (Exception ex)
+        {
+            _bugsnag.Notify(ex);
+            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsDelete(_appSetting).NENewsDeleteDAO(_nENewsDeleteIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+            return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+        }
+    }
 
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
+    [HttpPost]
+    [Authorize]
+    [Route("NENewsDeleteListBase")]
+    public async Task<ActionResult<object>> NENewsDeleteListBase(List<NENewsDeleteIN> _nENewsDeleteINs)
+    {
+        try
+        {
+            int count = 0;
+            int errcount = 0;
+            foreach (var _nENewsDeleteIN in _nENewsDeleteINs)
+            {
+                var result = await new NENewsDelete(_appSetting).NENewsDeleteDAO(_nENewsDeleteIN);
+                if (result > 0)
+                {
+                    count++;
+                }
+                else
+                {
+                    errcount++;
+                }
+            }
 
-		[HttpPost]
-		[Authorize]
-		[Route("NENewsDeleteListBase")]
-		public async Task<ActionResult<object>> NENewsDeleteListBase(List<NENewsDeleteIN> _nENewsDeleteINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _nENewsDeleteIN in _nENewsDeleteINs)
-				{
-					var result = await new NENewsDelete(_appSetting).NENewsDeleteDAO(_nENewsDeleteIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
+            IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"CountSuccess", count},
+                        {"CountError", errcount}
+                    };
+            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+            return new ResultApi { Success = ResultCode.OK, Result = json };
+        }
+        catch (Exception ex)
+        {
+            _bugsnag.Notify(ex);
+            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+            return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+        }
+    }
 
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
+    [HttpGet]
+    [Authorize]
+    [Route("NENewsGetAllOnPageBase")]
+    public async Task<ActionResult<object>> NENewsGetAllOnPageBase(string Ids, int? PageSize, int? PageIndex, string Title, int? NewType, int? Status)
+    {
+        try
+        {
+            List<NENewsGetAllOnPage> rsNENewsGetAllOnPage = await new NENewsGetAllOnPage(_appSetting).NENewsGetAllOnPageDAO(Ids, PageSize, PageIndex, Title, NewType, Status);
+            IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"NENewsGetAllOnPage", rsNENewsGetAllOnPage},
+                        {"PageIndex", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageIndex : 0},
+                        {"PageSize", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageSize : 0},
+                    };
+            return new ResultApi { Success = ResultCode.OK, Result = json };
+        }
+        catch (Exception ex)
+        {
+            _bugsnag.Notify(ex);
+            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-		[HttpGet]
-		[Authorize]
-		[Route("NENewsGetAllOnPageBase")]
-		public async Task<ActionResult<object>> NENewsGetAllOnPageBase(string Ids, int? PageSize, int? PageIndex, string Title, int? NewType, int? Status)
-		{
-			try
-			{
-				List<NENewsGetAllOnPage> rsNENewsGetAllOnPage = await new NENewsGetAllOnPage(_appSetting).NENewsGetAllOnPageDAO(Ids, PageSize, PageIndex, Title, NewType, Status);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"NENewsGetAllOnPage", rsNENewsGetAllOnPage},
-						{"PageIndex", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageSize : 0},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+            return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+        }
+    }
 
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
+    [HttpGet]
+    [Authorize]
+    [Route("NENewsGetByIDBase")]
+    public async Task<ActionResult<object>> NENewsGetByIDBase(int? Id)
+    {
+        try
+        {
+            List<NENewsGetByID> rsNENewsGetByID = await new NENewsGetByID(_appSetting).NENewsGetByIDDAO(Id);
+            IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"NENewsGetByID", rsNENewsGetByID},
+                    };
+            return new ResultApi { Success = ResultCode.OK, Result = json };
+        }
+        catch (Exception ex)
+        {
+            _bugsnag.Notify(ex);
+            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-		[HttpGet]
-		[Authorize]
-		[Route("NENewsGetByIDBase")]
-		public async Task<ActionResult<object>> NENewsGetByIDBase(int? Id)
-		{
-			try
-			{
-				List<NENewsGetByID> rsNENewsGetByID = await new NENewsGetByID(_appSetting).NENewsGetByIDDAO(Id);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"NENewsGetByID", rsNENewsGetByID},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+            return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+        }
+    }
 
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
+    [HttpPost]
+    [Authorize]
+    [Route("NENewsInsertBase")]
+    public async Task<ActionResult<object>> NENewsInsertBase(NENewsInsertIN _nENewsInsertIN)
+    {
+        try
+        {
+            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-		[HttpPost]
-		[Authorize]
-		[Route("NENewsInsertBase")]
-		public async Task<ActionResult<object>> NENewsInsertBase(NENewsInsertIN _nENewsInsertIN)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+            return new ResultApi { Success = ResultCode.OK, Result = await new NENewsInsert(_appSetting).NENewsInsertDAO(_nENewsInsertIN) };
+        }
+        catch (Exception ex)
+        {
+            _bugsnag.Notify(ex);
+            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsInsert(_appSetting).NENewsInsertDAO(_nENewsInsertIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+            return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+        }
+    }
 
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
+    [HttpPost]
+    [Authorize]
+    [Route("NENewsInsertListBase")]
+    public async Task<ActionResult<object>> NENewsInsertListBase(List<NENewsInsertIN> _nENewsInsertINs)
+    {
+        try
+        {
+            int count = 0;
+            int errcount = 0;
+            foreach (var _nENewsInsertIN in _nENewsInsertINs)
+            {
+                var result = await new NENewsInsert(_appSetting).NENewsInsertDAO(_nENewsInsertIN);
+                if (result > 0)
+                {
+                    count++;
+                }
+                else
+                {
+                    errcount++;
+                }
+            }
 
-		[HttpPost]
-		[Authorize]
-		[Route("NENewsInsertListBase")]
-		public async Task<ActionResult<object>> NENewsInsertListBase(List<NENewsInsertIN> _nENewsInsertINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _nENewsInsertIN in _nENewsInsertINs)
-				{
-					var result = await new NENewsInsert(_appSetting).NENewsInsertDAO(_nENewsInsertIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
+            IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"CountSuccess", count},
+                        {"CountError", errcount}
+                    };
+            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+            return new ResultApi { Success = ResultCode.OK, Result = json };
+        }
+        catch (Exception ex)
+        {
+            _bugsnag.Notify(ex);
+            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+            return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+        }
+    }
 
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
+    [HttpPost]
+    [Authorize]
+    [Route("NENewsUpdateBase")]
+    public async Task<ActionResult<object>> NENewsUpdateBase(NENewsUpdateIN _nENewsUpdateIN)
+    {
+        try
+        {
+            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-		[HttpPost]
-		[Authorize]
-		[Route("NENewsUpdateBase")]
-		public async Task<ActionResult<object>> NENewsUpdateBase(NENewsUpdateIN _nENewsUpdateIN)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+            return new ResultApi { Success = ResultCode.OK, Result = await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN) };
+        }
+        catch (Exception ex)
+        {
+            _bugsnag.Notify(ex);
+            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+            return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+        }
+    }
 
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
+    [HttpPost]
+    [Authorize]
+    [Route("NENewsUpdateListBase")]
+    public async Task<ActionResult<object>> NENewsUpdateListBase(List<NENewsUpdateIN> _nENewsUpdateINs)
+    {
+        try
+        {
+            int count = 0;
+            int errcount = 0;
+            foreach (var _nENewsUpdateIN in _nENewsUpdateINs)
+            {
+                var result = await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN);
+                if (result > 0)
+                {
+                    count++;
+                }
+                else
+                {
+                    errcount++;
+                }
+            }
 
-		[HttpPost]
-		[Authorize]
-		[Route("NENewsUpdateListBase")]
-		public async Task<ActionResult<object>> NENewsUpdateListBase(List<NENewsUpdateIN> _nENewsUpdateINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _nENewsUpdateIN in _nENewsUpdateINs)
-				{
-					var result = await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
+            IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"CountSuccess", count},
+                        {"CountError", errcount}
+                    };
+            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+            return new ResultApi { Success = ResultCode.OK, Result = json };
+        }
+        catch (Exception ex)
+        {
+            _bugsnag.Notify(ex);
+            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-	}
+            return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+        }
+    }
+}
 }
