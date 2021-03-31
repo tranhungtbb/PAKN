@@ -19,8 +19,8 @@ export class PositionComponent implements OnInit {
 
   listData = new Array<FieldObject>()
   listStatus: any = [
-    { value: true, text: 'Sử dụng' },
-    { value: false, text: 'Không sử dụng' },
+    { value: true, text: 'Hiệu lực' },
+    { value: false, text: 'Hết hiệu lực' },
   ]
   form: FormGroup
   model: any = new FieldObject()
