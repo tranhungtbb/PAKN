@@ -24,13 +24,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int ObjectId;
-		public int? Type;
-		public string Content;
-		public byte? Status;
-		public long? CreatedBy;
-		public DateTime? CreatedDate;
+		public int Id { get; set; }
+		public int ObjectId { get; set; }
+		public int? Type { get; set; }
+		public string Content { get; set; }
+		public byte? Status { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
 
 		public async Task<List<HISRecommendationGetByObjectId>> HISRecommendationGetByObjectIdDAO(int? Id)
 		{
@@ -91,7 +91,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? Total;
+		public int? Total { get; set; }
 
 		public async Task<List<MRRecommendationCheckExistedCode>> MRRecommendationCheckExistedCodeDAO(string Code)
 		{
@@ -142,11 +142,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int? RecommendationId;
-		public string Name;
-		public short? FileType;
-		public string FilePath;
+		public int Id { get; set; }
+		public int? RecommendationId { get; set; }
+		public string Name { get; set; }
+		public short? FileType { get; set; }
+		public string FilePath { get; set; }
 
 		public async Task<List<MRRecommendationFilesGetByRecommendationId>> MRRecommendationFilesGetByRecommendationIdDAO(int? Id)
 		{
@@ -203,19 +203,19 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int RecommendationId;
-		public long? UserSendId;
-		public int? UnitSendId;
-		public long? ReceiveId;
-		public int? UnitReceiveId;
-		public byte? Status;
-		public string Content;
-		public string ReasonDeny;
-		public DateTime? SendDate;
-		public DateTime? ExpiredDate;
-		public DateTime? ProcessingDate;
-		public bool? IsViewed;
+		public int Id { get; set; }
+		public int RecommendationId { get; set; }
+		public long? UserSendId { get; set; }
+		public int? UnitSendId { get; set; }
+		public long? ReceiveId { get; set; }
+		public int? UnitReceiveId { get; set; }
+		public byte? Status { get; set; }
+		public string Content { get; set; }
+		public string ReasonDeny { get; set; }
+		public DateTime? SendDate { get; set; }
+		public DateTime? ExpiredDate { get; set; }
+		public DateTime? ProcessingDate { get; set; }
+		public bool? IsViewed { get; set; }
 
 		public async Task<List<MRRecommendationForwardGetByID>> MRRecommendationForwardGetByIDDAO(int? Id)
 		{
@@ -408,8 +408,8 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Value;
-		public string Text;
+		public int Value { get; set; }
+		public string Text { get; set; }
 
 		public async Task<List<MRRecommendationHashtagGetByRecommendationId>> MRRecommendationHashtagGetByRecommendationIdDAO(long? Id)
 		{
@@ -491,24 +491,24 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber;
-		public int Id;
-		public string Code;
-		public string Title;
-		public string Content;
-		public int? Field;
-		public string FieldName;
-		public int? UnitId;
-		public string UnitName;
-		public short? TypeObject;
-		public long? SendId;
-		public string Name;
-		public byte? Status;
-		public DateTime? SendDate;
-		public long? CreatedBy;
-		public DateTime? CreatedDate;
-		public long? UpdatedBy;
-		public DateTime? UpdatedDate;
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Title { get; set; }
+		public string Content { get; set; }
+		public int? Field { get; set; }
+		public string FieldName { get; set; }
+		public int? UnitId { get; set; }
+		public string UnitName { get; set; }
+		public short? TypeObject { get; set; }
+		public long? SendId { get; set; }
+		public string Name { get; set; }
+		public byte? Status { get; set; }
+		public DateTime? SendDate { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public long? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
 
 		public async Task<List<MRRecommendationGetAllOnPage>> MRRecommendationGetAllOnPageDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex)
 		{
@@ -539,24 +539,24 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber;
-		public int Id;
-		public string Code;
-		public string Title;
-		public string Content;
-		public int? Field;
-		public string FieldName;
-		public int? UnitId;
-		public string UnitName;
-		public short? TypeObject;
-		public long? SendId;
-		public string Name;
-		public byte? Status;
-		public DateTime? SendDate;
-		public long? CreatedBy;
-		public DateTime? CreatedDate;
-		public long? UpdatedBy;
-		public DateTime? UpdatedDate;
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Title { get; set; }
+		public string Content { get; set; }
+		public int? Field { get; set; }
+		public string FieldName { get; set; }
+		public int? UnitId { get; set; }
+		public string UnitName { get; set; }
+		public short? TypeObject { get; set; }
+		public long? SendId { get; set; }
+		public string Name { get; set; }
+		public byte? Status { get; set; }
+		public DateTime? SendDate { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public long? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
 
 		public async Task<List<MRRecommendationGetAllWithProcess>> MRRecommendationGetAllWithProcessDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, int? PageSize, int? PageIndex)
 		{
@@ -588,21 +588,21 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Code;
-		public string Title;
-		public string Content;
-		public int? Field;
-		public int? UnitId;
-		public short? TypeObject;
-		public long? SendId;
-		public string Name;
-		public byte? Status;
-		public DateTime? SendDate;
-		public long? CreatedBy;
-		public DateTime? CreatedDate;
-		public long? UpdatedBy;
-		public DateTime? UpdatedDate;
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Title { get; set; }
+		public string Content { get; set; }
+		public int? Field { get; set; }
+		public int? UnitId { get; set; }
+		public short? TypeObject { get; set; }
+		public long? SendId { get; set; }
+		public string Name { get; set; }
+		public byte? Status { get; set; }
+		public DateTime? SendDate { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public long? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
 
 		public async Task<List<MRRecommendationGetByID>> MRRecommendationGetByIDDAO(int? Id)
 		{
