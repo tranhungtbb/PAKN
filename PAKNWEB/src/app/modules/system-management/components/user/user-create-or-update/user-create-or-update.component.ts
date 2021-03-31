@@ -9,9 +9,9 @@ import { PositionService } from '../../../../../services/position.service'
 import { RoleService } from '../../../../../services/role.service'
 
 import { COMMONS } from 'src/app/commons/commons'
-import {UserObject2} from 'src/app/models/UserObject'
+import { UserObject2 } from 'src/app/models/UserObject'
 
-import {UnitComponent} from '../../unit/unit.component'
+import { UnitComponent } from '../../unit/unit.component'
 
 declare var jquery: any
 declare var $: any
@@ -27,19 +27,18 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		private positionService: PositionService,
 		private formBuilder: FormBuilder,
 		private _toastr: ToastrService,
-		private dialog: MatDialog,
 		private roleService: RoleService,
 		private parentUnit: UnitComponent
 	) {}
 
 	modelUser: UserObject2 = new UserObject2()
-	createUserForm:FormGroup
-	modalTitle:string = 'Thông tin người dùng'
-	unitId:number
+	createUserForm: FormGroup
+	modalTitle: string = 'Thông tin người dùng'
+	unitId: number
 
-	positionsList:any[] = []
-	rolesList:any[] = []
-	unitsList:any[] = []
+	positionsList: any[] = []
+	rolesList: any[] = []
+	unitsList: any[] = []
 	selectedRoles: Array<number>
 
 	listStatus: any = [
@@ -52,7 +51,6 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	]
 
 	ngOnInit() {
-
 		this.createUserForm = this.formBuilder.group({
 			userName: ['', [Validators.required]],
 			email: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')]],
@@ -96,7 +94,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			return
 		}
 		this.modelUser.roleIds = this.selectedRoles.toString()
-
+		this.modelUser.userName = this.modelUser.email
 		if (this.modelUser.id != null && this.modelUser.id > 0) {
 			this.userService.update(this.modelUser).subscribe((res) => {
 				if (res.success != 'OK') {
@@ -122,25 +120,21 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		}
 	}
 
-
-	openModal(unitId=0,userId=0): void {
-		this.modelUser = new UserObject2();
-		this.userFormSubmitted = false;
-		this.modelUser.unitId = unitId;
-		if(userId > 0){
-			this.modalTitle = "Tạo người dùng mới"
+	openModal(unitId = 0, userId = 0): void {
+		this.modelUser = new UserObject2()
+		this.userFormSubmitted = false
+		this.modelUser.unitId = unitId
+		if (userId > 0) {
+			this.modalTitle = 'Tạo người dùng mới'
 			this.userService.getById({ id: userId }).subscribe((res) => {
 				if (res.success != 'OK') return
 				this.modelUser = res.result.SYUserGetByID[0]
-				if(this.modelUser.roleIds)
-					this.selectedRoles = this.modelUser.roleIds.split(',').map(c=>parseInt(c))
+				if (this.modelUser.roleIds) this.selectedRoles = this.modelUser.roleIds.split(',').map((c) => parseInt(c))
 				else this.selectedRoles = []
-
 			})
-		}else{
-			this.modalTitle = "Sửa người dùng"
+		} else {
+			this.modalTitle = 'Sửa người dùng'
 		}
 		$('#modal-user-create-or-update').modal('show')
 	}
-
 }
