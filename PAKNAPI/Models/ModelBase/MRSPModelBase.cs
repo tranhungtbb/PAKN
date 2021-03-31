@@ -276,6 +276,41 @@ namespace PAKNAPI.ModelBase
 		public bool? IsViewed { get; set; }
 	}
 
+	public class MRRecommendationForwardProcess
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationForwardProcess(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationForwardProcess()
+		{
+		}
+
+		public async Task<int> MRRecommendationForwardProcessDAO(MRRecommendationForwardProcessIN _mRRecommendationForwardProcessIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationForwardProcessIN.Id);
+			DP.Add("RecommendationId", _mRRecommendationForwardProcessIN.RecommendationId);
+			DP.Add("Status", _mRRecommendationForwardProcessIN.Status);
+			DP.Add("ReasonDeny", _mRRecommendationForwardProcessIN.ReasonDeny);
+			DP.Add("ProcessingDate", _mRRecommendationForwardProcessIN.ProcessingDate);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_ForwardProcess", DP));
+		}
+	}
+
+	public class MRRecommendationForwardProcessIN
+	{
+		public int? Id { get; set; }
+		public int? RecommendationId { get; set; }
+		public byte? Status { get; set; }
+		public string ReasonDeny { get; set; }
+		public DateTime? ProcessingDate { get; set; }
+	}
+
 	public class MRRecommendationForwardUpdate
 	{
 		private SQLCon _sQLCon;
@@ -324,6 +359,35 @@ namespace PAKNAPI.ModelBase
 		public DateTime? SendDate { get; set; }
 		public DateTime? ExpiredDate { get; set; }
 		public DateTime? ProcessingDate { get; set; }
+		public bool? IsViewed { get; set; }
+	}
+
+	public class MRRecommendationForwardUpdateIsviewed
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationForwardUpdateIsviewed(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationForwardUpdateIsviewed()
+		{
+		}
+
+		public async Task<int> MRRecommendationForwardUpdateIsviewedDAO(MRRecommendationForwardUpdateIsviewedIN _mRRecommendationForwardUpdateIsviewedIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationForwardUpdateIsviewedIN.Id);
+			DP.Add("IsViewed", _mRRecommendationForwardUpdateIsviewedIN.IsViewed);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_ForwardUpdateIsviewed", DP));
+		}
+	}
+
+	public class MRRecommendationForwardUpdateIsviewedIN
+	{
+		public int? Id { get; set; }
 		public bool? IsViewed { get; set; }
 	}
 
@@ -726,6 +790,35 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate { get; set; }
 		public long? UpdatedBy { get; set; }
 		public DateTime? UpdatedDate { get; set; }
+	}
+
+	public class MRRecommendationUpdateReactionaryWord
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationUpdateReactionaryWord(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationUpdateReactionaryWord()
+		{
+		}
+
+		public async Task<int> MRRecommendationUpdateReactionaryWordDAO(MRRecommendationUpdateReactionaryWordIN _mRRecommendationUpdateReactionaryWordIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationUpdateReactionaryWordIN.Id);
+			DP.Add("ReactionaryWord", _mRRecommendationUpdateReactionaryWordIN.ReactionaryWord);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateReactionaryWord", DP));
+		}
+	}
+
+	public class MRRecommendationUpdateReactionaryWordIN
+	{
+		public int? Id { get; set; }
+		public bool? ReactionaryWord { get; set; }
 	}
 
 	public class MRRecommendationUpdateStatus

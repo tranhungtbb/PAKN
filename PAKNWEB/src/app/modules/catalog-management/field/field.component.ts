@@ -15,12 +15,12 @@ declare var $: any
 	styleUrls: ['./field.component.css'],
 })
 export class FieldComponent implements OnInit {
-	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) { }
+	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) {}
 
 	listData = new Array<FieldObject>()
 	listStatus: any = [
-		{ value: true, text: 'Sử dụng' },
-		{ value: false, text: 'Không sử dụng' },
+		{ value: true, text: 'Hiệu lực' },
+		{ value: false, text: 'Hết hiệu lực' },
 	]
 	form: FormGroup
 	model: any = new FieldObject()
@@ -28,6 +28,7 @@ export class FieldComponent implements OnInit {
 	isActived: boolean
 	title: string = ''
 	name: string = ''
+	description: string = ''
 	pageIndex: number = 1
 	pageSize: number = 20
 	@ViewChild('table', { static: false }) table: any
@@ -68,10 +69,10 @@ export class FieldComponent implements OnInit {
 		let request = {
 			Name: this.name,
 			isActived: this.isActived != null ? this.isActived : '',
+			description: this.description != null ? this.description : '',
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
-		console.log(request)
 		this._service.fieldGetList(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
@@ -126,12 +127,14 @@ export class FieldComponent implements OnInit {
 		this.model = new FieldObject()
 		this.rebuilForm()
 		this.submitted = false
-		this.title = 'Thêm mới lĩnh vực'
+		this.title = 'Thêm lĩnh vực'
 		$('#modal').modal('show')
 	}
 
 	onSave() {
 		this.submitted = true
+		this.model.name = this.model.name.trim().replace(' ', '')
+		if (this.model.name == '') return
 		if (this.form.invalid) {
 			return
 		}
@@ -184,7 +187,7 @@ export class FieldComponent implements OnInit {
 		this._service.fieldGetById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.rebuilForm()
-				this.title = 'Chỉnh sửa lĩnh vực'
+				this.title = 'Cập nhập lĩnh vực'
 				this.model = response.result.CAFieldGetByID[0]
 				$('#modal').modal('show')
 			} else {
@@ -227,8 +230,8 @@ export class FieldComponent implements OnInit {
 		}
 		data.isActived = !data.isActived
 		this._service.fieldUpdateStatus(data).subscribe((res) => {
-			console.log(res);
-			if (res.success == "OK") {
+			console.log(res)
+			if (res.success == 'OK') {
 				if (data.isActived == true) {
 					this._toastr.success(MESSAGE_COMMON.UNLOCK_SUCCESS)
 				} else {

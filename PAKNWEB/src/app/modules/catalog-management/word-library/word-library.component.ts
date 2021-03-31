@@ -19,8 +19,8 @@ export class WordLibraryComponent implements OnInit {
 
   listData = new Array<FieldObject>()
   listStatus: any = [
-    { value: true, text: 'Sử dụng' },
-    { value: false, text: 'Không sử dụng' },
+    { value: true, text: 'Hiệu lực' },
+    { value: false, text: 'Hết hiệu lực' },
   ]
   form: FormGroup
   model: any = new FieldObject()
@@ -28,6 +28,7 @@ export class WordLibraryComponent implements OnInit {
   isActived: boolean
   title: string = ''
   name: string = ''
+  description: string = ''
   pageIndex: number = 1
   pageSize: number = 20
   @ViewChild('table', { static: false }) table: any
@@ -67,17 +68,18 @@ export class WordLibraryComponent implements OnInit {
 
     let request = {
       Name: this.name,
+      Description: this.description.trim(),
       isActived: this.isActived != null ? this.isActived : '',
       PageIndex: this.pageIndex,
       PageSize: this.pageSize,
     }
-    console.log(request)
     this._service.wordGetList(request).subscribe((response) => {
       if (response.success == RESPONSE_STATUS.success) {
         if (response.result != null) {
           this.listData = []
           this.listData = response.result.CAWordGetAllOnPage
           this.totalRecords = response.result.TotalCount
+          console.log(this.totalRecords)
         }
       } else {
         this._toastr.error(response.message)

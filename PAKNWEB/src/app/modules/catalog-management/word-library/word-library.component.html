@@ -1,6 +1,10 @@
 <div class="container-fluid p-0">
   <div class="row">
     <div class="col-lg-12">
+      <ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+        <li class="breadcrumb-item"><a>Danh mục</a></li>
+        <li class="breadcrumb-item active"><a class="font-weight-bold"> Thư viện từ ngữ</a></li>
+      </ol>
       <div class="btn-group group-button-table" role="group">
         <button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -52,27 +56,29 @@
                     <strong>Mô tả</strong>
                     <span class="caret-tb"></span>
                   </p>
-                  <input type="text" class="form-control form-control-sm">
+                  <input class="form-control form-control-sm" [(ngModel)]="description" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập mô tả..." />
                 </th>
                 <th style="width: 160px">
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Trạng thái</strong>
                     <span class="caret-tb"></span>
                   </p>
-                  <div class="dropdown bootstrap-select form-control form-control-sm">
+                  <div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
                     <ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text"
                       bindValue="value" [(ngModel)]="isActived" [closeOnSelect]="true" (change)="dataStateChange()">
                     </ng-select>
                   </div>
                 </th>
-                <th class="text-right" style="max-width: 100px;"><strong>Thao tác</strong></th>
+                <th class="text-right" style="width: 100px;"><strong>Thao tác</strong></th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
               <tr>
                 <td class="text-center">{{rowIndex + 1}}</td>
                 <td>
-                  <strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
+                  <strong><a (click)="preView(item)" class="ellipsis text-dark" type="button"
+                      title="Xem chi tiết">{{item.name}}</a></strong>
                 </td>
                 <td>{{item.description}}</td>
                 <td>
@@ -89,6 +95,11 @@
                       data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
                   </div>
                 </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td class="text-center" colspan="5">Không có dữ liệu</td>
               </tr>
             </ng-template>
           </p-table>

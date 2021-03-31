@@ -1,0 +1,14 @@
+.hover-active a :hover {
+	font-size: 23px;
+}
+strong.highlight:hover {
+	color: red;
+}
+strong.highlight {
+	cursor: pointer;
+}
+
+.title-detail {
+	font-size: 20px;
+	color: #000;
+}

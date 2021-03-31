@@ -20,8 +20,8 @@ export class DepartmentGroupComponent implements OnInit {
 
   listData = new Array<FieldObject>()
   listStatus: any = [
-    { value: true, text: 'Sử dụng' },
-    { value: false, text: 'Không sử dụng' },
+    { value: true, text: 'Hiệu lực' },
+    { value: false, text: 'Hết hiệu lực' },
   ]
   form: FormGroup
   model: any = new FieldObject()
@@ -29,6 +29,7 @@ export class DepartmentGroupComponent implements OnInit {
   isActived: boolean
   title: string = ''
   name: string = ''
+  description: string = ''
   pageIndex: number = 1
   pageSize: number = 20
   @ViewChild('table', { static: false }) table: any
@@ -68,6 +69,7 @@ export class DepartmentGroupComponent implements OnInit {
 
     let request = {
       Name: this.name,
+      Description: this.description.trim(),
       isActived: this.isActived != null ? this.isActived : '',
       PageIndex: this.pageIndex,
       PageSize: this.pageSize,
