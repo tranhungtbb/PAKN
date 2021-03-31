@@ -30,6 +30,7 @@ namespace PAKNAPI.ModelBase
 		public string Content;
 		public byte? Status;
 		public long? CreatedBy;
+		public string CreatedByName;
 		public DateTime? CreatedDate;
 
 		public async Task<List<HISRecommendationGetByObjectId>> HISRecommendationGetByObjectIdDAO(int? Id)

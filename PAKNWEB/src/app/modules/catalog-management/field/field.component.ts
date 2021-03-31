@@ -15,12 +15,12 @@ declare var $: any
 	styleUrls: ['./field.component.css'],
 })
 export class FieldComponent implements OnInit {
-	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) { }
+	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) {}
 
 	listData = new Array<FieldObject>()
 	listStatus: any = [
-		{ value: true, text: 'Sử dụng' },
-		{ value: false, text: 'Không sử dụng' },
+		{ value: true, text: 'Hiệu lực' },
+		{ value: false, text: 'Hết hiệu lực' },
 	]
 	form: FormGroup
 	model: any = new FieldObject()
@@ -227,8 +227,8 @@ export class FieldComponent implements OnInit {
 		}
 		data.isActived = !data.isActived
 		this._service.fieldUpdateStatus(data).subscribe((res) => {
-			console.log(res);
-			if (res.success == "OK") {
+			console.log(res)
+			if (res.success == 'OK') {
 				if (data.isActived == true) {
 					this._toastr.success(MESSAGE_COMMON.UNLOCK_SUCCESS)
 				} else {
