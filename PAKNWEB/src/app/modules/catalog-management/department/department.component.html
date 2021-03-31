@@ -103,7 +103,7 @@
                     <strong>Trạng thái</strong>
                     <span class="caret-tb"></span>
                   </p>
-                  <div class="dropdown bootstrap-select form-control form-control-sm">
+                  <div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
                     <ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text"
                       bindValue="value" [(ngModel)]="isActived" [closeOnSelect]="true" (change)="dataStateChange()">
                     </ng-select>
@@ -113,11 +113,6 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-              <tr *ngIf="(totalRecords == null || totalRecords == 0 || item == null)">
-                <td class="text-center" colspan="10">
-                  <span><i>Không có dữ liệu</i></span>
-                </td>
-              </tr>
               <tr>
                 <td class="text-center">{{rowIndex + 1}}</td>
                 <td>
@@ -157,6 +152,11 @@
                       data-toggle="modal" data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
                   </div>
                 </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td class="text-center" colspan="7">Không có dữ liệu</td>
               </tr>
             </ng-template>
           </p-table>

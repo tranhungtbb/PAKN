@@ -73,13 +73,13 @@ export class WordLibraryComponent implements OnInit {
       PageIndex: this.pageIndex,
       PageSize: this.pageSize,
     }
-    console.log(request)
     this._service.wordGetList(request).subscribe((response) => {
       if (response.success == RESPONSE_STATUS.success) {
         if (response.result != null) {
           this.listData = []
           this.listData = response.result.CAWordGetAllOnPage
           this.totalRecords = response.result.TotalCount
+          console.log(this.totalRecords)
         }
       } else {
         this._toastr.error(response.message)
