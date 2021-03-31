@@ -1,3 +1,9 @@
 .hover-active a :hover {
 	font-size: 23px;
 }
+strong.highlight:hover {
+	color: red;
+}
+strong.highlight {
+	cursor: pointer;
+}
