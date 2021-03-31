@@ -25,7 +25,7 @@
 						</div>
 					</div>
 					<div class="btn-group" role="group">
-						<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" >
+						<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
 								<path
 									d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
@@ -94,19 +94,22 @@
 										</strong>
 									</td>
 									<td>
-										Loại tin tức
+										{{item.newsType}}
 									</td>
 									<td>
-										<span *ngIf="item.status == listStatus[2].value" class="badge rounded-pill badge-outline-light bg-white" >{{listStatus[2].text}}</span>
+										<span *ngIf="item.status == listStatus[2].value" class="badge rounded-pill badge-outline-light bg-white">{{listStatus[2].text}}</span>
 										<span *ngIf="item.status == listStatus[0].value" class="badge rounded-pill bg-green">{{listStatus[0].text}}</span>
 										<span *ngIf="item.status == listStatus[1].value" class="badge rounded-pill bg-blue2">{{listStatus[1].text}}</span>
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
-											<button class="btn-icon grd-xanhngoc text-white mr-2"><i class="bi bi-box-arrow-up"></i></button>
-											<a [routerLink]="['./chinh-sua', item.id]" class="btn-icon mr-2"><i
-													class="bi bi-pencil-square"></i></a>
-											<button class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-history-pakn" (click)="delNews(item.id)"><i class="bi bi-trash"></i></button>
+											<button class="btn-icon grd-xanhngoc text-white mr-2" (click)="onOpenModalConfirm(item.id,'publish')">
+												<i class="bi bi-box-arrow-up" *ngIf="item.isPublished"></i>
+												<i class="bi bi-box-arrow-down" *ngIf="!item.isPublished"></i>
+											</button>
+											<a [routerLink]="['./chinh-sua', item.id]" class="btn-icon mr-2"><i class="bi bi-pencil-square"></i></a>
+											<button class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-history-pakn"
+												(click)="onOpenModalConfirm(item.id,'delete')"><i class="bi bi-trash"></i></button>
 										</div>
 									</td>
 								</tr>
@@ -114,6 +117,28 @@
 						</table>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- confirm modal -->
+<div class="modal fade" id="modal-confirm">
+	<div class="modal-dialog modal-dialog-centered modal-md" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-0">
+				<span>
+					{{modalConfirm_message}}
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="acceptConfirm()">Đồng ý</button>
 			</div>
 		</div>
 	</div>

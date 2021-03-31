@@ -71,5 +71,14 @@ namespace PAKNAPI.Controllers
                 return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = e.Message };
             }
         }
+        [HttpGet]
+        [Route("get-news-avatar")]
+        [Authorize]
+        public async Task<IActionResult> GetNewsAvatar(int id)
+        {
+
+
+            return null;
+        }
     }
 }

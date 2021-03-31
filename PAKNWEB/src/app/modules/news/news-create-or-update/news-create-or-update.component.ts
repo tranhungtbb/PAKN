@@ -6,6 +6,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
 
 import { NewsService } from 'src/app/services/news.service'
+import { CatalogService } from 'src/app/services/catalog.service'
 
 import { NewsRelateModalComponent } from '../news-relate-modal/news-relate-modal.component'
 
@@ -19,11 +20,12 @@ import { NewsModel } from 'src/app/models/NewsObject'
 	styleUrls: ['./news-create-or-update.component.css'],
 })
 export class NewsCreateOrUpdateComponent implements OnInit {
-	@ViewChild(NewsRelateModalComponent, { static: false }) newsRelateChild: NewsRelateModalComponent
+	@ViewChild(NewsRelateModalComponent, { static: false }) child_NewsRelate: NewsRelateModalComponent
 	constructor(
 		private toast: ToastrService,
 		private formBuilder: FormBuilder,
 		private newsService: NewsService,
+		private catalogService: CatalogService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private dialog: MatDialog
@@ -32,7 +34,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	public Editor = ClassicEditor
 	model: NewsModel = new NewsModel()
 	newsForm: FormGroup
-	listNewsCategories: Array<any>
+	listNewsTypes: any[]
 	postTypes: any[] = [
 		{ text: 'thường', value: true, checked: true },
 		{ text: 'nổi bật', value: false, checked: false },
@@ -62,17 +64,35 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 						this.avatarUrl = 'assets/dist/images/no.jpg'
 					}
 				})
-
-				this.newsService.getAllNewsRelates({ id: params['id'] }).subscribe((res) => {
-					if (res.success != 'OK') {
-						return
-					}
-					if (res.result.NERelateGetAll) {
-						this.model.newsIdRelates = res.result.NERelateGetAll.map((e) => e.NewsIdRelate)
-					}
-				})
+				if (this.model.newsRelateIds != null && this.model.newsRelateIds.length > 0) {
+					this.newsService
+						.getAllPagedList({
+							pageIndex: 1,
+							pageSize: 100,
+							newsIds: '5',
+						})
+						.subscribe((res) => {
+							if (res.success != 'OK') {
+								return
+							}
+							this.newsRelatesSelected = res.result.NENewsGetAllOnPage
+						})
+				}
 			}
 		})
+
+		//get all news type
+		this.catalogService
+			.newsTypeGetList({
+				pageSize: 10000,
+				pageIndex: 1,
+			})
+			.subscribe((res) => {
+				if (res.success != 'OK') {
+					return
+				}
+				this.listNewsTypes = res.result.CANewsTypeGetAllOnPage
+			})
 	}
 
 	get f() {
@@ -89,13 +109,11 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		// 	this.toast.error()
 		// 	return
 		// }
-		let formData = new FormData()
-		for (let key in this.model) {
-			formData.append(key, this.model[key])
+		if (this.model.newsRelateIds != null && this.model.newsRelateIds.length == 0) {
+			this.model.newsRelateIds = null
 		}
-
 		if (this.model.id && this.model.id > 0) {
-			this.newsService.update(formData).subscribe((res) => {
+			this.newsService.update(this.model).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error(COMMONS.UPDATE_FAILED)
 					return
@@ -104,7 +122,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				this.router.navigate(['/quan-tri/tin-tuc'])
 			})
 		} else {
-			this.newsService.create(formData).subscribe((res) => {
+			this.newsService.create(this.model).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error(COMMONS.ADD_FAILED)
 					return
@@ -120,20 +138,25 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	}
 
 	onModalNewsRelate() {
-		this.newsRelateChild.openModal(this.model.newsIdRelates)
+		this.child_NewsRelate.openModal(this.model.newsRelateIds ? this.model.newsRelateIds.split(',') : [])
 	}
-	onModalNewsRelate_Close() {
-		this.model.newsIdRelates = this.newsRelateChild.newsSelected
-		this.newsService
-			.getAllPagedList({
-				pageIndex: 1,
-				pageSize: 1000,
-				ids: this.newsRelateChild.newsSelected.toString(),
-			})
-			.subscribe((res) => {
-				if (res.success != 'OK') return
-				if (res.result.NENewsGetAllOnPage) this.newsRelatesSelected = res.result.NENewsGetAllOnPage
-			})
+	onModalNewsRelate_Closed() {
+		this.model.newsRelateIds = this.child_NewsRelate.newsSelected.toString()
+
+		if (this.model.newsRelateIds != null && this.model.newsRelateIds != '') {
+			this.newsService
+				.getAllPagedList({
+					pageIndex: 1,
+					pageSize: 1000,
+					ids: this.child_NewsRelate.newsSelected.toString(),
+				})
+				.subscribe((res) => {
+					if (res.success != 'OK') return
+					if (res.result.NENewsGetAllOnPage) this.newsRelatesSelected = res.result.NENewsGetAllOnPage
+				})
+		} else {
+			this.newsRelatesSelected = []
+		}
 	}
 
 	onChangeAvatar() {

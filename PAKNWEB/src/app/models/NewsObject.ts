@@ -4,7 +4,7 @@ export class NewsModel {
 		this.isPublished = false
 		this.status = 2 // 0: đã thu hồi | 1: đã công bố | 2: đang soạn thảo
 		this.imagePath = ' '
-		this.newsIdRelates = []
+		this.newsRelateIds = ''
 	}
 	id: number
 	title: string
@@ -13,10 +13,10 @@ export class NewsModel {
 	newsType: number
 	postType: boolean
 	imagePath: string
-	isPublished:boolean
-	status:number
+	isPublished: boolean
+	status: number
 
-	newsIdRelates: any[]
+	newsRelateIds: string
 
 	//system field
 	createdAt: string

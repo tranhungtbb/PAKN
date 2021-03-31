@@ -13,13 +13,13 @@ namespace PAKNAPI.ModelBase
 {
 	public class HISRecommendationOnPage
 	{
-		public int Id { get; set; }
-		public int ObjectId { get; set; }
-		public int? Type { get; set; }
-		public string Content { get; set; }
-		public byte? Status { get; set; }
-		public long? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
+		public int Id;
+		public int ObjectId;
+		public int? Type;
+		public string Content;
+		public byte? Status;
+		public long? CreatedBy;
+		public DateTime? CreatedDate;
 		public int? RowNumber; // int, null
 	}
 
@@ -36,13 +36,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id { get; set; }
-		public int ObjectId { get; set; }
-		public int? Type { get; set; }
-		public string Content { get; set; }
-		public byte? Status { get; set; }
-		public long? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
+		public int Id;
+		public int ObjectId;
+		public int? Type;
+		public string Content;
+		public byte? Status;
+		public long? CreatedBy;
+		public DateTime? CreatedDate;
 
 		public async Task<HISRecommendation> HISRecommendationGetByID(int? Id)
 		{

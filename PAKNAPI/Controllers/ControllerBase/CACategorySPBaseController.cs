@@ -688,46 +688,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("CAHashtagUpdateListBase")]
-		public async Task<ActionResult<object>> CAHashtagUpdateListBase(List<CAHashtagUpdateIN> _cAHashtagUpdateINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _cAHashtagUpdateIN in _cAHashtagUpdateINs)
-				{
-					var result = await new CAHashtagUpdate(_appSetting).CAHashtagUpdateDAO(_cAHashtagUpdateIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
 		[Route("CANewsTypeDeleteBase")]
 		public async Task<ActionResult<object>> CANewsTypeDeleteBase(CANewsTypeDeleteIN _cANewsTypeDeleteIN)
 		{
