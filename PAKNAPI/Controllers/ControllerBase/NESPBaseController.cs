@@ -17,20 +17,14 @@ using Bugsnag;
 
 namespace PAKNAPI.ControllerBase
 {
-	[Route("api/NE
-
-SPBase")]
+	[Route("api/NESPBase")]
 	[ApiController]
-	public class NE
-
-SPBaseController : BaseApiController
+	public class NESPBaseController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;
 
-		public NE
-
-SPBaseController(IAppSetting appSetting, IClient bugsnag)
+		public NESPBaseController(IAppSetting appSetting, IClient bugsnag)
 		{
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
