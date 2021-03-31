@@ -124,6 +124,7 @@ namespace PAKNAPI.ModelBase
 		public string Name;
 		public byte? Status;
 		public DateTime? SendDate;
+		public bool? ReactionaryWord;
 		public long? CreatedBy;
 		public DateTime? CreatedDate;
 		public long? UpdatedBy;
@@ -155,6 +156,7 @@ namespace PAKNAPI.ModelBase
 		public string Name;
 		public byte? Status;
 		public DateTime? SendDate;
+		public bool? ReactionaryWord;
 		public long? CreatedBy;
 		public DateTime? CreatedDate;
 		public long? UpdatedBy;
@@ -197,6 +199,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Name", _mRRecommendation.Name);
 			DP.Add("Status", _mRRecommendation.Status);
 			DP.Add("SendDate", _mRRecommendation.SendDate);
+			DP.Add("ReactionaryWord", _mRRecommendation.ReactionaryWord);
 			DP.Add("CreatedBy", _mRRecommendation.CreatedBy);
 			DP.Add("CreatedDate", _mRRecommendation.CreatedDate);
 			DP.Add("UpdatedBy", _mRRecommendation.UpdatedBy);
@@ -219,6 +222,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Name", _mRRecommendation.Name);
 			DP.Add("Status", _mRRecommendation.Status);
 			DP.Add("SendDate", _mRRecommendation.SendDate);
+			DP.Add("ReactionaryWord", _mRRecommendation.ReactionaryWord);
 			DP.Add("CreatedBy", _mRRecommendation.CreatedBy);
 			DP.Add("CreatedDate", _mRRecommendation.CreatedDate);
 			DP.Add("UpdatedBy", _mRRecommendation.UpdatedBy);
