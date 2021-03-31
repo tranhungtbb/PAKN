@@ -24,9 +24,9 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public string Code;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
 
 		public async Task<List<SYRoleGetAll>> SYRoleGetAllDAO()
 		{
@@ -49,7 +49,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
+		public int Id { get; set; }
 
 		public async Task<List<SYUnitGetMainId>> SYUnitGetMainIdDAO()
 		{

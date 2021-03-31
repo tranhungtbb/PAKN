@@ -44,7 +44,8 @@
 					<div class="col-12 col-lg-12 form-group mb-6">
 						<div class="clearfix">
 							<label class="mb-1"><span class="text-uppercase">bài viết liên quan</span> <span class="cl-red">(*)</span></label>
-							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline pull-right" (click)="onModalNewsRelate()"><i class="bi bi-list"></i> Thêm mới</button>
+							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline pull-right" (click)="onModalNewsRelate()"><i class="bi bi-list"></i> Thêm
+								mới</button>
 						</div>
 						<div class="col-md-12 pr-0 pl-0">
 							<div class="btn btn-default p-3 border" *ngFor="let relateItem of newsRelatesSelected">
@@ -79,7 +80,7 @@
 						<label class="mb-1"><span class="text-uppercase">ảnh đại diện</span></label>
 						<input type="file" [hidden]="true" id="avatar-image" (change)="onAvatarChange($event)">
 						<div class="news-avatar" (click)="onChangeAvatar()">
-							<img src="assets/dist/images/no.jpg" alt="">
+							<img src="{{avatarUrl}}" alt="">
 						</div>
 					</div>
 					<!-- <div class="col-12 col-lg-12 form-group mb-6">

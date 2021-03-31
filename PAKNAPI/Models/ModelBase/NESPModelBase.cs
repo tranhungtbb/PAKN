@@ -51,25 +51,25 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public bool PostType;
-		public bool IsPublished;
-		public int Status;
-		public int Id;
-		public string Title;
-		public string Summary;
-		public string Contents;
-		public string ImagePath;
-		public int? NewsType;
-		public int? ViewCount;
-		public string Url;
-		public int? CreatedBy;
-		public DateTime? CreatedDate;
-		public int? UpdatedBy;
-		public DateTime? UpdatedDate;
-		public int? PublishedBy;
-		public DateTime? PublishedDate;
-		public int? WithdrawBy;
-		public DateTime? WithdrawDate;
+		public bool PostType { get; set; }
+		public bool IsPublished { get; set; }
+		public int Status { get; set; }
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Summary { get; set; }
+		public string Contents { get; set; }
+		public string ImagePath { get; set; }
+		public int? NewsType { get; set; }
+		public int? ViewCount { get; set; }
+		public string Url { get; set; }
+		public int? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public int? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? PublishedBy { get; set; }
+		public DateTime? PublishedDate { get; set; }
+		public int? WithdrawBy { get; set; }
+		public DateTime? WithdrawDate { get; set; }
 		public int? RowNumber; // int, null
 
 		public async Task<List<NENewsGetAllOnPage>> NENewsGetAllOnPageDAO(string Ids, int? PageSize, int? PageIndex, string Title, int? NewType, int? Status)
@@ -99,25 +99,26 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public bool PostType;
-		public bool IsPublished;
-		public int Status;
-		public int Id;
-		public string Title;
-		public string Summary;
-		public string Contents;
-		public string ImagePath;
-		public int? NewsType;
-		public int? ViewCount;
-		public string Url;
-		public int? CreatedBy;
-		public DateTime? CreatedDate;
-		public int? UpdatedBy;
-		public DateTime? UpdatedDate;
-		public int? PublishedBy;
-		public DateTime? PublishedDate;
-		public int? WithdrawBy;
-		public DateTime? WithdrawDate;
+		public bool PostType { get; set; }
+		public bool IsPublished { get; set; }
+		public int Status { get; set; }
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Summary { get; set; }
+		public string Contents { get; set; }
+		public string ImagePath { get; set; }
+		public int? NewsType { get; set; }
+		public int? ViewCount { get; set; }
+		public string Url { get; set; }
+		public int? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public int? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? PublishedBy { get; set; }
+		public DateTime? PublishedDate { get; set; }
+		public int? WithdrawBy { get; set; }
+		public DateTime? WithdrawDate { get; set; }
+		public int? NewsRelateId { get; set; }
 
 		public async Task<List<NENewsGetByID>> NENewsGetByIDDAO(int? Id)
 		{
@@ -125,6 +126,76 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<NENewsGetByID>("NE_NewsGetByID", DP)).ToList();
+		}
+	}
+
+	public class NENewsGetByIDOnJoin
+	{
+		IAppSetting _appSetting;
+
+		public NENewsGetByIDOnJoin(IAppSetting appSetting)
+		{
+			_appSetting = appSetting;
+		}
+
+		public NENewsGetByIDOnJoin()
+		{
+		}
+
+		public bool PostType { get; set; }
+		public bool IsPublished { get; set; }
+		public int Status { get; set; }
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Summary { get; set; }
+		public string Contents { get; set; }
+		public string ImagePath { get; set; }
+		public int? NewsType { get; set; }
+		public int? ViewCount { get; set; }
+		public string Url { get; set; }
+		public int? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public int? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? PublishedBy { get; set; }
+		public DateTime? PublishedDate { get; set; }
+		public int? WithdrawBy { get; set; }
+		public DateTime? WithdrawDate { get; set; }
+		public List<NENewsGetByIDOnJoinNewsRelates> cNENewsGetByIDOnJoinNewsRelates = new List<NENewsGetByIDOnJoinNewsRelates>();
+
+		public class NENewsGetByIDOnJoinNewsRelates
+		{
+			public int? NewsRelates_Id { get; set; }
+			public string NewsRelates_Title { get; set; }
+			public string NewsRelates_ImagePath { get; set; }
+		}
+
+		public async Task<List<NENewsGetByIDOnJoin>> NENewsGetByIDOnJoinDAO(int? Id)
+		{
+			List<NENewsGetByIDOnJoin> mNENewsGetByIDOnJoins = new List<NENewsGetByIDOnJoin>();
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			using (SqlConnection conn = new SqlConnection(_appSetting.GetConnectstring()))
+			{
+				(await conn.QueryAsync<NENewsGetByIDOnJoin, NENewsGetByIDOnJoinNewsRelates, NENewsGetByIDOnJoin>("NENewsGetByIDOnJoin", (mNENewsGetByIDOnJoin, cNENewsGetByIDOnJoinNewsRelates) =>
+				{
+					var _mNENewsGetByIDOnJoin = mNENewsGetByIDOnJoins.Find(item => item.Id == mNENewsGetByIDOnJoin.Id);
+					if (_mNENewsGetByIDOnJoin == null)
+					{
+						mNENewsGetByIDOnJoins.Add(mNENewsGetByIDOnJoin);
+						_mNENewsGetByIDOnJoin = mNENewsGetByIDOnJoin;
+					}
+
+					_mNENewsGetByIDOnJoin.cNENewsGetByIDOnJoinNewsRelates = _mNENewsGetByIDOnJoin.cNENewsGetByIDOnJoinNewsRelates ?? new List<NENewsGetByIDOnJoinNewsRelates>();
+					if (cNENewsGetByIDOnJoinNewsRelates != null && _mNENewsGetByIDOnJoin.cNENewsGetByIDOnJoinNewsRelates.Find(item => item.NewsRelates_Id == cNENewsGetByIDOnJoinNewsRelates.NewsRelates_Id && item.NewsRelates_Title == cNENewsGetByIDOnJoinNewsRelates.NewsRelates_Title && item.NewsRelates_ImagePath == cNENewsGetByIDOnJoinNewsRelates.NewsRelates_ImagePath) == null)
+						_mNENewsGetByIDOnJoin.cNENewsGetByIDOnJoinNewsRelates.Add(cNENewsGetByIDOnJoinNewsRelates);
+
+					return _mNENewsGetByIDOnJoin;
+				}, DP, splitOn: "PostType, NewsRelates_Id", commandType: CommandType.StoredProcedure)).ToList();
+			}
+
+			return mNENewsGetByIDOnJoins;
 		}
 	}
 
@@ -250,31 +321,5 @@ namespace PAKNAPI.ModelBase
 		public DateTime? PublishedDate { get; set; }
 		public int? WithdrawBy { get; set; }
 		public DateTime? WithdrawDate { get; set; }
-	}
-
-	public class NERelateGetAll
-	{
-		private SQLCon _sQLCon;
-
-		public NERelateGetAll(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public NERelateGetAll()
-		{
-		}
-
-		public int Id;
-		public int? NewsId;
-		public int? NewsIdRelate;
-
-		public async Task<List<NERelateGetAll>> NERelateGetAllDAO(int? NewsId)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("NewsId", NewsId);
-
-			return (await _sQLCon.ExecuteListDapperAsync<NERelateGetAll>("NE_RelateGetAll", DP)).ToList();
-		}
 	}
 }

@@ -600,11 +600,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize]
 		[Route("CAHashtagGetAllOnPageBase")]
-		public async Task<ActionResult<object>> CAHashtagGetAllOnPageBase(string Id, int? PageSize, int? PageIndex, string Name, bool? IsActived)
+		public async Task<ActionResult<object>> CAHashtagGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, bool? IsActived)
 		{
 			try
 			{
-				List<CAHashtagGetAllOnPage> rsCAHashtagGetAllOnPage = await new CAHashtagGetAllOnPage(_appSetting).CAHashtagGetAllOnPageDAO(Id, PageSize, PageIndex, Name, IsActived);
+				List<CAHashtagGetAllOnPage> rsCAHashtagGetAllOnPage = await new CAHashtagGetAllOnPage(_appSetting).CAHashtagGetAllOnPageDAO(PageSize, PageIndex, Name, IsActived);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAHashtagGetAllOnPage", rsCAHashtagGetAllOnPage},
