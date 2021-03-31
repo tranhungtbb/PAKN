@@ -79,7 +79,7 @@ export class PositionComponent implements OnInit {
         if (response.result != null) {
           this.listData = []
           this.listData = response.result.CAPositionGetAllOnPage
-          this.totalRecords = response.result.TotalCount
+          this.totalRecords = response.result.CAPositionGetAllOnPage[0].rowNumber
         }
       } else {
         this._toastr.error(response.message)
