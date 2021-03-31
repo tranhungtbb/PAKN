@@ -34,26 +34,26 @@
 						autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
-								<th style="width: 50px">
+								<th style="width: 3%;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>STT</strong>
 									</p>
 								</th>
-								<th>
+								<th style="width: 30%;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Tên lĩnh vực</strong>
 										<span class="caret-tb"></span>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
 								</th>
-								<th style="width: 350px">
+								<th style="width: 55%;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Mô tả</strong>
 										<span class="caret-tb"></span>
 									</p>
-									<input type="text" class="form-control form-control-sm">
+									<input type="text" class="form-control form-control-sm" placeholder="Nhập mô tả...">
 								</th>
-								<th style="width: 160px">
+								<th style="width: 10%;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Trạng thái</strong>
 										<span class="caret-tb"></span>
@@ -64,22 +64,22 @@
 										</ng-select>
 									</div>
 								</th>
-								<th class="text-right" style="max-width: 100px;"><strong>Thao tác</strong></th>
+								<th style="width: 10%;" class="text-right"><strong>Thao tác</strong></th>
 							</tr>
 						</ng-template>
 						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									<strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
+									<strong class="highlight"><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
 								</td>
 								<td>{{item.description}}</td>
 								<td>
 									<span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == true" class="badge rounded-pill bg-success">Hiệu lực</span>
 									<span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Hết hiệu lực</span>
 								</td>
-								<td style="max-width: 100px;">
-									<div class="d-flex justify-content-end">
+								<td>
+									<div class="hover-active d-flex justify-content-end">
 										<a (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
 										<a (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
 												class="bi bi-trash"></i></a>
@@ -163,8 +163,8 @@
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label lb600">Trạng thái</label>
-								<p *ngIf="model.isActived == 0">Sử dụng</p>
-								<p *ngIf="model.isActived == 1">Không sử dụng</p>
+								<p *ngIf="model.isActived == 0">Hiệu lực</p>
+								<p *ngIf="model.isActived == 1">Hết hiệu lực</p>
 							</div>
 						</div>
 						<div class="row">
