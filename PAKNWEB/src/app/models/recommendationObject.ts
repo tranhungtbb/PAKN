@@ -65,3 +65,10 @@ export class RecommendationForwardObject {
 	processingDate: Date = null
 	isViewed: boolean = false
 }
+export class RecommendationProcessObject {
+	id: number = 0
+	recommendationId: number = null
+	status: number = null
+	reasonDeny: string = ''
+	reactionaryWord: boolean = false
+}

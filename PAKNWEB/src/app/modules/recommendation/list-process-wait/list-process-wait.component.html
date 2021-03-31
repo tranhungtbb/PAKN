@@ -109,12 +109,10 @@
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
-											<a [routerLink]="['/quan-tri/kien-nghi/them-moi/', item.id]" *ngIf="item.status == 4 && item.createdBy == userLoginId"
-												class="btn-icon grd-brown text-brown mr-2" title="Cập nhật"><i class="bi bi-pencil-square"></i></a>
-											<a *ngIf="item.status == 2" class="btn-icon grd-xanhngoc text-white mr-2" title="Tiếp nhận xử lý"><i
-													class="bi bi-file-earmark-check"></i></a>
-											<a *ngIf="item.status == 2" href="#" class="btn-icon grd-red text-white mr-2" data-toggle="modal" data-target="#modal-tc-pakn"
-												title="Từ chối tiếp nhận"><i class="bi bi-file-earmark-break"></i></a>
+											<a class="btn-icon grd-xanhngoc text-white mr-2" (click)="preProcess(item.id,item.processId,7)" title="Tiếp nhận giải quyết">
+												<i class="bi bi-file-earmark-check"></i></a>
+											<a class="btn-icon grd-red text-white mr-2" (click)="preProcess(item.id,item.processId,6)" title="Từ chối giải quyết">
+												<i class="bi bi-file-earmark-break"></i></a>
 											<a class="btn-icon" (click)="getHistories(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
 									</td>
@@ -126,9 +124,8 @@
 			</div>
 		</div>
 	</div>
-
 </div>
-<div class="modal fade" id="modalConfirmDelete">
+<div class="modal fade" id="modalAccept">
 	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
 		<div class="modal-content rounded">
 			<form class="form-horizontal">
@@ -146,10 +143,33 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác nhận</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onProcessAccept(idDelete)">Xác nhận</button>
 					</div>
 				</div>
 			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalReject">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p class="h4 text-center mb-3">Bạn có chắc chắn từ chối <strong>PAKN</strong> này ko?</p>
+				<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="modelProcess.reasonDeny" maxlength="500"></textarea>
+				<div class="custom-control custom-checkbox checkbox-danger mt-3">
+					<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord" id="basic_checkbox_1">
+					<label class="custom-control-label" for="basic_checkbox_1">Chứa từ ngữ bị cấm</label>
+				</div>
+			</div>
+			<div class="modal-footer justify-content-center border-top-0">
+				<button type="button" class="btn btn-outline-secondary border" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger grd-red" (click)="onProcessReject()">Xác nhận</button>
+			</div>
 		</div>
 	</div>
 </div>

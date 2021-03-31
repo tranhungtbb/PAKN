@@ -319,7 +319,7 @@ namespace PAKNAPI.Controller
 				HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
 				hisData.ObjectId = _mRRecommendationForwardInsertIN.RecommendationId;
 				hisData.Type = 1;
-				hisData.Content = "Đã chuyển ";// + ();
+				hisData.Content = "Đã chuyển đến: ";// + ();
 				hisData.Status = _mRRecommendationForwardInsertIN.Status;
 				hisData.CreatedBy = _mRRecommendationForwardInsertIN.UserSendId;
 				hisData.CreatedDate = DateTime.Now;
@@ -339,19 +339,28 @@ namespace PAKNAPI.Controller
 		[HttpPost]
 		[Authorize]
 		[Route("RecommendationOnProcess")]
-		public async Task<ActionResult<object>> MRRecommendationOnProcess(MRRecommendationForwardProcessIN _mRRecommendationForwardProcessIN)
+		public async Task<ActionResult<object>> MRRecommendationOnProcess(RecommendationForwardProcess _mRRecommendationForwardProcessIN)
 		{
 			try
 			{
 				long UserSendId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
 				int UnitSendId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
 				_mRRecommendationForwardProcessIN.ProcessingDate = DateTime.Now;
-				await new MRRecommendationForwardProcess(_appSetting).MRRecommendationForwardProcessDAO(_mRRecommendationForwardProcessIN);
+				await new RecommendationDAO(_appSetting).RecommendationForwardProcess(_mRRecommendationForwardProcessIN);
+
+				if(_mRRecommendationForwardProcessIN.Status == STATUS_RECOMMENDATION.PROCESS_DENY)
+                {
+					MRRecommendationUpdateReactionaryWordIN _mRRecommendationUpdateReactionaryWordIN = new MRRecommendationUpdateReactionaryWordIN();
+					_mRRecommendationUpdateReactionaryWordIN.Id = _mRRecommendationForwardProcessIN.RecommendationId;
+					_mRRecommendationUpdateReactionaryWordIN.ReactionaryWord = _mRRecommendationForwardProcessIN.ReactionaryWord;
+					await new MRRecommendationUpdateReactionaryWord(_appSetting).MRRecommendationUpdateReactionaryWordDAO(_mRRecommendationUpdateReactionaryWordIN);
+				}
 
 				MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
 				_mRRecommendationUpdateStatusIN.Status = _mRRecommendationForwardProcessIN.Status;
 				_mRRecommendationUpdateStatusIN.Id = _mRRecommendationForwardProcessIN.RecommendationId;
 				await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
+
 				HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
 				hisData.ObjectId = _mRRecommendationForwardProcessIN.RecommendationId;
 				hisData.Type = 1;

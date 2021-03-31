@@ -568,13 +568,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<decimal?> CAHashtagInsertDAO(CAHashtagInsertIN _cAHashtagInsertIN)
+		public async Task<int?> CAHashtagInsertDAO(CAHashtagInsertIN _cAHashtagInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cAHashtagInsertIN.Name);
 			DP.Add("IsActived", _cAHashtagInsertIN.IsActived);
 
-			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("CA_HashtagInsert", DP);
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_HashtagInsert", DP);
 		}
 	}
 
@@ -597,14 +597,14 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> CAHashtagUpdateDAO(CAHashtagUpdateIN _cAHashtagUpdateIN)
+		public async Task<int?> CAHashtagUpdateDAO(CAHashtagUpdateIN _cAHashtagUpdateIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _cAHashtagUpdateIN.Id);
 			DP.Add("Name", _cAHashtagUpdateIN.Name);
 			DP.Add("IsActived", _cAHashtagUpdateIN.IsActived);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_HashtagUpdate", DP));
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_HashtagUpdate", DP);
 		}
 	}
 

@@ -33,6 +33,7 @@ export class Api {
 	public static RecommendationInsert = 'Recommendation/RecommendationInsert'
 	public static RecommendationUpdate = 'Recommendation/RecommendationUpdate'
 	public static RecommendationForward = 'Recommendation/RecommendationForward'
+	public static RecommendationProcess = 'Recommendation/RecommendationOnProcess'
 	public static RecommendationDelete = 'MRSPBase/MRRecommendationDeleteBase'
 	public static RecommendationExport = 'MRSPBase/MRRecommendationExportBase'
 
@@ -111,8 +112,6 @@ export class Api {
 	public static NewsDelete = 'NESPBase/NENewsDeleteBase'
 	public static NewsUploadFile = 'files/upload?folder=News'
 	public static NewsRelatesGetAll = 'NESPBase/NERelateGetAllBase'
-
-	
 
 	//Department
 	public static DepartmentGetList = 'CACategorySPBase/CADepartmentGetAllOnPageBase'

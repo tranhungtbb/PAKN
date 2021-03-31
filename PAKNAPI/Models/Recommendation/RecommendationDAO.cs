@@ -53,5 +53,17 @@ namespace PAKNAPI.Models.Recommendation
 			}
 			return data;
 		}
+
+		public async Task<int> RecommendationForwardProcess(RecommendationForwardProcess _recommendationForwardProcess)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _recommendationForwardProcess.Id);
+			DP.Add("RecommendationId", _recommendationForwardProcess.RecommendationId);
+			DP.Add("Status", _recommendationForwardProcess.Status);
+			DP.Add("ReasonDeny", _recommendationForwardProcess.ReasonDeny);
+			DP.Add("ProcessingDate", _recommendationForwardProcess.ProcessingDate);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_ForwardProcess", DP));
+		}
 	}
 }

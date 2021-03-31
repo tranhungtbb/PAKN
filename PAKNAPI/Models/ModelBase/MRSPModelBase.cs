@@ -622,6 +622,7 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate;
 		public long? UpdatedBy;
 		public DateTime? UpdatedDate;
+		public int ProcessId;
 
 		public async Task<List<MRRecommendationGetAllWithProcess>> MRRecommendationGetAllWithProcessDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, int? PageSize, int? PageIndex)
 		{
@@ -664,6 +665,7 @@ namespace PAKNAPI.ModelBase
 		public string Name;
 		public byte? Status;
 		public DateTime? SendDate;
+		public bool? ReactionaryWord;
 		public long? CreatedBy;
 		public DateTime? CreatedDate;
 		public long? UpdatedBy;
@@ -704,6 +706,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Name", _mRRecommendationInsertIN.Name);
 			DP.Add("Status", _mRRecommendationInsertIN.Status);
 			DP.Add("SendDate", _mRRecommendationInsertIN.SendDate);
+			DP.Add("ReactionaryWord", _mRRecommendationInsertIN.ReactionaryWord);
 			DP.Add("CreatedBy", _mRRecommendationInsertIN.CreatedBy);
 			DP.Add("CreatedDate", _mRRecommendationInsertIN.CreatedDate);
 			DP.Add("UpdatedBy", _mRRecommendationInsertIN.UpdatedBy);
@@ -720,11 +723,12 @@ namespace PAKNAPI.ModelBase
 		public string Content { get; set; }
 		public int? Field { get; set; }
 		public int? UnitId { get; set; }
-		public bool? TypeObject { get; set; }
+		public short? TypeObject { get; set; }
 		public long? SendId { get; set; }
 		public string Name { get; set; }
 		public byte? Status { get; set; }
 		public DateTime? SendDate { get; set; }
+		public bool? ReactionaryWord { get; set; }
 		public long? CreatedBy { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public long? UpdatedBy { get; set; }
@@ -758,6 +762,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Name", _mRRecommendationUpdateIN.Name);
 			DP.Add("Status", _mRRecommendationUpdateIN.Status);
 			DP.Add("SendDate", _mRRecommendationUpdateIN.SendDate);
+			DP.Add("ReactionaryWord", _mRRecommendationUpdateIN.ReactionaryWord);
 			DP.Add("CreatedBy", _mRRecommendationUpdateIN.CreatedBy);
 			DP.Add("CreatedDate", _mRRecommendationUpdateIN.CreatedDate);
 			DP.Add("UpdatedBy", _mRRecommendationUpdateIN.UpdatedBy);
@@ -780,10 +785,40 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 		public byte? Status { get; set; }
 		public DateTime? SendDate { get; set; }
+		public bool? ReactionaryWord { get; set; }
 		public long? CreatedBy { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public long? UpdatedBy { get; set; }
 		public DateTime? UpdatedDate { get; set; }
+	}
+
+	public class MRRecommendationUpdateReactionaryWord
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationUpdateReactionaryWord(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationUpdateReactionaryWord()
+		{
+		}
+
+		public async Task<int> MRRecommendationUpdateReactionaryWordDAO(MRRecommendationUpdateReactionaryWordIN _mRRecommendationUpdateReactionaryWordIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationUpdateReactionaryWordIN.Id);
+			DP.Add("ReactionaryWord", _mRRecommendationUpdateReactionaryWordIN.ReactionaryWord);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateReactionaryWord", DP));
+		}
+	}
+
+	public class MRRecommendationUpdateReactionaryWordIN
+	{
+		public int? Id { get; set; }
+		public bool? ReactionaryWord { get; set; }
 	}
 
 	public class MRRecommendationUpdateStatus
