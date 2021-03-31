@@ -152,6 +152,7 @@ export class ListProcessWaitComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
 				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
+				this.getList()
 			} else {
 				this._toastr.error(response.message)
 			}
@@ -169,6 +170,7 @@ export class ListProcessWaitComponent implements OnInit {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
 					this._toastr.success(COMMONS.DENY_SUCCESS)
+					this.getList()
 				} else {
 					this._toastr.error(response.message)
 				}
