@@ -52,7 +52,8 @@
                     <strong>Mô tả</strong>
                     <span class="caret-tb"></span>
                   </p>
-                  <input type="text" class="form-control form-control-sm">
+                  <input class="form-control form-control-sm" [(ngModel)]="description" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập mô tả..." />
                 </th>
                 <th style="width: 160px">
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -72,7 +73,8 @@
               <tr>
                 <td class="text-center">{{rowIndex + 1}}</td>
                 <td>
-                  <strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
+                  <strong><a (click)="preView(item)" class="ellipsis text-dark" type="button"
+                      title="Xem chi tiết">{{item.name}}</a></strong>
                 </td>
                 <td>{{item.description}}</td>
                 <td>
