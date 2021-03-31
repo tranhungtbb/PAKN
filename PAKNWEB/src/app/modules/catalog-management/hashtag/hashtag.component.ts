@@ -111,7 +111,7 @@ export class HashtagComponent implements OnInit {
 
 	preCreate() {
 		this.hashtag = new HashtagObject()
-		this.Title = 'Thêm mới Hashtag'
+		this.Title = 'Thêm Hashtag'
 		this.submitted = false
 		this.rebuilForm()
 		$('#modal').modal('show')
@@ -140,7 +140,7 @@ export class HashtagComponent implements OnInit {
 			return
 		}
 
-		this.hashtag.name = this.hashtag.name.trim().replace(/\s+/g, ' ')
+		this.hashtag.name = this.hashtag.name.trim()
 
 		if (this.hashtag.name == '') {
 			this.nameHash = ''
@@ -152,11 +152,15 @@ export class HashtagComponent implements OnInit {
 				$('#modal').modal('hide')
 				if (res != 'undefined') {
 					if (res.success == RESPONSE_STATUS.success) {
-						this.GetListHashtag()
-						this._toastr.success('Thêm mới hashtag thành công!')
+						if (res.result == -1) {
+							this._toastr.info(MESSAGE_COMMON.EXISTED_NAME)
+						} else {
+							this.GetListHashtag()
+							this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
+						}
 					}
 				} else {
-					this._toastr.error('Lỗi khi thêm mới!')
+					this._toastr.error(MESSAGE_COMMON.ADD_FAILED)
 				}
 			})
 		}
@@ -168,10 +172,14 @@ export class HashtagComponent implements OnInit {
 					if (res.success == RESPONSE_STATUS.success) {
 						this.rebuilForm()
 						this.GetListHashtag()
-						this._toastr.success('Cập nhập hashtag thành công!')
+						this._toastr.success(MESSAGE_COMMON.UPDATE_SUCCESS)
+					} else if (res.success == RESPONSE_STATUS.orror && res.result == -1) {
+						this._toastr.info(MESSAGE_COMMON.EXISTED_NAME)
+					} else {
+						this._toastr.error(MESSAGE_COMMON.UPDATE_FAILED)
 					}
 				} else {
-					this._toastr.error('Lỗi khi cập nhập hashtag!')
+					this._toastr.error(MESSAGE_COMMON.UPDATE_FAILED)
 				}
 			})
 		}
@@ -184,12 +192,12 @@ export class HashtagComponent implements OnInit {
 			if (res != 'undefined') {
 				if (res.success == RESPONSE_STATUS.success) {
 					this.GetListHashtag()
-					this._toastr.success('Xóa hashtag thành công!')
+					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				} else {
 					this._toastr.show('Hashtag này đang được sử dụng!')
 				}
 			} else {
-				this._toastr.error('Lỗi khi xóa Hashtag!')
+				this._toastr.error(MESSAGE_COMMON.DELETE_FAILED)
 			}
 		})
 	}
