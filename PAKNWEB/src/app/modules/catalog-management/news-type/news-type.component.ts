@@ -28,6 +28,7 @@ export class NewsTypeComponent implements OnInit {
   isActived: boolean
   title: string = ''
   name: string = ''
+  description: string = ''
   pageIndex: number = 1
   pageSize: number = 20
   @ViewChild('table', { static: false }) table: any
@@ -64,14 +65,14 @@ export class NewsTypeComponent implements OnInit {
 
   getList() {
     this.name = this.name.trim()
-
+    this.description = this.description.trim()
     let request = {
       Name: this.name,
+      Description: this.description,
       isActived: this.isActived != null ? this.isActived : '',
       PageIndex: this.pageIndex,
       PageSize: this.pageSize,
     }
-    console.log(request)
     this._service.newsTypeGetList(request).subscribe((response) => {
       if (response.success == RESPONSE_STATUS.success) {
         if (response.result != null) {

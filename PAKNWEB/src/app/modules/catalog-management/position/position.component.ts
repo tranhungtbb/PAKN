@@ -28,6 +28,7 @@ export class PositionComponent implements OnInit {
   isActived: boolean
   title: string = ''
   name: string = ''
+  description: string = ''
   pageIndex: number = 1
   pageSize: number = 20
   @ViewChild('table', { static: false }) table: any
@@ -67,6 +68,7 @@ export class PositionComponent implements OnInit {
 
     let request = {
       Name: this.name,
+      Description: this.description.trim(),
       isActived: this.isActived != null ? this.isActived : '',
       PageIndex: this.pageIndex,
       PageSize: this.pageSize,
