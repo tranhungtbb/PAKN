@@ -17,14 +17,20 @@ using Bugsnag;
 
 namespace PAKNAPI.ControllerBase
 {
-	[Route("api/NESPBase")]
+	[Route("api/NE
+
+SPBase")]
 	[ApiController]
-	public class NESPBaseController : BaseApiController
+	public class NE
+
+SPBaseController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;
 
-		public NESPBaseController(IAppSetting appSetting, IClient bugsnag)
+		public NE
+
+SPBaseController(IAppSetting appSetting, IClient bugsnag)
 		{
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
@@ -126,29 +132,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"NENewsGetByID", rsNENewsGetByID},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize]
-		[Route("NENewsGetByIDOnJoinBase")]
-		public async Task<ActionResult<object>> NENewsGetByIDOnJoinBase(int? Id)
-		{
-			try
-			{
-				List<NENewsGetByIDOnJoin> rsNENewsGetByIDOnJoin = await new NENewsGetByIDOnJoin(_appSetting).NENewsGetByIDOnJoinDAO(Id);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"NENewsGetByIDOnJoin", rsNENewsGetByIDOnJoin},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

@@ -188,21 +188,3 @@ BEGIN
 END
 GO
 /* End HIS_NewsDeleteAll */
-
-/* Start HIS_NewsCount */
-IF EXISTS
-(
-	SELECT *
-	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[HIS_NewsCount]') AND type IN ( N'P', N'PC' )
-)
-DROP PROCEDURE [HIS_NewsCount];
-GO
-CREATE PROCEDURE [dbo].[HIS_NewsCount]
-AS
-BEGIN
-	SELECT Count(*)
-	FROM [HIS_News]
-END
-GO
-/* End HIS_NewsCount */

@@ -319,9 +319,45 @@ namespace PAKNAPI.Controller
 				HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
 				hisData.ObjectId = _mRRecommendationForwardInsertIN.RecommendationId;
 				hisData.Type = 1;
-				hisData.Content = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
+				hisData.Content = "Đã chuyển ";// + ();
 				hisData.Status = _mRRecommendationForwardInsertIN.Status;
 				hisData.CreatedBy = _mRRecommendationForwardInsertIN.UserSendId;
+				hisData.CreatedDate = DateTime.Now;
+				await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				return new ResultApi { Success = ResultCode.OK };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
+		[HttpPost]
+		[Authorize]
+		[Route("RecommendationOnProcess")]
+		public async Task<ActionResult<object>> MRRecommendationOnProcess(MRRecommendationForwardProcessIN _mRRecommendationForwardProcessIN)
+		{
+			try
+			{
+				long UserSendId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				int UnitSendId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+				_mRRecommendationForwardProcessIN.ProcessingDate = DateTime.Now;
+				await new MRRecommendationForwardProcess(_appSetting).MRRecommendationForwardProcessDAO(_mRRecommendationForwardProcessIN);
+
+				MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
+				_mRRecommendationUpdateStatusIN.Status = _mRRecommendationForwardProcessIN.Status;
+				_mRRecommendationUpdateStatusIN.Id = _mRRecommendationForwardProcessIN.RecommendationId;
+				await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
+				HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
+				hisData.ObjectId = _mRRecommendationForwardProcessIN.RecommendationId;
+				hisData.Type = 1;
+				hisData.Content = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
+				hisData.Status = _mRRecommendationForwardProcessIN.Status;
+				hisData.CreatedBy = UserSendId;
 				hisData.CreatedDate = DateTime.Now;
 				await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);

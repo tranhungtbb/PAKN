@@ -11,23 +11,123 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
+	public class HISRecommendationOnPage
+	{
+		public int Id { get; set; }
+		public int ObjectId { get; set; }
+		public int? Type { get; set; }
+		public string Content { get; set; }
+		public byte? Status { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public int? RowNumber; // int, null
+	}
+
+	public class HISRecommendation
+	{
+		private SQLCon _sQLCon;
+
+		public HISRecommendation(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public HISRecommendation()
+		{
+		}
+
+		public int Id { get; set; }
+		public int ObjectId { get; set; }
+		public int? Type { get; set; }
+		public string Content { get; set; }
+		public byte? Status { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+
+		public async Task<HISRecommendation> HISRecommendationGetByID(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<HISRecommendation>("HIS_RecommendationGetByID", DP)).ToList().FirstOrDefault();
+		}
+
+		public async Task<List<HISRecommendation>> HISRecommendationGetAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<HISRecommendation>("HIS_RecommendationGetAll", DP)).ToList();
+		}
+
+		public async Task<List<HISRecommendationOnPage>> HISRecommendationGetAllOnPage(int PageSize, int PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			return (await _sQLCon.ExecuteListDapperAsync<HISRecommendationOnPage>("HIS_RecommendationGetAllOnPage", DP)).ToList();
+		}
+
+		public async Task<int?> HISRecommendationInsert(HISRecommendation _hISRecommendation)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ObjectId", _hISRecommendation.ObjectId);
+			DP.Add("Type", _hISRecommendation.Type);
+			DP.Add("Content", _hISRecommendation.Content);
+			DP.Add("Status", _hISRecommendation.Status);
+			DP.Add("CreatedBy", _hISRecommendation.CreatedBy);
+			DP.Add("CreatedDate", _hISRecommendation.CreatedDate);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("HIS_RecommendationInsert", DP));
+		}
+
+		public async Task<int> HISRecommendationUpdate(HISRecommendation _hISRecommendation)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _hISRecommendation.Id);
+			DP.Add("ObjectId", _hISRecommendation.ObjectId);
+			DP.Add("Type", _hISRecommendation.Type);
+			DP.Add("Content", _hISRecommendation.Content);
+			DP.Add("Status", _hISRecommendation.Status);
+			DP.Add("CreatedBy", _hISRecommendation.CreatedBy);
+			DP.Add("CreatedDate", _hISRecommendation.CreatedDate);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("HIS_RecommendationUpdate", DP));
+		}
+
+		public async Task<int> HISRecommendationDelete(HISRecommendation _hISRecommendation)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _hISRecommendation.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("HIS_RecommendationDelete", DP));
+		}
+
+		public async Task<int> HISRecommendationDeleteAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("HIS_RecommendationDeleteAll", DP));
+		}
+	}
+
 	public class MRRecommendationOnPage
 	{
-		public int Id;
-		public string Code;
-		public string Title;
-		public string Content;
-		public int? Field;
-		public int? UnitId;
-		public short? TypeObject;
-		public long? SendId;
-		public string Name;
-		public byte? Status;
-		public DateTime? SendDate;
-		public long? CreatedBy;
-		public DateTime? CreatedDate;
-		public long? UpdatedBy;
-		public DateTime? UpdatedDate;
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Title { get; set; }
+		public string Content { get; set; }
+		public int? Field { get; set; }
+		public int? UnitId { get; set; }
+		public short? TypeObject { get; set; }
+		public long? SendId { get; set; }
+		public string Name { get; set; }
+		public byte? Status { get; set; }
+		public DateTime? SendDate { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public long? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -44,21 +144,21 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Code;
-		public string Title;
-		public string Content;
-		public int? Field;
-		public int? UnitId;
-		public short? TypeObject;
-		public long? SendId;
-		public string Name;
-		public byte? Status;
-		public DateTime? SendDate;
-		public long? CreatedBy;
-		public DateTime? CreatedDate;
-		public long? UpdatedBy;
-		public DateTime? UpdatedDate;
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Title { get; set; }
+		public string Content { get; set; }
+		public int? Field { get; set; }
+		public int? UnitId { get; set; }
+		public short? TypeObject { get; set; }
+		public long? SendId { get; set; }
+		public string Name { get; set; }
+		public byte? Status { get; set; }
+		public DateTime? SendDate { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public long? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
 
 		public async Task<MRRecommendation> MRRecommendationGetByID(int? Id)
 		{
@@ -145,18 +245,18 @@ namespace PAKNAPI.ModelBase
 
 	public class MRRecommendationConclusionOnPage
 	{
-		public int Id;
-		public int RecommendationId;
-		public long UserCreatedId;
-		public int? UnitCreatedId;
-		public long? ReceiverId;
-		public int? UnitReceiverId;
-		public byte? Status;
-		public string Content;
-		public DateTime? SendDate;
-		public DateTime? ExpiredDate;
-		public DateTime? ProcessingDate;
-		public bool? IsViewed;
+		public int Id { get; set; }
+		public int RecommendationId { get; set; }
+		public long UserCreatedId { get; set; }
+		public int? UnitCreatedId { get; set; }
+		public long? ReceiverId { get; set; }
+		public int? UnitReceiverId { get; set; }
+		public byte? Status { get; set; }
+		public string Content { get; set; }
+		public DateTime? SendDate { get; set; }
+		public DateTime? ExpiredDate { get; set; }
+		public DateTime? ProcessingDate { get; set; }
+		public bool? IsViewed { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -173,18 +273,18 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int RecommendationId;
-		public long UserCreatedId;
-		public int? UnitCreatedId;
-		public long? ReceiverId;
-		public int? UnitReceiverId;
-		public byte? Status;
-		public string Content;
-		public DateTime? SendDate;
-		public DateTime? ExpiredDate;
-		public DateTime? ProcessingDate;
-		public bool? IsViewed;
+		public int Id { get; set; }
+		public int RecommendationId { get; set; }
+		public long UserCreatedId { get; set; }
+		public int? UnitCreatedId { get; set; }
+		public long? ReceiverId { get; set; }
+		public int? UnitReceiverId { get; set; }
+		public byte? Status { get; set; }
+		public string Content { get; set; }
+		public DateTime? SendDate { get; set; }
+		public DateTime? ExpiredDate { get; set; }
+		public DateTime? ProcessingDate { get; set; }
+		public bool? IsViewed { get; set; }
 
 		public async Task<MRRecommendationConclusion> MRRecommendationConclusionGetByID(int? Id)
 		{
@@ -265,11 +365,11 @@ namespace PAKNAPI.ModelBase
 
 	public class MRRecommendationConclusionFilesOnPage
 	{
-		public int Id;
-		public int? ConclusionId;
-		public string Name;
-		public short? FileType;
-		public string FilePath;
+		public int Id { get; set; }
+		public int? ConclusionId { get; set; }
+		public string Name { get; set; }
+		public short? FileType { get; set; }
+		public string FilePath { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -286,11 +386,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int? ConclusionId;
-		public string Name;
-		public short? FileType;
-		public string FilePath;
+		public int Id { get; set; }
+		public int? ConclusionId { get; set; }
+		public string Name { get; set; }
+		public short? FileType { get; set; }
+		public string FilePath { get; set; }
 
 		public async Task<MRRecommendationConclusionFiles> MRRecommendationConclusionFilesGetByID(int? Id)
 		{
@@ -357,11 +457,11 @@ namespace PAKNAPI.ModelBase
 
 	public class MRRecommendationFilesOnPage
 	{
-		public int Id;
-		public int? RecommendationId;
-		public string Name;
-		public short? FileType;
-		public string FilePath;
+		public int Id { get; set; }
+		public int? RecommendationId { get; set; }
+		public string Name { get; set; }
+		public short? FileType { get; set; }
+		public string FilePath { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -378,11 +478,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int? RecommendationId;
-		public string Name;
-		public short? FileType;
-		public string FilePath;
+		public int Id { get; set; }
+		public int? RecommendationId { get; set; }
+		public string Name { get; set; }
+		public short? FileType { get; set; }
+		public string FilePath { get; set; }
 
 		public async Task<MRRecommendationFiles> MRRecommendationFilesGetByID(int? Id)
 		{
@@ -449,19 +549,19 @@ namespace PAKNAPI.ModelBase
 
 	public class MRRecommendationForwardOnPage
 	{
-		public int Id;
-		public int RecommendationId;
-		public long? UserSendId;
-		public int? UnitSendId;
-		public long? ReceiveId;
-		public int? UnitReceiveId;
-		public byte? Status;
-		public string Content;
-		public string ReasonDeny;
-		public DateTime? SendDate;
-		public DateTime? ExpiredDate;
-		public DateTime? ProcessingDate;
-		public bool? IsViewed;
+		public int Id { get; set; }
+		public int RecommendationId { get; set; }
+		public long? UserSendId { get; set; }
+		public int? UnitSendId { get; set; }
+		public long? ReceiveId { get; set; }
+		public int? UnitReceiveId { get; set; }
+		public byte? Status { get; set; }
+		public string Content { get; set; }
+		public string ReasonDeny { get; set; }
+		public DateTime? SendDate { get; set; }
+		public DateTime? ExpiredDate { get; set; }
+		public DateTime? ProcessingDate { get; set; }
+		public bool? IsViewed { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -478,19 +578,19 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int RecommendationId;
-		public long? UserSendId;
-		public int? UnitSendId;
-		public long? ReceiveId;
-		public int? UnitReceiveId;
-		public byte? Status;
-		public string Content;
-		public string ReasonDeny;
-		public DateTime? SendDate;
-		public DateTime? ExpiredDate;
-		public DateTime? ProcessingDate;
-		public bool? IsViewed;
+		public int Id { get; set; }
+		public int RecommendationId { get; set; }
+		public long? UserSendId { get; set; }
+		public int? UnitSendId { get; set; }
+		public long? ReceiveId { get; set; }
+		public int? UnitReceiveId { get; set; }
+		public byte? Status { get; set; }
+		public string Content { get; set; }
+		public string ReasonDeny { get; set; }
+		public DateTime? SendDate { get; set; }
+		public DateTime? ExpiredDate { get; set; }
+		public DateTime? ProcessingDate { get; set; }
+		public bool? IsViewed { get; set; }
 
 		public async Task<MRRecommendationForward> MRRecommendationForwardGetByID(int? Id)
 		{
@@ -573,9 +673,9 @@ namespace PAKNAPI.ModelBase
 
 	public class MRRecommendationGenCodeOnPage
 	{
-		public int Id;
-		public double CurrentNumber;
-		public int Year;
+		public int Id { get; set; }
+		public double CurrentNumber { get; set; }
+		public int Year { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -592,9 +692,9 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public double CurrentNumber;
-		public int Year;
+		public int Id { get; set; }
+		public double CurrentNumber { get; set; }
+		public int Year { get; set; }
 
 		public async Task<MRRecommendationGenCode> MRRecommendationGenCodeGetByID(int? Id)
 		{
@@ -657,10 +757,10 @@ namespace PAKNAPI.ModelBase
 
 	public class MRRecommendationHashtagOnPage
 	{
-		public long Id;
-		public int RecommendationId;
-		public int HashtagId;
-		public string HashtagName;
+		public long Id { get; set; }
+		public int RecommendationId { get; set; }
+		public int HashtagId { get; set; }
+		public string HashtagName { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -677,10 +777,10 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public long Id;
-		public int RecommendationId;
-		public int HashtagId;
-		public string HashtagName;
+		public long Id { get; set; }
+		public int RecommendationId { get; set; }
+		public int HashtagId { get; set; }
+		public string HashtagName { get; set; }
 
 		public async Task<MRRecommendationHashtag> MRRecommendationHashtagGetByID(long? Id)
 		{
