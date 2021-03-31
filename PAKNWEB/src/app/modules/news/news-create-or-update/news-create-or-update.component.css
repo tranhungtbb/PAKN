@@ -1,0 +1,13 @@
+:host ::ng-deep .ck-editor__editable_inline {
+	min-height: 500px;
+}
+.text-area-height {
+	min-height: 200px;
+}
+.news-avatar > img {
+	width: 100%;
+	min-height: 120px;
+}
+.btn-inline {
+	display: inline;
+}

@@ -3,15 +3,15 @@
 		<nav class="navbar navbar-expand">
 			<div class="collapse navbar-collapse justify-content-between">
 				<div class="header-left w-100 justify-content-between pr-5">
-					<p class="mb-0 h3">Trang chủ / tin tức / tạo tin tức</p>
+					<p class="mb-0 h3">Trang chủ / Tin tức / Tạo tin tức</p>
 
 					<div class="btn-group" role="group">
-						<button class="btn btn-sm btn-default rounded border-0 mr-3">
+						<a class="btn btn-sm btn-default rounded border-0 mr-3" [routerLink]="['/quan-tri','tin-tuc']">
 							<i class="bi bi-arrow-left"></i>&nbsp;
 							Quay lại
-						</button>
-						<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3">Lưu</button>
-						<button class="btn btn-sm grd-green rounded text-white border-0">Công bố</button>
+						</a>
+						<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave($event)">Lưu</button>
+						<button class="btn btn-sm grd-green rounded text-white border-0" (click)="onPublished()">Công bố</button>
 					</div>
 				</div>
 			</div>
@@ -19,17 +19,92 @@
 	</div>
 </div>
 <div class="content-body">
-	<!-- <form>
-		<div class="form-row">
-			<div class="col-12 col-lg-8 form-group">
-				<label class="mb-1"><span class="text-uppercase">tiêu đề</span> <span class="cl-red">(*)</span></label>
-				<input formControlName="title" [(ngModel)]="model.title" type="text" class="form-control" placeholder="Nhập...">
-				<div *ngIf="(unitFormSubmitted && fUnit.name.invalid)||(fUnit.name.invalid && (fUnit.name.dirty || fUnit.name.touched))" class="has-error m-b-12">
-          <div *ngIf="fUnit.name.errors.required">
-            <span class="help-block">Trường dữ liệu này không được để trống</span>
-          </div>
-        </div>
+	<form [formGroup]="newsFrom">
+		<div class="container mr-0 ml-0">
+			<div class="row">
+				<div class="col-md-9 col-lg-9">
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">tiêu đề</span> <span class="cl-red">(*)</span></label>
+						<input formControlName="title" [(ngModel)]="model.title" type="text" class="form-control input-sm" placeholder="Nhập...">
+						<div *ngIf="(submitted && f.title.invalid)||(f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
+							<div *ngIf="f.title.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">tóm tắt</span> <span class="cl-red">(*)</span></label>
+						<textarea class="form-control text-area-height" cols="10" formControlName="summary" [(ngModel)]="model.summary"></textarea>
+						<div *ngIf="(submitted && f.summary.invalid)||(f.summary.invalid && (f.summary.dirty || f.summary.touched))" class="has-error m-b-12">
+							<div *ngIf="f.summary.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-12 form-group mb-6">
+						<div class="clearfix">
+							<label class="mb-1"><span class="text-uppercase">bài viết liên quan</span> <span class="cl-red">(*)</span></label>
+							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline pull-right" (click)="onModalNewsRelate()"><i class="bi bi-list"></i> Thêm
+								mới</button>
+						</div>
+						<div class="col-md-12 pr-0 pl-0">
+							<div class="btn btn-default p-3 border" *ngFor="let relateItem of newsRelatesSelected">
+								<img width="70" height="50" src="{{relateItem.imagePath}}" />
+								<span>
+									<strong>{{relateItem.title}}</strong>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-12 form-group">
+						<ckeditor [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents" (ready)="onReady($event)"></ckeditor>
+					</div>
+				</div>
+				<div class="col-md-3 col-lg-3">
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">loại danh mục</span></label>
+						<ng-select [multiple]="true" formControlName="newsType" [(ngModel)]="categoriesSelected" class="form-control">
+							<ng-option *ngFor="let cate of listNewsCategories" [value]="cate.id">{{cate.name}}</ng-option>
+						</ng-select>
+					</div>
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">kiểu bài</span></label>
+						<div class="radio radio-inline" *ngFor="let pType of postTypes">
+							<label>
+								<input type="radio" formControlName="postType" [(ngModel)]="model.postType" [value]="pType.value" [checked]="pType.checked">
+								<span class="text-uppercase"> {{pType.text}}</span>
+							</label>
+						</div>
+					</div>
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">ảnh đại diện</span></label>
+						<input type="file" [hidden]="true" id="avatar-image" (change)="onAvatarChange($event)">
+						<div class="news-avatar" (click)="onChangeAvatar()">
+							<img src="{{avatarUrl}}" alt="">
+						</div>
+					</div>
+					<!-- <div class="col-12 col-lg-12 form-group mb-6">
+						<label class="mb-1">
+							<span class="text-uppercase">upload media</span>
+							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline pull-right"><i class="bi bi-upload"></i> Thêm mới</button>
+						</label>
+						<input type="file" [hidden]="true">
+						<div class="col-sm-12 col-md-12 pl-0 pr-0">
+							<div class="btn btn-sm-btn-default border p-2">
+								<img src="" alt="" width="50" height="50">&nbsp;
+								<span>File 01</span>
+							</div>
+						</div>
+					</div> -->
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">thông báo</span></label>
+						<div class="checkbox">
+							<label><input type="checkbox" formControlName="pushNotify" checked> Gửi thông báo đến người dân, doanh nghiệp</label>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</form> -->
+	</form>
 </div>
+<app-news-relate-modal></app-news-relate-modal>

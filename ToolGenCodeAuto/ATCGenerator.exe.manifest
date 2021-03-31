@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ATCGenerator.exe" size="220176">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ATCGenerator.exe" size="221200">
       <assemblyIdentity name="ATCGenerator" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ZtTm2kv3L+39tipBFXRE0fLQuIMzI09mUiG4E+LjEq0=</dsig:DigestValue>
+        <dsig:DigestValue>Dtzm39OSSLDrA94k077gwJpab9gU2ndD1CVdEdVsloQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -66,14 +66,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Db.dll" size="282112">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Db.dll" size="283136">
       <assemblyIdentity name="Db" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>oExZjSS8+Q+e3b1peMcb2LPhPMRfmjTjA7ajO0OE3CE=</dsig:DigestValue>
+        <dsig:DigestValue>+pt/5l06Wmy5iy2knqmmH/GLKOx/VEbEI6O/ow882+E=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

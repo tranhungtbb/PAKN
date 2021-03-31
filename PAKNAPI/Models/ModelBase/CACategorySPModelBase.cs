@@ -517,10 +517,9 @@ namespace PAKNAPI.ModelBase
 		public string Name;
 		public bool IsActived;
 
-		public async Task<List<CAHashtagGetAllOnPage>> CAHashtagGetAllOnPageDAO(string Id, int? PageSize, int? PageIndex, string Name, bool? IsActived)
+		public async Task<List<CAHashtagGetAllOnPage>> CAHashtagGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, bool? IsActived)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
 			DP.Add("Name", Name);

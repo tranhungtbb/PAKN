@@ -17,14 +17,14 @@ using Bugsnag;
 
 namespace PAKNAPI.ControllerBase
 {
-	[Route("api/SYUserSPBase")]
+	[Route("api/NESPBase")]
 	[ApiController]
-	public class SYUserSPBaseController : BaseApiController
+	public class NESPBaseController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;
 
-		public SYUserSPBaseController(IAppSetting appSetting, IClient bugsnag)
+		public NESPBaseController(IAppSetting appSetting, IClient bugsnag)
 		{
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
@@ -32,14 +32,14 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("SYUserDeleteBase")]
-		public async Task<ActionResult<object>> SYUserDeleteBase(SYUserDeleteIN _sYUserDeleteIN)
+		[Route("NENewsDeleteBase")]
+		public async Task<ActionResult<object>> NENewsDeleteBase(NENewsDeleteIN _nENewsDeleteIN)
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserDelete(_appSetting).SYUserDeleteDAO(_sYUserDeleteIN) };
+				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsDelete(_appSetting).NENewsDeleteDAO(_nENewsDeleteIN) };
 			}
 			catch (Exception ex)
 			{
@@ -52,16 +52,16 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("SYUserDeleteListBase")]
-		public async Task<ActionResult<object>> SYUserDeleteListBase(List<SYUserDeleteIN> _sYUserDeleteINs)
+		[Route("NENewsDeleteListBase")]
+		public async Task<ActionResult<object>> NENewsDeleteListBase(List<NENewsDeleteIN> _nENewsDeleteINs)
 		{
 			try
 			{
 				int count = 0;
 				int errcount = 0;
-				foreach (var _sYUserDeleteIN in _sYUserDeleteINs)
+				foreach (var _nENewsDeleteIN in _nENewsDeleteINs)
 				{
-					var result = await new SYUserDelete(_appSetting).SYUserDeleteDAO(_sYUserDeleteIN);
+					var result = await new NENewsDelete(_appSetting).NENewsDeleteDAO(_nENewsDeleteIN);
 					if (result > 0)
 					{
 						count++;
@@ -92,18 +92,17 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize]
-		[Route("SYUserGetAllOnPageBase")]
-		public async Task<ActionResult<object>> SYUserGetAllOnPageBase(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActive, int? UnitId)
+		[Route("NENewsGetAllOnPageBase")]
+		public async Task<ActionResult<object>> NENewsGetAllOnPageBase(string Ids, int? PageSize, int? PageIndex, string Title, int? NewType, int? Status)
 		{
 			try
 			{
-				List<SYUserGetAllOnPage> rsSYUserGetAllOnPage = await new SYUserGetAllOnPage(_appSetting).SYUserGetAllOnPageDAO(PageSize, PageIndex, UserName, FullName, Phone, IsActive, UnitId);
+				List<NENewsGetAllOnPage> rsNENewsGetAllOnPage = await new NENewsGetAllOnPage(_appSetting).NENewsGetAllOnPageDAO(Ids, PageSize, PageIndex, Title, NewType, Status);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"SYUserGetAllOnPage", rsSYUserGetAllOnPage},
-						{"TotalCount", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? rsSYUserGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageSize : 0},
+						{"NENewsGetAllOnPage", rsNENewsGetAllOnPage},
+						{"PageIndex", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -118,15 +117,15 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize]
-		[Route("SYUserGetByIDBase")]
-		public async Task<ActionResult<object>> SYUserGetByIDBase(long? Id)
+		[Route("NENewsGetByIDBase")]
+		public async Task<ActionResult<object>> NENewsGetByIDBase(int? Id)
 		{
 			try
 			{
-				List<SYUserGetByID> rsSYUserGetByID = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(Id);
+				List<NENewsGetByID> rsNENewsGetByID = await new NENewsGetByID(_appSetting).NENewsGetByIDDAO(Id);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"SYUserGetByID", rsSYUserGetByID},
+						{"NENewsGetByID", rsNENewsGetByID},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -141,14 +140,14 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("SYUserInsertBase")]
-		public async Task<ActionResult<object>> SYUserInsertBase(SYUserInsertIN _sYUserInsertIN)
+		[Route("NENewsInsertBase")]
+		public async Task<ActionResult<object>> NENewsInsertBase(NENewsInsertIN _nENewsInsertIN)
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserInsert(_appSetting).SYUserInsertDAO(_sYUserInsertIN) };
+				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsInsert(_appSetting).NENewsInsertDAO(_nENewsInsertIN) };
 			}
 			catch (Exception ex)
 			{
@@ -161,16 +160,16 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("SYUserInsertListBase")]
-		public async Task<ActionResult<object>> SYUserInsertListBase(List<SYUserInsertIN> _sYUserInsertINs)
+		[Route("NENewsInsertListBase")]
+		public async Task<ActionResult<object>> NENewsInsertListBase(List<NENewsInsertIN> _nENewsInsertINs)
 		{
 			try
 			{
 				int count = 0;
 				int errcount = 0;
-				foreach (var _sYUserInsertIN in _sYUserInsertINs)
+				foreach (var _nENewsInsertIN in _nENewsInsertINs)
 				{
-					var result = await new SYUserInsert(_appSetting).SYUserInsertDAO(_sYUserInsertIN);
+					var result = await new NENewsInsert(_appSetting).NENewsInsertDAO(_nENewsInsertIN);
 					if (result > 0)
 					{
 						count++;
@@ -201,14 +200,14 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("SYUserUpdateBase")]
-		public async Task<ActionResult<object>> SYUserUpdateBase(SYUserUpdateIN _sYUserUpdateIN)
+		[Route("NENewsUpdateBase")]
+		public async Task<ActionResult<object>> NENewsUpdateBase(NENewsUpdateIN _nENewsUpdateIN)
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserUpdate(_appSetting).SYUserUpdateDAO(_sYUserUpdateIN) };
+				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN) };
 			}
 			catch (Exception ex)
 			{
@@ -221,16 +220,16 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("SYUserUpdateListBase")]
-		public async Task<ActionResult<object>> SYUserUpdateListBase(List<SYUserUpdateIN> _sYUserUpdateINs)
+		[Route("NENewsUpdateListBase")]
+		public async Task<ActionResult<object>> NENewsUpdateListBase(List<NENewsUpdateIN> _nENewsUpdateINs)
 		{
 			try
 			{
 				int count = 0;
 				int errcount = 0;
-				foreach (var _sYUserUpdateIN in _sYUserUpdateINs)
+				foreach (var _nENewsUpdateIN in _nENewsUpdateINs)
 				{
-					var result = await new SYUserUpdate(_appSetting).SYUserUpdateDAO(_sYUserUpdateIN);
+					var result = await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN);
 					if (result > 0)
 					{
 						count++;
@@ -248,29 +247,6 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize]
-		[Route("SYUSRGetPermissionByUserIdBase")]
-		public async Task<ActionResult<object>> SYUSRGetPermissionByUserIdBase(long? UserId)
-		{
-			try
-			{
-				List<SYUSRGetPermissionByUserId> rsSYUSRGetPermissionByUserId = await new SYUSRGetPermissionByUserId(_appSetting).SYUSRGetPermissionByUserIdDAO(UserId);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"SYUSRGetPermissionByUserId", rsSYUSRGetPermissionByUserId},
-					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)

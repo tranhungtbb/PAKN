@@ -13,6 +13,7 @@ using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
+using Bugsnag;
 
 namespace PAKNAPI.ControllerBase
 {
@@ -21,9 +22,12 @@ namespace PAKNAPI.ControllerBase
 	public class MRSPBaseController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
-		public MRSPBaseController(IAppSetting appSetting)
+		private readonly IClient _bugsnag;
+
+		public MRSPBaseController(IAppSetting appSetting, IClient bugsnag)
 		{
 			_appSetting = appSetting;
+			_bugsnag = bugsnag;
 		}
 
 		[HttpGet]
@@ -42,6 +46,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -61,6 +66,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -100,6 +106,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -122,6 +129,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -141,6 +149,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -180,6 +189,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -202,6 +212,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -221,6 +232,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -260,6 +272,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -282,6 +295,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -301,6 +315,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -340,6 +355,67 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationForwardProcessBase")]
+		public async Task<ActionResult<object>> MRRecommendationForwardProcessBase(MRRecommendationForwardProcessIN _mRRecommendationForwardProcessIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationForwardProcess(_appSetting).MRRecommendationForwardProcessDAO(_mRRecommendationForwardProcessIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationForwardProcessListBase")]
+		public async Task<ActionResult<object>> MRRecommendationForwardProcessListBase(List<MRRecommendationForwardProcessIN> _mRRecommendationForwardProcessINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _mRRecommendationForwardProcessIN in _mRRecommendationForwardProcessINs)
+				{
+					var result = await new MRRecommendationForwardProcess(_appSetting).MRRecommendationForwardProcessDAO(_mRRecommendationForwardProcessIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -359,6 +435,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -398,6 +475,67 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationForwardUpdateIsviewedBase")]
+		public async Task<ActionResult<object>> MRRecommendationForwardUpdateIsviewedBase(MRRecommendationForwardUpdateIsviewedIN _mRRecommendationForwardUpdateIsviewedIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationForwardUpdateIsviewed(_appSetting).MRRecommendationForwardUpdateIsviewedDAO(_mRRecommendationForwardUpdateIsviewedIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationForwardUpdateIsviewedListBase")]
+		public async Task<ActionResult<object>> MRRecommendationForwardUpdateIsviewedListBase(List<MRRecommendationForwardUpdateIsviewedIN> _mRRecommendationForwardUpdateIsviewedINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _mRRecommendationForwardUpdateIsviewedIN in _mRRecommendationForwardUpdateIsviewedINs)
+				{
+					var result = await new MRRecommendationForwardUpdateIsviewed(_appSetting).MRRecommendationForwardUpdateIsviewedDAO(_mRRecommendationForwardUpdateIsviewedIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -417,6 +555,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -436,6 +575,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -455,6 +595,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -494,6 +635,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -516,6 +658,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -535,6 +678,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -574,6 +718,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -593,6 +738,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -632,6 +778,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -657,6 +804,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -679,6 +827,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -701,6 +850,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -720,6 +870,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -739,6 +890,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -778,6 +930,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -797,6 +950,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
@@ -836,6 +990,7 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex)
 			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };

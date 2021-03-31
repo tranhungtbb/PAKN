@@ -6,17 +6,17 @@
 					<p class="mb-0 h3 text-uppercase">danh sách tin tức</p>
 					<div class="nav-table">
 						<div class="d-flex align-items-center">
-							<button type="button" class="btn btn-outline-secondary mr-2 p-2">
+							<button type="button" class="btn btn-outline-secondary mr-2 p-2" (click)="changePage(1)">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
 									<path fill-rule="evenodd"
 										d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
 								</svg>
 							</button>
 							<div class="border d-flex align-items-center border-dark px-2 rounded">
-								<input type="number" value="1" class="border-0 p-0 number-page-table text-right">
-								<span>/20</span>
+								<input type="number" [ngModel]="query.pageIndex" (ngModelChange)="changePage($event)" class="border-0 p-0 number-page-table text-right">
+								<span>/{{pageCount}}</span>
 							</div>
-							<button type="button" class="btn btn-outline-secondary ml-2 p-2">
+							<button type="button" class="btn btn-outline-secondary ml-2 p-2" (click)="changePage(-1)">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
 									<path fill-rule="evenodd"
 										d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
@@ -25,7 +25,7 @@
 						</div>
 					</div>
 					<div class="btn-group" role="group">
-						<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
+						<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" >
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
 								<path
 									d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
@@ -62,7 +62,7 @@
 											<strong>Bài viết</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input [(ngModel)]="query.title" type="text" class="form-control form-control-sm">
+										<input [(ngModel)]="query.title" (change)="filterChange()" type="text" class="form-control form-control-sm">
 									</th>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -70,7 +70,7 @@
 											<span class="caret-tb"></span>
 										</p>
 										<ng-select class="form-control form-control-sm mod" placeholder="Loại tin tức ..." [items]="listNewCategories" bindLabel="name"
-											bindValue="id" [closeOnSelect]="true" [(ngModel)]="query.newType">
+											bindValue="id" [closeOnSelect]="true" [(ngModel)]="query.newType" (change)="filterChange()">
 										</ng-select>
 									</th>
 									<th style="width: 160px">
@@ -79,34 +79,34 @@
 											<span class="caret-tb"></span>
 										</p>
 										<ng-select class="form-control form-control-sm mod" placeholder="Trạng thái ..." [items]="listStatus" bindLabel="text" bindValue="value"
-											[closeOnSelect]="true" [(ngModel)]="query.status">
+											[closeOnSelect]="true" [(ngModel)]="query.status" (change)="filterChange()">
 										</ng-select>
 									</th>
 									<th class="text-right"><strong>Thao tác</strong></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
+								<tr *ngFor="let item of listDataPaged">
 									<td>
-										<img width='60px' [src]="">
+										<img width='60px' src="{{item.imagePath || 'assets/dist/images/no.jpg'}}">
 										<strong>
-											Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+											{{item.title}}
 										</strong>
 									</td>
 									<td>
-										Lorem ipsum dolor
+										Loại tin tức
 									</td>
 									<td>
-										<span class="badge rounded-pill badge-outline-light bg-white">{{listStatus[2].text}}</span>
-										<span class="badge rounded-pill bg-green">{{listStatus[0].text}}</span>
-										<span class="badge rounded-pill bg-blue2">{{listStatus[1].text}}</span>
+										<span *ngIf="item.status == listStatus[2].value" class="badge rounded-pill badge-outline-light bg-white" >{{listStatus[2].text}}</span>
+										<span *ngIf="item.status == listStatus[0].value" class="badge rounded-pill bg-green">{{listStatus[0].text}}</span>
+										<span *ngIf="item.status == listStatus[1].value" class="badge rounded-pill bg-blue2">{{listStatus[1].text}}</span>
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
 											<button class="btn-icon grd-xanhngoc text-white mr-2"><i class="bi bi-box-arrow-up"></i></button>
-											<a [routerLink]="['./chinh-sua', '1']" class="btn-icon mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
+											<a [routerLink]="['./chinh-sua', item.id]" class="btn-icon mr-2"><i
 													class="bi bi-pencil-square"></i></a>
-											<button class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-history-pakn"><i class="bi bi-trash"></i></button>
+											<button class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-history-pakn" (click)="delNews(item.id)"><i class="bi bi-trash"></i></button>
 										</div>
 									</td>
 								</tr>

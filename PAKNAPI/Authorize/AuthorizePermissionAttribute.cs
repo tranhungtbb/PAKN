@@ -12,6 +12,13 @@ namespace PAKNAPI.AuthorizePermission
 		{
 			//Custom code ...
 			var ab = context.HttpContext.Items["User"];
+
+			// get api name từ context
+			//check userid có dược call api name này không
+
+
+
+
 			//string apiName = context.ActionDescriptor.Request.RequestUri.Segments[3];
 			//Resolving a custom Services from the container
 			//var service = context.HttpContext.RequestServices.GetRequiredService<ISample>();

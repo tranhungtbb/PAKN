@@ -13,6 +13,7 @@ using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
+using Bugsnag;
 
 namespace PAKNAPI.ControllerBase
 {
@@ -21,9 +22,12 @@ namespace PAKNAPI.ControllerBase
 	public class SYLogSPBaseController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
-		public SYLogSPBaseController(IAppSetting appSetting)
+		private readonly IClient _bugsnag;
+
+		public SYLogSPBaseController(IAppSetting appSetting, IClient bugsnag)
 		{
 			_appSetting = appSetting;
+			_bugsnag = bugsnag;
 		}
 	}
 }
