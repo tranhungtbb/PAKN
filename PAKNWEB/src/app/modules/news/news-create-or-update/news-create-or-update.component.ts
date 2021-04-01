@@ -1,8 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
+<<<<<<< HEAD
 import { Router, ActivatedRoute, ParamMap } from '@angular/router'
+=======
+import { Router, ActivatedRoute } from '@angular/router'
+>>>>>>> e0f9cbf9b908b8decf1dba299761f84b8bb74df3
 
 import { NewsService } from '../../../services/news.service'
 import { CatalogService } from '../../../services/catalog.service'

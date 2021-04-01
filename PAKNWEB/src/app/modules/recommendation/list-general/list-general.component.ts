@@ -4,7 +4,7 @@ import { RecommendationForwardObject, RecommendationObject, RecommendationSearch
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
-import { MESSAGE_COMMON, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { COMMONS } from 'src/app/commons/commons'
@@ -225,10 +225,16 @@ export class ListGeneralComponent implements OnInit {
 		if (this.formForward.invalid) {
 			return
 		}
-		this.modelForward.status = RECOMMENDATION_STATUS.PROCESS_WAIT
-		this._service.recommendationForward(this.modelForward).subscribe((response) => {
+		this.modelForward.step = STEP_RECOMMENDATION.PROCESS
+		this.modelForward.status = PROCESS_STATUS_RECOMMENDATION.WAIT
+		var request = {
+			_mRRecommendationForwardInsertIN: this.modelForward,
+			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
+		}
+		this._service.recommendationForward(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modal-tc-pakn').modal('hide')
+				this.getList()
 				this._toastr.success(COMMONS.FORWARD_SUCCESS)
 			} else {
 				this._toastr.error(response.message)

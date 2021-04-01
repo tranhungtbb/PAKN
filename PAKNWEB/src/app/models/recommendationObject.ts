@@ -58,6 +58,7 @@ export class RecommendationForwardObject {
 	receiveId: number = null
 	unitReceiveId: number = null
 	status: number = null
+	step: number = null
 	content: string = ''
 	reasonDeny: string = ''
 	sendDate: Date = null
@@ -68,7 +69,37 @@ export class RecommendationForwardObject {
 export class RecommendationProcessObject {
 	id: number = 0
 	recommendationId: number = null
+	step: number = null
 	status: number = null
 	reasonDeny: string = ''
 	reactionaryWord: boolean = false
+}
+export class RecommendationViewObject {
+	id: number
+	code: string
+	title: string
+	content: string
+	field: number
+	fieldName: string
+	unitId: number
+	unitName: string
+	typeObject: number
+	sendId: number
+	name: string
+	shortName: string
+	status: number
+	sendDate: Date
+	createdBy: number
+	createdDate: Date
+	updatedBy: number
+	updatedDate: Date
+}
+export class RecommendationConclusionObject {
+	id: number = 0
+	recommendationId: number = null
+	userCreatedId: number = null
+	unitCreatedId: number = null
+	receiverId: number = null
+	unitReceiverId: number = null
+	content: string = ''
 }

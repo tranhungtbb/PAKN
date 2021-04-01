@@ -57,6 +57,19 @@ export class RECOMMENDATION_STATUS {
 	public static UPDATED = 11 //11 Chỉ để lưu log
 }
 
+export class STEP_RECOMMENDATION {
+	public static RECEIVE = 1 //Tiếp nhận
+	public static PROCESS = 2 //2 Giải quyết
+	public static APPROVE = 3 //3 Phê duyệt
+}
+
+export class PROCESS_STATUS_RECOMMENDATION {
+	public static WAIT = 1 //Chờ xử lý
+	public static APPROVED = 2 //2 Đồng ý xử lý
+	public static DENY = 3 //3 Từ chối xử lý
+	public static FORWARD = 4 //3 Chuyển xử lý
+}
+
 export const FILETYPE = [
 	{ text: 'application/msword', value: 1 },
 	{ text: 'text/plain', value: 1 },

@@ -26,6 +26,7 @@ export class Api {
 	//Recommendation
 	public static RecommendationGetDataForCreate = 'Recommendation/RecommendationGetDataForCreate'
 	public static RecommendationGetDataForForward = 'Recommendation/RecommendationGetDataForForward'
+	public static RecommendationGetDataForProcess = 'Recommendation/RecommendationGetDataForProcess'
 	public static RecommendationGetList = 'MRSPBase/MRRecommendationGetAllOnPageBase'
 	public static RecommendationGetListProcess = 'MRSPBase/MRRecommendationGetAllWithProcessBase'
 	public static RecommendationGetById = 'Recommendation/RecommendationGetById'

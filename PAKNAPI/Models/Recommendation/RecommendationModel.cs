@@ -21,6 +21,12 @@ namespace PAKNAPI.Models.Recommendation
     {
         public List<DropdownObject> lstUnitNotMain { get; set; }
     }
+
+	public class RecommendationGetDataForProcessResponse
+    {
+        public List<DropdownObject> lstHashtag { get; set; }
+        public List<DropdownObject> lstUsers { get; set; }
+    }
 	public class RecommendationInsertRequest
     {
         public long? UserId { get; set; }
@@ -46,15 +52,22 @@ namespace PAKNAPI.Models.Recommendation
         public List<MRRecommendationHashtagGetByRecommendationId> lstHashtag { get; set; }
         public List<MRRecommendationFilesGetByRecommendationId> lstFiles { get; set; }
     }
+    public class RecommendationGetByIDViewResponse
+    {
+        public MRRecommendationGetByIDView Model { get; set; }
+        public List<MRRecommendationHashtagGetByRecommendationId> lstHashtag { get; set; }
+        public List<MRRecommendationFilesGetByRecommendationId> lstFiles { get; set; }
+    }
 
-
+    public class RecommendationForwardRequest
+    {
+        public MRRecommendationForwardInsertIN _mRRecommendationForwardInsertIN { get; set; }
+        public byte RecommendationStatus { get; set; }
+    }
     public class RecommendationForwardProcess
     {
-        public int? Id { get; set; }
-        public int? RecommendationId { get; set; }
-        public byte? Status { get; set; }
-        public string ReasonDeny { get; set; }
-        public DateTime? ProcessingDate { get; set; }
+        public MRRecommendationForwardProcessIN _mRRecommendationForwardProcessIN { get; set; }
+        public byte RecommendationStatus { get; set; }
         public bool? ReactionaryWord { get; set; }
     }
 }

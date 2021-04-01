@@ -75,5 +75,28 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYUnitGetNameByIdBase")]
+		public async Task<ActionResult<object>> SYUnitGetNameByIdBase(int? Id)
+		{
+			try
+			{
+				List<SYUnitGetNameById> rsSYUnitGetNameById = await new SYUnitGetNameById(_appSetting).SYUnitGetNameByIdDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUnitGetNameById", rsSYUnitGetNameById},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 	}
 }

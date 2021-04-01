@@ -661,6 +661,47 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class MRRecommendationGetByIDView
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGetByIDView(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGetByIDView()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Title { get; set; }
+		public string Content { get; set; }
+		public int? Field { get; set; }
+		public int? UnitId { get; set; }
+		public short? TypeObject { get; set; }
+		public long? SendId { get; set; }
+		public string Name { get; set; }
+		public byte? Status { get; set; }
+		public DateTime? SendDate { get; set; }
+		public bool? ReactionaryWord { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public long? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public string UnitName { get; set; }
+		public string FieldName { get; set; }
+
+		public async Task<List<MRRecommendationGetByIDView>> MRRecommendationGetByIDViewDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByIDView>("MR_RecommendationGetByIDView", DP)).ToList();
+		}
+	}
+
 	public class MRRecommendationInsert
 	{
 		private SQLCon _sQLCon;
