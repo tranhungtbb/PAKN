@@ -86,10 +86,10 @@
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
 									<td>
-										<strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
+										<strong><a [routerLink]="['/quan-tri/kien-nghi/chi-tiet/',item.id]" class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
 									</td>
 									<td>
-										<strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
+										<strong><a class="ellipsis">{{item.name}}</a></strong>
 									</td>
 									<td>
 										<p class="text-2line mb-0">{{item.content}}</p>
@@ -126,32 +126,6 @@
 	</div>
 
 </div>
-<div class="modal fade" id="modalConfirmDelete">
-	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
-		<div class="modal-content rounded">
-			<form class="form-horizontal">
-				<div class="panel panel-default no-margin">
-					<div class="modal-header">
-						<button class="close btn-close-modal" data-dismiss="modal">
-							×
-						</button>
-						<p class="modal-title h3">Xác nhận</p>
-					</div>
-					<div class="modal-body no-padding-bottom">
-						<div>
-							<p>Anh/Chị có chắc chắn thực hiện hành động này?</p>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác nhận</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-
 <div class="modal fade pr-0" id="modal-history-pakn">
 	<div class="modal-dialog modal-dialog-right vh-100" role="document">
 		<div class="modal-content rounded-0 h-100">
