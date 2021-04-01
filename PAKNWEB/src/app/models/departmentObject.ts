@@ -6,6 +6,10 @@ export class DepartmentObject {
 		this.code = ''
 		this.description = ''
 		this.isDeleted = false
+		this.phone = ''
+		this.email = ''
+		this.fax = ''
+		this.address = ''
 	}
 	id: number
 	orderNumber: number

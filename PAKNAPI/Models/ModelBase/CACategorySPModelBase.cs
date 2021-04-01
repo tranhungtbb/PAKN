@@ -271,6 +271,49 @@ namespace PAKNAPI.ModelBase
 		public string Description { get; set; }
 	}
 
+	public class CADepartmentInsert
+	{
+		private SQLCon _sQLCon;
+
+		public CADepartmentInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CADepartmentInsert()
+		{
+		}
+
+		public async Task<int?> CADepartmentInsertDAO(CADepartmentInsertIN _cADepartmentInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _cADepartmentInsertIN.Name);
+			DP.Add("DepartmentGroupId", _cADepartmentInsertIN.DepartmentGroupId);
+			DP.Add("Phone", _cADepartmentInsertIN.Phone);
+			DP.Add("Email", _cADepartmentInsertIN.Email);
+			DP.Add("Fax", _cADepartmentInsertIN.Fax);
+			DP.Add("Address", _cADepartmentInsertIN.Address);
+			DP.Add("IsActived", _cADepartmentInsertIN.IsActived);
+			DP.Add("IsDeleted", _cADepartmentInsertIN.IsDeleted);
+			DP.Add("Description", _cADepartmentInsertIN.Description);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_DepartmentInsert", DP);
+		}
+	}
+
+	public class CADepartmentInsertIN
+	{
+		public string Name { get; set; }
+		public int? DepartmentGroupId { get; set; }
+		public string Phone { get; set; }
+		public string Email { get; set; }
+		public string Fax { get; set; }
+		public string Address { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public string Description { get; set; }
+	}
+
 	public class CADepartmentUpdate
 	{
 		private SQLCon _sQLCon;

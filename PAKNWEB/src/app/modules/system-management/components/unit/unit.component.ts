@@ -95,14 +95,14 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			isDeleted: [''],
 			parentId: [''],
 			description: [''],
-			email: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
+			email: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_.]{2,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
 			phone: ['', [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
 			address: ['', [Validators.required]],
 		})
 		/*user form*/
 		this.createUserForm = this.formBuilder.group({
 			userName: ['', [Validators.required]],
-			email: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')]],
+			email: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_.]{2,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')]],
 			fullName: ['', [Validators.required]],
 			phone: ['', [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
 			positionId: ['', [Validators.required]],
@@ -191,6 +191,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				})
 				this.unitFlatlist = listUnit
 				this.treeUnit = this.unflatten(listUnit)
+				this.treeViewActive(listUnit[0].id, listUnit[0].unitLevel)
 			},
 			(err) => {}
 		)

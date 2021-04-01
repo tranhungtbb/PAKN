@@ -81,16 +81,15 @@ export class DepartmentComponent implements OnInit {
   }
 
   rebuilForm() {
-    this.model = new DepartmentObject()
     this.form.reset({
-      name: '',
+      name: this.model.name,
       isActived: this.model.isActived,
-      description: '',
+      description: this.model.description,
       departmentGroupId: this.model.departmentGroupId,
-      phone: '',
-      email: '',
-      address: '',
-      fax: ''
+      phone: this.model.phone,
+      email: this.model.email,
+      address: this.model.address,
+      fax: this.model.fax
     })
   }
 
@@ -176,6 +175,7 @@ export class DepartmentComponent implements OnInit {
     }
     if (this.model.id == 0 || this.model.id == null) {
       this._service.departmentInsert(this.model).subscribe((response) => {
+        console.log(response)
         if (response.success == RESPONSE_STATUS.success) {
           if (response.result == -1) {
             this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)

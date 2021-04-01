@@ -5,14 +5,14 @@ import { ToastrService } from 'ngx-toastr'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
 
-import { NewsService } from 'src/app/services/news.service'
-import { CatalogService } from 'src/app/services/catalog.service'
+import { NewsService } from '../../../services/news.service'
+import { CatalogService } from '../../../services/catalog.service'
 
 import { NewsRelateModalComponent } from '../news-relate-modal/news-relate-modal.component'
 
-import { COMMONS } from 'src/app/commons/commons'
-import { AppSettings } from 'src/app/constants/app-setting'
-import { NewsModel } from 'src/app/models/NewsObject'
+import { COMMONS } from '../../../commons/commons'
+import { AppSettings } from '../../../constants/app-setting'
+import { NewsModel } from '../../../models/NewsObject'
 
 @Component({
 	selector: 'app-news-create-or-update',
@@ -27,8 +27,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		private newsService: NewsService,
 		private catalogService: CatalogService,
 		private router: Router,
-		private activatedRoute: ActivatedRoute,
-		private dialog: MatDialog
+		private activatedRoute: ActivatedRoute
 	) {}
 	allowImageExtend = ['image/jpeg', 'image/png']
 	public Editor = ClassicEditor

@@ -12,3 +12,9 @@ strong.highlight {
 	font-size: 20px;
 	color: #000;
 }
+
+body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+	color: #fff !important;
+	background-color: #0283e1 !important;
+	font-size: 1.2rem !important;
+}
