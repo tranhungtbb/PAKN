@@ -7,3 +7,8 @@ strong.highlight:hover {
 strong.highlight {
 	cursor: pointer;
 }
+.change-status-title {
+	font-weight: 600;
+	letter-spacing: 1px;
+	font-size: 1.1rem;
+}
