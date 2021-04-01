@@ -17,4 +17,17 @@
 		//Action
 		public const int UPDATED = 11;
 	}
+	public static class STEP_RECOMMENDATION
+	{
+		public const int RECEIVE = 1;//Tiếp nhận
+		public const int PROCESS = 2;//2 Giải quyết
+		public const int APPROVE = 3;//3 Phê duyệt
+	}
+	public static class PROCESS_STATUS_RECOMMENDATION
+	{
+		public const int WAIT = 1;//Chờ xử lý
+		public const int APPROVED = 2;//2 Đồng ý xử lý
+		public const int DENY = 3;//3 Từ chối xử lý
+		public const int FORWARD = 4;//3 Chuyển xử lý
+	}
 }

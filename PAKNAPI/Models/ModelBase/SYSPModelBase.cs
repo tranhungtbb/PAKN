@@ -24,9 +24,9 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public string Code;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
 
 		public async Task<List<SYRoleGetAll>> SYRoleGetAllDAO()
 		{
@@ -49,13 +49,37 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
+		public int Id { get; set; }
 
 		public async Task<List<SYUnitGetMainId>> SYUnitGetMainIdDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUnitGetMainId>("SY_UnitGetMainId", DP)).ToList();
+		}
+	}
+
+	public class SYUnitGetNameById
+	{
+		private SQLCon _sQLCon;
+
+		public SYUnitGetNameById(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUnitGetNameById()
+		{
+		}
+
+		public string Name { get; set; }
+
+		public async Task<List<SYUnitGetNameById>> SYUnitGetNameByIdDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUnitGetNameById>("SY_UnitGetNameById", DP)).ToList();
 		}
 	}
 }

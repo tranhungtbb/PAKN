@@ -79,6 +79,7 @@ export class ListProcessDenyComponent implements OnInit {
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
 			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
 			UnitProcessId: this.storeageService.getUnitId(),
+			UserProcessId: this.storeageService.getUserId(),
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}

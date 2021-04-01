@@ -8,6 +8,7 @@ import { SmsSettingComponent } from './components/sms-setting/sms-setting.compon
 import { GroupUserComponent } from './components/group-user/group-user.component'
 import { UserComponent } from './components/user/user.component'
 import { UnitComponent } from './components/unit/unit.component'
+import { UserCreateOrUpdateComponent } from './components/user/user-create-or-update/user-create-or-update.component'
 
 const routes: Routes = [
 	{
@@ -20,6 +21,7 @@ const routes: Routes = [
 			{ path: 'nguoi-dung', component: UserComponent },
 			{ path: 'lich-su-he-thong', component: SystemLogComponent },
 			{ path: 'co-cau-to-chuc', component: UnitComponent },
+			{ path: 'nguoi-dung/them-moi', component: UserCreateOrUpdateComponent },
 		],
 	},
 ]
