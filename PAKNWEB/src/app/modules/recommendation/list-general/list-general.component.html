@@ -91,10 +91,10 @@
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
 									<td>
-										<strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
+										<strong><a [routerLink]="['/quan-tri/kien-nghi/chi-tiet/',item.id]" class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
 									</td>
 									<td>
-										<strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
+										<strong><a class="ellipsis">{{item.name}}</a></strong>
 									</td>
 									<td>
 										<p class="text-2line mb-0">{{item.content}}</p>

@@ -86,10 +86,10 @@
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
 									<td>
-										<strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
+										<strong><a [routerLink]="['/quan-tri/kien-nghi/chi-tiet/',item.id]" class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
 									</td>
 									<td>
-										<strong><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
+										<strong><a class="ellipsis">{{item.name}}</a></strong>
 									</td>
 									<td>
 										<p class="text-2line mb-0">{{item.content}}</p>
@@ -143,7 +143,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onProcessAccept(idDelete)">Xác nhận</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onProcessAccept()">Xác nhận</button>
 					</div>
 				</div>
 			</form>
@@ -168,7 +168,7 @@
 			</div>
 			<div class="modal-footer justify-content-center border-top-0">
 				<button type="button" class="btn btn-outline-secondary border" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger grd-red" (click)="onProcessReject()">Xác nhận</button>
+				<button type="button" class="btn btn-danger grd-red" (click)="onProcessDeny()">Xác nhận</button>
 			</div>
 		</div>
 	</div>

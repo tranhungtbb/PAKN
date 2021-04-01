@@ -114,7 +114,7 @@
 					</svg>
 				</button>
 			</p>
-			<p-tree [value]="treeUnit">
+			<p-tree id="tree-unit" [value]="treeUnit">
 				<ng-template let-node pTemplate="default">
 					<a (click)="treeViewActive(node.id, node.unitLevel)">{{node.name}}</a>
 				</ng-template>

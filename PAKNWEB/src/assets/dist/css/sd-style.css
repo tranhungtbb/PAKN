@@ -1286,12 +1286,12 @@ body .ui-paginator{
 	border: none;
 }
 body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
-	background-color: transparent;
 	border: 0;
-	color: #0283E1;
 	box-shadow: none;
-	font-size: 1.8rem;
 	line-height: 42px;
+	color: #fff;
+	background-color: #0283e1;
+	font-size: 1.2rem;
 }
 body .ui-paginator .ui-paginator-first:not(.ui-state-disabled):not(.ui-state-active):hover, 
 body .ui-paginator .ui-paginator-prev:not(.ui-state-disabled):not(.ui-state-active):hover, 
@@ -1311,7 +1311,8 @@ body .ui-paginator .ui-paginator-pages .ui-paginator-page{
 	margin-top: 0!important;
 }
 body .ui-paginator .ui-paginator-current{
-	line-height: 48px;
+	line-height: 50px;
+	font-weight: bold;
 }
 .form-control.ng-select{	
 	padding: 0;
@@ -1338,6 +1339,11 @@ body .ui-paginator .ui-paginator-current{
 	color: red;
 	font-style: italic;
 	font-size: 14px;
+}
+
+body .ui-paginator .ui-dropdown .ui-dropdown-trigger, body .ui-paginator .ui-dropdown .ui-dropdown-label{
+	margin-top: 2px;
+	font-size: 1.2rem;
 }
 
 .form-control, .ng-select {

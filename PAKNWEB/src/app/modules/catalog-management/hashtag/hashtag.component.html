@@ -29,8 +29,8 @@
 			<div class="card mb-0 shadow-none">
 				<div class="table-responsive">
 					<p-table #table [value]="listHastag" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-						currentPageReportTemplate="Tổng số {{totalRecord}}" [rows]="PageSize" [totalRecords]="totalRecord" [rowsPerPageOptions]="[10,20,30,50]" [responsive]="true"
-						autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+						currentPageReportTemplate="Tổng số {{totalRecord}}" [rows]="PageSize" [totalRecords]="totalRecord" [responsive]="true" autoLayout="true"
+						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
 								<th style="width: 5%">
@@ -106,7 +106,7 @@
 							<div class="col-sm-8">
 								<label class="control-label">Tên Hashtag<span class="text-danger">(*)</span></label>
 
-								<input class="form-control" formControlName="name" [(ngModel)]="hashtag.name" maxlength="100" placeholder="Nhập..." />
+								<input class="form-control" formControlName="name" [(ngModel)]="hashtag.name" maxlength="100" placeholder="Nhập tên Hashtag..." />
 								<div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))" class="has-error m-b-12">
 									<div *ngIf="f.name.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -156,7 +156,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác nhận</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete()">Xác nhận</button>
 					</div>
 				</div>
 			</form>
