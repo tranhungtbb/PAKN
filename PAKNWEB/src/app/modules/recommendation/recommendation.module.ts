@@ -20,7 +20,8 @@ import { ListReceiveDenyComponent } from './list-receive-deny/list-receive-deny.
 import { ListReceiveApprovedComponent } from './list-receive-approved/list-receive-approved.component';
 import { ListProcessWaitComponent } from './list-process-wait/list-process-wait.component';
 import { ListProcessDenyComponent } from './list-process-deny/list-process-deny.component';
-import { ListProcessingComponent } from './list-processing/list-processing.component'
+import { ListProcessingComponent } from './list-processing/list-processing.component';
+import { ViewRecommendationComponent } from './view-recommendation/view-recommendation.component'
 
 @NgModule({
 	imports: [
@@ -38,6 +39,6 @@ import { ListProcessingComponent } from './list-processing/list-processing.compo
 		NgSelectModule,
 		ContextMenuModule,
 	],
-	declarations: [RecommendationComponent, ListGeneralComponent, CreateRecommendationComponent, ListReceiveWaitComponent, ListReceiveDenyComponent, ListReceiveApprovedComponent, ListProcessWaitComponent, ListProcessDenyComponent, ListProcessingComponent],
+	declarations: [RecommendationComponent, ListGeneralComponent, CreateRecommendationComponent, ListReceiveWaitComponent, ListReceiveDenyComponent, ListReceiveApprovedComponent, ListProcessWaitComponent, ListProcessDenyComponent, ListProcessingComponent, ViewRecommendationComponent],
 })
 export class RecommendationModule {}

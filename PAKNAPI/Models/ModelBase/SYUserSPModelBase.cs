@@ -38,54 +38,6 @@ namespace PAKNAPI.ModelBase
 		public long? Id { get; set; }
 	}
 
-	public class SYUserGetAllOnPage
-	{
-		private SQLCon _sQLCon;
-
-		public SYUserGetAllOnPage(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public SYUserGetAllOnPage()
-		{
-		}
-
-		public int? RowNumber;
-		public long Id;
-		public string FullName;
-		public string UserName;
-		public string Password;
-		public string Salt;
-		public bool IsActived;
-		public bool IsDeleted;
-		public bool Gender;
-		public byte Type;
-		public bool IsSuperAdmin;
-		public string Email;
-		public string Phone;
-		public int? UnitId;
-		public byte? CountLock;
-		public DateTime? LockEndOut;
-		public string Avatar;
-		public string Address;
-		public int? PositionId;
-
-		public async Task<List<SYUserGetAllOnPage>> SYUserGetAllOnPageDAO(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActive, int? UnitId)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("UserName", UserName);
-			DP.Add("FullName", FullName);
-			DP.Add("Phone", Phone);
-			DP.Add("IsActive", IsActive);
-			DP.Add("UnitId", UnitId);
-
-			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPage>("SY_UserGetAllOnPage", DP)).ToList();
-		}
-	}
-
 	public class SYUserGetByID
 	{
 		private SQLCon _sQLCon;

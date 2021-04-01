@@ -1036,6 +1036,7 @@ namespace PAKNAPI.ModelBase
 	public class SYUserOnPage
 	{
 		public long Id;
+		public int TypeId;
 		public string FullName;
 		public string UserName;
 		public string Password;
@@ -1070,6 +1071,7 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public long Id;
+		public int TypeId;
 		public string FullName;
 		public string UserName;
 		public string Password;
@@ -1115,6 +1117,7 @@ namespace PAKNAPI.ModelBase
 		public async Task<int?> SYUserInsert(SYUser _sYUser)
 		{
 			DynamicParameters DP = new DynamicParameters();
+			DP.Add("TypeId", _sYUser.TypeId);
 			DP.Add("FullName", _sYUser.FullName);
 			DP.Add("UserName", _sYUser.UserName);
 			DP.Add("Password", _sYUser.Password);
@@ -1140,6 +1143,7 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _sYUser.Id);
+			DP.Add("TypeId", _sYUser.TypeId);
 			DP.Add("FullName", _sYUser.FullName);
 			DP.Add("UserName", _sYUser.UserName);
 			DP.Add("Password", _sYUser.Password);
