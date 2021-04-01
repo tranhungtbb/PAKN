@@ -123,6 +123,12 @@ export class FieldComponent implements OnInit {
 		}
 	}
 
+	confirmChangeStatus(data) {
+		this.model = { ...data }
+		this.model.isActived = !data.isActived
+		$('#modalConfirmChangeStatus').modal('show')
+	}
+
 	preCreate() {
 		this.model = new FieldObject()
 		this.rebuilForm()
@@ -222,17 +228,12 @@ export class FieldComponent implements OnInit {
 			}
 	}
 
-	onUpdateStatus(data) {
-		var isActived = data.isActived
-		let request = {
-			Type: 1,
-			Id: data.id,
-		}
-		data.isActived = !data.isActived
-		this._service.fieldUpdateStatus(data).subscribe((res) => {
-			console.log(res)
+	onUpdateStatus() {
+		this._service.fieldUpdateStatus(this.model).subscribe((res) => {
 			if (res.success == 'OK') {
-				if (data.isActived == true) {
+				$('#modalConfirmChangeStatus').modal('hide')
+				this.getList()
+				if (this.model.isActived == true) {
 					this._toastr.success(MESSAGE_COMMON.UNLOCK_SUCCESS)
 				} else {
 					this._toastr.success(MESSAGE_COMMON.LOCK_SUCCESS)
