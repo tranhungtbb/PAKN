@@ -1289,9 +1289,10 @@ body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
 	border: 0;
 	box-shadow: none;
 	line-height: 42px;
-	color: #fff;
-	background-color: #0283e1;
-	font-size: 1.2rem;
+	color: #0283e1;
+	background-color: transparent;
+	font-size: 1.3rem;
+	font-weight: bolder;
 }
 body .ui-paginator .ui-paginator-first:not(.ui-state-disabled):not(.ui-state-active):hover, 
 body .ui-paginator .ui-paginator-prev:not(.ui-state-disabled):not(.ui-state-active):hover, 

@@ -76,8 +76,9 @@
 								</td>
 								<td>{{item.description}}</td>
 								<td>
-									<span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == true" class="badge rounded-pill bg-success">Hiệu lực</span>
-									<span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+									<span type="button" (click)="confirmChangeStatus(item)" *ngIf="item.isActived == true" class="badge rounded-pill bg-blue2">Hiệu lực</span>
+									<span type="button" (click)="confirmChangeStatus(item)" *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Hết hiệu
+										lực</span>
 								</td>
 								<td>
 									<div class="hover-active d-flex justify-content-end">
@@ -99,13 +100,13 @@
 		<div class="modal-content rounded">
 			<form class="form-horizontal" [formGroup]="form" #formDir="ngForm">
 				<div class="panel panel-default no-margin">
-					<div class="modal-header">
+					<div class="modal-header" style="border: none;">
 						<button class="close btn-close-modal" data-dismiss="modal">
 							×
 						</button>
 						<p class="modal-title h3">{{title}}</p>
 					</div>
-					<div class="modal-body no-padding-bottom">
+					<div class="modal-body no-padding-bottom" style="border: none;">
 						<div class="row form-group">
 							<div class="col-sm-8">
 								<label class="control-label">Tên lĩnh vực <span class="text-danger">(*)</span></label>
@@ -119,7 +120,7 @@
 							<div class="col-sm-4">
 								<label class="control-label">Trạng thái <span class="text-danger">(*)</span></label>
 								<ng-select class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
-									[(ngModel)]="model.isActived">
+									[(ngModel)]="model.isActived" style="font-weight: 600;">
 								</ng-select>
 								<div *ngIf="(submitted && f.isActived.invalid) || (f.isActived.invalid && (f.isActived.dirty || f.isActived.touched))" class="has-error m-b-12">
 									<div *ngIf="f.isActived.errors.required">
@@ -131,14 +132,14 @@
 						<div class="row form-group">
 							<div class="col-sm-12">
 								<label class="control-label">Mô tả</label>
-								<textarea class="form-control" formControlName="description" type="text" rows="4" [(ngModel)]="model.description" maxlength="255"
+								<textarea class="form-control" formControlName="description" type="text" rows="5" [(ngModel)]="model.description" maxlength="255"
 									placeholder="Nhập..."></textarea>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer border-top-0">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onSave()">Xác nhận</button>
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" style="text-transform: none;" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" style="text-transform: none;" (click)="onSave()">Xác nhận</button>
 					</div>
 				</div>
 			</form>
@@ -177,7 +178,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button data-dismiss="modal" class="btn btn-primary btn-sm"> Đóng
+						<button data-dismiss="modal" style="text-transform: none;" class="btn btn-primary btn-sm"> Đóng
 							<!-- <i class="far fa-times"></i> -->
 						</button>
 					</div>
@@ -187,7 +188,63 @@
 	</div>
 </div>
 
+<div class="modal fade" id="modalConfirmChangeStatus">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<!-- <p class="modal-title h3">Xác nhận</p> -->
+					</div>
+					<div class="modal-body no-padding-bottom" style="border: none;">
+						<div style="text-align: center;">
+							<strong class="change-status-title">Bạn có chắc chắn thực hiện hành động này?</strong>
+						</div>
+					</div>
+					<div class="modal-footer" style="border: none; justify-content: center;">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" style="text-transform: none;" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" style="text-transform: none;" (click)="onUpdateStatus()">Xác
+							nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
 <div class="modal fade" id="modalConfirmDelete">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<!-- <p class="modal-title h3">Xác nhận</p> -->
+					</div>
+					<div class="modal-body no-padding-bottom" style="border: none;">
+						<div style="text-align: center;">
+							<strong class="change-status-title">Bạn có chắc chắn thực hiện hành động này?</strong>
+						</div>
+					</div>
+					<div class="modal-footer" style="border: none; justify-content: center;">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" style="text-transform: none;" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" style="text-transform: none;" (click)="onDelete(idDelete)">Xác
+							nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- <div class="modal fade" id="modalConfirmDelete">
 	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
 		<div class="modal-content rounded">
 			<form class="form-horizontal">
@@ -204,12 +261,12 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" style="text-transform: none;" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" style="text-transform: none;" (click)="onDelete(idDelete)">Xác
 							nhận</button>
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
-</div>
+</div> -->

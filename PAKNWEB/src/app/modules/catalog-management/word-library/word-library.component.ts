@@ -46,7 +46,11 @@ export class WordLibraryComponent implements OnInit {
   get f() {
     return this.form.controls
   }
-
+  dataUpdate: any
+  preUpdateStatus(data) {
+    this.dataUpdate = data
+    $('#modalConfirmUpdateStatus').modal('show')
+  }
   buildForm() {
     this.form = this._fb.group({
       name: [this.model.name, Validators.required],
@@ -229,7 +233,8 @@ export class WordLibraryComponent implements OnInit {
     }
     data.isActived = !data.isActived
     this._service.wordUpdateStatus(data).subscribe((res) => {
-      if (res.result == 1) {
+      $('#modalConfirmUpdateStatus').modal('hide')
+      if (res.success == "OK") {
         if (data.isActived == true) {
           this._toastr.success(MESSAGE_COMMON.UNLOCK_SUCCESS)
         } else {

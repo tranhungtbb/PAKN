@@ -39,6 +39,7 @@ export class DepartmentComponent implements OnInit {
   @ViewChild('table', { static: false }) table: any
   totalRecords: number = 0
   idDelete: number = 0
+  dataUpdate: any
   ngOnInit() {
     this.buildForm()
     this.getList()
@@ -73,7 +74,7 @@ export class DepartmentComponent implements OnInit {
       description: [this.model.description],
       isActived: [this.model.isActived, Validators.required],
       departmentGroupId: [this.model.departmentGroup, Validators.required],
-      email: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_.]{3,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
+      email: ['', [Validators.required, Validators.pattern('^[a-z0-9_.][a-z0-9_.]{3,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
       phone: ['', [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
       address: [''],
       fax: ['']
@@ -239,7 +240,10 @@ export class DepartmentComponent implements OnInit {
     this.idDelete = id
     $('#modalConfirmDelete').modal('show')
   }
-
+  preUpdateStatus(data) {
+    this.dataUpdate = data
+    $('#modalConfirmUpdateStatus').modal('show')
+  }
   onDelete(id: number) {
     let request = {
       Id: id,
@@ -266,7 +270,9 @@ export class DepartmentComponent implements OnInit {
     }
     data.isActived = !data.isActived
     this._service.departmentUpdateStatus(data).subscribe((res) => {
-      if (res.result == 1) {
+      console.log(res);
+      $('#modalConfirmUpdateStatus').modal('hide')
+      if (res.success == "OK") {
         console.log(data)
         if (data.isActived) {
           this._toastr.success(MESSAGE_COMMON.UNLOCK_SUCCESS)

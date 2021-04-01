@@ -2,8 +2,7 @@
   <div class="row">
     <div class="col-lg-12">
       <ol class="breadcrumb title-module px-0 bg-transparent mb-0">
-        <li class="breadcrumb-item"><a>Danh mục</a></li>
-        <li class="breadcrumb-item active"><a class="font-weight-bold"> Sở ngành</a></li>
+        <li class="breadcrumb-item active"><a class="font-weight-bold">DANH SÁCH SỞ NGÀNH</a></li>
       </ol>
       <div class="btn-group group-button-table" role="group">
         <button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
@@ -34,7 +33,7 @@
 
           <p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true"
             [showCurrentPageReport]="true" currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize"
-            [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]" [responsive]="true" autoLayout="true"
+            [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
             tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
             <ng-template pTemplate="header" class="bg-thead">
               <tr>
@@ -143,9 +142,9 @@
                 </td>
                 <td>{{item.description}}</td> -->
                 <td>
-                  <span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == true"
+                  <span type="button" (click)="preUpdateStatus(item)" *ngIf="item.isActived == true"
                     class="badge rounded-pill bg-success">Hiệu lực</span>
-                  <span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == false"
+                  <span type="button" (click)="preUpdateStatus(item)" *ngIf="item.isActived == false"
                     class="badge rounded-pill badge-light">Hết hiệu lực</span>
                 </td>
                 <td style="max-width: 100px;">
@@ -183,7 +182,7 @@
           <div class="modal-body no-padding-bottom">
             <div class="row form-group">
               <div class="col-sm-4">
-                <label class="control-label">Tên sở ngành <span class="text-danger">*</span></label>
+                <label class="control-label">Tên sở ngành <span class="text-danger">(*)</span></label>
                 <input svTrim placeholder="Nhập tên..." class="form-control" formControlName="name"
                   [(ngModel)]="model.name" maxlength="100" />
                 <div *ngIf="(submitted && f.name.invalid)|| (f.name.invalid && (f.name.dirty || f.name.touched))"
@@ -194,10 +193,9 @@
                 </div>
               </div>
               <div class="col-sm-4">
-                <label class="control-label">Nhóm sở ngành <span class="text-danger">*</span></label>
-                <ng-select class="form-control " [items]="listDepartmentGroup" bindValue="id"
-                  placeholder="Chọn nhóm sở ngành" bindLabel="name" formControlName="departmentGroupId"
-                  [(ngModel)]="model.departmentGroupId">
+                <label class="control-label">Nhóm sở ngành <span class="text-danger">(*)</span></label>
+                <ng-select class="form-control " [items]="listDepartmentGroup" bindValue="id" placeholder="Chọn..."
+                  bindLabel="name" formControlName="departmentGroupId" [(ngModel)]="model.departmentGroupId">
                 </ng-select>
                 <div
                   *ngIf="(submitted && f.departmentGroupId.invalid) || (f.departmentGroupId.invalid && (f.departmentGroupId.dirty || f.departmentGroupId.touched))"
@@ -208,7 +206,7 @@
                 </div>
               </div>
               <div class="col-sm-4">
-                <label class="control-label">Trạng thái <span class="text-danger">*</span></label>
+                <label class="control-label">Trạng thái <span class="text-danger">(*)</span></label>
                 <ng-select class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái"
                   bindLabel="text" formControlName="isActived" [(ngModel)]="model.isActived">
                 </ng-select>
@@ -224,7 +222,7 @@
 
             <div class="row form-group">
               <div class="col-sm-4">
-                <label class="control-label">Điện thoại <span class="text-danger">*</span></label>
+                <label class="control-label">Điện thoại <span class="text-danger">(*)</span></label>
                 <input svTrim placeholder="Nhập..." class="form-control" formControlName="phone"
                   [(ngModel)]="model.phone" maxlength="100" />
                 <div *ngIf="(submitted && f.phone.invalid) || (f.phone.invalid && (f.phone.dirty || f.phone.touched))"
@@ -238,7 +236,7 @@
                 </div>
               </div>
               <div class="col-sm-4">
-                <label class="control-label">Email <span class="text-danger">*</span></label>
+                <label class="control-label">Email <span class="text-danger">(*)</span></label>
                 <input svTrim placeholder="Nhập..." class="form-control" formControlName="email"
                   [(ngModel)]="model.email" maxlength="100" />
                 <div *ngIf="(submitted && f.email.invalid) || (f.email.invalid && (f.email.dirty || f.email.touched))"
@@ -247,7 +245,7 @@
                     <span class="help-block">Trường dữ liệu này không để trống</span>
                   </div>
                   <div *ngIf="f.email.errors.pattern">
-                    <span class="help-block">Chưa đúng định dạng Email, vui lòng nhập lại</span>
+                    <span class="help-block">Định dạng email không đúng</span>
                   </div>
                 </div>
               </div>
@@ -279,14 +277,14 @@
             <div class="row form-group">
               <div class="col-sm-12">
                 <label class="control-label">Mô tả</label>
-                <textarea class="form-control" formControlName="description" type="text" rows="4"
+                <textarea placeholder="Nhập..." class="form-control" formControlName="description" type="text" rows="4"
                   [(ngModel)]="model.description" maxlength="255"></textarea>
               </div>
             </div>
             <div class="row">
               <div class="col-sm-8">
-                <button style="float:right" type="button" data-dismiss="modal" class="btn btn-secondary border px-5"
-                  data-dismiss="modal">Hủy</button>
+                <button style="float:right" type="button" data-dismiss="modal"
+                  class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
               </div>
               <div class="col-sm-4">
                 <button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onSave()">Xác nhận</button>
@@ -373,7 +371,6 @@
             <button class="close btn-close-modal" data-dismiss="modal">
               ×
             </button>
-            <p class="modal-title h3">Xác nhận</p>
           </div>
           <div class="modal-body no-padding-bottom">
             <div>
@@ -384,6 +381,34 @@
             <button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
               data-dismiss="modal">Hủy</button>
             <button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác
+              nhận</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalConfirmUpdateStatus">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
+    <div class="modal-content rounded">
+      <form class="form-horizontal">
+        <div class="panel panel-default no-margin">
+          <div class="modal-header" style="border: none;">
+            <button class="close btn-close-modal" data-dismiss="modal">
+              ×
+            </button>
+            <!-- <p class="modal-title h3">Xác nhận</p> -->
+          </div>
+          <div class="modal-body no-padding-bottom" style="border: none;">
+            <div style="text-align: center;">
+              <strong class="change-status-title">Bạn có chắc chắn thực hiện hành động này?</strong>
+            </div>
+          </div>
+          <div class="modal-footer" style="border: none; justify-content: center;">
+            <button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
+              style="text-transform: none;" data-dismiss="modal">Hủy</button>
+            <button type="button" class="btn btn-danger border-0 px-5 grd-blue" style="text-transform: none;"
+              (click)="onUpdateStatus(dataUpdate)">Xác
               nhận</button>
           </div>
         </div>
