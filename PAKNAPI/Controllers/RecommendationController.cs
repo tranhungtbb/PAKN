@@ -70,6 +70,23 @@ namespace PAKNAPI.Controller
 
 		[HttpGet]
 		[Authorize]
+		[Route("RecommendationGetDataForProcess")]
+		public async Task<ActionResult<object>> RecommendationGetDataForProcess(int? UnitId)
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationGetDataForProcess(UnitId) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
 		[Route("RecommendationGetByID")]
 		public async Task<ActionResult<object>> RecommendationGetByID(int? Id)
 		{
@@ -77,6 +94,24 @@ namespace PAKNAPI.Controller
 			{
 				RecommendationGetByIDResponse data = new RecommendationGetByIDResponse();
 				return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationGetByID(Id) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("RecommendationGetByIDView")]
+		public async Task<ActionResult<object>> RecommendationGetByIDView(int? Id)
+		{
+			try
+			{
+				RecommendationGetByIDViewResponse data = new RecommendationGetByIDViewResponse();
+				return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationGetByIDView(Id) };
 			}
 			catch (Exception ex)
 			{
@@ -105,6 +140,7 @@ namespace PAKNAPI.Controller
 				request.UserType = new LogHelper(_appSetting).GetTypeFromRequest(HttpContext);
 				request.UserFullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
 				request.Data = JsonConvert.DeserializeObject<MRRecommendationInsertIN>(Request.Form["Data"].ToString(), jss);
+				request.Data.UnitId  = request.Data.UnitId != null ? request.Data.UnitId : (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault().Id;
 				request.ListHashTag = JsonConvert.DeserializeObject<List<DropdownObject>>(Request.Form["Hashtags"].ToString(), jss);
 				request.Files = Request.Form.Files;
 				request.Data.CreatedBy = request.UserId;
@@ -118,18 +154,27 @@ namespace PAKNAPI.Controller
 				if (Id > 0)
 				{
 					await new MRRecommendationGenCodeUpdateNumber(_appSetting).MRRecommendationGenCodeUpdateNumberDAO();
+					MRRecommendationForwardInsertIN _mRRecommendationForwardInsertIN = new MRRecommendationForwardInsertIN();
+
+					_mRRecommendationForwardInsertIN.RecommendationId = Id;
+					_mRRecommendationForwardInsertIN.UserSendId = request.UserId;
+					_mRRecommendationForwardInsertIN.SendDate = DateTime.Now;
+					_mRRecommendationForwardInsertIN.Step = STEP_RECOMMENDATION.RECEIVE;
 					if (request.UserType != 1)
 					{
-						MRRecommendationForwardInsertIN _mRRecommendationForwardInsertIN = new MRRecommendationForwardInsertIN();
-
-						_mRRecommendationForwardInsertIN.RecommendationId = Id;
-						_mRRecommendationForwardInsertIN.UserSendId =request.UserId;
-						_mRRecommendationForwardInsertIN.UnitReceiveId= request.Data.UnitId != null ? request.Data.UnitId : (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault().Id;
-						_mRRecommendationForwardInsertIN.Status = STATUS_RECOMMENDATION.RECEIVE_WAIT;
-						_mRRecommendationForwardInsertIN.SendDate = DateTime.Now;
+						_mRRecommendationForwardInsertIN.UnitReceiveId = request.Data.UnitId;
+						_mRRecommendationForwardInsertIN.Status = PROCESS_STATUS_RECOMMENDATION.WAIT;
 						_mRRecommendationForwardInsertIN.IsViewed = false;
-						await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_mRRecommendationForwardInsertIN);
+                    }
+                    else
+					{
+						_mRRecommendationForwardInsertIN.UnitReceiveId = request.Data.UnitId != null ? request.Data.UnitId : (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault().Id;
+						_mRRecommendationForwardInsertIN.Status = PROCESS_STATUS_RECOMMENDATION.APPROVED;
+						_mRRecommendationForwardInsertIN.ReceiveId = request.UserId;
+						_mRRecommendationForwardInsertIN.ProcessingDate = DateTime.Now;
+						_mRRecommendationForwardInsertIN.IsViewed = true;
 					}
+					await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_mRRecommendationForwardInsertIN);
 					if (request.Files != null && request.Files.Count > 0)
 					{
 						string folder = "Upload\\Recommendation\\" + Id;
@@ -166,7 +211,7 @@ namespace PAKNAPI.Controller
 					HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
 					hisData.ObjectId = Id;
 					hisData.Type = 1;
-					hisData.Content = request.UserFullName;
+					hisData.Content = "";
 					hisData.Status = STATUS_RECOMMENDATION.CREATED;
 					hisData.CreatedBy = request.UserId;
 					hisData.CreatedDate = DateTime.Now;
@@ -176,8 +221,19 @@ namespace PAKNAPI.Controller
 						hisData = new HISRecommendationInsertIN();
 						hisData.ObjectId = Id;
 						hisData.Type = 1;
-						hisData.Content = request.UserFullName;
+						hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByIdDAO(request.Data.UnitId)).FirstOrDefault().Name;
 						hisData.Status = STATUS_RECOMMENDATION.RECEIVE_WAIT;
+						hisData.CreatedBy = request.UserId;
+						hisData.CreatedDate = DateTime.Now;
+						await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+                    }
+                    else
+					{
+						hisData = new HISRecommendationInsertIN();
+						hisData.ObjectId = Id;
+						hisData.Type = 1;
+						hisData.Content = "";
+						hisData.Status = STATUS_RECOMMENDATION.RECEIVE_APPROVED;
 						hisData.CreatedBy = request.UserId;
 						hisData.CreatedDate = DateTime.Now;
 						await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
@@ -283,7 +339,7 @@ namespace PAKNAPI.Controller
 				HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
 				hisData.ObjectId = request.Data.Id;
 				hisData.Type = 1;
-				hisData.Content = request.UserFullName;
+				hisData.Content = "";
 				hisData.Status = STATUS_RECOMMENDATION.UPDATED;
 				hisData.CreatedBy = request.UserId;
 				hisData.CreatedDate = DateTime.Now;
@@ -303,25 +359,25 @@ namespace PAKNAPI.Controller
 		[HttpPost]
 		[Authorize]
 		[Route("RecommendationForward")]
-		public async Task<ActionResult<object>> MRRecommendationForwardInsertBase(MRRecommendationForwardInsertIN _mRRecommendationForwardInsertIN)
+		public async Task<ActionResult<object>> RecommendationForward(RecommendationForwardRequest request)
 		{
 			try
 			{
-				_mRRecommendationForwardInsertIN.UserSendId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
-				_mRRecommendationForwardInsertIN.UnitSendId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-				_mRRecommendationForwardInsertIN.SendDate = DateTime.Now;
-				await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_mRRecommendationForwardInsertIN);
+				request._mRRecommendationForwardInsertIN.UserSendId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				request._mRRecommendationForwardInsertIN.UnitSendId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+				request._mRRecommendationForwardInsertIN.SendDate = DateTime.Now;
+				await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(request._mRRecommendationForwardInsertIN);
 
 				MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
-				_mRRecommendationUpdateStatusIN.Status = _mRRecommendationForwardInsertIN.Status;
-				_mRRecommendationUpdateStatusIN.Id = _mRRecommendationForwardInsertIN.RecommendationId;
+				_mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
+				_mRRecommendationUpdateStatusIN.Id = request._mRRecommendationForwardInsertIN.RecommendationId;
 				await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
 				HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
-				hisData.ObjectId = _mRRecommendationForwardInsertIN.RecommendationId;
+				hisData.ObjectId = request._mRRecommendationForwardInsertIN.RecommendationId;
 				hisData.Type = 1;
-				hisData.Content = "Đã chuyển đến: ";// + ();
-				hisData.Status = _mRRecommendationForwardInsertIN.Status;
-				hisData.CreatedBy = _mRRecommendationForwardInsertIN.UserSendId;
+				hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByIdDAO(request._mRRecommendationForwardInsertIN.UnitReceiveId)).FirstOrDefault().Name; ;
+				hisData.Status = request.RecommendationStatus;
+				hisData.CreatedBy = request._mRRecommendationForwardInsertIN.UserSendId;
 				hisData.CreatedDate = DateTime.Now;
 				await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
@@ -339,33 +395,37 @@ namespace PAKNAPI.Controller
 		[HttpPost]
 		[Authorize]
 		[Route("RecommendationOnProcess")]
-		public async Task<ActionResult<object>> MRRecommendationOnProcess(RecommendationForwardProcess _mRRecommendationForwardProcessIN)
+		public async Task<ActionResult<object>> MRRecommendationOnProcess(RecommendationForwardProcess request)
 		{
 			try
 			{
 				long UserSendId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
 				int UnitSendId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-				_mRRecommendationForwardProcessIN.ProcessingDate = DateTime.Now;
-				await new RecommendationDAO(_appSetting).RecommendationForwardProcess(_mRRecommendationForwardProcessIN);
-
-				if(_mRRecommendationForwardProcessIN.Status == STATUS_RECOMMENDATION.PROCESS_DENY)
+				request._mRRecommendationForwardProcessIN.ProcessingDate = DateTime.Now;
+				request._mRRecommendationForwardProcessIN.UserId = UserSendId;
+				await new MRRecommendationForwardProcess(_appSetting).MRRecommendationForwardProcessDAO(request._mRRecommendationForwardProcessIN);
+				if (request.RecommendationStatus == STATUS_RECOMMENDATION.PROCESS_DENY)
                 {
 					MRRecommendationUpdateReactionaryWordIN _mRRecommendationUpdateReactionaryWordIN = new MRRecommendationUpdateReactionaryWordIN();
-					_mRRecommendationUpdateReactionaryWordIN.Id = _mRRecommendationForwardProcessIN.RecommendationId;
-					_mRRecommendationUpdateReactionaryWordIN.ReactionaryWord = _mRRecommendationForwardProcessIN.ReactionaryWord;
+					_mRRecommendationUpdateReactionaryWordIN.Id = request._mRRecommendationForwardProcessIN.RecommendationId;
+					_mRRecommendationUpdateReactionaryWordIN.ReactionaryWord = request.ReactionaryWord;
 					await new MRRecommendationUpdateReactionaryWord(_appSetting).MRRecommendationUpdateReactionaryWordDAO(_mRRecommendationUpdateReactionaryWordIN);
 				}
 
 				MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
-				_mRRecommendationUpdateStatusIN.Status = _mRRecommendationForwardProcessIN.Status;
-				_mRRecommendationUpdateStatusIN.Id = _mRRecommendationForwardProcessIN.RecommendationId;
+				_mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
+				_mRRecommendationUpdateStatusIN.Id = request._mRRecommendationForwardProcessIN.RecommendationId;
 				await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
 
 				HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
-				hisData.ObjectId = _mRRecommendationForwardProcessIN.RecommendationId;
+				hisData.ObjectId = request._mRRecommendationForwardProcessIN.RecommendationId;
 				hisData.Type = 1;
-				hisData.Content = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
-				hisData.Status = _mRRecommendationForwardProcessIN.Status;
+				hisData.Content = "";
+				if(request.RecommendationStatus == STATUS_RECOMMENDATION.APPROVE_DENY || request.RecommendationStatus == STATUS_RECOMMENDATION.PROCESS_DENY || request.RecommendationStatus == STATUS_RECOMMENDATION.RECEIVE_DENY)
+				{
+					hisData.Content = "Với lý do: " + request._mRRecommendationForwardProcessIN.ReasonDeny;
+				}
+				hisData.Status = request.RecommendationStatus;
 				hisData.CreatedBy = UserSendId;
 				hisData.CreatedDate = DateTime.Now;
 				await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);

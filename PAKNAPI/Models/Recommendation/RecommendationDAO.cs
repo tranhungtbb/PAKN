@@ -38,6 +38,16 @@ namespace PAKNAPI.Models.Recommendation
 			return data;
 		}
 
+		public async Task<RecommendationGetDataForProcessResponse> RecommendationGetDataForProcess(int? UnitId)
+		{
+			RecommendationGetDataForProcessResponse data = new RecommendationGetDataForProcessResponse();
+			DynamicParameters DP = new DynamicParameters();
+			data.lstHashtag = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("CA_HashtagGetDropdown", DP)).ToList();
+			DP.Add("UnitId", UnitId);
+			data.lstUsers = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("SY_UsersGetDropdownByUnitId", DP)).ToList();
+			return data;
+		}
+
 		public async Task<RecommendationGetByIDResponse> RecommendationGetByID(int? Id)
 		{
 			RecommendationGetByIDResponse data = new RecommendationGetByIDResponse();
@@ -54,16 +64,20 @@ namespace PAKNAPI.Models.Recommendation
 			return data;
 		}
 
-		public async Task<int> RecommendationForwardProcess(RecommendationForwardProcess _recommendationForwardProcess)
+		public async Task<RecommendationGetByIDViewResponse> RecommendationGetByIDView(int? Id)
 		{
+			RecommendationGetByIDViewResponse data = new RecommendationGetByIDViewResponse();
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _recommendationForwardProcess.Id);
-			DP.Add("RecommendationId", _recommendationForwardProcess.RecommendationId);
-			DP.Add("Status", _recommendationForwardProcess.Status);
-			DP.Add("ReasonDeny", _recommendationForwardProcess.ReasonDeny);
-			DP.Add("ProcessingDate", _recommendationForwardProcess.ProcessingDate);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_ForwardProcess", DP));
+			DP.Add("Id", Id);
+			data.Model = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByIDView>("MR_RecommendationGetByIDView", DP)).FirstOrDefault();
+			data.lstHashtag = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationHashtagGetByRecommendationId>("MR_Recommendation_HashtagGetByRecommendationId", DP)).ToList();
+			data.lstFiles = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationFilesGetByRecommendationId>("MR_Recommendation_FilesGetByRecommendationId", DP)).ToList();
+			Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
+			foreach (var item in data.lstFiles)
+			{
+				item.FilePath = decrypt.EncryptData(item.FilePath);
+			}
+			return data;
 		}
 	}
 }

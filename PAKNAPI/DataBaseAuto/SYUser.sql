@@ -14,6 +14,7 @@ AS
 BEGIN
 	SELECT
 		[Id],
+		[TypeId],
 		[FullName],
 		[UserName],
 		[Password],
@@ -51,6 +52,7 @@ AS
 BEGIN
 	SELECT
 		[Id],
+		[TypeId],
 		[FullName],
 		[UserName],
 		[Password],
@@ -90,6 +92,7 @@ BEGIN
 	SELECT
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
 		[Id],
+		[TypeId],
 		[FullName],
 		[UserName],
 		[Password],
@@ -125,6 +128,7 @@ IF EXISTS
 DROP PROCEDURE [SY_UserInsert];
 GO
 CREATE PROCEDURE [dbo].[SY_UserInsert]
+	@TypeId int = null,
 	@FullName nvarchar(256) = null,
 	@UserName nvarchar(100) = null,
 	@Password nvarchar(500) = null,
@@ -146,6 +150,7 @@ AS
 BEGIN
 	INSERT INTO [SY_User]
 	(
+		[TypeId],
 		[FullName],
 		[UserName],
 		[Password],
@@ -166,6 +171,7 @@ BEGIN
 	)
 	VALUES
 	(
+		@TypeId,
 		@FullName,
 		@UserName,
 		@Password,
@@ -199,6 +205,7 @@ DROP PROCEDURE [SY_UserUpdate];
 GO
 CREATE PROCEDURE [dbo].[SY_UserUpdate]
 	@Id bigint = null,
+	@TypeId int = null,
 	@FullName nvarchar(256) = null,
 	@UserName nvarchar(100) = null,
 	@Password nvarchar(500) = null,
@@ -219,6 +226,7 @@ CREATE PROCEDURE [dbo].[SY_UserUpdate]
 AS
 BEGIN
 	UPDATE [SY_User] SET
+		[TypeId] = @TypeId,
 		[FullName] = @FullName,
 		[UserName] = @UserName,
 		[Password] = @Password,

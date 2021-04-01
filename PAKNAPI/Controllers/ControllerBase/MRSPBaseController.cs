@@ -484,66 +484,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("MRRecommendationForwardUpdateIsviewedBase")]
-		public async Task<ActionResult<object>> MRRecommendationForwardUpdateIsviewedBase(MRRecommendationForwardUpdateIsviewedIN _mRRecommendationForwardUpdateIsviewedIN)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationForwardUpdateIsviewed(_appSetting).MRRecommendationForwardUpdateIsviewedDAO(_mRRecommendationForwardUpdateIsviewedIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("MRRecommendationForwardUpdateIsviewedListBase")]
-		public async Task<ActionResult<object>> MRRecommendationForwardUpdateIsviewedListBase(List<MRRecommendationForwardUpdateIsviewedIN> _mRRecommendationForwardUpdateIsviewedINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationForwardUpdateIsviewedIN in _mRRecommendationForwardUpdateIsviewedINs)
-				{
-					var result = await new MRRecommendationForwardUpdateIsviewed(_appSetting).MRRecommendationForwardUpdateIsviewedDAO(_mRRecommendationForwardUpdateIsviewedIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
 		[Route("MRRecommendationGenCodeGetCodeBase")]
 		public async Task<ActionResult<object>> MRRecommendationGenCodeGetCodeBase()
 		{
@@ -814,11 +754,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize]
 		[Route("MRRecommendationGetAllWithProcessBase")]
-		public async Task<ActionResult<object>> MRRecommendationGetAllWithProcessBase(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, int? PageSize, int? PageIndex)
+		public async Task<ActionResult<object>> MRRecommendationGetAllWithProcessBase(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId, int? PageSize, int? PageIndex)
 		{
 			try
 			{
-				List<MRRecommendationGetAllWithProcess> rsMRRecommendationGetAllWithProcess = await new MRRecommendationGetAllWithProcess(_appSetting).MRRecommendationGetAllWithProcessDAO(Code, SendName, Content, UnitId, Field, Status, UnitProcessId, PageSize, PageIndex);
+				List<MRRecommendationGetAllWithProcess> rsMRRecommendationGetAllWithProcess = await new MRRecommendationGetAllWithProcess(_appSetting).MRRecommendationGetAllWithProcessDAO(Code, SendName, Content, UnitId, Field, Status, UnitProcessId, UserProcessId, PageSize, PageIndex);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"MRRecommendationGetAllWithProcess", rsMRRecommendationGetAllWithProcess},
@@ -845,6 +785,29 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"MRRecommendationGetByID", rsMRRecommendationGetByID},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationGetByIDViewBase")]
+		public async Task<ActionResult<object>> MRRecommendationGetByIDViewBase(int? Id)
+		{
+			try
+			{
+				List<MRRecommendationGetByIDView> rsMRRecommendationGetByIDView = await new MRRecommendationGetByIDView(_appSetting).MRRecommendationGetByIDViewDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationGetByIDView", rsMRRecommendationGetByIDView},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

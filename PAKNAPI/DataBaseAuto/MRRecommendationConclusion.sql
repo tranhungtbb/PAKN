@@ -19,12 +19,7 @@ BEGIN
 		[UnitCreatedId],
 		[ReceiverId],
 		[UnitReceiverId],
-		[Status],
-		[Content],
-		[SendDate],
-		[ExpiredDate],
-		[ProcessingDate],
-		[IsViewed]
+		[Content]
 	FROM [MR_Recommendation_Conclusion]
 	WHERE [Id] = @Id
 END
@@ -50,12 +45,7 @@ BEGIN
 		[UnitCreatedId],
 		[ReceiverId],
 		[UnitReceiverId],
-		[Status],
-		[Content],
-		[SendDate],
-		[ExpiredDate],
-		[ProcessingDate],
-		[IsViewed]
+		[Content]
 	FROM [MR_Recommendation_Conclusion]
 END
 GO
@@ -83,12 +73,7 @@ BEGIN
 		[UnitCreatedId],
 		[ReceiverId],
 		[UnitReceiverId],
-		[Status],
-		[Content],
-		[SendDate],
-		[ExpiredDate],
-		[ProcessingDate],
-		[IsViewed]
+		[Content]
 	FROM [MR_Recommendation_Conclusion]
 	ORDER BY [Id]
 	OFFSET (@PageIndex-1) * @PageSize ROWS
@@ -112,12 +97,7 @@ CREATE PROCEDURE [dbo].[MR_Recommendation_ConclusionInsert]
 	@UnitCreatedId int = null,
 	@ReceiverId bigint = null,
 	@UnitReceiverId int = null,
-	@Status tinyint = null,
-	@Content nvarchar(max) = null,
-	@SendDate datetime = null,
-	@ExpiredDate datetime = null,
-	@ProcessingDate datetime = null,
-	@IsViewed bit = null
+	@Content nvarchar(max) = null
 AS
 BEGIN
 	INSERT INTO [MR_Recommendation_Conclusion]
@@ -127,12 +107,7 @@ BEGIN
 		[UnitCreatedId],
 		[ReceiverId],
 		[UnitReceiverId],
-		[Status],
-		[Content],
-		[SendDate],
-		[ExpiredDate],
-		[ProcessingDate],
-		[IsViewed]
+		[Content]
 	)
 	VALUES
 	(
@@ -141,12 +116,7 @@ BEGIN
 		@UnitCreatedId,
 		@ReceiverId,
 		@UnitReceiverId,
-		@Status,
-		@Content,
-		@SendDate,
-		@ExpiredDate,
-		@ProcessingDate,
-		@IsViewed
+		@Content
 	)
 END
 GO
@@ -168,12 +138,7 @@ CREATE PROCEDURE [dbo].[MR_Recommendation_ConclusionUpdate]
 	@UnitCreatedId int = null,
 	@ReceiverId bigint = null,
 	@UnitReceiverId int = null,
-	@Status tinyint = null,
-	@Content nvarchar(max) = null,
-	@SendDate datetime = null,
-	@ExpiredDate datetime = null,
-	@ProcessingDate datetime = null,
-	@IsViewed bit = null
+	@Content nvarchar(max) = null
 AS
 BEGIN
 	UPDATE [MR_Recommendation_Conclusion] SET
@@ -182,12 +147,7 @@ BEGIN
 		[UnitCreatedId] = @UnitCreatedId,
 		[ReceiverId] = @ReceiverId,
 		[UnitReceiverId] = @UnitReceiverId,
-		[Status] = @Status,
-		[Content] = @Content,
-		[SendDate] = @SendDate,
-		[ExpiredDate] = @ExpiredDate,
-		[ProcessingDate] = @ProcessingDate,
-		[IsViewed] = @IsViewed
+		[Content] = @Content
 	WHERE [Id] = @Id
 END
 GO
