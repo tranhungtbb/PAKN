@@ -9,35 +9,36 @@
 			<div class="modal-body pb-0">
 				<div class="table-reponsive">
 					<table class="table">
-					    <thead>
-					      <tr>
-					        <th colspan="2">
-					        	<span class="text-uppercase">Bài viết</span>
-					        	<input [(ngModel)]="query.title" (change)="filterChange()" type="text" class="form-control form-control-sm">
-					        </th>
-					        <th>
-					        	<span class="text-uppercase">Loại tin tức</span>
-					        	<ng-select class="form-control form-control-sm mod" placeholder="Loại tin tức ..." [items]="listNewCategories"bindLabel="name"
-									bindValue="id" [closeOnSelect]="true" [(ngModel)]="query.newType" (change)="filterChange()">
-								</ng-select>
-					        </th>
-					      </tr>
-					    </thead>
-					    <tbody>
-					      <tr *ngFor="let item of listDataPaged">
-					        <td width="40px">
-					        	<div class="checkbox">
-					        		<label><input class="form-control border-0" type="checkbox" (change)="onChangeChecked(item.id, $event.target.checked)" [checked]="newsSelected.indexOf(item.id) != -1"></label>
-					        	</div>
-					        </td>
-					        <td>
-					        	<img width="60px" src="{{item.imagePath}}">
-					        	<span>{{item.title}}</span>
-					        </td>
-					        <td>{{item.newsType}}</td>
-					      </tr>
-					    </tbody>
-					  </table>
+						<thead>
+							<tr>
+								<th colspan="2">
+									<span class="text-uppercase">Bài viết</span>
+									<input [(ngModel)]="query.title" (change)="filterChange()" type="text" class="form-control form-control-sm">
+								</th>
+								<th>
+									<span class="text-uppercase">Loại tin tức</span>
+									<ng-select class="form-control form-control-sm mod" placeholder="Loại tin tức ..." [items]="listNewCategories" bindLabel="name" bindValue="id"
+										[closeOnSelect]="true" [(ngModel)]="query.newType" (change)="filterChange()">
+									</ng-select>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let item of listDataPaged">
+								<td width="40px">
+									<div class="checkbox">
+										<label><input class="form-control border-0" type="checkbox" (change)="onChangeChecked(item.id, $event.target.checked)"
+												[checked]="hasOne(item.id)"></label>
+									</div>
+								</td>
+								<td>
+									<img width="60px" src="{{item.imagePath}}">
+									<span>{{item.title}}</span>
+								</td>
+								<td>{{item.newsType}}</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 			<div class="modal-footer border-top-0">

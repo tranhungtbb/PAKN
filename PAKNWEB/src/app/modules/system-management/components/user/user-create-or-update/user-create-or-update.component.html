@@ -13,8 +13,8 @@
 				<form id="createUserForm" [formGroup]="createUserForm" (ngSubmit)="onSaveUser()">
 
 					<div class="form-row">
-						<div class="col-12 col-lg-4 form-group">
-							<label class="mb-1">Tên đăng nhập <span class="cl-red">(*)</span></label>
+						<!-- <div class="col-12 col-lg-4 form-group">
+							<label class="mb-1">Email/Tên đăng nhập <span class="cl-red">(*)</span></label>
 							<input formControlName="userName" [(ngModel)]="modelUser.userName" type="text" class="form-control" placeholder="Nhập...">
 							<div *ngIf="(userFormSubmitted && fUser.userName.invalid)||(fUser.userName.invalid && (fUser.userName.dirty || fUser.userName.touched))"
 								class="has-error m-b-12">
@@ -22,9 +22,9 @@
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
 								</div>
 							</div>
-						</div>
-						<div class="col-12 col-lg-4 form-group">
-							<label class="mb-1">Email <span class="cl-red">(*)</span></label>
+						</div> -->
+						<div class="col-12 col-lg-8 form-group">
+							<label class="mb-1">Email/Tên đăng nhập <span class="cl-red">(*)</span></label>
 							<input formControlName="email" [(ngModel)]="modelUser.email" type="text" class="form-control" placeholder="Nhập...">
 							<div *ngIf="(userFormSubmitted && fUser.email.invalid)||(fUser.email.invalid && (fUser.email.dirty || fUser.email.touched))" class="has-error m-b-12">
 								<div *ngIf="fUser.email.errors.required">

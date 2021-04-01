@@ -73,7 +73,12 @@ export class NewsRelateModalComponent implements OnInit {
 	filterChange() {
 		this.getListPaged()
 	}
-
+	hasOne(id: number): boolean {
+		if (this.newsSelected == null || this.newsSelected.length == 0) {
+			return false
+		}
+		return this.newsSelected.some((c) => c.id == id)
+	}
 	openModal(newsRelate: any[]) {
 		if (newsRelate) this.newsSelected = newsRelate.map((c) => parseInt(c))
 		$('#modal-news-relate').modal('show')
