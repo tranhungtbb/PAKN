@@ -357,9 +357,12 @@
 												<strong>Trạng thái</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<ng-select class="form-control form-control-sm mod" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
-												[closeOnSelect]="true" [(ngModel)]="query.isActive" (change)="unitFilterChange()">
-											</ng-select>
+											<div class="dropdown bootstrap-select form-control form-control-sm">
+												<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [closeOnSelect]="true"
+													[(ngModel)]="query.isActive" (change)="unitFilterChange()">
+												</ng-select>
+											</div>
+
 										</th>
 										<th class="text-right"><strong>Thao tác</strong></th>
 									</tr>

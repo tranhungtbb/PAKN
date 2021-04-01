@@ -484,66 +484,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("MRRecommendationForwardUpdateIsviewedBase")]
-		public async Task<ActionResult<object>> MRRecommendationForwardUpdateIsviewedBase(MRRecommendationForwardUpdateIsviewedIN _mRRecommendationForwardUpdateIsviewedIN)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationForwardUpdateIsviewed(_appSetting).MRRecommendationForwardUpdateIsviewedDAO(_mRRecommendationForwardUpdateIsviewedIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("MRRecommendationForwardUpdateIsviewedListBase")]
-		public async Task<ActionResult<object>> MRRecommendationForwardUpdateIsviewedListBase(List<MRRecommendationForwardUpdateIsviewedIN> _mRRecommendationForwardUpdateIsviewedINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationForwardUpdateIsviewedIN in _mRRecommendationForwardUpdateIsviewedINs)
-				{
-					var result = await new MRRecommendationForwardUpdateIsviewed(_appSetting).MRRecommendationForwardUpdateIsviewedDAO(_mRRecommendationForwardUpdateIsviewedIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
 		[Route("MRRecommendationGenCodeGetCodeBase")]
 		public async Task<ActionResult<object>> MRRecommendationGenCodeGetCodeBase()
 		{

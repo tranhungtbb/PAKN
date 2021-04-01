@@ -51,4 +51,11 @@ export class NewsService {
 	uploadFile(data: any): Observable<any> {
 		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.NewsUploadFile)
 	}
+	getAvatar(data: string): Observable<any> {
+		const httpPackage = {
+			headers: this.tempheaders,
+			reportProgress: true,
+		}
+		return this.http.get(AppSettings.API_ADDRESS + Api.NewsGetAvatar + '/' + data, httpPackage)
+	}
 }

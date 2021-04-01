@@ -11,7 +11,7 @@
 							Quay lại
 						</a>
 						<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave($event)">Lưu</button>
-						<button class="btn btn-sm grd-green rounded text-white border-0" (click)="onPublished()">Công bố</button>
+						<button class="btn btn-sm grd-green rounded text-white border-0" (click)="onSave($event,true)">Công bố</button>
 					</div>
 				</div>
 			</div>
@@ -51,7 +51,7 @@
 							<div class="btn btn-default p-3 border" *ngFor="let relateItem of newsRelatesSelected">
 								<img width="70" height="50" src="{{relateItem.imagePath}}" />
 								<span>
-									<strong>{{relateItem.title}}</strong>
+									&nbsp;<strong>{{relateItem.title}}</strong>
 								</span>
 							</div>
 						</div>

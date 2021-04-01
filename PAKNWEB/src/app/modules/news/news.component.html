@@ -69,18 +69,24 @@
 											<strong>Loại tin tức</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<ng-select class="form-control form-control-sm mod" placeholder="Loại tin tức ..." [items]="listNewCategories" bindLabel="name"
-											bindValue="id" [closeOnSelect]="true" [(ngModel)]="query.newType" (change)="filterChange()">
-										</ng-select>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select class="" placeholder="Loại tin tức ..." [items]="listNewCategories" bindLabel="name" bindValue="id" [closeOnSelect]="true"
+												[(ngModel)]="query.newsType" (change)="filterChange()">
+											</ng-select>
+										</div>
+
 									</th>
 									<th style="width: 160px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Trạng thái</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<ng-select class="form-control form-control-sm mod" placeholder="Trạng thái ..." [items]="listStatus" bindLabel="text" bindValue="value"
-											[closeOnSelect]="true" [(ngModel)]="query.status" (change)="filterChange()">
-										</ng-select>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select class="" placeholder="Trạng thái ..." [items]="listStatus" bindLabel="text" bindValue="value" [closeOnSelect]="true"
+												[(ngModel)]="query.status" (change)="filterChange()">
+											</ng-select>
+										</div>
+
 									</th>
 									<th class="text-right"><strong>Thao tác</strong></th>
 								</tr>
@@ -88,7 +94,7 @@
 							<tbody>
 								<tr *ngFor="let item of listDataPaged">
 									<td>
-										<img width='60px' src="{{item.imagePath || 'assets/dist/images/no.jpg'}}">
+										<img width='60px' [src]="avatara">
 										<strong>
 											{{item.title}}
 										</strong>

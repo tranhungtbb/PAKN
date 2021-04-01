@@ -1,0 +1,10 @@
+.paging-panel-left {
+	margin-right: 265px;
+}
+.paging-panel-left input {
+	width: 40px;
+}
+
+.form-control.ng-select .ng-select-container {
+	padding-top: 5px !important;
+}

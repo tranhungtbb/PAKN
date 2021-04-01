@@ -3,7 +3,6 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router'
-import { MatDialog } from '@angular/material/dialog'
 
 import { NewsService } from '../../../services/news.service'
 import { CatalogService } from '../../../services/catalog.service'
@@ -59,24 +58,11 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 						return
 					}
 					this.model = res.result.NENewsGetByID[0]
+					this.getNewsRelatesInfo()
 					if (this.model.imagePath == null || this.model.imagePath.trim() == '') {
 						this.avatarUrl = 'assets/dist/images/no.jpg'
 					}
 				})
-				if (this.model.newsRelateIds != null && this.model.newsRelateIds.length > 0) {
-					this.newsService
-						.getAllPagedList({
-							pageIndex: 1,
-							pageSize: 100,
-							newsIds: '5',
-						})
-						.subscribe((res) => {
-							if (res.success != 'OK') {
-								return
-							}
-							this.newsRelatesSelected = res.result.NENewsGetAllOnPage
-						})
-				}
 			}
 		})
 
@@ -94,12 +80,29 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			})
 	}
 
+	getNewsRelatesInfo() {
+		if (this.model.newsRelateIds != null && this.model.newsRelateIds.length > 0) {
+			this.newsService
+				.getAllPagedList({
+					pageIndex: 1,
+					pageSize: 100,
+					newsIds: this.model.newsRelateIds,
+				})
+				.subscribe((res) => {
+					if (res.success != 'OK') {
+						return
+					}
+					this.newsRelatesSelected = res.result.NENewsGetAllOnPage
+				})
+		}
+	}
+
 	get f() {
 		return this.newsForm.controls
 	}
 
 	submitted = false
-	onSave(event) {
+	onSave(event, published = false) {
 		this.submitted = true
 		if (this.newsForm.invalid) {
 			return
@@ -108,9 +111,11 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		// 	this.toast.error()
 		// 	return
 		// }
-		if (this.model.newsRelateIds != null && this.model.newsRelateIds.length == 0) {
-			this.model.newsRelateIds = null
-		}
+		// if (this.model.newsRelateIds != null && this.model.newsRelateIds.length == 0) {
+		// 	this.model.newsRelateIds = null
+		// }
+		this.model.isPublished = published
+
 		if (this.model.id && this.model.id > 0) {
 			this.newsService.update(this.model).subscribe((res) => {
 				if (res.success != 'OK') {
@@ -132,12 +137,8 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		}
 	}
 
-	onPublished() {
-		this.router.navigate(['/quan-tri/tin-tuc'])
-	}
-
 	onModalNewsRelate() {
-		this.child_NewsRelate.openModal(this.model.newsRelateIds ? this.model.newsRelateIds.split(',') : [])
+		this.child_NewsRelate.openModal(this.model.newsRelateIds ? this.model.newsRelateIds.split(',') : [], this.model.id)
 	}
 	onModalNewsRelate_Closed() {
 		this.model.newsRelateIds = this.child_NewsRelate.newsSelected.toString()
@@ -147,7 +148,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				.getAllPagedList({
 					pageIndex: 1,
 					pageSize: 1000,
-					ids: this.child_NewsRelate.newsSelected.toString(),
+					NewsIds: this.model.newsRelateIds,
 				})
 				.subscribe((res) => {
 					if (res.success != 'OK') return

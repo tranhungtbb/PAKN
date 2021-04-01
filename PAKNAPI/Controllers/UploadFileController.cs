@@ -9,6 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace PAKNAPI.Controllers
 {
@@ -72,13 +74,31 @@ namespace PAKNAPI.Controllers
             }
         }
         [HttpGet]
-        [Route("get-news-avatar")]
-        [Authorize]
-        public async Task<IActionResult> GetNewsAvatar(int id)
+        [Route("get-news-avatar/{name}")]
+        public async Task<byte[]> GetNewsAvatar(string name)
         {
+            string contentRootPath = _webHostEnvironment.ContentRootPath;
+            string filePath = Path.Combine(contentRootPath , "Upload/News", name);
 
+            try
+            {
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await fileStream.CopyToAsync(memoryStream);
+                        Bitmap image = new Bitmap(1, 1);
+                        image.Save(memoryStream, ImageFormat.Jpeg);
 
-            return null;
+                        byte[] byteImage = memoryStream.ToArray();
+                        return byteImage;
+                    }
+                }
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

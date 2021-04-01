@@ -13,17 +13,18 @@ declare var $: any
 export class NewsRelateModalComponent implements OnInit {
 	constructor(private newsService: NewsService, private newsCreateOrUpdateComponent: NewsCreateOrUpdateComponent, private catalogService: CatalogService) {}
 
-	listNewCategories: any[] = []
+	listNewsCategories: any[] = []
 	listDataPaged: any[]
 	newsSelected: any[] = []
 	query: any = {
 		pageSize: 20,
 		pageIndex: 1,
 		title: '',
-		newType: '',
+		newsType: '',
 	}
 	totalCount: number = 0
 	pageCount: number = 0
+	parentNews: number
 	ngOnInit() {
 		this.getListPaged()
 		this.catalogService
@@ -35,7 +36,7 @@ export class NewsRelateModalComponent implements OnInit {
 				if (res.success != 'OK') {
 					return
 				}
-				this.listNewCategories = res.result.CANewsTypeGetAllOnPage
+				this.listNewsCategories = res.result.CANewsTypeGetAllOnPage
 			})
 	}
 	onChangeChecked(id: number, checked: boolean) {
@@ -51,9 +52,10 @@ export class NewsRelateModalComponent implements OnInit {
 		$('#modal-news-relate').modal('hide')
 	}
 	getListPaged() {
+		this.query.newsType == null ? '' : this.query.newsType
 		this.newsService.getAllPagedList(this.query).subscribe((res) => {
 			if (res.success != 'OK') return
-			this.listDataPaged = res.result.NENewsGetAllOnPage
+			this.listDataPaged = res.result.NENewsGetAllOnPage.filter((c) => c.id != this.parentNews)
 			if (this.totalCount <= 0) this.totalCount = res.result.TotalCount
 			this.totalCount = Math.ceil(this.totalCount / this.query.pageSize)
 		})
@@ -77,10 +79,11 @@ export class NewsRelateModalComponent implements OnInit {
 		if (this.newsSelected == null || this.newsSelected.length == 0) {
 			return false
 		}
-		return this.newsSelected.some((c) => c.id == id)
+		return this.newsSelected.some((c) => c == id)
 	}
-	openModal(newsRelate: any[]) {
+	openModal(newsRelate: any[], parentNews: number) {
 		if (newsRelate) this.newsSelected = newsRelate.map((c) => parseInt(c))
+		this.parentNews = parentNews
 		$('#modal-news-relate').modal('show')
 	}
 }

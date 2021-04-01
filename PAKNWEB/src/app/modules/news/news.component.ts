@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { DomSanitizer } from '@angular/platform-browser'
 import { ToastrService } from 'ngx-toastr'
 
 import { NewsService } from 'src/app/services/news.service'
@@ -13,14 +14,14 @@ declare var $: any
 	styleUrls: ['./news.component.css'],
 })
 export class NewsComponent implements OnInit {
-	constructor(private newsService: NewsService, private catalogService: CatalogService, private toast: ToastrService) {}
+	constructor(private newsService: NewsService, private catalogService: CatalogService, private toast: ToastrService, private sanitizer: DomSanitizer) {}
 
 	query: any = {
 		pageSize: 20,
 		pageIndex: 1,
 		title: '',
 		status: '',
-		newType: '',
+		newsType: '',
 	}
 
 	listNewCategories: any[] = []
@@ -48,9 +49,12 @@ export class NewsComponent implements OnInit {
 				}
 				this.listNewCategories = res.result.CANewsTypeGetAllOnPage
 			})
+			this.displayAvatar();
 	}
 
 	getListPaged() {
+		this.query.newsType == null ? '' : this.query.newsType
+		this.query.status == null ? '' : this.query.status
 		this.newsService.getAllPagedList(this.query).subscribe((res) => {
 			if (res.success != 'OK') return
 			this.listDataPaged = res.result.NENewsGetAllOnPage
@@ -105,5 +109,12 @@ export class NewsComponent implements OnInit {
 			return
 		}
 		this.getListPaged()
+	}
+	avatara:string
+	displayAvatar(){
+		this.newsService.getAvatar('01042021103900-2.jpg').subscribe( (res) => {
+			let objectURL = 'data:image/jpeg;base64,' + res
+			this.avatara = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+		})
 	}
 }

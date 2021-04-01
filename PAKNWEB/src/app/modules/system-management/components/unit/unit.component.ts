@@ -130,6 +130,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	ngAfterViewInit() {}
 
 	getUnitPagedList(): void {
+		this.query.isActive == null ? '' : this.query.isActive
 		this.unitService.getAllPagedList(this.query).subscribe(
 			(res) => {
 				if (res.success != 'OK') return
@@ -200,6 +201,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	/*start user area*/
 	getUserPagedList() {
 		this.queryUser.unitId = this.unitObject.id
+		this.queryUser.isActive == null ? '' : this.queryUser.isActive
 		this.userService.getAllPagedList(this.queryUser).subscribe((res) => {
 			if (res.success != 'OK') return
 			this.listUserPaged = res.result.SYUserGetAllOnPage
