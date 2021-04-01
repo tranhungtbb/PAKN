@@ -837,46 +837,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("CANewsTypeInsertListBase")]
-		public async Task<ActionResult<object>> CANewsTypeInsertListBase(List<CANewsTypeInsertIN> _cANewsTypeInsertINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _cANewsTypeInsertIN in _cANewsTypeInsertINs)
-				{
-					var result = await new CANewsTypeInsert(_appSetting).CANewsTypeInsertDAO(_cANewsTypeInsertIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
 		[Route("CANewsTypeUpdateBase")]
 		public async Task<ActionResult<object>> CANewsTypeUpdateBase(CANewsTypeUpdateIN _cANewsTypeUpdateIN)
 		{
@@ -1051,46 +1011,6 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new CAPositionInsert(_appSetting).CAPositionInsertDAO(_cAPositionInsertIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("CAPositionInsertListBase")]
-		public async Task<ActionResult<object>> CAPositionInsertListBase(List<CAPositionInsertIN> _cAPositionInsertINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _cAPositionInsertIN in _cAPositionInsertINs)
-				{
-					var result = await new CAPositionInsert(_appSetting).CAPositionInsertDAO(_cAPositionInsertIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1532,46 +1452,6 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new CAWordInsert(_appSetting).CAWordInsertDAO(_cAWordInsertIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("CAWordInsertListBase")]
-		public async Task<ActionResult<object>> CAWordInsertListBase(List<CAWordInsertIN> _cAWordInsertINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _cAWordInsertIN in _cAWordInsertINs)
-				{
-					var result = await new CAWordInsert(_appSetting).CAWordInsertDAO(_cAWordInsertIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{

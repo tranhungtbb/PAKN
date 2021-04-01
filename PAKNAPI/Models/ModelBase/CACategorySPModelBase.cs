@@ -51,18 +51,18 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber;
-		public int Id;
-		public string Name;
-		public string Phone;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string Description;
-		public string Email;
-		public int? DepartmentGroupId;
-		public string Address;
-		public string Fax;
-		public string GroupName;
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Phone { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
+		public string Email { get; set; }
+		public int? DepartmentGroupId { get; set; }
+		public string Address { get; set; }
+		public string Fax { get; set; }
+		public string GroupName { get; set; }
 
 		public async Task<List<CADepartmentGetAllOnPage>> CADepartmentGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived, int? DepartmentGroupId, string Phone, string Email, string Address, string Fax)
 		{
@@ -95,16 +95,16 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public string Phone;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string Description;
-		public string Email;
-		public int? DepartmentGroupId;
-		public string Address;
-		public string Fax;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Phone { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
+		public string Email { get; set; }
+		public int? DepartmentGroupId { get; set; }
+		public string Address { get; set; }
+		public string Fax { get; set; }
 
 		public async Task<List<CADepartmentGetByID>> CADepartmentGetByIDDAO(int? Id)
 		{
@@ -155,12 +155,12 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber;
-		public int Id;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string Description;
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
 
 		public async Task<List<CADepartmentGroupGetAllOnPage>> CADepartmentGroupGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
 		{
@@ -188,11 +188,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string Description;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
 
 		public async Task<List<CADepartmentGroupGetByID>> CADepartmentGroupGetByIDDAO(int? Id)
 		{
@@ -399,12 +399,12 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber;
-		public int Id;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string Description;
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
 
 		public async Task<List<CAFieldGetAllOnPage>> CAFieldGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
 		{
@@ -432,11 +432,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string Description;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
 
 		public async Task<List<CAFieldGetByID>> CAFieldGetByIDDAO(int? Id)
 		{
@@ -555,10 +555,10 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber;
-		public int Id;
-		public string Name;
-		public bool IsActived;
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
 
 		public async Task<List<CAHashtagGetAllOnPage>> CAHashtagGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, bool? IsActived)
 		{
@@ -585,9 +585,9 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public bool IsActived;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
 
 		public async Task<List<CAHashtagGetByID>> CAHashtagGetByIDDAO(int? Id)
 		{
@@ -698,12 +698,12 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber;
-		public int Id;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string Description;
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
 
 		public async Task<List<CANewsTypeGetAllOnPage>> CANewsTypeGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
 		{
@@ -731,11 +731,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string Description;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
 
 		public async Task<List<CANewsTypeGetByID>> CANewsTypeGetByIDDAO(int? Id)
 		{
@@ -759,7 +759,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> CANewsTypeInsertDAO(CANewsTypeInsertIN _cANewsTypeInsertIN)
+		public async Task<int?> CANewsTypeInsertDAO(CANewsTypeInsertIN _cANewsTypeInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cANewsTypeInsertIN.Name);
@@ -767,7 +767,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cANewsTypeInsertIN.IsDeleted);
 			DP.Add("Description", _cANewsTypeInsertIN.Description);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_NewsTypeInsert", DP));
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_NewsTypeInsert", DP);
 		}
 	}
 
@@ -854,12 +854,12 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber;
-		public int Id;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string Description;
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
 
 		public async Task<List<CAPositionGetAllOnPage>> CAPositionGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Code, string Description, bool? IsActived)
 		{
@@ -888,11 +888,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string Description;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
 
 		public async Task<List<CAPositionGetByID>> CAPositionGetByIDDAO(int? Id)
 		{
@@ -916,7 +916,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> CAPositionInsertDAO(CAPositionInsertIN _cAPositionInsertIN)
+		public async Task<int?> CAPositionInsertDAO(CAPositionInsertIN _cAPositionInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cAPositionInsertIN.Name);
@@ -924,7 +924,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cAPositionInsertIN.IsDeleted);
 			DP.Add("Description", _cAPositionInsertIN.Description);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_PositionInsert", DP));
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_PositionInsert", DP);
 		}
 	}
 
@@ -1011,11 +1011,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber;
-		public int Id;
-		public string Name;
-		public int? ParentId;
-		public byte UnitLevel;
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public int? ParentId { get; set; }
+		public byte UnitLevel { get; set; }
 
 		public async Task<List<CAUnitGetAll>> CAUnitGetAllDAO(int? ParentId, byte? UnitLevel)
 		{
@@ -1040,18 +1040,18 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber;
-		public int Id;
-		public string Name;
-		public byte UnitLevel;
-		public bool IsActived;
-		public bool IsDeleted;
-		public int? ParentId;
-		public string Description;
-		public string Email;
-		public string Phone;
-		public string Address;
-		public bool IsMain;
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public byte UnitLevel { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public int? ParentId { get; set; }
+		public string Description { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Address { get; set; }
+		public bool IsMain { get; set; }
 
 		public async Task<List<CAUnitGetAllOnPage>> CAUnitGetAllOnPageDAO(int? PageSize, int? PageIndex, int? ParentId, byte? UnitLevel, string Name, string Phone, string Email, string Address, bool? IsActive, bool? IsMain)
 		{
@@ -1084,17 +1084,17 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public byte UnitLevel;
-		public bool IsActived;
-		public bool IsDeleted;
-		public int? ParentId;
-		public string Description;
-		public string Email;
-		public string Phone;
-		public string Address;
-		public bool IsMain;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public byte UnitLevel { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public int? ParentId { get; set; }
+		public string Description { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Address { get; set; }
+		public bool IsMain { get; set; }
 
 		public async Task<List<CAUnitGetByID>> CAUnitGetByIDDAO(int? Id)
 		{
@@ -1237,12 +1237,12 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber;
-		public int Id;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string Description;
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
 
 		public async Task<List<CAWordGetAllOnPage>> CAWordGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
 		{
@@ -1270,11 +1270,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public bool IsActived;
-		public bool IsDeleted;
-		public string Description;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
 
 		public async Task<List<CAWordGetByID>> CAWordGetByIDDAO(int? Id)
 		{
@@ -1298,7 +1298,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> CAWordInsertDAO(CAWordInsertIN _cAWordInsertIN)
+		public async Task<int?> CAWordInsertDAO(CAWordInsertIN _cAWordInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cAWordInsertIN.Name);
@@ -1306,7 +1306,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cAWordInsertIN.IsDeleted);
 			DP.Add("Description", _cAWordInsertIN.Description);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_WordInsert", DP));
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_WordInsert", DP);
 		}
 	}
 
