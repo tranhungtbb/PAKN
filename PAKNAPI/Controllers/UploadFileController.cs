@@ -100,5 +100,11 @@ namespace PAKNAPI.Controllers
                 return null;
             }
         }
+        [HttpPost]
+        [Route("get-news-avatar/{names}")]
+        public async Task<byte[]> GetNewsAvatars(string[] names)
+        {
+            return null;
+        }
     }
 }

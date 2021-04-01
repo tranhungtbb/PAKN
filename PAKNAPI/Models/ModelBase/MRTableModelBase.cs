@@ -255,12 +255,7 @@ namespace PAKNAPI.ModelBase
 		public int? UnitCreatedId { get; set; }
 		public long? ReceiverId { get; set; }
 		public int? UnitReceiverId { get; set; }
-		public byte? Status { get; set; }
 		public string Content { get; set; }
-		public DateTime? SendDate { get; set; }
-		public DateTime? ExpiredDate { get; set; }
-		public DateTime? ProcessingDate { get; set; }
-		public bool? IsViewed { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -283,12 +278,7 @@ namespace PAKNAPI.ModelBase
 		public int? UnitCreatedId { get; set; }
 		public long? ReceiverId { get; set; }
 		public int? UnitReceiverId { get; set; }
-		public byte? Status { get; set; }
 		public string Content { get; set; }
-		public DateTime? SendDate { get; set; }
-		public DateTime? ExpiredDate { get; set; }
-		public DateTime? ProcessingDate { get; set; }
-		public bool? IsViewed { get; set; }
 
 		public async Task<MRRecommendationConclusion> MRRecommendationConclusionGetByID(int? Id)
 		{
@@ -322,12 +312,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UnitCreatedId", _mRRecommendationConclusion.UnitCreatedId);
 			DP.Add("ReceiverId", _mRRecommendationConclusion.ReceiverId);
 			DP.Add("UnitReceiverId", _mRRecommendationConclusion.UnitReceiverId);
-			DP.Add("Status", _mRRecommendationConclusion.Status);
 			DP.Add("Content", _mRRecommendationConclusion.Content);
-			DP.Add("SendDate", _mRRecommendationConclusion.SendDate);
-			DP.Add("ExpiredDate", _mRRecommendationConclusion.ExpiredDate);
-			DP.Add("ProcessingDate", _mRRecommendationConclusion.ProcessingDate);
-			DP.Add("IsViewed", _mRRecommendationConclusion.IsViewed);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_ConclusionInsert", DP));
 		}
@@ -341,12 +326,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UnitCreatedId", _mRRecommendationConclusion.UnitCreatedId);
 			DP.Add("ReceiverId", _mRRecommendationConclusion.ReceiverId);
 			DP.Add("UnitReceiverId", _mRRecommendationConclusion.UnitReceiverId);
-			DP.Add("Status", _mRRecommendationConclusion.Status);
 			DP.Add("Content", _mRRecommendationConclusion.Content);
-			DP.Add("SendDate", _mRRecommendationConclusion.SendDate);
-			DP.Add("ExpiredDate", _mRRecommendationConclusion.ExpiredDate);
-			DP.Add("ProcessingDate", _mRRecommendationConclusion.ProcessingDate);
-			DP.Add("IsViewed", _mRRecommendationConclusion.IsViewed);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_ConclusionUpdate", DP));
 		}

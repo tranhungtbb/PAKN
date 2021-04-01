@@ -111,7 +111,7 @@ export class HashtagComponent implements OnInit {
 
 	preCreate() {
 		this.hashtag = new HashtagObject()
-		this.Title = 'Thêm Hashtag'
+		this.Title = 'Thêm mới Hashtag'
 		this.submitted = false
 		this.rebuilForm()
 		$('#modal').modal('show')
@@ -123,9 +123,13 @@ export class HashtagComponent implements OnInit {
 		$('#modal').modal('show')
 	}
 
-	UpdateIsActived(obj: any) {
-		this.hashtag = Object.assign(new HashtagObject(), obj)
-		this.hashtag.isActived = !this.hashtag.isActived
+	confirmChangeStatus(data) {
+		this.hashtag = { ...data }
+		this.hashtag.isActived = !data.isActived
+		$('#modalConfirmChangeStatus').modal('show')
+	}
+
+	UpdateIsActived() {
 		this.onSave()
 	}
 
@@ -168,6 +172,7 @@ export class HashtagComponent implements OnInit {
 		else {
 			this.service.update(this.hashtag).subscribe((res) => {
 				$('#modal').modal('hide')
+				$('#modalConfirmChangeStatus').modal('hide')
 				if (res != 'undefined') {
 					if (res.success == RESPONSE_STATUS.success) {
 						this.rebuilForm()

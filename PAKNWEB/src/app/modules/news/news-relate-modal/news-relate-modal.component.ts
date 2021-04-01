@@ -22,6 +22,7 @@ export class NewsRelateModalComponent implements OnInit {
 		title: '',
 		newsType: '',
 	}
+	modalTitle: string = ''
 	totalCount: number = 0
 	pageCount: number = 0
 	parentNews: number

@@ -39,6 +39,7 @@ export class DepartmentComponent implements OnInit {
   @ViewChild('table', { static: false }) table: any
   totalRecords: number = 0
   idDelete: number = 0
+  dataUpdate: any
   ngOnInit() {
     this.buildForm()
     this.getList()
@@ -239,7 +240,10 @@ export class DepartmentComponent implements OnInit {
     this.idDelete = id
     $('#modalConfirmDelete').modal('show')
   }
-
+  preUpdateStatus(data) {
+    this.dataUpdate = data
+    $('#modalConfirmUpdateStatus').modal('show')
+  }
   onDelete(id: number) {
     let request = {
       Id: id,
@@ -266,7 +270,9 @@ export class DepartmentComponent implements OnInit {
     }
     data.isActived = !data.isActived
     this._service.departmentUpdateStatus(data).subscribe((res) => {
-      if (res.result == 1) {
+      console.log(res);
+      $('#modalConfirmUpdateStatus').modal('hide')
+      if (res.success == "OK") {
         console.log(data)
         if (data.isActived) {
           this._toastr.success(MESSAGE_COMMON.UNLOCK_SUCCESS)

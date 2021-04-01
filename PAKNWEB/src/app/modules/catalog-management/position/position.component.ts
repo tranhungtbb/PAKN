@@ -90,7 +90,11 @@ export class PositionComponent implements OnInit {
         alert(error)
       }
   }
-
+  dataUpdate: any
+  preUpdateStatus(data) {
+    this.dataUpdate = data
+    $('#modalConfirmUpdateStatus').modal('show')
+  }
   onPageChange(event: any) {
     this.pageSize = event.rows
     this.pageIndex = event.first / event.rows + 1
@@ -229,7 +233,8 @@ export class PositionComponent implements OnInit {
     }
     data.isActived = !data.isActived
     this._service.positionUpdateStatus(data).subscribe((res) => {
-      if (res.result == 1) {
+      $('#modalConfirmUpdateStatus').modal('hide')
+      if (res.success == "OK") {
         if (data.isActived == true) {
           this._toastr.success(MESSAGE_COMMON.UNLOCK_SUCCESS)
         } else {

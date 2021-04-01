@@ -49,7 +49,7 @@ export class NewsComponent implements OnInit {
 				}
 				this.listNewCategories = res.result.CANewsTypeGetAllOnPage
 			})
-			this.displayAvatar();
+		this.displayAvatar()
 	}
 
 	getListPaged() {
@@ -110,9 +110,9 @@ export class NewsComponent implements OnInit {
 		}
 		this.getListPaged()
 	}
-	avatara:string
-	displayAvatar(){
-		this.newsService.getAvatar('01042021103900-2.jpg').subscribe( (res) => {
+	avatara: any
+	displayAvatar() {
+		this.newsService.getAvatar('01042021103900-2.jpg').subscribe((res) => {
 			let objectURL = 'data:image/jpeg;base64,' + res
 			this.avatara = this.sanitizer.bypassSecurityTrustUrl(objectURL)
 		})

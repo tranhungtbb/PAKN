@@ -129,6 +129,76 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class NENewsGetByIDOnJoin
+	{
+		IAppSetting _appSetting;
+
+		public NENewsGetByIDOnJoin(IAppSetting appSetting)
+		{
+			_appSetting = appSetting;
+		}
+
+		public NENewsGetByIDOnJoin()
+		{
+		}
+
+		public bool PostType { get; set; }
+		public bool IsPublished { get; set; }
+		public int Status { get; set; }
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Summary { get; set; }
+		public string Contents { get; set; }
+		public string ImagePath { get; set; }
+		public int? NewsType { get; set; }
+		public int? ViewCount { get; set; }
+		public string Url { get; set; }
+		public int? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public int? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? PublishedBy { get; set; }
+		public DateTime? PublishedDate { get; set; }
+		public int? WithdrawBy { get; set; }
+		public DateTime? WithdrawDate { get; set; }
+		public List<NENewsGetByIDOnJoinNewsRelates> cNENewsGetByIDOnJoinNewsRelates = new List<NENewsGetByIDOnJoinNewsRelates>();
+
+		public class NENewsGetByIDOnJoinNewsRelates
+		{
+			public int? NewsRelates_Id { get; set; }
+			public string NewsRelates_Title { get; set; }
+			public string NewsRelates_ImagePath { get; set; }
+		}
+
+		public async Task<List<NENewsGetByIDOnJoin>> NENewsGetByIDOnJoinDAO(int? Id)
+		{
+			List<NENewsGetByIDOnJoin> mNENewsGetByIDOnJoins = new List<NENewsGetByIDOnJoin>();
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			using (SqlConnection conn = new SqlConnection(_appSetting.GetConnectstring()))
+			{
+				(await conn.QueryAsync<NENewsGetByIDOnJoin, NENewsGetByIDOnJoinNewsRelates, NENewsGetByIDOnJoin>("NENewsGetByIDOnJoin", (mNENewsGetByIDOnJoin, cNENewsGetByIDOnJoinNewsRelates) =>
+				{
+					var _mNENewsGetByIDOnJoin = mNENewsGetByIDOnJoins.Find(item => item.Id == mNENewsGetByIDOnJoin.Id);
+					if (_mNENewsGetByIDOnJoin == null)
+					{
+						mNENewsGetByIDOnJoins.Add(mNENewsGetByIDOnJoin);
+						_mNENewsGetByIDOnJoin = mNENewsGetByIDOnJoin;
+					}
+
+					_mNENewsGetByIDOnJoin.cNENewsGetByIDOnJoinNewsRelates = _mNENewsGetByIDOnJoin.cNENewsGetByIDOnJoinNewsRelates ?? new List<NENewsGetByIDOnJoinNewsRelates>();
+					if (cNENewsGetByIDOnJoinNewsRelates != null && _mNENewsGetByIDOnJoin.cNENewsGetByIDOnJoinNewsRelates.Find(item => item.NewsRelates_Id == cNENewsGetByIDOnJoinNewsRelates.NewsRelates_Id && item.NewsRelates_Title == cNENewsGetByIDOnJoinNewsRelates.NewsRelates_Title && item.NewsRelates_ImagePath == cNENewsGetByIDOnJoinNewsRelates.NewsRelates_ImagePath) == null)
+						_mNENewsGetByIDOnJoin.cNENewsGetByIDOnJoinNewsRelates.Add(cNENewsGetByIDOnJoinNewsRelates);
+
+					return _mNENewsGetByIDOnJoin;
+				}, DP, splitOn: "PostType, NewsRelates_Id", commandType: CommandType.StoredProcedure)).ToList();
+			}
+
+			return mNENewsGetByIDOnJoins;
+		}
+	}
+
 	public class NENewsInsert
 	{
 		private SQLCon _sQLCon;

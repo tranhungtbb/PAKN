@@ -301,6 +301,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Status", _mRRecommendationForwardProcessIN.Status);
 			DP.Add("ReasonDeny", _mRRecommendationForwardProcessIN.ReasonDeny);
 			DP.Add("ProcessingDate", _mRRecommendationForwardProcessIN.ProcessingDate);
+			DP.Add("UserId", _mRRecommendationForwardProcessIN.UserId);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_ForwardProcess", DP));
 		}
@@ -314,6 +315,7 @@ namespace PAKNAPI.ModelBase
 		public byte? Status { get; set; }
 		public string ReasonDeny { get; set; }
 		public DateTime? ProcessingDate { get; set; }
+		public long? UserId { get; set; }
 	}
 
 	public class MRRecommendationForwardUpdate
@@ -602,7 +604,7 @@ namespace PAKNAPI.ModelBase
 		public DateTime? UpdatedDate { get; set; }
 		public int ProcessId { get; set; }
 
-		public async Task<List<MRRecommendationGetAllWithProcess>> MRRecommendationGetAllWithProcessDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, int? PageSize, int? PageIndex)
+		public async Task<List<MRRecommendationGetAllWithProcess>> MRRecommendationGetAllWithProcessDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Code", Code);
@@ -612,6 +614,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Field", Field);
 			DP.Add("Status", Status);
 			DP.Add("UnitProcessId", UnitProcessId);
+			DP.Add("UserProcessId", UserProcessId);
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
 
