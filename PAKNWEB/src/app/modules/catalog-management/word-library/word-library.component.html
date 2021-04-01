@@ -82,9 +82,9 @@
                 </td>
                 <td>{{item.description}}</td>
                 <td>
-                  <span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == true"
+                  <span type="button" (click)="preUpdateStatus(item)" *ngIf="item.isActived == true"
                     class="badge rounded-pill bg-success">Hiệu lực</span>
-                  <span type="button" (click)="onUpdateStatus(item)" *ngIf="item.isActived == false"
+                  <span type="button" (click)="preUpdateStatus(item)" *ngIf="item.isActived == false"
                     class="badge rounded-pill badge-light">Hết hiệu lực</span>
                 </td>
                 <td style="max-width: 100px;">
@@ -225,6 +225,33 @@
             <button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
               data-dismiss="modal">Hủy</button>
             <button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác
+              nhận</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalConfirmUpdateStatus">
+  <div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
+    <div class="modal-content rounded">
+      <form class="form-horizontal">
+        <div class="panel panel-default no-margin">
+          <div class="modal-header">
+            <button class="close btn-close-modal" data-dismiss="modal">
+              ×
+            </button>
+            <p class="modal-title h3">Xác nhận</p>
+          </div>
+          <div class="modal-body no-padding-bottom">
+            <div>
+              <p>Bạn có chắc chắn thực hiện hành động này?</p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
+              data-dismiss="modal">Hủy</button>
+            <button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onUpdateStatus(dataUpdate)">Xác
               nhận</button>
           </div>
         </div>
