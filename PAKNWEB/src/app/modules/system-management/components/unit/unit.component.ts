@@ -41,10 +41,8 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	positionsList: any[] = []
 
 	createUnitFrom: FormGroup
-	createUserForm: FormGroup
 
 	modelUnit: UnitObject = new UnitObject()
-	modelUser: UserObject2 = new UserObject2()
 
 	/*unit query*/
 	query: any = {
@@ -98,19 +96,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			phone: ['', [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
 			address: ['', [Validators.required]],
 		})
-		/*user form*/
-		// this.createUserForm = this.formBuilder.group({
-		// 	userName: ['', [Validators.required]],
-		// 	email: ['', [Validators.required, Validators.email]],
-		// 	fullName: ['', [Validators.required]],
-		// 	phone: ['', [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
-		// 	positionId: ['', [Validators.required]],
-		// 	unitId: ['', [Validators.required]],
-		// 	gender: ['', [Validators.required]],
-		// 	roleId: ['', [Validators.required]],
-		// 	isActived: [''],
-		// 	address: [''],
-		// })
 
 		this.positionService
 			.positionGetList({

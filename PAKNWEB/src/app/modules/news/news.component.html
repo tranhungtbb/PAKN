@@ -94,9 +94,9 @@
 							<tbody>
 								<tr *ngFor="let item of listDataPaged">
 									<td>
-										<img width='60px' [src]="avatara">
+										<img width='60px' [src]="item.imageBin">
 										<strong>
-											{{item.title}}
+											&nbsp;{{item.title}}
 										</strong>
 									</td>
 									<td>
@@ -109,12 +109,12 @@
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
-											<button class="btn-icon grd-xanhngoc text-white mr-2" (click)="onOpenModalConfirm(item.id,'publish')">
+											<button class="btn-icon grd-xanhngoc text-white mr-2 border-0" (click)="onOpenModalConfirm(item.id,'publish')">
 												<i class="bi bi-box-arrow-up" *ngIf="item.isPublished"></i>
 												<i class="bi bi-box-arrow-down" *ngIf="!item.isPublished"></i>
 											</button>
-											<a [routerLink]="['./chinh-sua', item.id]" class="btn-icon mr-2"><i class="bi bi-pencil-square"></i></a>
-											<button class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-history-pakn"
+											<a [routerLink]="['./chinh-sua', item.id]" class="btn-icon mr-2 border-0"><i class="bi bi-pencil-square"></i></a>
+											<button class="btn-icon grd-red text-white border-0" data-toggle="modal" data-target="#modal-history-pakn"
 												(click)="onOpenModalConfirm(item.id,'delete')"><i class="bi bi-trash"></i></button>
 										</div>
 									</td>
@@ -144,7 +144,7 @@
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="acceptConfirm()">Đồng ý</button>
+				<button type="button" class="btn btn-danger border-0 px-5 grd-blue" data-dismiss="modal" (click)="acceptConfirm()">Đồng ý</button>
 			</div>
 		</div>
 	</div>

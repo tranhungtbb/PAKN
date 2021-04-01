@@ -13,6 +13,7 @@ declare var $: any
 	templateUrl: './news.component.html',
 	styleUrls: ['./news.component.css'],
 })
+//acbd
 export class NewsComponent implements OnInit {
 	constructor(private newsService: NewsService, private catalogService: CatalogService, private toast: ToastrService, private sanitizer: DomSanitizer) {}
 
@@ -49,7 +50,6 @@ export class NewsComponent implements OnInit {
 				}
 				this.listNewCategories = res.result.CANewsTypeGetAllOnPage
 			})
-		this.displayAvatar()
 	}
 
 	getListPaged() {
@@ -60,6 +60,9 @@ export class NewsComponent implements OnInit {
 			this.listDataPaged = res.result.NENewsGetAllOnPage
 			if (this.totalCount <= 0) this.totalCount = res.result.TotalCount
 			this.totalCount = Math.ceil(this.totalCount / this.query.pageSize)
+
+			// load image
+			this.getNewsAvatars();
 		})
 	}
 
@@ -110,11 +113,22 @@ export class NewsComponent implements OnInit {
 		}
 		this.getListPaged()
 	}
-	avatara: any
-	displayAvatar() {
-		this.newsService.getAvatar('01042021103900-2.jpg').subscribe((res) => {
-			let objectURL = 'data:image/jpeg;base64,' + res
-			this.avatara = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-		})
+	
+	// getCateName(id):string{
+	// 	return this.listNewCategories.find(c=>c.id == id).name
+	// }
+
+	getNewsAvatars(){
+		let ids = this.listDataPaged.map(c=>c.id);
+
+		this.newsService.getAvatars(ids).subscribe(res=>{
+			if(res){
+				res.forEach(e=>{
+					let item = this.listDataPaged.find(c=>c.id == e.id)
+					let objectURL = 'data:image/jpeg;base64,' + e.byteImage
+					item.imageBin = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+				})
+			}
+		});
 	}
 }

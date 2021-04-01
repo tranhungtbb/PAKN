@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { DomSanitizer } from '@angular/platform-browser'
 
 import { NewsService } from 'src/app/services/news.service'
 import { CatalogService } from 'src/app/services/catalog.service'
@@ -11,7 +12,8 @@ declare var $: any
 	styleUrls: ['./news-relate-modal.component.css'],
 })
 export class NewsRelateModalComponent implements OnInit {
-	constructor(private newsService: NewsService, private newsCreateOrUpdateComponent: NewsCreateOrUpdateComponent, private catalogService: CatalogService) {}
+	constructor(private newsService: NewsService, private newsCreateOrUpdateComponent: NewsCreateOrUpdateComponent, private catalogService: CatalogService,
+		private sanitizer: DomSanitizer) {}
 
 	listNewsCategories: any[] = []
 	listDataPaged: any[]
@@ -41,10 +43,11 @@ export class NewsRelateModalComponent implements OnInit {
 			})
 	}
 	onChangeChecked(id: number, checked: boolean) {
+		let newsItem = this.listDataPaged.find(c=>c.id == id)
 		if (checked) {
-			this.newsSelected.push(id)
+			this.newsSelected.push(newsItem)
 		} else {
-			let index = this.newsSelected.indexOf(id)
+			let index = this.newsSelected.indexOf(newsItem)
 			this.newsSelected.splice(index, 1)
 		}
 	}
@@ -59,6 +62,13 @@ export class NewsRelateModalComponent implements OnInit {
 			this.listDataPaged = res.result.NENewsGetAllOnPage.filter((c) => c.id != this.parentNews)
 			if (this.totalCount <= 0) this.totalCount = res.result.TotalCount
 			this.totalCount = Math.ceil(this.totalCount / this.query.pageSize)
+
+			//get avatars 
+			this.getNewsAvatars()
+
+			// lấy ds tin tức từ id
+			// if (this.newsIds != null && this.newsIds.length > 0)
+			// 	this.newsSelected=this.listDataPaged.filter(c=>this.newsIds.some(d=>d==c.id))
 		})
 	}
 	changePage(page: any) {
@@ -76,15 +86,36 @@ export class NewsRelateModalComponent implements OnInit {
 	filterChange() {
 		this.getListPaged()
 	}
+
 	hasOne(id: number): boolean {
 		if (this.newsSelected == null || this.newsSelected.length == 0) {
 			return false
 		}
 		return this.newsSelected.some((c) => c == id)
 	}
+
+	
+	//mở modal, được gọi từ comp cha
 	openModal(newsRelate: any[], parentNews: number) {
-		if (newsRelate) this.newsSelected = newsRelate.map((c) => parseInt(c))
+		if (newsRelate){
+			this.newsSelected = newsRelate.map((c) => parseInt(c))
+		}
+
 		this.parentNews = parentNews
 		$('#modal-news-relate').modal('show')
+	}
+
+	getNewsAvatars(){
+		let ids = this.listDataPaged.map(c=>c.id);
+
+		this.newsService.getAvatars(ids).subscribe(res=>{
+			if(res){
+				res.forEach(e=>{
+					let item = this.listDataPaged.find(c=>c.id == e.id)
+					let objectURL = 'data:image/jpeg;base64,' + e.byteImage
+					item.imageBin = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+				})
+			}
+		});
 	}
 }
