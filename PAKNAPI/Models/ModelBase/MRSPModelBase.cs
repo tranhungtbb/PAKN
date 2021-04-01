@@ -204,13 +204,14 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
+		public byte Status;
 		public int Id;
 		public int RecommendationId;
 		public long? UserSendId;
 		public int? UnitSendId;
 		public long? ReceiveId;
 		public int? UnitReceiveId;
-		public byte? Status;
+		public byte? Step;
 		public string Content;
 		public string ReasonDeny;
 		public DateTime? SendDate;
@@ -243,12 +244,13 @@ namespace PAKNAPI.ModelBase
 		public async Task<int> MRRecommendationForwardInsertDAO(MRRecommendationForwardInsertIN _mRRecommendationForwardInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Status", _mRRecommendationForwardInsertIN.Status);
 			DP.Add("RecommendationId", _mRRecommendationForwardInsertIN.RecommendationId);
 			DP.Add("UserSendId", _mRRecommendationForwardInsertIN.UserSendId);
 			DP.Add("UnitSendId", _mRRecommendationForwardInsertIN.UnitSendId);
 			DP.Add("ReceiveId", _mRRecommendationForwardInsertIN.ReceiveId);
 			DP.Add("UnitReceiveId", _mRRecommendationForwardInsertIN.UnitReceiveId);
-			DP.Add("Status", _mRRecommendationForwardInsertIN.Status);
+			DP.Add("Step", _mRRecommendationForwardInsertIN.Step);
 			DP.Add("Content", _mRRecommendationForwardInsertIN.Content);
 			DP.Add("ReasonDeny", _mRRecommendationForwardInsertIN.ReasonDeny);
 			DP.Add("SendDate", _mRRecommendationForwardInsertIN.SendDate);
@@ -262,12 +264,13 @@ namespace PAKNAPI.ModelBase
 
 	public class MRRecommendationForwardInsertIN
 	{
+		public byte? Status { get; set; }
 		public int? RecommendationId { get; set; }
 		public long? UserSendId { get; set; }
 		public int? UnitSendId { get; set; }
 		public long? ReceiveId { get; set; }
 		public int? UnitReceiveId { get; set; }
-		public byte? Status { get; set; }
+		public byte? Step { get; set; }
 		public string Content { get; set; }
 		public string ReasonDeny { get; set; }
 		public DateTime? SendDate { get; set; }
@@ -294,9 +297,11 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _mRRecommendationForwardProcessIN.Id);
 			DP.Add("RecommendationId", _mRRecommendationForwardProcessIN.RecommendationId);
+			DP.Add("Step", _mRRecommendationForwardProcessIN.Step);
 			DP.Add("Status", _mRRecommendationForwardProcessIN.Status);
 			DP.Add("ReasonDeny", _mRRecommendationForwardProcessIN.ReasonDeny);
 			DP.Add("ProcessingDate", _mRRecommendationForwardProcessIN.ProcessingDate);
+			DP.Add("UserId", _mRRecommendationForwardProcessIN.UserId);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_ForwardProcess", DP));
 		}
@@ -306,9 +311,11 @@ namespace PAKNAPI.ModelBase
 	{
 		public int? Id { get; set; }
 		public int? RecommendationId { get; set; }
+		public byte? Step { get; set; }
 		public byte? Status { get; set; }
 		public string ReasonDeny { get; set; }
 		public DateTime? ProcessingDate { get; set; }
+		public long? UserId { get; set; }
 	}
 
 	public class MRRecommendationForwardUpdate
@@ -327,13 +334,14 @@ namespace PAKNAPI.ModelBase
 		public async Task<int> MRRecommendationForwardUpdateDAO(MRRecommendationForwardUpdateIN _mRRecommendationForwardUpdateIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Status", _mRRecommendationForwardUpdateIN.Status);
 			DP.Add("Id", _mRRecommendationForwardUpdateIN.Id);
 			DP.Add("RecommendationId", _mRRecommendationForwardUpdateIN.RecommendationId);
 			DP.Add("UserSendId", _mRRecommendationForwardUpdateIN.UserSendId);
 			DP.Add("UnitSendId", _mRRecommendationForwardUpdateIN.UnitSendId);
 			DP.Add("ReceiveId", _mRRecommendationForwardUpdateIN.ReceiveId);
 			DP.Add("UnitReceiveId", _mRRecommendationForwardUpdateIN.UnitReceiveId);
-			DP.Add("Status", _mRRecommendationForwardUpdateIN.Status);
+			DP.Add("Step", _mRRecommendationForwardUpdateIN.Step);
 			DP.Add("Content", _mRRecommendationForwardUpdateIN.Content);
 			DP.Add("ReasonDeny", _mRRecommendationForwardUpdateIN.ReasonDeny);
 			DP.Add("SendDate", _mRRecommendationForwardUpdateIN.SendDate);
@@ -347,47 +355,19 @@ namespace PAKNAPI.ModelBase
 
 	public class MRRecommendationForwardUpdateIN
 	{
+		public byte? Status { get; set; }
 		public int? Id { get; set; }
 		public int? RecommendationId { get; set; }
 		public long? UserSendId { get; set; }
 		public int? UnitSendId { get; set; }
 		public long? ReceiveId { get; set; }
 		public int? UnitReceiveId { get; set; }
-		public byte? Status { get; set; }
+		public byte? Step { get; set; }
 		public string Content { get; set; }
 		public string ReasonDeny { get; set; }
 		public DateTime? SendDate { get; set; }
 		public DateTime? ExpiredDate { get; set; }
 		public DateTime? ProcessingDate { get; set; }
-		public bool? IsViewed { get; set; }
-	}
-
-	public class MRRecommendationForwardUpdateIsviewed
-	{
-		private SQLCon _sQLCon;
-
-		public MRRecommendationForwardUpdateIsviewed(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public MRRecommendationForwardUpdateIsviewed()
-		{
-		}
-
-		public async Task<int> MRRecommendationForwardUpdateIsviewedDAO(MRRecommendationForwardUpdateIsviewedIN _mRRecommendationForwardUpdateIsviewedIN)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _mRRecommendationForwardUpdateIsviewedIN.Id);
-			DP.Add("IsViewed", _mRRecommendationForwardUpdateIsviewedIN.IsViewed);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_ForwardUpdateIsviewed", DP));
-		}
-	}
-
-	public class MRRecommendationForwardUpdateIsviewedIN
-	{
-		public int? Id { get; set; }
 		public bool? IsViewed { get; set; }
 	}
 

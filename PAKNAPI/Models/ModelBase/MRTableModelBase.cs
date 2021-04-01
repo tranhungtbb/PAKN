@@ -559,7 +559,8 @@ namespace PAKNAPI.ModelBase
 		public int? UnitSendId;
 		public long? ReceiveId;
 		public int? UnitReceiveId;
-		public byte? Status;
+		public byte Status;
+		public byte? Step;
 		public string Content;
 		public string ReasonDeny;
 		public DateTime? SendDate;
@@ -588,7 +589,8 @@ namespace PAKNAPI.ModelBase
 		public int? UnitSendId;
 		public long? ReceiveId;
 		public int? UnitReceiveId;
-		public byte? Status;
+		public byte Status;
+		public byte? Step;
 		public string Content;
 		public string ReasonDeny;
 		public DateTime? SendDate;
@@ -623,12 +625,13 @@ namespace PAKNAPI.ModelBase
 		public async Task<int?> MRRecommendationForwardInsert(MRRecommendationForward _mRRecommendationForward)
 		{
 			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Status", _mRRecommendationForward.Status);
 			DP.Add("RecommendationId", _mRRecommendationForward.RecommendationId);
 			DP.Add("UserSendId", _mRRecommendationForward.UserSendId);
 			DP.Add("UnitSendId", _mRRecommendationForward.UnitSendId);
 			DP.Add("ReceiveId", _mRRecommendationForward.ReceiveId);
 			DP.Add("UnitReceiveId", _mRRecommendationForward.UnitReceiveId);
-			DP.Add("Status", _mRRecommendationForward.Status);
+			DP.Add("Step", _mRRecommendationForward.Step);
 			DP.Add("Content", _mRRecommendationForward.Content);
 			DP.Add("ReasonDeny", _mRRecommendationForward.ReasonDeny);
 			DP.Add("SendDate", _mRRecommendationForward.SendDate);
@@ -642,13 +645,14 @@ namespace PAKNAPI.ModelBase
 		public async Task<int> MRRecommendationForwardUpdate(MRRecommendationForward _mRRecommendationForward)
 		{
 			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Status", _mRRecommendationForward.Status);
 			DP.Add("Id", _mRRecommendationForward.Id);
 			DP.Add("RecommendationId", _mRRecommendationForward.RecommendationId);
 			DP.Add("UserSendId", _mRRecommendationForward.UserSendId);
 			DP.Add("UnitSendId", _mRRecommendationForward.UnitSendId);
 			DP.Add("ReceiveId", _mRRecommendationForward.ReceiveId);
 			DP.Add("UnitReceiveId", _mRRecommendationForward.UnitReceiveId);
-			DP.Add("Status", _mRRecommendationForward.Status);
+			DP.Add("Step", _mRRecommendationForward.Step);
 			DP.Add("Content", _mRRecommendationForward.Content);
 			DP.Add("ReasonDeny", _mRRecommendationForward.ReasonDeny);
 			DP.Add("SendDate", _mRRecommendationForward.SendDate);

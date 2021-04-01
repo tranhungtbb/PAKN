@@ -13,13 +13,14 @@ CREATE PROCEDURE [dbo].[MR_Recommendation_ForwardGetByID]
 AS
 BEGIN
 	SELECT
+		[Status],
 		[Id],
 		[RecommendationId],
 		[UserSendId],
 		[UnitSendId],
 		[ReceiveId],
 		[UnitReceiveId],
-		[Status],
+		[Step],
 		[Content],
 		[ReasonDeny],
 		[SendDate],
@@ -45,13 +46,14 @@ CREATE PROCEDURE [dbo].[MR_Recommendation_ForwardGetAll]
 AS
 BEGIN
 	SELECT
+		[Status],
 		[Id],
 		[RecommendationId],
 		[UserSendId],
 		[UnitSendId],
 		[ReceiveId],
 		[UnitReceiveId],
-		[Status],
+		[Step],
 		[Content],
 		[ReasonDeny],
 		[SendDate],
@@ -79,13 +81,14 @@ AS
 BEGIN
 	SELECT
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
+		[Status],
 		[Id],
 		[RecommendationId],
 		[UserSendId],
 		[UnitSendId],
 		[ReceiveId],
 		[UnitReceiveId],
-		[Status],
+		[Step],
 		[Content],
 		[ReasonDeny],
 		[SendDate],
@@ -110,12 +113,13 @@ IF EXISTS
 DROP PROCEDURE [MR_Recommendation_ForwardInsert];
 GO
 CREATE PROCEDURE [dbo].[MR_Recommendation_ForwardInsert]
+	@Status tinyint = null,
 	@RecommendationId int = null,
 	@UserSendId bigint = null,
 	@UnitSendId int = null,
 	@ReceiveId bigint = null,
 	@UnitReceiveId int = null,
-	@Status tinyint = null,
+	@Step tinyint = null,
 	@Content nvarchar(500) = null,
 	@ReasonDeny nvarchar(500) = null,
 	@SendDate datetime = null,
@@ -126,12 +130,13 @@ AS
 BEGIN
 	INSERT INTO [MR_Recommendation_Forward]
 	(
+		[Status],
 		[RecommendationId],
 		[UserSendId],
 		[UnitSendId],
 		[ReceiveId],
 		[UnitReceiveId],
-		[Status],
+		[Step],
 		[Content],
 		[ReasonDeny],
 		[SendDate],
@@ -141,12 +146,13 @@ BEGIN
 	)
 	VALUES
 	(
+		@Status,
 		@RecommendationId,
 		@UserSendId,
 		@UnitSendId,
 		@ReceiveId,
 		@UnitReceiveId,
-		@Status,
+		@Step,
 		@Content,
 		@ReasonDeny,
 		@SendDate,
@@ -168,13 +174,14 @@ IF EXISTS
 DROP PROCEDURE [MR_Recommendation_ForwardUpdate];
 GO
 CREATE PROCEDURE [dbo].[MR_Recommendation_ForwardUpdate]
+	@Status tinyint = null,
 	@Id int = null,
 	@RecommendationId int = null,
 	@UserSendId bigint = null,
 	@UnitSendId int = null,
 	@ReceiveId bigint = null,
 	@UnitReceiveId int = null,
-	@Status tinyint = null,
+	@Step tinyint = null,
 	@Content nvarchar(500) = null,
 	@ReasonDeny nvarchar(500) = null,
 	@SendDate datetime = null,
@@ -184,12 +191,13 @@ CREATE PROCEDURE [dbo].[MR_Recommendation_ForwardUpdate]
 AS
 BEGIN
 	UPDATE [MR_Recommendation_Forward] SET
+		[Status] = @Status,
 		[RecommendationId] = @RecommendationId,
 		[UserSendId] = @UserSendId,
 		[UnitSendId] = @UnitSendId,
 		[ReceiveId] = @ReceiveId,
 		[UnitReceiveId] = @UnitReceiveId,
-		[Status] = @Status,
+		[Step] = @Step,
 		[Content] = @Content,
 		[ReasonDeny] = @ReasonDeny,
 		[SendDate] = @SendDate,

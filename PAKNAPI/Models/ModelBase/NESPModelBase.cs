@@ -72,14 +72,14 @@ namespace PAKNAPI.ModelBase
 		public DateTime? WithdrawDate;
 		public int? RowNumber; // int, null
 
-		public async Task<List<NENewsGetAllOnPage>> NENewsGetAllOnPageDAO(string NewsIds, int? PageSize, int? PageIndex, string Title, int? NewType, int? Status)
+		public async Task<List<NENewsGetAllOnPage>> NENewsGetAllOnPageDAO(string NewsIds, int? PageSize, int? PageIndex, string Title, int? NewsType, int? Status)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("NewsIds", NewsIds);
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
 			DP.Add("Title", Title);
-			DP.Add("NewType", NewType);
+			DP.Add("NewsType", NewsType);
 			DP.Add("Status", Status);
 
 			return (await _sQLCon.ExecuteListDapperAsync<NENewsGetAllOnPage>("NE_NewsGetAllOnPage", DP)).ToList();

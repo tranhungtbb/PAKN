@@ -122,7 +122,7 @@
           <div class="modal-body no-padding-bottom">
             <div class="row form-group">
               <div class="col-sm-8">
-                <label class="control-label">Loại tin tức <span class="text-danger">*</span></label>
+                <label class="control-label">Loại tin tức <span class="text-danger">(*)</span></label>
                 <input placeholder="Nhập tên..." svTrim class="form-control" formControlName="name"
                   [(ngModel)]="model.name" maxlength="100" />
                 <div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))"
@@ -133,7 +133,7 @@
                 </div>
               </div>
               <div class="col-sm-4">
-                <label class="control-label">Trạng thái <span class="text-danger">*</span></label>
+                <label class="control-label">Trạng thái <span class="text-danger">(*)</span></label>
                 <ng-select class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái"
                   bindLabel="text" formControlName="isActived" [(ngModel)]="model.isActived">
                 </ng-select>

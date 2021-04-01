@@ -183,7 +183,7 @@
           <div class="modal-body no-padding-bottom">
             <div class="row form-group">
               <div class="col-sm-4">
-                <label class="control-label">Tên sở ngành <span class="text-danger">*</span></label>
+                <label class="control-label">Tên sở ngành <span class="text-danger">(*)</span></label>
                 <input svTrim placeholder="Nhập tên..." class="form-control" formControlName="name"
                   [(ngModel)]="model.name" maxlength="100" />
                 <div *ngIf="(submitted && f.name.invalid)|| (f.name.invalid && (f.name.dirty || f.name.touched))"
@@ -194,7 +194,7 @@
                 </div>
               </div>
               <div class="col-sm-4">
-                <label class="control-label">Nhóm sở ngành <span class="text-danger">*</span></label>
+                <label class="control-label">Nhóm sở ngành <span class="text-danger">(*)</span></label>
                 <ng-select class="form-control " [items]="listDepartmentGroup" bindValue="id"
                   placeholder="Chọn nhóm sở ngành" bindLabel="name" formControlName="departmentGroupId"
                   [(ngModel)]="model.departmentGroupId">
@@ -208,7 +208,7 @@
                 </div>
               </div>
               <div class="col-sm-4">
-                <label class="control-label">Trạng thái <span class="text-danger">*</span></label>
+                <label class="control-label">Trạng thái <span class="text-danger">(*)</span></label>
                 <ng-select class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái"
                   bindLabel="text" formControlName="isActived" [(ngModel)]="model.isActived">
                 </ng-select>
@@ -224,7 +224,7 @@
 
             <div class="row form-group">
               <div class="col-sm-4">
-                <label class="control-label">Điện thoại <span class="text-danger">*</span></label>
+                <label class="control-label">Điện thoại <span class="text-danger">(*)</span></label>
                 <input svTrim placeholder="Nhập..." class="form-control" formControlName="phone"
                   [(ngModel)]="model.phone" maxlength="100" />
                 <div *ngIf="(submitted && f.phone.invalid) || (f.phone.invalid && (f.phone.dirty || f.phone.touched))"
@@ -238,7 +238,7 @@
                 </div>
               </div>
               <div class="col-sm-4">
-                <label class="control-label">Email <span class="text-danger">*</span></label>
+                <label class="control-label">Email <span class="text-danger">(*)</span></label>
                 <input svTrim placeholder="Nhập..." class="form-control" formControlName="email"
                   [(ngModel)]="model.email" maxlength="100" />
                 <div *ngIf="(submitted && f.email.invalid) || (f.email.invalid && (f.email.dirty || f.email.touched))"
