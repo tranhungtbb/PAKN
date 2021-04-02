@@ -166,6 +166,7 @@ export class RecommendationService {
 		})
 		const form = new FormData()
 		form.append('DataConclusion', JSON.stringify(request.DataConclusion))
+		form.append('Hashtags', JSON.stringify(request.Hashtags))
 		form.append('RecommendationStatus', JSON.stringify(request.RecommendationStatus))
 
 		if (request.Files) {

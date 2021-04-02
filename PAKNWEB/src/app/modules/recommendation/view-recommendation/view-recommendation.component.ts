@@ -193,6 +193,7 @@ export class ViewRecommendationComponent implements OnInit {
 			this.modelConclusion.recommendationId = this.model.id
 			var request = {
 				DataConclusion: this.modelConclusion,
+				Hashtags: this.lstHashtagSelected,
 				Files: this.files,
 				RecommendationStatus: RECOMMENDATION_STATUS.APPROVE_WAIT,
 			}

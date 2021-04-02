@@ -457,6 +457,7 @@ namespace PAKNAPI.Controller
 				RecommendationOnProcessConclusionProcess request = new RecommendationOnProcessConclusionProcess();
 				request.DataConclusion = JsonConvert.DeserializeObject<MRRecommendationConclusionInsertIN>(Request.Form["DataConclusion"].ToString(), jss);
 				request.RecommendationStatus = JsonConvert.DeserializeObject<byte>(Request.Form["RecommendationStatus"].ToString(), jss);
+				request.ListHashTag = JsonConvert.DeserializeObject<List<DropdownObject>>(Request.Form["Hashtags"].ToString(), jss);
 				request.Files = Request.Form.Files; ;
 				long UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
 				int UnitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
@@ -503,6 +504,20 @@ namespace PAKNAPI.Controller
 				_mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
 				_mRRecommendationUpdateStatusIN.Id = request.DataConclusion.RecommendationId;
 				await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
+
+
+				MRRecommendationHashtagDeleteByRecommendationIdIN hashtagDeleteByRecommendationIdIN = new MRRecommendationHashtagDeleteByRecommendationIdIN();
+				hashtagDeleteByRecommendationIdIN.Id = request.DataConclusion.RecommendationId;
+				await new MRRecommendationHashtagDeleteByRecommendationId(_appSetting).MRRecommendationHashtagDeleteByRecommendationIdDAO(hashtagDeleteByRecommendationIdIN);
+				MRRecommendationHashtagInsertIN _mRRecommendationHashtagInsertIN = new MRRecommendationHashtagInsertIN();
+				foreach (var item in request.ListHashTag)
+				{
+					_mRRecommendationHashtagInsertIN = new MRRecommendationHashtagInsertIN();
+					_mRRecommendationHashtagInsertIN.RecommendationId = request.DataConclusion.RecommendationId;
+					_mRRecommendationHashtagInsertIN.HashtagId = item.Value;
+					_mRRecommendationHashtagInsertIN.HashtagName = item.Text;
+					await new MRRecommendationHashtagInsert(_appSetting).MRRecommendationHashtagInsertDAO(_mRRecommendationHashtagInsertIN);
+				}
 
 				HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
 				hisData.ObjectId = request.DataConclusion.RecommendationId;
