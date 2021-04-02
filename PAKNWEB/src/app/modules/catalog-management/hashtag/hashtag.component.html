@@ -45,7 +45,8 @@
 										<strong>Tên Hashtag</strong>
 										<span class="caret-tb"></span>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="nameHash" maxlength="100" (keyup)="dataStateChange()" placeholder="Nhập tên..." />
+									<input class="form-control form-control-sm" [(ngModel)]="nameHash" maxlength="100" (keydown.enter)="dataStateChange()"
+										placeholder="Nhập tên..." />
 								</th>
 
 								<th style="width: 15%;">

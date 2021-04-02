@@ -39,6 +39,9 @@ export class Api {
 	public static RecommendationDelete = 'MRSPBase/MRRecommendationDeleteBase'
 	public static RecommendationExport = 'MRSPBase/MRRecommendationExportBase'
 
+	public static PuRecommendationGetAllOnPage = 'PURecommendation/PURecommendationAllOnPage'
+	public static PuRecommendationGetById = 'PURecommendation/PURecommendationGetById'
+
 	//Field
 	public static FieldGetList = 'CACategorySPBase/CAFieldGetAllOnPageBase'
 	public static FieldGetById = 'CACategorySPBase/CAFieldGetByIDBase'
