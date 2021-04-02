@@ -11,10 +11,11 @@ import { TableModule } from 'primeng/table'
 import { NewsRoutingModule } from './news-routing.module'
 import { NewsComponent } from './news.component'
 import { NewsCreateOrUpdateComponent } from './news-create-or-update/news-create-or-update.component'
-import { NewsRelateModalComponent } from './news-relate-modal/news-relate-modal.component'
+import { NewsRelateModalComponent } from './news-relate-modal/news-relate-modal.component';
+import { GetCatePipe } from './get-cate.pipe'
 
 @NgModule({
-	declarations: [NewsComponent, NewsCreateOrUpdateComponent, NewsRelateModalComponent],
+	declarations: [NewsComponent, NewsCreateOrUpdateComponent, NewsRelateModalComponent, GetCatePipe],
 	imports: [CommonModule, NewsRoutingModule, ReactiveFormsModule, FormsModule, SharedModule, BsDatepickerModule, NgSelectModule, CKEditorModule, MatDialogModule, TableModule],
 })
 export class NewsModule {}

@@ -133,7 +133,7 @@ export class FieldComponent implements OnInit {
 		this.model = new FieldObject()
 		this.rebuilForm()
 		this.submitted = false
-		this.title = 'Thêm lĩnh vực'
+		this.title = 'Thêm mới'
 		$('#modal').modal('show')
 	}
 
@@ -193,7 +193,7 @@ export class FieldComponent implements OnInit {
 		this._service.fieldGetById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.rebuilForm()
-				this.title = 'Cập nhập lĩnh vực'
+				this.title = 'Chỉnh sửa'
 				this.model = response.result.CAFieldGetByID[0]
 				$('#modal').modal('show')
 			} else {

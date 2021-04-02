@@ -25,7 +25,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		private userService: UserService,
 		private positionService: PositionService,
 		private formBuilder: FormBuilder,
-		private _toastr: ToastrService,
+		private toast: ToastrService,
 		private roleService: RoleService,
 		private parentUnit: UnitComponent
 	) {}
@@ -91,7 +91,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		this.modelUser.userName = this.modelUser.email
 		this.modelUser.typeId = 1
 		if (this.createUserForm.invalid) {
-			this._toastr.error('Dữ liệu không hợp lệ')
+			this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
 		this.modelUser.roleIds = this.selectedRoles.toString()
@@ -99,10 +99,10 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		if (this.modelUser.id != null && this.modelUser.id > 0) {
 			this.userService.update(this.modelUser).subscribe((res) => {
 				if (res.success != 'OK') {
-					this._toastr.error(COMMONS.UPDATE_FAILED)
+					this.toast.error(COMMONS.UPDATE_FAILED)
 					return
 				}
-				this._toastr.success(COMMONS.UPDATE_SUCCESS)
+				this.toast.success(COMMONS.UPDATE_SUCCESS)
 				this.parentUnit.getUserPagedList()
 				this.modelUser = new UserObject2()
 				$('#modal-user-create-or-update').modal('hide')
@@ -110,15 +110,33 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		} else {
 			this.userService.insert(this.modelUser).subscribe((res) => {
 				if (res.success != 'OK') {
-					this._toastr.error(COMMONS.ADD_FAILED)
+					this.toast.error(COMMONS.ADD_FAILED)
 					return
 				}
-				this._toastr.success(COMMONS.ADD_SUCCESS)
+				this.toast.success(COMMONS.ADD_SUCCESS)
 				this.parentUnit.getUserPagedList()
 				this.modelUser = new UserObject2()
 				$('#modal-user-create-or-update').modal('hide')
 			})
 		}
+	}
+
+	onChangeAvatar() {
+		$('#seclect-avatar').click()
+	}
+	changeSelectAvatar(event: any) {
+		var file = event.target.files[0]
+		if (!['image/jpeg', 'image/png'].includes(file.type)) {
+			this.toast.error('Chỉ chọn tệp tin ảnh')
+			event.target.value = null
+			return
+		}
+
+		var reader = new FileReader()
+		reader.onload = function (e) {
+			$('#avatar-img').attr('src', e.target.result)
+		}
+		reader.readAsDataURL(file) // convert to base64 string
 	}
 
 	openModal(unitId = 0, userId = 0): void {

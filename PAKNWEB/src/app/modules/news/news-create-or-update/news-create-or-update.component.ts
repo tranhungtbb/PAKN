@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
+import { DomSanitizer } from '@angular/platform-browser'
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
@@ -27,7 +28,8 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		private newsService: NewsService,
 		private catalogService: CatalogService,
 		private router: Router,
-		private activatedRoute: ActivatedRoute
+		private activatedRoute: ActivatedRoute,
+		private sanitizer: DomSanitizer
 	) {}
 	allowImageExtend = ['image/jpeg', 'image/png']
 	public Editor = ClassicEditor
@@ -40,7 +42,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	]
 	newsRelatesSelected: any[] = []
 	categoriesSelected: any[]
-	avatarUrl: string = 'assets/dist/images/no.jpg'
+	avatarUrl: any = 'assets/dist/images/no.jpg'
 
 	ngOnInit() {
 		this.newsForm = this.formBuilder.group({
@@ -59,9 +61,17 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 						return
 					}
 					this.model = res.result.NENewsGetByID[0]
+					//lay danh sach bai viet lien quan
 					this.getNewsRelatesInfo()
-					if (this.model.imagePath == null || this.model.imagePath.trim() == '') {
-						this.avatarUrl = 'assets/dist/images/no.jpg'
+
+					//get current avatar
+					if (this.model.imagePath != null && this.model.imagePath.trim() != '') {
+						this.newsService.getAvatars([this.model.id]).subscribe((res) => {
+							if (res) {
+								let objectURL = 'data:image/jpeg;base64,' + res[0].byteImage
+								this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+							}
+						})
 					}
 				})
 			}
@@ -94,6 +104,9 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 						return
 					}
 					this.newsRelatesSelected = res.result.NENewsGetAllOnPage
+
+					//get avatar
+					this.getNewsRelateAvatar()
 				})
 		}
 	}
@@ -154,6 +167,9 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				.subscribe((res) => {
 					if (res.success != 'OK') return
 					if (res.result.NENewsGetAllOnPage) this.newsRelatesSelected = res.result.NENewsGetAllOnPage
+
+					//get avatar
+					this.getNewsRelateAvatar()
 				})
 		} else {
 			this.newsRelatesSelected = []
@@ -181,7 +197,26 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				return
 			}
 			this.model.imagePath = res.result.path
-			this.avatarUrl = AppSettings.API_DOWNLOADFILES + '/' + this.model.imagePath
+
+			let avatarPath = this.model.imagePath.split('/')
+			this.newsService.getAvatar(avatarPath[avatarPath.length - 1]).subscribe((res) => {
+				if (res) {
+					let objectURL = 'data:image/jpeg;base64,' + res
+					this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+				}
+			})
+		})
+	}
+
+	getNewsRelateAvatar() {
+		this.newsService.getAvatars(this.newsRelatesSelected.map((c) => c.id)).subscribe((res) => {
+			if (res) {
+				for (let img of res) {
+					let item = this.newsRelatesSelected.find((c) => c.id == img.id)
+					let objectURL = 'data:image/jpeg;base64,' + img.byteImage
+					item.imageBin = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+				}
+			}
 		})
 	}
 

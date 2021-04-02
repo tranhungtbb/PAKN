@@ -68,7 +68,7 @@
 										</strong>
 									</td>
 									<td>
-										{{item.newsType}}
+										{{listNewCategories | getCateName:item.newsType}}
 									</td>
 									<td>
 										<span *ngIf="item.status == listStatus[2].value" class="badge rounded-pill badge-outline-light bg-white">{{listStatus[2].text}}</span>
@@ -78,12 +78,12 @@
 									<td>
 										<div class="d-flex justify-content-end">
 											<button class="btn-icon grd-xanhngoc text-white mr-2 border-0" (click)="onOpenModalConfirm(item.id,'publish')">
-												<i class="bi bi-box-arrow-up" *ngIf="item.isPublished"></i>
-												<i class="bi bi-box-arrow-down" *ngIf="!item.isPublished"></i>
+												<i class="bi bi-box-arrow-up" *ngIf="item.isPublished" title="Đã công bố"></i>
+												<i class="bi bi-box-arrow-down" *ngIf="!item.isPublished" title="Đã thu hồi"></i>
 											</button>
-											<a [routerLink]="['./chinh-sua', item.id]" class="btn-icon mr-2 border-0"><i class="bi bi-pencil-square"></i></a>
+											<a [routerLink]="['./chinh-sua', item.id]" class="btn-icon mr-2 border-0" title="Sửa"><i class="bi bi-pencil-square"></i></a>
 											<button class="btn-icon grd-red text-white border-0" data-toggle="modal" data-target="#modal-history-pakn"
-												(click)="onOpenModalConfirm(item.id,'delete')"><i class="bi bi-trash"></i></button>
+												(click)="onOpenModalConfirm(item.id,'delete')"><i class="bi bi-trash" title="Xóa"></i></button>
 										</div>
 									</td>
 								</tr>
