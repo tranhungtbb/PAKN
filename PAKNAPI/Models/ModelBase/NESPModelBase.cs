@@ -178,7 +178,7 @@ namespace PAKNAPI.ModelBase
 
 			using (SqlConnection conn = new SqlConnection(_appSetting.GetConnectstring()))
 			{
-				(await conn.QueryAsync<NENewsGetByIDOnJoin, NENewsGetByIDOnJoinNewsRelates, NENewsGetByIDOnJoin>("NENewsGetByIDOnJoin", (mNENewsGetByIDOnJoin, cNENewsGetByIDOnJoinNewsRelates) =>
+				(await conn.QueryAsync<NENewsGetByIDOnJoin, NENewsGetByIDOnJoinNewsRelates, NENewsGetByIDOnJoin>("NE_NewsGetByIDOnJoin", (mNENewsGetByIDOnJoin, cNENewsGetByIDOnJoinNewsRelates) =>
 				{
 					var _mNENewsGetByIDOnJoin = mNENewsGetByIDOnJoins.Find(item => item.Id == mNENewsGetByIDOnJoin.Id);
 					if (_mNENewsGetByIDOnJoin == null)
