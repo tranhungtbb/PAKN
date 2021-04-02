@@ -12,8 +12,12 @@ declare var $: any
 	styleUrls: ['./news-relate-modal.component.css'],
 })
 export class NewsRelateModalComponent implements OnInit {
-	constructor(private newsService: NewsService, private newsCreateOrUpdateComponent: NewsCreateOrUpdateComponent, private catalogService: CatalogService,
-		private sanitizer: DomSanitizer) {}
+	constructor(
+		private newsService: NewsService,
+		private newsCreateOrUpdateComponent: NewsCreateOrUpdateComponent,
+		private catalogService: CatalogService,
+		private sanitizer: DomSanitizer
+	) {}
 
 	listNewsCategories: any[] = []
 	listDataPaged: any[]
@@ -43,11 +47,11 @@ export class NewsRelateModalComponent implements OnInit {
 			})
 	}
 	onChangeChecked(id: number, checked: boolean) {
-		let newsItem = this.listDataPaged.find(c=>c.id == id)
+		let newsItem = this.listDataPaged.find((c) => c.id == id)
 		if (checked) {
-			this.newsSelected.push(newsItem)
+			this.newsSelected.push(id)
 		} else {
-			let index = this.newsSelected.indexOf(newsItem)
+			let index = this.newsSelected.indexOf(id)
 			this.newsSelected.splice(index, 1)
 		}
 	}
@@ -63,7 +67,7 @@ export class NewsRelateModalComponent implements OnInit {
 			if (this.totalCount <= 0) this.totalCount = res.result.TotalCount
 			this.totalCount = Math.ceil(this.totalCount / this.query.pageSize)
 
-			//get avatars 
+			//get avatars
 			this.getNewsAvatars()
 
 			// lấy ds tin tức từ id
@@ -94,10 +98,9 @@ export class NewsRelateModalComponent implements OnInit {
 		return this.newsSelected.some((c) => c == id)
 	}
 
-	
 	//mở modal, được gọi từ comp cha
 	openModal(newsRelate: any[], parentNews: number) {
-		if (newsRelate){
+		if (newsRelate) {
 			this.newsSelected = newsRelate.map((c) => parseInt(c))
 		}
 
@@ -105,17 +108,17 @@ export class NewsRelateModalComponent implements OnInit {
 		$('#modal-news-relate').modal('show')
 	}
 
-	getNewsAvatars(){
-		let ids = this.listDataPaged.map(c=>c.id);
+	getNewsAvatars() {
+		let ids = this.listDataPaged.map((c) => c.id)
 
-		this.newsService.getAvatars(ids).subscribe(res=>{
-			if(res){
-				res.forEach(e=>{
-					let item = this.listDataPaged.find(c=>c.id == e.id)
+		this.newsService.getAvatars(ids).subscribe((res) => {
+			if (res) {
+				res.forEach((e) => {
+					let item = this.listDataPaged.find((c) => c.id == e.id)
 					let objectURL = 'data:image/jpeg;base64,' + e.byteImage
 					item.imageBin = this.sanitizer.bypassSecurityTrustUrl(objectURL)
 				})
 			}
-		});
+		})
 	}
 }

@@ -187,15 +187,17 @@ export class ViewRecommendationComponent implements OnInit {
 			this.toastr.error('Vui lòng nhập nội dung')
 			return
 		} else if (this.modelConclusion.receiverId == null) {
-			this.toastr.error('Vui lòng nhập lãnh đạo duyệt')
+			this.toastr.error('Vui lòng nhập người phê duyệt')
 			return
 		} else {
 			this.modelConclusion.recommendationId = this.model.id
 			var request = {
 				DataConclusion: this.modelConclusion,
+				Hashtags: this.lstHashtagSelected,
+				Files: this.files,
 				RecommendationStatus: RECOMMENDATION_STATUS.APPROVE_WAIT,
 			}
-			this.recommendationService.recommendationProcess(request).subscribe((response) => {
+			this.recommendationService.recommendationProcessConclusion(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
 					this.toastr.success(COMMONS.PROCESS_SUCCESS)

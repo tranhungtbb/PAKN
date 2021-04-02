@@ -70,4 +70,11 @@ namespace PAKNAPI.Models.Recommendation
         public byte RecommendationStatus { get; set; }
         public bool? ReactionaryWord { get; set; }
     }
+    public class RecommendationOnProcessConclusionProcess
+    {
+        public MRRecommendationConclusionInsertIN DataConclusion { get; set; }
+        public IFormFileCollection Files { get; set; }
+        public byte RecommendationStatus { get; set; }        
+        public List<DropdownObject> ListHashTag { get; set; }
+    }
 }

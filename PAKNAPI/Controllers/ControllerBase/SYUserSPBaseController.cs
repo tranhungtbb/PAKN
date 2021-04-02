@@ -139,6 +139,29 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("SYUserGetNameByIdBase")]
+		public async Task<ActionResult<object>> SYUserGetNameByIdBase(long? Id)
+		{
+			try
+			{
+				List<SYUserGetNameById> rsSYUserGetNameById = await new SYUserGetNameById(_appSetting).SYUserGetNameByIdDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserGetNameById", rsSYUserGetNameById},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("SYUserInsertBase")]

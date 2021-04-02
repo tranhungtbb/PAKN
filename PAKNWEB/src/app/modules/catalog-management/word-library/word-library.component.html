@@ -33,18 +33,18 @@
                     <strong>STT</strong>
                   </p>
                 </th>
-                <th>
+                <th style="width: 350px">
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Từ ngữ</strong>
-                    <span class="caret-tb"></span>
+
                   </p>
                   <input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100"
                     (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
                 </th>
-                <th style="width: 350px">
+                <th>
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Mô tả</strong>
-                    <span class="caret-tb"></span>
+
                   </p>
                   <input class="form-control form-control-sm" [(ngModel)]="description" maxlength="100"
                     (keydown.enter)="dataStateChange()" placeholder="Nhập mô tả..." />
@@ -52,7 +52,7 @@
                 <th style="width: 160px">
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Trạng thái</strong>
-                    <span class="caret-tb"></span>
+
                   </p>
                   <div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
                     <ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text"
