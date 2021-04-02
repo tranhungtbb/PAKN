@@ -36,7 +36,7 @@ export class Api {
 	public static RecommendationUpdate = 'Recommendation/RecommendationUpdate'
 	public static RecommendationForward = 'Recommendation/RecommendationForward'
 	public static RecommendationProcess = 'Recommendation/RecommendationOnProcess'
-	public static RecommendationProcessConclusion = 'Recommendation/RecommendationOnProcessConclusion'
+	public static RecommendationOnProcessConclusion = 'Recommendation/RecommendationOnProcessConclusion'
 	public static RecommendationDelete = 'MRSPBase/MRRecommendationDeleteBase'
 	public static RecommendationExport = 'MRSPBase/MRRecommendationExportBase'
 
