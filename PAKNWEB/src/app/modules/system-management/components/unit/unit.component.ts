@@ -25,7 +25,7 @@ declare var $: any
 export class UnitComponent implements OnInit, AfterViewInit {
 	listStatus: any = [
 		{ value: true, text: 'Hiệu lực' },
-		{ value: false, text: 'Không hiệu lực' },
+		{ value: false, text: 'Hết hiệu lực' },
 	]
 	listGender: any = [
 		{ value: true, text: 'Nam' },
@@ -90,7 +90,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			unitLevel: ['', [Validators.required]],
 			isActived: [''],
 			isDeleted: [''],
-			parentId: [''],
+			parentId: ['', Validators.required],
 			description: [''],
 			email: ['', [Validators.required, Validators.email]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
 			phone: ['', [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
@@ -128,16 +128,9 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	unitFilterChange(): void {
 		this.getUnitPagedList()
 	}
-	changePage(page: number): void {
-		this.query.pageIndex += page
-		if (this.query.pageIndex < 1) {
-			this.query.pageIndex = 1
-			return
-		}
-		if (this.query.pageIndex > this.unitPageCount) {
-			this.query.pageIndex = this.unitPageCount
-			return
-		}
+	onPageChange(event): void {
+		this.query.pageSize = event.rows
+		this.query.pageIndex = event.first / event.rows + 1
 		this.getUnitPagedList()
 	}
 
@@ -198,16 +191,9 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	onUserFilterChange() {
 		this.getUserPagedList()
 	}
-	onUserPageChange(page) {
-		this.queryUser.pageIndex += page
-		if (this.queryUser.pageIndex < 1) {
-			this.queryUser.pageIndex = 1
-			return
-		}
-		if (this.queryUser.pageIndex > this.userPageCount) {
-			this.queryUser.pageIndex = this.userPageCount
-			return
-		}
+	onUserPageChange(event: any) {
+		this.query.pageSize = event.rows
+		this.query.pageIndex = event.first / event.rows + 1
 		this.getUserPagedList()
 	}
 
@@ -233,10 +219,11 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	/*modal thêm / sửa đơn vị*/
 	modalCreateOrUpdateTitle: string = 'Thêm cơ quan, đơn vị'
 	modalCreateOrUpdate(id: any, level: any = 1, parentId: any = 0) {
+		this.unitFormSubmitted = false
 		if (id == 0) {
 			this.modalCreateOrUpdateTitle = 'Thêm cơ quan, đơn vị'
 			this.modelUnit = new UnitObject()
-			this.unitFormSubmitted = false
+			this.modelUnit.name = ' '
 		} else {
 			this.modalCreateOrUpdateTitle = 'Sửa cơ quan, đơn vị'
 			this.unitService.getById({ id }).subscribe((res) => {
@@ -286,6 +273,43 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		}
 	}
 
+	onChangeUnitStatus(id: number) {
+		let item = this.listUnitPaged.find((c) => c.id == id)
+		if (item == null) item = this.unitObject
+
+		item.isActived = !item.isActived
+		this.unitService.update(item).subscribe((res) => {
+			if (res.success != 'OK') {
+				this._toastr.error(COMMONS.UPDATE_FAILED)
+				item.isActived = !item.isActived
+				return
+			}
+			this._toastr.success(COMMONS.UPDATE_SUCCESS)
+			this.getAllUnitShortInfo()
+			this.getUnitPagedList()
+			this.modelUnit = new UnitObject()
+			$('#modal-create-or-update').modal('hide')
+		})
+	}
+	onChangeUserStatus(id: number) {
+		let item = this.listUserPaged.find((c) => c.id == id)
+
+		item.isActived = !item.isActived
+		item.typeId = 1
+		this.userService.update(item).subscribe((res) => {
+			if (res.success != 'OK') {
+				this._toastr.error(COMMONS.UPDATE_FAILED)
+				item.isActived = !item.isActived
+				return
+			}
+			this._toastr.success(COMMONS.UPDATE_SUCCESS)
+			this.getAllUnitShortInfo()
+			this.getUnitPagedList()
+			this.modelUnit = new UnitObject()
+			$('#modal-create-or-update').modal('hide')
+		})
+	}
+
 	changeLevel(level: number) {
 		this.modelUnit.unitLevel = level
 		//this.modelUnit.parentId = 0
@@ -297,24 +321,28 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 
 	/*start - chức năng xác nhận hành động xóa*/
-	delType = 'unit'
-	delId: number = 0
+	modalConfirm_type = 'unit'
+	modelConfirm_itemId: number = 0
 	onOpenConfirmModal(id: any, type = 'unit') {
 		$('#modal-confirm').modal('show')
-		this.delType = type
-		this.delId = id
+		this.modalConfirm_type = type
+		this.modelConfirm_itemId = id
 	}
 	acceptConfirm() {
-		if (this.delType == 'unit') {
-			this.onDeleteUnit(this.delId)
-		} else if (this.delType == 'user') {
-			this.onDelUser(this.delId)
+		if (this.modalConfirm_type == 'unit') {
+			this.onDeleteUnit(this.modelConfirm_itemId)
+		} else if (this.modalConfirm_type == 'user') {
+			this.onDelUser(this.modelConfirm_itemId)
+		} else if (this.modalConfirm_type == 'unit_status') {
+			this.onChangeUnitStatus(this.modelConfirm_itemId)
+		} else if (this.modalConfirm_type == 'user_status') {
+			this.onChangeUserStatus(this.modelConfirm_itemId)
 		}
 
 		$('#modal-confirm').modal('hide')
 	}
 	onDeleteUnit(id) {
-		let item = this.listUnitPaged.find((c) => c.id == this.delId)
+		let item = this.listUnitPaged.find((c) => c.id == this.modelConfirm_itemId)
 		this.unitService.delete(item).subscribe((res) => {
 			if (res.success != 'OK') {
 				this._toastr.error(COMMONS.DELETE_FAILED)

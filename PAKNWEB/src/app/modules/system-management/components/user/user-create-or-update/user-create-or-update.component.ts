@@ -42,7 +42,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 
 	listStatus: any = [
 		{ value: true, text: 'Hiệu lực' },
-		{ value: false, text: 'Không hiệu lực' },
+		{ value: false, text: 'Hết hiệu lực' },
 	]
 	listGender: any = [
 		{ value: true, text: 'Nam' },
@@ -89,6 +89,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	onSaveUser(): void {
 		this.userFormSubmitted = true
 		this.modelUser.userName = this.modelUser.email
+		this.modelUser.typeId = 1
 		if (this.createUserForm.invalid) {
 			this._toastr.error('Dữ liệu không hợp lệ')
 			return

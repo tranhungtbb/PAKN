@@ -141,6 +141,7 @@ export class NewsTypeComponent implements OnInit {
         if (response.success == RESPONSE_STATUS.success) {
           if (response.result == -1) {
             this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
+            $("#target").focus()
             return
           } else {
             $('#modal').modal('hide')
@@ -160,6 +161,7 @@ export class NewsTypeComponent implements OnInit {
         if (response.success == RESPONSE_STATUS.success) {
           if (response.result == -1) {
             this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
+            $("#target").focus()
             return
           } else {
             $('#modal').modal('hide')

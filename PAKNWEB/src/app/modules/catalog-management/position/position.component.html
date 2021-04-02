@@ -5,16 +5,7 @@
 				<li class="breadcrumb-item active"><a class="font-weight-bold">DANH SÁCH CHỨC VỤ</a></li>
 			</ol>
 			<div class="btn-group group-button-table" role="group">
-				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-						class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
-						<path
-							d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
-						<path
-							d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-					</svg>
-					Xuất excel
-				</button>
+
 				<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="preCreate()">
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus"
 						viewBox="0 0 16 16">
@@ -42,18 +33,16 @@
 										<strong>STT</strong>
 									</p>
 								</th>
-								<th>
+								<th style="width: 350px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Tên chức vụ</strong>
-										<span class="caret-tb"></span>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100"
 										(keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
 								</th>
-								<th style="width: 350px">
+								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Mô tả</strong>
-										<span class="caret-tb"></span>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="description" maxlength="100"
 										(keydown.enter)="dataStateChange()" placeholder="Nhập mô tả..." />
@@ -61,7 +50,6 @@
 								<th style="width: 160px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Trạng thái</strong>
-										<span class="caret-tb"></span>
 									</p>
 									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
 										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text"
@@ -69,7 +57,11 @@
 										</ng-select>
 									</div>
 								</th>
-								<th class="text-right" style="width: 100px;"><strong>Thao tác</strong></th>
+								<th class="text-right" style="width: 100px;">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>Thao tác</strong>
+									</p>
+								</th>
 							</tr>
 						</ng-template>
 						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -122,7 +114,7 @@
 						<div class="row form-group">
 							<div class="col-sm-8">
 								<label class="control-label">Tên chức vụ <span class="text-danger">(*)</span></label>
-								<input placeholder="Nhập tên..." svTrim class="form-control" formControlName="name"
+								<input id="target" placeholder="Nhập tên..." svTrim class="form-control" formControlName="name"
 									[(ngModel)]="model.name" maxlength="100" />
 								<div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))"
 									class="has-error m-b-12">
