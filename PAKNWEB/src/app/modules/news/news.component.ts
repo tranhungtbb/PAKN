@@ -58,8 +58,8 @@ export class NewsComponent implements OnInit {
 				pageIndex: this.query.pageIndex,
 				pageSize: this.query.pageSize,
 				title: this.query.title,
-				status: this.query.newsType == null ? '' : this.query.newsType,
-				newsType: this.query.status == null ? '' : this.query.status,
+				newsType: this.query.newsType == null ? '' : this.query.newsType,
+				status: this.query.status == null ? '' : this.query.status,
 			})
 			.subscribe((res) => {
 				if (res.success != 'OK') return
