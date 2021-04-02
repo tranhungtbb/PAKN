@@ -2,14 +2,15 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { COMMONS } from 'src/app/commons/commons'
 import { CONSTANTS, FILETYPE, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { RecommendationViewObject } from 'src/app/models/recommendationObject'
+import { RecommendationConclusionObject, RecommendationViewObject } from 'src/app/models/recommendationObject'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
-import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { HashtagObject } from 'src/app/models/hashtagObject'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+
+declare var $: any
 
 @Component({
 	selector: 'app-view-recommendation',
@@ -18,6 +19,7 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 })
 export class ViewRecommendationComponent implements OnInit {
 	model: RecommendationViewObject = new RecommendationViewObject()
+	modelConclusion: RecommendationConclusionObject = new RecommendationConclusionObject()
 	lstHashtag: any[] = []
 	lstUsers: any[] = []
 	lstHashtagSelected: any[] = []
@@ -25,7 +27,7 @@ export class ViewRecommendationComponent implements OnInit {
 	files: any[] = []
 	modelHashTagAdd: HashtagObject = new HashtagObject()
 	hashtagId: number = null
-	form: FormGroup
+	fileAccept = CONSTANTS.FILEACCEPT
 	@ViewChild('file', { static: false }) public file: ElementRef
 	constructor(
 		private toastr: ToastrService,
@@ -149,22 +151,6 @@ export class ViewRecommendationComponent implements OnInit {
 		}
 	}
 
-	builForm() {
-		this.form = new FormGroup({
-			// code: new FormControl(this.model.code, [Validators.required]),
-			title: new FormControl(this.model.title, [Validators.required]),
-			content: new FormControl(this.model.content, [Validators.required]),
-			field: new FormControl(this.model.field, [Validators.required]),
-			unitId: new FormControl(this.model.unitId, [Validators.required]),
-			sendId: new FormControl(this.model.sendId, [Validators.required]),
-			sendDate: new FormControl(this.model.sendDate, [Validators.required]),
-			hashtag: new FormControl(this.hashtagId),
-		})
-	}
-	get f() {
-		return this.form.controls
-	}
-
 	onUpload(event) {
 		if (event.target.files.length == 0) {
 			return
@@ -194,5 +180,35 @@ export class ViewRecommendationComponent implements OnInit {
 		const index = this.files.indexOf(args)
 		const file = this.files[index]
 		this.files.splice(index, 1)
+	}
+
+	onProcessConclusion() {
+		if (this.modelConclusion.content == '' || this.modelConclusion.content.trim() == '') {
+			this.toastr.error('Vui lòng nhập nội dung')
+			return
+		} else if (this.modelConclusion.receiverId == null) {
+			this.toastr.error('Vui lòng nhập người phê duyệt')
+			return
+		} else {
+			this.modelConclusion.recommendationId = this.model.id
+			var request = {
+				DataConclusion: this.modelConclusion,
+				Hashtags: this.lstHashtagSelected,
+				Files: this.files,
+				RecommendationStatus: RECOMMENDATION_STATUS.APPROVE_WAIT,
+			}
+			this.recommendationService.recommendationProcessConclusion(request).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					$('#modalReject').modal('hide')
+					this.toastr.success(COMMONS.PROCESS_SUCCESS)
+					return this.router.navigate(['/quan-tri/kien-nghi/dang-giai-quyet'])
+				} else {
+					this.toastr.error(response.message)
+				}
+			}),
+				(err) => {
+					console.error(err)
+				}
+		}
 	}
 }

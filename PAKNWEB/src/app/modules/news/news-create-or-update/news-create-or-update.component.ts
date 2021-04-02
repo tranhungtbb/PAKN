@@ -54,8 +54,6 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			pushNotify: [''],
 		})
 
-
-		// lấy thông tin, nếu là sửa
 		this.activatedRoute.params.subscribe((params) => {
 			if (params['id']) {
 				this.newsService.getById({ id: params['id'] }).subscribe((res) => {
@@ -63,18 +61,17 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 						return
 					}
 					this.model = res.result.NENewsGetByID[0]
+					//lay danh sach bai viet lien quan
 					this.getNewsRelatesInfo()
 
-					this.child_NewsRelate.parentNews = this.model.id
-
-					// lấy avatar bài viết đang chỉnh sửa
+					//get current avatar
 					if (this.model.imagePath != null && this.model.imagePath.trim() != '') {
-						this.newsService.getAvatars([this.model.id]).subscribe((res:any[])=>{
-							if(res){
+						this.newsService.getAvatars([this.model.id]).subscribe((res) => {
+							if (res) {
 								let objectURL = 'data:image/jpeg;base64,' + res[0].byteImage
 								this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
 							}
-						});
+						})
 					}
 				})
 			}
@@ -108,8 +105,8 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					}
 					this.newsRelatesSelected = res.result.NENewsGetAllOnPage
 
-					//get avatar 
-					this.getNewsRelatesAvatars();
+					//get avatar
+					this.getNewsRelateAvatar()
 				})
 		}
 	}
@@ -124,11 +121,14 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		if (this.newsForm.invalid) {
 			return
 		}
-
+		// if(this.model.imagePath == null || this.model.imagePath == ""){
+		// 	this.toast.error()
+		// 	return
+		// }
+		// if (this.model.newsRelateIds != null && this.model.newsRelateIds.length == 0) {
+		// 	this.model.newsRelateIds = null
+		// }
 		this.model.isPublished = published
-		if(published){
-			this.model.status = 1
-		}
 
 		if (this.model.id && this.model.id > 0) {
 			this.newsService.update(this.model).subscribe((res) => {
@@ -154,11 +154,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	onModalNewsRelate() {
 		this.child_NewsRelate.openModal(this.model.newsRelateIds ? this.model.newsRelateIds.split(',') : [], this.model.id)
 	}
-
-	//sau khi đóng modal con sẽ gọi đến
 	onModalNewsRelate_Closed() {
-
-		// lấy danh sách bài viết liên quan từ popup con
 		this.model.newsRelateIds = this.child_NewsRelate.newsSelected.toString()
 
 		if (this.model.newsRelateIds != null && this.model.newsRelateIds != '') {
@@ -170,8 +166,10 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				})
 				.subscribe((res) => {
 					if (res.success != 'OK') return
-					this.newsRelatesSelected = res.result.NENewsGetAllOnPage
-					this.getNewsRelatesAvatars();
+					if (res.result.NENewsGetAllOnPage) this.newsRelatesSelected = res.result.NENewsGetAllOnPage
+
+					//get avatar
+					this.getNewsRelateAvatar()
 				})
 		} else {
 			this.newsRelatesSelected = []
@@ -199,22 +197,27 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				return
 			}
 			this.model.imagePath = res.result.path
-			this.avatarUrl = AppSettings.API_DOWNLOADFILES + '/' + this.model.imagePath
+
+			let avatarPath = this.model.imagePath.split('/')
+			this.newsService.getAvatar(avatarPath[avatarPath.length - 1]).subscribe((res) => {
+				if (res) {
+					let objectURL = 'data:image/jpeg;base64,' + res
+					this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+				}
+			})
 		})
 	}
 
-	getNewsRelatesAvatars(){
-		let ids = this.newsRelatesSelected.map(c=>c.id);
-
-		this.newsService.getAvatars(ids).subscribe(res=>{
-			if(res){
-				res.forEach(e=>{
-					let item = this.newsRelatesSelected.find(c=>c.id == e.id)
-					let objectURL = 'data:image/jpeg;base64,' + e.byteImage
+	getNewsRelateAvatar() {
+		this.newsService.getAvatars(this.newsRelatesSelected.map((c) => c.id)).subscribe((res) => {
+			if (res) {
+				for (let img of res) {
+					let item = this.newsRelatesSelected.find((c) => c.id == img.id)
+					let objectURL = 'data:image/jpeg;base64,' + img.byteImage
 					item.imageBin = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-				})
+				}
 			}
-		});
+		})
 	}
 
 	public onChangeEditor({ editor }: any) {

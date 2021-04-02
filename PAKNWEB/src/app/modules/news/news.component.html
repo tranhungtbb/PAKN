@@ -1,61 +1,29 @@
-<div class="header header-ql">
-	<div class="header-content px-3">
-		<nav class="navbar navbar-expand">
-			<div class="collapse navbar-collapse justify-content-between">
-				<div class="header-left w-100 justify-content-between pr-5">
-					<p class="mb-0 h3 text-uppercase">danh sách tin tức</p>
-					<div class="nav-table">
-						<div class="d-flex align-items-center">
-							<button type="button" class="btn btn-outline-secondary mr-2 p-2" (click)="changePage(1)">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
-									<path fill-rule="evenodd"
-										d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
-								</svg>
-							</button>
-							<div class="border d-flex align-items-center border-dark px-2 rounded">
-								<input type="number" [ngModel]="query.pageIndex" (ngModelChange)="changePage($event)" class="border-0 p-0 number-page-table text-right">
-								<span>/{{pageCount}}</span>
-							</div>
-							<button type="button" class="btn btn-outline-secondary ml-2 p-2" (click)="changePage(-1)">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-									<path fill-rule="evenodd"
-										d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-								</svg>
-							</button>
-						</div>
-					</div>
-					<div class="btn-group" role="group">
-						<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
-								<path
-									d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
-								<path
-									d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-							</svg>
-							Xuất excel
-						</button>
-						<a [routerLink]="['./them-moi']" class="btn grd-xanhngoc btn-sm rounded border-0 text-white">
-							<i class="bi bi-plus"></i>&nbsp;
-							Thêm mới
-						</a>
-					</div>
-				</div>
-			</div>
-		</nav>
-	</div>
-</div>
 <div class="content-body">
-
-	<!--  -->
-
 	<!-- row -->
 	<div class="container-fluid p-0">
 		<div class="row">
 			<div class="col-lg-12">
+				<div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách tin tức</div>
+				<div class="btn-group group-button-table" role="group">
+					<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
+						<i class="pi pi-file-excel"></i>
+						Xuất excel
+					</button>
+					<a [routerLink]="['./them-moi']" class="btn grd-xanhngoc btn-sm rounded border-0 text-white">
+						<i class="bi bi-plus"></i>&nbsp;
+						Thêm mới
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
 				<div class="card mb-0 shadow-none">
 					<div class="table-responsive">
-						<table class="table table-sd table-responsive-md table-striped mb-0">
-							<thead class="bg-thead">
+						<p-table #table [value]="listDataPaged" [rows]="query.pageSize" [totalRecords]="totalCount" currentPageReportTemplate="Tổng số {{totalCount}}"
+							(onLazyLoad)="onPageChange($event)" [lazy]="true" [responsive]="true" [paginator]="true" [showCurrentPageReport]="true" autoLayout="true"
+							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -90,9 +58,9 @@
 									</th>
 									<th class="text-right"><strong>Thao tác</strong></th>
 								</tr>
-							</thead>
-							<tbody>
-								<tr *ngFor="let item of listDataPaged">
+							</ng-template>
+							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+								<tr>
 									<td>
 										<img width='60px' [src]="item.imageBin">
 										<strong>
@@ -100,7 +68,7 @@
 										</strong>
 									</td>
 									<td>
-										{{item.newsType}}
+										{{listNewCategories | getCateName:item.newsType}}
 									</td>
 									<td>
 										<span *ngIf="item.status == listStatus[2].value" class="badge rounded-pill badge-outline-light bg-white">{{listStatus[2].text}}</span>
@@ -110,17 +78,17 @@
 									<td>
 										<div class="d-flex justify-content-end">
 											<button class="btn-icon grd-xanhngoc text-white mr-2 border-0" (click)="onOpenModalConfirm(item.id,'publish')">
-												<i class="bi bi-box-arrow-up" *ngIf="item.isPublished"></i>
-												<i class="bi bi-box-arrow-down" *ngIf="!item.isPublished"></i>
+												<i class="bi bi-box-arrow-up" *ngIf="item.isPublished" title="Đã công bố"></i>
+												<i class="bi bi-box-arrow-down" *ngIf="!item.isPublished" title="Đã thu hồi"></i>
 											</button>
-											<a [routerLink]="['./chinh-sua', item.id]" class="btn-icon mr-2 border-0"><i class="bi bi-pencil-square"></i></a>
+											<a [routerLink]="['./chinh-sua', item.id]" class="btn-icon mr-2 border-0" title="Sửa"><i class="bi bi-pencil-square"></i></a>
 											<button class="btn-icon grd-red text-white border-0" data-toggle="modal" data-target="#modal-history-pakn"
-												(click)="onOpenModalConfirm(item.id,'delete')"><i class="bi bi-trash"></i></button>
+												(click)="onOpenModalConfirm(item.id,'delete')"><i class="bi bi-trash" title="Xóa"></i></button>
 										</div>
 									</td>
 								</tr>
-							</tbody>
-						</table>
+							</ng-template>
+						</p-table>
 					</div>
 				</div>
 			</div>

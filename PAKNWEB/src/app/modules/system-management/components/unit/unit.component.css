@@ -94,5 +94,11 @@ body .ui-tree .ui-tree-container .ui-treenode .ui-treenode-content .ui-tree-togg
 }
 
 .text-color-blue {
-	color: rgb(0, 81, 255);
+	color: #1673d8 !important;
+}
+.width-95 {
+	width: 95%;
+}
+.width-175 {
+	width: 175px;
 }

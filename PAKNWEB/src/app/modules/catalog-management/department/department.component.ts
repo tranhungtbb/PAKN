@@ -165,7 +165,7 @@ export class DepartmentComponent implements OnInit {
     this.model = new DepartmentObject()
     this.rebuilForm()
     this.submitted = false
-    this.title = 'Thêm mới nhóm sở ngành'
+    this.title = 'Thêm mới sở ngành'
     $('#modal').modal('show')
   }
 
@@ -180,6 +180,7 @@ export class DepartmentComponent implements OnInit {
         if (response.success == RESPONSE_STATUS.success) {
           if (response.result == -1) {
             this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
+            $("#target").focus()
             return
           } else {
             $('#modal').modal('hide')
@@ -199,6 +200,7 @@ export class DepartmentComponent implements OnInit {
         if (response.success == RESPONSE_STATUS.success) {
           if (response.result == -1) {
             this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
+            $("#target").focus()
             return
           } else {
             $('#modal').modal('hide')

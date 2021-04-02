@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Input } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import { ToastrService } from 'ngx-toastr'
 
@@ -21,8 +21,8 @@ export class NewsComponent implements OnInit {
 		pageSize: 20,
 		pageIndex: 1,
 		title: '',
-		status: '',
-		newsType: '',
+		status: null,
+		newsType: null,
 	}
 
 	listNewCategories: any[] = []
@@ -53,17 +53,22 @@ export class NewsComponent implements OnInit {
 	}
 
 	getListPaged() {
-		this.query.newsType == null ? '' : this.query.newsType
-		this.query.status == null ? '' : this.query.status
-		this.newsService.getAllPagedList(this.query).subscribe((res) => {
-			if (res.success != 'OK') return
-			this.listDataPaged = res.result.NENewsGetAllOnPage
-			if (this.totalCount <= 0) this.totalCount = res.result.TotalCount
-			this.totalCount = Math.ceil(this.totalCount / this.query.pageSize)
-
-			// load image
-			this.getNewsAvatars();
-		})
+		this.newsService
+			.getAllPagedList({
+				pageIndex: this.query.pageIndex,
+				pageSize: this.query.pageSize,
+				title: this.query.title,
+				newsType: this.query.newsType == null ? '' : this.query.newsType,
+				status: this.query.status == null ? '' : this.query.status,
+			})
+			.subscribe((res) => {
+				if (res.success != 'OK') return
+				this.listDataPaged = res.result.NENewsGetAllOnPage
+				if (this.totalCount <= 0) this.totalCount = res.result.TotalCount
+				this.totalCount = Math.ceil(this.totalCount / this.query.pageSize)
+				// load image
+				this.getNewsAvatars()
+			})
 	}
 
 	modalConfirm_message = 'Anh/chị có chắc chắn thực hiện hành động này?'
@@ -89,10 +94,11 @@ export class NewsComponent implements OnInit {
 			item.isPublished = !item.isPublished
 			this.newsService.update(item).subscribe((res) => {
 				if (res.success != 'OK') {
-					this.toast.error(COMMONS.DELETE_FAILED)
+					this.toast.error('Xảy ra lỗi trong quá trình xử lý')
 					return
 				}
-				this.toast.success(COMMONS.DELETE_SUCCESS)
+
+				this.toast.success(item.isPublished ? 'Đã công bố' : 'Đã thu hồi')
 			})
 		}
 	}
@@ -101,34 +107,27 @@ export class NewsComponent implements OnInit {
 		this.getListPaged()
 	}
 
-	changePage(page: number): void {
-		this.query.pageIndex += page
-		if (this.query.pageIndex < 1) {
-			this.query.pageIndex = 1
-			return
-		}
-		if (this.query.pageIndex > this.pageCount) {
-			this.query.pageIndex = this.pageCount
-			return
-		}
+	onPageChange(event: any): void {
+		this.query.pageSize = event.rows
+		this.query.pageIndex = event.first / event.rows + 1
 		this.getListPaged()
 	}
-	
-	// getCateName(id):string{
-	// 	return this.listNewCategories.find(c=>c.id == id).name
+
+	// getCateName(id): string {
+	// 	return this.listNewCategories.find((c) => c.id == id).name
 	// }
 
-	getNewsAvatars(){
-		let ids = this.listDataPaged.map(c=>c.id);
+	getNewsAvatars() {
+		let ids = this.listDataPaged.map((c) => c.id)
 
-		this.newsService.getAvatars(ids).subscribe(res=>{
-			if(res){
-				res.forEach(e=>{
-					let item = this.listDataPaged.find(c=>c.id == e.id)
+		this.newsService.getAvatars(ids).subscribe((res) => {
+			if (res) {
+				res.forEach((e) => {
+					let item = this.listDataPaged.find((c) => c.id == e.id)
 					let objectURL = 'data:image/jpeg;base64,' + e.byteImage
 					item.imageBin = this.sanitizer.bypassSecurityTrustUrl(objectURL)
 				})
 			}
-		});
+		})
 	}
 }

@@ -157,6 +157,30 @@ export class RecommendationService {
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationProcess, headers)
 	}
 
+	recommendationProcessConclusion(request: any): Observable<any> {
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
+			macAddress: '',
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		})
+		const form = new FormData()
+		form.append('DataConclusion', JSON.stringify(request.DataConclusion))
+		form.append('Hashtags', JSON.stringify(request.Hashtags))
+		form.append('RecommendationStatus', JSON.stringify(request.RecommendationStatus))
+
+		if (request.Files) {
+			request.Files.forEach((item) => {
+				form.append('QD', item)
+			})
+		}
+		const httpPackage = {
+			headers: tempheaders,
+			reportProgress: true,
+		}
+		return this.http.post(AppSettings.API_ADDRESS + Api.RecommendationOnProcessConclusion, form, httpPackage)
+	}
+
 	recommendationDelete(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),

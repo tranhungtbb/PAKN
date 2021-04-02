@@ -7,9 +7,11 @@
 				</button>
 			</div>
 			<div class="modal-body pb-0">
-				<!-- <div class="align-items-center form-group mb-4 border-bottom pb-3">
-					user avatar
-				</div> -->
+				<div class="align-items-center form-group mb-4 border-bottom pb-3">
+					<div class="avatar-frame">
+						<img src="" />
+					</div>
+				</div>
 				<form id="createUserForm" [formGroup]="createUserForm" (ngSubmit)="onSaveUser()">
 
 					<div class="form-row">
@@ -25,7 +27,7 @@
 						</div> -->
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">Email/Tên đăng nhập <span class="cl-red">(*)</span></label>
-							<input formControlName="email" [(ngModel)]="modelUser.email" type="text" class="form-control" placeholder="Nhập...">
+							<input svTrim formControlName="email" [(ngModel)]="modelUser.email" type="text" class="form-control" placeholder="Nhập...">
 							<div *ngIf="(userFormSubmitted && fUser.email.invalid)||(fUser.email.invalid && (fUser.email.dirty || fUser.email.touched))" class="has-error m-b-12">
 								<div *ngIf="fUser.email.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -37,7 +39,7 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Họ và tên <span class="cl-red">(*)</span></label>
-							<input formControlName="fullName" [(ngModel)]="modelUser.fullName" type="text" class="form-control" placeholder="Nhập...">
+							<input svTrim formControlName="fullName" [(ngModel)]="modelUser.fullName" type="text" class="form-control" placeholder="Nhập...">
 							<div *ngIf="(userFormSubmitted && fUser.fullName.invalid)||(fUser.fullName.invalid && (fUser.fullName.dirty || fUser.fullName.touched))"
 								class="has-error m-b-12">
 								<div *ngIf="fUser.fullName.errors.required">
@@ -47,7 +49,7 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Điện thoại <span class="cl-red">(*)</span></label>
-							<input formControlName="phone" [(ngModel)]="modelUser.phone" type="text" class="form-control" placeholder="Nhập...">
+							<input svTrim formControlName="phone" [(ngModel)]="modelUser.phone" type="text" class="form-control" placeholder="Nhập...">
 							<div *ngIf="(userFormSubmitted && fUser.phone.invalid)||(fUser.phone.invalid && (fUser.phone.dirty || fUser.phone.touched))" class="has-error m-b-12">
 								<div *ngIf="fUser.phone.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>

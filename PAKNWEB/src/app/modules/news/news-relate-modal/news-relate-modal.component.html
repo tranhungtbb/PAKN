@@ -38,7 +38,7 @@
 									<img width="60px" [src]="item.imageBin">
 									<span>&nbsp;{{item.title}}</span>
 								</td>
-								<td>{{item.newsType}}</td>
+								<td>{{listNewsCategories|getCateName:item.newsType}}</td>
 							</tr>
 						</tbody>
 					</table>
