@@ -36,7 +36,6 @@
                 <th>
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Tên sở ngành</strong>
-                    <span class="caret-tb"></span>
                   </p>
                   <input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100"
                     (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
@@ -44,7 +43,6 @@
                 <th style="max-width: 250px">
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Nhóm sở ngành</strong>
-                    <span class="caret-tb"></span>
                   </p>
                   <div class="dropdown bootstrap-select form-control form-control-sm">
                     <ng-select class="" [items]="listDepartmentGroup" placeholder="Nhóm sở ngành ..." bindLabel="name"
@@ -55,7 +53,6 @@
                 <th>
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Điện thoại</strong>
-                    <span class="caret-tb"></span>
                   </p>
                   <input class="form-control form-control-sm" [(ngModel)]="phone" maxlength="100"
                     (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
@@ -63,7 +60,6 @@
                 <th>
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Email</strong>
-                    <span class="caret-tb"></span>
                   </p>
                   <input class="form-control form-control-sm" [(ngModel)]="email" maxlength="100"
                     (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
@@ -95,7 +91,6 @@
                 <th style="width: 160px">
                   <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
                     <strong>Trạng thái</strong>
-                    <span class="caret-tb"></span>
                   </p>
                   <div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
                     <ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text"
