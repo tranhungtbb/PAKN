@@ -7,30 +7,21 @@
 				</button>
 			</div>
 			<div class="modal-body pb-0 mt-0 pt-0">
-				<div class="align-items-center mb-4 avatar-bg">
-					<div class="avatar-frame">
-						<img src="" />
-					</div>
-					<div class="text-center">
-						<a class="color-brow" href="javascript:void(0);">
-							<i class="pi pi-image"></i>
-							Tải lên ảnh đại diện
-						</a>
-					</div>
-				</div>
-				<form id="createUserForm" [formGroup]="createUserForm" (ngSubmit)="onSaveUser()">
 
+				<form id="createUserForm" [formGroup]="createUserForm" (ngSubmit)="onSaveUser()">
+					<div class="align-items-center mb-4 avatar-bg">
+						<div class="avatar-frame">
+							<img src="" />
+						</div>
+						<div class="text-center">
+							<input type="file" [hidden]="true" id="seclect-avatar" (change)="changeSelectAvatar($event)">
+							<a class="color-brow" href="javascript:void(0);" (click)="onChangeAvatar()">
+								<i class="pi pi-image"></i>
+								Tải lên ảnh đại diện
+							</a>
+						</div>
+					</div>
 					<div class="form-row">
-						<!-- <div class="col-12 col-lg-4 form-group">
-							<label class="mb-1">Email/Tên đăng nhập <span class="cl-red">(*)</span></label>
-							<input formControlName="userName" [(ngModel)]="modelUser.userName" type="text" class="form-control" placeholder="Nhập...">
-							<div *ngIf="(userFormSubmitted && fUser.userName.invalid)||(fUser.userName.invalid && (fUser.userName.dirty || fUser.userName.touched))"
-								class="has-error m-b-12">
-								<div *ngIf="fUser.userName.errors.required">
-									<span class="help-block">Trường dữ liệu này không được để trống</span>
-								</div>
-							</div>
-						</div> -->
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">Email/Tên đăng nhập <span class="cl-red">(*)</span></label>
 							<input svTrim formControlName="email" [(ngModel)]="modelUser.email" type="text" class="form-control" placeholder="Nhập...">
