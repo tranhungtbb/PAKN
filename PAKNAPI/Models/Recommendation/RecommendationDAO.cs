@@ -70,12 +70,26 @@ namespace PAKNAPI.Models.Recommendation
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", Id);
 			data.Model = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByIDView>("MR_RecommendationGetByIDView", DP)).FirstOrDefault();
-			data.lstHashtag = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationHashtagGetByRecommendationId>("MR_Recommendation_HashtagGetByRecommendationId", DP)).ToList();
+				data.lstHashtag = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationHashtagGetByRecommendationId>("MR_Recommendation_HashtagGetByRecommendationId", DP)).ToList();
 			data.lstFiles = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationFilesGetByRecommendationId>("MR_Recommendation_FilesGetByRecommendationId", DP)).ToList();
 			Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
 			foreach (var item in data.lstFiles)
 			{
 				item.FilePath = decrypt.EncryptData(item.FilePath);
+			}
+			if(data.Model.Status > STATUS_RECOMMENDATION.PROCESSING)
+			{
+				data.ModelConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionGetByRecommendationId>("MR_Recommendation_ConclusionGetByRecommendationId", DP)).FirstOrDefault();
+				DP = new DynamicParameters();
+				DP.Add("Id", data.ModelConclusion.Id);
+				if (data.ModelConclusion != null)
+				{
+					data.filesConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionFilesGetByConclusionId>("MR_Recommendation_Conclusion_FilesGetByConclusionId", DP)).ToList();
+					foreach (var item in data.filesConclusion)
+					{
+						item.FilePath = decrypt.EncryptData(item.FilePath);
+					}
+				}
 			}
 			return data;
 		}

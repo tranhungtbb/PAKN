@@ -204,6 +204,7 @@ export class ListGeneralComponent implements OnInit {
 	preForward(id: number) {
 		this.modelForward = new RecommendationForwardObject()
 		this.modelForward.recommendationId = id
+		this.rebuilForm()
 		this._service.recommendationGetDataForForward({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
