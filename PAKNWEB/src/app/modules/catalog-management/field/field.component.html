@@ -149,40 +149,50 @@
 </div>
 
 <div class="modal fade" id="modalDetail">
-	<div class="modal-dialog modal-dialog-centered" style="min-width: 60%" role="document">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 40%" role="document">
 		<div class="modal-content rounded">
 			<form class="form-horizontal">
 				<div class="panel panel-default no-margin">
-					<div class="modal-header">
+					<div class="modal-header" style="border: none;">
 						<button class="close btn-close-modal" data-dismiss="modal">
 							×
 						</button>
-						<p class="modal-title h3">Thông tin lĩnh vực</p>
+						<p class="modal-title h3">Thông tin</p>
 					</div>
-					<div class="modal-body no-padding-bottom">
-						<div class="row">
-							<div class="col-sm-8">
-								<label class="control-label lb600 title-detail">Tên lĩnh vực</label>
-								<p>{{model.name}}</p>
-							</div>
+					<div class="modal-body no-padding-bottom" style="padding: 1.1rem;">
+						<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 10px 0px;">
 							<div class="col-sm-4">
-								<label class="control-label lb600 title-detail">Trạng thái</label>
-								<p *ngIf="model.isActived == 0">Hiệu lực</p>
-								<p *ngIf="model.isActived == 1">Hết hiệu lực</p>
+								<label class="control-label lb600 detail-title">Tên lĩnh vực</label>
+							</div>
+							<div class="col-sm-6">
+								<strong>{{model.name}}</strong>
 							</div>
 						</div>
-						<div class="row">
+						<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 10px 0px;">
 							<div class="col-sm-12">
-								<label class="control-label lb600 title-detail">Mô tả</label>
+								<label class="control-label lb600">Mô tả</label>
+							</div>
+							<div class="col-sm-12">
 								<p>{{model.description}}</p>
 							</div>
 						</div>
+
+						<div class="row" style="padding: 10px 0px;">
+							<div class="col-sm-8">
+								<label class="control-label lb600">Trạng thái</label>
+							</div>
+							<div class="col-sm-4" style="text-align: right;">
+								<span style="padding: 7px;" *ngIf="model.isActived == true" class="badge rounded-pill bg-success">Hiệu lực</span>
+								<span style="padding: 7px;" *ngIf="model.isActived == false" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+							</div>
+						</div>
 					</div>
-					<div class="modal-footer">
-						<button data-dismiss="modal" style="text-transform: none;" class="btn btn-primary btn-sm"> Đóng
-							<!-- <i class="far fa-times"></i> -->
-						</button>
-					</div>
+					<!-- <div class="modal-footer"> -->
+
+					<!-- <button data-dismiss="modal" style="text-transform: none;" class="btn btn-primary btn-sm"> Đóng
+							<i class="far fa-times"></i>
+						</button> -->
+					<!-- </div> -->
 				</div>
 			</form>
 		</div>
