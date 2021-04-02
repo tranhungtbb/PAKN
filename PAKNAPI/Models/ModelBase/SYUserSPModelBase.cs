@@ -38,6 +38,55 @@ namespace PAKNAPI.ModelBase
 		public long? Id { get; set; }
 	}
 
+	public class SYUserGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public string Password { get; set; }
+		public string Salt { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public bool Gender { get; set; }
+		public byte Type { get; set; }
+		public bool IsSuperAdmin { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public int? UnitId { get; set; }
+		public byte? CountLock { get; set; }
+		public DateTime? LockEndOut { get; set; }
+		public string Avatar { get; set; }
+		public string Address { get; set; }
+		public int? PositionId { get; set; }
+
+		public async Task<List<SYUserGetAllOnPage>> SYUserGetAllOnPageDAO(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActive, int? UnitId, int? TypeId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("UserName", UserName);
+			DP.Add("FullName", FullName);
+			DP.Add("Phone", Phone);
+			DP.Add("IsActive", IsActive);
+			DP.Add("UnitId", UnitId);
+			DP.Add("TypeId", TypeId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPage>("SY_UserGetAllOnPage", DP)).ToList();
+		}
+	}
+
 	public class SYUserGetByID
 	{
 		private SQLCon _sQLCon;
@@ -96,6 +145,7 @@ namespace PAKNAPI.ModelBase
 		public async Task<int> SYUserInsertDAO(SYUserInsertIN _sYUserInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
+			DP.Add("TypeId", _sYUserInsertIN.TypeId);
 			DP.Add("FullName", _sYUserInsertIN.FullName);
 			DP.Add("UserName", _sYUserInsertIN.UserName);
 			DP.Add("Password", _sYUserInsertIN.Password);
@@ -121,6 +171,7 @@ namespace PAKNAPI.ModelBase
 
 	public class SYUserInsertIN
 	{
+		public int? TypeId { get; set; }
 		public string FullName { get; set; }
 		public string UserName { get; set; }
 		public string Password { get; set; }
@@ -158,6 +209,7 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _sYUserUpdateIN.Id);
+			DP.Add("TypeId", _sYUserUpdateIN.TypeId);
 			DP.Add("FullName", _sYUserUpdateIN.FullName);
 			DP.Add("UserName", _sYUserUpdateIN.UserName);
 			DP.Add("Password", _sYUserUpdateIN.Password);
@@ -184,6 +236,7 @@ namespace PAKNAPI.ModelBase
 	public class SYUserUpdateIN
 	{
 		public long? Id { get; set; }
+		public int? TypeId { get; set; }
 		public string FullName { get; set; }
 		public string UserName { get; set; }
 		public string Password { get; set; }

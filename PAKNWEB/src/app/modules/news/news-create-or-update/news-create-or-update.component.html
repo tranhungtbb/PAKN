@@ -11,7 +11,7 @@
 							Quay lại
 						</a>
 						<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave($event)">Lưu</button>
-						<button class="btn btn-sm grd-green rounded text-white border-0" (click)="onPublished()">Công bố</button>
+						<button class="btn btn-sm grd-green rounded text-white border-0" (click)="onSave($event,true)">Công bố</button>
 					</div>
 				</div>
 			</div>
@@ -48,10 +48,10 @@
 								mới</button>
 						</div>
 						<div class="col-md-12 pr-0 pl-0">
-							<div class="btn btn-default p-3 border" *ngFor="let relateItem of newsRelatesSelected">
-								<img width="70" height="50" src="{{relateItem.imagePath}}" />
+							<div class="btn btn-default p-3 border mb-2" *ngFor="let relateItem of newsRelatesSelected">
+								<img width="70" [src]="relateItem.imageBin" />
 								<span>
-									<strong>{{relateItem.title}}</strong>
+									&nbsp;<strong>{{relateItem.title}}</strong>
 								</span>
 							</div>
 						</div>
@@ -68,8 +68,8 @@
 						</ng-select>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
-						<label class="mb-1"><span class="text-uppercase">kiểu bài</span></label>
-						<div class="radio radio-inline" *ngFor="let pType of postTypes">
+						<label class="mb-1 dis-block"><span class="text-uppercase">kiểu bài</span></label>
+						<div class="radio dis-inline" *ngFor="let pType of postTypes">
 							<label>
 								<input type="radio" formControlName="postType" [(ngModel)]="model.postType" [value]="pType.value" [checked]="pType.checked">
 								<span class="text-uppercase"> {{pType.text}}</span>
@@ -80,7 +80,7 @@
 						<label class="mb-1"><span class="text-uppercase">ảnh đại diện</span></label>
 						<input type="file" [hidden]="true" id="avatar-image" (change)="onAvatarChange($event)">
 						<div class="news-avatar" (click)="onChangeAvatar()">
-							<img src="{{avatarUrl}}" alt="">
+							<img [src]="avatarUrl" alt="">
 						</div>
 					</div>
 					<!-- <div class="col-12 col-lg-12 form-group mb-6">

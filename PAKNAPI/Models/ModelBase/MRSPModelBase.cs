@@ -103,6 +103,188 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class MRRecommendationConclusionFilesDelete
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationConclusionFilesDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationConclusionFilesDelete()
+		{
+		}
+
+		public async Task<int> MRRecommendationConclusionFilesDeleteDAO(MRRecommendationConclusionFilesDeleteIN _mRRecommendationConclusionFilesDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationConclusionFilesDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_Conclusion_FilesDelete", DP));
+		}
+	}
+
+	public class MRRecommendationConclusionFilesDeleteIN
+	{
+		public int? Id { get; set; }
+	}
+
+	public class MRRecommendationConclusionFilesGetByConclusionId
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationConclusionFilesGetByConclusionId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationConclusionFilesGetByConclusionId()
+		{
+		}
+
+		public int Id;
+		public int? ConclusionId;
+		public string Name;
+		public short? FileType;
+		public string FilePath;
+
+		public async Task<List<MRRecommendationConclusionFilesGetByConclusionId>> MRRecommendationConclusionFilesGetByConclusionIdDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionFilesGetByConclusionId>("MR_Recommendation_Conclusion_FilesGetByConclusionId", DP)).ToList();
+		}
+	}
+
+	public class MRRecommendationConclusionFilesInsert
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationConclusionFilesInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationConclusionFilesInsert()
+		{
+		}
+
+		public async Task<int> MRRecommendationConclusionFilesInsertDAO(MRRecommendationConclusionFilesInsertIN _mRRecommendationConclusionFilesInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ConclusionId", _mRRecommendationConclusionFilesInsertIN.ConclusionId);
+			DP.Add("Name", _mRRecommendationConclusionFilesInsertIN.Name);
+			DP.Add("FileType", _mRRecommendationConclusionFilesInsertIN.FileType);
+			DP.Add("FilePath", _mRRecommendationConclusionFilesInsertIN.FilePath);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_Conclusion_FilesInsert", DP));
+		}
+	}
+
+	public class MRRecommendationConclusionFilesInsertIN
+	{
+		public int? ConclusionId { get; set; }
+		public string Name { get; set; }
+		public short? FileType { get; set; }
+		public string FilePath { get; set; }
+	}
+
+	public class MRRecommendationConclusionDelete
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationConclusionDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationConclusionDelete()
+		{
+		}
+
+		public async Task<int> MRRecommendationConclusionDeleteDAO(MRRecommendationConclusionDeleteIN _mRRecommendationConclusionDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationConclusionDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_ConclusionDelete", DP));
+		}
+	}
+
+	public class MRRecommendationConclusionDeleteIN
+	{
+		public int? Id { get; set; }
+	}
+
+	public class MRRecommendationConclusionGetByRecommendationId
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationConclusionGetByRecommendationId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationConclusionGetByRecommendationId()
+		{
+		}
+
+		public int Id;
+		public int RecommendationId;
+		public long UserCreatedId;
+		public int? UnitCreatedId;
+		public long? ReceiverId;
+		public int? UnitReceiverId;
+		public string Content;
+
+		public async Task<List<MRRecommendationConclusionGetByRecommendationId>> MRRecommendationConclusionGetByRecommendationIdDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionGetByRecommendationId>("MR_Recommendation_ConclusionGetByRecommendationId", DP)).ToList();
+		}
+	}
+
+	public class MRRecommendationConclusionInsert
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationConclusionInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationConclusionInsert()
+		{
+		}
+
+		public async Task<decimal?> MRRecommendationConclusionInsertDAO(MRRecommendationConclusionInsertIN _mRRecommendationConclusionInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationId", _mRRecommendationConclusionInsertIN.RecommendationId);
+			DP.Add("UserCreatedId", _mRRecommendationConclusionInsertIN.UserCreatedId);
+			DP.Add("UnitCreatedId", _mRRecommendationConclusionInsertIN.UnitCreatedId);
+			DP.Add("ReceiverId", _mRRecommendationConclusionInsertIN.ReceiverId);
+			DP.Add("UnitReceiverId", _mRRecommendationConclusionInsertIN.UnitReceiverId);
+			DP.Add("Content", _mRRecommendationConclusionInsertIN.Content);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("MR_Recommendation_ConclusionInsert", DP);
+		}
+	}
+
+	public class MRRecommendationConclusionInsertIN
+	{
+		public int? RecommendationId { get; set; }
+		public long? UserCreatedId { get; set; }
+		public int? UnitCreatedId { get; set; }
+		public long? ReceiverId { get; set; }
+		public int? UnitReceiverId { get; set; }
+		public string Content { get; set; }
+	}
+
 	public class MRRecommendationFilesDelete
 	{
 		private SQLCon _sQLCon;
@@ -604,7 +786,7 @@ namespace PAKNAPI.ModelBase
 		public DateTime? UpdatedDate;
 		public int ProcessId;
 
-		public async Task<List<MRRecommendationGetAllWithProcess>> MRRecommendationGetAllWithProcessDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, int? PageSize, int? PageIndex)
+		public async Task<List<MRRecommendationGetAllWithProcess>> MRRecommendationGetAllWithProcessDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Code", Code);
@@ -614,6 +796,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Field", Field);
 			DP.Add("Status", Status);
 			DP.Add("UnitProcessId", UnitProcessId);
+			DP.Add("UserProcessId", UserProcessId);
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
 
@@ -657,6 +840,49 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByID>("MR_RecommendationGetByID", DP)).ToList();
+		}
+	}
+
+	public class MRRecommendationGetByIDView
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGetByIDView(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGetByIDView()
+		{
+		}
+
+		public int Id;
+		public string Code;
+		public string Title;
+		public string Content;
+		public int? Field;
+		public int? UnitId;
+		public short? TypeObject;
+		public long? SendId;
+		public string Name;
+		public byte? Status;
+		public DateTime? SendDate;
+		public bool? ReactionaryWord;
+		public long? CreatedBy;
+		public DateTime? CreatedDate;
+		public long? UpdatedBy;
+		public DateTime? UpdatedDate;
+		public string UnitName;
+		public string FieldName;
+		public int? UnitActive;
+		public long? UserActive;
+
+		public async Task<List<MRRecommendationGetByIDView>> MRRecommendationGetByIDViewDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByIDView>("MR_RecommendationGetByIDView", DP)).ToList();
 		}
 	}
 

@@ -1,106 +1,6 @@
-<app-user-create-or-update></app-user-create-or-update>
-<!-- Modal unit -->
-<div class="modal fade" id="modal-create-or-update">
-	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-		<div class="modal-content rounded">
-			<div class="modal-header border-bottom-0">
-				<p class="modal-title h3">{{modalCreateOrUpdateTitle}}</p>
-				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-				</button>
-			</div>
-			<div class="modal-body pb-0">
-				<div class="align-items-center form-group mb-4 border-bottom pb-3">
-					<strong class="h4 mr-5">Cấp đơn vị:</strong>
-					<label class="radio-inline mr-5"><input (click)="changeLevel(1)" [checked]="modelUnit.unitLevel == 1" class="radio-danger" type="radio" name="optradio" checked>
-						Cấp tỉnh</label>
-					<label class="radio-inline mr-5"><input (click)="changeLevel(2)" [checked]="modelUnit.unitLevel == 2" type="radio" name="optradio"> Cấp huyện</label>
-					<label class="radio-inline"><input (click)="changeLevel(3)" [checked]="modelUnit.unitLevel == 3" type="radio" name="optradio"> Cấp xã</label>
-				</div>
-				<form id="createUnitFrom" [formGroup]="createUnitFrom" (ngSubmit)="onSaveUnit()">
-					<input hidden formControlName="unitLevel" [(ngModel)]="modelUnit.unitLevel">
-					<div class="form-row">
-						<div class="col-12 col-lg-8 form-group" [ngClass]="{'col-lg-4':modelUnit.unitLevel > 1,'col-lg-8':modelUnit.unitLevel == 1}">
-							<label class="mb-1">Tên đơn vị <span class="cl-red">(*)</span></label>
-							<input formControlName="name" [(ngModel)]="modelUnit.name" type="text" class="form-control" placeholder="Nhập...">
-							<div *ngIf="(unitFormSubmitted && fUnit.name.invalid)||(fUnit.name.invalid && (fUnit.name.dirty || fUnit.name.touched))" class="has-error m-b-12">
-								<div *ngIf="fUnit.name.errors.required">
-									<span class="help-block">Trường dữ liệu này không được để trống</span>
-								</div>
-							</div>
-						</div>
-						<div class="col-12 col-lg-4 form-group" *ngIf="modelUnit.unitLevel > 1">
-							<label class="mb-1">Đơn vị cấp trên <span class="cl-red">(*)</span></label>
-							<!-- <select class="form-control" id="f_parentId">
-								<option *ngFor="let item of getUnitParent" [value]="item.id">{{item.name}}</option>
-							</select> -->
-							<!-- <ng-select id="f_parentId" class="form-control" [items]="unitFlatlist | unitFilter:modelUnit.unitLevel - 1" placeholder="Đơn vị cấp trên ..."
-								bindLabel="name" bindValue="id" formControlName="parentId" [(ngModel)]="modelUnit.parentId" [closeOnSelect]="true">
-							</ng-select> -->
-							<ng-select formControlName="parentId" [(ngModel)]="modelUnit.parentId" class="form-control">
-								<ng-option *ngFor="let item of unitFlatlist | unitFilter:modelUnit.unitLevel-1" [value]="item.id">{{item.name}}</ng-option>
-							</ng-select>
-							<div *ngIf="(unitFormSubmitted && fUnit.parentId.invalid)||(fUnit.parentId.invalid && (fUnit.parentId.dirty || fUnit.parentId.touched))"
-								class="has-error m-b-12">
-								<div *ngIf="fUnit.parentId.errors.required">
-									<span class="help-block">Trường dữ liệu này không được để trống</span>
-								</div>
-							</div>
-						</div>
-						<div class="col-12 col-lg-4 form-group">
-							<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" formControlName="isActived"
-								[(ngModel)]="modelUnit.isActived" [closeOnSelect]="true">
-							</ng-select>
-						</div>
-						<div class="col-12 col-lg-8 form-group">
-							<label class="mb-1">Email <span class="cl-red">(*)</span></label>
-							<input formControlName="email" [(ngModel)]="modelUnit.email" type="mail" class="form-control" placeholder="Nhập...">
-							<div *ngIf="(unitFormSubmitted && fUnit.email.invalid)||(fUnit.email.invalid && (fUnit.email.dirty || fUnit.email.touched))" class="has-error m-b-12">
-								<div *ngIf="fUnit.email.errors.required">
-									<span class="help-block">Trường dữ liệu này không được để trống</span>
-								</div>
-								<div *ngIf="fUnit.email.errors.pattern">
-									<span class="help-block">Định dạng email không đúng</span>
-								</div>
-							</div>
-						</div>
-						<div class="col-12 col-lg-4 form-group">
-							<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
-							<input formControlName="phone" [(ngModel)]="modelUnit.phone" type="text" class="form-control" placeholder="Nhập...">
-							<div *ngIf="(unitFormSubmitted && fUnit.phone.invalid)||(fUnit.phone.invalid && (fUnit.phone.dirty || fUnit.phone.touched))" class="has-error m-b-12">
-								<div *ngIf="fUnit.phone.errors.required">
-									<span class="help-block">Trường dữ liệu này không được để trống</span>
-								</div>
-								<div *ngIf="fUnit.phone.errors.pattern">
-									<span class="help-block">Định dạng số điện thoại không đúng</span>
-								</div>
-							</div>
-						</div>
-						<div class="col-12 form-group">
-							<label class="mb-1">Địa chỉ <span class="cl-red">(*)</span></label>
-							<input formControlName="address" [(ngModel)]="modelUnit.address" type="text" class="form-control" placeholder="Nhập...">
-							<div *ngIf="(unitFormSubmitted && fUnit.address.invalid)||(fUnit.address.invalid && (fUnit.address.dirty || fUnit.address.touched))"
-								class="has-error m-b-12">
-								<div *ngIf="fUnit.address.errors.required">
-									<span class="help-block">Trường dữ liệu này không được để trống</span>
-								</div>
-							</div>
-						</div>
-						<div class="col-12 form-group">
-							<label class="mb-1">Mô tả</label>
-							<textarea class="form-control" rows="4" placeholder="Nhập mô tả..."></textarea>
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer border-top-0">
-				<button type="button" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-				<button type="button" (click)="onSaveUnit()" class="btn btn-danger border-0 px-5 grd-blue">Xác nhận</button>
-			</div>
-		</div>
-	</div>
+<div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">
+	<span class="text-uppercase">Thông tin đơn vị</span>
 </div>
-<!-- end modal unit -->
 
 <!-- row -->
 <div class="container-fluid p-0">
@@ -109,14 +9,12 @@
 			<p class="p-3 h4 d-flex justify-content-between align-items-center shadow">
 				<span class="text-uppercase">Danh sách đơn vị</span>
 				<button type="button" class="btn grd-blue border-0 p-2 btn-sm text-white" (click)="modalCreateOrUpdate(0)">
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
-					</svg>
+					<i class="pi pi-plus"></i>
 				</button>
 			</p>
 			<p-tree id="tree-unit" [value]="treeUnit">
 				<ng-template let-node pTemplate="default">
-					<a (click)="treeViewActive(node.id, node.unitLevel)">{{node.name}}</a>
+					<a (click)="treeViewActive(node.id, node.unitLevel)" [ngClass]="{'text-color-blue':(unitObject.id && unitObject.id == node.id)}">{{node.name}}</a>
 				</ng-template>
 			</p-tree>
 		</div>
@@ -126,13 +24,16 @@
 					<p class="card-title d-flex align-items-center mb-0">
 						<span class="badge rounded-pill badge-success mr-3" *ngIf="unitObject.isActived">Hiệu lực</span>
 						<span class="badge rounded-pill badge-light mr-3" *ngIf="!unitObject.isActived">Hết hiệu lực</span>
-						{{unitObject.name}}
+						<span>{{unitObject.name}}</span>
 					</p>
 					<div class="d-flex align-items-center">
 						<button type="button" class="btn grd-brown text-dark border-0 mr-3 py-2 px-3" (click)="modalCreateOrUpdate(unitObject.id,unitObject.unitLevel)"><i
-								class="bi bi-pencil-square mr-2"></i>Sửa</button>
-						<button type="button" class="btn grd-red text-white border-0 py-2 px-3" (click)="onOpenConfirmModal(unitObject.id,'unit')"><i
-								class="bi bi-trash mr-2"></i>Xóa</button>
+								class="bi bi-pencil-square mr-2"></i>
+							Sửa
+						</button>
+						<button type="button" class="btn grd-red text-white border-0 py-2 px-3" (click)="onOpenConfirmModal(unitObject.id,'unit')"><i class="bi bi-trash mr-2"></i>
+							Xóa
+						</button>
 					</div>
 				</div>
 				<div class="card-body pt-0 pb-3">
@@ -146,17 +47,14 @@
 			</div>
 			<div id="accordion-four" class="accordion accordion-no-gutter accordion-bordered">
 				<div class="accordion__item">
-					<div class="accordion__header">
+					<div class="accordion__header collapsed">
 						<div class="d-flex justify-content-between align-items-center pr-5">
-							<span class="accordion__header--text text-uppercase h4" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne">Người dùng trong đơn
+							<span class="accordion__header--text text-uppercase h4">Người dùng trong đơn
 								vị</span>
 							<div class="nav-table">
 								<div class="d-flex align-items-center">
 									<button type="button" class="btn btn-outline-secondary mr-2 p-2" (click)="onUserPageChange(1)">
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
-											<path fill-rule="evenodd"
-												d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
-										</svg>
+										<i class="pi pi-angle-left"></i>
 									</button>
 									<div class="border d-flex align-items-center border-dark px-2 rounded">
 										<input type="number" (change)="onUserFilterChange()" [value]="queryUser.pageIndex"
@@ -164,32 +62,22 @@
 										<span>/{{userPageCount}}</span>
 									</div>
 									<button type="button" class="btn btn-outline-secondary ml-2 p-2" (click)="onUserPageChange(-1)">
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-											<path fill-rule="evenodd"
-												d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-										</svg>
+										<i class="pi pi-angle-right"></i>
 									</button>
 								</div>
 							</div>
 							<div class="btn-group" role="group">
 								<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
-										<path
-											d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
-										<path
-											d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-									</svg>
+									<i class="pi pi-file-excel"></i>
 									Xuất excel
 								</button>
 								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalUserCreateOrUpdate(null)">
-									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-										<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-									</svg>
+									<i class="pi pi-plus"></i>
 									Thêm mới
 								</button>
 							</div>
 						</div>
-						<span class="accordion__header--indicator style_two"></span>
+						<span class="accordion__header--indicator style_two" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne"></span>
 					</div>
 					<div id="bordered_no-gutter_collapseOne" class="collapse accordion__body" data-parent="#accordion-four">
 						<div class="table-responsive">
@@ -228,14 +116,12 @@
 												<strong>Trạng thái</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<ng-select class="form-control form-control-sm mod" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
-												[(ngModel)]="queryUser.isActived" [closeOnSelect]="true" (change)="onUserFilterChange()">
-											</ng-select>
-											<!-- <select [(ngModel)]="queryUser.isActived" class="form-control form-control-sm">
-												<option value="">__Toàn bộ__</option>
-												<option value="true">Hiệu lực</option>
-												<option value="false">Hết hiệu lực</option>
-											</select> -->
+											<div class="dropdown bootstrap-select form-control form-control-sm">
+												<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
+													[(ngModel)]="queryUser.isActived" [closeOnSelect]="true" (change)="onUserFilterChange()">
+												</ng-select>
+											</div>
+
 										</th>
 										<th class="text-right"><strong>Thao tác</strong></th>
 									</tr>
@@ -270,15 +156,12 @@
 				<div class="accordion__item">
 					<div class="accordion__header collapsed">
 						<div class="d-flex justify-content-between align-items-center pr-5">
-							<span class="accordion__header--text text-uppercase h4" data-toggle="collapse" data-target="#bordered_no-gutter_collapseTwo">Danh sách đơn vị cấp
+							<span class="accordion__header--text text-uppercase h4">Danh sách đơn vị cấp
 								dưới</span>
 							<div class="nav-table">
 								<div class="d-flex align-items-center">
 									<button type="button" class="btn btn-outline-secondary mr-2 p-2" (click)="changePage(-1)">
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
-											<path fill-rule="evenodd"
-												d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
-										</svg>
+										<i class="pi pi-angle-left"></i>
 									</button>
 									<div class="border d-flex align-items-center border-dark px-2 rounded">
 										<input type="number" [value]="query.pageIndex" (change)="unitFilterChange()"
@@ -286,32 +169,22 @@
 										<span>/{{unitPageCount}}</span>
 									</div>
 									<button type="button" class="btn btn-outline-secondary ml-2 p-2" (click)="changePage(1)">
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
-											<path fill-rule="evenodd"
-												d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-										</svg>
+										<i class="pi pi-angle-right"></i>
 									</button>
 								</div>
 							</div>
 							<div class="btn-group" role="group">
 								<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
-										<path
-											d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
-										<path
-											d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-									</svg>
+									<i class="pi pi-file-excel"></i>
 									Xuất excel
 								</button>
 								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalCreateOrUpdate(0,unitObject.unitLevel+1,unitObject.id)">
-									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-										<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-									</svg>
+									<i class="pi pi-plus"></i>
 									Thêm mới
 								</button>
 							</div>
 						</div>
-						<span class="accordion__header--indicator style_two"></span>
+						<span class="accordion__header--indicator style_two" data-toggle="collapse" data-target="#bordered_no-gutter_collapseTwo"></span>
 					</div>
 					<div id="bordered_no-gutter_collapseTwo" class="collapse accordion__body" data-parent="#accordion-four">
 						<div class="table-responsive">
@@ -357,9 +230,12 @@
 												<strong>Trạng thái</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<ng-select class="form-control form-control-sm mod" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
-												[closeOnSelect]="true" [(ngModel)]="query.isActive" (change)="unitFilterChange()">
-											</ng-select>
+											<div class="dropdown bootstrap-select form-control form-control-sm">
+												<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [closeOnSelect]="true"
+													[(ngModel)]="query.isActive" (change)="unitFilterChange()">
+												</ng-select>
+											</div>
+
 										</th>
 										<th class="text-right"><strong>Thao tác</strong></th>
 									</tr>
@@ -397,6 +273,110 @@
 		</div>
 	</div>
 </div>
+
+
+<app-user-create-or-update></app-user-create-or-update>
+<!-- Modal unit -->
+<div class="modal fade" id="modal-create-or-update">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">{{modalCreateOrUpdateTitle}}</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-0">
+				<div class="align-items-center form-group mb-4 border-bottom pb-3">
+					<strong class="h4 mr-5">Cấp đơn vị:</strong>
+					<label class="radio-inline mr-5"><input (click)="changeLevel(1)" [checked]="modelUnit.unitLevel == 1" class="radio-danger" type="radio" name="optradio" checked>
+						<span class="text-uppercase"> Cấp tỉnh</span>
+					</label>
+					<label class="radio-inline mr-5"><input (click)="changeLevel(2)" [checked]="modelUnit.unitLevel == 2" type="radio" name="optradio">
+						<span class="text-uppercase">Cấp huyện</span>
+					</label>
+					<label class="radio-inline"><input (click)="changeLevel(3)" [checked]="modelUnit.unitLevel == 3" type="radio" name="optradio"> <span class="text-uppercase">Cấp
+							xã</span></label>
+				</div>
+				<form id="createUnitFrom" [formGroup]="createUnitFrom" (ngSubmit)="onSaveUnit()">
+					<input hidden formControlName="unitLevel" [(ngModel)]="modelUnit.unitLevel">
+					<div class="form-row">
+						<div class="col-12 col-lg-8 form-group" [ngClass]="{'col-lg-4':modelUnit.unitLevel > 1,'col-lg-8':modelUnit.unitLevel == 1}">
+							<label class="mb-1">Tên đơn vị <span class="cl-red">(*)</span></label>
+							<input svTrim formControlName="name" [(ngModel)]="modelUnit.name" type="text" class="form-control" placeholder="Nhập...">
+							<div *ngIf="(unitFormSubmitted && fUnit.name.invalid)||(fUnit.name.invalid && (fUnit.name.dirty || fUnit.name.touched))" class="has-error m-b-12">
+								<div *ngIf="fUnit.name.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-4 form-group" *ngIf="modelUnit.unitLevel > 1">
+							<label class="mb-1">Đơn vị cấp trên <span class="cl-red">(*)</span></label>
+							<ng-select formControlName="parentId" [(ngModel)]="modelUnit.parentId" class="form-control">
+								<ng-option *ngFor="let item of unitFlatlist | unitFilter:modelUnit.unitLevel-1" [value]="item.id">{{item.name}}</ng-option>
+							</ng-select>
+							<div *ngIf="(unitFormSubmitted && fUnit.parentId.invalid)||(fUnit.parentId.invalid && (fUnit.parentId.dirty || fUnit.parentId.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="fUnit.parentId.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-4 form-group">
+							<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
+							<ng-select class="form-control" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" formControlName="isActived"
+								[(ngModel)]="modelUnit.isActived" [closeOnSelect]="true" [searchable]="false" [clearable]="false">
+							</ng-select>
+						</div>
+						<div class="col-12 col-lg-8 form-group">
+							<label class="mb-1">Email <span class="cl-red">(*)</span></label>
+							<input formControlName="email" [(ngModel)]="modelUnit.email" type="mail" class="form-control" placeholder="Nhập...">
+							<div *ngIf="(unitFormSubmitted && fUnit.email.invalid)||(fUnit.email.invalid && (fUnit.email.dirty || fUnit.email.touched))" class="has-error m-b-12">
+								<div *ngIf="fUnit.email.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+								<div *ngIf="fUnit.email.errors.email">
+									<span class="help-block">Định dạng email không đúng</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-4 form-group">
+							<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
+							<input formControlName="phone" [(ngModel)]="modelUnit.phone" type="text" class="form-control" placeholder="Nhập...">
+							<div *ngIf="(unitFormSubmitted && fUnit.phone.invalid)||(fUnit.phone.invalid && (fUnit.phone.dirty || fUnit.phone.touched))" class="has-error m-b-12">
+								<div *ngIf="fUnit.phone.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+								<div *ngIf="fUnit.phone.errors.pattern">
+									<span class="help-block">Định dạng số điện thoại không đúng</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 form-group">
+							<label class="mb-1">Địa chỉ <span class="cl-red">(*)</span></label>
+							<input formControlName="address" [(ngModel)]="modelUnit.address" type="text" class="form-control" placeholder="Nhập...">
+							<div *ngIf="(unitFormSubmitted && fUnit.address.invalid)||(fUnit.address.invalid && (fUnit.address.dirty || fUnit.address.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="fUnit.address.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 form-group">
+							<label class="mb-1">Mô tả</label>
+							<textarea [(ngModel)]="modelUnit.description" formControlName="description" class="form-control" rows="4" placeholder="Nhập mô tả..."></textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+				<button type="button" (click)="onSaveUnit()" class="btn btn-danger border-0 px-5 grd-blue">Xác nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end modal unit -->
+
 
 <!-- confirm modal -->
 <div class="modal fade" id="modal-confirm">

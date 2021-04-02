@@ -4,7 +4,7 @@ import { RecommendationObject, RecommendationProcessObject, RecommendationSearch
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
-import { MESSAGE_COMMON, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { stat } from 'fs'
 import { COMMONS } from 'src/app/commons/commons'
@@ -81,6 +81,7 @@ export class ListProcessWaitComponent implements OnInit {
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
 			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
 			UnitProcessId: this.storeageService.getUnitId(),
+			UserProcessId: this.storeageService.getUserId(),
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
@@ -138,17 +139,23 @@ export class ListProcessWaitComponent implements OnInit {
 	preProcess(recommendationId, idProcess, status) {
 		this.modelProcess.status = status
 		this.modelProcess.id = idProcess
+		this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
 		this.modelProcess.recommendationId = recommendationId
 		this.modelProcess.reactionaryWord = false
 		this.modelProcess.reasonDeny = ''
-		if (status == RECOMMENDATION_STATUS.PROCESS_DENY) {
+		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
 			$('#modalReject').modal('show')
 		} else {
 			$('#modalAccept').modal('show')
 		}
 	}
 	onProcessAccept() {
-		this._service.recommendationProcess(this.modelProcess).subscribe((response) => {
+		var request = {
+			_mRRecommendationForwardProcessIN: this.modelProcess,
+			RecommendationStatus: RECOMMENDATION_STATUS.PROCESSING,
+			ReactionaryWord: this.modelProcess.reactionaryWord,
+		}
+		this._service.recommendationProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
 				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
@@ -166,7 +173,11 @@ export class ListProcessWaitComponent implements OnInit {
 			this._toastr.error('Vui lòng nhập lý do')
 			return
 		} else {
-			this._service.recommendationProcess(this.modelProcess).subscribe((response) => {
+			var request = {
+				_mRRecommendationForwardProcessIN: this.modelProcess,
+				RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_DENY,
+			}
+			this._service.recommendationProcess(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
 					this._toastr.success(COMMONS.DENY_SUCCESS)

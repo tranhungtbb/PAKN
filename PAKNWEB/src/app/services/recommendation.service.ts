@@ -36,6 +36,14 @@ export class RecommendationService {
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetDataForForward, headers)
 	}
 
+	recommendationGetDataForProcess(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetDataForProcess, headers)
+	}
+
 	recommendationGetList(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
@@ -147,6 +155,14 @@ export class RecommendationService {
 			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationProcess, headers)
+	}
+
+	recommendationProcessConclusion(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationProcessConclusion, headers)
 	}
 
 	recommendationDelete(request: any): Observable<any> {

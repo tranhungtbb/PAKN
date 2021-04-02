@@ -1,12 +1,13 @@
 <div class="container-fluid p-0">
 	<div class="row">
 		<div class="col-lg-12">
-			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+			<!-- <ol class="breadcrumb title-module px-0 bg-transparent mb-0">
 				<li class="breadcrumb-item"><a>Danh mục</a></li>
 				<li class="breadcrumb-item active"><a class="font-weight-bold"> Hashtag</a></li>
-			</ol>
+			</ol> -->
+			<div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách Hashtag</div>
 			<div class="btn-group group-button-table" role="group">
-				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
+				<!-- <button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
 						<path
 							d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
@@ -14,7 +15,7 @@
 							d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
 					</svg>
 					Xuất excel
-				</button>
+				</button> -->
 				<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="preCreate()">
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
@@ -39,7 +40,7 @@
 									</p>
 								</th>
 
-								<th style="width: 75%;">
+								<th style="width: 73%;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Tên Hashtag</strong>
 										<span class="caret-tb"></span>
@@ -58,7 +59,7 @@
 										</ng-select>
 									</div>
 								</th>
-								<th style="width: 10%;" class="text-right"><strong>Thao tác</strong></th>
+								<th style="width: 7%;" class="text-right"><strong>THAO TÁC</strong></th>
 							</tr>
 						</ng-template>
 						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -68,7 +69,7 @@
 									<strong class="highlight"><a class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
 								</td>
 								<td style="cursor: pointer;">
-									<span *ngIf="item.isActived == true" (click)="confirmChangeStatus(item)" class="badge rounded-pill bg-blue2">Hiệu lực</span>
+									<span *ngIf="item.isActived == true" (click)="confirmChangeStatus(item)" class="badge rounded-pill bg-success">Hiệu lực</span>
 									<span *ngIf="item.isActived == false" (click)="confirmChangeStatus(item)" class="badge rounded-pill badge-light">Hết hiệu lực</span>
 								</td>
 								<td>
@@ -128,8 +129,8 @@
 
 					</div>
 					<div class="modal-footer border-top-0">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" style="text-transform: none;" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" style="text-transform: none;" (click)="onSave()">Xác nhận</button>
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onSave()">Xác nhận</button>
 					</div>
 				</div>
 			</form>
@@ -154,8 +155,8 @@
 						</div>
 					</div>
 					<div class="modal-footer" style="border: none; justify-content: center;">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" style="text-transform: none;" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" style="text-transform: none;" (click)="UpdateIsActived()">Xác
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="UpdateIsActived()">Xác
 							nhận</button>
 					</div>
 				</div>
@@ -183,7 +184,7 @@
 					</div>
 					<div class="modal-footer" style="border: none; justify-content: center;">
 						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" style="text-transform: none;" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" style="text-transform: none;" (click)="onDelete(idDelete)">Xác
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" style="text-transform: none;" (click)="onDelete()">Xác
 							nhận</button>
 					</div>
 				</div>

@@ -88,3 +88,11 @@ body .ui-tree .ui-tree-container .ui-treenode .ui-treenode-content .ui-tree-togg
 body .ui-tree .ui-tree-container .ui-treenode .ui-treenode-content .ui-tree-toggler.pi-caret-down::before {
 	content: '\f2e5' !important;
 }
+
+.text-normal {
+	text-transform: capitalize !important;
+}
+
+.text-color-blue {
+	color: rgb(0, 81, 255);
+}
