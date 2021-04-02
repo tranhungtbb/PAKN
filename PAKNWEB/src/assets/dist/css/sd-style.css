@@ -722,6 +722,10 @@ transition: all .3s ease-in-out;
 	padding: 0.75rem;
 }
 
+.attach-file.with-border .alert{	
+	border: 1px solid #E0E0E0;
+}
+
 .dashboard{
 	background: linear-gradient(291.94deg, #DE7941 7.74%, #BE2727 59.19%, #B43838 98.37%);
 }

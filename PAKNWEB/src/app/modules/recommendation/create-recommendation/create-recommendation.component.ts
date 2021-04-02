@@ -196,7 +196,6 @@ export class CreateRecommendationComponent implements OnInit {
 		if (event.target.files.length == 0) {
 			return
 		}
-		debugger
 		const check = this.fileService.checkFileWasExitsted(event, this.files)
 		if (check === 1) {
 			for (let item of event.target.files) {
