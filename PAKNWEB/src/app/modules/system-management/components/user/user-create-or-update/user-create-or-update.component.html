@@ -1,15 +1,21 @@
 <div class="modal fade" id="modal-user-create-or-update">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content rounded">
-			<div class="modal-header border-bottom-0">
+			<div class="modal-header border-bottom-0 bg-ligth-gold">
 				<p class="modal-title h3">{{modalTitle}}</p>
 				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
 				</button>
 			</div>
-			<div class="modal-body pb-0">
-				<div class="align-items-center form-group mb-4 border-bottom pb-3">
+			<div class="modal-body pb-0 mt-0 pt-0">
+				<div class="align-items-center mb-4 avatar-bg">
 					<div class="avatar-frame">
 						<img src="" />
+					</div>
+					<div class="text-center">
+						<a class="color-brow" href="javascript:void(0);">
+							<i class="pi pi-image"></i>
+							Tải lên ảnh đại diện
+						</a>
 					</div>
 				</div>
 				<form id="createUserForm" [formGroup]="createUserForm" (ngSubmit)="onSaveUser()">

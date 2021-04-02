@@ -1,2 +1,22 @@
 .avatar-frame {
+	width: 130px;
+	height: 130px;
+	border-radius: 100%;
+	background: linear-gradient(180deg, rgba(255, 239, 223, 0.6) 0%, rgba(230, 190, 157, 0.6) 100%);
+	border: 7px solid white;
+	margin: 0 auto;
+}
+.bg-ligth-gold {
+	background-color: #fffaf5;
+}
+.avatar-bg {
+	background: linear-gradient(to bottom, #fffaf5 50%, white 50%);
+	margin-left: -30px;
+	margin-right: -30px;
+}
+.margin-auto {
+	margin: 0 auto;
+}
+.color-brow {
+	color: #743f15;
 }
