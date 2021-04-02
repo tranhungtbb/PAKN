@@ -115,6 +115,8 @@ export class Api {
 	public static NewsDelete = 'NESPBase/NENewsDeleteBase'
 	public static NewsUploadFile = 'files/upload?folder=News'
 	public static NewsRelatesGetAll = 'NESPBase/NERelateGetAllBase'
+	public static NewsGetAvatar = 'files/get-news-avatar'
+	public static NewsGetAvatars = 'files/get-news-avatar'
 
 	//Department
 	public static DepartmentGetList = 'CACategorySPBase/CADepartmentGetAllOnPageBase'

@@ -30,7 +30,7 @@
 								<div *ngIf="fUser.email.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
 								</div>
-								<div *ngIf="fUser.email.errors.pattern">
+								<div *ngIf="fUser.email.errors.email">
 									<span class="help-block">Định dạng email không đúng</span>
 								</div>
 							</div>
@@ -88,7 +88,7 @@
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Giới tính</label>
 							<ng-select class="form-control" [items]="listGender" placeholder="Giới tính ..." bindLabel="text" bindValue="value" [(ngModel)]="modelUser.gender"
-								formControlName="gender" [closeOnSelect]="true">
+								formControlName="gender" [closeOnSelect]="true" [searchable]="false" [clearable]="false">
 							</ng-select>
 						</div>
 						<div class="col-12 col-lg-4 form-group">
@@ -106,7 +106,7 @@
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Trạng thái</label>
 							<ng-select class="form-control" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" formControlName="isActived"
-								[(ngModel)]="modelUser.isActived" [closeOnSelect]="true">
+								[(ngModel)]="modelUser.isActived" [closeOnSelect]="true" [searchable]="false" [clearable]="false">
 							</ng-select>
 						</div>
 						<div class="col-12 form-group">

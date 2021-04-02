@@ -138,6 +138,29 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("NENewsGetByIDOnJoinBase")]
+		public async Task<ActionResult<object>> NENewsGetByIDOnJoinBase(int? Id)
+		{
+			try
+			{
+				List<NENewsGetByIDOnJoin> rsNENewsGetByIDOnJoin = await new NENewsGetByIDOnJoin(_appSetting).NENewsGetByIDOnJoinDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"NENewsGetByIDOnJoin", rsNENewsGetByIDOnJoin},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("NENewsInsertBase")]
