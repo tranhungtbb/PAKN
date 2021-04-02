@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { DomSanitizer } from '@angular/platform-browser'
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
@@ -28,8 +27,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		private newsService: NewsService,
 		private catalogService: CatalogService,
 		private router: Router,
-		private activatedRoute: ActivatedRoute,
-		private sanitizer: DomSanitizer
+		private activatedRoute: ActivatedRoute
 	) {}
 	allowImageExtend = ['image/jpeg', 'image/png']
 	public Editor = ClassicEditor
@@ -42,7 +40,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	]
 	newsRelatesSelected: any[] = []
 	categoriesSelected: any[]
-	avatarUrl: any = 'assets/dist/images/no.jpg'
+	avatarUrl: string = 'assets/dist/images/no.jpg'
 
 	ngOnInit() {
 		this.newsForm = this.formBuilder.group({
@@ -54,8 +52,6 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			pushNotify: [''],
 		})
 
-
-		// lấy thông tin, nếu là sửa
 		this.activatedRoute.params.subscribe((params) => {
 			if (params['id']) {
 				this.newsService.getById({ id: params['id'] }).subscribe((res) => {
@@ -64,17 +60,8 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					}
 					this.model = res.result.NENewsGetByID[0]
 					this.getNewsRelatesInfo()
-
-					this.child_NewsRelate.parentNews = this.model.id
-
-					// lấy avatar bài viết đang chỉnh sửa
-					if (this.model.imagePath != null && this.model.imagePath.trim() != '') {
-						this.newsService.getAvatars([this.model.id]).subscribe((res:any[])=>{
-							if(res){
-								let objectURL = 'data:image/jpeg;base64,' + res[0].byteImage
-								this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-							}
-						});
+					if (this.model.imagePath == null || this.model.imagePath.trim() == '') {
+						this.avatarUrl = 'assets/dist/images/no.jpg'
 					}
 				})
 			}
@@ -107,9 +94,6 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 						return
 					}
 					this.newsRelatesSelected = res.result.NENewsGetAllOnPage
-
-					//get avatar 
-					this.getNewsRelatesAvatars();
 				})
 		}
 	}
@@ -124,11 +108,14 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		if (this.newsForm.invalid) {
 			return
 		}
-
+		// if(this.model.imagePath == null || this.model.imagePath == ""){
+		// 	this.toast.error()
+		// 	return
+		// }
+		// if (this.model.newsRelateIds != null && this.model.newsRelateIds.length == 0) {
+		// 	this.model.newsRelateIds = null
+		// }
 		this.model.isPublished = published
-		if(published){
-			this.model.status = 1
-		}
 
 		if (this.model.id && this.model.id > 0) {
 			this.newsService.update(this.model).subscribe((res) => {
@@ -154,11 +141,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	onModalNewsRelate() {
 		this.child_NewsRelate.openModal(this.model.newsRelateIds ? this.model.newsRelateIds.split(',') : [], this.model.id)
 	}
-
-	//sau khi đóng modal con sẽ gọi đến
 	onModalNewsRelate_Closed() {
-
-		// lấy danh sách bài viết liên quan từ popup con
 		this.model.newsRelateIds = this.child_NewsRelate.newsSelected.toString()
 
 		if (this.model.newsRelateIds != null && this.model.newsRelateIds != '') {
@@ -170,8 +153,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				})
 				.subscribe((res) => {
 					if (res.success != 'OK') return
-					this.newsRelatesSelected = res.result.NENewsGetAllOnPage
-					this.getNewsRelatesAvatars();
+					if (res.result.NENewsGetAllOnPage) this.newsRelatesSelected = res.result.NENewsGetAllOnPage
 				})
 		} else {
 			this.newsRelatesSelected = []
@@ -201,20 +183,6 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			this.model.imagePath = res.result.path
 			this.avatarUrl = AppSettings.API_DOWNLOADFILES + '/' + this.model.imagePath
 		})
-	}
-
-	getNewsRelatesAvatars(){
-		let ids = this.newsRelatesSelected.map(c=>c.id);
-
-		this.newsService.getAvatars(ids).subscribe(res=>{
-			if(res){
-				res.forEach(e=>{
-					let item = this.newsRelatesSelected.find(c=>c.id == e.id)
-					let objectURL = 'data:image/jpeg;base64,' + e.byteImage
-					item.imageBin = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-				})
-			}
-		});
 	}
 
 	public onChangeEditor({ editor }: any) {

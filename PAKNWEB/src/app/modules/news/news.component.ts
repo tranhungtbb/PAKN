@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Input } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import { ToastrService } from 'ngx-toastr'
 
@@ -62,7 +62,7 @@ export class NewsComponent implements OnInit {
 			this.totalCount = Math.ceil(this.totalCount / this.query.pageSize)
 
 			// load image
-			this.getNewsAvatars();
+			this.getNewsAvatars()
 		})
 	}
 
@@ -101,34 +101,27 @@ export class NewsComponent implements OnInit {
 		this.getListPaged()
 	}
 
-	changePage(page: number): void {
-		this.query.pageIndex += page
-		if (this.query.pageIndex < 1) {
-			this.query.pageIndex = 1
-			return
-		}
-		if (this.query.pageIndex > this.pageCount) {
-			this.query.pageIndex = this.pageCount
-			return
-		}
+	onPageChange(event: any): void {
+		this.query.pageSize = event.rows
+		this.query.pageIndex = event.first / event.rows + 1
 		this.getListPaged()
 	}
-	
+
 	// getCateName(id):string{
 	// 	return this.listNewCategories.find(c=>c.id == id).name
 	// }
 
-	getNewsAvatars(){
-		let ids = this.listDataPaged.map(c=>c.id);
+	getNewsAvatars() {
+		let ids = this.listDataPaged.map((c) => c.id)
 
-		this.newsService.getAvatars(ids).subscribe(res=>{
-			if(res){
-				res.forEach(e=>{
-					let item = this.listDataPaged.find(c=>c.id == e.id)
+		this.newsService.getAvatars(ids).subscribe((res) => {
+			if (res) {
+				res.forEach((e) => {
+					let item = this.listDataPaged.find((c) => c.id == e.id)
 					let objectURL = 'data:image/jpeg;base64,' + e.byteImage
 					item.imageBin = this.sanitizer.bypassSecurityTrustUrl(objectURL)
 				})
 			}
-		});
+		})
 	}
 }
