@@ -92,18 +92,15 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize]
-		[Route("SYUserGetAllOnPageBase")]
-		public async Task<ActionResult<object>> SYUserGetAllOnPageBase(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActive, int? UnitId, int? TypeId)
+		[Route("SYUserGetByIDBase")]
+		public async Task<ActionResult<object>> SYUserGetByIDBase(long? Id)
 		{
 			try
 			{
-				List<SYUserGetAllOnPage> rsSYUserGetAllOnPage = await new SYUserGetAllOnPage(_appSetting).SYUserGetAllOnPageDAO(PageSize, PageIndex, UserName, FullName, Phone, IsActive, UnitId, TypeId);
+				List<SYUserGetByID> rsSYUserGetByID = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(Id);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"SYUserGetAllOnPage", rsSYUserGetAllOnPage},
-						{"TotalCount", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? rsSYUserGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageSize : 0},
+						{"SYUserGetByID", rsSYUserGetByID},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -118,15 +115,15 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize]
-		[Route("SYUserGetByIDBase")]
-		public async Task<ActionResult<object>> SYUserGetByIDBase(long? Id)
+		[Route("SYUserGetNameByIdBase")]
+		public async Task<ActionResult<object>> SYUserGetNameByIdBase(long? Id)
 		{
 			try
 			{
-				List<SYUserGetByID> rsSYUserGetByID = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(Id);
+				List<SYUserGetNameById> rsSYUserGetNameById = await new SYUserGetNameById(_appSetting).SYUserGetNameByIdDAO(Id);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"SYUserGetByID", rsSYUserGetByID},
+						{"SYUserGetNameById", rsSYUserGetNameById},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

@@ -38,20 +38,19 @@ namespace PAKNAPI.ModelBase
 		public long? Id { get; set; }
 	}
 
-	public class SYUserGetAllOnPage
+	public class SYUserGetByID
 	{
 		private SQLCon _sQLCon;
 
-		public SYUserGetAllOnPage(IAppSetting appSetting)
+		public SYUserGetByID(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public SYUserGetAllOnPage()
+		public SYUserGetByID()
 		{
 		}
 
-		public int? RowNumber { get; set; }
 		public long Id { get; set; }
 		public string FullName { get; set; }
 		public string UserName { get; set; }
@@ -70,55 +69,7 @@ namespace PAKNAPI.ModelBase
 		public string Avatar { get; set; }
 		public string Address { get; set; }
 		public int? PositionId { get; set; }
-
-		public async Task<List<SYUserGetAllOnPage>> SYUserGetAllOnPageDAO(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActive, int? UnitId, int? TypeId)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("UserName", UserName);
-			DP.Add("FullName", FullName);
-			DP.Add("Phone", Phone);
-			DP.Add("IsActive", IsActive);
-			DP.Add("UnitId", UnitId);
-			DP.Add("TypeId", TypeId);
-
-			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPage>("SY_UserGetAllOnPage", DP)).ToList();
-		}
-	}
-
-	public class SYUserGetByID
-	{
-		private SQLCon _sQLCon;
-
-		public SYUserGetByID(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public SYUserGetByID()
-		{
-		}
-
-		public long Id;
-		public string FullName;
-		public string UserName;
-		public string Password;
-		public string Salt;
-		public bool IsActived;
-		public bool IsDeleted;
-		public bool Gender;
-		public byte Type;
-		public bool IsSuperAdmin;
-		public string Email;
-		public string Phone;
-		public int? UnitId;
-		public byte? CountLock;
-		public DateTime? LockEndOut;
-		public string Avatar;
-		public string Address;
-		public int? PositionId;
-		public string RoleIds;
+		public string RoleIds { get; set; }
 
 		public async Task<List<SYUserGetByID>> SYUserGetByIDDAO(long? Id)
 		{
@@ -126,6 +77,30 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetByID>("SY_UserGetByID", DP)).ToList();
+		}
+	}
+
+	public class SYUserGetNameById
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserGetNameById(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserGetNameById()
+		{
+		}
+
+		public string FullName { get; set; }
+
+		public async Task<List<SYUserGetNameById>> SYUserGetNameByIdDAO(long? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetNameById>("SY_UserGetNameById", DP)).ToList();
 		}
 	}
 
@@ -270,9 +245,9 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public short Id;
-		public string Name;
-		public string Code;
+		public short Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
 
 		public async Task<List<SYUSRGetPermissionByUserId>> SYUSRGetPermissionByUserIdDAO(long? UserId)
 		{
@@ -296,22 +271,22 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public long Id;
-		public string Password;
-		public string Salt;
-		public string FullName;
-		public string UserName;
-		public string Address;
-		public string Email;
-		public string Avatar;
-		public bool Gender;
-		public string Phone;
-		public int? PositionId;
-		public byte Type;
-		public string PositionName;
-		public int? UnitId;
-		public string UnitName;
-		public bool? IsMain;
+		public long Id { get; set; }
+		public string Password { get; set; }
+		public string Salt { get; set; }
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public string Address { get; set; }
+		public string Email { get; set; }
+		public string Avatar { get; set; }
+		public bool Gender { get; set; }
+		public string Phone { get; set; }
+		public int? PositionId { get; set; }
+		public byte Type { get; set; }
+		public string PositionName { get; set; }
+		public int? UnitId { get; set; }
+		public string UnitName { get; set; }
+		public bool? IsMain { get; set; }
 
 		public async Task<List<SYUSRLogin>> SYUSRLoginDAO(string UserName)
 		{
