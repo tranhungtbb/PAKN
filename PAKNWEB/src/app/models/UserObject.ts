@@ -57,9 +57,11 @@ export class UserObject2 {
 		this.isSuperAdmin = false
 		this.salt = 'rDZ82OI0dXmfNXETo3JOWNwYQSn46bmgFFinJs8OK/A='
 		this.password = 'CFYlDe4EncNqefble1NzVNjm3+RepMA39hUgGiRSBXI='
+		this.typeId = 1
 	}
 
 	id: number
+	typeId: number
 	fullName: string
 	userName: string
 	salt: string

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { DomSanitizer } from '@angular/platform-browser'
 import { ToastrService } from 'ngx-toastr'
 
 import { NewsService } from 'src/app/services/news.service'
@@ -12,15 +13,16 @@ declare var $: any
 	templateUrl: './news.component.html',
 	styleUrls: ['./news.component.css'],
 })
+//acbd
 export class NewsComponent implements OnInit {
-	constructor(private newsService: NewsService, private catalogService: CatalogService, private toast: ToastrService) {}
+	constructor(private newsService: NewsService, private catalogService: CatalogService, private toast: ToastrService, private sanitizer: DomSanitizer) {}
 
 	query: any = {
 		pageSize: 20,
 		pageIndex: 1,
 		title: '',
 		status: '',
-		newType: '',
+		newsType: '',
 	}
 
 	listNewCategories: any[] = []
@@ -51,11 +53,16 @@ export class NewsComponent implements OnInit {
 	}
 
 	getListPaged() {
+		this.query.newsType == null ? '' : this.query.newsType
+		this.query.status == null ? '' : this.query.status
 		this.newsService.getAllPagedList(this.query).subscribe((res) => {
 			if (res.success != 'OK') return
 			this.listDataPaged = res.result.NENewsGetAllOnPage
 			if (this.totalCount <= 0) this.totalCount = res.result.TotalCount
 			this.totalCount = Math.ceil(this.totalCount / this.query.pageSize)
+
+			// load image
+			this.getNewsAvatars();
 		})
 	}
 
@@ -105,5 +112,23 @@ export class NewsComponent implements OnInit {
 			return
 		}
 		this.getListPaged()
+	}
+	
+	// getCateName(id):string{
+	// 	return this.listNewCategories.find(c=>c.id == id).name
+	// }
+
+	getNewsAvatars(){
+		let ids = this.listDataPaged.map(c=>c.id);
+
+		this.newsService.getAvatars(ids).subscribe(res=>{
+			if(res){
+				res.forEach(e=>{
+					let item = this.listDataPaged.find(c=>c.id == e.id)
+					let objectURL = 'data:image/jpeg;base64,' + e.byteImage
+					item.imageBin = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+				})
+			}
+		});
 	}
 }

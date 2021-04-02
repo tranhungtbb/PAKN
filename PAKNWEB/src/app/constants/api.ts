@@ -26,6 +26,7 @@ export class Api {
 	//Recommendation
 	public static RecommendationGetDataForCreate = 'Recommendation/RecommendationGetDataForCreate'
 	public static RecommendationGetDataForForward = 'Recommendation/RecommendationGetDataForForward'
+	public static RecommendationGetDataForProcess = 'Recommendation/RecommendationGetDataForProcess'
 	public static RecommendationGetList = 'MRSPBase/MRRecommendationGetAllOnPageBase'
 	public static RecommendationGetListProcess = 'MRSPBase/MRRecommendationGetAllWithProcessBase'
 	public static RecommendationGetById = 'Recommendation/RecommendationGetById'
@@ -113,6 +114,8 @@ export class Api {
 	public static NewsDelete = 'NESPBase/NENewsDeleteBase'
 	public static NewsUploadFile = 'files/upload?folder=News'
 	public static NewsRelatesGetAll = 'NESPBase/NERelateGetAllBase'
+	public static NewsGetAvatar = 'files/get-news-avatar'
+	public static NewsGetAvatars = 'files/get-news-avatar'
 
 	//Department
 	public static DepartmentGetList = 'CACategorySPBase/CADepartmentGetAllOnPageBase'

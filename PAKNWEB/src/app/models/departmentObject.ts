@@ -10,6 +10,7 @@ export class DepartmentObject {
 		this.email = ''
 		this.fax = ''
 		this.address = ''
+		this.isActived = true
 	}
 	id: number
 	orderNumber: number

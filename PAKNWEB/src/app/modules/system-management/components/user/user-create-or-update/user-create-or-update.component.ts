@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { MatDialog } from '@angular/material'
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 
 import { UnitService } from '../../../../../services/unit.service'
@@ -52,8 +51,8 @@ export class UserCreateOrUpdateComponent implements OnInit {
 
 	ngOnInit() {
 		this.createUserForm = this.formBuilder.group({
-			userName: ['', [Validators.required]],
-			email: ['', [Validators.required, Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')]],
+			//userName: ['', [Validators.required]],
+			email: ['', [Validators.required, Validators.email]],
 			fullName: ['', [Validators.required]],
 			phone: ['', [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
 			positionId: ['', [Validators.required]],
@@ -89,6 +88,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	userFormSubmitted = false
 	onSaveUser(): void {
 		this.userFormSubmitted = true
+		this.modelUser.userName = this.modelUser.email
 		if (this.createUserForm.invalid) {
 			this._toastr.error('Dữ liệu không hợp lệ')
 			return
@@ -125,7 +125,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		this.userFormSubmitted = false
 		this.modelUser.unitId = unitId
 		if (userId > 0) {
-			this.modalTitle = 'Tạo người dùng mới'
+			this.modalTitle = 'Sửa người dùng'
 			this.userService.getById({ id: userId }).subscribe((res) => {
 				if (res.success != 'OK') return
 				this.modelUser = res.result.SYUserGetByID[0]
@@ -133,7 +133,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 				else this.selectedRoles = []
 			})
 		} else {
-			this.modalTitle = 'Sửa người dùng'
+			this.modalTitle = 'Tạo người dùng mới'
 		}
 		$('#modal-user-create-or-update').modal('show')
 	}
