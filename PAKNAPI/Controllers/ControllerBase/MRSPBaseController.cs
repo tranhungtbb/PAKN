@@ -138,6 +138,252 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
+		[Route("MRRecommendationConclusionFilesDeleteBase")]
+		public async Task<ActionResult<object>> MRRecommendationConclusionFilesDeleteBase(MRRecommendationConclusionFilesDeleteIN _mRRecommendationConclusionFilesDeleteIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationConclusionFilesDelete(_appSetting).MRRecommendationConclusionFilesDeleteDAO(_mRRecommendationConclusionFilesDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationConclusionFilesDeleteListBase")]
+		public async Task<ActionResult<object>> MRRecommendationConclusionFilesDeleteListBase(List<MRRecommendationConclusionFilesDeleteIN> _mRRecommendationConclusionFilesDeleteINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _mRRecommendationConclusionFilesDeleteIN in _mRRecommendationConclusionFilesDeleteINs)
+				{
+					var result = await new MRRecommendationConclusionFilesDelete(_appSetting).MRRecommendationConclusionFilesDeleteDAO(_mRRecommendationConclusionFilesDeleteIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationConclusionFilesGetByConclusionIdBase")]
+		public async Task<ActionResult<object>> MRRecommendationConclusionFilesGetByConclusionIdBase(int? Id)
+		{
+			try
+			{
+				List<MRRecommendationConclusionFilesGetByConclusionId> rsMRRecommendationConclusionFilesGetByConclusionId = await new MRRecommendationConclusionFilesGetByConclusionId(_appSetting).MRRecommendationConclusionFilesGetByConclusionIdDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationConclusionFilesGetByConclusionId", rsMRRecommendationConclusionFilesGetByConclusionId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationConclusionFilesInsertBase")]
+		public async Task<ActionResult<object>> MRRecommendationConclusionFilesInsertBase(MRRecommendationConclusionFilesInsertIN _mRRecommendationConclusionFilesInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationConclusionFilesInsert(_appSetting).MRRecommendationConclusionFilesInsertDAO(_mRRecommendationConclusionFilesInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationConclusionFilesInsertListBase")]
+		public async Task<ActionResult<object>> MRRecommendationConclusionFilesInsertListBase(List<MRRecommendationConclusionFilesInsertIN> _mRRecommendationConclusionFilesInsertINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _mRRecommendationConclusionFilesInsertIN in _mRRecommendationConclusionFilesInsertINs)
+				{
+					var result = await new MRRecommendationConclusionFilesInsert(_appSetting).MRRecommendationConclusionFilesInsertDAO(_mRRecommendationConclusionFilesInsertIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationConclusionDeleteBase")]
+		public async Task<ActionResult<object>> MRRecommendationConclusionDeleteBase(MRRecommendationConclusionDeleteIN _mRRecommendationConclusionDeleteIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationConclusionDelete(_appSetting).MRRecommendationConclusionDeleteDAO(_mRRecommendationConclusionDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationConclusionDeleteListBase")]
+		public async Task<ActionResult<object>> MRRecommendationConclusionDeleteListBase(List<MRRecommendationConclusionDeleteIN> _mRRecommendationConclusionDeleteINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _mRRecommendationConclusionDeleteIN in _mRRecommendationConclusionDeleteINs)
+				{
+					var result = await new MRRecommendationConclusionDelete(_appSetting).MRRecommendationConclusionDeleteDAO(_mRRecommendationConclusionDeleteIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationConclusionGetByRecommendationIdBase")]
+		public async Task<ActionResult<object>> MRRecommendationConclusionGetByRecommendationIdBase(int? Id)
+		{
+			try
+			{
+				List<MRRecommendationConclusionGetByRecommendationId> rsMRRecommendationConclusionGetByRecommendationId = await new MRRecommendationConclusionGetByRecommendationId(_appSetting).MRRecommendationConclusionGetByRecommendationIdDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationConclusionGetByRecommendationId", rsMRRecommendationConclusionGetByRecommendationId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("MRRecommendationConclusionInsertBase")]
+		public async Task<ActionResult<object>> MRRecommendationConclusionInsertBase(MRRecommendationConclusionInsertIN _mRRecommendationConclusionInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationConclusionInsert(_appSetting).MRRecommendationConclusionInsertDAO(_mRRecommendationConclusionInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
 		[Route("MRRecommendationFilesDeleteBase")]
 		public async Task<ActionResult<object>> MRRecommendationFilesDeleteBase(MRRecommendationFilesDeleteIN _mRRecommendationFilesDeleteIN)
 		{
