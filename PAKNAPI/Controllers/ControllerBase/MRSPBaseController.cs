@@ -31,90 +31,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
-		[Route("HISRecommendationGetByObjectIdBase")]
-		public async Task<ActionResult<object>> HISRecommendationGetByObjectIdBase(int? Id)
-		{
-			try
-			{
-				List<HISRecommendationGetByObjectId> rsHISRecommendationGetByObjectId = await new HISRecommendationGetByObjectId(_appSetting).HISRecommendationGetByObjectIdDAO(Id);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"HISRecommendationGetByObjectId", rsHISRecommendationGetByObjectId},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("HISRecommendationInsertBase")]
-		public async Task<ActionResult<object>> HISRecommendationInsertBase(HISRecommendationInsertIN _hISRecommendationInsertIN)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(_hISRecommendationInsertIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("HISRecommendationInsertListBase")]
-		public async Task<ActionResult<object>> HISRecommendationInsertListBase(List<HISRecommendationInsertIN> _hISRecommendationInsertINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _hISRecommendationInsertIN in _hISRecommendationInsertINs)
-				{
-					var result = await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(_hISRecommendationInsertIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationCheckExistedCodeBase")]
 		public async Task<ActionResult<object>> MRRecommendationCheckExistedCodeBase(string Code)
 		{
@@ -137,7 +54,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionFilesDeleteBase")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionFilesDeleteBase(MRRecommendationConclusionFilesDeleteIN _mRRecommendationConclusionFilesDeleteIN)
 		{
@@ -157,7 +74,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionFilesDeleteListBase")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionFilesDeleteListBase(List<MRRecommendationConclusionFilesDeleteIN> _mRRecommendationConclusionFilesDeleteINs)
 		{
@@ -197,7 +114,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionFilesGetByConclusionIdBase")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionFilesGetByConclusionIdBase(int? Id)
 		{
@@ -220,7 +137,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionFilesInsertBase")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionFilesInsertBase(MRRecommendationConclusionFilesInsertIN _mRRecommendationConclusionFilesInsertIN)
 		{
@@ -240,7 +157,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionFilesInsertListBase")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionFilesInsertListBase(List<MRRecommendationConclusionFilesInsertIN> _mRRecommendationConclusionFilesInsertINs)
 		{
@@ -280,7 +197,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionDeleteBase")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionDeleteBase(MRRecommendationConclusionDeleteIN _mRRecommendationConclusionDeleteIN)
 		{
@@ -300,7 +217,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionDeleteListBase")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionDeleteListBase(List<MRRecommendationConclusionDeleteIN> _mRRecommendationConclusionDeleteINs)
 		{
@@ -340,7 +257,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionGetByRecommendationIdBase")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionGetByRecommendationIdBase(int? Id)
 		{
@@ -363,7 +280,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionInsertBase")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionInsertBase(MRRecommendationConclusionInsertIN _mRRecommendationConclusionInsertIN)
 		{
@@ -383,7 +300,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationFilesDeleteBase")]
 		public async Task<ActionResult<object>> MRRecommendationFilesDeleteBase(MRRecommendationFilesDeleteIN _mRRecommendationFilesDeleteIN)
 		{
@@ -403,7 +320,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationFilesDeleteListBase")]
 		public async Task<ActionResult<object>> MRRecommendationFilesDeleteListBase(List<MRRecommendationFilesDeleteIN> _mRRecommendationFilesDeleteINs)
 		{
@@ -443,7 +360,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationFilesGetByRecommendationIdBase")]
 		public async Task<ActionResult<object>> MRRecommendationFilesGetByRecommendationIdBase(int? Id)
 		{
@@ -466,7 +383,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationFilesInsertBase")]
 		public async Task<ActionResult<object>> MRRecommendationFilesInsertBase(MRRecommendationFilesInsertIN _mRRecommendationFilesInsertIN)
 		{
@@ -486,7 +403,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationFilesInsertListBase")]
 		public async Task<ActionResult<object>> MRRecommendationFilesInsertListBase(List<MRRecommendationFilesInsertIN> _mRRecommendationFilesInsertINs)
 		{
@@ -526,7 +443,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationForwardGetByIDBase")]
 		public async Task<ActionResult<object>> MRRecommendationForwardGetByIDBase(int? Id)
 		{
@@ -549,7 +466,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationForwardInsertBase")]
 		public async Task<ActionResult<object>> MRRecommendationForwardInsertBase(MRRecommendationForwardInsertIN _mRRecommendationForwardInsertIN)
 		{
@@ -569,7 +486,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationForwardInsertListBase")]
 		public async Task<ActionResult<object>> MRRecommendationForwardInsertListBase(List<MRRecommendationForwardInsertIN> _mRRecommendationForwardInsertINs)
 		{
@@ -609,7 +526,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationForwardProcessBase")]
 		public async Task<ActionResult<object>> MRRecommendationForwardProcessBase(MRRecommendationForwardProcessIN _mRRecommendationForwardProcessIN)
 		{
@@ -629,7 +546,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationForwardProcessListBase")]
 		public async Task<ActionResult<object>> MRRecommendationForwardProcessListBase(List<MRRecommendationForwardProcessIN> _mRRecommendationForwardProcessINs)
 		{
@@ -669,7 +586,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationForwardUpdateBase")]
 		public async Task<ActionResult<object>> MRRecommendationForwardUpdateBase(MRRecommendationForwardUpdateIN _mRRecommendationForwardUpdateIN)
 		{
@@ -689,7 +606,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationForwardUpdateListBase")]
 		public async Task<ActionResult<object>> MRRecommendationForwardUpdateListBase(List<MRRecommendationForwardUpdateIN> _mRRecommendationForwardUpdateINs)
 		{
@@ -729,7 +646,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGenCodeGetCodeBase")]
 		public async Task<ActionResult<object>> MRRecommendationGenCodeGetCodeBase()
 		{
@@ -749,7 +666,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGenCodeUpdateNumberBase")]
 		public async Task<ActionResult<object>> MRRecommendationGenCodeUpdateNumberBase()
 		{
@@ -769,7 +686,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationHashtagDeleteByRecommendationIdBase")]
 		public async Task<ActionResult<object>> MRRecommendationHashtagDeleteByRecommendationIdBase(MRRecommendationHashtagDeleteByRecommendationIdIN _mRRecommendationHashtagDeleteByRecommendationIdIN)
 		{
@@ -789,7 +706,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationHashtagDeleteByRecommendationIdListBase")]
 		public async Task<ActionResult<object>> MRRecommendationHashtagDeleteByRecommendationIdListBase(List<MRRecommendationHashtagDeleteByRecommendationIdIN> _mRRecommendationHashtagDeleteByRecommendationIdINs)
 		{
@@ -829,7 +746,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationHashtagGetByRecommendationIdBase")]
 		public async Task<ActionResult<object>> MRRecommendationHashtagGetByRecommendationIdBase(long? Id)
 		{
@@ -852,7 +769,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationHashtagInsertBase")]
 		public async Task<ActionResult<object>> MRRecommendationHashtagInsertBase(MRRecommendationHashtagInsertIN _mRRecommendationHashtagInsertIN)
 		{
@@ -872,7 +789,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationHashtagInsertListBase")]
 		public async Task<ActionResult<object>> MRRecommendationHashtagInsertListBase(List<MRRecommendationHashtagInsertIN> _mRRecommendationHashtagInsertINs)
 		{
@@ -912,7 +829,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationDeleteBase")]
 		public async Task<ActionResult<object>> MRRecommendationDeleteBase(MRRecommendationDeleteIN _mRRecommendationDeleteIN)
 		{
@@ -932,7 +849,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationDeleteListBase")]
 		public async Task<ActionResult<object>> MRRecommendationDeleteListBase(List<MRRecommendationDeleteIN> _mRRecommendationDeleteINs)
 		{
@@ -972,7 +889,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGetAllOnPageBase")]
 		public async Task<ActionResult<object>> MRRecommendationGetAllOnPageBase(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex)
 		{
@@ -998,7 +915,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGetAllWithProcessBase")]
 		public async Task<ActionResult<object>> MRRecommendationGetAllWithProcessBase(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId, int? PageSize, int? PageIndex)
 		{
@@ -1021,7 +938,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGetByIDBase")]
 		public async Task<ActionResult<object>> MRRecommendationGetByIDBase(int? Id)
 		{
@@ -1044,7 +961,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGetByIDViewBase")]
 		public async Task<ActionResult<object>> MRRecommendationGetByIDViewBase(int? Id)
 		{
@@ -1067,7 +984,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationInsertBase")]
 		public async Task<ActionResult<object>> MRRecommendationInsertBase(MRRecommendationInsertIN _mRRecommendationInsertIN)
 		{
@@ -1087,7 +1004,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationUpdateBase")]
 		public async Task<ActionResult<object>> MRRecommendationUpdateBase(MRRecommendationUpdateIN _mRRecommendationUpdateIN)
 		{
@@ -1107,7 +1024,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationUpdateListBase")]
 		public async Task<ActionResult<object>> MRRecommendationUpdateListBase(List<MRRecommendationUpdateIN> _mRRecommendationUpdateINs)
 		{
@@ -1147,7 +1064,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationUpdateReactionaryWordBase")]
 		public async Task<ActionResult<object>> MRRecommendationUpdateReactionaryWordBase(MRRecommendationUpdateReactionaryWordIN _mRRecommendationUpdateReactionaryWordIN)
 		{
@@ -1167,7 +1084,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationUpdateReactionaryWordListBase")]
 		public async Task<ActionResult<object>> MRRecommendationUpdateReactionaryWordListBase(List<MRRecommendationUpdateReactionaryWordIN> _mRRecommendationUpdateReactionaryWordINs)
 		{
@@ -1207,7 +1124,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationUpdateStatusBase")]
 		public async Task<ActionResult<object>> MRRecommendationUpdateStatusBase(MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN)
 		{
@@ -1227,7 +1144,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationUpdateStatusListBase")]
 		public async Task<ActionResult<object>> MRRecommendationUpdateStatusListBase(List<MRRecommendationUpdateStatusIN> _mRRecommendationUpdateStatusINs)
 		{

@@ -31,7 +31,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("NENewsDeleteBase")]
 		public async Task<ActionResult<object>> NENewsDeleteBase(NENewsDeleteIN _nENewsDeleteIN)
 		{
@@ -51,7 +51,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("NENewsDeleteListBase")]
 		public async Task<ActionResult<object>> NENewsDeleteListBase(List<NENewsDeleteIN> _nENewsDeleteINs)
 		{
@@ -91,7 +91,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("NENewsGetAllOnPageBase")]
 		public async Task<ActionResult<object>> NENewsGetAllOnPageBase(string NewsIds, int? PageSize, int? PageIndex, string Title, int? NewsType, int? Status)
 		{
@@ -116,7 +116,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("NENewsGetByIDBase")]
 		public async Task<ActionResult<object>> NENewsGetByIDBase(int? Id)
 		{
@@ -138,8 +138,31 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("NENewsGetByIDOnJoinBase")]
+		public async Task<ActionResult<object>> NENewsGetByIDOnJoinBase(int? Id)
+		{
+			try
+			{
+				List<NENewsGetByIDOnJoin> rsNENewsGetByIDOnJoin = await new NENewsGetByIDOnJoin(_appSetting).NENewsGetByIDOnJoinDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"NENewsGetByIDOnJoin", rsNENewsGetByIDOnJoin},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("NENewsInsertBase")]
 		public async Task<ActionResult<object>> NENewsInsertBase(NENewsInsertIN _nENewsInsertIN)
 		{
@@ -159,7 +182,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("NENewsInsertListBase")]
 		public async Task<ActionResult<object>> NENewsInsertListBase(List<NENewsInsertIN> _nENewsInsertINs)
 		{
@@ -199,7 +222,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("NENewsUpdateBase")]
 		public async Task<ActionResult<object>> NENewsUpdateBase(NENewsUpdateIN _nENewsUpdateIN)
 		{
@@ -219,7 +242,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("NENewsUpdateListBase")]
 		public async Task<ActionResult<object>> NENewsUpdateListBase(List<NENewsUpdateIN> _nENewsUpdateINs)
 		{
@@ -247,6 +270,29 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("NERelateGetAllBase")]
+		public async Task<ActionResult<object>> NERelateGetAllBase(int? NewsId)
+		{
+			try
+			{
+				List<NERelateGetAll> rsNERelateGetAll = await new NERelateGetAll(_appSetting).NERelateGetAllDAO(NewsId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"NERelateGetAll", rsNERelateGetAll},
+					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)

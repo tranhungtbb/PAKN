@@ -30,264 +30,10 @@ namespace PAKNAPI.ControllerBase
 			_bugsnag = bugsnag;
 		}
 
-		#region HISRecommendation
-
-		[HttpGet]
-		[Authorize]
-		[Route("HISRecommendationGetByID")]
-		public async Task<ActionResult<object>> HISRecommendationGetByID(int? Id)
-		{
-			try
-			{
-				return new ResultApi { Success = ResultCode.OK, Result = await new HISRecommendation(_appSetting).HISRecommendationGetByID(Id) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize]
-		[Route("HISRecommendationGetAll")]
-		public async Task<ActionResult<object>> HISRecommendationGetAll()
-		{
-			try
-			{
-				return new ResultApi { Success = ResultCode.OK, Result = await new HISRecommendation(_appSetting).HISRecommendationGetAll() };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize]
-		[Route("HISRecommendationGetAllOnPage")]
-		public async Task<ActionResult<object>> HISRecommendationGetAllOnPage(int PageSize, int PageIndex)
-		{
-			try
-			{
-				List<HISRecommendationOnPage> rsHISRecommendationOnPage = await new HISRecommendation(_appSetting).HISRecommendationGetAllOnPage(PageSize, PageIndex);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"HISRecommendation", rsHISRecommendationOnPage},
-						{"TotalCount", rsHISRecommendationOnPage != null && rsHISRecommendationOnPage.Count > 0 ? rsHISRecommendationOnPage[0].RowNumber : 0},
-						{"PageIndex", rsHISRecommendationOnPage != null && rsHISRecommendationOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsHISRecommendationOnPage != null && rsHISRecommendationOnPage.Count > 0 ? PageSize : 0},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("HISRecommendationInsert")]
-		public async Task<ActionResult<object>> HISRecommendationInsert(HISRecommendation _hISRecommendation)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new HISRecommendation(_appSetting).HISRecommendationInsert(_hISRecommendation) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("HISRecommendationListInsert")]
-		public async Task<ActionResult<object>> HISRecommendationListInsert(List<HISRecommendation> _hISRecommendations)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (HISRecommendation _hISRecommendation in _hISRecommendations)
-				{
-					int? result = await new HISRecommendation(_appSetting).HISRecommendationInsert(_hISRecommendation);
-					if (result != null)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("HISRecommendationUpdate")]
-		public async Task<ActionResult<object>> HISRecommendationUpdate(HISRecommendation _hISRecommendation)
-		{
-			try
-			{
-				int count = await new HISRecommendation(_appSetting).HISRecommendationUpdate(_hISRecommendation);
-				if (count > 0)
-				{
-					return new ResultApi { Success = ResultCode.OK, Result = count };
-				}
-				else
-				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
-				}
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("HISRecommendationDelete")]
-		public async Task<ActionResult<object>> HISRecommendationDelete(HISRecommendation _hISRecommendation)
-		{
-			try
-			{
-				int count = await new HISRecommendation(_appSetting).HISRecommendationDelete(_hISRecommendation);
-				if (count > 0)
-				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-					return new ResultApi { Success = ResultCode.OK, Result = count };
-				}
-				else
-				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
-				}
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("HISRecommendationListDelete")]
-		public async Task<ActionResult<object>> HISRecommendationListDelete(List<HISRecommendation> _hISRecommendations)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (HISRecommendation _hISRecommendation in _hISRecommendations)
-				{
-					var result = await new HISRecommendation(_appSetting).HISRecommendationDelete(_hISRecommendation);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("HISRecommendationDeleteAll")]
-		public async Task<ActionResult<object>> HISRecommendationDeleteAll()
-		{
-			try
-			{
-				int count = await new HISRecommendation(_appSetting).HISRecommendationDeleteAll();
-				if (count > 0)
-				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-					return new ResultApi { Success = ResultCode.OK, Result = count };
-				}
-				else
-				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
-				}
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		#endregion HISRecommendation
-
 		#region MRRecommendation
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGetByID")]
 		public async Task<ActionResult<object>> MRRecommendationGetByID(int? Id)
 		{
@@ -305,7 +51,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGetAll")]
 		public async Task<ActionResult<object>> MRRecommendationGetAll()
 		{
@@ -323,7 +69,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGetAllOnPage")]
 		public async Task<ActionResult<object>> MRRecommendationGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -349,7 +95,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationInsert")]
 		public async Task<ActionResult<object>> MRRecommendationInsert(MRRecommendation _mRRecommendation)
 		{
@@ -369,7 +115,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationListInsert")]
 		public async Task<ActionResult<object>> MRRecommendationListInsert(List<MRRecommendation> _mRRecommendations)
 		{
@@ -409,7 +155,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationUpdate")]
 		public async Task<ActionResult<object>> MRRecommendationUpdate(MRRecommendation _mRRecommendation)
 		{
@@ -437,7 +183,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationDelete")]
 		public async Task<ActionResult<object>> MRRecommendationDelete(MRRecommendation _mRRecommendation)
 		{
@@ -467,7 +213,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationListDelete")]
 		public async Task<ActionResult<object>> MRRecommendationListDelete(List<MRRecommendation> _mRRecommendations)
 		{
@@ -507,7 +253,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationDeleteAll")]
 		public async Task<ActionResult<object>> MRRecommendationDeleteAll()
 		{
@@ -536,12 +282,30 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationCount")]
+		public async Task<ActionResult<object>> MRRecommendationCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendation(_appSetting).MRRecommendationCount() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion MRRecommendation
 
 		#region MRRecommendationConclusion
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionGetByID")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionGetByID(int? Id)
 		{
@@ -559,7 +323,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionGetAll")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionGetAll()
 		{
@@ -577,7 +341,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionGetAllOnPage")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -603,7 +367,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionInsert")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionInsert(MRRecommendationConclusion _mRRecommendationConclusion)
 		{
@@ -623,7 +387,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionListInsert")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionListInsert(List<MRRecommendationConclusion> _mRRecommendationConclusions)
 		{
@@ -663,7 +427,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionUpdate")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionUpdate(MRRecommendationConclusion _mRRecommendationConclusion)
 		{
@@ -691,7 +455,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionDelete")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionDelete(MRRecommendationConclusion _mRRecommendationConclusion)
 		{
@@ -721,7 +485,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionListDelete")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionListDelete(List<MRRecommendationConclusion> _mRRecommendationConclusions)
 		{
@@ -761,7 +525,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionDeleteAll")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionDeleteAll()
 		{
@@ -790,12 +554,30 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationConclusionCount")]
+		public async Task<ActionResult<object>> MRRecommendationConclusionCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationConclusion(_appSetting).MRRecommendationConclusionCount() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion MRRecommendationConclusion
 
 		#region MRRecommendationConclusionFiles
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionFilesGetByID")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionFilesGetByID(int? Id)
 		{
@@ -813,7 +595,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionFilesGetAll")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionFilesGetAll()
 		{
@@ -831,7 +613,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionFilesGetAllOnPage")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionFilesGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -857,7 +639,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionFilesInsert")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionFilesInsert(MRRecommendationConclusionFiles _mRRecommendationConclusionFiles)
 		{
@@ -877,7 +659,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionFilesListInsert")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionFilesListInsert(List<MRRecommendationConclusionFiles> _mRRecommendationConclusionFiless)
 		{
@@ -917,7 +699,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionFilesUpdate")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionFilesUpdate(MRRecommendationConclusionFiles _mRRecommendationConclusionFiles)
 		{
@@ -945,7 +727,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionFilesDelete")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionFilesDelete(MRRecommendationConclusionFiles _mRRecommendationConclusionFiles)
 		{
@@ -975,7 +757,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionFilesListDelete")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionFilesListDelete(List<MRRecommendationConclusionFiles> _mRRecommendationConclusionFiless)
 		{
@@ -1015,7 +797,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationConclusionFilesDeleteAll")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionFilesDeleteAll()
 		{
@@ -1044,12 +826,30 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationConclusionFilesCount")]
+		public async Task<ActionResult<object>> MRRecommendationConclusionFilesCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationConclusionFiles(_appSetting).MRRecommendationConclusionFilesCount() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion MRRecommendationConclusionFiles
 
 		#region MRRecommendationFiles
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationFilesGetByID")]
 		public async Task<ActionResult<object>> MRRecommendationFilesGetByID(int? Id)
 		{
@@ -1067,7 +867,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationFilesGetAll")]
 		public async Task<ActionResult<object>> MRRecommendationFilesGetAll()
 		{
@@ -1085,7 +885,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationFilesGetAllOnPage")]
 		public async Task<ActionResult<object>> MRRecommendationFilesGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -1111,7 +911,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationFilesInsert")]
 		public async Task<ActionResult<object>> MRRecommendationFilesInsert(MRRecommendationFiles _mRRecommendationFiles)
 		{
@@ -1131,7 +931,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationFilesListInsert")]
 		public async Task<ActionResult<object>> MRRecommendationFilesListInsert(List<MRRecommendationFiles> _mRRecommendationFiless)
 		{
@@ -1171,7 +971,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationFilesUpdate")]
 		public async Task<ActionResult<object>> MRRecommendationFilesUpdate(MRRecommendationFiles _mRRecommendationFiles)
 		{
@@ -1199,7 +999,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationFilesDelete")]
 		public async Task<ActionResult<object>> MRRecommendationFilesDelete(MRRecommendationFiles _mRRecommendationFiles)
 		{
@@ -1229,7 +1029,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationFilesListDelete")]
 		public async Task<ActionResult<object>> MRRecommendationFilesListDelete(List<MRRecommendationFiles> _mRRecommendationFiless)
 		{
@@ -1269,7 +1069,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationFilesDeleteAll")]
 		public async Task<ActionResult<object>> MRRecommendationFilesDeleteAll()
 		{
@@ -1298,12 +1098,30 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationFilesCount")]
+		public async Task<ActionResult<object>> MRRecommendationFilesCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationFiles(_appSetting).MRRecommendationFilesCount() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion MRRecommendationFiles
 
 		#region MRRecommendationForward
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationForwardGetByID")]
 		public async Task<ActionResult<object>> MRRecommendationForwardGetByID(int? Id)
 		{
@@ -1321,7 +1139,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationForwardGetAll")]
 		public async Task<ActionResult<object>> MRRecommendationForwardGetAll()
 		{
@@ -1339,7 +1157,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationForwardGetAllOnPage")]
 		public async Task<ActionResult<object>> MRRecommendationForwardGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -1365,7 +1183,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationForwardInsert")]
 		public async Task<ActionResult<object>> MRRecommendationForwardInsert(MRRecommendationForward _mRRecommendationForward)
 		{
@@ -1385,7 +1203,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationForwardListInsert")]
 		public async Task<ActionResult<object>> MRRecommendationForwardListInsert(List<MRRecommendationForward> _mRRecommendationForwards)
 		{
@@ -1425,7 +1243,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationForwardUpdate")]
 		public async Task<ActionResult<object>> MRRecommendationForwardUpdate(MRRecommendationForward _mRRecommendationForward)
 		{
@@ -1453,7 +1271,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationForwardDelete")]
 		public async Task<ActionResult<object>> MRRecommendationForwardDelete(MRRecommendationForward _mRRecommendationForward)
 		{
@@ -1483,7 +1301,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationForwardListDelete")]
 		public async Task<ActionResult<object>> MRRecommendationForwardListDelete(List<MRRecommendationForward> _mRRecommendationForwards)
 		{
@@ -1523,7 +1341,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationForwardDeleteAll")]
 		public async Task<ActionResult<object>> MRRecommendationForwardDeleteAll()
 		{
@@ -1552,12 +1370,30 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationForwardCount")]
+		public async Task<ActionResult<object>> MRRecommendationForwardCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationForward(_appSetting).MRRecommendationForwardCount() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion MRRecommendationForward
 
 		#region MRRecommendationGenCode
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGenCodeGetByID")]
 		public async Task<ActionResult<object>> MRRecommendationGenCodeGetByID(int? Id)
 		{
@@ -1575,7 +1411,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGenCodeGetAll")]
 		public async Task<ActionResult<object>> MRRecommendationGenCodeGetAll()
 		{
@@ -1593,7 +1429,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGenCodeGetAllOnPage")]
 		public async Task<ActionResult<object>> MRRecommendationGenCodeGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -1619,7 +1455,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGenCodeInsert")]
 		public async Task<ActionResult<object>> MRRecommendationGenCodeInsert(MRRecommendationGenCode _mRRecommendationGenCode)
 		{
@@ -1639,7 +1475,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGenCodeListInsert")]
 		public async Task<ActionResult<object>> MRRecommendationGenCodeListInsert(List<MRRecommendationGenCode> _mRRecommendationGenCodes)
 		{
@@ -1679,7 +1515,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGenCodeUpdate")]
 		public async Task<ActionResult<object>> MRRecommendationGenCodeUpdate(MRRecommendationGenCode _mRRecommendationGenCode)
 		{
@@ -1707,7 +1543,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGenCodeDelete")]
 		public async Task<ActionResult<object>> MRRecommendationGenCodeDelete(MRRecommendationGenCode _mRRecommendationGenCode)
 		{
@@ -1737,7 +1573,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGenCodeListDelete")]
 		public async Task<ActionResult<object>> MRRecommendationGenCodeListDelete(List<MRRecommendationGenCode> _mRRecommendationGenCodes)
 		{
@@ -1777,7 +1613,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationGenCodeDeleteAll")]
 		public async Task<ActionResult<object>> MRRecommendationGenCodeDeleteAll()
 		{
@@ -1806,12 +1642,30 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationGenCodeCount")]
+		public async Task<ActionResult<object>> MRRecommendationGenCodeCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationGenCode(_appSetting).MRRecommendationGenCodeCount() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion MRRecommendationGenCode
 
 		#region MRRecommendationHashtag
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationHashtagGetByID")]
 		public async Task<ActionResult<object>> MRRecommendationHashtagGetByID(long? Id)
 		{
@@ -1829,7 +1683,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationHashtagGetAll")]
 		public async Task<ActionResult<object>> MRRecommendationHashtagGetAll()
 		{
@@ -1847,7 +1701,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationHashtagGetAllOnPage")]
 		public async Task<ActionResult<object>> MRRecommendationHashtagGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -1873,7 +1727,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationHashtagInsert")]
 		public async Task<ActionResult<object>> MRRecommendationHashtagInsert(MRRecommendationHashtag _mRRecommendationHashtag)
 		{
@@ -1893,7 +1747,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationHashtagListInsert")]
 		public async Task<ActionResult<object>> MRRecommendationHashtagListInsert(List<MRRecommendationHashtag> _mRRecommendationHashtags)
 		{
@@ -1933,7 +1787,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationHashtagUpdate")]
 		public async Task<ActionResult<object>> MRRecommendationHashtagUpdate(MRRecommendationHashtag _mRRecommendationHashtag)
 		{
@@ -1961,7 +1815,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationHashtagDelete")]
 		public async Task<ActionResult<object>> MRRecommendationHashtagDelete(MRRecommendationHashtag _mRRecommendationHashtag)
 		{
@@ -1991,7 +1845,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationHashtagListDelete")]
 		public async Task<ActionResult<object>> MRRecommendationHashtagListDelete(List<MRRecommendationHashtag> _mRRecommendationHashtags)
 		{
@@ -2031,7 +1885,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("MRRecommendationHashtagDeleteAll")]
 		public async Task<ActionResult<object>> MRRecommendationHashtagDeleteAll()
 		{
@@ -2050,6 +1904,24 @@ namespace PAKNAPI.ControllerBase
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationHashtagCount")]
+		public async Task<ActionResult<object>> MRRecommendationHashtagCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationHashtag(_appSetting).MRRecommendationHashtagCount() };
 			}
 			catch (Exception ex)
 			{

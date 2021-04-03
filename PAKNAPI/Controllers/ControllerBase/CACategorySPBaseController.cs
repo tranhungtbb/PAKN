@@ -31,7 +31,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CADepartmentDeleteBase")]
 		public async Task<ActionResult<object>> CADepartmentDeleteBase(CADepartmentDeleteIN _cADepartmentDeleteIN)
 		{
@@ -51,7 +51,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CADepartmentDeleteListBase")]
 		public async Task<ActionResult<object>> CADepartmentDeleteListBase(List<CADepartmentDeleteIN> _cADepartmentDeleteINs)
 		{
@@ -91,7 +91,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CADepartmentGetAllOnPageBase")]
 		public async Task<ActionResult<object>> CADepartmentGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived, int? DepartmentGroupId, string Phone, string Email, string Address, string Fax)
 		{
@@ -117,7 +117,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CADepartmentGetByIDBase")]
 		public async Task<ActionResult<object>> CADepartmentGetByIDBase(int? Id)
 		{
@@ -140,7 +140,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CADepartmentGroupDeleteBase")]
 		public async Task<ActionResult<object>> CADepartmentGroupDeleteBase(CADepartmentGroupDeleteIN _cADepartmentGroupDeleteIN)
 		{
@@ -160,7 +160,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CADepartmentGroupDeleteListBase")]
 		public async Task<ActionResult<object>> CADepartmentGroupDeleteListBase(List<CADepartmentGroupDeleteIN> _cADepartmentGroupDeleteINs)
 		{
@@ -200,7 +200,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CADepartmentGroupGetAllOnPageBase")]
 		public async Task<ActionResult<object>> CADepartmentGroupGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
 		{
@@ -226,7 +226,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CADepartmentGroupGetByIDBase")]
 		public async Task<ActionResult<object>> CADepartmentGroupGetByIDBase(int? Id)
 		{
@@ -249,7 +249,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CADepartmentGroupInsertBase")]
 		public async Task<ActionResult<object>> CADepartmentGroupInsertBase(CADepartmentGroupInsertIN _cADepartmentGroupInsertIN)
 		{
@@ -269,7 +269,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CADepartmentGroupUpdateBase")]
 		public async Task<ActionResult<object>> CADepartmentGroupUpdateBase(CADepartmentGroupUpdateIN _cADepartmentGroupUpdateIN)
 		{
@@ -289,7 +289,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CADepartmentInsertBase")]
 		public async Task<ActionResult<object>> CADepartmentInsertBase(CADepartmentInsertIN _cADepartmentInsertIN)
 		{
@@ -309,7 +309,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CADepartmentUpdateBase")]
 		public async Task<ActionResult<object>> CADepartmentUpdateBase(CADepartmentUpdateIN _cADepartmentUpdateIN)
 		{
@@ -329,7 +329,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAFieldDeleteBase")]
 		public async Task<ActionResult<object>> CAFieldDeleteBase(CAFieldDeleteIN _cAFieldDeleteIN)
 		{
@@ -349,7 +349,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAFieldDeleteListBase")]
 		public async Task<ActionResult<object>> CAFieldDeleteListBase(List<CAFieldDeleteIN> _cAFieldDeleteINs)
 		{
@@ -389,7 +389,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAFieldGetAllOnPageBase")]
 		public async Task<ActionResult<object>> CAFieldGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
 		{
@@ -415,7 +415,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAFieldGetByIDBase")]
 		public async Task<ActionResult<object>> CAFieldGetByIDBase(int? Id)
 		{
@@ -438,7 +438,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAFieldInsertBase")]
 		public async Task<ActionResult<object>> CAFieldInsertBase(CAFieldInsertIN _cAFieldInsertIN)
 		{
@@ -458,7 +458,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAFieldUpdateBase")]
 		public async Task<ActionResult<object>> CAFieldUpdateBase(CAFieldUpdateIN _cAFieldUpdateIN)
 		{
@@ -478,7 +478,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAHashtagDeleteBase")]
 		public async Task<ActionResult<object>> CAHashtagDeleteBase(CAHashtagDeleteIN _cAHashtagDeleteIN)
 		{
@@ -498,7 +498,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAHashtagDeleteListBase")]
 		public async Task<ActionResult<object>> CAHashtagDeleteListBase(List<CAHashtagDeleteIN> _cAHashtagDeleteINs)
 		{
@@ -538,7 +538,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAHashtagGetAllOnPageBase")]
 		public async Task<ActionResult<object>> CAHashtagGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, bool? IsActived)
 		{
@@ -564,7 +564,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAHashtagGetByIDBase")]
 		public async Task<ActionResult<object>> CAHashtagGetByIDBase(int? Id)
 		{
@@ -587,7 +587,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAHashtagInsertBase")]
 		public async Task<ActionResult<object>> CAHashtagInsertBase(CAHashtagInsertIN _cAHashtagInsertIN)
 		{
@@ -607,7 +607,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAHashtagUpdateBase")]
 		public async Task<ActionResult<object>> CAHashtagUpdateBase(CAHashtagUpdateIN _cAHashtagUpdateIN)
 		{
@@ -627,7 +627,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CANewsTypeDeleteBase")]
 		public async Task<ActionResult<object>> CANewsTypeDeleteBase(CANewsTypeDeleteIN _cANewsTypeDeleteIN)
 		{
@@ -647,7 +647,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CANewsTypeDeleteListBase")]
 		public async Task<ActionResult<object>> CANewsTypeDeleteListBase(List<CANewsTypeDeleteIN> _cANewsTypeDeleteINs)
 		{
@@ -687,7 +687,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CANewsTypeGetAllOnPageBase")]
 		public async Task<ActionResult<object>> CANewsTypeGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
 		{
@@ -713,7 +713,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CANewsTypeGetByIDBase")]
 		public async Task<ActionResult<object>> CANewsTypeGetByIDBase(int? Id)
 		{
@@ -736,7 +736,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CANewsTypeInsertBase")]
 		public async Task<ActionResult<object>> CANewsTypeInsertBase(CANewsTypeInsertIN _cANewsTypeInsertIN)
 		{
@@ -756,7 +756,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CANewsTypeUpdateBase")]
 		public async Task<ActionResult<object>> CANewsTypeUpdateBase(CANewsTypeUpdateIN _cANewsTypeUpdateIN)
 		{
@@ -776,7 +776,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAPositionDeleteBase")]
 		public async Task<ActionResult<object>> CAPositionDeleteBase(CAPositionDeleteIN _cAPositionDeleteIN)
 		{
@@ -796,7 +796,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAPositionDeleteListBase")]
 		public async Task<ActionResult<object>> CAPositionDeleteListBase(List<CAPositionDeleteIN> _cAPositionDeleteINs)
 		{
@@ -836,7 +836,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAPositionGetAllOnPageBase")]
 		public async Task<ActionResult<object>> CAPositionGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Code, string Description, bool? IsActived)
 		{
@@ -846,6 +846,9 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAPositionGetAllOnPage", rsCAPositionGetAllOnPage},
+						{"TotalCount", rsCAPositionGetAllOnPage != null && rsCAPositionGetAllOnPage.Count > 0 ? rsCAPositionGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsCAPositionGetAllOnPage != null && rsCAPositionGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsCAPositionGetAllOnPage != null && rsCAPositionGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -859,7 +862,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAPositionGetByIDBase")]
 		public async Task<ActionResult<object>> CAPositionGetByIDBase(int? Id)
 		{
@@ -881,8 +884,31 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("CAPositionGetDropdownBase")]
+		public async Task<ActionResult<object>> CAPositionGetDropdownBase()
+		{
+			try
+			{
+				List<CAPositionGetDropdown> rsCAPositionGetDropdown = await new CAPositionGetDropdown(_appSetting).CAPositionGetDropdownDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAPositionGetDropdown", rsCAPositionGetDropdown},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAPositionInsertBase")]
 		public async Task<ActionResult<object>> CAPositionInsertBase(CAPositionInsertIN _cAPositionInsertIN)
 		{
@@ -902,7 +928,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAPositionUpdateBase")]
 		public async Task<ActionResult<object>> CAPositionUpdateBase(CAPositionUpdateIN _cAPositionUpdateIN)
 		{
@@ -922,7 +948,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAUnitDeleteBase")]
 		public async Task<ActionResult<object>> CAUnitDeleteBase(CAUnitDeleteIN _cAUnitDeleteIN)
 		{
@@ -942,7 +968,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAUnitDeleteListBase")]
 		public async Task<ActionResult<object>> CAUnitDeleteListBase(List<CAUnitDeleteIN> _cAUnitDeleteINs)
 		{
@@ -982,7 +1008,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAUnitGetAllBase")]
 		public async Task<ActionResult<object>> CAUnitGetAllBase(int? ParentId, byte? UnitLevel)
 		{
@@ -1005,7 +1031,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAUnitGetAllOnPageBase")]
 		public async Task<ActionResult<object>> CAUnitGetAllOnPageBase(int? PageSize, int? PageIndex, int? ParentId, byte? UnitLevel, string Name, string Phone, string Email, string Address, bool? IsActive, bool? IsMain)
 		{
@@ -1031,7 +1057,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAUnitGetByIDBase")]
 		public async Task<ActionResult<object>> CAUnitGetByIDBase(int? Id)
 		{
@@ -1053,8 +1079,31 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("CAUnitGetTreeBase")]
+		public async Task<ActionResult<object>> CAUnitGetTreeBase()
+		{
+			try
+			{
+				List<CAUnitGetTree> rsCAUnitGetTree = await new CAUnitGetTree(_appSetting).CAUnitGetTreeDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAUnitGetTree", rsCAUnitGetTree},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAUnitInsertBase")]
 		public async Task<ActionResult<object>> CAUnitInsertBase(CAUnitInsertIN _cAUnitInsertIN)
 		{
@@ -1074,7 +1123,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAUnitInsertListBase")]
 		public async Task<ActionResult<object>> CAUnitInsertListBase(List<CAUnitInsertIN> _cAUnitInsertINs)
 		{
@@ -1114,7 +1163,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAUnitUpdateBase")]
 		public async Task<ActionResult<object>> CAUnitUpdateBase(CAUnitUpdateIN _cAUnitUpdateIN)
 		{
@@ -1134,7 +1183,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAUnitUpdateListBase")]
 		public async Task<ActionResult<object>> CAUnitUpdateListBase(List<CAUnitUpdateIN> _cAUnitUpdateINs)
 		{
@@ -1173,8 +1222,31 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("CAUserGetByUnitIdBase")]
+		public async Task<ActionResult<object>> CAUserGetByUnitIdBase(int? PageIndex, int? PageSize, string UserName, string FullName, string Phone, bool? IsActive, int? UnitId)
+		{
+			try
+			{
+				List<CAUserGetByUnitId> rsCAUserGetByUnitId = await new CAUserGetByUnitId(_appSetting).CAUserGetByUnitIdDAO(PageIndex, PageSize, UserName, FullName, Phone, IsActive, UnitId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAUserGetByUnitId", rsCAUserGetByUnitId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAWordDeleteBase")]
 		public async Task<ActionResult<object>> CAWordDeleteBase(CAWordDeleteIN _cAWordDeleteIN)
 		{
@@ -1194,7 +1266,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAWordDeleteListBase")]
 		public async Task<ActionResult<object>> CAWordDeleteListBase(List<CAWordDeleteIN> _cAWordDeleteINs)
 		{
@@ -1234,7 +1306,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAWordGetAllOnPageBase")]
 		public async Task<ActionResult<object>> CAWordGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
 		{
@@ -1260,7 +1332,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAWordGetByIDBase")]
 		public async Task<ActionResult<object>> CAWordGetByIDBase(int? Id)
 		{
@@ -1283,7 +1355,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAWordInsertBase")]
 		public async Task<ActionResult<object>> CAWordInsertBase(CAWordInsertIN _cAWordInsertIN)
 		{
@@ -1303,7 +1375,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("CAWordUpdateBase")]
 		public async Task<ActionResult<object>> CAWordUpdateBase(CAWordUpdateIN _cAWordUpdateIN)
 		{

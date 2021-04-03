@@ -24,15 +24,63 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
+		public int Id;
+		public string Name;
+		public string Code;
 
 		public async Task<List<SYRoleGetAll>> SYRoleGetAllDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYRoleGetAll>("SY_RoleGetAll", DP)).ToList();
+		}
+	}
+
+	public class SYUnitGetDropdown
+	{
+		private SQLCon _sQLCon;
+
+		public SYUnitGetDropdown(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUnitGetDropdown()
+		{
+		}
+
+		public int Value;
+		public string Text;
+
+		public async Task<List<SYUnitGetDropdown>> SYUnitGetDropdownDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUnitGetDropdown>("SY_UnitGetDropdown", DP)).ToList();
+		}
+	}
+
+	public class SYUnitGetDropdownNotMain
+	{
+		private SQLCon _sQLCon;
+
+		public SYUnitGetDropdownNotMain(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUnitGetDropdownNotMain()
+		{
+		}
+
+		public int Value;
+		public string Text;
+
+		public async Task<List<SYUnitGetDropdownNotMain>> SYUnitGetDropdownNotMainDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUnitGetDropdownNotMain>("SY_UnitGetDropdownNotMain", DP)).ToList();
 		}
 	}
 
@@ -49,7 +97,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id { get; set; }
+		public int Id;
 
 		public async Task<List<SYUnitGetMainId>> SYUnitGetMainIdDAO()
 		{
@@ -72,7 +120,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public string Name { get; set; }
+		public string Name;
 
 		public async Task<List<SYUnitGetNameById>> SYUnitGetNameByIdDAO(int? Id)
 		{

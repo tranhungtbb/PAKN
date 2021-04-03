@@ -31,7 +31,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("SYRoleGetAllBase")]
 		public async Task<ActionResult<object>> SYRoleGetAllBase()
 		{
@@ -54,7 +54,53 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
+		[Route("SYUnitGetDropdownBase")]
+		public async Task<ActionResult<object>> SYUnitGetDropdownBase()
+		{
+			try
+			{
+				List<SYUnitGetDropdown> rsSYUnitGetDropdown = await new SYUnitGetDropdown(_appSetting).SYUnitGetDropdownDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUnitGetDropdown", rsSYUnitGetDropdown},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYUnitGetDropdownNotMainBase")]
+		public async Task<ActionResult<object>> SYUnitGetDropdownNotMainBase()
+		{
+			try
+			{
+				List<SYUnitGetDropdownNotMain> rsSYUnitGetDropdownNotMain = await new SYUnitGetDropdownNotMain(_appSetting).SYUnitGetDropdownNotMainDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUnitGetDropdownNotMain", rsSYUnitGetDropdownNotMain},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
 		[Route("SYUnitGetMainIdBase")]
 		public async Task<ActionResult<object>> SYUnitGetMainIdBase()
 		{
@@ -77,7 +123,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("SYUnitGetNameByIdBase")]
 		public async Task<ActionResult<object>> SYUnitGetNameByIdBase(int? Id)
 		{

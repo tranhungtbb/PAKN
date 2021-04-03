@@ -31,7 +31,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("SYUserDeleteBase")]
 		public async Task<ActionResult<object>> SYUserDeleteBase(SYUserDeleteIN _sYUserDeleteIN)
 		{
@@ -51,7 +51,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("SYUserDeleteListBase")]
 		public async Task<ActionResult<object>> SYUserDeleteListBase(List<SYUserDeleteIN> _sYUserDeleteINs)
 		{
@@ -91,7 +91,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("SYUserGetAllOnPageBase")]
 		public async Task<ActionResult<object>> SYUserGetAllOnPageBase(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActive, int? UnitId, int? TypeId)
 		{
@@ -117,7 +117,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("SYUserGetByIDBase")]
 		public async Task<ActionResult<object>> SYUserGetByIDBase(long? Id)
 		{
@@ -140,7 +140,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("SYUserGetNameByIdBase")]
 		public async Task<ActionResult<object>> SYUserGetNameByIdBase(long? Id)
 		{
@@ -163,7 +163,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("SYUserInsertBase")]
 		public async Task<ActionResult<object>> SYUserInsertBase(SYUserInsertIN _sYUserInsertIN)
 		{
@@ -183,7 +183,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("SYUserInsertListBase")]
 		public async Task<ActionResult<object>> SYUserInsertListBase(List<SYUserInsertIN> _sYUserInsertINs)
 		{
@@ -222,8 +222,31 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYUsersGetDropdownByUnitIdBase")]
+		public async Task<ActionResult<object>> SYUsersGetDropdownByUnitIdBase(int? UnitId)
+		{
+			try
+			{
+				List<SYUsersGetDropdownByUnitId> rsSYUsersGetDropdownByUnitId = await new SYUsersGetDropdownByUnitId(_appSetting).SYUsersGetDropdownByUnitIdDAO(UnitId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUsersGetDropdownByUnitId", rsSYUsersGetDropdownByUnitId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("SYUserUpdateBase")]
 		public async Task<ActionResult<object>> SYUserUpdateBase(SYUserUpdateIN _sYUserUpdateIN)
 		{
@@ -243,7 +266,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("SYUserUpdateListBase")]
 		public async Task<ActionResult<object>> SYUserUpdateListBase(List<SYUserUpdateIN> _sYUserUpdateINs)
 		{
@@ -283,7 +306,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("SYUSRGetPermissionByUserIdBase")]
 		public async Task<ActionResult<object>> SYUSRGetPermissionByUserIdBase(long? UserId)
 		{

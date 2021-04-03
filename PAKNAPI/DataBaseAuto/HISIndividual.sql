@@ -188,3 +188,21 @@ BEGIN
 END
 GO
 /* End HIS_IndividualDeleteAll */
+
+/* Start HIS_IndividualCount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[HIS_IndividualCount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [HIS_IndividualCount];
+GO
+CREATE PROCEDURE [dbo].[HIS_IndividualCount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [HIS_Individual]
+END
+GO
+/* End HIS_IndividualCount */
