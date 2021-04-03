@@ -16,7 +16,7 @@
 						<div class="text-center">
 							<input type="file" [hidden]="true" id="seclect-avatar" (change)="changeSelectAvatar($event)">
 							<a class="color-brow" href="javascript:void(0);" (click)="onChangeAvatar()">
-								<i class="pi pi-image"></i>
+								<i class="pi bi-image"></i>&nbsp;
 								Tải lên ảnh đại diện
 							</a>
 						</div>
@@ -58,7 +58,7 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Chức vụ <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" [items]="positionsList" placeholder="Chức vụ ..." bindLabel="name" bindValue="id" formControlName="positionId"
+							<ng-select class="form-control" [items]="positionsList" placeholder="Chọn..." bindLabel="name" bindValue="id" formControlName="positionId"
 								[(ngModel)]="modelUser.positionId" [closeOnSelect]="true">
 							</ng-select>
 							<div *ngIf="(userFormSubmitted && fUser.positionId.invalid)||(fUser.positionId.invalid && (fUser.positionId.dirty || fUser.positionId.touched))"
@@ -73,7 +73,7 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Đơn vị <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" [items]="unitsList" placeholder="Đơn vị ..." bindLabel="name" bindValue="id" [(ngModel)]="modelUser.unitId"
+							<ng-select class="form-control" [items]="unitsList" placeholder="Chọn..." bindLabel="name" bindValue="id" [(ngModel)]="modelUser.unitId"
 								formControlName="unitId" [closeOnSelect]="true">
 							</ng-select>
 
@@ -86,13 +86,13 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Giới tính</label>
-							<ng-select class="form-control" [items]="listGender" placeholder="Giới tính ..." bindLabel="text" bindValue="value" [(ngModel)]="modelUser.gender"
+							<ng-select class="form-control" [items]="listGender" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="modelUser.gender"
 								formControlName="gender" [closeOnSelect]="true" [searchable]="false" [clearable]="false">
 							</ng-select>
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Vai trò <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" [items]="rolesList" placeholder="Vai trò ..." bindLabel="name" bindValue="id" [(ngModel)]="selectedRoles"
+							<ng-select class="form-control" [items]="rolesList" placeholder="Chọn..." bindLabel="name" bindValue="id" [(ngModel)]="selectedRoles"
 								formControlName="roleId" [closeOnSelect]="true" [multiple]="true">
 							</ng-select>
 							<div *ngIf="(userFormSubmitted && fUser.roleId.invalid)||(fUser.roleId.invalid && (fUser.roleId.dirty || fUser.roleId.touched))"
@@ -104,13 +104,13 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Trạng thái</label>
-							<ng-select class="form-control" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" formControlName="isActived"
+							<ng-select class="form-control" [items]="listStatus" placeholder="Chọn..." bindLabel="text" bindValue="value" formControlName="isActived"
 								[(ngModel)]="modelUser.isActived" [closeOnSelect]="true" [searchable]="false" [clearable]="false">
 							</ng-select>
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Địa chỉ</label>
-							<textarea class="form-control" formControlName="address" [(ngModel)]="modelUser.address" rows="4" placeholder="Nhập địa chỉ..."></textarea>
+							<textarea class="form-control" formControlName="address" [(ngModel)]="modelUser.address" rows="4" placeholder="Nhập..."></textarea>
 						</div>
 					</div>
 				</form>
