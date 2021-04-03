@@ -11,6 +11,60 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
+	public class SYAPIInsert
+	{
+		private SQLCon _sQLCon;
+
+		public SYAPIInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYAPIInsert()
+		{
+		}
+
+		public async Task<int> SYAPIInsertDAO(SYAPIInsertIN _sYAPIInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _sYAPIInsertIN.Name);
+			DP.Add("Authorize", _sYAPIInsertIN.Authorize);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_APIInsert", DP));
+		}
+	}
+
+	public class SYAPIInsertIN
+	{
+		public string Name { get; set; }
+		public bool? Authorize { get; set; }
+	}
+
+	public class SYPermissionCheckByUserId
+	{
+		private SQLCon _sQLCon;
+
+		public SYPermissionCheckByUserId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYPermissionCheckByUserId()
+		{
+		}
+
+		public int Permission { get; set; }
+
+		public async Task<List<SYPermissionCheckByUserId>> SYPermissionCheckByUserIdDAO(int? UserId, string APIName)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", UserId);
+			DP.Add("APIName", APIName);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYPermissionCheckByUserId>("SY_PermissionCheckByUserId", DP)).ToList();
+		}
+	}
+
 	public class SYRoleGetAll
 	{
 		private SQLCon _sQLCon;

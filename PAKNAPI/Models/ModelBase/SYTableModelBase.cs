@@ -11,6 +11,97 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
+	public class SYAPIOnPage
+	{
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool? Authorize { get; set; }
+		public int? RowNumber; // int, null
+	}
+
+	public class SYAPI
+	{
+		private SQLCon _sQLCon;
+
+		public SYAPI(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYAPI()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool? Authorize { get; set; }
+
+		public async Task<SYAPI> SYAPIGetByID(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYAPI>("SY_APIGetByID", DP)).ToList().FirstOrDefault();
+		}
+
+		public async Task<List<SYAPI>> SYAPIGetAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYAPI>("SY_APIGetAll", DP)).ToList();
+		}
+
+		public async Task<List<SYAPIOnPage>> SYAPIGetAllOnPage(int PageSize, int PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			return (await _sQLCon.ExecuteListDapperAsync<SYAPIOnPage>("SY_APIGetAllOnPage", DP)).ToList();
+		}
+
+		public async Task<int?> SYAPIInsert(SYAPI _sYAPI)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _sYAPI.Name);
+			DP.Add("Authorize", _sYAPI.Authorize);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_APIInsert", DP));
+		}
+
+		public async Task<int> SYAPIUpdate(SYAPI _sYAPI)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYAPI.Id);
+			DP.Add("Name", _sYAPI.Name);
+			DP.Add("Authorize", _sYAPI.Authorize);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_APIUpdate", DP));
+		}
+
+		public async Task<int> SYAPIDelete(SYAPI _sYAPI)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYAPI.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_APIDelete", DP));
+		}
+
+		public async Task<int> SYAPIDeleteAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_APIDeleteAll", DP));
+		}
+
+		public async Task<int> SYAPICount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("SY_APICount", DP));
+		}
+	}
+
 	public class SYCaptChaOnPage
 	{
 		public int Id { get; set; }
@@ -313,6 +404,97 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteDapperAsync<int>("SY_PermissionCount", DP));
+		}
+	}
+
+	public class SYPermissionAPIOnPage
+	{
+		public int Id { get; set; }
+		public int PermissionId { get; set; }
+		public int APIId { get; set; }
+		public int? RowNumber; // int, null
+	}
+
+	public class SYPermissionAPI
+	{
+		private SQLCon _sQLCon;
+
+		public SYPermissionAPI(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYPermissionAPI()
+		{
+		}
+
+		public int Id { get; set; }
+		public int PermissionId { get; set; }
+		public int APIId { get; set; }
+
+		public async Task<SYPermissionAPI> SYPermissionAPIGetByID(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYPermissionAPI>("SY_PermissionAPIGetByID", DP)).ToList().FirstOrDefault();
+		}
+
+		public async Task<List<SYPermissionAPI>> SYPermissionAPIGetAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYPermissionAPI>("SY_PermissionAPIGetAll", DP)).ToList();
+		}
+
+		public async Task<List<SYPermissionAPIOnPage>> SYPermissionAPIGetAllOnPage(int PageSize, int PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			return (await _sQLCon.ExecuteListDapperAsync<SYPermissionAPIOnPage>("SY_PermissionAPIGetAllOnPage", DP)).ToList();
+		}
+
+		public async Task<int?> SYPermissionAPIInsert(SYPermissionAPI _sYPermissionAPI)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PermissionId", _sYPermissionAPI.PermissionId);
+			DP.Add("APIId", _sYPermissionAPI.APIId);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_PermissionAPIInsert", DP));
+		}
+
+		public async Task<int> SYPermissionAPIUpdate(SYPermissionAPI _sYPermissionAPI)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYPermissionAPI.Id);
+			DP.Add("PermissionId", _sYPermissionAPI.PermissionId);
+			DP.Add("APIId", _sYPermissionAPI.APIId);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_PermissionAPIUpdate", DP));
+		}
+
+		public async Task<int> SYPermissionAPIDelete(SYPermissionAPI _sYPermissionAPI)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYPermissionAPI.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_PermissionAPIDelete", DP));
+		}
+
+		public async Task<int> SYPermissionAPIDeleteAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_PermissionAPIDeleteAll", DP));
+		}
+
+		public async Task<int> SYPermissionAPICount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("SY_PermissionAPICount", DP));
 		}
 	}
 
