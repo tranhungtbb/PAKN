@@ -77,7 +77,7 @@ export class HashtagComponent implements OnInit {
 	}
 
 	GetListHashtag() {
-		this.nameHash = this.nameHash.trim().replace(' ', '')
+		this.nameHash = this.nameHash.trim()
 		debugger
 		var obj = {
 			PageSize: this.PageSize,
@@ -112,7 +112,7 @@ export class HashtagComponent implements OnInit {
 
 	preCreate() {
 		this.hashtag = new HashtagObject()
-		this.Title = 'Thêm mới Hashtag'
+		this.Title = 'Thêm mới'
 		this.submitted = false
 		this.rebuilForm()
 		$('#modal').modal('show')
@@ -120,7 +120,7 @@ export class HashtagComponent implements OnInit {
 
 	preUpdate(obj: any) {
 		this.hashtag = Object.assign(new HashtagObject(), obj)
-		this.Title = 'Cập nhập Hashtag!'
+		this.Title = 'Chỉnh sửa'
 		$('#modal').modal('show')
 	}
 
@@ -172,19 +172,22 @@ export class HashtagComponent implements OnInit {
 		// update
 		else {
 			this.service.update(this.hashtag).subscribe((res) => {
-				$('#modal').modal('hide')
 				$('#modalConfirmChangeStatus').modal('hide')
+				debugger
 				if (res != 'undefined') {
 					if (res.success == RESPONSE_STATUS.success) {
+						$('#modal').modal('hide')
 						this.rebuilForm()
 						this.GetListHashtag()
 						this._toastr.success(MESSAGE_COMMON.UPDATE_SUCCESS)
 					} else if (res.success == RESPONSE_STATUS.orror && res.result == -1) {
-						this._toastr.info(MESSAGE_COMMON.EXISTED_NAME)
+						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
 					} else {
+						$('#modal').modal('hide')
 						this._toastr.error(MESSAGE_COMMON.UPDATE_FAILED)
 					}
 				} else {
+					$('#modal').modal('hide')
 					this._toastr.error(MESSAGE_COMMON.UPDATE_FAILED)
 				}
 			})
@@ -200,7 +203,7 @@ export class HashtagComponent implements OnInit {
 					this.GetListHashtag()
 					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				} else {
-					this._toastr.show('Hashtag này đang được sử dụng!')
+					this._toastr.error('Hashtag này đang được sử dụng')
 				}
 			} else {
 				this._toastr.error(MESSAGE_COMMON.DELETE_FAILED)

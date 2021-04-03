@@ -143,6 +143,7 @@ export class PositionComponent implements OnInit {
     }
     if (this.model.id == 0 || this.model.id == null) {
       this._service.CreatePosition(this.model).subscribe((response) => {
+        console.log(response)
         if (response.success == RESPONSE_STATUS.success) {
           if (response.result == -1) {
             this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -214,6 +215,7 @@ export class PositionComponent implements OnInit {
       Id: id,
     }
     this._service.positionDelete(request).subscribe((response) => {
+      console.log(response)
       if (response.success == RESPONSE_STATUS.success) {
         this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
         $('#modalConfirmDelete').modal('hide')

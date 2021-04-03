@@ -1,14 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { COMMONS } from 'src/app/commons/commons'
-import { CONSTANTS, FILETYPE, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { RecommendationConclusionObject, RecommendationViewObject } from 'src/app/models/recommendationObject'
+import { CONSTANTS, FILETYPE, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { RecommendationConclusionObject, RecommendationForwardObject, RecommendationProcessObject, RecommendationViewObject } from 'src/app/models/recommendationObject'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { ActivatedRoute, Router } from '@angular/router'
 import { HashtagObject } from 'src/app/models/hashtagObject'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 declare var $: any
 
@@ -28,6 +29,8 @@ export class ViewRecommendationComponent implements OnInit {
 	modelHashTagAdd: HashtagObject = new HashtagObject()
 	hashtagId: number = null
 	fileAccept = CONSTANTS.FILEACCEPT
+	userLoginId: number = this.storeageService.getUserId()
+	unitLoginId: number = this.storeageService.getUnitId()
 	@ViewChild('file', { static: false }) public file: ElementRef
 	constructor(
 		private toastr: ToastrService,
@@ -36,10 +39,12 @@ export class ViewRecommendationComponent implements OnInit {
 		private recommendationService: RecommendationService,
 		private _serviceCatalog: CatalogService,
 		private router: Router,
+		private _fb: FormBuilder,
 		private activatedRoute: ActivatedRoute
 	) {}
 
 	ngOnInit() {
+		this.buildFormForward()
 		this.getDropdown()
 		this.model = new RecommendationViewObject()
 		this.activatedRoute.params.subscribe((params) => {
@@ -59,6 +64,12 @@ export class ViewRecommendationComponent implements OnInit {
 		this.recommendationService.recommendationGetByIdView(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.model
+				if (this.model.status > RECOMMENDATION_STATUS.PROCESSING) {
+					this.modelConclusion = response.result.modelConclusion
+					this.files = response.result.filesConclusion
+				} else {
+					this.modelConclusion = new RecommendationConclusionObject()
+				}
 				this.lstHashtagSelected = response.result.lstHashtag
 				this.filesModel = response.result.lstFiles
 				this.model.shortName = this.getShortName(this.model.name)
@@ -202,6 +213,145 @@ export class ViewRecommendationComponent implements OnInit {
 					$('#modalReject').modal('hide')
 					this.toastr.success(COMMONS.PROCESS_SUCCESS)
 					return this.router.navigate(['/quan-tri/kien-nghi/dang-giai-quyet'])
+				} else {
+					this.toastr.error(response.message)
+				}
+			}),
+				(err) => {
+					console.error(err)
+				}
+		}
+	}
+	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
+	formForward: FormGroup
+	lstUnitNotMain: any = []
+
+	get f() {
+		return this.formForward.controls
+	}
+
+	submitted: boolean = false
+	buildFormForward() {
+		this.formForward = this._fb.group({
+			unitReceiveId: [this.modelForward.unitReceiveId, Validators.required],
+			expiredDate: [this.modelForward.expiredDate],
+			content: [this.modelForward.content],
+		})
+	}
+
+	rebuilFormForward() {
+		this.formForward.reset({
+			unitReceiveId: this.modelForward.unitReceiveId,
+			expiredDate: this.modelForward.expiredDate,
+			content: this.modelForward.content,
+		})
+	}
+	preForward() {
+		this.modelForward = new RecommendationForwardObject()
+		this.modelForward.recommendationId = this.modelConclusion.id
+		this.rebuilFormForward()
+		this.recommendationService.recommendationGetDataForForward({}).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if (response.result != null) {
+					this.lstUnitNotMain = response.result.lstUnitNotMain
+					$('#modalForward').modal('show')
+				}
+			} else {
+				this.toastr.error(response.message)
+			}
+		}),
+			(error) => {
+				console.log(error)
+			}
+	}
+
+	onForward() {
+		this.modelForward.content = this.modelForward.content.trim()
+		this.submitted = true
+		if (this.formForward.invalid) {
+			return
+		}
+		this.modelForward.step = STEP_RECOMMENDATION.PROCESS
+		this.modelForward.status = PROCESS_STATUS_RECOMMENDATION.WAIT
+		var request = {
+			_mRRecommendationForwardInsertIN: this.modelForward,
+			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
+		}
+		this.recommendationService.recommendationForward(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				$('#modalForward').modal('hide')
+				this.getData()
+				this.toastr.success(COMMONS.FORWARD_SUCCESS)
+			} else {
+				this.toastr.error(response.message)
+			}
+		}),
+			(err) => {
+				console.error(err)
+			}
+	}
+	modelProcess: RecommendationProcessObject = new RecommendationProcessObject()
+	recommendationStatusProcess: number = 0
+	preProcess(status: number) {
+		this.modelProcess.status = status
+		this.modelProcess.id = this.model.idProcess
+		this.modelProcess.step = this.model.stepProcess
+		this.modelProcess.recommendationId = this.model.id
+		this.modelProcess.reactionaryWord = false
+		this.modelProcess.reasonDeny = ''
+		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
+			if ((this.model.status = RECOMMENDATION_STATUS.RECEIVE_WAIT)) {
+				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
+			} else if ((this.model.status = RECOMMENDATION_STATUS.PROCESS_WAIT)) {
+				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESS_DENY
+			} else if ((this.model.status = RECOMMENDATION_STATUS.APPROVE_WAIT)) {
+				this.recommendationStatusProcess = RECOMMENDATION_STATUS.APPROVE_DENY
+			}
+			$('#modalReject').modal('show')
+		} else {
+			if ((this.model.status = RECOMMENDATION_STATUS.RECEIVE_WAIT)) {
+				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_APPROVED
+			} else if ((this.model.status = RECOMMENDATION_STATUS.PROCESS_WAIT)) {
+				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
+			} else if ((this.model.status = RECOMMENDATION_STATUS.APPROVE_WAIT)) {
+				this.recommendationStatusProcess = RECOMMENDATION_STATUS.FINISED
+			}
+			$('#modalAccept').modal('show')
+		}
+	}
+	onProcessAccept() {
+		var request = {
+			_mRRecommendationForwardProcessIN: this.modelProcess,
+			RecommendationStatus: this.recommendationStatusProcess,
+			ReactionaryWord: this.modelProcess.reactionaryWord,
+		}
+		this.recommendationService.recommendationProcess(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				$('#modalAccept').modal('hide')
+				this.toastr.success(COMMONS.ACCEPT_SUCCESS)
+				this.getData()
+			} else {
+				this.toastr.error(response.message)
+			}
+		}),
+			(err) => {
+				console.error(err)
+			}
+	}
+	onProcessDeny() {
+		if (this.modelProcess.reasonDeny == '' || this.modelProcess.reasonDeny.trim() == '') {
+			this.toastr.error('Vui lòng nhập lý do')
+			return
+		} else {
+			var request = {
+				_mRRecommendationForwardProcessIN: this.modelProcess,
+				RecommendationStatus: this.recommendationStatusProcess,
+			}
+			this.recommendationService.recommendationProcess(request).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					$('#modalReject').modal('hide')
+					this.toastr.success(COMMONS.DENY_SUCCESS)
+					this.getData()
 				} else {
 					this.toastr.error(response.message)
 				}

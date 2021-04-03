@@ -93,6 +93,10 @@ export class RecommendationViewObject {
 	createdDate: Date
 	updatedBy: number
 	updatedDate: Date
+	unitActive: number
+	userActive: number
+	idProcess: number
+	stepProcess: number
 }
 export class RecommendationConclusionObject {
 	id: number = 0
@@ -103,3 +107,20 @@ export class RecommendationConclusionObject {
 	unitReceiverId: number = null
 	content: string = ''
 }
+
+export class PuRecommendation {
+	id: number = 0
+	name: string
+	title: string
+	content: string
+	hour: string
+	date: string
+	shortName: string
+}
+
+// export class PuRecommendationSearch {
+// 	keyseach: string = ''
+// 	code: number
+// 	pagesize: number
+// 	pageindex: number
+// }

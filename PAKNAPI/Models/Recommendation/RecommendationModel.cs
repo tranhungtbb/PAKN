@@ -55,8 +55,10 @@ namespace PAKNAPI.Models.Recommendation
     public class RecommendationGetByIDViewResponse
     {
         public MRRecommendationGetByIDView Model { get; set; }
+        public MRRecommendationConclusionGetByRecommendationId ModelConclusion { get; set; }
         public List<MRRecommendationHashtagGetByRecommendationId> lstHashtag { get; set; }
         public List<MRRecommendationFilesGetByRecommendationId> lstFiles { get; set; }
+        public List<MRRecommendationConclusionFilesGetByConclusionId> filesConclusion { get; set; }
     }
 
     public class RecommendationForwardRequest

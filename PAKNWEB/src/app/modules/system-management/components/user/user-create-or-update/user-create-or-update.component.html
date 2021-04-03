@@ -1,28 +1,27 @@
 <div class="modal fade" id="modal-user-create-or-update">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content rounded">
-			<div class="modal-header border-bottom-0">
+			<div class="modal-header border-bottom-0 bg-ligth-gold">
 				<p class="modal-title h3">{{modalTitle}}</p>
 				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
 				</button>
 			</div>
-			<div class="modal-body pb-0">
-				<!-- <div class="align-items-center form-group mb-4 border-bottom pb-3">
-					user avatar
-				</div> -->
-				<form id="createUserForm" [formGroup]="createUserForm" (ngSubmit)="onSaveUser()">
+			<div class="modal-body pb-0 mt-0 pt-0">
 
+				<form id="createUserForm" [formGroup]="createUserForm" (ngSubmit)="onSaveUser()">
+					<div class="align-items-center mb-4 avatar-bg">
+						<div class="avatar-frame">
+							<img id="avatar-view" [src]="userAvatar" />
+						</div>
+						<div class="text-center">
+							<input type="file" [hidden]="true" id="seclect-avatar" (change)="changeSelectAvatar($event)">
+							<a class="color-brow" href="javascript:void(0);" (click)="onChangeAvatar()">
+								<i class="pi bi-image"></i>&nbsp;
+								Tải lên ảnh đại diện
+							</a>
+						</div>
+					</div>
 					<div class="form-row">
-						<!-- <div class="col-12 col-lg-4 form-group">
-							<label class="mb-1">Email/Tên đăng nhập <span class="cl-red">(*)</span></label>
-							<input formControlName="userName" [(ngModel)]="modelUser.userName" type="text" class="form-control" placeholder="Nhập...">
-							<div *ngIf="(userFormSubmitted && fUser.userName.invalid)||(fUser.userName.invalid && (fUser.userName.dirty || fUser.userName.touched))"
-								class="has-error m-b-12">
-								<div *ngIf="fUser.userName.errors.required">
-									<span class="help-block">Trường dữ liệu này không được để trống</span>
-								</div>
-							</div>
-						</div> -->
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">Email/Tên đăng nhập <span class="cl-red">(*)</span></label>
 							<input svTrim formControlName="email" [(ngModel)]="modelUser.email" type="text" class="form-control" placeholder="Nhập...">
@@ -59,7 +58,7 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Chức vụ <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" [items]="positionsList" placeholder="Chức vụ ..." bindLabel="name" bindValue="id" formControlName="positionId"
+							<ng-select class="form-control" [items]="positionsList" placeholder="Chọn..." bindLabel="name" bindValue="id" formControlName="positionId"
 								[(ngModel)]="modelUser.positionId" [closeOnSelect]="true">
 							</ng-select>
 							<div *ngIf="(userFormSubmitted && fUser.positionId.invalid)||(fUser.positionId.invalid && (fUser.positionId.dirty || fUser.positionId.touched))"
@@ -74,7 +73,7 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Đơn vị <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" [items]="unitsList" placeholder="Đơn vị ..." bindLabel="name" bindValue="id" [(ngModel)]="modelUser.unitId"
+							<ng-select class="form-control" [items]="unitsList" placeholder="Chọn..." bindLabel="name" bindValue="id" [(ngModel)]="modelUser.unitId"
 								formControlName="unitId" [closeOnSelect]="true">
 							</ng-select>
 
@@ -87,13 +86,13 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Giới tính</label>
-							<ng-select class="form-control" [items]="listGender" placeholder="Giới tính ..." bindLabel="text" bindValue="value" [(ngModel)]="modelUser.gender"
+							<ng-select class="form-control" [items]="listGender" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="modelUser.gender"
 								formControlName="gender" [closeOnSelect]="true" [searchable]="false" [clearable]="false">
 							</ng-select>
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Vai trò <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" [items]="rolesList" placeholder="Vai trò ..." bindLabel="name" bindValue="id" [(ngModel)]="selectedRoles"
+							<ng-select class="form-control" [items]="rolesList" placeholder="Chọn..." bindLabel="name" bindValue="id" [(ngModel)]="selectedRoles"
 								formControlName="roleId" [closeOnSelect]="true" [multiple]="true">
 							</ng-select>
 							<div *ngIf="(userFormSubmitted && fUser.roleId.invalid)||(fUser.roleId.invalid && (fUser.roleId.dirty || fUser.roleId.touched))"
@@ -105,13 +104,13 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Trạng thái</label>
-							<ng-select class="form-control" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" formControlName="isActived"
+							<ng-select class="form-control" [items]="listStatus" placeholder="Chọn..." bindLabel="text" bindValue="value" formControlName="isActived"
 								[(ngModel)]="modelUser.isActived" [closeOnSelect]="true" [searchable]="false" [clearable]="false">
 							</ng-select>
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Địa chỉ</label>
-							<textarea class="form-control" formControlName="address" [(ngModel)]="modelUser.address" rows="4" placeholder="Nhập địa chỉ..."></textarea>
+							<textarea class="form-control" formControlName="address" [(ngModel)]="modelUser.address" rows="4" placeholder="Nhập..."></textarea>
 						</div>
 					</div>
 				</form>

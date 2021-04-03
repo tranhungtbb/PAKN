@@ -15,6 +15,7 @@ using PAKNAPI.Authorize;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using PAKNAPI.Middle;
 using Bugsnag.AspNet.Core;
+using PAKNAPI.Services.FileUpload;
 
 namespace BookLibAPI
 {
@@ -41,6 +42,7 @@ namespace BookLibAPI
 			services.AddTransient<CustomMiddleware>();
 			services.AddHttpContextAccessor();
 			services.AddTransient<IAppSetting, AppSetting>();
+			services.AddTransient<IFileService, FileService>();
 
 			//services.Configure<CsSetting>(Configuration.GetSection("Default"));
 

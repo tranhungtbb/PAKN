@@ -290,7 +290,8 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group" *ngIf="modelUnit.unitLevel > 1">
 							<label class="mb-1">Đơn vị cấp trên <span class="cl-red">(*)</span></label>
-							<ng-select formControlName="parentId" [(ngModel)]="modelUnit.parentId" class="form-control">
+							<ng-select formControlName="parentId" [(ngModel)]="modelUnit.parentId" class="
+							form-control" placeholder="Chọn...">
 								<ng-option *ngFor="let item of unitFlatlist | unitFilter:modelUnit.unitLevel-1" [value]="item.id">{{item.name}}</ng-option>
 							</ng-select>
 							<div *ngIf="(unitFormSubmitted && fUnit.parentId.invalid)||(fUnit.parentId.invalid && (fUnit.parentId.dirty || fUnit.parentId.touched))"
@@ -302,7 +303,7 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" formControlName="isActived"
+							<ng-select class="form-control" [items]="listStatus" placeholder="Chọn..." bindLabel="text" bindValue="value" formControlName="isActived"
 								[(ngModel)]="modelUnit.isActived" [closeOnSelect]="true" [searchable]="false" [clearable]="false">
 							</ng-select>
 						</div>
@@ -342,7 +343,7 @@
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Mô tả</label>
-							<textarea [(ngModel)]="modelUnit.description" formControlName="description" class="form-control" rows="4" placeholder="Nhập mô tả..."></textarea>
+							<textarea [(ngModel)]="modelUnit.description" formControlName="description" class="form-control" rows="4" placeholder="Nhập..."></textarea>
 						</div>
 					</div>
 				</form>

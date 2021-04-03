@@ -50,13 +50,17 @@ export class UserObject {
 
 export class UserObject2 {
 	constructor() {
+		this.fullName = ''
+		this.userName = ''
+		this.email = ''
+		this.phone = ''
+		this.positionId = null
+		this.roleIds = null
 		this.isActived = true
 		this.isDeleted = false
 		this.gender = true
 		this.type = 1
 		this.isSuperAdmin = false
-		this.salt = 'rDZ82OI0dXmfNXETo3JOWNwYQSn46bmgFFinJs8OK/A='
-		this.password = 'CFYlDe4EncNqefble1NzVNjm3+RepMA39hUgGiRSBXI='
 		this.typeId = 1
 	}
 
@@ -75,7 +79,7 @@ export class UserObject2 {
 	phone: string
 	unitId: number
 	countLock: number
-	lockEndOut: number
+	lockEndOut: string
 	avatar: string
 	address: string
 	positionId: number

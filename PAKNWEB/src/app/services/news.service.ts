@@ -59,11 +59,11 @@ export class NewsService {
 		return this.http.get(AppSettings.API_ADDRESS + Api.NewsGetAvatar + '/' + data, httpPackage)
 	}
 
-	getAvatars(data:number[]): Observable<any> {
+	getAvatars(data: number[]): Observable<any> {
 		const httpPackage = {
 			headers: this.tempheaders,
 			reportProgress: true,
 		}
-		return this.http.post(AppSettings.API_ADDRESS + Api.NewsGetAvatar, data ,httpPackage)
+		return this.http.post(AppSettings.API_ADDRESS + Api.NewsGetAvatars, data, httpPackage)
 	}
 }

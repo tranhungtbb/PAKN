@@ -80,28 +80,31 @@ namespace PAKNAPI.Controllers
         [Route("get-news-avatar/{name}")]
         public async Task<byte[]> GetNewsAvatar(string name)
         {
-            string contentRootPath = _webHostEnvironment.ContentRootPath;
-            string filePath = Path.Combine(contentRootPath , "Upload/News", name);
+            //string contentRootPath = _webHostEnvironment.ContentRootPath;
+            //string filePath = Path.Combine(contentRootPath , "Upload/News", name);
+            //try
+            //{
+            //    using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+            //    {
+            //        using (var memoryStream = new MemoryStream())
+            //        {
+            //            await fileStream.CopyToAsync(memoryStream);
+            //            Bitmap image = new Bitmap(1, 1);
+            //            image.Save(memoryStream, ImageFormat.Jpeg);
 
-            try
-            {
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
-                {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        await fileStream.CopyToAsync(memoryStream);
-                        Bitmap image = new Bitmap(1, 1);
-                        image.Save(memoryStream, ImageFormat.Jpeg);
+            //            byte[] byteImage = memoryStream.ToArray();
+            //            return byteImage;
+            //        }
+            //    }
+            //}
+            //catch
+            //{
+            //    return null;
+            //}
+            string filePath = Path.Combine("Upload/News", name);
+            var bin = await this.getFileBin(filePath);
+            return bin;
 
-                        byte[] byteImage = memoryStream.ToArray();
-                        return byteImage;
-                    }
-                }
-            }
-            catch
-            {
-                return null;
-            }
         }
         [HttpPost]
         [Route("get-news-avatar")]
@@ -145,5 +148,32 @@ namespace PAKNAPI.Controllers
                 return null;
             }
         }
+
+        private async Task<byte[]> getFileBin(string filePath)
+        {
+            string contentRootPath = _webHostEnvironment.ContentRootPath;
+            string fullPath = Path.Combine(contentRootPath, filePath);
+
+            try
+            {
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await fileStream.CopyToAsync(memoryStream);
+                        Bitmap image = new Bitmap(1, 1);
+                        image.Save(memoryStream, ImageFormat.Jpeg);
+
+                        byte[] byteImage = memoryStream.ToArray();
+                        return byteImage;
+                    }
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        
     }
 }
