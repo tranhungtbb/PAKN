@@ -121,13 +121,6 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		if (this.newsForm.invalid) {
 			return
 		}
-		// if(this.model.imagePath == null || this.model.imagePath == ""){
-		// 	this.toast.error()
-		// 	return
-		// }
-		// if (this.model.newsRelateIds != null && this.model.newsRelateIds.length == 0) {
-		// 	this.model.newsRelateIds = null
-		// }
 		this.model.isPublished = published
 
 		if (this.model.id && this.model.id > 0) {

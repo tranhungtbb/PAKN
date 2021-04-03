@@ -11,7 +11,7 @@
 				<form id="createUserForm" [formGroup]="createUserForm" (ngSubmit)="onSaveUser()">
 					<div class="align-items-center mb-4 avatar-bg">
 						<div class="avatar-frame">
-							<img src="" />
+							<img id="avatar-view" [src]="userAvatar" />
 						</div>
 						<div class="text-center">
 							<input type="file" [hidden]="true" id="seclect-avatar" (change)="changeSelectAvatar($event)">

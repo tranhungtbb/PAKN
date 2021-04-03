@@ -34,14 +34,18 @@ namespace PAKNAPI.Controllers
         [HttpPost, DisableRequestSizeLimit]
         [Route("Create")]
         [Authorize]
-        public async Task<object> Create([FromForm] SYUserInsertIN model, [FromForm] IFormFileCollection files)
+        public async Task<object> Create([FromForm] SYUserInsertIN model, [FromForm] IFormFileCollection files = null)
         {
             // tải file
             string filePath = "";
             try
             {
-                var info = await _fileService.Save(files, "User");
-                filePath = info[0].Path;
+                if(files != null && files.Any())
+                {
+                    var info = await _fileService.Save(files, "User");
+                    filePath = info[0].Path;
+                }
+                
             }
             catch (Exception e)
             {
@@ -78,7 +82,7 @@ namespace PAKNAPI.Controllers
                 _bugsnag.Notify(ex);
                 //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
                 //xóa file đã tải
-                _fileService.Remove(filePath);
+                await _fileService.Remove(filePath);
                 return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message};
             }
 
@@ -90,14 +94,17 @@ namespace PAKNAPI.Controllers
         [HttpPost, DisableRequestSizeLimit]
         [Route("Update")]
         [Authorize]
-        public async Task<object> Update([FromForm] SYUserUpdateIN model, [FromForm] IFormFileCollection files)
+        public async Task<object> Update([FromForm] SYUserUpdateIN model, [FromForm] IFormFileCollection files = null)
         {
             // tải file
             string filePath = "";
             try
             {
-                var info = await _fileService.Save(files, "User");
-                filePath = info[0].Path;
+                if (files != null && files.Any())
+                {
+                    var info = await _fileService.Save(files, "User");
+                    filePath = info[0].Path;
+                }
             }
             catch (Exception e)
             {
@@ -121,7 +128,7 @@ namespace PAKNAPI.Controllers
                 // xóa avatar cũ
                 if (string.IsNullOrEmpty(modelOld[0].Avatar) && string.IsNullOrEmpty(filePath))
                 {
-                    _fileService.Remove(modelOld[0].Avatar);
+                    await _fileService.Remove(modelOld[0].Avatar);
                 }
 
             }
@@ -130,7 +137,7 @@ namespace PAKNAPI.Controllers
                 _bugsnag.Notify(ex);
                 //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
                 //xóa file đã tải
-                _fileService.Remove(filePath);
+                await _fileService.Remove(filePath);
                 return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
 
@@ -154,7 +161,7 @@ namespace PAKNAPI.Controllers
                 // xóa avatar cũ
                 if (string.IsNullOrEmpty(modelOld[0].Avatar))
                 {
-                    _fileService.Remove(modelOld[0].Avatar);
+                    await _fileService.Remove(modelOld[0].Avatar);
                 }
 
             }
@@ -170,6 +177,17 @@ namespace PAKNAPI.Controllers
 
         }
 
+        [HttpGet]
+        [Route("GetAvatar/{id}")]
+        [Authorize]
+        public async Task<byte[]> GetAvatar(int id)
+        {
+            var modelOld = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(id);
+            if (string.IsNullOrEmpty(modelOld[0].Avatar.Trim())) return null;
+            var data = await _fileService.GetBinary(modelOld[0].Avatar);
+
+            return data;
+        }
 
     }
 }

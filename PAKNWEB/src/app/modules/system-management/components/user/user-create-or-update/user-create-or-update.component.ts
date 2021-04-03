@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'
+import { DomSanitizer } from '@angular/platform-browser'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 
@@ -27,7 +28,8 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private toast: ToastrService,
 		private roleService: RoleService,
-		private parentUnit: UnitComponent
+		private parentUnit: UnitComponent,
+		private sanitizer:DomSanitizer
 	) {}
 
 	modelUser: UserObject2 = new UserObject2()
@@ -94,10 +96,18 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
+
+		//avatar file;
+		let files = $('#seclect-avatar')[0].files;
+
 		this.modelUser.roleIds = this.selectedRoles.toString()
 		this.modelUser.userName = this.modelUser.email
+		this.modelUser.avatar = ''
+		this.modelUser.countLock = 0
+		this.modelUser.lockEndOut = ''
+
 		if (this.modelUser.id != null && this.modelUser.id > 0) {
-			this.userService.update(this.modelUser).subscribe((res) => {
+			this.userService.update(this.modelUser,files).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error(COMMONS.UPDATE_FAILED)
 					return
@@ -108,7 +118,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 				$('#modal-user-create-or-update').modal('hide')
 			})
 		} else {
-			this.userService.insert(this.modelUser).subscribe((res) => {
+			this.userService.insert(this.modelUser,files).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error(COMMONS.ADD_FAILED)
 					return
@@ -132,28 +142,44 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			return
 		}
 
-		var reader = new FileReader()
-		reader.onload = function (e) {
-			$('#avatar-img').attr('src', e.target.result)
-		}
-		reader.readAsDataURL(file) // convert to base64 string
+		let output : any = document.getElementById('avatar-view');
+	    output.src = URL.createObjectURL(file);
+	    output.onload = function() {
+	    	URL.revokeObjectURL(output.src) // free memory
+	    }
 	}
 
 	openModal(unitId = 0, userId = 0): void {
-		this.modelUser = new UserObject2()
 		this.userFormSubmitted = false
+		this.modelUser = new UserObject2()
 		this.modelUser.unitId = unitId
 		if (userId > 0) {
 			this.modalTitle = 'Sửa người dùng'
 			this.userService.getById({ id: userId }).subscribe((res) => {
 				if (res.success != 'OK') return
 				this.modelUser = res.result.SYUserGetByID[0]
+
+				if(this.modelUser.avatar != null && this.modelUser.avatar != '')
+					this.getUserAvatar(this.modelUser.id);
+
 				if (this.modelUser.roleIds) this.selectedRoles = this.modelUser.roleIds.split(',').map((c) => parseInt(c))
 				else this.selectedRoles = []
 			})
 		} else {
 			this.modalTitle = 'Tạo người dùng mới'
 		}
+
+		$('#avatar-view').attr('src','');
 		$('#modal-user-create-or-update').modal('show')
+	}
+
+	userAvatar:any
+	getUserAvatar(id:number){
+		this.userService.getAvatar(id).subscribe(res=>{
+			if(res){
+				let objectURL = 'data:image/jpeg;base64,' + res
+				this.userAvatar = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+			}
+		})
 	}
 }
