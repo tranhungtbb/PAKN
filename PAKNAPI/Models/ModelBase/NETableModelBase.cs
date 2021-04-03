@@ -13,11 +13,11 @@ namespace PAKNAPI.ModelBase
 {
 	public class NEFileAttachOnPage
 	{
-		public int Id;
-		public int? NewsId;
-		public string FileAttach;
-		public string Name;
-		public byte? FileType;
+		public int Id { get; set; }
+		public int? NewsId { get; set; }
+		public string FileAttach { get; set; }
+		public string Name { get; set; }
+		public byte? FileType { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -34,11 +34,11 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int? NewsId;
-		public string FileAttach;
-		public string Name;
-		public byte? FileType;
+		public int Id { get; set; }
+		public int? NewsId { get; set; }
+		public string FileAttach { get; set; }
+		public string Name { get; set; }
+		public byte? FileType { get; set; }
 
 		public async Task<NEFileAttach> NEFileAttachGetByID(int? Id)
 		{
@@ -112,25 +112,25 @@ namespace PAKNAPI.ModelBase
 
 	public class NENewsOnPage
 	{
-		public int Id;
-		public string Title;
-		public string Summary;
-		public string Contents;
-		public string ImagePath;
-		public int? NewsType;
-		public bool PostType;
-		public bool IsPublished;
-		public int Status;
-		public int? ViewCount;
-		public string Url;
-		public int? CreatedBy;
-		public DateTime? CreatedDate;
-		public int? UpdatedBy;
-		public DateTime? UpdatedDate;
-		public int? PublishedBy;
-		public DateTime? PublishedDate;
-		public int? WithdrawBy;
-		public DateTime? WithdrawDate;
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Summary { get; set; }
+		public string Contents { get; set; }
+		public string ImagePath { get; set; }
+		public int? NewsType { get; set; }
+		public bool PostType { get; set; }
+		public bool IsPublished { get; set; }
+		public int Status { get; set; }
+		public int? ViewCount { get; set; }
+		public string Url { get; set; }
+		public int? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public int? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? PublishedBy { get; set; }
+		public DateTime? PublishedDate { get; set; }
+		public int? WithdrawBy { get; set; }
+		public DateTime? WithdrawDate { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -147,25 +147,25 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Title;
-		public string Summary;
-		public string Contents;
-		public string ImagePath;
-		public int? NewsType;
-		public bool PostType;
-		public bool IsPublished;
-		public int Status;
-		public int? ViewCount;
-		public string Url;
-		public int? CreatedBy;
-		public DateTime? CreatedDate;
-		public int? UpdatedBy;
-		public DateTime? UpdatedDate;
-		public int? PublishedBy;
-		public DateTime? PublishedDate;
-		public int? WithdrawBy;
-		public DateTime? WithdrawDate;
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Summary { get; set; }
+		public string Contents { get; set; }
+		public string ImagePath { get; set; }
+		public int? NewsType { get; set; }
+		public bool PostType { get; set; }
+		public bool IsPublished { get; set; }
+		public int Status { get; set; }
+		public int? ViewCount { get; set; }
+		public string Url { get; set; }
+		public int? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public int? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? PublishedBy { get; set; }
+		public DateTime? PublishedDate { get; set; }
+		public int? WithdrawBy { get; set; }
+		public DateTime? WithdrawDate { get; set; }
 
 		public async Task<NENews> NENewsGetByID(int? Id)
 		{
@@ -267,9 +267,9 @@ namespace PAKNAPI.ModelBase
 
 	public class NERelateOnPage
 	{
-		public int Id;
-		public int? NewsId;
-		public int? NewsIdRelate;
+		public int Id { get; set; }
+		public int? NewsId { get; set; }
+		public int? NewsIdRelate { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -286,9 +286,9 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int? NewsId;
-		public int? NewsIdRelate;
+		public int Id { get; set; }
+		public int? NewsId { get; set; }
+		public int? NewsIdRelate { get; set; }
 
 		public async Task<NERelate> NERelateGetByID(int? Id)
 		{

@@ -24,8 +24,8 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Value;
-		public string Text;
+		public int Value { get; set; }
+		public string Text { get; set; }
 
 		public async Task<List<CAFieldGetDropdown>> CAFieldGetDropdownDAO()
 		{
@@ -48,10 +48,10 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber;
-		public int Id;
-		public string Name;
-		public bool IsActived;
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
 
 		public async Task<List<CAHashtagGetAll>> CAHashtagGetAllDAO()
 		{
@@ -74,8 +74,8 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Value;
-		public string Text;
+		public int Value { get; set; }
+		public string Text { get; set; }
 
 		public async Task<List<CAHashtagGetDropdown>> CAHashtagGetDropdownDAO()
 		{

@@ -24,9 +24,9 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public string Name;
-		public string Code;
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
 
 		public async Task<List<SYRoleGetAll>> SYRoleGetAllDAO()
 		{
@@ -49,8 +49,8 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Value;
-		public string Text;
+		public int Value { get; set; }
+		public string Text { get; set; }
 
 		public async Task<List<SYUnitGetDropdown>> SYUnitGetDropdownDAO()
 		{
@@ -73,8 +73,8 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Value;
-		public string Text;
+		public int Value { get; set; }
+		public string Text { get; set; }
 
 		public async Task<List<SYUnitGetDropdownNotMain>> SYUnitGetDropdownNotMainDAO()
 		{
@@ -97,7 +97,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
+		public int Id { get; set; }
 
 		public async Task<List<SYUnitGetMainId>> SYUnitGetMainIdDAO()
 		{
@@ -120,7 +120,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public string Name;
+		public string Name { get; set; }
 
 		public async Task<List<SYUnitGetNameById>> SYUnitGetNameByIdDAO(int? Id)
 		{

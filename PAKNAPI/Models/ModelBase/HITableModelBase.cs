@@ -13,13 +13,13 @@ namespace PAKNAPI.ModelBase
 {
 	public class HISIndividualOnPage
 	{
-		public int Id;
-		public int ObjectId;
-		public int? Type;
-		public string Content;
-		public byte? Status;
-		public long? CreatedBy;
-		public DateTime? CreatedDate;
+		public int Id { get; set; }
+		public int ObjectId { get; set; }
+		public int? Type { get; set; }
+		public string Content { get; set; }
+		public byte? Status { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -36,13 +36,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int ObjectId;
-		public int? Type;
-		public string Content;
-		public byte? Status;
-		public long? CreatedBy;
-		public DateTime? CreatedDate;
+		public int Id { get; set; }
+		public int ObjectId { get; set; }
+		public int? Type { get; set; }
+		public string Content { get; set; }
+		public byte? Status { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
 
 		public async Task<HISIndividual> HISIndividualGetByID(int? Id)
 		{
@@ -120,13 +120,13 @@ namespace PAKNAPI.ModelBase
 
 	public class HISInvitationOnPage
 	{
-		public int Id;
-		public int ObjectId;
-		public int? Type;
-		public string Content;
-		public byte? Status;
-		public long? CreatedBy;
-		public DateTime? CreatedDate;
+		public int Id { get; set; }
+		public int ObjectId { get; set; }
+		public int? Type { get; set; }
+		public string Content { get; set; }
+		public byte? Status { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -143,13 +143,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int ObjectId;
-		public int? Type;
-		public string Content;
-		public byte? Status;
-		public long? CreatedBy;
-		public DateTime? CreatedDate;
+		public int Id { get; set; }
+		public int ObjectId { get; set; }
+		public int? Type { get; set; }
+		public string Content { get; set; }
+		public byte? Status { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
 
 		public async Task<HISInvitation> HISInvitationGetByID(int? Id)
 		{
@@ -227,13 +227,13 @@ namespace PAKNAPI.ModelBase
 
 	public class HISNewsOnPage
 	{
-		public int Id;
-		public int ObjectId;
-		public int? Type;
-		public string Content;
-		public byte? Status;
-		public long? CreatedBy;
-		public DateTime? CreatedDate;
+		public int Id { get; set; }
+		public int ObjectId { get; set; }
+		public int? Type { get; set; }
+		public string Content { get; set; }
+		public byte? Status { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -250,13 +250,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int ObjectId;
-		public int? Type;
-		public string Content;
-		public byte? Status;
-		public long? CreatedBy;
-		public DateTime? CreatedDate;
+		public int Id { get; set; }
+		public int ObjectId { get; set; }
+		public int? Type { get; set; }
+		public string Content { get; set; }
+		public byte? Status { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
 
 		public async Task<HISNews> HISNewsGetByID(int? Id)
 		{
@@ -334,13 +334,13 @@ namespace PAKNAPI.ModelBase
 
 	public class HISRecommendationOnPage
 	{
-		public int Id;
-		public int ObjectId;
-		public int? Type;
-		public string Content;
-		public byte? Status;
-		public long? CreatedBy;
-		public DateTime? CreatedDate;
+		public int Id { get; set; }
+		public int ObjectId { get; set; }
+		public int? Type { get; set; }
+		public string Content { get; set; }
+		public byte? Status { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -357,13 +357,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int ObjectId;
-		public int? Type;
-		public string Content;
-		public byte? Status;
-		public long? CreatedBy;
-		public DateTime? CreatedDate;
+		public int Id { get; set; }
+		public int ObjectId { get; set; }
+		public int? Type { get; set; }
+		public string Content { get; set; }
+		public byte? Status { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
 
 		public async Task<HISRecommendation> HISRecommendationGetByID(int? Id)
 		{
@@ -441,13 +441,13 @@ namespace PAKNAPI.ModelBase
 
 	public class HISSMSOnPage
 	{
-		public int Id;
-		public int ObjectId;
-		public int? Type;
-		public string Content;
-		public byte? Status;
-		public long? CreatedBy;
-		public DateTime? CreatedDate;
+		public int Id { get; set; }
+		public int ObjectId { get; set; }
+		public int? Type { get; set; }
+		public string Content { get; set; }
+		public byte? Status { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -464,13 +464,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int ObjectId;
-		public int? Type;
-		public string Content;
-		public byte? Status;
-		public long? CreatedBy;
-		public DateTime? CreatedDate;
+		public int Id { get; set; }
+		public int ObjectId { get; set; }
+		public int? Type { get; set; }
+		public string Content { get; set; }
+		public byte? Status { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
 
 		public async Task<HISSMS> HISSMSGetByID(int? Id)
 		{

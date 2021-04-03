@@ -24,8 +24,8 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public long Value;
-		public string Text;
+		public long Value { get; set; }
+		public string Text { get; set; }
 
 		public async Task<List<BIBusinessGetDropdown>> BIBusinessGetDropdownDAO()
 		{
@@ -48,8 +48,8 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public long Value;
-		public string Text;
+		public long Value { get; set; }
+		public string Text { get; set; }
 
 		public async Task<List<BIIndividualGetDropdown>> BIIndividualGetDropdownDAO()
 		{

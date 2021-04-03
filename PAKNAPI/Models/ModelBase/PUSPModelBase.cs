@@ -24,13 +24,13 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber;
-		public int Id;
-		public string Name;
-		public string Title;
-		public string Content;
-		public string Hour;
-		public string Date;
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string Title { get; set; }
+		public string Content { get; set; }
+		public string Hour { get; set; }
+		public string Date { get; set; }
 
 		public async Task<List<PURecommendationGetAllOnPage>> PURecommendationGetAllOnPageDAO(string KeySearch, int? Status, int? PageSize, int? PageIndex)
 		{

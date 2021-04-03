@@ -51,25 +51,25 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public bool PostType;
-		public bool IsPublished;
-		public int Status;
-		public int Id;
-		public string Title;
-		public string Summary;
-		public string Contents;
-		public string ImagePath;
-		public int? NewsType;
-		public int? ViewCount;
-		public string Url;
-		public int? CreatedBy;
-		public DateTime? CreatedDate;
-		public int? UpdatedBy;
-		public DateTime? UpdatedDate;
-		public int? PublishedBy;
-		public DateTime? PublishedDate;
-		public int? WithdrawBy;
-		public DateTime? WithdrawDate;
+		public bool PostType { get; set; }
+		public bool IsPublished { get; set; }
+		public int Status { get; set; }
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Summary { get; set; }
+		public string Contents { get; set; }
+		public string ImagePath { get; set; }
+		public int? NewsType { get; set; }
+		public int? ViewCount { get; set; }
+		public string Url { get; set; }
+		public int? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public int? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? PublishedBy { get; set; }
+		public DateTime? PublishedDate { get; set; }
+		public int? WithdrawBy { get; set; }
+		public DateTime? WithdrawDate { get; set; }
 		public int? RowNumber; // int, null
 
 		public async Task<List<NENewsGetAllOnPage>> NENewsGetAllOnPageDAO(string NewsIds, int? PageSize, int? PageIndex, string Title, int? NewsType, int? Status)
@@ -99,26 +99,26 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public bool PostType;
-		public bool IsPublished;
-		public int Status;
-		public int Id;
-		public string Title;
-		public string Summary;
-		public string Contents;
-		public string ImagePath;
-		public int? NewsType;
-		public int? ViewCount;
-		public string Url;
-		public int? CreatedBy;
-		public DateTime? CreatedDate;
-		public int? UpdatedBy;
-		public DateTime? UpdatedDate;
-		public int? PublishedBy;
-		public DateTime? PublishedDate;
-		public int? WithdrawBy;
-		public DateTime? WithdrawDate;
-		public string NewsRelateIds;
+		public bool PostType { get; set; }
+		public bool IsPublished { get; set; }
+		public int Status { get; set; }
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Summary { get; set; }
+		public string Contents { get; set; }
+		public string ImagePath { get; set; }
+		public int? NewsType { get; set; }
+		public int? ViewCount { get; set; }
+		public string Url { get; set; }
+		public int? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public int? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? PublishedBy { get; set; }
+		public DateTime? PublishedDate { get; set; }
+		public int? WithdrawBy { get; set; }
+		public DateTime? WithdrawDate { get; set; }
+		public string NewsRelateIds { get; set; }
 
 		public async Task<List<NENewsGetByID>> NENewsGetByIDDAO(int? Id)
 		{
@@ -142,28 +142,28 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public bool PostType;
-		public bool IsPublished;
-		public int Status;
-		public int Id;
-		public string Title;
-		public string Summary;
-		public string Contents;
-		public string ImagePath;
-		public int? NewsType;
-		public int? ViewCount;
-		public string Url;
-		public int? CreatedBy;
-		public DateTime? CreatedDate;
-		public int? UpdatedBy;
-		public DateTime? UpdatedDate;
-		public int? PublishedBy;
-		public DateTime? PublishedDate;
-		public int? WithdrawBy;
-		public DateTime? WithdrawDate;
-		public int? NewsRelates_Id;
-		public string NewsRelates_Title;
-		public string NewsRelates_ImagePath;
+		public bool PostType { get; set; }
+		public bool IsPublished { get; set; }
+		public int Status { get; set; }
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Summary { get; set; }
+		public string Contents { get; set; }
+		public string ImagePath { get; set; }
+		public int? NewsType { get; set; }
+		public int? ViewCount { get; set; }
+		public string Url { get; set; }
+		public int? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public int? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? PublishedBy { get; set; }
+		public DateTime? PublishedDate { get; set; }
+		public int? WithdrawBy { get; set; }
+		public DateTime? WithdrawDate { get; set; }
+		public int? NewsRelates_Id { get; set; }
+		public string NewsRelates_Title { get; set; }
+		public string NewsRelates_ImagePath { get; set; }
 
 		public async Task<List<NENewsGetByIDOnJoin>> NENewsGetByIDOnJoinDAO(int? Id)
 		{
@@ -315,9 +315,9 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Id;
-		public int? NewsId;
-		public int? NewsIdRelate;
+		public int Id { get; set; }
+		public int? NewsId { get; set; }
+		public int? NewsIdRelate { get; set; }
 
 		public async Task<List<NERelateGetAll>> NERelateGetAllDAO(int? NewsId)
 		{
