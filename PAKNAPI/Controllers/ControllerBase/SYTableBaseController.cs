@@ -33,7 +33,7 @@ namespace PAKNAPI.ControllerBase
 		#region SYAPI
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYAPIGetByID")]
 		public async Task<ActionResult<object>> SYAPIGetByID(int? Id)
 		{
@@ -51,7 +51,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYAPIGetAll")]
 		public async Task<ActionResult<object>> SYAPIGetAll()
 		{
@@ -69,7 +69,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYAPIGetAllOnPage")]
 		public async Task<ActionResult<object>> SYAPIGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -95,7 +95,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYAPIInsert")]
 		public async Task<ActionResult<object>> SYAPIInsert(SYAPI _sYAPI)
 		{
@@ -115,7 +115,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYAPIListInsert")]
 		public async Task<ActionResult<object>> SYAPIListInsert(List<SYAPI> _sYAPIs)
 		{
@@ -155,7 +155,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYAPIUpdate")]
 		public async Task<ActionResult<object>> SYAPIUpdate(SYAPI _sYAPI)
 		{
@@ -183,7 +183,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYAPIDelete")]
 		public async Task<ActionResult<object>> SYAPIDelete(SYAPI _sYAPI)
 		{
@@ -213,7 +213,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYAPIListDelete")]
 		public async Task<ActionResult<object>> SYAPIListDelete(List<SYAPI> _sYAPIs)
 		{
@@ -253,7 +253,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYAPIDeleteAll")]
 		public async Task<ActionResult<object>> SYAPIDeleteAll()
 		{
@@ -283,7 +283,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYAPICount")]
 		public async Task<ActionResult<object>> SYAPICount()
 		{
@@ -305,7 +305,7 @@ namespace PAKNAPI.ControllerBase
 		#region SYCaptCha
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYCaptChaGetByID")]
 		public async Task<ActionResult<object>> SYCaptChaGetByID(int? Id)
 		{
@@ -323,7 +323,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYCaptChaGetAll")]
 		public async Task<ActionResult<object>> SYCaptChaGetAll()
 		{
@@ -341,7 +341,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYCaptChaGetAllOnPage")]
 		public async Task<ActionResult<object>> SYCaptChaGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -367,7 +367,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYCaptChaInsert")]
 		public async Task<ActionResult<object>> SYCaptChaInsert(SYCaptCha _sYCaptCha)
 		{
@@ -387,7 +387,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYCaptChaListInsert")]
 		public async Task<ActionResult<object>> SYCaptChaListInsert(List<SYCaptCha> _sYCaptChas)
 		{
@@ -427,7 +427,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYCaptChaUpdate")]
 		public async Task<ActionResult<object>> SYCaptChaUpdate(SYCaptCha _sYCaptCha)
 		{
@@ -455,7 +455,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYCaptChaDelete")]
 		public async Task<ActionResult<object>> SYCaptChaDelete(SYCaptCha _sYCaptCha)
 		{
@@ -485,7 +485,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYCaptChaListDelete")]
 		public async Task<ActionResult<object>> SYCaptChaListDelete(List<SYCaptCha> _sYCaptChas)
 		{
@@ -525,7 +525,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYCaptChaDeleteAll")]
 		public async Task<ActionResult<object>> SYCaptChaDeleteAll()
 		{
@@ -555,7 +555,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYCaptChaCount")]
 		public async Task<ActionResult<object>> SYCaptChaCount()
 		{
@@ -577,7 +577,7 @@ namespace PAKNAPI.ControllerBase
 		#region SYGroupUser
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYGroupUserGetByID")]
 		public async Task<ActionResult<object>> SYGroupUserGetByID(int? Id)
 		{
@@ -595,7 +595,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYGroupUserGetAll")]
 		public async Task<ActionResult<object>> SYGroupUserGetAll()
 		{
@@ -613,7 +613,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYGroupUserGetAllOnPage")]
 		public async Task<ActionResult<object>> SYGroupUserGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -639,7 +639,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYGroupUserInsert")]
 		public async Task<ActionResult<object>> SYGroupUserInsert(SYGroupUser _sYGroupUser)
 		{
@@ -659,7 +659,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYGroupUserListInsert")]
 		public async Task<ActionResult<object>> SYGroupUserListInsert(List<SYGroupUser> _sYGroupUsers)
 		{
@@ -699,7 +699,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYGroupUserUpdate")]
 		public async Task<ActionResult<object>> SYGroupUserUpdate(SYGroupUser _sYGroupUser)
 		{
@@ -727,7 +727,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYGroupUserDelete")]
 		public async Task<ActionResult<object>> SYGroupUserDelete(SYGroupUser _sYGroupUser)
 		{
@@ -757,7 +757,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYGroupUserListDelete")]
 		public async Task<ActionResult<object>> SYGroupUserListDelete(List<SYGroupUser> _sYGroupUsers)
 		{
@@ -797,7 +797,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYGroupUserDeleteAll")]
 		public async Task<ActionResult<object>> SYGroupUserDeleteAll()
 		{
@@ -827,7 +827,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYGroupUserCount")]
 		public async Task<ActionResult<object>> SYGroupUserCount()
 		{
@@ -849,7 +849,7 @@ namespace PAKNAPI.ControllerBase
 		#region SYPermission
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionGetByID")]
 		public async Task<ActionResult<object>> SYPermissionGetByID(short? Id)
 		{
@@ -867,7 +867,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionGetAll")]
 		public async Task<ActionResult<object>> SYPermissionGetAll()
 		{
@@ -885,7 +885,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionGetAllOnPage")]
 		public async Task<ActionResult<object>> SYPermissionGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -911,7 +911,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionInsert")]
 		public async Task<ActionResult<object>> SYPermissionInsert(SYPermission _sYPermission)
 		{
@@ -931,7 +931,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionListInsert")]
 		public async Task<ActionResult<object>> SYPermissionListInsert(List<SYPermission> _sYPermissions)
 		{
@@ -971,7 +971,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionUpdate")]
 		public async Task<ActionResult<object>> SYPermissionUpdate(SYPermission _sYPermission)
 		{
@@ -999,7 +999,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionDelete")]
 		public async Task<ActionResult<object>> SYPermissionDelete(SYPermission _sYPermission)
 		{
@@ -1029,7 +1029,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionListDelete")]
 		public async Task<ActionResult<object>> SYPermissionListDelete(List<SYPermission> _sYPermissions)
 		{
@@ -1069,7 +1069,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionDeleteAll")]
 		public async Task<ActionResult<object>> SYPermissionDeleteAll()
 		{
@@ -1099,7 +1099,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionCount")]
 		public async Task<ActionResult<object>> SYPermissionCount()
 		{
@@ -1121,7 +1121,7 @@ namespace PAKNAPI.ControllerBase
 		#region SYPermissionAPI
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionAPIGetByID")]
 		public async Task<ActionResult<object>> SYPermissionAPIGetByID(int? Id)
 		{
@@ -1139,7 +1139,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionAPIGetAll")]
 		public async Task<ActionResult<object>> SYPermissionAPIGetAll()
 		{
@@ -1157,7 +1157,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionAPIGetAllOnPage")]
 		public async Task<ActionResult<object>> SYPermissionAPIGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -1183,7 +1183,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionAPIInsert")]
 		public async Task<ActionResult<object>> SYPermissionAPIInsert(SYPermissionAPI _sYPermissionAPI)
 		{
@@ -1203,7 +1203,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionAPIListInsert")]
 		public async Task<ActionResult<object>> SYPermissionAPIListInsert(List<SYPermissionAPI> _sYPermissionAPIs)
 		{
@@ -1243,7 +1243,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionAPIUpdate")]
 		public async Task<ActionResult<object>> SYPermissionAPIUpdate(SYPermissionAPI _sYPermissionAPI)
 		{
@@ -1271,7 +1271,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionAPIDelete")]
 		public async Task<ActionResult<object>> SYPermissionAPIDelete(SYPermissionAPI _sYPermissionAPI)
 		{
@@ -1301,7 +1301,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionAPIListDelete")]
 		public async Task<ActionResult<object>> SYPermissionAPIListDelete(List<SYPermissionAPI> _sYPermissionAPIs)
 		{
@@ -1341,7 +1341,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionAPIDeleteAll")]
 		public async Task<ActionResult<object>> SYPermissionAPIDeleteAll()
 		{
@@ -1371,7 +1371,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionAPICount")]
 		public async Task<ActionResult<object>> SYPermissionAPICount()
 		{
@@ -1393,7 +1393,7 @@ namespace PAKNAPI.ControllerBase
 		#region SYPermissionCategory
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionCategoryGetByID")]
 		public async Task<ActionResult<object>> SYPermissionCategoryGetByID(short? Id)
 		{
@@ -1411,7 +1411,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionCategoryGetAll")]
 		public async Task<ActionResult<object>> SYPermissionCategoryGetAll()
 		{
@@ -1429,7 +1429,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionCategoryGetAllOnPage")]
 		public async Task<ActionResult<object>> SYPermissionCategoryGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -1455,7 +1455,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionCategoryInsert")]
 		public async Task<ActionResult<object>> SYPermissionCategoryInsert(SYPermissionCategory _sYPermissionCategory)
 		{
@@ -1475,7 +1475,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionCategoryListInsert")]
 		public async Task<ActionResult<object>> SYPermissionCategoryListInsert(List<SYPermissionCategory> _sYPermissionCategorys)
 		{
@@ -1515,7 +1515,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionCategoryUpdate")]
 		public async Task<ActionResult<object>> SYPermissionCategoryUpdate(SYPermissionCategory _sYPermissionCategory)
 		{
@@ -1543,7 +1543,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionCategoryDelete")]
 		public async Task<ActionResult<object>> SYPermissionCategoryDelete(SYPermissionCategory _sYPermissionCategory)
 		{
@@ -1573,7 +1573,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionCategoryListDelete")]
 		public async Task<ActionResult<object>> SYPermissionCategoryListDelete(List<SYPermissionCategory> _sYPermissionCategorys)
 		{
@@ -1613,7 +1613,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionCategoryDeleteAll")]
 		public async Task<ActionResult<object>> SYPermissionCategoryDeleteAll()
 		{
@@ -1643,7 +1643,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionCategoryCount")]
 		public async Task<ActionResult<object>> SYPermissionCategoryCount()
 		{
@@ -1665,7 +1665,7 @@ namespace PAKNAPI.ControllerBase
 		#region SYPermissionFunction
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionFunctionGetByID")]
 		public async Task<ActionResult<object>> SYPermissionFunctionGetByID(short? Id)
 		{
@@ -1683,7 +1683,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionFunctionGetAll")]
 		public async Task<ActionResult<object>> SYPermissionFunctionGetAll()
 		{
@@ -1701,7 +1701,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionFunctionGetAllOnPage")]
 		public async Task<ActionResult<object>> SYPermissionFunctionGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -1727,7 +1727,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionFunctionInsert")]
 		public async Task<ActionResult<object>> SYPermissionFunctionInsert(SYPermissionFunction _sYPermissionFunction)
 		{
@@ -1747,7 +1747,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionFunctionListInsert")]
 		public async Task<ActionResult<object>> SYPermissionFunctionListInsert(List<SYPermissionFunction> _sYPermissionFunctions)
 		{
@@ -1787,7 +1787,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionFunctionUpdate")]
 		public async Task<ActionResult<object>> SYPermissionFunctionUpdate(SYPermissionFunction _sYPermissionFunction)
 		{
@@ -1815,7 +1815,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionFunctionDelete")]
 		public async Task<ActionResult<object>> SYPermissionFunctionDelete(SYPermissionFunction _sYPermissionFunction)
 		{
@@ -1845,7 +1845,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionFunctionListDelete")]
 		public async Task<ActionResult<object>> SYPermissionFunctionListDelete(List<SYPermissionFunction> _sYPermissionFunctions)
 		{
@@ -1885,7 +1885,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionFunctionDeleteAll")]
 		public async Task<ActionResult<object>> SYPermissionFunctionDeleteAll()
 		{
@@ -1915,7 +1915,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionFunctionCount")]
 		public async Task<ActionResult<object>> SYPermissionFunctionCount()
 		{
@@ -1937,7 +1937,7 @@ namespace PAKNAPI.ControllerBase
 		#region SYPermissionGroupUser
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionGroupUserGetByID")]
 		public async Task<ActionResult<object>> SYPermissionGroupUserGetByID(short? PermissionId)
 		{
@@ -1955,7 +1955,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionGroupUserGetAll")]
 		public async Task<ActionResult<object>> SYPermissionGroupUserGetAll()
 		{
@@ -1973,7 +1973,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionGroupUserGetAllOnPage")]
 		public async Task<ActionResult<object>> SYPermissionGroupUserGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -1999,7 +1999,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionGroupUserInsert")]
 		public async Task<ActionResult<object>> SYPermissionGroupUserInsert(SYPermissionGroupUser _sYPermissionGroupUser)
 		{
@@ -2019,7 +2019,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionGroupUserListInsert")]
 		public async Task<ActionResult<object>> SYPermissionGroupUserListInsert(List<SYPermissionGroupUser> _sYPermissionGroupUsers)
 		{
@@ -2059,7 +2059,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionGroupUserUpdate")]
 		public async Task<ActionResult<object>> SYPermissionGroupUserUpdate(SYPermissionGroupUser _sYPermissionGroupUser)
 		{
@@ -2087,7 +2087,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionGroupUserDelete")]
 		public async Task<ActionResult<object>> SYPermissionGroupUserDelete(SYPermissionGroupUser _sYPermissionGroupUser)
 		{
@@ -2117,7 +2117,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionGroupUserListDelete")]
 		public async Task<ActionResult<object>> SYPermissionGroupUserListDelete(List<SYPermissionGroupUser> _sYPermissionGroupUsers)
 		{
@@ -2157,7 +2157,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionGroupUserDeleteAll")]
 		public async Task<ActionResult<object>> SYPermissionGroupUserDeleteAll()
 		{
@@ -2187,7 +2187,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionGroupUserCount")]
 		public async Task<ActionResult<object>> SYPermissionGroupUserCount()
 		{
@@ -2209,7 +2209,7 @@ namespace PAKNAPI.ControllerBase
 		#region SYPermissionUser
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionUserGetByID")]
 		public async Task<ActionResult<object>> SYPermissionUserGetByID(long? UserId)
 		{
@@ -2227,7 +2227,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionUserGetAll")]
 		public async Task<ActionResult<object>> SYPermissionUserGetAll()
 		{
@@ -2245,7 +2245,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionUserGetAllOnPage")]
 		public async Task<ActionResult<object>> SYPermissionUserGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -2271,7 +2271,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionUserInsert")]
 		public async Task<ActionResult<object>> SYPermissionUserInsert(SYPermissionUser _sYPermissionUser)
 		{
@@ -2291,7 +2291,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionUserListInsert")]
 		public async Task<ActionResult<object>> SYPermissionUserListInsert(List<SYPermissionUser> _sYPermissionUsers)
 		{
@@ -2331,7 +2331,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionUserUpdate")]
 		public async Task<ActionResult<object>> SYPermissionUserUpdate(SYPermissionUser _sYPermissionUser)
 		{
@@ -2359,7 +2359,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionUserDelete")]
 		public async Task<ActionResult<object>> SYPermissionUserDelete(SYPermissionUser _sYPermissionUser)
 		{
@@ -2389,7 +2389,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionUserListDelete")]
 		public async Task<ActionResult<object>> SYPermissionUserListDelete(List<SYPermissionUser> _sYPermissionUsers)
 		{
@@ -2429,7 +2429,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionUserDeleteAll")]
 		public async Task<ActionResult<object>> SYPermissionUserDeleteAll()
 		{
@@ -2459,7 +2459,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionUserCount")]
 		public async Task<ActionResult<object>> SYPermissionUserCount()
 		{
@@ -2481,7 +2481,7 @@ namespace PAKNAPI.ControllerBase
 		#region SYRole
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYRoleGetByID")]
 		public async Task<ActionResult<object>> SYRoleGetByID(int? Id)
 		{
@@ -2499,7 +2499,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYRoleGetAll")]
 		public async Task<ActionResult<object>> SYRoleGetAll()
 		{
@@ -2517,7 +2517,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYRoleGetAllOnPage")]
 		public async Task<ActionResult<object>> SYRoleGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -2543,7 +2543,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYRoleInsert")]
 		public async Task<ActionResult<object>> SYRoleInsert(SYRole _sYRole)
 		{
@@ -2563,7 +2563,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYRoleListInsert")]
 		public async Task<ActionResult<object>> SYRoleListInsert(List<SYRole> _sYRoles)
 		{
@@ -2603,7 +2603,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYRoleUpdate")]
 		public async Task<ActionResult<object>> SYRoleUpdate(SYRole _sYRole)
 		{
@@ -2631,7 +2631,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYRoleDelete")]
 		public async Task<ActionResult<object>> SYRoleDelete(SYRole _sYRole)
 		{
@@ -2661,7 +2661,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYRoleListDelete")]
 		public async Task<ActionResult<object>> SYRoleListDelete(List<SYRole> _sYRoles)
 		{
@@ -2701,7 +2701,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYRoleDeleteAll")]
 		public async Task<ActionResult<object>> SYRoleDeleteAll()
 		{
@@ -2731,7 +2731,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYRoleCount")]
 		public async Task<ActionResult<object>> SYRoleCount()
 		{
@@ -2753,7 +2753,7 @@ namespace PAKNAPI.ControllerBase
 		#region SYSystemLog
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYSystemLogGetByID")]
 		public async Task<ActionResult<object>> SYSystemLogGetByID(long? Id)
 		{
@@ -2771,7 +2771,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYSystemLogGetAll")]
 		public async Task<ActionResult<object>> SYSystemLogGetAll()
 		{
@@ -2789,7 +2789,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYSystemLogGetAllOnPage")]
 		public async Task<ActionResult<object>> SYSystemLogGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -2815,7 +2815,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYSystemLogInsert")]
 		public async Task<ActionResult<object>> SYSystemLogInsert(SYSystemLog _sYSystemLog)
 		{
@@ -2835,7 +2835,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYSystemLogListInsert")]
 		public async Task<ActionResult<object>> SYSystemLogListInsert(List<SYSystemLog> _sYSystemLogs)
 		{
@@ -2875,7 +2875,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYSystemLogUpdate")]
 		public async Task<ActionResult<object>> SYSystemLogUpdate(SYSystemLog _sYSystemLog)
 		{
@@ -2903,7 +2903,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYSystemLogDelete")]
 		public async Task<ActionResult<object>> SYSystemLogDelete(SYSystemLog _sYSystemLog)
 		{
@@ -2933,7 +2933,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYSystemLogListDelete")]
 		public async Task<ActionResult<object>> SYSystemLogListDelete(List<SYSystemLog> _sYSystemLogs)
 		{
@@ -2973,7 +2973,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYSystemLogDeleteAll")]
 		public async Task<ActionResult<object>> SYSystemLogDeleteAll()
 		{
@@ -3003,7 +3003,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYSystemLogCount")]
 		public async Task<ActionResult<object>> SYSystemLogCount()
 		{
@@ -3025,7 +3025,7 @@ namespace PAKNAPI.ControllerBase
 		#region SYUnit
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUnitGetByID")]
 		public async Task<ActionResult<object>> SYUnitGetByID(int? Id)
 		{
@@ -3043,7 +3043,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUnitGetAll")]
 		public async Task<ActionResult<object>> SYUnitGetAll()
 		{
@@ -3061,7 +3061,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUnitGetAllOnPage")]
 		public async Task<ActionResult<object>> SYUnitGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -3087,7 +3087,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUnitInsert")]
 		public async Task<ActionResult<object>> SYUnitInsert(SYUnit _sYUnit)
 		{
@@ -3107,7 +3107,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUnitListInsert")]
 		public async Task<ActionResult<object>> SYUnitListInsert(List<SYUnit> _sYUnits)
 		{
@@ -3147,7 +3147,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUnitUpdate")]
 		public async Task<ActionResult<object>> SYUnitUpdate(SYUnit _sYUnit)
 		{
@@ -3175,7 +3175,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUnitDelete")]
 		public async Task<ActionResult<object>> SYUnitDelete(SYUnit _sYUnit)
 		{
@@ -3205,7 +3205,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUnitListDelete")]
 		public async Task<ActionResult<object>> SYUnitListDelete(List<SYUnit> _sYUnits)
 		{
@@ -3245,7 +3245,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUnitDeleteAll")]
 		public async Task<ActionResult<object>> SYUnitDeleteAll()
 		{
@@ -3275,7 +3275,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUnitCount")]
 		public async Task<ActionResult<object>> SYUnitCount()
 		{
@@ -3297,7 +3297,7 @@ namespace PAKNAPI.ControllerBase
 		#region SYUser
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserGetByID")]
 		public async Task<ActionResult<object>> SYUserGetByID(long? Id)
 		{
@@ -3315,7 +3315,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserGetAll")]
 		public async Task<ActionResult<object>> SYUserGetAll()
 		{
@@ -3333,7 +3333,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserGetAllOnPage")]
 		public async Task<ActionResult<object>> SYUserGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -3359,7 +3359,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserInsert")]
 		public async Task<ActionResult<object>> SYUserInsert(SYUser _sYUser)
 		{
@@ -3379,7 +3379,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserListInsert")]
 		public async Task<ActionResult<object>> SYUserListInsert(List<SYUser> _sYUsers)
 		{
@@ -3419,7 +3419,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserUpdate")]
 		public async Task<ActionResult<object>> SYUserUpdate(SYUser _sYUser)
 		{
@@ -3447,7 +3447,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserDelete")]
 		public async Task<ActionResult<object>> SYUserDelete(SYUser _sYUser)
 		{
@@ -3477,7 +3477,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserListDelete")]
 		public async Task<ActionResult<object>> SYUserListDelete(List<SYUser> _sYUsers)
 		{
@@ -3517,7 +3517,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserDeleteAll")]
 		public async Task<ActionResult<object>> SYUserDeleteAll()
 		{
@@ -3547,7 +3547,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserCount")]
 		public async Task<ActionResult<object>> SYUserCount()
 		{
@@ -3569,7 +3569,7 @@ namespace PAKNAPI.ControllerBase
 		#region SYUserRoleMap
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserRoleMapGetByID")]
 		public async Task<ActionResult<object>> SYUserRoleMapGetByID(int? UserId)
 		{
@@ -3587,7 +3587,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserRoleMapGetAll")]
 		public async Task<ActionResult<object>> SYUserRoleMapGetAll()
 		{
@@ -3605,7 +3605,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserRoleMapGetAllOnPage")]
 		public async Task<ActionResult<object>> SYUserRoleMapGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -3631,7 +3631,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserRoleMapInsert")]
 		public async Task<ActionResult<object>> SYUserRoleMapInsert(SYUserRoleMap _sYUserRoleMap)
 		{
@@ -3651,7 +3651,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserRoleMapListInsert")]
 		public async Task<ActionResult<object>> SYUserRoleMapListInsert(List<SYUserRoleMap> _sYUserRoleMaps)
 		{
@@ -3691,7 +3691,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserRoleMapUpdate")]
 		public async Task<ActionResult<object>> SYUserRoleMapUpdate(SYUserRoleMap _sYUserRoleMap)
 		{
@@ -3719,7 +3719,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserRoleMapDelete")]
 		public async Task<ActionResult<object>> SYUserRoleMapDelete(SYUserRoleMap _sYUserRoleMap)
 		{
@@ -3749,7 +3749,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserRoleMapListDelete")]
 		public async Task<ActionResult<object>> SYUserRoleMapListDelete(List<SYUserRoleMap> _sYUserRoleMaps)
 		{
@@ -3789,7 +3789,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserRoleMapDeleteAll")]
 		public async Task<ActionResult<object>> SYUserRoleMapDeleteAll()
 		{
@@ -3819,7 +3819,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserRoleMapCount")]
 		public async Task<ActionResult<object>> SYUserRoleMapCount()
 		{
@@ -3841,7 +3841,7 @@ namespace PAKNAPI.ControllerBase
 		#region SYUserGroupUser
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserGroupUserGetByID")]
 		public async Task<ActionResult<object>> SYUserGroupUserGetByID(int? Id)
 		{
@@ -3859,7 +3859,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserGroupUserGetAll")]
 		public async Task<ActionResult<object>> SYUserGroupUserGetAll()
 		{
@@ -3877,7 +3877,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserGroupUserGetAllOnPage")]
 		public async Task<ActionResult<object>> SYUserGroupUserGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -3903,7 +3903,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserGroupUserInsert")]
 		public async Task<ActionResult<object>> SYUserGroupUserInsert(SYUserGroupUser _sYUserGroupUser)
 		{
@@ -3923,7 +3923,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserGroupUserListInsert")]
 		public async Task<ActionResult<object>> SYUserGroupUserListInsert(List<SYUserGroupUser> _sYUserGroupUsers)
 		{
@@ -3963,7 +3963,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserGroupUserUpdate")]
 		public async Task<ActionResult<object>> SYUserGroupUserUpdate(SYUserGroupUser _sYUserGroupUser)
 		{
@@ -3991,7 +3991,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserGroupUserDelete")]
 		public async Task<ActionResult<object>> SYUserGroupUserDelete(SYUserGroupUser _sYUserGroupUser)
 		{
@@ -4021,7 +4021,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserGroupUserListDelete")]
 		public async Task<ActionResult<object>> SYUserGroupUserListDelete(List<SYUserGroupUser> _sYUserGroupUsers)
 		{
@@ -4061,7 +4061,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserGroupUserDeleteAll")]
 		public async Task<ActionResult<object>> SYUserGroupUserDeleteAll()
 		{
@@ -4091,7 +4091,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserGroupUserCount")]
 		public async Task<ActionResult<object>> SYUserGroupUserCount()
 		{
@@ -4113,7 +4113,7 @@ namespace PAKNAPI.ControllerBase
 		#region SYUserUnit
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserUnitGetByID")]
 		public async Task<ActionResult<object>> SYUserUnitGetByID(int? Id)
 		{
@@ -4131,7 +4131,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserUnitGetAll")]
 		public async Task<ActionResult<object>> SYUserUnitGetAll()
 		{
@@ -4149,7 +4149,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserUnitGetAllOnPage")]
 		public async Task<ActionResult<object>> SYUserUnitGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -4175,7 +4175,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserUnitInsert")]
 		public async Task<ActionResult<object>> SYUserUnitInsert(SYUserUnit _sYUserUnit)
 		{
@@ -4195,7 +4195,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserUnitListInsert")]
 		public async Task<ActionResult<object>> SYUserUnitListInsert(List<SYUserUnit> _sYUserUnits)
 		{
@@ -4235,7 +4235,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserUnitUpdate")]
 		public async Task<ActionResult<object>> SYUserUnitUpdate(SYUserUnit _sYUserUnit)
 		{
@@ -4263,7 +4263,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserUnitDelete")]
 		public async Task<ActionResult<object>> SYUserUnitDelete(SYUserUnit _sYUserUnit)
 		{
@@ -4293,7 +4293,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserUnitListDelete")]
 		public async Task<ActionResult<object>> SYUserUnitListDelete(List<SYUserUnit> _sYUserUnits)
 		{
@@ -4333,7 +4333,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserUnitDeleteAll")]
 		public async Task<ActionResult<object>> SYUserUnitDeleteAll()
 		{
@@ -4363,7 +4363,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUserUnitCount")]
 		public async Task<ActionResult<object>> SYUserUnitCount()
 		{

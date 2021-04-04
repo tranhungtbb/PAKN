@@ -31,7 +31,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("CAFieldGetDropdownBase")]
 		public async Task<ActionResult<object>> CAFieldGetDropdownBase()
 		{
@@ -54,7 +54,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("CAHashtagGetAllBase")]
 		public async Task<ActionResult<object>> CAHashtagGetAllBase()
 		{
@@ -77,7 +77,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("CAHashtagGetDropdownBase")]
 		public async Task<ActionResult<object>> CAHashtagGetDropdownBase()
 		{

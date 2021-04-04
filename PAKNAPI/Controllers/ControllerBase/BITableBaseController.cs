@@ -33,7 +33,7 @@ namespace PAKNAPI.ControllerBase
 		#region BIBusiness
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIBusinessGetByID")]
 		public async Task<ActionResult<object>> BIBusinessGetByID(long? Id)
 		{
@@ -51,7 +51,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIBusinessGetAll")]
 		public async Task<ActionResult<object>> BIBusinessGetAll()
 		{
@@ -69,7 +69,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIBusinessGetAllOnPage")]
 		public async Task<ActionResult<object>> BIBusinessGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -95,7 +95,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIBusinessInsert")]
 		public async Task<ActionResult<object>> BIBusinessInsert(BIBusiness _bIBusiness)
 		{
@@ -115,7 +115,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIBusinessListInsert")]
 		public async Task<ActionResult<object>> BIBusinessListInsert(List<BIBusiness> _bIBusinesss)
 		{
@@ -155,7 +155,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIBusinessUpdate")]
 		public async Task<ActionResult<object>> BIBusinessUpdate(BIBusiness _bIBusiness)
 		{
@@ -183,7 +183,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIBusinessDelete")]
 		public async Task<ActionResult<object>> BIBusinessDelete(BIBusiness _bIBusiness)
 		{
@@ -213,7 +213,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIBusinessListDelete")]
 		public async Task<ActionResult<object>> BIBusinessListDelete(List<BIBusiness> _bIBusinesss)
 		{
@@ -253,7 +253,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIBusinessDeleteAll")]
 		public async Task<ActionResult<object>> BIBusinessDeleteAll()
 		{
@@ -283,7 +283,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIBusinessCount")]
 		public async Task<ActionResult<object>> BIBusinessCount()
 		{
@@ -305,7 +305,7 @@ namespace PAKNAPI.ControllerBase
 		#region BIIndividual
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIIndividualGetByID")]
 		public async Task<ActionResult<object>> BIIndividualGetByID(long? Id)
 		{
@@ -323,7 +323,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIIndividualGetAll")]
 		public async Task<ActionResult<object>> BIIndividualGetAll()
 		{
@@ -341,7 +341,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIIndividualGetAllOnPage")]
 		public async Task<ActionResult<object>> BIIndividualGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -367,7 +367,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIIndividualInsert")]
 		public async Task<ActionResult<object>> BIIndividualInsert(BIIndividual _bIIndividual)
 		{
@@ -387,7 +387,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIIndividualListInsert")]
 		public async Task<ActionResult<object>> BIIndividualListInsert(List<BIIndividual> _bIIndividuals)
 		{
@@ -427,7 +427,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIIndividualUpdate")]
 		public async Task<ActionResult<object>> BIIndividualUpdate(BIIndividual _bIIndividual)
 		{
@@ -455,7 +455,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIIndividualDelete")]
 		public async Task<ActionResult<object>> BIIndividualDelete(BIIndividual _bIIndividual)
 		{
@@ -485,7 +485,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIIndividualListDelete")]
 		public async Task<ActionResult<object>> BIIndividualListDelete(List<BIIndividual> _bIIndividuals)
 		{
@@ -525,7 +525,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIIndividualDeleteAll")]
 		public async Task<ActionResult<object>> BIIndividualDeleteAll()
 		{
@@ -555,7 +555,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIIndividualCount")]
 		public async Task<ActionResult<object>> BIIndividualCount()
 		{

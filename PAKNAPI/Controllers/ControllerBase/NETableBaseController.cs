@@ -33,7 +33,7 @@ namespace PAKNAPI.ControllerBase
 		#region NEFileAttach
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NEFileAttachGetByID")]
 		public async Task<ActionResult<object>> NEFileAttachGetByID(int? Id)
 		{
@@ -51,7 +51,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NEFileAttachGetAll")]
 		public async Task<ActionResult<object>> NEFileAttachGetAll()
 		{
@@ -69,7 +69,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NEFileAttachGetAllOnPage")]
 		public async Task<ActionResult<object>> NEFileAttachGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -95,7 +95,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NEFileAttachInsert")]
 		public async Task<ActionResult<object>> NEFileAttachInsert(NEFileAttach _nEFileAttach)
 		{
@@ -115,7 +115,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NEFileAttachListInsert")]
 		public async Task<ActionResult<object>> NEFileAttachListInsert(List<NEFileAttach> _nEFileAttachs)
 		{
@@ -155,7 +155,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NEFileAttachUpdate")]
 		public async Task<ActionResult<object>> NEFileAttachUpdate(NEFileAttach _nEFileAttach)
 		{
@@ -183,7 +183,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NEFileAttachDelete")]
 		public async Task<ActionResult<object>> NEFileAttachDelete(NEFileAttach _nEFileAttach)
 		{
@@ -213,7 +213,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NEFileAttachListDelete")]
 		public async Task<ActionResult<object>> NEFileAttachListDelete(List<NEFileAttach> _nEFileAttachs)
 		{
@@ -253,7 +253,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NEFileAttachDeleteAll")]
 		public async Task<ActionResult<object>> NEFileAttachDeleteAll()
 		{
@@ -283,7 +283,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NEFileAttachCount")]
 		public async Task<ActionResult<object>> NEFileAttachCount()
 		{
@@ -305,7 +305,7 @@ namespace PAKNAPI.ControllerBase
 		#region NENews
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NENewsGetByID")]
 		public async Task<ActionResult<object>> NENewsGetByID(int? Id)
 		{
@@ -323,7 +323,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NENewsGetAll")]
 		public async Task<ActionResult<object>> NENewsGetAll()
 		{
@@ -341,7 +341,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NENewsGetAllOnPage")]
 		public async Task<ActionResult<object>> NENewsGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -367,7 +367,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NENewsInsert")]
 		public async Task<ActionResult<object>> NENewsInsert(NENews _nENews)
 		{
@@ -387,7 +387,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NENewsListInsert")]
 		public async Task<ActionResult<object>> NENewsListInsert(List<NENews> _nENewss)
 		{
@@ -427,7 +427,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NENewsUpdate")]
 		public async Task<ActionResult<object>> NENewsUpdate(NENews _nENews)
 		{
@@ -455,7 +455,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NENewsDelete")]
 		public async Task<ActionResult<object>> NENewsDelete(NENews _nENews)
 		{
@@ -485,7 +485,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NENewsListDelete")]
 		public async Task<ActionResult<object>> NENewsListDelete(List<NENews> _nENewss)
 		{
@@ -525,7 +525,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NENewsDeleteAll")]
 		public async Task<ActionResult<object>> NENewsDeleteAll()
 		{
@@ -555,7 +555,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NENewsCount")]
 		public async Task<ActionResult<object>> NENewsCount()
 		{
@@ -577,7 +577,7 @@ namespace PAKNAPI.ControllerBase
 		#region NERelate
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NERelateGetByID")]
 		public async Task<ActionResult<object>> NERelateGetByID(int? Id)
 		{
@@ -595,7 +595,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NERelateGetAll")]
 		public async Task<ActionResult<object>> NERelateGetAll()
 		{
@@ -613,7 +613,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NERelateGetAllOnPage")]
 		public async Task<ActionResult<object>> NERelateGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -639,7 +639,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NERelateInsert")]
 		public async Task<ActionResult<object>> NERelateInsert(NERelate _nERelate)
 		{
@@ -659,7 +659,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NERelateListInsert")]
 		public async Task<ActionResult<object>> NERelateListInsert(List<NERelate> _nERelates)
 		{
@@ -699,7 +699,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NERelateUpdate")]
 		public async Task<ActionResult<object>> NERelateUpdate(NERelate _nERelate)
 		{
@@ -727,7 +727,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NERelateDelete")]
 		public async Task<ActionResult<object>> NERelateDelete(NERelate _nERelate)
 		{
@@ -757,7 +757,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NERelateListDelete")]
 		public async Task<ActionResult<object>> NERelateListDelete(List<NERelate> _nERelates)
 		{
@@ -797,7 +797,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NERelateDeleteAll")]
 		public async Task<ActionResult<object>> NERelateDeleteAll()
 		{
@@ -827,7 +827,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("NERelateCount")]
 		public async Task<ActionResult<object>> NERelateCount()
 		{

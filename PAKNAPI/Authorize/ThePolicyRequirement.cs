@@ -28,7 +28,7 @@ namespace PAKNAPI.Authorize
 			Claim username = context.User.Claims.FirstOrDefault(claim => claim.Type == Sub);
 			Claim fullnam = context.User.Claims.FirstOrDefault(claim => claim.Type == UniqueName);
 			Claim email = context.User.Claims.FirstOrDefault(claim => claim.Type == FamilyName);
-			Claim userId = context.User.Claims.FirstOrDefault(claim => claim.Type == GivenName);
+			Claim userId = context.User.Claims.FirstOrDefault(claim => claim.Type == "Id");
 			_authHandlerContext = context;
 			var user = context.User;
 			//logic here

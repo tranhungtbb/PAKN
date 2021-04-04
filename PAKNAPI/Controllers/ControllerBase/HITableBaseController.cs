@@ -33,7 +33,7 @@ namespace PAKNAPI.ControllerBase
 		#region HISIndividual
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISIndividualGetByID")]
 		public async Task<ActionResult<object>> HISIndividualGetByID(int? Id)
 		{
@@ -51,7 +51,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISIndividualGetAll")]
 		public async Task<ActionResult<object>> HISIndividualGetAll()
 		{
@@ -69,7 +69,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISIndividualGetAllOnPage")]
 		public async Task<ActionResult<object>> HISIndividualGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -95,7 +95,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISIndividualInsert")]
 		public async Task<ActionResult<object>> HISIndividualInsert(HISIndividual _hISIndividual)
 		{
@@ -115,7 +115,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISIndividualListInsert")]
 		public async Task<ActionResult<object>> HISIndividualListInsert(List<HISIndividual> _hISIndividuals)
 		{
@@ -155,7 +155,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISIndividualUpdate")]
 		public async Task<ActionResult<object>> HISIndividualUpdate(HISIndividual _hISIndividual)
 		{
@@ -183,7 +183,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISIndividualDelete")]
 		public async Task<ActionResult<object>> HISIndividualDelete(HISIndividual _hISIndividual)
 		{
@@ -213,7 +213,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISIndividualListDelete")]
 		public async Task<ActionResult<object>> HISIndividualListDelete(List<HISIndividual> _hISIndividuals)
 		{
@@ -253,7 +253,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISIndividualDeleteAll")]
 		public async Task<ActionResult<object>> HISIndividualDeleteAll()
 		{
@@ -283,7 +283,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISIndividualCount")]
 		public async Task<ActionResult<object>> HISIndividualCount()
 		{
@@ -305,7 +305,7 @@ namespace PAKNAPI.ControllerBase
 		#region HISInvitation
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISInvitationGetByID")]
 		public async Task<ActionResult<object>> HISInvitationGetByID(int? Id)
 		{
@@ -323,7 +323,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISInvitationGetAll")]
 		public async Task<ActionResult<object>> HISInvitationGetAll()
 		{
@@ -341,7 +341,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISInvitationGetAllOnPage")]
 		public async Task<ActionResult<object>> HISInvitationGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -367,7 +367,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISInvitationInsert")]
 		public async Task<ActionResult<object>> HISInvitationInsert(HISInvitation _hISInvitation)
 		{
@@ -387,7 +387,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISInvitationListInsert")]
 		public async Task<ActionResult<object>> HISInvitationListInsert(List<HISInvitation> _hISInvitations)
 		{
@@ -427,7 +427,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISInvitationUpdate")]
 		public async Task<ActionResult<object>> HISInvitationUpdate(HISInvitation _hISInvitation)
 		{
@@ -455,7 +455,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISInvitationDelete")]
 		public async Task<ActionResult<object>> HISInvitationDelete(HISInvitation _hISInvitation)
 		{
@@ -485,7 +485,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISInvitationListDelete")]
 		public async Task<ActionResult<object>> HISInvitationListDelete(List<HISInvitation> _hISInvitations)
 		{
@@ -525,7 +525,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISInvitationDeleteAll")]
 		public async Task<ActionResult<object>> HISInvitationDeleteAll()
 		{
@@ -555,7 +555,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISInvitationCount")]
 		public async Task<ActionResult<object>> HISInvitationCount()
 		{
@@ -577,7 +577,7 @@ namespace PAKNAPI.ControllerBase
 		#region HISNews
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISNewsGetByID")]
 		public async Task<ActionResult<object>> HISNewsGetByID(int? Id)
 		{
@@ -595,7 +595,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISNewsGetAll")]
 		public async Task<ActionResult<object>> HISNewsGetAll()
 		{
@@ -613,7 +613,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISNewsGetAllOnPage")]
 		public async Task<ActionResult<object>> HISNewsGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -639,7 +639,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISNewsInsert")]
 		public async Task<ActionResult<object>> HISNewsInsert(HISNews _hISNews)
 		{
@@ -659,7 +659,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISNewsListInsert")]
 		public async Task<ActionResult<object>> HISNewsListInsert(List<HISNews> _hISNewss)
 		{
@@ -699,7 +699,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISNewsUpdate")]
 		public async Task<ActionResult<object>> HISNewsUpdate(HISNews _hISNews)
 		{
@@ -727,7 +727,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISNewsDelete")]
 		public async Task<ActionResult<object>> HISNewsDelete(HISNews _hISNews)
 		{
@@ -757,7 +757,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISNewsListDelete")]
 		public async Task<ActionResult<object>> HISNewsListDelete(List<HISNews> _hISNewss)
 		{
@@ -797,7 +797,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISNewsDeleteAll")]
 		public async Task<ActionResult<object>> HISNewsDeleteAll()
 		{
@@ -827,7 +827,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISNewsCount")]
 		public async Task<ActionResult<object>> HISNewsCount()
 		{
@@ -849,7 +849,7 @@ namespace PAKNAPI.ControllerBase
 		#region HISRecommendation
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISRecommendationGetByID")]
 		public async Task<ActionResult<object>> HISRecommendationGetByID(int? Id)
 		{
@@ -867,7 +867,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISRecommendationGetAll")]
 		public async Task<ActionResult<object>> HISRecommendationGetAll()
 		{
@@ -885,7 +885,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISRecommendationGetAllOnPage")]
 		public async Task<ActionResult<object>> HISRecommendationGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -911,7 +911,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISRecommendationInsert")]
 		public async Task<ActionResult<object>> HISRecommendationInsert(HISRecommendation _hISRecommendation)
 		{
@@ -931,7 +931,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISRecommendationListInsert")]
 		public async Task<ActionResult<object>> HISRecommendationListInsert(List<HISRecommendation> _hISRecommendations)
 		{
@@ -971,7 +971,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISRecommendationUpdate")]
 		public async Task<ActionResult<object>> HISRecommendationUpdate(HISRecommendation _hISRecommendation)
 		{
@@ -999,7 +999,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISRecommendationDelete")]
 		public async Task<ActionResult<object>> HISRecommendationDelete(HISRecommendation _hISRecommendation)
 		{
@@ -1029,7 +1029,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISRecommendationListDelete")]
 		public async Task<ActionResult<object>> HISRecommendationListDelete(List<HISRecommendation> _hISRecommendations)
 		{
@@ -1069,7 +1069,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISRecommendationDeleteAll")]
 		public async Task<ActionResult<object>> HISRecommendationDeleteAll()
 		{
@@ -1099,7 +1099,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISRecommendationCount")]
 		public async Task<ActionResult<object>> HISRecommendationCount()
 		{
@@ -1121,7 +1121,7 @@ namespace PAKNAPI.ControllerBase
 		#region HISSMS
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISSMSGetByID")]
 		public async Task<ActionResult<object>> HISSMSGetByID(int? Id)
 		{
@@ -1139,7 +1139,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISSMSGetAll")]
 		public async Task<ActionResult<object>> HISSMSGetAll()
 		{
@@ -1157,7 +1157,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISSMSGetAllOnPage")]
 		public async Task<ActionResult<object>> HISSMSGetAllOnPage(int PageSize, int PageIndex)
 		{
@@ -1183,7 +1183,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISSMSInsert")]
 		public async Task<ActionResult<object>> HISSMSInsert(HISSMS _hISSMS)
 		{
@@ -1203,7 +1203,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISSMSListInsert")]
 		public async Task<ActionResult<object>> HISSMSListInsert(List<HISSMS> _hISSMSs)
 		{
@@ -1243,7 +1243,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISSMSUpdate")]
 		public async Task<ActionResult<object>> HISSMSUpdate(HISSMS _hISSMS)
 		{
@@ -1271,7 +1271,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISSMSDelete")]
 		public async Task<ActionResult<object>> HISSMSDelete(HISSMS _hISSMS)
 		{
@@ -1301,7 +1301,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISSMSListDelete")]
 		public async Task<ActionResult<object>> HISSMSListDelete(List<HISSMS> _hISSMSs)
 		{
@@ -1341,7 +1341,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISSMSDeleteAll")]
 		public async Task<ActionResult<object>> HISSMSDeleteAll()
 		{
@@ -1371,7 +1371,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("HISSMSCount")]
 		public async Task<ActionResult<object>> HISSMSCount()
 		{

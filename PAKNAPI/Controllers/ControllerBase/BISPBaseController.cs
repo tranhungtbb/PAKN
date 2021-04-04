@@ -31,7 +31,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIBusinessGetDropdownBase")]
 		public async Task<ActionResult<object>> BIBusinessGetDropdownBase()
 		{
@@ -54,7 +54,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIIndividualGetDropdownBase")]
 		public async Task<ActionResult<object>> BIIndividualGetDropdownBase()
 		{

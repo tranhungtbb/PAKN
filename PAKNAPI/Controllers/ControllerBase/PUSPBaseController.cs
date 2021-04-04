@@ -31,7 +31,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("PURecommendationGetAllOnPageBase")]
 		public async Task<ActionResult<object>> PURecommendationGetAllOnPageBase(string KeySearch, int? Status, int? PageSize, int? PageIndex)
 		{

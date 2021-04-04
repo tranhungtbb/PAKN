@@ -31,7 +31,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYAPIInsertBase")]
 		public async Task<ActionResult<object>> SYAPIInsertBase(SYAPIInsertIN _sYAPIInsertIN)
 		{
@@ -51,7 +51,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYAPIInsertListBase")]
 		public async Task<ActionResult<object>> SYAPIInsertListBase(List<SYAPIInsertIN> _sYAPIInsertINs)
 		{
@@ -91,7 +91,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYPermissionCheckByUserIdBase")]
 		public async Task<ActionResult<object>> SYPermissionCheckByUserIdBase(int? UserId, string APIName)
 		{
@@ -114,7 +114,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYRoleGetAllBase")]
 		public async Task<ActionResult<object>> SYRoleGetAllBase()
 		{
@@ -137,7 +137,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUnitGetDropdownBase")]
 		public async Task<ActionResult<object>> SYUnitGetDropdownBase()
 		{
@@ -160,7 +160,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUnitGetDropdownNotMainBase")]
 		public async Task<ActionResult<object>> SYUnitGetDropdownNotMainBase()
 		{
@@ -183,7 +183,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUnitGetMainIdBase")]
 		public async Task<ActionResult<object>> SYUnitGetMainIdBase()
 		{
@@ -206,7 +206,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUnitGetNameByIdBase")]
 		public async Task<ActionResult<object>> SYUnitGetNameByIdBase(int? Id)
 		{

@@ -31,7 +31,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYCaptChaDeleteBase")]
 		public async Task<ActionResult<object>> SYCaptChaDeleteBase(SYCaptChaDeleteIN _sYCaptChaDeleteIN)
 		{
@@ -51,7 +51,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYCaptChaDeleteListBase")]
 		public async Task<ActionResult<object>> SYCaptChaDeleteListBase(List<SYCaptChaDeleteIN> _sYCaptChaDeleteINs)
 		{
@@ -91,7 +91,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYCaptChaInsertDataBase")]
 		public async Task<ActionResult<object>> SYCaptChaInsertDataBase(SYCaptChaInsertDataIN _sYCaptChaInsertDataIN)
 		{
@@ -111,7 +111,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYCaptChaInsertDataListBase")]
 		public async Task<ActionResult<object>> SYCaptChaInsertDataListBase(List<SYCaptChaInsertDataIN> _sYCaptChaInsertDataINs)
 		{
@@ -151,7 +151,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYCaptChaValidatorBase")]
 		public async Task<ActionResult<object>> SYCaptChaValidatorBase(string Code)
 		{
