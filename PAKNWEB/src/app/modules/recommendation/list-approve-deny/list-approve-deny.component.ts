@@ -1,21 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
-import { RecommendationObject, RecommendationProcessObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
+import { RecommendationObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
-import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { MESSAGE_COMMON, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import { COMMONS } from 'src/app/commons/commons'
 
 declare var $: any
-
 @Component({
-	selector: 'app-list-receive-wait',
-	templateUrl: './list-receive-wait.component.html',
-	styleUrls: ['./list-receive-wait.component.css'],
+	selector: 'app-list-approve-deny',
+	templateUrl: './list-approve-deny.component.html',
+	styleUrls: ['./list-approve-deny.component.css'],
 })
-export class ListReceiveWaitComponent implements OnInit {
+export class ListApproveDenyComponent implements OnInit {
 	constructor(private _service: RecommendationService, private storeageService: UserInfoStorageService, private _toastr: ToastrService, private _shareData: DataService) {}
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
@@ -42,7 +40,7 @@ export class ListReceiveWaitComponent implements OnInit {
 	totalRecords: number = 0
 	idDelete: number = 0
 	ngOnInit() {
-		this.dataSearch.status = RECOMMENDATION_STATUS.RECEIVE_WAIT
+		this.dataSearch.status = RECOMMENDATION_STATUS.APPROVE_DENY
 		this.getDataForCreate()
 		this.getList()
 	}
@@ -79,15 +77,17 @@ export class ListReceiveWaitComponent implements OnInit {
 			UnitId: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
 			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
+			UnitProcessId: this.storeageService.getUnitId(),
+			UserProcessId: this.storeageService.getUserId(),
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
 
-		this._service.recommendationGetList(request).subscribe((response) => {
+		this._service.recommendationGetListProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
-					this.listData = response.result.MRRecommendationGetAllOnPage
+					this.listData = response.result.MRRecommendationGetAllWithProcess
 					this.totalRecords = response.result.TotalCount
 				}
 			} else {
@@ -130,62 +130,6 @@ export class ListReceiveWaitComponent implements OnInit {
 			this.pageIndex = 1
 			this.pageSize = 20
 			this.getList()
-		}
-	}
-	modelProcess: RecommendationProcessObject = new RecommendationProcessObject()
-	preProcess(recommendationId, idProcess, status) {
-		this.modelProcess.status = status
-		this.modelProcess.id = idProcess
-		this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
-		this.modelProcess.recommendationId = recommendationId
-		this.modelProcess.reactionaryWord = false
-		this.modelProcess.reasonDeny = ''
-		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
-			$('#modalReject').modal('show')
-		} else {
-			$('#modalAccept').modal('show')
-		}
-	}
-	onProcessAccept() {
-		var request = {
-			_mRRecommendationForwardProcessIN: this.modelProcess,
-			RecommendationStatus: RECOMMENDATION_STATUS.RECEIVE_APPROVED,
-			ReactionaryWord: this.modelProcess.reactionaryWord,
-		}
-		this._service.recommendationProcess(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				$('#modalAccept').modal('hide')
-				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
-				this.getList()
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(err) => {
-				console.error(err)
-			}
-	}
-	onProcessDeny() {
-		if (this.modelProcess.reasonDeny == '' || this.modelProcess.reasonDeny.trim() == '') {
-			this._toastr.error('Vui lòng nhập lý do')
-			return
-		} else {
-			var request = {
-				_mRRecommendationForwardProcessIN: this.modelProcess,
-				RecommendationStatus: RECOMMENDATION_STATUS.RECEIVE_DENY,
-			}
-			this._service.recommendationProcess(request).subscribe((response) => {
-				if (response.success == RESPONSE_STATUS.success) {
-					$('#modalReject').modal('hide')
-					this._toastr.success(COMMONS.DENY_SUCCESS)
-					this.getList()
-				} else {
-					this._toastr.error(response.message)
-				}
-			}),
-				(err) => {
-					console.error(err)
-				}
 		}
 	}
 

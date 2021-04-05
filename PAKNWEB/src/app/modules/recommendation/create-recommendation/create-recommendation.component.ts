@@ -38,7 +38,7 @@ export class CreateRecommendationComponent implements OnInit {
 	lstXoaFile: any[] = []
 	submitted: boolean = false
 	modelHashTagAdd: HashtagObject = new HashtagObject()
-
+	dateNow: Date = new Date()
 	@ViewChild('file', { static: false }) public file: ElementRef
 	constructor(
 		private toastr: ToastrService,
@@ -230,10 +230,6 @@ export class CreateRecommendationComponent implements OnInit {
 
 		this.submitted = true
 		if (this.form.invalid) {
-			return
-		}
-		if (this.lstHashtagSelected == null || this.lstHashtagSelected.length == 0) {
-			this.toastr.error('Vui lòng nhập hashtag')
 			return
 		}
 		this.model.status = RECOMMENDATION_STATUS.RECEIVE_APPROVED

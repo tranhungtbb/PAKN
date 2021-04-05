@@ -6,16 +6,17 @@ import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { stat } from 'fs'
 import { COMMONS } from 'src/app/commons/commons'
 
 declare var $: any
 
 @Component({
-	selector: 'app-list-receive-wait',
-	templateUrl: './list-receive-wait.component.html',
-	styleUrls: ['./list-receive-wait.component.css'],
+	selector: 'app-list-approve-wait',
+	templateUrl: './list-approve-wait.component.html',
+	styleUrls: ['./list-approve-wait.component.css'],
 })
-export class ListReceiveWaitComponent implements OnInit {
+export class ListApproveWaitComponent implements OnInit {
 	constructor(private _service: RecommendationService, private storeageService: UserInfoStorageService, private _toastr: ToastrService, private _shareData: DataService) {}
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
@@ -42,7 +43,7 @@ export class ListReceiveWaitComponent implements OnInit {
 	totalRecords: number = 0
 	idDelete: number = 0
 	ngOnInit() {
-		this.dataSearch.status = RECOMMENDATION_STATUS.RECEIVE_WAIT
+		this.dataSearch.status = RECOMMENDATION_STATUS.APPROVE_WAIT
 		this.getDataForCreate()
 		this.getList()
 	}
@@ -79,15 +80,17 @@ export class ListReceiveWaitComponent implements OnInit {
 			UnitId: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
 			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
+			UnitProcessId: this.storeageService.getUnitId(),
+			UserProcessId: this.storeageService.getUserId(),
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
 
-		this._service.recommendationGetList(request).subscribe((response) => {
+		this._service.recommendationGetListProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
-					this.listData = response.result.MRRecommendationGetAllOnPage
+					this.listData = response.result.MRRecommendationGetAllWithProcess
 					this.totalRecords = response.result.TotalCount
 				}
 			} else {
@@ -136,7 +139,7 @@ export class ListReceiveWaitComponent implements OnInit {
 	preProcess(recommendationId, idProcess, status) {
 		this.modelProcess.status = status
 		this.modelProcess.id = idProcess
-		this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
+		this.modelProcess.step = STEP_RECOMMENDATION.APPROVE
 		this.modelProcess.recommendationId = recommendationId
 		this.modelProcess.reactionaryWord = false
 		this.modelProcess.reasonDeny = ''
@@ -149,7 +152,7 @@ export class ListReceiveWaitComponent implements OnInit {
 	onProcessAccept() {
 		var request = {
 			_mRRecommendationForwardProcessIN: this.modelProcess,
-			RecommendationStatus: RECOMMENDATION_STATUS.RECEIVE_APPROVED,
+			RecommendationStatus: RECOMMENDATION_STATUS.FINISED,
 			ReactionaryWord: this.modelProcess.reactionaryWord,
 		}
 		this._service.recommendationProcess(request).subscribe((response) => {
@@ -172,7 +175,7 @@ export class ListReceiveWaitComponent implements OnInit {
 		} else {
 			var request = {
 				_mRRecommendationForwardProcessIN: this.modelProcess,
-				RecommendationStatus: RECOMMENDATION_STATUS.RECEIVE_DENY,
+				RecommendationStatus: RECOMMENDATION_STATUS.APPROVE_DENY,
 			}
 			this._service.recommendationProcess(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
@@ -187,23 +190,6 @@ export class ListReceiveWaitComponent implements OnInit {
 					console.error(err)
 				}
 		}
-	}
-
-	getHistories(id: number) {
-		let request = {
-			Id: id,
-		}
-		this._service.recommendationGetHistories(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this.lstHistories = response.result.HISRecommendationGetByObjectId
-				$('#modal-history-pakn').modal('show')
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.log(error)
-			}
 	}
 
 	exportExcel() {

@@ -84,7 +84,9 @@
 											<span class="caret-tb"></span>
 										</p>
 									</th>
-									<th class="text-right"><strong>Thao tác</strong></th>
+									<th style="width: 100px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead"><strong>Thao tác</strong></p>
+									</th>
 								</tr>
 							</ng-template>
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -122,6 +124,11 @@
 											<a class="btn-icon" (click)="getHistories(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
 									</td>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="emptymessage">
+								<tr>
+									<td class="text-center" colspan="5">Không có dữ liệu</td>
 								</tr>
 							</ng-template>
 						</p-table>

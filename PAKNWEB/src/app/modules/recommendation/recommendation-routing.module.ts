@@ -8,6 +8,7 @@ import { ListProcessingComponent } from './list-processing/list-processing.compo
 import { ListReceiveApprovedComponent } from './list-receive-approved/list-receive-approved.component'
 import { ListReceiveDenyComponent } from './list-receive-deny/list-receive-deny.component'
 import { ListReceiveWaitComponent } from './list-receive-wait/list-receive-wait.component'
+import { ListApproveWaitComponent } from './list-approve-wait/list-approve-wait.component'
 import { RecommendationComponent } from './recommendation.component'
 import { ViewRecommendationComponent } from './view-recommendation/view-recommendation.component'
 
@@ -25,6 +26,7 @@ const routes: Routes = [
 			{ path: 'dang-giai-quyet', component: ListProcessingComponent },
 			{ path: 'tu-choi-giai-quyet', component: ListProcessDenyComponent },
 			{ path: 'chi-tiet/:id', component: ViewRecommendationComponent },
+			{ path: 'cho-phe-duyet', component: ListApproveWaitComponent },
 		],
 	},
 ]
@@ -33,4 +35,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class RecommendationRoutingModule {}
+export class RecommendationRoutingModule { }
