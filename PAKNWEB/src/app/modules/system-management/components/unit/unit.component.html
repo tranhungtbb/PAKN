@@ -1,0 +1,381 @@
+<div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">
+	<span class="text-uppercase">Quản lý cơ quan, đơn vị</span>
+</div>
+
+<!-- row -->
+<div class="container-fluid p-0">
+	<div class="row ml-0">
+		<div class="col-auto treeView px-0">
+			<p class="p-3 h4 d-flex justify-content-between align-items-center shadow">
+				<span class="text-uppercase">Danh sách đơn vị</span>
+				<button type="button" class="btn grd-blue border-0 p-2 btn-sm text-white" (click)="modalCreateOrUpdate(0)">
+					<i class="pi pi-plus"></i>
+				</button>
+			</p>
+			<p-tree id="tree-unit" [value]="treeUnit">
+
+				<ng-template let-node pTemplate="default">
+					<a (click)="treeViewActive(node.id, node.unitLevel)" class="tree-cursor-hand" [ngClass]="{'text-color-blue':(unitObject.id && unitObject.id == node.id)}">
+						<strong>{{node.name}}</strong>
+					</a>
+				</ng-template>
+			</p-tree>
+		</div>
+		<div class="col pl-lg-0" *ngIf="unitObject.id">
+			<div class="card mb-0 border-bottom rounded-0">
+				<div class="card-header d-flex align-items-center">
+					<p class="card-title d-flex align-items-center mb-0">
+						<span class="badge rounded-pill badge-success mr-3" *ngIf="unitObject.isActived" (click)="onOpenConfirmModal(unitObject.id,'unit_status')">Hiệu lực</span>
+						<span class="badge rounded-pill badge-light mr-3" *ngIf="!unitObject.isActived" (click)="onOpenConfirmModal(unitObject.id,'unit_status')">Hết hiệu
+							lực</span>
+						<span>{{unitObject.name}}</span>
+					</p>
+					<div class="d-flex align-items-center">
+						<button type="button" class="btn grd-brown text-dark border-0 mr-3 py-2 px-3" (click)="modalCreateOrUpdate(unitObject.id,unitObject.unitLevel)"><i
+								class="bi bi-pencil-square mr-2"></i>
+							Sửa
+						</button>
+						<button type="button" class="btn grd-red text-white border-0 py-2 px-3" (click)="onOpenConfirmModal(unitObject.id,'unit')"><i class="bi bi-trash mr-2"></i>
+							Xóa
+						</button>
+					</div>
+				</div>
+				<div class="card-body pt-0 pb-3">
+					<p class="card-text">{{unitObject.description}}</p>
+				</div>
+				<div class="card-footer d-sm-flex align-items-center">
+					<p class="card-text text-dark mb-0 mr-4">Số ĐT: <strong title="{{unitObject.phone}}">{{unitObject.phone}}</strong></p>
+					<p class="card-text text-dark mb-0 mr-4">Email: <strong title="{{unitObject.email}}">{{unitObject.email}}</strong></p>
+					<p class="card-text text-dark mb-0">Địa chỉ: <strong title="{{unitObject.address}}">{{unitObject.address}}</strong></p>
+				</div>
+			</div>
+			<div id="accordion-four" class="accordion accordion-no-gutter accordion-bordered">
+				<div class="accordion__item">
+					<div class="accordion__header collapsed">
+						<div class="d-flex justify-content-between align-items-center pr-5">
+							<span class="accordion__header--text text-uppercase h4" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne"
+								(click)="onCollapsed('item01')">Người dùng trong đơn
+								vị</span>
+							<div class="btn-group" role="group" [hidden]="!collapsed_checked['item01']">
+								<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
+									<i class="pi pi-file-excel"></i>
+									Xuất excel
+								</button>
+								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalUserCreateOrUpdate(null)">
+									<i class="pi pi-plus"></i>
+									Thêm mới
+								</button>
+							</div>
+						</div>
+						<span class="accordion__header--indicator style_two" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne"
+							[ngClass]="{'collapse-icon-up':collapsed_checked['item01']}" (click)="onCollapsed('item01')"></span>
+					</div>
+					<div id="bordered_no-gutter_collapseOne" class="collapse accordion__body">
+						<div class="table-responsive">
+							<p-table #table [value]="listUserPaged" [rows]="queryUser.pageSize" [totalRecords]="totalCount_User"
+								currentPageReportTemplate="Tổng số {{totalCount_User}}" (onLazyLoad)="onPageChange($event)" [lazy]="true" [responsive]="true" [paginator]="true"
+								[showCurrentPageReport]="true" autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+								<ng-template pTemplate="header" class="bg-thead">
+									<tr>
+										<th style="width: 50px">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>#</strong>
+											</p>
+										</th>
+										<th>
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>Tên đăng nhập</strong>
+												<span class="caret-tb"></span>
+											</p>
+											<input [(ngModel)]="queryUser.email" type="text" class="form-control form-control-sm" (change)="onUserFilterChange()">
+										</th>
+										<th style="width: 350px">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>Tên người dùng</strong>
+												<span class="caret-tb"></span>
+											</p>
+											<input [(ngModel)]="queryUser.fullName" type="text" class="form-control form-control-sm" (change)="onUserFilterChange()">
+										</th>
+										<th>
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>Số điện thoại</strong>
+												<span class="caret-tb"></span>
+											</p>
+											<input [(ngModel)]="queryUser.phone" type="text" class="form-control form-control-sm" (change)="onUserFilterChange()">
+										</th>
+										<th>
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>Trạng thái</strong>
+												<span class="caret-tb"></span>
+											</p>
+											<div class="dropdown bootstrap-select form-control form-control-sm">
+												<ng-select class="width-175" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
+													[(ngModel)]="queryUser.isActived" [closeOnSelect]="true" (change)="onUserFilterChange()">
+												</ng-select>
+											</div>
+
+										</th>
+										<th class="text-right text-uppercase"><strong>Thao tác</strong></th>
+									</tr>
+								</ng-template>
+								<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+									<tr>
+										<td>
+											<strong>{{rowIndex+1}}</strong>
+										</td>
+										<td><strong>{{item.userName}}</strong></td>
+										<td><strong>{{item.fullName}}</strong></td>
+										<td>{{item.phone}}</td>
+										<td>
+											<span class="badge rounded-pill badge-light" *ngIf="!item.isActived" (click)="onOpenConfirmModal(item.id,'user_status')">Hết hiệu
+												lực</span>
+											<span class="badge rounded-pill badge-success" *ngIf="item.isActived" (click)="onOpenConfirmModal(item.id,'user_status')">Hiệu
+												lực</span>
+										</td>
+										<td>
+											<div class="d-flex justify-content-end">
+												<a href="javascript:void(0);" class="btn-icon grd-brown text-brown mr-2" (click)="modalUserCreateOrUpdate(item.id)"><i
+														class="bi bi-pencil-square"></i></a>
+												<a href="javascript:void(0);" class="btn-icon grd-red text-white" (click)="onOpenConfirmModal(item.id,'user')"><i
+														class="bi bi-trash"></i></a>
+											</div>
+										</td>
+									</tr>
+								</ng-template>
+							</p-table>
+						</div>
+					</div>
+				</div>
+				<div class="accordion__item">
+					<div class="accordion__header collapsed">
+						<div class="d-flex justify-content-between align-items-center pr-5">
+							<span class="accordion__header--text text-uppercase h4" data-toggle="collapse" data-target="#bordered_no-gutter_collapseTwo"
+								(click)="onCollapsed('item02')">Danh sách đơn vị cấp
+								dưới</span>
+							<div class="btn-group" role="group" [hidden]="!collapsed_checked['item02']">
+								<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
+									<i class="pi pi-file-excel"></i>
+									Xuất excel
+								</button>
+								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalCreateOrUpdate(0,unitObject.unitLevel+1,unitObject.id)">
+									<i class="pi pi-plus"></i>
+									Thêm mới
+								</button>
+							</div>
+						</div>
+						<span class="accordion__header--indicator style_two" data-toggle="collapse" data-target="#bordered_no-gutter_collapseTwo"
+							[ngClass]="{'collapse-icon-up':collapsed_checked['item02']}" (click)="onCollapsed('item02')">
+						</span>
+					</div>
+					<div id="bordered_no-gutter_collapseTwo" class="collapse accordion__body">
+						<div class="table-responsive">
+							<p-table #table [value]="listUnitPaged" [rows]="query.pageSize" [totalRecords]="totalCount_Unit" currentPageReportTemplate="Tổng số {{totalCount_Unit}}"
+								(onLazyLoad)="onUserPageChange($event)" [lazy]="true" [responsive]="true" [paginator]="true" [showCurrentPageReport]="true" autoLayout="true"
+								tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+								<ng-template pTemplate="header" class="bg-thead">
+									<tr>
+										<th style="width: 50px">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>#</strong>
+											</p>
+										</th>
+										<th>
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>Tên đơn vị</strong>
+												<span class="caret-tb"></span>
+											</p>
+											<input type="text" [(ngModel)]="query.name" (change)="unitFilterChange()" class="form-control form-control-sm">
+										</th>
+										<th>
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>Số điện thoại</strong>
+												<span class="caret-tb"></span>
+											</p>
+											<input type="text" [(ngModel)]="query.phone" (change)="unitFilterChange()" class="form-control form-control-sm">
+										</th>
+										<th>
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>Email</strong>
+												<span class="caret-tb"></span>
+											</p>
+											<input type="text" [(ngModel)]="query.email" (change)="unitFilterChange()" class="form-control form-control-sm">
+										</th>
+										<th>
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+												<strong>Địa chỉ</strong>
+												<span class="caret-tb"></span>
+											</p>
+											<input type="text" [(ngModel)]="query.address" (change)="unitFilterChange()" class="form-control form-control-sm">
+										</th>
+										<th style="width: 160px">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead text-uppercase">
+												<strong>Trạng thái</strong>
+												<span class="caret-tb"></span>
+											</p>
+											<div class="dropdown bootstrap-select form-control form-control-sm">
+												<ng-select class="width-175" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
+													[closeOnSelect]="true" [(ngModel)]="query.isActive" (change)="unitFilterChange()">
+												</ng-select>
+											</div>
+
+										</th>
+										<th class="text-right"><strong>Thao tác</strong></th>
+									</tr>
+								</ng-template>
+								<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+									<tr>
+										<td>
+											<strong>{{rowIndex+1}}</strong>
+										</td>
+										<td><strong>{{item.name}}</strong></td>
+										<td>{{item.phone}}</td>
+										<td>{{item.email}}</td>
+										<td>
+											{{item.address}}
+										</td>
+										<td>
+											<span class="badge rounded-pill badge-success" *ngIf="item.isActived" (click)="onOpenConfirmModal(item.id,'unit_status')">Hiệu
+												lực</span>
+											<span class="badge rounded-pill badge-light" *ngIf="!item.isActived" (click)="onOpenConfirmModal(item.id,'unit_status')">Hết hiệu
+												lực</span>
+										</td>
+										<td>
+											<div class="d-flex justify-content-end">
+												<a href="javascript:void(0);" class="btn-icon grd-brown text-brown mr-2" (click)="modalCreateOrUpdate(item.id,item.unitLevel)"><i
+														class="bi bi-pencil-square"></i></a>
+												<a href="javascript:void(0);" class="btn-icon grd-red text-white" (click)="onOpenConfirmModal(item.id)"><i
+														class="bi bi-trash"></i></a>
+											</div>
+										</td>
+									</tr>
+								</ng-template>
+							</p-table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<app-user-create-or-update></app-user-create-or-update>
+<!-- Modal unit -->
+<div class="modal fade" id="modal-create-or-update">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">{{modalCreateOrUpdateTitle}}</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-0">
+				<div class="align-items-center form-group mb-4 border-bottom pb-3">
+					<strong class="h4 mr-5">Cấp đơn vị:</strong>
+					<label class="radio-inline mr-5"><input (click)="changeLevel(1)" [checked]="modelUnit.unitLevel == 1" class="radio-danger" type="radio" name="optradio" checked>
+						<span class="text-uppercase"> Cấp tỉnh</span>
+					</label>
+					<label class="radio-inline mr-5"><input (click)="changeLevel(2)" [checked]="modelUnit.unitLevel == 2" type="radio" name="optradio">
+						<span class="text-uppercase"> Cấp huyện</span>
+					</label>
+					<label class="radio-inline"><input (click)="changeLevel(3)" [checked]="modelUnit.unitLevel == 3" type="radio" name="optradio"> <span class="text-uppercase"> Cấp
+							xã</span></label>
+				</div>
+				<form id="createUnitFrom" [formGroup]="createUnitFrom" (ngSubmit)="onSaveUnit()">
+					<input hidden formControlName="unitLevel" [(ngModel)]="modelUnit.unitLevel">
+					<div class="form-row">
+						<div class="col-12 col-lg-8 form-group" [ngClass]="{'col-lg-4':modelUnit.unitLevel > 1,'col-lg-8':modelUnit.unitLevel == 1}">
+							<label class="mb-1">Tên đơn vị <span class="cl-red">(*)</span></label>
+							<input svTrim formControlName="name" [(ngModel)]="modelUnit.name" type="text" class="form-control" placeholder="Nhập...">
+							<div *ngIf="(unitFormSubmitted && fUnit.name.invalid)||(fUnit.name.invalid && (fUnit.name.dirty || fUnit.name.touched))" class="has-error m-b-12">
+								<div *ngIf="fUnit.name.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div>
+						</div>
+						<input hidden value="0" formControlName="parentId" [(ngModel)]="modelUnit.parentId" *ngIf="modelUnit.unitLevel == 1">
+						<div class="col-12 col-lg-4 form-group" *ngIf="modelUnit.unitLevel > 1">
+							<label class="mb-1">Đơn vị cấp trên <span class="cl-red">(*)</span></label>
+							<ng-select formControlName="parentId" [(ngModel)]="modelUnit.parentId" class="
+							form-control" placeholder="Chọn..." [clearable]="false">
+								<ng-option *ngFor="let item of unitFlatlist | unitFilter:modelUnit.unitLevel-1" [value]="item.id">{{item.name}}</ng-option>
+							</ng-select>
+							<div *ngIf="(unitFormSubmitted && fUnit.parentId.invalid)||(fUnit.parentId.invalid && (fUnit.parentId.dirty || fUnit.parentId.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="fUnit.parentId.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-4 form-group">
+							<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
+							<ng-select class="form-control" [items]="listStatus" placeholder="Chọn..." bindLabel="text" bindValue="value" formControlName="isActived"
+								[(ngModel)]="modelUnit.isActived" [closeOnSelect]="true" [searchable]="false" [clearable]="false">
+							</ng-select>
+						</div>
+						<div class="col-12 col-lg-8 form-group">
+							<label class="mb-1">Email <span class="cl-red">(*)</span></label>
+							<input formControlName="email" [(ngModel)]="modelUnit.email" type="mail" class="form-control" placeholder="Nhập...">
+							<div *ngIf="(unitFormSubmitted && fUnit.email.invalid)||(fUnit.email.invalid && (fUnit.email.dirty || fUnit.email.touched))" class="has-error m-b-12">
+								<div *ngIf="fUnit.email.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+								<div *ngIf="fUnit.email.errors.email">
+									<span class="help-block">Định dạng email không đúng</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-4 form-group">
+							<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
+							<input formControlName="phone" [(ngModel)]="modelUnit.phone" type="text" class="form-control" placeholder="Nhập...">
+							<div *ngIf="(unitFormSubmitted && fUnit.phone.invalid)||(fUnit.phone.invalid && (fUnit.phone.dirty || fUnit.phone.touched))" class="has-error m-b-12">
+								<div *ngIf="fUnit.phone.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+								<div *ngIf="fUnit.phone.errors.pattern">
+									<span class="help-block">Định dạng số điện thoại không đúng</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 form-group">
+							<label class="mb-1">Địa chỉ</label>
+							<input formControlName="address" [(ngModel)]="modelUnit.address" type="text" class="form-control" placeholder="Nhập...">
+						</div>
+						<div class="col-12 form-group">
+							<label class="mb-1">Mô tả</label>
+							<textarea [(ngModel)]="modelUnit.description" formControlName="description" class="form-control" rows="4" placeholder="Nhập..."></textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+				<button type="button" (click)="onSaveUnit()" class="btn btn-danger border-0 px-5 grd-blue">Xác nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end modal unit -->
+
+
+<!-- confirm modal -->
+<div class="modal fade" id="modal-confirm">
+	<div class="modal-dialog modal-dialog-centered modal-md" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-0">
+				<span>
+					Anh/chị có chắc chắn thực hiện hành động này?
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="acceptConfirm()">Đồng ý</button>
+			</div>
+		</div>
+	</div>
+</div>

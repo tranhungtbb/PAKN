@@ -1,0 +1,376 @@
+<!--**********************************
+            Sidebar start
+        ***********************************-->
+<div class="deznav">
+	<div class="deznav-scroll ps ps--active-y">
+		<ul class="metismenu" id="menu">
+			<li class="border-0 bg-transparent" routerLinkActive="mm-active">
+				<a class="ai-icon" routerLink="/quan-tri/ban-lam-viec" aria-expanded="false">
+					<i class="bi bi-grid"></i>
+					<span class="nav-text">Bảng điều khiển</span>
+				</a>
+			</li>
+			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-file-earmark-medical"></i>
+					<span class="nav-text">Phản ánh, Kiến nghị</span>
+				</a>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/danh-sach-tong-hop">Danh sách tổng hợp</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/cho-xu-ly">Chờ xử lý</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tiep-nhan-xu-ly">Tiếp nhận xử lý</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tu-choi-tiep-nhan">Từ chối tiếp nhận</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/cho-giai-quyet">Chờ giải quyết</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/dang-giai-quyet">Đang giải quyết</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tu-choi-giai-quyet">Từ chối giải quyết</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/cho-phe-duyet">Chờ phê duyệt</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tu-choi-phe-duyet">Từ chối phê duyệt</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/da-giai-quyet">Đã giải quyết</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/pakn-chua-anh-gia">PAKN chứa ảnh giả</a></li>
+				</ul>
+			</li>
+			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-file-earmark-ruled"></i>
+					<span class="nav-text">Thủ tục hành chính</span>
+				</a>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<li><a href="#">Danh sách tổng hợp</a></li>
+					<li><a href="#">Đã công bố</a></li>
+					<li><a href="#">Đã gửi đơn vị, cơ quan</a></li>
+				</ul>
+			</li>
+			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-newspaper"></i>
+					<span class="nav-text">Tin tức, Sự kiện</span>
+				</a>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<li><a routerLink="/quan-tri/tin-tuc">Danh sách tổng hợp</a></li>
+					<li><a routerLink="/quan-tri/da-cong-bo">Đã công bố</a></li>
+				</ul>
+			</li>
+			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-people"></i>
+					<span class="nav-text">Cá nhân, DN</span>
+				</a>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<li><a href="#">QL cá nhân</a></li>
+					<li><a href="#">QL Doanh nghiệp</a></li>
+				</ul>
+			</li>
+			<li routerLinkActive="mm-active active"><a href="#" class="ai-icon" aria-expanded="false">
+					<i class="bi bi-envelope-open"></i>
+					<span class="nav-text">Thư mời</span>
+				</a>
+			</li>
+			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-chat-right-dots"></i>
+					<span class="nav-text">Email/SMS</span>
+				</a>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<li><a href="#">Dự thảo Email</a></li>
+					<li><a href="#">Email đã gửi</a></li>
+					<li><a href="#">Dự thảo SMS</a></li>
+					<li><a href="#">SMS đã gửi</a></li>
+				</ul>
+			</li>
+			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-distribute-vertical"></i>
+					<span class="nav-text">Danh mục</span>
+				</a>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<li><a routerLink="/quan-tri/danh-muc/chuc-vu">Chức vụ</a></li>
+					<li><a routerLink="/quan-tri/danh-muc/linh-vuc">Lĩnh vực</a></li>
+					<li><a routerLink="/quan-tri/danh-muc/loai-tin-tuc">Loại tin tức</a></li>
+					<li><a routerLink="/quan-tri/danh-muc/thu-vien-tu">Thư viện từ ngữ</a></li>
+					<li><a routerLink="/quan-tri/danh-muc/so-nganh">Sở ngành</a></li>
+					<li><a routerLink="/quan-tri/danh-muc/nhom-so-nganh">Nhóm sở ngành</a></li>
+					<li><a routerLink="/quan-tri/danh-muc/hashtag">Hashtag</a></li>
+				</ul>
+			</li>
+			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-diagram-2"></i>
+					<span class="nav-text">Hệ thống</span>
+				</a>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<li><a routerLink="/quan-tri/he-thong/cau-hinh-email">Cấu hình Email</a></li>
+					<li><a routerLink="/quan-tri/he-thong/cau-hinh-sms">Cấu hình SMS thương hiệu</a></li>
+					<li><a routerLink="/quan-tri/he-thong/co-cau-to-chuc">Cơ cấu tổ chức</a></li>
+					<li><a routerLink="/quan-tri/he-thong/vai-tro">Quản lý vai trò</a></li>
+					<li><a routerLink="/quan-tri/he-thong/nguoi-dung">Quản lý người dùng</a></li>
+					<li><a routerLink="/quan-tri/he-thong/lich-su-he-thong">Lịch sử hệ thống</a></li>
+				</ul>
+			</li>
+			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-pie-chart"></i>
+					<span class="nav-text">Thống kê</span>
+				</a>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<li><a href="#">Sub menu</a></li>
+					<li><a href="#">Sub menu</a></li>
+					<li><a href="#">Sub menu</a></li>
+					<li><a href="#">Sub menu</a></li>
+				</ul>
+			</li>
+			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-file-earmark-text"></i>
+					<span class="nav-text">Báo cáo</span>
+				</a>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<li><a href="#">Sub menu</a></li>
+					<li><a href="#">Sub menu</a></li>
+					<li><a href="#">Sub menu</a></li>
+					<li><a href="#">Sub menu</a></li>
+				</ul>
+			</li>
+			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-layout-text-sidebar-reverse"></i>
+					<span class="nav-text">Thiết lập chung</span>
+				</a>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<li><a href="#">Giới thiệu phần mềm</a></li>
+					<li><a href="#">Chức năng, nhiệm vụ, quyền hạn của tổ chức</a></li>
+					<li><a href="#">Lãnh đạo đương nhiệm</a></li>
+					<li><a href="#">Cơ cấu tổ chức</a></li>
+					<li><a href="#">Thông tin liên hệ</a></li>
+				</ul>
+			</li>
+			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-life-preserver"></i>
+					<span class="nav-text">Hỗ trợ</span>
+				</a>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<li><a href="#">Tài liệu hướng dẫn sử dụng</a></li>
+					<li><a href="#">Video hướng dẫn sử dụng</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+<!--**********************************
+          Sidebar end
+      ***********************************-->
+<!-- <aside class="main-sidebar">
+  <section class="sidebar" style="height: auto;">
+    <ul class="sidebar-menu tree" data-widget="tree">
+      <li class="treeview" routerLinkActive="active">
+        <a routerLink="./business-management/dash-board">
+          <i class="far fa-home"></i>
+          <span class="text-transform">TRANG CHỦ</span>
+        </a>
+      </li>
+      <li class="treeview" routerLinkActive="active">
+        <a class="treeview-toggle" data-toggle="treeview">
+          <i class="far fa-newspaper"></i>
+          <span class="text-transform">Hoạt động thanh tra</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li class="treeview" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./business-management/inspection-year/list">
+              <i class="fa fa-angle-right"></i><span>Kế hoạch thanh tra năm</span>
+            </a>
+          </li>
+          <li class="treeview" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./business-management/inspection-period/list">
+              <i class="fa fa-angle-right"></i><span>Kế hoạch thanh tra theo đợt</span>
+            </a>
+          </li>
+          <li class="treeview" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./business-management/inspection-decision/list">
+              <i class="fa fa-angle-right"></i><span>Quyết định thanh tra</span>
+            </a>
+          </li>
+          <li class="treeview" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a>
+              <i class="fa fa-angle-right"></i><span>Tiến độ thanh tra</span>
+            </a>
+          </li>
+          <li class="treeview" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./business-management/inspection/list">
+              <i class="fa fa-angle-right"></i><span>Cuộc thanh tra</span>
+            </a>
+          </li>
+          <li class="treeview" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./business-management/steer-content/list">
+              <i class="fa fa-angle-right"></i><span>Chỉ đạo nội dung thanh tra</span>
+            </a>
+          </li>
+          <li class="treeview" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./business-management/inspection-diary/list">
+              <i class="fa fa-angle-right"></i><span>Nhật ký thanh tra</span>
+            </a>
+          </li>
+          <li class="treeview" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./business-management/inspection-files/list">
+              <i class="fa fa-angle-right"></i><span>Hồ sơ thanh tra</span>
+            </a>
+          </li>
+          <li class="treeview" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./business-management/inspection-report/list">
+              <i class="fa fa-angle-right"></i><span>BC kết quả thanh tra</span>
+            </a>
+          </li>
+          <li class="treeview" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./business-management/working-records/list">
+              <i class="fa fa-angle-right"></i><span>Biên bản làm việc</span>
+            </a>
+          </li>
+          <li class="treeview" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./business-management/signboard-work/list">
+              <i class="fa fa-angle-right"></i><span>Biên bản thanh tra</span>
+            </a>
+          </li>
+          <li class="treeview" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./business-management/inspection-conclusion/list">
+              <i class="fa fa-angle-right"></i><span>Kết luận thanh tra</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="treeview" routerLinkActive="active">
+        <a class="treeview-toggle" data-toggle="treeview">
+          <i class="far fa-newspaper"></i>
+          <span class="text-transform">Tiện ích</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li class="treeview" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./business-management/utilities/list">
+              <i class="fa fa-angle-right"></i><span>Quản lý văn bản hướng dẫn</span>
+            </a>
+          </li>
+          <li class="treeview" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./business-management/document-form/list">
+              <i class="fa fa-angle-right"></i><span>Quản lý biểu mẫu tài liệu</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="treeview" routerLinkActive="active">
+        <a class="treeview-toggle" data-toggle="treeview">
+          <i class="far fa-newspaper"></i>
+          <span class="text-transform">Thông tin đồng bộ</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li class="treeview" id="bckt" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./business-management/audit-evidence/list">
+              <i class="fa fa-angle-right"></i> <span>Quản lý thông tin bằng chứng KT</span>
+            </a>
+          </li>
+          <li class="treeview" id="kqkt" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./business-management/audit-result/list">
+              <i class="fa fa-angle-right"></i> <span>Quản lý bằng chứng kiểm toán</span>
+            </a>
+          </li>
+          <li class="treeview" id="knkt" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./business-management/audit-recommendation/list">
+              <i class="fa fa-angle-right"></i> <span>Thông tin kiến nghị kiểm toán - xử lý tài chính</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li class="treeview" routerLinkActive="active">
+        <a class="treeview-toggle" data-toggle="treeview">
+          <i class="far fa-database"></i>
+          <span class="main-li-menu text-transform">Hệ thống</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li class="treeview" id="NhomND" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
+            <a routerLink="./system-management/group-user-management" title="Nhóm quyền">
+              <i class="fa fa-angle-right"></i> <span>Nhóm quyền</span>
+            </a>
+          </li>
+          <li class="treeview" id="LichSuHT" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./system-management/system-log" title="Lịch sử hệ thống">
+              <i class="fa fa-angle-right"></i> <span>Lịch sử hệ thống</span>
+            </a>
+          </li>
+          <li *hasPermission="['2', 'A_III']" class="treeview" id="MailConfiguration" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: false}">
+            <a routerLink="./system-management/mail-configuration" title="Cấu hình gửi email">
+              <i class="fa fa-angle-right"></i> <span>Cấu hình gửi email</span>
+            </a>
+          </li>
+          <li class="treeview" id="mau-email" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./system-management/email-template/list">
+              <i class="fa fa-angle-right"></i> <span>Quản lý mẫu email</span>
+            </a>
+          </li>
+          <li *hasPermission="['2', 'A_III']" class="treeview" id="notifyForm" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: false}">
+            <a routerLink="./system-management/notify-form" title="Quản lý thông báo">
+              <i class="fa fa-angle-right"></i> <span>Thông báo</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li *hasPermission="['1', 'B']" class="treeview" routerLinkActive="active">
+        <a class="treeview-toggle" data-toggle="treeview">
+          <i class="far fa-clipboard-list"></i>
+          <span class="main-li-menu text-transform">Danh mục</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li *hasPermission="['2', 'B_XIII']" class="treeview" id="unit" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./system-management/catalog-management/unit-ktnn">
+              <i class="fa fa-angle-right"></i> <span>Đơn vị trực thuộc KTNN</span>
+            </a>
+          </li>
+          <li *hasPermission="['2', 'B_XIV']" class="treeview" id="ChucVuDoanKT" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./system-management/catalog-management/position-group">
+              <i class="fa fa-angle-right"></i> <span>Chức vụ đoàn KT</span>
+            </a>
+          </li>
+          <li *hasPermission="['2', 'B_I']" class="treeview" id="ChucVu" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./system-management/catalog-management/position">
+              <i class="fa fa-angle-right"></i> <span>Chức vụ hành chính</span>
+            </a>
+          </li>
+          <li *hasPermission="['2', 'B_X']" class="treeview" id="hanhChinh" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./system-management/catalog-management/region">
+              <i class="fa fa-angle-right"></i> <span>Địa bàn hành chính</span>
+            </a>
+          </li>
+          <li *hasPermission="['2', 'B_XI']" class="treeview" id="danToc" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./system-management/catalog-management/nation">
+              <i class="fa fa-angle-right"></i> <span>Dân tộc</span>
+            </a>
+          </li>
+          <li *hasPermission="['2', 'B_VIII']" class="treeview" id="nguonDonThu" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="./system-management/catalog-management/complaint-letter">
+              <i class="fa fa-angle-right"></i> <span>Nguồn đơn KNTC</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+</aside> -->

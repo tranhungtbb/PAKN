@@ -1,0 +1,406 @@
+<div class="container-fluid p-0">
+  <div class="row">
+    <div class="col-lg-12">
+      <ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+        <li class="breadcrumb-item active"><a class="font-weight-bold">DANH SÁCH SỞ NGÀNH</a></li>
+      </ol>
+      <div class="btn-group group-button-table" role="group">
+
+        <button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="preCreate()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus"
+            viewBox="0 0 16 16">
+            <path
+              d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+          </svg>
+          Thêm mới
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card mb-0 shadow-none">
+        <div class="table-responsive">
+
+          <p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true"
+            [showCurrentPageReport]="true" currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize"
+            [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+            tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+            <ng-template pTemplate="header" class="bg-thead">
+              <tr>
+                <th style="width: 50px">
+                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+                    <strong>STT</strong>
+                  </p>
+                </th>
+                <th>
+                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+                    <strong>Tên sở ngành</strong>
+                  </p>
+                  <input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
+                </th>
+                <th style="max-width: 250px">
+                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+                    <strong>Nhóm sở ngành</strong>
+                  </p>
+                  <div class="dropdown bootstrap-select form-control form-control-sm">
+                    <ng-select class="" [items]="listDepartmentGroup" placeholder="Nhóm sở ngành ..." bindLabel="name"
+                      bindValue="id" [(ngModel)]="groupName" (change)="dataStateChange()">
+                    </ng-select>
+                  </div>
+                </th>
+                <th>
+                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+                    <strong>Điện thoại</strong>
+                  </p>
+                  <input class="form-control form-control-sm" [(ngModel)]="phone" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
+                </th>
+                <th>
+                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+                    <strong>Email</strong>
+                  </p>
+                  <input class="form-control form-control-sm" [(ngModel)]="email" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
+                </th>
+                <!-- <th>
+                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+                    <strong>Địa chỉ</strong>
+                    <span class="caret-tb"></span>
+                  </p>
+                  <input class="form-control form-control-sm" [(ngModel)]="address" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
+                </th>
+                <th>
+                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+                    <strong>Fax</strong>
+                    <span class="caret-tb"></span>
+                  </p>
+                  <input class="form-control form-control-sm" [(ngModel)]="fax" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
+                </th>
+                <th style="width: 350px">
+                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+                    <strong>Mô tả</strong>
+                    <span class="caret-tb"></span>
+                  </p>
+                  <input class="form-control form-control-sm" [(ngModel)]="description" maxlength="100"
+                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
+                </th> -->
+                <th style="width: 160px">
+                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+                    <strong>Trạng thái</strong>
+                  </p>
+                  <div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
+                    <ng-select [clearable]="false" class="" [items]="listStatus" placeholder="Trạng thái ..."
+                      bindLabel="text" bindValue="value" [(ngModel)]="isActived" [closeOnSelect]="true"
+                      (change)="dataStateChange()">
+                    </ng-select>
+                  </div>
+                </th>
+                <th class="text-right" style="width: 100px;">
+                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+                    <strong>Thao tác</strong>
+                  </p>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+              <tr>
+                <td class="text-center">{{rowIndex + 1}}</td>
+                <td>
+                  <a (click)="preView(item)" class="ellipsis text-dark" type="button"
+                    title="Xem chi tiết">{{item.name}}</a>
+                </td>
+                <td>
+                  <a (click)="preView(item)" class="ellipsis text-dark" type="button"
+                    title="Xem chi tiết">{{item.groupName}}</a>
+                </td>
+                <td>
+                  <a (click)="preView(item)" class="ellipsis text-dark" type="button"
+                    title="Xem chi tiết">{{item.phone}}</a>
+                </td>
+                <td>
+                  <a (click)="preView(item)" class="ellipsis text-dark" type="button"
+                    title="Xem chi tiết">{{item.email}}</a>
+                </td>
+                <!-- <td>
+                  <a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.address}}</a>
+                </td>
+                <td>
+                  <a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.fax}}</a>
+                </td>
+                <td>{{item.description}}</td> -->
+                <td>
+                  <span type="button" (click)="preUpdateStatus(item)" *ngIf="item.isActived == true"
+                    class="badge rounded-pill bg-success">Hiệu lực</span>
+                  <span type="button" (click)="preUpdateStatus(item)" *ngIf="item.isActived == false"
+                    class="badge rounded-pill badge-light">Hết hiệu lực</span>
+                </td>
+                <td style="max-width: 100px;">
+                  <div class="d-flex justify-content-end">
+                    <a type="button" (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i
+                        class="bi bi-pencil-square"></i></a>
+                    <a type="button" (click)="preDelete(item.id)" class="btn-icon grd-red text-white"
+                      data-toggle="modal" data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td class="text-center" colspan="7">Không có dữ liệu</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modal">
+  <div class="modal-dialog modal-dialog-centered" style="min-width: 60%" role="document">
+    <div class="modal-content rounded">
+      <form class="form-horizontal" [formGroup]="form" #formDir="ngForm">
+        <div class="panel panel-default no-margin">
+          <div class="modal-header">
+            <button class="close btn-close-modal" data-dismiss="modal">
+              ×
+            </button>
+            <p class="modal-title h3">{{title}}</p>
+          </div>
+          <div class="modal-body no-padding-bottom">
+            <div class="row form-group">
+              <div class="col-sm-4">
+                <label class="control-label">Tên sở ngành <span class="text-danger">(*)</span></label>
+                <input id="target" svTrim placeholder="Nhập tên..." class="form-control" formControlName="name"
+                  [(ngModel)]="model.name" maxlength="100" />
+                <div *ngIf="(submitted && f.name.invalid)|| (f.name.invalid && (f.name.dirty || f.name.touched))"
+                  class="has-error m-b-12">
+                  <div *ngIf="f.name.errors.required">
+                    <span class="help-block">Trường dữ liệu này không để trống</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <label class="control-label">Nhóm sở ngành <span class="text-danger">(*)</span></label>
+                <ng-select [clearable]="false" class="form-control " [items]="listDepartmentGroup" bindValue="id"
+                  placeholder="Chọn..." bindLabel="name" formControlName="departmentGroupId"
+                  [(ngModel)]="model.departmentGroupId">
+                </ng-select>
+                <div
+                  *ngIf="(submitted && f.departmentGroupId.invalid) || (f.departmentGroupId.invalid && (f.departmentGroupId.dirty || f.departmentGroupId.touched))"
+                  class="has-error m-b-12">
+                  <div *ngIf="f.departmentGroupId.errors.required">
+                    <span class="help-block">Trường dữ liệu này không để trống</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <label class="control-label">Trạng thái <span class="text-danger">(*)</span></label>
+                <ng-select [clearable]="false" class="form-control " [items]="listStatus" bindValue="value"
+                  placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
+                  [(ngModel)]="model.isActived" style="font-weight: 600;">
+                </ng-select>
+                <div
+                  *ngIf="(submitted && f.isActived.invalid) || (f.isActived.invalid && (f.isActived.dirty || f.isActived.touched))"
+                  class="has-error m-b-12">
+                  <div *ngIf="f.isActived.errors.required">
+                    <span class="help-block">Trường dữ liệu này không để trống</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-sm-4">
+                <label class="control-label">Điện thoại <span class="text-danger">(*)</span></label>
+                <input svTrim placeholder="Nhập..." class="form-control" formControlName="phone"
+                  [(ngModel)]="model.phone" maxlength="100" />
+                <div *ngIf="(submitted && f.phone.invalid) || (f.phone.invalid && (f.phone.dirty || f.phone.touched))"
+                  class="has-error m-b-12">
+                  <div *ngIf="f.phone.errors.required">
+                    <span class="help-block">Trường dữ liệu này không để trống</span>
+                  </div>
+                  <div *ngIf="f.phone.errors.pattern">
+                    <span class="help-block">Số điện thoại của bạn không đúng định dạng!</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <label class="control-label">Email <span class="text-danger">(*)</span></label>
+                <input svTrim placeholder="Nhập..." class="form-control" formControlName="email"
+                  [(ngModel)]="model.email" maxlength="100" />
+                <div *ngIf="(submitted && f.email.invalid) || (f.email.invalid && (f.email.dirty || f.email.touched))"
+                  class="has-error m-b-12">
+                  <div *ngIf="f.email.errors.required">
+                    <span class="help-block">Trường dữ liệu này không để trống</span>
+                  </div>
+                  <div *ngIf="f.email.errors.pattern">
+                    <span class="help-block">Định dạng email không đúng</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <label class="control-label">Fax <span class="text-danger"></span></label>
+                <input svTrim placeholder="Nhập..." class="form-control" formControlName="fax" [(ngModel)]="model.fax"
+                  maxlength="100" />
+                <!-- <div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))"
+                  class="has-error m-b-12">
+                  <div *ngIf="f.name.errors.required">
+                    <span class="help-block">Trường dữ liệu này không để trống</span>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-sm-12">
+                <label class="control-label">Địa chỉ</label>
+                <input svTrim placeholder="Nhập..." class="form-control" formControlName="address"
+                  [(ngModel)]="model.address" maxlength="200" />
+                <!-- <div *ngIf="(submitted && f.address.invalid) || (f.address.invalid && (f.address.dirty || f.address.touched))"
+                  class="has-error m-b-12">
+                  <div *ngIf="f.address.errors.required">
+                    <span class="help-block">Trường dữ liệu này không để trống</span>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-sm-12">
+                <label class="control-label">Mô tả</label>
+                <textarea placeholder="Nhập..." class="form-control" formControlName="description" type="text" rows="4"
+                  [(ngModel)]="model.description" maxlength="255"></textarea>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8">
+                <button style="float:right" type="button" data-dismiss="modal"
+                  class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+              </div>
+              <div class="col-sm-4">
+                <button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onSave()">Xác nhận</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalDetail">
+  <div class="modal-dialog modal-dialog-centered" style="min-width: 60%" role="document">
+    <div class="modal-content rounded">
+      <form class="form-horizontal">
+        <div class="panel panel-default no-margin">
+          <div class="modal-header">
+            <button class="close btn-close-modal" data-dismiss="modal">
+              ×
+            </button>
+            <p class="modal-title h3">Thông tin sở ngành</p>
+          </div>
+          <div class="modal-body no-padding-bottom">
+            <div class="row">
+              <div class="col-sm-4">
+                <strong class="control-label lb600">Tên sở ngành</strong>
+                <p>{{model.name}}</p>
+              </div>
+              <div class="col-sm-4">
+                <strong class="control-label lb600">Nhóm sở ngành</strong>
+                <p>{{model.groupName}}</p>
+              </div>
+              <div class="col-sm-4">
+                <strong class="control-label lb600">Trạng thái</strong>
+                <p *ngIf="model.isActived == true">Hiệu lực</p>
+                <p *ngIf="model.isActived == false">Hết hiệu lực</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <strong class="control-label lb600">Điện thoại</strong>
+                <p>{{model.phone}}</p>
+              </div>
+              <div class="col-sm-4">
+                <strong class="control-label lb600">Email</strong>
+                <p>{{model.email}}</p>
+              </div>
+              <div class="col-sm-4">
+                <strong class="control-label lb600">Fax</strong>
+                <p>{{model.fax}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <strong class="control-label lb600">Địa chỉ</strong>
+                <p>{{model.address}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <strong class="control-label lb600">Mô tả</strong>
+                <p>{{model.description}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalConfirmDelete">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
+    <div class="modal-content rounded">
+      <form class="form-horizontal">
+        <div class="panel panel-default no-margin">
+          <div class="modal-header" style="border: none;">
+            <button class="close btn-close-modal" data-dismiss="modal">
+              ×
+            </button>
+            <!-- <p class="modal-title h3">Xác nhận</p> -->
+          </div>
+          <div class="modal-body no-padding-bottom" style="border: none;">
+            <div style="text-align: center;">
+              <strong class="change-status-title">Bạn có chắc chắn thực hiện hành động này?</strong>
+            </div>
+          </div>
+          <div class="modal-footer" style="border: none; justify-content: center;">
+            <button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
+              data-dismiss="modal">Hủy</button>
+            <button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác
+              nhận</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalConfirmUpdateStatus">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
+    <div class="modal-content rounded">
+      <form class="form-horizontal">
+        <div class="panel panel-default no-margin">
+          <div class="modal-header" style="border: none;">
+            <button class="close btn-close-modal" data-dismiss="modal">
+              ×
+            </button>
+            <!-- <p class="modal-title h3">Xác nhận</p> -->
+          </div>
+          <div class="modal-body no-padding-bottom" style="border: none;">
+            <div style="text-align: center;">
+              <strong class="change-status-title">Bạn có chắc chắn thực hiện hành động này?</strong>
+            </div>
+          </div>
+          <div class="modal-footer" style="border: none; justify-content: center;">
+            <button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
+              data-dismiss="modal">Hủy</button>
+            <button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onUpdateStatus(dataUpdate)">Xác
+              nhận</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

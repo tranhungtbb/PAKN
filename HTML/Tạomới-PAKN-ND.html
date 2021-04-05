@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>TRUNG TÂM TIẾP NHẬN PHẢN ÁNH, KIẾN NGHỊ TỈNH KHÁNH HOÀ</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+    <link href="./vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
+    <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="./vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-icons.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+	<link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
+	<!-- owl.carousel -->
+	<link href="./css/owl.carousel.min.css" rel="stylesheet">
+	<link href="./css/owl.theme.default.min.css" rel="stylesheet">
+	<link href="./css/owl.theme.green.min.css" rel="stylesheet">
+
+	<link href="./css/sd-style.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+		
+		<!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header-nd px-0">
+            <div class="header-content container">
+                <nav class="navbar navbar-expand py-4 px-0">
+                    <div class="collapse navbar-collapse justify-content-between">
+                        <div class="header-left">
+                            <a href="index.html"><img class="img-fluid" src="images/logo-nd.png" alt=""></a>
+                        </div>
+
+                        <ul class="navbar-nav header-right align-items-center">
+                            <li class="nav-item d-none d-lg-block">
+                                <div class="header-info">
+                                    <span class="text-white">Xin chào! <strong>Nguyễn Thị Liêm</strong></span>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown notification_dropdown">
+                                <a class="nav-link text-white ai-icon bg-transparent" href="#" role="button" data-toggle="dropdown">
+                                    <i class="bi bi-bell"></i>
+                                    <div class="pulse-css"></div>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:380px;">
+                                        <ul class="timeline">
+                                            <li>
+                                                <a href="#" class="timeline-panel">
+                                                    <div class="media mr-2 grd-brown">
+                                                        <i class="bi bi-file-earmark-medical cl-brown"></i>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <small class="d-block">Vừa xong</small>
+                                                        <p class="mb-0 text-uppercase">PAKN chờ xử lý</p>
+                                                        <p class="mb-1 h4">Nguyễn Thị Liêm gửi một phản ánh, kiến nghị về lĩnh vực Y tế</p>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="timeline-panel">
+                                                    <div class="media mr-2 grd-brown">
+                                                        <i class="bi bi-file-earmark-medical cl-brown"></i>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <small class="d-block">30 phút trước</small>
+                                                        <p class="mb-0 text-uppercase cl-blue2">PAKN đã được tiếp nhận</p>
+                                                        <p class="mb-1 h4">Công an thành phố Nha Trang đã tiếp nhận kiến nghị số 10007.23</p>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="timeline-panel">
+                                                    <div class="media mr-2 grd-brown">
+                                                        <i class="bi bi-file-earmark-medical cl-brown"></i>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <small class="d-block">12 giờ trước</small>
+                                                        <p class="mb-0 text-uppercase cl-blue">PAKN đã giải quyết</p>
+                                                        <p class="mb-1 h4">Công an thành phố Nha Trang đã giải quyết xong kiến nghị số 10007.23</p>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="timeline-panel">
+                                                    <div class="media mr-2 grd-brown">
+                                                        <i class="bi bi-file-earmark-medical cl-brown"></i>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <small class="d-block">1 ngày trước</small>
+                                                        <p class="mb-0 text-uppercase cl-red">PAKN bị từ chối</p>
+                                                        <p class="mb-1 h4">Công an thành phố Nha Trang đã từ chối kiến nghị số 10007.23</p>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <a class="all-notification" href="#">Xem tất cả thông báo <i class="ti-arrow-right"></i></a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown header-profile">
+                                <a class="nav-link bg-transparent px-0" href="#" role="button" data-toggle="dropdown">
+                                    <div class="avatar-circle">
+                                        <i class="bi bi-person-fill cl-brown" style="font-size: 24px"></i>
+                                    </div>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="#" class="dropdown-item ai-icon">
+                                        <i class="bi bi-person-square"></i>
+                                        <span class="ml-2">Thông tin cá nhân </span>
+                                    </a>
+                                    <a href="#" class="dropdown-item ai-icon">
+                                        <i class="bi bi-file-earmark-medical"></i>
+                                        <span class="ml-2">PAKN của tôi </span>
+                                    </a>
+                                    <a href="#" class="dropdown-item ai-icon">
+                                        <i class="bi bi-key"></i>
+                                        <span class="ml-2">Đổi mật khẩu </span>
+                                    </a>
+                                    <a href="./ĐăngNhập.html" class="dropdown-item ai-icon">
+                                        <i class="bi bi-box-arrow-right"></i>
+                                        <span class="ml-2">Đăng xuất </span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <nav class="navbar navbar-expand-lg navbar-light bg-nav p-3 p-md-0">
+				    <button class="navbar-toggler border-0 bg-white py-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				      <span class="navbar-toggler-icon"></span>
+				    </button>
+				    <div class="collapse navbar-collapse pt-3 pt-md-0" id="navbarSupportedContent">
+				      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				        <li class="nav-item">
+				          <a class="nav-link" aria-current="page" href="#">
+				          	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+							  <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+							  <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+							</svg>
+				          </a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link" href="#">giới thiệu</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link" href="#">Thủ tục hành chính</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link" href="#">Tin tức sự kiện</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link active" href="#">phản ảnh - kiến nghị</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link" href="#">hỗ trợ</a>
+				        </li>
+				      </ul>
+				        <div class="header-left">
+                            <div class="search_bar dropdown show">
+                                <div class="dropdown-menu p-0 m-0 show">
+                                    <form>
+                                        <input class="form-control" type="search" placeholder="Tìm kiếm..." aria-label="Search">
+                                    </form>
+                                </div>
+								<span class="search_icon p-3 c-pointer" data-toggle="dropdown">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z" fill="#A4A4A4"/></svg>
+                                </span>
+                            </div>
+                        </div>
+				    </div>
+				</nav>
+            </div>   
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+		
+		<!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-nd">
+            <div class="container">
+            	<div class="row justify-content-between pt-5">
+            		<div class="col main-ct pr-3 pr-lg-5">
+                        <ol class="breadcrumb px-0 bg-transparent">
+                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                            <li class="breadcrumb-item"><a href="#">Phản ánh, Kiến nghị</a></li>
+                            <li class="breadcrumb-item font-weight-bold">Tạo mới phản ánh, Kiến nghị</li>
+                        </ol>
+            			<form class="form-row mb-3">
+                            <div class="col-12 form-group">
+                                <label class="mb-1">PAKN về việc <span class="cl-red">(*)</span></label>
+                                <input type="text" placeholder="Nhập..." class="form-control">
+                            </div>
+                            <div class="col-12 form-group">
+                                <label class="mb-1">Nội dung <span class="cl-red">(*)</span></label>
+                                <textarea class="form-control" rows="6" placeholder="Nhập nội dung..."></textarea>
+                            </div>
+                            <div class="col-12 col-lg form-group">
+                                <label class="mb-1">Đơn vị tiếp nhận <span class="cl-red">(*)</span></label>
+                                <select class="form-control border-brown">
+                                  <option>option 1</option>
+                                  <option>option 2</option>
+                                  <option>option 3</option>
+                                  <option>option 4</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-lg form-group">
+                                <label class="mb-1">Lĩnh vực... <span class="cl-red">(*)</span></label>
+                                <select class="form-control border-brown">
+                                  <option>option 1</option>
+                                  <option>option 2</option>
+                                  <option>option 3</option>
+                                  <option>option 4</option>
+                                </select>
+                            </div>
+                        </form>
+                        <div class="box attach-ct">
+                            <p class="h5 text-uppercase mb-3">
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+                                      <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
+                                    </svg>
+                                </span>
+                                Tài liệu đính kèm
+                            </p>
+                            <div class="attach-file row">
+                                <div class="col-auto mb-4">
+                                    <div class="border rounded h-100 d-flex align-items-center" style="width: 170px; background: #F0FBFF; border-color: #C7F1FF">
+                                        <input type="file" name="file-5[]" id="file-5" class="inputfile inputfile-4 d-none" data-multiple-caption="{count} files selected" multiple />
+                                        <label for="file-5"><figure><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg></figure> <span class="d-block text-center">Tải lên</span></label>
+                                    </div>
+                                </div>
+                                <div class="col-auto mb-4">
+                                    <div class="alert border alert-dismissible fade show h-100 d-flex align-items-end p-0" style="max-width: 170px; background: url(images/1.jpg) no-repeat; background-size: cover;">
+                                        <button type="button" class="close text-white" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+                                        </button>
+                                        <a href="#" class="d-block text-center p-3 pb-4 rounded-bottom" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);">
+                                            <span class="mt-3 d-block text-wrap text-2line text-white">Ảnh mô tả chức năng.jpg</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-auto mb-4">
+                                    <div class="alert border alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+                                        </button>
+                                        <a href="#" class="d-block text-center">
+                                            <img src="images/file-pdf.svg" style="width: 40px" alt="">
+                                            <span class="mt-3 text-dark text-wrap text-2line">Đính kèm mô tả chức năng.pdf</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-auto mb-4">
+                                    <div class="alert border alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+                                        </button>
+                                        <a href="#" class="d-block text-center">
+                                            <img src="images/file-word.svg" style="width: 45px" alt="">
+                                            <span class="mt-3 text-dark text-wrap text-2line">Đính kèm mô tả chức năng.doc</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-auto mb-4">
+                                    <div class="alert border alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+                                        </button>
+                                        <a href="#" class="d-block text-center">
+                                            <img src="images/file-excel.svg" style="width: 45px" alt="">
+                                            <span class="mt-3 text-dark text-wrap text-2line">Đính kèm mô tả chức năng.xlsx</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-auto mb-4">
+                                    <div class="alert border alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
+                                        </button>
+                                        <a href="#" class="d-block text-center">
+                                            <img src="images/file-powerpoint.svg" style="width: 45px" alt="">
+                                            <span class="mt-3 text-dark text-wrap text-2line">Đính kèm mô tả chức năng.pptx</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <form class="form-row mb-3 align-items-end">
+                            <div class="col-12 col-lg">
+                                <label class="mb-1">Mã số xác thực</label>
+                                <div class="bg-white captcha border d-flex w-100 justify-content-between align-items-center rounded">
+                                    <img class="img-fluid rounded-xl" style="max-height: 56px; max-width: 70%;" src="images/captcha.jpg" alt="">
+                                    <button type="button" class="btn px-3 py-0 rounded-xl"><i class="bi bi-arrow-repeat" style="font-size: 24px"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg">
+                                <label class="mb-1">Nhập mã xác thực <span class="cl-red">(*)</span></label>
+                                <input type="text" placeholder="Nhập..." class="form-control">
+                            </div>
+                            <div class="col-12 col-lg-auto d-flex justify-content-end align-items-center">
+                                <button type="button" class="btn border mr-3">
+                                    <i class="bi bi-arrow-repeat d-flex" style="font-size: 24px"></i>
+                                    <span class="ml-2">Đặt lại</span>
+                                </button>
+                                <button type="button" class="btn text-white border-0 grd-xanhngoc">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+                                      <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z"></path>
+                                      <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"></path>
+                                    </svg>
+                                    <span class="ml-2">Gửi PAKN</span>
+                                </button>
+                            </div>
+                        </form>
+            		</div>
+            		<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+            			<div class="sb-tk-pakn mb-4">
+            				<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between">
+			                	<h4 class="text-uppercase">Thống kê PAKN của tôi</h4>
+			                	<h4 class="counter">60</h4>
+			                </div>
+			                <div class="card-body p-0">
+                                <p class="mb-1">Chờ xử lý
+                                    <span class="pull-right font-weight-bold cl-yellow counter">20</span>
+                                </p>
+                                <div class="progress ">
+                                    <div class="progress-bar grd-yellow1 progress-animated" style="width: 85%; height:6px;" role="progressbar">
+                                    </div>
+                                </div>
+
+                                <p class="mb-1 mt-4">Đã tiếp nhận
+                                    <span class="pull-right font-weight-bold cl-blue2 counter">12</span>
+                                </p>
+                                <div class="progress ">
+                                    <div class="progress-bar grd-xanhngoc progress-animated" style="width: 35%; height:6px;" role="progressbar">
+                                    </div>
+                                </div>
+
+                                <p class="mb-1 mt-4">Đã trả lời
+                                    <span class="pull-right font-weight-bold cl-blue counter">13</span>
+                                </p>
+                                <div class="progress ">
+                                    <div class="progress-bar grd-blue progress-animated" style="width: 40%; height:6px;" role="progressbar">
+                                    </div>
+                                </div>
+
+                                <p class="mb-1 mt-4">Bị từ chối
+                                    <span class="pull-right font-weight-bold cl-red counter">05</span>
+                                </p>
+                                <div class="progress ">
+                                    <div class="progress-bar grd-red progress-animated" style="width: 15%; height:6px;" role="progressbar">
+                                    </div>
+                                </div>
+                                
+                            </div>
+            			</div>
+
+            			<div class="sb-pakn-dqt mb-4">
+            				<div class="tt-v1 pt-3 pb-3">
+			                	<h4 class="text-uppercase">PA-KN được quan tâm nhiều</h4>
+			                </div>
+			                <div class="bootstrap-media">
+                                <div class="media">
+                                    <a href="#"><img class="mr-3 img-fluid rounded-0" width="60" src="./images/icon-vb.png" alt=""></a>
+                                    <div class="media-body">
+                                        <small>7:30 | 14/01/2021</small>
+                                        <p class="mb-0 h5 text-3line"><a href="#">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</a></p>
+                                    </div>
+                                </div>
+                                <div class="media mt-3 pt-3 border-top">
+                                    <a href="#"><img class="mr-3 img-fluid rounded-0" width="60" src="./images/icon-vb.png" alt=""></a>
+                                    <div class="media-body">
+                                        <small>7:30 | 14/01/2021</small>
+                                        <p class="mb-0 h5 text-3line"><a href="#">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</a></p>
+                                    </div>
+                                </div>
+                                <div class="media mt-3 pt-3 border-top">
+                                    <a href="#"><img class="mr-3 img-fluid rounded-0" width="60" src="./images/icon-vb.png" alt=""></a>
+                                    <div class="media-body">
+                                        <small>7:30 | 14/01/2021</small>
+                                        <p class="mb-0 h5 text-3line"><a href="#">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</a></p>
+                                    </div>
+                                </div>
+                            </div>
+            			</div>
+            			<a class="mb-4" href="#"><img class="img-fluid card shadow rounded img-hover" src="images/img-sb1.png" alt=""></a>
+            			<a class="mb-4" href="#"><img class="img-fluid card shadow rounded img-hover" src="images/img-sb2.png" alt=""></a>
+            			<div class="sb-lkWeb mb-4">
+            				<div class="tt-v1 pt-3">
+			                	<h4 class="text-uppercase">liên kế website</h4>
+			                </div>
+			                <ul class="list-group list-group-flush">
+                                <li class="list-group-item px-0">
+                                	<a class="h5" href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit</a>
+                                </li>
+                                <li class="list-group-item px-0">
+                                	<a class="h5" href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit</a>
+                                </li>
+                                <li class="list-group-item px-0">
+                                	<a class="h5" href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit</a>
+                                </li>
+                                <li class="list-group-item px-0">
+                                	<a class="h5" href="#">Lorem ipsum dolor sit amet consectetur adipiscing elit</a>
+                                </li>
+                            </ul>
+            			</div>
+            			<a class="mb-4" href="#"><img class="img-fluid card shadow rounded img-hover" src="images/img-sb3.png" alt=""></a>
+            		</div>
+            	</div>
+            </div>
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer px-0">
+        	<div class="ct-footer pt-5 pb-4" style="background: #FFF7EB">
+        		<div class="container">
+        			<div class="row justify-content-between">
+        				<div class="col-12 col-lg-5 pr-lg-5">
+        					<a href="#"><img class="img-fluid" src="images/logo-ft.png" alt=""></a>
+        					<p class="mb-0 mt-3 h6">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum dolor, sit amet consectetur adipisicing elit doloribus fugiat accusantium illo.</p>
+        				</div>
+        				<div class="col-auto pl-3 pl-lg-0 mt-3 mt-lg-0" style="width: 320px">
+        					<ul class="list-group list-group-flush">
+                                <li class="list-group-item pb-2 pt-0 px-0 border-0"><i class="bi bi-telephone-fill mr-2"></i>0258.3563.531</li>
+                                <li class="list-group-item py-2 px-0 border-0"><i class="bi bi-envelope-open-fill mr-2"></i>stttt@khanhhoa.gov.vn</li>
+                                <li class="list-group-item py-2 px-0"><i class="bi bi-geo-alt-fill mr-2"></i>Nhà A1 Khu Liên cơ số 01 đường Trần Phú, thành phố Nha Trang, tỉnh Khánh Hòa</li>
+                            </ul>
+        				</div>
+        			</div>
+        			
+        		</div>
+        	</div>
+            <div class="copyright py-2" style="background: #FFF2DE">
+            	<div class="container">
+            		<p class="text-left">
+            		<small>Giấy phép số: 39/GP-TTĐT do Cục Quản lý Phát thanh, Truyền hình và Thông tin điện tử - Bộ Thông tin và Truyền thông cấp ngày 28/4/2016</small>
+            		</p>
+            	</div>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+
+	<!-- Bootstrap -->
+    <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="./vendor/bootstrap/is/bootstrap.min.js"></script>
+
+    <!-- Required vendors -->
+    <script src="./vendor/global/global.min.js"></script>
+	<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+	<script src="./vendor/chart.js/Chart.bundle.min.js"></script>
+    <script src="./js/custom.min.js"></script>
+	<script src="./js/deznav-init.js"></script>
+	
+	<!-- Counter Up -->
+    <script src="./vendor/waypoints/jquery.waypoints.min.js"></script>
+    <script src="./vendor/jquery.counterup/jquery.counterup.min.js"></script>	
+		
+	<!-- Apex Chart -->
+	<script src="./vendor/apexchart/apexchart.js"></script>	
+	
+	<!-- Chart piety plugin files -->
+	<script src="./vendor/peity/jquery.peity.min.js"></script>
+	
+	<!-- Dashboard 1 -->
+	<script src="./js/dashboard/dashboard-1.js"></script>
+
+    <script src="js/jquery.custom-file-input.js"></script>
+
+	<!-- owl.carousel -->
+	<script src="./js/owl.carousel.min.js"></script>
+	<script src="./js/sd-js.js"></script>
+	
+	
+</body>
+</html>

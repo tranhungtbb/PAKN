@@ -1,0 +1,251 @@
+<!--**********************************
+            Content body start
+        ***********************************-->
+<div class="content-body bg-yellow">
+	<!-- row -->
+	<div class="container p-0">
+		<div class="row">
+			<div class="col align-items-center form-group mb-0 border-bottom pb-3 border-brown">
+				<div class="row">
+					<div class="col-md-6">
+						<strong class="h4 mr-5">Đối tượng:</strong>
+						<label class="radio-inline mr-5">
+							<input type="radio" name="optradio" (click)="changeTypeObject(1)" [value]="1" [(ngModel)]="model.typeObject"> Cá nhân
+						</label>
+						<label class="radio-inline">
+							<input type="radio" name="optradio" (click)="changeTypeObject(2)" [value]="2" [(ngModel)]="model.typeObject"> Doanh nghiệp
+						</label>
+					</div>
+					<div class="col-md-6">
+						Mã phản ánh/kiến nghị:
+						<strong class="h4 mr-5">{{model.code}}</strong>
+					</div>
+				</div>
+			</div>
+		</div>
+		<form [formGroup]="form">
+			<div class="row">
+				<div class="col-12 col-lg-6 border-right border-brown pt-4 pr-lg-4">
+					<div class="row">
+						<div class="col-12 col-lg-8 form-group">
+							<label class="mb-1">{{titleObject}} <span class="cl-red">(*)</span></label>
+							<ng-select class="form-control" [items]="lstObject" bindValue="value" bindLabel="text" (change)="changeObject()" formControlName="sendId"
+								[(ngModel)]="model.sendId">
+								<ng-template ng-option-tmp let-item="item">
+									<div title="{{item.text}}">{{item.text}}</div>
+								</ng-template>
+							</ng-select>
+							<div *ngIf="(submitted && f.sendId.invalid) || (f.sendId.invalid && (f.sendId.dirty || f.sendId.touched))" class="has-error">
+								<div *ngIf="f.sendId.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-4 form-group">
+							<label class="mb-1">&nbsp;</label>
+							<button *ngIf="model.typeObject == 1" type="button" class="btn grd-xanhngoc btn-block border-0 text-white">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+									<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+								</svg>
+								Thêm mới CN
+							</button>
+							<button *ngIf="model.typeObject == 2" type="button" class="btn grd-xanhngoc btn-block border-0 text-white">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+									<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+								</svg>
+								Thêm mới DN
+							</button>
+						</div>
+						<div class="w-100"></div>
+					</div>
+					<div class="row">
+						<div class="col-12 col-lg-8 form-group">
+							<label class="mb-1">Lĩnh vực <span class="cl-red">(*)</span></label>
+							<ng-select class="form-control" [items]="lstField" bindValue="value" bindLabel="text" formControlName="field" [(ngModel)]="model.field">
+								<ng-template ng-option-tmp let-item="item">
+									<div title="{{item.text}}">{{item.text}}</div>
+								</ng-template>
+							</ng-select>
+							<div *ngIf="(submitted && f.field.invalid) || (f.field.invalid && (f.field.dirty || f.field.touched))" class="has-error">
+								<div *ngIf="f.field.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-4 form-group">
+							<label class="mb-1">Ngày gửi <span class="cl-red">(*)</span></label>
+							<div class="input-group">
+								<input class="form-control" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="sendDate"
+									[(ngModel)]="model.sendDate" appBsDatepickerInvalid
+									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+								<div class="input-group-addon">
+									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+								</div>
+							</div>
+							<div *ngIf="(submitted && f.sendDate.invalid) || (f.sendDate.invalid && (f.sendDate.dirty || f.sendDate.touched))" class="has-error">
+								<div *ngIf="f.sendDate.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div>
+						</div>
+						<div class="w-100"></div>
+					</div>
+					<div class="form-row align-items-end justify-content-between">
+						<div class="col-12 form-group">
+							<label class="mb-1">Đơn vị tiếp nhận <span class="cl-red">(*)</span></label>
+							<ng-select class="form-control" [items]="lstUnit" bindValue="value" bindLabel="text" formControlName="unitId" [(ngModel)]="model.unitId">
+								<ng-template ng-option-tmp let-item="item">
+									<div title="{{item.text}}">{{item.text}}</div>
+								</ng-template>
+							</ng-select>
+							<div *ngIf="(submitted && f.unitId.invalid) || (f.unitId.invalid && (f.unitId.dirty || f.unitId.touched))" class="has-error">
+								<div *ngIf="f.unitId.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div>
+						</div>
+						<div class="w-100"></div>
+						<div class="col form-group">
+							<label class="mb-1"><i class="bi bi-tags mr-2"></i>Hashtags</label>
+							<ng-select class="form-control" [items]="lstHashtag" bindValue="value" bindLabel="text" formControlName="hashtag"
+								(keydown.enter)="onCreateHashtag($event)" [(ngModel)]="hashtagId" [virtualScroll]="true">
+								<ng-template ng-option-tmp let-item="item">
+									<div title="{{item.text}}">{{item.text}}</div>
+								</ng-template>
+							</ng-select>
+						</div>
+						<div class="col-auto form-group">
+							<button type="button" class="btn grd-blue btn-block border-0 px-3 text-white" (click)="onAddHashtag()">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+									<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+								</svg>
+							</button>
+						</div>
+						<div class="col-12">
+							<div class="alert alert-dark d-inline-flex fade show py-2 pl-3 pr-2 align-items-center mr-1" *ngFor="let item of lstHashtagSelected">
+								<strong>{{item.text}}</strong>
+								<button type="button" class="close h-100 pl-2" (click)="onRemoveHashtag(item)"><span><i class="mdi mdi-close"></i></span>
+								</button>
+							</div>
+						</div>
+						<div class="w-100"></div>
+					</div>
+				</div>
+				<div class="col-12 col-lg-6 pt-4 pl-lg-4">
+					<div class="form-group">
+						<label class="mb-1"><i class="bi bi-tags mr-2"></i>PAKN về việc <span class="cl-red">(*)</span></label>
+						<input class="form-control " type="text" [(ngModel)]="model.title" maxlength="500" formControlName="title" placeholder="Nhập..." />
+						<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error">
+							<div *ngIf="f.title.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="mb-1">Nội dung <span class="cl-red">(*)</span></label>
+						<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" rows="10" placeholder="Nhập nội dung..."></textarea>
+						<div *ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error">
+							<div *ngIf="f.content.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div class="row">
+			<div class="col-12 attach-ct mt-3">
+				<p class="h5 text-uppercase mb-3">
+					<span>
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+							<path
+								d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z">
+							</path>
+						</svg>
+					</span>
+					Tài liệu đính kèm
+				</p>
+				<div class="attach-file row">
+					<div class="col-auto mb-4">
+						<div class="alert alert-dark h-100 d-flex align-items-center" style="width: 170px">
+							<input type="file" style="display: none" #file id="file" (change)="onUpload($event)" class="inputfile inputfile-4 d-none" multiple
+								accept="{{fileAccept}}" />
+							<!-- <input type="file" name="file-5[]" id="file-5" class="inputfile inputfile-4 d-none" data-multiple-caption="{count} files selected" multiple=""> -->
+							<label for="file-5" (click)="file.click()">
+								<figure><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+										<path
+											d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+										</path>
+									</svg></figure> <span class="d-block text-center">Tải lên</span>
+							</label>
+						</div>
+					</div>
+					<ng-container *ngFor="let item of files">
+						<div class="col-auto mb-4" *ngIf="item.fileType == 1">
+							<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
+								<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+								</button>
+								<a href="#" class="d-block text-center box-fileinput">
+									<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
+									<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+								</a>
+							</div>
+						</div>
+						<div class="col-auto mb-4" *ngIf="item.fileType == 2">
+							<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
+								<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+								</button>
+								<a href="#" class="d-block text-center box-fileinput">
+									<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
+									<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+								</a>
+							</div>
+						</div>
+						<div class="col-auto mb-4" *ngIf="item.fileType == 4">
+							<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
+								<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+								</button>
+								<a href="#" class="d-block text-center box-fileinput">
+									<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="">
+									<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+								</a>
+							</div>
+						</div>
+						<div class="col-auto mb-4" *ngIf="item.fileType == 3">
+							<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
+								<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+								</button>
+								<a href="#" class="d-block text-center box-fileinput">
+									<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 40px" alt="">
+									<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+								</a>
+							</div>
+						</div>
+						<div class="col-auto mb-4" *ngIf="item.fileType == 6">
+							<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
+								<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+								</button>
+								<a href="#" class="d-block text-center box-fileinput">
+									<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
+									<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+								</a>
+							</div>
+						</div>
+
+					</ng-container>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12 attach-ct">
+				<div class="d-flex justify-content-end align-items-center">
+					<button type="button" class="btn border bg-white mr-3 px-5">Hủy</button>
+					<button type="button" class="btn text-white border-0 grd-xanhngoc px-5" (click)="onSave()">Lưu</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--**********************************
+          Content body end
+      ***********************************-->

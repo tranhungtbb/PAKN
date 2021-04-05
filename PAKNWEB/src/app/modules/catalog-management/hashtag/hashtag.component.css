@@ -1,0 +1,16 @@
+.hover-active a :hover {
+	font-size: 23px;
+	cursor: pointer;
+}
+strong.highlight:hover {
+	color: red;
+	cursor: pointer;
+}
+strong.highlight {
+	cursor: pointer;
+}
+.change-status-title {
+	font-weight: 600;
+	letter-spacing: 1px;
+	font-size: 1.1rem;
+}
