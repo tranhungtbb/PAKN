@@ -8,18 +8,18 @@
 				</ol>
 				<div class="box">
 					<p class="card-text h3 mb-3">
-						Thống nhất quy định về chế độ trả lương làm việc vào ban đêm, làm thêm giờ đối với cán bộ, công chức, viên chức
+						{{model.title}}
 					</p>
 					<div class="py-2 mb-4 d-flex justify-content-between align-items-center border-bottom border-top">
 						<div class="media align-items-center">
 							<div class="avatar-circle mr-2" style="background: #EBF2FF; color: #5D90F1">
-								MT
+								{{model.shortName}}
 							</div>
 							<div class="media-body">
-								<p class="my-0 h5">Nguyễn Mạnh Toàn</p>
+								<p class="my-0 h5">{{model.name}}</p>
 							</div>
 						</div>
-						<span>7:30 | 14/01/2021</span>
+						<span>{{model.hour}} | {{model.date}}</span>
 					</div>
 					<div class="media pb-4 border-bottom mb-4">
 						<div class="mr-3">
@@ -33,29 +33,7 @@
 						<div class="media-body">
 							<p class="h4 font-italic font-weight-bold">Nội dung kiến nghị:</p>
 							<p>
-								Căn cứ quy định về chế độ trả lương làm việc vào ban đêm, làm thêm giờ đối với cán bộ, công chức, viên chức theo các quy định hiện hành như:<br>
-								- Nghị định 204/2004/NĐ-CP<br>
-								- Thông tư 08/2005/TTLT-BNV-BTC<br>
-								Trong đó:<br>
-								+ Tiền lương giờ dùng làm căn cứ để tính trả tiền lương làm việc vào ban đêm, làm thêm giờ được xác định bằng tiền lương của một tháng chia cho số
-								giờ làm việc tiêu chuẩn trong một tháng; Tiền lương của một tháng, bao gồm: Mức lương hiện hưởng, các khoản phụ cấp lương và hệ số chênh lệch bảo
-								lưu (nếu có) (điểm 2 Mục II Thông tư 08/2005/TTLT-BNV-BTC)<br>
-								+ Các chế độ phụ cấp lương theo quy định tại Điều 6 Nghị định 204/2004/NĐ-CP, bao gồm: Phụ cấp thâm niên vượt khung; Phụ cấp kiêm nhiệm chức danh
-								lãnh đạo; Phụ cấp khu vực; Phụ cấp đặc biệt; Phụ cấp thu hút; Phụ cấp lưu động; Phụ cấp độc hại, nguy hiểm; Các chế độ phụ cấp đặc thù theo nghề
-								hoặc công việc: Phụ cấp thâm niên nghề,Phụ cấp ưu đãi theo nghề, Phụ cấp trách nhiệm theo nghề, Phụ cấp trách nhiệm công việc,Phụ cấp phục vụ quốc
-								phòng, an ninh.<br>
-								- Ngoài ra, cán bộ, công chức còn được hưởng chế độ phụ cấp công vụ theo quy định tại Nghị định 34/2012/NĐ-CP.
-								Ngày 26/6/2020, công dân Nguyễn Duy Vương đã gửi phản ánh kiến nghị tại Cổng dịch vụ công quốc gia với câu hỏi “Tiền lương giờ thực trả của ngày làm
-								việc bình thường (tiền lương một tháng) trong công thức tính tiền lương làm thêm giờ cho cán bộ, công chức có bao gồm phụ cấp công vụ không ?” và
-								Ngày 23/7/2020, Bộ Nội vụ có Văn bản số 313/TL trả lời Công dân Nguyễn Duy Vương như sau: “Phụ cấp công vụ được quy định tại Nghị định số
-								34/2012/NĐ-CP ngày 15 tháng 4 năm 2012 của Chính phủ là một loại phụ cấp lương được tính trong tiền lương của một tháng để tính trả tiền lương làm
-								thêm giờ quy định tại Điểm a1 Khoản 2 Mục II Thông tư liên tịch số 08/2005/TTLT-BNV-BTC ngày 05 tháng 01 năm 2005 của Bộ trưởng Bộ Nội vụ và Bộ
-								trưởng Bộ Tài chính hướng dẫn thực hiện chế độ trả lương vào ban đêm, làm thêm giờ đối với cán bộ, công chức, viên chức.” (Đường dẫn PAKN, Văn bản
-								trả lời đính kèm)<br>
-								Dựa trên các quy định hiện hành về chế độ trả lương làm việc vào ban đêm, làm thêm giờ đối với cán bộ, công chức, viên chức và nội dung trả lời của
-								cơ quan chức năng tại Văn bản số 313/TL ngày 23/7/2020. Để có căn cứ thực hiện, áp dụng các quy định về chế độ trả lương làm việc vào ban đêm, làm
-								thêm giờ đối với cán bộ, công chức, viên chức; đảm bảo quyền lợi của người lao động theo các quy định hiện hành, tôi đề nghị cơ quan chức năng ban
-								hành văn bản hướng dẫn để các đơn vị thống nhất thực hiện.
+								{{model.content}}
 							</p>
 							<p>
 								<button type="button" class="btn border btn-block text-dark p-0">
@@ -83,12 +61,7 @@
 						<div class="media-body">
 							<p class="h4 font-italic font-weight-bold">Trung tâm phản ánh kiến nghị tỉnh Khánh Hoà trả lời:</p>
 							<p>
-								Liên quan đến phản ánh, kiến nghị của Ông Nguyễn Duy Vương, Bộ Nội vụ có ý kiến như sau:<br>
-								Căn cứ quy định của Chính phủ về chế độ tiền lương và phụ cấp, Bộ Nội vụ và các Bộ, ngành liên quan đã ban hành các văn bản hướng dẫn thực hiện,
-								trong đó có Thông tư liên tịch số 08/2005/TT-BNV-BTC ngày 05 tháng 01 năm 2005.<br>
-								Đề xuất của ông nêu trên, sẽ ghi nhận trong quá trình nghiên cứu xây dựng chính sách, hướng dẫn thực hiện thống nhất, đồng bộ khi thực hiện chính
-								sách tiền lương mới đối với cán bộ, công chức, viên chức. <br>
-								Bộ Nội vụ thông tin để Ông được biết. Trân trọng cảm ơn!
+								{{lstConclusion.content}}
 							</p>
 							<p class="mb-4">
 								<button type="button" class="btn border btn-block text-dark p-0">

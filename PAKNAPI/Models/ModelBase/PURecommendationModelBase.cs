@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using PAKNAPI.Common;
+using PAKNAPI.ModelBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,5 +42,31 @@ namespace PAKNAPI.Models.ModelBase
 
             return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetAllOnPage", DP)).ToList();
         }
+
+
+        public async Task<PURecommendation> PURecommendationGetById(int? id, int? status)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("Id", id);
+            DP.Add("Status", status);
+            return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetByID", DP)).ToList().FirstOrDefault();
+        }
+        
     }
+
+
+    // detail Recommendation trang công bố
+    public class PURecommendationGetByIdViewResponse {
+        public PURecommendation Model { get; set; }
+        // files
+        public List<MRRecommendationFilesGetByRecommendationId> lstFiles { get; set; }
+        //Conclusion
+        public MRRecommendationConclusionGetByRecommendationId lstConclusion {get; set;}
+        //ConclusionFile - file đính kèm giải quyết
+        public List<MRRecommendationConclusionFilesGetByConclusionId> lstConclusionFiles { get; set; }
+        
+    }
+
+
+
 }
