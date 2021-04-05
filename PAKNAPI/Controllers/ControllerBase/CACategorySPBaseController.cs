@@ -540,11 +540,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize]
 		[Route("CAHashtagGetAllOnPageBase")]
-		public async Task<ActionResult<object>> CAHashtagGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, bool? IsActived)
+		public async Task<ActionResult<object>> CAHashtagGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, int? QuantityUser, bool? IsActived)
 		{
 			try
 			{
-				List<CAHashtagGetAllOnPage> rsCAHashtagGetAllOnPage = await new CAHashtagGetAllOnPage(_appSetting).CAHashtagGetAllOnPageDAO(PageSize, PageIndex, Name, IsActived);
+				List<CAHashtagGetAllOnPage> rsCAHashtagGetAllOnPage = await new CAHashtagGetAllOnPage(_appSetting).CAHashtagGetAllOnPageDAO(PageSize, PageIndex, Name, QuantityUser, IsActived);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAHashtagGetAllOnPage", rsCAHashtagGetAllOnPage},
@@ -1033,11 +1033,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize]
 		[Route("CAUnitGetAllOnPageBase")]
-		public async Task<ActionResult<object>> CAUnitGetAllOnPageBase(int? PageSize, int? PageIndex, int? ParentId, byte? UnitLevel, string Name, string Phone, string Email, string Address, bool? IsActive, bool? IsMain)
+		public async Task<ActionResult<object>> CAUnitGetAllOnPageBase(int? PageSize, int? PageIndex, int? ParentId, byte? UnitLevel, string Name, string Phone, string Email, string Address, bool? IsActived, bool? IsMain)
 		{
 			try
 			{
-				List<CAUnitGetAllOnPage> rsCAUnitGetAllOnPage = await new CAUnitGetAllOnPage(_appSetting).CAUnitGetAllOnPageDAO(PageSize, PageIndex, ParentId, UnitLevel, Name, Phone, Email, Address, IsActive, IsMain);
+				List<CAUnitGetAllOnPage> rsCAUnitGetAllOnPage = await new CAUnitGetAllOnPage(_appSetting).CAUnitGetAllOnPageDAO(PageSize, PageIndex, ParentId, UnitLevel, Name, Phone, Email, Address, IsActived, IsMain);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAUnitGetAllOnPage", rsCAUnitGetAllOnPage},

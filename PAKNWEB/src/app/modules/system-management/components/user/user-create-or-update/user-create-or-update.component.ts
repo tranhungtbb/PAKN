@@ -149,12 +149,27 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		}
 	}
 
+	modal_btn_save = 'Tạo mới'
 	openModal(unitId = 0, userId = 0): void {
+		this.createUserForm = this.formBuilder.group({
+			//userName: ['', [Validators.required]],
+			email: ['', [Validators.required, Validators.email]],
+			fullName: ['', [Validators.required]],
+			phone: ['', [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
+			positionId: ['', [Validators.required]],
+			unitId: ['', [Validators.required]],
+			gender: ['', [Validators.required]],
+			roleId: ['', [Validators.required]],
+			isActived: [''],
+			address: [''],
+		})
+
 		this.userFormSubmitted = false
 		this.modelUser = new UserObject2()
 		this.modelUser.unitId = unitId
 		if (userId > 0) {
 			this.modalTitle = 'Chỉnh sửa người dùng'
+			this.modal_btn_save = 'Cập nhật'
 			this.userService.getById({ id: userId }).subscribe((res) => {
 				if (res.success != 'OK') return
 				this.modelUser = res.result.SYUserGetByID[0]
@@ -166,6 +181,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			})
 		} else {
 			this.modalTitle = 'Tạo người dùng mới'
+			this.modal_btn_save = 'Tạo mới'
 		}
 
 		$('#avatar-view').attr('src', '')

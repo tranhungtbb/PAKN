@@ -93,11 +93,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize]
 		[Route("SYUserGetAllOnPageBase")]
-		public async Task<ActionResult<object>> SYUserGetAllOnPageBase(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActive, int? UnitId, int? TypeId)
+		public async Task<ActionResult<object>> SYUserGetAllOnPageBase(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived, int? UnitId, int? TypeId)
 		{
 			try
 			{
-				List<SYUserGetAllOnPage> rsSYUserGetAllOnPage = await new SYUserGetAllOnPage(_appSetting).SYUserGetAllOnPageDAO(PageSize, PageIndex, UserName, FullName, Phone, IsActive, UnitId, TypeId);
+				List<SYUserGetAllOnPage> rsSYUserGetAllOnPage = await new SYUserGetAllOnPage(_appSetting).SYUserGetAllOnPageDAO(PageSize, PageIndex, UserName, FullName, Phone, IsActived, UnitId, TypeId);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYUserGetAllOnPage", rsSYUserGetAllOnPage},
