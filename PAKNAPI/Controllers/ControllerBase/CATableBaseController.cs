@@ -1,4 +1,4 @@
-using PAKNAPI.Common;
+﻿using PAKNAPI.Common;
 using PAKNAPI.Controllers;
 using PAKNAPI.Models;
 using PAKNAPI.ModelBase;
@@ -1703,11 +1703,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize]
 		[Route("CAHashtagGetAllOnPage")]
-		public async Task<ActionResult<object>> CAHashtagGetAllOnPage(int PageSize, int PageIndex)
+		public async Task<ActionResult<object>> CAHashtagGetAllOnPage(int PageSize, int PageIndex, string?Name , bool? IsActived)
 		{
 			try
 			{
-				List<CAHashtagOnPage> rsCAHashtagOnPage = await new CAHashtag(_appSetting).CAHashtagGetAllOnPage(PageSize, PageIndex);
+				List<CAHashtagOnPage> rsCAHashtagOnPage = await new CAHashtag(_appSetting).CAHashtagGetAllOnPage(PageSize, PageIndex, Name, IsActived);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAHashtag", rsCAHashtagOnPage},
@@ -1797,6 +1797,10 @@ namespace PAKNAPI.ControllerBase
 				if (count > 0)
 				{
 					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				// cập nhập thất bại do đã trùng tên
+				else if (count == -1) {
+					return new ResultApi { Success = ResultCode.ORROR, Result = count };
 				}
 				else
 				{
