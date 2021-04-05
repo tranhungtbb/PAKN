@@ -52,8 +52,9 @@
                     <strong>Trạng thái</strong>
                   </p>
                   <div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
-                    <ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text"
-                      bindValue="value" [(ngModel)]="isActived" [closeOnSelect]="true" (change)="dataStateChange()">
+                    <ng-select [clearable]="false" class="" [items]="listStatus" placeholder="Trạng thái ..."
+                      bindLabel="text" bindValue="value" [(ngModel)]="isActived" [closeOnSelect]="true"
+                      (change)="dataStateChange()">
                     </ng-select>
                   </div>
                 </th>
@@ -125,8 +126,9 @@
               </div>
               <div class="col-sm-4">
                 <label class="control-label">Trạng thái <span class="text-danger">(*)</span></label>
-                <ng-select class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái"
-                  bindLabel="text" formControlName="isActived" [(ngModel)]="model.isActived">
+                <ng-select [clearable]="false" class="form-control " [items]="listStatus" bindValue="value"
+                  placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
+                  [(ngModel)]="model.isActived" style="font-weight: 600;">
                 </ng-select>
                 <div
                   *ngIf="(submitted && f.isActived.invalid) || (f.isActived.invalid && (f.isActived.dirty || f.isActived.touched))"
@@ -157,40 +159,52 @@
 </div>
 
 <div class="modal fade" id="modalDetail">
-  <div class="modal-dialog modal-dialog-centered" style="min-width: 60%" role="document">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 40%" role="document">
     <div class="modal-content rounded">
       <form class="form-horizontal">
         <div class="panel panel-default no-margin">
-          <div class="modal-header">
+          <div class="modal-header" style="border: none;">
             <button class="close btn-close-modal" data-dismiss="modal">
               ×
             </button>
-            <p class="modal-title h3">Thông tin nhóm sở ngành</p>
+            <p class="modal-title h3">Thông tin</p>
           </div>
-          <div class="modal-body no-padding-bottom">
-            <div class="row">
-              <div class="col-sm-8">
-                <strong class="control-label lb600">Nhóm sở ngành</strong>
-                <p>{{model.name}}</p>
-              </div>
+          <div class="modal-body no-padding-bottom" style="padding: 1.1rem;">
+            <div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 10px 0px;">
               <div class="col-sm-4">
-                <strong class="control-label lb600">Trạng thái</strong>
-                <p *ngIf="model.isActived == 0">Sử dụng</p>
-                <p *ngIf="model.isActived == 1">Không sử dụng</p>
+                <label class="control-label lb600 detail-title">Nhóm sở ngành: </label>
+              </div>
+              <div class="col-sm-6">
+                <strong>{{model.name}}</strong>
               </div>
             </div>
-            <div class="row">
+            <div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 10px 0px;">
               <div class="col-sm-12">
-                <strong class="control-label lb600">Mô tả</strong>
+                <label class="control-label lb600">Mô tả: </label>
+              </div>
+              <div class="col-sm-12">
                 <p>{{model.description}}</p>
               </div>
             </div>
+
+            <div class="row" style="padding: 10px 0px;">
+              <div class="col-sm-8">
+                <label class="control-label lb600">Trạng thái: </label>
+              </div>
+              <div class="col-sm-4" style="text-align: right;">
+                <span style="padding: 7px;" *ngIf="model.isActived == true" class="badge rounded-pill bg-success">Hiệu
+                  lực</span>
+                <span style="padding: 7px;" *ngIf="model.isActived == false" class="badge rounded-pill badge-light">Hết
+                  hiệu lực</span>
+              </div>
+            </div>
           </div>
-          <div class="modal-footer">
-            <button data-dismiss="modal" class="btn btn-success btn-sm">
-              <i class="fa fa-close"></i> Đóng
-            </button>
-          </div>
+          <!-- <div class="modal-footer"> -->
+
+          <!-- <button data-dismiss="modal" style="text-transform: none;" class="btn btn-primary btn-sm"> Đóng
+							<i class="far fa-times"></i>
+						</button> -->
+          <!-- </div> -->
         </div>
       </form>
     </div>
@@ -198,22 +212,22 @@
 </div>
 
 <div class="modal fade" id="modalConfirmDelete">
-  <div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
     <div class="modal-content rounded">
       <form class="form-horizontal">
         <div class="panel panel-default no-margin">
-          <div class="modal-header">
+          <div class="modal-header" style="border: none;">
             <button class="close btn-close-modal" data-dismiss="modal">
               ×
             </button>
-            <p class="modal-title h3">Xác nhận</p>
+            <!-- <p class="modal-title h3">Xác nhận</p> -->
           </div>
-          <div class="modal-body no-padding-bottom">
-            <div>
-              <p>Anh/Chị có chắc chắn thực hiện hành động này?</p>
+          <div class="modal-body no-padding-bottom" style="border: none;">
+            <div style="text-align: center;">
+              <strong class="change-status-title">Bạn có chắc chắn thực hiện hành động này?</strong>
             </div>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer" style="border: none; justify-content: center;">
             <button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
               data-dismiss="modal">Hủy</button>
             <button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác
@@ -242,9 +256,8 @@
           </div>
           <div class="modal-footer" style="border: none; justify-content: center;">
             <button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
-              style="text-transform: none;" data-dismiss="modal">Hủy</button>
-            <button type="button" class="btn btn-danger border-0 px-5 grd-blue" style="text-transform: none;"
-              (click)="onUpdateStatus(dataUpdate)">Xác
+              data-dismiss="modal">Hủy</button>
+            <button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onUpdateStatus(dataUpdate)">Xác
               nhận</button>
           </div>
         </div>
