@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
-import { RecommendationObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
+import { RecommendationForwardObject, RecommendationObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
-import { MESSAGE_COMMON, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { COMMONS } from 'src/app/commons/commons'
 
 declare var $: any
 
@@ -15,7 +17,13 @@ declare var $: any
 	styleUrls: ['./list-receive-approved.component.css'],
 })
 export class ListReceiveApprovedComponent implements OnInit {
-	constructor(private _service: RecommendationService, private storeageService: UserInfoStorageService, private _toastr: ToastrService, private _shareData: DataService) {}
+	constructor(
+		private _service: RecommendationService,
+		private storeageService: UserInfoStorageService,
+		private _toastr: ToastrService,
+		private _fb: FormBuilder,
+		private _shareData: DataService
+	) {}
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
@@ -40,7 +48,12 @@ export class ListReceiveApprovedComponent implements OnInit {
 	totalRecords: number = 0
 	idDelete: number = 0
 	lstHistories: any = []
+
+	lstUnitNotMain: any = []
+	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
+	formForward: FormGroup
 	ngOnInit() {
+		this.buildForm()
 		this.dataSearch.status = RECOMMENDATION_STATUS.RECEIVE_APPROVED
 		this.getDataForCreate()
 		this.getList()
@@ -152,6 +165,70 @@ export class ListReceiveApprovedComponent implements OnInit {
 		}),
 			(error) => {
 				console.error(error)
+			}
+	}
+
+	get f() {
+		return this.formForward.controls
+	}
+
+	buildForm() {
+		this.formForward = this._fb.group({
+			unitReceiveId: [this.modelForward.unitReceiveId, Validators.required],
+			expiredDate: [this.modelForward.expiredDate],
+			content: [this.modelForward.content],
+		})
+	}
+
+	rebuilForm() {
+		this.formForward.reset({
+			unitReceiveId: this.modelForward.unitReceiveId,
+			expiredDate: this.modelForward.expiredDate,
+			content: this.modelForward.content,
+		})
+	}
+	preForward(id: number) {
+		this.modelForward = new RecommendationForwardObject()
+		this.modelForward.recommendationId = id
+		this.rebuilForm()
+		this._service.recommendationGetDataForForward({}).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if (response.result != null) {
+					this.lstUnitNotMain = response.result.lstUnitNotMain
+					$('#modal-tc-pakn').modal('show')
+				}
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(error) => {
+				console.log(error)
+			}
+	}
+
+	onForward() {
+		this.modelForward.content = this.modelForward.content.trim()
+		this.submitted = true
+		if (this.formForward.invalid) {
+			return
+		}
+		this.modelForward.step = STEP_RECOMMENDATION.PROCESS
+		this.modelForward.status = PROCESS_STATUS_RECOMMENDATION.WAIT
+		var request = {
+			_mRRecommendationForwardInsertIN: this.modelForward,
+			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
+		}
+		this._service.recommendationForward(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				$('#modal-tc-pakn').modal('hide')
+				this.getList()
+				this._toastr.success(COMMONS.FORWARD_SUCCESS)
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(err) => {
+				console.error(err)
 			}
 	}
 

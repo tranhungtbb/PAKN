@@ -43,11 +43,17 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">&nbsp;</label>
-							<button type="button" class="btn grd-xanhngoc btn-block border-0 text-white">
+							<button *ngIf="model.typeObject == 1" type="button" class="btn grd-xanhngoc btn-block border-0 text-white">
 								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 									<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 								</svg>
 								Thêm mới CN
+							</button>
+							<button *ngIf="model.typeObject == 2" type="button" class="btn grd-xanhngoc btn-block border-0 text-white">
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+									<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+								</svg>
+								Thêm mới DN
 							</button>
 						</div>
 						<div class="w-100"></div>
@@ -100,7 +106,7 @@
 						</div>
 						<div class="w-100"></div>
 						<div class="col form-group">
-							<label class="mb-1"><i class="bi bi-tags mr-2"></i>Hashtags <span class="cl-red">(*)</span></label>
+							<label class="mb-1"><i class="bi bi-tags mr-2"></i>Hashtags</label>
 							<ng-select class="form-control" [items]="lstHashtag" bindValue="value" bindLabel="text" formControlName="hashtag"
 								(keydown.enter)="onCreateHashtag($event)" [(ngModel)]="hashtagId" [virtualScroll]="true">
 								<ng-template ng-option-tmp let-item="item">
@@ -143,10 +149,6 @@
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
 						</div>
-					</div>
-					<div class="d-flex justify-content-end align-items-center mt-4">
-						<button type="button" class="btn border bg-white mr-3 px-5">Hủy</button>
-						<button type="button" class="btn text-white border-0 grd-xanhngoc px-5" (click)="onSave()">Lưu</button>
 					</div>
 				</div>
 			</div>
@@ -231,6 +233,14 @@
 						</div>
 
 					</ng-container>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12 attach-ct">
+				<div class="d-flex justify-content-end align-items-center">
+					<button type="button" class="btn border bg-white mr-3 px-5">Hủy</button>
+					<button type="button" class="btn text-white border-0 grd-xanhngoc px-5" (click)="onSave()">Lưu</button>
 				</div>
 			</div>
 		</div>

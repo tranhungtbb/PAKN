@@ -20,6 +20,7 @@ export class DepartmentGroupComponent implements OnInit {
 
   listData = new Array<FieldObject>()
   listStatus: any = [
+    { value: '', text: '--Chọn trạng thái--' },
     { value: true, text: 'Hiệu lực' },
     { value: false, text: 'Hết hiệu lực' },
   ]

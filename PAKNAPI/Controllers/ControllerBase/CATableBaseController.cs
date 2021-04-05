@@ -1,4 +1,4 @@
-﻿using PAKNAPI.Common;
+using PAKNAPI.Common;
 using PAKNAPI.Controllers;
 using PAKNAPI.Models;
 using PAKNAPI.ModelBase;
@@ -1708,6 +1708,7 @@ namespace PAKNAPI.ControllerBase
 			try
 			{
 				List<CAHashtagOnPage> rsCAHashtagOnPage = await new CAHashtag(_appSetting).CAHashtagGetAllOnPage(PageSize, PageIndex, Name, IsActived, QuantityUser);
+
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAHashtag", rsCAHashtagOnPage},
@@ -1798,10 +1799,9 @@ namespace PAKNAPI.ControllerBase
 				{
 					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
-				// cập nhập thất bại do đã trùng tên
 				else
 				{
-					//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 					return new ResultApi { Success = ResultCode.ORROR, Result = count };
 				}

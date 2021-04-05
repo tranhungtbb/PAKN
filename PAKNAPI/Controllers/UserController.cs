@@ -179,5 +179,18 @@ namespace PAKNAPI.Controllers
 			return data;
 		}
 
-	}
+
+
+        #region dang ky nguoi dan, doanh nghiep
+		
+		public async Task<object> CitizenOrOrganizationRegister()
+        {
+			return null;
+        }
+
+
+        #endregion
+
+
+    }
 }
