@@ -86,15 +86,14 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.getAllUnitShortInfo()
 		/*unit form*/
 		this.createUnitFrom = this.formBuilder.group({
-			name: ['', Validators.required],
-			unitLevel: ['', [Validators.required]],
-			isActived: [''],
-			isDeleted: [''],
-			parentId: ['', Validators.required],
-			description: [''],
-			email: ['', [Validators.required, Validators.email]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
-			phone: ['', [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
-			address: ['', [Validators.required]],
+			name: [this.modelUnit.name, Validators.required],
+			unitLevel: [this.modelUnit.unitLevel, [Validators.required]],
+			isActived: [this.modelUnit.isActived],
+			parentId: [this.modelUnit.parentId, Validators.required],
+			description: [this.modelUnit.description],
+			email: [this.modelUnit.email, [Validators.required, Validators.email]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
+			phone: [this.modelUnit.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
+			address: [this.modelUnit.address],
 		})
 
 		this.positionService
@@ -110,8 +109,18 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			if (res.success != 'OK') return
 			this.rolesList = res.result.SYRoleGetAll
 		})
+
+		//
 	}
 	ngAfterViewInit() {}
+
+	collapsed_checked: any = {
+		item01: false,
+		item02: false,
+	}
+	onCollapsed(item: string) {
+		this.collapsed_checked[item] = !this.collapsed_checked[item]
+	}
 
 	getUnitPagedList(): void {
 		this.query.isActive == null ? '' : this.query.isActive
@@ -217,15 +226,19 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	/*end user area*/
 
 	/*modal thêm / sửa đơn vị*/
-	modalCreateOrUpdateTitle: string = 'Thêm cơ quan, đơn vị'
+	modalCreateOrUpdateTitle: string = 'Thêm mới cơ quan, đơn vị'
 	modalCreateOrUpdate(id: any, level: any = 1, parentId: any = 0) {
 		this.unitFormSubmitted = false
 		if (id == 0) {
-			this.modalCreateOrUpdateTitle = 'Thêm cơ quan, đơn vị'
+			this.modalCreateOrUpdateTitle = 'Thêm mới cơ quan, đơn vị'
 			this.modelUnit = new UnitObject()
-			this.modelUnit.name = ' '
+			this.modelUnit.name = ''
+			if (this.modelUnit.unitLevel > 1) this.modelUnit.parentId = null
+			else {
+				this.modelUnit.parentId = 0
+			}
 		} else {
-			this.modalCreateOrUpdateTitle = 'Sửa cơ quan, đơn vị'
+			this.modalCreateOrUpdateTitle = 'Chỉnh sửa cơ quan, đơn vị'
 			this.unitService.getById({ id }).subscribe((res) => {
 				if (res.success != 'OK') return
 				this.modelUnit = res.result.CAUnitGetByID[0]
@@ -242,7 +255,16 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	unitFormSubmitted = false
 	onSaveUnit() {
 		this.unitFormSubmitted = true
+		let { controls } = this.createUnitFrom
+		// for (let key in controls) {
+		// 	if (!controls[key].valid) {
+		// 		this._toastr.error('Dữ liệu không hợp lệ')
+		// 		return
+		// 	}
+		// }
+
 		if (this.createUnitFrom.invalid) {
+			this._toastr.error('Dữ liệu không hợp lệ')
 			return
 		}
 
@@ -313,6 +335,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	changeLevel(level: number) {
 		this.modelUnit.unitLevel = level
 		//this.modelUnit.parentId = 0
+		if (this.modelUnit.unitLevel > 1) this.modelUnit.parentId = null
+		else {
+			this.modelUnit.parentId = 0
+		}
 	}
 	get getUnitParent(): any[] {
 		if (!this.unitFlatlist) return []

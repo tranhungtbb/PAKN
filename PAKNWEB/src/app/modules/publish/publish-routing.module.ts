@@ -8,6 +8,7 @@ import { NewsComponent } from './news/news.component'
 import { ReflectionsRecommendationsComponent } from './reflections-recommendations/reflections-recommendations.component'
 import { ViewReflectionsRecommendationComponent } from './view-reflections-recommendation/view-reflections-recommendation.component'
 import { SupportComponent } from './support/support.component'
+import { using } from 'rxjs'
 
 const routes: Routes = [
 	{
@@ -47,6 +48,10 @@ const routes: Routes = [
 			{
 				path: 'ho-tro',
 				component: SupportComponent,
+			},
+			{
+				path: 'tai-khoan',
+				loadChildren: './account/account.module#AccountModule', //() => import('./account/account.module').then((m) => m.AccountModule),
 			},
 		],
 	},

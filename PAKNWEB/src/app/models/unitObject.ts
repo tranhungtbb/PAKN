@@ -19,6 +19,7 @@ export class UnitObject {
 		this.isDeleted = false
 		this.unitLevel = 1
 		this.isMain = false
+		this.parentId = 0
 	}
 	id: number
 	name: string

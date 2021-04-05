@@ -559,13 +559,15 @@ namespace PAKNAPI.ModelBase
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public bool IsActived { get; set; }
+		public int? QuantityUser { get; set; }
 
-		public async Task<List<CAHashtagGetAllOnPage>> CAHashtagGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, bool? IsActived)
+		public async Task<List<CAHashtagGetAllOnPage>> CAHashtagGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, int? QuantityUser, bool? IsActived)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
 			DP.Add("Name", Name);
+			DP.Add("QuantityUser", QuantityUser);
 			DP.Add("IsActived", IsActived);
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAHashtagGetAllOnPage>("CA_HashtagGetAllOnPage", DP)).ToList();
@@ -1077,7 +1079,7 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public bool IsMain { get; set; }
 
-		public async Task<List<CAUnitGetAllOnPage>> CAUnitGetAllOnPageDAO(int? PageSize, int? PageIndex, int? ParentId, byte? UnitLevel, string Name, string Phone, string Email, string Address, bool? IsActive, bool? IsMain)
+		public async Task<List<CAUnitGetAllOnPage>> CAUnitGetAllOnPageDAO(int? PageSize, int? PageIndex, int? ParentId, byte? UnitLevel, string Name, string Phone, string Email, string Address, bool? IsActived, bool? IsMain)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
@@ -1088,7 +1090,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Phone", Phone);
 			DP.Add("Email", Email);
 			DP.Add("Address", Address);
-			DP.Add("IsActive", IsActive);
+			DP.Add("IsActived", IsActived);
 			DP.Add("IsMain", IsMain);
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAUnitGetAllOnPage>("CA_UnitGetAllOnPage", DP)).ToList();

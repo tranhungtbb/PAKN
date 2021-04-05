@@ -1,5 +1,5 @@
 <div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">
-	<span class="text-uppercase">Thông tin đơn vị</span>
+	<span class="text-uppercase">Quản lý cơ quan, đơn vị</span>
 </div>
 
 <!-- row -->
@@ -15,7 +15,7 @@
 			<p-tree id="tree-unit" [value]="treeUnit">
 
 				<ng-template let-node pTemplate="default">
-					<a (click)="treeViewActive(node.id, node.unitLevel)" [ngClass]="{'text-color-blue':(unitObject.id && unitObject.id == node.id)}">
+					<a (click)="treeViewActive(node.id, node.unitLevel)" class="tree-cursor-hand" [ngClass]="{'text-color-blue':(unitObject.id && unitObject.id == node.id)}">
 						<strong>{{node.name}}</strong>
 					</a>
 				</ng-template>
@@ -53,9 +53,10 @@
 				<div class="accordion__item">
 					<div class="accordion__header collapsed">
 						<div class="d-flex justify-content-between align-items-center pr-5">
-							<span class="accordion__header--text text-uppercase h4" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne">Người dùng trong đơn
+							<span class="accordion__header--text text-uppercase h4" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne"
+								(click)="onCollapsed('item01')">Người dùng trong đơn
 								vị</span>
-							<div class="btn-group" role="group">
+							<div class="btn-group" role="group" [hidden]="!collapsed_checked['item01']">
 								<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
 									<i class="pi pi-file-excel"></i>
 									Xuất excel
@@ -66,7 +67,8 @@
 								</button>
 							</div>
 						</div>
-						<span class="accordion__header--indicator style_two" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne"></span>
+						<span class="accordion__header--indicator style_two" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne"
+							[ngClass]="{'collapse-icon-up':collapsed_checked['item01']}" (click)="onCollapsed('item01')"></span>
 					</div>
 					<div id="bordered_no-gutter_collapseOne" class="collapse accordion__body">
 						<div class="table-responsive">
@@ -113,7 +115,7 @@
 											</div>
 
 										</th>
-										<th class="text-right"><strong>Thao tác</strong></th>
+										<th class="text-right text-uppercase"><strong>Thao tác</strong></th>
 									</tr>
 								</ng-template>
 								<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -147,9 +149,10 @@
 				<div class="accordion__item">
 					<div class="accordion__header collapsed">
 						<div class="d-flex justify-content-between align-items-center pr-5">
-							<span class="accordion__header--text text-uppercase h4" data-toggle="collapse" data-target="#bordered_no-gutter_collapseTwo">Danh sách đơn vị cấp
+							<span class="accordion__header--text text-uppercase h4" data-toggle="collapse" data-target="#bordered_no-gutter_collapseTwo"
+								(click)="onCollapsed('item02')">Danh sách đơn vị cấp
 								dưới</span>
-							<div class="btn-group" role="group">
+							<div class="btn-group" role="group" [hidden]="!collapsed_checked['item02']">
 								<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
 									<i class="pi pi-file-excel"></i>
 									Xuất excel
@@ -160,7 +163,9 @@
 								</button>
 							</div>
 						</div>
-						<span class="accordion__header--indicator style_two" data-toggle="collapse" data-target="#bordered_no-gutter_collapseTwo"></span>
+						<span class="accordion__header--indicator style_two" data-toggle="collapse" data-target="#bordered_no-gutter_collapseTwo"
+							[ngClass]="{'collapse-icon-up':collapsed_checked['item02']}" (click)="onCollapsed('item02')">
+						</span>
 					</div>
 					<div id="bordered_no-gutter_collapseTwo" class="collapse accordion__body">
 						<div class="table-responsive">
@@ -203,7 +208,7 @@
 											<input type="text" [(ngModel)]="query.address" (change)="unitFilterChange()" class="form-control form-control-sm">
 										</th>
 										<th style="width: 160px">
-											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead text-uppercase">
 												<strong>Trạng thái</strong>
 												<span class="caret-tb"></span>
 											</p>
@@ -271,9 +276,9 @@
 						<span class="text-uppercase"> Cấp tỉnh</span>
 					</label>
 					<label class="radio-inline mr-5"><input (click)="changeLevel(2)" [checked]="modelUnit.unitLevel == 2" type="radio" name="optradio">
-						<span class="text-uppercase">Cấp huyện</span>
+						<span class="text-uppercase"> Cấp huyện</span>
 					</label>
-					<label class="radio-inline"><input (click)="changeLevel(3)" [checked]="modelUnit.unitLevel == 3" type="radio" name="optradio"> <span class="text-uppercase">Cấp
+					<label class="radio-inline"><input (click)="changeLevel(3)" [checked]="modelUnit.unitLevel == 3" type="radio" name="optradio"> <span class="text-uppercase"> Cấp
 							xã</span></label>
 				</div>
 				<form id="createUnitFrom" [formGroup]="createUnitFrom" (ngSubmit)="onSaveUnit()">
@@ -288,10 +293,11 @@
 								</div>
 							</div>
 						</div>
+						<input hidden value="0" formControlName="parentId" [(ngModel)]="modelUnit.parentId" *ngIf="modelUnit.unitLevel == 1">
 						<div class="col-12 col-lg-4 form-group" *ngIf="modelUnit.unitLevel > 1">
 							<label class="mb-1">Đơn vị cấp trên <span class="cl-red">(*)</span></label>
 							<ng-select formControlName="parentId" [(ngModel)]="modelUnit.parentId" class="
-							form-control" placeholder="Chọn...">
+							form-control" placeholder="Chọn..." [clearable]="false">
 								<ng-option *ngFor="let item of unitFlatlist | unitFilter:modelUnit.unitLevel-1" [value]="item.id">{{item.name}}</ng-option>
 							</ng-select>
 							<div *ngIf="(unitFormSubmitted && fUnit.parentId.invalid)||(fUnit.parentId.invalid && (fUnit.parentId.dirty || fUnit.parentId.touched))"
@@ -332,14 +338,8 @@
 							</div>
 						</div>
 						<div class="col-12 form-group">
-							<label class="mb-1">Địa chỉ <span class="cl-red">(*)</span></label>
+							<label class="mb-1">Địa chỉ</label>
 							<input formControlName="address" [(ngModel)]="modelUnit.address" type="text" class="form-control" placeholder="Nhập...">
-							<div *ngIf="(unitFormSubmitted && fUnit.address.invalid)||(fUnit.address.invalid && (fUnit.address.dirty || fUnit.address.touched))"
-								class="has-error m-b-12">
-								<div *ngIf="fUnit.address.errors.required">
-									<span class="help-block">Trường dữ liệu này không được để trống</span>
-								</div>
-							</div>
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Mô tả</label>
