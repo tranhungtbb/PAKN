@@ -78,7 +78,6 @@ export class HashtagComponent implements OnInit {
 
 	GetListHashtag() {
 		this.nameHash = this.nameHash.trim()
-		debugger
 		var obj = {
 			PageSize: this.PageSize,
 			PageIndex: this.PageIndex,

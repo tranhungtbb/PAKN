@@ -40,7 +40,7 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 	getList() {
 		var obj = {
 			KeySearch: this.KeySearch,
-			Code: RECOMMENDATION_STATUS.PROCESS_DENY, //FINISED
+			Code: RECOMMENDATION_STATUS.RECEIVE_DENY, //FINISED
 			PageSize: this.PageSize,
 			PageIndex: this.PageIndex,
 		}
