@@ -71,7 +71,7 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public int? PositionId { get; set; }
 
-		public async Task<List<SYUserGetAllOnPage>> SYUserGetAllOnPageDAO(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActive, int? UnitId, int? TypeId)
+		public async Task<List<SYUserGetAllOnPage>> SYUserGetAllOnPageDAO(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived, int? UnitId, int? TypeId)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
@@ -79,7 +79,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UserName", UserName);
 			DP.Add("FullName", FullName);
 			DP.Add("Phone", Phone);
-			DP.Add("IsActive", IsActive);
+			DP.Add("IsActived", IsActived);
 			DP.Add("UnitId", UnitId);
 			DP.Add("TypeId", TypeId);
 

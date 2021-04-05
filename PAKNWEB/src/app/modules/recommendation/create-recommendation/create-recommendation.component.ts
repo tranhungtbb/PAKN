@@ -232,10 +232,6 @@ export class CreateRecommendationComponent implements OnInit {
 		if (this.form.invalid) {
 			return
 		}
-		if (this.lstHashtagSelected == null || this.lstHashtagSelected.length == 0) {
-			this.toastr.error('Vui lòng nhập hashtag')
-			return
-		}
 		this.model.status = RECOMMENDATION_STATUS.RECEIVE_APPROVED
 		const request = {
 			Data: this.model,

@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { CreateRecommendationComponent } from './create-recommendation/create-recommendation.component'
+import { ListApproveDenyComponent } from './list-approve-deny/list-approve-deny.component'
+import { ListApproveWaitComponent } from './list-approve-wait/list-approve-wait.component'
+import { ListApprovedComponent } from './list-approved/list-approved.component'
 import { ListGeneralComponent } from './list-general/list-general.component'
 import { ListProcessDenyComponent } from './list-process-deny/list-process-deny.component'
 import { ListProcessWaitComponent } from './list-process-wait/list-process-wait.component'
@@ -25,6 +28,9 @@ const routes: Routes = [
 			{ path: 'dang-giai-quyet', component: ListProcessingComponent },
 			{ path: 'tu-choi-giai-quyet', component: ListProcessDenyComponent },
 			{ path: 'chi-tiet/:id', component: ViewRecommendationComponent },
+			{ path: 'cho-phe-duyet', component: ListApproveWaitComponent },
+			{ path: 'tu-choi-phe-duyet', component: ListApproveDenyComponent },
+			{ path: 'da-giai-quyet', component: ListApprovedComponent },
 		],
 	},
 ]
