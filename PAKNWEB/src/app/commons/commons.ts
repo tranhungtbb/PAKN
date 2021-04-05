@@ -23,5 +23,6 @@ export class COMMONS {
 	public static FORWARD_SUCCESS = 'Chuyển tiếp thành công'
 	public static DENY_SUCCESS = 'Từ chối thành công'
 	public static ACCEPT_SUCCESS = 'Tiếp nhận thành công'
+	public static APPROVED_SUCCESS = 'Phê duyệt thành công'
 	public static PROCESS_SUCCESS = 'Xử lý thành công'
 }
