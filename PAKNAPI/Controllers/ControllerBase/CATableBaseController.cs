@@ -1140,7 +1140,7 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize]
-		[Route("CAFieldGetAll")]
+		[Route("CAFieldGet")]
 		public async Task<ActionResult<object>> CAFieldGetAll()
 		{
 			try
@@ -1703,11 +1703,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize]
 		[Route("CAHashtagGetAllOnPage")]
-		public async Task<ActionResult<object>> CAHashtagGetAllOnPage(int PageSize, int PageIndex, string?Name , bool? IsActived)
+		public async Task<ActionResult<object>> CAHashtagGetAllOnPage(int PageSize, int PageIndex, string?Name , bool? IsActived, int? QuantityUser)
 		{
 			try
 			{
-				List<CAHashtagOnPage> rsCAHashtagOnPage = await new CAHashtag(_appSetting).CAHashtagGetAllOnPage(PageSize, PageIndex, Name, IsActived);
+				List<CAHashtagOnPage> rsCAHashtagOnPage = await new CAHashtag(_appSetting).CAHashtagGetAllOnPage(PageSize, PageIndex, Name, IsActived, QuantityUser);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAHashtag", rsCAHashtagOnPage},
@@ -1799,14 +1799,11 @@ namespace PAKNAPI.ControllerBase
 					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				// cập nhập thất bại do đã trùng tên
-				else if (count == -1) {
-					return new ResultApi { Success = ResultCode.ORROR, Result = count };
-				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+					return new ResultApi { Success = ResultCode.ORROR, Result = count };
 				}
 			}
 			catch (Exception ex)
