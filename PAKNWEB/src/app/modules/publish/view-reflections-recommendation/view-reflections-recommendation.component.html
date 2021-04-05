@@ -35,7 +35,7 @@
 							<p>
 								{{model.content}}
 							</p>
-							<p>
+							<p *ngFor="let item of lstFiles; let i = index">
 								<button type="button" class="btn border btn-block text-dark p-0">
 									<span class="rounded grd-xanhngoc text-white p-3 mr-3">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
@@ -44,8 +44,8 @@
 										</svg>
 									</span>
 									<span class="text-left text-truncate">
-										<small class="small">Tài liệu đính kèm</small><br>
-										Tài liệu mô tả.doc
+										<small class="small">Tài liệu đính kèm {{i + 1}}</small><br>
+										{{item.name}}
 									</span>
 								</button>
 							</p>
@@ -63,7 +63,7 @@
 							<p>
 								{{lstConclusion.content}}
 							</p>
-							<p class="mb-4">
+							<p class="mb-4" *ngFor="let item of lstConclusionFiles; let i = index">
 								<button type="button" class="btn border btn-block text-dark p-0">
 									<span class="rounded text-white p-3 bg-success mr-3">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-paperclip" viewBox="0 0 16 16">
@@ -72,8 +72,8 @@
 										</svg>
 									</span>
 									<span class="text-left text-truncate">
-										<small class="small">Tài liệu đính kèm</small><br>
-										Tài liệu giải thích.pdf
+										<small class="small">Tài liệu đính kèm {{i + 1}}</small><br>
+										{{item.name}}
 									</span>
 								</button>
 							</p>
