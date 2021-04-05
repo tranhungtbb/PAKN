@@ -607,6 +607,7 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 		public bool IsActived { get; set; }
 		public int? RowNumber; // int, null
+		public int? QuantityUser; // int, null
 	}
 
 	public class CAHashtag
@@ -641,13 +642,16 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<CAHashtag>("CA_HashtagGetAll", DP)).ToList();
 		}
 
-		public async Task<List<CAHashtagOnPage>> CAHashtagGetAllOnPage(int PageSize, int PageIndex)
+		public async Task<List<CAHashtagOnPage>> CAHashtagGetAllOnPage(int PageSize, int PageIndex,string? Name,bool? IsActived, int? QuantityUser)
 		{
 			DynamicParameters DP = new DynamicParameters();
 
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
-			return (await _sQLCon.ExecuteListDapperAsync<CAHashtagOnPage>("CA_HashtagGetAllOnPage", DP)).ToList();
+			DP.Add("Name", Name);
+			DP.Add("IsActived", IsActived);
+			DP.Add("QuantityUser", QuantityUser);
+			return (await _sQLCon.ExecuteListDapperAsync<CAHashtagOnPage>("[CA_HashtagGetAllOnPage]", DP)).ToList();
 		}
 
 		public async Task<int?> CAHashtagInsert(CAHashtag _cAHashtag)

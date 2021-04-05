@@ -35,6 +35,7 @@ export class HashtagComponent implements OnInit {
 	public totalRecord
 	public nameHash = ''
 	public IsActived
+	public QuantityUser
 	public fForm: FormGroup
 	public Title: string
 	public IdDelete: number
@@ -86,6 +87,10 @@ export class HashtagComponent implements OnInit {
 		if (typeof this.IsActived !== 'undefined' && this.IsActived != null) {
 			obj['IsActived'] = this.IsActived
 		}
+
+		if (typeof this.QuantityUser !== 'undefined' && this.QuantityUser != null) {
+			obj['QuantityUser'] = this.QuantityUser
+		}
 		this.service.getAllPagedList(obj).subscribe((res) => {
 			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 				if (res.result) {
@@ -106,6 +111,8 @@ export class HashtagComponent implements OnInit {
 
 	dataStateChange() {
 		this.table.first = 0
+		this.PageIndex = 1
+		this.PageSize = 20
 		this.GetListHashtag()
 	}
 
@@ -119,7 +126,7 @@ export class HashtagComponent implements OnInit {
 
 	preUpdate(obj: any) {
 		this.hashtag = Object.assign(new HashtagObject(), obj)
-		this.Title = 'Chỉnh sửa'
+		this.Title = 'Chỉnh sửa Hashtag'
 		$('#modal').modal('show')
 	}
 
@@ -153,12 +160,12 @@ export class HashtagComponent implements OnInit {
 		// create
 		if (this.hashtag.id == 0) {
 			this.service.create(this.hashtag).subscribe((res) => {
-				$('#modal').modal('hide')
 				if (res != 'undefined') {
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result == -1) {
-							this._toastr.info(MESSAGE_COMMON.EXISTED_NAME)
+							this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
 						} else {
+							$('#modal').modal('hide')
 							this.GetListHashtag()
 							this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
 						}

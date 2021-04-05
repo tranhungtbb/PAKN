@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { CreateRecommendationComponent } from './create-recommendation/create-recommendation.component'
-import { ListApproveDenyComponent } from './list-approve-deny/list-approve-deny.component'
-import { ListApproveWaitComponent } from './list-approve-wait/list-approve-wait.component'
-import { ListApprovedComponent } from './list-approved/list-approved.component'
 import { ListGeneralComponent } from './list-general/list-general.component'
 import { ListProcessDenyComponent } from './list-process-deny/list-process-deny.component'
 import { ListProcessWaitComponent } from './list-process-wait/list-process-wait.component'
@@ -11,6 +8,7 @@ import { ListProcessingComponent } from './list-processing/list-processing.compo
 import { ListReceiveApprovedComponent } from './list-receive-approved/list-receive-approved.component'
 import { ListReceiveDenyComponent } from './list-receive-deny/list-receive-deny.component'
 import { ListReceiveWaitComponent } from './list-receive-wait/list-receive-wait.component'
+import { ListApproveWaitComponent } from './list-approve-wait/list-approve-wait.component'
 import { RecommendationComponent } from './recommendation.component'
 import { ViewRecommendationComponent } from './view-recommendation/view-recommendation.component'
 
@@ -29,8 +27,6 @@ const routes: Routes = [
 			{ path: 'tu-choi-giai-quyet', component: ListProcessDenyComponent },
 			{ path: 'chi-tiet/:id', component: ViewRecommendationComponent },
 			{ path: 'cho-phe-duyet', component: ListApproveWaitComponent },
-			{ path: 'tu-choi-phe-duyet', component: ListApproveDenyComponent },
-			{ path: 'da-giai-quyet', component: ListApprovedComponent },
 		],
 	},
 ]
@@ -39,4 +35,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class RecommendationRoutingModule {}
+export class RecommendationRoutingModule { }
