@@ -248,7 +248,7 @@ export class ViewRecommendationComponent implements OnInit {
 	}
 	preForward() {
 		this.modelForward = new RecommendationForwardObject()
-		this.modelForward.recommendationId = this.modelConclusion.id
+		this.modelForward.recommendationId = this.model.id
 		this.rebuilFormForward()
 		this.recommendationService.recommendationGetDataForForward({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -300,20 +300,20 @@ export class ViewRecommendationComponent implements OnInit {
 		this.modelProcess.reactionaryWord = false
 		this.modelProcess.reasonDeny = ''
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
-			if ((this.model.status = RECOMMENDATION_STATUS.RECEIVE_WAIT)) {
+			if (this.model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
-			} else if ((this.model.status = RECOMMENDATION_STATUS.PROCESS_WAIT)) {
+			} else if (this.model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESS_DENY
-			} else if ((this.model.status = RECOMMENDATION_STATUS.APPROVE_WAIT)) {
+			} else if (this.model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.APPROVE_DENY
 			}
 			$('#modalReject').modal('show')
 		} else {
-			if ((this.model.status = RECOMMENDATION_STATUS.RECEIVE_WAIT)) {
+			if (this.model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_APPROVED
-			} else if ((this.model.status = RECOMMENDATION_STATUS.PROCESS_WAIT)) {
+			} else if (this.model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
-			} else if ((this.model.status = RECOMMENDATION_STATUS.APPROVE_WAIT)) {
+			} else if (this.model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.FINISED
 			}
 			$('#modalAccept').modal('show')
@@ -328,7 +328,11 @@ export class ViewRecommendationComponent implements OnInit {
 		this.recommendationService.recommendationProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
-				this.toastr.success(COMMONS.ACCEPT_SUCCESS)
+				if (this.recommendationStatusProcess == RECOMMENDATION_STATUS.FINISED) {
+					this.toastr.success(COMMONS.APPROVED_SUCCESS)
+				} else {
+					this.toastr.success(COMMONS.ACCEPT_SUCCESS)
+				}
 				this.getData()
 			} else {
 				this.toastr.error(response.message)

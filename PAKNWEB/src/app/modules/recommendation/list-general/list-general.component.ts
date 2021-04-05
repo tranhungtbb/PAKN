@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
-import { RecommendationForwardObject, RecommendationObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
+import { RecommendationForwardObject, RecommendationObject, RecommendationProcessObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
@@ -108,15 +108,17 @@ export class ListGeneralComponent implements OnInit {
 			UnitId: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
 			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
+			UnitProcessId: this.storeageService.getUnitId(),
+			UserProcessId: this.storeageService.getUserId(),
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
 
-		this._service.recommendationGetList(request).subscribe((response) => {
+		this._service.recommendationGetListProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
-					this.listData = response.result.MRRecommendationGetAllOnPage
+					this.listData = response.result.MRRecommendationGetAllWithProcess
 					this.totalRecords = response.result.TotalCount
 				}
 			} else {
@@ -244,6 +246,78 @@ export class ListGeneralComponent implements OnInit {
 			(err) => {
 				console.error(err)
 			}
+	}
+	modelProcess: RecommendationProcessObject = new RecommendationProcessObject()
+	recommendationStatusProcess: number = 0
+
+	preProcess(model: any, status: number) {
+		this.modelProcess.status = status
+		this.modelProcess.id = model.idProcess
+		this.modelProcess.step = model.stepProcess
+		this.modelProcess.recommendationId = model.id
+		this.modelProcess.reactionaryWord = false
+		this.modelProcess.reasonDeny = ''
+		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
+			if (model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
+				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
+			} else if (model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
+				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESS_DENY
+			} else if (model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
+				this.recommendationStatusProcess = RECOMMENDATION_STATUS.APPROVE_DENY
+			}
+			$('#modalReject').modal('show')
+		} else {
+			if (model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
+				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_APPROVED
+			} else if (model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
+				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
+			} else if (model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
+				this.recommendationStatusProcess = RECOMMENDATION_STATUS.FINISED
+			}
+			$('#modalAccept').modal('show')
+		}
+	}
+	onProcessAccept() {
+		var request = {
+			_mRRecommendationForwardProcessIN: this.modelProcess,
+			RecommendationStatus: this.recommendationStatusProcess,
+			ReactionaryWord: this.modelProcess.reactionaryWord,
+		}
+		this._service.recommendationProcess(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				$('#modalAccept').modal('hide')
+				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
+				this.getList()
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(err) => {
+				console.error(err)
+			}
+	}
+	onProcessDeny() {
+		if (this.modelProcess.reasonDeny == '' || this.modelProcess.reasonDeny.trim() == '') {
+			this._toastr.error('Vui lòng nhập lý do')
+			return
+		} else {
+			var request = {
+				_mRRecommendationForwardProcessIN: this.modelProcess,
+				RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_DENY,
+			}
+			this._service.recommendationProcess(request).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					$('#modalReject').modal('hide')
+					this._toastr.success(COMMONS.DENY_SUCCESS)
+					this.getList()
+				} else {
+					this._toastr.error(response.message)
+				}
+			}),
+				(err) => {
+					console.error(err)
+				}
+		}
 	}
 
 	exportExcel() {
