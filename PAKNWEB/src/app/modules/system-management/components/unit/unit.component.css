@@ -103,7 +103,7 @@ body .ui-tree .ui-tree-container .ui-treenode .ui-treenode-content .ui-tree-togg
 	width: 175px;
 }
 
-.tree-cursor-hand {
+.cursor-hand {
 	cursor: pointer;
 }
 

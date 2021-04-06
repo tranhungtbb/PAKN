@@ -40,7 +40,7 @@
 									</p>
 								</th>
 
-								<th style="width: 73%;">
+								<th style="width: 63%;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Tên Hashtag</strong>
 										<span class="caret-tb"></span>
@@ -49,7 +49,16 @@
 										placeholder="Nhập tên..." />
 								</th>
 
-								<th style="width: 15%;">
+								<th style="width: 18%;">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>Số lượng kiến nghị</strong>
+										<span class="caret-tb"></span>
+									</p>
+									<input class="form-control form-control-sm" [(ngModel)]="QuantityUser" maxlength="100" (keydown.enter)="dataStateChange()"
+										placeholder="Nhập số lượng..." />
+								</th>
+
+								<th style="width: 12%;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Trạng thái</strong>
 										<span class="caret-tb"></span>
@@ -69,6 +78,9 @@
 								<td>
 									<strong class="highlight"><a class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
 								</td>
+								<td style="text-align: right;">
+									<strong><a class="ellipsis" title="Số lượng kiến nghị">{{item.quantityUser}}</a></strong>
+								</td>
 								<td style="cursor: pointer;">
 									<span *ngIf="item.isActived == true" (click)="confirmChangeStatus(item)" class="badge rounded-pill bg-success">Hiệu lực</span>
 									<span *ngIf="item.isActived == false" (click)="confirmChangeStatus(item)" class="badge rounded-pill badge-light">Hết hiệu lực</span>
@@ -80,6 +92,11 @@
 												class="bi bi-trash"></i></a>
 									</div>
 								</td>
+							</tr>
+						</ng-template>
+						<ng-template pTemplate="emptymessage">
+							<tr>
+								<td class="text-center" colspan="5">Không có dữ liệu</td>
 							</tr>
 						</ng-template>
 					</p-table>

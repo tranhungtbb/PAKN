@@ -13,7 +13,7 @@ import { PuRecommendation } from 'src/app/models/recommendationObject'
 export class ReflectionsRecommendationsComponent implements OnInit {
 	// property
 	public KeySearch: string = ''
-	public PageSize = 1
+	public PageSize = 20
 	public PageIndex = 1
 	public Total = 0
 
@@ -40,13 +40,13 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 	getList() {
 		var obj = {
 			KeySearch: this.KeySearch,
-			Code: RECOMMENDATION_STATUS.RECEIVE_DENY, //FINISED
+			Code: RECOMMENDATION_STATUS.FINISED, //FINISED
 			PageSize: this.PageSize,
 			PageIndex: this.PageIndex,
 		}
 		this.service.getAllPagedList(obj).subscribe((res) => {
 			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
-				if (res.result) {
+				if (res.result.PURecommendation.length > 0) {
 					this.ReflectionsRecommendations = res.result.PURecommendation.map((item) => {
 						item.shortName = this.getShortName(item.name)
 						return item
@@ -55,13 +55,13 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 					this.Total = res.result.TotalCount
 					this.padi()
 				} else {
-					this.ReflectionsRecommendations = []
-					this.PageIndex = 0
+					this.ReflectionsRecommendations = this.pagination = []
+					this.PageIndex = 1
 					this.Total = 0
 				}
 			} else {
-				this.ReflectionsRecommendations = []
-				this.PageIndex = 0
+				this.ReflectionsRecommendations = this.pagination = []
+				this.PageIndex = 1
 				this.Total = 0
 			}
 		})
@@ -83,7 +83,8 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 	}
 
 	changePagination(index: any) {
-		if (this.PageIndex != index && index > 0) {
+		debugger
+		if ((this.PageIndex - 1 == index && index > 0) || this.pagination.length == index) {
 			this.PageIndex = index
 			this.getList()
 		}

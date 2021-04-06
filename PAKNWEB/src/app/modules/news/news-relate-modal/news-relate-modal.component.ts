@@ -26,7 +26,7 @@ export class NewsRelateModalComponent implements OnInit {
 		pageSize: 20,
 		pageIndex: 1,
 		title: '',
-		newsType: '',
+		newsType: null,
 	}
 	modalTitle: string = ''
 	totalCount: number = 0
@@ -61,19 +61,26 @@ export class NewsRelateModalComponent implements OnInit {
 	}
 	getListPaged() {
 		this.query.newsType == null ? '' : this.query.newsType
-		this.newsService.getAllPagedList(this.query).subscribe((res) => {
-			if (res.success != 'OK') return
-			this.listDataPaged = res.result.NENewsGetAllOnPage.filter((c) => c.id != this.parentNews)
-			if (this.totalCount <= 0) this.totalCount = res.result.TotalCount
-			this.totalCount = Math.ceil(this.totalCount / this.query.pageSize)
+		this.newsService
+			.getAllPagedList({
+				pageSize: this.query.pageSize,
+				pageIndex: this.query.pageIndex,
+				title: this.query.title,
+				newsType: this.query.newsType == null ? '' : this.query.newsType,
+			})
+			.subscribe((res) => {
+				if (res.success != 'OK') return
+				this.listDataPaged = res.result.NENewsGetAllOnPage.filter((c) => c.id != this.parentNews)
+				if (this.totalCount <= 0) this.totalCount = res.result.TotalCount
+				this.totalCount = Math.ceil(this.totalCount / this.query.pageSize)
 
-			//get avatars
-			this.getNewsAvatars()
+				//get avatars
+				this.getNewsAvatars()
 
-			// lấy ds tin tức từ id
-			// if (this.newsIds != null && this.newsIds.length > 0)
-			// 	this.newsSelected=this.listDataPaged.filter(c=>this.newsIds.some(d=>d==c.id))
-		})
+				// lấy ds tin tức từ id
+				// if (this.newsIds != null && this.newsIds.length > 0)
+				// 	this.newsSelected=this.listDataPaged.filter(c=>this.newsIds.some(d=>d==c.id))
+			})
 	}
 	changePage(page: any) {
 		this.query.pageIndex += page

@@ -38,7 +38,7 @@ export class CreateRecommendationComponent implements OnInit {
 	lstXoaFile: any[] = []
 	submitted: boolean = false
 	modelHashTagAdd: HashtagObject = new HashtagObject()
-
+	dateNow: Date = new Date()
 	@ViewChild('file', { static: false }) public file: ElementRef
 	constructor(
 		private toastr: ToastrService,

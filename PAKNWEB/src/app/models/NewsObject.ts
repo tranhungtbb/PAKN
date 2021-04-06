@@ -5,6 +5,7 @@ export class NewsModel {
 		this.status = 2 // 0: đã thu hồi | 1: đã công bố | 2: đang soạn thảo
 		this.imagePath = ' '
 		this.newsRelateIds = ''
+		this.newsType = null
 	}
 	id: number
 	title: string

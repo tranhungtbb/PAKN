@@ -5,10 +5,7 @@
 			<div class="col-lg-12">
 				<div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách tin tức</div>
 				<div class="btn-group group-button-table" role="group">
-					<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
-						<i class="pi pi-file-excel"></i>
-						Xuất excel
-					</button>
+
 					<a [routerLink]="['./them-moi']" class="btn grd-xanhngoc btn-sm rounded border-0 text-white">
 						<i class="bi bi-plus"></i>&nbsp;
 						Thêm mới
@@ -30,19 +27,23 @@
 											<strong>Bài viết</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input [(ngModel)]="query.title" (change)="filterChange()" type="text" class="form-control form-control-sm">
+										<input [(ngModel)]="query.title" (change)="filterChange()" type="text" class="form-control form-control-sm" placeholder="Nhập ...">
 									</th>
-									<th>
+									<th style="width: 180px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Loại tin tức</strong>
 											<span class="caret-tb"></span>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" placeholder="Loại tin tức ..." [items]="listNewCategories" bindLabel="name" bindValue="id" [closeOnSelect]="true"
-												[(ngModel)]="query.newsType" (change)="filterChange()">
+											<!-- [items]="listNewCategories" bindLabel="name" bindValue="id" -->
+											<ng-select class="" placeholder="" [closeOnSelect]="true" [(ngModel)]="query.newsType" (change)="filterChange()" style="width: 170px;"
+												[clearable]="false">
+												<ng-option value="">Tất cả loại tin tức</ng-option>
+												<ng-option *ngFor="let nt of listNewCategories" [value]="nt.id">
+													{{nt.name}}
+												</ng-option>
 											</ng-select>
 										</div>
-
 									</th>
 									<th style="width: 160px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -50,21 +51,28 @@
 											<span class="caret-tb"></span>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" placeholder="Trạng thái ..." [items]="listStatus" bindLabel="text" bindValue="value" [closeOnSelect]="true"
-												[(ngModel)]="query.status" (change)="filterChange()">
+											<!-- [items]="listStatus" bindLabel="text" bindValue="value" -->
+											<ng-select class="" placeholder="" [closeOnSelect]="true" [(ngModel)]="query.status" (change)="filterChange()" [searchable]="false"
+												[clearable]="false" style="width: 170px;">
+												<ng-option value="">Tất cả trạng thái</ng-option>
+												<ng-option *ngFor="let stt of listStatus" [value]="stt.value">
+													{{stt.text}}
+												</ng-option>
 											</ng-select>
 										</div>
 
 									</th>
-									<th class="text-right"><strong>Thao tác</strong></th>
+									<th class="text-right  text-uppercase" style=width:130px;><strong>Thao tác</strong></th>
 								</tr>
 							</ng-template>
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
 									<td>
-										<img width='60px' [src]="item.imageBin">
-										<strong>
-											&nbsp;{{item.title}}
+										<img class="avatar-size rounded-3" [src]="item.imageBin">
+
+										<strong class="news-title col-sm-10">
+											<a [routerLink]="['./chinh-sua', item.id]" style="color: #222222;">
+												{{item.title}}</a>
 										</strong>
 									</td>
 									<td>
@@ -72,14 +80,15 @@
 									</td>
 									<td>
 										<span *ngIf="item.status == listStatus[2].value" class="badge rounded-pill badge-outline-light bg-white">{{listStatus[2].text}}</span>
-										<span *ngIf="item.status == listStatus[0].value" class="badge rounded-pill bg-green">{{listStatus[0].text}}</span>
-										<span *ngIf="item.status == listStatus[1].value" class="badge rounded-pill bg-blue2">{{listStatus[1].text}}</span>
+										<span *ngIf="item.status == listStatus[0].value" class="badge rounded-pill bg-xam text-dark">{{listStatus[0].text}}</span>
+										<span *ngIf="item.status == listStatus[1].value" class="badge rounded-pill bg-xanhla">{{listStatus[1].text}}</span>
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
-											<button class="btn-icon grd-xanhngoc text-white mr-2 border-0" (click)="onOpenModalConfirm(item.id,'publish')">
-												<i class="bi bi-box-arrow-up" *ngIf="item.isPublished" title="Đã công bố"></i>
-												<i class="bi bi-box-arrow-down" *ngIf="!item.isPublished" title="Đã thu hồi"></i>
+											<button class="btn-icon text-white mr-2 border-0" (click)="onOpenModalConfirm(item.id,'publish')"
+												[ngClass]="{'bg-xanhla':(item.status > 0), 'bg-xam':item.status == 0}">
+												<i class="bi bi-box-arrow-up" *ngIf="item.status > 0" title="{{item.isPublished?'Đã công bố':'Công bố'}}"></i>
+												<i class="bi bi-box-arrow-down text-dark" *ngIf="item.status == 0" title="Đã thu hồi"></i>
 											</button>
 											<a [routerLink]="['./chinh-sua', item.id]" class="btn-icon mr-2 border-0" title="Sửa"><i class="bi bi-pencil-square"></i></a>
 											<button class="btn-icon grd-red text-white border-0" data-toggle="modal" data-target="#modal-history-pakn"
