@@ -12,9 +12,16 @@
 	display: inline;
 }
 
-.dis-block{
+.dis-block {
 	display: block;
 }
-.dis-inline{
+.dis-inline {
 	display: inline;
+}
+.relate-del-btn {
+	position: absolute;
+	top: 0;
+	right: 0;
+	/* font-style: italic; */
+	font-weight: 100;
 }

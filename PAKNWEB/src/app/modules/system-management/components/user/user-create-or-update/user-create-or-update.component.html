@@ -83,9 +83,16 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Giới tính</label>
-							<ng-select class="form-control" [items]="listGender" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="modelUser.gender"
+							<!--  -->
+							<ng-select class="form-control" placeholder="Chọn..." [items]="listGender" bindLabel="text" bindValue="value" [(ngModel)]="modelUser.gender"
 								formControlName="gender" [closeOnSelect]="true" [searchable]="false" [clearable]="false">
 							</ng-select>
+							<div *ngIf="(userFormSubmitted && fUser.gender.invalid)||(fUser.gender.invalid && (fUser.gender.dirty || fUser.gender.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="fUser.gender.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div>
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Vai trò <span class="cl-red">(*)</span></label>
@@ -101,7 +108,8 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Trạng thái</label>
-							<ng-select class="form-control" [items]="listStatus" placeholder="Chọn..." bindLabel="text" bindValue="value" formControlName="isActived"
+							<!-- [items]="listStatus" bindLabel="text" bindValue="value" -->
+							<ng-select class="form-control" placeholder="Chọn..." [items]="listStatus" bindLabel="text" bindValue="value" formControlName="isActived"
 								[(ngModel)]="modelUser.isActived" [closeOnSelect]="true" [searchable]="false" [clearable]="false">
 							</ng-select>
 						</div>

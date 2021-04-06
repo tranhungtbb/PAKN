@@ -1,23 +1,3 @@
-<!-- <div class="header header-ql">
-	<div class="header-content px-3">
-		<nav class="navbar navbar-expand">
-			<div class="collapse navbar-collapse justify-content-between">
-				<div class="header-left w-100 justify-content-between pr-5">
-					<p class="mb-0 h3">Trang chủ / Tin tức / Tạo tin tức</p>
-
-					<div class="btn-group" role="group">
-						<a class="btn btn-sm btn-default rounded border-0 mr-3" [routerLink]="['/quan-tri','tin-tuc']">
-							<i class="bi bi-arrow-left"></i>&nbsp;
-							Quay lại
-						</a>
-						<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave($event)">Lưu</button>
-						<button class="btn btn-sm grd-green rounded text-white border-0" (click)="onSave($event,true)">Công bố</button>
-					</div>
-				</div>
-			</div>
-		</nav>
-	</div>
-</div> -->
 <div class="content-body">
 	<div class="row">
 		<div class="col-lg-12">
@@ -25,11 +5,12 @@
 				<p class="mb-0 h4">Trang chủ / Tin tức / <strong>Tạo tin tức</strong> </p>
 			</div>
 			<div class="btn-group group-button-table" role="group">
-				<a class="btn btn-sm btn-default rounded border-0 mr-3" [routerLink]="['/quan-tri','tin-tuc']">
+				<a class="btn btn-sm btn-default rounded mr-3" style="border: 1px solid gray;" [routerLink]="['/quan-tri','tin-tuc']">
 					<i class="bi bi-arrow-left"></i>&nbsp;
 					Quay lại
 				</a>
-				<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave($event)">Lưu</button>
+				<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3">Xem trước</button>
+				<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave($event)">&nbsp;&nbsp;&nbsp;&nbsp;Lưu&nbsp;&nbsp;&nbsp;&nbsp;</button>
 				<button class="btn btn-sm grd-green rounded text-white border-0" (click)="onSave($event,true)">Công bố</button>
 			</div>
 		</div>
@@ -48,25 +29,36 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
-						<label class="mb-1"><span class="text-uppercase">tóm tắt</span> <span class="cl-red">(*)</span></label>
-						<textarea class="form-control text-area-height" cols="10" formControlName="summary" [(ngModel)]="model.summary"></textarea>
-						<div *ngIf="(submitted && f.summary.invalid)||(f.summary.invalid && (f.summary.dirty || f.summary.touched))" class="has-error m-b-12">
+						<label class="mb-1"><span class="text-uppercase">tóm tắt</span></label>
+						<textarea class="form-control text-area-height" cols="10" formControlName="summary" [(ngModel)]="model.summary" placeholder="Nhập..."></textarea>
+						<!-- <div *ngIf="(submitted && f.summary.invalid)||(f.summary.invalid && (f.summary.dirty || f.summary.touched))" class="has-error m-b-12">
 							<div *ngIf="f.summary.errors.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
-						</div>
+						</div> -->
 					</div>
 					<div class="col-12 col-lg-12 form-group mb-6">
-						<div class="clearfix">
-							<label class="mb-1"><span class="text-uppercase">bài viết liên quan</span> <span class="cl-red">(*)</span></label>
-							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline pull-right" (click)="onModalNewsRelate()"><i class="bi bi-list"></i> Thêm
-								mới</button>
+						<div class="clearfix mb-2">
+							<label class="mb-1"><span class="text-uppercase">bài viết liên quan</span> </label>
+							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline pull-right" (click)="onModalNewsRelate()">
+								<i class="bi bi-list"></i> Thêm
+								mới
+							</button>
 						</div>
 						<div class="col-md-12 pr-0 pl-0">
-							<div class="btn btn-default p-3 border mb-2" *ngFor="let relateItem of newsRelatesSelected">
+							<div class="btn btn-default p-3 border mb-2" style="position: relative; overflow-x: hidden;" *ngFor="let relateItem of newsRelatesSelected">
 								<img width="70" [src]="relateItem.imageBin" />
-								<span>
+								<span class="col-md-10" style="white-space: nowrap;
+								display: inline-block;
+								overflow: hidden;
+    						text-align: left;">
 									&nbsp;<strong>{{relateItem.title}}</strong>
+								</span>
+								<span class="mt-1 mr-1 relate-del-btn" (click)="removeRelate(relateItem.id)">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+										<path
+											d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+									</svg>
 								</span>
 							</div>
 						</div>
@@ -78,7 +70,7 @@
 				<div class="col-md-3 col-lg-3">
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">loại danh mục</span></label>
-						<ng-select formControlName="newsType" [(ngModel)]="model.newsType" class="form-control">
+						<ng-select formControlName="newsType" [(ngModel)]="model.newsType" class="form-control" placeholder="Chọn...">
 							<ng-option *ngFor="let cate of listNewsTypes" [value]="cate.id">{{cate.name}}</ng-option>
 						</ng-select>
 					</div>

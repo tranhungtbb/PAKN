@@ -4,7 +4,7 @@
 }
 
 .avatar-size {
-	width: 70px;
+	width: 95px;
 	min-height: 50px;
 	display: inline-block;
 	border: 1px solid #ddd;
@@ -19,4 +19,13 @@
 .bg-xam {
 	background-color: #e5e5e5;
 	background-image: unset;
+}
+
+.news-title {
+	vertical-align: top;
+	display: inline-block;
+	/* white-space: nowrap; */
+	height: 3em;
+	overflow: hidden;
+	text-align: left;
 }

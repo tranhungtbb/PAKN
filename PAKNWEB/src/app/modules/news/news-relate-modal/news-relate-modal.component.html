@@ -2,11 +2,11 @@
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0">
-				<p class="modal-title h3">{{modalTitle}}</p>
+				<p class="modal-title h3">Thêm bài viết liên quan</p>
 				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
 				</button>
 			</div>
-			<div class="modal-body pb-0">
+			<div class="modal-body pb-0 body-scroll">
 				<div class="table-reponsive">
 					<table class="table">
 						<thead>
@@ -15,7 +15,7 @@
 									<span class="text-uppercase">Bài viết</span>
 									<input [(ngModel)]="query.title" (change)="filterChange()" type="text" class="form-control form-control-sm">
 								</th>
-								<th style="min-width:170px;">
+								<th style="width:150px;">
 									<span class="text-uppercase">Loại tin tức</span>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
 										<ng-select class="" [items]="listNewsCategories" bindLabel="name" bindValue="id" [closeOnSelect]="true" [(ngModel)]="query.newsType"
@@ -29,14 +29,15 @@
 						<tbody>
 							<tr *ngFor="let item of listDataPaged">
 								<td width="40px">
-									<div class="checkbox">
-										<label><input class="form-control border-0" type="checkbox" (change)="onChangeChecked(item.id, $event.target.checked)"
-												[checked]="hasOne(item.id)"></label>
-									</div>
+									<label class="checkbox checkbox-inline"><input class="form-control border-0" type="checkbox"
+											(change)="onChangeChecked(item.id, $event.target.checked)" [checked]="hasOne(item.id)"></label>
 								</td>
 								<td>
-									<img width="60px" [src]="item.imageBin">
-									<span>&nbsp;{{item.title}}</span>
+
+									<p class="title-relate">
+										<img class="image-relate rounded" [src]="item.imageBin">
+										<span style="display: inline-block; vertical-align: top; height: 3em;" class="ml-1 col-md-9">{{item.title}}</span>
+									</p>
 								</td>
 								<td>{{listNewsCategories|getCateName:item.newsType}}</td>
 							</tr>

@@ -55,7 +55,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		phone: '',
 		email: '',
 		address: '',
-		isActived: null,
+		isActived: '',
 	}
 	totalCount_Unit: number = 0
 	unitPageCount: number = 0
@@ -68,7 +68,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		email: '',
 		fullName: '',
 		phone: '',
-		isActived: null,
+		isActived: '',
 	}
 	totalCount_User: number = 0
 	userPageCount: number = 0
@@ -129,10 +129,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				parentId: this.query.parentId,
 				pageSize: this.query.pageSize,
 				pageIndex: this.query.pageIndex,
-				userName: this.query.userName,
+				name: this.query.name,
 				email: this.query.email,
-				fullName: this.query.fullName,
 				phone: this.query.phone,
+				address: this.query.address,
 				isActived: this.query.isActived == null ? '' : this.query.isActived,
 			})
 			.subscribe(
@@ -194,6 +194,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				if (activeTreeNode == null) this.treeViewActive(this.treeUnit[0].id, this.treeUnit[0].unitLevel)
 				else {
 					this.treeViewActive(activeTreeNode.id, activeTreeNode.unitLevel)
+					this.expandNode(activeTreeNode)
 				}
 			},
 			(err) => {}
@@ -224,8 +225,8 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.getUserPagedList()
 	}
 	onUserPageChange(event: any) {
-		this.query.pageSize = event.rows
-		this.query.pageIndex = event.first / event.rows + 1
+		this.queryUser.pageSize = event.rows
+		this.queryUser.pageIndex = event.first / event.rows + 1
 		this.getUserPagedList()
 	}
 
@@ -289,9 +290,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	unitFormSubmitted = false
 	onSaveUnit() {
 		this.unitFormSubmitted = true
-		let { controls } = this.createUnitFrom
-
-		if (!this.modelUnit.parentId) this.modelUnit.parentId = 0
 
 		if (this.createUnitFrom.invalid) {
 			this._toastr.error('Dữ liệu không hợp lệ')
@@ -364,9 +362,35 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		})
 	}
 
+	//////expand node
+	expandNode(node: any) {
+		let _node = this.searchTree(this.treeUnit, node.id)
+		if (_node) this.expandRecursive(_node, true)
+	}
+	private expandRecursive(node: any, isExpand: boolean) {
+		node.expanded = isExpand
+		if (node.parentId) {
+			let pNode = this.searchTree(this.treeUnit, node.parentId)
+			this.expandRecursive(pNode, isExpand)
+		}
+	}
+	private searchTree(element, matchingId) {
+		if (element.id == matchingId) {
+			return element
+		} else if (element.children != null) {
+			var i
+			var result = null
+			for (i = 0; result == null && i < element.children.length; i++) {
+				result = this.searchTree(element.children[i], matchingId)
+			}
+			return result
+		}
+		return null
+	}
+	//////end expand node
+
 	changeLevel(level: number) {
 		this.modelUnit.unitLevel = level
-		//this.modelUnit.parentId = 0
 		if (this.modelUnit.unitLevel > 1) this.modelUnit.parentId = null
 		else {
 			this.modelUnit.parentId = 0
