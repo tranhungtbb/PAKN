@@ -1,0 +1,59 @@
+.FontSize {
+  color: blue;
+  font-size: 20px;
+}
+
+.show-paging {
+  float: right;
+  position: relative;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 1px;
+}
+.paging {
+  float: left;
+  margin: 10px 0;
+}
+.show-paging > .paging .totalrecord {
+  font-weight: 500;
+  color: #f07030;
+}
+.show-paging > .paging > select {
+  height: 22px !important;
+  padding: 3px 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  font-weight: 500;
+  color: #f07030 !important;
+}
+.pager > li > a, .pagination > li > a {
+  border-width: 0px;
+  border-color: #d4dfe3;
+  color: #2283C5;
+  background-color: #f3f3f3;
+  margin: 0 -1px 0 0;
+  position: relative;
+  z-index: auto;
+  cursor: pointer;
+}
+.pagination {
+  float: right !important;
+  padding-top: 4px !important;
+  margin: 0 !important;
+  padding-right: 10px;
+}
+.pageindexActive {
+  color: rgb(255, 255, 255) !important;
+  background: rgb(240, 112, 48) !important;
+}
+
+.non-bold {
+  font-weight: 500;
+}
+
+.ui-state-highlight {
+  background: #ffffff !important;
+  color: #333333 !important;
+}

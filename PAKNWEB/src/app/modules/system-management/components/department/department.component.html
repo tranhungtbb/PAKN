@@ -1,0 +1,115 @@
+<div class="panel row content-panel">
+  <div class="panel-body bg-body no-padding-bottom">
+    <div class="row custom-organization-background">
+      <div class="col-md-7 header-organization-custom">
+        <h6> {{modelDonVi.ten}}</h6>
+        <div class=" row">
+          <div class="col-md-4 ">
+            <label>Số điện thoại: </label>
+            <span> {{modelDonVi.SoDienThoai}}</span>
+          </div>
+          <div class="col-md-4">
+            <label>Email: </label>
+            <span> hdndvp@mail.com </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5" style="padding-top: 7px;">
+        <div class="row">
+          <div class="col-md-6">
+            <span>Người phụ trách:</span> <img class="avatar" src="../../../../../assets/dist/img/image/DefaultAvatar.png" id="userImageOfUnit" />
+          </div>
+          <div class="col-md-6">
+            <label>{{modelDonVi.hoTen}}</label>
+            <div class="custom-postion">{{modelDonVi.chucVu}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row custom-organization-background">
+      <label style="padding:10px 0px 0px 15px;">Mô tả</label>
+      <div>
+        <span style="padding:10px 0px 0px 15px;">
+          {{modelDonVi.moTa}}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body bg-body no-padding-bottom">
+    <div class="row">
+      <div class="col-md-3">
+        <ul class="timeline">
+          <li *ngFor="let item of lstDepartments">
+            <i *ngIf="item.isDonVi" style="color:black" class="fa fa-dot"></i>
+            <i *ngIf="!item.isDonVi" style="color:red" class="fa fa-dot"></i>
+            <div class="timeline-item">
+              <span class="timeline-header"><a (click)="GetListUserByDepartment(item.ma)">{{item.ten}}</a></span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-9">
+        <div class="row custom-organization-background">
+          <div class="col-md-7">
+            Danh sách người dùng trong phòng ban ( {{total}} )
+          </div>
+          <div class="col-md-4">
+            <input [(ngModel)]="NameSearch" type="text" (keydown.enter)="dataStateChange()" placeholder="Nhập tên người dùng..." />
+            <button class="btn btn-sm btn-info" (click)="dataStateChange()"> <i class="fal fa-search"></i> </button>
+          </div>
+          <div class="col-md-1">
+            <button class="btn btn-sm btn-info" (click)="PreAddUserToDepartment(this.deptId)"> <i class="fa fa-user-plus"></i> </button>
+          </div>
+        </div>
+        <p-table #dataTable [value]="lstCatalogValue" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true"
+                 [rows]="modelSearch.pageSize" [totalRecords]="total" [rowsPerPageOptions]="[10,20,30]" [responsive]="true"
+                 autoLayout="true">
+          <ng-template pTemplate="header">
+            <tr>
+              <th> STT </th>
+              <th class="text-center">
+                Tên người dùng
+              </th>
+              <th>
+                Chức vụ
+              </th>
+              <th class="text-center">
+                Email
+              </th>
+              <th class="text-center">
+                Số điện thoại
+              </th>
+              <th class="text-center">
+                Trạng thái
+              </th>
+              <th class="text-center">Hành động</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowIndex="rowIndex" let-user>
+            <tr>
+              <td>{{rowIndex + 1}}</td>
+              <td>{{user.hoTen}}</td>
+              <td>{{user.chucVu}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.soDienThoai}}</td>
+              <td class="text-center">{{user.trangThai}}</td>
+              <td class="text-center">
+                <a class="option-button" *ngIf="user.isdaidien" title="Là người đại diện"><i class="fa fa-user" style="color:rgb(240, 112, 48)"></i></a>
+                <a class="option-button" *ngIf="!user.isdaidien" (click)="confirmDaiDien(user.ma)" title="Không phải người đại diện"><i class="fa fa-user"></i></a>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="20">
+                Không tìm thấy dữ liệu
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+
+  </div>
+
+</div>

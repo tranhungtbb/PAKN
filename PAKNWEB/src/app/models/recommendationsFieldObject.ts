@@ -1,0 +1,17 @@
+export class RecommendationsFieldObject {
+  constructor() {
+    this.id = 0;
+    this.xoa = false;
+    this.trangThai = true;
+    this.moTa = '';
+    this.parentId = null;
+  }
+  id: number;
+  stt: number;
+  tenDuLieu: string;
+  code: string;
+  moTa: string;
+  trangThai: boolean;
+  xoa: boolean;
+  parentId: number;
+}

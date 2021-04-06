@@ -1,0 +1,78 @@
+<div class="col-md-3 no-padding">
+  <div class="panel panel-default no-margin">
+    <div class="responsive-body">
+      <!--new tree ngprime-->
+      <p-tree [value]="newtrenode" (onNodeSelect)="selectDepartment($event)" selectionMode="single"
+        [(selection)]="selectedNode" [contextMenu]="cm" (onNodeContextMenuSelect)="CheckContextMenu($event)"></p-tree>
+      <p-contextMenu #cm appendTo="body" [model]="Menuitems">
+      </p-contextMenu>
+    </div>
+    <!-- /.box-body -->
+  </div>
+  <!-- /.box -->
+</div>
+<!-- Modal Confirm Delete-->
+<div class="modal fade" id="modal-confirm" style="padding-top:15%" tabindex='-1'>
+  <div class="modal-dialog" style="width: 500px;">
+    <div class="modal-content panel panel-default no-margin">
+      <div class="panel-heading">
+        <a class="btn-close-modal" data-dismiss="modal">
+          ×
+        </a>
+        <span class="modal-title">Xác nhận</span>
+      </div>
+      <div class="modal-body">
+        <p>Anh/chị có chắc chắn thực hiện hành động này ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success btn-sm btn-confirm" (click)="DeleteDePartment(DepId)">Đồng ý</button>
+        <button type="button" class="btn btn-danger btn-sm btn-confirm" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- Modal Thêm người dùng vào đơn vị -->
+<div class="modal fade" id="modal-adduser">
+  <div class="modal-dialog" style="min-width:60%">
+    <div class="modal-content panel panel-default no-margin">
+      <div class="panel-heading">
+        <a class="btn-close-modal" data-dismiss="modal">
+          ×
+        </a>
+        <p class="modal-title">Thêm mới người dùng vào phòng ban</p>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4 no-padding">
+            <p-tree [value]="treeAddUser" (onNodeSelect)="changeDepartment($event)" selectionMode="single"
+              [(selection)]="selectedTreeAddUser"></p-tree>
+          </div>
+          <div class="col-md-8">
+            <div class="row">
+              <div class="col-md-11">
+                <input class="form-control" placeholder="Nhập họ và tên hoặc tên đăng nhập để tìm kiếm..."
+                  [(ngModel)]="searchuser" (keypress)="myMethod($event)" />
+              </div>
+              <div class="col-md-1">
+                <a class="btn btn-primary pull-right btn-sm" (click)="SearchUser()" title="Tìm kiếm"><i
+                    class="fa fa-search"></i></a>
+              </div>
+            </div>
+            <br />
+            <dual-list [sort]="true" [source]="userlstadd" key="ma" display="hoTen" [(destination)]="confirmed"
+              [format]="format" height="265px"></dual-list>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-success btn-sm" *hasPermission="['3', 'A_II_8']" (click)="SaveDepartmentUser(DepId)"><i
+            class="fa fa-save"></i> Lưu</a>
+        <a class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> Hủy</a>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

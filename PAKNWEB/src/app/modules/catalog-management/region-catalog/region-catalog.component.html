@@ -1,0 +1,188 @@
+
+<div class="panel-group">
+  <section class="content-header">
+    <div class="row">
+      <ol class="breadcrumb">
+        <li>
+          <a class="text-black" routerLink="/business/business-management/dash-board">Trang chủ</a>
+        </li>
+        <li>
+          <a class="text-black">Danh mục</a>
+        </li>
+        <li>
+          <a>Địa bàn hành chính</a>
+        </li>
+      </ol>
+      <button class="btn btn-sm btn-previous pull-right" appSvBackButton><i class="far fa-undo-alt"></i> Quay lại</button>
+    </div>
+  </section>
+  <section class="content n-d-t">
+    <div class="row no-margin">
+      <div class="col-md-3 no-padding">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-md-10">
+                <h4>Địa bàn hành chính</h4>
+              </div>
+              <div class="btn-b-l">
+                <button class="btn btn-sm btn-success" (click)="exportExcel()">
+                  <i class="fas fa-file-excel"></i> Xuất file
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="responsive-body">
+            <p-tree [value]="newtrenode" (onNodeSelect)="selectDepartment($event)" selectionMode="single" [(selection)]="selectedNode"
+                    expanded="true" (onNodeExpand)="loadNode($event)" [contextMenu]="cm" (onNodeContextMenuSelect)="CheckContextMenu($event)"></p-tree>
+            <p-contextMenu #cm appendTo="body" [model]="Menuitems">
+            </p-contextMenu>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 no-padding-right no-padding-xs">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-md-5">
+                <h5>Thông tin Địa phương</h5>
+              </div>
+              <!-- <div class="col-md-7 text-right">
+                <button *ngIf="typeMode != 'edit' && model.id != 0" type="button" class="btn btn-primary btn-sm btn-inline" style="margin-left:5px;" (click)="onEdit()"><i class="far fa-pen"></i> Sửa</button>
+                <button *ngIf="typeMode == 'edit'" type="button" class="btn btn-default btn-sm btn-inline" style="margin-left:5px;" (click)="resetData()"><i class="fal fa-times"></i> Hủy</button>
+                <button *ngIf="typeMode == 'edit'" type="button" class="btn btn-save btn-sm btn-inline" style="margin-left:5px;" data-toggle="modal" data-target="#modalCreate" (click)="preCreate()"><i class="fal fa-save"></i> Lưu</button>
+              </div> -->
+            </div>
+          </div>
+          <form class="form-horizontal" id="RegionForm" [formGroup]="RegionForm" #formDir="ngForm">
+            <div class="responsive-body panel-body">
+              <div class="col-md-12 no-padding">
+                <div class="form-group">
+                  <div class="col-sm-2 control-label">
+                    <i class="text-red">*</i> Cấp địa phương:
+                  </div>
+                  <div class="col-sm-4">
+                    <select class="form-control" formControlName="cap" [(ngModel)]="model.cap" (change)="onChangeCap()">
+                      <option value="1">Cấp tỉnh/thành phố</option>
+                      <option value="2">Cấp quận/huyện</option>
+                      <option value="3">Cấp phường/xã</option>
+                    </select>
+                  </div>
+
+                  <div *ngIf="model.cap == 2 || model.cap == 3" class="col-sm-2 control-label">
+                    <i class="text-red">*</i> Thuộc Tỉnh/TP:
+                  </div>
+                  <div *ngIf="model.cap == 2 || model.cap == 3" class="col-sm-4">
+                    <ng-select formControlName="tinhTP"
+                               [items]="lstTinhTP"
+                               placeholder="--- Chọn Tỉnh/TP ---"
+                               bindLabel="text"
+                               bindValue="value"
+                               [(ngModel)]="model.tinhId"
+                               [closeOnSelect]="true" (change)="onChangeDropDown(model.tinhId)">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div title="{{item.text}}">{{item.text}}</div>
+                      </ng-template>
+                    </ng-select>
+                    <div id="capTinhcontroll" style="display:none">
+                      <div>
+                        <div class="text-danger">Trường dữ liệu này không được để trống</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div *ngIf="model.cap == 3" class="col-sm-2 control-label">
+                    <i class="text-red">*</i> Thuộc Quận/Huyện:
+                  </div>
+                  <div *ngIf="model.cap == 3" class="col-sm-4">
+                    <ng-select formControlName="quanH"
+                               [items]="lstQuanHuyen"
+                               placeholder="--- Chọn Quận/Huyện ---"
+                               bindLabel="text"
+                               bindValue="value"
+                               [(ngModel)]="model.quanHuyenId"
+                               [closeOnSelect]="true">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div title="{{item.text}}">{{item.text}}</div>
+                      </ng-template>
+                    </ng-select>
+                    <div id="quanhuyenControll" style="display:none">
+                      <div>
+                        <div class="text-danger">Trường dữ liệu này không được để trống</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-2 control-label">
+                    <i class="text-red">*</i> Tên địa phương:
+                  </div>
+                  <div class="col-sm-10" [ngClass]="{ 'has-error':( submitted && ctrl.ten.errors) ||(ctrl.ten.invalid && (ctrl.ten.dirty || ctrl.ten.touched))}">
+                    <input class="form-control" type="text" formControlName="ten" [(ngModel)]="model.name" maxlength="100" required>
+                    <div *ngIf="(submitted && ctrl.ten.invalid)||(ctrl.ten.invalid && (ctrl.ten.dirty || ctrl.ten.touched))">
+                      <div *ngIf="ctrl.ten.errors.required">
+                        <div class="text-danger">Trường dữ liệu này không được để trống</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-2 control-label">
+                    <i class="text-red">*</i> Mã địa phương:
+                  </div>
+                  <div class="col-sm-4" [ngClass]="{ 'has-error':( submitted && ctrl.code.errors) ||(ctrl.code.invalid && (ctrl.code.dirty || ctrl.code.touched))}">
+                    <input class="form-control" (input)="inputValidator($event)" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" nonSpecialchar formControlName="code" [(ngModel)]="model.code" maxlength="20" required>
+                    <div *ngIf="(submitted && ctrl.code.invalid)||(ctrl.code.invalid && (ctrl.code.dirty || ctrl.code.touched))">
+                      <div *ngIf="ctrl.code.errors.required">
+                        <div class="text-danger">Trường dữ liệu này không được để trống</div>
+                      </div>
+                      <div *ngIf="!ctrl.code.errors.required && ctrl.code.hasError('specialCharacter')">
+                        <span class="text-danger">Dữ liệu không hợp lệ</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-2 control-label"> Trạng thái:</div>
+                  <div class="col-sm-4">
+                    <select class="form-control" formControlName="trangthai" [(ngModel)]="model.trangThai">
+                      <option value="true">Hiệu lực</option>
+                      <option value="false">Hết hiệu lực</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-2 control-label"> Mô tả:</div>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" formControlName="moTa" [(ngModel)]="model.description" maxlength="255"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="modal fade" id="modalDelete" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="panel panel-primary no-margin" style="margin:0!important;width: 500px!important">
+      <div class="panel-heading">
+        <button _ngcontent-c7="" class="close btn-close-moda pull-right" data-dismiss="modal" style="color: white;font-size: 24px !important;margin-top:-3px;opacity: 0.9;font-weight: 400;" tabindex="8" type="button">
+          ×
+        </button>
+        <p class="title-ct uppercase no-margin">Xác nhận</p>
+      </div>
+      <div class="modal-body">
+        <span>
+          Anh/chị có chắc chắn thực hiện hành động này?
+        </span>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success btn-sm" (click)="onDelete()"><i class="fa fa-check"></i> Có</button>
+        <button class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> Không</button>
+      </div>
+    </div>
+  </div>
+</div>
