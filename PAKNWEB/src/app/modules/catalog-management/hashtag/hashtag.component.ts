@@ -118,7 +118,7 @@ export class HashtagComponent implements OnInit {
 
 	preCreate() {
 		this.hashtag = new HashtagObject()
-		this.Title = 'Thêm mới'
+		this.Title = 'Thêm mới hashtag'
 		this.submitted = false
 		this.rebuilForm()
 		$('#modal').modal('show')
@@ -126,7 +126,7 @@ export class HashtagComponent implements OnInit {
 
 	preUpdate(obj: any) {
 		this.hashtag = Object.assign(new HashtagObject(), obj)
-		this.Title = 'Chỉnh sửa Hashtag'
+		this.Title = 'Chỉnh sửa hashtag'
 		$('#modal').modal('show')
 	}
 
