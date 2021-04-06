@@ -78,7 +78,7 @@
 								<td>
 									<strong class="highlight"><a class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
 								</td>
-								<td>
+								<td style="text-align: right;">
 									<strong><a class="ellipsis" title="Số lượng kiến nghị">{{item.quantityUser}}</a></strong>
 								</td>
 								<td style="cursor: pointer;">
@@ -92,6 +92,11 @@
 												class="bi bi-trash"></i></a>
 									</div>
 								</td>
+							</tr>
+						</ng-template>
+						<ng-template pTemplate="emptymessage">
+							<tr>
+								<td class="text-center" colspan="5">Không có dữ liệu</td>
 							</tr>
 						</ng-template>
 					</p-table>

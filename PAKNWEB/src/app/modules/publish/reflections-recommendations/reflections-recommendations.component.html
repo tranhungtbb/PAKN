@@ -29,6 +29,9 @@
 					</div>
 				</div>
 				<div class="box">
+					<div *ngIf="ReflectionsRecommendations.length == 0" style="text-align: center;">
+						<strong>Không tìm thấy dữ liệu</strong>
+					</div>
 					<div class="card border" *ngFor="let item of ReflectionsRecommendations">
 						<div class="card-header pt-3 pb-0 d-flex align-items-center">
 							<div class="media align-items-center">

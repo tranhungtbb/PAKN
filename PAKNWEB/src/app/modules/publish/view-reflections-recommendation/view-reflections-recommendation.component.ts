@@ -5,6 +5,9 @@ import { PuRecommendationService } from 'src/app/services/pu-recommendation.serv
 import { RESPONSE_STATUS, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
 import { PuRecommendation } from 'src/app/models/recommendationObject'
 
+declare var require: any
+const FileSaver = require('file-saver')
+
 @Component({
 	selector: 'app-view-reflections-recommendations',
 	templateUrl: './view-reflections-recommendation.component.html',
@@ -27,14 +30,14 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 			if (this.id != 0) {
 				// call api getRecommendation by id
 				// tạm thời fix status = 3, nhưng thực tế status success = 10
-				this.service.getById({ id: this.id, status: RECOMMENDATION_STATUS.RECEIVE_DENY }).subscribe((res) => {
+				this.service.getById({ id: this.id, status: RECOMMENDATION_STATUS.FINISED }).subscribe((res) => {
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result.model) {
 							this.model = { ...res.result.model, shortName: this.getShortName(res.result.model.name) }
+							this.lstFiles = res.result.lstFiles
+							this.lstConclusion = res.result.lstConclusion
+							this.lstConclusionFiles = res.result.lstConclusionFiles
 						}
-						this.lstFiles = res.result.lstFiles
-						this.lstConclusion = res.result.lstConclusion
-						this.lstConclusionFiles = res.result.lstConclusionFiles
 					}
 				})
 			}
