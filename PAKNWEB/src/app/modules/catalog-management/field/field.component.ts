@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, AfterViewInit, Input } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 import { FieldObject } from 'src/app/models/fieldObject'
@@ -7,6 +7,8 @@ import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 
+import { RemindComponent } from 'src/app/modules/catalog-management/remind/remind.component'
+
 declare var $: any
 
 @Component({
@@ -14,11 +16,16 @@ declare var $: any
 	templateUrl: './field.component.html',
 	styleUrls: ['./field.component.css'],
 })
-export class FieldComponent implements OnInit {
+export class FieldComponent implements OnInit, AfterViewInit {
 	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) {}
+
+	// child
+
+	@ViewChild(RemindComponent, { static: false }) remindComponent: RemindComponent
 
 	listData = new Array<FieldObject>()
 	listStatus: any = [
+		{ value: '', text: 'Chọn trạng thái' },
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
 	]
@@ -268,5 +275,9 @@ export class FieldComponent implements OnInit {
 			var blob = new Blob([response], { type: response.type })
 			importedSaveAs(blob, fileName)
 		})
+	}
+
+	show() {
+		this.remindComponent.showComponent()
 	}
 }

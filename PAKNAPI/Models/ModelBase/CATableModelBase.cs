@@ -607,6 +607,7 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 		public bool IsActived { get; set; }
 		public int? RowNumber; // int, null
+		public int? QuantityUser;
 	}
 
 	public class CAHashtag
@@ -625,6 +626,7 @@ namespace PAKNAPI.ModelBase
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public bool IsActived { get; set; }
+		public int QuantityUser { get; set; }
 
 		public async Task<CAHashtag> CAHashtagGetByID(int? Id)
 		{
@@ -649,6 +651,9 @@ namespace PAKNAPI.ModelBase
 
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
+			DP.Add("Name", Name);
+			DP.Add("IsActived", IsActived);
+			DP.Add("QuantityUser", QuantityUser);
 			return (await _sQLCon.ExecuteListDapperAsync<CAHashtagOnPage>("CA_HashtagGetAllOnPage", DP)).ToList();
 		}
 

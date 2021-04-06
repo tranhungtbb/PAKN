@@ -19,6 +19,7 @@ import { NewsTypeComponent } from './news-type/news-type.component'
 import { WordLibraryComponent } from './word-library/word-library.component'
 import { DepartmentComponent } from './department/department.component'
 import { HashtagComponent } from './hashtag/hashtag.component'
+import { RemindComponent } from './remind/remind.component'
 
 @NgModule({
 	imports: [
@@ -45,6 +46,7 @@ import { HashtagComponent } from './hashtag/hashtag.component'
 		WordLibraryComponent,
 		DepartmentComponent,
 		HashtagComponent,
+		RemindComponent,
 	],
 })
 export class CatalogManagementModule {}
