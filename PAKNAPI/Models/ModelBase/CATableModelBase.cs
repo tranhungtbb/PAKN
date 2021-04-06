@@ -641,8 +641,10 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<CAHashtag>("CA_HashtagGetAll", DP)).ToList();
 		}
 
-		public async Task<List<CAHashtagOnPage>> CAHashtagGetAllOnPage(int PageSize, int PageIndex)
+		public async Task<List<CAHashtagOnPage>> CAHashtagGetAllOnPage(int PageSize, int PageIndex, string? Name, bool? IsActived, int? QuantityUser)
 		{
+
+
 			DynamicParameters DP = new DynamicParameters();
 
 			DP.Add("PageSize", PageSize);

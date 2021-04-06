@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter';
+//import * as ClassicEditor from '../ckeditor';
+
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 
@@ -14,6 +17,8 @@ import { NewsRelateModalComponent } from '../news-relate-modal/news-relate-modal
 import { COMMONS } from '../../../commons/commons'
 import { AppSettings } from '../../../constants/app-setting'
 import { NewsModel } from '../../../models/NewsObject'
+
+declare var $:any
 
 @Component({
 	selector: 'app-news-create-or-update',
@@ -43,6 +48,9 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	newsRelatesSelected: any[] = []
 	categoriesSelected: any[]
 	avatarUrl: any = 'assets/dist/images/no.jpg'
+
+
+
 
 	ngOnInit() {
 		this.newsForm = this.formBuilder.group({
