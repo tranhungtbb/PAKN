@@ -64,8 +64,7 @@ export class NewsComponent implements OnInit {
 			.subscribe((res) => {
 				if (res.success != 'OK') return
 				this.listDataPaged = res.result.NENewsGetAllOnPage
-				if (this.totalCount <= 0) this.totalCount = res.result.TotalCount
-				this.totalCount = Math.ceil(this.totalCount / this.query.pageSize)
+				this.totalCount = res.result.TotalCount
 				// load image
 				this.getNewsAvatars()
 			})
@@ -92,6 +91,8 @@ export class NewsComponent implements OnInit {
 			})
 		} else if (this.modalConfirm_type == 'publish') {
 			item.isPublished = !item.isPublished
+			if (item.isPublished) item.status = 1
+			else item.status = 0
 			this.newsService.update(item).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error('Xảy ra lỗi trong quá trình xử lý')

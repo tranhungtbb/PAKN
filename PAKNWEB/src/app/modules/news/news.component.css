@@ -2,3 +2,21 @@
 	padding-top: 0 !important;
 	padding-left: 0 im !important;
 }
+
+.avatar-size {
+	width: 70px;
+	min-height: 50px;
+	display: inline-block;
+	border: 1px solid #ddd;
+}
+.avatar-size img {
+	width: 100%;
+}
+.bg-xanhla {
+	background-color: #41c948;
+	background-image: unset;
+}
+.bg-xam {
+	background-color: #e5e5e5;
+	background-image: unset;
+}

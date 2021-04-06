@@ -126,7 +126,7 @@ namespace PAKNAPI.Controllers
                         if (string.IsNullOrEmpty(item.ImagePath.Trim())) continue;
 
                         string filePath = Path.Combine(contentRootPath, item.ImagePath);
-
+                        if (!System.IO.File.Exists(filePath)) continue;
                         using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
                         {
                             using (var memoryStream = new MemoryStream())
@@ -145,7 +145,7 @@ namespace PAKNAPI.Controllers
             }
             catch(Exception e)
             {
-                return null;
+                return new List<object>();
             }
         }
 

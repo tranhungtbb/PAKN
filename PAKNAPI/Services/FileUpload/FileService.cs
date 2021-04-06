@@ -24,6 +24,7 @@ namespace PAKNAPI.Services.FileUpload
 
             try
             {
+                if (!System.IO.File.Exists(fullPath)) return null;
                 using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
                 {
                     using (var memoryStream = new MemoryStream())

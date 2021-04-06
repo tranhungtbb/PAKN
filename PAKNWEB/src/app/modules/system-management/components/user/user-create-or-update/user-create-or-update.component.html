@@ -66,9 +66,6 @@
 								<div *ngIf="fUser.positionId.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
 								</div>
-								<div *ngIf="fUser.positionId.errors.pattern">
-									<span class="help-block">Định dạng số điện thoại không đúng</span>
-								</div>
 							</div>
 						</div>
 						<div class="col-12 col-lg-4 form-group">
@@ -117,7 +114,9 @@
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-				<button type="button" (click)="onSaveUser()" class="btn btn-danger border-0 px-5 grd-blue">Xác nhận</button>
+				<button type="button" (click)="onSaveUser()" class="btn btn-danger border-0 px-5 grd-blue">
+					{{modal_btn_save}}
+				</button>
 			</div>
 		</div>
 	</div>

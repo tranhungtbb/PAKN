@@ -51,6 +51,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
+		public int? RowNumber { get; set; }
 		public bool PostType { get; set; }
 		public bool IsPublished { get; set; }
 		public int Status { get; set; }
@@ -70,7 +71,6 @@ namespace PAKNAPI.ModelBase
 		public DateTime? PublishedDate { get; set; }
 		public int? WithdrawBy { get; set; }
 		public DateTime? WithdrawDate { get; set; }
-		public int? RowNumber; // int, null
 
 		public async Task<List<NENewsGetAllOnPage>> NENewsGetAllOnPageDAO(string NewsIds, int? PageSize, int? PageIndex, string Title, int? NewsType, int? Status)
 		{
