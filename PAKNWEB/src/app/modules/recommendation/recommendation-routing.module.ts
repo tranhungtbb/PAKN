@@ -9,6 +9,7 @@ import { ListReceiveApprovedComponent } from './list-receive-approved/list-recei
 import { ListReceiveDenyComponent } from './list-receive-deny/list-receive-deny.component'
 import { ListReceiveWaitComponent } from './list-receive-wait/list-receive-wait.component'
 import { ListApproveWaitComponent } from './list-approve-wait/list-approve-wait.component'
+import { ListRequestComponent } from './list-request/list-request.component'
 import { RecommendationComponent } from './recommendation.component'
 import { ViewRecommendationComponent } from './view-recommendation/view-recommendation.component'
 
@@ -27,6 +28,7 @@ const routes: Routes = [
 			{ path: 'tu-choi-giai-quyet', component: ListProcessDenyComponent },
 			{ path: 'chi-tiet/:id', component: ViewRecommendationComponent },
 			{ path: 'cho-phe-duyet', component: ListApproveWaitComponent },
+			{ path: 'danh-sach-knct', component: ListRequestComponent },
 		],
 	},
 ]
