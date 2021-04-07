@@ -6,7 +6,10 @@
 					<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
 					<li class="breadcrumb-item active"><a href="#">Phản ánh, Kiến nghị</a></li>
 				</ol>
-				<div class="box">
+				<div class="box" *ngIf="!model" style="text-align: center;">
+					<strong>Không tìm thấy dữ liệu</strong>
+				</div>
+				<div class="box" *ngIf="model">
 					<p class="card-text h3 mb-3">
 						{{model.title}}
 					</p>
