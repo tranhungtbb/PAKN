@@ -1,6 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+<<<<<<< .mine
+
+
+
+=======
+import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'
+//import * as ClassicEditor from '../ckeditor';
+
+>>>>>>> .theirs
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 
@@ -15,6 +24,13 @@ import { COMMONS } from '../../../commons/commons'
 import { AppSettings } from '../../../constants/app-setting'
 import { NewsModel } from '../../../models/NewsObject'
 
+<<<<<<< .mine
+
+
+=======
+declare var $: any
+
+>>>>>>> .theirs
 @Component({
 	selector: 'app-news-create-or-update',
 	templateUrl: './news-create-or-update.component.html',
@@ -37,16 +53,19 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	newsForm: FormGroup
 	listNewsTypes: any[]
 	postTypes: any[] = [
-		{ text: 'thường', value: true, checked: true },
-		{ text: 'nổi bật', value: false, checked: false },
+		{ text: 'thường', value: '0' },
+		{ text: 'nổi bật', value: '1' },
 	]
+
+	postTypeSelected: any[] = []
+
 	newsRelatesSelected: any[] = []
 	categoriesSelected: any[]
 	avatarUrl: any = 'assets/dist/images/no.jpg'
 
 	ngOnInit() {
 		this.newsForm = this.formBuilder.group({
-			title: [this.model.title, [Validators.required]],
+			title: [this.model.title, [Validators.required, Validators.maxLength(500)]],
 			summary: [this.model.summary],
 			contents: [this.model.contents],
 			newsType: [this.model.newsType],
@@ -61,6 +80,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 						return
 					}
 					this.model = res.result.NENewsGetByID[0]
+					this.postTypeSelected = this.model.postType.trim().split(',')
 					//lay danh sach bai viet lien quan
 					this.getNewsRelatesInfo()
 
@@ -121,6 +141,8 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		if (this.newsForm.invalid) {
 			return
 		}
+		if (this.postTypeSelected.length > 0) this.model.postType = this.postTypeSelected.toString()
+		//return
 		this.model.isPublished = published
 		if (published) this.model.status = 1
 		else this.model.status = 2
@@ -143,6 +165,13 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				this.toast.success(COMMONS.ADD_SUCCESS)
 				this.router.navigate(['/quan-tri/tin-tuc'])
 			})
+		}
+	}
+	onChangePostType(id: any, selected: boolean) {
+		if (selected) {
+			if (!this.postTypeSelected.includes(id)) this.postTypeSelected.push(id)
+		} else {
+			this.postTypeSelected.splice(this.postTypeSelected.indexOf(id), 1)
 		}
 	}
 

@@ -118,7 +118,6 @@ namespace PAKNAPI.ModelBase
 		public string Contents { get; set; }
 		public string ImagePath { get; set; }
 		public int? NewsType { get; set; }
-		public bool PostType { get; set; }
 		public bool IsPublished { get; set; }
 		public int Status { get; set; }
 		public int? ViewCount { get; set; }
@@ -131,6 +130,7 @@ namespace PAKNAPI.ModelBase
 		public DateTime? PublishedDate { get; set; }
 		public int? WithdrawBy { get; set; }
 		public DateTime? WithdrawDate { get; set; }
+		public string PostType { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -153,7 +153,6 @@ namespace PAKNAPI.ModelBase
 		public string Contents { get; set; }
 		public string ImagePath { get; set; }
 		public int? NewsType { get; set; }
-		public bool PostType { get; set; }
 		public bool IsPublished { get; set; }
 		public int Status { get; set; }
 		public int? ViewCount { get; set; }
@@ -166,6 +165,7 @@ namespace PAKNAPI.ModelBase
 		public DateTime? PublishedDate { get; set; }
 		public int? WithdrawBy { get; set; }
 		public DateTime? WithdrawDate { get; set; }
+		public string PostType { get; set; }
 
 		public async Task<NENews> NENewsGetByID(int? Id)
 		{
@@ -194,13 +194,13 @@ namespace PAKNAPI.ModelBase
 		public async Task<int?> NENewsInsert(NENews _nENews)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PostType", _nENews.PostType);
 			DP.Add("IsPublished", _nENews.IsPublished);
 			DP.Add("Status", _nENews.Status);
 			DP.Add("Title", _nENews.Title);
 			DP.Add("Summary", _nENews.Summary);
 			DP.Add("Contents", _nENews.Contents);
 			DP.Add("ImagePath", _nENews.ImagePath);
+			DP.Add("PostType", _nENews.PostType);
 			DP.Add("NewsType", _nENews.NewsType);
 			DP.Add("ViewCount", _nENews.ViewCount);
 			DP.Add("Url", _nENews.Url);
@@ -219,7 +219,6 @@ namespace PAKNAPI.ModelBase
 		public async Task<int> NENewsUpdate(NENews _nENews)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PostType", _nENews.PostType);
 			DP.Add("IsPublished", _nENews.IsPublished);
 			DP.Add("Status", _nENews.Status);
 			DP.Add("Id", _nENews.Id);
@@ -227,6 +226,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Summary", _nENews.Summary);
 			DP.Add("Contents", _nENews.Contents);
 			DP.Add("ImagePath", _nENews.ImagePath);
+			DP.Add("PostType", _nENews.PostType);
 			DP.Add("NewsType", _nENews.NewsType);
 			DP.Add("ViewCount", _nENews.ViewCount);
 			DP.Add("Url", _nENews.Url);
