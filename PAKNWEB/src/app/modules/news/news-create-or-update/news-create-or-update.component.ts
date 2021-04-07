@@ -1,15 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-<<<<<<< .mine
 
-
-
-=======
 import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'
 //import * as ClassicEditor from '../ckeditor';
 
->>>>>>> .theirs
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 
@@ -24,13 +19,8 @@ import { COMMONS } from '../../../commons/commons'
 import { AppSettings } from '../../../constants/app-setting'
 import { NewsModel } from '../../../models/NewsObject'
 
-<<<<<<< .mine
-
-
-=======
 declare var $: any
 
->>>>>>> .theirs
 @Component({
 	selector: 'app-news-create-or-update',
 	templateUrl: './news-create-or-update.component.html',
