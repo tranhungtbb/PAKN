@@ -51,6 +51,12 @@ export class AppComponent implements OnInit, AfterViewChecked {
 				var urlback = this._router.url
 				this.storeageService.setReturnUrl(urlback)
 			}
+
+			if (currentlink.includes('dang-ky')) {
+				this._router.navigate(['/dang-ky'])
+				return
+			}
+
 			if (!currentlink.includes('cong-bo') && !currentlink.includes('dang-nhap') && !currentlink.includes('forgotPass')) {
 				this._router.navigate(['/cong-bo/trang-chu'])
 			}

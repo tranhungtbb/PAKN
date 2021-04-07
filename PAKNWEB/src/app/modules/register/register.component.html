@@ -1,0 +1,28 @@
+<div class="authincation">
+	<div class="container-fluid px-0">
+		<div class="row justify-content-center align-items-center">
+			<div class="col">
+				<div class="card mb-0 bg-transparent shadow-none">
+					<div class="card-body p-0">
+						<!-- Nav tabs -->
+						<div class="custom-tab-1">
+							<ul class="nav nav-tabs nav-tabs-register px-5">
+								<li class="nav-item mr-5">
+									<a [appTabActive]="'ca-nhan'" class="nav-link text-uppercase px-0 py-4 bg-transparent" [routerLink]="['./ca-nhan']">đăng ký dành cho cá nhân</a>
+								</li>
+								<li class="nav-item">
+									<a [appTabActive]="'doanh-nghiep'" class="nav-link px-0 py-4 bg-transparent text-uppercase" [routerLink]="['./doanh-nghiep']">đăng ký dành cho
+										tổ chức, doanh nghiệp</a>
+								</li>
+							</ul>
+							<div class="tab-content p-3 p-lg-5 pb-0">
+								<router-outlet>
+								</router-outlet>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
