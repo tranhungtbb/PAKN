@@ -25,6 +25,7 @@ export class HashtagComponent implements OnInit {
 	cols: any[]
 
 	public listStatus: any = [
+		{ value: '', text: 'Chọn trạng thái' },
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
 	]
