@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+//import * as ClassicEditor from '../../../../ckeditor'
 
 import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'
-//import * as ClassicEditor from '../ckeditor';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
@@ -20,6 +20,23 @@ import { AppSettings } from '../../../constants/app-setting'
 import { NewsModel } from '../../../models/NewsObject'
 
 declare var $: any
+
+// ClassicEditor.create(document.querySelector('#editor'), {
+// 	extraPlugins: [MyUploadAdapterPlugin],
+// })
+// 	.then((editor) => {
+// 		console.log('Editor was initialized', editor)
+// 	})
+// 	.catch((error) => {
+// 		console.error(error)
+// 	})
+
+// function MyUploadAdapterPlugin(editor) {
+// 	console.log(editor)
+// 	editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
+// 		console.log(loader)
+// 	}
+// }
 
 @Component({
 	selector: 'app-news-create-or-update',

@@ -67,7 +67,7 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
-						<ckeditor [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents" (ready)="onReady($event)"></ckeditor>
+						<ckeditor id="editor" [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents" (ready)="onReady($event)"></ckeditor>
 					</div>
 				</div>
 				<div class="col-md-3 col-lg-3">
