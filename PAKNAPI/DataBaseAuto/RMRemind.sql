@@ -15,10 +15,7 @@ BEGIN
 	SELECT
 		[Id],
 		[RecommendationId],
-		[Content],
-		[CreateDate],
-		[UnitId],
-		[Name]
+		[Content]
 	FROM [RM_Remind]
 	WHERE [Id] = @Id
 END
@@ -40,10 +37,7 @@ BEGIN
 	SELECT
 		[Id],
 		[RecommendationId],
-		[Content],
-		[CreateDate],
-		[UnitId],
-		[Name]
+		[Content]
 	FROM [RM_Remind]
 END
 GO
@@ -67,10 +61,7 @@ BEGIN
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
 		[Id],
 		[RecommendationId],
-		[Content],
-		[CreateDate],
-		[UnitId],
-		[Name]
+		[Content]
 	FROM [RM_Remind]
 	ORDER BY [Id]
 	OFFSET (@PageIndex-1) * @PageSize ROWS
@@ -90,27 +81,18 @@ DROP PROCEDURE [RM_RemindInsert];
 GO
 CREATE PROCEDURE [dbo].[RM_RemindInsert]
 	@RecommendationId int = null,
-	@Content nvarchar(max) = null,
-	@CreateDate datetime = null,
-	@UnitId int = null,
-	@Name nvarchar(100) = null
+	@Content nvarchar(max) = null
 AS
 BEGIN
 	INSERT INTO [RM_Remind]
 	(
 		[RecommendationId],
-		[Content],
-		[CreateDate],
-		[UnitId],
-		[Name]
+		[Content]
 	)
 	VALUES
 	(
 		@RecommendationId,
-		@Content,
-		@CreateDate,
-		@UnitId,
-		@Name
+		@Content
 	)
 END
 GO
@@ -128,18 +110,12 @@ GO
 CREATE PROCEDURE [dbo].[RM_RemindUpdate]
 	@Id int = null,
 	@RecommendationId int = null,
-	@Content nvarchar(max) = null,
-	@CreateDate datetime = null,
-	@UnitId int = null,
-	@Name nvarchar(100) = null
+	@Content nvarchar(max) = null
 AS
 BEGIN
 	UPDATE [RM_Remind] SET
 		[RecommendationId] = @RecommendationId,
-		[Content] = @Content,
-		[CreateDate] = @CreateDate,
-		[UnitId] = @UnitId,
-		[Name] = @Name
+		[Content] = @Content
 	WHERE [Id] = @Id
 END
 GO

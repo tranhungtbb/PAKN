@@ -129,4 +129,13 @@ export class Api {
 	public static DepartmentUpdate = 'CACategorySPBase/CADepartmentUpdateBase'
 	public static DepartmentUpdateStatus = 'CACategorySPBase/CADepartmentUpdateBase'
 	public static DepartmentDelete = 'CACategorySPBase/CADepartmentDeleteBase'
+
+	//api dia danh
+	public static ProvinceGetAll = 'CASPBase/CAProvinceGetAllBase'
+	public static DistrictGetAll = 'CASPBase/CADistrictGetAllBase'
+	public static VillageGetAll = 'CASPBase/CAVillageGetAllBase'
+
+	//register
+	public static RegisterIndividual = ''
+	public static RegisterOrganization = ''
 }

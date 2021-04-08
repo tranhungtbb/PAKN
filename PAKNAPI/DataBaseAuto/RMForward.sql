@@ -14,7 +14,9 @@ AS
 BEGIN
 	SELECT
 		[Id],
+		[RemindId],
 		[SenderId],
+		[SenderName],
 		[SendOrgId],
 		[ReceiveOrgId],
 		[DateSend],
@@ -39,7 +41,9 @@ AS
 BEGIN
 	SELECT
 		[Id],
+		[RemindId],
 		[SenderId],
+		[SenderName],
 		[SendOrgId],
 		[ReceiveOrgId],
 		[DateSend],
@@ -66,7 +70,9 @@ BEGIN
 	SELECT
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
 		[Id],
+		[RemindId],
 		[SenderId],
+		[SenderName],
 		[SendOrgId],
 		[ReceiveOrgId],
 		[DateSend],
@@ -89,7 +95,9 @@ IF EXISTS
 DROP PROCEDURE [RM_ForwardInsert];
 GO
 CREATE PROCEDURE [dbo].[RM_ForwardInsert]
+	@RemindId int = null,
 	@SenderId int = null,
+	@SenderName nvarchar(100) = null,
 	@SendOrgId int = null,
 	@ReceiveOrgId int = null,
 	@DateSend datetime = null,
@@ -98,7 +106,9 @@ AS
 BEGIN
 	INSERT INTO [RM_Forward]
 	(
+		[RemindId],
 		[SenderId],
+		[SenderName],
 		[SendOrgId],
 		[ReceiveOrgId],
 		[DateSend],
@@ -106,7 +116,9 @@ BEGIN
 	)
 	VALUES
 	(
+		@RemindId,
 		@SenderId,
+		@SenderName,
 		@SendOrgId,
 		@ReceiveOrgId,
 		@DateSend,
@@ -127,7 +139,9 @@ DROP PROCEDURE [RM_ForwardUpdate];
 GO
 CREATE PROCEDURE [dbo].[RM_ForwardUpdate]
 	@Id int = null,
+	@RemindId int = null,
 	@SenderId int = null,
+	@SenderName nvarchar(100) = null,
 	@SendOrgId int = null,
 	@ReceiveOrgId int = null,
 	@DateSend datetime = null,
@@ -135,7 +149,9 @@ CREATE PROCEDURE [dbo].[RM_ForwardUpdate]
 AS
 BEGIN
 	UPDATE [RM_Forward] SET
+		[RemindId] = @RemindId,
 		[SenderId] = @SenderId,
+		[SenderName] = @SenderName,
 		[SendOrgId] = @SendOrgId,
 		[ReceiveOrgId] = @ReceiveOrgId,
 		[DateSend] = @DateSend,

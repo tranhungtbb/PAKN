@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { NgSelectModule } from '@ng-select/ng-select'
 import { SharedModule } from 'src/app/shared/shared.module'
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
 
 import { RegisterRoutingModule } from './register-routing.module'
 import { OrganizationComponent } from './organization/organization.component'
@@ -12,6 +13,6 @@ import { TabActiveDirective } from './tab-active.directive'
 
 @NgModule({
 	declarations: [OrganizationComponent, IndividualComponent, RegisterComponent, TabActiveDirective],
-	imports: [CommonModule, RegisterRoutingModule, ReactiveFormsModule, FormsModule, NgSelectModule, SharedModule],
+	imports: [CommonModule, RegisterRoutingModule, ReactiveFormsModule, FormsModule, NgSelectModule, SharedModule, BsDatepickerModule.forRoot()],
 })
 export class RegisterModule {}

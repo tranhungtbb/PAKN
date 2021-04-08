@@ -68,7 +68,8 @@
 						<option value="">Chọn...</option>
 						<option *ngFor="let nation of listNation" [value]="nation.id">{{nation.name}}</option>
 					</select> -->
-					<ng-select [(ngModel)]="model.nation" formControlName="nation" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true">
+					<ng-select [(ngModel)]="model.nation" formControlName="nation" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true"
+						(change)="onChangeNation()">
 						<ng-option value="">Chon...</ng-option>
 						<ng-option *ngFor="let nation of listNation" [value]="nation.id">{{nation.name}}</ng-option>
 					</ng-select>
@@ -84,7 +85,8 @@
 					<!-- <select [(ngModel)]="model.province" formControlName="province" class="form-control border-brown">
 						<option *ngFor="let prov of listProvince" [value]="prov.id">{{prov.name}}</option>
 					</select> -->
-					<ng-select [(ngModel)]="model.province" formControlName="province" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true">
+					<ng-select [(ngModel)]="model.province" formControlName="province" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true"
+						(change)="onChangeProvince()">
 						<ng-option value="">Chon...</ng-option>
 						<ng-option *ngFor="let prov of listProvince" [value]="prov.id">{{prov.name}}</ng-option>
 					</ng-select>
@@ -99,6 +101,8 @@
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Ngày tháng năm sinh <span class="cl-red">(*)</span></label>
 					<input [svTrim] [(ngModel)]="model.odb" formControlName="odb" type="text" placeholder="Nhập..." class="form-control border-brown">
+
+					<!-- bsDatepicker #nv1="bsDatepicker" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY',containerClass:'theme-dark-blue' }" datetime="DD/MM/YYYY" -->
 					<!--  -->
 					<div *ngIf="(fLoginSubmitted && fInfo.odb.invalid)||(fInfo.odb.invalid && (fInfo.odb.dirty || fInfo.odb.touched))" class="has-error m-b-12">
 						<div *ngIf="fInfo.odb.errors.required">
@@ -113,7 +117,8 @@
 						<option value="">Chọn...</option>
 						<option *ngFor="let dis of listDistrict" [value]="dis.id">{{dis.name}}</option>
 					</select> -->
-					<ng-select [(ngModel)]="model.district" formControlName="district" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true">
+					<ng-select [(ngModel)]="model.district" formControlName="district" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true"
+						(change)="onChangeDistrict()">
 						<ng-option value="">Chon...</ng-option>
 						<ng-option *ngFor="let dis of listDistrict" [value]="dis.id">{{dis.name}}</ng-option>
 					</ng-select>
@@ -189,7 +194,7 @@
 				</div>
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Ngày cấp <span class="cl-red">(*)</span></label>
-					<input [svTrim] [(ngModel)]="model.dateIssue" formControlName="dateIssue" type="date" class="form-control" placeholder="Nhập...">
+					<input [svTrim] [(ngModel)]="model.dateIssue" formControlName="dateIssue" type="text" class="form-control" placeholder="Nhập...">
 					<!--  -->
 					<div *ngIf="(fLoginSubmitted && fInfo.dateIssue.invalid)||(fInfo.dateIssue.invalid && (fInfo.dateIssue.dirty || fInfo.dateIssue.touched))"
 						class="has-error m-b-12">

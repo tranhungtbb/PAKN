@@ -3,6 +3,9 @@ import { ToastrService } from 'ngx-toastr'
 import { Router } from '@angular/router'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
 
+import { RegisterService } from 'src/app/services/register.service'
+import { DiadanhService } from 'src/app/services/diadanh.service'
+
 import { COMMONS } from 'src/app/commons/commons'
 import { IndividualObject } from 'src/app/models/RegisterObject'
 
@@ -13,18 +16,19 @@ declare var $: any
 	styleUrls: ['./individual.component.css'],
 })
 export class IndividualComponent implements OnInit {
-	constructor(private toast: ToastrService, private formBuilder: FormBuilder, private router: Router) {}
+	constructor(
+		private toast: ToastrService,
+		private formBuilder: FormBuilder,
+		private router: Router,
+		private registerService: RegisterService,
+		private diadanhService: DiadanhService
+	) {}
 
 	formLogin: FormGroup
 	formInfo: FormGroup
 	model: IndividualObject = new IndividualObject()
 
-	listNation: any[] = [
-		{ id: 1, name: 'Việt Nam' },
-		{ id: 2, name: 'Lào' },
-		{ id: 3, name: 'Thái Lan' },
-		{ id: 4, name: 'Campuchia' },
-	]
+	listNation: any[] = [{ id: 1, name: 'Việt Nam' }]
 	listProvince: any[] = []
 	listDistrict: any[] = []
 	listVillage: any[] = []
@@ -36,6 +40,54 @@ export class IndividualComponent implements OnInit {
 
 	ngOnInit() {
 		this.loadFormBuilder()
+	}
+
+	//get req
+
+	//event
+	onChangeNation() {
+		this.listProvince = []
+		this.listDistrict = []
+		this.listVillage = []
+
+		this.model.province = ''
+		if (this.model.nation == 1) {
+			this.diadanhService.getAllProvince().subscribe((res) => {
+				if (res.success == 'OK') {
+					this.listProvince = res.result.CAProvinceGetAll
+				}
+			})
+		} else {
+		}
+	}
+	onChangeProvince() {
+		this.listDistrict = []
+		this.listVillage = []
+
+		this.model.district = ''
+		this.model.village = ''
+		if (this.model.province != null && this.model.province != '') {
+			this.diadanhService.getAllDistrict(this.model.province).subscribe((res) => {
+				if (res.success == 'OK') {
+					this.listDistrict = res.result.CADistrictGetAll
+				}
+			})
+		} else {
+		}
+	}
+
+	onChangeDistrict() {
+		this.listVillage = []
+
+		this.model.village = ''
+		if (this.model.district != null && this.model.district != '') {
+			this.diadanhService.getAllVillage(this.model.province, this.model.district).subscribe((res) => {
+				if (res.success == 'OK') {
+					this.listVillage = res.result.CAVillageGetAll
+				}
+			})
+		} else {
+		}
 	}
 
 	onSave() {
