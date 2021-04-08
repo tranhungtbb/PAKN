@@ -8,6 +8,7 @@ import { NewsComponent } from './news/news.component'
 import { ReflectionsRecommendationsComponent } from './reflections-recommendations/reflections-recommendations.component'
 import { ViewReflectionsRecommendationComponent } from './view-reflections-recommendation/view-reflections-recommendation.component'
 import { SupportComponent } from './support/support.component'
+import { CreateRecommendationComponent } from './user-create-recommendation/user-create-recommendation.component'
 import { using } from 'rxjs'
 
 const routes: Routes = [
@@ -34,6 +35,10 @@ const routes: Routes = [
 			{
 				path: 'tin-tuc-su-kien',
 				component: NewsComponent,
+			},
+			{
+				path: 'them-moi-kien-nghi',
+				component: CreateRecommendationComponent,
 			},
 			{
 				path: 'phan-anh-kien-nghi',

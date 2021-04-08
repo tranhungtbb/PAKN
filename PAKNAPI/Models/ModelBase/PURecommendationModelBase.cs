@@ -17,8 +17,11 @@ namespace PAKNAPI.Models.ModelBase
         public string Name { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public string Hour { get; set; }
-        public string Date { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int QuantityLike { get; set; }
+        public int QuantityDislike { get; set; }
+
+
 
         public int RowNumber { get; set; }
 

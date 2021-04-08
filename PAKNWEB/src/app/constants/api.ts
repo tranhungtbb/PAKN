@@ -129,4 +129,6 @@ export class Api {
 	public static DepartmentUpdate = 'CACategorySPBase/CADepartmentUpdateBase'
 	public static DepartmentUpdateStatus = 'CACategorySPBase/CADepartmentUpdateBase'
 	public static DepartmentDelete = 'CACategorySPBase/CADepartmentDeleteBase'
+
+	public static RemindInsert = 'RMRemind/RemindInsert'
 }

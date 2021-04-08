@@ -84,7 +84,9 @@ namespace PAKNAPI.ControllerBase
 				// nội dung phản hồi
 				result.lstConclusion = (await new MRRecommendationConclusionGetByRecommendationId(_appSetting).MRRecommendationConclusionGetByRecommendationIdDAO(Id)).ToList().FirstOrDefault();
 				// file đính kèm nội dung phản hồi
-				result.lstConclusionFiles = (await new MRRecommendationConclusionFilesGetByConclusionId(_appSetting).MRRecommendationConclusionFilesGetByConclusionIdDAO(result.lstConclusion.Id)).ToList();
+				if (result.lstConclusion != null) {
+					result.lstConclusionFiles = (await new MRRecommendationConclusionFilesGetByConclusionId(_appSetting).MRRecommendationConclusionFilesGetByConclusionIdDAO(result.lstConclusion.Id)).ToList();
+				}
 				foreach (var item in result.lstConclusionFiles) {
 					item.FilePath = decrypt.EncryptData(item.FilePath);
 				}

@@ -26,6 +26,8 @@ import { ListApproveWaitComponent } from './list-approve-wait/list-approve-wait.
 import { ListRequestComponent } from './list-request/list-request.component'
 import { ListApproveDenyComponent } from './list-approve-deny/list-approve-deny.component'
 import { ListApprovedComponent } from './list-approved/list-approved.component'
+
+import { RemindComponent } from './remind/remind.component'
 @NgModule({
 	imports: [
 		CommonModule,
@@ -57,6 +59,7 @@ import { ListApprovedComponent } from './list-approved/list-approved.component'
 		ListApproveDenyComponent,
 		ListApprovedComponent,
 		ListRequestComponent,
+		RemindComponent,
 	],
 })
 export class RecommendationModule {}

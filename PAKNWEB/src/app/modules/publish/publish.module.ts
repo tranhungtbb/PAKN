@@ -10,6 +10,9 @@ import { ReflectionsRecommendationsComponent } from './reflections-recommendatio
 import { IntroduceComponent } from './introduce/introduce.component'
 import { SupportComponent } from './support/support.component'
 import { ViewReflectionsRecommendationComponent } from './view-reflections-recommendation/view-reflections-recommendation.component'
+import { CreateRecommendationComponent } from './user-create-recommendation/user-create-recommendation.component'
+import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
+import { from } from 'rxjs'
 
 @NgModule({
 	declarations: [
@@ -21,6 +24,8 @@ import { ViewReflectionsRecommendationComponent } from './view-reflections-recom
 		IntroduceComponent,
 		SupportComponent,
 		ViewReflectionsRecommendationComponent,
+		CreateRecommendationComponent,
+		ChangePipe,
 	],
 	imports: [CommonModule, PublishRoutingModule],
 })
