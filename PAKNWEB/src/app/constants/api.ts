@@ -81,10 +81,10 @@ export class Api {
 	// user
 	public static UserGetPagedList = 'SYUserSPBase/SYUserGetAllOnPageBase'
 	public static UserGetById = 'SYUserSPBase/SYUserGetByIDBase'
-	public static UserInsert = 'User/Create'//'SYUserSPBase/SYUserInsertBase'
-	public static UserUpdate = 'User/Update'//'SYUserSPBase/SYUserUpdateBase'
-	public static UserDelete = 'User/Delete'//'SYUserSPBase/SYUserDeleteBase'GetAvatar
-	public static UserGetAvatar = 'User/GetAvatar'//'SYUserSPBase/SYUserDeleteBase'
+	public static UserInsert = 'User/Create' //'SYUserSPBase/SYUserInsertBase'
+	public static UserUpdate = 'User/Update' //'SYUserSPBase/SYUserUpdateBase'
+	public static UserDelete = 'User/Delete' //'SYUserSPBase/SYUserDeleteBase'GetAvatar
+	public static UserGetAvatar = 'User/GetAvatar' //'SYUserSPBase/SYUserDeleteBase'
 
 	//SY_Role
 	public static RoleGetAll = 'SYSPBase/SYRoleGetAllBase'

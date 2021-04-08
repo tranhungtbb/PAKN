@@ -26,6 +26,9 @@
 							<div *ngIf="f.title.errors.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
+							<div *ngIf="f.title.errors.maxlength">
+								<span class="help-block">Chỉ nhập tối đa 500 kí tự</span>
+							</div>
 						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
@@ -46,8 +49,8 @@
 							</button>
 						</div>
 						<div class="col-md-12 pr-0 pl-0">
-							<div class="btn btn-default p-3 border mb-2" style="position: relative; overflow-x: hidden;" *ngFor="let relateItem of newsRelatesSelected">
-								<img width="70" [src]="relateItem.imageBin" />
+							<div class="btn btn-default p-2 border mb-2" style="position: relative; overflow-x: hidden;" *ngFor="let relateItem of newsRelatesSelected">
+								<img class="rounded border" style="min-height: 52px;" width="80" [src]="relateItem.imageBin" />
 								<span class="col-md-10" style="white-space: nowrap;
 								display: inline-block;
 								overflow: hidden;
@@ -64,21 +67,23 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
-						<ckeditor [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents" (ready)="onReady($event)"></ckeditor>
+						<ckeditor id="editor" [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents" (ready)="onReady($event)"></ckeditor>
 					</div>
 				</div>
 				<div class="col-md-3 col-lg-3">
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">loại danh mục</span></label>
-						<ng-select formControlName="newsType" [(ngModel)]="model.newsType" class="form-control" placeholder="Chọn...">
+						<ng-select formControlName="newsType" [(ngModel)]="model.newsType" class="form-control" placeholder="Chọn..." [clearable]="false">
+							<ng-option value=''>Chon...</ng-option>	
 							<ng-option *ngFor="let cate of listNewsTypes" [value]="cate.id">{{cate.name}}</ng-option>
 						</ng-select>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1 dis-block"><span class="text-uppercase">kiểu bài</span></label>
-						<div class="radio dis-inline mr-3" *ngFor="let pType of postTypes">
+						<div class="checkbox dis-inline mr-3" *ngFor="let pType of postTypes">
 							<label>
-								<input type="radio" formControlName="postType" [(ngModel)]="model.postType" [value]="pType.value" [checked]="pType.checked">
+								<!-- formControlName="postType" [(ngModel)]="postTypeSelected" [value]="pType.value" -->
+								<input type="checkbox" [checked]="postTypeSelected.indexOf(pType.value) != -1" (change)="onChangePostType(pType.value,$event.target.checked)">
 								<span class="text-uppercase"> {{pType.text}}</span>
 							</label>
 						</div>

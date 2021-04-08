@@ -18,18 +18,22 @@
 								<th style="width:150px;">
 									<span class="text-uppercase">Loại tin tức</span>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select class="" [items]="listNewsCategories" bindLabel="name" bindValue="id" [closeOnSelect]="true" [(ngModel)]="query.newsType"
-											(change)="filterChange()">
+										<!-- [items]="listNewsCategories" bindLabel="name" bindValue="id" [closeOnSelect]="true" -->
+										<ng-select class="" [(ngModel)]="query.newsType" (change)="filterChange()" style="width:120px;" [clearable]="false">
+											<ng-option value="">Tất cả loại tin tức</ng-option>
+											<ng-option *ngFor="let nt of listNewsCategories" [value]="nt.id">
+												{{nt.name}}
+											</ng-option>
 										</ng-select>
 									</div>
 
 								</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody class="border-bottom">
 							<tr *ngFor="let item of listDataPaged">
 								<td width="40px">
-									<label class="checkbox checkbox-inline"><input class="form-control border-0" type="checkbox"
+									<label class="checkbox checkbox-inline" style="height: 30px;"><input class="form-control border-0" type="checkbox"
 											(change)="onChangeChecked(item.id, $event.target.checked)" [checked]="hasOne(item.id)"></label>
 								</td>
 								<td>
@@ -48,17 +52,17 @@
 			<div class="modal-footer border-top-0">
 				<div class="nav-table paging-panel-left">
 					<div class="d-flex align-items-center">
-						<button type="button" class="btn btn-outline-secondary mr-2 p-2" (click)="changePage(1)">
+						<button type="button" class="btn btn-outline-secondary mr-2 p-2 rounded-3" style="padding: 3px !important;" (click)="changePage(1)">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
 								<path fill-rule="evenodd"
 									d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
 							</svg>
 						</button>
 						<div class="border d-flex align-items-center border-dark px-2 rounded">
-							<input type="number" [ngModel]="query.pageIndex" (ngModelChange)="changePage($event)" class="border-0 p-0 number-page-table text-right">
+							<input type="number" [ngModel]="query.pageIndex" (ngModelChange)="changePage($event)" class="border-0 p-0 number-page-table text-right form-control-sm">
 							<span>/{{pageCount}}</span>
 						</div>
-						<button type="button" class="btn btn-outline-secondary ml-2 p-2" (click)="changePage(-1)">
+						<button type="button" class="btn btn-outline-secondary ml-2 p-2 rounded-3" style="padding: 3px !important;" (click)="changePage(-1)">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
 								<path fill-rule="evenodd"
 									d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />

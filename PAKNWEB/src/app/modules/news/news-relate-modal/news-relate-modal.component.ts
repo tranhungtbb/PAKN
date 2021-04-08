@@ -26,7 +26,7 @@ export class NewsRelateModalComponent implements OnInit {
 		pageSize: 20,
 		pageIndex: 1,
 		title: '',
-		newsType: null,
+		newsType: '',
 	}
 	modalTitle: string = ''
 	totalCount: number = 0
@@ -107,11 +107,12 @@ export class NewsRelateModalComponent implements OnInit {
 
 	//mở modal, được gọi từ comp cha
 	openModal(newsRelate: any[], parentNews: number) {
+		this.parentNews = parentNews
 		if (newsRelate) {
 			this.newsSelected = newsRelate.map((c) => parseInt(c))
+			this.listDataPaged = this.listDataPaged.filter((c) => c.id != this.parentNews)
 		}
 
-		this.parentNews = parentNews
 		$('#modal-news-relate').modal('show')
 	}
 
