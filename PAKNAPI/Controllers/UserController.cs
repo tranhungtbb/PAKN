@@ -13,6 +13,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using PAKNAPI.App_Helper;
 using PAKNAPI.Models.Results;
+using PAKNAPI.Models.Login;
 
 namespace PAKNAPI.Controllers
 {
@@ -37,6 +38,19 @@ namespace PAKNAPI.Controllers
 		{
 			// tải file
 			string filePath = "";
+			//try
+			//{
+			//	if (files != null && files.Any())
+			//	{
+			//		var info = await _fileService.Save(files, "User");
+			//		filePath = info[0].Path;
+			//	}
+			//}
+			//catch (Exception e)
+			//{
+			//	new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Xảy ra lỗi trong quá trình tải file" };
+			//}
+
 			try
 			{
 				if (files != null && files.Any())
@@ -44,14 +58,7 @@ namespace PAKNAPI.Controllers
 					var info = await _fileService.Save(files, "User");
 					filePath = info[0].Path;
 				}
-			}
-			catch (Exception e)
-			{
-				new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Xảy ra lỗi trong quá trình tải file" };
-			}
 
-			try
-			{
 				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				//generate mật khẩu
 				byte[] salt = new byte[128 / 8];
@@ -100,14 +107,8 @@ namespace PAKNAPI.Controllers
 					var info = await _fileService.Save(files, "User");
 					filePath = info[0].Path;
 				}
-			}
-			catch (Exception e)
-			{
-				new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Xảy ra lỗi trong quá trình tải file" };
-			}
 
-			try
-			{
+
 				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				var modelOld = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(model.Id);
 				if (!string.IsNullOrEmpty(filePath))
@@ -182,18 +183,147 @@ namespace PAKNAPI.Controllers
 
 
 
-        #region dang ky nguoi dan, doanh nghiep
-		
-		public async Task<object> CitizenOrOrganizationRegister()
+		#region dang ky nguoi dan, doanh nghiep
+		[HttpPost]
+		[Route("OrganizationRegister")]
+		public async Task<object> OrganizationRegister([FromForm] RegisterModel loginInfo, [FromBody] QLDoanhNghiepInsertIN model)
         {
-			return null;
-        }
+			try
+			{
+				if (loginInfo.Password != loginInfo.RePassword)
+				{
+					return null;
+				}
+				///mod loginInfo
+				///
+				var pwd = generatePassword(loginInfo.Password);
+				var account = new SYUserInsertIN
+				{
+					Password = pwd["Password"],
+					Salt = pwd["Salt"],
+					Phone = loginInfo.Phone,
+					Email = model.Email,
+					UserName = model.Email,
+					FullName = model.RepresentativeName,
+					Gender = model.Gender,
+					Address = model.Address,
+
+					TypeId = 3,
+					Type = 3,
+					IsActived = true,
+					IsDeleted = false,
+					CountLock = 0,
+					LockEndOut = DateTime.Now,
+					IsSuperAdmin = false,
+
+				};
+				var rs1 = await new SYUserInsert(_appSetting).SYUserInsertDAO(account);
+
+				///mod model
+				model.CreatedDate = DateTime.Now;
+				model.CreatedBy = 0;
+				model.UpdatedBy = 0;
+				model.UpdatedDate = DateTime.Now;
+				model.Status = 1;
+
+				var rs2 = await new QLDoanhNghiepInsert(_appSetting).QLDoanhNghiepInsertDAO(model);
+
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+
+			return new Models.Results.ResultApi { Success = ResultCode.OK };
+		}
+
+		[HttpPost]
+		[Route("InvididualRegister")]
+		public async Task<object> InvididualRegister([FromForm] RegisterModel loginInfo, [FromForm] QLNguoiDanInsertIN model)
+		{
 
 
-		#endregion
+            try
+            {
+				if (loginInfo.Password != loginInfo.RePassword)
+				{
+					return null;
+				}
+				///mod loginInfo
+				///
+				var pwd = generatePassword(loginInfo.Password);
+				var account = new SYUserInsertIN 
+				{
+					Password = pwd["Password"],
+					Salt = pwd["Salt"],
+					Phone = loginInfo.Phone,
+					Email = model.Email,
+					UserName = model.Email,
+					FullName = model.FullName,
+					Gender = model.Gender,
+					Address = model.Address,
+
+					TypeId = 2,
+					Type = 2,
+					IsActived = true,
+					IsDeleted= false,
+					CountLock = 0,
+					LockEndOut = DateTime.Now,
+					IsSuperAdmin=false,
+					
+				};
+					var rs1 = await new SYUserInsert(_appSetting).SYUserInsertDAO(account);
+
+				///mod model
+				model.CreatedDate = DateTime.Now;
+				model.CreatedBy = 0;
+				model.UpdatedBy = 0;
+				model.UpdatedDate = DateTime.Now;
+				model.Status = 1;
+
+				var rs2 = await new QLNguoiDanInsert(_appSetting).QLNguoiDanInsertDAO(model);
+
+			}
+			catch (Exception ex)
+            {
+				_bugsnag.Notify(ex);
+
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message};
+			}
+
+			return new Models.Results.ResultApi { Success = ResultCode.OK };
+		}
+
+        #endregion
 
 
-		
+        #region private
 
-	}
+		private Dictionary<string,string> generatePassword(string pwd)
+        {
+			byte[] salt = new byte[128 / 8];
+			using (var rng = RandomNumberGenerator.Create())
+			{
+				rng.GetBytes(salt);
+			}
+			// derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
+			string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+				password: pwd,
+				salt: salt,
+				prf: KeyDerivationPrf.HMACSHA1,
+				iterationCount: 10000,
+				numBytesRequested: 256 / 8));
+
+			return new Dictionary<string,string>
+			{
+				{"Password",hashed},
+				{"Salt",Convert.ToBase64String(salt) }
+			};
+		}
+
+        #endregion
+
+    }
 }

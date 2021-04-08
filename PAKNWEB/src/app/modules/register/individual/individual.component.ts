@@ -99,8 +99,15 @@ export class IndividualComponent implements OnInit {
 		}
 
 		// req to server
-		this.toast.error('Đang ký tài khoản thành công')
-		this.router.navigate(['/dang-nhap'])
+		this.registerService.registerIndividual(this.model).subscribe(res=>{
+			if(res.success != "OK"){
+				this.toast.error(res.message);
+				return;
+			}
+			this.toast.success('Đang ký tài khoản thành công')
+			this.router.navigate(['/dang-nhap'])
+		})
+		
 	}
 
 	fLoginSubmitted = false
@@ -129,7 +136,7 @@ export class IndividualComponent implements OnInit {
 		this.formInfo = this.formBuilder.group({
 			fullName: [this.model.fullName, [Validators.required]],
 			gender: [this.model.gender, [Validators.required]],
-			odb: [this.model.odb, [Validators.required]],
+			dob: [this.model.dob, [Validators.required]],
 			nation: [this.model.nation, [Validators.required]],
 			province: [this.model.province, [Validators.required]],
 			district: [this.model.district, [Validators.required]],
@@ -137,7 +144,7 @@ export class IndividualComponent implements OnInit {
 
 			email: [this.model.email, [Validators.required, Validators.email]],
 			address: [this.model.address, [Validators.required]],
-			identity: [this.model.identity, [Validators.required]],
+			identity: [this.model.identity, [Validators.required,Validators.pattern(/^([0-9]){9,12}$/g)]],
 			placeIssue: [this.model.placeIssue, [Validators.required]],
 			dateIssue: [this.model.dateIssue, [Validators.required]],
 		})

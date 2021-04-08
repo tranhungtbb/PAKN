@@ -43,13 +43,18 @@ export class OrganizationComponent implements OnInit {
 	]
 
 	onSave() {
-		// this.fLoginSubmitted = true
-		// this.fInfoSubmitted = true
-		// if (this.formLogin.invalid || this.formInfo.invalid) {
-		// 	this.toast.error('Dữ liệu không hợp lệ')
-		// 	return
-		// }
-		// req to server
+		this.fLoginSubmitted = true
+		this.fInfoSubmitted = true
+		this.fOrgInfoSubmitted = true
+		this.fOrgAddressSubmitted = true
+
+		console.log(this.model);
+
+		if (this.formLogin.invalid || this.formInfo.invalid || this.formOrgInfo.invalid || this.formOrgAddress.invalid) {
+			this.toast.error('Dữ liệu không hợp lệ')
+			return
+		}
+		//req to server
 	}
 
 	fLoginSubmitted = false

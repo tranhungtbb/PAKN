@@ -16,13 +16,13 @@ export class IndividualObject {
 	rePassword: string
 
 	//thong tin tai khoan
-	fullName: string
+	fullName: string // fullName
 	nation: any // quoc tich
 	province: any
 	district: any
 	village: any
 	gender: boolean
-	odb: string // ngay thang nam sinh
+	dob: string // ngay thang nam sinh
 
 	email: string
 	address: string

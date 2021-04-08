@@ -136,6 +136,6 @@ export class Api {
 	public static VillageGetAll = 'CASPBase/CAVillageGetAllBase'
 
 	//register
-	public static RegisterIndividual = ''
-	public static RegisterOrganization = ''
+	public static RegisterIndividual = 'User/InvididualRegister'
+	public static RegisterOrganization = 'User/OrganizationRegister'
 }
