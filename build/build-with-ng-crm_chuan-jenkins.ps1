@@ -5,7 +5,7 @@ $outputFolderBU = "D:\PROJECTS\38.PAKN\Old"
 $backupFolder = "D:\PROJECTS\38.PAKN\Backup\Config\"
 $slnFolder = Join-Path $buildFolder "../"
 $webHostFolder = Join-Path $slnFolder "PAKNAPI"
-$ngFolder = Join-Path $slnFolder "Web"
+$ngFolder = Join-Path $slnFolder "PAKNWeb"
 $ErrorActionPreference = "Stop"
 $APPCMDPath = "C:\windows\system32\inetsrv\appcmd.exe"
 
