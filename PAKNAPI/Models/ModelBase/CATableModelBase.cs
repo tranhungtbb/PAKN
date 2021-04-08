@@ -626,7 +626,6 @@ namespace PAKNAPI.ModelBase
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public bool IsActived { get; set; }
-		public int QuantityUser { get; set; }
 
 		public async Task<CAHashtag> CAHashtagGetByID(int? Id)
 		{
@@ -645,8 +644,6 @@ namespace PAKNAPI.ModelBase
 
 		public async Task<List<CAHashtagOnPage>> CAHashtagGetAllOnPage(int PageSize, int PageIndex, string? Name, bool? IsActived, int? QuantityUser)
 		{
-
-
 			DynamicParameters DP = new DynamicParameters();
 
 			DP.Add("PageSize", PageSize);

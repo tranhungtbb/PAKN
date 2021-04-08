@@ -41,10 +41,17 @@ namespace PAKNAPI.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<object> RMRemindInsert(RMRemindInsertRequest _rMRemindInsert) {
+        [Route("RemindInsert")]
+        public async Task<object> RMRemindInsert() {
             try {
                 // insert vào Remind
-                int id = int.Parse((await new RMRemindModelDAO(_appSetting).RMRemindInsert(_rMRemindInsert.Model)).ToString());
+                RMRemindInsertRequest _rMRemindInsert = new RMRemindInsertRequest();
+                _rMRemindInsert.Model = JsonConvert.DeserializeObject<RMRemindModel>(Request.Form["Model"].ToString());
+                _rMRemindInsert.Model.CreateDate = DateTime.Now;
+                _rMRemindInsert.Model.Name = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
+                _rMRemindInsert.Model.UnitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                _rMRemindInsert.Files = Request.Form.Files;
+                int id =Int32.Parse((await new RMRemind(_appSetting).RMRemindInsert(_rMRemindInsert.Model)).ToString());
                 if (id > 0) {
                     // insert vào RM_FileAttach
 
@@ -58,7 +65,7 @@ namespace PAKNAPI.Controllers
                         }
                         foreach (var item in _rMRemindInsert.Files)
                         {
-                            RMFileAttach file = new RMFileAttach();
+                            RMFileAttachModel file = new RMFileAttachModel();
                             file.RemindId = id;
                             file.Name = Path.GetFileName(item.FileName).Replace("+", "");
                             string filePath = Path.Combine(folderPath, file.Name);
@@ -68,7 +75,7 @@ namespace PAKNAPI.Controllers
                             {
                                 item.CopyTo(stream);
                             }
-                            await new RMFileAttachDAO(_appSetting).RMFileAttachInsert(file);
+                            await new RMFileAttach(_appSetting).RMFileAttachInsert(file);
                         }
                     }
 
@@ -82,17 +89,17 @@ namespace PAKNAPI.Controllers
 
                 }
                 // insert vào RMForward
-                _rMRemindInsert.Forward.SenderId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
-                _rMRemindInsert.Forward.SendOrgId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-                _rMRemindInsert.Forward.DateSend = DateTime.Now;
-                _rMRemindInsert.Forward.IsView = 1; // chưa biết là gì, auto để 1
+                //_rMRemindInsert.Forward.SenderId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                //_rMRemindInsert.Forward.SendOrgId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                //_rMRemindInsert.Forward.DateSend = DateTime.Now;
+                //_rMRemindInsert.Forward.IsView = 1; // chưa biết là gì, auto để 1
 
-                int? insertForward = await new RMForwardDAO(_appSetting).RMFileAttachInsert(_rMRemindInsert.Forward);
-                if (insertForward < 0) {
-                    throw new ArgumentException("error while insert RMForward");
-                }
+                //int? insertForward = await new RMForward(_appSetting).RMFileAttachInsert(_rMRemindInsert.Forward);
+                //if (insertForward < 0) {
+                //    throw new ArgumentException("error while insert RMForward");
+                //}
 
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
                 return new ResultApi { Success = ResultCode.OK };
             }

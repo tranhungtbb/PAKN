@@ -6,15 +6,18 @@ using System.Threading.Tasks;
 
 namespace PAKNAPI.Models.Remind
 {
-    public class RMRemind
+    public class RMRemindModel
     {
         public int id { get; set; }
-        public int PetitionId { get; set; }
+        public int RecommendationId { get; set; }
         public string Content { get; set; }
+        public string Name { get; set; }
+        public DateTime CreateDate { get; set; }
+        public int UnitId { get; set; }
     }
 
 
-    public class RMFileAttach {
+    public class RMFileAttachModel {
         public int id { get; set; }
         public int RemindId { get; set; }
         public string FileAttach { get; set; }
@@ -22,7 +25,7 @@ namespace PAKNAPI.Models.Remind
         public int FileType { get; set; }
     }
 
-    public class RMForward {
+    public class RMForwardModel {
         public int id {get; set;}
         public long SenderId { get; set;}
         public int SendOrgId { get; set;}
@@ -32,16 +35,16 @@ namespace PAKNAPI.Models.Remind
     }
 
     public class RMRemindView {
-        public RMRemind Model { get; set; }
+        public RMRemindModel Model { get; set; }
         public List<RMFileAttach> Files { get; set; }
     }
 
     public class RMRemindInsertRequest
     {
-        public RMRemind Model { get; set; }
+        public RMRemindModel Model { get; set; }
         //public List<RMFileAttach> ltsFiles { get; set; }
 
-        public RMForward Forward { get; set; }
+        public RMForwardModel Forward { get; set; }
 
         public IFormFileCollection Files { get; set; }
     }

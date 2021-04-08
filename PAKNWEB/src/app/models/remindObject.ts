@@ -1,8 +1,10 @@
 export class RemindObject {
 	id: number
-	PetitionId: number
-	Content: string
-	constructor() {}
+	recommendationId: number
+	content: string
+	constructor() {
+		this.content = ''
+	}
 }
 
 export class Forward {

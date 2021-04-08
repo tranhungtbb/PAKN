@@ -7,7 +7,7 @@ import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 
-import { RemindComponent } from 'src/app/modules/catalog-management/remind/remind.component'
+// import { RemindComponent } from 'src/app/modules/recommendation/remind/remind.component'
 
 declare var $: any
 
@@ -21,7 +21,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 
 	// child
 
-	@ViewChild(RemindComponent, { static: false }) remindComponent: RemindComponent
+	// @ViewChild(RemindComponent, { static: false }) remindComponent: RemindComponent
 
 	listData = new Array<FieldObject>()
 	listStatus: any = [
@@ -275,9 +275,5 @@ export class FieldComponent implements OnInit, AfterViewInit {
 			var blob = new Blob([response], { type: response.type })
 			importedSaveAs(blob, fileName)
 		})
-	}
-
-	show() {
-		this.remindComponent.showComponent()
 	}
 }
