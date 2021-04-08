@@ -5,7 +5,7 @@
 			<form [formGroup]="formLogin" class="px-3" autocomplete="off">
 				<div class="form-group">
 					<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
-					<input [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." autocomplete="off" class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." autocomplete="off" class="form-control border-brown">
 					<div *ngIf="(fLoginSubmitted && fLogin.phone.invalid)||(fLogin.phone.invalid && (fLogin.phone.dirty || fLogin.phone.touched))" class="has-error m-b-12">
 						<div *ngIf="fLogin.phone.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -17,22 +17,25 @@
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Mật khẩu <span class="cl-red">(*)</span></label>
-					<input [(ngModel)]="model.password" formControlName="password" type="password" placeholder="Nhập..." autocomplete="off" class="form-control border-brown"
-						value="">
+					<input [svTrim] [(ngModel)]="model.password" formControlName="password" type="password" placeholder="Nhập..." autocomplete="off"
+						class="form-control border-brown" value="">
 					<div *ngIf="(fLoginSubmitted && fLogin.password.invalid)||(fLogin.password.invalid && (fLogin.password.dirty || fLogin.password.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fLogin.password.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
-						<div *ngIf="fLogin.password.errors.minlength">
+						<!-- <div *ngIf="fLogin.password.errors.minlength">
+							<span class="help-block">Mật khẩu ít nhất 6 ký tự, bao gồm cả ký tự chữ và số</span>
+						</div> -->
+						<div *ngIf="fLogin.password.errors.pattern">
 							<span class="help-block">Mật khẩu ít nhất 6 ký tự, bao gồm cả ký tự chữ và số</span>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Nhập lại mật khẩu <span class="cl-red">(*)</span></label>
-					<input [(ngModel)]="model.rePassword" formControlName="rePassword" type="password" placeholder="Nhập..." autocomplete="off" class="form-control border-brown"
-						value="">
+					<input [svTrim] [(ngModel)]="model.rePassword" formControlName="rePassword" type="password" placeholder="Nhập..." autocomplete="off"
+						class="form-control border-brown" value="">
 					<div *ngIf="(fLoginSubmitted && fLogin.rePassword.invalid)||(fLogin.rePassword.invalid && (fLogin.rePassword.dirty || fLogin.rePassword.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fLogin.rePassword.errors.required">
@@ -51,10 +54,9 @@
 			<form [formGroup]="formInfo" class="form-row px-3" autocomplete="off">
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Họ và Tên <span class="cl-red">(*)</span></label>
-					<input [(ngModel)]="model.fullName" formControlName="fullName" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.fullName" formControlName="fullName" type="text" placeholder="Nhập..." class="form-control border-brown">
 					<!--  -->
-					<div *ngIf="(fLoginSubmitted && fInfo.fullName.invalid)||(fInfo.fullName.invalid && (fInfo.fullName.dirty || fInfo.fullName.touched))"
-						class="has-error m-b-12">
+					<div *ngIf="(fLoginSubmitted && fInfo.fullName.invalid)||(fInfo.fullName.invalid && (fInfo.fullName.dirty || fInfo.fullName.touched))" class="has-error m-b-12">
 						<div *ngIf="fInfo.fullName.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
@@ -71,8 +73,7 @@
 						<ng-option *ngFor="let nation of listNation" [value]="nation.id">{{nation.name}}</ng-option>
 					</ng-select>
 					<!--  -->
-					<div *ngIf="(fLoginSubmitted && fInfo.nation.invalid)||(fInfo.nation.invalid && (fInfo.nation.dirty || fInfo.nation.touched))"
-						class="has-error m-b-12">
+					<div *ngIf="(fLoginSubmitted && fInfo.nation.invalid)||(fInfo.nation.invalid && (fInfo.nation.dirty || fInfo.nation.touched))" class="has-error m-b-12">
 						<div *ngIf="fInfo.nation.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
@@ -88,8 +89,7 @@
 						<ng-option *ngFor="let prov of listProvince" [value]="prov.id">{{prov.name}}</ng-option>
 					</ng-select>
 					<!--  -->
-					<div *ngIf="(fLoginSubmitted && fInfo.province.invalid)||(fInfo.province.invalid && (fInfo.province.dirty || fInfo.province.touched))"
-						class="has-error m-b-12">
+					<div *ngIf="(fLoginSubmitted && fInfo.province.invalid)||(fInfo.province.invalid && (fInfo.province.dirty || fInfo.province.touched))" class="has-error m-b-12">
 						<div *ngIf="fInfo.province.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
@@ -98,10 +98,9 @@
 				<div class="w-100"></div>
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Ngày tháng năm sinh <span class="cl-red">(*)</span></label>
-					<input [(ngModel)]="model.odb" formControlName="odb" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.odb" formControlName="odb" type="text" placeholder="Nhập..." class="form-control border-brown">
 					<!--  -->
-					<div *ngIf="(fLoginSubmitted && fInfo.odb.invalid)||(fInfo.odb.invalid && (fInfo.odb.dirty || fInfo.odb.touched))"
-						class="has-error m-b-12">
+					<div *ngIf="(fLoginSubmitted && fInfo.odb.invalid)||(fInfo.odb.invalid && (fInfo.odb.dirty || fInfo.odb.touched))" class="has-error m-b-12">
 						<div *ngIf="fInfo.odb.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
@@ -119,8 +118,7 @@
 						<ng-option *ngFor="let dis of listDistrict" [value]="dis.id">{{dis.name}}</ng-option>
 					</ng-select>
 					<!--  -->
-					<div *ngIf="(fLoginSubmitted && fInfo.district.invalid)||(fInfo.district.invalid && (fInfo.district.dirty || fInfo.district.touched))"
-						class="has-error m-b-12">
+					<div *ngIf="(fLoginSubmitted && fInfo.district.invalid)||(fInfo.district.invalid && (fInfo.district.dirty || fInfo.district.touched))" class="has-error m-b-12">
 						<div *ngIf="fInfo.district.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
@@ -136,8 +134,7 @@
 						<ng-option *ngFor="let vill of listVillage" [value]="vill.id">{{vill.name}}</ng-option>
 					</ng-select>
 					<!--  -->
-					<div *ngIf="(fLoginSubmitted && fInfo.village.invalid)||(fInfo.village.invalid && (fInfo.village.dirty || fInfo.village.touched))"
-						class="has-error m-b-12">
+					<div *ngIf="(fLoginSubmitted && fInfo.village.invalid)||(fInfo.village.invalid && (fInfo.village.dirty || fInfo.village.touched))" class="has-error m-b-12">
 						<div *ngIf="fInfo.village.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
@@ -146,21 +143,22 @@
 				<div class="w-100"></div>
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Email <span class="cl-red">(*)</span></label>
-					<input [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập..." class="form-control border-brown">
 					<!--  -->
-					<div *ngIf="(fLoginSubmitted && fInfo.email.invalid)||(fInfo.email.invalid && (fInfo.email.dirty || fInfo.email.touched))"
-						class="has-error m-b-12">
+					<div *ngIf="(fLoginSubmitted && fInfo.email.invalid)||(fInfo.email.invalid && (fInfo.email.dirty || fInfo.email.touched))" class="has-error m-b-12">
 						<div *ngIf="fInfo.email.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+						<div *ngIf="fInfo.email.errors.email">
+							<span class="help-block">Định dạng email không hợp lệ</span>
 						</div>
 					</div>
 				</div>
 				<div class="col-12 col-lg-8 form-group">
 					<label class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></label>
-					<input [(ngModel)]="model.address" formControlName="address" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.address" formControlName="address" type="text" placeholder="Nhập..." class="form-control border-brown">
 					<!--  -->
-					<div *ngIf="(fLoginSubmitted && fInfo.address.invalid)||(fInfo.address.invalid && (fInfo.address.dirty || fInfo.address.touched))"
-						class="has-error m-b-12">
+					<div *ngIf="(fLoginSubmitted && fInfo.address.invalid)||(fInfo.address.invalid && (fInfo.address.dirty || fInfo.address.touched))" class="has-error m-b-12">
 						<div *ngIf="fInfo.address.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
@@ -170,10 +168,9 @@
 				<div class="w-100"></div>
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Số CMND / CCCD / Hộ chiếu <span class="cl-red">(*)</span></label>
-					<input [(ngModel)]="model.identity" formControlName="identity" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.identity" formControlName="identity" type="text" placeholder="Nhập..." class="form-control border-brown">
 					<!--  -->
-					<div *ngIf="(fLoginSubmitted && fInfo.identity.invalid)||(fInfo.identity.invalid && (fInfo.identity.dirty || fInfo.identity.touched))"
-						class="has-error m-b-12">
+					<div *ngIf="(fLoginSubmitted && fInfo.identity.invalid)||(fInfo.identity.invalid && (fInfo.identity.dirty || fInfo.identity.touched))" class="has-error m-b-12">
 						<div *ngIf="fInfo.identity.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
@@ -181,7 +178,7 @@
 				</div>
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Nơi cấp <span class="cl-red">(*)</span></label>
-					<input [(ngModel)]="model.placeIssue" formControlName="placeIssue" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.placeIssue" formControlName="placeIssue" type="text" placeholder="Nhập..." class="form-control border-brown">
 					<!--  -->
 					<div *ngIf="(fLoginSubmitted && fInfo.placeIssue.invalid)||(fInfo.placeIssue.invalid && (fInfo.placeIssue.dirty || fInfo.placeIssue.touched))"
 						class="has-error m-b-12">
@@ -192,7 +189,7 @@
 				</div>
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Ngày cấp <span class="cl-red">(*)</span></label>
-					<input [(ngModel)]="model.dateIssue" formControlName="dateIssue" type="date" class="form-control" placeholder="Nhập...">
+					<input [svTrim] [(ngModel)]="model.dateIssue" formControlName="dateIssue" type="date" class="form-control" placeholder="Nhập...">
 					<!--  -->
 					<div *ngIf="(fLoginSubmitted && fInfo.dateIssue.invalid)||(fInfo.dateIssue.invalid && (fInfo.dateIssue.dirty || fInfo.dateIssue.touched))"
 						class="has-error m-b-12">
@@ -204,7 +201,7 @@
 				<div class="w-100"></div>
 				<div class="form-group mb-0 col">
 					<label class="mr-3">Giới tính:</label>
-					<label *ngFor="let gen of listGender" class="radio-inline mr-3" >
+					<label *ngFor="let gen of listGender" class="radio-inline mr-3">
 						<input [(ngModel)]="model.gender" formControlName="gender" [value]="gen.value" type="radio"> {{gen.text}}
 					</label>
 				</div>

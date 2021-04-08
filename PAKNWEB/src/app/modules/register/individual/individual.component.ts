@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
+import { Router } from '@angular/router'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
 
 import { COMMONS } from 'src/app/commons/commons'
-import { IndividualObject } from 'src/app/models/individualObject'
+import { IndividualObject } from 'src/app/models/RegisterObject'
 
 declare var $: any
 @Component({
@@ -12,44 +13,43 @@ declare var $: any
 	styleUrls: ['./individual.component.css'],
 })
 export class IndividualComponent implements OnInit {
-	constructor(private toast: ToastrService, private formBuilder: FormBuilder) {}
+	constructor(private toast: ToastrService, private formBuilder: FormBuilder, private router: Router) {}
 
 	formLogin: FormGroup
 	formInfo: FormGroup
 	model: IndividualObject = new IndividualObject()
 
-	listNation:any[]=[
-		{id:1,name:"Việt Nam"},
-		{id:2,name:"Lào"},
-		{id:3,name:"Thái Lan"},
-		{id:4,name:"Campuchia"}
+	listNation: any[] = [
+		{ id: 1, name: 'Việt Nam' },
+		{ id: 2, name: 'Lào' },
+		{ id: 3, name: 'Thái Lan' },
+		{ id: 4, name: 'Campuchia' },
 	]
-	listProvince:any[]=[]
-	listDistrict:any[]=[]
-	listVillage:any[]=[]
+	listProvince: any[] = []
+	listDistrict: any[] = []
+	listVillage: any[] = []
 
-	listGender:any[]=[
-		{value:true,text:'Nam'},
-		{value:false,text:'Nữ'}
+	listGender: any[] = [
+		{ value: true, text: 'Nam' },
+		{ value: false, text: 'Nữ' },
 	]
 
 	ngOnInit() {
 		this.loadFormBuilder()
 	}
 
-
-	onSave(){
-		this.fLoginSubmitted = true;
-		this.fInfoSubmitted = true;
-		if(this.formLogin.invalid || this.formInfo.invalid){
-			this.toast.error('Dữ liệu không hợp lệ');
-			return;
+	onSave() {
+		this.fLoginSubmitted = true
+		this.fInfoSubmitted = true
+		if (this.formLogin.invalid || this.formInfo.invalid) {
+			this.toast.error('Dữ liệu không hợp lệ')
+			return
 		}
 
 		// req to server
-
+		this.toast.error('Đang ký tài khoản thành công')
+		this.router.navigate(['/dang-nhap'])
 	}
-
 
 	fLoginSubmitted = false
 	fInfoSubmitted = false
@@ -64,23 +64,26 @@ export class IndividualComponent implements OnInit {
 
 	private loadFormBuilder() {
 		//form thông tin đăng nhập
-		this.formLogin = this.formBuilder.group({
-			phone: [this.model.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
-			password: [this.model.password, [Validators.required, Validators.minLength(6)]],
-			rePassword: [this.model.rePassword, [Validators.required]],
-		},{validator: MustMatch('password', 'rePassword')})
+		this.formLogin = this.formBuilder.group(
+			{
+				phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
+				password: [this.model.password, [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/g)]],
+				rePassword: [this.model.rePassword, [Validators.required]],
+			},
+			{ validator: MustMatch('password', 'rePassword') }
+		)
 
 		//form thông tin
 		this.formInfo = this.formBuilder.group({
 			fullName: [this.model.fullName, [Validators.required]],
 			gender: [this.model.gender, [Validators.required]],
-			odb:[this.model.odb,[Validators.required]],
+			odb: [this.model.odb, [Validators.required]],
 			nation: [this.model.nation, [Validators.required]],
 			province: [this.model.province, [Validators.required]],
 			district: [this.model.district, [Validators.required]],
 			village: [this.model.village, [Validators.required]],
 
-			email: [this.model.email, [Validators.required]],
+			email: [this.model.email, [Validators.required, Validators.email]],
 			address: [this.model.address, [Validators.required]],
 			identity: [this.model.identity, [Validators.required]],
 			placeIssue: [this.model.placeIssue, [Validators.required]],
@@ -89,20 +92,20 @@ export class IndividualComponent implements OnInit {
 	}
 }
 function MustMatch(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
-        const control = formGroup.controls[controlName];
-        const matchingControl = formGroup.controls[matchingControlName];
+	return (formGroup: FormGroup) => {
+		const control = formGroup.controls[controlName]
+		const matchingControl = formGroup.controls[matchingControlName]
 
-        if (matchingControl.errors && !matchingControl.errors.mustMatch) {
-            // return if another validator has already found an error on the matchingControl
-            return;
-        }
+		if (matchingControl.errors && !matchingControl.errors.mustMatch) {
+			// return if another validator has already found an error on the matchingControl
+			return
+		}
 
-        // set error on matchingControl if validation fails
-        if (control.value !== matchingControl.value) {
-            matchingControl.setErrors({ mustMatch: true });
-        } else {
-            matchingControl.setErrors(null);
-        }
-    }
+		// set error on matchingControl if validation fails
+		if (control.value !== matchingControl.value) {
+			matchingControl.setErrors({ mustMatch: true })
+		} else {
+			matchingControl.setErrors(null)
+		}
+	}
 }

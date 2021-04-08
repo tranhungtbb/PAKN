@@ -4,6 +4,8 @@ import { ToastrService } from 'ngx-toastr'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
 
 import { COMMONS } from 'src/app/commons/commons'
+import { OrganizationObject } from 'src/app/models/RegisterObject'
+
 declare var $: any
 
 @Component({
@@ -12,44 +14,40 @@ declare var $: any
 	styleUrls: ['./organization.component.css'],
 })
 export class OrganizationComponent implements OnInit {
-	constructor(
-		private toast :ToastrService,
-		private formBuilder: FormBuilder) {}
+	constructor(private toast: ToastrService, private formBuilder: FormBuilder) {}
 
 	formLogin: FormGroup
 	formInfo: FormGroup
 
-	model:any
+	model: OrganizationObject = new OrganizationObject()
 
 	ngOnInit() {}
 
-	listNation:any[]=[
-		{id:1,name:"Việt Nam"},
-		{id:2,name:"Lào"},
-		{id:3,name:"Thái Lan"},
-		{id:4,name:"Campuchia"}
+	listNation: any[] = [
+		{ id: 1, name: 'Việt Nam' },
+		{ id: 2, name: 'Lào' },
+		{ id: 3, name: 'Thái Lan' },
+		{ id: 4, name: 'Campuchia' },
 	]
-	listProvince:any[]=[]
-	listDistrict:any[]=[]
-	listVillage:any[]=[]
+	listProvince: any[] = []
+	listDistrict: any[] = []
+	listVillage: any[] = []
 
-	listGender:any[]=[
-		{value:true,text:'Nam'},
-		{value:false,text:'Nữ'}
+	listGender: any[] = [
+		{ value: true, text: 'Nam' },
+		{ value: false, text: 'Nữ' },
 	]
 
-	onSave(){
-		this.fLoginSubmitted = true;
-		this.fInfoSubmitted = true;
-		if(this.formLogin.invalid || this.formInfo.invalid){
-			this.toast.error('Dữ liệu không hợp lệ');
-			return;
+	onSave() {
+		this.fLoginSubmitted = true
+		this.fInfoSubmitted = true
+		if (this.formLogin.invalid || this.formInfo.invalid) {
+			this.toast.error('Dữ liệu không hợp lệ')
+			return
 		}
 
 		// req to server
-
 	}
-
 
 	fLoginSubmitted = false
 	fInfoSubmitted = false
@@ -64,17 +62,20 @@ export class OrganizationComponent implements OnInit {
 
 	private loadFormBuilder() {
 		//form thông tin đăng nhập
-		this.formLogin = this.formBuilder.group({
-			phone: [this.model.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
-			password: [this.model.password, [Validators.required, Validators.minLength(6)]],
-			rePassword: [this.model.rePassword, [Validators.required]],
-		},{validator: MustMatch('password', 'rePassword')})
+		this.formLogin = this.formBuilder.group(
+			{
+				phone: [this.model.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
+				password: [this.model.password, [Validators.required, Validators.minLength(6)]],
+				rePassword: [this.model.rePassword, [Validators.required]],
+			},
+			{ validator: MustMatch('password', 'rePassword') }
+		)
 
 		//form thông tin
 		this.formInfo = this.formBuilder.group({
 			fullName: [this.model.fullName, [Validators.required]],
 			gender: [this.model.gender, [Validators.required]],
-			odb:[this.model.odb,[Validators.required]],
+			odb: [this.model.Obj, [Validators.required]],
 			nation: [this.model.nation, [Validators.required]],
 			province: [this.model.province, [Validators.required]],
 			district: [this.model.district, [Validators.required]],
@@ -89,21 +90,20 @@ export class OrganizationComponent implements OnInit {
 	}
 }
 function MustMatch(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
-        const control = formGroup.controls[controlName];
-        const matchingControl = formGroup.controls[matchingControlName];
+	return (formGroup: FormGroup) => {
+		const control = formGroup.controls[controlName]
+		const matchingControl = formGroup.controls[matchingControlName]
 
-        if (matchingControl.errors && !matchingControl.errors.mustMatch) {
-            // return if another validator has already found an error on the matchingControl
-            return;
-        }
+		if (matchingControl.errors && !matchingControl.errors.mustMatch) {
+			// return if another validator has already found an error on the matchingControl
+			return
+		}
 
-        // set error on matchingControl if validation fails
-        if (control.value !== matchingControl.value) {
-            matchingControl.setErrors({ mustMatch: true });
-        } else {
-            matchingControl.setErrors(null);
-        }
-    }
+		// set error on matchingControl if validation fails
+		if (control.value !== matchingControl.value) {
+			matchingControl.setErrors({ mustMatch: true })
+		} else {
+			matchingControl.setErrors(null)
+		}
+	}
 }
-

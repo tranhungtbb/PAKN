@@ -39,6 +39,12 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UpdatedDate", _qLDoanhNghiepInsertIN.UpdatedDate);
 			DP.Add("RepresentativeName", _qLDoanhNghiepInsertIN.RepresentativeName);
 			DP.Add("Email", _qLDoanhNghiepInsertIN.Email);
+			DP.Add("OrgProvince", _qLDoanhNghiepInsertIN.OrgProvince);
+			DP.Add("OrgDistrict", _qLDoanhNghiepInsertIN.OrgDistrict);
+			DP.Add("OrgVillage", _qLDoanhNghiepInsertIN.OrgVillage);
+			DP.Add("OrgAddress", _qLDoanhNghiepInsertIN.OrgAddress);
+			DP.Add("OrgPhone", _qLDoanhNghiepInsertIN.OrgPhone);
+			DP.Add("OrgEmail", _qLDoanhNghiepInsertIN.OrgEmail);
 			DP.Add("RegistrationNum", _qLDoanhNghiepInsertIN.RegistrationNum);
 			DP.Add("DecisionFoundation", _qLDoanhNghiepInsertIN.DecisionFoundation);
 			DP.Add("DateIssue", _qLDoanhNghiepInsertIN.DateIssue);
@@ -66,6 +72,12 @@ namespace PAKNAPI.ModelBase
 		public DateTime? UpdatedDate { get; set; }
 		public string RepresentativeName { get; set; }
 		public string Email { get; set; }
+		public int? OrgProvince { get; set; }
+		public int? OrgDistrict { get; set; }
+		public int? OrgVillage { get; set; }
+		public int? OrgAddress { get; set; }
+		public string OrgPhone { get; set; }
+		public string OrgEmail { get; set; }
 		public string RegistrationNum { get; set; }
 		public string DecisionFoundation { get; set; }
 		public DateTime? DateIssue { get; set; }
