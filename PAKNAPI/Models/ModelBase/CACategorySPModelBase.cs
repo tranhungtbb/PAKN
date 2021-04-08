@@ -480,6 +480,33 @@ namespace PAKNAPI.ModelBase
 		public string Description { get; set; }
 	}
 
+	public class CAFieldKNCTInsert
+	{
+		private SQLCon _sQLCon;
+
+		public CAFieldKNCTInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAFieldKNCTInsert()
+		{
+		}
+
+		public async Task<int?> CAFieldKNCTInsertDAO(CAFieldKNCTInsertIN _cAFieldKNCTInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _cAFieldKNCTInsertIN.Name);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_FieldKNCTInsert", DP);
+		}
+	}
+
+	public class CAFieldKNCTInsertIN
+	{
+		public string Name { get; set; }
+	}
+
 	public class CAFieldUpdate
 	{
 		private SQLCon _sQLCon;

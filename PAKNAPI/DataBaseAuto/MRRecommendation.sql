@@ -28,7 +28,9 @@ BEGIN
 		[CreatedBy],
 		[CreatedDate],
 		[UpdatedBy],
-		[UpdatedDate]
+		[UpdatedDate],
+		[QuantityLike],
+		[QuantityDislike]
 	FROM [MR_Recommendation]
 	WHERE [Id] = @Id
 END
@@ -63,7 +65,9 @@ BEGIN
 		[CreatedBy],
 		[CreatedDate],
 		[UpdatedBy],
-		[UpdatedDate]
+		[UpdatedDate],
+		[QuantityLike],
+		[QuantityDislike]
 	FROM [MR_Recommendation]
 END
 GO
@@ -100,7 +104,9 @@ BEGIN
 		[CreatedBy],
 		[CreatedDate],
 		[UpdatedBy],
-		[UpdatedDate]
+		[UpdatedDate],
+		[QuantityLike],
+		[QuantityDislike]
 	FROM [MR_Recommendation]
 	ORDER BY [Id]
 	OFFSET (@PageIndex-1) * @PageSize ROWS
@@ -133,7 +139,9 @@ CREATE PROCEDURE [dbo].[MR_RecommendationInsert]
 	@CreatedBy bigint = null,
 	@CreatedDate datetime = null,
 	@UpdatedBy bigint = null,
-	@UpdatedDate datetime = null
+	@UpdatedDate datetime = null,
+	@QuantityLike int = null,
+	@QuantityDislike int = null
 AS
 BEGIN
 	INSERT INTO [MR_Recommendation]
@@ -152,7 +160,9 @@ BEGIN
 		[CreatedBy],
 		[CreatedDate],
 		[UpdatedBy],
-		[UpdatedDate]
+		[UpdatedDate],
+		[QuantityLike],
+		[QuantityDislike]
 	)
 	VALUES
 	(
@@ -170,7 +180,9 @@ BEGIN
 		@CreatedBy,
 		@CreatedDate,
 		@UpdatedBy,
-		@UpdatedDate
+		@UpdatedDate,
+		@QuantityLike,
+		@QuantityDislike
 	)
 END
 GO
@@ -201,7 +213,9 @@ CREATE PROCEDURE [dbo].[MR_RecommendationUpdate]
 	@CreatedBy bigint = null,
 	@CreatedDate datetime = null,
 	@UpdatedBy bigint = null,
-	@UpdatedDate datetime = null
+	@UpdatedDate datetime = null,
+	@QuantityLike int = null,
+	@QuantityDislike int = null
 AS
 BEGIN
 	UPDATE [MR_Recommendation] SET
@@ -219,7 +233,9 @@ BEGIN
 		[CreatedBy] = @CreatedBy,
 		[CreatedDate] = @CreatedDate,
 		[UpdatedBy] = @UpdatedBy,
-		[UpdatedDate] = @UpdatedDate
+		[UpdatedDate] = @UpdatedDate,
+		[QuantityLike] = @QuantityLike,
+		[QuantityDislike] = @QuantityDislike
 	WHERE [Id] = @Id
 END
 GO

@@ -458,6 +458,26 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("CAFieldKNCTInsertBase")]
+		public async Task<ActionResult<object>> CAFieldKNCTInsertBase(CAFieldKNCTInsertIN _cAFieldKNCTInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldKNCTInsert(_appSetting).CAFieldKNCTInsertDAO(_cAFieldKNCTInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
 		[Authorize]
 		[Route("CAFieldUpdateBase")]
 		public async Task<ActionResult<object>> CAFieldUpdateBase(CAFieldUpdateIN _cAFieldUpdateIN)

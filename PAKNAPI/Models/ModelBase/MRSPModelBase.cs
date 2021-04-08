@@ -943,6 +943,196 @@ namespace PAKNAPI.ModelBase
 		public DateTime? UpdatedDate { get; set; }
 	}
 
+	public class MRRecommendationKNCTCheckExistedId
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationKNCTCheckExistedId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationKNCTCheckExistedId()
+		{
+		}
+
+		public int? Total { get; set; }
+
+		public async Task<List<MRRecommendationKNCTCheckExistedId>> MRRecommendationKNCTCheckExistedIdDAO(int? RecommendationKNCTId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationKNCTId", RecommendationKNCTId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationKNCTCheckExistedId>("MR_RecommendationKNCT_CheckExistedId", DP)).ToList();
+		}
+	}
+
+	public class MRRecommendationKNCTFilesDelete
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationKNCTFilesDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationKNCTFilesDelete()
+		{
+		}
+
+		public async Task<int> MRRecommendationKNCTFilesDeleteDAO(MRRecommendationKNCTFilesDeleteIN _mRRecommendationKNCTFilesDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationKNCTFilesDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationKNCT_FilesDelete", DP));
+		}
+	}
+
+	public class MRRecommendationKNCTFilesDeleteIN
+	{
+		public int? Id { get; set; }
+	}
+
+	public class MRRecommendationKNCTFilesInsert
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationKNCTFilesInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationKNCTFilesInsert()
+		{
+		}
+
+		public async Task<int> MRRecommendationKNCTFilesInsertDAO(MRRecommendationKNCTFilesInsertIN _mRRecommendationKNCTFilesInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationKNCTId", _mRRecommendationKNCTFilesInsertIN.RecommendationKNCTId);
+			DP.Add("Name", _mRRecommendationKNCTFilesInsertIN.Name);
+			DP.Add("FileType", _mRRecommendationKNCTFilesInsertIN.FileType);
+			DP.Add("FilePath", _mRRecommendationKNCTFilesInsertIN.FilePath);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationKNCT_FilesInsert", DP));
+		}
+	}
+
+	public class MRRecommendationKNCTFilesInsertIN
+	{
+		public int? RecommendationKNCTId { get; set; }
+		public string Name { get; set; }
+		public short? FileType { get; set; }
+		public string FilePath { get; set; }
+	}
+
+	public class MRRecommendationKNCTInsert
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationKNCTInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationKNCTInsert()
+		{
+		}
+
+		public async Task<decimal?> MRRecommendationKNCTInsertDAO(MRRecommendationKNCTInsertIN _mRRecommendationKNCTInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationKNCTId", _mRRecommendationKNCTInsertIN.RecommendationKNCTId);
+			DP.Add("CreatedDate", _mRRecommendationKNCTInsertIN.CreatedDate);
+			DP.Add("SendDate", _mRRecommendationKNCTInsertIN.SendDate);
+			DP.Add("EndDate", _mRRecommendationKNCTInsertIN.EndDate);
+			DP.Add("District", _mRRecommendationKNCTInsertIN.District);
+			DP.Add("Code", _mRRecommendationKNCTInsertIN.Code);
+			DP.Add("Content", _mRRecommendationKNCTInsertIN.Content);
+			DP.Add("Classify", _mRRecommendationKNCTInsertIN.Classify);
+			DP.Add("Term", _mRRecommendationKNCTInsertIN.Term);
+			DP.Add("FieldId", _mRRecommendationKNCTInsertIN.FieldId);
+			DP.Add("Place", _mRRecommendationKNCTInsertIN.Place);
+			DP.Add("Department", _mRRecommendationKNCTInsertIN.Department);
+			DP.Add("Progress", _mRRecommendationKNCTInsertIN.Progress);
+			DP.Add("Status", _mRRecommendationKNCTInsertIN.Status);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("MR_RecommendationKNCTInsert", DP);
+		}
+	}
+
+	public class MRRecommendationKNCTInsertIN
+	{
+		public int? RecommendationKNCTId { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public DateTime? SendDate { get; set; }
+		public DateTime? EndDate { get; set; }
+		public string District { get; set; }
+		public string Code { get; set; }
+		public string Content { get; set; }
+		public string Classify { get; set; }
+		public string Term { get; set; }
+		public int? FieldId { get; set; }
+		public string Place { get; set; }
+		public string Department { get; set; }
+		public string Progress { get; set; }
+		public int? Status { get; set; }
+	}
+
+	public class MRRecommendationKNCTUpdate
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationKNCTUpdate(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationKNCTUpdate()
+		{
+		}
+
+		public async Task<int> MRRecommendationKNCTUpdateDAO(MRRecommendationKNCTUpdateIN _mRRecommendationKNCTUpdateIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationKNCTId", _mRRecommendationKNCTUpdateIN.RecommendationKNCTId);
+			DP.Add("CreatedDate", _mRRecommendationKNCTUpdateIN.CreatedDate);
+			DP.Add("SendDate", _mRRecommendationKNCTUpdateIN.SendDate);
+			DP.Add("EndDate", _mRRecommendationKNCTUpdateIN.EndDate);
+			DP.Add("District", _mRRecommendationKNCTUpdateIN.District);
+			DP.Add("Code", _mRRecommendationKNCTUpdateIN.Code);
+			DP.Add("Content", _mRRecommendationKNCTUpdateIN.Content);
+			DP.Add("Classify", _mRRecommendationKNCTUpdateIN.Classify);
+			DP.Add("Term", _mRRecommendationKNCTUpdateIN.Term);
+			DP.Add("FieldId", _mRRecommendationKNCTUpdateIN.FieldId);
+			DP.Add("Place", _mRRecommendationKNCTUpdateIN.Place);
+			DP.Add("Department", _mRRecommendationKNCTUpdateIN.Department);
+			DP.Add("Progress", _mRRecommendationKNCTUpdateIN.Progress);
+			DP.Add("Status", _mRRecommendationKNCTUpdateIN.Status);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationKNCTUpdate", DP));
+		}
+	}
+
+	public class MRRecommendationKNCTUpdateIN
+	{
+		public int? RecommendationKNCTId { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public DateTime? SendDate { get; set; }
+		public DateTime? EndDate { get; set; }
+		public string District { get; set; }
+		public string Code { get; set; }
+		public string Content { get; set; }
+		public string Classify { get; set; }
+		public string Term { get; set; }
+		public int? FieldId { get; set; }
+		public string Place { get; set; }
+		public string Department { get; set; }
+		public string Progress { get; set; }
+		public int? Status { get; set; }
+	}
+
 	public class MRRecommendationUpdate
 	{
 		private SQLCon _sQLCon;
