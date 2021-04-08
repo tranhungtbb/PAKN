@@ -299,7 +299,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		if (this.modelUnit.id != null && this.modelUnit.id > 0) {
 			this.unitService.update(this.modelUnit).subscribe((res) => {
 				if (res.success != 'OK') {
-					this._toastr.error(COMMONS.UPDATE_FAILED)
+					let errorMsg = COMMONS.UPDATE_FAILED
+					if (res.message.includes(`UNIQUE KEY constraint 'UC_SY_Unit_Email'`)) {
+						errorMsg = 'Email đã được sử dụng'
+					}
 					return
 				}
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
@@ -312,7 +315,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		} else {
 			this.unitService.create(this.modelUnit).subscribe((res) => {
 				if (res.success != 'OK') {
-					this._toastr.error(COMMONS.ADD_FAILED)
+					let errorMsg = COMMONS.ADD_FAILED
+					if (res.message.includes(`UNIQUE KEY constraint 'UC_SY_Unit_Email'`)) {
+						errorMsg = 'Email đã được sử dụng'
+					}
 					return
 				}
 				this._toastr.success(COMMONS.ADD_SUCCESS)
