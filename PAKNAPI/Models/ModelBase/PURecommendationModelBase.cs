@@ -54,7 +54,16 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("Status", status);
             return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetByID", DP)).ToList().FirstOrDefault();
         }
-        
+
+
+        public async Task<int?> MR_RecommendationUpdateSatisfaction(int? RecommendationId, bool? Satisfaction)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("RecommendationId", RecommendationId);
+            DP.Add("Satisfaction", Satisfaction);
+
+            return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateSatisfaction", DP));
+        }
     }
 
 

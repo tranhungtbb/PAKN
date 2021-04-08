@@ -23,6 +23,7 @@ export class RemindService {
 		debugger
 		const form = new FormData()
 		form.append('Model', JSON.stringify(request.Model))
+		form.append('SendOrgId', request.SendOrgId)
 
 		if (request.Files) {
 			request.Files.forEach((item) => {
@@ -35,5 +36,9 @@ export class RemindService {
 			reportProgress: true,
 		}
 		return this.http.post(AppSettings.API_ADDRESS + Api.RemindInsert, form, httpPackage)
+	}
+
+	remindGetList(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.RemindGetList)
 	}
 }

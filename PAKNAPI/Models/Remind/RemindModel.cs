@@ -11,9 +11,6 @@ namespace PAKNAPI.Models.Remind
         public int id { get; set; }
         public int RecommendationId { get; set; }
         public string Content { get; set; }
-        public string Name { get; set; }
-        public DateTime CreateDate { get; set; }
-        public int UnitId { get; set; }
     }
 
 
@@ -27,7 +24,9 @@ namespace PAKNAPI.Models.Remind
 
     public class RMForwardModel {
         public int id {get; set;}
+        public int RemindId {get; set;}
         public long SenderId { get; set;}
+        public string SenderName { get; set;}
         public int SendOrgId { get; set;}
         public int ReceiveOrgId { get; set;}
         public DateTime DateSend { get; set;}
@@ -44,8 +43,21 @@ namespace PAKNAPI.Models.Remind
         public RMRemindModel Model { get; set; }
         //public List<RMFileAttach> ltsFiles { get; set; }
 
-        public RMForwardModel Forward { get; set; }
+        //public RMForwardModel Forward { get; set; }
 
         public IFormFileCollection Files { get; set; }
+    }
+
+    public class RMRemindObject {
+        public int Id { get; set; }
+        public int RecommendationId { get; set; }
+        public string Content { get; set; }
+        public int SenderId { get; set; }
+        public int SenderOrgId { get; set; }
+        public int ReceiveOrgId { get; set; }
+        public DateTime DateSend { get; set; }
+        public int IsView { get; set; }
+
+        public List<RMFileAttachModel> Files { get; set; }
     }
 }

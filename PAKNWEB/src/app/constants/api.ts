@@ -42,6 +42,7 @@ export class Api {
 
 	public static PuRecommendationGetAllOnPage = 'PURecommendation/PURecommendationAllOnPage'
 	public static PuRecommendationGetById = 'PURecommendation/PURecommendationGetById'
+	public static PuChangeSatisfaction = 'PURecommendation/ChangeSatisfaction'
 
 	//Field
 	public static FieldGetList = 'CACategorySPBase/CAFieldGetAllOnPageBase'
@@ -131,4 +132,5 @@ export class Api {
 	public static DepartmentDelete = 'CACategorySPBase/CADepartmentDeleteBase'
 
 	public static RemindInsert = 'RMRemind/RemindInsert'
+	public static RemindGetList = 'RMRemind/RemindGetList'
 }

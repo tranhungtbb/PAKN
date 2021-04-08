@@ -20,20 +20,19 @@ namespace PAKNAPI.Models.Remind
             DynamicParameters DP = new DynamicParameters();
             DP.Add("Content", _rMRemind.Content);
             DP.Add("RecommendationId", _rMRemind.RecommendationId);
-            DP.Add("CreateDate", _rMRemind.CreateDate);
-            DP.Add("UnitId", _rMRemind.UnitId);
-            DP.Add("Name", _rMRemind.Name);
 
             return (await _sQLCon.ExecuteScalarDapperAsync<decimal?>("[RM_RemindInsert]", DP));
         }
-        //public int? RMRemindInsert(RMRemindModel _rMRemind)
-        //{
-        //    DynamicParameters DP = new DynamicParameters();
-        //    DP.Add("Content", _rMRemind.Content);
-        //    DP.Add("RecommendationId", _rMRemind.RecommendationId);
 
-        //    return  _sQLCon.ExecuteScalarDapper<int?>("[RM_RemindInsert]", DP);
-        //}
+        public async Task<List<RMRemindObject>> RMRemindGetList(int? RecommendationID,int? OrgId,bool? IsSenderOrg)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("RecommendationId", RecommendationID);
+            DP.Add("OrgId", OrgId);
+            DP.Add("IsSenderOrg", IsSenderOrg);
+            return (await _sQLCon.ExecuteListDapperAsync<RMRemindObject>("[RM_RemindGetList]", DP)).ToList();
+        }
+
     }
 
     public class RMFileAttach
@@ -54,6 +53,13 @@ namespace PAKNAPI.Models.Remind
 
             return (await _sQLCon.ExecuteNonQueryDapperAsync("[RM_FileAttachInsert]", DP));
         }
+
+        public async Task<List<RMFileAttachModel>> RMFileAttachGetByRemindID(int? Id)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("Id", Id);
+            return (await _sQLCon.ExecuteListDapperAsync<RMFileAttachModel>("[RM_FileAttachGetByRemindID]", DP)).ToList();
+        }
     }
 
     public class RMForward
@@ -67,7 +73,9 @@ namespace PAKNAPI.Models.Remind
         public async Task<int?> RMFileAttachInsert(RMForwardModel _rMForward)
         {
             DynamicParameters DP = new DynamicParameters();
+            DP.Add("RemindId", _rMForward.RemindId);
             DP.Add("SenderId", _rMForward.SenderId);
+            DP.Add("SenderName", _rMForward.SenderName);
             DP.Add("SendOrgId", _rMForward.SendOrgId);
             DP.Add("ReceiveOrgId", _rMForward.ReceiveOrgId);
             DP.Add("DateSend", _rMForward.DateSend);
