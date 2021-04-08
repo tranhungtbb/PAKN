@@ -1,0 +1,111 @@
+<div class="col-md-9 no-padding-right no-padding-xs">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <span>Thông tin đơn vị/phòng ban</span>
+    </div>
+    <!-- /.box-header -->
+    <form class="form-horizontal" id="createForm" [formGroup]="DepartmentForm" #formDir="ngForm">
+      <div class="responsive-body panel-body">
+        <div class="col-md-12 no-padding">
+          <div class="form-group">
+            <div class="col-sm-3 control-label"> Thuộc cấp cha:</div>
+            <div class="col-sm-9">
+              <select class="form-control" formControlName="maCapCha" [(ngModel)]="model.maCapCha">
+                <option value=null>--Chọn cấp cha--</option>
+                <option *ngFor="let sp of lstDepartment" value="{{sp.ma}}">{{sp.name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 no-padding">
+          <div class="form-group">
+            <div class="col-sm-3 control-label"><i class="danger">*</i> Tên đơn vị/phòng ban:</div>
+            <div class="col-sm-9">
+              <input [disabled]="true" class="form-control" id="DepartmentName" type="text" for="ten"
+                formControlName="ten" tabindex="1" [(ngModel)]="model.ten" maxlength="100" />
+              <div *ngIf="ten.invalid && (ten.dirty || ten.touched)">
+                <div *ngIf="ten.errors.required">
+                  <div class="text-danger">Trường dữ liệu này không được để trống</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 no-padding">
+          <div class="form-group">
+            <div class="col-sm-3 control-label"><i class="danger">*</i> Mã đơn vị/phòng ban:</div>
+            <div class="col-sm-4">
+              <input class="form-control" name="code" type="text" id="code" formControlName="code" tabindex="2"
+                [(ngModel)]="model.code" maxlength="20" />
+              <div *ngIf="code.invalid && (code.dirty || code.touched)">
+                <div *ngIf="code.errors.required">
+                  <div class="text-danger" id="lblCodeError">Trường dữ liệu này không được để trống</div>
+                </div>
+                <div *ngIf="code.errors.pattern">
+                  <span class="text-danger">Trường sai định dạng</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2 control-label"> Trạng thái:</div>
+            <div class="col-sm-3">
+              <select class="form-control" for="kichHoat" formControlName="kichHoat" tabindex="3"
+                [(ngModel)]="model.kichHoat">
+                <option value="true">Hiệu lực</option>
+                <option value="false">Hết hiệu lực</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 no-padding">
+          <div class="form-group">
+            <div class="col-sm-3 control-label">Thuộc cấp:</div>
+            <div class="col-sm-4">
+              <select class="form-control" [(ngModel)]="model.isDonVi" formControlName="isDonVi">
+                <option value="true">Đơn vị</option>
+                <option value="false">Phòng ban</option>
+              </select>
+            </div>
+
+            <div class="col-sm-2 control-label"> Số điện thoại:</div>
+            <div class="col-sm-3">
+              <input class="form-control" #PhoneNumber type="text" for="soDienThoai" formControlName="soDienThoai"
+                     tabindex="6" [(ngModel)]="model.soDienThoai" minlength="9" maxlength="11"
+                     (keyup)="checkvalue($event)" />
+              <div *ngIf="soDienThoai.invalid && (soDienThoai.dirty || soDienThoai.touched)">
+                <div *ngIf="soDienThoai.errors.minlength || soDienThoai.errors.maxlength">
+                  <div class="text-danger" id="lblCodeError">Số điện thoại không hợp lệ</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--<div class="col-md-12 no-padding">
+          <div class="form-group">
+            <div class="col-sm-3 control-label">Số điện thoại:</div>
+            <div class="col-sm-9">
+              <input class="form-control" #PhoneNumber type="text" for="soDienThoai" formControlName="soDienThoai"
+                tabindex="6" [(ngModel)]="model.soDienThoai" minlength="9" maxlength="11"
+                (keyup)="checkvalue($event)" />
+              <div *ngIf="soDienThoai.invalid && (soDienThoai.dirty || soDienThoai.touched)">
+                <div *ngIf="soDienThoai.errors.minlength || soDienThoai.errors.maxlength">
+                  <div class="text-danger" id="lblCodeError">Số điện thoại không hợp lệ</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>-->
+        <div class="col-md-12 no-padding">
+          <div class="form-group">
+            <div class="col-sm-3 control-label">Mô tả:</div>
+            <div class="col-sm-9">
+              <textarea class="form-control" rows="3" for="moTa" formControlName="moTa" tabindex="7"
+                [(ngModel)]="model.moTa" maxlength="255"></textarea>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+  <!-- /.box-body -->
+</div>

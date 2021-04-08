@@ -22,6 +22,7 @@
 					</svg>
 					Thêm mới
 				</button>
+				<!-- <button (click)="show()">show</button> -->
 			</div>
 		</div>
 	</div>
@@ -61,8 +62,8 @@
 										<span class="caret-tb"></span>
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="isActived"
-											[closeOnSelect]="true" (change)="dataStateChange()">
+										<ng-select class="" [clearable]="false" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
+											[(ngModel)]="isActived" [closeOnSelect]="true" (change)="dataStateChange()">
 										</ng-select>
 									</div>
 								</th>
@@ -88,6 +89,11 @@
 												class="bi bi-trash"></i></a>
 									</div>
 								</td>
+							</tr>
+						</ng-template>
+						<ng-template pTemplate="emptymessage">
+							<tr>
+								<td class="text-center" colspan="5">Không có dữ liệu</td>
 							</tr>
 						</ng-template>
 					</p-table>
@@ -120,8 +126,8 @@
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label">Trạng thái <span class="text-danger">(*)</span></label>
-								<ng-select class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
-									[(ngModel)]="model.isActived" style="font-weight: 600;">
+								<ng-select class="form-control" [clearable]="false" [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text"
+									formControlName="isActived" [(ngModel)]="model.isActived" style="font-weight: 600;">
 								</ng-select>
 								<div *ngIf="(submitted && f.isActived.invalid) || (f.isActived.invalid && (f.isActived.dirty || f.isActived.touched))" class="has-error m-b-12">
 									<div *ngIf="f.isActived.errors.required">
@@ -255,29 +261,4 @@
 	</div>
 </div>
 
-<!-- <div class="modal fade" id="modalConfirmDelete">
-	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
-		<div class="modal-content rounded">
-			<form class="form-horizontal">
-				<div class="panel panel-default no-margin">
-					<div class="modal-header">
-						<button class="close btn-close-modal" data-dismiss="modal">
-							×
-						</button>
-						<p class="modal-title h3">Xác nhận</p>
-					</div>
-					<div class="modal-body no-padding-bottom">
-						<div>
-							<p>Anh/Chị có chắc chắn thực hiện hành động này?</p>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" style="text-transform: none;" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" style="text-transform: none;" (click)="onDelete(idDelete)">Xác
-							nhận</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-</div> -->
+<app-remind></app-remind>

@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
-import { RecommendationObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
+import { RecommendationObject, RecommendationProcessObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
-import { MESSAGE_COMMON, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { stat } from 'fs'
+import { COMMONS } from 'src/app/commons/commons'
 
 declare var $: any
 
@@ -15,7 +17,7 @@ declare var $: any
 	styleUrls: ['./list-approve-wait.component.css'],
 })
 export class ListApproveWaitComponent implements OnInit {
-	constructor(private _service: RecommendationService, private storeageService: UserInfoStorageService, private _toastr: ToastrService, private _shareData: DataService) { }
+	constructor(private _service: RecommendationService, private storeageService: UserInfoStorageService, private _toastr: ToastrService, private _shareData: DataService) {}
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
@@ -36,12 +38,12 @@ export class ListApproveWaitComponent implements OnInit {
 	isActived: boolean
 	pageIndex: number = 1
 	pageSize: number = 20
+	lstHistories: any = []
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
-	lstHistories: any = []
 	ngOnInit() {
-		this.dataSearch.status = RECOMMENDATION_STATUS.RECEIVE_DENY
+		this.dataSearch.status = RECOMMENDATION_STATUS.APPROVE_WAIT
 		this.getDataForCreate()
 		this.getList()
 	}
@@ -77,16 +79,18 @@ export class ListApproveWaitComponent implements OnInit {
 			Content: this.dataSearch.content,
 			UnitId: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
-			Status: 8,
+			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
+			UnitProcessId: this.storeageService.getUnitId(),
+			UserProcessId: this.storeageService.getUserId(),
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
 
-		this._service.recommendationGetList(request).subscribe((response) => {
+		this._service.recommendationGetListProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
-					this.listData = response.result.MRRecommendationGetAllOnPage
+					this.listData = response.result.MRRecommendationGetAllWithProcess
 					this.totalRecords = response.result.TotalCount
 				}
 			} else {
@@ -131,45 +135,61 @@ export class ListApproveWaitComponent implements OnInit {
 			this.getList()
 		}
 	}
-
-	preDelete(id: number) {
-		this.idDelete = id
-		$('#modalConfirmDelete').modal('show')
-	}
-
-	onDelete(id: number) {
-		let request = {
-			Id: id,
+	modelProcess: RecommendationProcessObject = new RecommendationProcessObject()
+	preProcess(recommendationId, idProcess, status) {
+		this.modelProcess.status = status
+		this.modelProcess.id = idProcess
+		this.modelProcess.step = STEP_RECOMMENDATION.APPROVE
+		this.modelProcess.recommendationId = recommendationId
+		this.modelProcess.reactionaryWord = false
+		this.modelProcess.reasonDeny = ''
+		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
+			$('#modalReject').modal('show')
+		} else {
+			$('#modalAccept').modal('show')
 		}
-		this._service.recommendationDelete(request).subscribe((response) => {
+	}
+	onProcessAccept() {
+		var request = {
+			_mRRecommendationForwardProcessIN: this.modelProcess,
+			RecommendationStatus: RECOMMENDATION_STATUS.FINISED,
+			ReactionaryWord: this.modelProcess.reactionaryWord,
+		}
+		this._service.recommendationProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
-				$('#modalConfirmDelete').modal('hide')
+				$('#modalAccept').modal('hide')
+				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
 				this.getList()
 			} else {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
-				console.error(error)
+			(err) => {
+				console.error(err)
 			}
 	}
-
-	getHistories(id: number) {
-		let request = {
-			Id: id,
+	onProcessDeny() {
+		if (this.modelProcess.reasonDeny == '' || this.modelProcess.reasonDeny.trim() == '') {
+			this._toastr.error('Vui lòng nhập lý do')
+			return
+		} else {
+			var request = {
+				_mRRecommendationForwardProcessIN: this.modelProcess,
+				RecommendationStatus: RECOMMENDATION_STATUS.APPROVE_DENY,
+			}
+			this._service.recommendationProcess(request).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					$('#modalReject').modal('hide')
+					this._toastr.success(COMMONS.DENY_SUCCESS)
+					this.getList()
+				} else {
+					this._toastr.error(response.message)
+				}
+			}),
+				(err) => {
+					console.error(err)
+				}
 		}
-		this._service.recommendationGetHistories(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this.lstHistories = response.result.HISRecommendationGetByObjectId
-				$('#modal-history-pakn').modal('show')
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.log(error)
-			}
 	}
 
 	exportExcel() {

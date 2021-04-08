@@ -21,17 +21,17 @@ export class NewsComponent implements OnInit {
 		pageSize: 20,
 		pageIndex: 1,
 		title: '',
-		status: null,
-		newsType: null,
+		status: '',
+		newsType: '',
 	}
 
 	listNewCategories: any[] = []
 
 	listDataPaged: any[] = []
 	listStatus: any[] = [
-		{ value: 0, text: 'Đã thu hồi' },
-		{ value: 1, text: 'Đã công bố' },
 		{ value: 2, text: 'Đang soạn thảo' },
+		{ value: 1, text: 'Đã công bố' },
+		{ value: 0, text: 'Hủy công bố' },
 	]
 	totalCount: number = 0
 	pageCount: number = 0
@@ -64,8 +64,8 @@ export class NewsComponent implements OnInit {
 			.subscribe((res) => {
 				if (res.success != 'OK') return
 				this.listDataPaged = res.result.NENewsGetAllOnPage
-				if (this.totalCount <= 0) this.totalCount = res.result.TotalCount
-				this.totalCount = Math.ceil(this.totalCount / this.query.pageSize)
+
+				if (this.totalCount == null || this.totalCount == 0) this.totalCount = res.result.TotalCount
 				// load image
 				this.getNewsAvatars()
 			})
@@ -82,7 +82,7 @@ export class NewsComponent implements OnInit {
 	acceptConfirm() {
 		let item = this.listDataPaged.find((c) => c.id == this.modalConfirm_item_id)
 		if (this.modalConfirm_type == 'delete') {
-			this.newsService.delete(item).subscribe((res) => {
+			this.newsService.delete({ id: item.id }).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error(COMMONS.DELETE_FAILED)
 					return
@@ -92,6 +92,8 @@ export class NewsComponent implements OnInit {
 			})
 		} else if (this.modalConfirm_type == 'publish') {
 			item.isPublished = !item.isPublished
+			if (item.isPublished) item.status = 1
+			else item.status = 0
 			this.newsService.update(item).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error('Xảy ra lỗi trong quá trình xử lý')

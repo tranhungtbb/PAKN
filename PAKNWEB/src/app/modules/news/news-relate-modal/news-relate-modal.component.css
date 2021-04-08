@@ -8,3 +8,21 @@
 .form-control.ng-select .ng-select-container {
 	padding-top: 5px !important;
 }
+
+.body-scroll {
+	height: 480px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+.image-relate {
+	width: 80px;
+	min-height: 3em;
+	display: inline-block;
+	border: 1px solid #ddd;
+}
+.title-relate {
+	/* height: 3em; */
+	/* white-space: nowrap; */
+	overflow: hidden;
+	text-overflow: ellipsis;
+}

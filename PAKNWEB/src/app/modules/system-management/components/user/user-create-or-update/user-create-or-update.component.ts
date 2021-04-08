@@ -61,7 +61,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			unitId: ['', [Validators.required]],
 			gender: ['', [Validators.required]],
 			roleId: ['', [Validators.required]],
-			isActived: [''],
+			isActived: ['', [Validators.required]],
 			address: [''],
 		})
 
@@ -149,12 +149,28 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		}
 	}
 
+	modal_btn_save = 'Tạo mới'
 	openModal(unitId = 0, userId = 0): void {
+		this.createUserForm = this.formBuilder.group({
+			//userName: ['', [Validators.required]],
+			email: [this.modelUser.email, [Validators.required, Validators.email]],
+			fullName: [this.modelUser.fullName, [Validators.required]],
+			phone: [this.modelUser.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
+			positionId: [this.modelUser.positionId, [Validators.required]],
+			unitId: [this.modelUser.unitId, [Validators.required]],
+			gender: [this.modelUser.gender, [Validators.required]],
+			roleId: [this.modelUser.positionId, [Validators.required]],
+			isActived: [this.modelUser.isActived, [Validators.required]],
+			address: [this.modelUser.address],
+		})
+
 		this.userFormSubmitted = false
 		this.modelUser = new UserObject2()
+
 		this.modelUser.unitId = unitId
 		if (userId > 0) {
 			this.modalTitle = 'Chỉnh sửa người dùng'
+			this.modal_btn_save = 'Cập nhật'
 			this.userService.getById({ id: userId }).subscribe((res) => {
 				if (res.success != 'OK') return
 				this.modelUser = res.result.SYUserGetByID[0]
@@ -165,7 +181,12 @@ export class UserCreateOrUpdateComponent implements OnInit {
 				else this.selectedRoles = []
 			})
 		} else {
-			this.modalTitle = 'Tạo người dùng mới'
+			this.modalTitle = 'Tạo mới người dùng'
+			this.modal_btn_save = 'Tạo mới'
+			//set value
+			this.modelUser.positionId = null
+			this.modelUser.gender = null
+			this.modelUser.isActived = true
 		}
 
 		$('#avatar-view').attr('src', '')

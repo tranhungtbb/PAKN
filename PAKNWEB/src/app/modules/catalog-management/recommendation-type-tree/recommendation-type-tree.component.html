@@ -1,0 +1,193 @@
+
+<div class="panel-group">
+  <section class="content-header">
+    <div class="row">
+      <ol class="breadcrumb">
+        <li>
+          <a class="text-black" routerLink="/business/business-management/dash-board">Trang chủ</a>
+        </li>
+        <li>
+          <a class="text-black">Danh mục</a>
+        </li>
+        <li>
+          <a>Lĩnh vực</a>
+        </li>
+      </ol>
+      <button class="btn btn-sm btn-previous pull-right" appSvBackButton><i class="far fa-undo-alt"></i> Quay lại</button>
+    </div>
+  </section>
+  <section class="content n-d-t">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-md-offset-3 col-md-9 panel-heading-group petition">
+                <div class="form-row">
+                  <div class="search-item">
+                    <input class="form-control" type="text" [(ngModel)]="modelSearch.code" maxlength="50" (keydown.enter)="dataStateChange()" placeholder="Nhập mã..." />
+                  </div>
+                  <div class="search-item">
+                    <input class="form-control" [(ngModel)]="modelSearch.name" maxlength="1000" (keydown.enter)="dataStateChange()" type="text" placeholder="Nhập tên..." />
+                  </div>
+                  <div class="search-item">
+                    <ng-select [items]="listTrangThai" placeholder="Trạng thái ..."
+                               bindLabel="text" bindValue="value"
+                               [(ngModel)]="modelSearch.status"
+                               [closeOnSelect]="true"
+                               (change)="dataStateChange()">
+                      <ng-template ng-option-tmp let-item="item">
+                        <div title="{{item.text}}">{{item.text}}</div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                  <div>
+                    <button class="btn btn-primary btn-sm" (click)="dataStateChange()">
+                      <i class="fal fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="btn-b-l">
+                  <button class="btn btn-sm btn-primary" (click)="preCreate()">
+                    <i class="fal fa-plus"></i> Thêm mới
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p-treeTable #tableResolutionType [value]="listresolutionTypeObject" [paginator]="true" [rows]="modelSearch.pageSize" [totalRecords]="totalRecordsForPaginator" [rowsPerPageOptions]="[10,20,30]"
+                       [lazy]="true" (onLazyLoad)="onPageChange($event)" (onNodeExpand)="onNodeExpand($event)">
+            <ng-template pTemplate="header">
+              <tr>
+                <!--<th>STT</th>-->
+                <th>Tên lĩnh vực</th>
+                <th class="priority-3"> Mã</th>
+                <th class="priority-4"> Mô tả</th>
+                <th class="priority-5 text-center" style="width:150px"> Trạng thái</th>
+                <th class="priority-2 text-center" style="width:150px"> Thao tác</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-rowIndex="rowIndex">
+              <tr>
+                <!--<td class="text-center">{{rowIndex + 1}}</td>-->
+                <td>
+                  <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                  {{rowData.tenDuLieu}}
+                </td>
+                <td>
+                  {{rowData.code}}
+                </td>
+                <td>
+                  {{rowData.moTa}}
+                </td>
+                <td class="text-center">
+                  <label>
+                    <input class="ace ace-switch ace-switch-4" type="checkbox" [(ngModel)]="rowData.trangThai" (change)="onUpdateStatus(rowData)" />
+                    <span class="lbl middle"></span>
+                  </label>
+                </td>
+                <td class="text-center">
+                  <a title="Thêm cấp con" (click)="preCreateInList(rowData)">
+                    <i class="fa fa-plus"></i>
+                  </a>
+                  <a title="Sửa" (click)="preUpdate(rowData)">
+                    <i class="far fa-pen"></i>
+                  </a>
+                  <a title="Xóa" (appConfirmClick)="onDelete(rowData)">
+                    <i class="far fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td [attr.colspan]="5">
+                  Không có dữ liệu hiển thị
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+              Tổng số {{totalRecords}} bản ghi
+            </ng-template>
+          </p-treeTable>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="modal fade" id="modal">
+  <div class="modal-dialog" style="min-width: 50%">
+    <form class="form-horizontal" [formGroup]="form" #formDir="ngForm">
+      <div class="panel panel-default no-margin">
+        <div class="modal-header">
+          <button class="close btn-close-modal" data-dismiss="modal">
+            ×
+          </button>
+          <p class="title-ct no-margin">{{title}}</p>
+        </div>
+        <div class="modal-body no-padding-bottom">
+          <div class="row form-group">
+            <div class="col-sm-6">
+              <label class="control-label">Mã lĩnh vực <span class="text-danger">*</span></label>
+              <input class="form-control" formControlName="code" [(ngModel)]="model.code" maxlength="20" id="code" />
+              <div *ngIf="(submitted && f.code.invalid) || (f.code.invalid && (f.code.dirty || f.code.touched))" class="has-error m-b-12">
+                <div *ngIf="f.code.errors.required">
+                  <span class="help-block">Trường dữ liệu này không để trống</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label class="control-label">Tên lĩnh vực <span class="text-danger">*</span></label>
+              <input class="form-control" formControlName="name" [(ngModel)]="model.tenDuLieu" id="ten" maxlength="100" />
+              <div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))" class="has-error m-b-12">
+                <div *ngIf="f.name.errors.required">
+                  <span class="help-block">Trường dữ liệu này không để trống</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-sm-6">
+              <label class="control-label">Trạng thái <span class="text-danger">*</span></label>
+              <ng-select [items]="listTrangThai"
+                         bindValue="value" bindLabel="text"
+                         formControlName="status"
+                         [(ngModel)]="model.trangThai">
+              </ng-select>
+              <div *ngIf="(submitted && f.status.invalid) || (f.status.invalid && (f.status.dirty || f.status.touched))" class="has-error m-b-12">
+                <div *ngIf="f.status.errors.required">
+                  <span class="help-block">Trường dữ liệu này không để trống</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label class="control-label"> Thuộc lĩnh vực</label>
+              <ng-select [items]="listcapChaId"
+                         bindValue="value" bindLabel="text"
+                         formControlName="parentId"
+                         [(ngModel)]="model.parentId"
+                         placeholder="Chọn lĩnh vực ...">
+              </ng-select>
+              <div *ngIf="(submitted && f.parentId.invalid) || (f.parentId.invalid && (f.parentId.dirty || f.parentId.touched))" class="has-error m-b-12">
+                <div *ngIf="f.parentId.errors.required">
+                  <span class="help-block">Trường dữ liệu này không để trống</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-sm-12">
+              <label class="control-label">Mô tả</label>
+              <textarea class="form-control" formControlName="description" type="text" rows="4" [(ngModel)]="model.description" maxlength="255"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-save btn-sm" (click)="onSave()"><i class="fal fa-save"></i> Lưu</button>
+          <button data-dismiss="modal" class="btn btn-danger btn-sm"><i class="far fa-times"> Hủy</i></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

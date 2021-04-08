@@ -1,0 +1,159 @@
+<div class="panel-group">
+  <section class="content">
+    <div class="row">
+      <ol class="breadcrumb">
+        <li><a class="text-black" routerLink="/business/business-management/dash-board">Trang chủ</a></li>
+        <li><a class="text-black">Hệ thống</a></li>
+        <li><a>Thông tin người dùng</a></li>
+      </ol>
+      <button class="btn btn-sm btn-previous pull-right" appSvBackButton><i class="far fa-undo-alt"></i> Quay lại</button>
+    </div>
+    <form class="form-horizontal" id="createUserForm" [formGroup]="createUserForm" #formDir="ngForm" (ngSubmit)="onSave()">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-6 col-xs-6">
+              <h5>Thông tin cơ bản</h5>
+            </div>
+            <div class="col-md-6 col-xs-6">
+              <div class="btn-group pull-right btn-group-add-del">
+                <button class="btn btn-primary btn-sm" [routerLink]="['/business/system-management/user/edit-user', model.ma]"><i class="far fa-pen"></i> Sửa</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="row text-center" style="background-color:#FAFAFA">
+            <img src="{{imgURL}}" style="width: 200px; height: 200px" class="img-circle img-bordered-sm" id="imgUpdateUser">
+          </div>
+          <div class="row custom-head-user-info">
+            <h5 class="text-bold">Thông tin cơ bản</h5>
+          </div>
+          <div class="row">
+            <div class="col-md-12 no-padding-left">
+              <div class="col-md-4 custom-user-label-view" [ngClass]="{ 'has-error':( submitted && f.mail.errors) ||(f.mail.invalid && (f.mail.dirty || f.mail.touched))}">
+                <label>
+                  Email: <i style="color: red">*</i>
+                </label>
+                <div>{{model.homThu}}</div>
+              </div>
+              <div class="col-md-4 custom-user-label-view" [ngClass]="{ 'has-error': (submitted && f.loginName.errors) ||(f.loginName.invalid && (f.loginName.dirty || f.loginName.touched)) }">
+                <label>
+                  Tên đăng nhập: <i style="color: red">*</i>
+                </label>
+                <div>{{model.tenDangNhap}}</div>
+              </div>
+              <div class="col-md-4 custom-user-label-view" [ngClass]="{ 'has-error': (submitted && f.sex.errors) ||(f.sex.invalid && (f.sex.dirty || f.sex.touched)) }">
+                <label>
+                  Giới tính: <i style="color: red">*</i>
+                </label>
+                <div *ngFor="let item of listSexs">
+                  <span *ngIf="item.value == model.gioiTinh" title="{{item.text}}">{{item.text}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 no-padding-left">
+              <div class="col-md-4 custom-user-label-view" [ngClass]="{ 'has-error': (submitted && f.userName.errors) ||(f.userName.invalid && (f.userName.dirty || f.userName.touched)) }">
+                <label>
+                  Họ và tên: <i style="color: red">*</i>
+                </label>
+                <div>{{model.hoTen}}</div>
+              </div>
+              <div class="col-md-4 custom-user-label-view" [ngClass]="{ 'has-error': (submitted && f.role.errors) ||(f.role.invalid && (f.role.dirty || f.role.touched)) }">
+                <label>
+                  Vai trò: <i style="color: red">*</i>
+                </label>
+                <div *ngFor="let item of listVaiTro">
+                  <span *ngIf="item.value == model.role" title="{{item.text}}">{{item.text}}</span>
+                </div>
+              </div>
+              <div class="col-md-4 custom-user-label-view">
+                <label>
+                  Số điện thoại:
+                </label>
+                <div>{{model.dienThoai}}</div>
+              </div>
+            </div>
+            <div class="col-md-12 no-padding-left">
+              <div class="col-md-4 custom-user-label-view" [ngClass]="{ 'has-error': (submitted && f.state.errors) ||(f.state.invalid && (f.state.dirty || f.state.touched)) }">
+                <label>
+                  Trạng thái: <i style="color: red">*</i>
+                </label>
+                <div *ngFor="let item of listTrangThai">
+                  <span *ngIf="item.value == model.kichHoat" title="{{item.text}}">{{item.text}}</span>
+                </div>
+              </div>
+              <div class="col-md-8 custom-user-label-view">
+                <label>
+                  Địa chỉ:
+                </label>
+                <div>{{model.diaChi}}</div>
+              </div>
+            </div>
+            <div class="col-md-12 no-padding-left">
+              <div class="col-md-4 custom-user-label-view">
+                <label>
+                  Chức vụ:
+                </label>
+                <div *ngFor="let item of listPosistions">
+                  <span *ngIf="item.value == model.maChucVu" title="{{item.text}}">{{item.text}}</span>
+                </div>
+              </div>
+              <div class="col-md-8 custom-user-label-view">
+                <label>
+                  Phòng ban:
+                </label>
+                <div>
+                  <span *ngFor="let item of listDepartments">
+                    <span *ngFor="let phongBan of model.listPhongBan">
+                      <span *ngIf="item.value == phongBan" title="{{item.text}}">{{item.text}} , </span>
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h5>Phân quyền người dùng</h5>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-3 border-right">
+              <div class="permission-category-selection" style="margin-top:12px">Chọn nhóm quyền</div>
+              <hr />
+              <div class="vertical-checkboxes-list">
+                <div *ngFor="let group of listGroupUsers">
+                  <mat-checkbox [(ngModel)]="group.selected" [ngModelOptions]="{standalone: true}" (change)="onGroupUserChange($event, group)">{{ group.tenNhom }}</mat-checkbox>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-9">
+              <div *ngFor="let permisionCategory of listPermissionCategories">
+                <div class="col-sm-12 permission-category-selection">
+                  <mat-checkbox [(ngModel)]="permisionCategory.selected" [ngModelOptions]="{standalone: true}" [labelPosition]="before" (change)="onCategoryChange($event, permisionCategory)" [disabled]="permisionCategory.disabled">{{ permisionCategory.name }}</mat-checkbox>
+                  <hr />
+                  <div *ngFor="let function of permisionCategory.htFunction; let i = index;">
+                    <div class="col-sm-4 permission-select-layout">
+                      <div class="pull-left">
+                        <button type="button" class="btn-collapse btn btn-box-tool" data-toggle="collapse" [attr.href]="'#collapseOne_'+i+permisionCategory.id"></button>
+                      </div>
+                      <mat-checkbox [(ngModel)]="function.selected" [ngModelOptions]="{standalone: true}" [labelPosition]="before" (change)="onFunctionChange($event, function, permisionCategory)" [disabled]="function.disabled">{{ function.name }}</mat-checkbox>
+                      <div [attr.id]="'collapseOne_'+i+permisionCategory.id" collapse in class="collapse in">
+                        <div class="permission-select-area" *ngFor="let permission of function.htPermission">
+                          <mat-checkbox [(ngModel)]="permission.selected" [ngModelOptions]="{standalone: true}" [labelPosition]="before" (change)="onPermissionChange($event, permission, function, permisionCategory)" [disabled]="permission.disabled">{{ permission.name }}</mat-checkbox>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </section>
+</div>

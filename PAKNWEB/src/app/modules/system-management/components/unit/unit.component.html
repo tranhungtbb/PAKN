@@ -15,7 +15,7 @@
 			<p-tree id="tree-unit" [value]="treeUnit">
 
 				<ng-template let-node pTemplate="default">
-					<a (click)="treeViewActive(node.id, node.unitLevel)" class="tree-cursor-hand" [ngClass]="{'text-color-blue':(unitObject.id && unitObject.id == node.id)}">
+					<a (click)="treeViewActive(node.id, node.unitLevel)" class="cursor-hand" [ngClass]="{'text-color-blue':(unitObject.id && unitObject.id == node.id)}">
 						<strong>{{node.name}}</strong>
 					</a>
 				</ng-template>
@@ -31,11 +31,12 @@
 						<span>{{unitObject.name}}</span>
 					</p>
 					<div class="d-flex align-items-center">
-						<button type="button" class="btn grd-brown text-dark border-0 mr-3 py-2 px-3" (click)="modalCreateOrUpdate(unitObject.id,unitObject.unitLevel)"><i
-								class="bi bi-pencil-square mr-2"></i>
+						<button type="button" class="btn grd-brown text-dark border-0 mr-3 py-2 px-3 cursor-hand"
+							(click)="modalCreateOrUpdate(unitObject.id,unitObject.unitLevel)"><i class="bi bi-pencil-square mr-2"></i>
 							Sửa
 						</button>
-						<button type="button" class="btn grd-red text-white border-0 py-2 px-3" (click)="onOpenConfirmModal(unitObject.id,'unit')"><i class="bi bi-trash mr-2"></i>
+						<button type="button" class="btn grd-red text-white border-0 py-2 px-3 cursor-hand" (click)="onOpenConfirmModal(unitObject.id,'unit')"><i
+								class="bi bi-trash mr-2"></i>
 							Xóa
 						</button>
 					</div>
@@ -73,7 +74,7 @@
 					<div id="bordered_no-gutter_collapseOne" class="collapse accordion__body">
 						<div class="table-responsive">
 							<p-table #table [value]="listUserPaged" [rows]="queryUser.pageSize" [totalRecords]="totalCount_User"
-								currentPageReportTemplate="Tổng số {{totalCount_User}}" (onLazyLoad)="onPageChange($event)" [lazy]="true" [responsive]="true" [paginator]="true"
+								currentPageReportTemplate="Tổng số {{totalCount_User}}" (onLazyLoad)="onUserPageChange($event)" [lazy]="true" [responsive]="true" [paginator]="true"
 								[showCurrentPageReport]="true" autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 								<ng-template pTemplate="header" class="bg-thead">
 									<tr>
@@ -87,21 +88,24 @@
 												<strong>Tên đăng nhập</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<input [(ngModel)]="queryUser.email" type="text" class="form-control form-control-sm" (change)="onUserFilterChange()">
+											<input [(ngModel)]="queryUser.userName" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
+												(change)="onUserFilterChange()">
 										</th>
-										<th style="width: 350px">
+										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Tên người dùng</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<input [(ngModel)]="queryUser.fullName" type="text" class="form-control form-control-sm" (change)="onUserFilterChange()">
+											<input [(ngModel)]="queryUser.fullName" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
+												(change)="onUserFilterChange()">
 										</th>
-										<th>
+										<th style="min-width: 150px;">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Số điện thoại</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<input [(ngModel)]="queryUser.phone" type="text" class="form-control form-control-sm" (change)="onUserFilterChange()">
+											<input [(ngModel)]="queryUser.phone" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
+												(change)="onUserFilterChange()">
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -109,8 +113,13 @@
 												<span class="caret-tb"></span>
 											</p>
 											<div class="dropdown bootstrap-select form-control form-control-sm">
-												<ng-select class="width-175" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
-													[(ngModel)]="queryUser.isActived" [closeOnSelect]="true" (change)="onUserFilterChange()">
+												<!-- [items]="listStatus" bindLabel="text" bindValue="value" -->
+												<ng-select class="width-175" [(ngModel)]="queryUser.isActived" [closeOnSelect]="true" [searchable]="false" [clearable]="false"
+													(change)="onUserFilterChange()">
+													<ng-option value="">Tất cả trạng thái</ng-option>
+													<ng-option *ngFor="let item of listStatus" [value]="item.value">
+														{{item.text}}
+													</ng-option>
 												</ng-select>
 											</div>
 
@@ -127,9 +136,11 @@
 										<td><strong>{{item.fullName}}</strong></td>
 										<td>{{item.phone}}</td>
 										<td>
-											<span class="badge rounded-pill badge-light" *ngIf="!item.isActived" (click)="onOpenConfirmModal(item.id,'user_status')">Hết hiệu
+											<span class="badge rounded-pill badge-light cursor-hand" *ngIf="!item.isActived" (click)="onOpenConfirmModal(item.id,'user_status')">Hết
+												hiệu
 												lực</span>
-											<span class="badge rounded-pill badge-success" *ngIf="item.isActived" (click)="onOpenConfirmModal(item.id,'user_status')">Hiệu
+											<span class="badge rounded-pill badge-success cursor-hand" *ngIf="item.isActived"
+												(click)="onOpenConfirmModal(item.id,'user_status')">Hiệu
 												lực</span>
 										</td>
 										<td>
@@ -184,28 +195,29 @@
 												<strong>Tên đơn vị</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<input type="text" [(ngModel)]="query.name" (change)="unitFilterChange()" class="form-control form-control-sm">
+											<input type="text" [(ngModel)]="query.name" (change)="unitFilterChange()" placeholder="Nhập ..." class="form-control form-control-sm">
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Số điện thoại</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<input type="text" [(ngModel)]="query.phone" (change)="unitFilterChange()" class="form-control form-control-sm">
+											<input type="text" [(ngModel)]="query.phone" (change)="unitFilterChange()" placeholder="Nhập ..." class="form-control form-control-sm">
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Email</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<input type="text" [(ngModel)]="query.email" (change)="unitFilterChange()" class="form-control form-control-sm">
+											<input type="text" [(ngModel)]="query.email" (change)="unitFilterChange()" placeholder="Nhập ..." class="form-control form-control-sm">
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Địa chỉ</strong>
 												<span class="caret-tb"></span>
 											</p>
-											<input type="text" [(ngModel)]="query.address" (change)="unitFilterChange()" class="form-control form-control-sm">
+											<input type="text" [(ngModel)]="query.address" (change)="unitFilterChange()" placeholder="Nhập ..."
+												class="form-control form-control-sm">
 										</th>
 										<th style="width: 160px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead text-uppercase">
@@ -213,8 +225,13 @@
 												<span class="caret-tb"></span>
 											</p>
 											<div class="dropdown bootstrap-select form-control form-control-sm">
-												<ng-select class="width-175" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
-													[closeOnSelect]="true" [(ngModel)]="query.isActive" (change)="unitFilterChange()">
+												<!-- [items]="listStatus" bindLabel="text" bindValue="value"  -->
+												<ng-select class="width-175" [closeOnSelect]="true" [searchable]="false" [(ngModel)]="query.isActived"
+													(change)="unitFilterChange()">
+													<ng-option value="">Tất cả trạng thái</ng-option>
+													<ng-option *ngFor="let item of listStatus" [value]="item.value">
+														{{item.text}}
+													</ng-option>
 												</ng-select>
 											</div>
 
@@ -234,9 +251,11 @@
 											{{item.address}}
 										</td>
 										<td>
-											<span class="badge rounded-pill badge-success" *ngIf="item.isActived" (click)="onOpenConfirmModal(item.id,'unit_status')">Hiệu
+											<span class="badge rounded-pill badge-success cursor-hand" *ngIf="item.isActived"
+												(click)="onOpenConfirmModal(item.id,'unit_status')">Hiệu
 												lực</span>
-											<span class="badge rounded-pill badge-light" *ngIf="!item.isActived" (click)="onOpenConfirmModal(item.id,'unit_status')">Hết hiệu
+											<span class="badge rounded-pill badge-light cursor-hand" *ngIf="!item.isActived" (click)="onOpenConfirmModal(item.id,'unit_status')">Hết
+												hiệu
 												lực</span>
 										</td>
 										<td>

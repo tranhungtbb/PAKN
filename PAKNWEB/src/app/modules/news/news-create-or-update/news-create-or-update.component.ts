@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter';
+//import * as ClassicEditor from '../ckeditor';
+
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 
@@ -14,6 +17,8 @@ import { NewsRelateModalComponent } from '../news-relate-modal/news-relate-modal
 import { COMMONS } from '../../../commons/commons'
 import { AppSettings } from '../../../constants/app-setting'
 import { NewsModel } from '../../../models/NewsObject'
+
+declare var $:any
 
 @Component({
 	selector: 'app-news-create-or-update',
@@ -44,13 +49,16 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	categoriesSelected: any[]
 	avatarUrl: any = 'assets/dist/images/no.jpg'
 
+
+
+
 	ngOnInit() {
 		this.newsForm = this.formBuilder.group({
-			title: ['', [Validators.required]],
-			summary: ['', [Validators.required]],
-			contents: [''],
-			newsType: [''],
-			postType: [''],
+			title: [this.model.title, [Validators.required]],
+			summary: [this.model.summary],
+			contents: [this.model.contents],
+			newsType: [this.model.newsType],
+			postType: [this.model.postType],
 			pushNotify: [''],
 		})
 
@@ -92,7 +100,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	}
 
 	getNewsRelatesInfo() {
-		if (this.model.newsRelateIds != null && this.model.newsRelateIds.length > 0) {
+		if (this.model.newsRelateIds != null && this.model.newsRelateIds != '') {
 			this.newsService
 				.getAllPagedList({
 					pageIndex: 1,
@@ -122,6 +130,8 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			return
 		}
 		this.model.isPublished = published
+		if (published) this.model.status = 1
+		else this.model.status = 2
 
 		if (this.model.id && this.model.id > 0) {
 			this.newsService.update(this.model).subscribe((res) => {
@@ -166,6 +176,14 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				})
 		} else {
 			this.newsRelatesSelected = []
+		}
+	}
+
+	removeRelate(id: number) {
+		let index = this.newsRelatesSelected.indexOf(this.newsRelatesSelected.find((c) => c.id == id))
+		if (index >= 0) {
+			this.newsRelatesSelected.splice(index, 1)
+			this.model.newsRelateIds = this.newsRelatesSelected.map((c) => c.id).toString()
 		}
 	}
 

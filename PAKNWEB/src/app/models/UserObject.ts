@@ -58,10 +58,11 @@ export class UserObject2 {
 		this.roleIds = null
 		this.isActived = true
 		this.isDeleted = false
-		this.gender = true
+		this.gender = null
 		this.type = 1
 		this.isSuperAdmin = false
 		this.typeId = 1
+		this.isActived = true
 	}
 
 	id: number

@@ -24,6 +24,7 @@ declare var $: any
 })
 export class UnitComponent implements OnInit, AfterViewInit {
 	listStatus: any = [
+		// { value: '', text: 'Toàn bộ' },
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
 	]
@@ -54,7 +55,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		phone: '',
 		email: '',
 		address: '',
-		isActive: '',
+		isActived: '',
 	}
 	totalCount_Unit: number = 0
 	unitPageCount: number = 0
@@ -123,16 +124,26 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 
 	getUnitPagedList(): void {
-		this.query.isActive == null ? '' : this.query.isActive
-		this.unitService.getAllPagedList(this.query).subscribe(
-			(res) => {
-				if (res.success != 'OK') return
-				this.listUnitPaged = res.result.CAUnitGetAllOnPage
-				if (this.totalCount_Unit <= 0) this.totalCount_Unit = res.result.TotalCount
-				this.unitPageCount = Math.ceil(this.totalCount_Unit / this.query.pageSize)
-			},
-			(err) => {}
-		)
+		this.unitService
+			.getAllPagedList({
+				parentId: this.query.parentId,
+				pageSize: this.query.pageSize,
+				pageIndex: this.query.pageIndex,
+				name: this.query.name,
+				email: this.query.email,
+				phone: this.query.phone,
+				address: this.query.address,
+				isActived: this.query.isActived == null ? '' : this.query.isActived,
+			})
+			.subscribe(
+				(res) => {
+					if (res.success != 'OK') return
+					this.listUnitPaged = res.result.CAUnitGetAllOnPage
+					if (this.totalCount_Unit <= 0) this.totalCount_Unit = res.result.TotalCount
+					this.unitPageCount = Math.ceil(this.totalCount_Unit / this.query.pageSize)
+				},
+				(err) => {}
+			)
 	}
 	unitFilterChange(): void {
 		this.getUnitPagedList()
@@ -157,7 +168,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		})
 	}
 
-	getAllUnitShortInfo() {
+	getAllUnitShortInfo(activeTreeNode: any = null) {
 		this.unitService.getAll({}).subscribe(
 			(res) => {
 				if (res.success != 'OK') return
@@ -169,10 +180,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 						unitLevel: e.unitLevel,
 						children: [],
 					}
-					if (e.unitLevel < 3) {
-						item['expandedIcon'] = 'pi bi-dash-circle-fill'
-						item['collapsedIcon'] = 'pi bi-plus-circle-fill'
-					}
+					// if (e.unitLevel < 3) {
+					// 	item['expandedIcon'] = 'pi bi-dash-circle-fill' //change [ngClass]=\"{'bi-plus-circle-fill':!node.expanded,'bi-dash-circle-fill':node.expanded}
+					// 	item['collapsedIcon'] = 'pi bi-plus-circle-fill'
+					// }
 
 					return item
 				})
@@ -180,7 +191,11 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				this.treeUnit = this.unflatten(listUnit)
 
 				//active first
-				this.treeViewActive(this.treeUnit[0].id, this.treeUnit[0].unitLevel)
+				if (activeTreeNode == null) this.treeViewActive(this.treeUnit[0].id, this.treeUnit[0].unitLevel)
+				else {
+					this.treeViewActive(activeTreeNode.id, activeTreeNode.unitLevel)
+					this.expandNode(activeTreeNode)
+				}
 			},
 			(err) => {}
 		)
@@ -188,21 +203,30 @@ export class UnitComponent implements OnInit, AfterViewInit {
 
 	/*start user area*/
 	getUserPagedList() {
-		this.queryUser.unitId = this.unitObject.id
-		this.queryUser.isActive == null ? '' : this.queryUser.isActive
-		this.userService.getAllPagedList(this.queryUser).subscribe((res) => {
-			if (res.success != 'OK') return
-			this.listUserPaged = res.result.SYUserGetAllOnPage
-			if (this.totalCount_User <= 0) this.totalCount_User = res.result.TotalCount
-			this.userPageCount = Math.ceil(this.totalCount_User / this.query.pageSize)
-		})
+		this.userService
+			.getAllPagedList({
+				unitid: this.unitObject.id,
+				pageSize: this.queryUser.pageSize,
+				pageIndex: this.queryUser.pageIndex,
+				userName: this.queryUser.userName,
+				email: this.queryUser.email,
+				fullName: this.queryUser.fullName,
+				phone: this.queryUser.phone,
+				isActived: this.queryUser.isActived == null ? '' : this.queryUser.isActived,
+			})
+			.subscribe((res) => {
+				if (res.success != 'OK') return
+				this.listUserPaged = res.result.SYUserGetAllOnPage
+				if (this.totalCount_User <= 0) this.totalCount_User = res.result.TotalCount
+				this.userPageCount = Math.ceil(this.totalCount_User / this.query.pageSize)
+			})
 	}
 	onUserFilterChange() {
 		this.getUserPagedList()
 	}
 	onUserPageChange(event: any) {
-		this.query.pageSize = event.rows
-		this.query.pageIndex = event.first / event.rows + 1
+		this.queryUser.pageSize = event.rows
+		this.queryUser.pageIndex = event.first / event.rows + 1
 		this.getUserPagedList()
 	}
 
@@ -228,6 +252,17 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	/*modal thêm / sửa đơn vị*/
 	modalCreateOrUpdateTitle: string = 'Thêm mới cơ quan, đơn vị'
 	modalCreateOrUpdate(id: any, level: any = 1, parentId: any = 0) {
+		this.createUnitFrom = this.formBuilder.group({
+			name: [this.modelUnit.name, Validators.required],
+			unitLevel: [this.modelUnit.unitLevel, [Validators.required]],
+			isActived: [this.modelUnit.isActived],
+			parentId: [this.modelUnit.parentId, Validators.required],
+			description: [this.modelUnit.description],
+			email: [this.modelUnit.email, [Validators.required, Validators.email]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
+			phone: [this.modelUnit.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
+			address: [this.modelUnit.address],
+		})
+
 		this.unitFormSubmitted = false
 		if (id == 0) {
 			this.modalCreateOrUpdateTitle = 'Thêm mới cơ quan, đơn vị'
@@ -255,13 +290,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	unitFormSubmitted = false
 	onSaveUnit() {
 		this.unitFormSubmitted = true
-		let { controls } = this.createUnitFrom
-		// for (let key in controls) {
-		// 	if (!controls[key].valid) {
-		// 		this._toastr.error('Dữ liệu không hợp lệ')
-		// 		return
-		// 	}
-		// }
 
 		if (this.createUnitFrom.invalid) {
 			this._toastr.error('Dữ liệu không hợp lệ')
@@ -275,8 +303,9 @@ export class UnitComponent implements OnInit, AfterViewInit {
 					return
 				}
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
-				this.getAllUnitShortInfo()
-				this.getUnitPagedList()
+				// this.getAllUnitShortInfo()
+				//this.getUnitPagedList()
+				this.treeViewActive(this.unitObject.id, this.unitObject.unitLevel)
 				this.modelUnit = new UnitObject()
 				$('#modal-create-or-update').modal('hide')
 			})
@@ -287,8 +316,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 					return
 				}
 				this._toastr.success(COMMONS.ADD_SUCCESS)
-				this.getAllUnitShortInfo()
-				this.getUnitPagedList()
+				this.getAllUnitShortInfo(this.unitObject)
 				this.modelUnit = new UnitObject()
 				$('#modal-create-or-update').modal('hide')
 			})
@@ -307,7 +335,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				return
 			}
 			this._toastr.success(COMMONS.UPDATE_SUCCESS)
-			this.getAllUnitShortInfo()
+			//this.getAllUnitShortInfo(this.unitObject)
 			this.getUnitPagedList()
 			this.modelUnit = new UnitObject()
 			$('#modal-create-or-update').modal('hide')
@@ -318,6 +346,8 @@ export class UnitComponent implements OnInit, AfterViewInit {
 
 		item.isActived = !item.isActived
 		item.typeId = 1
+		item.countLock = 0
+		item.lockEndOut = ''
 		this.userService.update(item).subscribe((res) => {
 			if (res.success != 'OK') {
 				this._toastr.error(COMMONS.UPDATE_FAILED)
@@ -325,16 +355,42 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				return
 			}
 			this._toastr.success(COMMONS.UPDATE_SUCCESS)
-			this.getAllUnitShortInfo()
-			this.getUnitPagedList()
+			this.getAllUnitShortInfo(this.unitObject)
+			//this.getUnitPagedList()
 			this.modelUnit = new UnitObject()
 			$('#modal-create-or-update').modal('hide')
 		})
 	}
 
+	//////expand node
+	expandNode(node: any) {
+		let _node = this.searchTree(this.treeUnit, node.id)
+		if (_node) this.expandRecursive(_node, true)
+	}
+	private expandRecursive(node: any, isExpand: boolean) {
+		node.expanded = isExpand
+		if (node.parentId) {
+			let pNode = this.searchTree(this.treeUnit, node.parentId)
+			this.expandRecursive(pNode, isExpand)
+		}
+	}
+	private searchTree(element, matchingId) {
+		if (element.id == matchingId) {
+			return element
+		} else if (element.children != null) {
+			var i
+			var result = null
+			for (i = 0; result == null && i < element.children.length; i++) {
+				result = this.searchTree(element.children[i], matchingId)
+			}
+			return result
+		}
+		return null
+	}
+	//////end expand node
+
 	changeLevel(level: number) {
 		this.modelUnit.unitLevel = level
-		//this.modelUnit.parentId = 0
 		if (this.modelUnit.unitLevel > 1) this.modelUnit.parentId = null
 		else {
 			this.modelUnit.parentId = 0
@@ -369,14 +425,20 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 	onDeleteUnit(id) {
 		let item = this.listUnitPaged.find((c) => c.id == this.modelConfirm_itemId)
+		if (!item) item = this.unitObject
 		this.unitService.delete(item).subscribe((res) => {
 			if (res.success != 'OK') {
 				this._toastr.error(COMMONS.DELETE_FAILED)
 				return
 			}
 			this._toastr.success(COMMONS.DELETE_SUCCESS)
-			this.getAllUnitShortInfo()
-			this.getUnitPagedList()
+
+			if (this.unitObject.id == id) {
+				this.getAllUnitShortInfo()
+				this.getUnitPagedList()
+			} else {
+				this.getAllUnitShortInfo(this.unitObject)
+			}
 		})
 	}
 	/*end - chức năng xác nhận hành động xóa*/
