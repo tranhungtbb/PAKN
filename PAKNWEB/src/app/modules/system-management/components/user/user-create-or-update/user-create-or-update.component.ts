@@ -108,8 +108,14 @@ export class UserCreateOrUpdateComponent implements OnInit {
 
 		if (this.modelUser.id != null && this.modelUser.id > 0) {
 			this.userService.update(this.modelUser, files).subscribe((res) => {
+				$('#seclect-avatar').val('')
+
 				if (res.success != 'OK') {
-					this.toast.error(COMMONS.UPDATE_FAILED)
+					let errorMsg = COMMONS.UPDATE_FAILED
+					if (res.message.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
+						errorMsg = 'Email đã được sử dụng'
+					}
+					this.toast.error(errorMsg)
 					return
 				}
 				this.toast.success(COMMONS.UPDATE_SUCCESS)
@@ -119,8 +125,14 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			})
 		} else {
 			this.userService.insert(this.modelUser, files).subscribe((res) => {
+				$('#seclect-avatar').val('')
+
 				if (res.success != 'OK') {
-					this.toast.error(COMMONS.ADD_FAILED)
+					let errorMsg = COMMONS.ADD_FAILED
+					if (res.message.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
+						errorMsg = 'Email đã được sử dụng'
+					}
+					this.toast.error(errorMsg)
 					return
 				}
 				this.toast.success(COMMONS.ADD_SUCCESS)

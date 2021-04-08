@@ -13,6 +13,7 @@ namespace PAKNAPI.Models.Results
         public string Phone { get; set; }
         public string AccessToken { get; set; }
         public int? UnitId { get; set; }
+        public int? TypeObject { get; set; }
         public string UnitName { get; set; }
         public bool? IsMain { get; set; }
         public bool? IsHaveToken { get; set; }

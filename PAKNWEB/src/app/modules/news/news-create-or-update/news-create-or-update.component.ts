@@ -3,7 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser'
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 //import * as ClassicEditor from '../../../../ckeditor'
 
-import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'
+//import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
@@ -53,7 +53,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private sanitizer: DomSanitizer
-	) {}
+	) { }
 	allowImageExtend = ['image/jpeg', 'image/png']
 	public Editor = ClassicEditor
 	model: NewsModel = new NewsModel()
@@ -166,7 +166,8 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		} else {
 			this.newsService.create(this.model).subscribe((res) => {
 				if (res.success != 'OK') {
-					this.toast.error(COMMONS.ADD_FAILED)
+					let errorMsg = COMMONS.ADD_FAILED
+					this.toast.error(errorMsg)
 					return
 				}
 				this.toast.success(COMMONS.ADD_SUCCESS)
@@ -259,10 +260,6 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		})
 	}
 
-	public onChangeEditor({ editor }: any) {
-		let data = editor.getData()
-		this.model.contents = data
-	}
 	public onReady(editor) {
 		editor.ui.getEditableElement().parentElement.insertBefore(editor.ui.view.toolbar.element, editor.ui.getEditableElement())
 	}

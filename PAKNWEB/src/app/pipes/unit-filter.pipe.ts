@@ -9,3 +9,13 @@ export class UnitFilterPipe implements PipeTransform {
 		return items.filter((c) => c['unitLevel'] == args[0])
 	}
 }
+
+@Pipe({
+	name: 'Change',
+	pure: false,
+})
+export class ChangePipe implements PipeTransform {
+	transform(data: string, data2: string): any {
+		return data.replace('\n', '<br>')
+	}
+}

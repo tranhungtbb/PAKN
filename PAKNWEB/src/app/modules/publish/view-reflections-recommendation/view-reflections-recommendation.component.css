@@ -1,0 +1,11 @@
+.breadcrumb-item a {
+	color: #222;
+}
+.like {
+	color: #fff;
+	background-color: #2bc155;
+}
+.dislike {
+	color: #fff;
+	background-color: #3e4954;
+}

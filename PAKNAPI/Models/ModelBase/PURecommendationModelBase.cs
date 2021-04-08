@@ -17,8 +17,11 @@ namespace PAKNAPI.Models.ModelBase
         public string Name { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public string Hour { get; set; }
-        public string Date { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public int QuantityLike { get; set; }
+        public int QuantityDislike { get; set; }
+
+
 
         public int RowNumber { get; set; }
 
@@ -51,7 +54,16 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("Status", status);
             return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetByID", DP)).ToList().FirstOrDefault();
         }
-        
+
+
+        public async Task<int?> MR_RecommendationUpdateSatisfaction(int? RecommendationId, bool? Satisfaction)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("RecommendationId", RecommendationId);
+            DP.Add("Satisfaction", Satisfaction);
+
+            return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateSatisfaction", DP));
+        }
     }
 
 

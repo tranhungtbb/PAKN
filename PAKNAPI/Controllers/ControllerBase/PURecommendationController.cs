@@ -84,7 +84,9 @@ namespace PAKNAPI.ControllerBase
 				// nội dung phản hồi
 				result.lstConclusion = (await new MRRecommendationConclusionGetByRecommendationId(_appSetting).MRRecommendationConclusionGetByRecommendationIdDAO(Id)).ToList().FirstOrDefault();
 				// file đính kèm nội dung phản hồi
-				result.lstConclusionFiles = (await new MRRecommendationConclusionFilesGetByConclusionId(_appSetting).MRRecommendationConclusionFilesGetByConclusionIdDAO(result.lstConclusion.Id)).ToList();
+				if (result.lstConclusion != null) {
+					result.lstConclusionFiles = (await new MRRecommendationConclusionFilesGetByConclusionId(_appSetting).MRRecommendationConclusionFilesGetByConclusionIdDAO(result.lstConclusion.Id)).ToList();
+				}
 				foreach (var item in result.lstConclusionFiles) {
 					item.FilePath = decrypt.EncryptData(item.FilePath);
 				}
@@ -100,6 +102,34 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		#endregion PURecommendationgetById
+
+		#region ChangeSatisfaction
+
+		[HttpGet]
+		[Authorize]
+		[Route("ChangeSatisfaction")]
+		public async Task<object> ChangeSatisfaction(int? RecommendationId, bool? Satisfaction)
+		{
+			try {
+				var result = await new PURecommendation(_appSetting).MR_RecommendationUpdateSatisfaction(RecommendationId, Satisfaction);
+				if (result > 0)
+				{
+					return new ResultApi { Success = ResultCode.OK };
+				}
+				else {
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Error" };
+				}
+			}
+			catch (Exception ex) {
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		#endregion ChangeSatisfaction
+
 
 
 	}

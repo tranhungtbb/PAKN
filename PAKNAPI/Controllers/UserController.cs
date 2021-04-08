@@ -60,7 +60,7 @@ namespace PAKNAPI.Controllers
 				}
 				// derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
 				string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-					password: "13245",
+					password: "12345",
 					salt: salt,
 					prf: KeyDerivationPrf.HMACSHA1,
 					iterationCount: 10000,
@@ -120,7 +120,7 @@ namespace PAKNAPI.Controllers
 				var result = await new SYUserUpdate(_appSetting).SYUserUpdateDAO(model);
 
 				// xóa avatar cũ
-				if (string.IsNullOrEmpty(modelOld[0].Avatar) && string.IsNullOrEmpty(filePath))
+				if (!string.IsNullOrEmpty(modelOld[0].Avatar) && !string.IsNullOrEmpty(filePath))
 				{
 					await _fileService.Remove(modelOld[0].Avatar);
 				}
