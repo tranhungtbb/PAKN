@@ -13,7 +13,6 @@ CREATE PROCEDURE [dbo].[NE_NewsGetByID]
 AS
 BEGIN
 	SELECT
-		[PostType],
 		[IsPublished],
 		[Status],
 		[Id],
@@ -21,6 +20,7 @@ BEGIN
 		[Summary],
 		[Contents],
 		[ImagePath],
+		[PostType],
 		[NewsType],
 		[ViewCount],
 		[Url],
@@ -51,7 +51,6 @@ CREATE PROCEDURE [dbo].[NE_NewsGetAll]
 AS
 BEGIN
 	SELECT
-		[PostType],
 		[IsPublished],
 		[Status],
 		[Id],
@@ -59,6 +58,7 @@ BEGIN
 		[Summary],
 		[Contents],
 		[ImagePath],
+		[PostType],
 		[NewsType],
 		[ViewCount],
 		[Url],
@@ -91,7 +91,6 @@ AS
 BEGIN
 	SELECT
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
-		[PostType],
 		[IsPublished],
 		[Status],
 		[Id],
@@ -99,6 +98,7 @@ BEGIN
 		[Summary],
 		[Contents],
 		[ImagePath],
+		[PostType],
 		[NewsType],
 		[ViewCount],
 		[Url],
@@ -128,13 +128,13 @@ IF EXISTS
 DROP PROCEDURE [NE_NewsInsert];
 GO
 CREATE PROCEDURE [dbo].[NE_NewsInsert]
-	@PostType bit = null,
 	@IsPublished bit = null,
 	@Status int = null,
 	@Title nvarchar(500) = null,
 	@Summary nvarchar(2000) = null,
 	@Contents ntext = null,
 	@ImagePath varchar(500) = null,
+	@PostType char(10) = null,
 	@NewsType int = null,
 	@ViewCount int = null,
 	@Url nvarchar(500) = null,
@@ -150,13 +150,13 @@ AS
 BEGIN
 	INSERT INTO [NE_News]
 	(
-		[PostType],
 		[IsPublished],
 		[Status],
 		[Title],
 		[Summary],
 		[Contents],
 		[ImagePath],
+		[PostType],
 		[NewsType],
 		[ViewCount],
 		[Url],
@@ -171,13 +171,13 @@ BEGIN
 	)
 	VALUES
 	(
-		@PostType,
 		@IsPublished,
 		@Status,
 		@Title,
 		@Summary,
 		@Contents,
 		@ImagePath,
+		@PostType,
 		@NewsType,
 		@ViewCount,
 		@Url,
@@ -204,7 +204,6 @@ IF EXISTS
 DROP PROCEDURE [NE_NewsUpdate];
 GO
 CREATE PROCEDURE [dbo].[NE_NewsUpdate]
-	@PostType bit = null,
 	@IsPublished bit = null,
 	@Status int = null,
 	@Id int = null,
@@ -212,6 +211,7 @@ CREATE PROCEDURE [dbo].[NE_NewsUpdate]
 	@Summary nvarchar(2000) = null,
 	@Contents ntext = null,
 	@ImagePath varchar(500) = null,
+	@PostType char(10) = null,
 	@NewsType int = null,
 	@ViewCount int = null,
 	@Url nvarchar(500) = null,
@@ -226,13 +226,13 @@ CREATE PROCEDURE [dbo].[NE_NewsUpdate]
 AS
 BEGIN
 	UPDATE [NE_News] SET
-		[PostType] = @PostType,
 		[IsPublished] = @IsPublished,
 		[Status] = @Status,
 		[Title] = @Title,
 		[Summary] = @Summary,
 		[Contents] = @Contents,
 		[ImagePath] = @ImagePath,
+		[PostType] = @PostType,
 		[NewsType] = @NewsType,
 		[ViewCount] = @ViewCount,
 		[Url] = @Url,

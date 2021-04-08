@@ -10,6 +10,7 @@ import { HashtagObject } from 'src/app/models/hashtagObject'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { RemindComponent } from 'src/app/modules/recommendation/remind/remind.component'
 
 declare var $: any
 
@@ -32,6 +33,7 @@ export class ViewRecommendationComponent implements OnInit {
 	userLoginId: number = this.storeageService.getUserId()
 	unitLoginId: number = this.storeageService.getUnitId()
 	@ViewChild('file', { static: false }) public file: ElementRef
+	@ViewChild(RemindComponent, { static: false }) remindComponent: RemindComponent
 	constructor(
 		private toastr: ToastrService,
 		private fileService: UploadFileService,
@@ -364,5 +366,8 @@ export class ViewRecommendationComponent implements OnInit {
 					console.error(err)
 				}
 		}
+	}
+	show() {
+		this.remindComponent.showComponent()
 	}
 }

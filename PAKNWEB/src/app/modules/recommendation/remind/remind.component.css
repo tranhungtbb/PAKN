@@ -1,0 +1,33 @@
+.hover-active a :hover {
+	font-size: 23px;
+	cursor: pointer;
+}
+strong.highlight:hover {
+	color: red;
+}
+strong.highlight {
+	cursor: pointer;
+}
+
+.title-detail {
+	font-size: 20px;
+	color: #000;
+}
+
+body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+	color: #fff !important;
+	background-color: #0283e1 !important;
+	font-size: 1.2rem !important;
+}
+
+.change-status-title {
+	font-weight: 600;
+	letter-spacing: 1px;
+	font-size: 1.1rem;
+}
+
+/* popup nhac viec */
+.alert-dark {
+	border: 2px solid #e5e5e5;
+	border-radius: 10px;
+}

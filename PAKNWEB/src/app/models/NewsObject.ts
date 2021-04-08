@@ -1,6 +1,6 @@
 export class NewsModel {
 	constructor() {
-		this.postType = true
+		this.postType = '0'
 		this.isPublished = false
 		this.status = 2 // 0: đã thu hồi | 1: đã công bố | 2: đang soạn thảo
 		this.imagePath = ' '
@@ -12,7 +12,7 @@ export class NewsModel {
 	summary: string
 	contents: string
 	newsType: number
-	postType: boolean
+	postType: string
 	imagePath: string
 	isPublished: boolean
 	status: number

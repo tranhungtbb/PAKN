@@ -90,4 +90,7 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 		}
 		return
 	}
+	redirectCreateRecommendation() {
+		this.routers.navigate(['/cong-bo/them-moi-kien-nghi'])
+	}
 }

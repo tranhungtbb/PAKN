@@ -113,8 +113,9 @@ export class PuRecommendation {
 	name: string
 	title: string
 	content: string
-	hour: string
-	date: string
+	createDate: Date
+	quantityLike: number
+	quantityDislike: number
 	shortName: string
 }
 

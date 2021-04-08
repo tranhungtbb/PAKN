@@ -120,7 +120,7 @@ namespace PAKNAPI.Controllers
 				var result = await new SYUserUpdate(_appSetting).SYUserUpdateDAO(model);
 
 				// xóa avatar cũ
-				if (string.IsNullOrEmpty(modelOld[0].Avatar) && string.IsNullOrEmpty(filePath))
+				if (string.IsNullOrEmpty(modelOld[0].Avatar) && !string.IsNullOrEmpty(filePath))
 				{
 					await _fileService.Remove(modelOld[0].Avatar);
 				}

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { RESPONSE_STATUS, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
@@ -19,7 +19,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	public lstFiles: any
 	public lstConclusion: any
 	public lstConclusionFiles: any
-	constructor(private service: PuRecommendationService, private activatedRoute: ActivatedRoute) {}
+	constructor(private service: PuRecommendationService, private activatedRoute: ActivatedRoute, public router: Router) {}
 	ngOnInit() {
 		this.getRecommendationById()
 	}
@@ -33,6 +33,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 				this.service.getById({ id: this.id, status: RECOMMENDATION_STATUS.FINISED }).subscribe((res) => {
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result.model) {
+							debugger
 							this.model = { ...res.result.model, shortName: this.getShortName(res.result.model.name) }
 							this.lstFiles = res.result.lstFiles
 							this.lstConclusion = res.result.lstConclusion

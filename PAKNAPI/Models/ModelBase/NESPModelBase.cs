@@ -52,7 +52,7 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int? RowNumber { get; set; }
-		public bool PostType { get; set; }
+		public string PostType { get; set; }
 		public bool IsPublished { get; set; }
 		public int Status { get; set; }
 		public int Id { get; set; }
@@ -99,7 +99,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public bool PostType { get; set; }
+		public string PostType { get; set; }
 		public bool IsPublished { get; set; }
 		public int Status { get; set; }
 		public int Id { get; set; }
@@ -142,7 +142,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public bool PostType { get; set; }
+		public string PostType { get; set; }
 		public bool IsPublished { get; set; }
 		public int Status { get; set; }
 		public int Id { get; set; }
@@ -216,7 +216,7 @@ namespace PAKNAPI.ModelBase
 
 	public class NENewsInsertIN
 	{
-		public bool? PostType { get; set; }
+		public string PostType { get; set; }
 		public bool? IsPublished { get; set; }
 		public int? Status { get; set; }
 		public string Title { get; set; }
@@ -280,7 +280,7 @@ namespace PAKNAPI.ModelBase
 
 	public class NENewsUpdateIN
 	{
-		public bool? PostType { get; set; }
+		public string PostType { get; set; }
 		public bool? IsPublished { get; set; }
 		public int? Status { get; set; }
 		public int? Id { get; set; }
