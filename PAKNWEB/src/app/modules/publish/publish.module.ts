@@ -1,8 +1,13 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 
+import { NgSelectModule } from '@ng-select/ng-select'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { PublishRoutingModule } from './publish-routing.module'
 import { PublishComponent } from './publish.component'
+import { SharedModule } from '../../shared/shared.module'
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
+import { TooltipModule } from 'primeng/tooltip'
 import { IndexComponent } from './index/index.component'
 import { AdministrativeProceduresComponent } from './administrative-procedures/administrative-procedures.component'
 import { NewsComponent } from './news/news.component'
@@ -27,6 +32,12 @@ import { from } from 'rxjs'
 		CreateRecommendationComponent,
 		ChangePipe,
 	],
-	imports: [CommonModule, PublishRoutingModule],
+	imports: [CommonModule, PublishRoutingModule,
+		NgSelectModule,
+		ReactiveFormsModule,
+		FormsModule,
+		SharedModule,
+		BsDatepickerModule.forRoot(),
+		TooltipModule],
 })
-export class PublishModule {}
+export class PublishModule { }

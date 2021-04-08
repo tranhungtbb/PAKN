@@ -11,7 +11,7 @@ export class UserInfoStorageService {
 	unitName: string
 	role: number
 
-	constructor() {}
+	constructor() { }
 	setKeyRemember(key: string): void {
 		localStorage.setItem('KeyRework', key)
 	}
@@ -68,6 +68,10 @@ export class UserInfoStorageService {
 
 	setIsMain(value): void {
 		localStorage.setItem('isMain', value)
+	}
+
+	setTypeObject(value): void {
+		localStorage.setItem('typeObject', value)
 	}
 
 	getKeyRemember(): string {
@@ -130,6 +134,10 @@ export class UserInfoStorageService {
 		var role = localStorage.getItem('Role')
 		if (role == 'null') return null
 		else return role
+	}
+
+	getTypeObject(): number {
+		return localStorage.getItem('typeObject') as any
 	}
 
 	clearStoreage(): void {

@@ -126,6 +126,7 @@ export class LoginComponent implements OnInit {
 								this.storeageService.setIsHaveToken(data.isHaveToken)
 								this.storeageService.setRole(data.role)
 								this.storeageService.setFullName(data.fullName)
+								this.storeageService.setTypeObject(data.typeObject)
 								this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((dataIP) => {
 									if (dataIP != null) {
 										this.storeageService.setIpAddress(dataIP.ip)
@@ -193,6 +194,7 @@ export class LoginComponent implements OnInit {
 								this.storeageService.setIsHaveToken(data.isHaveToken)
 								this.storeageService.setRole(data.role)
 								this.storeageService.setFullName(data.fullName)
+								this.storeageService.setTypeObject(data.typeObject)
 								this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((dataIP) => {
 									if (dataIP != null) {
 										this.storeageService.setIpAddress(dataIP.ip)
