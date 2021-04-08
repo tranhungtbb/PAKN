@@ -18,10 +18,14 @@ export class OrganizationComponent implements OnInit {
 
 	formLogin: FormGroup
 	formInfo: FormGroup
+	formOrgInfo: FormGroup
+	formOrgAddress: FormGroup
 
 	model: OrganizationObject = new OrganizationObject()
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.loadFormBuilder()
+	}
 
 	listNation: any[] = [
 		{ id: 1, name: 'Việt Nam' },
@@ -39,53 +43,74 @@ export class OrganizationComponent implements OnInit {
 	]
 
 	onSave() {
-		this.fLoginSubmitted = true
-		this.fInfoSubmitted = true
-		if (this.formLogin.invalid || this.formInfo.invalid) {
-			this.toast.error('Dữ liệu không hợp lệ')
-			return
-		}
-
+		// this.fLoginSubmitted = true
+		// this.fInfoSubmitted = true
+		// if (this.formLogin.invalid || this.formInfo.invalid) {
+		// 	this.toast.error('Dữ liệu không hợp lệ')
+		// 	return
+		// }
 		// req to server
 	}
 
 	fLoginSubmitted = false
 	fInfoSubmitted = false
+	fOrgInfoSubmitted = false
+	fOrgAddressSubmitted = false
 
 	get fLogin() {
 		return this.formLogin.controls
 	}
-
 	get fInfo() {
 		return this.formInfo.controls
+	}
+	get fOrgInfo() {
+		return this.formOrgInfo.controls
+	}
+	get fOrgAdr() {
+		return this.formOrgAddress.controls
 	}
 
 	private loadFormBuilder() {
 		//form thông tin đăng nhập
 		this.formLogin = this.formBuilder.group(
 			{
-				phone: [this.model.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
-				password: [this.model.password, [Validators.required, Validators.minLength(6)]],
+				phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
+				password: [this.model.password, [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/g)]],
 				rePassword: [this.model.rePassword, [Validators.required]],
 			},
 			{ validator: MustMatch('password', 'rePassword') }
 		)
 
-		//form thông tin
+		//form thông tin nguoi dai dien
 		this.formInfo = this.formBuilder.group({
-			fullName: [this.model.fullName, [Validators.required]],
-			gender: [this.model.gender, [Validators.required]],
-			odb: [this.model.Obj, [Validators.required]],
-			nation: [this.model.nation, [Validators.required]],
-			province: [this.model.province, [Validators.required]],
-			district: [this.model.district, [Validators.required]],
-			village: [this.model.village, [Validators.required]],
+			//----thông tin người đại diện
+			RepresentativeName: [this.model.RepresentativeName, [Validators.required]], // tên người đại diện
+			Email: [this.model.Email, [Validators.required, Validators.email]],
+			Gender: [this.model.Gender, [Validators.required]],
+			DOB: [this.model.DOB, [Validators.required]],
+			Nation: [this.model.Nation, [Validators.required]],
+			Province: [this.model.Province, [Validators.required]], //int
+			District: [this.model.District, [Validators.required]], // int
+			Village: [this.model.Village, [Validators.required]], // int
+			Address: [this.model.Address, [Validators.required]],
+		})
 
-			email: [this.model.email, [Validators.required]],
-			address: [this.model.address, [Validators.required]],
-			identity: [this.model.identity, [Validators.required]],
-			placeIssue: [this.model.placeIssue, [Validators.required]],
-			dateIssue: [this.model.dateIssue, [Validators.required]],
+		this.formOrgInfo = this.formBuilder.group({
+			//---thông tin doanh nghiệp
+			Business: [this.model.Business, [Validators.required]], // tên tổ chức
+			RegistrationNum: [this.model.RegistrationNum, [Validators.required]], //Số ĐKKD
+			DecisionFoundation: [this.model.DecisionFoundation, [Validators.required]], //Quyết định thành lập
+			DateIssue: [this.model.DateIssue, [Validators.required]], //Ngày cấp/thành lập
+			Tax: [this.model.Tax, [Validators.required]], //Mã số thuế
+		})
+
+		this.formOrgAddress = this.formBuilder.group({
+			OrgProvince: [this.model.OrgDistrict, [Validators.required]], //int
+			OrgDistrict: [this.model.OrgDistrict, [Validators.required]], //int
+			OrgVillage: [this.model.OrgVillage, [Validators.required]], //int
+			OrgAddress: [this.model.OrgAddress, [Validators.required]],
+			OrgPhone: [this.model.OrgPhone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
+			OrgEmail: [this.model.OrgEmail, [Validators.required, Validators.email]],
 		})
 	}
 }

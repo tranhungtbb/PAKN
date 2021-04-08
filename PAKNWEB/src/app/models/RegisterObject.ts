@@ -43,6 +43,11 @@ export class OrganizationObject {
 		this.Province = ''
 		this.District = ''
 		this.Village = ''
+
+		this.OrgProvince = ''
+		this.OrgDistrict = ''
+		this.OrgVillage = ''
+
 		this.Status = 1
 	}
 	//----thông tin tài khoản đăng nhập

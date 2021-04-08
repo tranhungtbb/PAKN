@@ -2,156 +2,292 @@
 	<div class="row mx-0 border border-brown rounded-xl">
 		<div class="col col-lg-3 border-right p-4 border-brown">
 			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin đăng nhập</span></h4>
-			<form class="px-3">
+			<form class="px-3" [formGroup]="formLogin">
 				<div class="form-group">
 					<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
-					<input type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." autocomplete="off" class="form-control border-brown">
+					<div *ngIf="(fLoginSubmitted && fLogin.phone.invalid)||(fLogin.phone.invalid && (fLogin.phone.dirty || fLogin.phone.touched))" class="has-error m-b-12">
+						<div *ngIf="fLogin.phone.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+						<div *ngIf="fLogin.phone.errors.pattern">
+							<span class="help-block">Định dạng số điện thoại không đúng</span>
+						</div>
+					</div>
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Mật khẩu <span class="cl-red">(*)</span></label>
-					<input type="password" placeholder="Nhập..." class="form-control border-brown" value="">
+					<input [svTrim] [(ngModel)]="model.password" formControlName="password" type="password" placeholder="Nhập..." autocomplete="off"
+						class="form-control border-brown" value="">
+					<div *ngIf="(fLoginSubmitted && fLogin.password.invalid)||(fLogin.password.invalid && (fLogin.password.dirty || fLogin.password.touched))"
+						class="has-error m-b-12">
+						<div *ngIf="fLogin.password.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+						<div *ngIf="fLogin.password.errors.pattern">
+							<span class="help-block">Mật khẩu ít nhất 6 ký tự, bao gồm cả ký tự chữ và số</span>
+						</div>
+					</div>
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Nhập lại mật khẩu <span class="cl-red">(*)</span></label>
-					<input type="password" placeholder="Nhập..." class="form-control border-brown" value="">
+					<input [svTrim] [(ngModel)]="model.rePassword" formControlName="rePassword" type="password" placeholder="Nhập..." autocomplete="off"
+						class="form-control border-brown" value="">
+					<div *ngIf="(fLoginSubmitted && fLogin.rePassword.invalid)||(fLogin.rePassword.invalid && (fLogin.rePassword.dirty || fLogin.rePassword.touched))"
+						class="has-error m-b-12">
+						<div *ngIf="fLogin.rePassword.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+						<div *ngIf="fLogin.rePassword.errors.mustMatch">
+							<span class="help-block">Mật khẩu không trùng khớp</span>
+						</div>
+					</div>
 				</div>
 				<p class="font-italic mb-0">Sử dụng 6 ký tự trở lên, bao gồm cả ký tự chữ và số</p>
 			</form>
 		</div>
+
 		<div class="col col-lg-9 p-4 border-brown">
 			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin người đại diện</span></h4>
-			<form class="form-row px-3">
+
+			<form class="form-row px-3" [formGroup]="formInfo">
 				<div class="col form-group">
 					<label class="mb-1">Người đại diện <span class="cl-red">(*)</span></label>
-					<input type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.RepresentativeName" formControlName="RepresentativeName" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<div *ngIf="(fInfoSubmitted && fInfo.RepresentativeName.invalid)||(fInfo.RepresentativeName.invalid && (fInfo.RepresentativeName.dirty || fInfo.RepresentativeName.touched))"
+						class="has-error m-b-12">
+						<div *ngIf="fInfo.RepresentativeName.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+					</div>
 				</div>
 				<div class="col form-group">
 					<label class="mb-1">Quốc tịch <span class="cl-red">(*)</span></label>
-					<select class="form-control border-brown">
-						<option>Việt Nam</option>
-						<option>Lào</option>
-						<option>Ấn Độ</option>
-						<option>Mỹ</option>
-					</select>
+					<ng-select [(ngModel)]="model.Nation" formControlName="Nation" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true">
+						<ng-option value="">Chon...</ng-option>
+						<ng-option *ngFor="let vill of listNation" [value]="vill.id">{{vill.name}}</ng-option>
+					</ng-select>
+					<div *ngIf="(fInfoSubmitted && fInfo.Nation.invalid)||(fInfo.Nation.invalid && (fInfo.Nation.dirty || fInfo.Nation.touched))" class="has-error m-b-12">
+						<div *ngIf="fInfo.Nation.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+					</div>
 				</div>
 				<div class="col form-group">
 					<label class="mb-1">Tỉnh / Thành phố <span class="cl-red">(*)</span></label>
-					<select class="form-control border-brown">
-						<option>option 1</option>
-						<option>option 2</option>
-						<option>option 3</option>
-						<option>option 4</option>
-					</select>
+					<ng-select [(ngModel)]="model.Province" formControlName="Province" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true">
+						<ng-option value="">Chon...</ng-option>
+						<ng-option *ngFor="let vill of listProvince" [value]="vill.id">{{vill.name}}</ng-option>
+					</ng-select>
+					<div *ngIf="(fInfoSubmitted && fInfo.Province.invalid)||(fInfo.Province.invalid && (fInfo.Province.dirty || fInfo.Province.touched))" class="has-error m-b-12">
+						<div *ngIf="fInfo.Province.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+					</div>
 				</div>
 				<div class="w-100"></div>
 				<div class="col form-group">
 					<label class="mb-1">Email <span class="cl-red">(*)</span></label>
-					<input type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.Email" formControlName="Email" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<div *ngIf="(fInfoSubmitted && fInfo.Email.invalid)||(fInfo.Email.invalid && (fInfo.Email.dirty || fInfo.Email.touched))" class="has-error m-b-12">
+						<div *ngIf="fInfo.Email.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+						<div *ngIf="fInfo.Email.errors.email">
+							<span class="help-block">Định dạng email không hợp lệ</span>
+						</div>
+					</div>
 				</div>
 				<div class="col form-group">
 					<label class="mb-1">Huyện / Quận / thị xã... <span class="cl-red">(*)</span></label>
-					<select class="form-control border-brown">
-						<option>option 1</option>
-						<option>option 2</option>
-						<option>option 3</option>
-						<option>option 4</option>
-					</select>
+					<ng-select [(ngModel)]="model.District" formControlName="District" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true">
+						<ng-option value="">Chon...</ng-option>
+						<ng-option *ngFor="let vill of listDistrict" [value]="vill.id">{{vill.name}}</ng-option>
+					</ng-select>
+					<div *ngIf="(fInfoSubmitted && fInfo.District.invalid)||(fInfo.District.invalid && (fInfo.District.dirty || fInfo.District.touched))" class="has-error m-b-12">
+						<div *ngIf="fInfo.District.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+					</div>
 				</div>
 				<div class="col form-group">
 					<label class="mb-1">Xã / Phường / Thị trấn <span class="cl-red">(*)</span></label>
-					<select class="form-control border-brown">
-						<option>option 1</option>
-						<option>option 2</option>
-						<option>option 3</option>
-						<option>option 4</option>
-					</select>
+					<ng-select [(ngModel)]="model.Village" formControlName="Village" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true">
+						<ng-option value="">Chon...</ng-option>
+						<ng-option *ngFor="let vill of listVillage" [value]="vill.id">{{vill.name}}</ng-option>
+					</ng-select>
+					<div *ngIf="(fInfoSubmitted && fInfo.Village.invalid)||(fInfo.Village.invalid && (fInfo.Village.dirty || fInfo.Village.touched))" class="has-error m-b-12">
+						<div *ngIf="fInfo.Village.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+					</div>
 				</div>
 				<div class="w-100"></div>
 				<div class="col form-group">
 					<label class="mb-1">Ngày tháng năm sinh <span class="cl-red">(*)</span></label>
-					<input type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.DOB" formControlName="DOB" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+					<mat-datepicker #picker></mat-datepicker> -->
+
+					<div *ngIf="(fInfoSubmitted && fInfo.DOB.invalid)||(fInfo.DOB.invalid && (fInfo.DOB.dirty || fInfo.DOB.touched))" class="has-error m-b-12">
+						<div *ngIf="fInfo.DOB.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+					</div>
 				</div>
 				<div class="col col-lg-8 form-group">
 					<label class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></label>
-					<input type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.Address" formControlName="Address" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<div *ngIf="(fInfoSubmitted && fInfo.Address.invalid)||(fInfo.Address.invalid && (fInfo.Address.dirty || fInfo.Address.touched))" class="has-error m-b-12">
+						<div *ngIf="fInfo.Address.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+					</div>
 				</div>
 				<div class="w-100"></div>
 				<div class="form-group mb-0 col">
 					<label class="mr-3">Giới tính:</label>
-					<label class="radio-inline mr-3"><input type="radio" name="optradio"> Nam</label>
-					<label class="radio-inline mr-3"><input type="radio" name="optradio"> Nữ</label>
+					<label *ngFor="let gen of listGender" class="radio-inline mr-3">
+						<input [(ngModel)]="model.Gender" formControlName="Gender" [value]="gen.value" type="radio"> {{gen.text}}
+					</label>
 				</div>
 			</form>
 		</div>
 		<div class="col col-lg-3 border-right border-top p-4 border-brown">
 			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin doanh nghiệp</span></h4>
-			<form class="px-3">
+			<form class="px-3" [formGroup]="formOrgInfo">
 				<div class="form-group">
 					<label class="mb-1">Tên tổ chức, doanh nghiệp <span class="cl-red">(*)</span></label>
-					<input type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.Business" formControlName="Business" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.Business.invalid)||(fOrgInfo.Business.invalid && (fOrgInfo.Business.dirty || fOrgInfo.Business.touched))"
+						class="has-error m-b-12">
+						<div *ngIf="fOrgInfo.Business.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+					</div>
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Số chứng nhận ĐKKD <span class="cl-red">(*)</span></label>
-					<input type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.RegistrationNum" formControlName="RegistrationNum" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.RegistrationNum.invalid)||(fOrgInfo.RegistrationNum.invalid && (fOrgInfo.RegistrationNum.dirty || fOrgInfo.RegistrationNum.touched))"
+						class="has-error m-b-12">
+						<div *ngIf="fOrgInfo.RegistrationNum.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+					</div>
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Số quyết định thành lập <span class="cl-red">(*)</span></label>
-					<input type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.DecisionFoundation" formControlName="DecisionFoundation" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.DecisionFoundation.invalid)||(fOrgInfo.DecisionFoundation.invalid && (fOrgInfo.DecisionFoundation.dirty || fOrgInfo.DecisionFoundation.touched))"
+						class="has-error m-b-12">
+						<div *ngIf="fOrgInfo.DecisionFoundation.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+					</div>
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Ngày cấp / Thành lập <span class="cl-red">(*)</span></label>
-					<input type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.DateIssue" formControlName="DateIssue" type="date" placeholder="Nhập..." class="form-control border-brown">
+					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.DateIssue.invalid)||(fOrgInfo.DateIssue.invalid && (fOrgInfo.DateIssue.dirty || fOrgInfo.DateIssue.touched))"
+						class="has-error m-b-12">
+						<div *ngIf="fOrgInfo.DateIssue.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+					</div>
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Mã số thuế <span class="cl-red">(*)</span></label>
-					<input type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.Tax" formControlName="Tax" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.Tax.invalid)||(fOrgInfo.Tax.invalid && (fOrgInfo.Tax.dirty || fOrgInfo.Tax.touched))" class="has-error m-b-12">
+						<div *ngIf="fOrgInfo.Tax.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+					</div>
 				</div>
 			</form>
 		</div>
 		<div class="col col-lg-9 border-right border-top p-4 border-brown">
 			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">địa chỉ trụ sở / văn phòng đại diện</span></h4>
-			<form class="form-row px-3">
+			<form class="form-row px-3" [formGroup]="formOrgAddress">
 				<div class="col-12 form-group">
 					<label class="mb-1">Tỉnh / Thành Phố <span class="cl-red">(*)</span></label>
-					<select class="form-control border-brown">
-						<option>option 1</option>
-						<option>option 2</option>
-						<option>option 3</option>
-						<option>option 4</option>
-					</select>
+					<ng-select [(ngModel)]="model.OrgProvince" formControlName="OrgProvince" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true">
+						<ng-option value="">Chon...</ng-option>
+						<ng-option *ngFor="let lItem of listProvince" [value]="lItem.id">{{lItem.name}}</ng-option>
+					</ng-select>
+					<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgProvince.invalid)||(fOrgAdr.OrgProvince.invalid && (fOrgAdr.OrgProvince.dirty || fOrgAdr.OrgProvince.touched))"
+						class="has-error m-b-12">
+						<div *ngIf="fOrgAdr.OrgProvince.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+					</div>
 				</div>
 				<div class="col-12 form-group">
 					<label class="mb-1">Huyện / Quận / thị xã / Thành phố thuộc tỉnh <span class="cl-red">(*)</span></label>
-					<select class="form-control border-brown">
-						<option>option 1</option>
-						<option>option 2</option>
-						<option>option 3</option>
-						<option>option 4</option>
-					</select>
+					<ng-select [(ngModel)]="model.OrgDistrict" formControlName="OrgDistrict" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true">
+						<ng-option value="">Chon...</ng-option>
+						<ng-option *ngFor="let lItem of listDistrict" [value]="lItem.id">{{lItem.name}}</ng-option>
+					</ng-select>
+					<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgDistrict.invalid)||(fOrgAdr.OrgDistrict.invalid && (fOrgAdr.OrgDistrict.dirty || fOrgAdr.OrgDistrict.touched))"
+						class="has-error m-b-12">
+						<div *ngIf="fOrgAdr.OrgDistrict.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+					</div>
 				</div>
 				<div class="col-12 form-group">
 					<label class="mb-1">Xã / Phường / Thị trấn <span class="cl-red">(*)</span></label>
-					<select class="form-control border-brown">
-						<option>option 1</option>
-						<option>option 2</option>
-						<option>option 3</option>
-						<option>option 4</option>
-					</select>
+					<ng-select [(ngModel)]="model.OrgVillage" formControlName="OrgVillage" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true">
+						<ng-option value="">Chon...</ng-option>
+						<ng-option *ngFor="let vill of listVillage" [value]="vill.id">{{vill.name}}</ng-option>
+					</ng-select>
+					<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgVillage.invalid)||(fOrgAdr.OrgVillage.invalid && (fOrgAdr.OrgVillage.dirty || fOrgAdr.OrgVillage.touched))"
+						class="has-error m-b-12">
+						<div *ngIf="fOrgAdr.OrgVillage.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+					</div>
 				</div>
 				<div class="col-12 form-group">
 					<label class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></label>
-					<input type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.OrgAddress" formControlName="OrgAddress" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgAddress.invalid)||(fOrgAdr.OrgAddress.invalid && (fOrgAdr.OrgAddress.dirty || fOrgAdr.OrgAddress.touched))"
+						class="has-error m-b-12">
+						<div *ngIf="fOrgAdr.OrgAddress.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+					</div>
 				</div>
 				<div class="col form-group">
 					<label class="mb-1">Địện thoại <span class="cl-red">(*)</span></label>
-					<input type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.OrgPhone" formControlName="OrgPhone" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgPhone.invalid)||(fOrgAdr.OrgPhone.invalid && (fOrgAdr.OrgPhone.dirty || fOrgAdr.OrgPhone.touched))"
+						class="has-error m-b-12">
+						<div *ngIf="fOrgAdr.OrgPhone.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+						<div *ngIf="fOrgAdr.OrgPhone.errors.password">
+							<span class="help-block">Định dạng số điện thoại không hợp lệ</span>
+						</div>
+					</div>
 				</div>
 				<div class="col form-group">
 					<label class="mb-1">Email <span class="cl-red">(*)</span></label>
-					<input type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.OrgEmail" formControlName="OrgEmail" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgEmail.invalid)||(fOrgAdr.OrgEmail.invalid && (fOrgAdr.OrgEmail.dirty || fOrgAdr.OrgEmail.touched))"
+						class="has-error m-b-12">
+						<div *ngIf="fOrgAdr.OrgEmail.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+						<div *ngIf="fOrgAdr.OrgEmail.errors.email">
+							<span class="help-block">Định dạng email không hợp lệ</span>
+						</div>
+					</div>
 				</div>
 			</form>
 		</div>
+
 	</div>
 	<p class="cl-red font-italic mt-3">Vui lòng nhập đầy đủ, chính xác toàn bộ thông tin một lần để sử dụng nhiều lần trên hệ thống</p>
 	<div class="card-body d-flex justify-content-end px-0">
