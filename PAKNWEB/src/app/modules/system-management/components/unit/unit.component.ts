@@ -155,8 +155,14 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 
 	treeViewActive(id, level) {
-		this.getUnitInfo(id)
 		this.query.parentId = id
+		this.query.pageIndex = 1
+		this.totalCount_Unit = 0
+
+		this.queryUser.pageIndex = 1
+		this.totalCount_User = 0
+
+		this.getUnitInfo(id)
 		this.getUnitPagedList()
 	}
 
@@ -194,7 +200,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				if (activeTreeNode == null) this.treeViewActive(this.treeUnit[0].id, this.treeUnit[0].unitLevel)
 				else {
 					this.treeViewActive(activeTreeNode.id, activeTreeNode.unitLevel)
-					this.expandNode(activeTreeNode)
+					//this.expandNode(activeTreeNode)
 				}
 			},
 			(err) => {}
@@ -309,6 +315,11 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				// this.getAllUnitShortInfo()
 				//this.getUnitPagedList()
 				this.treeViewActive(this.unitObject.id, this.unitObject.unitLevel)
+
+				// cập nhật tên cho tree khi đã sửa thành công
+				// let current_edit = this.searchTree(this.treeUnit, this.modelUnit.id)
+				// current_edit.name = this.modelUnit.name
+
 				this.modelUnit = new UnitObject()
 				$('#modal-create-or-update').modal('hide')
 			})
@@ -369,29 +380,24 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 
 	//////expand node
-	expandNode(node: any) {
-		let _node = this.searchTree(this.treeUnit, node.id)
-		if (_node) this.expandRecursive(_node, true)
-	}
-	private expandRecursive(node: any, isExpand: boolean) {
-		node.expanded = isExpand
-		if (node.parentId) {
-			let pNode = this.searchTree(this.treeUnit, node.parentId)
-			this.expandRecursive(pNode, isExpand)
-		}
-	}
-	private searchTree(element, matchingId) {
-		if (element.id == matchingId) {
-			return element
-		} else if (element.children != null) {
-			var i
-			var result = null
-			for (i = 0; result == null && i < element.children.length; i++) {
-				result = this.searchTree(element.children[i], matchingId)
+	// expandNode(node: any) {
+	// 	let _node = this.searchTree(this.treeUnit, node.id)
+	// 	if (_node) this.expandRecursive(_node, true)
+	// }
+	// private expandRecursive(node: any, isExpand: boolean) {
+	// 	node.expanded = isExpand
+	// 	if (node.parentId) {
+	// 		let pNode = this.searchTree(this.treeUnit, node.parentId)
+	// 		this.expandRecursive(pNode, isExpand)
+	// 	}
+	// }
+	private searchTree(list: any[], matchingId: any): any {
+		list.forEach((e) => {
+			if (e.id == matchingId) return e
+			else {
+				this.searchTree(e.children, matchingId)
 			}
-			return result
-		}
-		return null
+		})
 	}
 	//////end expand node
 
