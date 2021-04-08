@@ -79,7 +79,11 @@ export class LoginComponent implements OnInit {
 			if (ReturnlUrl != undefined && ReturnlUrl != '' && ReturnlUrl != null && ReturnlUrl.includes('business')) {
 				this._router.navigateByUrl(ReturnlUrl)
 			} else {
-				this._router.navigate(['/quan-tri'])
+				if (this.storeageService.getTypeObject() && this.storeageService.getTypeObject() == 1) {
+					this._router.navigate(['/quan-tri'])
+				} else {
+					this._router.navigate(['/cong-bo'])
+				}
 			}
 			return
 		}
@@ -138,7 +142,12 @@ export class LoginComponent implements OnInit {
 									this.storeageService.setKeyRemember('')
 								}
 								//this._router.navigate(['/quan-tri'])
-								location.href = '/quan-tri'
+								if (data.typeObject && data.typeObject == 1) {
+									location.href = '/quan-tri'
+								} else {
+									this.toastr.error(data.message, 'Tài khoản cá nhân, doanh nghiệp không thể đăng nhập hệ thống dành cho cán bộ quản lý')
+									localStorage.clear();
+								}
 							} else if (data.success === RESPONSE_STATUS.incorrect) {
 								this.toastr.error(data.message, 'Tên tài khoản hoặc mật khẩu không chính xác')
 							}
@@ -179,7 +188,7 @@ export class LoginComponent implements OnInit {
 			}
 			this.captchaService.send(constdata).subscribe((result) => {
 				if (result.success === RESPONSE_STATUS.success) {
-					this.authenService.login(this.user).subscribe(
+					this.authenService.login(this.userProduct).subscribe(
 						(data) => {
 							if (data.success === RESPONSE_STATUS.success) {
 								localStorage.clear()
@@ -206,7 +215,12 @@ export class LoginComponent implements OnInit {
 									this.storeageService.setKeyRemember('')
 								}
 								//this._router.navigate(['/quan-tri'])
-								location.href = '/quan-tri'
+								if (data.typeObject && data.typeObject == 1) {
+									this.toastr.error(data.message, 'Tài khoản cán bộ quản lý không thể đăng nhập hệ thống dành cho cá nhân, doanh nghiệp')
+									localStorage.clear();
+								} else {
+									location.href = '/cong-bo'
+								}
 							} else if (data.success === RESPONSE_STATUS.incorrect) {
 								this.toastr.error(data.message, 'Tên tài khoản hoặc mật khẩu không chính xác')
 							}

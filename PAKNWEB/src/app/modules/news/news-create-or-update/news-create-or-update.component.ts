@@ -53,7 +53,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private sanitizer: DomSanitizer
-	) {}
+	) { }
 	allowImageExtend = ['image/jpeg', 'image/png']
 	public Editor = ClassicEditor
 	model: NewsModel = new NewsModel()
