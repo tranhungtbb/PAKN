@@ -31,7 +31,6 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
 		[Route("QLDoanhNghiepInsertBase")]
 		public async Task<ActionResult<object>> QLDoanhNghiepInsertBase(QLDoanhNghiepInsertIN _qLDoanhNghiepInsertIN)
 		{
@@ -51,7 +50,6 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
 		[Route("QLDoanhNghiepInsertListBase")]
 		public async Task<ActionResult<object>> QLDoanhNghiepInsertListBase(List<QLDoanhNghiepInsertIN> _qLDoanhNghiepInsertINs)
 		{
@@ -91,7 +89,6 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
 		[Route("QLNguoiDanInsertBase")]
 		public async Task<ActionResult<object>> QLNguoiDanInsertBase(QLNguoiDanInsertIN _qLNguoiDanInsertIN)
 		{
@@ -111,7 +108,6 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
 		[Route("QLNguoiDanInsertListBase")]
 		public async Task<ActionResult<object>> QLNguoiDanInsertListBase(List<QLNguoiDanInsertIN> _qLNguoiDanInsertINs)
 		{

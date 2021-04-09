@@ -36,6 +36,7 @@ export class Api {
 	public static RecommendationUpdate = 'Recommendation/RecommendationUpdate'
 	public static RecommendationForward = 'Recommendation/RecommendationForward'
 	public static RecommendationProcess = 'Recommendation/RecommendationOnProcess'
+	public static RecommendationUpdateStatus = 'Recommendation/RecommendationUpdateStatus'
 	public static RecommendationOnProcessConclusion = 'Recommendation/RecommendationOnProcessConclusion'
 	public static RecommendationDelete = 'MRSPBase/MRRecommendationDeleteBase'
 	public static RecommendationExport = 'MRSPBase/MRRecommendationExportBase'
@@ -133,4 +134,20 @@ export class Api {
 
 	public static RemindInsert = 'RMRemind/RemindInsert'
 	public static RemindGetList = 'RMRemind/RemindGetList'
+
+	//RequestRecommendation
+	public static RecommendationRequestGetListProcess = 'MRSPBase/MRRecommendationKNCTGetAllWithProcessBase'
+	public static RecommendationRequestGetDataForCreate = 'CACategorySPBase/CAFieldKNCTGetDropdownBase'
+
+	//api dia danh
+	public static ProvinceGetAll = 'CASPBase/CAProvinceGetAllBase'
+	public static DistrictGetAll = 'CASPBase/CADistrictGetAllBase'
+	public static VillageGetAll = 'CASPBase/CAVillageGetAllBase'
+
+	//register
+	public static RegisterIndividual = 'User/InvididualRegister'
+	public static RegisterOrganization = 'User/OrganizationRegister'
+
+	public static RecommendationRequestGetByIdView = 'MRSPBase/MRRecommendationKNCTGetByIdBase'
+	public static RecommendationRequestGetFile = 'MRSPBase/MRRecommendationKNCTFilesGetByRecommendationIdBase'
 }

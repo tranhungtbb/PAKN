@@ -1,5 +1,5 @@
 export class COMMONS {
-	constructor() {}
+	constructor() { }
 
 	public static LIST_EMAIL = [
 		{ text: 'Gmail', value: 1 },
@@ -25,4 +25,5 @@ export class COMMONS {
 	public static ACCEPT_SUCCESS = 'Tiếp nhận thành công'
 	public static APPROVED_SUCCESS = 'Phê duyệt thành công'
 	public static PROCESS_SUCCESS = 'Xử lý thành công'
+	public static SEND_SUCCESS = 'Gửi thành công'
 }

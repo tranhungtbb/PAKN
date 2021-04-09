@@ -1086,6 +1086,298 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationKNCTCheckExistedIdBase")]
+		public async Task<ActionResult<object>> MRRecommendationKNCTCheckExistedIdBase(int? RecommendationKNCTId)
+		{
+			try
+			{
+				List<MRRecommendationKNCTCheckExistedId> rsMRRecommendationKNCTCheckExistedId = await new MRRecommendationKNCTCheckExistedId(_appSetting).MRRecommendationKNCTCheckExistedIdDAO(RecommendationKNCTId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationKNCTCheckExistedId", rsMRRecommendationKNCTCheckExistedId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationKNCTFilesDeleteBase")]
+		public async Task<ActionResult<object>> MRRecommendationKNCTFilesDeleteBase(MRRecommendationKNCTFilesDeleteIN _mRRecommendationKNCTFilesDeleteIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationKNCTFilesDelete(_appSetting).MRRecommendationKNCTFilesDeleteDAO(_mRRecommendationKNCTFilesDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationKNCTFilesDeleteListBase")]
+		public async Task<ActionResult<object>> MRRecommendationKNCTFilesDeleteListBase(List<MRRecommendationKNCTFilesDeleteIN> _mRRecommendationKNCTFilesDeleteINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _mRRecommendationKNCTFilesDeleteIN in _mRRecommendationKNCTFilesDeleteINs)
+				{
+					var result = await new MRRecommendationKNCTFilesDelete(_appSetting).MRRecommendationKNCTFilesDeleteDAO(_mRRecommendationKNCTFilesDeleteIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationKNCTFilesGetByRecommendationIdBase")]
+		public async Task<ActionResult<object>> MRRecommendationKNCTFilesGetByRecommendationIdBase(int? Id)
+		{
+			try
+			{
+				List<MRRecommendationKNCTFilesGetByRecommendationId> rsMRRecommendationKNCTFilesGetByRecommendationId = await new MRRecommendationKNCTFilesGetByRecommendationId(_appSetting).MRRecommendationKNCTFilesGetByRecommendationIdDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationKNCTFilesGetByRecommendationId", rsMRRecommendationKNCTFilesGetByRecommendationId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationKNCTFilesInsertBase")]
+		public async Task<ActionResult<object>> MRRecommendationKNCTFilesInsertBase(MRRecommendationKNCTFilesInsertIN _mRRecommendationKNCTFilesInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationKNCTFilesInsert(_appSetting).MRRecommendationKNCTFilesInsertDAO(_mRRecommendationKNCTFilesInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationKNCTFilesInsertListBase")]
+		public async Task<ActionResult<object>> MRRecommendationKNCTFilesInsertListBase(List<MRRecommendationKNCTFilesInsertIN> _mRRecommendationKNCTFilesInsertINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _mRRecommendationKNCTFilesInsertIN in _mRRecommendationKNCTFilesInsertINs)
+				{
+					var result = await new MRRecommendationKNCTFilesInsert(_appSetting).MRRecommendationKNCTFilesInsertDAO(_mRRecommendationKNCTFilesInsertIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationKNCTGetAllWithProcessBase")]
+		public async Task<ActionResult<object>> MRRecommendationKNCTGetAllWithProcessBase(string Code, string Content, string Unit, int? Field, int? Status, int? PageSize, int? PageIndex)
+		{
+			try
+			{
+				List<MRRecommendationKNCTGetAllWithProcess> rsMRRecommendationKNCTGetAllWithProcess = await new MRRecommendationKNCTGetAllWithProcess(_appSetting).MRRecommendationKNCTGetAllWithProcessDAO(Code, Content, Unit, Field, Status, PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationKNCTGetAllWithProcess", rsMRRecommendationKNCTGetAllWithProcess},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationKNCTGetByIdBase")]
+		public async Task<ActionResult<object>> MRRecommendationKNCTGetByIdBase(int? Id)
+		{
+			try
+			{
+				List<MRRecommendationKNCTGetById> rsMRRecommendationKNCTGetById = await new MRRecommendationKNCTGetById(_appSetting).MRRecommendationKNCTGetByIdDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationKNCTGetById", rsMRRecommendationKNCTGetById},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationKNCTInsertBase")]
+		public async Task<ActionResult<object>> MRRecommendationKNCTInsertBase(MRRecommendationKNCTInsertIN _mRRecommendationKNCTInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationKNCTInsert(_appSetting).MRRecommendationKNCTInsertDAO(_mRRecommendationKNCTInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationKNCTUpdateBase")]
+		public async Task<ActionResult<object>> MRRecommendationKNCTUpdateBase(MRRecommendationKNCTUpdateIN _mRRecommendationKNCTUpdateIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationKNCTUpdate(_appSetting).MRRecommendationKNCTUpdateDAO(_mRRecommendationKNCTUpdateIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationKNCTUpdateListBase")]
+		public async Task<ActionResult<object>> MRRecommendationKNCTUpdateListBase(List<MRRecommendationKNCTUpdateIN> _mRRecommendationKNCTUpdateINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _mRRecommendationKNCTUpdateIN in _mRRecommendationKNCTUpdateINs)
+				{
+					var result = await new MRRecommendationKNCTUpdate(_appSetting).MRRecommendationKNCTUpdateDAO(_mRRecommendationKNCTUpdateIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("MRRecommendationUpdateBase")]

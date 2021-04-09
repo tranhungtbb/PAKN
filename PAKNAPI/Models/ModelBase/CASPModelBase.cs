@@ -11,6 +11,32 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
+	public class CADistrictGetAll
+	{
+		private SQLCon _sQLCon;
+
+		public CADistrictGetAll(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CADistrictGetAll()
+		{
+		}
+
+		public short Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+
+		public async Task<List<CADistrictGetAll>> CADistrictGetAllDAO(byte? ProvinceId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ProvinceId", ProvinceId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CADistrictGetAll>("CA_DistrictGetAll", DP)).ToList();
+		}
+	}
+
 	public class CAFieldGetDropdown
 	{
 		private SQLCon _sQLCon;
@@ -82,6 +108,58 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAHashtagGetDropdown>("CA_HashtagGetDropdown", DP)).ToList();
+		}
+	}
+
+	public class CAProvinceGetAll
+	{
+		private SQLCon _sQLCon;
+
+		public CAProvinceGetAll(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAProvinceGetAll()
+		{
+		}
+
+		public short Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+
+		public async Task<List<CAProvinceGetAll>> CAProvinceGetAllDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAProvinceGetAll>("CA_ProvinceGetAll", DP)).ToList();
+		}
+	}
+
+	public class CAVillageGetAll
+	{
+		private SQLCon _sQLCon;
+
+		public CAVillageGetAll(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAVillageGetAll()
+		{
+		}
+
+		public short Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+
+		public async Task<List<CAVillageGetAll>> CAVillageGetAllDAO(byte? ProvinceId, byte? DistrictId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ProvinceId", ProvinceId);
+			DP.Add("DistrictId", DistrictId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAVillageGetAll>("CA_VillageGetAll", DP)).ToList();
 		}
 	}
 }

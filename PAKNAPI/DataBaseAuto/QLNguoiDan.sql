@@ -16,14 +16,14 @@ BEGIN
 		[Phone],
 		[Identity],
 		[Gender],
-		[DOB],
 		[Status],
 		[CreatedBy],
 		[CreatedDate],
 		[UpdatedBy],
 		[UpdatedDate],
+		[DOB],
+		[FullName],
 		[Id],
-		[Name],
 		[Email],
 		[PlaceIssue],
 		[DateIssue],
@@ -31,7 +31,8 @@ BEGIN
 		[Province],
 		[District],
 		[Village],
-		[Address]
+		[Address],
+		[Email]
 	FROM [QL_NguoiDan]
 	WHERE [Id] = @Id
 END
@@ -54,14 +55,14 @@ BEGIN
 		[Phone],
 		[Identity],
 		[Gender],
-		[DOB],
 		[Status],
 		[CreatedBy],
 		[CreatedDate],
 		[UpdatedBy],
 		[UpdatedDate],
+		[DOB],
+		[FullName],
 		[Id],
-		[Name],
 		[Email],
 		[PlaceIssue],
 		[DateIssue],
@@ -69,7 +70,8 @@ BEGIN
 		[Province],
 		[District],
 		[Village],
-		[Address]
+		[Address],
+		[Email]
 	FROM [QL_NguoiDan]
 END
 GO
@@ -94,14 +96,14 @@ BEGIN
 		[Phone],
 		[Identity],
 		[Gender],
-		[DOB],
 		[Status],
 		[CreatedBy],
 		[CreatedDate],
 		[UpdatedBy],
 		[UpdatedDate],
+		[DOB],
+		[FullName],
 		[Id],
-		[Name],
 		[Email],
 		[PlaceIssue],
 		[DateIssue],
@@ -109,7 +111,8 @@ BEGIN
 		[Province],
 		[District],
 		[Village],
-		[Address]
+		[Address],
+		[Email]
 	FROM [QL_NguoiDan]
 	ORDER BY [Id]
 	OFFSET (@PageIndex-1) * @PageSize ROWS
@@ -131,13 +134,13 @@ CREATE PROCEDURE [dbo].[QL_NguoiDanInsert]
 	@Phone char(10) = null,
 	@Identity int = null,
 	@Gender bit = null,
-	@DOB int = null,
 	@Status tinyint = null,
 	@CreatedBy int = null,
 	@CreatedDate datetime = null,
 	@UpdatedBy int = null,
 	@UpdatedDate datetime = null,
-	@Name nvarchar(50) = null,
+	@DOB date = null,
+	@FullName nvarchar(50) = null,
 	@Email nvarchar(100) = null,
 	@PlaceIssue nvarchar(500) = null,
 	@DateIssue date = null,
@@ -145,7 +148,8 @@ CREATE PROCEDURE [dbo].[QL_NguoiDanInsert]
 	@Province int = null,
 	@District int = null,
 	@Village int = null,
-	@Address nvarchar(500) = null
+	@Address nvarchar(500) = null,
+	@Email nvarchar(100) = null
 AS
 BEGIN
 	INSERT INTO [QL_NguoiDan]
@@ -153,13 +157,13 @@ BEGIN
 		[Phone],
 		[Identity],
 		[Gender],
-		[DOB],
 		[Status],
 		[CreatedBy],
 		[CreatedDate],
 		[UpdatedBy],
 		[UpdatedDate],
-		[Name],
+		[DOB],
+		[FullName],
 		[Email],
 		[PlaceIssue],
 		[DateIssue],
@@ -167,20 +171,21 @@ BEGIN
 		[Province],
 		[District],
 		[Village],
-		[Address]
+		[Address],
+		[Email]
 	)
 	VALUES
 	(
 		@Phone,
 		@Identity,
 		@Gender,
-		@DOB,
 		@Status,
 		@CreatedBy,
 		@CreatedDate,
 		@UpdatedBy,
 		@UpdatedDate,
-		@Name,
+		@DOB,
+		@FullName,
 		@Email,
 		@PlaceIssue,
 		@DateIssue,
@@ -188,7 +193,8 @@ BEGIN
 		@Province,
 		@District,
 		@Village,
-		@Address
+		@Address,
+		@Email
 	)
 END
 GO
@@ -207,14 +213,14 @@ CREATE PROCEDURE [dbo].[QL_NguoiDanUpdate]
 	@Phone char(10) = null,
 	@Identity int = null,
 	@Gender bit = null,
-	@DOB int = null,
 	@Status tinyint = null,
 	@CreatedBy int = null,
 	@CreatedDate datetime = null,
 	@UpdatedBy int = null,
 	@UpdatedDate datetime = null,
+	@DOB date = null,
+	@FullName nvarchar(50) = null,
 	@Id int = null,
-	@Name nvarchar(50) = null,
 	@Email nvarchar(100) = null,
 	@PlaceIssue nvarchar(500) = null,
 	@DateIssue date = null,
@@ -222,20 +228,21 @@ CREATE PROCEDURE [dbo].[QL_NguoiDanUpdate]
 	@Province int = null,
 	@District int = null,
 	@Village int = null,
-	@Address nvarchar(500) = null
+	@Address nvarchar(500) = null,
+	@Email nvarchar(100) = null
 AS
 BEGIN
 	UPDATE [QL_NguoiDan] SET
 		[Phone] = @Phone,
 		[Identity] = @Identity,
 		[Gender] = @Gender,
-		[DOB] = @DOB,
 		[Status] = @Status,
 		[CreatedBy] = @CreatedBy,
 		[CreatedDate] = @CreatedDate,
 		[UpdatedBy] = @UpdatedBy,
 		[UpdatedDate] = @UpdatedDate,
-		[Name] = @Name,
+		[DOB] = @DOB,
+		[FullName] = @FullName,
 		[Email] = @Email,
 		[PlaceIssue] = @PlaceIssue,
 		[DateIssue] = @DateIssue,
@@ -243,7 +250,8 @@ BEGIN
 		[Province] = @Province,
 		[District] = @District,
 		[Village] = @Village,
-		[Address] = @Address
+		[Address] = @Address,
+		[Email] = @Email
 	WHERE [Id] = @Id
 END
 GO

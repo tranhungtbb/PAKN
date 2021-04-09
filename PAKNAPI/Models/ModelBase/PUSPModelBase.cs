@@ -29,8 +29,7 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 		public string Title { get; set; }
 		public string Content { get; set; }
-		public string Hour { get; set; }
-		public string Date { get; set; }
+		public DateTime? CreatedDate { get; set; }
 
 		public async Task<List<PURecommendationGetAllOnPage>> PURecommendationGetAllOnPageDAO(string KeySearch, int? Status, int? PageSize, int? PageIndex)
 		{

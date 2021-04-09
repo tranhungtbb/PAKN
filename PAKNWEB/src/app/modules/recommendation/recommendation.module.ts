@@ -28,6 +28,9 @@ import { ListApproveDenyComponent } from './list-approve-deny/list-approve-deny.
 import { ListApprovedComponent } from './list-approved/list-approved.component'
 
 import { RemindComponent } from './remind/remind.component'
+
+import { DetailRecommendationComponent } from './detail-recommendation/detail-recommendation.component'
+import { HtmlToPlaintextPipe } from 'src/app/pipes/html-filter.pipe'
 import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
 @NgModule({
 	imports: [
@@ -47,6 +50,7 @@ import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
 	],
 	declarations: [
 		RecommendationComponent,
+		HtmlToPlaintextPipe,
 		ListGeneralComponent,
 		CreateRecommendationComponent,
 		ListReceiveWaitComponent,
@@ -62,6 +66,7 @@ import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
 		ListRequestComponent,
 		RemindComponent,
 		ChangePipe,
+		DetailRecommendationComponent,
 	],
 })
 export class RecommendationModule {}
