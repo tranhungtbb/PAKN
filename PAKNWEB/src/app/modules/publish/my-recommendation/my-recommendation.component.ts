@@ -141,7 +141,7 @@ export class MyRecommendationComponent implements OnInit {
 		this.recommendationService.recommendationUpdateStatus(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalConfirmSend').modal('hide')
-				this.toastr.success(COMMONS.ACCEPT_SUCCESS)
+				this.toastr.success(COMMONS.SEND_SUCCESS)
 				this.getList()
 			} else {
 				this.toastr.error(response.message)

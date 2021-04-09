@@ -55,7 +55,10 @@ export class CreateRecommendationComponent implements OnInit {
 		this.reloadImage();
 		this.getDropdown();
 		this.activatedRoute.params.subscribe((params) => {
-			this.model.id = +params['id']
+			if (params['id']) {
+				this.model.id = +params['id']
+			}
+
 			if (this.model.id != 0) {
 				this.getData()
 			} else {
