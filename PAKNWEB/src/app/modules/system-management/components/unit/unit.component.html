@@ -85,7 +85,7 @@
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong>Tên đăng nhập</strong>
+												<strong class="no-wrap">Tên đăng nhập</strong>
 												<span class="caret-tb"></span>
 											</p>
 											<input [(ngModel)]="queryUser.userName" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
@@ -93,7 +93,7 @@
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong>Tên người dùng</strong>
+												<strong class="no-wrap">Tên người dùng</strong>
 												<span class="caret-tb"></span>
 											</p>
 											<input [(ngModel)]="queryUser.fullName" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
@@ -101,7 +101,7 @@
 										</th>
 										<th style="min-width: 150px;">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong>Số điện thoại</strong>
+												<strong class="no-wrap">Số điện thoại</strong>
 												<span class="caret-tb"></span>
 											</p>
 											<input [(ngModel)]="queryUser.phone" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
@@ -109,12 +109,12 @@
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong>Trạng thái</strong>
+												<strong class="no-wrap">Trạng thái</strong>
 												<span class="caret-tb"></span>
 											</p>
 											<div class="dropdown bootstrap-select form-control form-control-sm">
 												<!-- [items]="listStatus" bindLabel="text" bindValue="value" -->
-												<ng-select class="width-175" [(ngModel)]="queryUser.isActived" [closeOnSelect]="true" [searchable]="false" [clearable]="false"
+												<ng-select style="width:130px;" [(ngModel)]="queryUser.isActived" [closeOnSelect]="true" [searchable]="false" [clearable]="false"
 													(change)="onUserFilterChange()">
 													<ng-option value="">Tất cả trạng thái</ng-option>
 													<ng-option *ngFor="let item of listStatus" [value]="item.value">
@@ -192,28 +192,28 @@
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong>Tên đơn vị</strong>
+												<strong class="no-wrap">Tên đơn vị</strong>
 												<span class="caret-tb"></span>
 											</p>
 											<input type="text" [(ngModel)]="query.name" (change)="unitFilterChange()" placeholder="Nhập ..." class="form-control form-control-sm">
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong>Số điện thoại</strong>
+												<strong class="no-wrap">Số điện thoại</strong>
 												<span class="caret-tb"></span>
 											</p>
 											<input type="text" [(ngModel)]="query.phone" (change)="unitFilterChange()" placeholder="Nhập ..." class="form-control form-control-sm">
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong>Email</strong>
+												<strong class="no-wrap">Email</strong>
 												<span class="caret-tb"></span>
 											</p>
 											<input type="text" [(ngModel)]="query.email" (change)="unitFilterChange()" placeholder="Nhập ..." class="form-control form-control-sm">
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong>Địa chỉ</strong>
+												<strong class="no-wrap">Địa chỉ</strong>
 												<span class="caret-tb"></span>
 											</p>
 											<input type="text" [(ngModel)]="query.address" (change)="unitFilterChange()" placeholder="Nhập ..."
@@ -221,13 +221,13 @@
 										</th>
 										<th style="width: 160px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead text-uppercase">
-												<strong>Trạng thái</strong>
+												<strong class="no-wrap">Trạng thái</strong>
 												<span class="caret-tb"></span>
 											</p>
 											<div class="dropdown bootstrap-select form-control form-control-sm">
 												<!-- [items]="listStatus" bindLabel="text" bindValue="value"  -->
-												<ng-select class="width-175" [closeOnSelect]="true" [searchable]="false" [(ngModel)]="query.isActived"
-													(change)="unitFilterChange()">
+												<ng-select style="width:130px;" [closeOnSelect]="true" [searchable]="false" [(ngModel)]="query.isActived"
+													(change)="unitFilterChange()" [clearable]="false">
 													<ng-option value="">Tất cả trạng thái</ng-option>
 													<ng-option *ngFor="let item of listStatus" [value]="item.value">
 														{{item.text}}
@@ -346,7 +346,8 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
-							<input formControlName="phone" [(ngModel)]="modelUnit.phone" type="text" class="form-control" placeholder="Nhập...">
+							<input onlyNumber="true" stopLength="10" svTrim formControlName="phone" [(ngModel)]="modelUnit.phone" type="text" class="form-control"
+								placeholder="Nhập...">
 							<div *ngIf="(unitFormSubmitted && fUnit.phone.invalid)||(fUnit.phone.invalid && (fUnit.phone.dirty || fUnit.phone.touched))" class="has-error m-b-12">
 								<div *ngIf="fUnit.phone.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>

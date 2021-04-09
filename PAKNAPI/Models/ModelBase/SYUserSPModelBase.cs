@@ -357,7 +357,6 @@ namespace PAKNAPI.ModelBase
 		public string Phone { get; set; }
 		public int? PositionId { get; set; }
 		public byte Type { get; set; }
-		public byte TypeId { get; set; }
 		public string PositionName { get; set; }
 		public int? UnitId { get; set; }
 		public string UnitName { get; set; }

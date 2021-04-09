@@ -133,4 +133,13 @@ export class Api {
 
 	public static RemindInsert = 'RMRemind/RemindInsert'
 	public static RemindGetList = 'RMRemind/RemindGetList'
+
+	//api dia danh
+	public static ProvinceGetAll = 'CASPBase/CAProvinceGetAllBase'
+	public static DistrictGetAll = 'CASPBase/CADistrictGetAllBase'
+	public static VillageGetAll = 'CASPBase/CAVillageGetAllBase'
+
+	//register
+	public static RegisterIndividual = 'User/InvididualRegister'
+	public static RegisterOrganization = 'User/OrganizationRegister'
 }
