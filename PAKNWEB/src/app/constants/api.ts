@@ -133,4 +133,8 @@ export class Api {
 
 	public static RemindInsert = 'RMRemind/RemindInsert'
 	public static RemindGetList = 'RMRemind/RemindGetList'
+
+	//RequestRecommendation
+	public static RecommendationRequestGetListProcess = 'MRSPBase/MRRecommendationKNCTGetAllWithProcessBase'
+	public static RecommendationRequestGetDataForCreate = 'CACategorySPBase/CAFieldKNCTGetDropdownBase'
 }

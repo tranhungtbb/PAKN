@@ -1027,6 +1027,51 @@ namespace PAKNAPI.ModelBase
 		public string FilePath { get; set; }
 	}
 
+	public class MRRecommendationKNCTGetAllWithProcess
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationKNCTGetAllWithProcess(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationKNCTGetAllWithProcess()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Content { get; set; }
+		public int? FieldId { get; set; }
+		public string FieldName { get; set; }
+		public string Department { get; set; }
+		public string Progress { get; set; }
+		public string Place { get; set; }
+		public string Term { get; set; }
+		public int? Status { get; set; }
+		public DateTime? SendDate { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public string Classify { get; set; }
+		public DateTime? EndDate { get; set; }
+		public int? RecommendationKNCTId { get; set; }
+
+		public async Task<List<MRRecommendationKNCTGetAllWithProcess>> MRRecommendationKNCTGetAllWithProcessDAO(string Code, string Content, string Unit, int? Field, int? Status, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Code", Code);
+			DP.Add("Content", Content);
+			DP.Add("Unit", Unit);
+			DP.Add("Field", Field);
+			DP.Add("Status", Status);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationKNCTGetAllWithProcess>("MR_RecommendationKNCTGetAllWithProcess", DP)).ToList();
+		}
+	}
+
 	public class MRRecommendationKNCTInsert
 	{
 		private SQLCon _sQLCon;
