@@ -14,6 +14,7 @@ import { UserCreateOrUpdateComponent } from '../user/user-create-or-update/user-
 import { COMMONS } from 'src/app/commons/commons'
 import { UnitObject } from 'src/app/models/unitObject'
 import { UserObject2 } from 'src/app/models/UserObject'
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast'
 
 declare var jquery: any
 declare var $: any
@@ -316,9 +317,9 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				//this.getUnitPagedList()
 				this.treeViewActive(this.unitObject.id, this.unitObject.unitLevel)
 
-				// cập nhật tên cho tree khi đã sửa thành công
-				// let current_edit = this.searchTree(this.treeUnit, this.modelUnit.id)
-				// current_edit.name = this.modelUnit.name
+				// cập nhật tên ptree khi đã sửa thành công
+				let current_edit = this.searchTree(this.treeUnit, this.modelUnit.id)
+				current_edit.name = this.modelUnit.name
 
 				this.modelUnit = new UnitObject()
 				$('#modal-create-or-update').modal('hide')
@@ -391,14 +392,22 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	// 		this.expandRecursive(pNode, isExpand)
 	// 	}
 	// }
-	private searchTree(list: any[], matchingId: any): any {
-		list.forEach((e) => {
-			if (e.id == matchingId) return e
-			else {
-				this.searchTree(e.children, matchingId)
+	private searchTree(data, value, key = 'id', sub = 'children', tempObj: any = {}) {
+		if (value && data) {
+			data.find((node) => {
+				if (node[key] == value) {
+					tempObj.found = node
+					return node
+				}
+				return this.searchTree(node[sub], value, key, sub, tempObj)
+			})
+			if (tempObj.found) {
+				return tempObj.found
 			}
-		})
+		}
+		return false
 	}
+
 	//////end expand node
 
 	changeLevel(level: number) {
@@ -440,7 +449,11 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		if (!item) item = this.unitObject
 		this.unitService.delete(item).subscribe((res) => {
 			if (res.success != 'OK') {
-				this._toastr.error(COMMONS.DELETE_FAILED)
+				if (res.message.includes(`REFERENCE constraint "FK_SY_User_UnitId"`)) {
+					this._toastr.error(COMMONS.DELETE_FAILED + ', đơn vị đang được sử dụng trong quy trình')
+					return
+				}
+				this._toastr.error(res.message)
 				return
 			}
 			this._toastr.success(COMMONS.DELETE_SUCCESS)

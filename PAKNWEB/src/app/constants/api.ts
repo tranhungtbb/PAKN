@@ -138,6 +138,16 @@ export class Api {
 	//RequestRecommendation
 	public static RecommendationRequestGetListProcess = 'MRSPBase/MRRecommendationKNCTGetAllWithProcessBase'
 	public static RecommendationRequestGetDataForCreate = 'CACategorySPBase/CAFieldKNCTGetDropdownBase'
+
+	//api dia danh
+	public static ProvinceGetAll = 'CASPBase/CAProvinceGetAllBase'
+	public static DistrictGetAll = 'CASPBase/CADistrictGetAllBase'
+	public static VillageGetAll = 'CASPBase/CAVillageGetAllBase'
+
+	//register
+	public static RegisterIndividual = 'User/InvididualRegister'
+	public static RegisterOrganization = 'User/OrganizationRegister'
+
 	public static RecommendationRequestGetByIdView = 'MRSPBase/MRRecommendationKNCTGetByIdBase'
 	public static RecommendationRequestGetFile = 'MRSPBase/MRRecommendationKNCTFilesGetByRecommendationIdBase'
 }
