@@ -13,6 +13,8 @@ import { ViewFileDirective } from '../directives/view-file.directive'
 import { NonSpecialcharDirective } from '../directives/sv-nonSpecialchar.directive'
 import { InputCodeDirective } from '../directives/sv-inputCode.directive'
 import { SvScanDirective } from '../directives/sv-scan.directive'
+import { OnlyNumberDirective } from '../directives/only-number'
+import { StopLengthDirective } from '../directives/stop-length.directive'
 
 @NgModule({
 	declarations: [
@@ -30,6 +32,8 @@ import { SvScanDirective } from '../directives/sv-scan.directive'
 		SvScanDirective,
 		NonSpecialcharDirective,
 		InputCodeDirective,
+		OnlyNumberDirective,
+		StopLengthDirective,
 	],
 	exports: [
 		ConfirmClickDirective,
@@ -46,6 +50,8 @@ import { SvScanDirective } from '../directives/sv-scan.directive'
 		SvScanDirective,
 		NonSpecialcharDirective,
 		InputCodeDirective,
+		OnlyNumberDirective,
+		StopLengthDirective,
 	],
 })
 export class SharedModule {}
