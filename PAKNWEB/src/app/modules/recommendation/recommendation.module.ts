@@ -29,6 +29,7 @@ import { ListApprovedComponent } from './list-approved/list-approved.component'
 
 import { RemindComponent } from './remind/remind.component'
 import { DetailRecommendationComponent } from './detail-recommendation/detail-recommendation.component'
+import { HtmlToPlaintextPipe } from 'src/app/pipes/html-filter.pipe'
 @NgModule({
 	imports: [
 		CommonModule,
@@ -47,6 +48,7 @@ import { DetailRecommendationComponent } from './detail-recommendation/detail-re
 	],
 	declarations: [
 		RecommendationComponent,
+		HtmlToPlaintextPipe,
 		ListGeneralComponent,
 		CreateRecommendationComponent,
 		ListReceiveWaitComponent,

@@ -49,7 +49,7 @@
 						</div>
 						<div class="media-body">
 							<p class="h4 font-italic font-weight-bold">Nội dung kiến nghị:</p>
-							<p>{{modelData.progress | htmlToPlaintext}}</p>
+							<div class='white-space-break-line'>{{modelData.progress | htmlToPlaintext}}</div>
 							<p>
 								<button type="button" class="btn border btn-block text-dark p-0">
 									<span class="rounded grd-xanhngoc text-white p-3 mr-3">
@@ -263,18 +263,13 @@
 				<div class="mb-4">
 					<ul class="list-group list-group-flush">
 						<li class="list-group-item">
-							Mã số: <strong class="h4 font-weight-bold">{{model.code}}</strong>
+							Mã số: <strong class="h4 font-weight-bold">{{modelData.code}}</strong>
 						</li>
 						<li class="list-group-item">
-							Đối tượng:
-							<strong *ngIf="model.typeObject == 1" class="h4 font-weight-bold">Người dân</strong>
-							<strong *ngIf="model.typeObject == 2" class="h4 font-weight-bold">Doanh nghiệp</strong>
+							Lĩnh Vực: <strong class="h4 font-weight-bold">{{modelData.fieldName}}</strong>
 						</li>
 						<li class="list-group-item">
-							Lĩnh Vực: <strong class="h4 font-weight-bold">{{model.fieldName}}</strong>
-						</li>
-						<li class="list-group-item">
-							Đơn vị tiếp nhận: <strong class="h4 font-weight-bold">{{model.unitName}}</strong>
+							Đơn vị tiếp nhận: <strong class="h4 font-weight-bold">{{modelData.department}}</strong>
 						</li>
 					</ul>
 				</div>

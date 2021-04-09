@@ -65,8 +65,14 @@ export class DetailRecommendationComponent implements OnInit {
 			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
 				this.modelData = response.result.MRRecommendationKNCTGetById[0]
-				console.log(this.modelData.content)
-				this.files = response.result.filesConclusion
+				let req = {
+					Id: this.modelData.recommendationKNCTId,
+				}
+				this.recommendationService.recommendationGetFileByIdView(req).subscribe((res) => {
+					if (res.success == RESPONSE_STATUS.success) {
+						this.filesModel = res.result.MRRecommendationKNCTFilesGetByRecommendationId[0]
+					}
+				})
 				this.model.shortName = this.getShortName('Kiến nghị cử tri')
 				if (this.model.sendDate) {
 					this.model.sendDate = new Date(this.model.sendDate)
@@ -111,15 +117,4 @@ export class RequestData {
 	status: number
 	term: string
 }
-import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-	name: 'htmlToPlaintext'
-})
-export class HtmlToPlaintextPipe implements PipeTransform {
-	transform(value: any): string {
-		const temp = document.createElement('div');
-		temp.innerHTML = value;
-		return temp.textContent || temp.innerText || '';
-	}
-}
