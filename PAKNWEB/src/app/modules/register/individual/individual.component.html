@@ -97,7 +97,7 @@
 				<div class="w-100"></div>
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Ngày tháng năm sinh <span class="cl-red">(*)</span></label>
-					<input [svTrim] [(ngModel)]="model.dob" formControlName="dob" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.dob" formControlName="dob" type="date" placeholder="Nhập..." class="form-control border-brown">
 
 					<!-- bsDatepicker #nv1="bsDatepicker" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY',containerClass:'theme-dark-blue' }" datetime="DD/MM/YYYY" -->
 					<!--  -->
@@ -110,10 +110,6 @@
 
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Huyện / Quận / thị xã... <span class="cl-red">(*)</span></label>
-					<!-- <select [(ngModel)]="model.district" formControlName="district" class="form-control border-brown">
-						<option value="">Chọn...</option>
-						<option *ngFor="let dis of listDistrict" [value]="dis.id">{{dis.name}}</option>
-					</select> -->
 					<ng-select [(ngModel)]="model.district" formControlName="district" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true"
 						(change)="onChangeDistrict()">
 						<ng-option value="">Chon...</ng-option>
@@ -128,9 +124,6 @@
 				</div>
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Xã / Phường / Thị trấn <span class="cl-red">(*)</span></label>
-					<!-- <select [(ngModel)]="model.village" formControlName="village" class="form-control border-brown">
-						<option *ngFor="let vill of listVillage" [value]="vill.id">{{vill.name}}</option>
-					</select> -->
 					<ng-select [(ngModel)]="model.village" formControlName="village" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true">
 						<ng-option value="">Chon...</ng-option>
 						<ng-option *ngFor="let vill of listVillage" [value]="vill.id">{{vill.name}}</ng-option>
@@ -207,7 +200,7 @@
 				<div class="form-group mb-0 col">
 					<label class="mr-3">Giới tính:</label>
 					<label *ngFor="let gen of listGender" class="radio-inline mr-3">
-						<input [(ngModel)]="model.gender" formControlName="gender" [value]="gen.value" type="radio"> {{gen.text}}
+						<input [(ngModel)]="model.gender" formControlName="gender" [value]="gen.value" type="radio"> <span class="text-uppercase"> {{gen.text}}</span>
 					</label>
 				</div>
 			</form>
