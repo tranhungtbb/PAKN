@@ -20,6 +20,7 @@ declare var $: any
 })
 export class DetailRecommendationComponent implements OnInit {
 	model: RecommendationViewObject = new RecommendationViewObject()
+	modelData: RequestData = new RequestData()
 	modelConclusion: RecommendationConclusionObject = new RecommendationConclusionObject()
 	lstHashtag: any[] = []
 	lstUsers: any[] = []
@@ -63,16 +64,10 @@ export class DetailRecommendationComponent implements OnInit {
 		this.recommendationService.recommendationGetByIdView(request).subscribe((response) => {
 			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
-				this.model = response.result.model
-				if (this.model.status > RECOMMENDATION_STATUS.PROCESSING) {
-					this.modelConclusion = response.result.modelConclusion
-					this.files = response.result.filesConclusion
-				} else {
-					this.modelConclusion = new RecommendationConclusionObject()
-				}
-				this.lstHashtagSelected = response.result.lstHashtag
-				this.filesModel = response.result.lstFiles
-				this.model.shortName = this.getShortName(this.model.name)
+				this.modelData = response.result.MRRecommendationKNCTGetById[0]
+				console.log(this.modelData.content)
+				this.files = response.result.filesConclusion
+				this.model.shortName = this.getShortName('Kiến nghị cử tri')
 				if (this.model.sendDate) {
 					this.model.sendDate = new Date(this.model.sendDate)
 				}
@@ -96,5 +91,35 @@ export class DetailRecommendationComponent implements OnInit {
 			initials += names[names.length - 1].substring(0, 1).toUpperCase()
 		}
 		return initials
+	}
+}
+export class RequestData {
+	classify: string
+	code: string
+	content: string
+	createdDate: string
+	department: string
+	endDate: string
+	fieldId: number
+	fieldName: string
+	id: number
+	place: string
+	progress: string
+	recommendationKNCTId: number
+	rowNumber: number
+	sendDate: string
+	status: number
+	term: string
+}
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+	name: 'htmlToPlaintext'
+})
+export class HtmlToPlaintextPipe implements PipeTransform {
+	transform(value: any): string {
+		const temp = document.createElement('div');
+		temp.innerHTML = value;
+		return temp.textContent || temp.innerText || '';
 	}
 }
