@@ -70,7 +70,8 @@ export class DetailRecommendationComponent implements OnInit {
 				}
 				this.recommendationService.recommendationGetFileByIdView(req).subscribe((res) => {
 					if (res.success == RESPONSE_STATUS.success) {
-						this.filesModel = res.result.MRRecommendationKNCTFilesGetByRecommendationId[0]
+						this.filesModel = res.result.MRRecommendationKNCTFilesGetByRecommendationId
+						console.log(this.filesModel)
 					}
 				})
 				this.model.shortName = this.getShortName('Kiến nghị cử tri')
