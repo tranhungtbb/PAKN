@@ -11,6 +11,7 @@ import { SupportComponent } from './support/support.component'
 import { CreateRecommendationComponent } from './user-create-recommendation/user-create-recommendation.component'
 import { using } from 'rxjs'
 import { MyRecommendationComponent } from './my-recommendation/my-recommendation.component'
+import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
 
 const routes: Routes = [
 	{
@@ -44,6 +45,10 @@ const routes: Routes = [
 			{
 				path: 'cap-nhat-kien-nghi/:id',
 				component: CreateRecommendationComponent,
+			},
+			{
+				path: 'chi-tiet-kien-nghi/:id',
+				component: ViewRecommendationPersonalComponent,
 			},
 			{
 				path: 'phan-anh-kien-nghi',

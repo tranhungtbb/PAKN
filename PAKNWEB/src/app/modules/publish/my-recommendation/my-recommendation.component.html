@@ -96,7 +96,10 @@
 					</div>
 				</div>
 				<div class="card-list-pakn" *ngFor="let item of listData">
-					<div class="col-md-12 font-weight-bold pt-2">{{item.title}}</div>
+					<div class="col-md-12 font-weight-bold pt-2">
+						<a [routerLink]="['/cong-bo/chi-tiet-kien-nghi/',item.id]" title="{{item.title}}" class="text-black">
+							{{item.title}}</a>
+					</div>
 					<div class="col-md-12 font-italic content-recommendation white-space-break-line">{{item.content}}</div>
 					<div class="col-md-12 row pb-2">
 						<div class="col-md-6">{{item.createdDate | date:'HH:mm dd/MM/yyyy'}} </div>
