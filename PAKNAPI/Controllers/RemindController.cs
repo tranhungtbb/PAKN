@@ -76,13 +76,15 @@ namespace PAKNAPI.Controllers
                             await new RMFileAttach(_appSetting).RMFileAttachInsert(file);
                         }
                     }
+                    List<RecommendationForward> lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(_rMRemindInsert.Model.RecommendationId)).ToList();
+                    var UnitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
                     // insert vào RMForward
                     RMForwardModel _rMForwardInsert = new RMForwardModel();
                     _rMForwardInsert.RemindId = id;
                     _rMForwardInsert.SenderId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
                     _rMForwardInsert.SenderName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
-                    _rMForwardInsert.SendOrgId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-                    _rMForwardInsert.ReceiveOrgId =Int32.Parse(Request.Form["SendOrgId"].ToString());
+                    _rMForwardInsert.SendOrgId = Int32.Parse(Request.Form["SendOrgId"].ToString());
+                    _rMForwardInsert.ReceiveOrgId = UnitReceiveId;
                     _rMForwardInsert.DateSend = DateTime.Now;
                     _rMForwardInsert.IsView = 1; // chưa biết là gì, auto để 1
 
@@ -112,21 +114,30 @@ namespace PAKNAPI.Controllers
 
         #region danh sách nhắc việc trong detail PAKN mà cơ quan mình nhận được hoặc mình là người gửi
 
-        [HttpPost]
+        [HttpGet]
         [Authorize]
         [Route("RemindGetList")]
-        public async Task<object> RMRemindGetAll(int? RecommnendationId , int? Org) {
+        // receive org ID
+        public async Task<object> RMRemindGetAll(int? RecommendationId, int? SendOrgId) {
             try
             {
+                List<RecommendationForward> lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(RecommendationId)).ToList();
+                var UnitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
                 List<RMRemindObject> result = new List<RMRemindObject>();
-
-                result = await new RMRemind(_appSetting).RMRemindGetList(RecommnendationId, Org, true);
+                var x = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                if (SendOrgId != UnitReceiveId) {
+                    result = await new RMRemind(_appSetting).RMRemindGetList(RecommendationId, SendOrgId, true);
+                }
+                else
+                {
+                    result = await new RMRemind(_appSetting).RMRemindGetList(RecommendationId, UnitReceiveId , false);
+                }
+                
                 if (result.Count > 0) {
-                    result.ForEach(async item =>
-                    {
+                    foreach (var item in result) {
                         List<RMFileAttachModel> files = await new RMFileAttach(_appSetting).RMFileAttachGetByRemindID(item.Id);
                         item.Files = files;
-                    });
+                    }
                     return new ResultApi { Success = ResultCode.OK, Result = result };
                 }
 
@@ -136,7 +147,6 @@ namespace PAKNAPI.Controllers
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
-
 
 
         #endregion

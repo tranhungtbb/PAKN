@@ -84,4 +84,34 @@ namespace PAKNAPI.Models.Remind
             return (await _sQLCon.ExecuteNonQueryDapperAsync("[RM_ForwardInsert]", DP));
         }
     }
+
+    public class MR_RecommendationForward
+    {
+        private SQLCon _sQLCon;
+
+        public MR_RecommendationForward(IAppSetting appSetting)
+        {
+            _sQLCon = new SQLCon(appSetting.GetConnectstring());
+        }
+
+
+        public async Task<List<RecommendationForward>> MRRecommendationForwardGetByRecommendationId(int? RecommendationId)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("RecommendationId", RecommendationId);
+            return (await _sQLCon.ExecuteListDapperAsync<RecommendationForward>("MR_Recommendation_ForwardGetByRecommendationId", DP)).ToList();
+        }
+    }
+
+    public class RecommendationForward
+    {
+        public int Id { get; set; }
+        public int RecommendationId { get; set; }
+        public int UserSendId { get; set; }
+        public int ReceiveId { get; set; }
+        public int UnitReceiveId { get; set; }
+        public int Step { get; set; }
+    }
+
+
 }

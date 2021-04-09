@@ -53,6 +53,7 @@ namespace PAKNAPI.Models.Remind
         public int RecommendationId { get; set; }
         public string Content { get; set; }
         public int SenderId { get; set; }
+        public string SenderName { get; set; }
         public int SenderOrgId { get; set; }
         public int ReceiveOrgId { get; set; }
         public DateTime DateSend { get; set; }

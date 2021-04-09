@@ -78,6 +78,7 @@ export class ViewRecommendationComponent implements OnInit {
 				if (this.model.sendDate) {
 					this.model.sendDate = new Date(this.model.sendDate)
 				}
+				this.remindComponent.getListRemind()
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -366,8 +367,5 @@ export class ViewRecommendationComponent implements OnInit {
 					console.error(err)
 				}
 		}
-	}
-	show() {
-		this.remindComponent.showComponent()
 	}
 }

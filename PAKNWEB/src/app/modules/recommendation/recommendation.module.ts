@@ -28,6 +28,7 @@ import { ListApproveDenyComponent } from './list-approve-deny/list-approve-deny.
 import { ListApprovedComponent } from './list-approved/list-approved.component'
 
 import { RemindComponent } from './remind/remind.component'
+import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
 @NgModule({
 	imports: [
 		CommonModule,
@@ -60,6 +61,7 @@ import { RemindComponent } from './remind/remind.component'
 		ListApprovedComponent,
 		ListRequestComponent,
 		RemindComponent,
+		ChangePipe,
 	],
 })
 export class RecommendationModule {}
