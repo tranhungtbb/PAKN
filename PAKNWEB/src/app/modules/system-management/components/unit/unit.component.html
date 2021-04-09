@@ -25,8 +25,10 @@
 			<div class="card mb-0 border-bottom rounded-0">
 				<div class="card-header d-flex align-items-center">
 					<p class="card-title d-flex align-items-center mb-0">
-						<span class="badge rounded-pill badge-success mr-3" *ngIf="unitObject.isActived" (click)="onOpenConfirmModal(unitObject.id,'unit_status')">Hiệu lực</span>
-						<span class="badge rounded-pill badge-light mr-3" *ngIf="!unitObject.isActived" (click)="onOpenConfirmModal(unitObject.id,'unit_status')">Hết hiệu
+						<span class="badge rounded-pill badge-success mr-3 cursor-hand" *ngIf="unitObject.isActived" (click)="onOpenConfirmModal(unitObject.id,'unit_status')">Hiệu
+							lực</span>
+						<span class="badge rounded-pill badge-light mr-3 cursor-hand" *ngIf="!unitObject.isActived" (click)="onOpenConfirmModal(unitObject.id,'unit_status')">Hết
+							hiệu
 							lực</span>
 						<span>{{unitObject.name}}</span>
 					</p>
