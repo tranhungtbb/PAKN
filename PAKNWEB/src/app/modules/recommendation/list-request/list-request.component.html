@@ -7,25 +7,7 @@
 					<li class="breadcrumb-item active"><a class="font-weight-bold"> Danh sách Kiến nghị cử tri</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
-					<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
-							<path
-								d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
-							<path
-								d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-						</svg>
-						Xuất excel
-					</button>
-					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white"
-						[routerLink]="['/quan-tri/kien-nghi/them-moi/0']">
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus"
-							viewBox="0 0 16 16">
-							<path
-								d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-						</svg>
-						Thêm mới
-					</button>
+
 				</div>
 			</div>
 		</div>
@@ -48,14 +30,6 @@
 										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
 									</th>
-									<th>
-										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Tên CN/DN</strong>
-											<span class="caret-tb"></span>
-										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100"
-											(keydown.enter)="dataStateChange()" />
-									</th>
 									<th style="width: 350px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Nội dung</strong>
@@ -64,23 +38,22 @@
 										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.content" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
 									</th>
-									<th>
+									<th style="min-width: 160px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>ĐV tiếp nhận</strong>
 											<span class="caret-tb"></span>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [items]="lstUnit" bindLabel="text" bindValue="value"
-												[(ngModel)]="dataSearch.unitId" [closeOnSelect]="true" (change)="dataStateChange()">
-											</ng-select>
+											<input class="form-control form-control-sm" [(ngModel)]="dataSearch.unitId" maxlength="100"
+												(keydown.enter)="dataStateChange()" />
 										</div>
 									</th>
-									<th>
+									<th style="width: 200px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>lĩnh vực</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<div class="dropdown bootstrap-select form-control form-control-sm">
+										<div style="width: 200px" class="dropdown bootstrap-select form-control form-control-sm">
 											<ng-select class="" [items]="lstField" bindLabel="text" bindValue="value"
 												[(ngModel)]="dataSearch.field" [closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
@@ -111,24 +84,21 @@
 												title="Xem chi tiết">{{item.code}}</a></strong>
 									</td>
 									<td>
-										<strong><a class="ellipsis">{{item.name}}</a></strong>
-									</td>
-									<td>
 										<p class="text-2line mb-0">{{item.content}}</p>
 									</td>
-									<td>{{item.unitName}}</td>
+									<td>{{item.department}}</td>
 									<td>{{item.fieldName}}</td>
 									<td>
 										<span *ngIf="item.status == 2" class="badge rounded-pill badge-outline-light bg-white">Chờ xử
 											lý</span>
-										<span *ngIf="item.status == 3" class="badge rounded-pill bg-red">Từ chối xử lý</span>
+										<span *ngIf="item.status == 10" class="badge rounded-pill bg-red">Từ chối xử lý</span>
 										<span *ngIf="item.status == 4" class="badge rounded-pill bg-blue2">Đã tiếp nhận</span>
 										<span *ngIf="item.status == 5" class="badge rounded-pill badge-outline-green2">Chờ giải quyết</span>
 										<span *ngIf="item.status == 6" class="badge rounded-pill bg-red">Từ chối giải quyết</span>
 										<span *ngIf="item.status == 7" class="badge rounded-pill badge-outline-blue">Đang giải quyết</span>
 										<span *ngIf="item.status == 8" class="badge rounded-pill badge-outline-success">Chờ phê duyệt</span>
 										<span *ngIf="item.status == 9" class="badge rounded-pill bg-red">Từ chối phê duyệt</span>
-										<span *ngIf="item.status == 10" class="badge rounded-pill badge-success">Đã giải quyết</span>
+										<span *ngIf="item.status == 3" class="badge rounded-pill badge-success">Đã giải quyết</span>
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
