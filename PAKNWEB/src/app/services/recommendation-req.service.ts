@@ -73,7 +73,7 @@ export class RecommendationRequestService {
 			logAction: encodeURIComponent(LOG_ACTION.GETINFO),
 			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
 		}
-		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetByIdView, headers)
+		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationRequestGetByIdView, headers)
 	}
 
 	recommendationGetHistories(request: any): Observable<any> {

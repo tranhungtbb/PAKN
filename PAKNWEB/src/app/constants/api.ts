@@ -147,4 +147,7 @@ export class Api {
 	//register
 	public static RegisterIndividual = 'User/InvididualRegister'
 	public static RegisterOrganization = 'User/OrganizationRegister'
+
+	public static RecommendationRequestGetByIdView = 'MRSPBase/MRRecommendationKNCTGetByIdBase'
+	public static RecommendationRequestGetFile = 'MRSPBase/MRRecommendationKNCTFilesGetByRecommendationIdBase'
 }

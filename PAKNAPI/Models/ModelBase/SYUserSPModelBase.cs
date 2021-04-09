@@ -361,7 +361,7 @@ namespace PAKNAPI.ModelBase
 		public int? UnitId { get; set; }
 		public string UnitName { get; set; }
 		public bool? IsMain { get; set; }
-		public int? TypeObject { get; set; }
+		public int TypeObject { get; set; }
 
 		public async Task<List<SYUSRLogin>> SYUSRLoginDAO(string UserName)
 		{
