@@ -79,4 +79,10 @@ namespace PAKNAPI.Models.Recommendation
         public byte RecommendationStatus { get; set; }        
         public List<DropdownObject> ListHashTag { get; set; }
     }
+
+    public class RecommendationSendProcess
+    {
+        public int? id { get; set; }
+        public byte? status { get; set; }
+    }
 }
