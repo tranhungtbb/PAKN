@@ -137,4 +137,6 @@ export class Api {
 	//RequestRecommendation
 	public static RecommendationRequestGetListProcess = 'MRSPBase/MRRecommendationKNCTGetAllWithProcessBase'
 	public static RecommendationRequestGetDataForCreate = 'CACategorySPBase/CAFieldKNCTGetDropdownBase'
+	public static RecommendationRequestGetByIdView = 'MRSPBase/MRRecommendationKNCTGetByIdBase'
+	public static RecommendationRequestGetFile = 'MRSPBase/MRRecommendationKNCTFilesGetByRecommendationIdBase'
 }

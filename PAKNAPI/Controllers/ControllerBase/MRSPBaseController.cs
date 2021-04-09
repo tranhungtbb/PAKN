@@ -1169,6 +1169,29 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationKNCTFilesGetByRecommendationIdBase")]
+		public async Task<ActionResult<object>> MRRecommendationKNCTFilesGetByRecommendationIdBase(int? Id)
+		{
+			try
+			{
+				List<MRRecommendationKNCTFilesGetByRecommendationId> rsMRRecommendationKNCTFilesGetByRecommendationId = await new MRRecommendationKNCTFilesGetByRecommendationId(_appSetting).MRRecommendationKNCTFilesGetByRecommendationIdDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationKNCTFilesGetByRecommendationId", rsMRRecommendationKNCTFilesGetByRecommendationId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("MRRecommendationKNCTFilesInsertBase")]
@@ -1240,6 +1263,29 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"MRRecommendationKNCTGetAllWithProcess", rsMRRecommendationKNCTGetAllWithProcess},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationKNCTGetByIdBase")]
+		public async Task<ActionResult<object>> MRRecommendationKNCTGetByIdBase(int? Id)
+		{
+			try
+			{
+				List<MRRecommendationKNCTGetById> rsMRRecommendationKNCTGetById = await new MRRecommendationKNCTGetById(_appSetting).MRRecommendationKNCTGetByIdDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationKNCTGetById", rsMRRecommendationKNCTGetById},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

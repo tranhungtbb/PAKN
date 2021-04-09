@@ -994,6 +994,34 @@ namespace PAKNAPI.ModelBase
 		public int? Id { get; set; }
 	}
 
+	public class MRRecommendationKNCTFilesGetByRecommendationId
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationKNCTFilesGetByRecommendationId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationKNCTFilesGetByRecommendationId()
+		{
+		}
+
+		public int Id { get; set; }
+		public int? RecommendationKNCTId { get; set; }
+		public string Name { get; set; }
+		public short? FileType { get; set; }
+		public string FilePath { get; set; }
+
+		public async Task<List<MRRecommendationKNCTFilesGetByRecommendationId>> MRRecommendationKNCTFilesGetByRecommendationIdDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationKNCTFilesGetByRecommendationId>("MR_RecommendationKNCT_FilesGetByRecommendationId", DP)).ToList();
+		}
+	}
+
 	public class MRRecommendationKNCTFilesInsert
 	{
 		private SQLCon _sQLCon;
@@ -1069,6 +1097,45 @@ namespace PAKNAPI.ModelBase
 			DP.Add("PageIndex", PageIndex);
 
 			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationKNCTGetAllWithProcess>("MR_RecommendationKNCTGetAllWithProcess", DP)).ToList();
+		}
+	}
+
+	public class MRRecommendationKNCTGetById
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationKNCTGetById(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationKNCTGetById()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Content { get; set; }
+		public int? FieldId { get; set; }
+		public string FieldName { get; set; }
+		public string Department { get; set; }
+		public string Progress { get; set; }
+		public string Place { get; set; }
+		public string Term { get; set; }
+		public int? Status { get; set; }
+		public DateTime? SendDate { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public string Classify { get; set; }
+		public DateTime? EndDate { get; set; }
+		public int? RecommendationKNCTId { get; set; }
+
+		public async Task<List<MRRecommendationKNCTGetById>> MRRecommendationKNCTGetByIdDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationKNCTGetById>("MR_RecommendationKNCTGetById", DP)).ToList();
 		}
 	}
 
