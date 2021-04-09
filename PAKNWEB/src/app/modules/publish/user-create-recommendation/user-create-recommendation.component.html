@@ -8,7 +8,8 @@
 				<ol class="breadcrumb px-0 bg-transparent">
 					<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
 					<li class="breadcrumb-item"><a href="#">Phản ánh, Kiến nghị</a></li>
-					<li class="breadcrumb-item font-weight-bold">Tạo mới phản ánh, Kiến nghị</li>
+					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id == 0">Tạo mới phản ánh, Kiến nghị</li>
+					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id != 0">Cập nhật phản ánh, Kiến nghị</li>
 				</ol>
 				<form class="form-row mb-3" [formGroup]="form">
 					<div class="col-12 form-group">
@@ -186,7 +187,9 @@
 							<i class="bi bi-arrow-repeat d-flex" style="font-size: 24px"></i>
 							<span class="ml-2">Nhập lại</span>
 						</button>
-						<button type="button" class="btn text-white border-0 grd-xanhngoc" (click)="onSave()">
+						<button type="button" class="btn text-white border-0 grd-xanhngoc mr-3" (click)="onSave(1)">Lưu</button>
+
+						<button type="button" class="btn text-white border-0 grd-xanhngoc" (click)="onSave(2)">
 							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
 								class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
 								<path
