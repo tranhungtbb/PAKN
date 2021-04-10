@@ -25,6 +25,7 @@ import { TreeModule } from 'primeng/tree'
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer'
 import { ImageViewerModule } from 'ng2-image-viewer'
 import { UnitFilterPipe } from './pipes/unit-filter.pipe'
+import {DpDatePickerModule} from 'ng2-date-picker'
 
 @NgModule({
 	declarations: [AppComponent, SvFocusDirective, ConfirmDialogComponent, ViewFileDialogComponent],
@@ -57,6 +58,7 @@ import { UnitFilterPipe } from './pipes/unit-filter.pipe'
 		PdfJsViewerModule,
 		ImageViewerModule,
 		TreeModule,
+		DpDatePickerModule
 	],
 	providers: [
 		{

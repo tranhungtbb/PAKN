@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
-import { DiadanhService } from 'src/app/services/diadanh.service'
+import { DatepickerOptions } from 'ng2-datepicker';
 
+import { DiadanhService } from 'src/app/services/diadanh.service'
 import { OrganizationComponent } from '../organization.component'
 
 @Component({
@@ -11,6 +12,14 @@ import { OrganizationComponent } from '../organization.component'
 })
 export class OrgRepreFormComponent implements OnInit {
 	constructor(private parentCompo: OrganizationComponent, private formBuilder: FormBuilder, private diadanhService: DiadanhService) {}
+
+	datePickerConfig:DatepickerOptions={
+		inputClass: 'form-control border-brown',
+		placeholder:'Nhập...',
+		formatTitle: 'MM yyyy',
+		format: 'dd/MM/yyyy',
+  	calendarClass: 'datepicker-container datepicker-dark',
+	}
 
 	formInfo: FormGroup
 	fInfoSubmitted = false

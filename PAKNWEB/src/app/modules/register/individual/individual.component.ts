@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { Router } from '@angular/router'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
+import { DatepickerOptions } from 'ng2-datepicker';
 
 import { RegisterService } from 'src/app/services/register.service'
 import { DiadanhService } from 'src/app/services/diadanh.service'
@@ -23,6 +24,15 @@ export class IndividualComponent implements OnInit {
 		private registerService: RegisterService,
 		private diadanhService: DiadanhService
 	) {}
+
+	datePickerConfig:DatepickerOptions={
+		inputClass: 'form-control border-brown',
+		placeholder:'Nhập...',
+		formatTitle: 'MM yyyy',
+		format: 'dd/MM/yyyy',
+  	calendarClass: 'datepicker-container datepicker-dark',
+	}
+
 
 	formLogin: FormGroup
 	formInfo: FormGroup
@@ -93,6 +103,10 @@ export class IndividualComponent implements OnInit {
 	onSave() {
 		this.fLoginSubmitted = true
 		this.fInfoSubmitted = true
+
+		let fDob :any = document.querySelector('ngx-datepicker#_dob input');
+		this.model.dob = fDob.value;
+
 		if (this.formLogin.invalid || this.formInfo.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return

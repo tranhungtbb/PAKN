@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
 import { Router } from '@angular/router'
+import { DatepickerOptions } from 'ng2-datepicker';
 
 import { OrgFormAddressComponent } from './org-form-address/org-form-address.component'
 import { OrgRepreFormComponent } from './org-repre-form/org-repre-form.component'
@@ -21,6 +22,14 @@ declare var $: any
 })
 export class OrganizationComponent implements OnInit {
 	constructor(private toast: ToastrService, private formBuilder: FormBuilder, private registerService: RegisterService, private router: Router) {}
+
+	datePickerConfig:DatepickerOptions={
+		inputClass: 'form-control border-brown',
+		placeholder:'Nhập...',
+		formatTitle: 'MM yyyy',
+		format: 'dd/MM/yyyy',
+  	calendarClass: 'datepicker-container datepicker-dark',
+	}
 
 	@ViewChild(OrgRepreFormComponent, { static: false }) child_OrgRepreForm: OrgRepreFormComponent
 	@ViewChild(OrgFormAddressComponent, { static: false }) child_OrgAddressForm: OrgFormAddressComponent
@@ -62,7 +71,12 @@ export class OrganizationComponent implements OnInit {
 		this.fOrgInfoSubmitted = true
 		this.child_OrgAddressForm.fOrgAddressSubmitted = true
 
-		console.log(this.model)
+		let fDob :any = document.querySelector('ngx-datepicker#_dob input');
+		let fIsDate:any = document.querySelector('ngx-datepicker#_IsDate input');
+		this.model.DOB = fDob.value;
+		this.model.DateIssue = fIsDate.value;
+
+		//console.log(this.model);
 
 		if (this.formLogin.invalid || this.formOrgInfo.invalid || this.child_OrgRepreForm.formInfo.invalid || this.child_OrgAddressForm.formOrgAddress.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')

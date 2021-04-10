@@ -97,8 +97,9 @@
 				<div class="w-100"></div>
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Ngày tháng năm sinh <span class="cl-red">(*)</span></label>
-					<input [svTrim] [(ngModel)]="model.dob" formControlName="dob" type="date" placeholder="Nhập..." class="form-control border-brown">
-
+					<!-- <input [svTrim] [(ngModel)]="model.dob" formControlName="dob" type="text" placeholder="Nhập..." class="form-control border-brown"
+					> -->
+					<ngx-datepicker id="_dob" [(ngModel)]="model.dob" formControlName="dob" [options]="datePickerConfig"></ngx-datepicker>
 					<!-- bsDatepicker #nv1="bsDatepicker" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY',containerClass:'theme-dark-blue' }" datetime="DD/MM/YYYY" -->
 					<!--  -->
 					<div *ngIf="(fLoginSubmitted && fInfo.dob.invalid)||(fInfo.dob.invalid && (fInfo.dob.dirty || fInfo.dob.touched))" class="has-error m-b-12">
