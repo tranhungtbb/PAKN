@@ -39,6 +39,12 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UpdatedDate", _qLDoanhNghiepInsertIN.UpdatedDate);
 			DP.Add("RepresentativeName", _qLDoanhNghiepInsertIN.RepresentativeName);
 			DP.Add("Email", _qLDoanhNghiepInsertIN.Email);
+			DP.Add("OrgProvince", _qLDoanhNghiepInsertIN.OrgProvince);
+			DP.Add("OrgDistrict", _qLDoanhNghiepInsertIN.OrgDistrict);
+			DP.Add("OrgVillage", _qLDoanhNghiepInsertIN.OrgVillage);
+			DP.Add("OrgAddress", _qLDoanhNghiepInsertIN.OrgAddress);
+			DP.Add("OrgPhone", _qLDoanhNghiepInsertIN.OrgPhone);
+			DP.Add("OrgEmail", _qLDoanhNghiepInsertIN.OrgEmail);
 			DP.Add("RegistrationNum", _qLDoanhNghiepInsertIN.RegistrationNum);
 			DP.Add("DecisionFoundation", _qLDoanhNghiepInsertIN.DecisionFoundation);
 			DP.Add("DateIssue", _qLDoanhNghiepInsertIN.DateIssue);
@@ -66,6 +72,12 @@ namespace PAKNAPI.ModelBase
 		public DateTime? UpdatedDate { get; set; }
 		public string RepresentativeName { get; set; }
 		public string Email { get; set; }
+		public int? OrgProvince { get; set; }
+		public int? OrgDistrict { get; set; }
+		public int? OrgVillage { get; set; }
+		public int? OrgAddress { get; set; }
+		public string OrgPhone { get; set; }
+		public string OrgEmail { get; set; }
 		public string RegistrationNum { get; set; }
 		public string DecisionFoundation { get; set; }
 		public DateTime? DateIssue { get; set; }
@@ -101,7 +113,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("CreatedDate", _qLNguoiDanInsertIN.CreatedDate);
 			DP.Add("UpdatedBy", _qLNguoiDanInsertIN.UpdatedBy);
 			DP.Add("UpdatedDate", _qLNguoiDanInsertIN.UpdatedDate);
-			DP.Add("Name", _qLNguoiDanInsertIN.Name);
+			DP.Add("FullName", _qLNguoiDanInsertIN.FullName);
 			DP.Add("Email", _qLNguoiDanInsertIN.Email);
 			DP.Add("PlaceIssue", _qLNguoiDanInsertIN.PlaceIssue);
 			DP.Add("DateIssue", _qLNguoiDanInsertIN.DateIssue);
@@ -120,13 +132,13 @@ namespace PAKNAPI.ModelBase
 		public string Phone { get; set; }
 		public int? Identity { get; set; }
 		public bool? Gender { get; set; }
-		public int? DOB { get; set; }
+		public DateTime? DOB { get; set; }
 		public byte? Status { get; set; }
 		public int? CreatedBy { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public int? UpdatedBy { get; set; }
 		public DateTime? UpdatedDate { get; set; }
-		public string Name { get; set; }
+		public string FullName { get; set; }
 		public string Email { get; set; }
 		public string PlaceIssue { get; set; }
 		public DateTime? DateIssue { get; set; }

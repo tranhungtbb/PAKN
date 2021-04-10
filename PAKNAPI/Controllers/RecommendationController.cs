@@ -537,5 +537,27 @@ namespace PAKNAPI.Controller
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("RecommendationUpdateStatus")]
+		public async Task<ActionResult<object>> RecommendationUpdateStatus(RecommendationSendProcess request)
+		{
+			try
+			{
+				MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
+				_mRRecommendationUpdateStatusIN.Status = request.status;
+				_mRRecommendationUpdateStatusIN.Id = request.id;
+				await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				return new ResultApi { Success = ResultCode.OK };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 	}
 }

@@ -47,14 +47,25 @@ export class CreateRecommendationComponent implements OnInit {
 		private _serviceCatalog: CatalogService,
 		private router: Router,
 		private captchaService: CaptchaService,
+		private activatedRoute: ActivatedRoute
 	) { }
 
 	ngOnInit() {
 		this.model = new RecommendationObject();
 		this.reloadImage();
 		this.getDropdown();
-		this.builForm();
-		this.model.typeObject = 1
+		this.activatedRoute.params.subscribe((params) => {
+			if (params['id']) {
+				this.model.id = +params['id']
+			}
+
+			if (this.model.id != 0) {
+				this.getData()
+			} else {
+				this.model.typeObject = 1
+			}
+			this.builForm()
+		})
 	}
 
 	onCreateHashtag(e) {
@@ -197,7 +208,7 @@ export class CreateRecommendationComponent implements OnInit {
 
 
 
-	onSave() {
+	onSave(status) {
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
 
@@ -206,7 +217,7 @@ export class CreateRecommendationComponent implements OnInit {
 			this.reloadImage();
 			return
 		}
-		this.model.status = RECOMMENDATION_STATUS.RECEIVE_APPROVED;
+		this.model.status = status;
 		this.model.sendId = this.storageService.getUserId();
 		this.model.sendDate = new Date();
 		this.model.typeObject = this.storageService.getTypeObject();
@@ -222,18 +233,33 @@ export class CreateRecommendationComponent implements OnInit {
 		}
 		this.captchaService.send(constdata).subscribe((result) => {
 			if (result.success === RESPONSE_STATUS.success) {
-				this.recommendationService.recommendationInsert(request).subscribe((response) => {
-					if (response.success == RESPONSE_STATUS.success) {
-						this.toastr.success(COMMONS.ADD_SUCCESS)
-						return this.router.navigate(['/cong-bo/phan-anh-kien-nghi'])
-					} else {
-						this.toastr.error(response.message)
-					}
-				}),
-					(err) => {
-						console.error(err)
-						this.reloadImage();
-					}
+				if (this.model.id == 0) {
+					this.recommendationService.recommendationInsert(request).subscribe((response) => {
+						if (response.success == RESPONSE_STATUS.success) {
+							this.toastr.success(COMMONS.ADD_SUCCESS)
+							return this.router.navigate(['/cong-bo/phan-anh-kien-nghi'])
+						} else {
+							this.toastr.error(response.message)
+						}
+					}),
+						(err) => {
+							console.error(err)
+							this.reloadImage();
+						}
+				} else {
+					this.recommendationService.recommendationUpdate(request).subscribe((response) => {
+						if (response.success == RESPONSE_STATUS.success) {
+							this.toastr.success(COMMONS.UPDATE_SUCCESS)
+							return this.router.navigate(['/cong-bo/phan-anh-kien-nghi'])
+						} else {
+							this.toastr.error(response.message)
+						}
+					}),
+						(err) => {
+							console.error(err)
+						}
+				}
+
 			} else {
 				this.toastr.error("Mã xác thực không chính xác!")
 				this.reloadImage();

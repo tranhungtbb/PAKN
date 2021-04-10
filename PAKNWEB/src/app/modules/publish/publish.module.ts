@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common'
 import { NgSelectModule } from '@ng-select/ng-select'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { PublishRoutingModule } from './publish-routing.module'
+import { PaginatorModule } from 'primeng/paginator';
+
 import { PublishComponent } from './publish.component'
 import { SharedModule } from '../../shared/shared.module'
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
@@ -16,8 +18,10 @@ import { IntroduceComponent } from './introduce/introduce.component'
 import { SupportComponent } from './support/support.component'
 import { ViewReflectionsRecommendationComponent } from './view-reflections-recommendation/view-reflections-recommendation.component'
 import { CreateRecommendationComponent } from './user-create-recommendation/user-create-recommendation.component'
+import { MyRecommendationComponent } from './my-recommendation/my-recommendation.component'
 import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
 import { from } from 'rxjs'
+import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
 
 @NgModule({
 	declarations: [
@@ -31,12 +35,15 @@ import { from } from 'rxjs'
 		ViewReflectionsRecommendationComponent,
 		CreateRecommendationComponent,
 		ChangePipe,
+		MyRecommendationComponent,
+		ViewRecommendationPersonalComponent
 	],
 	imports: [CommonModule, PublishRoutingModule,
 		NgSelectModule,
 		ReactiveFormsModule,
 		FormsModule,
 		SharedModule,
+		PaginatorModule,
 		BsDatepickerModule.forRoot(),
 		TooltipModule],
 })

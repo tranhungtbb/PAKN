@@ -136,6 +136,8 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate { get; set; }
 		public long? UpdatedBy { get; set; }
 		public DateTime? UpdatedDate { get; set; }
+		public int? QuantityLike { get; set; }
+		public int? QuantityDislike { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -168,6 +170,8 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate { get; set; }
 		public long? UpdatedBy { get; set; }
 		public DateTime? UpdatedDate { get; set; }
+		public int? QuantityLike { get; set; }
+		public int? QuantityDislike { get; set; }
 
 		public async Task<MRRecommendation> MRRecommendationGetByID(int? Id)
 		{
@@ -211,6 +215,8 @@ namespace PAKNAPI.ModelBase
 			DP.Add("CreatedDate", _mRRecommendation.CreatedDate);
 			DP.Add("UpdatedBy", _mRRecommendation.UpdatedBy);
 			DP.Add("UpdatedDate", _mRRecommendation.UpdatedDate);
+			DP.Add("QuantityLike", _mRRecommendation.QuantityLike);
+			DP.Add("QuantityDislike", _mRRecommendation.QuantityDislike);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationInsert", DP));
 		}
@@ -234,6 +240,8 @@ namespace PAKNAPI.ModelBase
 			DP.Add("CreatedDate", _mRRecommendation.CreatedDate);
 			DP.Add("UpdatedBy", _mRRecommendation.UpdatedBy);
 			DP.Add("UpdatedDate", _mRRecommendation.UpdatedDate);
+			DP.Add("QuantityLike", _mRRecommendation.QuantityLike);
+			DP.Add("QuantityDislike", _mRRecommendation.QuantityDislike);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdate", DP));
 		}

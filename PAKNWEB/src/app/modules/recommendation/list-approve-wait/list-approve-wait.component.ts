@@ -17,7 +17,7 @@ declare var $: any
 	styleUrls: ['./list-approve-wait.component.css'],
 })
 export class ListApproveWaitComponent implements OnInit {
-	constructor(private _service: RecommendationService, private storeageService: UserInfoStorageService, private _toastr: ToastrService, private _shareData: DataService) {}
+	constructor(private _service: RecommendationService, private storeageService: UserInfoStorageService, private _toastr: ToastrService, private _shareData: DataService) { }
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
@@ -79,7 +79,7 @@ export class ListApproveWaitComponent implements OnInit {
 			Content: this.dataSearch.content,
 			UnitId: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
-			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
+			Status: 8,
 			UnitProcessId: this.storeageService.getUnitId(),
 			UserProcessId: this.storeageService.getUserId(),
 			PageIndex: this.pageIndex,

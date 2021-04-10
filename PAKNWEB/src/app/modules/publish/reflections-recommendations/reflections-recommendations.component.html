@@ -51,8 +51,7 @@
 								</a>
 							</p>
 							<p class="card-text">
-								<a class="text-2line" href="javascrip:void(0)" style="color: #222;" (click)="redirect(item.id)">
-									{{item.content}}
+								<a class="text-2line" href="javascrip:void(0)" style="color: #222;" (click)="redirect(item.id)" innerHTML="{{item.content | Change}}">
 								</a>
 							</p>
 						</div>
