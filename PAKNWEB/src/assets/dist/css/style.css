@@ -29785,6 +29785,25 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
           background: transparent
         }
 
+/* date picker old version */
+.ngx-datepicker-container .ngx-datepicker-calendar-container{
+  z-index:10;
+  top: 110% !important;
+}
+.ngx-datepicker-container .ngx-datepicker-input{
+  width: 100% !important;
+}
+
+.ngx-datepicker-container::after{
+  content: "\f214";
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  position: absolute;
+  font-family: bootstrap-icons !important;
+  color: gray;
+}
+
 .datepicker-container::after {
   content: "\f214";
   top: 50%;

@@ -5,8 +5,7 @@ import { NgSelectModule } from '@ng-select/ng-select'
 import { SharedModule } from 'src/app/shared/shared.module'
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material'
-import {DpDatePickerModule} from 'ng2-date-picker'
-import { DatepickerModule } from 'ng2-datepicker';
+import { NgDatepickerModule } from 'ng2-datepicker';
 
 import { RegisterRoutingModule } from './register-routing.module'
 import { OrganizationComponent } from './organization/organization.component'
@@ -18,7 +17,7 @@ import { OrgRepreFormComponent } from './organization/org-repre-form/org-repre-f
 
 @NgModule({
 	declarations: [OrganizationComponent, IndividualComponent, RegisterComponent, TabActiveDirective, OrgFormAddressComponent, OrgRepreFormComponent],
-	imports: [CommonModule, RegisterRoutingModule, ReactiveFormsModule, FormsModule, NgSelectModule, SharedModule, DatepickerModule],
+	imports: [CommonModule, RegisterRoutingModule, ReactiveFormsModule, FormsModule, NgSelectModule, SharedModule, NgDatepickerModule],
 	providers:[]
 })
 export class RegisterModule {}

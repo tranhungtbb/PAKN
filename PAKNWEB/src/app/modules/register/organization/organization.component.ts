@@ -23,12 +23,14 @@ declare var $: any
 export class OrganizationComponent implements OnInit {
 	constructor(private toast: ToastrService, private formBuilder: FormBuilder, private registerService: RegisterService, private router: Router) {}
 
+	date:Date = new Date()
 	datePickerConfig:DatepickerOptions={
-		inputClass: 'form-control border-brown',
+		addClass: 'form-control border-brown',
 		placeholder:'Nhập...',
-		formatTitle: 'MM yyyy',
-		format: 'dd/MM/yyyy',
-  	calendarClass: 'datepicker-container datepicker-dark',
+		barTitleFormat: 'MM YYYY',
+		firstCalendarDay: 1,
+		barTitleIfEmpty: (`${this.date.getMonth()+1}`.includes('0')?`${this.date.getMonth()+1}`:`0${this.date.getMonth()+1}`)+` ${this.date.getFullYear()}`,
+		displayFormat: 'DD/MM/YYYY',
 	}
 
 	@ViewChild(OrgRepreFormComponent, { static: false }) child_OrgRepreForm: OrgRepreFormComponent

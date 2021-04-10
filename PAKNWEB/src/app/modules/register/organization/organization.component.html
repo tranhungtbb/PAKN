@@ -88,7 +88,7 @@
 				<div class="form-group">
 					<label class="mb-1">Ngày cấp / Thành lập <span class="cl-red">(*)</span></label>
 					<!-- <input [svTrim] [(ngModel)]="model.DateIssue" formControlName="DateIssue" type="date" placeholder="Nhập..." class="form-control border-brown"> -->
-					<ngx-datepicker id="_IsDate" [(ngModel)]="model.DateIssue" formControlName="DateIssue" [options]="datePickerConfig"></ngx-datepicker>
+					<ng-datepicker id="_IsDate" [(ngModel)]="model.DateIssue" formControlName="DateIssue" [options]="datePickerConfig"></ng-datepicker>
 					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.DateIssue.invalid)||(fOrgInfo.DateIssue.invalid && (fOrgInfo.DateIssue.dirty || fOrgInfo.DateIssue.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fOrgInfo.DateIssue.errors.required">
