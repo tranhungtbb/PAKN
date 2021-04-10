@@ -104,7 +104,7 @@ export class IndividualComponent implements OnInit {
 		this.fLoginSubmitted = true
 		this.fInfoSubmitted = true
 
-		let fDob :any = document.querySelector('ngx-datepicker#_dob input');
+		let fDob :any = document.querySelector('ngx-datepicker#_dob input'); 
 		this.model.dob = fDob.value;
 
 		if (this.formLogin.invalid || this.formInfo.invalid) {

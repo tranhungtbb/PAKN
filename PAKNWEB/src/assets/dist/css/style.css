@@ -29732,6 +29732,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
         background: transparent
 
  */
+ 
 
 
 .datepicker-dark .calendar-container{
@@ -29783,3 +29784,24 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
         {
           background: transparent
         }
+
+.datepicker-container::after {
+  content: "\f214";
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  position: absolute;
+  font-family: bootstrap-icons !important;
+  color: gray;
+}
+
+
+body .ui-tree .ui-tree-container .ui-treenode .ui-treenode-content .ui-tree-toggler.pi-caret-right::before{
+  content:"\f4f9" !important;
+  font-family: bootstrap-icons !important;
+}
+
+body .ui-tree .ui-tree-container .ui-treenode .ui-treenode-content .ui-tree-toggler.pi-caret-down::before{
+  content:"\f2e5" !important;
+  font-family: bootstrap-icons !important;
+}
