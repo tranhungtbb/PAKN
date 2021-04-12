@@ -14,8 +14,8 @@ using System.Threading.Tasks;
 
 namespace PAKNAPI.Controllers
 {
-    [Route("api/[controller]")]
-    public class CaptchaController
+    [Route("api/Captcha")]
+    public class CaptchaController : BaseApiController
     {
         private readonly IAppSetting _appSetting;
         public static List<CaptchaObject> captChaCode = new List<CaptchaObject>();
@@ -143,6 +143,9 @@ namespace PAKNAPI.Controllers
 
             }
         }
+
+        [Route("RecommendationKNCTInsert")]
+        [HttpPost]
         public async Task<ActionResult<object>> RecommendationKNCTInsert(MRRecommendationKNCTInsertIN mRRecommendationKNCTInsertIN)
         {
             try
