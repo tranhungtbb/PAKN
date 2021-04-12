@@ -11,7 +11,6 @@ import { CatalogService } from 'src/app/services/catalog.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { RemindComponent } from 'src/app/modules/recommendation/remind/remind.component'
-
 declare var $: any
 
 @Component({
