@@ -15,6 +15,7 @@ import { InputCodeDirective } from '../directives/sv-inputCode.directive'
 import { SvScanDirective } from '../directives/sv-scan.directive'
 import { OnlyNumberDirective } from '../directives/only-number'
 import { StopLengthDirective } from '../directives/stop-length.directive'
+import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
 
 @NgModule({
 	declarations: [
@@ -34,6 +35,7 @@ import { StopLengthDirective } from '../directives/stop-length.directive'
 		InputCodeDirective,
 		OnlyNumberDirective,
 		StopLengthDirective,
+		ChangePipe,
 	],
 	exports: [
 		ConfirmClickDirective,
@@ -52,6 +54,7 @@ import { StopLengthDirective } from '../directives/stop-length.directive'
 		InputCodeDirective,
 		OnlyNumberDirective,
 		StopLengthDirective,
+		ChangePipe,
 	],
 })
 export class SharedModule {}

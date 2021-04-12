@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 import { CONSTANTS, FILETYPE, RESPONSE_STATUS, MESSAGE_COMMON, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
+import { AppSettings } from 'src/app/constants/app-setting'
 import { ViewRecommendationComponent } from 'src/app/modules/recommendation/view-recommendation/view-recommendation.component'
 import { RemindObject } from '../../../models/remindObject'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
@@ -23,7 +24,7 @@ export class RemindComponent implements OnInit {
 		private remindService: RemindService,
 		private viewRecommendation: ViewRecommendationComponent
 	) {}
-
+	APIADDRESS: string
 	files: any = []
 	model = new RemindObject()
 	sendOrgId: any
@@ -35,6 +36,7 @@ export class RemindComponent implements OnInit {
 	submitted = false
 
 	ngOnInit() {
+		this.APIADDRESS = AppSettings.API_ADDRESS.replace('api/', '')
 		this.buildForm()
 	}
 
@@ -62,7 +64,6 @@ export class RemindComponent implements OnInit {
 			RecommendationId: this.viewRecommendation.model.id,
 			SendOrgId: this.viewRecommendation.model.unitId,
 		}
-		debugger
 		this.remindService.remindGetList(obj).subscribe((res) => {
 			if ((res.success = RESPONSE_STATUS.success)) {
 				if (res.result != null) {

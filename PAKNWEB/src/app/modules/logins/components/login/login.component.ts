@@ -145,8 +145,9 @@ export class LoginComponent implements OnInit {
 								if (data.typeObject && data.typeObject == 1) {
 									location.href = '/quan-tri'
 								} else {
-									this.toastr.error(data.message, 'Tài khoản cá nhân, doanh nghiệp không thể đăng nhập hệ thống dành cho cán bộ quản lý')
-									localStorage.clear();
+									location.href = '/quan-tri'
+									// this.toastr.error(data.message, 'Tài khoản cá nhân, doanh nghiệp không thể đăng nhập hệ thống dành cho cán bộ quản lý')
+									// localStorage.clear();
 								}
 							} else if (data.success === RESPONSE_STATUS.incorrect) {
 								this.toastr.error(data.message, 'Tên tài khoản hoặc mật khẩu không chính xác')
@@ -217,7 +218,7 @@ export class LoginComponent implements OnInit {
 								//this._router.navigate(['/quan-tri'])
 								if (data.typeObject && data.typeObject == 1) {
 									this.toastr.error(data.message, 'Tài khoản cán bộ quản lý không thể đăng nhập hệ thống dành cho cá nhân, doanh nghiệp')
-									localStorage.clear();
+									localStorage.clear()
 								} else {
 									location.href = '/cong-bo'
 								}
