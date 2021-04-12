@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { Router } from '@angular/router'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
-import { DatepickerOptions } from 'ng2-datepicker';
+import { DatepickerOptions } from 'ng2-datepicker'
 
 import { RegisterService } from 'src/app/services/register.service'
 import { DiadanhService } from 'src/app/services/diadanh.service'
@@ -30,18 +30,17 @@ export class IndividualComponent implements OnInit {
 	// 	placeholder:'Nhập...',
 	// 	formatTitle: 'MM yyyy',
 	// 	format: 'dd/MM/yyyy',
-  // 	calendarClass: 'datepicker-container datepicker-dark',
+	// 	calendarClass: 'datepicker-container datepicker-dark',
 	// }
-	date:Date = new Date()
-	datePickerConfig:DatepickerOptions={
+	date: Date = new Date()
+	datePickerConfig: DatepickerOptions = {
 		addClass: 'form-control border-brown',
-		placeholder:'Nhập...',
+		placeholder: 'Nhập...',
 		barTitleFormat: 'MM YYYY',
 		firstCalendarDay: 1,
-		barTitleIfEmpty: (`${this.date.getMonth()+1}`.includes('0')?`${this.date.getMonth()+1}`:`0${this.date.getMonth()+1}`)+` ${this.date.getFullYear()}`,
+		barTitleIfEmpty: (`${this.date.getMonth() + 1}`.includes('0') ? `${this.date.getMonth() + 1}` : `0${this.date.getMonth() + 1}`) + ` ${this.date.getFullYear()}`,
 		displayFormat: 'DD/MM/YYYY',
 	}
-
 
 	formLogin: FormGroup
 	formInfo: FormGroup
@@ -113,8 +112,10 @@ export class IndividualComponent implements OnInit {
 		this.fLoginSubmitted = true
 		this.fInfoSubmitted = true
 
-		let fDob :any = document.querySelector('ngx-datepicker#_dob input'); 
-		this.model.dob = fDob.value;
+		let fDob: any = document.querySelector('ng-datepicker#_dob input')
+		let fDateIssue: any = document.querySelector('ng-datepicker#_dateIssue input')
+		this.model.dob = fDob.value
+		this.model.dateIssue = fDateIssue.value
 
 		if (this.formLogin.invalid || this.formInfo.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
@@ -122,15 +123,14 @@ export class IndividualComponent implements OnInit {
 		}
 
 		// req to server
-		this.registerService.registerIndividual(this.model).subscribe(res=>{
-			if(res.success != "OK"){
-				this.toast.error(res.message);
-				return;
+		this.registerService.registerIndividual(this.model).subscribe((res) => {
+			if (res.success != 'OK') {
+				this.toast.error(res.message)
+				return
 			}
-			this.toast.success('Đang ký tài khoản thành công')
+			this.toast.success('Đăng ký tài khoản thành công')
 			this.router.navigate(['/dang-nhap'])
 		})
-		
 	}
 
 	fLoginSubmitted = false
@@ -167,7 +167,7 @@ export class IndividualComponent implements OnInit {
 
 			email: [this.model.email, [Validators.required, Validators.email]],
 			address: [this.model.address, [Validators.required]],
-			identity: [this.model.identity, [Validators.required,Validators.pattern(/^([0-9]){9,12}$/g)]],
+			identity: [this.model.identity, [Validators.required, Validators.pattern(/^([0-9]){9,12}$/g)]],
 			placeIssue: [this.model.placeIssue, [Validators.required]],
 			dateIssue: [this.model.dateIssue, [Validators.required]],
 		})

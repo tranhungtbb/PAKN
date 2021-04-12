@@ -188,7 +188,8 @@
 				</div>
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Ngày cấp <span class="cl-red">(*)</span></label>
-					<input [svTrim] [(ngModel)]="model.dateIssue" formControlName="dateIssue" type="text" class="form-control" placeholder="Nhập...">
+					<!-- <input [svTrim] [(ngModel)]="model.dateIssue" formControlName="dateIssue" type="text" class="form-control" placeholder="Nhập..."> -->
+					<ng-datepicker id="_dateIssue" [(ngModel)]="model.dateIssue" formControlName="dateIssue" [options]="datePickerConfig"></ng-datepicker>
 					<!--  -->
 					<div *ngIf="(fLoginSubmitted && fInfo.dateIssue.invalid)||(fInfo.dateIssue.invalid && (fInfo.dateIssue.dirty || fInfo.dateIssue.touched))"
 						class="has-error m-b-12">

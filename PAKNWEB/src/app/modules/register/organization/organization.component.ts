@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
 import { Router } from '@angular/router'
-import { DatepickerOptions } from 'ng2-datepicker';
+import { DatepickerOptions } from 'ng2-datepicker'
 
 import { OrgFormAddressComponent } from './org-form-address/org-form-address.component'
 import { OrgRepreFormComponent } from './org-repre-form/org-repre-form.component'
@@ -23,13 +23,13 @@ declare var $: any
 export class OrganizationComponent implements OnInit {
 	constructor(private toast: ToastrService, private formBuilder: FormBuilder, private registerService: RegisterService, private router: Router) {}
 
-	date:Date = new Date()
-	datePickerConfig:DatepickerOptions={
+	date: Date = new Date()
+	datePickerConfig: DatepickerOptions = {
 		addClass: 'form-control border-brown',
-		placeholder:'Nhập...',
+		placeholder: 'Nhập...',
 		barTitleFormat: 'MM YYYY',
 		firstCalendarDay: 1,
-		barTitleIfEmpty: (`${this.date.getMonth()+1}`.includes('0')?`${this.date.getMonth()+1}`:`0${this.date.getMonth()+1}`)+` ${this.date.getFullYear()}`,
+		barTitleIfEmpty: (`${this.date.getMonth() + 1}`.includes('0') ? `${this.date.getMonth() + 1}` : `0${this.date.getMonth() + 1}`) + ` ${this.date.getFullYear()}`,
 		displayFormat: 'DD/MM/YYYY',
 	}
 
@@ -43,28 +43,25 @@ export class OrganizationComponent implements OnInit {
 
 	ngOnInit() {
 		this.loadFormBuilder()
-		this.model.phone = '0356489552'
-		this.model.password = '123abc'
-		this.model.rePassword = '123abc'
+		// this.model.phone = '0356489552'
+		// this.model.password = '123abc'
+		// this.model.rePassword = '123abc'
 
-		this.model.Business = 'Công ty vận tải hàng không'
-		this.model.RegistrationNum = '12346798abcd'
-		this.model.DecisionFoundation = '134679ancd'
-		this.model.DateIssue = '12/12/2000'
-		this.model.Tax = '132456798'
+		// this.model.Business = 'Công ty vận tải hàng không'
+		// this.model.RegistrationNum = '12346798abcd'
+		// this.model.DecisionFoundation = '134679ancd'
+		// this.model.DateIssue = '12/12/2000'
+		// this.model.Tax = '132456798'
 
-		this.model.Gender = true
+		// this.model.Gender = true
 
-		this.model.RepresentativeName = 'NGuyễn Văn Tường'
-		this.model.Email = 'ngvantuong@mail.com'
-		this.model.DOB = '12/12/2000'
-		this.model.Address = 'số 12 Cầu Giấy - Hà Nội'
-		this.model.OrgAddress = '120 Xuân Mai'
-		this.model.OrgPhone = '0356489552'
-		this.model.OrgEmail = 'doanhnghiep@mail.com'
-
-		// 		delete SY_User where Email = 'ngvantuong@mail.com'
-		// delete QL_DoanhNghiep where email = 'ngvantuong@mail.com'
+		// this.model.RepresentativeName = 'NGuyễn Văn Tường'
+		// this.model.Email = 'ngvantuong@mail.com'
+		// this.model.DOB = '12/12/2000'
+		// this.model.Address = 'số 12 Cầu Giấy - Hà Nội'
+		// this.model.OrgAddress = '120 Xuân Mai'
+		// this.model.OrgPhone = '0356489552'
+		// this.model.OrgEmail = 'doanhnghiep@mail.com'
 	}
 
 	onSave() {
@@ -73,10 +70,10 @@ export class OrganizationComponent implements OnInit {
 		this.fOrgInfoSubmitted = true
 		this.child_OrgAddressForm.fOrgAddressSubmitted = true
 
-		let fDob :any = document.querySelector('ngx-datepicker#_dob input');
-		let fIsDate:any = document.querySelector('ngx-datepicker#_IsDate input');
-		this.model.DOB = fDob.value;
-		this.model.DateIssue = fIsDate.value;
+		let fDob: any = document.querySelector('ng-datepicker#_dob input')
+		let fIsDate: any = document.querySelector('ng-datepicker#_IsDate input')
+		this.model.DOB = fDob.value
+		this.model.DateIssue = fIsDate.value
 
 		//console.log(this.model);
 
@@ -90,7 +87,7 @@ export class OrganizationComponent implements OnInit {
 				this.toast.error(res.message)
 				return
 			}
-			this.toast.success('Đang ký tài khoản thành công')
+			this.toast.success('Đăng ký tài khoản thành công')
 			this.router.navigate(['/dang-nhap'])
 		})
 		//req to server

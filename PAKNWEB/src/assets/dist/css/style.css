@@ -29737,53 +29737,53 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 
 .datepicker-dark .calendar-container{
       
-      background: #39373A;
-    border: 1px solid #39373A;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
-    top: 110% !important;
-    left: 0;
-    font-weight: 700;
-    }
-    .datepicker-dark .calendar-container .month-year-text
-    {
-      color: #ffffff;
-    }
-    .datepicker-dark .calendar-container .control path{
-      fill: #eff1f5;
-    }
-      .datepicker-dark .calendar-container .control path:hover{
-        fill: #ffffff;
-      }
-        
-      .datepicker-dark .day-name-unit
-    {
-      color: #fafafa;
-    }
-    .datepicker-dark .day-unit,.datepicker-dark .year-unit
-    {
-      color: #ffffff
-    }
-    .datepicker-dark .day-unit.is-prev-month
-      {
-        color: rgba(#ffffff, .4);
-      }
-      .datepicker-dark .day-unit.is-today
-      {
-        background: lighten(#39373A, 20);
-      }
-      .datepicker-dark .day-unit:hover, .datepicker-dark .day-unit.is-selected
-      {
-        background: #ffffff;
-      color: #686669;
-      }
-      .datepicker-dark .day-unit.is-disabled
-      {
-        color: #aaa8ab;
-      }
-      .datepicker-dark .day-unit:hover
-        {
-          background: transparent
-        }
+  background: #39373A;
+  border: 1px solid #39373A;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
+  top: 110% !important;
+  left: 0;
+  font-weight: 700;
+}
+.datepicker-dark .calendar-container .month-year-text
+{
+  color: #ffffff;
+}
+.datepicker-dark .calendar-container .control path{
+  fill: #eff1f5;
+}
+.datepicker-dark .calendar-container .control path:hover{
+  fill: #ffffff;
+}
+
+.datepicker-dark .day-name-unit
+{
+color: #fafafa;
+}
+.datepicker-dark .day-unit,.datepicker-dark .year-unit
+{
+color: #ffffff
+}
+.datepicker-dark .day-unit.is-prev-month
+{
+color: rgba(#ffffff, .4);
+}
+.datepicker-dark .day-unit.is-today
+{
+background: lighten(#39373A, 20);
+}
+.datepicker-dark .day-unit:hover, .datepicker-dark .day-unit.is-selected 
+{
+background: #ffffff;
+color: #686669;
+}
+.datepicker-dark .day-unit.is-disabled
+{
+color: #aaa8ab;
+}
+.datepicker-dark .day-unit:hover
+{
+  background: transparent
+}
 
 /* date picker old version */
 .ngx-datepicker-container .ngx-datepicker-calendar-container{
