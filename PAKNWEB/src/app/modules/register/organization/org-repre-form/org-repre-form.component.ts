@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
-import { DatepickerOptions } from 'ng2-datepicker';
 
 import { DiadanhService } from 'src/app/services/diadanh.service'
 import { OrganizationComponent } from '../organization.component'
@@ -13,16 +12,7 @@ import { OrganizationComponent } from '../organization.component'
 export class OrgRepreFormComponent implements OnInit {
 	constructor(private parentCompo: OrganizationComponent, private formBuilder: FormBuilder, private diadanhService: DiadanhService) {}
 
-	date:Date = new Date()
-	datePickerConfig:DatepickerOptions={
-		addClass: 'form-control border-brown',
-		placeholder:'Nhập...',
-		barTitleFormat: 'MM YYYY',
-		firstCalendarDay: 1,
-		barTitleIfEmpty: (`${this.date.getMonth()+1}`.includes('0')?`${this.date.getMonth()+1}`:`0${this.date.getMonth()+1}`)+` ${this.date.getFullYear()}`,
-		displayFormat: 'DD/MM/YYYY',
-	}
-
+	date: Date = new Date()
 	formInfo: FormGroup
 	fInfoSubmitted = false
 
