@@ -91,7 +91,7 @@
 					<!-- <input [svTrim] [(ngModel)]="model.DateIssue" formControlName="DateIssue" type="date" placeholder="Nhập..." class="form-control border-brown"> -->
 					<div class="input-group">
 						<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_IsDate" [(ngModel)]="model._DateOfIssue"
-							formControlName="DateIssue" appBsDatepickerInvalid [maxDate]="dateNow"
+							formControlName="DateIssue" appBsDatepickerInvalid
 							[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 						<div class="input-group-addon">
 							<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
