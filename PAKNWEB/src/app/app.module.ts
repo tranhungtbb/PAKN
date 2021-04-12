@@ -56,7 +56,7 @@ import { UnitFilterPipe } from './pipes/unit-filter.pipe'
 		EffectsModule.forRoot([]),
 		PdfJsViewerModule,
 		ImageViewerModule,
-		TreeModule,
+		TreeModule
 	],
 	providers: [
 		{

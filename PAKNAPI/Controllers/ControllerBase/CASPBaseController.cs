@@ -31,6 +31,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Authorize("ThePolicy")]
 		[Route("CADistrictGetAllBase")]
 		public async Task<ActionResult<object>> CADistrictGetAllBase(byte? ProvinceId)
 		{
@@ -122,6 +123,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Authorize("ThePolicy")]
 		[Route("CAProvinceGetAllBase")]
 		public async Task<ActionResult<object>> CAProvinceGetAllBase()
 		{
@@ -144,6 +146,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Authorize("ThePolicy")]
 		[Route("CAVillageGetAllBase")]
 		public async Task<ActionResult<object>> CAVillageGetAllBase(byte? ProvinceId, byte? DistrictId)
 		{

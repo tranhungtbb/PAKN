@@ -1,7 +1,14 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 
 import { ToastrService } from 'ngx-toastr'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
+import { Router } from '@angular/router'
+import { DatepickerOptions } from 'ng2-datepicker'
+
+import { OrgFormAddressComponent } from './org-form-address/org-form-address.component'
+import { OrgRepreFormComponent } from './org-repre-form/org-repre-form.component'
+
+import { RegisterService } from 'src/app/services/register.service'
 
 import { COMMONS } from 'src/app/commons/commons'
 import { OrganizationObject } from 'src/app/models/RegisterObject'
@@ -14,65 +21,86 @@ declare var $: any
 	styleUrls: ['./organization.component.css'],
 })
 export class OrganizationComponent implements OnInit {
-	constructor(private toast: ToastrService, private formBuilder: FormBuilder) {}
+	constructor(private toast: ToastrService, private formBuilder: FormBuilder, private registerService: RegisterService, private router: Router) {}
+
+	date: Date = new Date()
+	datePickerConfig: DatepickerOptions = {
+		addClass: 'form-control border-brown',
+		placeholder: 'Nhập...',
+		barTitleFormat: 'MM YYYY',
+		firstCalendarDay: 1,
+		barTitleIfEmpty: (`${this.date.getMonth() + 1}`.includes('0') ? `${this.date.getMonth() + 1}` : `0${this.date.getMonth() + 1}`) + ` ${this.date.getFullYear()}`,
+		displayFormat: 'DD/MM/YYYY',
+	}
+
+	@ViewChild(OrgRepreFormComponent, { static: false }) child_OrgRepreForm: OrgRepreFormComponent
+	@ViewChild(OrgFormAddressComponent, { static: false }) child_OrgAddressForm: OrgFormAddressComponent
 
 	formLogin: FormGroup
-	formInfo: FormGroup
 	formOrgInfo: FormGroup
-	formOrgAddress: FormGroup
 
 	model: OrganizationObject = new OrganizationObject()
 
 	ngOnInit() {
 		this.loadFormBuilder()
+		// this.model.phone = '0356489552'
+		// this.model.password = '123abc'
+		// this.model.rePassword = '123abc'
+
+		// this.model.Business = 'Công ty vận tải hàng không'
+		// this.model.RegistrationNum = '12346798abcd'
+		// this.model.DecisionFoundation = '134679ancd'
+		// this.model.DateIssue = '12/12/2000'
+		// this.model.Tax = '132456798'
+
+		// this.model.Gender = true
+
+		// this.model.RepresentativeName = 'NGuyễn Văn Tường'
+		// this.model.Email = 'ngvantuong@mail.com'
+		// this.model.DOB = '12/12/2000'
+		// this.model.Address = 'số 12 Cầu Giấy - Hà Nội'
+		// this.model.OrgAddress = '120 Xuân Mai'
+		// this.model.OrgPhone = '0356489552'
+		// this.model.OrgEmail = 'doanhnghiep@mail.com'
 	}
-
-	listNation: any[] = [
-		{ id: 1, name: 'Việt Nam' },
-		{ id: 2, name: 'Lào' },
-		{ id: 3, name: 'Thái Lan' },
-		{ id: 4, name: 'Campuchia' },
-	]
-	listProvince: any[] = []
-	listDistrict: any[] = []
-	listVillage: any[] = []
-
-	listGender: any[] = [
-		{ value: true, text: 'Nam' },
-		{ value: false, text: 'Nữ' },
-	]
 
 	onSave() {
 		this.fLoginSubmitted = true
-		this.fInfoSubmitted = true
+		this.child_OrgRepreForm.fInfoSubmitted = true
 		this.fOrgInfoSubmitted = true
-		this.fOrgAddressSubmitted = true
+		this.child_OrgAddressForm.fOrgAddressSubmitted = true
 
-		console.log(this.model);
+		let fDob: any = document.querySelector('ng-datepicker#_dob input')
+		let fIsDate: any = document.querySelector('ng-datepicker#_IsDate input')
+		this.model.DOB = fDob.value
+		this.model.DateIssue = fIsDate.value
 
-		if (this.formLogin.invalid || this.formInfo.invalid || this.formOrgInfo.invalid || this.formOrgAddress.invalid) {
+		//console.log(this.model);
+
+		if (this.formLogin.invalid || this.formOrgInfo.invalid || this.child_OrgRepreForm.formInfo.invalid || this.child_OrgAddressForm.formOrgAddress.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
+
+		this.registerService.registerOrganization(this.model).subscribe((res) => {
+			if (res.success != 'OK') {
+				this.toast.error(res.message)
+				return
+			}
+			this.toast.success('Đăng ký tài khoản thành công')
+			this.router.navigate(['/dang-nhap'])
+		})
 		//req to server
 	}
 
 	fLoginSubmitted = false
-	fInfoSubmitted = false
 	fOrgInfoSubmitted = false
-	fOrgAddressSubmitted = false
 
 	get fLogin() {
 		return this.formLogin.controls
 	}
-	get fInfo() {
-		return this.formInfo.controls
-	}
 	get fOrgInfo() {
 		return this.formOrgInfo.controls
-	}
-	get fOrgAdr() {
-		return this.formOrgAddress.controls
 	}
 
 	private loadFormBuilder() {
@@ -86,20 +114,6 @@ export class OrganizationComponent implements OnInit {
 			{ validator: MustMatch('password', 'rePassword') }
 		)
 
-		//form thông tin nguoi dai dien
-		this.formInfo = this.formBuilder.group({
-			//----thông tin người đại diện
-			RepresentativeName: [this.model.RepresentativeName, [Validators.required]], // tên người đại diện
-			Email: [this.model.Email, [Validators.required, Validators.email]],
-			Gender: [this.model.Gender, [Validators.required]],
-			DOB: [this.model.DOB, [Validators.required]],
-			Nation: [this.model.Nation, [Validators.required]],
-			Province: [this.model.Province, [Validators.required]], //int
-			District: [this.model.District, [Validators.required]], // int
-			Village: [this.model.Village, [Validators.required]], // int
-			Address: [this.model.Address, [Validators.required]],
-		})
-
 		this.formOrgInfo = this.formBuilder.group({
 			//---thông tin doanh nghiệp
 			Business: [this.model.Business, [Validators.required]], // tên tổ chức
@@ -107,15 +121,6 @@ export class OrganizationComponent implements OnInit {
 			DecisionFoundation: [this.model.DecisionFoundation, [Validators.required]], //Quyết định thành lập
 			DateIssue: [this.model.DateIssue, [Validators.required]], //Ngày cấp/thành lập
 			Tax: [this.model.Tax, [Validators.required]], //Mã số thuế
-		})
-
-		this.formOrgAddress = this.formBuilder.group({
-			OrgProvince: [this.model.OrgDistrict, [Validators.required]], //int
-			OrgDistrict: [this.model.OrgDistrict, [Validators.required]], //int
-			OrgVillage: [this.model.OrgVillage, [Validators.required]], //int
-			OrgAddress: [this.model.OrgAddress, [Validators.required]],
-			OrgPhone: [this.model.OrgPhone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
-			OrgEmail: [this.model.OrgEmail, [Validators.required, Validators.email]],
 		})
 	}
 }
