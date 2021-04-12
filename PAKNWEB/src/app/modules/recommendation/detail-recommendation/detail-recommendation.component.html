@@ -88,15 +88,8 @@
 						</li>
 						<li class="list-group-item">
 							Trạng thái:
-							<span *ngIf="modelData.status == 2" class="badge rounded-pill badge-outline-light bg-white">Chờ xử
-								lý</span>
-							<span *ngIf="modelData.status == 10" class="badge rounded-pill bg-red">Từ chối xử lý</span>
-							<span *ngIf="modelData.status == 4" class="badge rounded-pill bg-blue2">Đã tiếp nhận</span>
-							<span *ngIf="modelData.status == 5" class="badge rounded-pill badge-outline-green2">Chờ giải quyết</span>
-							<span *ngIf="modelData.status == 6" class="badge rounded-pill bg-red">Từ chối giải quyết</span>
-							<span *ngIf="modelData.status == 7" class="badge rounded-pill badge-outline-blue">Đang giải quyết</span>
-							<span *ngIf="modelData.status == 8" class="badge rounded-pill badge-outline-success">Chờ phê duyệt</span>
-							<span *ngIf="modelData.status == 9" class="badge rounded-pill bg-red">Từ chối phê duyệt</span>
+							<span *ngIf="modelData.status == 1" class="badge rounded-pill badge-outline-green2">Chưa giải quyết</span>
+							<span *ngIf="modelData.status == 2" class="badge rounded-pill badge-outline-blue">Đang giải quyết</span>
 							<span *ngIf="modelData.status == 3" class="badge rounded-pill badge-success">Đã giải quyết</span>
 						</li>
 					</ul>
