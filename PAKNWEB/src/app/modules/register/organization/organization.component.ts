@@ -3,7 +3,6 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
 import { Router } from '@angular/router'
-import { DatepickerOptions } from 'ng2-datepicker'
 
 import { OrgFormAddressComponent } from './org-form-address/org-form-address.component'
 import { OrgRepreFormComponent } from './org-repre-form/org-repre-form.component'
@@ -24,14 +23,6 @@ export class OrganizationComponent implements OnInit {
 	constructor(private toast: ToastrService, private formBuilder: FormBuilder, private registerService: RegisterService, private router: Router) {}
 
 	date: Date = new Date()
-	datePickerConfig: DatepickerOptions = {
-		addClass: 'form-control border-brown',
-		placeholder: 'Nhập...',
-		barTitleFormat: 'MM YYYY',
-		firstCalendarDay: 1,
-		barTitleIfEmpty: (`${this.date.getMonth() + 1}`.includes('0') ? `${this.date.getMonth() + 1}` : `0${this.date.getMonth() + 1}`) + ` ${this.date.getFullYear()}`,
-		displayFormat: 'DD/MM/YYYY',
-	}
 
 	@ViewChild(OrgRepreFormComponent, { static: false }) child_OrgRepreForm: OrgRepreFormComponent
 	@ViewChild(OrgFormAddressComponent, { static: false }) child_OrgAddressForm: OrgFormAddressComponent
