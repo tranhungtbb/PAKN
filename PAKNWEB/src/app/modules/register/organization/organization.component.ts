@@ -3,7 +3,6 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
 import { Router } from '@angular/router'
-import { DatepickerOptions } from 'ng2-datepicker'
 
 import { OrgFormAddressComponent } from './org-form-address/org-form-address.component'
 import { OrgRepreFormComponent } from './org-repre-form/org-repre-form.component'
@@ -24,14 +23,6 @@ export class OrganizationComponent implements OnInit {
 	constructor(private toast: ToastrService, private formBuilder: FormBuilder, private registerService: RegisterService, private router: Router) {}
 
 	date: Date = new Date()
-	datePickerConfig: DatepickerOptions = {
-		addClass: 'form-control border-brown',
-		placeholder: 'Nhập...',
-		barTitleFormat: 'MM YYYY',
-		firstCalendarDay: 1,
-		barTitleIfEmpty: (`${this.date.getMonth() + 1}`.includes('0') ? `${this.date.getMonth() + 1}` : `0${this.date.getMonth() + 1}`) + ` ${this.date.getFullYear()}`,
-		displayFormat: 'DD/MM/YYYY',
-	}
 
 	@ViewChild(OrgRepreFormComponent, { static: false }) child_OrgRepreForm: OrgRepreFormComponent
 	@ViewChild(OrgFormAddressComponent, { static: false }) child_OrgAddressForm: OrgFormAddressComponent
@@ -43,25 +34,6 @@ export class OrganizationComponent implements OnInit {
 
 	ngOnInit() {
 		this.loadFormBuilder()
-		// this.model.phone = '0356489552'
-		// this.model.password = '123abc'
-		// this.model.rePassword = '123abc'
-
-		// this.model.Business = 'Công ty vận tải hàng không'
-		// this.model.RegistrationNum = '12346798abcd'
-		// this.model.DecisionFoundation = '134679ancd'
-		// this.model.DateIssue = '12/12/2000'
-		// this.model.Tax = '132456798'
-
-		// this.model.Gender = true
-
-		// this.model.RepresentativeName = 'NGuyễn Văn Tường'
-		// this.model.Email = 'ngvantuong@mail.com'
-		// this.model.DOB = '12/12/2000'
-		// this.model.Address = 'số 12 Cầu Giấy - Hà Nội'
-		// this.model.OrgAddress = '120 Xuân Mai'
-		// this.model.OrgPhone = '0356489552'
-		// this.model.OrgEmail = 'doanhnghiep@mail.com'
 	}
 
 	onSave() {
@@ -70,10 +42,10 @@ export class OrganizationComponent implements OnInit {
 		this.fOrgInfoSubmitted = true
 		this.child_OrgAddressForm.fOrgAddressSubmitted = true
 
-		let fDob: any = document.querySelector('ng-datepicker#_dob input')
-		let fIsDate: any = document.querySelector('ng-datepicker#_IsDate input')
-		this.model.DOB = fDob.value
-		this.model.DateIssue = fIsDate.value
+		let fDob: any = document.querySelector('#_dob')
+		let fIsDate: any = document.querySelector('#_IsDate')
+		this.model._RepresentativeBirthDay = fDob.value
+		this.model._DateOfIssue = fIsDate.value
 
 		//console.log(this.model);
 
@@ -107,8 +79,8 @@ export class OrganizationComponent implements OnInit {
 		//form thông tin đăng nhập
 		this.formLogin = this.formBuilder.group(
 			{
-				phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
-				password: [this.model.password, [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/g)]],
+				phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/)]],
+				password: [this.model.password, [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)]],
 				rePassword: [this.model.rePassword, [Validators.required]],
 			},
 			{ validator: MustMatch('password', 'rePassword') }
@@ -117,9 +89,9 @@ export class OrganizationComponent implements OnInit {
 		this.formOrgInfo = this.formBuilder.group({
 			//---thông tin doanh nghiệp
 			Business: [this.model.Business, [Validators.required]], // tên tổ chức
-			RegistrationNum: [this.model.RegistrationNum, [Validators.required]], //Số ĐKKD
-			DecisionFoundation: [this.model.DecisionFoundation, [Validators.required]], //Quyết định thành lập
-			DateIssue: [this.model.DateIssue, [Validators.required]], //Ngày cấp/thành lập
+			RegistrationNum: [this.model.BusinessRegistration, [Validators.required]], //Số ĐKKD
+			DecisionFoundation: [this.model.DecisionOfEstablishing, [Validators.required]], //Quyết định thành lập
+			DateIssue: [this.model._DateOfIssue, [Validators.required]], //Ngày cấp/thành lập
 			Tax: [this.model.Tax, [Validators.required]], //Mã số thuế
 		})
 	}

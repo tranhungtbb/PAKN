@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
-import { DatepickerOptions } from 'ng2-datepicker';
 
 import { DiadanhService } from 'src/app/services/diadanh.service'
 import { OrganizationComponent } from '../organization.component'
@@ -13,16 +12,7 @@ import { OrganizationComponent } from '../organization.component'
 export class OrgRepreFormComponent implements OnInit {
 	constructor(private parentCompo: OrganizationComponent, private formBuilder: FormBuilder, private diadanhService: DiadanhService) {}
 
-	date:Date = new Date()
-	datePickerConfig:DatepickerOptions={
-		addClass: 'form-control border-brown',
-		placeholder:'Nhập...',
-		barTitleFormat: 'MM YYYY',
-		firstCalendarDay: 1,
-		barTitleIfEmpty: (`${this.date.getMonth()+1}`.includes('0')?`${this.date.getMonth()+1}`:`0${this.date.getMonth()+1}`)+` ${this.date.getFullYear()}`,
-		displayFormat: 'DD/MM/YYYY',
-	}
-
+	date: Date = new Date()
 	formInfo: FormGroup
 	fInfoSubmitted = false
 
@@ -49,7 +39,7 @@ export class OrgRepreFormComponent implements OnInit {
 		this.listDistrict = []
 		this.listVillage = []
 
-		this.model.Province = ''
+		this.model.ProvinceId = ''
 		if (this.model.Nation == 1) {
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
@@ -63,10 +53,10 @@ export class OrgRepreFormComponent implements OnInit {
 		this.listDistrict = []
 		this.listVillage = []
 
-		this.model.District = ''
-		this.model.Village = ''
-		if (this.model.Province != null && this.model.Province != '') {
-			this.diadanhService.getAllDistrict(this.model.Province).subscribe((res) => {
+		this.model.DistrictId = ''
+		this.model.WardsId = ''
+		if (this.model.ProvinceId != null && this.model.ProvinceId != '') {
+			this.diadanhService.getAllDistrict(this.model.ProvinceId).subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listDistrict = res.result.CADistrictGetAll
 				}
@@ -78,9 +68,9 @@ export class OrgRepreFormComponent implements OnInit {
 	onChangeDistrict() {
 		this.listVillage = []
 
-		this.model.Village = ''
-		if (this.model.District != null && this.model.District != '') {
-			this.diadanhService.getAllVillage(this.model.Province, this.model.District).subscribe((res) => {
+		this.model.WardsId = ''
+		if (this.model.DistrictId != null && this.model.DistrictId != '') {
+			this.diadanhService.getAllVillage(this.model.ProvinceId, this.model.DistrictId).subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listVillage = res.result.CAVillageGetAll
 				}
@@ -95,12 +85,12 @@ export class OrgRepreFormComponent implements OnInit {
 			//----thông tin người đại diện
 			RepresentativeName: [this.model.RepresentativeName, [Validators.required]], // tên người đại diện
 			Email: [this.model.Email, [Validators.required, Validators.email]],
-			Gender: [this.model.Gender, [Validators.required]],
-			DOB: [this.model.DOB, [Validators.required]],
+			Gender: [this.model.RepresentativeGender, [Validators.required]],
+			DOB: [this.model._RepresentativeBirthDay, [Validators.required]],
 			Nation: [this.model.Nation, [Validators.required]],
-			Province: [this.model.Province, [Validators.required]], //int
-			District: [this.model.District, [Validators.required]], // int
-			Village: [this.model.Village, [Validators.required]], // int
+			Province: [this.model.ProvinceId, [Validators.required]], //int
+			District: [this.model.DistrictId, [Validators.required]], // int
+			Village: [this.model.WardsId, [Validators.required]], // int
 			Address: [this.model.Address, [Validators.required]],
 		})
 	}

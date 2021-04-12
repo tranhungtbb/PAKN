@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 using PAKNAPI.App_Helper;
 using PAKNAPI.Models.Results;
 using PAKNAPI.Models.Login;
+using System.Security.Claims;
+using System.Globalization;
 
 namespace PAKNAPI.Controllers
 {
@@ -24,11 +26,14 @@ namespace PAKNAPI.Controllers
 		private readonly IFileService _fileService;
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;
-		public UserController(IFileService fileService, IAppSetting appSetting, IClient bugsnag)
+		private readonly IHttpContextAccessor _httpContextAccessor;
+		public UserController(IFileService fileService, IAppSetting appSetting, IClient bugsnag,
+			IHttpContextAccessor httpContextAccessor)
 		{
 			_fileService = fileService;
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
+			_httpContextAccessor = httpContextAccessor;
 		}
 
 		[HttpPost, DisableRequestSizeLimit]
@@ -188,17 +193,30 @@ namespace PAKNAPI.Controllers
 
 
 
-		#region dang ky nguoi dan, doanh nghiep
+		#region nguoi dan, doanh nghiep
 		[HttpPost]
 		[Route("OrganizationRegister")]
-		public async Task<object> OrganizationRegister([FromForm] RegisterModel loginInfo, [FromForm] QLDoanhNghiepInsertIN model)
+		public async Task<object> OrganizationRegister([FromForm] RegisterModel loginInfo, [FromForm] BIBusinessInsertIN model,
+			[FromForm] string _RepresentativeBirthDay,
+			[FromForm] string _DateOfIssue)
         {
 			try
 			{
 				if (loginInfo.Password != loginInfo.RePassword)
 				{
-					return null;
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu không khớp" };
 				}
+
+				DateTime birdDay, dateOfIssue;
+				if (!DateTime.TryParseExact(_RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
+				{
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+				}
+				if (!DateTime.TryParseExact(_DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
+				{
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+				}
+
 				///mod loginInfo
 				///
 				var pwd = generatePassword(loginInfo.Password);
@@ -210,7 +228,7 @@ namespace PAKNAPI.Controllers
 					Email = model.Email,
 					UserName = model.Email,
 					FullName = model.RepresentativeName,
-					Gender = model.Gender,
+					Gender = model.RepresentativeGender,
 					Address = model.Address,
 
 					TypeId = 3,
@@ -225,13 +243,17 @@ namespace PAKNAPI.Controllers
 				var rs1 = await new SYUserInsert(_appSetting).SYUserInsertDAO(account);
 
 				///mod model
+				///
+				model.DateOfIssue = dateOfIssue;
+				model.RepresentativeBirthDay = birdDay;
 				model.CreatedDate = DateTime.Now;
 				model.CreatedBy = 0;
 				model.UpdatedBy = 0;
 				model.UpdatedDate = DateTime.Now;
 				model.Status = 1;
+				model.IsDeleted = false;
 
-				var rs2 = await new QLDoanhNghiepInsert(_appSetting).QLDoanhNghiepInsertDAO(model);
+				var rs2 = await new BIBusinessInsert(_appSetting).BIBusinessInsertDAO(model);
 
 			}
 			catch (Exception ex)
@@ -246,7 +268,11 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Route("InvididualRegister")]
-		public async Task<object> InvididualRegister([FromForm] RegisterModel loginInfo, [FromForm] QLNguoiDanInsertIN model)
+		public async Task<object> InvididualRegister(
+			[FromForm] RegisterModel loginInfo, 
+			[FromForm] BIIndividualInsertIN model,
+			[FromForm] string _BirthDay,
+			[FromForm] string _DateOfIssue)
 		{
 
 
@@ -254,8 +280,19 @@ namespace PAKNAPI.Controllers
             {
 				if (loginInfo.Password != loginInfo.RePassword)
 				{
-					return null;
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu không khớp" };
 				}
+
+				DateTime birdDay, dateOfIssue;
+				if (!DateTime.TryParseExact(_BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
+				{
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+				}
+				if (!DateTime.TryParseExact(_DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
+				{
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+				}
+
 				///mod loginInfo
 				///
 				var pwd = generatePassword(loginInfo.Password);
@@ -281,14 +318,19 @@ namespace PAKNAPI.Controllers
 				};
 					var rs1 = await new SYUserInsert(_appSetting).SYUserInsertDAO(account);
 
+
 				///mod model
+				///
+				model.DateOfIssue = dateOfIssue;
+				model.BirthDay = birdDay;
 				model.CreatedDate = DateTime.Now;
 				model.CreatedBy = 0;
 				model.UpdatedBy = 0;
 				model.UpdatedDate = DateTime.Now;
 				model.Status = 1;
+				model.IsDeleted = false;
 
-				var rs2 = await new QLNguoiDanInsert(_appSetting).QLNguoiDanInsertDAO(model);
+				var rs2 = await new BIIndividualInsert(_appSetting).BIIndividualInsertDAO(model);
 
 			}
 			catch (Exception ex)
@@ -300,6 +342,45 @@ namespace PAKNAPI.Controllers
 
 			return new Models.Results.ResultApi { Success = ResultCode.OK };
 		}
+
+
+		[HttpGet]
+		[Route("UserGetInfo")]
+		[Authorize]
+		public async Task<object> UserGetInfo(long id)
+        {
+			try
+            {
+				var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+				var accInfo = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(id);
+				
+				if(accInfo == null || !accInfo.Any())
+                {
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Tài khoản không tồn tại" };
+				}
+
+                if (accInfo[0].TypeId == 1)
+                {
+
+                }
+                else if (accInfo[0].TypeId == 2)
+                {
+					//var info = await new 
+                }
+				else if (accInfo[0].TypeId == 3)
+                {
+
+                }
+
+			}
+			catch(Exception ex)
+            {
+				_bugsnag.Notify(ex);
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+
+			return null;
+        }
 
         #endregion
 

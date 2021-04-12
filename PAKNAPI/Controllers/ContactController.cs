@@ -96,6 +96,7 @@ namespace PAKNAPI.Controllers
 							IsMain = user[0].IsMain,
 							TypeObject = user[0].TypeObject,
 							AccessToken = tokenString,
+							IsHaveToken = true,
 							Permissions = rsSYUSRGetPermissionByUserId,
 						};
 					}

@@ -1,227 +1,228 @@
 <div id="main-wrapper">
 
-    <!--**********************************
+	<!--**********************************
             Header start
         ***********************************-->
-    <div class="header-nd px-0">
-        <div class="header-content container">
-            <nav class="navbar navbar-expand py-4 px-0">
-                <div class="collapse navbar-collapse justify-content-between">
-                    <div class="header-left">
-                        <a href="index.html"><img class="img-fluid" src="../../../assets/dist/images/logo-nd.png"
-                                alt=""></a>
-                    </div>
+	<div class="header-nd px-0">
+		<div class="header-content container">
+			<nav class="navbar navbar-expand py-4 px-0">
+				<div class="collapse navbar-collapse justify-content-between">
+					<div class="header-left">
+						<a href="index.html"><img class="img-fluid" src="../../../assets/dist/images/logo-nd.png" alt=""></a>
+					</div>
 
-                    <ul class="navbar-nav header-right align-items-center">
-                        <li class="nav-item d-none d-lg-block">
-                            <div class="header-info">
-                                <span class="text-white">Xin chào! <strong>Nguyễn Thị Liêm</strong></span>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown notification_dropdown">
-                            <a class="nav-link text-white ai-icon bg-transparent" href="#" role="button"
-                                data-toggle="dropdown">
-                                <i class="bi bi-bell"></i>
-                                <div class="pulse-css"></div>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:380px;">
-                                    <ul class="timeline">
-                                        <li>
-                                            <a href="#" class="timeline-panel">
-                                                <div class="media mr-2 grd-brown">
-                                                    <i class="bi bi-file-earmark-medical cl-brown"></i>
-                                                </div>
-                                                <div class="media-body">
-                                                    <small class="d-block">Vừa xong</small>
-                                                    <p class="mb-0 text-uppercase">PAKN chờ xử lý</p>
-                                                    <p class="mb-1 h4">Nguyễn Thị Liêm gửi một phản ánh, kiến nghị về
-                                                        lĩnh vực Y tế</p>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="timeline-panel">
-                                                <div class="media mr-2 grd-brown">
-                                                    <i class="bi bi-file-earmark-medical cl-brown"></i>
-                                                </div>
-                                                <div class="media-body">
-                                                    <small class="d-block">30 phút trước</small>
-                                                    <p class="mb-0 text-uppercase cl-blue2">PAKN đã được tiếp nhận</p>
-                                                    <p class="mb-1 h4">Công an thành phố Nha Trang đã tiếp nhận kiến
-                                                        nghị số 10007.23</p>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="timeline-panel">
-                                                <div class="media mr-2 grd-brown">
-                                                    <i class="bi bi-file-earmark-medical cl-brown"></i>
-                                                </div>
-                                                <div class="media-body">
-                                                    <small class="d-block">12 giờ trước</small>
-                                                    <p class="mb-0 text-uppercase cl-blue">PAKN đã giải quyết</p>
-                                                    <p class="mb-1 h4">Công an thành phố Nha Trang đã giải quyết xong
-                                                        kiến nghị số 10007.23</p>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="timeline-panel">
-                                                <div class="media mr-2 grd-brown">
-                                                    <i class="bi bi-file-earmark-medical cl-brown"></i>
-                                                </div>
-                                                <div class="media-body">
-                                                    <small class="d-block">1 ngày trước</small>
-                                                    <p class="mb-0 text-uppercase cl-red">PAKN bị từ chối</p>
-                                                    <p class="mb-1 h4">Công an thành phố Nha Trang đã từ chối kiến nghị
-                                                        số 10007.23</p>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <a class="all-notification" href="#">Xem tất cả thông báo <i
-                                        class="ti-arrow-right"></i></a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown header-profile">
-                            <a class="nav-link bg-transparent px-0" href="#" role="button" data-toggle="dropdown">
-                                <div class="avatar-circle">
-                                    <i class="bi bi-person-fill cl-brown" style="font-size: 24px"></i>
-                                </div>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a href="#" class="dropdown-item ai-icon">
-                                    <i class="bi bi-person-square"></i>
-                                    <span class="ml-2">Thông tin cá nhân </span>
-                                </a>
-                                <a routerLink="/cong-bo/phan-anh-kien-nghi-cua-toi" class="dropdown-item ai-icon">
-                                    <i class="bi bi-file-earmark-medical"></i>
-                                    <span class="ml-2">PAKN của tôi </span>
-                                </a>
-                                <a href="#" class="dropdown-item ai-icon">
-                                    <i class="bi bi-key"></i>
-                                    <span class="ml-2">Đổi mật khẩu </span>
-                                </a>
-                                <a (click)="signOut()" class="dropdown-item ai-icon">
-                                    <i class="bi bi-box-arrow-right"></i>
-                                    <span class="ml-2">Đăng xuất </span>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+					<ul *ngIf="isHasToken" class="navbar-nav header-right align-items-center">
+						<li class="nav-item d-none d-lg-block">
+							<div class="header-info">
+								<span class="text-white">Xin chào! <strong>Nguyễn Thị Liêm</strong></span>
+							</div>
+						</li>
+						<li class="nav-item dropdown notification_dropdown">
+							<a class="nav-link text-white bg-transparent" href="/quan-tri">
+								<i class="bi bi-grid"></i>
+							</a>
+						</li>
+						<li class="nav-item dropdown notification_dropdown">
+							<a class="nav-link text-white ai-icon bg-transparent" href="#" role="button" data-toggle="dropdown">
+								<i class="bi bi-bell"></i>
+								<div class="pulse-css"></div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right">
+								<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:380px;">
+									<ul class="timeline">
+										<li>
+											<a href="#" class="timeline-panel">
+												<div class="media mr-2 grd-brown">
+													<i class="bi bi-file-earmark-medical cl-brown"></i>
+												</div>
+												<div class="media-body">
+													<small class="d-block">Vừa xong</small>
+													<p class="mb-0 text-uppercase">PAKN chờ xử lý</p>
+													<p class="mb-1 h4">Nguyễn Thị Liêm gửi một phản ánh, kiến nghị về
+														lĩnh vực Y tế</p>
+												</div>
+											</a>
+										</li>
+										<li>
+											<a href="#" class="timeline-panel">
+												<div class="media mr-2 grd-brown">
+													<i class="bi bi-file-earmark-medical cl-brown"></i>
+												</div>
+												<div class="media-body">
+													<small class="d-block">30 phút trước</small>
+													<p class="mb-0 text-uppercase cl-blue2">PAKN đã được tiếp nhận</p>
+													<p class="mb-1 h4">Công an thành phố Nha Trang đã tiếp nhận kiến
+														nghị số 10007.23</p>
+												</div>
+											</a>
+										</li>
+										<li>
+											<a href="#" class="timeline-panel">
+												<div class="media mr-2 grd-brown">
+													<i class="bi bi-file-earmark-medical cl-brown"></i>
+												</div>
+												<div class="media-body">
+													<small class="d-block">12 giờ trước</small>
+													<p class="mb-0 text-uppercase cl-blue">PAKN đã giải quyết</p>
+													<p class="mb-1 h4">Công an thành phố Nha Trang đã giải quyết xong
+														kiến nghị số 10007.23</p>
+												</div>
+											</a>
+										</li>
+										<li>
+											<a href="#" class="timeline-panel">
+												<div class="media mr-2 grd-brown">
+													<i class="bi bi-file-earmark-medical cl-brown"></i>
+												</div>
+												<div class="media-body">
+													<small class="d-block">1 ngày trước</small>
+													<p class="mb-0 text-uppercase cl-red">PAKN bị từ chối</p>
+													<p class="mb-1 h4">Công an thành phố Nha Trang đã từ chối kiến nghị
+														số 10007.23</p>
+												</div>
+											</a>
+										</li>
+									</ul>
+								</div>
+								<a class="all-notification" href="#">Xem tất cả thông báo <i class="ti-arrow-right"></i></a>
+							</div>
+						</li>
+						<li class="nav-item dropdown header-profile">
+							<a class="nav-link bg-transparent px-0" href="#" role="button" data-toggle="dropdown">
+								<div class="avatar-circle">
+									<i class="bi bi-person-fill cl-brown" style="font-size: 24px"></i>
+								</div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right">
+								<a href="#" class="dropdown-item ai-icon">
+									<i class="bi bi-person-square"></i>
+									<span class="ml-2">Thông tin cá nhân </span>
+								</a>
+								<a routerLink="/cong-bo/phan-anh-kien-nghi-cua-toi" class="dropdown-item ai-icon">
+									<i class="bi bi-file-earmark-medical"></i>
+									<span class="ml-2">PAKN của tôi </span>
+								</a>
+								<a href="#" class="dropdown-item ai-icon">
+									<i class="bi bi-key"></i>
+									<span class="ml-2">Đổi mật khẩu </span>
+								</a>
+								<a (click)="signOut()" class="dropdown-item ai-icon">
+									<i class="bi bi-box-arrow-right"></i>
+									<span class="ml-2">Đăng xuất </span>
+								</a>
+							</div>
+						</li>
+					</ul>
+					<ul *ngIf="!isHasToken" class="navbar-nav header-right align-items-center">
+						<li class="nav-item dropdown header-profile">
+							<div class="header-info">
+								<a class="nav-link bg-transparent px-0" title="Đăng nhập" routerLink="/dang-nhap">
+									<div class="avatar-circle">
+										<i class="bi bi-box-arrow-in-right cl-brown" style="margin-left: -5px;font-size: 24px"></i>
+									</div>
+								</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-nav p-3 p-md-0">
-                <button class="navbar-toggler border-0 bg-white py-2" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse pt-3 pt-md-0" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" [ngClass]="{'active': (activeUrl == '' || activeUrl == 'trang-chu')}"
-                                aria-current="page" (click)="routingMenu('trang-chu')">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                    class="bi bi-house" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
-                                    <path fill-rule="evenodd"
-                                        d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
-                                </svg>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" [ngClass]="{'active': activeUrl == 'gioi-thieu'}"
-                                (click)="routingMenu('gioi-thieu')">giới thiệu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" [ngClass]="{'active': activeUrl == 'thu-tuc-hanh-chinh'}"
-                                (click)="routingMenu('thu-tuc-hanh-chinh')">Thủ tục hành chính</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" [ngClass]="{'active': activeUrl == 'tin-tuc-su-kien'}"
-                                (click)="routingMenu('tin-tuc-su-kien')">Tin tức sự kiện</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" [ngClass]="{'active': activeUrl == 'phan-anh-kien-nghi'}"
-                                (click)="routingMenu('phan-anh-kien-nghi')">phản ánh - kiến nghị</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" [ngClass]="{'active': activeUrl == 'ho-tro'}"
-                                (click)="routingMenu('ho-tro')">hỗ trợ</a>
-                        </li>
-                    </ul>
-                    <div class="header-left">
-                        <div class="search_bar dropdown show">
-                            <div class="dropdown-menu p-0 m-0 show">
-                                <form>
-                                    <input class="form-control" type="search" placeholder="Tìm kiếm..."
-                                        aria-label="Search">
-                                </form>
-                            </div>
-                            <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z"
-                                        fill="#A4A4A4" />
-                                </svg>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </div>
-    <!--**********************************
+			<nav class="navbar navbar-expand-lg navbar-light bg-nav p-3 p-md-0">
+				<button class="navbar-toggler border-0 bg-white py-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse pt-3 pt-md-0" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link" [ngClass]="{'active': (activeUrl == '' || activeUrl == 'trang-chu')}" aria-current="page" (click)="routingMenu('trang-chu')">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+									<path fill-rule="evenodd"
+										d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+									<path fill-rule="evenodd"
+										d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
+								</svg>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" [ngClass]="{'active': activeUrl == 'gioi-thieu'}" (click)="routingMenu('gioi-thieu')">giới thiệu</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" [ngClass]="{'active': activeUrl == 'thu-tuc-hanh-chinh'}" (click)="routingMenu('thu-tuc-hanh-chinh')">Thủ tục hành chính</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" [ngClass]="{'active': activeUrl == 'tin-tuc-su-kien'}" (click)="routingMenu('tin-tuc-su-kien')">Tin tức sự kiện</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" [ngClass]="{'active': activeUrl == 'phan-anh-kien-nghi'}" (click)="routingMenu('phan-anh-kien-nghi')">phản ánh - kiến nghị</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" [ngClass]="{'active': activeUrl == 'ho-tro'}" (click)="routingMenu('ho-tro')">hỗ trợ</a>
+						</li>
+					</ul>
+					<div class="header-left">
+						<div class="search_bar dropdown show">
+							<div class="dropdown-menu p-0 m-0 show">
+								<form>
+									<input class="form-control" type="search" placeholder="Tìm kiếm..." aria-label="Search">
+								</form>
+							</div>
+							<span class="search_icon p-3 c-pointer" data-toggle="dropdown">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path
+										d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z"
+										fill="#A4A4A4" />
+								</svg>
+							</span>
+						</div>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<!--**********************************
             Header end ti-comment-alt
         ***********************************-->
-    <router-outlet>
-    </router-outlet>
+	<router-outlet>
+	</router-outlet>
 
 
 
-    <!--**********************************
+	<!--**********************************
             Footer start
         ***********************************-->
-    <div class="footer px-0">
-        <div class="ct-footer pt-5 pb-4" style="background: #FFF7EB">
-            <div class="container">
-                <div class="row justify-content-between">
-                    <div class="col-12 col-lg-5 pr-lg-5">
-                        <a href="#"><img class="img-fluid" src="../../../assets/dist/images/logo-ft.png" alt=""></a>
-                        <p class="mb-0 mt-3 h6">Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem ipsum dolor, sit amet consectetur adipisicing elit doloribus fugiat
-                            accusantium illo.</p>
-                    </div>
-                    <div class="col-auto pl-3 pl-lg-0 mt-3 mt-lg-0" style="width: 320px">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item pb-2 pt-0 px-0 border-0"><i
-                                    class="bi bi-telephone-fill mr-2"></i>0258.3563.531</li>
-                            <li class="list-group-item py-2 px-0 border-0"><i
-                                    class="bi bi-envelope-open-fill mr-2"></i>stttt@khanhhoa.gov.vn</li>
-                            <li class="list-group-item py-2 px-0"><i class="bi bi-geo-alt-fill mr-2"></i>Nhà A1 Khu Liên
-                                cơ số 01 đường Trần Phú, thành phố Nha Trang, tỉnh Khánh Hòa</li>
-                        </ul>
-                    </div>
-                </div>
+	<div class="footer px-0">
+		<div class="ct-footer pt-5 pb-4" style="background: #FFF7EB">
+			<div class="container">
+				<div class="row justify-content-between">
+					<div class="col-12 col-lg-5 pr-lg-5">
+						<a href="#"><img class="img-fluid" src="../../../assets/dist/images/logo-ft.png" alt=""></a>
+						<p class="mb-0 mt-3 h6">Lorem Ipsum is simply dummy text of the printing and typesetting
+							industry. Lorem ipsum dolor, sit amet consectetur adipisicing elit doloribus fugiat
+							accusantium illo.</p>
+					</div>
+					<div class="col-auto pl-3 pl-lg-0 mt-3 mt-lg-0" style="width: 320px">
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item pb-2 pt-0 px-0 border-0"><i class="bi bi-telephone-fill mr-2"></i>0258.3563.531</li>
+							<li class="list-group-item py-2 px-0 border-0"><i class="bi bi-envelope-open-fill mr-2"></i>stttt@khanhhoa.gov.vn</li>
+							<li class="list-group-item py-2 px-0"><i class="bi bi-geo-alt-fill mr-2"></i>Nhà A1 Khu Liên
+								cơ số 01 đường Trần Phú, thành phố Nha Trang, tỉnh Khánh Hòa</li>
+						</ul>
+					</div>
+				</div>
 
-            </div>
-        </div>
-        <div class="copyright py-2" style="background: #FFF2DE">
-            <div class="container">
-                <p class="text-left">
-                    <small>Giấy phép số: 39/GP-TTĐT do Cục Quản lý Phát thanh, Truyền hình và Thông tin điện tử - Bộ
-                        Thông tin và Truyền thông cấp ngày 28/4/2016</small>
-                </p>
-            </div>
-        </div>
-    </div>
-    <!--**********************************
+			</div>
+		</div>
+		<div class="copyright py-2" style="background: #FFF2DE">
+			<div class="container">
+				<p class="text-left">
+					<small>Giấy phép số: 39/GP-TTĐT do Cục Quản lý Phát thanh, Truyền hình và Thông tin điện tử - Bộ
+						Thông tin và Truyền thông cấp ngày 28/4/2016</small>
+				</p>
+			</div>
+		</div>
+	</div>
+	<!--**********************************
             Footer end
         ***********************************-->
 
