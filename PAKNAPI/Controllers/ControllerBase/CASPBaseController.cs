@@ -31,6 +31,29 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("CADistrictGetAllBase")]
+		public async Task<ActionResult<object>> CADistrictGetAllBase(byte? ProvinceId)
+		{
+			try
+			{
+				List<CADistrictGetAll> rsCADistrictGetAll = await new CADistrictGetAll(_appSetting).CADistrictGetAllDAO(ProvinceId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CADistrictGetAll", rsCADistrictGetAll},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
 		[Authorize]
 		[Route("CAFieldGetDropdownBase")]
 		public async Task<ActionResult<object>> CAFieldGetDropdownBase()
@@ -87,6 +110,52 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAHashtagGetDropdown", rsCAHashtagGetDropdown},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("CAProvinceGetAllBase")]
+		public async Task<ActionResult<object>> CAProvinceGetAllBase()
+		{
+			try
+			{
+				List<CAProvinceGetAll> rsCAProvinceGetAll = await new CAProvinceGetAll(_appSetting).CAProvinceGetAllDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAProvinceGetAll", rsCAProvinceGetAll},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("CAVillageGetAllBase")]
+		public async Task<ActionResult<object>> CAVillageGetAllBase(byte? ProvinceId, byte? DistrictId)
+		{
+			try
+			{
+				List<CAVillageGetAll> rsCAVillageGetAll = await new CAVillageGetAll(_appSetting).CAVillageGetAllDAO(ProvinceId, DistrictId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAVillageGetAll", rsCAVillageGetAll},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

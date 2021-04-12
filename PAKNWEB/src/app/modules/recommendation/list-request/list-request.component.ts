@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { RecommendationForwardObject, RecommendationObject, RecommendationProcessObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
-import { RecommendationService } from 'src/app/services/recommendation.service'
+import { RecommendationRequestService } from 'src/app/services/recommendation-req.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
@@ -18,7 +18,7 @@ declare var $: any
 })
 export class ListRequestComponent implements OnInit {
 	constructor(
-		private _service: RecommendationService,
+		private _service: RecommendationRequestService,
 		private storeageService: UserInfoStorageService,
 		private _fb: FormBuilder,
 		private _toastr: ToastrService,
@@ -28,14 +28,14 @@ export class ListRequestComponent implements OnInit {
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
 		{ value: 2, text: 'Chờ xử lý' },
-		{ value: 3, text: 'Từ chối xử lý' },
+		{ value: 3, text: 'Đã giải quyết' },
 		{ value: 4, text: 'Đã tiếp nhận' },
 		{ value: 5, text: 'Chờ giải quyết' },
 		{ value: 6, text: 'Từ chối giải quyết' },
 		{ value: 7, text: 'Đang giải quyết' },
 		{ value: 8, text: 'Chờ phê duyệt' },
 		{ value: 9, text: 'Từ chối phê duyệt' },
-		{ value: 10, text: 'Đã giải quyết' },
+		{ value: 10, text: 'Từ chối xử lý' },
 	]
 	formForward: FormGroup
 	lstUnitNotMain: any = []
@@ -63,10 +63,10 @@ export class ListRequestComponent implements OnInit {
 
 	getDataForCreate() {
 		this._service.recommendationGetDataForCreate({}).subscribe((response) => {
+			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
-					this.lstUnit = response.result.lstUnit
-					this.lstField = response.result.lstField
+					this.lstField = response.result.CAFieldKNCTGetDropdown
 				}
 			} else {
 				this._toastr.error(response.message)
@@ -103,23 +103,21 @@ export class ListRequestComponent implements OnInit {
 		this.dataSearch.content = this.dataSearch.content.trim()
 		let request = {
 			Code: this.dataSearch.code,
-			SendName: this.dataSearch.name,
 			Content: this.dataSearch.content,
-			UnitId: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
+			Unit: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
 			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
-			UnitProcessId: this.storeageService.getUnitId(),
-			UserProcessId: this.storeageService.getUserId(),
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
 
 		this._service.recommendationGetListProcess(request).subscribe((response) => {
+			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
-					this.listData = response.result.MRRecommendationGetAllWithProcess
-					this.totalRecords = response.result.TotalCount
+					this.listData = response.result.MRRecommendationKNCTGetAllWithProcess
+					this.totalRecords = response.result.MRRecommendationKNCTGetAllWithProcess.length
 				}
 			} else {
 				this._toastr.error(response.message)

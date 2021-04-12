@@ -12,6 +12,15 @@
 					<div class="align-items-center mb-4 avatar-bg">
 						<div class="avatar-frame">
 							<img id="avatar-view" [src]="userAvatar" />
+							<span class="no-avatar-view">
+								<!-- <i class="pi pi-user"></i> -->
+								<svg width="78" height="78" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path fill-rule="evenodd" clip-rule="evenodd"
+										d="M6.5 78C6.5 78 0 78 0 71.5C0 65 6.5 45.5 39 45.5C71.5 45.5 78 65 78 71.5C78 78 71.5 78 71.5 78H6.5ZM39 39C44.1717 39 49.1316 36.9455 52.7886 33.2886C56.4455 29.6316 58.5 24.6717 58.5 19.5C58.5 14.3283 56.4455 9.36838 52.7886 5.71142C49.1316 2.05446 44.1717 0 39 0C33.8283 0 28.8684 2.05446 25.2114 5.71142C21.5545 9.36838 19.5 14.3283 19.5 19.5C19.5 24.6717 21.5545 29.6316 25.2114 33.2886C28.8684 36.9455 33.8283 39 39 39Z"
+										fill="#743F15" />
+								</svg>
+
+							</span>
 						</div>
 						<div class="text-center">
 							<input type="file" [hidden]="true" id="seclect-avatar" (change)="changeSelectAvatar($event)">
@@ -46,7 +55,8 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Điện thoại <span class="cl-red">(*)</span></label>
-							<input svTrim formControlName="phone" [(ngModel)]="modelUser.phone" type="text" class="form-control" placeholder="Nhập...">
+							<input svTrim onlyNumber="true" stopLength="10" formControlName="phone" [(ngModel)]="modelUser.phone" type="text" class="form-control"
+								placeholder="Nhập...">
 							<div *ngIf="(userFormSubmitted && fUser.phone.invalid)||(fUser.phone.invalid && (fUser.phone.dirty || fUser.phone.touched))" class="has-error m-b-12">
 								<div *ngIf="fUser.phone.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -109,8 +119,8 @@
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Trạng thái</label>
 							<!-- [items]="listStatus" bindLabel="text" bindValue="value" -->
-							<ng-select class="form-control" placeholder="Chọn..." [items]="listStatus" bindLabel="text" bindValue="value" formControlName="isActived"
-								[(ngModel)]="modelUser.isActived" [closeOnSelect]="true" [searchable]="false" [clearable]="false">
+							<ng-select class="form-control" style="font-weight: bold;" placeholder="Chọn..." [items]="listStatus" bindLabel="text" bindValue="value"
+								formControlName="isActived" [(ngModel)]="modelUser.isActived" [closeOnSelect]="true" [searchable]="false" [clearable]="false">
 							</ng-select>
 						</div>
 						<div class="col-12 form-group">

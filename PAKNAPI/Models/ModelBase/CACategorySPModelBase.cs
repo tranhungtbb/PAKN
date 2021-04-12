@@ -480,6 +480,57 @@ namespace PAKNAPI.ModelBase
 		public string Description { get; set; }
 	}
 
+	public class CAFieldKNCTGetDropdown
+	{
+		private SQLCon _sQLCon;
+
+		public CAFieldKNCTGetDropdown(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAFieldKNCTGetDropdown()
+		{
+		}
+
+		public int Value { get; set; }
+		public string Text { get; set; }
+
+		public async Task<List<CAFieldKNCTGetDropdown>> CAFieldKNCTGetDropdownDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAFieldKNCTGetDropdown>("CA_FieldKNCTGetDropdown", DP)).ToList();
+		}
+	}
+
+	public class CAFieldKNCTInsert
+	{
+		private SQLCon _sQLCon;
+
+		public CAFieldKNCTInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAFieldKNCTInsert()
+		{
+		}
+
+		public async Task<int?> CAFieldKNCTInsertDAO(CAFieldKNCTInsertIN _cAFieldKNCTInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _cAFieldKNCTInsertIN.Name);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_FieldKNCTInsert", DP);
+		}
+	}
+
+	public class CAFieldKNCTInsertIN
+	{
+		public string Name { get; set; }
+	}
+
 	public class CAFieldUpdate
 	{
 		private SQLCon _sQLCon;

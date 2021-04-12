@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
-import { CONSTANTS, FILETYPE, RESPONSE_STATUS, MESSAGE_COMMON } from 'src/app/constants/CONSTANTS'
-// import { FieldComponent } from '../../catalog-management/field/field.component'
+import { CONSTANTS, FILETYPE, RESPONSE_STATUS, MESSAGE_COMMON, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
+import { AppSettings } from 'src/app/constants/app-setting'
+import { ViewRecommendationComponent } from 'src/app/modules/recommendation/view-recommendation/view-recommendation.component'
 import { RemindObject } from '../../../models/remindObject'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RemindService } from 'src/app/services/remind.service'
@@ -16,16 +17,26 @@ declare var $: any
 	styleUrls: ['./remind.component.css'],
 })
 export class RemindComponent implements OnInit {
-	constructor(private toastr: ToastrService, private _fb: FormBuilder, private fileService: UploadFileService, private remindService: RemindService) {}
-
+	constructor(
+		private toastr: ToastrService,
+		private _fb: FormBuilder,
+		private fileService: UploadFileService,
+		private remindService: RemindService,
+		private viewRecommendation: ViewRecommendationComponent
+	) {}
+	APIADDRESS: string
 	files: any = []
 	model = new RemindObject()
+	sendOrgId: any
 	remindForm: any
+	listRemind: any = []
+	checkShow: boolean
 	@ViewChild('file', { static: false }) public file: ElementRef
 	fileAccept = CONSTANTS.FILEACCEPT
 	submitted = false
 
 	ngOnInit() {
+		this.APIADDRESS = AppSettings.API_ADDRESS.replace('api/', '')
 		this.buildForm()
 	}
 
@@ -45,29 +56,46 @@ export class RemindComponent implements OnInit {
 		})
 	}
 
+	getListRemind() {
+		if (!this.checkShowRemind()) {
+			return
+		}
+		var obj = {
+			RecommendationId: this.viewRecommendation.model.id,
+			SendOrgId: this.viewRecommendation.model.unitId,
+		}
+		this.remindService.remindGetList(obj).subscribe((res) => {
+			if ((res.success = RESPONSE_STATUS.success)) {
+				if (res.result != null) {
+					this.listRemind = res.result
+				}
+			}
+		})
+	}
+
 	onInsert() {
 		this.submitted = true
-
 		if (this.remindForm.invalid) {
 			return
 		}
-		this.model.recommendationId
+		this.model.recommendationId = this.viewRecommendation.model.id
+		this.sendOrgId = this.viewRecommendation.model.unitId
 		var obj = {
-			Model: { ...this.model, RecommendationId: 123 },
+			Model: { ...this.model },
 			Files: this.files,
+			SendOrgId: this.sendOrgId,
 		}
 		this.remindService.remindInsert(obj).subscribe((res) => {
-			debugger
 			if (res.success == RESPONSE_STATUS.success) {
 				$('#modal2').modal('hide')
 				this.model = new RemindObject()
 				this.files = []
 				this.rebuilForm()
+				this.getListRemind()
 				this.toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
 			} else {
 				this.toastr.error(MESSAGE_COMMON.ADD_FAILED)
 			}
-			console.log(res)
 		})
 	}
 
@@ -98,7 +126,6 @@ export class RemindComponent implements OnInit {
 			this.toastr.error('File tải lên vượt quá dung lượng cho phép 10MB')
 		}
 		this.file.nativeElement.value = ''
-		console.log(this.files)
 	}
 
 	onRemoveFile(item: any) {
@@ -113,6 +140,17 @@ export class RemindComponent implements OnInit {
 
 	showComponent() {
 		this.submitted = false
-		$('#modal2').modal('show')
+		if (this.viewRecommendation.model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
+			$('#modal2').modal('show')
+		}
+		return
+	}
+	checkShowRemind() {
+		if (this.viewRecommendation.model.status == 5 || this.viewRecommendation.model.status == 7 || this.viewRecommendation.model.status == 8) {
+			this.checkShow = true
+			return true
+		}
+		this.checkShow = false
+		return false
 	}
 }

@@ -457,6 +457,49 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("CAFieldKNCTGetDropdownBase")]
+		public async Task<ActionResult<object>> CAFieldKNCTGetDropdownBase()
+		{
+			try
+			{
+				List<CAFieldKNCTGetDropdown> rsCAFieldKNCTGetDropdown = await new CAFieldKNCTGetDropdown(_appSetting).CAFieldKNCTGetDropdownDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAFieldKNCTGetDropdown", rsCAFieldKNCTGetDropdown},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("CAFieldKNCTInsertBase")]
+		public async Task<ActionResult<object>> CAFieldKNCTInsertBase(CAFieldKNCTInsertIN _cAFieldKNCTInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldKNCTInsert(_appSetting).CAFieldKNCTInsertDAO(_cAFieldKNCTInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("CAFieldUpdateBase")]

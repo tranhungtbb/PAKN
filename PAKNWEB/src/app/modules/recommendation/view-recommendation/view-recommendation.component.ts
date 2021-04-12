@@ -11,7 +11,6 @@ import { CatalogService } from 'src/app/services/catalog.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { RemindComponent } from 'src/app/modules/recommendation/remind/remind.component'
-
 declare var $: any
 
 @Component({
@@ -78,6 +77,7 @@ export class ViewRecommendationComponent implements OnInit {
 				if (this.model.sendDate) {
 					this.model.sendDate = new Date(this.model.sendDate)
 				}
+				this.remindComponent.getListRemind()
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -366,8 +366,5 @@ export class ViewRecommendationComponent implements OnInit {
 					console.error(err)
 				}
 		}
-	}
-	show() {
-		this.remindComponent.showComponent()
 	}
 }

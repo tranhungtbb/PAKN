@@ -10,6 +10,8 @@ import { ViewReflectionsRecommendationComponent } from './view-reflections-recom
 import { SupportComponent } from './support/support.component'
 import { CreateRecommendationComponent } from './user-create-recommendation/user-create-recommendation.component'
 import { using } from 'rxjs'
+import { MyRecommendationComponent } from './my-recommendation/my-recommendation.component'
+import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
 
 const routes: Routes = [
 	{
@@ -41,6 +43,14 @@ const routes: Routes = [
 				component: CreateRecommendationComponent,
 			},
 			{
+				path: 'cap-nhat-kien-nghi/:id',
+				component: CreateRecommendationComponent,
+			},
+			{
+				path: 'chi-tiet-kien-nghi/:id',
+				component: ViewRecommendationPersonalComponent,
+			},
+			{
 				path: 'phan-anh-kien-nghi',
 				component: ReflectionsRecommendationsComponent,
 			},
@@ -49,11 +59,15 @@ const routes: Routes = [
 				path: 'phan-anh-kien-nghi/:id',
 				component: ViewReflectionsRecommendationComponent,
 			},
-
 			{
 				path: 'ho-tro',
 				component: SupportComponent,
 			},
+			{
+				path: 'phan-anh-kien-nghi-cua-toi',
+				component: MyRecommendationComponent,
+			},
+
 			{
 				path: 'tai-khoan',
 				loadChildren: './account/account.module#AccountModule', //() => import('./account/account.module').then((m) => m.AccountModule),
@@ -66,4 +80,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class PublishRoutingModule {}
+export class PublishRoutingModule { }
