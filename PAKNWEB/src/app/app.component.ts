@@ -57,7 +57,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
 				return
 			}
 
-			if (!currentlink.includes('cong-bo') && !currentlink.includes('dang-nhap') && !currentlink.includes('forgotPass')) {
+			if (!currentlink.includes('cong-bo') && !currentlink.includes('dang-nhap') && !currentlink.includes('quen-mat-khau')) {
 				this._router.navigate(['/cong-bo/trang-chu'])
 			}
 		}

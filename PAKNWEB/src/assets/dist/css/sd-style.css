@@ -1422,3 +1422,7 @@ body .ui-paginator .ui-dropdown .ui-dropdown-trigger, body .ui-paginator .ui-dro
 	top: 10px;
 	margin-left: 10px;
 }
+
+.pointer{
+	cursor: pointer;
+}
