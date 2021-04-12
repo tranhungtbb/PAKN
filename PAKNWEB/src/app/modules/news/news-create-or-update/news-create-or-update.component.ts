@@ -53,14 +53,18 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private sanitizer: DomSanitizer
-	) { }
+	) {}
 	allowImageExtend = ['image/jpeg', 'image/png']
 	public Editor = ClassicEditor
+	public ckConfig = {
+		placeholder: 'Nhập...',
+	}
+
 	model: NewsModel = new NewsModel()
 	newsForm: FormGroup
 	listNewsTypes: any[]
 	postTypes: any[] = [
-		{ text: 'thường', value: '0' },
+		{ text: 'Bài viết thường', value: '0' },
 		{ text: 'nổi bật', value: '1' },
 	]
 
