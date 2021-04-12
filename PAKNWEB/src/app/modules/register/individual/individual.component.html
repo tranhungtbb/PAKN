@@ -92,8 +92,7 @@
 					<label class="mb-1">Ngày tháng năm sinh <span class="cl-red">(*)</span></label>
 					<div class="input-group">
 						<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dob" [(ngModel)]="model._birthDay"
-							formControlName="dob" appBsDatepickerInvalid [maxDate]="dateNow"
-							[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+							formControlName="dob" appBsDatepickerInvalid [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 						<div class="input-group-addon">
 							<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 						</div>
@@ -187,7 +186,7 @@
 					<label class="mb-1">Ngày cấp <span class="cl-red">(*)</span></label>
 					<div class="input-group">
 						<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dateIssue" [(ngModel)]="model._dateOfIssue"
-							formControlName="dateIssue" appBsDatepickerInvalid [maxDate]="dateNow"
+							formControlName="dateIssue" appBsDatepickerInvalid
 							[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 						<div class="input-group-addon">
 							<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
