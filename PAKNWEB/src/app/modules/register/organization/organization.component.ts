@@ -34,25 +34,6 @@ export class OrganizationComponent implements OnInit {
 
 	ngOnInit() {
 		this.loadFormBuilder()
-		// this.model.phone = '0356489552'
-		// this.model.password = '123abc'
-		// this.model.rePassword = '123abc'
-
-		// this.model.Business = 'Công ty vận tải hàng không'
-		// this.model.RegistrationNum = '12346798abcd'
-		// this.model.DecisionFoundation = '134679ancd'
-		// this.model.DateIssue = '12/12/2000'
-		// this.model.Tax = '132456798'
-
-		// this.model.Gender = true
-
-		// this.model.RepresentativeName = 'NGuyễn Văn Tường'
-		// this.model.Email = 'ngvantuong@mail.com'
-		// this.model.DOB = '12/12/2000'
-		// this.model.Address = 'số 12 Cầu Giấy - Hà Nội'
-		// this.model.OrgAddress = '120 Xuân Mai'
-		// this.model.OrgPhone = '0356489552'
-		// this.model.OrgEmail = 'doanhnghiep@mail.com'
 	}
 
 	onSave() {
@@ -61,10 +42,10 @@ export class OrganizationComponent implements OnInit {
 		this.fOrgInfoSubmitted = true
 		this.child_OrgAddressForm.fOrgAddressSubmitted = true
 
-		let fDob: any = document.querySelector('ng-datepicker#_dob input')
-		let fIsDate: any = document.querySelector('ng-datepicker#_IsDate input')
-		this.model.DOB = fDob.value
-		this.model.DateIssue = fIsDate.value
+		let fDob: any = document.querySelector('#_dob')
+		let fIsDate: any = document.querySelector('#_IsDate')
+		this.model._RepresentativeBirthDay = fDob.value
+		this.model._DateOfIssue = fIsDate.value
 
 		//console.log(this.model);
 
@@ -108,9 +89,9 @@ export class OrganizationComponent implements OnInit {
 		this.formOrgInfo = this.formBuilder.group({
 			//---thông tin doanh nghiệp
 			Business: [this.model.Business, [Validators.required]], // tên tổ chức
-			RegistrationNum: [this.model.RegistrationNum, [Validators.required]], //Số ĐKKD
-			DecisionFoundation: [this.model.DecisionFoundation, [Validators.required]], //Quyết định thành lập
-			DateIssue: [this.model.DateIssue, [Validators.required]], //Ngày cấp/thành lập
+			RegistrationNum: [this.model.BusinessRegistration, [Validators.required]], //Số ĐKKD
+			DecisionFoundation: [this.model.DecisionOfEstablishing, [Validators.required]], //Quyết định thành lập
+			DateIssue: [this.model._DateOfIssue, [Validators.required]], //Ngày cấp/thành lập
 			Tax: [this.model.Tax, [Validators.required]], //Mã số thuế
 		})
 	}
