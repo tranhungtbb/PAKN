@@ -16,6 +16,9 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using PAKNAPI.Middle;
 using Bugsnag.AspNet.Core;
 using PAKNAPI.Services.FileUpload;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace BookLibAPI
 {
@@ -144,6 +147,14 @@ namespace BookLibAPI
 			app.UseSwaggerUi3();
 
 			app.UseHttpsRedirection();
+			//// note
+			app.UseStaticFiles();
+			app.UseStaticFiles(new StaticFileOptions()
+			{
+				FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Upload/Remind")),
+				RequestPath = new PathString("/Upload/Remind")
+			});
+
 
 			app.UseRouting();
 

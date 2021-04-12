@@ -24,6 +24,7 @@ export class RemindService {
 		const form = new FormData()
 		form.append('Model', JSON.stringify(request.Model))
 		form.append('SendOrgId', request.SendOrgId)
+		form.append('ReceiveOrgId', request.ReceiveOrgId)
 
 		if (request.Files) {
 			request.Files.forEach((item) => {

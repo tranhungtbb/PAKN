@@ -1,4 +1,45 @@
-<div class="modal fade" id="modal2">
+<div style="position: relative;" *ngIf="checkShow == true">
+	<button (click)="showComponent()" class="btn btn-remind"><i class="bi bi-chat-text px-2"></i> Nhắc việc</button>
+	<div class="list-remind">
+		<div class="item-remind" *ngFor="let item of listRemind">
+			<div class="sender-name">{{item.senderName}}</div>
+			<div class="create-date">{{item.dateSend | date : 'HH:mm'}} - {{item.dateSend | date : 'dd/MM/yyyy'}}</div>
+			<p class="content-remind" innerHTML="{{item.content | Change}}">
+			</p>
+			<span class="text-left text-truncate">
+				<small class="mr-2" style="font-size: 17px;font-weight: 500;">Tài liệu đính kèm</small><br>
+				<div *ngFor="let file of item.files">
+					<a *ngIf="file.fileType == 1" download [href]="APIADDRESS + file.fileAttach" target="_blank" style="color: #333;">
+						<img src="../../../../assets/dist/images/file-word.svg" style="width: 20px;padding-right: 5px;" alt="">
+						<span class="small">{{file.name}}</span>
+					</a>
+					<a *ngIf="file.fileType == 2" download [href]="APIADDRESS + file.fileAttach" target="_blank" style="color: #333;">
+						<img src="../../../../assets/dist/images/file-excel.svg" style="width: 20px;padding-right: 5px;" alt="">
+						<span class="small">{{file.name}}</span>
+					</a>
+					<a *ngIf="file.fileType == 3" download [href]="APIADDRESS + file.fileAttach" target="_blank" style="color: #333;">
+						<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 20px;padding-right: 5px;" alt="">
+						<span class="small">{{file.name}}</span>
+					</a>
+					<a *ngIf="file.fileType == 4" download [href]="APIADDRESS + file.fileAttach" target="_blank" style="color: #333;">
+						<img src="../../../../assets/dist/images/file-image.svg" style="width: 20px;padding-right: 5px;" alt="">
+						<span class="small">{{file.name}}</span>
+					</a>
+					<a *ngIf="file.fileType == 6" download [href]="APIADDRESS + file.fileAttach" target="_blank" style="color: #333;">
+						<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 20px;padding-right: 5px;" alt="">
+						<span class="small">{{file.name}}</span>
+					</a>
+				</div>
+			</span>
+		</div>
+		<div *ngIf="listRemind.length <= 0">Chưa có nhắc việc</div>
+	</div>
+
+</div>
+
+
+
+<div class="modal fade" id="modal2" *ngIf="checkShow == true">
 	<div class="modal-dialog modal-dialog-centered" style="min-width: 60%" role="document">
 		<div class="modal-content rounded">
 			<form class="form-horizontal" [formGroup]="remindForm" #formDir="ngForm">

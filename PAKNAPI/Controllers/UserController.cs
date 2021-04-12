@@ -191,7 +191,7 @@ namespace PAKNAPI.Controllers
 		#region dang ky nguoi dan, doanh nghiep
 		[HttpPost]
 		[Route("OrganizationRegister")]
-		public async Task<object> OrganizationRegister([FromForm] RegisterModel loginInfo, [FromBody] QLDoanhNghiepInsertIN model)
+		public async Task<object> OrganizationRegister([FromForm] RegisterModel loginInfo, [FromForm] QLDoanhNghiepInsertIN model)
         {
 			try
 			{

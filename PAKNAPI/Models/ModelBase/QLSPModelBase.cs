@@ -75,7 +75,7 @@ namespace PAKNAPI.ModelBase
 		public int? OrgProvince { get; set; }
 		public int? OrgDistrict { get; set; }
 		public int? OrgVillage { get; set; }
-		public int? OrgAddress { get; set; }
+		public string OrgAddress { get; set; }
 		public string OrgPhone { get; set; }
 		public string OrgEmail { get; set; }
 		public string RegistrationNum { get; set; }
