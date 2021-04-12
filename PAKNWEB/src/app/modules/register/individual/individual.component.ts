@@ -24,13 +24,6 @@ export class IndividualComponent implements OnInit {
 		private diadanhService: DiadanhService
 	) {}
 
-	// datePickerConfig:DatepickerOptions={
-	// 	inputClass: 'form-control border-brown',
-	// 	placeholder:'Nhập...',
-	// 	formatTitle: 'MM yyyy',
-	// 	format: 'dd/MM/yyyy',
-	// 	calendarClass: 'datepicker-container datepicker-dark',
-	// }
 	date: Date = new Date()
 
 	formLogin: FormGroup
@@ -59,7 +52,7 @@ export class IndividualComponent implements OnInit {
 		this.listDistrict = []
 		this.listVillage = []
 
-		this.model.province = ''
+		this.model.provinceId = ''
 		if (this.model.nation == 1) {
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
@@ -73,10 +66,10 @@ export class IndividualComponent implements OnInit {
 		this.listDistrict = []
 		this.listVillage = []
 
-		this.model.district = ''
-		this.model.village = ''
-		if (this.model.province != null && this.model.province != '') {
-			this.diadanhService.getAllDistrict(this.model.province).subscribe((res) => {
+		this.model.districtId = ''
+		this.model.wardsId = ''
+		if (this.model.provinceId != null && this.model.provinceId != '') {
+			this.diadanhService.getAllDistrict(this.model.provinceId).subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listDistrict = res.result.CADistrictGetAll
 				}
@@ -88,9 +81,9 @@ export class IndividualComponent implements OnInit {
 	onChangeDistrict() {
 		this.listVillage = []
 
-		this.model.village = ''
-		if (this.model.district != null && this.model.district != '') {
-			this.diadanhService.getAllVillage(this.model.province, this.model.district).subscribe((res) => {
+		this.model.wardsId = ''
+		if (this.model.districtId != null && this.model.districtId != '') {
+			this.diadanhService.getAllVillage(this.model.provinceId, this.model.districtId).subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listVillage = res.result.CAVillageGetAll
 				}
@@ -103,10 +96,10 @@ export class IndividualComponent implements OnInit {
 		this.fLoginSubmitted = true
 		this.fInfoSubmitted = true
 
-		let fDob: any = document.querySelector('ng-datepicker#_dob input')
-		let fDateIssue: any = document.querySelector('ng-datepicker#_dateIssue input')
-		this.model.dob = fDob.value
-		this.model.dateIssue = fDateIssue.value
+		let fDob: any = document.querySelector('#_dob')
+		let fDateIssue: any = document.querySelector('#_dateIssue')
+		this.model._birthDay = fDob.value
+		this.model._dateOfIssue = fDateIssue.value
 
 		if (this.formLogin.invalid || this.formInfo.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
@@ -150,17 +143,17 @@ export class IndividualComponent implements OnInit {
 		this.formInfo = this.formBuilder.group({
 			fullName: [this.model.fullName, [Validators.required]],
 			gender: [this.model.gender, [Validators.required]],
-			dob: [this.model.dob, [Validators.required]],
+			dob: [this.model._birthDay, [Validators.required]],
 			nation: [this.model.nation, [Validators.required]],
-			province: [this.model.province, [Validators.required]],
-			district: [this.model.district, [Validators.required]],
-			village: [this.model.village, [Validators.required]],
+			province: [this.model.provinceId, [Validators.required]],
+			district: [this.model.districtId, [Validators.required]],
+			village: [this.model.wardsId, [Validators.required]],
 
 			email: [this.model.email, [Validators.required, Validators.email]],
 			address: [this.model.address, [Validators.required]],
-			identity: [this.model.identity, [Validators.required, Validators.pattern(/^([0-9]){9,12}$/g)]],
-			placeIssue: [this.model.placeIssue, [Validators.required]],
-			dateIssue: [this.model.dateIssue, [Validators.required]],
+			iDCard: [this.model.iDCard, [Validators.required, Validators.pattern(/^([0-9]){9,12}$/g)]],
+			placeIssue: [this.model.issuedPlace, [Validators.required]],
+			dateIssue: [this.model._dateOfIssue, [Validators.required]],
 		})
 	}
 }

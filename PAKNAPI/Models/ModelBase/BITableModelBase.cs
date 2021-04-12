@@ -17,7 +17,7 @@ namespace PAKNAPI.ModelBase
 		public int? ProvinceId { get; set; }
 		public int WardsId { get; set; }
 		public int DistrictId { get; set; }
-		public string Name { get; set; }
+		public string RepresentativeName { get; set; }
 		public string Code { get; set; }
 		public string Address { get; set; }
 		public string Email { get; set; }
@@ -34,6 +34,19 @@ namespace PAKNAPI.ModelBase
 		public string DecisionOfEstablishing { get; set; }
 		public DateTime? DateOfIssue { get; set; }
 		public string Tax { get; set; }
+		public int? OrgProvinceId { get; set; }
+		public int? OrgDistrictId { get; set; }
+		public int? OrgWardsId { get; set; }
+		public string OrgAddress { get; set; }
+		public string OrgPhone { get; set; }
+		public string OrgEmail { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? CreatedBy { get; set; }
+		public int? UpdatedBy { get; set; }
+		public int? Status { get; set; }
+		public bool? RepresentativeGender { get; set; }
+		public DateTime RepresentativeBirthDay { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -54,7 +67,7 @@ namespace PAKNAPI.ModelBase
 		public int? ProvinceId { get; set; }
 		public int WardsId { get; set; }
 		public int DistrictId { get; set; }
-		public string Name { get; set; }
+		public string RepresentativeName { get; set; }
 		public string Code { get; set; }
 		public string Address { get; set; }
 		public string Email { get; set; }
@@ -71,6 +84,19 @@ namespace PAKNAPI.ModelBase
 		public string DecisionOfEstablishing { get; set; }
 		public DateTime? DateOfIssue { get; set; }
 		public string Tax { get; set; }
+		public int? OrgProvinceId { get; set; }
+		public int? OrgDistrictId { get; set; }
+		public int? OrgWardsId { get; set; }
+		public string OrgAddress { get; set; }
+		public string OrgPhone { get; set; }
+		public string OrgEmail { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? CreatedBy { get; set; }
+		public int? UpdatedBy { get; set; }
+		public int? Status { get; set; }
+		public bool? RepresentativeGender { get; set; }
+		public DateTime RepresentativeBirthDay { get; set; }
 
 		public async Task<BIBusiness> BIBusinessGetByID(long? Id)
 		{
@@ -101,15 +127,28 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("WardsId", _bIBusiness.WardsId);
 			DP.Add("DistrictId", _bIBusiness.DistrictId);
-			DP.Add("Name", _bIBusiness.Name);
+			DP.Add("RepresentativeName", _bIBusiness.RepresentativeName);
 			DP.Add("Code", _bIBusiness.Code);
 			DP.Add("IsActived", _bIBusiness.IsActived);
 			DP.Add("IsDeleted", _bIBusiness.IsDeleted);
+			DP.Add("OrgPhone", _bIBusiness.OrgPhone);
+			DP.Add("OrgEmail", _bIBusiness.OrgEmail);
+			DP.Add("RepresentativeBirthDay", _bIBusiness.RepresentativeBirthDay);
 			DP.Add("ProvinceId", _bIBusiness.ProvinceId);
+			DP.Add("CreatedDate", _bIBusiness.CreatedDate);
+			DP.Add("UpdatedDate", _bIBusiness.UpdatedDate);
+			DP.Add("CreatedBy", _bIBusiness.CreatedBy);
+			DP.Add("UpdatedBy", _bIBusiness.UpdatedBy);
+			DP.Add("Status", _bIBusiness.Status);
+			DP.Add("RepresentativeGender", _bIBusiness.RepresentativeGender);
 			DP.Add("BusinessRegistration", _bIBusiness.BusinessRegistration);
 			DP.Add("DecisionOfEstablishing", _bIBusiness.DecisionOfEstablishing);
 			DP.Add("DateOfIssue", _bIBusiness.DateOfIssue);
 			DP.Add("Tax", _bIBusiness.Tax);
+			DP.Add("OrgProvinceId", _bIBusiness.OrgProvinceId);
+			DP.Add("OrgDistrictId", _bIBusiness.OrgDistrictId);
+			DP.Add("OrgWardsId", _bIBusiness.OrgWardsId);
+			DP.Add("OrgAddress", _bIBusiness.OrgAddress);
 			DP.Add("Address", _bIBusiness.Address);
 			DP.Add("Email", _bIBusiness.Email);
 			DP.Add("Phone", _bIBusiness.Phone);
@@ -128,16 +167,29 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("WardsId", _bIBusiness.WardsId);
 			DP.Add("DistrictId", _bIBusiness.DistrictId);
-			DP.Add("Name", _bIBusiness.Name);
+			DP.Add("RepresentativeName", _bIBusiness.RepresentativeName);
 			DP.Add("Code", _bIBusiness.Code);
 			DP.Add("IsActived", _bIBusiness.IsActived);
 			DP.Add("IsDeleted", _bIBusiness.IsDeleted);
+			DP.Add("OrgPhone", _bIBusiness.OrgPhone);
+			DP.Add("OrgEmail", _bIBusiness.OrgEmail);
 			DP.Add("Id", _bIBusiness.Id);
+			DP.Add("RepresentativeBirthDay", _bIBusiness.RepresentativeBirthDay);
 			DP.Add("ProvinceId", _bIBusiness.ProvinceId);
+			DP.Add("CreatedDate", _bIBusiness.CreatedDate);
+			DP.Add("UpdatedDate", _bIBusiness.UpdatedDate);
+			DP.Add("CreatedBy", _bIBusiness.CreatedBy);
+			DP.Add("UpdatedBy", _bIBusiness.UpdatedBy);
+			DP.Add("Status", _bIBusiness.Status);
+			DP.Add("RepresentativeGender", _bIBusiness.RepresentativeGender);
 			DP.Add("BusinessRegistration", _bIBusiness.BusinessRegistration);
 			DP.Add("DecisionOfEstablishing", _bIBusiness.DecisionOfEstablishing);
 			DP.Add("DateOfIssue", _bIBusiness.DateOfIssue);
 			DP.Add("Tax", _bIBusiness.Tax);
+			DP.Add("OrgProvinceId", _bIBusiness.OrgProvinceId);
+			DP.Add("OrgDistrictId", _bIBusiness.OrgDistrictId);
+			DP.Add("OrgWardsId", _bIBusiness.OrgWardsId);
+			DP.Add("OrgAddress", _bIBusiness.OrgAddress);
 			DP.Add("Address", _bIBusiness.Address);
 			DP.Add("Email", _bIBusiness.Email);
 			DP.Add("Phone", _bIBusiness.Phone);
@@ -195,6 +247,11 @@ namespace PAKNAPI.ModelBase
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
 		public DateTime? DateOfIssue { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? CreatedBy { get; set; }
+		public int? UpdatedBy { get; set; }
+		public int? Status { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -230,6 +287,11 @@ namespace PAKNAPI.ModelBase
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
 		public DateTime? DateOfIssue { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? CreatedBy { get; set; }
+		public int? UpdatedBy { get; set; }
+		public int? Status { get; set; }
 
 		public async Task<BIIndividual> BIIndividualGetByID(long? Id)
 		{
@@ -262,10 +324,15 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Code", _bIIndividual.Code);
 			DP.Add("IsActived", _bIIndividual.IsActived);
 			DP.Add("IsDeleted", _bIIndividual.IsDeleted);
-			DP.Add("DateOfIssue", _bIIndividual.DateOfIssue);
 			DP.Add("ProvinceId", _bIIndividual.ProvinceId);
 			DP.Add("WardsId", _bIIndividual.WardsId);
 			DP.Add("DistrictId", _bIIndividual.DistrictId);
+			DP.Add("DateOfIssue", _bIIndividual.DateOfIssue);
+			DP.Add("CreatedDate", _bIIndividual.CreatedDate);
+			DP.Add("UpdatedDate", _bIIndividual.UpdatedDate);
+			DP.Add("CreatedBy", _bIIndividual.CreatedBy);
+			DP.Add("UpdatedBy", _bIIndividual.UpdatedBy);
+			DP.Add("Status", _bIIndividual.Status);
 			DP.Add("Address", _bIIndividual.Address);
 			DP.Add("Email", _bIIndividual.Email);
 			DP.Add("Phone", _bIIndividual.Phone);
@@ -285,13 +352,18 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("FullName", _bIIndividual.FullName);
 			DP.Add("Code", _bIIndividual.Code);
-			DP.Add("Id", _bIIndividual.Id);
 			DP.Add("IsActived", _bIIndividual.IsActived);
 			DP.Add("IsDeleted", _bIIndividual.IsDeleted);
-			DP.Add("DateOfIssue", _bIIndividual.DateOfIssue);
+			DP.Add("Id", _bIIndividual.Id);
 			DP.Add("ProvinceId", _bIIndividual.ProvinceId);
 			DP.Add("WardsId", _bIIndividual.WardsId);
 			DP.Add("DistrictId", _bIIndividual.DistrictId);
+			DP.Add("DateOfIssue", _bIIndividual.DateOfIssue);
+			DP.Add("CreatedDate", _bIIndividual.CreatedDate);
+			DP.Add("UpdatedDate", _bIIndividual.UpdatedDate);
+			DP.Add("CreatedBy", _bIIndividual.CreatedBy);
+			DP.Add("UpdatedBy", _bIIndividual.UpdatedBy);
+			DP.Add("Status", _bIIndividual.Status);
 			DP.Add("Address", _bIIndividual.Address);
 			DP.Add("Email", _bIIndividual.Email);
 			DP.Add("Phone", _bIIndividual.Phone);
