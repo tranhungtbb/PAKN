@@ -42,8 +42,10 @@ export class Api {
 	public static RecommendationExport = 'MRSPBase/MRRecommendationExportBase'
 
 	public static PuRecommendationGetAllOnPage = 'PURecommendation/PURecommendationAllOnPage'
+	public static PuRecomentdationGetListOrderByCountClick = 'PURecommendation/PURecommendationGetListOrderByCountClick'
 	public static PuRecommendationGetById = 'PURecommendation/PURecommendationGetById'
 	public static PuChangeSatisfaction = 'PURecommendation/ChangeSatisfaction'
+	public static PuRecommendationCountClick = 'PURecommendation/PURecommendationCountClick'
 
 	//Field
 	public static FieldGetList = 'CACategorySPBase/CAFieldGetAllOnPageBase'
