@@ -79,8 +79,8 @@ export class OrganizationComponent implements OnInit {
 		//form thông tin đăng nhập
 		this.formLogin = this.formBuilder.group(
 			{
-				phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
-				password: [this.model.password, [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/g)]],
+				phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/)]],
+				password: [this.model.password, [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)]],
 				rePassword: [this.model.rePassword, [Validators.required]],
 			},
 			{ validator: MustMatch('password', 'rePassword') }
