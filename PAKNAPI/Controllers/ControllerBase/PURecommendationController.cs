@@ -86,9 +86,10 @@ namespace PAKNAPI.ControllerBase
 				// file đính kèm nội dung phản hồi
 				if (result.lstConclusion != null) {
 					result.lstConclusionFiles = (await new MRRecommendationConclusionFilesGetByConclusionId(_appSetting).MRRecommendationConclusionFilesGetByConclusionIdDAO(result.lstConclusion.Id)).ToList();
-				}
-				foreach (var item in result.lstConclusionFiles) {
-					item.FilePath = decrypt.EncryptData(item.FilePath);
+					foreach (var item in result.lstConclusionFiles)
+					{
+						item.FilePath = decrypt.EncryptData(item.FilePath);
+					}
 				}
 				return new ResultApi { Success = ResultCode.OK, Result = result };
 			}
