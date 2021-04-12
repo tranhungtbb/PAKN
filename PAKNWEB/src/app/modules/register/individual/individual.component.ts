@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { Router } from '@angular/router'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
-import { DatepickerOptions } from 'ng2-datepicker'
 
 import { RegisterService } from 'src/app/services/register.service'
 import { DiadanhService } from 'src/app/services/diadanh.service'
@@ -33,14 +32,6 @@ export class IndividualComponent implements OnInit {
 	// 	calendarClass: 'datepicker-container datepicker-dark',
 	// }
 	date: Date = new Date()
-	datePickerConfig: DatepickerOptions = {
-		addClass: 'form-control border-brown',
-		placeholder: 'Nhập...',
-		barTitleFormat: 'MM YYYY',
-		firstCalendarDay: 1,
-		barTitleIfEmpty: (`${this.date.getMonth() + 1}`.includes('0') ? `${this.date.getMonth() + 1}` : `0${this.date.getMonth() + 1}`) + ` ${this.date.getFullYear()}`,
-		displayFormat: 'DD/MM/YYYY',
-	}
 
 	formLogin: FormGroup
 	formInfo: FormGroup
