@@ -118,6 +118,7 @@ namespace PAKNAPI.ModelBase
 		public string Avatar { get; set; }
 		public string Address { get; set; }
 		public int? PositionId { get; set; }
+		public int TypeId { get; set; }
 		public string RoleIds { get; set; }
 
 		public async Task<List<SYUserGetByID>> SYUserGetByIDDAO(long? Id)

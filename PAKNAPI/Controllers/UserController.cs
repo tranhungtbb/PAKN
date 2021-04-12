@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using PAKNAPI.App_Helper;
 using PAKNAPI.Models.Results;
 using PAKNAPI.Models.Login;
+using System.Security.Claims;
 
 namespace PAKNAPI.Controllers
 {
@@ -24,11 +25,14 @@ namespace PAKNAPI.Controllers
 		private readonly IFileService _fileService;
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;
-		public UserController(IFileService fileService, IAppSetting appSetting, IClient bugsnag)
+		private readonly IHttpContextAccessor _httpContextAccessor;
+		public UserController(IFileService fileService, IAppSetting appSetting, IClient bugsnag,
+			IHttpContextAccessor httpContextAccessor)
 		{
 			_fileService = fileService;
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
+			_httpContextAccessor = httpContextAccessor;
 		}
 
 		[HttpPost, DisableRequestSizeLimit]
@@ -188,7 +192,7 @@ namespace PAKNAPI.Controllers
 
 
 
-		#region dang ky nguoi dan, doanh nghiep
+		#region nguoi dan, doanh nghiep
 		[HttpPost]
 		[Route("OrganizationRegister")]
 		public async Task<object> OrganizationRegister([FromForm] RegisterModel loginInfo, [FromForm] QLDoanhNghiepInsertIN model)
@@ -300,6 +304,45 @@ namespace PAKNAPI.Controllers
 
 			return new Models.Results.ResultApi { Success = ResultCode.OK };
 		}
+
+
+		[HttpGet]
+		[Route("UserGetInfo")]
+		[Authorize]
+		public async Task<object> UserGetInfo(long id)
+        {
+			try
+            {
+				var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+				var accInfo = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(id);
+				
+				if(accInfo == null || !accInfo.Any())
+                {
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Tài khoản không tồn tại" };
+				}
+
+                if (accInfo[0].TypeId == 1)
+                {
+
+                }
+                else if (accInfo[0].TypeId == 2)
+                {
+					//var info = await new 
+                }
+				else if (accInfo[0].TypeId == 3)
+                {
+
+                }
+
+			}
+			catch(Exception ex)
+            {
+				_bugsnag.Notify(ex);
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+
+			return null;
+        }
 
         #endregion
 
