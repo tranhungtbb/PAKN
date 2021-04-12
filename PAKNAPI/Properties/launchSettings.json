@@ -16,7 +16,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "ancmHostingModel": "OutOfProcess"
+      "ancmHostingModel": "OutOfProcess",
+      "stdoutLogEnabled": true
     },
     "BookLibAPI": {
       "commandName": "Project",
