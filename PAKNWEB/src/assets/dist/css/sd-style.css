@@ -1426,3 +1426,6 @@ body .ui-paginator .ui-dropdown .ui-dropdown-trigger, body .ui-paginator .ui-dro
 .pointer{
 	cursor: pointer;
 }
+.ui-autocomplete{
+	width: 100%!important;
+}

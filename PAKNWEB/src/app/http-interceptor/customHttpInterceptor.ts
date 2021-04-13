@@ -17,7 +17,7 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 	constructor(public storeageService: UserInfoStorageService, private _router: Router, private toastr: ToastrService) {}
 
 	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-		this.env.isContentLoading = true
+		//this.env.isContentLoading = true
 		// Retake Token
 		// if (request.url == AppSettings.API_ADDRESS + Api.GetNotification) {
 		//   this.env.isContentLoading = false;

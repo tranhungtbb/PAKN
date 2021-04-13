@@ -151,6 +151,7 @@ export class LoginComponent implements OnInit {
 								}
 							} else if (data.success === RESPONSE_STATUS.incorrect) {
 								this.toastr.error(data.message, 'Tên tài khoản hoặc mật khẩu không chính xác')
+								this.captchaCode = ''
 							}
 						},
 						(error) => {
@@ -223,6 +224,7 @@ export class LoginComponent implements OnInit {
 									location.href = '/cong-bo'
 								}
 							} else if (data.success === RESPONSE_STATUS.incorrect) {
+								this.captchaCode = ''
 								this.toastr.error(data.message, 'Tên tài khoản hoặc mật khẩu không chính xác')
 							}
 						},
