@@ -14,13 +14,25 @@
 				<form class="form-row mb-3" [formGroup]="form">
 					<div class="col-12 form-group">
 						<label class="mb-1">PAKN về việc <span class="cl-red">(*)</span></label>
-						<!-- <input class="form-control" type="text" [(ngModel)]="model.title" maxlength="500" formControlName="title"
-							placeholder="Nhập..." /> -->
-						<p-autoComplete [(ngModel)]="model.title" field="title" maxlength="500" formControlName="title" placeholder="Nhập..." [suggestions]="resultsRecommendation"
+						<input class="form-control" type="text" [(ngModel)]="model.title" maxlength="500" formControlName="title" (blur)="searchRecommendation()"
+							placeholder="Nhập..." />
+						<!-- <p-autoComplete [(ngModel)]="model.title" field="title" maxlength="500" formControlName="title" placeholder="Nhập..." [suggestions]="resultsRecommendation"
 							inputStyleClass="form-control" (completeMethod)="searchRecommendation($event)"></p-autoComplete>
 						<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error">
 							<div *ngIf="f.title.errors.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+						</div> -->
+					</div>
+					<div class="col-12 form-group" *ngIf="resultsRecommendation.length>0">
+						<div class="email-list mini-scroll">
+							<div class="message" *ngFor="let item of resultsRecommendation">
+								<div>
+									<a href="/cong-bo/phan-anh-kien-nghi/{{item.id}}" target="_blank" class="col-mail col-mail-2">
+										<div class="subject">{{item.title}}</div>
+										<div class="date">{{item.createdDate}}</div>
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>

@@ -39,7 +39,7 @@ export class CreateRecommendationComponent implements OnInit {
 	@ViewChild('file', { static: false }) public file: ElementRef
 	captchaImage: any = ''
 	captchaCode: string = null
-	resultsRecommendation: any
+	resultsRecommendation: any = []
 	constructor(
 		private toastr: ToastrService,
 		private fileService: UploadFileService,
@@ -69,11 +69,12 @@ export class CreateRecommendationComponent implements OnInit {
 		})
 	}
 
-	searchRecommendation(event) {
+	searchRecommendation() {
 		// this.mylookupservice.getResults(event.query).then(data => {
 		// 		this.resultsRecommendation = data
 		// });
-		this.recommendationService.recommendationGetSuggestCreate('?Title=' + event.query).subscribe((response) => {
+
+		this.recommendationService.recommendationGetSuggestCreate({ Title: this.model.title }).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.resultsRecommendation = response.result.MRRecommendationGetSuggestCreate
 			} else {

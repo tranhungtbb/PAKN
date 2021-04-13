@@ -197,8 +197,12 @@ export class RecommendationService {
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationDelete, headers)
 	}
 
-	recommendationGetSuggestCreate(title: string): Observable<any> {
-		return this.http.get(AppSettings.API_ADDRESS + Api.RecommendationGetSuggestCreate + title)
+	recommendationGetSuggestCreate(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.getNotLoading(request, AppSettings.API_ADDRESS + Api.RecommendationGetSuggestCreate, headers)
 	}
 
 	recommendationExportExcel(request): Observable<any> {
