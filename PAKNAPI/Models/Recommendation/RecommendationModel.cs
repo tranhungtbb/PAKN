@@ -40,6 +40,7 @@ namespace PAKNAPI.Models.Recommendation
 	public class RecommendationUpdateRequest
     {
         public long? UserId { get; set; }
+        public int? UserType { get; set; }
         public string UserFullName { get; set; }
         public MRRecommendationUpdateIN Data { get; set; }
         public List<DropdownObject> ListHashTag { get; set; }

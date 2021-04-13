@@ -18,7 +18,7 @@ export class RecommendationService {
 			return of(result as T)
 		}
 	}
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) { }
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
 
 	recommendationGetDataForCreate(request: any): Observable<any> {
 		let headers = {
@@ -195,6 +195,14 @@ export class RecommendationService {
 			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationDelete, headers)
+	}
+
+	recommendationGetSuggestCreate(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.getNotLoading(request, AppSettings.API_ADDRESS + Api.RecommendationGetSuggestCreate, headers)
 	}
 
 	recommendationExportExcel(request): Observable<any> {

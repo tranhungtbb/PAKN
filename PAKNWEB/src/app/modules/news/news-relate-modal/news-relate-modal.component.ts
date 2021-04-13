@@ -12,13 +12,9 @@ declare var $: any
 	styleUrls: ['./news-relate-modal.component.css'],
 })
 export class NewsRelateModalComponent implements OnInit {
-	constructor(
-		private newsService: NewsService,
-		private newsCreateOrUpdateComponent: NewsCreateOrUpdateComponent,
-		private catalogService: CatalogService,
-		private sanitizer: DomSanitizer
-	) {}
+	constructor(private newsService: NewsService, private catalogService: CatalogService, private sanitizer: DomSanitizer) {}
 
+	public newsCreateOrUpdateComponent: NewsCreateOrUpdateComponent
 	listNewsCategories: any[] = []
 	listDataPaged: any[]
 	newsSelected: any[] = []
