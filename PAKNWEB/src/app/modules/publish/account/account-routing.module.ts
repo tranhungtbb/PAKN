@@ -5,6 +5,7 @@ import { AccountInfoComponent } from './account-info/account-info.component'
 const routes: Routes = [
 	{ path: 'thong-tin', component: AccountInfoComponent },
 	{ path: 'thay-doi-mat-khau', component: AccountInfoComponent },
+	{ path: 'chinh-sua-thong-tin', component: AccountInfoComponent },
 ]
 
 @NgModule({

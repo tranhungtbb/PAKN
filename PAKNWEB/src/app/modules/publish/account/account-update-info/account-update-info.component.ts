@@ -25,7 +25,7 @@ export class AccountUpdateInfoComponent implements OnInit {
 	formData: FormGroup
 	model: UserInfoObject = new UserInfoObject()
 
-	listNation: any[] = [{ id: 1, name: 'Việt Nam' }]
+	listNation: any[] = [{ id: '1', name: 'Việt Nam' }]
 	listProvince: any[] = []
 	listDistrict: any[] = []
 	listVillage: any[] = []
@@ -36,41 +36,50 @@ export class AccountUpdateInfoComponent implements OnInit {
 	]
 
 	//event
-	onChangeNation() {
-		this.listProvince = []
-		this.listDistrict = []
-		this.listVillage = []
+	onChangeNation(clearable = false) {
+		if (clearable) {
+			this.listProvince = []
+			this.listDistrict = []
+			this.listVillage = []
 
-		this.model.provinceId = ''
-		if (this.model.nation == 1) {
+			this.model.provinceId = ''
+		}
+		if (this.model.nation == 1 || this.model.nation == '1') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listProvince = res.result.CAProvinceGetAll
+					//get province
+					this.onChangeProvince()
 				}
 			})
 		} else {
 		}
 	}
-	onChangeProvince() {
-		this.listDistrict = []
-		this.listVillage = []
+	onChangeProvince(clearable = false) {
+		if (clearable) {
+			this.listDistrict = []
+			this.listVillage = []
 
-		this.model.districtId = ''
-		this.model.wardsId = ''
+			this.model.districtId = ''
+			this.model.wardsId = ''
+		}
 		if (this.model.provinceId != null && this.model.provinceId != '') {
 			this.diadanhService.getAllDistrict(this.model.provinceId).subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listDistrict = res.result.CADistrictGetAll
+					//get district
+					this.onChangeDistrict()
 				}
 			})
 		} else {
 		}
 	}
 
-	onChangeDistrict() {
-		this.listVillage = []
-
-		this.model.wardsId = ''
+	onChangeDistrict(clearable = false) {
+		if (clearable) {
+			this.listVillage = []
+			this.model.wardsId = ''
+		}
 		if (this.model.districtId != null && this.model.districtId != '') {
 			this.diadanhService.getAllVillage(this.model.provinceId, this.model.districtId).subscribe((res) => {
 				if (res.success == 'OK') {
@@ -81,12 +90,16 @@ export class AccountUpdateInfoComponent implements OnInit {
 		}
 	}
 
+	get f() {
+		return this.formData.controls
+	}
 	ngOnInit() {
+		this.getUserInfo()
 		this.formData = this.formBuider.group({
 			userName: [this.model.userName, [Validators.required]],
 			fullName: [this.model.fullName, [Validators.required]],
 			dateOfBirth: [this.model.dateOfBirth, [Validators.required]],
-			email: [this.model.email, [Validators.required]],
+			email: [this.model.email, [Validators.required, Validators.email]],
 			phone: [this.model.phone, [Validators.required]],
 			nation: [this.model.nation, [Validators.required]],
 			provinceId: [this.model.provinceId, [Validators.required]],
@@ -97,6 +110,17 @@ export class AccountUpdateInfoComponent implements OnInit {
 			issuedPlace: [this.model.issuedPlace, [Validators.required]],
 			issuedDate: [this.model.issuedDate, [Validators.required]],
 			gender: [this.model.gender, [Validators.required]],
+		})
+	}
+
+	getUserInfo() {
+		this.accountService.getUserInfo().subscribe((res) => {
+			if (res.success != 'OK') {
+				this.toast.error(res.message)
+				return
+			}
+			this.model = res.result
+			this.onChangeNation()
 		})
 	}
 }

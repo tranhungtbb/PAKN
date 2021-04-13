@@ -1,22 +1,20 @@
-<div *ngIf="viewVisiable == 'info'" class="box">
+<div class="box">
 	<div class="tt-v1 pt-3 mb-3">
 		<h4 class="text-uppercase">Thông tin tài khoản</h4>
 	</div>
-	<form [formGroup]="formData" class="px-3" autocomplete="off">
-		<div class="col-3 col-lg form-group">
+	<form [formGroup]="formData" class="form-row align-items-center" autocomplete="off">
+		<div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Họ và Tên <span class="cl-red">(*)</span></label>
 			<input [svTrim] [(ngModel)]="model.fullName" formControlName="fullName" type="text" placeholder="Nhập..." class="form-control border-brown">
-			<!--  -->
 			<div *ngIf="(submitted && f.fullName.invalid)||(f.fullName.invalid && (f.fullName.dirty || f.fullName.touched))" class="has-error m-b-12">
 				<div *ngIf="f.fullName.errors.required">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
 				</div>
 			</div>
 		</div>
-		<div class="col-8 col-lg form-group">
+		<div class="col-12 col-lg-8 form-group">
 			<label class="mb-1">Email</label>
 			<input [svTrim] [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập..." class="form-control border-brown">
-			<!--  -->
 			<div *ngIf="(submitted && f.email.invalid)||(f.email.invalid && (f.email.dirty || f.email.touched))" class="has-error m-b-12">
 				<div *ngIf="f.email.errors.required">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -27,24 +25,23 @@
 			</div>
 		</div>
 		<!-- row2 -->
-		<div class="col-4 col-lg form-group">
+		<div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Quốc tịch</label>
 			<ng-select [(ngModel)]="model.nation" formControlName="nation" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true"
-				(change)="onChangeNation()">
+				(change)="onChangeNation(true)">
 				<ng-option value="">Chọn...</ng-option>
 				<ng-option *ngFor="let nation of listNation" [value]="nation.id">{{nation.name}}</ng-option>
 			</ng-select>
-			<!--  -->
 			<div *ngIf="(submitted && f.nation.invalid)||(f.nation.invalid && (f.nation.dirty || f.nation.touched))" class="has-error m-b-12">
 				<div *ngIf="f.nation.errors.required">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
 				</div>
 			</div>
 		</div>
-		<div class="col-4 col-lg form-group">
+		<div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Tỉnh / Thành phố </label>
 			<ng-select [(ngModel)]="model.provinceId" formControlName="provinceId" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true"
-				(change)="onChangeProvince()">
+				(change)="onChangeProvince(true)">
 				<ng-option value="">Chọn...</ng-option>
 				<ng-option *ngFor="let prov of listProvince" [value]="prov.id">{{prov.name}}</ng-option>
 			</ng-select>
@@ -54,14 +51,14 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-4 col-lg form-group">
+		<div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Huyện / Quận / thị xã...</label>
 			<ng-select [(ngModel)]="model.districtId" formControlName="districtId" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true"
-				(change)="onChangeDistrict()">
+				(change)="onChangeDistrict(true)">
 				<ng-option value="">Chọn...</ng-option>
 				<ng-option *ngFor="let dis of listDistrict" [value]="dis.id">{{dis.name}}</ng-option>
 			</ng-select>
-			<!--  -->
+
 			<div *ngIf="(submitted && f.districtId.invalid)||(f.districtId.invalid && (f.districtId.dirty || f.districtId.touched))" class="has-error m-b-12">
 				<div *ngIf="f.districtId.errors.required">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -69,7 +66,7 @@
 			</div>
 		</div>
 		<!-- row 3 -->
-		<div class="col-3 col-lg form-group">
+		<div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Xã / Phường / Thị trấn</label>
 			<ng-select [(ngModel)]="model.wardsId" formControlName="wardsId" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true">
 				<ng-option value="">Chọn...</ng-option>
@@ -81,10 +78,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-8 col-lg form-group">
-			<label class="mb-1">Địa chỉ cụ thể</label>
+		<div class="col-12 col-lg-8 form-group">
+			<label class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></label>
 			<input [svTrim] [(ngModel)]="model.address" formControlName="address" type="text" placeholder="Nhập..." class="form-control border-brown">
-			<!--  -->
+
 			<div *ngIf="(submitted && f.address.invalid)||(f.address.invalid && (f.address.dirty || f.address.touched))" class="has-error m-b-12">
 				<div *ngIf="f.address.errors.required">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -92,29 +89,29 @@
 			</div>
 		</div>
 		<!-- row 4 -->
-		<div class="col-4 col-lg form-group">
+		<div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Số CMND / CCCD / Hộ chiếu </label>
 			<input [svTrim] [(ngModel)]="model.idCard" formControlName="idCard" type="text" placeholder="Nhập..." class="form-control border-brown">
-			<!--  -->
+
 			<div *ngIf="(submitted && f.idCard.invalid)||(f.idCard.invalid && (f.idCard.dirty || f.idCard.touched))" class="has-error m-b-12">
 				<div *ngIf="f.idCard.errors.required">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
 				</div>
 			</div>
 		</div>
-		<div class="col-4 col-lg form-group">
+		<div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Nơi cấp</label>
 			<input [svTrim] [(ngModel)]="model.issuedPlace" formControlName="issuedPlace" type="text" placeholder="Nhập..." class="form-control border-brown">
-			<!--  -->
+
 			<div *ngIf="(submitted && f.issuedPlace.invalid)||(f.issuedPlace.invalid && (f.issuedPlace.dirty || f.issuedPlace.touched))" class="has-error m-b-12">
 				<div *ngIf="f.issuedPlace.errors.required">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
 				</div>
 			</div>
 		</div>
-		<div class="col-4 col-lg form-group">
+		<div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Ngày cấp</label>
-			<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dateIssue" [(ngModel)]="model.issuedDate"
+			<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_issuedDate" [(ngModel)]="model.issuedDate"
 				formControlName="issuedDate" appBsDatepickerInvalid [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 			<div class="input-group-addon">
 				<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
@@ -125,7 +122,20 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-8 col-lg form-group">
+		<div class="col-12 col-lg-4 form-group">
+			<label class="mb-1">Ngày tháng năm sinh</label>
+			<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dateOfBirth" [(ngModel)]="model.dateOfBirth"
+				formControlName="dateOfBirth" appBsDatepickerInvalid [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+			<div class="input-group-addon">
+				<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+			</div>
+			<div *ngIf="(submitted && f.dateOfBirth.invalid)||(f.dateOfBirth.invalid && (f.dateOfBirth.dirty || f.dateOfBirth.touched))" class="has-error m-b-12">
+				<div *ngIf="f.dateOfBirth.errors.required">
+					<span class="help-block">Trường dữ liệu này không được để trống</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-lg-8 form-group">
 			<label class="mr-3">Giới tính:</label>
 			<label *ngFor="let gen of listGender" class="radio-inline mr-3">
 				<input [(ngModel)]="model.gender" formControlName="gender" [value]="gen.value" type="radio"> <span class="text-uppercase"> {{gen.text}}</span>
@@ -133,7 +143,7 @@
 		</div>
 	</form>
 
-	<div class="row">
+	<div class="row mb-4">
 		<div class="col text-right clearfix">
 			<button type="button" class="btn text-white border-0 rounded-xl mt-3 grd-xanhngoc pull-right" (click)="onSave($event)">Cập nhật</button>
 			<button type="button" class="btn grd-brown text-dark border-0 rounded-xl mt-3 mr-3 pull-right">Đặt lại</button>

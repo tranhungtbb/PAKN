@@ -29,11 +29,11 @@ export class AccountInfoComponent implements OnInit {
 	ngOnInit() {
 		this.getUserInfo()
 
-		if (this.router.url.includes('thong-tin')) {
+		if (this.router.url.includes('/tai-khoan/thong-tin')) {
 			this.viewVisiable = 'info'
-		} else if (this.router.url.includes('thay-doi-mat-khau')) {
+		} else if (this.router.url.includes('/tai-khoan/thay-doi-mat-khau')) {
 			this.viewVisiable = 'pwd'
-		} else if (this.router.url.includes('chinh-sua-thong-tin')) {
+		} else if (this.router.url.includes('/tai-khoan/chinh-sua-thong-tin')) {
 			this.viewVisiable = 'edit'
 		}
 	}
