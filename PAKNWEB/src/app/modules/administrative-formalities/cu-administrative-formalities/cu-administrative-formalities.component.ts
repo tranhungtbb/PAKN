@@ -35,6 +35,7 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 	lstXoaFileForm: any[] = [];
 	submitted: boolean = false;
 	dateNow: Date = new Date();
+	lstTypeSend: any[] = [];
 	@ViewChild('file', { static: false }) public file: ElementRef;
 
 	lstCompositionProfile: any[] = [];
