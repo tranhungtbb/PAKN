@@ -16,6 +16,7 @@ import { SvScanDirective } from '../directives/sv-scan.directive'
 import { OnlyNumberDirective } from '../directives/only-number'
 import { StopLengthDirective } from '../directives/stop-length.directive'
 import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
+import { DisabledSpaceKeyDirective } from 'src/app/directives/sv-disabled-space-key.directive'
 
 @NgModule({
 	declarations: [
@@ -35,6 +36,7 @@ import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
 		InputCodeDirective,
 		OnlyNumberDirective,
 		StopLengthDirective,
+		DisabledSpaceKeyDirective,
 		ChangePipe,
 	],
 	exports: [
@@ -54,6 +56,7 @@ import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
 		InputCodeDirective,
 		OnlyNumberDirective,
 		StopLengthDirective,
+		DisabledSpaceKeyDirective,
 		ChangePipe,
 	],
 })

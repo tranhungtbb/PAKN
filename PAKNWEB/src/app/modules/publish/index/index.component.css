@@ -1,0 +1,12 @@
+.text-3line a,
+.text-2line {
+	font-size: 15px;
+	line-height: 24px;
+	color: #222222;
+	flex-grow: 0;
+	margin: 8px 0px;
+}
+
+.read-more {
+	color: #222222;
+}
