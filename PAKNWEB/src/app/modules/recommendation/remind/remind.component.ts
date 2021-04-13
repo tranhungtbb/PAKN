@@ -8,6 +8,7 @@ import { RemindObject } from '../../../models/remindObject'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RemindService } from 'src/app/services/remind.service'
 import { from } from 'rxjs'
+import { ThrowStmt } from '@angular/compiler'
 
 declare var $: any
 
@@ -68,6 +69,7 @@ export class RemindComponent implements OnInit {
 			if ((res.success = RESPONSE_STATUS.success)) {
 				if (res.result != null) {
 					this.listRemind = res.result
+					console.log(this.listRemind)
 				}
 			}
 		})
@@ -75,6 +77,8 @@ export class RemindComponent implements OnInit {
 
 	onInsert() {
 		this.submitted = true
+		this.model.content = this.model.content.trim()
+		this.rebuilForm()
 		if (this.remindForm.invalid) {
 			return
 		}
@@ -129,7 +133,6 @@ export class RemindComponent implements OnInit {
 	}
 
 	onRemoveFile(item: any) {
-		debugger
 		for (let index = 0; index < this.files.length; index++) {
 			if (this.files[index].id == item.id) {
 				this.files.splice(index, 1)

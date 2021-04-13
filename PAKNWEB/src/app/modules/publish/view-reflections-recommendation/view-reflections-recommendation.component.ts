@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { RESPONSE_STATUS, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
-import { PuRecommendation } from 'src/app/models/recommendationObject'
 
 declare var require: any
 const FileSaver = require('file-saver')
@@ -34,11 +33,14 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 		this.activatedRoute.params.subscribe((params) => {
 			this.id = +params['id']
 			if (this.id != 0) {
+				//update count click
+				this.service.countClick({ RecommendationId: this.id }).subscribe()
+
 				// call api getRecommendation by id
 				// tạm thời fix status = 3, nhưng thực tế status success = 10
 				this.service.getById({ id: this.id, status: RECOMMENDATION_STATUS.FINISED }).subscribe((res) => {
 					if (res.success == RESPONSE_STATUS.success) {
-						if (res.result.model) {
+						if (res.result.model != null) {
 							this.model = { ...res.result.model, shortName: this.getShortName(res.result.model.name) }
 							this.lstFiles = res.result.lstFiles
 							this.lstConclusion = res.result.lstConclusion
@@ -59,7 +61,6 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 		return initials
 	}
 	setSatisfaction() {
-		debugger
 		var data = localStorage.getItem('satisfaction')
 		if (data == null || data == undefined) {
 			this.satisfactions = []

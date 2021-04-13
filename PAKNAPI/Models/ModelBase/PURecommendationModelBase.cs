@@ -21,7 +21,7 @@ namespace PAKNAPI.Models.ModelBase
         public int QuantityLike { get; set; }
         public int QuantityDislike { get; set; }
 
-
+        public int CountClick { get; set; }
 
         public int RowNumber { get; set; }
 
@@ -45,6 +45,25 @@ namespace PAKNAPI.Models.ModelBase
 
             return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetAllOnPage", DP)).ToList();
         }
+
+        public async Task<List<PURecommendation>> PURecommendationGetListOrderByCountClick(int? Status)
+        {
+            DynamicParameters DP = new DynamicParameters();
+
+            DP.Add("Status", Status);
+
+            return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetListOrderByCountClick", DP)).ToList();
+        }
+
+        public async Task<int?> PURecommendationCountClick(int? recommendationId)
+        {
+            DynamicParameters DP = new DynamicParameters();
+
+            DP.Add("Id", recommendationId);
+
+            return (await _sQLCon.ExecuteNonQueryDapperAsync("[PU_RecommendationUpdateCountClick]", DP));
+        }
+
 
 
         public async Task<PURecommendation> PURecommendationGetById(int? id, int? status)
