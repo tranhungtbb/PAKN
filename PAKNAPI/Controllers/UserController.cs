@@ -16,6 +16,7 @@ using PAKNAPI.Models.Results;
 using PAKNAPI.Models.Login;
 using System.Security.Claims;
 using System.Globalization;
+using PAKNAPI.Models;
 
 namespace PAKNAPI.Controllers
 {
@@ -226,7 +227,7 @@ namespace PAKNAPI.Controllers
 					Salt = pwd["Salt"],
 					Phone = loginInfo.Phone,
 					Email = model.Email,
-					UserName = model.Email,
+					UserName = loginInfo.Phone,
 					FullName = model.RepresentativeName,
 					Gender = model.RepresentativeGender,
 					Address = model.Address,
@@ -302,7 +303,7 @@ namespace PAKNAPI.Controllers
 					Salt = pwd["Salt"],
 					Phone = loginInfo.Phone,
 					Email = model.Email,
-					UserName = model.Email,
+					UserName = loginInfo.Phone,
 					FullName = model.FullName,
 					Gender = model.Gender,
 					Address = model.Address,
@@ -347,12 +348,14 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Route("UserGetInfo")]
 		[Authorize]
-		public async Task<object> UserGetInfo(long id)
+		public async Task<object> UserGetInfo(long? id)
         {
 			try
             {
-				var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-				var accInfo = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(id);
+				var users = _httpContextAccessor.HttpContext.User.Identities.FirstOrDefault().Claims; //FindFirst(ClaimTypes.NameIdentifier);
+
+				var userId = users.FirstOrDefault(c=> c.Type.Equals("Id", StringComparison.OrdinalIgnoreCase)).Value;
+				var accInfo = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(long.Parse(userId));
 				
 				if(accInfo == null || !accInfo.Any())
                 {
@@ -365,12 +368,65 @@ namespace PAKNAPI.Controllers
                 }
                 else if (accInfo[0].TypeId == 2)
                 {
-					//var info = await new 
-                }
+					var info = await new BIIndividualGetByEmail(_appSetting).BIIndividualGetByEmailDAO(accInfo[0].Email);
+					if(info == null || !info.Any())
+                    {
+						return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Thông tin tài khoản không tồn tại" };
+					}
+
+					var model = new AccountInfoModel
+					{
+						UserName = accInfo[0].UserName,
+						FullName = info[0].FullName,
+						Gender = info[0].Gender.Value,
+						DateOfBirth = info[0].BirthDay.Value.ToString("dd/MM/yyyy"),
+						Email = info[0].Email,
+						Phone = info[0].Phone,
+						Nation = info[0].Nation,
+						ProvinceId = info[0].ProvinceId.Value,
+						DistrictId = info[0].DistrictId.Value,
+						WardsId = info[0].WardsId.Value,
+						Address = info[0].Address,
+						IdCard = info[0].IDCard,
+						IssuedPlace = info[0].IssuedPlace,
+						IssuedDate = info[0].DateOfIssue.Value.ToString("dd/MM/yyyy"),
+					};
+
+
+
+					return new Models.Results.ResultApi { Success = ResultCode.OK, Result = model };
+
+				}
 				else if (accInfo[0].TypeId == 3)
                 {
+					var info = await new BIBusinessGetRepresentativeEmail(_appSetting).BIBusinessGetRepresentativeEmailDAO(accInfo[0].Email);
+					if (info == null || !info.Any())
+					{
+						return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Thông tin tài khoản không tồn tại" };
+					}
 
-                }
+					var model = new AccountInfoModel
+					{
+						UserName = accInfo[0].UserName,
+						FullName = info[0].RepresentativeName,
+						Gender = info[0].RepresentativeGender.Value,
+						DateOfBirth = info[0].RepresentativeBirthDay.ToString("dd/MM/yyyy"),
+						Email = info[0].Email,
+						Phone = info[0].Phone,
+						Nation = info[0].Nation,
+						ProvinceId = info[0].ProvinceId.Value,
+						DistrictId = info[0].DistrictId,
+						WardsId = info[0].WardsId,
+						Address = info[0].Address,
+						IdCard = info[0].IDCard,
+						//IssuedPlace = info[0].IssuedPlace,
+						//IssuedDate = info[0].DateOfIssue.Value.ToString("dd/MM/yyyy"),
+					};
+
+
+
+					return new Models.Results.ResultApi { Success = ResultCode.OK, Result = model };
+				}
 
 			}
 			catch(Exception ex)
@@ -379,13 +435,61 @@ namespace PAKNAPI.Controllers
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 
-			return null;
+			return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Thông tin tài khoản không tồn tại"};
+		}
+
+		[HttpPost]
+		[Route("UserChagePwd")]
+		[Authorize]
+		public async Task<object> UserChagePwd([FromForm] ChangePwdModel model)
+        {
+            try
+            {
+				var users = _httpContextAccessor.HttpContext.User.Identities.FirstOrDefault().Claims; //FindFirst(ClaimTypes.NameIdentifier);
+
+				var userId = users.FirstOrDefault(c => c.Type.Equals("Id", StringComparison.OrdinalIgnoreCase)).Value;
+				var accInfo = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(long.Parse(userId));
+				if (accInfo == null || !accInfo.Any())
+				{
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Tài khoản không tồn tại" };
+				}
+                if (string.IsNullOrEmpty(model.OldPassword) || string.IsNullOrEmpty(model.NewPassword))
+                {
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Dữ liệu không hợp lệ" };
+				}
+                if (model.NewPassword !=  model.RePassword)
+                {
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu mới không trùng khớp" };
+				}
+
+				PasswordHasher hasher = new PasswordHasher();
+				if (!hasher.AuthenticateUser(model.OldPassword, accInfo[0].Password, accInfo[0].Salt))
+                {
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu cũ không đúng" };
+				}
+
+				var newPwd = generatePassword(model.NewPassword);
+				var _model = new SYUserChangePwdIN
+				{
+					Password = newPwd["Password"],
+					Salt = newPwd["Salt"]
+				};
+
+				var rs = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_model);
+
+				return new Models.Results.ResultApi { Success = ResultCode.OK};
+			}
+			catch(Exception ex)
+            {
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
         }
 
-        #endregion
+
+		#endregion
 
 
-        #region private
+		#region private
 
 		private Dictionary<string,string> generatePassword(string pwd)
         {

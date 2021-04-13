@@ -14,7 +14,7 @@ AS
 BEGIN
 	SELECT
 		[Id],
-		[PetitionId],
+		[RecommendationId],
 		[Content]
 	FROM [RM_Remind]
 	WHERE [Id] = @Id
@@ -36,7 +36,7 @@ AS
 BEGIN
 	SELECT
 		[Id],
-		[PetitionId],
+		[RecommendationId],
 		[Content]
 	FROM [RM_Remind]
 END
@@ -60,7 +60,7 @@ BEGIN
 	SELECT
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
 		[Id],
-		[PetitionId],
+		[RecommendationId],
 		[Content]
 	FROM [RM_Remind]
 	ORDER BY [Id]
@@ -80,18 +80,18 @@ IF EXISTS
 DROP PROCEDURE [RM_RemindInsert];
 GO
 CREATE PROCEDURE [dbo].[RM_RemindInsert]
-	@PetitionId int = null,
+	@RecommendationId int = null,
 	@Content nvarchar(max) = null
 AS
 BEGIN
 	INSERT INTO [RM_Remind]
 	(
-		[PetitionId],
+		[RecommendationId],
 		[Content]
 	)
 	VALUES
 	(
-		@PetitionId,
+		@RecommendationId,
 		@Content
 	)
 END
@@ -109,12 +109,12 @@ DROP PROCEDURE [RM_RemindUpdate];
 GO
 CREATE PROCEDURE [dbo].[RM_RemindUpdate]
 	@Id int = null,
-	@PetitionId int = null,
+	@RecommendationId int = null,
 	@Content nvarchar(max) = null
 AS
 BEGIN
 	UPDATE [RM_Remind] SET
-		[PetitionId] = @PetitionId,
+		[RecommendationId] = @RecommendationId,
 		[Content] = @Content
 	WHERE [Id] = @Id
 END

@@ -30,6 +30,52 @@ namespace PAKNAPI.ControllerBase
 			_bugsnag = bugsnag;
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("BIBusinessGetRepresentativeByIdBase")]
+		public async Task<ActionResult<object>> BIBusinessGetRepresentativeByIdBase(long? Id)
+		{
+			try
+			{
+				List<BIBusinessGetRepresentativeById> rsBIBusinessGetRepresentativeById = await new BIBusinessGetRepresentativeById(_appSetting).BIBusinessGetRepresentativeByIdDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"BIBusinessGetRepresentativeById", rsBIBusinessGetRepresentativeById},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("BIBusinessGetRepresentativeEmailBase")]
+		public async Task<ActionResult<object>> BIBusinessGetRepresentativeEmailBase(string Email)
+		{
+			try
+			{
+				List<BIBusinessGetRepresentativeEmail> rsBIBusinessGetRepresentativeEmail = await new BIBusinessGetRepresentativeEmail(_appSetting).BIBusinessGetRepresentativeEmailDAO(Email);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"BIBusinessGetRepresentativeEmail", rsBIBusinessGetRepresentativeEmail},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("BIBusinessInsertBase")]
@@ -79,6 +125,112 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("BIBusinessUpdateBase")]
+		public async Task<ActionResult<object>> BIBusinessUpdateBase(BIBusinessUpdateIN _bIBusinessUpdateIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new BIBusinessUpdate(_appSetting).BIBusinessUpdateDAO(_bIBusinessUpdateIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("BIBusinessUpdateListBase")]
+		public async Task<ActionResult<object>> BIBusinessUpdateListBase(List<BIBusinessUpdateIN> _bIBusinessUpdateINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _bIBusinessUpdateIN in _bIBusinessUpdateINs)
+				{
+					var result = await new BIBusinessUpdate(_appSetting).BIBusinessUpdateDAO(_bIBusinessUpdateIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("BIIndividualGetByEmailBase")]
+		public async Task<ActionResult<object>> BIIndividualGetByEmailBase(string Email)
+		{
+			try
+			{
+				List<BIIndividualGetByEmail> rsBIIndividualGetByEmail = await new BIIndividualGetByEmail(_appSetting).BIIndividualGetByEmailDAO(Email);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"BIIndividualGetByEmail", rsBIIndividualGetByEmail},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("BIIndividualGetByIDBase")]
+		public async Task<ActionResult<object>> BIIndividualGetByIDBase(long? Id)
+		{
+			try
+			{
+				List<BIIndividualGetByID> rsBIIndividualGetByID = await new BIIndividualGetByID(_appSetting).BIIndividualGetByIDDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"BIIndividualGetByID", rsBIIndividualGetByID},
+					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)

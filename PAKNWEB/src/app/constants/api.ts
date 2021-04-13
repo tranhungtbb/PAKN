@@ -150,4 +150,8 @@ export class Api {
 
 	public static RecommendationRequestGetByIdView = 'MRSPBase/MRRecommendationKNCTGetByIdBase'
 	public static RecommendationRequestGetFile = 'MRSPBase/MRRecommendationKNCTFilesGetByRecommendationIdBase'
+
+	//tai khoan ca nhan, doanh nghiep
+	public static AccountGetInfo = 'user/UserGetInfo'
+	public static AccountChangePassword = 'User/UserChagePwd'
 }
