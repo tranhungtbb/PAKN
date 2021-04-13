@@ -14,7 +14,6 @@ AS
 BEGIN
 	SELECT
 		[FullName],
-		[Code],
 		[IsActived],
 		[IsDeleted],
 		[Id],
@@ -27,6 +26,7 @@ BEGIN
 		[CreatedBy],
 		[UpdatedBy],
 		[Status],
+		[Code],
 		[Address],
 		[Email],
 		[Phone],
@@ -57,7 +57,6 @@ AS
 BEGIN
 	SELECT
 		[FullName],
-		[Code],
 		[IsActived],
 		[IsDeleted],
 		[Id],
@@ -70,6 +69,7 @@ BEGIN
 		[CreatedBy],
 		[UpdatedBy],
 		[Status],
+		[Code],
 		[Address],
 		[Email],
 		[Phone],
@@ -102,7 +102,6 @@ BEGIN
 	SELECT
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
 		[FullName],
-		[Code],
 		[IsActived],
 		[IsDeleted],
 		[Id],
@@ -115,6 +114,7 @@ BEGIN
 		[CreatedBy],
 		[UpdatedBy],
 		[Status],
+		[Code],
 		[Address],
 		[Email],
 		[Phone],
@@ -144,7 +144,6 @@ DROP PROCEDURE [BI_IndividualInsert];
 GO
 CREATE PROCEDURE [dbo].[BI_IndividualInsert]
 	@FullName nvarchar(256) = null,
-	@Code nvarchar(256) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
 	@ProvinceId int = null,
@@ -156,6 +155,7 @@ CREATE PROCEDURE [dbo].[BI_IndividualInsert]
 	@CreatedBy int = null,
 	@UpdatedBy int = null,
 	@Status int = null,
+	@Code nvarchar(256) = null,
 	@Address nvarchar(500) = null,
 	@Email nvarchar(256) = null,
 	@Phone varchar(11) = null,
@@ -171,7 +171,6 @@ BEGIN
 	INSERT INTO [BI_Individual]
 	(
 		[FullName],
-		[Code],
 		[IsActived],
 		[IsDeleted],
 		[ProvinceId],
@@ -183,6 +182,7 @@ BEGIN
 		[CreatedBy],
 		[UpdatedBy],
 		[Status],
+		[Code],
 		[Address],
 		[Email],
 		[Phone],
@@ -197,7 +197,6 @@ BEGIN
 	VALUES
 	(
 		@FullName,
-		@Code,
 		@IsActived,
 		@IsDeleted,
 		@ProvinceId,
@@ -209,6 +208,7 @@ BEGIN
 		@CreatedBy,
 		@UpdatedBy,
 		@Status,
+		@Code,
 		@Address,
 		@Email,
 		@Phone,
@@ -235,7 +235,6 @@ DROP PROCEDURE [BI_IndividualUpdate];
 GO
 CREATE PROCEDURE [dbo].[BI_IndividualUpdate]
 	@FullName nvarchar(256) = null,
-	@Code nvarchar(256) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
 	@Id bigint = null,
@@ -248,6 +247,7 @@ CREATE PROCEDURE [dbo].[BI_IndividualUpdate]
 	@CreatedBy int = null,
 	@UpdatedBy int = null,
 	@Status int = null,
+	@Code nvarchar(256) = null,
 	@Address nvarchar(500) = null,
 	@Email nvarchar(256) = null,
 	@Phone varchar(11) = null,
@@ -262,7 +262,6 @@ AS
 BEGIN
 	UPDATE [BI_Individual] SET
 		[FullName] = @FullName,
-		[Code] = @Code,
 		[IsActived] = @IsActived,
 		[IsDeleted] = @IsDeleted,
 		[ProvinceId] = @ProvinceId,
@@ -274,6 +273,7 @@ BEGIN
 		[CreatedBy] = @CreatedBy,
 		[UpdatedBy] = @UpdatedBy,
 		[Status] = @Status,
+		[Code] = @Code,
 		[Address] = @Address,
 		[Email] = @Email,
 		[Phone] = @Phone,

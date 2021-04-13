@@ -40,6 +40,7 @@ export class Api {
 	public static RecommendationOnProcessConclusion = 'Recommendation/RecommendationOnProcessConclusion'
 	public static RecommendationDelete = 'MRSPBase/MRRecommendationDeleteBase'
 	public static RecommendationExport = 'MRSPBase/MRRecommendationExportBase'
+	public static RecommendationGetSuggestCreate = 'MRSPBase/MRRecommendationGetSuggestCreateBase'
 
 	public static PuRecommendationGetAllOnPage = 'PURecommendation/PURecommendationAllOnPage'
 	public static PuRecomentdationGetListOrderByCountClick = 'PURecommendation/PURecommendationGetListOrderByCountClick'
@@ -152,4 +153,13 @@ export class Api {
 
 	public static RecommendationRequestGetByIdView = 'MRSPBase/MRRecommendationKNCTGetByIdBase'
 	public static RecommendationRequestGetFile = 'MRSPBase/MRRecommendationKNCTFilesGetByRecommendationIdBase'
+
+	//Administrative Formalities
+	public static AdministrativeFormalitiesGetDropdown = 'AdministrativeFormalities/AdministrativeFormalitiesGetDropdown'
+	public static AdministrativeFormalitiesGetList = 'MRSPBase/MRRecommendationGetAllOnPageBase'
+	public static AdministrativeFormalitiesGetById = 'AdministrativeFormalities/RecommendationGetById'
+	public static AdministrativeFormalitiesGetByIdView = 'AdministrativeFormalities/RecommendationGetByIdView'
+	public static AdministrativeFormalitiesInsert = 'AdministrativeFormalities/RecommendationInsert'
+	public static AdministrativeFormalitiesUpdate = 'AdministrativeFormalities/RecommendationUpdate'
+	public static AdministrativeFormalitiesDelete = 'MRSPBase/MRRecommendationDeleteBase'
 }

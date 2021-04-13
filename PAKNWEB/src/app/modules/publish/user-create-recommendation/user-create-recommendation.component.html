@@ -14,10 +14,11 @@
 				<form class="form-row mb-3" [formGroup]="form">
 					<div class="col-12 form-group">
 						<label class="mb-1">PAKN về việc <span class="cl-red">(*)</span></label>
-						<input class="form-control" type="text" [(ngModel)]="model.title" maxlength="500" formControlName="title"
-							placeholder="Nhập..." />
-						<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))"
-							class="has-error">
+						<!-- <input class="form-control" type="text" [(ngModel)]="model.title" maxlength="500" formControlName="title"
+							placeholder="Nhập..." /> -->
+						<p-autoComplete [(ngModel)]="model.title" field="title" maxlength="500" formControlName="title" placeholder="Nhập..." [suggestions]="resultsRecommendation"
+							inputStyleClass="form-control" (completeMethod)="searchRecommendation($event)"></p-autoComplete>
+						<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error">
 							<div *ngIf="f.title.errors.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
@@ -25,11 +26,8 @@
 					</div>
 					<div class="col-12 form-group">
 						<label class="mb-1">Nội dung <span class="cl-red">(*)</span></label>
-						<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" rows="6"
-							placeholder="Nhập nội dung..."></textarea>
-						<div
-							*ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))"
-							class="has-error">
+						<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" rows="6" placeholder="Nhập nội dung..."></textarea>
+						<div *ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error">
 							<div *ngIf="f.content.errors.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
@@ -37,8 +35,8 @@
 					</div>
 					<div class="col-12 col-lg form-group">
 						<label class="mb-1">Đơn vị tiếp nhận </label>
-						<ng-select class="form-control" [items]="lstUnit" bindValue="value" bindLabel="text" placeholder="Chọn..."
-							formControlName="unitId" [(ngModel)]="model.unitId">
+						<ng-select class="form-control" [items]="lstUnit" bindValue="value" bindLabel="text" placeholder="Chọn..." formControlName="unitId"
+							[(ngModel)]="model.unitId">
 							<ng-template ng-option-tmp let-item="item">
 								<div title="{{item.text}}">{{item.text}}</div>
 							</ng-template>
@@ -46,14 +44,13 @@
 					</div>
 					<div class="col-12 col-lg form-group">
 						<label class="mb-1">Lĩnh vực <span class="cl-red">(*)</span></label>
-						<ng-select class="form-control" [items]="lstField" bindValue="value" bindLabel="text" placeholder="Chọn..."
-							formControlName="field" [(ngModel)]="model.field">
+						<ng-select class="form-control" [items]="lstField" bindValue="value" bindLabel="text" placeholder="Chọn..." formControlName="field"
+							[(ngModel)]="model.field">
 							<ng-template ng-option-tmp let-item="item">
 								<div title="{{item.text}}">{{item.text}}</div>
 							</ng-template>
 						</ng-select>
-						<div *ngIf="(submitted && f.field.invalid) || (f.field.invalid && (f.field.dirty || f.field.touched))"
-							class="has-error">
+						<div *ngIf="(submitted && f.field.invalid) || (f.field.invalid && (f.field.dirty || f.field.touched))" class="has-error">
 							<div *ngIf="f.field.errors.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
@@ -63,8 +60,7 @@
 				<div class="box attach-ct">
 					<p class="h5 text-uppercase mb-3">
 						<span>
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-paperclip"
-								viewBox="0 0 16 16">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
 								<path
 									d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z">
 								</path>
@@ -75,8 +71,8 @@
 					<div class="attach-file row">
 						<div class="col-auto mb-4">
 							<div class="alert alert-dark h-100 d-flex align-items-center" style="width: 170px">
-								<input type="file" style="display: none" #file id="file" (change)="onUpload($event)"
-									class="inputfile inputfile-4 d-none" multiple accept="{{fileAccept}}" />
+								<input type="file" style="display: none" #file id="file" (change)="onUpload($event)" class="inputfile inputfile-4 d-none" multiple
+									accept="{{fileAccept}}" />
 								<!-- <input type="file" name="file-5[]" id="file-5" class="inputfile inputfile-4 d-none" data-multiple-caption="{count} files selected" multiple=""> -->
 								<label for="file-5" (click)="file.click()">
 									<figure><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
@@ -89,10 +85,8 @@
 						</div>
 						<ng-container *ngFor="let item of files">
 							<div class="col-auto mb-4" *ngIf="item.fileType == 1">
-								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
-									style="width: 170px">
-									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
-												class="mdi mdi-close"></i></span>
+								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
+									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 									</button>
 									<a href="#" class="d-block text-center box-fileinput">
 										<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
@@ -101,10 +95,8 @@
 								</div>
 							</div>
 							<div class="col-auto mb-4" *ngIf="item.fileType == 2">
-								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
-									style="width: 170px">
-									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
-												class="mdi mdi-close"></i></span>
+								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
+									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 									</button>
 									<a href="#" class="d-block text-center box-fileinput">
 										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
@@ -113,10 +105,8 @@
 								</div>
 							</div>
 							<div class="col-auto mb-4" *ngIf="item.fileType == 4">
-								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
-									style="width: 170px">
-									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
-												class="mdi mdi-close"></i></span>
+								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
+									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 									</button>
 									<a href="#" class="d-block text-center box-fileinput">
 										<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="">
@@ -125,10 +115,8 @@
 								</div>
 							</div>
 							<div class="col-auto mb-4" *ngIf="item.fileType == 3">
-								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
-									style="width: 170px">
-									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
-												class="mdi mdi-close"></i></span>
+								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
+									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 									</button>
 									<a href="#" class="d-block text-center box-fileinput">
 										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 40px" alt="">
@@ -137,10 +125,8 @@
 								</div>
 							</div>
 							<div class="col-auto mb-4" *ngIf="item.fileType == 6">
-								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center"
-									style="width: 170px">
-									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i
-												class="mdi mdi-close"></i></span>
+								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
+									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 									</button>
 									<a href="#" class="d-block text-center box-fileinput">
 										<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
@@ -155,12 +141,9 @@
 				<form class="form-row mb-3 align-items-end" [formGroup]="form">
 					<div class="col-12 col-lg">
 						<label class="mb-1">Mã số xác thực</label>
-						<div
-							class="bg-white captcha border d-flex justify-content-between align-items-center rounded-xl shadow position-absolute">
-							<img class="img-fluid rounded-xl" style="max-height: 56px; max-width: 70%;" id="img-captcha"
-								[src]="captchaImage" />
-							<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat"
-									style="font-size: 34px"></i></button>
+						<div class="bg-white captcha border d-flex justify-content-between align-items-center rounded-xl shadow position-absolute">
+							<img class="img-fluid rounded-xl" style="max-height: 56px; max-width: 70%;" id="img-captcha" [src]="captchaImage" />
+							<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat" style="font-size: 34px"></i></button>
 						</div>
 
 						<!-- <div class="bg-white captcha border d-flex w-100 justify-content-between align-items-center rounded">
@@ -171,11 +154,8 @@
 					</div>
 					<div class="col-12 col-lg">
 						<label class="mb-1">Nhập mã xác thực <span class="cl-red">(*)</span></label>
-						<input type="text" placeholder="Nhập..." class="form-control" [(ngModel)]="captchaCode"
-							formControlName="captcha">
-						<div
-							*ngIf="(submitted && f.captcha.invalid) || (f.captcha.invalid && (f.captcha.dirty || f.captcha.touched))"
-							class="has-error">
+						<input type="text" placeholder="Nhập..." class="form-control" [(ngModel)]="captchaCode" formControlName="captcha">
+						<div *ngIf="(submitted && f.captcha.invalid) || (f.captcha.invalid && (f.captcha.dirty || f.captcha.touched))" class="has-error">
 							<div *ngIf="f.captcha.errors.required">
 								<span class="help-block">Vui lòng nhập mã captcha</span>
 							</div>
@@ -190,10 +170,8 @@
 						<button type="button" class="btn text-white border-0 grd-xanhngoc mr-3" (click)="onSave(1)">Lưu</button>
 
 						<button type="button" class="btn text-white border-0 grd-xanhngoc" (click)="onSave(2)">
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-								class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
-								<path
-									d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+								<path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z">
 								</path>
 								<path
 									d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z">
@@ -215,8 +193,7 @@
 							<span class="pull-right font-weight-bold cl-yellow counter">20</span>
 						</p>
 						<div class="progress ">
-							<div class="progress-bar grd-yellow1 progress-animated" style="width: 85%; height:6px;"
-								role="progressbar">
+							<div class="progress-bar grd-yellow1 progress-animated" style="width: 85%; height:6px;" role="progressbar">
 							</div>
 						</div>
 
@@ -224,8 +201,7 @@
 							<span class="pull-right font-weight-bold cl-blue2 counter">12</span>
 						</p>
 						<div class="progress ">
-							<div class="progress-bar grd-xanhngoc progress-animated" style="width: 35%; height:6px;"
-								role="progressbar">
+							<div class="progress-bar grd-xanhngoc progress-animated" style="width: 35%; height:6px;" role="progressbar">
 							</div>
 						</div>
 
@@ -288,10 +264,8 @@
 						</div>
 					</div>
 				</div>
-				<a class="mb-4" href="#"><img class="img-fluid card shadow rounded img-hover" src="images/img-sb1.png"
-						alt=""></a>
-				<a class="mb-4" href="#"><img class="img-fluid card shadow rounded img-hover" src="images/img-sb2.png"
-						alt=""></a>
+				<a class="mb-4" href="#"><img class="img-fluid card shadow rounded img-hover" src="images/img-sb1.png" alt=""></a>
+				<a class="mb-4" href="#"><img class="img-fluid card shadow rounded img-hover" src="images/img-sb2.png" alt=""></a>
 				<div class="sb-lkWeb mb-4">
 					<div class="tt-v1 pt-3">
 						<h4 class="text-uppercase">liên kế website</h4>
@@ -311,8 +285,7 @@
 						</li>
 					</ul>
 				</div>
-				<a class="mb-4" href="#"><img class="img-fluid card shadow rounded img-hover" src="images/img-sb3.png"
-						alt=""></a>
+				<a class="mb-4" href="#"><img class="img-fluid card shadow rounded img-hover" src="images/img-sb3.png" alt=""></a>
 			</div>
 		</div>
 	</div>

@@ -188,6 +188,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	}
 
 	onModalNewsRelate() {
+		this.child_NewsRelate.newsCreateOrUpdateComponent = this
 		this.child_NewsRelate.openModal(this.model.newsRelateIds ? this.model.newsRelateIds.split(',') : [], this.model.id)
 	}
 	onModalNewsRelate_Closed() {
