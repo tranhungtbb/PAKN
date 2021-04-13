@@ -40,7 +40,7 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 	getList() {
 		var obj = {
 			KeySearch: this.KeySearch,
-			Code: RECOMMENDATION_STATUS.FINISED, //FINISED
+			Status: RECOMMENDATION_STATUS.FINISED, //FINISED
 			PageSize: this.PageSize,
 			PageIndex: this.PageIndex,
 		}

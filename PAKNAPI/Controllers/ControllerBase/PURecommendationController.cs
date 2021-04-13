@@ -34,13 +34,12 @@ namespace PAKNAPI.ControllerBase
 		#region PURecommendationAllOnPage
 
 		[HttpGet]
-		[Authorize]
 		[Route("PURecommendationAllOnPage")]
-		public async Task<ActionResult<object>> PURecommendationAllOnPage(string? KeySearch, int Code, int PageSize, int PageIndex)
+		public async Task<ActionResult<object>> PURecommendationAllOnPage(string? KeySearch, int Status, int PageSize, int PageIndex)
 		{
 			try
 			{
-				var rsPURecommendationOnPage = await new PURecommendation(_appSetting).PURecommendationAllOnPage(KeySearch, Code, PageSize, PageIndex);
+				var rsPURecommendationOnPage = await new PURecommendation(_appSetting).PURecommendationAllOnPage(KeySearch, Status, PageSize, PageIndex);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"PURecommendation", rsPURecommendationOnPage},
@@ -53,7 +52,7 @@ namespace PAKNAPI.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -61,11 +60,58 @@ namespace PAKNAPI.ControllerBase
 
 		#endregion PURecommendationAllOnPage
 
+		#region PURecommendationGetListOrderByCountClick
+		[HttpGet]
+		[Route("PURecommendationGetListOrderByCountClick")]
+		public async Task<ActionResult<object>> PURecommendationGetListOrderByCountClick(int? Status)
+		{
+			try
+			{
+				var rsPURecommendationOnPage = await new PURecommendation(_appSetting).PURecommendationGetListOrderByCountClick(Status);
+				return new ResultApi { Success = ResultCode.OK, Result = rsPURecommendationOnPage };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		#endregion PURecommendationGetListOrderByCountClick
+
+		#region
+		[HttpGet]
+		[Route("PURecommendationCountClick")]
+		public async Task<ActionResult<object>> PURecommendationCountClick(int? RecommendationId)
+		{
+			try
+			{
+				int? count = await new PURecommendation(_appSetting).PURecommendationCountClick(RecommendationId);
+				if (count > 0)
+				{
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else {
+					return new ResultApi { Success = ResultCode.ORROR, Result = count };
+				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+		#endregion
+
+
 
 		#region PURecommendationgetById
 
 		[HttpGet]
-		[Authorize]
 		[Route("PURecommendationGetById")]
 		public async Task<ActionResult<object>> PURecommendationGetById(int? Id, int?Status)
 		{
@@ -96,7 +142,7 @@ namespace PAKNAPI.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -107,7 +153,6 @@ namespace PAKNAPI.ControllerBase
 		#region ChangeSatisfaction
 
 		[HttpGet]
-		[Authorize]
 		[Route("ChangeSatisfaction")]
 		public async Task<object> ChangeSatisfaction(int? RecommendationId, bool? Satisfaction)
 		{
