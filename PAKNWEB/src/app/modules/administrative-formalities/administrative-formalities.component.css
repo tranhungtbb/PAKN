@@ -1,0 +1,31 @@
+.form-control.ng-select.mod > .ng-select-container {
+	padding-top: 0 !important;
+	padding-left: 0 im !important;
+}
+
+.avatar-size {
+	width: 95px;
+	min-height: 50px;
+	display: inline-block;
+	border: 1px solid #ddd;
+}
+.avatar-size img {
+	width: 100%;
+}
+.bg-xanhla {
+	background-color: #41c948;
+	background-image: unset;
+}
+.bg-xam {
+	background-color: #e5e5e5;
+	background-image: unset;
+}
+
+.news-title {
+	vertical-align: top;
+	display: inline-block;
+	/* white-space: nowrap; */
+	height: 3em;
+	overflow: hidden;
+	text-align: left;
+}

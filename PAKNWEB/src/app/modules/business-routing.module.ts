@@ -22,6 +22,7 @@ const routes: Routes = [
 			{ path: 'bao-cao', loadChildren: './report/report.module#ReportModule' },
 			{ path: 'thiet-lap-chung', loadChildren: './setting/setting.module#SettingModule' },
 			{ path: 'ho-tro', loadChildren: './support/support.module#SupportModule' },
+			{ path: 'thu-tuc-hanh-chinh', loadChildren: './administrative-formalities/administrative-formalities.module#AdministrativeFormalitiesModule' },
 		],
 	},
 ]
@@ -30,4 +31,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class BusinessRoutingModule {}
+export class BusinessRoutingModule { }
