@@ -16,9 +16,8 @@
 				<div class="card mb-0 shadow-none">
 					<div class="table-responsive">
 
-						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true"
-							[showCurrentPageReport]="true" currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize"
-							[totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
@@ -27,16 +26,14 @@
 											<strong>Mã số PAKN</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100"
-											(keydown.enter)="dataStateChange()" />
+										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100" (keydown.enter)="dataStateChange()" />
 									</th>
 									<th style="width: 350px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Nội dung</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.content" maxlength="100"
-											(keydown.enter)="dataStateChange()" />
+										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.content" maxlength="100" (keydown.enter)="dataStateChange()" />
 									</th>
 									<th style="min-width: 160px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -44,8 +41,7 @@
 											<span class="caret-tb"></span>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<input class="form-control form-control-sm" [(ngModel)]="dataSearch.unitId" maxlength="100"
-												(keydown.enter)="dataStateChange()" />
+											<input class="form-control form-control-sm" [(ngModel)]="dataSearch.unitId" maxlength="100" (keydown.enter)="dataStateChange()" />
 										</div>
 									</th>
 									<th style="width: 200px">
@@ -54,8 +50,12 @@
 											<span class="caret-tb"></span>
 										</p>
 										<div style="width: 200px" class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [items]="lstField" bindLabel="text" bindValue="value"
-												[(ngModel)]="dataSearch.field" [closeOnSelect]="true" (change)="dataStateChange()">
+											<ng-select style="width:200px;" [(ngModel)]="dataSearch.field" [closeOnSelect]="true" [searchable]="false" [clearable]="false"
+												(change)="dataStateChange()">
+												<ng-option value="">--Chọn lĩnh vực--</ng-option>
+												<ng-option *ngFor="let item of lstField" [value]="item.value">
+													{{item.text | htmlToPlaintext}}
+												</ng-option>
 											</ng-select>
 										</div>
 									</th>
@@ -65,23 +65,25 @@
 											<span class="caret-tb"></span>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text"
-												bindValue="value" [(ngModel)]="dataSearch.status" [closeOnSelect]="true"
+											<ng-select style="width:130px;" [(ngModel)]="dataSearch.status" [closeOnSelect]="true" [searchable]="false" [clearable]="false"
 												(change)="dataStateChange()">
+												<ng-option value="">Tất cả trạng thái</ng-option>
+												<ng-option *ngFor="let item of listStatus" [value]="item.value">
+													{{item.text}}
+												</ng-option>
 											</ng-select>
 										</div>
 									</th>
-									<th style="width: 100px">
+									<!-- <th style="width: 100px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead"><strong>Thao
 												tác</strong></p>
 									</th>
-								</tr>
+								</tr> -->
 							</ng-template>
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
 									<td>
-										<strong><a [routerLink]="['/quan-tri/kien-nghi/chi-tiet-knct/',item.id]" class="ellipsis"
-												title="Xem chi tiết">{{item.code}}</a></strong>
+										<strong><a [routerLink]="['/quan-tri/kien-nghi/chi-tiet-knct/',item.id]" class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
 									</td>
 									<td>
 										<p class="text-2line mb-0">{{item.content}}</p>
@@ -94,7 +96,7 @@
 										<span *ngIf="item.status == 2" class="badge rounded-pill badge-outline-blue">Đang giải quyết</span>
 										<span *ngIf="item.status == 3" class="badge rounded-pill badge-success">Đã giải quyết</span>
 									</td>
-									<td>
+									<!-- <td>
 										<div class="d-flex justify-content-end">
 											<a [routerLink]="['/quan-tri/kien-nghi/them-moi/', item.id]"
 												*ngIf="item.status == 4 && item.createdBy == userLoginId"
@@ -119,7 +121,12 @@
 											<a class="btn-icon" (click)="getHistories(item.id)" title="Xem lịch sử"><i
 													class="bi bi-clock-history"></i></a>
 										</div>
-									</td>
+									</td> -->
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="emptymessage">
+								<tr>
+									<td class="text-center" colspan="5">Không có dữ liệu</td>
 								</tr>
 							</ng-template>
 						</p-table>
@@ -147,8 +154,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
-							data-dismiss="modal">Hủy</button>
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
 						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác
 							nhận</button>
 					</div>
@@ -225,11 +231,10 @@
 					<div class="form-row">
 						<div class="col-12 col-lg-6 form-group">
 							<label class="mb-1">Đơn vị giải quyết <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" [items]="lstUnitNotMain" bindLabel="text" bindValue="value"
-								formControlName="unitReceiveId" [(ngModel)]="modelForward.unitReceiveId" [closeOnSelect]="true">
+							<ng-select class="form-control" [items]="lstUnitNotMain" bindLabel="text" bindValue="value" formControlName="unitReceiveId"
+								[(ngModel)]="modelForward.unitReceiveId" [closeOnSelect]="true">
 							</ng-select>
-							<div
-								*ngIf="(submitted && f.unitReceiveId.invalid) || (f.unitReceiveId.invalid && (f.unitReceiveId.dirty || f.unitReceiveId.touched))"
+							<div *ngIf="(submitted && f.unitReceiveId.invalid) || (f.unitReceiveId.invalid && (f.unitReceiveId.dirty || f.unitReceiveId.touched))"
 								class="has-error m-b-12">
 								<div *ngIf="f.unitReceiveId.errors.required">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -239,9 +244,8 @@
 						<div class="col-12 col-lg-6 form-group">
 							<label class="mb-1">Hạn giải quyết</label>
 							<div class="input-group">
-								<input class="form-control" placeholder="Chọn hạn giải quyết" bsDatepicker #n="bsDatepicker"
-									maxlength="10" formControlName="expiredDate" [(ngModel)]="modelForward.expiredDate"
-									appBsDatepickerInvalid
+								<input class="form-control" placeholder="Chọn hạn giải quyết" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="expiredDate"
+									[(ngModel)]="modelForward.expiredDate" appBsDatepickerInvalid
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon">
 									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
@@ -250,8 +254,8 @@
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Nội dung</label>
-							<textarea class="form-control" rows="6" [(ngModel)]="modelForward.content" formControlName="content"
-								placeholder="Nhập nội dung..." maxlength="500"></textarea>
+							<textarea class="form-control" rows="6" [(ngModel)]="modelForward.content" formControlName="content" placeholder="Nhập nội dung..."
+								maxlength="500"></textarea>
 						</div>
 					</div>
 				</form>
@@ -281,8 +285,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
-							data-dismiss="modal">Hủy</button>
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
 						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onProcessAccept()">Xác
 							nhận</button>
 					</div>
@@ -301,11 +304,9 @@
 			</div>
 			<div class="modal-body">
 				<p class="h4 text-center mb-3">Bạn có chắc chắn từ chối <strong>PAKN</strong> này ko?</p>
-				<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="modelProcess.reasonDeny"
-					maxlength="500"></textarea>
+				<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="modelProcess.reasonDeny" maxlength="500"></textarea>
 				<div class="custom-control custom-checkbox checkbox-danger mt-3" *ngIf="recommendationStatusProcess == 2">
-					<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord"
-						id="basic_checkbox_1">
+					<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord" id="basic_checkbox_1">
 					<label class="custom-control-label" for="basic_checkbox_1">Chứa từ ngữ bị cấm</label>
 				</div>
 			</div>

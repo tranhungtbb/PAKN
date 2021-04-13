@@ -46,4 +46,8 @@ namespace PAKNAPI.Models.Recommendation
     {
         public List<RecommendationKNCT> gridData { get; set; }
     }
+    public class numRecord
+    {
+        public int soLuongKNChoXuLy { get; set; }
+    }
 }
