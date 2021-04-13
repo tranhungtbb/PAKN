@@ -128,7 +128,6 @@ namespace PAKNAPI.ModelBase
 			DP.Add("WardsId", _bIBusiness.WardsId);
 			DP.Add("DistrictId", _bIBusiness.DistrictId);
 			DP.Add("RepresentativeName", _bIBusiness.RepresentativeName);
-			DP.Add("Code", _bIBusiness.Code);
 			DP.Add("IsActived", _bIBusiness.IsActived);
 			DP.Add("IsDeleted", _bIBusiness.IsDeleted);
 			DP.Add("OrgPhone", _bIBusiness.OrgPhone);
@@ -149,6 +148,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("OrgDistrictId", _bIBusiness.OrgDistrictId);
 			DP.Add("OrgWardsId", _bIBusiness.OrgWardsId);
 			DP.Add("OrgAddress", _bIBusiness.OrgAddress);
+			DP.Add("Code", _bIBusiness.Code);
 			DP.Add("Address", _bIBusiness.Address);
 			DP.Add("Email", _bIBusiness.Email);
 			DP.Add("Phone", _bIBusiness.Phone);
@@ -168,7 +168,6 @@ namespace PAKNAPI.ModelBase
 			DP.Add("WardsId", _bIBusiness.WardsId);
 			DP.Add("DistrictId", _bIBusiness.DistrictId);
 			DP.Add("RepresentativeName", _bIBusiness.RepresentativeName);
-			DP.Add("Code", _bIBusiness.Code);
 			DP.Add("IsActived", _bIBusiness.IsActived);
 			DP.Add("IsDeleted", _bIBusiness.IsDeleted);
 			DP.Add("OrgPhone", _bIBusiness.OrgPhone);
@@ -190,6 +189,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("OrgDistrictId", _bIBusiness.OrgDistrictId);
 			DP.Add("OrgWardsId", _bIBusiness.OrgWardsId);
 			DP.Add("OrgAddress", _bIBusiness.OrgAddress);
+			DP.Add("Code", _bIBusiness.Code);
 			DP.Add("Address", _bIBusiness.Address);
 			DP.Add("Email", _bIBusiness.Email);
 			DP.Add("Phone", _bIBusiness.Phone);
@@ -321,7 +321,6 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("FullName", _bIIndividual.FullName);
-			DP.Add("Code", _bIIndividual.Code);
 			DP.Add("IsActived", _bIIndividual.IsActived);
 			DP.Add("IsDeleted", _bIIndividual.IsDeleted);
 			DP.Add("ProvinceId", _bIIndividual.ProvinceId);
@@ -333,6 +332,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("CreatedBy", _bIIndividual.CreatedBy);
 			DP.Add("UpdatedBy", _bIIndividual.UpdatedBy);
 			DP.Add("Status", _bIIndividual.Status);
+			DP.Add("Code", _bIIndividual.Code);
 			DP.Add("Address", _bIIndividual.Address);
 			DP.Add("Email", _bIIndividual.Email);
 			DP.Add("Phone", _bIIndividual.Phone);
@@ -351,7 +351,6 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("FullName", _bIIndividual.FullName);
-			DP.Add("Code", _bIIndividual.Code);
 			DP.Add("IsActived", _bIIndividual.IsActived);
 			DP.Add("IsDeleted", _bIIndividual.IsDeleted);
 			DP.Add("Id", _bIIndividual.Id);
@@ -364,6 +363,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("CreatedBy", _bIIndividual.CreatedBy);
 			DP.Add("UpdatedBy", _bIIndividual.UpdatedBy);
 			DP.Add("Status", _bIIndividual.Status);
+			DP.Add("Code", _bIIndividual.Code);
 			DP.Add("Address", _bIIndividual.Address);
 			DP.Add("Email", _bIIndividual.Email);
 			DP.Add("Phone", _bIIndividual.Phone);

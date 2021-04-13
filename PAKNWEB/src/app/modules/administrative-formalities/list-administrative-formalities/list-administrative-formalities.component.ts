@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { RecommendationForwardObject, RecommendationObject, RecommendationProcessObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
-import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { COMMONS } from 'src/app/commons/commons'
+import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
+import { RecommendationService } from 'src/app/services/recommendation.service'
 
 declare var $: any
 
@@ -18,7 +19,8 @@ declare var $: any
 })
 export class ListAdministrativeFormalitiesComponent implements OnInit {
 	constructor(
-		private _service: RecommendationService,
+		private afService: AdministrativeFormalitiesService,
+		private recommendationService: RecommendationService,
 		private storeageService: UserInfoStorageService,
 		private _fb: FormBuilder,
 		private _toastr: ToastrService,
@@ -27,21 +29,14 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
-		{ value: 2, text: 'Chờ xử lý' },
-		{ value: 3, text: 'Từ chối xử lý' },
-		{ value: 4, text: 'Đã tiếp nhận' },
-		{ value: 5, text: 'Chờ giải quyết' },
-		{ value: 6, text: 'Từ chối giải quyết' },
-		{ value: 7, text: 'Đang giải quyết' },
-		{ value: 8, text: 'Chờ phê duyệt' },
-		{ value: 9, text: 'Từ chối phê duyệt' },
-		{ value: 10, text: 'Đã giải quyết' },
+		{ value: 1, text: 'Đang soạn thảo' },
+		{ value: 2, text: 'Đã công bố' },
+		{ value: 3, text: 'Đã thu hồi' }
 	]
 	formForward: FormGroup
 	lstUnitNotMain: any = []
 	lstUnit: any = []
 	lstField: any = []
-	dataSearch: RecommendationSearchObject = new RecommendationSearchObject()
 	submitted: boolean = false
 	isActived: boolean
 	pageIndex: number = 1
@@ -49,10 +44,18 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
-	lstHistories: any = []
-	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
+
+	dataSearch = {
+		code: '',
+		name: '',
+		title: '',
+		object: '',
+		field: null,
+		unitId: null,
+		status: null,
+	}
+
 	ngOnInit() {
-		this.buildForm()
 		this.getDataForCreate()
 		this.getList()
 	}
@@ -62,7 +65,7 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 	}
 
 	getDataForCreate() {
-		this._service.recommendationGetDataForCreate({}).subscribe((response) => {
+		this.recommendationService.recommendationGetDataForCreate({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.lstUnit = response.result.lstUnit
@@ -81,44 +84,27 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 		return this.formForward.controls
 	}
 
-	buildForm() {
-		this.formForward = this._fb.group({
-			unitReceiveId: [this.modelForward.unitReceiveId, Validators.required],
-			expiredDate: [this.modelForward.expiredDate],
-			content: [this.modelForward.content],
-		})
-	}
-
-	rebuilForm() {
-		this.formForward.reset({
-			unitReceiveId: this.modelForward.unitReceiveId,
-			expiredDate: this.modelForward.expiredDate,
-			content: this.modelForward.content,
-		})
-	}
 
 	getList() {
 		this.dataSearch.code = this.dataSearch.code.trim()
 		this.dataSearch.name = this.dataSearch.name.trim()
-		this.dataSearch.content = this.dataSearch.content.trim()
+		this.dataSearch.object = this.dataSearch.object.trim()
 		let request = {
 			Code: this.dataSearch.code,
-			SendName: this.dataSearch.name,
-			Content: this.dataSearch.content,
+			Name: this.dataSearch.name,
+			Object: this.dataSearch.object,
 			UnitId: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
 			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
-			UnitProcessId: this.storeageService.getUnitId(),
-			UserProcessId: this.storeageService.getUserId(),
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
 
-		this._service.recommendationGetListProcess(request).subscribe((response) => {
+		this.afService.getList(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
-					this.listData = response.result.MRRecommendationGetAllWithProcess
+					this.listData = response.result.DAMAdministrationGetList
 					this.totalRecords = response.result.TotalCount
 				}
 			} else {
@@ -173,7 +159,7 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.recommendationDelete(request).subscribe((response) => {
+		this.afService.delete(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				$('#modalConfirmDelete').modal('hide')
@@ -185,156 +171,5 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 			(error) => {
 				console.error(error)
 			}
-	}
-
-	getHistories(id: number) {
-		let request = {
-			Id: id,
-		}
-		this._service.recommendationGetHistories(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this.lstHistories = response.result.HISRecommendationGetByObjectId
-				$('#modal-history-pakn').modal('show')
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.log(error)
-			}
-	}
-	preForward(id: number) {
-		this.modelForward = new RecommendationForwardObject()
-		this.modelForward.recommendationId = id
-		this.rebuilForm()
-		this._service.recommendationGetDataForForward({}).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				if (response.result != null) {
-					this.lstUnitNotMain = response.result.lstUnitNotMain
-					$('#modal-tc-pakn').modal('show')
-				}
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.log(error)
-			}
-	}
-
-	onForward() {
-		this.modelForward.content = this.modelForward.content.trim()
-		this.submitted = true
-		if (this.formForward.invalid) {
-			return
-		}
-		this.modelForward.step = STEP_RECOMMENDATION.PROCESS
-		this.modelForward.status = PROCESS_STATUS_RECOMMENDATION.WAIT
-		var request = {
-			_mRRecommendationForwardInsertIN: this.modelForward,
-			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
-		}
-		this._service.recommendationForward(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				$('#modal-tc-pakn').modal('hide')
-				this.getList()
-				this._toastr.success(COMMONS.FORWARD_SUCCESS)
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(err) => {
-				console.error(err)
-			}
-	}
-	modelProcess: RecommendationProcessObject = new RecommendationProcessObject()
-	recommendationStatusProcess: number = 0
-
-	preProcess(model: any, status: number) {
-		this.modelProcess.status = status
-		this.modelProcess.id = model.idProcess
-		this.modelProcess.step = model.stepProcess
-		this.modelProcess.recommendationId = model.id
-		this.modelProcess.reactionaryWord = false
-		this.modelProcess.reasonDeny = ''
-		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
-			if (model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
-				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
-			} else if (model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
-				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESS_DENY
-			} else if (model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
-				this.recommendationStatusProcess = RECOMMENDATION_STATUS.APPROVE_DENY
-			}
-			$('#modalReject').modal('show')
-		} else {
-			if (model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
-				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_APPROVED
-			} else if (model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
-				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
-			} else if (model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
-				this.recommendationStatusProcess = RECOMMENDATION_STATUS.FINISED
-			}
-			$('#modalAccept').modal('show')
-		}
-	}
-	onProcessAccept() {
-		var request = {
-			_mRRecommendationForwardProcessIN: this.modelProcess,
-			RecommendationStatus: this.recommendationStatusProcess,
-			ReactionaryWord: this.modelProcess.reactionaryWord,
-		}
-		this._service.recommendationProcess(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				$('#modalAccept').modal('hide')
-				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
-				this.getList()
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(err) => {
-				console.error(err)
-			}
-	}
-	onProcessDeny() {
-		if (this.modelProcess.reasonDeny == '' || this.modelProcess.reasonDeny.trim() == '') {
-			this._toastr.error('Vui lòng nhập lý do')
-			return
-		} else {
-			var request = {
-				_mRRecommendationForwardProcessIN: this.modelProcess,
-				RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_DENY,
-			}
-			this._service.recommendationProcess(request).subscribe((response) => {
-				if (response.success == RESPONSE_STATUS.success) {
-					$('#modalReject').modal('hide')
-					this._toastr.success(COMMONS.DENY_SUCCESS)
-					this.getList()
-				} else {
-					this._toastr.error(response.message)
-				}
-			}),
-				(err) => {
-					console.error(err)
-				}
-		}
-	}
-
-	exportExcel() {
-		let request = {
-			IsActived: this.isActived,
-		}
-
-		this._service.recommendationExportExcel(request).subscribe((response) => {
-			var today = new Date()
-			var dd = String(today.getDate()).padStart(2, '0')
-			var mm = String(today.getMonth() + 1).padStart(2, '0')
-			var yyyy = today.getFullYear()
-			var hh = String(today.getHours()).padStart(2, '0')
-			var minute = String(today.getMinutes()).padStart(2, '0')
-			var fileName = 'DM_ChucVuHanhChinh_' + yyyy + mm + dd + hh + minute
-			var blob = new Blob([response], { type: response.type })
-			importedSaveAs(blob, fileName)
-		})
 	}
 }

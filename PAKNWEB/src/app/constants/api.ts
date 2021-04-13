@@ -155,10 +155,10 @@ export class Api {
 
 	//Administrative Formalities
 	public static AdministrativeFormalitiesGetDropdown = 'AdministrativeFormalities/AdministrativeFormalitiesGetDropdown'
-	public static AdministrativeFormalitiesGetList = 'MRSPBase/MRRecommendationGetAllOnPageBase'
-	public static AdministrativeFormalitiesGetById = 'AdministrativeFormalities/RecommendationGetById'
+	public static AdministrativeFormalitiesGetList = 'DAMSPBase/DAMAdministrationGetListBase'
+	public static AdministrativeFormalitiesGetById = 'AdministrationFormalities/AdministrationFormalitiesGetByID'
 	public static AdministrativeFormalitiesGetByIdView = 'AdministrativeFormalities/RecommendationGetByIdView'
-	public static AdministrativeFormalitiesInsert = 'AdministrativeFormalities/RecommendationInsert'
-	public static AdministrativeFormalitiesUpdate = 'AdministrativeFormalities/RecommendationUpdate'
-	public static AdministrativeFormalitiesDelete = 'MRSPBase/MRRecommendationDeleteBase'
+	public static AdministrativeFormalitiesInsert = 'AdministrationFormalities/AdministrationFormalitiesInsert'
+	public static AdministrativeFormalitiesUpdate = 'AdministrationFormalities/AdministrationFormalitiesUpdate'
+	public static AdministrativeFormalitiesDelete = 'DAMSPBase/DAMAdministrationDeleteBase'
 }
