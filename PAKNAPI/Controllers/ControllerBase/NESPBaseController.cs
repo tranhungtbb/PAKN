@@ -30,66 +30,6 @@ namespace PAKNAPI.ControllerBase
 			_bugsnag = bugsnag;
 		}
 
-		[HttpPost]
-		[Authorize]
-		[Route("NENewsDeleteBase")]
-		public async Task<ActionResult<object>> NENewsDeleteBase(NENewsDeleteIN _nENewsDeleteIN)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsDelete(_appSetting).NENewsDeleteDAO(_nENewsDeleteIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("NENewsDeleteListBase")]
-		public async Task<ActionResult<object>> NENewsDeleteListBase(List<NENewsDeleteIN> _nENewsDeleteINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _nENewsDeleteIN in _nENewsDeleteINs)
-				{
-					var result = await new NENewsDelete(_appSetting).NENewsDeleteDAO(_nENewsDeleteIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
 		[HttpGet]
 		[Authorize]
 		[Route("NENewsGetAllOnPageBase")]
