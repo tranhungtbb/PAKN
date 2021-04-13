@@ -20,7 +20,6 @@ export class RemindService {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
 			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
 		})
-		debugger
 		const form = new FormData()
 		form.append('Model', JSON.stringify(request.Model))
 		form.append('SendOrgId', request.SendOrgId)

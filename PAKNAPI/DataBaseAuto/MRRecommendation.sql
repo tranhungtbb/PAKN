@@ -30,7 +30,8 @@ BEGIN
 		[UpdatedBy],
 		[UpdatedDate],
 		[QuantityLike],
-		[QuantityDislike]
+		[QuantityDislike],
+		[CountClick]
 	FROM [MR_Recommendation]
 	WHERE [Id] = @Id
 END
@@ -67,7 +68,8 @@ BEGIN
 		[UpdatedBy],
 		[UpdatedDate],
 		[QuantityLike],
-		[QuantityDislike]
+		[QuantityDislike],
+		[CountClick]
 	FROM [MR_Recommendation]
 END
 GO
@@ -106,7 +108,8 @@ BEGIN
 		[UpdatedBy],
 		[UpdatedDate],
 		[QuantityLike],
-		[QuantityDislike]
+		[QuantityDislike],
+		[CountClick]
 	FROM [MR_Recommendation]
 	ORDER BY [Id]
 	OFFSET (@PageIndex-1) * @PageSize ROWS
@@ -141,7 +144,8 @@ CREATE PROCEDURE [dbo].[MR_RecommendationInsert]
 	@UpdatedBy bigint = null,
 	@UpdatedDate datetime = null,
 	@QuantityLike int = null,
-	@QuantityDislike int = null
+	@QuantityDislike int = null,
+	@CountClick int = null
 AS
 BEGIN
 	INSERT INTO [MR_Recommendation]
@@ -162,7 +166,8 @@ BEGIN
 		[UpdatedBy],
 		[UpdatedDate],
 		[QuantityLike],
-		[QuantityDislike]
+		[QuantityDislike],
+		[CountClick]
 	)
 	VALUES
 	(
@@ -182,7 +187,8 @@ BEGIN
 		@UpdatedBy,
 		@UpdatedDate,
 		@QuantityLike,
-		@QuantityDislike
+		@QuantityDislike,
+		@CountClick
 	)
 END
 GO
@@ -215,7 +221,8 @@ CREATE PROCEDURE [dbo].[MR_RecommendationUpdate]
 	@UpdatedBy bigint = null,
 	@UpdatedDate datetime = null,
 	@QuantityLike int = null,
-	@QuantityDislike int = null
+	@QuantityDislike int = null,
+	@CountClick int = null
 AS
 BEGIN
 	UPDATE [MR_Recommendation] SET
@@ -235,7 +242,8 @@ BEGIN
 		[UpdatedBy] = @UpdatedBy,
 		[UpdatedDate] = @UpdatedDate,
 		[QuantityLike] = @QuantityLike,
-		[QuantityDislike] = @QuantityDislike
+		[QuantityDislike] = @QuantityDislike,
+		[CountClick] = @CountClick
 	WHERE [Id] = @Id
 END
 GO

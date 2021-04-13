@@ -1,5 +1,9 @@
-.help-block{
-  color: red;
-  font-size: 14px;
-  font-style: italic;
+.help-block {
+	color: red;
+	font-size: 14px;
+	font-style: italic;
+}
+.btn {
+	display: block;
+	width: 100%;
 }

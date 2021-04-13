@@ -268,7 +268,11 @@ export class LoginComponent implements OnInit {
 	}
 
 	forgetPassWord(): void {
-		this._router.navigate(['/forgotPass'])
+		this._router.navigate(['/quen-mat-khau'])
+	}
+
+	register(): void {
+		this._router.navigate(['/dang-ky/ca-nhan'])
 	}
 
 	handleExpire() {

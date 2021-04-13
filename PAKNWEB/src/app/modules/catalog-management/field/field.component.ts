@@ -146,7 +146,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 
 	onSave() {
 		this.submitted = true
-		this.model.name = this.model.name.trim().replace(' ', '')
+		this.model.name = this.model.name.trim()
 		if (this.model.name == '') return
 		if (this.form.invalid) {
 			return
