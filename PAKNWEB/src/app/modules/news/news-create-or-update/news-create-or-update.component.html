@@ -18,7 +18,7 @@
 	<form [formGroup]="newsForm">
 		<div class="container mr-0 ml-0">
 			<div class="row">
-				<div class="col-md-9 col-lg-9">
+				<div class="col-md-9 col-lg-9 col-xl-9 col-xxl-8">
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">tiêu đề</span> <span class="cl-red">(*)</span></label>
 						<input formControlName="title" [(ngModel)]="model.title" type="text" class="form-control input-sm" placeholder="Nhập...">
@@ -42,10 +42,9 @@
 					</div>
 					<div class="col-12 col-lg-12 form-group mb-6">
 						<div class="clearfix mb-2">
-							<label class="mb-1"><span class="text-uppercase">bài viết liên quan</span> </label>
+							<label class="mb-1"><span class="text-uppercase">bài viết liên quan</span><span class="cl-red">(*)</span></label>
 							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline pull-right" (click)="onModalNewsRelate()">
-								<i class="bi bi-list"></i> Thêm
-								mới
+								<i class="bi bi-list"></i> Chọn bài
 							</button>
 						</div>
 						<div class="col-md-12 pr-0 pl-0">
@@ -67,14 +66,14 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
-						<ckeditor id="editor" [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents" (ready)="onReady($event)"></ckeditor>
+						<ckeditor id="editor" [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents" (ready)="onReady($event)" [config]="ckConfig"></ckeditor>
 					</div>
 				</div>
-				<div class="col-md-3 col-lg-3">
+				<div class="col-md-3 col-lg-3 col-xl-3 col-xxl-4">
 					<div class="col-12 col-lg-12 form-group">
-						<label class="mb-1"><span class="text-uppercase">loại danh mục</span></label>
+						<label class="mb-1"><span class="text-uppercase">Loại tin tức</span></label>
 						<ng-select formControlName="newsType" [(ngModel)]="model.newsType" class="form-control" placeholder="Chọn..." [clearable]="false">
-							<ng-option value=''>Chon...</ng-option>	
+							<ng-option value=''>Chon...</ng-option>
 							<ng-option *ngFor="let cate of listNewsTypes" [value]="cate.id">{{cate.name}}</ng-option>
 						</ng-select>
 					</div>

@@ -7,7 +7,7 @@
 			<p class="content-remind" innerHTML="{{item.content | Change}}">
 			</p>
 			<span class="text-left text-truncate">
-				<small class="mr-2" style="font-size: 17px;font-weight: 500;">Tài liệu đính kèm</small><br>
+				<small *ngIf="item.files.length > 0" class="mr-2" style="font-size: 17px;font-weight: 500;">Tài liệu đính kèm</small><br>
 				<div *ngFor="let file of item.files">
 					<a *ngIf="file.fileType == 1" download [href]="APIADDRESS + file.fileAttach" target="_blank" style="color: #333;">
 						<img src="../../../../assets/dist/images/file-word.svg" style="width: 20px;padding-right: 5px;" alt="">

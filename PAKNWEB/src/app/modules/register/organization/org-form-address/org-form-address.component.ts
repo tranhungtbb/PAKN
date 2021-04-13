@@ -35,7 +35,7 @@ export class OrgFormAddressComponent implements OnInit {
 		this.listDistrict = []
 		this.listVillage = []
 
-		this.model.OrgProvince = ''
+		this.model.OrgProvinceId = ''
 		if (this.model.Nation == 1) {
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
@@ -54,10 +54,10 @@ export class OrgFormAddressComponent implements OnInit {
 		this.listDistrict = []
 		this.listVillage = []
 
-		this.model.OrgDistrict = ''
-		this.model.OrgVillage = ''
-		if (this.model.OrgProvince != null && this.model.OrgProvince != '') {
-			this.diadanhService.getAllDistrict(this.model.OrgProvince).subscribe((res) => {
+		this.model.OrgDistrictId = ''
+		this.model.OrgWardsId = ''
+		if (this.model.OrgProvinceId != null && this.model.OrgProvinceId != '') {
+			this.diadanhService.getAllDistrict(this.model.OrgProvinceId).subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listDistrict = res.result.CADistrictGetAll
 				}
@@ -69,9 +69,9 @@ export class OrgFormAddressComponent implements OnInit {
 	onChangeDistrict() {
 		this.listVillage = []
 
-		this.model.OrgVillage = ''
-		if (this.model.OrgDistrict != null && this.model.OrgDistrict != '') {
-			this.diadanhService.getAllVillage(this.model.OrgProvince, this.model.OrgDistrict).subscribe((res) => {
+		this.model.OrgWardsId = ''
+		if (this.model.OrgDistrictId != null && this.model.OrgDistrictId != '') {
+			this.diadanhService.getAllVillage(this.model.OrgProvinceId, this.model.OrgDistrictId).subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listVillage = res.result.CAVillageGetAll
 				}
@@ -82,9 +82,9 @@ export class OrgFormAddressComponent implements OnInit {
 
 	ngOnInit() {
 		this.formOrgAddress = this.formBuilder.group({
-			OrgProvince: [this.model.OrgDistrict, [Validators.required]], //int
-			OrgDistrict: [this.model.OrgDistrict, [Validators.required]], //int
-			OrgVillage: [this.model.OrgVillage, [Validators.required]], //int
+			OrgProvince: [this.model.OrgProvinceId, [Validators.required]], //int
+			OrgDistrict: [this.model.OrgDistrictId, [Validators.required]], //int
+			OrgVillage: [this.model.OrgWardsId, [Validators.required]], //int
 			OrgAddress: [this.model.OrgAddress, [Validators.required]],
 			OrgPhone: [this.model.OrgPhone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
 			OrgEmail: [this.model.OrgEmail, [Validators.required, Validators.email]],

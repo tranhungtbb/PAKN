@@ -20,25 +20,26 @@ import { CaptchaService } from 'src/app/services/captcha-service'
 	styleUrls: ['./user-create-recommendation.component.css'],
 })
 export class CreateRecommendationComponent implements OnInit {
-	form: FormGroup;
-	model: RecommendationObject = new RecommendationObject();
-	lstUnit: any[] = [];
-	lstField: any[] = [];
-	lstBusiness: any[] = [];
-	lstIndividual: any[] = [];
-	lstObject: any[] = [];
-	lstHashtag: any[] = [];
-	lstHashtagSelected: any[] = [];
-	hashtagId: number = null;
-	fileAccept = CONSTANTS.FILEACCEPT;
-	files: any[] = [];
-	lstXoaFile: any[] = [];
-	submitted: boolean = false;
-	modelHashTagAdd: HashtagObject = new HashtagObject();
-	dateNow: Date = new Date();
-	@ViewChild('file', { static: false }) public file: ElementRef;
-	captchaImage: any = '';
+	form: FormGroup
+	model: RecommendationObject = new RecommendationObject()
+	lstUnit: any[] = []
+	lstField: any[] = []
+	lstBusiness: any[] = []
+	lstIndividual: any[] = []
+	lstObject: any[] = []
+	lstHashtag: any[] = []
+	lstHashtagSelected: any[] = []
+	hashtagId: number = null
+	fileAccept = CONSTANTS.FILEACCEPT
+	files: any[] = []
+	lstXoaFile: any[] = []
+	submitted: boolean = false
+	modelHashTagAdd: HashtagObject = new HashtagObject()
+	dateNow: Date = new Date()
+	@ViewChild('file', { static: false }) public file: ElementRef
+	captchaImage: any = ''
 	captchaCode: string = null
+	resultsRecommendation: any = []
 	constructor(
 		private toastr: ToastrService,
 		private fileService: UploadFileService,
@@ -48,12 +49,12 @@ export class CreateRecommendationComponent implements OnInit {
 		private router: Router,
 		private captchaService: CaptchaService,
 		private activatedRoute: ActivatedRoute
-	) { }
+	) {}
 
 	ngOnInit() {
-		this.model = new RecommendationObject();
-		this.reloadImage();
-		this.getDropdown();
+		this.model = new RecommendationObject()
+		this.reloadImage()
+		this.getDropdown()
 		this.activatedRoute.params.subscribe((params) => {
 			if (params['id']) {
 				this.model.id = +params['id']
@@ -68,6 +69,22 @@ export class CreateRecommendationComponent implements OnInit {
 		})
 	}
 
+	searchRecommendation() {
+		// this.mylookupservice.getResults(event.query).then(data => {
+		// 		this.resultsRecommendation = data
+		// });
+
+		this.recommendationService.recommendationGetSuggestCreate({ Title: this.model.title }).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				this.resultsRecommendation = response.result.MRRecommendationGetSuggestCreate
+			} else {
+				this.toastr.error(response.message)
+			}
+		}),
+			(error) => {
+				console.log(error)
+			}
+	}
 	onCreateHashtag(e) {
 		if (e.target.value != null && e.target.value != '' && e.target.value.trim() != '' && e.keyCode == 13) {
 			var isExist = false
@@ -206,22 +223,20 @@ export class CreateRecommendationComponent implements OnInit {
 		this.files.splice(index, 1)
 	}
 
-
-
 	onSave(status) {
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
 
 		this.submitted = true
 		if (this.form.invalid) {
-			this.reloadImage();
+			this.reloadImage()
 			return
 		}
-		this.model.status = status;
-		this.model.sendId = this.storageService.getUserId();
-		this.model.sendDate = new Date();
-		this.model.typeObject = this.storageService.getTypeObject();
-		this.model.name = this.storageService.getFullName();
+		this.model.status = status
+		this.model.sendId = this.storageService.getUserId()
+		this.model.sendDate = new Date()
+		this.model.typeObject = this.storageService.getTypeObject()
+		this.model.name = this.storageService.getFullName()
 		const request = {
 			Data: this.model,
 			Hashtags: this.lstHashtagSelected,
@@ -244,7 +259,7 @@ export class CreateRecommendationComponent implements OnInit {
 					}),
 						(err) => {
 							console.error(err)
-							this.reloadImage();
+							this.reloadImage()
 						}
 				} else {
 					this.recommendationService.recommendationUpdate(request).subscribe((response) => {
@@ -259,14 +274,11 @@ export class CreateRecommendationComponent implements OnInit {
 							console.error(err)
 						}
 				}
-
 			} else {
-				this.toastr.error("Mã xác thực không chính xác!")
-				this.reloadImage();
+				this.toastr.error('Mã xác thực không chính xác!')
+				this.reloadImage()
 			}
-		});
-
-
+		})
 	}
 
 	reloadImage() {
@@ -274,9 +286,9 @@ export class CreateRecommendationComponent implements OnInit {
 	}
 
 	reloadForm() {
-		this.submitted = false;
-		this.model = new RecommendationObject();
-		this.captchaCode = null;
-		this.form.reset();
+		this.submitted = false
+		this.model = new RecommendationObject()
+		this.captchaCode = null
+		this.form.reset()
 	}
 }
