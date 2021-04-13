@@ -144,6 +144,6 @@
   },
   "defaultProject": "ClientApp",
   "cli": {
-    "analytics": false
+    "analytics": "1c9f4a20-294c-4402-b2dd-d92777427f14"
   }
 }
