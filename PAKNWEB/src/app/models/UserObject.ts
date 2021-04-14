@@ -86,3 +86,26 @@ export class UserObject2 {
 	positionId: number
 	roleIds: string
 }
+
+export class UserInfoObject {
+	userName: string
+	fullName: string
+	dateOfBirth: string
+	email: string
+	phone: string
+	nation: any
+	provinceId: any
+	districtId: any
+	wardsId: any
+	address: string
+	idCard: string
+	issuedPlace: string
+	issuedDate: string
+	gender: boolean
+}
+
+export class ChangePwdObject {
+	oldPassword: string
+	newPassword: string
+	rePassword: string
+}

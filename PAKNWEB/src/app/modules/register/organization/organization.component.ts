@@ -34,6 +34,8 @@ export class OrganizationComponent implements OnInit {
 
 	ngOnInit() {
 		this.loadFormBuilder()
+		this.child_OrgAddressForm.parentCompo = this
+		this.child_OrgRepreForm.parentCompo = this
 	}
 
 	onSave() {

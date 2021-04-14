@@ -4,7 +4,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { NgSelectModule } from '@ng-select/ng-select'
 import { SharedModule } from 'src/app/shared/shared.module'
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
-import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material'
 
 import { RegisterRoutingModule } from './register-routing.module'
 import { OrganizationComponent } from './organization/organization.component'

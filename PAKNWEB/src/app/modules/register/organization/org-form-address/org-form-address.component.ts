@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from
 import { DiadanhService } from 'src/app/services/diadanh.service'
 
 import { OrganizationComponent } from '../organization.component'
+import { OrganizationObject } from 'src/app/models/RegisterObject'
 
 @Component({
 	selector: 'app-org-form-address',
@@ -10,11 +11,14 @@ import { OrganizationComponent } from '../organization.component'
 	styleUrls: ['./org-form-address.component.css'],
 })
 export class OrgFormAddressComponent implements OnInit {
-	constructor(private parentCompo: OrganizationComponent, private formBuilder: FormBuilder, private diadanhService: DiadanhService) {}
+	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService) {
+		this.model = this.parentCompo.model
+	}
+	public parentCompo: OrganizationComponent
 
 	formOrgAddress: FormGroup
 	fOrgAddressSubmitted = false
-	model = this.parentCompo.model
+	model: OrganizationObject
 
 	get fOrgAdr() {
 		return this.formOrgAddress.controls
