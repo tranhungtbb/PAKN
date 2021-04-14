@@ -33,9 +33,9 @@ export class OrganizationComponent implements OnInit {
 	model: OrganizationObject = new OrganizationObject()
 
 	ngOnInit() {
+		// this.child_OrgAddressForm.parentCompo = this
+		// this.child_OrgRepreForm.parentCompo = this
 		this.loadFormBuilder()
-		this.child_OrgAddressForm.parentCompo = this
-		this.child_OrgRepreForm.parentCompo = this
 	}
 
 	onSave() {
@@ -48,8 +48,6 @@ export class OrganizationComponent implements OnInit {
 		let fIsDate: any = document.querySelector('#_IsDate')
 		this.model._RepresentativeBirthDay = fDob.value
 		this.model._DateOfIssue = fIsDate.value
-
-		//console.log(this.model);
 
 		if (this.formLogin.invalid || this.formOrgInfo.invalid || this.child_OrgRepreForm.formInfo.invalid || this.child_OrgAddressForm.formOrgAddress.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
