@@ -21,6 +21,7 @@ import { ViewReflectionsRecommendationComponent } from './view-reflections-recom
 import { CreateRecommendationComponent } from './user-create-recommendation/user-create-recommendation.component'
 import { MyRecommendationComponent } from './my-recommendation/my-recommendation.component'
 import { from } from 'rxjs'
+import { EditorModule } from 'primeng/editor'
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
 
 @NgModule({
@@ -48,6 +49,7 @@ import { ViewRecommendationPersonalComponent } from './view-recommendation-perso
 		BsDatepickerModule.forRoot(),
 		TooltipModule,
 		CarouselModule,
+		EditorModule,
 	],
 })
 export class PublishModule {}

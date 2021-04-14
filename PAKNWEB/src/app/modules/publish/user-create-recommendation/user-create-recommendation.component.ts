@@ -40,6 +40,7 @@ export class CreateRecommendationComponent implements OnInit {
 	captchaImage: any = ''
 	captchaCode: string = null
 	resultsRecommendation: any = []
+	lstDictionariesWord: any = []
 	constructor(
 		private toastr: ToastrService,
 		private fileService: UploadFileService,
@@ -70,20 +71,19 @@ export class CreateRecommendationComponent implements OnInit {
 	}
 
 	searchRecommendation() {
-		// this.mylookupservice.getResults(event.query).then(data => {
-		// 		this.resultsRecommendation = data
-		// });
-
-		this.recommendationService.recommendationGetSuggestCreate({ Title: this.model.title }).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this.resultsRecommendation = response.result.MRRecommendationGetSuggestCreate
-			} else {
-				this.toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.log(error)
-			}
+		this.resultsRecommendation = []
+		if (this.model.title != '' && this.model.title.trim() != '') {
+			this.recommendationService.recommendationGetSuggestCreate({ Title: this.model.title }).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					this.resultsRecommendation = response.result.MRRecommendationGetSuggestCreate
+				} else {
+					this.toastr.error(response.message)
+				}
+			}),
+				(error) => {
+					console.log(error)
+				}
+		}
 	}
 	onCreateHashtag(e) {
 		if (e.target.value != null && e.target.value != '' && e.target.value.trim() != '' && e.keyCode == 13) {
@@ -168,6 +168,16 @@ export class CreateRecommendationComponent implements OnInit {
 				this.lstIndividual = response.result.lstIndividual
 				this.lstObject = response.result.lstIndividual
 				this.model.code = response.result.code
+			} else {
+				this.toastr.error(response.message)
+			}
+		}),
+			(error) => {
+				console.log(error)
+			}
+		this._serviceCatalog.wordGetListSuggest(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				this.lstDictionariesWord = response.result.CAWordGetListSuggest
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -296,5 +306,18 @@ export class CreateRecommendationComponent implements OnInit {
 		this.model = new RecommendationObject()
 		this.captchaCode = null
 		this.form.reset()
+	}
+	hightLightText() {
+		if (this.model.content != null && this.model.content != '' && this.model.content.trim() != '') {
+			let content = ''
+			content = this.model.content
+			for (let index = 0; index < this.lstDictionariesWord.length; index++) {
+				content = content.replace(
+					this.lstDictionariesWord[index].name,
+					'<span class="text-danger" title="' + this.lstDictionariesWord[index].description + '">' + this.lstDictionariesWord[index].name + '</span>'
+				)
+			}
+			$('#contentRecommendation').html(content)
+		}
 	}
 }

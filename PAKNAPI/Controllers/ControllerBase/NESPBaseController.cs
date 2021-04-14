@@ -57,29 +57,6 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Route("NENewsGetListHomePage")]
-		public async Task<ActionResult<object>> NENewsGetListHome()
-		{
-			try
-			{
-				List<NENewsGetListHomePage> rsPUNewsGetListHomePage = await new NENewsGetListHomePage(_appSetting).PU_NewsGetListHomePage(true);
-				if (rsPUNewsGetListHomePage.Count < 4) {
-					rsPUNewsGetListHomePage = await new NENewsGetListHomePage(_appSetting).PU_NewsGetListHomePage(false);
-				}
-				return new ResultApi { Success = ResultCode.OK, Result = rsPUNewsGetListHomePage };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-
-
-
-		[HttpGet]
 		[Authorize]
 		[Route("NENewsGetByIDBase")]
 		public async Task<ActionResult<object>> NENewsGetByIDBase(int? Id)
