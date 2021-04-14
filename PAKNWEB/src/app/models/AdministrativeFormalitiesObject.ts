@@ -1,4 +1,9 @@
 export class AdministrativeFormalitiesObject {
+	constructor() {
+		this.unitReceive = null;
+		this.field = null;
+		this.typeSend = null;
+	}
 	id: number = 0;
 	name: string = '';
 	code: string = '';
@@ -6,7 +11,7 @@ export class AdministrativeFormalitiesObject {
 	unitReceive: number = null;
 	field: number = null;
 	rankReceive: string = '';
-	typeSend: Boolean = null;
+	typeSend: boolean = null;
 	fileNum: string = '';
 	amountTime: string = '';
 	proceed: string = '';
@@ -22,7 +27,7 @@ export class AdministrativeFormalitiesObject {
 	impactAssessment: string = '';
 	note: string = '';
 	status: number = 1;
-	isShow: Boolean = false;
+	isShow: boolean = false;
 
 	//system field
 	createdAt: string

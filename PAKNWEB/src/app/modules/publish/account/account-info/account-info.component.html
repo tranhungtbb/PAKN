@@ -7,19 +7,19 @@
 						<i class="bi bi-person-fill text-dark" style="font-size: 24px"></i>
 					</div>
 					<div class="media-body">
-						<p class="my-0 font-weight-bolder h4">Nguyễn Thị Liêm</p>
-						<p class="mb-0 small">SĐT: 0987.654.321</p>
+						<p class="my-0 font-weight-bolder h4">{{model.fullName}}</p>
+						<p class="mb-0 small">Tài khoản: {{model.userName}}</p>
 					</div>
 				</div>
 				<ul class="nav nav-qltknd flex-column">
 					<li class="nav-item border-bottom">
-						<a class="nav-link px-0 h5 active" aria-current="page" href="#">Thông tin tài khoản</a>
+						<a class="nav-link px-0 h5 active" aria-current="page" [routerLink]="['../thong-tin']">Thông tin tài khoản</a>
 					</li>
 					<li class="nav-item border-bottom">
-						<a class="nav-link px-0 h5" href="#">Đổi mật khẩu</a>
+						<a class="nav-link px-0 h5" [routerLink]="['../thay-doi-mat-khau']">Đổi mật khẩu</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link px-0 h5" href="#">Đăng xuất</a>
+						<a class="nav-link px-0 h5" href="javascript:void(0);" (click)="signOut()">Đăng xuất</a>
 					</li>
 				</ul>
 				<div class="sb-tk-pakn mb-4">
@@ -64,69 +64,71 @@
 				</div>
 			</div>
 			<div class="col main-ct pl-3 pl-lg-4">
-				<div class="box">
+				<div *ngIf="viewVisiable == 'info'" class="box">
 					<div class="tt-v1 pt-3 mb-3">
 						<h4 class="text-uppercase">Thông tin tài khoản</h4>
 					</div>
 					<div class="row">
 						<div class="col">
 							<p class="mb-1">Họ và Tên</p>
-							<p class="h4 mb-0 pb-3 border-bottom">Nguyễn Thị Liêm</p>
+							<p class="h4 mb-0 pb-3 border-bottom">{{model.fullName}}</p>
 						</div>
 						<div class="col">
 							<p class="mb-1">Ngày tháng năm sinh</p>
-							<p class="h4 mb-0 pb-3 border-bottom">10/01/1990</p>
+							<p class="h4 mb-0 pb-3 border-bottom">{{model.dateOfBirth}}</p>
 						</div>
 						<div class="col">
 							<p class="mb-1">Email</p>
-							<p class="h4 mb-0 pb-3 border-bottom">liemnt@gmail.com</p>
+							<p class="h4 mb-0 pb-3 border-bottom">{{model.email}}</p>
 						</div>
 						<div class="w-100 mb-3"></div>
 						<div class="col">
 							<p class="mb-1">Quốc tịch</p>
-							<p class="h4 mb-0 pb-3 border-bottom">Việt Nam</p>
+							<p class="h4 mb-0 pb-3 border-bottom">{{model.nation}}</p>
 						</div>
 						<div class="col">
 							<p class="mb-1">Tỉnh / Thành phố</p>
-							<p class="h4 mb-0 pb-3 border-bottom">Khánh Hòa</p>
+							<p class="h4 mb-0 pb-3 border-bottom">{{model.provinceId}}</p>
 						</div>
 						<div class="col">
 							<p class="mb-1">Huyện / Quận / thị xã ...</p>
-							<p class="h4 mb-0 pb-3 border-bottom">Huyện Abc</p>
+							<p class="h4 mb-0 pb-3 border-bottom">{{model.districtId}}</p>
 						</div>
 						<div class="w-100 mb-3"></div>
 						<div class="col">
 							<p class="mb-1">Xã / Phường / Thị trấn</p>
-							<p class="h4 mb-0 pb-3 border-bottom">Xã Abc</p>
+							<p class="h4 mb-0 pb-3 border-bottom">{{model.wardsId}}</p>
 						</div>
 						<div class="col col-lg-8">
 							<p class="mb-1">Địa chỉ cụ thể</p>
-							<p class="h4 mb-0 pb-3 border-bottom">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+							<p class="h4 mb-0 pb-3 border-bottom">{{model.address}}</p>
 						</div>
 						<div class="w-100 mb-3"></div>
 						<div class="col">
 							<p class="mb-1">Số CMND / CCCD / Hộ chiếu</p>
-							<p class="h4 mb-0 pb-3 border-bottom">123456789</p>
+							<p class="h4 mb-0 pb-3 border-bottom">{{model.idCard}}</p>
 						</div>
 						<div class="col">
 							<p class="mb-1">Nơi cấp</p>
-							<p class="h4 mb-0 pb-3 border-bottom">Công an tỉnh Khánh Hòa</p>
+							<p class="h4 mb-0 pb-3 border-bottom">{{model.issuedPlace}}</p>
 						</div>
 						<div class="col">
 							<p class="mb-1">Ngày cấp</p>
-							<p class="h4 mb-0 pb-3 border-bottom">20/01/2015</p>
+							<p class="h4 mb-0 pb-3 border-bottom">{{model.issuedDate}}</p>
 						</div>
 						<div class="w-100 mb-3"></div>
 						<div class="col">
-							<p class="mb-1">Giới tính: <span class="h4">Nữ</span></p>
+							<p class="mb-1">Giới tính: <span class="h4" *ngIf="!model.gender">Nữ</span><span class="h4" *ngIf="model.gender">Nam</span></p>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col text-right">
-							<button type="button" class="btn grd-brown text-dark border-0 rounded-xl mt-3">Sửa thông tin</button>
+						<div class="col text-right clearfix">
+							<a type="button" class="btn grd-brown text-dark border-0 rounded-xl mt-3 pull-right" [routerLink]="['../chinh-sua-thong-tin']">Sửa thông tin</a>
 						</div>
 					</div>
 				</div>
+				<app-change-password *ngIf="viewVisiable == 'pwd'"></app-change-password>
+				<app-account-update-info *ngIf="viewVisiable == 'edit'"></app-account-update-info>
 			</div>
 		</div>
 	</div>

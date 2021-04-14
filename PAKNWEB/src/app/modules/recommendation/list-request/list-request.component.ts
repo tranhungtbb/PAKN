@@ -27,15 +27,9 @@ export class ListRequestComponent implements OnInit {
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
-		{ value: 2, text: 'Chờ xử lý' },
+		{ value: 1, text: 'Chưa giải quyết' },
+		{ value: 2, text: 'Đang giải quyết' },
 		{ value: 3, text: 'Đã giải quyết' },
-		{ value: 4, text: 'Đã tiếp nhận' },
-		{ value: 5, text: 'Chờ giải quyết' },
-		{ value: 6, text: 'Từ chối giải quyết' },
-		{ value: 7, text: 'Đang giải quyết' },
-		{ value: 8, text: 'Chờ phê duyệt' },
-		{ value: 9, text: 'Từ chối phê duyệt' },
-		{ value: 10, text: 'Từ chối xử lý' },
 	]
 	formForward: FormGroup
 	lstUnitNotMain: any = []
@@ -117,7 +111,7 @@ export class ListRequestComponent implements OnInit {
 				if (response.result != null) {
 					this.listData = []
 					this.listData = response.result.MRRecommendationKNCTGetAllWithProcess
-					this.totalRecords = response.result.MRRecommendationKNCTGetAllWithProcess.length
+					this.totalRecords = response.result.MRRecommendationKNCTGetAllWithProcess[0].rowNumber
 				}
 			} else {
 				this._toastr.error(response.message)

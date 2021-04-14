@@ -8,6 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { AdministrativeFormalitiesObject } from 'src/app/models/AdministrativeFormalitiesObject'
+import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
 declare var $: any
 
 @Component({
@@ -25,25 +26,27 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 	lstBusiness: any[] = [];
 	lstIndividual: any[] = [];
 	lstObject: any[] = [];
-	lstHashtag: any[] = [];
-	lstHashtagSelected: any[] = [];
-	hashtagId: number = null;
 	fileAccept = CONSTANTS.FILEACCEPT;
 	fileAcceptForm = CONSTANTS.FILEACCEPT_FORM_ADMINISTRATION;
 	files: any[] = [];
 	lstXoaFile: any[] = [];
 	lstXoaFileForm: any[] = [];
 	submitted: boolean = false;
-	dateNow: Date = new Date();
-	lstTypeSend: any[] = [];
+	lstTypeSend: any[] = [{ value: null, text: "-- Chọn mức độ trực tuyến --" }, { value: true, text: "Nộp trực tuyến" }, { value: false, text: "Nộp qua mạng" }];
+	lstBind: any[] = [{ value: null, text: "-- Chọn bắt buộc --" }, { value: true, text: "Có" }, { value: false, text: "Không" }];
 	@ViewChild('file', { static: false }) public file: ElementRef;
 
 	lstCompositionProfile: any[] = [];
 	lstCharges: any[] = [];
 	lstImplementationProcess: any[] = [];
+
+	typeDelete: number;
+	itemDelete: any;
+	lstDelete: any[] = []; //list id , type tp hồ sơ, trình tự thực hiện, lệ phí
 	constructor(
 		private toastr: ToastrService,
 		private fileService: UploadFileService,
+		private afService: AdministrativeFormalitiesService,
 		private recommendationService: RecommendationService,
 		private _serviceCatalog: CatalogService,
 		private router: Router,
@@ -66,10 +69,13 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 		let request = {
 			Id: this.model.id,
 		}
-		this.recommendationService.recommendationGetById(request).subscribe((response) => {
+		this.afService.getById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this.model = response.result.model
-				this.files = response.result.lstFiles
+				this.model = response.result.data;
+				this.files = response.result.files;
+				this.lstCharges = response.result.lstCharges;
+				this.lstCompositionProfile = response.result.lstCompositionProfile;
+				this.lstImplementationProcess = response.result.lstImplementationProcess;
 
 			} else {
 				this.toastr.error(response.message)
@@ -85,11 +91,16 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.lstUnit = response.result.lstUnit
 				this.lstField = response.result.lstField
-				this.lstHashtag = response.result.lstHashTag
-				this.lstBusiness = response.result.lstBusiness
-				this.lstIndividual = response.result.lstIndividual
-				this.lstObject = response.result.lstIndividual
-				this.model.code = response.result.code
+				var defaultValueUnit = {
+					text: "-- Chọn đơn vị tiếp nhận --",
+					value: null
+				}
+				var defaultValueField = {
+					text: "-- Chọn lĩnh vực --",
+					value: null
+				}
+				this.lstUnit.unshift(defaultValueUnit);
+				this.lstField.unshift(defaultValueField);
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -101,13 +112,14 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 
 
 	builForm() {
+		this.model = new AdministrativeFormalitiesObject();
 		this.form = new FormGroup({
 			// code: new FormControl(this.model.code, [Validators.required]),
 			name: new FormControl(this.model.name, [Validators.required]),
 			rankReceive: new FormControl(this.model.rankReceive, [Validators.required]),
 			unitReceive: new FormControl(this.model.unitReceive, [Validators.required]),
 			field: new FormControl(this.model.field, [Validators.required]),
-			typeSend: new FormControl(this.model.typeSend, [Validators.required]),
+			typeSend: new FormControl(null, [Validators.required]),
 			fileNum: new FormControl(this.model.fileNum, [Validators.required]),
 			amountTime: new FormControl(this.model.amountTime, [Validators.required]),
 			proceed: new FormControl(this.model.proceed, [Validators.required]),
@@ -194,23 +206,42 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 	}
 
 	onSave(status) {
-		this.model.status = status;
 		this.submitted = true
+		this.model.status = status;
+		this.model.name = this.model.name.trim();
+		this.model.rankReceive = this.model.rankReceive.trim();
+		this.model.fileNum = this.model.fileNum.trim();
+		this.model.amountTime = this.model.amountTime.trim();
+		this.model.proceed = this.model.proceed.trim();
+		this.model.object = this.model.object.trim();
+		this.model.organization = this.model.organization.trim();
+		if (this.model.name == null || this.model.name == ''
+			|| this.model.rankReceive == null || this.model.rankReceive == ''
+			|| this.model.fileNum == null || this.model.fileNum == ''
+			|| this.model.amountTime == null || this.model.amountTime == ''
+			|| this.model.proceed == null || this.model.proceed == ''
+			|| this.model.object == null || this.model.object == ''
+			|| this.model.organization == null || this.model.organization == '') {
+			return;
+		}
 		if (this.form.invalid) {
 			return
 		}
-		this.model.status = RECOMMENDATION_STATUS.RECEIVE_APPROVED
 		const request = {
 			Data: this.model,
-			Hashtags: this.lstHashtagSelected,
 			Files: this.files,
 			LstXoaFile: this.lstXoaFile,
+			LstXoaFileForm: this.lstXoaFileForm,
+			LstCompositionProfile: this.lstCompositionProfile,
+			LstCharges: this.lstCharges,
+			LstImplementationProcess: this.lstImplementationProcess,
+			LstDelete: this.lstDelete,
 		}
 		if (this.model.id == 0) {
-			this.recommendationService.recommendationInsert(request).subscribe((response) => {
+			this.afService.insert(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.toastr.success(COMMONS.ADD_SUCCESS)
-					return this.router.navigate(['/quan-tri/kien-nghi/danh-sach-tong-hop'])
+					return this.router.navigate(['/quan-tri/thu-tuc-hanh-chinh'])
 				} else {
 					this.toastr.error(response.message)
 				}
@@ -219,10 +250,10 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 					console.error(err)
 				}
 		} else {
-			this.recommendationService.recommendationUpdate(request).subscribe((response) => {
+			this.afService.update(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.toastr.success(COMMONS.UPDATE_SUCCESS)
-					return this.router.navigate(['/quan-tri/kien-nghi/danh-sach-tong-hop'])
+					return this.router.navigate(['/quan-tri/thu-tuc-hanh-chinh'])
 				} else {
 					this.toastr.error(response.message)
 				}
@@ -235,11 +266,12 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 
 	onAddCompositionProfile() {
 		var cp = {
+			index: this.lstCompositionProfile.length + 1,
 			nameExhibit: '',
 			originalForm: '',
 			copyForm: '',
 			form: '',
-			isBind: false,
+			isBind: null,
 			files: []
 		}
 		this.lstCompositionProfile.push(cp);
@@ -247,6 +279,7 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 
 	onAddCharges() {
 		var cp = {
+			index: this.lstCharges.length + 1,
 			charges: '',
 			description: '',
 		}
@@ -255,11 +288,59 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 
 	onAddImplementationProcess() {
 		var cp = {
+			index: this.lstImplementationProcess.length + 1,
 			name: '',
 			unit: '',
 			time: '',
 			result: '',
 		}
 		this.lstImplementationProcess.push(cp);
+	}
+	preDelete(item, type) {
+		this.itemDelete = item;
+		this.typeDelete = type;
+		$('#modalDelete').modal('show')
+	}
+
+	onDelete() {
+		if (this.typeDelete == 1) {
+			this.onRemoveCompositionProfile();
+		} else if (this.typeDelete == 2) {
+			this.onRemoveImplementationProcess();
+		} else if (this.typeDelete == 3) {
+			this.onRemoveCharges();
+		}
+		this.itemDelete = null;
+		this.typeDelete = null;
+		$('#modalDelete').modal('hide')
+	}
+	onRemoveCompositionProfile() {
+		var index = this.lstCompositionProfile.indexOf(this.itemDelete);
+		var idDelete = {
+			id: this.itemDelete.id,
+			type: this.typeDelete
+		}
+		this.lstCompositionProfile.splice(index, 1);
+		this.lstDelete.push(idDelete);
+	}
+
+	onRemoveCharges() {
+		var index = this.lstCharges.indexOf(this.itemDelete);
+		var idDelete = {
+			id: this.itemDelete.id,
+			type: this.typeDelete
+		}
+		this.lstCharges.splice(index, 1);
+		this.lstDelete.push(idDelete);
+	}
+
+	onRemoveImplementationProcess() {
+		var index = this.lstImplementationProcess.indexOf(this.itemDelete);
+		var idDelete = {
+			id: this.itemDelete.id,
+			type: this.typeDelete
+		}
+		this.lstImplementationProcess.splice(index, 1);
+		this.lstDelete.push(idDelete);
 	}
 }

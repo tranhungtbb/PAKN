@@ -1397,6 +1397,29 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("CAWordGetListSuggestBase")]
+		public async Task<ActionResult<object>> CAWordGetListSuggestBase()
+		{
+			try
+			{
+				List<CAWordGetListSuggest> rsCAWordGetListSuggest = await new CAWordGetListSuggest(_appSetting).CAWordGetListSuggestDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAWordGetListSuggest", rsCAWordGetListSuggest},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("CAWordInsertBase")]

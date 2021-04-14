@@ -35,7 +35,6 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				SyncDataFromKNCTAPI();
 				int width = 200;
 				int height = 60;
 				var captchaCode = new Captcha(_appSetting).GenerateCaptchaCode();

@@ -28,9 +28,10 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private toast: ToastrService,
 		private roleService: RoleService,
-		private parentUnit: UnitComponent,
 		private sanitizer: DomSanitizer
 	) {}
+
+	public parentUnit: UnitComponent
 
 	modelUser: UserObject2 = new UserObject2()
 	createUserForm: FormGroup

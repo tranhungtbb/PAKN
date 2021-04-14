@@ -54,6 +54,23 @@ export class ServiceInvokerService {
 	}
 
 	/* Get array */
+	getNotLoading(element: any, url, headers: any): Observable<any> {
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
+			macAddress: '',
+			logAction: headers.logAction,
+			logObject: headers.logObject,
+			isShowLoading: 'false',
+		})
+		const httpPackage = {
+			params: element,
+			headers: tempheaders,
+		}
+
+		return this.http.get(url, httpPackage).pipe(catchError(this.handleError<any>()))
+	}
+
+	/* Get array */
 	getFilewithHeaders(element: any, url, headers: any): Observable<any> {
 		let tempheaders = new HttpHeaders({
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',

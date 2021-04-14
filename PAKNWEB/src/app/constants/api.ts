@@ -40,6 +40,7 @@ export class Api {
 	public static RecommendationOnProcessConclusion = 'Recommendation/RecommendationOnProcessConclusion'
 	public static RecommendationDelete = 'MRSPBase/MRRecommendationDeleteBase'
 	public static RecommendationExport = 'MRSPBase/MRRecommendationExportBase'
+	public static RecommendationGetSuggestCreate = 'MRSPBase/MRRecommendationGetSuggestCreateBase'
 
 	public static PuRecommendationGetAllOnPage = 'PURecommendation/PURecommendationAllOnPage'
 	public static PuRecomentdationGetListOrderByCountClick = 'PURecommendation/PURecommendationGetListOrderByCountClick'
@@ -114,9 +115,11 @@ export class Api {
 	public static WordUpdate = 'CACategorySPBase/CAWordUpdateBase'
 	public static WordUpdateStatus = 'CACategorySPBase/CAWordUpdateBase'
 	public static WordDelete = 'CACategorySPBase/CAWordDeleteBase'
+	public static WordGetListSuggest = 'CACategorySPBase/CAWordGetListSuggestBase'
 
 	//tin tuc
 	public static NewsGetAllOnPage = 'NESPBase/NENewsGetAllOnPageBase'
+	public static NewsGetListHomePage = 'NESPBase/NENewsGetListHomePage'
 	public static NewsGetById = 'NESPBase/NENewsGetByIDBase'
 	public static NewsInsert = 'NESPBase/NENewsInsertBase'
 	public static NewsUpdate = 'NESPBase/NENewsUpdateBase'
@@ -153,12 +156,17 @@ export class Api {
 	public static RecommendationRequestGetByIdView = 'MRSPBase/MRRecommendationKNCTGetByIdBase'
 	public static RecommendationRequestGetFile = 'MRSPBase/MRRecommendationKNCTFilesGetByRecommendationIdBase'
 
+	//tai khoan ca nhan, doanh nghiep
+	public static AccountGetInfo = 'user/UserGetInfo'
+	public static AccountChangePassword = 'User/UserChagePwd'
+	public static AccountUpdateInfo = 'User//UpdateCurrentInfo'
+
 	//Administrative Formalities
 	public static AdministrativeFormalitiesGetDropdown = 'AdministrativeFormalities/AdministrativeFormalitiesGetDropdown'
-	public static AdministrativeFormalitiesGetList = 'MRSPBase/MRRecommendationGetAllOnPageBase'
-	public static AdministrativeFormalitiesGetById = 'AdministrativeFormalities/RecommendationGetById'
+	public static AdministrativeFormalitiesGetList = 'DAMSPBase/DAMAdministrationGetListBase'
+	public static AdministrativeFormalitiesGetById = 'AdministrationFormalities/AdministrationFormalitiesGetByID'
 	public static AdministrativeFormalitiesGetByIdView = 'AdministrativeFormalities/RecommendationGetByIdView'
-	public static AdministrativeFormalitiesInsert = 'AdministrativeFormalities/RecommendationInsert'
-	public static AdministrativeFormalitiesUpdate = 'AdministrativeFormalities/RecommendationUpdate'
-	public static AdministrativeFormalitiesDelete = 'MRSPBase/MRRecommendationDeleteBase'
+	public static AdministrativeFormalitiesInsert = 'AdministrationFormalities/AdministrationFormalitiesInsert'
+	public static AdministrativeFormalitiesUpdate = 'AdministrationFormalities/AdministrationFormalitiesUpdate'
+	public static AdministrativeFormalitiesDelete = 'DAMSPBase/DAMAdministrationDeleteBase'
 }

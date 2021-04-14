@@ -595,6 +595,33 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class MRRecommendationGetSuggestCreate
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGetSuggestCreate(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGetSuggestCreate()
+		{
+		}
+
+		public int? Rank { get; set; }
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string CreatedDate { get; set; }
+
+		public async Task<List<MRRecommendationGetSuggestCreate>> MRRecommendationGetSuggestCreateDAO(string Title)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Title", Title);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetSuggestCreate>("MR_Recommendation_GetSuggestCreate", DP)).ToList();
+		}
+	}
+
 	public class MRRecommendationHashtagDeleteByRecommendationId
 	{
 		private SQLCon _sQLCon;

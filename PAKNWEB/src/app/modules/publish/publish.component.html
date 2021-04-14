@@ -17,7 +17,7 @@
 								<span class="text-white">Xin chào! <strong>Nguyễn Thị Liêm</strong></span>
 							</div>
 						</li>
-						<li class="nav-item dropdown notification_dropdown">
+						<li class="nav-item dropdown notification_dropdown" *ngIf="typeUserLoginPublish == 1">
 							<a class="nav-link text-white bg-transparent" href="/quan-tri">
 								<i class="bi bi-grid"></i>
 							</a>
@@ -94,7 +94,7 @@
 								</div>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">
-								<a href="#" class="dropdown-item ai-icon">
+								<a [routerLink]="['/cong-bo/tai-khoan/thong-tin']" class="dropdown-item ai-icon">
 									<i class="bi bi-person-square"></i>
 									<span class="ml-2">Thông tin cá nhân </span>
 								</a>
