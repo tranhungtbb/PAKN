@@ -145,10 +145,10 @@ export class CreateRecommendationComponent implements OnInit {
 				this.model = response.result.model
 				this.lstHashtagSelected = response.result.lstHashtag
 				this.files = response.result.lstFiles
-
 				if (this.model.sendDate) {
 					this.model.sendDate = new Date(this.model.sendDate)
 				}
+				this.hightLightText()
 			} else {
 				this.toastr.error(response.message)
 			}
