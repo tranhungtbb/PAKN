@@ -608,7 +608,9 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
+		public int Id { get; set; }
 		public string Title { get; set; }
+		public string CreatedDate { get; set; }
 
 		public async Task<List<MRRecommendationGetSuggestCreate>> MRRecommendationGetSuggestCreateDAO(string Title)
 		{

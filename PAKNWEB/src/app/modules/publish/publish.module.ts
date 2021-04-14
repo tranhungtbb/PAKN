@@ -20,7 +20,6 @@ import { SupportComponent } from './support/support.component'
 import { ViewReflectionsRecommendationComponent } from './view-reflections-recommendation/view-reflections-recommendation.component'
 import { CreateRecommendationComponent } from './user-create-recommendation/user-create-recommendation.component'
 import { MyRecommendationComponent } from './my-recommendation/my-recommendation.component'
-import { AutoCompleteModule } from 'primeng/autocomplete'
 import { from } from 'rxjs'
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
 
@@ -46,7 +45,6 @@ import { ViewRecommendationPersonalComponent } from './view-recommendation-perso
 		FormsModule,
 		SharedModule,
 		PaginatorModule,
-		AutoCompleteModule,
 		BsDatepickerModule.forRoot(),
 		TooltipModule,
 		CarouselModule,

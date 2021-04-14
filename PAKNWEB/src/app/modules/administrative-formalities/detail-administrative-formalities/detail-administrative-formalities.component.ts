@@ -12,11 +12,11 @@ import { AdministrativeFormalitiesService } from 'src/app/services/administrativ
 declare var $: any
 
 @Component({
-	selector: 'app-cu-administrative-formalities',
-	templateUrl: './cu-administrative-formalities.component.html',
-	styleUrls: ['./cu-administrative-formalities.component.css'],
+	selector: 'app-detail-administrative-formalities',
+	templateUrl: './detail-administrative-formalities.component.html',
+	styleUrls: ['./detail-administrative-formalities.component.css'],
 })
-export class CU_AdministrativeFormalitiesComponent implements OnInit {
+export class DetailAdministrativeFormalitiesComponent implements OnInit {
 	form: FormGroup;
 	model: AdministrativeFormalitiesObject = new AdministrativeFormalitiesObject();
 	titleObject: string = 'Cá nhân';
@@ -71,11 +71,8 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 		}
 		this.afService.getById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this.model = response.result.data;
-				this.files = response.result.files;
-				this.lstCharges = response.result.lstCharges;
-				this.lstCompositionProfile = response.result.lstCompositionProfile;
-				this.lstImplementationProcess = response.result.lstImplementationProcess;
+				this.model = response.result.model
+				this.files = response.result.lstFiles
 
 			} else {
 				this.toastr.error(response.message)
