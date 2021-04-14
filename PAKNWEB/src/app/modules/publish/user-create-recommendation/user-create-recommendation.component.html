@@ -6,8 +6,8 @@
 		<div class="row justify-content-between pt-5">
 			<div class="col main-ct pr-3 pr-lg-5">
 				<ol class="breadcrumb px-0 bg-transparent">
-					<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-					<li class="breadcrumb-item"><a href="#">Phản ánh, Kiến nghị</a></li>
+					<li class="breadcrumb-item"><a [routerLink]="['/cong-bo/trang-chu']">Trang chủ</a></li>
+					<li class="breadcrumb-item"><a [routerLink]="['//cong-bo/phan-anh-kien-nghi']">Phản ánh, Kiến nghị</a></li>
 					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id == 0">Tạo mới phản ánh, Kiến nghị</li>
 					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id != 0">Cập nhật phản ánh, Kiến nghị</li>
 				</ol>
@@ -16,13 +16,11 @@
 						<label class="mb-1">PAKN về việc <span class="cl-red">(*)</span></label>
 						<input class="form-control" type="text" [(ngModel)]="model.title" maxlength="500" formControlName="title" (blur)="searchRecommendation()"
 							placeholder="Nhập..." />
-						<!-- <p-autoComplete [(ngModel)]="model.title" field="title" maxlength="500" formControlName="title" placeholder="Nhập..." [suggestions]="resultsRecommendation"
-							inputStyleClass="form-control" (completeMethod)="searchRecommendation($event)"></p-autoComplete>
 						<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error">
 							<div *ngIf="f.title.errors.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
-						</div> -->
+						</div>
 					</div>
 					<div class="col-12 form-group" *ngIf="resultsRecommendation.length>0">
 						<div class="email-list mini-scroll">
@@ -38,7 +36,9 @@
 					</div>
 					<div class="col-12 form-group">
 						<label class="mb-1">Nội dung <span class="cl-red">(*)</span></label>
-						<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" rows="6" placeholder="Nhập nội dung..."></textarea>
+						<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" rows="6" placeholder="Nhập nội dung..."
+							(blur)="hightLightText()"></textarea>
+						<div id="contentRecommendation"></div>
 						<div *ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error">
 							<div *ngIf="f.content.errors.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>

@@ -20,6 +20,7 @@ import { ViewReflectionsRecommendationComponent } from './view-reflections-recom
 import { CreateRecommendationComponent } from './user-create-recommendation/user-create-recommendation.component'
 import { MyRecommendationComponent } from './my-recommendation/my-recommendation.component'
 import { from } from 'rxjs'
+import { EditorModule } from 'primeng/editor'
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
 
 @NgModule({
@@ -36,6 +37,17 @@ import { ViewRecommendationPersonalComponent } from './view-recommendation-perso
 		MyRecommendationComponent,
 		ViewRecommendationPersonalComponent,
 	],
-	imports: [CommonModule, PublishRoutingModule, NgSelectModule, ReactiveFormsModule, FormsModule, SharedModule, PaginatorModule, BsDatepickerModule.forRoot(), TooltipModule],
+	imports: [
+		CommonModule,
+		PublishRoutingModule,
+		NgSelectModule,
+		ReactiveFormsModule,
+		FormsModule,
+		SharedModule,
+		PaginatorModule,
+		EditorModule,
+		BsDatepickerModule.forRoot(),
+		TooltipModule,
+	],
 })
 export class PublishModule {}

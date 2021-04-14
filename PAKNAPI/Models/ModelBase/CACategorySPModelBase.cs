@@ -1425,6 +1425,30 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class CAWordGetListSuggest
+	{
+		private SQLCon _sQLCon;
+
+		public CAWordGetListSuggest(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAWordGetListSuggest()
+		{
+		}
+
+		public string Name { get; set; }
+		public string Description { get; set; }
+
+		public async Task<List<CAWordGetListSuggest>> CAWordGetListSuggestDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAWordGetListSuggest>("CA_WordGetListSuggest", DP)).ToList();
+		}
+	}
+
 	public class CAWordInsert
 	{
 		private SQLCon _sQLCon;

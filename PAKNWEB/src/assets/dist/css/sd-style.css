@@ -1446,3 +1446,21 @@ body .ui-paginator .ui-dropdown .ui-dropdown-trigger, body .ui-paginator .ui-dro
 	max-height: 280px;
 	overflow: auto;
 }
+.email-list .message{	
+	border-bottom: 1px solid #E5E5E5;
+}
+.email-list .message:last-child{
+	border-bottom: none;
+}
+body .ui-editor-container .ui-editor-toolbar{
+	display: none;
+}
+body .ui-editor-container .ui-editor-content {
+	border: 1px solid #c8c8c8!important;
+	border-radius: 3px;
+	font-family: Inter, sans-serif!important;
+	font-size: 16px!important;
+}
+.body .ui-editor-container .ui-editor-content .ql-editor{
+	background-color: transparent!important;
+}
