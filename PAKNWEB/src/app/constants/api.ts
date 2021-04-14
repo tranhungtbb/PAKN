@@ -118,6 +118,7 @@ export class Api {
 
 	//tin tuc
 	public static NewsGetAllOnPage = 'NESPBase/NENewsGetAllOnPageBase'
+	public static NewsGetListHomePage = 'NESPBase/NENewsGetListHomePage'
 	public static NewsGetById = 'NESPBase/NENewsGetByIDBase'
 	public static NewsInsert = 'NESPBase/NENewsInsertBase'
 	public static NewsUpdate = 'NESPBase/NENewsUpdateBase'
