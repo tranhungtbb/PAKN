@@ -117,4 +117,11 @@ export class IndexComponent implements OnInit {
 			}
 		})
 	}
+
+	redirectDetailNews(id: any) {
+		this._router.navigate(['/cong-bo/tin-tuc-su-kien/' + id])
+	}
+	redirectNews() {
+		this._router.navigate(['/cong-bo/tin-tuc-su-kien'])
+	}
 }

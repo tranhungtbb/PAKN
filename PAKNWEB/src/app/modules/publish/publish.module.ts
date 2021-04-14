@@ -22,6 +22,7 @@ import { MyRecommendationComponent } from './my-recommendation/my-recommendation
 import { from } from 'rxjs'
 import { EditorModule } from 'primeng/editor'
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
+import { ViewNewsComponent } from './view-news/view-news.component'
 
 @NgModule({
 	declarations: [
@@ -29,6 +30,7 @@ import { ViewRecommendationPersonalComponent } from './view-recommendation-perso
 		IndexComponent,
 		AdministrativeProceduresComponent,
 		NewsComponent,
+		ViewNewsComponent,
 		ReflectionsRecommendationsComponent,
 		IntroduceComponent,
 		SupportComponent,
