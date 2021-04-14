@@ -15,6 +15,7 @@ export class PublishComponent implements OnInit, OnChanges {
 
 	activeUrl: string = ''
 	isHasToken: boolean = this.storageService.getIsHaveToken()
+	typeUserLoginPublish: number = this.storageService.getTypeObject()
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
