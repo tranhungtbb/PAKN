@@ -7,6 +7,8 @@ import { PuRecommendationService } from 'src/app/services/pu-recommendation.serv
 import { NewsService } from 'src/app/services/news.service'
 import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 
+declare var $: any
+
 @Component({
 	selector: 'app-index',
 	templateUrl: './index.component.html',
@@ -22,7 +24,7 @@ export class IndexComponent implements OnInit {
 	ngOnInit() {
 		this.getData()
 	}
-	getData() {
+	async getData() {
 		// list recommendation order by count click
 		this._service.getListOrderByCountClick({ status: RECOMMENDATION_STATUS.FINISED }).subscribe((res) => {
 			if (res != undefined) {
@@ -61,6 +63,30 @@ export class IndexComponent implements OnInit {
 			return
 		})
 		// list thủ tục hành chính
+	}
+
+	ngAfterViewInit() {
+		setTimeout(function () {
+			$('.owl-carousel').owlCarousel({
+				loop: false,
+				margin: 30,
+				nav: false,
+				autoplay: true,
+				autoplayTimeout: 5000,
+				autoplayHoverPause: true,
+				responsive: {
+					0: {
+						items: 1,
+					},
+					600: {
+						items: 2,
+					},
+					1000: {
+						items: 2,
+					},
+				},
+			})
+		}, 200)
 	}
 
 	getShortName(string) {
