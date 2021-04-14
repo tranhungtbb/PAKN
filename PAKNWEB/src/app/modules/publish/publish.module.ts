@@ -5,7 +5,6 @@ import { NgSelectModule } from '@ng-select/ng-select'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { PublishRoutingModule } from './publish-routing.module'
 import { PaginatorModule } from 'primeng/paginator'
-import { CarouselModule } from 'ngx-owl-carousel-o'
 
 import { PublishComponent } from './publish.component'
 import { SharedModule } from '../../shared/shared.module'
@@ -48,7 +47,6 @@ import { ViewRecommendationPersonalComponent } from './view-recommendation-perso
 		PaginatorModule,
 		BsDatepickerModule.forRoot(),
 		TooltipModule,
-		CarouselModule,
 		EditorModule,
 	],
 })

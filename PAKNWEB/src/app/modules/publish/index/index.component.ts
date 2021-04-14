@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { OwlOptions } from 'ngx-owl-carousel-o'
 import { DomSanitizer } from '@angular/platform-browser'
 
 import { PuRecommendation } from 'src/app/models/recommendationObject'
@@ -20,28 +19,6 @@ export class IndexComponent implements OnInit {
 	ReflectionsRecommendations: Array<PuRecommendation>
 	news: any[]
 	firstNews: any
-	customOptions: OwlOptions = {
-		loop: true,
-		mouseDrag: false,
-		touchDrag: false,
-		pullDrag: false,
-		dots: true,
-		navSpeed: 200,
-		navText: ['', ''],
-		responsive: {
-			0: {
-				items: 1,
-			},
-			600: {
-				items: 2,
-			},
-			1000: {
-				items: 3,
-			},
-		},
-		nav: false,
-	}
-
 	ngOnInit() {
 		this.getData()
 	}
