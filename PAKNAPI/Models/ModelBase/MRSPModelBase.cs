@@ -608,6 +608,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
+		public int? Rank { get; set; }
 		public int Id { get; set; }
 		public string Title { get; set; }
 		public string CreatedDate { get; set; }

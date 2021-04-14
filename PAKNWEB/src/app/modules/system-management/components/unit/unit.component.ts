@@ -112,7 +112,8 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			this.rolesList = res.result.SYRoleGetAll
 		})
 
-		//
+		//bind parent
+		this.childCreateOrUpdateUser.parentUnit = this
 	}
 	ngAfterViewInit() {}
 

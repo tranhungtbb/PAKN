@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { OwlOptions } from 'ngx-owl-carousel-o'
 import { DomSanitizer } from '@angular/platform-browser'
 
 import { PuRecommendation } from 'src/app/models/recommendationObject'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { NewsService } from 'src/app/services/news.service'
 import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+
+declare var $: any
 
 @Component({
 	selector: 'app-index',
@@ -20,32 +21,10 @@ export class IndexComponent implements OnInit {
 	ReflectionsRecommendations: Array<PuRecommendation>
 	news: any[]
 	firstNews: any
-	customOptions: OwlOptions = {
-		loop: true,
-		mouseDrag: false,
-		touchDrag: false,
-		pullDrag: false,
-		dots: true,
-		navSpeed: 200,
-		navText: ['', ''],
-		responsive: {
-			0: {
-				items: 1,
-			},
-			600: {
-				items: 2,
-			},
-			1000: {
-				items: 3,
-			},
-		},
-		nav: false,
-	}
-
 	ngOnInit() {
 		this.getData()
 	}
-	getData() {
+	async getData() {
 		// list recommendation order by count click
 		this._service.getListOrderByCountClick({ status: RECOMMENDATION_STATUS.FINISED }).subscribe((res) => {
 			if (res != undefined) {
@@ -86,6 +65,30 @@ export class IndexComponent implements OnInit {
 		// list thủ tục hành chính
 	}
 
+	ngAfterViewInit() {
+		setTimeout(function () {
+			$('.owl-carousel').owlCarousel({
+				loop: false,
+				margin: 30,
+				nav: false,
+				autoplay: true,
+				autoplayTimeout: 5000,
+				autoplayHoverPause: true,
+				responsive: {
+					0: {
+						items: 1,
+					},
+					600: {
+						items: 2,
+					},
+					1000: {
+						items: 2,
+					},
+				},
+			})
+		}, 200)
+	}
+
 	getShortName(string) {
 		var names = string.split(' '),
 			initials = names[0].substring(0, 1).toUpperCase()
@@ -113,5 +116,12 @@ export class IndexComponent implements OnInit {
 				})
 			}
 		})
+	}
+
+	redirectDetailNews(id: any) {
+		this._router.navigate(['/cong-bo/tin-tuc-su-kien/' + id])
+	}
+	redirectNews() {
+		this._router.navigate(['/cong-bo/tin-tuc-su-kien'])
 	}
 }
