@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+	<AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
     <UserSecretsId>4c42c120-df39-447b-94c0-57af5ec1e3c8</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
@@ -15,6 +16,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Upload\**" />
+    <Content Remove="Upload\**" />
+    <EmbeddedResource Remove="Upload\**" />
+    <None Remove="Upload\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Bugsnag.AspNet.Core" Version="2.2.1" />
@@ -34,8 +42,15 @@
     <Folder Include="DataBaseAuto\" />
     <Folder Include="Models\Results\" />
     <Folder Include="BusinessLogic\" />
-    <Folder Include="Upload\Remind\" />
+	<Folder Include="Upload\Remind\" />
   </ItemGroup>
-
-
+  
+	<ItemGroup>
+		<Content Include="Upload\Remind\**">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<Target Name="CreateAppDataFolder" AfterTargets="AfterPublish">
+		<MakeDir Directories="$(PublishUrl)AppData" Condition="!Exists('$(PublishUrl)AppData')" />
+	</Target>
 </Project>

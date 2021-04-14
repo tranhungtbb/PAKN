@@ -1,0 +1,49 @@
+import { Injectable } from '@angular/core'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { ServiceInvokerService } from '../commons/service-invoker.service'
+import { Observable } from 'rxjs'
+import { AppSettings } from '../constants/app-setting'
+import { Api } from '../constants/api'
+import { UserInfoStorageService } from '../commons/user-info-storage.service'
+import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
+
+@Injectable({
+	providedIn: 'root',
+})
+export class AccountService {
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStronageService: UserInfoStorageService) {}
+
+	tempheaders = new HttpHeaders({
+		ipAddress: this.localStronageService.getIpAddress() && this.localStronageService.getIpAddress() != 'null' ? this.localStronageService.getIpAddress() : '',
+		macAddress: '',
+		logAction: encodeURIComponent(LOG_ACTION.INSERT),
+		logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+	})
+
+	getUserInfo(): Observable<any> {
+		let url = `${AppSettings.API_ADDRESS}${Api.AccountGetInfo}`
+		return this.serviceInvoker.get({}, url)
+	}
+
+	changePassword(body: any): Observable<any> {
+		let url = `${AppSettings.API_ADDRESS}${Api.AccountChangePassword}`
+
+		var form = new FormData()
+		for (var b in body) {
+			form.append(b, body[b])
+		}
+
+		return this.serviceInvoker.post(form, url)
+	}
+
+	updateInfoUserCurrent(body: any) {
+		let url = `${AppSettings.API_ADDRESS}${Api.AccountUpdateInfo}`
+
+		var form = new FormData()
+		for (var b in body) {
+			form.append(b, body[b])
+		}
+
+		return this.serviceInvoker.post(form, url)
+	}
+}
