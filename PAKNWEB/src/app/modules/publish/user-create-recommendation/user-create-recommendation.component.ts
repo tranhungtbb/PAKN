@@ -237,11 +237,11 @@ export class CreateRecommendationComponent implements OnInit {
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
 		if (this.model.content == null || this.model.content == '') {
-			return;
+			return
 		}
 
 		if (this.model.title == null || this.model.title == '') {
-			return;
+			return
 		}
 		this.submitted = true
 		if (this.form.invalid) {
@@ -310,14 +310,19 @@ export class CreateRecommendationComponent implements OnInit {
 	hightLightText() {
 		if (this.model.content != null && this.model.content != '' && this.model.content.trim() != '') {
 			let content = ''
-			content = this.model.content
+			content = this.model.content.replace(/\\n/g, String.fromCharCode(13, 10))
 			for (let index = 0; index < this.lstDictionariesWord.length; index++) {
 				content = content.replace(
 					this.lstDictionariesWord[index].name,
-					'<span class="text-danger" title="' + this.lstDictionariesWord[index].description + '">' + this.lstDictionariesWord[index].name + '</span>'
+					'<span class="txthighlight" title="' + this.lstDictionariesWord[index].description + '">' + this.lstDictionariesWord[index].name + '</span>'
 				)
 			}
+			$('#contentRecommendation').addClass('show')
+			document.getElementById('contentRecommendation').style.height = document.getElementById('inputContent').style.height
 			$('#contentRecommendation').html(content)
 		}
+	}
+	showEditContent() {
+		$('#contentRecommendation').removeClass('show')
 	}
 }
