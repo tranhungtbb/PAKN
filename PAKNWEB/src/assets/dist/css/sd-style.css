@@ -1464,3 +1464,6 @@ body .ui-editor-container .ui-editor-content {
 .body .ui-editor-container .ui-editor-content .ql-editor{
 	background-color: transparent!important;
 }
+.media-body a{	
+	color: #222;
+}
