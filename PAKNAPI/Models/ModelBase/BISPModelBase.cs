@@ -35,6 +35,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _bIBusinessInsertIN.IsDeleted);
 			DP.Add("OrgPhone", _bIBusinessInsertIN.OrgPhone);
 			DP.Add("OrgEmail", _bIBusinessInsertIN.OrgEmail);
+			DP.Add("RepresentativeBirthDay", _bIBusinessInsertIN.RepresentativeBirthDay);
 			DP.Add("ProvinceId", _bIBusinessInsertIN.ProvinceId);
 			DP.Add("CreatedDate", _bIBusinessInsertIN.CreatedDate);
 			DP.Add("UpdatedDate", _bIBusinessInsertIN.UpdatedDate);
@@ -59,7 +60,6 @@ namespace PAKNAPI.ModelBase
 			DP.Add("NativePlace", _bIBusinessInsertIN.NativePlace);
 			DP.Add("PermanentPlace", _bIBusinessInsertIN.PermanentPlace);
 			DP.Add("Nation", _bIBusinessInsertIN.Nation);
-			DP.Add("RepresentativeBirthDay", _bIBusinessInsertIN.RepresentativeBirthDay);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_BusinessInsert", DP));
 		}
@@ -75,6 +75,7 @@ namespace PAKNAPI.ModelBase
 		public bool? IsDeleted { get; set; }
 		public string OrgPhone { get; set; }
 		public string OrgEmail { get; set; }
+		public DateTime? RepresentativeBirthDay { get; set; }
 		public int? ProvinceId { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public DateTime? UpdatedDate { get; set; }
@@ -99,7 +100,6 @@ namespace PAKNAPI.ModelBase
 		public string NativePlace { get; set; }
 		public string PermanentPlace { get; set; }
 		public string Nation { get; set; }
-		public DateTime? RepresentativeBirthDay { get; set; }
 	}
 
 	public class BIIndividualInsert
@@ -119,7 +119,6 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("FullName", _bIIndividualInsertIN.FullName);
-			DP.Add("Code", _bIIndividualInsertIN.Code);
 			DP.Add("IsActived", _bIIndividualInsertIN.IsActived);
 			DP.Add("IsDeleted", _bIIndividualInsertIN.IsDeleted);
 			DP.Add("ProvinceId", _bIIndividualInsertIN.ProvinceId);
@@ -131,6 +130,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("CreatedBy", _bIIndividualInsertIN.CreatedBy);
 			DP.Add("UpdatedBy", _bIIndividualInsertIN.UpdatedBy);
 			DP.Add("Status", _bIIndividualInsertIN.Status);
+			DP.Add("Code", _bIIndividualInsertIN.Code);
 			DP.Add("Address", _bIIndividualInsertIN.Address);
 			DP.Add("Email", _bIIndividualInsertIN.Email);
 			DP.Add("Phone", _bIIndividualInsertIN.Phone);
@@ -149,7 +149,6 @@ namespace PAKNAPI.ModelBase
 	public class BIIndividualInsertIN
 	{
 		public string FullName { get; set; }
-		public string Code { get; set; }
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public int? ProvinceId { get; set; }
@@ -161,6 +160,7 @@ namespace PAKNAPI.ModelBase
 		public int? CreatedBy { get; set; }
 		public int? UpdatedBy { get; set; }
 		public int? Status { get; set; }
+		public string Code { get; set; }
 		public string Address { get; set; }
 		public string Email { get; set; }
 		public string Phone { get; set; }
