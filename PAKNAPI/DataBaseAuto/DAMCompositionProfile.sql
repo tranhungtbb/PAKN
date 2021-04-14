@@ -16,11 +16,11 @@ BEGIN
 		[Id],
 		[AdministrationId],
 		[NameExhibit],
+		[Form],
+		[FormType],
 		[OriginalForm],
 		[CopyForm],
-		[IsBind],
-		[Form],
-		[FormType]
+		[IsBind]
 	FROM [DAM_CompositionProfile]
 	WHERE [Id] = @Id
 END
@@ -43,11 +43,11 @@ BEGIN
 		[Id],
 		[AdministrationId],
 		[NameExhibit],
+		[Form],
+		[FormType],
 		[OriginalForm],
 		[CopyForm],
-		[IsBind],
-		[Form],
-		[FormType]
+		[IsBind]
 	FROM [DAM_CompositionProfile]
 END
 GO
@@ -72,11 +72,11 @@ BEGIN
 		[Id],
 		[AdministrationId],
 		[NameExhibit],
+		[Form],
+		[FormType],
 		[OriginalForm],
 		[CopyForm],
-		[IsBind],
-		[Form],
-		[FormType]
+		[IsBind]
 	FROM [DAM_CompositionProfile]
 	ORDER BY [Id]
 	OFFSET (@PageIndex-1) * @PageSize ROWS
@@ -97,32 +97,32 @@ GO
 CREATE PROCEDURE [dbo].[DAM_CompositionProfileInsert]
 	@AdministrationId int = null,
 	@NameExhibit nvarchar(2000) = null,
+	@Form nvarchar(100) = null,
+	@FormType nvarchar(50) = null,
 	@OriginalForm tinyint = null,
 	@CopyForm tinyint = null,
-	@IsBind bit = null,
-	@Form nvarchar(100) = null,
-	@FormType nvarchar(50) = null
+	@IsBind bit = null
 AS
 BEGIN
 	INSERT INTO [DAM_CompositionProfile]
 	(
 		[AdministrationId],
 		[NameExhibit],
+		[Form],
+		[FormType],
 		[OriginalForm],
 		[CopyForm],
-		[IsBind],
-		[Form],
-		[FormType]
+		[IsBind]
 	)
 	VALUES
 	(
 		@AdministrationId,
 		@NameExhibit,
+		@Form,
+		@FormType,
 		@OriginalForm,
 		@CopyForm,
-		@IsBind,
-		@Form,
-		@FormType
+		@IsBind
 	)
 END
 GO
@@ -141,21 +141,21 @@ CREATE PROCEDURE [dbo].[DAM_CompositionProfileUpdate]
 	@Id int = null,
 	@AdministrationId int = null,
 	@NameExhibit nvarchar(2000) = null,
+	@Form nvarchar(100) = null,
+	@FormType nvarchar(50) = null,
 	@OriginalForm tinyint = null,
 	@CopyForm tinyint = null,
-	@IsBind bit = null,
-	@Form nvarchar(100) = null,
-	@FormType nvarchar(50) = null
+	@IsBind bit = null
 AS
 BEGIN
 	UPDATE [DAM_CompositionProfile] SET
 		[AdministrationId] = @AdministrationId,
 		[NameExhibit] = @NameExhibit,
+		[Form] = @Form,
+		[FormType] = @FormType,
 		[OriginalForm] = @OriginalForm,
 		[CopyForm] = @CopyForm,
-		[IsBind] = @IsBind,
-		[Form] = @Form,
-		[FormType] = @FormType
+		[IsBind] = @IsBind
 	WHERE [Id] = @Id
 END
 GO

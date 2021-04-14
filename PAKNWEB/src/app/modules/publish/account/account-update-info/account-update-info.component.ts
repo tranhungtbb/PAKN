@@ -7,6 +7,8 @@ import { FormBuilder, FormControl, FormGroup, Validator, Validators } from '@ang
 import { DataService } from 'src/app/services/sharedata.service'
 import { DiadanhService } from 'src/app/services/diadanh.service'
 import { UserInfoObject } from 'src/app/models/UserObject'
+import { resultMemoize } from '@ngrx/store'
+import { COMMONS } from 'src/app/commons/commons'
 
 @Component({
 	selector: 'app-account-update-info',
@@ -24,6 +26,7 @@ export class AccountUpdateInfoComponent implements OnInit {
 
 	formData: FormGroup
 	model: UserInfoObject = new UserInfoObject()
+	modeCopy: UserInfoObject
 
 	listNation: any[] = [{ id: '1', name: 'Việt Nam' }]
 	listProvince: any[] = []
@@ -96,17 +99,17 @@ export class AccountUpdateInfoComponent implements OnInit {
 	ngOnInit() {
 		this.getUserInfo()
 		this.formData = this.formBuider.group({
-			userName: [this.model.userName, [Validators.required]],
+			//userName: [this.model.userName, [Validators.required]],
 			fullName: [this.model.fullName, [Validators.required]],
 			dateOfBirth: [this.model.dateOfBirth, [Validators.required]],
 			email: [this.model.email, [Validators.required, Validators.email]],
-			phone: [this.model.phone, [Validators.required]],
+			//phone: [this.model.phone, [Validators.required,Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
 			nation: [this.model.nation, [Validators.required]],
 			provinceId: [this.model.provinceId, [Validators.required]],
 			districtId: [this.model.districtId, [Validators.required]],
 			wardsId: [this.model.wardsId, [Validators.required]],
 			address: [this.model.address, [Validators.required]],
-			idCard: [this.model.idCard, [Validators.required]],
+			idCard: [this.model.idCard, [Validators.required, Validators.pattern(/^([0-9]){9,12}$/g)]],
 			issuedPlace: [this.model.issuedPlace, [Validators.required]],
 			issuedDate: [this.model.issuedDate, [Validators.required]],
 			gender: [this.model.gender, [Validators.required]],
@@ -120,7 +123,37 @@ export class AccountUpdateInfoComponent implements OnInit {
 				return
 			}
 			this.model = res.result
+			this.model = res.result
 			this.onChangeNation()
+		})
+	}
+
+	onReSet() {
+		this.model = { ...this.modeCopy }
+	}
+	submitted = false
+	onSave() {
+		this.submitted = true
+
+		let fDob: any = document.querySelector('#_dateOfBirth')
+		let fDateIssue: any = document.querySelector('#_issuedDate')
+
+		this.model.dateOfBirth = fDob.value
+		this.model.issuedDate = fDateIssue.value
+
+		if (this.formData.invalid) {
+			this.toast.error('Dữ liệu không hợp lệ')
+			return
+		}
+
+		this.accountService.updateInfoUserCurrent(this.model).subscribe((res) => {
+			if (res.success != 'OK') {
+				this.toast.error(res.message)
+				return
+			}
+
+			this.toast.success(COMMONS.UPDATE_SUCCESS)
+			this.router.navigate(['/cong-bo/tai-khoan/thong-tin'])
 		})
 	}
 }

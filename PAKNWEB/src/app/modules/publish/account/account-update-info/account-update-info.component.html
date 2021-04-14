@@ -97,6 +97,9 @@
 				<div *ngIf="f.idCard.errors.required">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
 				</div>
+				<div *ngIf="fInfo.idCard.errors.pattern">
+					<span class="help-block">Số CMND/CCCD không hợp lệ!</span>
+				</div>
 			</div>
 		</div>
 		<div class="col-12 col-lg-4 form-group">
@@ -145,8 +148,8 @@
 
 	<div class="row mb-4">
 		<div class="col text-right clearfix">
-			<button type="button" class="btn text-white border-0 rounded-xl mt-3 grd-xanhngoc pull-right" (click)="onSave($event)">Cập nhật</button>
-			<button type="button" class="btn grd-brown text-dark border-0 rounded-xl mt-3 mr-3 pull-right">Đặt lại</button>
+			<button type="button" class="btn text-white border-0 rounded-xl mt-3 grd-xanhngoc pull-right" (click)="onSave()">Cập nhật</button>
+			<button type="button" class="btn grd-brown text-dark border-0 rounded-xl mt-3 mr-3 pull-right" (click)="onReSet()">Đặt lại</button>
 		</div>
 	</div>
 </div>

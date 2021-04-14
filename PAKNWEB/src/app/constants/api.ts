@@ -157,6 +157,7 @@ export class Api {
 	//tai khoan ca nhan, doanh nghiep
 	public static AccountGetInfo = 'user/UserGetInfo'
 	public static AccountChangePassword = 'User/UserChagePwd'
+	public static AccountUpdateInfo = 'User//UpdateCurrentInfo'
 
 	//Administrative Formalities
 	public static AdministrativeFormalitiesGetDropdown = 'AdministrativeFormalities/AdministrativeFormalitiesGetDropdown'

@@ -485,6 +485,89 @@ namespace PAKNAPI.Controllers
 			}
         }
 
+		[HttpPost]
+		[Route("UpdateCurrentInfo")]
+		[Authorize]
+		public async Task<object> UpdateCurrentInfo([FromForm] AccountInfoModel model)
+        {
+            try
+            {
+				var users = _httpContextAccessor.HttpContext.User.Identities.FirstOrDefault().Claims; //FindFirst(ClaimTypes.NameIdentifier);
+
+				var userId = users.FirstOrDefault(c => c.Type.Equals("Id", StringComparison.OrdinalIgnoreCase)).Value;
+				var accInfo = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(long.Parse(userId));
+
+                if (accInfo == null || !accInfo.Any())
+                {
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Tài khoản không tồn tại" };
+				}
+
+				DateTime birdDay, dateOfIssue;
+				if (!DateTime.TryParseExact(model.DateOfBirth, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
+				{
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+				}
+				if (!DateTime.TryParseExact(model.IssuedDate, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
+				{
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+				}
+
+				if (accInfo[0].TypeId == 2)
+                {
+					var info = await new BIIndividualGetByEmail(_appSetting).BIIndividualGetByEmailDAO(accInfo[0].Email);
+
+					var _model = new BIInvididualUpdateInfoIN
+					{
+						Id = info[0].Id,
+						FullName = model.FullName,
+						DateOfBirth = birdDay,
+						Email = model.Email,
+						Nation = model.Nation,
+						ProvinceId = model.ProvinceId,
+						DistrictId = model.DistrictId,
+						WardsId = model.WardsId,
+						Address = model.Address,
+						IdCard = model.IdCard,
+						IssuedPlace = model.IssuedPlace,
+						IssuedDate = dateOfIssue,
+						Gender = model.Gender,
+					};
+
+					var rs = await new BIInvididualUpdateInfo(_appSetting).BIInvididualUpdateInfoDAO(_model);
+				}
+				else if (accInfo[0].TypeId == 3)
+                {
+					var info = await new BIBusinessGetRepresentativeEmail(_appSetting).BIBusinessGetRepresentativeEmailDAO(accInfo[0].Email);
+					
+					var _model = new BIBusinessUpdateInfoIN
+					{
+						Id = info[0].Id,
+						FullName = model.FullName,
+						DateOfBirth = birdDay,
+						Email = model.Email,
+						Nation = model.Nation,
+						ProvinceId = model.ProvinceId,
+						DistrictId = model.DistrictId,
+						WardsId = model.WardsId,
+						Address = model.Address,
+						IdCard = model.IdCard,
+						IssuedPlace = model.IssuedPlace,
+						IssuedDate = dateOfIssue,
+						Gender = model.Gender,
+					};
+					var rs = await new BIBusinessUpdateInfo(_appSetting).BIBusinessUpdateInfoDAO(_model);
+				}
+                
+
+				return new Models.Results.ResultApi { Success = ResultCode.OK};
+			}
+            catch (Exception ex)
+            {
+				_bugsnag.Notify(ex);
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message};
+			}
+        }
+
 
 		#endregion
 
