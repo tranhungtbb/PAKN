@@ -622,6 +622,39 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class MRRecommendationGetSuggestReply
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGetSuggestReply(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGetSuggestReply()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Title { get; set; }
+		public string Name { get; set; }
+		public DateTime? SendDate { get; set; }
+		public string ContentReply { get; set; }
+		public int? CountHashtag { get; set; }
+
+		public async Task<List<MRRecommendationGetSuggestReply>> MRRecommendationGetSuggestReplyDAO(string ListIdHashtag, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ListIdHashtag", ListIdHashtag);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetSuggestReply>("MR_Recommendation_GetSuggestReply", DP)).ToList();
+		}
+	}
+
 	public class MRRecommendationHashtagDeleteByRecommendationId
 	{
 		private SQLCon _sQLCon;
@@ -1112,12 +1145,13 @@ namespace PAKNAPI.ModelBase
 		public DateTime? EndDate { get; set; }
 		public int? RecommendationKNCTId { get; set; }
 
-		public async Task<List<MRRecommendationKNCTGetAllWithProcess>> MRRecommendationKNCTGetAllWithProcessDAO(string Code, string Content, string Unit, int? Field, int? Status, int? PageSize, int? PageIndex)
+		public async Task<List<MRRecommendationKNCTGetAllWithProcess>> MRRecommendationKNCTGetAllWithProcessDAO(string Code, string Content, string Unit, string Place, int? Field, int? Status, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Code", Code);
 			DP.Add("Content", Content);
 			DP.Add("Unit", Unit);
+			DP.Add("Place", Place);
 			DP.Add("Field", Field);
 			DP.Add("Status", Status);
 			DP.Add("PageSize", PageSize);

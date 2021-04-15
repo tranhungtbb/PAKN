@@ -20,22 +20,24 @@ declare var $: any
 	styleUrls: ['./organization.component.css'],
 })
 export class OrganizationComponent implements OnInit {
+	@ViewChild(OrgRepreFormComponent, { static: true })
+	private child_OrgRepreForm: OrgRepreFormComponent
+	@ViewChild(OrgFormAddressComponent, { static: true })
+	private child_OrgAddressForm: OrgFormAddressComponent
+
 	constructor(private toast: ToastrService, private formBuilder: FormBuilder, private registerService: RegisterService, private router: Router) {}
 
-	date: Date = new Date()
-
-	@ViewChild(OrgRepreFormComponent, { static: false }) child_OrgRepreForm: OrgRepreFormComponent
-	@ViewChild(OrgFormAddressComponent, { static: false }) child_OrgAddressForm: OrgFormAddressComponent
+	dateNow: Date = new Date()
 
 	formLogin: FormGroup
 	formOrgInfo: FormGroup
 
 	model: OrganizationObject = new OrganizationObject()
-
+	nation_enable_type = false
 	ngOnInit() {
+		this.child_OrgAddressForm.model = this.model
+		this.child_OrgRepreForm.model = this.model
 		this.loadFormBuilder()
-		this.child_OrgAddressForm.parentCompo = this
-		this.child_OrgRepreForm.parentCompo = this
 	}
 
 	onSave() {
@@ -48,8 +50,6 @@ export class OrganizationComponent implements OnInit {
 		let fIsDate: any = document.querySelector('#_IsDate')
 		this.model._RepresentativeBirthDay = fDob.value
 		this.model._DateOfIssue = fIsDate.value
-
-		//console.log(this.model);
 
 		if (this.formLogin.invalid || this.formOrgInfo.invalid || this.child_OrgRepreForm.formInfo.invalid || this.child_OrgAddressForm.formOrgAddress.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')

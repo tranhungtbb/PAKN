@@ -89,7 +89,7 @@ export class ListReceiveWaitComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
-					this.listData = response.result.MRRecommendationGetAllOnPage
+					this.listData = response.result.MRRecommendationGetAllWithProcess
 					this.totalRecords = response.result.TotalCount
 				}
 			} else {

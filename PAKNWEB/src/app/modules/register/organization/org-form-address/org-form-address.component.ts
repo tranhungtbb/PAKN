@@ -11,14 +11,10 @@ import { OrganizationObject } from 'src/app/models/RegisterObject'
 	styleUrls: ['./org-form-address.component.css'],
 })
 export class OrgFormAddressComponent implements OnInit {
-	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService) {
-		this.model = this.parentCompo.model
-	}
-	public parentCompo: OrganizationComponent
-
+	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService) {}
 	formOrgAddress: FormGroup
 	fOrgAddressSubmitted = false
-	model: OrganizationObject
+	public model: OrganizationObject = new OrganizationObject()
 
 	get fOrgAdr() {
 		return this.formOrgAddress.controls
@@ -33,6 +29,7 @@ export class OrgFormAddressComponent implements OnInit {
 		{ value: false, text: 'Nữ' },
 	]
 
+	nation_enable_type = false
 	//event
 	onChangeNation() {
 		this.listProvince = []

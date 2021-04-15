@@ -205,6 +205,14 @@ export class RecommendationService {
 		return this.serviceInvoker.getNotLoading(request, AppSettings.API_ADDRESS + Api.RecommendationGetSuggestCreate, headers)
 	}
 
+	recommendationGetSuggestReply(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.getNotLoading(request, AppSettings.API_ADDRESS + Api.RecommendationGetSuggestReply, headers)
+	}
+
 	recommendationExportExcel(request): Observable<any> {
 		let headers = new HttpHeaders({
 			logAction: encodeURIComponent(LOG_ACTION.EXPORT),

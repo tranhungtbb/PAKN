@@ -131,6 +131,7 @@ namespace PAKNAPI.ModelBase
 		public int? WithdrawBy { get; set; }
 		public DateTime? WithdrawDate { get; set; }
 		public string PostType { get; set; }
+		public bool? IsNotification { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -166,6 +167,7 @@ namespace PAKNAPI.ModelBase
 		public int? WithdrawBy { get; set; }
 		public DateTime? WithdrawDate { get; set; }
 		public string PostType { get; set; }
+		public bool? IsNotification { get; set; }
 
 		public async Task<NENews> NENewsGetByID(int? Id)
 		{
@@ -201,6 +203,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Contents", _nENews.Contents);
 			DP.Add("ImagePath", _nENews.ImagePath);
 			DP.Add("PostType", _nENews.PostType);
+			DP.Add("IsNotification", _nENews.IsNotification);
 			DP.Add("NewsType", _nENews.NewsType);
 			DP.Add("ViewCount", _nENews.ViewCount);
 			DP.Add("Url", _nENews.Url);
@@ -227,6 +230,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Contents", _nENews.Contents);
 			DP.Add("ImagePath", _nENews.ImagePath);
 			DP.Add("PostType", _nENews.PostType);
+			DP.Add("IsNotification", _nENews.IsNotification);
 			DP.Add("NewsType", _nENews.NewsType);
 			DP.Add("ViewCount", _nENews.ViewCount);
 			DP.Add("Url", _nENews.Url);

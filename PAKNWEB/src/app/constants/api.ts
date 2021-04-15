@@ -41,6 +41,7 @@ export class Api {
 	public static RecommendationDelete = 'MRSPBase/MRRecommendationDeleteBase'
 	public static RecommendationExport = 'MRSPBase/MRRecommendationExportBase'
 	public static RecommendationGetSuggestCreate = 'MRSPBase/MRRecommendationGetSuggestCreateBase'
+	public static RecommendationGetSuggestReply = 'MRSPBase/MRRecommendationGetSuggestReplyBase'
 
 	public static PuRecommendationGetAllOnPage = 'PURecommendation/PURecommendationAllOnPage'
 	public static PuRecomentdationGetListOrderByCountClick = 'PURecommendation/PURecommendationGetListOrderByCountClick'

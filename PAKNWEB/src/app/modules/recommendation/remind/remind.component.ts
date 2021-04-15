@@ -18,13 +18,8 @@ declare var $: any
 	styleUrls: ['./remind.component.css'],
 })
 export class RemindComponent implements OnInit {
-	constructor(
-		private toastr: ToastrService,
-		private _fb: FormBuilder,
-		private fileService: UploadFileService,
-		private remindService: RemindService,
-		private viewRecommendation: ViewRecommendationComponent
-	) {}
+	constructor(private toastr: ToastrService, private _fb: FormBuilder, private fileService: UploadFileService, private remindService: RemindService) {}
+	public viewRecommendation: ViewRecommendationComponent
 	APIADDRESS: string
 	files: any = []
 	model = new RemindObject()

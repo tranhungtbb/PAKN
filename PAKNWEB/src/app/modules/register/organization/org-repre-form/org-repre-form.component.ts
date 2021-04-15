@@ -12,23 +12,18 @@ import { OrganizationObject } from 'src/app/models/RegisterObject'
 	styleUrls: ['./org-repre-form.component.css'],
 })
 export class OrgRepreFormComponent implements OnInit {
-	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService) {
-		this.model = this.parentCompo.model
-	}
-	public parentCompo: OrganizationComponent
-
-	date: Date = new Date()
+	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService) {}
+	dateNow: Date = new Date()
 	formInfo: FormGroup
 	fInfoSubmitted = false
 
-	model: OrganizationObject
-
+	public model: OrganizationObject = new OrganizationObject()
 	get fInfo() {
 		return this.formInfo.controls
 	}
 
 	///
-	listNation: any[] = [{ id: 1, name: 'Việt Nam' }]
+	listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
 	listProvince: any[] = []
 	listDistrict: any[] = []
 	listVillage: any[] = []
@@ -37,6 +32,7 @@ export class OrgRepreFormComponent implements OnInit {
 		{ value: false, text: 'Nữ' },
 	]
 
+	nation_enable_type = false
 	//event
 	//event
 	onChangeNation() {
@@ -52,6 +48,17 @@ export class OrgRepreFormComponent implements OnInit {
 				}
 			})
 		} else {
+			if (this.model.Nation == '#') {
+				this.nation_enable_type = true
+				this.model.Nation = ''
+				this.model.ProvinceId = 0
+				this.model.DistrictId = 0
+				this.model.WardsId = 0
+				//
+				this.model.OrgProvinceId = 0
+				this.model.OrgDistrictId = 0
+				this.model.OrgWardsId = 0
+			}
 		}
 	}
 	onChangeProvince() {
@@ -88,7 +95,7 @@ export class OrgRepreFormComponent implements OnInit {
 		//form thông tin nguoi dai dien
 		this.formInfo = this.formBuilder.group({
 			//----thông tin người đại diện
-			RepresentativeName: [this.model.RepresentativeName, [Validators.required]], // tên người đại diện
+			RepresentativeName: [this.model.RepresentativeName, [Validators.required, Validators.maxLength(100)]], // tên người đại diện
 			Email: [this.model.Email, [Validators.required, Validators.email]],
 			Gender: [this.model.RepresentativeGender, [Validators.required]],
 			DOB: [this.model._RepresentativeBirthDay, [Validators.required]],
