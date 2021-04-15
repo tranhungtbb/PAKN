@@ -622,6 +622,38 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class MRRecommendationGetSuggestReply
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGetSuggestReply(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGetSuggestReply()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Title { get; set; }
+		public string Name { get; set; }
+		public DateTime? SendDate { get; set; }
+		public int? CountHashtag { get; set; }
+
+		public async Task<List<MRRecommendationGetSuggestReply>> MRRecommendationGetSuggestReplyDAO(string ListIdHashtag, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ListIdHashtag", ListIdHashtag);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetSuggestReply>("MR_Recommendation_GetSuggestReply", DP)).ToList();
+		}
+	}
+
 	public class MRRecommendationHashtagDeleteByRecommendationId
 	{
 		private SQLCon _sQLCon;

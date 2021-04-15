@@ -31,66 +31,6 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
-		[Route("SYUserChangePwdBase")]
-		public async Task<ActionResult<object>> SYUserChangePwdBase(SYUserChangePwdIN _sYUserChangePwdIN)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_sYUserChangePwdIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize("ThePolicy")]
-		[Route("SYUserChangePwdListBase")]
-		public async Task<ActionResult<object>> SYUserChangePwdListBase(List<SYUserChangePwdIN> _sYUserChangePwdINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _sYUserChangePwdIN in _sYUserChangePwdINs)
-				{
-					var result = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_sYUserChangePwdIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
 		[Authorize]
 		[Route("SYUserDeleteBase")]
 		public async Task<ActionResult<object>> SYUserDeleteBase(SYUserDeleteIN _sYUserDeleteIN)

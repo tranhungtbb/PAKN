@@ -32,7 +32,7 @@ export class ViewRecommendationComponent implements OnInit {
 	userLoginId: number = this.storeageService.getUserId()
 	unitLoginId: number = this.storeageService.getUnitId()
 	@ViewChild('file', { static: false }) public file: ElementRef
-	@ViewChild(RemindComponent, { static: false }) remindComponent: RemindComponent
+	@ViewChild(RemindComponent, { static: true }) remindComponent: RemindComponent
 	constructor(
 		private toastr: ToastrService,
 		private fileService: UploadFileService,
@@ -45,6 +45,7 @@ export class ViewRecommendationComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
+		this.remindComponent.viewRecommendation = this
 		this.buildFormForward()
 		this.getDropdown()
 		this.model = new RecommendationViewObject()

@@ -791,6 +791,32 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationGetSuggestReplyBase")]
+		public async Task<ActionResult<object>> MRRecommendationGetSuggestReplyBase(string ListIdHashtag, int? PageSize, int? PageIndex)
+		{
+			try
+			{
+				List<MRRecommendationGetSuggestReply> rsMRRecommendationGetSuggestReply = await new MRRecommendationGetSuggestReply(_appSetting).MRRecommendationGetSuggestReplyDAO(ListIdHashtag, PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationGetSuggestReply", rsMRRecommendationGetSuggestReply},
+						{"TotalCount", rsMRRecommendationGetSuggestReply != null && rsMRRecommendationGetSuggestReply.Count > 0 ? rsMRRecommendationGetSuggestReply[0].RowNumber : 0},
+						{"PageIndex", rsMRRecommendationGetSuggestReply != null && rsMRRecommendationGetSuggestReply.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsMRRecommendationGetSuggestReply != null && rsMRRecommendationGetSuggestReply.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("MRRecommendationHashtagDeleteByRecommendationIdBase")]
@@ -1286,9 +1312,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"MRRecommendationKNCTGetAllWithProcess", rsMRRecommendationKNCTGetAllWithProcess},
-						{"TotalCount", rsMRRecommendationKNCTGetAllWithProcess != null && rsMRRecommendationKNCTGetAllWithProcess.Count > 0 ? rsMRRecommendationKNCTGetAllWithProcess[0].RowNumber : 0},
-						{"PageIndex", rsMRRecommendationKNCTGetAllWithProcess != null && rsMRRecommendationKNCTGetAllWithProcess.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsMRRecommendationKNCTGetAllWithProcess != null && rsMRRecommendationKNCTGetAllWithProcess.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

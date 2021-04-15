@@ -47,6 +47,7 @@ namespace PAKNAPI.ModelBase
 		public int? Status { get; set; }
 		public bool? RepresentativeGender { get; set; }
 		public DateTime RepresentativeBirthDay { get; set; }
+		public string Business { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -97,6 +98,7 @@ namespace PAKNAPI.ModelBase
 		public int? Status { get; set; }
 		public bool? RepresentativeGender { get; set; }
 		public DateTime RepresentativeBirthDay { get; set; }
+		public string Business { get; set; }
 
 		public async Task<BIBusiness> BIBusinessGetByID(long? Id)
 		{
@@ -133,6 +135,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("OrgPhone", _bIBusiness.OrgPhone);
 			DP.Add("OrgEmail", _bIBusiness.OrgEmail);
 			DP.Add("RepresentativeBirthDay", _bIBusiness.RepresentativeBirthDay);
+			DP.Add("Business", _bIBusiness.Business);
 			DP.Add("ProvinceId", _bIBusiness.ProvinceId);
 			DP.Add("CreatedDate", _bIBusiness.CreatedDate);
 			DP.Add("UpdatedDate", _bIBusiness.UpdatedDate);
@@ -174,6 +177,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("OrgEmail", _bIBusiness.OrgEmail);
 			DP.Add("Id", _bIBusiness.Id);
 			DP.Add("RepresentativeBirthDay", _bIBusiness.RepresentativeBirthDay);
+			DP.Add("Business", _bIBusiness.Business);
 			DP.Add("ProvinceId", _bIBusiness.ProvinceId);
 			DP.Add("CreatedDate", _bIBusiness.CreatedDate);
 			DP.Add("UpdatedDate", _bIBusiness.UpdatedDate);
