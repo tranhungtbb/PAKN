@@ -59,6 +59,7 @@ export class IndividualComponent implements OnInit {
 		this.listVillage = []
 
 		this.model.provinceId = ''
+
 		if (this.model.nation == 'Việt Nam') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
@@ -70,9 +71,10 @@ export class IndividualComponent implements OnInit {
 			if (this.model.nation == '#') {
 				this.nation_enable_type = true
 				this.model.nation = ''
-				// this.model.provinceId = 0
-				// this.model.districtId = 0
-				// this.model.wardsId = 0
+				//
+				// this.formInfo.controls.province.disable()
+				// this.formInfo.controls.district.disable()
+				// this.formInfo.controls.village.disable()
 			}
 		}
 	}

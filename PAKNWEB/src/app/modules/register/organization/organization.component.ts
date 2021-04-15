@@ -31,7 +31,7 @@ export class OrganizationComponent implements OnInit {
 
 	formLogin: FormGroup
 	formOrgInfo: FormGroup
-
+	listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
 	model: OrganizationObject = new OrganizationObject()
 	nation_enable_type = false
 	ngOnInit() {
@@ -65,6 +65,17 @@ export class OrganizationComponent implements OnInit {
 		let fIsDate: any = document.querySelector('#_IsDate')
 		this.model._RepresentativeBirthDay = fDob.value
 		this.model._DateOfIssue = fIsDate.value
+
+		if (this.model.Nation != this.listNation[0].value) {
+			this.model.ProvinceId = 0
+			this.model.DistrictId = 0
+			this.model.WardsId = 0
+			//
+			this.model.OrgProvinceId = 0
+			this.model.OrgDistrictId = 0
+			this.model.OrgWardsId = 0
+		}
+
 		if (this.formLogin.invalid || this.formOrgInfo.invalid || this.child_OrgRepreForm.formInfo.invalid || this.child_OrgAddressForm.formOrgAddress.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return

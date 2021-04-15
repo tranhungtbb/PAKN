@@ -58,13 +58,6 @@ export class OrgRepreFormComponent implements OnInit {
 			if (this.model.Nation == '#') {
 				this.nation_enable_type = true
 				this.model.Nation = ''
-				this.model.ProvinceId = 0
-				this.model.DistrictId = 0
-				this.model.WardsId = 0
-				//
-				this.model.OrgProvinceId = 0
-				this.model.OrgDistrictId = 0
-				this.model.OrgWardsId = 0
 			}
 		}
 	}
