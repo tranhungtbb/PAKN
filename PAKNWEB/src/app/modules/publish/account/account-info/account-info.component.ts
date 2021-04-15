@@ -7,6 +7,7 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { AuthenticationService } from 'src/app/services/authentication.service'
 import { DataService } from 'src/app/services/sharedata.service'
+import { DiadanhService } from 'src/app/services/diadanh.service'
 
 import { UserInfoObject } from 'src/app/models/UserObject'
 @Component({
@@ -21,7 +22,8 @@ export class AccountInfoComponent implements OnInit {
 		private accountService: AccountService,
 		private storageService: UserInfoStorageService,
 		private authenService: AuthenticationService,
-		private sharedataService: DataService
+		private sharedataService: DataService,
+		private diadanhService: DiadanhService
 	) {}
 
 	model: UserInfoObject = new UserInfoObject()
@@ -47,6 +49,7 @@ export class AccountInfoComponent implements OnInit {
 				return
 			}
 			this.model = res.result
+			this.onChangeNation()
 		})
 	}
 	signOut(): void {
@@ -59,5 +62,88 @@ export class AccountInfoComponent implements OnInit {
 				//location.href = "/dang-nhap";
 			}
 		})
+	}
+
+	listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
+	listProvince: any[] = []
+	listDistrict: any[] = []
+	listVillage: any[] = []
+
+	listGender: any[] = [
+		{ value: true, text: 'Nam' },
+		{ value: false, text: 'Nữ' },
+	]
+
+	get getProvinceName() {
+		if (this.listProvince == null || this.listProvince.length == 0) {
+			return ''
+		}
+		return this.listProvince.find((c) => c.id == this.model.provinceId).name
+	}
+	get getDistrictName() {
+		if (this.listDistrict == null || this.listDistrict.length == 0) {
+			return ''
+		}
+		return this.listDistrict.find((c) => c.id == this.model.districtId).name
+	}
+	get getWardsName() {
+		if (this.listVillage == null || this.listVillage.length == 0) {
+			return ''
+		}
+		return this.listVillage.find((c) => c.id == this.model.wardsId).name
+	}
+
+	onChangeNation(clearable = false) {
+		if (clearable) {
+			this.listProvince = []
+			this.listDistrict = []
+			this.listVillage = []
+
+			this.model.provinceId = ''
+		}
+		if (this.model.nation == 'Việt Nam') {
+			this.diadanhService.getAllProvince().subscribe((res) => {
+				if (res.success == 'OK') {
+					this.listProvince = res.result.CAProvinceGetAll
+					//get province
+					this.onChangeProvince()
+				}
+			})
+		} else {
+		}
+	}
+	onChangeProvince(clearable = false) {
+		if (clearable) {
+			this.listDistrict = []
+			this.listVillage = []
+
+			this.model.districtId = ''
+			this.model.wardsId = ''
+		}
+		if (this.model.provinceId != null && this.model.provinceId != '') {
+			this.diadanhService.getAllDistrict(this.model.provinceId).subscribe((res) => {
+				if (res.success == 'OK') {
+					this.listDistrict = res.result.CADistrictGetAll
+					//get district
+					this.onChangeDistrict()
+				}
+			})
+		} else {
+		}
+	}
+
+	onChangeDistrict(clearable = false) {
+		if (clearable) {
+			this.listVillage = []
+			this.model.wardsId = ''
+		}
+		if (this.model.districtId != null && this.model.districtId != '') {
+			this.diadanhService.getAllVillage(this.model.provinceId, this.model.districtId).subscribe((res) => {
+				if (res.success == 'OK') {
+					this.listVillage = res.result.CAVillageGetAll
+				}
+			})
+		} else {
+		}
 	}
 }
