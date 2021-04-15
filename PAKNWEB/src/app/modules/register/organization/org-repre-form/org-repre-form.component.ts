@@ -6,6 +6,7 @@ import { OrganizationComponent } from '../organization.component'
 
 import { OrganizationObject } from 'src/app/models/RegisterObject'
 
+declare var $: any
 @Component({
 	selector: 'app-org-repre-form',
 	templateUrl: './org-repre-form.component.html',
@@ -43,10 +44,14 @@ export class OrgRepreFormComponent implements OnInit {
 		this.listVillage = []
 
 		this.model.ProvinceId = ''
-		if (this.model.Nation == 1) {
+		if (this.model.Nation == 'Việt Nam') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listProvince = res.result.CAProvinceGetAll
+
+					this.model.ProvinceId = 37
+					this.model.OrgProvinceId = 37
+					$('#_OrgDistrictId').click()
 				}
 			})
 		} else {
@@ -98,14 +103,16 @@ export class OrgRepreFormComponent implements OnInit {
 		this.formInfo = this.formBuilder.group({
 			//----thông tin người đại diện
 			RepresentativeName: [this.model.RepresentativeName, [Validators.required, Validators.maxLength(100)]], // tên người đại diện
-			Email: [this.model.Email, [Validators.required, Validators.email]],
+			Email: [this.model.Email, [Validators.email]],
 			Gender: [this.model.RepresentativeGender, [Validators.required]],
-			DOB: [this.model._RepresentativeBirthDay, [Validators.required]],
+			DOB: [this.model._RepresentativeBirthDay, []],
 			Nation: [this.model.Nation, [Validators.required]],
 			Province: [this.model.ProvinceId, [Validators.required]], //int
 			District: [this.model.DistrictId, [Validators.required]], // int
 			Village: [this.model.WardsId, [Validators.required]], // int
-			Address: [this.model.Address, [Validators.required]],
+			Address: [this.model.Address, []],
 		})
+
+		this.onChangeNation()
 	}
 }
