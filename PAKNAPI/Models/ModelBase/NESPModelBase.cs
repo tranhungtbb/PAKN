@@ -249,6 +249,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("WithdrawBy", _nENewsUpdateIN.WithdrawBy);
 			DP.Add("WithdrawDate", _nENewsUpdateIN.WithdrawDate);
 			DP.Add("NewsRelateIds", _nENewsUpdateIN.NewsRelateIds);
+			DP.Add("IsNotification", _nENewsUpdateIN.IsNotification);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("NE_NewsUpdate", DP));
 		}
@@ -276,6 +277,7 @@ namespace PAKNAPI.ModelBase
 		public int? WithdrawBy { get; set; }
 		public DateTime? WithdrawDate { get; set; }
 		public string NewsRelateIds { get; set; }
+		public bool? IsNotification { get; set; }
 	}
 
 	public class NERelateGetAll
