@@ -22,14 +22,15 @@ declare var $: any
 	styleUrls: ['./my-recommendation.component.css'],
 })
 export class MyRecommendationComponent implements OnInit {
-	userName: string = "";
-	phone: string = "";
-	recommandationId: number = 0;
-	pageIndex: number = 1;
-	pageSize: number = 20;
-	@ViewChild('table', { static: false }) table: any;
-	totalRecords: number = 0;
-	listData = new Array<RecommendationObject>();
+	userName: string = ''
+	phone: string = ''
+	recommandationId: number = 0
+	pageIndex: number = 1
+	pageSize: number = 20
+	pagination = []
+	@ViewChild('table', { static: false }) table: any
+	totalRecords: number = 0
+	listData = new Array<RecommendationObject>()
 	constructor(
 		private toastr: ToastrService,
 		private fileService: UploadFileService,
@@ -38,22 +39,21 @@ export class MyRecommendationComponent implements OnInit {
 		private _serviceCatalog: CatalogService,
 		private router: Router,
 		private captchaService: CaptchaService,
-		private userService: UserService,
-
-	) { }
+		private userService: UserService
+	) {}
 
 	ngOnInit() {
-		this.userName = this.storageService.getFullName();
-		this.getSoDienThoai();
-		this.getList();
+		this.userName = this.storageService.getFullName()
+		this.getSoDienThoai()
+		this.getList()
 	}
 
 	getSoDienThoai() {
 		this.userService.getById({ id: this.storageService.getUserId() }).subscribe((res) => {
 			if (res.success != 'OK') return
-			var modelUser = res.result.SYUserGetByID[0];
+			var modelUser = res.result.SYUserGetByID[0]
 			if (modelUser && modelUser.phone) {
-				this.phone = modelUser.phone;
+				this.phone = modelUser.phone
 			}
 		})
 	}
@@ -68,31 +68,32 @@ export class MyRecommendationComponent implements OnInit {
 			Status: '',
 			UnitProcessId: '',
 			UserProcessId: this.storageService.getUserId(),
-			PageIndex: this.pageIndex,
+			pageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
 
-		this.recommendationService.recommendationGetListProcess(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				if (response.result != null) {
-					this.listData = []
-					this.listData = response.result.MRRecommendationGetAllWithProcess
-					this.totalRecords = response.result.TotalCount
+		this.recommendationService.recommendationGetListProcess(request).subscribe((res) => {
+			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
+				if (res.result.MRRecommendationGetAllWithProcess.length > 0) {
+					this.listData = res.result.MRRecommendationGetAllWithProcess
+					this.pageIndex = res.result.pageIndex
+					this.totalRecords = res.result.TotalCount
+					this.padi()
+				} else {
+					this.listData = this.pagination = []
+					this.pageIndex = 1
+					this.totalRecords = 0
 				}
 			} else {
-				this.toastr.error(response.message)
+				this.listData = this.pagination = []
+				this.pageIndex = 1
+				this.totalRecords = 0
 			}
 		}),
 			(error) => {
 				console.log(error)
 				alert(error)
 			}
-	}
-
-	onPageChange(event: any) {
-		this.pageSize = event.rows
-		this.pageIndex = event.first / event.rows + 1
-		this.getList()
 	}
 
 	dataStateChange() {
@@ -102,7 +103,7 @@ export class MyRecommendationComponent implements OnInit {
 	}
 
 	sendRecommandation() {
-		this.router.navigateByUrl('/cong-bo/them-moi-kien-nghi');
+		this.router.navigateByUrl('/cong-bo/them-moi-kien-nghi')
 	}
 
 	//delete recommandateion
@@ -150,5 +151,29 @@ export class MyRecommendationComponent implements OnInit {
 			(err) => {
 				console.error(err)
 			}
+	}
+
+	padi() {
+		this.pagination = []
+		for (let i = 0; i < Math.ceil(this.totalRecords / this.pageSize); i++) {
+			this.pagination.push({ index: i + 1 })
+		}
+	}
+
+	changePagination(index: any) {
+		if (this.pageIndex > index) {
+			if (index > 0) {
+				this.pageIndex = index
+				this.getList()
+			}
+			return
+		} else if (this.pageIndex < index) {
+			if (this.pagination.length >= index) {
+				this.pageIndex = index
+				this.getList()
+			}
+			return
+		}
+		return
 	}
 }

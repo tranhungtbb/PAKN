@@ -18,6 +18,7 @@ using PAKNAPI.Models.ModelBase;
 using PAKNAPI.Models.Remind;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using PAKNAPI.Models.Recommendation;
 
 namespace PAKNAPI.Controllers
 {
@@ -118,20 +119,22 @@ namespace PAKNAPI.Controllers
         [Authorize]
         [Route("RemindGetList")]
         // receive org ID
-        public async Task<object> RMRemindGetAll(int? RecommendationId, int? SendOrgId) {
+        public async Task<object> RMRemindGetAll(int? RecommendationId) {
             try
             {
+                var recommentdation = await new RecommendationDAO(_appSetting).RecommendationGetByID(RecommendationId);
                 List<RecommendationForward> lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(RecommendationId)).ToList();
                 var UnitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
                 List<RMRemindObject> result = new List<RMRemindObject>();
-                var x = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-                if (SendOrgId != UnitReceiveId) {
-                    result = await new RMRemind(_appSetting).RMRemindGetList(RecommendationId, SendOrgId, true);
-                }
-                else
+                if (recommentdation.Model.UnitId == new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext))
                 {
-                    result = await new RMRemind(_appSetting).RMRemindGetList(RecommendationId, UnitReceiveId , false);
+                    result = await new RMRemind(_appSetting).RMRemindGetList(RecommendationId, recommentdation.Model.UnitId, true);
                 }
+                else if (UnitReceiveId == new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext))
+                {
+                    result = await new RMRemind(_appSetting).RMRemindGetList(RecommendationId, UnitReceiveId, false);
+                }
+                else { }
                 
                 if (result.Count > 0) {
                     foreach (var item in result) {

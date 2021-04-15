@@ -5,7 +5,10 @@ import { DomSanitizer } from '@angular/platform-browser'
 import { PuRecommendation } from 'src/app/models/recommendationObject'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { NewsService } from 'src/app/services/news.service'
+import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
 import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+
+declare var $: any
 
 @Component({
 	selector: 'app-index',
@@ -13,16 +16,23 @@ import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTA
 	styleUrls: ['./index.component.css'],
 })
 export class IndexComponent implements OnInit {
-	constructor(private _service: PuRecommendationService, private _router: Router, private _newsService: NewsService, private sanitizer: DomSanitizer) {}
+	constructor(
+		private _service: PuRecommendationService,
+		private _router: Router,
+		private _newsService: NewsService,
+		private _serviceAdministrative: AdministrativeFormalitiesService,
+		private sanitizer: DomSanitizer
+	) {}
 
 	RecommendationsOrderByCountClick: Array<PuRecommendation>
 	ReflectionsRecommendations: Array<PuRecommendation>
 	news: any[]
 	firstNews: any
+	Administrations: any[]
 	ngOnInit() {
 		this.getData()
 	}
-	getData() {
+	async getData() {
 		// list recommendation order by count click
 		this._service.getListOrderByCountClick({ status: RECOMMENDATION_STATUS.FINISED }).subscribe((res) => {
 			if (res != undefined) {
@@ -61,6 +71,39 @@ export class IndexComponent implements OnInit {
 			return
 		})
 		// list thủ tục hành chính
+		this._serviceAdministrative.getListHomePage({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				if (res.result.DAMAdministrationGetList) {
+					this.Administrations = res.result.DAMAdministrationGetList
+					console.log(this.Administrations)
+				}
+			}
+			return
+		})
+	}
+
+	ngAfterViewInit() {
+		setTimeout(function () {
+			$('.owl-carousel').owlCarousel({
+				loop: false,
+				margin: 30,
+				nav: false,
+				autoplay: true,
+				autoplayTimeout: 5000,
+				autoplayHoverPause: true,
+				responsive: {
+					0: {
+						items: 1,
+					},
+					600: {
+						items: 2,
+					},
+					1000: {
+						items: 2,
+					},
+				},
+			})
+		}, 200)
 	}
 
 	getShortName(string) {
@@ -90,5 +133,20 @@ export class IndexComponent implements OnInit {
 				})
 			}
 		})
+	}
+
+	redirectDetailNews(id: any) {
+		this._router.navigate(['/cong-bo/tin-tuc-su-kien/' + id])
+	}
+	redirectNews() {
+		this._router.navigate(['/cong-bo/tin-tuc-su-kien'])
+	}
+
+	redirectDetailAdministration(id: any) {
+		this._router.navigate(['/cong-bo/thu-tuc-hanh-chinh/' + id])
+	}
+
+	redirectAdministration() {
+		this._router.navigate(['/cong-bo/thu-tuc-hanh-chinh'])
 	}
 }
