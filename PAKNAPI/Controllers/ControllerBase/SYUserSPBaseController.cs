@@ -178,6 +178,31 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize]
+		[Route("SYUserGetAll")]
+		public async Task<ActionResult<object>> SYUserGetAll()
+		{
+			try
+			{
+				List<SYUserGetAllOnPage> rsSYUserGetAllOnPage = await new SYUserGetAllOnPage(_appSetting).SYUserGetAllDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserGetAll", rsSYUserGetAllOnPage},
+						{"TotalCount", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? rsSYUserGetAllOnPage[0].RowNumber : 0},
+						
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
 		[Route("SYUserGetByIDBase")]
 		public async Task<ActionResult<object>> SYUserGetByIDBase(long? Id)
 		{

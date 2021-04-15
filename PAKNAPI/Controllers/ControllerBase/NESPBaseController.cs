@@ -109,6 +109,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
+				_nENewsInsertIN.CreatedDate = DateTime.Now;
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsInsert(_appSetting).NENewsInsertDAO(_nENewsInsertIN) };
@@ -169,6 +170,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
+				_nENewsUpdateIN.UpdatedDate = DateTime.Now;
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN) };
