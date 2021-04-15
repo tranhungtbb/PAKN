@@ -11,39 +11,6 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
-	public class DAMCompositionProfileFileFilesInsert
-	{
-		private SQLCon _sQLCon;
-
-		public DAMCompositionProfileFileFilesInsert(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public DAMCompositionProfileFileFilesInsert()
-		{
-		}
-
-		public async Task<int> DAMCompositionProfileFileFilesInsertDAO(DAMCompositionProfileFileFilesInsertIN _dAMCompositionProfileFileFilesInsertIN)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("CompositionProfileId", _dAMCompositionProfileFileFilesInsertIN.CompositionProfileId);
-			DP.Add("Name", _dAMCompositionProfileFileFilesInsertIN.Name);
-			DP.Add("FileType", _dAMCompositionProfileFileFilesInsertIN.FileType);
-			DP.Add("FileAttach", _dAMCompositionProfileFileFilesInsertIN.FileAttach);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("DAM_CompositionProfile_File_FilesInsert", DP));
-		}
-	}
-
-	public class DAMCompositionProfileFileFilesInsertIN
-	{
-		public int? CompositionProfileId { get; set; }
-		public string Name { get; set; }
-		public short? FileType { get; set; }
-		public string FileAttach { get; set; }
-	}
-
 	public class QLDoanhNghiepInsert
 	{
 		private SQLCon _sQLCon;

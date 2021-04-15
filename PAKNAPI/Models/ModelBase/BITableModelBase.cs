@@ -47,6 +47,7 @@ namespace PAKNAPI.ModelBase
 		public int? Status { get; set; }
 		public bool? RepresentativeGender { get; set; }
 		public DateTime RepresentativeBirthDay { get; set; }
+		public string Business { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -97,6 +98,7 @@ namespace PAKNAPI.ModelBase
 		public int? Status { get; set; }
 		public bool? RepresentativeGender { get; set; }
 		public DateTime RepresentativeBirthDay { get; set; }
+		public string Business { get; set; }
 
 		public async Task<BIBusiness> BIBusinessGetByID(long? Id)
 		{
@@ -133,6 +135,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("OrgPhone", _bIBusiness.OrgPhone);
 			DP.Add("OrgEmail", _bIBusiness.OrgEmail);
 			DP.Add("RepresentativeBirthDay", _bIBusiness.RepresentativeBirthDay);
+			DP.Add("Business", _bIBusiness.Business);
 			DP.Add("ProvinceId", _bIBusiness.ProvinceId);
 			DP.Add("CreatedDate", _bIBusiness.CreatedDate);
 			DP.Add("UpdatedDate", _bIBusiness.UpdatedDate);
@@ -174,6 +177,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("OrgEmail", _bIBusiness.OrgEmail);
 			DP.Add("Id", _bIBusiness.Id);
 			DP.Add("RepresentativeBirthDay", _bIBusiness.RepresentativeBirthDay);
+			DP.Add("Business", _bIBusiness.Business);
 			DP.Add("ProvinceId", _bIBusiness.ProvinceId);
 			DP.Add("CreatedDate", _bIBusiness.CreatedDate);
 			DP.Add("UpdatedDate", _bIBusiness.UpdatedDate);
@@ -292,3 +296,112 @@ namespace PAKNAPI.ModelBase
 		public int? CreatedBy { get; set; }
 		public int? UpdatedBy { get; set; }
 		public int? Status { get; set; }
+
+		public async Task<BIIndividual> BIIndividualGetByID(long? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<BIIndividual>("BI_IndividualGetByID", DP)).ToList().FirstOrDefault();
+		}
+
+		public async Task<List<BIIndividual>> BIIndividualGetAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<BIIndividual>("BI_IndividualGetAll", DP)).ToList();
+		}
+
+		public async Task<List<BIIndividualOnPage>> BIIndividualGetAllOnPage(int PageSize, int PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualOnPage>("BI_IndividualGetAllOnPage", DP)).ToList();
+		}
+
+		public async Task<int?> BIIndividualInsert(BIIndividual _bIIndividual)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("FullName", _bIIndividual.FullName);
+			DP.Add("IsActived", _bIIndividual.IsActived);
+			DP.Add("IsDeleted", _bIIndividual.IsDeleted);
+			DP.Add("ProvinceId", _bIIndividual.ProvinceId);
+			DP.Add("WardsId", _bIIndividual.WardsId);
+			DP.Add("DistrictId", _bIIndividual.DistrictId);
+			DP.Add("DateOfIssue", _bIIndividual.DateOfIssue);
+			DP.Add("CreatedDate", _bIIndividual.CreatedDate);
+			DP.Add("UpdatedDate", _bIIndividual.UpdatedDate);
+			DP.Add("CreatedBy", _bIIndividual.CreatedBy);
+			DP.Add("UpdatedBy", _bIIndividual.UpdatedBy);
+			DP.Add("Status", _bIIndividual.Status);
+			DP.Add("Code", _bIIndividual.Code);
+			DP.Add("Address", _bIIndividual.Address);
+			DP.Add("Email", _bIIndividual.Email);
+			DP.Add("Phone", _bIIndividual.Phone);
+			DP.Add("IDCard", _bIIndividual.IDCard);
+			DP.Add("IssuedPlace", _bIIndividual.IssuedPlace);
+			DP.Add("NativePlace", _bIIndividual.NativePlace);
+			DP.Add("PermanentPlace", _bIIndividual.PermanentPlace);
+			DP.Add("Nation", _bIIndividual.Nation);
+			DP.Add("BirthDay", _bIIndividual.BirthDay);
+			DP.Add("Gender", _bIIndividual.Gender);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_IndividualInsert", DP));
+		}
+
+		public async Task<int> BIIndividualUpdate(BIIndividual _bIIndividual)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("FullName", _bIIndividual.FullName);
+			DP.Add("IsActived", _bIIndividual.IsActived);
+			DP.Add("IsDeleted", _bIIndividual.IsDeleted);
+			DP.Add("Id", _bIIndividual.Id);
+			DP.Add("ProvinceId", _bIIndividual.ProvinceId);
+			DP.Add("WardsId", _bIIndividual.WardsId);
+			DP.Add("DistrictId", _bIIndividual.DistrictId);
+			DP.Add("DateOfIssue", _bIIndividual.DateOfIssue);
+			DP.Add("CreatedDate", _bIIndividual.CreatedDate);
+			DP.Add("UpdatedDate", _bIIndividual.UpdatedDate);
+			DP.Add("CreatedBy", _bIIndividual.CreatedBy);
+			DP.Add("UpdatedBy", _bIIndividual.UpdatedBy);
+			DP.Add("Status", _bIIndividual.Status);
+			DP.Add("Code", _bIIndividual.Code);
+			DP.Add("Address", _bIIndividual.Address);
+			DP.Add("Email", _bIIndividual.Email);
+			DP.Add("Phone", _bIIndividual.Phone);
+			DP.Add("IDCard", _bIIndividual.IDCard);
+			DP.Add("IssuedPlace", _bIIndividual.IssuedPlace);
+			DP.Add("NativePlace", _bIIndividual.NativePlace);
+			DP.Add("PermanentPlace", _bIIndividual.PermanentPlace);
+			DP.Add("Nation", _bIIndividual.Nation);
+			DP.Add("BirthDay", _bIIndividual.BirthDay);
+			DP.Add("Gender", _bIIndividual.Gender);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_IndividualUpdate", DP));
+		}
+
+		public async Task<int> BIIndividualDelete(BIIndividual _bIIndividual)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _bIIndividual.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_IndividualDelete", DP));
+		}
+
+		public async Task<int> BIIndividualDeleteAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_IndividualDeleteAll", DP));
+		}
+
+		public async Task<int> BIIndividualCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("BI_IndividualCount", DP));
+		}
+	}
+}
