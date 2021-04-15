@@ -26,21 +26,21 @@ BEGIN
 		[Proceed],
 		[Object],
 		[Organization],
+		[OrganizationDecision],
+		[Address],
+		[OrganizationAuthor],
+		[OrganizationCombine],
+		[Result],
+		[LegalGrounds],
+		[Request],
 		[ImpactAssessment],
 		[Note],
 		[Status],
 		[IsShow],
-		[Result],
-		[LegalGrounds],
-		[Request],
 		[CreatedBy],
 		[CreatedDate],
 		[UpdatedBy],
-		[UpdatedDate],
-		[OrganizationDecision],
-		[Address],
-		[OrganizationAuthor],
-		[OrganizationCombine]
+		[UpdatedDate]
 	FROM [DAM_Administration]
 	WHERE [Id] = @Id
 END
@@ -73,21 +73,21 @@ BEGIN
 		[Proceed],
 		[Object],
 		[Organization],
+		[OrganizationDecision],
+		[Address],
+		[OrganizationAuthor],
+		[OrganizationCombine],
+		[Result],
+		[LegalGrounds],
+		[Request],
 		[ImpactAssessment],
 		[Note],
 		[Status],
 		[IsShow],
-		[Result],
-		[LegalGrounds],
-		[Request],
 		[CreatedBy],
 		[CreatedDate],
 		[UpdatedBy],
-		[UpdatedDate],
-		[OrganizationDecision],
-		[Address],
-		[OrganizationAuthor],
-		[OrganizationCombine]
+		[UpdatedDate]
 	FROM [DAM_Administration]
 END
 GO
@@ -122,21 +122,21 @@ BEGIN
 		[Proceed],
 		[Object],
 		[Organization],
+		[OrganizationDecision],
+		[Address],
+		[OrganizationAuthor],
+		[OrganizationCombine],
+		[Result],
+		[LegalGrounds],
+		[Request],
 		[ImpactAssessment],
 		[Note],
 		[Status],
 		[IsShow],
-		[Result],
-		[LegalGrounds],
-		[Request],
 		[CreatedBy],
 		[CreatedDate],
 		[UpdatedBy],
-		[UpdatedDate],
-		[OrganizationDecision],
-		[Address],
-		[OrganizationAuthor],
-		[OrganizationCombine]
+		[UpdatedDate]
 	FROM [DAM_Administration]
 	ORDER BY [Id]
 	OFFSET (@PageIndex-1) * @PageSize ROWS
@@ -167,21 +167,21 @@ CREATE PROCEDURE [dbo].[DAM_AdministrationInsert]
 	@Proceed nvarchar(1000) = null,
 	@Object nvarchar(1000) = null,
 	@Organization nvarchar(500) = null,
+	@OrganizationDecision nvarchar(500) = null,
+	@Address nvarchar(500) = null,
+	@OrganizationAuthor nvarchar(500) = null,
+	@OrganizationCombine nvarchar(500) = null,
+	@Result nvarchar(500) = null,
+	@LegalGrounds nvarchar(2000) = null,
+	@Request nvarchar(1000) = null,
 	@ImpactAssessment nvarchar(1000) = null,
 	@Note nvarchar(255) = null,
 	@Status tinyint = null,
 	@IsShow bit = null,
-	@Result nvarchar(500) = null,
-	@LegalGrounds nvarchar(2000) = null,
-	@Request nvarchar(1000) = null,
 	@CreatedBy bigint = null,
 	@CreatedDate datetime = null,
 	@UpdatedBy bigint = null,
-	@UpdatedDate datetime = null,
-	@OrganizationDecision nvarchar(500) = null,
-	@Address nvarchar(500) = null,
-	@OrganizationAuthor nvarchar(500) = null,
-	@OrganizationCombine nvarchar(500) = null
+	@UpdatedDate datetime = null
 AS
 BEGIN
 	INSERT INTO [DAM_Administration]
@@ -198,21 +198,21 @@ BEGIN
 		[Proceed],
 		[Object],
 		[Organization],
+		[OrganizationDecision],
+		[Address],
+		[OrganizationAuthor],
+		[OrganizationCombine],
+		[Result],
+		[LegalGrounds],
+		[Request],
 		[ImpactAssessment],
 		[Note],
 		[Status],
 		[IsShow],
-		[Result],
-		[LegalGrounds],
-		[Request],
 		[CreatedBy],
 		[CreatedDate],
 		[UpdatedBy],
-		[UpdatedDate],
-		[OrganizationDecision],
-		[Address],
-		[OrganizationAuthor],
-		[OrganizationCombine]
+		[UpdatedDate]
 	)
 	VALUES
 	(
@@ -228,21 +228,21 @@ BEGIN
 		@Proceed,
 		@Object,
 		@Organization,
+		@OrganizationDecision,
+		@Address,
+		@OrganizationAuthor,
+		@OrganizationCombine,
+		@Result,
+		@LegalGrounds,
+		@Request,
 		@ImpactAssessment,
 		@Note,
 		@Status,
 		@IsShow,
-		@Result,
-		@LegalGrounds,
-		@Request,
 		@CreatedBy,
 		@CreatedDate,
 		@UpdatedBy,
-		@UpdatedDate,
-		@OrganizationDecision,
-		@Address,
-		@OrganizationAuthor,
-		@OrganizationCombine
+		@UpdatedDate
 	)
 END
 GO
@@ -271,21 +271,21 @@ CREATE PROCEDURE [dbo].[DAM_AdministrationUpdate]
 	@Proceed nvarchar(1000) = null,
 	@Object nvarchar(1000) = null,
 	@Organization nvarchar(500) = null,
+	@OrganizationDecision nvarchar(500) = null,
+	@Address nvarchar(500) = null,
+	@OrganizationAuthor nvarchar(500) = null,
+	@OrganizationCombine nvarchar(500) = null,
+	@Result nvarchar(500) = null,
+	@LegalGrounds nvarchar(2000) = null,
+	@Request nvarchar(1000) = null,
 	@ImpactAssessment nvarchar(1000) = null,
 	@Note nvarchar(255) = null,
 	@Status tinyint = null,
 	@IsShow bit = null,
-	@Result nvarchar(500) = null,
-	@LegalGrounds nvarchar(2000) = null,
-	@Request nvarchar(1000) = null,
 	@CreatedBy bigint = null,
 	@CreatedDate datetime = null,
 	@UpdatedBy bigint = null,
-	@UpdatedDate datetime = null,
-	@OrganizationDecision nvarchar(500) = null,
-	@Address nvarchar(500) = null,
-	@OrganizationAuthor nvarchar(500) = null,
-	@OrganizationCombine nvarchar(500) = null
+	@UpdatedDate datetime = null
 AS
 BEGIN
 	UPDATE [DAM_Administration] SET
@@ -301,21 +301,21 @@ BEGIN
 		[Proceed] = @Proceed,
 		[Object] = @Object,
 		[Organization] = @Organization,
+		[OrganizationDecision] = @OrganizationDecision,
+		[Address] = @Address,
+		[OrganizationAuthor] = @OrganizationAuthor,
+		[OrganizationCombine] = @OrganizationCombine,
+		[Result] = @Result,
+		[LegalGrounds] = @LegalGrounds,
+		[Request] = @Request,
 		[ImpactAssessment] = @ImpactAssessment,
 		[Note] = @Note,
 		[Status] = @Status,
 		[IsShow] = @IsShow,
-		[Result] = @Result,
-		[LegalGrounds] = @LegalGrounds,
-		[Request] = @Request,
 		[CreatedBy] = @CreatedBy,
 		[CreatedDate] = @CreatedDate,
 		[UpdatedBy] = @UpdatedBy,
-		[UpdatedDate] = @UpdatedDate,
-		[OrganizationDecision] = @OrganizationDecision,
-		[Address] = @Address,
-		[OrganizationAuthor] = @OrganizationAuthor,
-		[OrganizationCombine] = @OrganizationCombine
+		[UpdatedDate] = @UpdatedDate
 	WHERE [Id] = @Id
 END
 GO
