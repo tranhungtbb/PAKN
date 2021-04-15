@@ -30,6 +30,7 @@ export class OrgFormAddressComponent implements OnInit {
 		{ value: false, text: 'Nữ' },
 	]
 
+	nation_enable_type = false
 	//event
 	onChangeNation() {
 		this.listProvince = []

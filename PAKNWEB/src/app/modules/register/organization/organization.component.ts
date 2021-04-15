@@ -22,7 +22,7 @@ declare var $: any
 export class OrganizationComponent implements OnInit {
 	constructor(private toast: ToastrService, private formBuilder: FormBuilder, private registerService: RegisterService, private router: Router) {}
 
-	date: Date = new Date()
+	dateNow: Date = new Date()
 
 	@ViewChild(OrgRepreFormComponent, { static: false }) child_OrgRepreForm: OrgRepreFormComponent
 	@ViewChild(OrgFormAddressComponent, { static: false }) child_OrgAddressForm: OrgFormAddressComponent
@@ -31,7 +31,7 @@ export class OrganizationComponent implements OnInit {
 	formOrgInfo: FormGroup
 
 	model: OrganizationObject = new OrganizationObject()
-
+	nation_enable_type = false
 	ngOnInit() {
 		// this.child_OrgAddressForm.parentCompo = this
 		// this.child_OrgRepreForm.parentCompo = this

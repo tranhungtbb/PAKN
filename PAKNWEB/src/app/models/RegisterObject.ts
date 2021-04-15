@@ -5,7 +5,7 @@ export class IndividualObject {
 		this.gender = true
 
 		//
-		this.nation = ''
+		this.nation = 'Việt Nam'
 		this.provinceId = ''
 		this.districtId = ''
 		this.wardsId = ''
@@ -44,7 +44,7 @@ export class OrganizationObject {
 		this.RepresentativeGender = true
 
 		//
-		this.Nation = ''
+		this.Nation = 'Việt Nam'
 		this.ProvinceId = ''
 		this.DistrictId = ''
 		this.WardsId = ''
