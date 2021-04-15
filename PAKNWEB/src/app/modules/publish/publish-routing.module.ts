@@ -13,6 +13,7 @@ import { CreateRecommendationComponent } from './user-create-recommendation/user
 import { from, using } from 'rxjs'
 import { MyRecommendationComponent } from './my-recommendation/my-recommendation.component'
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
+import { ViewAdministrativeProceduresComponent } from './view-administrative-procedures/view-administrative-procedures.component'
 
 const routes: Routes = [
 	{
@@ -34,6 +35,10 @@ const routes: Routes = [
 			{
 				path: 'thu-tuc-hanh-chinh',
 				component: AdministrativeProceduresComponent,
+			},
+			{
+				path: 'thu-tuc-hanh-chinh/:id',
+				component: ViewAdministrativeProceduresComponent,
 			},
 			{
 				path: 'tin-tuc-su-kien',

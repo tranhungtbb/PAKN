@@ -17,7 +17,8 @@
 } */
 
 .text-3line a,
-.text-2line a {
+.text-2line a,
+.card-text a {
 	color: #222222;
 }
 
