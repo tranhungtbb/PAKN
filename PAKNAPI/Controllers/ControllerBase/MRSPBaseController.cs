@@ -1278,14 +1278,17 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("MRRecommendationKNCTGetAllWithProcessBase")]
-		public async Task<ActionResult<object>> MRRecommendationKNCTGetAllWithProcessBase(string Code, string Content, string Unit, int? Field, int? Status, int? PageSize, int? PageIndex)
+		public async Task<ActionResult<object>> MRRecommendationKNCTGetAllWithProcessBase(string Code, string Content, string Unit, string Place, int? Field, int? Status, int? PageSize, int? PageIndex)
 		{
 			try
 			{
-				List<MRRecommendationKNCTGetAllWithProcess> rsMRRecommendationKNCTGetAllWithProcess = await new MRRecommendationKNCTGetAllWithProcess(_appSetting).MRRecommendationKNCTGetAllWithProcessDAO(Code, Content, Unit, Field, Status, PageSize, PageIndex);
+				List<MRRecommendationKNCTGetAllWithProcess> rsMRRecommendationKNCTGetAllWithProcess = await new MRRecommendationKNCTGetAllWithProcess(_appSetting).MRRecommendationKNCTGetAllWithProcessDAO(Code, Content, Unit, Place, Field, Status, PageSize, PageIndex);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"MRRecommendationKNCTGetAllWithProcess", rsMRRecommendationKNCTGetAllWithProcess},
+						{"TotalCount", rsMRRecommendationKNCTGetAllWithProcess != null && rsMRRecommendationKNCTGetAllWithProcess.Count > 0 ? rsMRRecommendationKNCTGetAllWithProcess[0].RowNumber : 0},
+						{"PageIndex", rsMRRecommendationKNCTGetAllWithProcess != null && rsMRRecommendationKNCTGetAllWithProcess.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsMRRecommendationKNCTGetAllWithProcess != null && rsMRRecommendationKNCTGetAllWithProcess.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
