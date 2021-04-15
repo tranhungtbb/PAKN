@@ -5,13 +5,15 @@ import { IndexComponent } from './index/index.component'
 import { IntroduceComponent } from './introduce/introduce.component'
 import { AdministrativeProceduresComponent } from './administrative-procedures/administrative-procedures.component'
 import { NewsComponent } from './news/news.component'
+import { ViewNewsComponent } from './view-news/view-news.component'
 import { ReflectionsRecommendationsComponent } from './reflections-recommendations/reflections-recommendations.component'
 import { ViewReflectionsRecommendationComponent } from './view-reflections-recommendation/view-reflections-recommendation.component'
 import { SupportComponent } from './support/support.component'
 import { CreateRecommendationComponent } from './user-create-recommendation/user-create-recommendation.component'
-import { using } from 'rxjs'
+import { from, using } from 'rxjs'
 import { MyRecommendationComponent } from './my-recommendation/my-recommendation.component'
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
+import { ViewAdministrativeProceduresComponent } from './view-administrative-procedures/view-administrative-procedures.component'
 
 const routes: Routes = [
 	{
@@ -35,8 +37,16 @@ const routes: Routes = [
 				component: AdministrativeProceduresComponent,
 			},
 			{
+				path: 'thu-tuc-hanh-chinh/:id',
+				component: ViewAdministrativeProceduresComponent,
+			},
+			{
 				path: 'tin-tuc-su-kien',
 				component: NewsComponent,
+			},
+			{
+				path: 'tin-tuc-su-kien/:id',
+				component: ViewNewsComponent,
 			},
 			{
 				path: 'them-moi-kien-nghi',
@@ -80,4 +90,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class PublishRoutingModule { }
+export class PublishRoutingModule {}

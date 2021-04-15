@@ -1796,13 +1796,14 @@ namespace PAKNAPI.ControllerBase
 				int count = await new CAHashtag(_appSetting).CAHashtagUpdate(_cAHashtag);
 				if (count > 0)
 				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+					return new ResultApi { Success = ResultCode.ORROR, Result = count };
 				}
 			}
 			catch (Exception ex)
@@ -1824,15 +1825,15 @@ namespace PAKNAPI.ControllerBase
 				int count = await new CAHashtag(_appSetting).CAHashtagDelete(_cAHashtag);
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+					return new ResultApi { Success = ResultCode.ORROR, Result = count, Message = ResultMessage.ORROR };
 				}
 			}
 			catch (Exception ex)

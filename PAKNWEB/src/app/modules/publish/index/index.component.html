@@ -3,143 +3,42 @@
 		<div class="container">
 			<div class="tt-v1 pt-3 mb-3 d-flex justify-content-between">
 				<h4 class="text-uppercase">Tin tức & sự kiện</h4>
-				<a class="read-more" href="#">Xem thêm <i class="bi bi-arrow-right"></i></a>
+				<a class="read-more" href="javascript:void(0)" (click)="redirectNews()">Xem thêm <i class="bi bi-arrow-right"></i></a>
 			</div>
 			<div class="row">
 				<div class="col col-lg-5">
 					<div class="card mb-lg-0 bg-transparent shadow rounded-xl position-relative">
-						<a href="#" class="image-box ratio-4-3 rounded">
-							<span class="image" style="background-image:url(images/post1.png);"></span>
+						<a href="javascript:void(0)" (click)="redirectDetailNews(firstNews.id)" class="image-box ratio-4-3 rounded">
+							<span class="image">
+								<img style="width: 100%; height: 100%; object-fit: cover;" [src]="firstNews.imageBin">
+							</span>
 						</a>
 
 						<div class="card-body position-absolute rounded-bottom"
-							style="bottom: 0; background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);">
-							<p class="text-white mb-1">7:30 | 14/01/2021</p>
-							<p><a class="cl2 text-white text-uppercase text-3line h4" style="line-height: 1.8rem" href="#">Việt Nam sắp thử nghiệm vaccine ngừa Covid-19 trên
-									người</a></p>
-							<p><a href="#" class="text-white">Xem chi tiết <i class="bi bi-arrow-right"></i></a></p>
+							style="width: 100%; bottom: 0; background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);">
+							<p class="text-white mb-1">{{firstNews.createdDate | date : 'dd/MM/yyyy'}}</p>
+							<p><a class="cl2 text-white text-uppercase text-3line h4" (click)="redirectDetailNews(firstNews.id)" style="line-height: 1.8rem"
+									href="javascript:void(0)">{{firstNews.title}}</a></p>
+							<p><a href="javascript:void(0)" class="text-white" (click)="redirectDetailNews(firstNews.id)">Xem chi tiết <i class="bi bi-arrow-right"></i></a></p>
 						</div>
 					</div>
 				</div>
 				<div class="col col-lg-7">
 					<div class="owl-carousel owl-theme h-100">
-						<div class="item">
+						<div class="item" *ngFor="let item of news">
 							<div class="card mb-lg-0">
-								<a href="#" class="image-box ratio-16-9 rounded">
-									<span class="image" style="background-image:url(images/card/1.png);"></span>
+								<a href="javascript:void(0)" (click)="redirectDetailNews(item.id)" class="image-box ratio-16-9 rounded">
+									<span class="image">
+										<img [src]="item.imageBin">
+									</span>
 								</a>
-								<p class="card-text text-dark px-4 pt-3 py-0 mb-0">7:30 | 14/01/2021</p>
+								<p class="card-text text-dark px-4 pt-3 py-0 mb-0">{{item.createdDate | date: 'dd/MM/yyyy'}}</p>
 								<div class="card-header px-4 pt-1 pb-0">
-									<p class="card-title text-3line"><a href="#">Khánh Hòa ra tối hậu thư về dự án 33 triệu đô lấn, lấp vịnh Nha Trang</a></p>
+									<p class="card-title text-3line"><a href="javascript:void(0)" (click)="redirectDetailNews(item.id)">{{item.title}}</a></p>
 								</div>
 								<div class="card-body px-4 pt-2 pb-3">
-									<p class="card-text text-2line"><a href="#">Lorem ipsum dolor sit amet consec elit. Temporibus praesentium, corporis corrupti quidem dolor
-											obcaecati dolore omnis fuga aliquam doloremque iusto repellat pariatur, quas impedit, quam!</a></p>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="card mb-lg-0">
-								<a href="#" class="image-box ratio-16-9 rounded">
-									<span class="image" style="background-image:url(images/card/2.png);"></span>
-								</a>
-								<p class="card-text text-dark px-4 pt-3 py-0 mb-0">7:30 | 14/01/2021</p>
-								<div class="card-header px-4 pt-1 pb-0">
-									<p class="card-title text-3line"><a href="#">Hòa mình vào lễ hội Cầu Ngư đầy sắc màu bên bờ biển Khánh Hòa</a></p>
-								</div>
-								<div class="card-body px-4 pt-2 pb-3">
-									<p class="card-text text-2line"><a href="#">Lorem ipsum dolor sit amet consec elit. Temporibus praesentium, corporis corrupti quidem dolor
-											obcaecati dolore omnis fuga aliquam doloremque iusto repellat pariatur, quas impedit, quam!</a></p>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="card mb-lg-0">
-								<a href="#" class="image-box ratio-16-9 rounded">
-									<span class="image" style="background-image:url(images/card/1.png);"></span>
-								</a>
-								<p class="card-text text-dark px-4 pt-3 py-0 mb-0">7:30 | 14/01/2021</p>
-								<div class="card-header px-4 pt-1 pb-0">
-									<p class="card-title text-3line"><a href="#">Khánh Hòa ra tối hậu thư về dự án 33 triệu đô lấn, lấp vịnh Nha Trang</a></p>
-								</div>
-								<div class="card-body px-4 pt-2 pb-3">
-									<p class="card-text text-2line"><a href="#">Lorem ipsum dolor sit amet consec elit. Temporibus praesentium, corporis corrupti quidem dolor
-											obcaecati dolore omnis fuga aliquam doloremque iusto repellat pariatur, quas impedit, quam!</a></p>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="card mb-lg-0">
-								<a href="#" class="image-box ratio-16-9 rounded">
-									<span class="image" style="background-image:url(images/card/2.png);"></span>
-								</a>
-								<p class="card-text text-dark px-4 pt-3 py-0 mb-0">7:30 | 14/01/2021</p>
-								<div class="card-header px-4 pt-1 pb-0">
-									<p class="card-title text-3line"><a href="#">Hòa mình vào lễ hội Cầu Ngư đầy sắc màu bên bờ biển Khánh Hòa</a></p>
-								</div>
-								<div class="card-body px-4 pt-2 pb-3">
-									<p class="card-text text-2line"><a href="#">Lorem ipsum dolor sit amet consec elit. Temporibus praesentium, corporis corrupti quidem dolor
-											obcaecati dolore omnis fuga aliquam doloremque iusto repellat pariatur, quas impedit, quam!</a></p>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="card mb-lg-0">
-								<a href="#" class="image-box ratio-16-9 rounded">
-									<span class="image" style="background-image:url(images/card/1.png);"></span>
-								</a>
-								<p class="card-text text-dark px-4 pt-3 py-0 mb-0">7:30 | 14/01/2021</p>
-								<div class="card-header px-4 pt-1 pb-0">
-									<p class="card-title text-3line"><a href="#">Khánh Hòa ra tối hậu thư về dự án 33 triệu đô lấn, lấp vịnh Nha Trang</a></p>
-								</div>
-								<div class="card-body px-4 pt-2 pb-3">
-									<p class="card-text text-2line"><a href="#">Lorem ipsum dolor sit amet consec elit. Temporibus praesentium, corporis corrupti quidem dolor
-											obcaecati dolore omnis fuga aliquam doloremque iusto repellat pariatur, quas impedit, quam!</a></p>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="card mb-lg-0">
-								<a href="#" class="image-box ratio-16-9 rounded">
-									<span class="image" style="background-image:url(images/card/2.png);"></span>
-								</a>
-								<p class="card-text text-dark px-4 pt-3 py-0 mb-0">7:30 | 14/01/2021</p>
-								<div class="card-header px-4 pt-1 pb-0">
-									<p class="card-title text-3line"><a href="#">Hòa mình vào lễ hội Cầu Ngư đầy sắc màu bên bờ biển Khánh Hòa</a></p>
-								</div>
-								<div class="card-body px-4 pt-2 pb-3">
-									<p class="card-text text-2line"><a href="#">Lorem ipsum dolor sit amet consec elit. Temporibus praesentium, corporis corrupti quidem dolor
-											obcaecati dolore omnis fuga aliquam doloremque iusto repellat pariatur, quas impedit, quam!</a></p>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="card mb-lg-0">
-								<a href="#" class="image-box ratio-16-9 rounded">
-									<span class="image" style="background-image:url(images/card/1.png);"></span>
-								</a>
-								<p class="card-text text-dark px-4 pt-3 py-0 mb-0">7:30 | 14/01/2021</p>
-								<div class="card-header px-4 pt-1 pb-0">
-									<p class="card-title text-3line"><a href="#">Khánh Hòa ra tối hậu thư về dự án 33 triệu đô lấn, lấp vịnh Nha Trang</a></p>
-								</div>
-								<div class="card-body px-4 pt-2 pb-3">
-									<p class="card-text text-2line"><a href="#">Lorem ipsum dolor sit amet consec elit. Temporibus praesentium, corporis corrupti quidem dolor
-											obcaecati dolore omnis fuga aliquam doloremque iusto repellat pariatur, quas impedit, quam!</a></p>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="card mb-lg-0">
-								<a href="#" class="image-box ratio-16-9 rounded">
-									<span class="image" style="background-image:url(images/card/2.png);"></span>
-								</a>
-								<p class="card-text text-dark px-4 pt-3 py-0 mb-0">7:30 | 14/01/2021</p>
-								<div class="card-header px-4 pt-1 pb-0">
-									<p class="card-title text-3line"><a href="#">Hòa mình vào lễ hội Cầu Ngư đầy sắc màu bên bờ biển Khánh Hòa</a></p>
-								</div>
-								<div class="card-body px-4 pt-2 pb-3">
-									<p class="card-text text-2line"><a href="#">Lorem ipsum dolor sit amet consec elit. Temporibus praesentium, corporis corrupti quidem dolor
-											obcaecati dolore omnis fuga aliquam doloremque iusto repellat pariatur, quas impedit, quam!</a></p>
+									<p class="card-text text-2line"><a href="javascript:void(0)" (click)="redirectDetailNews(item.id)" innerHTML="{{item.summary | Change}}"></a>
+									</p>
 								</div>
 							</div>
 						</div>
@@ -154,125 +53,31 @@
 				<div class="box">
 					<div class="tt-v1 pt-3 mb-3 d-flex justify-content-between">
 						<h4 class="text-uppercase">thủ tục hành chính</h4>
-						<a class="read-more" href="#">Xem thêm <i class="bi bi-arrow-right"></i></a>
+						<a class="read-more" href="javascript:void(0)" (click)="redirectAdministration()">Xem thêm <i class="bi bi-arrow-right"></i></a>
 					</div>
-					<div class="card border">
+					<div class="card border" *ngFor="let item of Administrations">
 						<div class="card-body py-4">
 							<p class="card-text">
-								<a class="h4" href="#">
-									Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ
-									trương đầu tư (Thuộc thẩm quyền giải quyết của Ban Quản lý Khu kinh tế Vân Phong)
+								<a class="h4" href="javascript:void(0)" (click)="redirectDetailAdministration(item.id)">
+									{{item.name}}
 								</a>
 							</p>
 						</div>
 						<div class="card-footer py-0 d-flex align-items-center">
 							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong>
+								<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">{{item.code}}</strong>
 								</p>
 							</div>
 							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Đối tượng thực hiện: <strong class="ml-2">Tổ
-										chức, cá nhân</strong></p>
+								<p class="card-text text-dark d-inline">Đối tượng thực hiện: <strong class="ml-2">{{item.object}}</strong></p>
 							</div>
 						</div>
 						<div class="card-footer py-0 d-flex align-items-center">
 							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt
-										nam</strong></p>
+								<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">{{item.filedName}}</strong></p>
 							</div>
 							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Cơ quan thực hiện: <strong class="ml-2">BQL Khu
-										Kinh tế Vân Phong</strong></p>
-							</div>
-						</div>
-					</div>
-					<div class="card border">
-						<div class="card-body py-4">
-							<p class="card-text">
-								<a class="h4" href="#">
-									Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ
-									trương đầu tư (Thuộc thẩm quyền giải quyết của Ban Quản lý Khu kinh tế Vân Phong)
-								</a>
-							</p>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong>
-								</p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Đối tượng thực hiện: <strong class="ml-2">Tổ
-										chức, cá nhân</strong></p>
-							</div>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt
-										nam</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Cơ quan thực hiện: <strong class="ml-2">BQL Khu
-										Kinh tế Vân Phong</strong></p>
-							</div>
-						</div>
-					</div>
-					<div class="card border">
-						<div class="card-body py-4">
-							<p class="card-text">
-								<a class="h4" href="#">
-									Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ
-									trương đầu tư (Thuộc thẩm quyền giải quyết của Ban Quản lý Khu kinh tế Vân Phong)
-								</a>
-							</p>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong>
-								</p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Đối tượng thực hiện: <strong class="ml-2">Tổ
-										chức, cá nhân</strong></p>
-							</div>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt
-										nam</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Cơ quan thực hiện: <strong class="ml-2">BQL Khu
-										Kinh tế Vân Phong</strong></p>
-							</div>
-						</div>
-					</div>
-					<div class="card border">
-						<div class="card-body py-4">
-							<p class="card-text">
-								<a class="h4" href="#">
-									Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ
-									trương đầu tư (Thuộc thẩm quyền giải quyết của Ban Quản lý Khu kinh tế Vân Phong)
-								</a>
-							</p>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong>
-								</p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Đối tượng thực hiện: <strong class="ml-2">Tổ
-										chức, cá nhân</strong></p>
-							</div>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt
-										nam</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Cơ quan thực hiện: <strong class="ml-2">BQL Khu
-										Kinh tế Vân Phong</strong></p>
+								<p class="card-text text-dark d-inline">Cơ quan thực hiện: <strong class="ml-2">{{item.organization}}</strong></p>
 							</div>
 						</div>
 					</div>
@@ -401,3 +206,5 @@
 		</div>
 	</div>
 </div>
+
+<script src="../../../../assets/dist/js/owl.carousel.min.js"></script>
