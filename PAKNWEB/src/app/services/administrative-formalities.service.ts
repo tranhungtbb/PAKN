@@ -13,7 +13,7 @@ import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 	providedIn: 'root',
 })
 export class AdministrativeFormalitiesService {
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) { }
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
 
 	getDropdownByType(request: any): Observable<any> {
 		let headers = {
@@ -29,6 +29,14 @@ export class AdministrativeFormalitiesService {
 			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
 		}
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.AdministrativeFormalitiesGetList, headers)
+	}
+
+	getListHomePage(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.AdministrativeFormalitiesGetListHomePage, headers)
 	}
 
 	getById(request: any): Observable<any> {
@@ -72,12 +80,11 @@ export class AdministrativeFormalitiesService {
 
 		if (request.LstCompositionProfile) {
 			for (let index = 0; index < request.LstCompositionProfile.length; index++) {
-				const element = request.LstCompositionProfile[index];
+				const element = request.LstCompositionProfile[index]
 				element.files.forEach((item) => {
 					form.append('Profile' + element.index, item)
 				})
 			}
-
 		}
 		const httpPackage = {
 			headers: tempheaders,
@@ -111,12 +118,11 @@ export class AdministrativeFormalitiesService {
 
 		if (request.LstCompositionProfile) {
 			for (let index = 0; index < request.LstCompositionProfile.length; index++) {
-				const element = request.LstCompositionProfile[index];
+				const element = request.LstCompositionProfile[index]
 				element.files.forEach((item) => {
 					form.append('Profile' + element.index, item)
 				})
 			}
-
 		}
 		const httpPackage = {
 			headers: tempheaders,

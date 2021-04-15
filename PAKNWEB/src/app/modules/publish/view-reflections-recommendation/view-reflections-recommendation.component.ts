@@ -111,11 +111,11 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 				})
 			} else {
 				this.checkSatisfaction = true
-				this._toastr.success('Bạn đã đánh giá PAKN này!')
+				this._toastr.error('Bạn đã đánh giá PAKN này!')
 				return
 			}
 		} else {
-			this._toastr.success('Bạn đã đánh giá PAKN này!')
+			this._toastr.error('Bạn đã đánh giá PAKN này!')
 			return
 		}
 	}
