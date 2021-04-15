@@ -70,10 +70,10 @@
 						<div class="col-12 col-lg-6 form-group">
 							<label class="mb-1">Đơn vị tiếp nhận <span class="cl-red">(*)</span></label>
 							<ng-select [clearable]="false" class="form-control" [items]="lstUnit" bindValue="value" bindLabel="text"
-								placeholder="Chọn..." formControlName="unitReceive" [(ngModel)]="model.unitReceive">
-								<ng-template ng-option-tmp let-item="item">
+								formControlName="unitReceive" [(ngModel)]="model.unitReceive" placeholder="-- Chọn đơn vị tiếp nhận --">
+								<!-- <ng-template ng-option-tmp let-item="item">
 									<div title="{{item.text}}">{{item.text}}</div>
-								</ng-template>
+								</ng-template> -->
 							</ng-select>
 							<div
 								*ngIf="(submitted && f.unitReceive.invalid) || (f.unitReceive.invalid && (f.unitReceive.dirty || f.unitReceive.touched))"
@@ -89,7 +89,7 @@
 						<div class="col-12 col-lg-6 form-group">
 							<label class="mb-1">Lĩnh vực <span class="cl-red">(*)</span></label>
 							<ng-select [clearable]="false" class="form-control" [items]="lstField" bindValue="value" bindLabel="text"
-								placeholder="Chọn..." formControlName="field" [(ngModel)]="model.field">
+								onChange formControlName="field" [(ngModel)]="model.field" placeholder="-- Chọn lĩnh vực --">
 								<ng-template ng-option-tmp let-item="item">
 									<div title="{{item.text}}">{{item.text}}</div>
 								</ng-template>
@@ -104,7 +104,8 @@
 						<div class="col-12 col-lg-6 form-group">
 							<label class="mb-1">Mức độ trực tuyến <span class="cl-red">(*)</span></label>
 							<ng-select [clearable]="false" class="form-control" [items]="lstTypeSend" bindValue="value"
-								bindLabel="text" placeholder="Chọn..." formControlName="typeSend" [(ngModel)]="model.typeSend">
+								bindLabel="text" formControlName="typeSend" [(ngModel)]="model.typeSend"
+								placeholder="-- Chọn mức độ trực tuyến --">
 								<ng-template ng-option-tmp let-item="item">
 									<div title="{{item.text}}">{{item.text}}</div>
 								</ng-template>
@@ -216,7 +217,7 @@
 				</div>
 				<div class="col-12 col-lg-6 pt-4 pl-lg-4">
 					<div class="form-group">
-						<label class="mb-1">Kết quả thực hiện<span class="cl-red">(*)</span></label>
+						<label class="mb-1">Kết quả thực hiện</label>
 						<textarea class="form-control " type="text" [(ngModel)]="model.result" maxlength="500" rows="5"
 							formControlName="result" placeholder="Nhập..."></textarea>
 					</div>
@@ -232,13 +233,13 @@
 					</div>
 					<div class="form-group">
 						<label class="mb-1">Đánh giá tác động </label>
-						<input class="form-control " type="text" [(ngModel)]="model.request" maxlength="1000"
-							formControlName="request" placeholder="Nhập..." />
+						<input class="form-control " type="text" [(ngModel)]="model.impactAssessment" maxlength="1000"
+							formControlName="impactAssessment" placeholder="Nhập..." />
 					</div>
 					<div class="form-group">
 						<label class="mb-1">Ghi chú </label>
-						<input class="form-control " type="text" [(ngModel)]="model.request" maxlength="255"
-							formControlName="request" placeholder="Nhập..." />
+						<input class="form-control " type="text" [(ngModel)]="model.note" maxlength="255" formControlName="note"
+							placeholder="Nhập..." />
 					</div>
 					<div class="row">
 						<div class="col-12 attach-ct mt-3">
@@ -339,7 +340,7 @@
 		<!-- thành phần hồ sơ -->
 		<div class="row">
 			<div class="col align-items-center form-group mb-0 border-bottom pb-3 border-brown">
-				<div class="row">
+				<div class="row mb-2">
 					<div class="col-md-6">
 						<strong class="h4 mr-5">Thành phần hồ sơ</strong>
 					</div>
@@ -389,7 +390,7 @@
 										<span class="caret-tb"></span>
 									</p>
 								</th>
-								<th style="width: 80px">
+								<th style="width: 200px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Bắt buộc</strong>
 										<span class="caret-tb"></span>
@@ -421,9 +422,9 @@
 								<td>
 									<div class="attach-file row">
 										<div class="col-auto mb-4">
-											<div class="alert alert-dark h-100 d-flex align-items-center" style="width: 170px">
+											<div class="h-100 d-flex align-items-center" style="width: 70px">
 												<input type="file" style="display: none" #file id="file" (change)="onUploadForm($event, item)"
-													class="inputfile inputfile-4 d-none" multiple accept="{{fileAcceptForm}}" />
+													class=" inputfile-4" multiple accept="{{fileAcceptForm}}" />
 												<!-- <input type="file" name="file-5[]" id="file-5" class="inputfile inputfile-4 d-none" data-multiple-caption="{count} files selected" multiple=""> -->
 												<label for="file-5" (click)="file.click()">
 													<figure><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
@@ -508,7 +509,7 @@
 								</td>
 								<td>
 									<div class="d-flex justify-content-end">
-										<a class="btn-icon grd-red text-white" (click)="preDelete(item.id)" title="Xóa"><i
+										<a class="btn-icon grd-red text-white" (click)="preDelete(item,1)" title="Xóa"><i
 												class="bi bi-trash"></i></a>
 									</div>
 								</td>
@@ -526,7 +527,7 @@
 		<!-- trình tự thực hiện -->
 		<div class="row mt-5">
 			<div class="col align-items-center form-group mb-0 border-bottom pb-3 border-brown">
-				<div class="row">
+				<div class="row  mb-2">
 					<div class="col-md-6">
 						<strong class="h4 mr-5">Trình tự thực hiện</strong>
 					</div>
@@ -588,17 +589,23 @@
 									<strong>{{rowIndex+1}}</strong>
 								</td>
 								<td>
-									{{item.name}}
+									<input class="form-control " type="text" [(ngModel)]="item.name" maxlength="500"
+										placeholder="Nhập..." />
 								</td>
 								<td>
-									{{item.unit}}
+									<input class="form-control " type="text" [(ngModel)]="item.unit" maxlength="500"
+										placeholder="Nhập..." />
 								</td>
-								<td>{{item.time}}</td>
-								<td>{{item.result}}</td>
+								<td> <input class="form-control " type="text" [(ngModel)]="item.time" maxlength="10"
+										placeholder="Nhập..." />
+								</td>
+								<td>
+									<input class="form-control " type="text" [(ngModel)]="item.result" placeholder="Nhập..." />
+								</td>
 								<td>
 									<div class="d-flex justify-content-end">
-										<a *ngIf="item.status == 4 && item.createdBy == userLoginId" class="btn-icon grd-red text-white"
-											(click)="preDelete(item.id)" title="Xóa"><i class="bi bi-trash"></i></a>
+										<a class="btn-icon grd-red text-white" (click)="preDelete(item,2)" title="Xóa"><i
+												class="bi bi-trash"></i></a>
 									</div>
 								</td>
 							</tr>
@@ -615,7 +622,7 @@
 		<!-- Phí, lệ phí -->
 		<div class="row mt-5">
 			<div class="col align-items-center form-group mb-0 border-bottom pb-3 border-brown">
-				<div class="row">
+				<div class="row  mb-2">
 					<div class="col-md-6">
 						<strong class="h4 mr-5">Phí, lệ phí</strong>
 					</div>
@@ -664,15 +671,16 @@
 									<strong>{{rowIndex+1}}</strong>
 								</td>
 								<td>
-									{{item.charges}}
+									<input class="form-control " type="text" [(ngModel)]="item.charges" maxlength="10"
+										placeholder="Nhập..." />
 								</td>
 								<td>
-									{{item.description}}
+									<input class="form-control " type="text" [(ngModel)]="item.description" placeholder="Nhập..." />
 								</td>
 								<td>
 									<div class="d-flex justify-content-end">
-										<a *ngIf="item.status == 4 && item.createdBy == userLoginId" class="btn-icon grd-red text-white"
-											(click)="preDelete(item.id)" title="Xóa"><i class="bi bi-trash"></i></a>
+										<a class="btn-icon grd-red text-white" (click)="preDelete(item,3)" title="Xóa"><i
+												class="bi bi-trash"></i></a>
 									</div>
 								</td>
 							</tr>
@@ -691,3 +699,30 @@
 <!--**********************************
 									Content body end
 							***********************************-->
+<div class="modal fade" id="modalDelete">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">Xác nhận</p>
+					</div>
+					<div class="modal-body no-padding-bottom">
+						<div>
+							<p>Anh/Chị có chắc chắn thực hiện hành động này?</p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5"
+							data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete()">Xác
+							nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

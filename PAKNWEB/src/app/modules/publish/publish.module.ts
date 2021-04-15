@@ -20,7 +20,10 @@ import { ViewReflectionsRecommendationComponent } from './view-reflections-recom
 import { CreateRecommendationComponent } from './user-create-recommendation/user-create-recommendation.component'
 import { MyRecommendationComponent } from './my-recommendation/my-recommendation.component'
 import { from } from 'rxjs'
+import { EditorModule } from 'primeng/editor'
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
+import { ViewNewsComponent } from './view-news/view-news.component'
+import { ViewAdministrativeProceduresComponent } from './view-administrative-procedures/view-administrative-procedures.component'
 
 @NgModule({
 	declarations: [
@@ -28,6 +31,7 @@ import { ViewRecommendationPersonalComponent } from './view-recommendation-perso
 		IndexComponent,
 		AdministrativeProceduresComponent,
 		NewsComponent,
+		ViewNewsComponent,
 		ReflectionsRecommendationsComponent,
 		IntroduceComponent,
 		SupportComponent,
@@ -35,7 +39,19 @@ import { ViewRecommendationPersonalComponent } from './view-recommendation-perso
 		CreateRecommendationComponent,
 		MyRecommendationComponent,
 		ViewRecommendationPersonalComponent,
+		ViewAdministrativeProceduresComponent,
 	],
-	imports: [CommonModule, PublishRoutingModule, NgSelectModule, ReactiveFormsModule, FormsModule, SharedModule, PaginatorModule, BsDatepickerModule.forRoot(), TooltipModule],
+	imports: [
+		CommonModule,
+		PublishRoutingModule,
+		NgSelectModule,
+		ReactiveFormsModule,
+		FormsModule,
+		SharedModule,
+		PaginatorModule,
+		BsDatepickerModule.forRoot(),
+		TooltipModule,
+		EditorModule,
+	],
 })
 export class PublishModule {}

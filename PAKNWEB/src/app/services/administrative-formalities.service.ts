@@ -13,7 +13,7 @@ import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 	providedIn: 'root',
 })
 export class AdministrativeFormalitiesService {
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) { }
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
 
 	getDropdownByType(request: any): Observable<any> {
 		let headers = {
@@ -29,6 +29,14 @@ export class AdministrativeFormalitiesService {
 			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
 		}
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.AdministrativeFormalitiesGetList, headers)
+	}
+
+	getListHomePage(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.AdministrativeFormalitiesGetListHomePage, headers)
 	}
 
 	getById(request: any): Observable<any> {
@@ -56,12 +64,27 @@ export class AdministrativeFormalitiesService {
 		})
 		const form = new FormData()
 		form.append('Data', JSON.stringify(request.Data))
-		form.append('Hashtags', JSON.stringify(request.Hashtags))
+		form.append('Files', JSON.stringify(request.Files))
+		form.append('LstXoaFile', JSON.stringify(request.LstXoaFile))
+		form.append('LstXoaFileForm', JSON.stringify(request.LstXoaFileForm))
+		form.append('LstCompositionProfile', JSON.stringify(request.LstCompositionProfile))
+		form.append('LstCharges', JSON.stringify(request.LstCharges))
+		form.append('LstImplementationProcess', JSON.stringify(request.LstImplementationProcess))
+		form.append('LstDelete', JSON.stringify(request.LstDelete))
 
 		if (request.Files) {
 			request.Files.forEach((item) => {
-				form.append('QD', item)
+				form.append('File', item)
 			})
+		}
+
+		if (request.LstCompositionProfile) {
+			for (let index = 0; index < request.LstCompositionProfile.length; index++) {
+				const element = request.LstCompositionProfile[index]
+				element.files.forEach((item) => {
+					form.append('Profile' + element.index, item)
+				})
+			}
 		}
 		const httpPackage = {
 			headers: tempheaders,
@@ -79,13 +102,27 @@ export class AdministrativeFormalitiesService {
 		})
 		const form = new FormData()
 		form.append('Data', JSON.stringify(request.Data))
-		form.append('Hashtags', JSON.stringify(request.Hashtags))
+		form.append('Files', JSON.stringify(request.Files))
 		form.append('LstXoaFile', JSON.stringify(request.LstXoaFile))
+		form.append('LstXoaFileForm', JSON.stringify(request.LstXoaFileForm))
+		form.append('LstCompositionProfile', JSON.stringify(request.LstCompositionProfile))
+		form.append('LstCharges', JSON.stringify(request.LstCharges))
+		form.append('LstImplementationProcess', JSON.stringify(request.LstImplementationProcess))
+		form.append('LstDelete', JSON.stringify(request.LstDelete))
 
 		if (request.Files) {
 			request.Files.forEach((item) => {
-				form.append('QD', item)
+				form.append('File', item)
 			})
+		}
+
+		if (request.LstCompositionProfile) {
+			for (let index = 0; index < request.LstCompositionProfile.length; index++) {
+				const element = request.LstCompositionProfile[index]
+				element.files.forEach((item) => {
+					form.append('Profile' + element.index, item)
+				})
+			}
 		}
 		const httpPackage = {
 			headers: tempheaders,

@@ -25,6 +25,7 @@ export class LOG_ACTION {
 export class LOG_OBJECT {
 	public static login = 'Đăng nhập'
 	public static CA_FIELD = 'Danh mục lĩnh vực'
+	public static CA_WORD = 'Danh mục thư viện từ ngữ'
 }
 
 export class MESSAGE_COMMON {

@@ -22,6 +22,7 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 	// arr
 
 	ReflectionsRecommendations = new Array<PuRecommendation>()
+	RecommendationsOrderByCountClick: any[]
 
 	constructor(private service: PuRecommendationService, private routers: Router) {}
 
@@ -65,6 +66,14 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 				this.Total = 0
 			}
 		})
+
+		this.service.getListOrderByCountClick({ status: RECOMMENDATION_STATUS.FINISED }).subscribe((res) => {
+			if (res != undefined) {
+				if (res.result) {
+					this.RecommendationsOrderByCountClick = res.result
+				}
+			}
+		})
 	}
 	getShortName(string) {
 		var names = string.split(' '),
@@ -83,10 +92,18 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 	}
 
 	changePagination(index: any) {
-		debugger
-		if ((this.PageIndex - 1 == index && index > 0) || this.pagination.length == index) {
-			this.PageIndex = index
-			this.getList()
+		if (this.PageIndex > index) {
+			if (index > 0) {
+				this.PageIndex = index
+				this.getList()
+			}
+			return
+		} else if (this.PageIndex < index) {
+			if (this.pagination.length >= index) {
+				this.PageIndex = index
+				this.getList()
+			}
+			return
 		}
 		return
 	}

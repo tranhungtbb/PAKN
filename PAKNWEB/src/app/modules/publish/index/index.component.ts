@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
+import { DomSanitizer } from '@angular/platform-browser'
 
 import { PuRecommendation } from 'src/app/models/recommendationObject'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
-import { RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
+import { NewsService } from 'src/app/services/news.service'
+import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
+import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+
+declare var $: any
 
 @Component({
 	selector: 'app-index',
@@ -11,15 +16,23 @@ import { RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
 	styleUrls: ['./index.component.css'],
 })
 export class IndexComponent implements OnInit {
-	constructor(private _service: PuRecommendationService, private _router: Router) {}
+	constructor(
+		private _service: PuRecommendationService,
+		private _router: Router,
+		private _newsService: NewsService,
+		private _serviceAdministrative: AdministrativeFormalitiesService,
+		private sanitizer: DomSanitizer
+	) {}
 
 	RecommendationsOrderByCountClick: Array<PuRecommendation>
 	ReflectionsRecommendations: Array<PuRecommendation>
-
+	news: any[]
+	firstNews: any
+	Administrations: any[]
 	ngOnInit() {
 		this.getData()
 	}
-	getData() {
+	async getData() {
 		// list recommendation order by count click
 		this._service.getListOrderByCountClick({ status: RECOMMENDATION_STATUS.FINISED }).subscribe((res) => {
 			if (res != undefined) {
@@ -46,8 +59,51 @@ export class IndexComponent implements OnInit {
 		})
 
 		//list news
-
+		this._newsService.getListHomePage({}).subscribe((res) => {
+			if (res.success != RESPONSE_STATUS.success) {
+				return
+			}
+			if (res.result) {
+				this.news = res.result
+				this.getNewsAvatars()
+				this.firstNews = this.news[0]
+			}
+			return
+		})
 		// list thủ tục hành chính
+		this._serviceAdministrative.getListHomePage({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				if (res.result.DAMAdministrationGetList) {
+					this.Administrations = res.result.DAMAdministrationGetList
+					console.log(this.Administrations)
+				}
+			}
+			return
+		})
+	}
+
+	ngAfterViewInit() {
+		setTimeout(function () {
+			$('.owl-carousel').owlCarousel({
+				loop: false,
+				margin: 30,
+				nav: false,
+				autoplay: true,
+				autoplayTimeout: 5000,
+				autoplayHoverPause: true,
+				responsive: {
+					0: {
+						items: 1,
+					},
+					600: {
+						items: 2,
+					},
+					1000: {
+						items: 2,
+					},
+				},
+			})
+		}, 200)
 	}
 
 	getShortName(string) {
@@ -65,5 +121,32 @@ export class IndexComponent implements OnInit {
 
 	redirectReflectionsRecommendations() {
 		this._router.navigate(['/cong-bo/phan-anh-kien-nghi'])
+	}
+	getNewsAvatars() {
+		let ids = this.news.map((c) => c.id)
+		this._newsService.getAvatars(ids).subscribe((res) => {
+			if (res) {
+				res.forEach((e) => {
+					let item = this.news.find((c) => c.id == e.id)
+					let objectURL = 'data:image/jpeg;base64,' + e.byteImage
+					item.imageBin = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+				})
+			}
+		})
+	}
+
+	redirectDetailNews(id: any) {
+		this._router.navigate(['/cong-bo/tin-tuc-su-kien/' + id])
+	}
+	redirectNews() {
+		this._router.navigate(['/cong-bo/tin-tuc-su-kien'])
+	}
+
+	redirectDetailAdministration(id: any) {
+		this._router.navigate(['/cong-bo/thu-tuc-hanh-chinh/' + id])
+	}
+
+	redirectAdministration() {
+		this._router.navigate(['/cong-bo/thu-tuc-hanh-chinh'])
 	}
 }

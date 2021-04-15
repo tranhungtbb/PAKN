@@ -28,6 +28,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
 	ngOnInit() {
 		var currentlink = location.toString()
 		var check = this.storeageService.getAccessToken()
+		var typeUserLogin = this.storeageService.getTypeObject()
 		if (check == '' || check == null || check == undefined) {
 			this.isLogin = false
 		} else {
@@ -38,12 +39,16 @@ export class AppComponent implements OnInit, AfterViewChecked {
 			if (returnlURL != undefined && returnlURL != '' && returnlURL != null && returnlURL != 'undefined') {
 				return
 			}
-
-			if (!currentlink.includes('quan-tri') && !currentlink.includes('cong-bo')) {
-				this._router.navigate(['/quan-tri/ban-lam-viec'])
-				return
+			if (typeUserLogin == 1) {
+				if (!currentlink.includes('quan-tri') && !currentlink.includes('cong-bo')) {
+					this._router.navigate(['/quan-tri/ban-lam-viec'])
+					return
+				}
 			} else {
-				//this._router.navigate(['/business']);
+				if (!currentlink.includes('cong-bo')) {
+					this._router.navigate(['/cong-bo/trang-chu'])
+					return
+				}
 			}
 		} else {
 			var returnlURL = this.storeageService.getReturnUrl()

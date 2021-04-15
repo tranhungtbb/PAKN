@@ -11,4 +11,11 @@ namespace PAKNAPI.Models.Login
         public string Password { get; set; }
         public string RePassword { get; set; }
     }
+
+    public class ChangePwdModel
+    {
+        public string OldPassword { get; set; }
+        public string NewPassword { get; set; }
+        public string RePassword { get; set; }
+    }
 }
