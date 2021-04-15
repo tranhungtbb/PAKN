@@ -47,6 +47,7 @@ export class IndividualComponent implements OnInit {
 
 	ngOnInit() {
 		this.loadFormBuilder()
+		this.onChangeNation()
 	}
 
 	//get req
@@ -58,19 +59,22 @@ export class IndividualComponent implements OnInit {
 		this.listVillage = []
 
 		this.model.provinceId = ''
+
 		if (this.model.nation == 'Việt Nam') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listProvince = res.result.CAProvinceGetAll
+					this.model.provinceId = 37
 				}
 			})
 		} else {
 			if (this.model.nation == '#') {
 				this.nation_enable_type = true
 				this.model.nation = ''
-				this.model.provinceId = 0
-				this.model.districtId = 0
-				this.model.wardsId = 0
+				//
+				// this.formInfo.controls.province.disable()
+				// this.formInfo.controls.district.disable()
+				// this.formInfo.controls.village.disable()
 			}
 		}
 	}
@@ -105,13 +109,16 @@ export class IndividualComponent implements OnInit {
 	}
 
 	onReset() {
+		this.formLogin.reset()
+		this.formInfo.reset()
+
 		this.fLoginSubmitted = false
 		this.fInfoSubmitted = false
 		this.model = new IndividualObject()
 		this.model._birthDay = ''
 		this.model._dateOfIssue = ''
-		this.formLogin.reset()
-		this.formInfo.reset()
+		this.model.fullName = ''
+		this.model.gender = true
 	}
 
 	onSave() {
@@ -122,6 +129,12 @@ export class IndividualComponent implements OnInit {
 		let fDateIssue: any = document.querySelector('#_dateIssue')
 		this.model._birthDay = fDob.value
 		this.model._dateOfIssue = fDateIssue.value
+
+		if (this.model.nation != this.listNation[0].value) {
+			this.model.provinceId = 0
+			this.model.districtId = 0
+			this.model.wardsId = 0
+		}
 
 		if (this.formLogin.invalid || this.formInfo.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
@@ -178,7 +191,7 @@ export class IndividualComponent implements OnInit {
 
 			email: [this.model.email, [Validators.email]],
 			address: [this.model.address, [Validators.required]],
-			iDCard: [this.model.iDCard, [Validators.required, Validators.pattern(/^([0-9]){9,12}$/g)]],
+			iDCard: [this.model.iDCard, [Validators.required, Validators.pattern(/^([0-9]){8,12}$/g)]],
 			placeIssue: [this.model.issuedPlace, []],
 			dateIssue: [this.model._dateOfIssue, []],
 		})
