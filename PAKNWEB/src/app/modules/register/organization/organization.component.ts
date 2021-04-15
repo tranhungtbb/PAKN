@@ -35,11 +35,31 @@ export class OrganizationComponent implements OnInit {
 	model: OrganizationObject = new OrganizationObject()
 	nation_enable_type = false
 	ngOnInit() {
+<<<<<<< Updated upstream
 		this.child_OrgAddressForm.model = this.model
 		this.child_OrgRepreForm.model = this.model
+=======
+		// this.child_OrgAddressForm.parentCompo = this
+		// this.child_OrgRepreForm.parentCompo = this
+		// this.child_OrgRepreForm.model = this.model
+>>>>>>> Stashed changes
 		this.loadFormBuilder()
 	}
 
+	onReset() {
+		this.fLoginSubmitted = false
+		this.child_OrgRepreForm.fInfoSubmitted = false
+		this.fOrgInfoSubmitted = false
+		this.child_OrgAddressForm.fOrgAddressSubmitted = false
+		this.model = new OrganizationObject()
+		this.model._RepresentativeBirthDay = ''
+		this.model._DateOfIssue = ''
+
+		this.formLogin.reset()
+		this.formOrgInfo.reset()
+		this.child_OrgRepreForm.formInfo.reset()
+		this.child_OrgAddressForm.formOrgAddress.reset()
+	}
 	onSave() {
 		this.fLoginSubmitted = true
 		this.child_OrgRepreForm.fInfoSubmitted = true
@@ -50,7 +70,8 @@ export class OrganizationComponent implements OnInit {
 		let fIsDate: any = document.querySelector('#_IsDate')
 		this.model._RepresentativeBirthDay = fDob.value
 		this.model._DateOfIssue = fIsDate.value
-
+		console.log(this.model)
+		return
 		if (this.formLogin.invalid || this.formOrgInfo.invalid || this.child_OrgRepreForm.formInfo.invalid || this.child_OrgAddressForm.formOrgAddress.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return

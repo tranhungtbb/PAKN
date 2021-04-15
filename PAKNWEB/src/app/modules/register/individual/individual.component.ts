@@ -110,6 +110,7 @@ export class IndividualComponent implements OnInit {
 		this.model = new IndividualObject()
 		this.model._birthDay = ''
 		this.model._dateOfIssue = ''
+		this.model.fullName = ''
 		this.formLogin.reset()
 		this.formInfo.reset()
 	}

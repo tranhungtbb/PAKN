@@ -53,7 +53,6 @@
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Họ và Tên <span class="cl-red">(*)</span></label>
 					<input [svTrim] [(ngModel)]="model.fullName" formControlName="fullName" type="text" placeholder="Nhập..." class="form-control border-brown">
-					<!--  -->
 					<div *ngIf="(fLoginSubmitted && fInfo.fullName.invalid)||(fInfo.fullName.invalid && (fInfo.fullName.dirty || fInfo.fullName.touched))" class="has-error m-b-12">
 						<div *ngIf="fInfo.fullName.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
