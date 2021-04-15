@@ -20,12 +20,14 @@ declare var $: any
 	styleUrls: ['./organization.component.css'],
 })
 export class OrganizationComponent implements OnInit {
+	@ViewChild(OrgRepreFormComponent, { static: true })
+	private child_OrgRepreForm: OrgRepreFormComponent
+	@ViewChild(OrgFormAddressComponent, { static: true })
+	private child_OrgAddressForm: OrgFormAddressComponent
+
 	constructor(private toast: ToastrService, private formBuilder: FormBuilder, private registerService: RegisterService, private router: Router) {}
 
 	dateNow: Date = new Date()
-
-	@ViewChild(OrgRepreFormComponent, { static: false }) child_OrgRepreForm: OrgRepreFormComponent
-	@ViewChild(OrgFormAddressComponent, { static: false }) child_OrgAddressForm: OrgFormAddressComponent
 
 	formLogin: FormGroup
 	formOrgInfo: FormGroup
@@ -33,8 +35,7 @@ export class OrganizationComponent implements OnInit {
 	model: OrganizationObject = new OrganizationObject()
 	nation_enable_type = false
 	ngOnInit() {
-		// this.child_OrgAddressForm.parentCompo = this
-		this.child_OrgRepreForm.parentCompo = this
+		this.child_OrgAddressForm.model = this.model
 		this.child_OrgRepreForm.model = this.model
 		this.loadFormBuilder()
 	}

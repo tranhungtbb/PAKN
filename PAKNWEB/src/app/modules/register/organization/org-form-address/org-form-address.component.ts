@@ -11,11 +11,10 @@ import { OrganizationObject } from 'src/app/models/RegisterObject'
 	styleUrls: ['./org-form-address.component.css'],
 })
 export class OrgFormAddressComponent implements OnInit {
-	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService, public parentCompo: OrganizationComponent) {}
-
+	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService) {}
 	formOrgAddress: FormGroup
 	fOrgAddressSubmitted = false
-	model: OrganizationObject = this.parentCompo.model
+	public model: OrganizationObject = new OrganizationObject()
 
 	get fOrgAdr() {
 		return this.formOrgAddress.controls
