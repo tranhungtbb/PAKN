@@ -16,7 +16,7 @@
 						</svg>
 						Xuất excel
 					</button>
-					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" [routerLink]="['/quan-tri/kien-nghi/them-moi/0']">
+					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" [routerLink]="['/quan-tri/kien-nghi/them-moi/0']" *ngIf="isMain">
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 						</svg>
@@ -38,50 +38,47 @@
 									<th style="width: 150px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Mã số PAKN</strong>
-											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input class="form-control form-control-sm" placeholder="Nhập mã..." [(ngModel)]="dataSearch.code" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
 									</th>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Tên CN/DN</strong>
-											<span class="caret-tb"></span>
+											<strong>Tên Cá nhân/Đơn vị</strong>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input class="form-control form-control-sm" placeholder="Nhập tên..." [(ngModel)]="dataSearch.name" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
 									</th>
 									<th style="width: 350px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Nội dung</strong>
-											<span class="caret-tb"></span>
+											<strong>Tiêu đề</strong>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.content" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input class="form-control form-control-sm" placeholder="Nhập tiêu đề..." [(ngModel)]="dataSearch.content" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
 									</th>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>ĐV tiếp nhận</strong>
-											<span class="caret-tb"></span>
+											<strong>Đơn vị tiếp nhận</strong>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [items]="lstUnit" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.unitId" [closeOnSelect]="true"
-												(change)="dataStateChange()">
+											<ng-select placeholder="Chọn đơn vị..." [items]="lstUnit" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.unitId"
+												[closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>
 									</th>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>lĩnh vực</strong>
-											<span class="caret-tb"></span>
+											<strong>Lĩnh vực</strong>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field" [closeOnSelect]="true"
-												(change)="dataStateChange()">
+											<ng-select placeholder="Chọn lĩnh vực..." [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field"
+												[closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>
 									</th>
 									<th style="width: 160px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Trạng thái</strong>
-											<span class="caret-tb"></span>
 										</p>
 									</th>
 									<th style="width: 100px">
@@ -96,7 +93,7 @@
 									</td>
 									<td><a class="ellipsis">{{item.name}}</a></td>
 									<td>
-										<p class="text-2line mb-0">{{item.content}}</p>
+										<p class="text-2line mb-0">{{item.title}}</p>
 									</td>
 									<td>{{item.unitName}}</td>
 									<td>{{item.fieldName}}</td>

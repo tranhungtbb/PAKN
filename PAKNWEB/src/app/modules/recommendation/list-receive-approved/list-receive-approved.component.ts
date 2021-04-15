@@ -52,6 +52,7 @@ export class ListReceiveApprovedComponent implements OnInit {
 	lstUnitNotMain: any = []
 	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
 	formForward: FormGroup
+	isMain: boolean = this.storeageService.getIsMain()
 	ngOnInit() {
 		this.buildForm()
 		this.dataSearch.status = RECOMMENDATION_STATUS.RECEIVE_APPROVED
