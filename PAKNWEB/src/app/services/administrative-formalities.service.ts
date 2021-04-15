@@ -82,7 +82,7 @@ export class AdministrativeFormalitiesService {
 			for (let index = 0; index < request.LstCompositionProfile.length; index++) {
 				const element = request.LstCompositionProfile[index]
 				element.files.forEach((item) => {
-					form.append('Profile' + element.index, item)
+					form.append('Profile' + index, item)
 				})
 			}
 		}
@@ -120,7 +120,7 @@ export class AdministrativeFormalitiesService {
 			for (let index = 0; index < request.LstCompositionProfile.length; index++) {
 				const element = request.LstCompositionProfile[index]
 				element.files.forEach((item) => {
-					form.append('Profile' + element.index, item)
+					form.append('Profile' + index, item)
 				})
 			}
 		}

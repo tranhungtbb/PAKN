@@ -25,3 +25,11 @@
 	/* font-style: italic; */
 	font-weight: 100;
 }
+.tb-attach-file {
+	width: 100%;
+}
+.tb-attach-file .inline-block {
+	display: inline-block;
+}
+.tb-attach-file .box-fileinput img {
+}

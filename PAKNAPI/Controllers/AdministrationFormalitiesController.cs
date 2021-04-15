@@ -198,7 +198,7 @@ namespace PAKNAPI.Controller
         }
 
 
-        [HttpPost]
+        [HttpPost,DisableRequestSizeLimit]
         [Authorize]
         [Route("AdministrationFormalitiesUpdate")]
         public async Task<ActionResult<object>> AdministrationFormalitiesUpdate()
@@ -243,6 +243,7 @@ namespace PAKNAPI.Controller
 
                         foreach (var item in request.LstXoaFile)
                         {
+                            if (string.IsNullOrWhiteSpace(item.FileAttach)) continue;
                             string filePath = Path.Combine(webRootPath, decrypt.DecryptData(item.FileAttach));
 
                             if (System.IO.File.Exists(filePath))
@@ -269,7 +270,8 @@ namespace PAKNAPI.Controller
 
                         foreach (var item in request.LstXoaFileForm)
                         {
-                            string filePath = Path.Combine(webRootPath, decrypt.DecryptData(item.FileAttach));
+                            if (string.IsNullOrWhiteSpace(item.FileAttach)) continue;
+                            string filePath = Path.Combine(webRootPath, item.FileAttach);
 
                             if (System.IO.File.Exists(filePath))
                             {
