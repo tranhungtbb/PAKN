@@ -126,53 +126,6 @@ namespace PAKNAPI.ModelBase
 		public string FileAttach { get; set; }
 	}
 
-	public class DAMAdministrationGetById
-	{
-		private SQLCon _sQLCon;
-
-		public DAMAdministrationGetById(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public DAMAdministrationGetById()
-		{
-		}
-
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-		public string CountryCode { get; set; }
-		public int UnitReceive { get; set; }
-		public int Field { get; set; }
-		public string RankReceive { get; set; }
-		public bool TypeSend { get; set; }
-		public string FileNum { get; set; }
-		public string AmountTime { get; set; }
-		public string Proceed { get; set; }
-		public string Object { get; set; }
-		public string Organization { get; set; }
-		public string OrganizationDecision { get; set; }
-		public string Address { get; set; }
-		public string OrganizationAuthor { get; set; }
-		public string OrganizationCombine { get; set; }
-		public string Result { get; set; }
-		public string LegalGrounds { get; set; }
-		public string Request { get; set; }
-		public string ImpactAssessment { get; set; }
-		public string Note { get; set; }
-		public byte Status { get; set; }
-		public bool IsShow { get; set; }
-
-		public async Task<List<DAMAdministrationGetById>> DAMAdministrationGetByIdDAO(int? Id)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-
-			return (await _sQLCon.ExecuteListDapperAsync<DAMAdministrationGetById>("DAM_Administration_GetById", DP)).ToList();
-		}
-	}
-
 	public class DAMAdministrationGetList
 	{
 		private SQLCon _sQLCon;
@@ -192,7 +145,7 @@ namespace PAKNAPI.ModelBase
 		public string UnitName { get; set; }
 		public string FieldName { get; set; }
 		public string Object { get; set; }
-		public byte Status { get; set; }
+		public byte? Status { get; set; }
 		public int Id { get; set; }
 
 		public async Task<List<DAMAdministrationGetList>> DAMAdministrationGetListDAO(string Code, string Name, string Object, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex, int? TotalRecords)
@@ -209,41 +162,6 @@ namespace PAKNAPI.ModelBase
 			DP.Add("TotalRecords", TotalRecords);
 
 			return (await _sQLCon.ExecuteListDapperAsync<DAMAdministrationGetList>("DAM_Administration_GetList", DP)).ToList();
-		}
-	}
-
-	public class DAMAdministrationGetListHomePage
-	{
-		private SQLCon _sQLCon;
-
-		public DAMAdministrationGetListHomePage(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public DAMAdministrationGetListHomePage()
-		{
-		}
-
-		public int? RowNumber { get; set; }
-		public int Id { get; set; }
-		public string Code { get; set; }
-		public string Name { get; set; }
-		public string Organization { get; set; }
-		public string FiledName { get; set; }
-		public string Object { get; set; }
-		public int Status { get; set; }
-
-
-		
-
-
-
-		public async Task<List<DAMAdministrationGetListHomePage>> DAMAdministrationGetListHomePageDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<DAMAdministrationGetListHomePage>("DAM_AdministrationGetListHomePage", DP)).ToList();
 		}
 	}
 
@@ -395,6 +313,36 @@ namespace PAKNAPI.ModelBase
 		public int? UpdatedBy { get; set; }
 	}
 
+	public class DAMAdministrationGetListHomePage
+	{
+		private SQLCon _sQLCon;
+
+		public DAMAdministrationGetListHomePage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public DAMAdministrationGetListHomePage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Name { get; set; }
+		public string Object { get; set; }
+		public string Organization { get; set; }
+		public byte? Status { get; set; }
+		public string FiledName { get; set; }
+
+		public async Task<List<DAMAdministrationGetListHomePage>> DAMAdministrationGetListHomePageDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<DAMAdministrationGetListHomePage>("DAM_AdministrationGetListHomePage", DP)).ToList();
+		}
+	}
+
 	public class DAMChargesCreate
 	{
 		private SQLCon _sQLCon;
@@ -540,72 +488,6 @@ namespace PAKNAPI.ModelBase
 		public string Description { get; set; }
 	}
 
-	public class DAMCompositionProfileCreate
-	{
-		private SQLCon _sQLCon;
-
-		public DAMCompositionProfileCreate(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public DAMCompositionProfileCreate()
-		{
-		}
-
-		public async Task<decimal?> DAMCompositionProfileCreateDAO(DAMCompositionProfileCreateIN _dAMCompositionProfileCreateIN)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("AdministrationId", _dAMCompositionProfileCreateIN.AdministrationId);
-			DP.Add("NameExhibit", _dAMCompositionProfileCreateIN.NameExhibit);
-			DP.Add("Form", _dAMCompositionProfileCreateIN.Form);
-			DP.Add("FormType", _dAMCompositionProfileCreateIN.FormType);
-			DP.Add("OriginalForm", _dAMCompositionProfileCreateIN.OriginalForm);
-			DP.Add("CopyForm", _dAMCompositionProfileCreateIN.CopyForm);
-			DP.Add("IsBind", _dAMCompositionProfileCreateIN.IsBind);
-
-			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("DAM_CompositionProfile_Create", DP);
-		}
-	}
-
-	public class DAMCompositionProfileCreateIN
-	{
-		public int? AdministrationId { get; set; }
-		public string NameExhibit { get; set; }
-		public string Form { get; set; }
-		public string FormType { get; set; }
-		public int? OriginalForm { get; set; }
-		public int? CopyForm { get; set; }
-		public bool? IsBind { get; set; }
-	}
-
-	public class DAMCompositionProfileDeleteById
-	{
-		private SQLCon _sQLCon;
-
-		public DAMCompositionProfileDeleteById(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public DAMCompositionProfileDeleteById()
-		{
-		}
-
-		public async Task<int> DAMCompositionProfileDeleteByIdDAO(DAMCompositionProfileDeleteByIdIN _dAMCompositionProfileDeleteByIdIN)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _dAMCompositionProfileDeleteByIdIN.Id);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("DAM_CompositionProfile_DeleteById", DP));
-		}
-	}
-
-	public class DAMCompositionProfileDeleteByIdIN
-	{
-		public int? Id { get; set; }
-	}
-
 	public class DAMCompositionProfileFileFilesDelete
 	{
 		private SQLCon _sQLCon;
@@ -661,6 +543,39 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class DAMCompositionProfileFileFilesInsert
+	{
+		private SQLCon _sQLCon;
+
+		public DAMCompositionProfileFileFilesInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public DAMCompositionProfileFileFilesInsert()
+		{
+		}
+
+		public async Task<int> DAMCompositionProfileFileFilesInsertDAO(DAMCompositionProfileFileFilesInsertIN _dAMCompositionProfileFileFilesInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("CompositionProfileId", _dAMCompositionProfileFileFilesInsertIN.CompositionProfileId);
+			DP.Add("Name", _dAMCompositionProfileFileFilesInsertIN.Name);
+			DP.Add("FileType", _dAMCompositionProfileFileFilesInsertIN.FileType);
+			DP.Add("FileAttach", _dAMCompositionProfileFileFilesInsertIN.FileAttach);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("DAM_CompositionProfile_File_FilesInsert", DP));
+		}
+	}
+
+	public class DAMCompositionProfileFileFilesInsertIN
+	{
+		public int? CompositionProfileId { get; set; }
+		public string Name { get; set; }
+		public short? FileType { get; set; }
+		public string FileAttach { get; set; }
+	}
+
 	public class DAMCompositionProfileGetByAdministration
 	{
 		private SQLCon _sQLCon;
@@ -679,58 +594,17 @@ namespace PAKNAPI.ModelBase
 		public string NameExhibit { get; set; }
 		public string Form { get; set; }
 		public string FormType { get; set; }
-		public byte OriginalForm { get; set; }
-		public byte CopyForm { get; set; }
-		public bool IsBind { get; set; }
+		public byte? OriginalForm { get; set; }
+		public byte? CopyForm { get; set; }
+		public bool? IsBind { get; set; }
 
-		public async Task<List<DAMCompositionProfileGetByAdministration>> DAMCompositionProfileGetByAdministrationDAO(int? AdministrationId)
+		public async Task<List<DAMCompositionProfileGetByAdministration>> DAMCompositionProfileGetByAdministrationDAO(int? Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("AdministrationId", AdministrationId);
+			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<DAMCompositionProfileGetByAdministration>("DAM_CompositionProfile_GetByAdministration", DP)).ToList();
 		}
-	}
-
-	public class DAMCompositionProfileUpdate
-	{
-		private SQLCon _sQLCon;
-
-		public DAMCompositionProfileUpdate(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public DAMCompositionProfileUpdate()
-		{
-		}
-
-		public async Task<int> DAMCompositionProfileUpdateDAO(DAMCompositionProfileUpdateIN _dAMCompositionProfileUpdateIN)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _dAMCompositionProfileUpdateIN.Id);
-			DP.Add("AdministrationId", _dAMCompositionProfileUpdateIN.AdministrationId);
-			DP.Add("NameExhibit", _dAMCompositionProfileUpdateIN.NameExhibit);
-			DP.Add("Form", _dAMCompositionProfileUpdateIN.Form);
-			DP.Add("FormType", _dAMCompositionProfileUpdateIN.FormType);
-			DP.Add("OriginalForm", _dAMCompositionProfileUpdateIN.OriginalForm);
-			DP.Add("CopyForm", _dAMCompositionProfileUpdateIN.CopyForm);
-			DP.Add("IsBind", _dAMCompositionProfileUpdateIN.IsBind);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("DAM_CompositionProfile_Update", DP));
-		}
-	}
-
-	public class DAMCompositionProfileUpdateIN
-	{
-		public int? Id { get; set; }
-		public int? AdministrationId { get; set; }
-		public string NameExhibit { get; set; }
-		public string Form { get; set; }
-		public string FormType { get; set; }
-		public int? OriginalForm { get; set; }
-		public int? CopyForm { get; set; }
-		public bool? IsBind { get; set; }
 	}
 
 	public class DAMImplementationProcessCreate

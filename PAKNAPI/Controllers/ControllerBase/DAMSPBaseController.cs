@@ -235,29 +235,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("DAMAdministrationGetByIdBase")]
-		public async Task<ActionResult<object>> DAMAdministrationGetByIdBase(int? Id)
-		{
-			try
-			{
-				List<DAMAdministrationGetById> rsDAMAdministrationGetById = await new DAMAdministrationGetById(_appSetting).DAMAdministrationGetByIdDAO(Id);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"DAMAdministrationGetById", rsDAMAdministrationGetById},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize("ThePolicy")]
 		[Route("DAMAdministrationGetListBase")]
 		public async Task<ActionResult<object>> DAMAdministrationGetListBase(string Code, string Name, string Object, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex, int? TotalRecords)
 		{
@@ -270,30 +247,6 @@ namespace PAKNAPI.ControllerBase
 						{"TotalCount", rsDAMAdministrationGetList != null && rsDAMAdministrationGetList.Count > 0 ? rsDAMAdministrationGetList[0].RowNumber : 0},
 						{"PageIndex", rsDAMAdministrationGetList != null && rsDAMAdministrationGetList.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsDAMAdministrationGetList != null && rsDAMAdministrationGetList.Count > 0 ? PageSize : 0},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Route("DAMAdministrationGetListHomePage")]
-		public async Task<ActionResult<object>> DAMAdministrationGetListHomePage()
-		{
-			try
-			{
-				List<DAMAdministrationGetListHomePage> rsDAMAdministrationGetList = await new DAMAdministrationGetListHomePage(_appSetting).DAMAdministrationGetListHomePageDAO();
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"DAMAdministrationGetList", rsDAMAdministrationGetList.Take(4).ToList()},
-						{"TotalCount", rsDAMAdministrationGetList != null && rsDAMAdministrationGetList.Count > 0 ? rsDAMAdministrationGetList[0].RowNumber : 0},
-						
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -375,6 +328,29 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("DAMAdministrationGetListHomePageBase")]
+		public async Task<ActionResult<object>> DAMAdministrationGetListHomePageBase()
+		{
+			try
+			{
+				List<DAMAdministrationGetListHomePage> rsDAMAdministrationGetListHomePage = await new DAMAdministrationGetListHomePage(_appSetting).DAMAdministrationGetListHomePageDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"DAMAdministrationGetListHomePage", rsDAMAdministrationGetListHomePage},
+					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
@@ -614,86 +590,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize("ThePolicy")]
-		[Route("DAMCompositionProfileCreateBase")]
-		public async Task<ActionResult<object>> DAMCompositionProfileCreateBase(DAMCompositionProfileCreateIN _dAMCompositionProfileCreateIN)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new DAMCompositionProfileCreate(_appSetting).DAMCompositionProfileCreateDAO(_dAMCompositionProfileCreateIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize("ThePolicy")]
-		[Route("DAMCompositionProfileDeleteByIdBase")]
-		public async Task<ActionResult<object>> DAMCompositionProfileDeleteByIdBase(DAMCompositionProfileDeleteByIdIN _dAMCompositionProfileDeleteByIdIN)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new DAMCompositionProfileDeleteById(_appSetting).DAMCompositionProfileDeleteByIdDAO(_dAMCompositionProfileDeleteByIdIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize("ThePolicy")]
-		[Route("DAMCompositionProfileDeleteByIdListBase")]
-		public async Task<ActionResult<object>> DAMCompositionProfileDeleteByIdListBase(List<DAMCompositionProfileDeleteByIdIN> _dAMCompositionProfileDeleteByIdINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _dAMCompositionProfileDeleteByIdIN in _dAMCompositionProfileDeleteByIdINs)
-				{
-					var result = await new DAMCompositionProfileDeleteById(_appSetting).DAMCompositionProfileDeleteByIdDAO(_dAMCompositionProfileDeleteByIdIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize("ThePolicy")]
 		[Route("DAMCompositionProfileFileFilesDeleteBase")]
 		public async Task<ActionResult<object>> DAMCompositionProfileFileFilesDeleteBase(DAMCompositionProfileFileFilesDeleteIN _dAMCompositionProfileFileFilesDeleteIN)
 		{
@@ -775,39 +671,16 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("DAMCompositionProfileGetByAdministrationBase")]
-		public async Task<ActionResult<object>> DAMCompositionProfileGetByAdministrationBase(int? AdministrationId)
-		{
-			try
-			{
-				List<DAMCompositionProfileGetByAdministration> rsDAMCompositionProfileGetByAdministration = await new DAMCompositionProfileGetByAdministration(_appSetting).DAMCompositionProfileGetByAdministrationDAO(AdministrationId);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"DAMCompositionProfileGetByAdministration", rsDAMCompositionProfileGetByAdministration},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
 		[HttpPost]
 		[Authorize("ThePolicy")]
-		[Route("DAMCompositionProfileUpdateBase")]
-		public async Task<ActionResult<object>> DAMCompositionProfileUpdateBase(DAMCompositionProfileUpdateIN _dAMCompositionProfileUpdateIN)
+		[Route("DAMCompositionProfileFileFilesInsertBase")]
+		public async Task<ActionResult<object>> DAMCompositionProfileFileFilesInsertBase(DAMCompositionProfileFileFilesInsertIN _dAMCompositionProfileFileFilesInsertIN)
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new DAMCompositionProfileUpdate(_appSetting).DAMCompositionProfileUpdateDAO(_dAMCompositionProfileUpdateIN) };
+				return new ResultApi { Success = ResultCode.OK, Result = await new DAMCompositionProfileFileFilesInsert(_appSetting).DAMCompositionProfileFileFilesInsertDAO(_dAMCompositionProfileFileFilesInsertIN) };
 			}
 			catch (Exception ex)
 			{
@@ -820,16 +693,16 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize("ThePolicy")]
-		[Route("DAMCompositionProfileUpdateListBase")]
-		public async Task<ActionResult<object>> DAMCompositionProfileUpdateListBase(List<DAMCompositionProfileUpdateIN> _dAMCompositionProfileUpdateINs)
+		[Route("DAMCompositionProfileFileFilesInsertListBase")]
+		public async Task<ActionResult<object>> DAMCompositionProfileFileFilesInsertListBase(List<DAMCompositionProfileFileFilesInsertIN> _dAMCompositionProfileFileFilesInsertINs)
 		{
 			try
 			{
 				int count = 0;
 				int errcount = 0;
-				foreach (var _dAMCompositionProfileUpdateIN in _dAMCompositionProfileUpdateINs)
+				foreach (var _dAMCompositionProfileFileFilesInsertIN in _dAMCompositionProfileFileFilesInsertINs)
 				{
-					var result = await new DAMCompositionProfileUpdate(_appSetting).DAMCompositionProfileUpdateDAO(_dAMCompositionProfileUpdateIN);
+					var result = await new DAMCompositionProfileFileFilesInsert(_appSetting).DAMCompositionProfileFileFilesInsertDAO(_dAMCompositionProfileFileFilesInsertIN);
 					if (result > 0)
 					{
 						count++;
@@ -847,6 +720,29 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("DAMCompositionProfileGetByAdministrationBase")]
+		public async Task<ActionResult<object>> DAMCompositionProfileGetByAdministrationBase(int? Id)
+		{
+			try
+			{
+				List<DAMCompositionProfileGetByAdministration> rsDAMCompositionProfileGetByAdministration = await new DAMCompositionProfileGetByAdministration(_appSetting).DAMCompositionProfileGetByAdministrationDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"DAMCompositionProfileGetByAdministration", rsDAMCompositionProfileGetByAdministration},
+					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)

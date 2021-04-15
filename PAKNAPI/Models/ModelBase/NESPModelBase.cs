@@ -91,6 +91,7 @@ namespace PAKNAPI.ModelBase
 		public DateTime? PublishedDate { get; set; }
 		public int? WithdrawBy { get; set; }
 		public DateTime? WithdrawDate { get; set; }
+		public bool? IsNotification { get; set; }
 		public string NewsRelateIds { get; set; }
 
 		public async Task<List<NENewsGetByID>> NENewsGetByIDDAO(int? Id)

@@ -641,6 +641,7 @@ namespace PAKNAPI.ModelBase
 		public string Title { get; set; }
 		public string Name { get; set; }
 		public DateTime? SendDate { get; set; }
+		public string ContentReply { get; set; }
 		public int? CountHashtag { get; set; }
 
 		public async Task<List<MRRecommendationGetSuggestReply>> MRRecommendationGetSuggestReplyDAO(string ListIdHashtag, int? PageSize, int? PageIndex)

@@ -211,7 +211,7 @@
 										</ng-select>
 									</div>
 									<div class="col-12 col-lg-3 form-group">
-										<button type="button" class="btn grd-xanhngoc btn-block border-0 text-white" (click)="onProcessConclusion()">
+										<button type="button" class="btn grd-xanhngoc border-0 text-white" (click)="onProcessConclusion()">
 											<svg _ngcontent-jqu-c6="" fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
 												<path _ngcontent-jqu-c6=""
 													d="M13.5938 0.125927L0.468823 7.69624C-0.205005 8.08589 -0.137622 9.07905 0.580151 9.37495L4.68757 11.0742V14.0625C4.68757 14.9472 5.795 15.331 6.34871 14.6572L8.12703 12.4951L11.8302 14.0244C12.3897 14.2558 13.0225 13.9013 13.1134 13.3007L14.9884 1.081C15.1085 0.298778 14.2677 -0.263722 13.5938 0.125927ZM5.62507 14.0625V11.4609L7.22175 12.1201L5.62507 14.0625ZM12.1876 13.1572L6.14656 10.6611L11.9913 3.75288C12.1319 3.58882 11.9063 3.36616 11.7423 3.50679L4.26277 9.88179L0.937573 8.51069L14.0626 0.93745L12.1876 13.1572Z"
@@ -392,6 +392,81 @@
 			<div class="modal-footer justify-content-center border-top-0">
 				<button type="button" class="btn btn-outline-secondary border" data-dismiss="modal">Hủy</button>
 				<button type="button" class="btn btn-danger grd-red" (click)="onProcessDeny()">Xác nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalSuggestReply">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4">Gửi đơn vị giải quyết</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pt-3 pb-0">
+				<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+					currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+					tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+					<ng-template pTemplate="header" class="bg-thead">
+						<tr>
+							<th style="width: 120px">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Mã số PAKN</strong>
+									<span class="caret-tb"></span>
+								</p>
+							</th>
+							<th>
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Tên CN/DN</strong>
+									<span class="caret-tb"></span>
+								</p>
+							</th>
+							<th style="width: 350px">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Tiêu đề</strong>
+									<span class="caret-tb"></span>
+								</p>
+							</th>
+							<th style="width: 90px">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Ngày gửi</strong>
+									<span class="caret-tb"></span>
+								</p>
+							</th>
+							<th style="width: 100px">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead"><strong>Thao tác</strong></p>
+							</th>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+						<tr>
+							<td>
+								<strong><a [routerLink]="['/quan-tri/kien-nghi/chi-tiet/',item.id]" class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
+							</td>
+							<td>
+								<strong><a class="ellipsis">{{item.name}}</a></strong>
+							</td>
+							<td>
+								<p class="text-2line mb-0">{{item.titel}}</p>
+							</td>
+							<td>{{item.sendDate | date:'dd/MM/yyyy'}}</td>
+							<td>
+								<div class="d-flex justify-content-end">
+									<a [routerLink]="['/quan-tri/kien-nghi/chi-tiet/',item.id]" class="btn-icon grd-brown text-brown mr-2" title="Xem chi tiết"><i
+											class="bi bi-eye"></i></a>
+									<a class="btn-icon grd-xanhngoc text-white mr-2" title="Sử dụng câu trả lời"><i class="bi bi-file-earmark-check"></i></a>
+								</div>
+							</td>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="emptymessage">
+						<tr>
+							<td class="text-center" colspan="5">Không có dữ liệu</td>
+						</tr>
+					</ng-template>
+				</p-table>
 			</div>
 		</div>
 	</div>
