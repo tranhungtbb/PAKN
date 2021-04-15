@@ -34,7 +34,8 @@ export class OrganizationComponent implements OnInit {
 	nation_enable_type = false
 	ngOnInit() {
 		// this.child_OrgAddressForm.parentCompo = this
-		// this.child_OrgRepreForm.parentCompo = this
+		this.child_OrgRepreForm.parentCompo = this
+		this.child_OrgRepreForm.model = this.model
 		this.loadFormBuilder()
 	}
 

@@ -12,13 +12,13 @@ import { OrganizationObject } from 'src/app/models/RegisterObject'
 	styleUrls: ['./org-repre-form.component.css'],
 })
 export class OrgRepreFormComponent implements OnInit {
-	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService, public parentCompo: OrganizationComponent) {}
-
+	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService) {}
+	public parentCompo: OrganizationComponent
 	dateNow: Date = new Date()
 	formInfo: FormGroup
 	fInfoSubmitted = false
 
-	model: OrganizationObject = this.parentCompo.model
+	public model: OrganizationObject
 	get fInfo() {
 		return this.formInfo.controls
 	}
