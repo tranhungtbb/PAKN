@@ -126,6 +126,8 @@ namespace PAKNAPI.ModelBase
 		public DateTime? WithdrawDate { get; set; }
 		public string NewsRelateIds { get; set; }
 
+		public bool IsNotification { get; set; }
+
 		public async Task<List<NENewsGetByID>> NENewsGetByIDDAO(int? Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -215,6 +217,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("WithdrawBy", _nENewsInsertIN.WithdrawBy);
 			DP.Add("WithdrawDate", _nENewsInsertIN.WithdrawDate);
 			DP.Add("NewsRelateIds", _nENewsInsertIN.NewsRelateIds);
+			DP.Add("IsNotification", _nENewsInsertIN.IsNotification);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("NE_NewsInsert", DP));
 		}
@@ -241,6 +244,7 @@ namespace PAKNAPI.ModelBase
 		public int? WithdrawBy { get; set; }
 		public DateTime? WithdrawDate { get; set; }
 		public string NewsRelateIds { get; set; }
+		public bool IsNotification { get; set; }
 	}
 
 	public class NENewsUpdate
@@ -279,6 +283,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("WithdrawBy", _nENewsUpdateIN.WithdrawBy);
 			DP.Add("WithdrawDate", _nENewsUpdateIN.WithdrawDate);
 			DP.Add("NewsRelateIds", _nENewsUpdateIN.NewsRelateIds);
+			DP.Add("IsNotification", _nENewsUpdateIN.IsNotification);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("NE_NewsUpdate", DP));
 		}
@@ -306,6 +311,8 @@ namespace PAKNAPI.ModelBase
 		public int? WithdrawBy { get; set; }
 		public DateTime? WithdrawDate { get; set; }
 		public string NewsRelateIds { get; set; }
+
+		public bool IsNotification { get; set; }
 	}
 
 	public class NERelateGetAll

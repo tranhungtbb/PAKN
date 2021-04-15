@@ -157,7 +157,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		this.model.isPublished = published
 		if (published) this.model.status = 1
 		else this.model.status = 2
-
+		debugger
 		if (this.model.id && this.model.id > 0) {
 			this.newsService.update(this.model).subscribe((res) => {
 				if (res.success != 'OK') {
