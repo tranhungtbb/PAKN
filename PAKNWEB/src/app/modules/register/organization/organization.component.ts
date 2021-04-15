@@ -36,8 +36,14 @@ export class OrganizationComponent implements OnInit {
 	nation_enable_type = false
 	ngOnInit() {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		this.child_OrgAddressForm.model = this.model
 		this.child_OrgRepreForm.model = this.model
+=======
+		// this.child_OrgAddressForm.parentCompo = this
+		// this.child_OrgRepreForm.parentCompo = this
+		// this.child_OrgRepreForm.model = this.model
+>>>>>>> Stashed changes
 =======
 		// this.child_OrgAddressForm.parentCompo = this
 		// this.child_OrgRepreForm.parentCompo = this
