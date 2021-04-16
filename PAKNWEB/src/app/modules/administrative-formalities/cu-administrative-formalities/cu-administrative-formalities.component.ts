@@ -38,7 +38,7 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 		{ value: false, text: 'Nộp qua mạng' },
 	]
 	lstBind: any[] = [
-		{ value: null, text: '-- Chọn bắt buộc --' },
+		// { value: null, text: '-- Chọn bắt buộc --' },
 		{ value: true, text: 'Có' },
 		{ value: false, text: 'Không' },
 	]
@@ -73,6 +73,9 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 		})
 	}
 
+	getBind(value: string) {
+		this.lstBind.find((c) => c.value == value).text
+	}
 	getData() {
 		let request = {
 			Id: this.model.id,
@@ -81,16 +84,19 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.data
 				this.files = response.result.files
-				this.lstCharges = response.result.lstCharges.map((c) => {
+				this.lstCharges = response.result.lstCharges.map((c, i) => {
 					c.eedit = false
+					c.index = i
 					return c
 				})
-				this.lstCompositionProfile = response.result.lstCompositionProfile.map((c) => {
+				this.lstCompositionProfile = response.result.lstCompositionProfile.map((c, i) => {
 					c.eedit = false
+					c.index = i
 					return c
 				})
-				this.lstImplementationProcess = response.result.lstImplementationProcess.map((c) => {
+				this.lstImplementationProcess = response.result.lstImplementationProcess.map((c, i) => {
 					c.eedit = false
+					c.index = i
 					return c
 				})
 			} else {
@@ -246,9 +252,15 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 			this.model.organization == null ||
 			this.model.organization == ''
 		) {
+			this.toastr.error('Dữ liệu không hợp lệ')
 			return
 		}
 		if (this.form.invalid) {
+			this.toastr.error('Dữ liệu không hợp lệ')
+			return
+		}
+		if (this.formEditing) {
+			this.toastr.error('Dữ liệu không hợp lệ, vui lòng kiểm tra các mục: Thành phần hồ sơ, Trình tự thực hiện, Lệ phí')
 			return
 		}
 		const request = {
@@ -291,33 +303,64 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 		}
 	}
 
+	formEditing = false
+
+	onSaveCompositionProfile(_item: any) {
+		if (_item.nameExhibit == null || _item.nameExhibit == '') {
+			_item.eedit = true
+			this.formEditing = true
+			return
+		}
+		_item.eedit = !_item.eedit
+		this.formEditing = !this.formEditing
+	}
 	onAddCompositionProfile() {
 		var cp = {
-			index: this.lstCompositionProfile.length + 1,
+			index: this.lstCompositionProfile.length,
 			nameExhibit: '',
 			originalForm: '',
 			copyForm: '',
 			form: '',
-			isBind: null,
+			isBind: true,
 			files: [],
 			eedit: true,
 		}
 		this.lstCompositionProfile.push(cp)
+		this.formEditing = true
 	}
 
+	onSaveCharges(_item: any) {
+		if (_item.charges == null || _item.charges == '' || _item.description == null || _item.description == '') {
+			_item.eedit = true
+			this.formEditing = true
+			return
+		}
+		_item.eedit = !_item.eedit
+		this.formEditing = !this.formEditing
+	}
 	onAddCharges() {
 		var cp = {
-			index: this.lstCharges.length + 1,
+			index: this.lstCharges.length,
 			charges: '',
 			description: '',
 			eedit: true,
 		}
 		this.lstCharges.push(cp)
+		this.formEditing = true
 	}
 
+	onSaveImplementationProcess(_item: any) {
+		if (_item.name == null || _item.name == '' || _item.unit == null || _item.unit == '' || _item.time == null || _item.time == '') {
+			_item.eedit = true
+			this.formEditing = true
+			return
+		}
+		_item.eedit = !_item.eedit
+		this.formEditing = !this.formEditing
+	}
 	onAddImplementationProcess() {
 		var cp = {
-			index: this.lstImplementationProcess.length + 1,
+			index: this.lstImplementationProcess.length,
 			name: '',
 			unit: '',
 			time: '',
@@ -325,6 +368,7 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 			eedit: true,
 		}
 		this.lstImplementationProcess.push(cp)
+		this.formEditing = true
 	}
 	preDelete(item, type) {
 		this.itemDelete = item

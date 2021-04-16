@@ -64,8 +64,8 @@ namespace PAKNAPI.Models.AdministrationFormalities
         public DAMAdministrationGetById Data { get; set; }
         public List<DAMFileObj> Files { get; set; }
         public List<DAMCompositionProfileCreateObj> LstCompositionProfile { get; set; }
-        public List<DAMChargesCreateIN> LstCharges { get; set; }
-        public List<DAMImplementationProcessCreateIN> LstImplementationProcess { get; set; }
+        public List<DAMChargesGetById> LstCharges { get; set; }
+        public List<DAMImplementationProcessUpdateIN> LstImplementationProcess { get; set; }
 
     }
 }

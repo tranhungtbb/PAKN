@@ -419,10 +419,10 @@ namespace PAKNAPI.Controller
                     {
                         foreach (var item in request.LstImplementationProcess)
                         {
-                            if (item.Id == 0)
+                            if (item.Id == null || item.Id == 0)
                             {
                                 DAMImplementationProcessCreateIN itemCreate = new DAMImplementationProcessCreateIN();
-                                itemCreate.AdministrationId = item.AdministrationId;
+                                itemCreate.AdministrationId = request.Data.Id;
                                 itemCreate.Name = item.Name;
                                 itemCreate.Result = item.Result;
                                 itemCreate.Time = item.Time;
@@ -439,10 +439,10 @@ namespace PAKNAPI.Controller
                     {
                         foreach (var item in request.LstCharges)
                         {
-                            if (item.Id == 0)
+                            if (item.Id == null || item.Id == 0)
                             {
                                 DAMChargesCreateIN itemCreate = new DAMChargesCreateIN();
-                                itemCreate.AdministrationId = item.AdministrationId;
+                                itemCreate.AdministrationId = request.Data.Id;
                                 itemCreate.Charges = item.Charges;
                                 itemCreate.Description = item.Description;
                                 await new DAMChargesCreate(_appSetting).DAMChargesCreateDAO(itemCreate);
