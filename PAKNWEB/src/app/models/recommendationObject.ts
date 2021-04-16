@@ -38,17 +38,19 @@ export class RecommendationSearchObject {
 		this.name = ''
 		this.title = ''
 		this.content = ''
+		this.place = ''
 		this.field = null
-		this.unitId = null
+		this.unitId = ''
 		this.status = null
 	}
 	code: string
 	name: string
 	title: string
 	content: string
-	unitId: number
+	unitId: string
 	field: number
 	status: number
+	place: string
 }
 export class RecommendationForwardObject {
 	id: number = 0
@@ -107,21 +109,12 @@ export class RecommendationConclusionObject {
 	unitReceiverId: number = null
 	content: string = ''
 }
-export class RecommendationSuggestObject {
-	id: number = 0
-	code: string = ''
-	title: string = ''
-	name: string = ''
-	sendDate: Date = null
-	contentReply: string = ''
-}
 
 export class PuRecommendation {
 	id: number = 0
 	name: string
 	title: string
 	content: string
-	countClick: number
 	createDate: Date
 	quantityLike: number
 	quantityDislike: number
