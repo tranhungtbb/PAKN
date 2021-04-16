@@ -116,13 +116,6 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPage>("SY_UserGetAllOnPage", DP)).ToList();
 		}
-
-		public async Task<List<SYUserGetAllOnPage>> SYUserGetAllDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPage>("[SY_UserGetAll]", DP)).ToList();
-		}
 	}
 
 	public class SYUserGetByID

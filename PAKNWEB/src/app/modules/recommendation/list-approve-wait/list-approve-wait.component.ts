@@ -25,6 +25,7 @@ export class ListApproveWaitComponent implements OnInit {
 		private _shareData: DataService,
 		private notificationService: NotificationService
 	) {}
+
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
@@ -49,7 +50,6 @@ export class ListApproveWaitComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
-	isMain: boolean = this.storeageService.getIsMain()
 	ngOnInit() {
 		this.dataSearch.status = RECOMMENDATION_STATUS.APPROVE_WAIT
 		this.getDataForCreate()

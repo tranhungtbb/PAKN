@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr'
 import { UserObject } from '../../models/UserObject'
 import { UserService } from '../../services/user.service'
 import { DataService } from '../../services/sharedata.service'
+
 import { RESPONSE_STATUS, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
 import { NotificationService } from 'src/app/services/notification.service'
 import { from } from 'rxjs'
@@ -25,6 +26,11 @@ export class AppheaderComponent implements OnInit {
 	myHours: any
 	pageindex: number
 	listPageIndex: any[] = []
+
+	listData: any[] = []
+	totalRecords: number = 0
+	emailUser: string = ''
+
 	pageSizeGrid: number = 10
 	files: any
 	updateForm: FormGroup
@@ -48,6 +54,10 @@ export class AppheaderComponent implements OnInit {
 		{ value: 1, Text: 'Thành công' },
 		{ value: 0, Text: 'Thất bại' },
 	]
+	fromDate: string = ''
+	toDate: string = ''
+	form: FormGroup
+	dataSearch: SearchHistoryUser = new SearchHistoryUser()
 	public timeOut: number = 1
 	public exchangedata: any = {}
 	listThongBao: any = []
@@ -57,6 +67,8 @@ export class AppheaderComponent implements OnInit {
 	remindWork: any = {}
 	minDate: Date = new Date()
 
+	pageIndex: number = 1
+	pageSize: number = 10
 	lstChucVu: any = []
 	lstPhongBan: any = []
 
@@ -86,7 +98,10 @@ export class AppheaderComponent implements OnInit {
 
 	ngOnInit() {
 		// this.buildForm()
-
+		this.form = this._fb.group({
+			toDate: [this.dataSearch.toDate],
+			fromDate: [this.dataSearch.toDate],
+		})
 		this.userName = this.storageService.getFullName()
 		this.userForm = new FormGroup({
 			oldpassword: new FormControl(this.user.OldPassword, [Validators.required]),
@@ -380,4 +395,56 @@ export class AppheaderComponent implements OnInit {
 			event = new Date()
 		}
 	}
+	onPageChange(event: any) {
+		this.pageSize = event.rows
+		this.pageIndex = event.first / event.rows + 1
+		this.getList()
+	}
+	getList() {
+		let request = {
+			FromDate: this.dataSearch.fromDate != null ? this.dataSearch.fromDate.toLocaleDateString() : '',
+			ToDate: this.dataSearch.toDate != null ? this.dataSearch.toDate.toLocaleDateString() : '',
+			PageIndex: this.pageIndex,
+			PageSize: this.pageSize,
+			UserId: localStorage.getItem('userId'),
+		}
+		this.userService.getSystemLogin(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if (response.result != null) {
+					this.listData = []
+					this.listData = response.result.SYSystemLogGetAllOnPage
+					this.totalRecords = response.result.SYSystemLogGetAllOnPage[0].rowNumber
+				}
+			} else {
+			}
+		})
+		let req = {
+			Id: localStorage.getItem('userId'),
+		}
+		this.userService.getById(req).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if (response.result != null) {
+					this.emailUser = response.result.SYUserGetByID[0].email
+				}
+			} else {
+			}
+		})
+	}
+	dataStateChange() {
+		this.pageIndex = 1
+		this.getList()
+	}
+	showModalDetail(): void {
+		$('#modalDetail').modal('show')
+
+		this.getList()
+	}
+}
+export class SearchHistoryUser {
+	constructor() {
+		this.fromDate = null
+		this.toDate = null
+	}
+	fromDate: Date
+	toDate: Date
 }

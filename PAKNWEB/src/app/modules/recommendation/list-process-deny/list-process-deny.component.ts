@@ -40,7 +40,6 @@ export class ListProcessDenyComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
-	isMain: boolean = this.storeageService.getIsMain()
 	ngOnInit() {
 		this.dataSearch.status = RECOMMENDATION_STATUS.PROCESS_DENY
 		this.getDataForCreate()

@@ -217,7 +217,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("NewsRelateIds", _nENewsInsertIN.NewsRelateIds);
 			DP.Add("IsNotification", _nENewsInsertIN.IsNotification);
 
-			return (await _sQLCon.ExecuteScalarDapperAsync<decimal?>("NE_NewsInsert", DP));
+			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("NE_NewsInsert", DP);
 		}
 	}
 

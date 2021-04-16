@@ -90,6 +90,44 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYSystemLogGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public SYSystemLogGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYSystemLogGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+		public long UserId { get; set; }
+		public string FullName { get; set; }
+		public string IPAddress { get; set; }
+		public string MACAddress { get; set; }
+		public string Description { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public byte Status { get; set; }
+		public string Action { get; set; }
+		public string Exception { get; set; }
+
+		public async Task<List<SYSystemLogGetAllOnPage>> SYSystemLogGetAllOnPageDAO(int? UserId, int? PageSize, int? PageIndex, DateTime? FromDate, DateTime? ToDate)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", UserId);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("FromDate", FromDate);
+			DP.Add("ToDate", ToDate);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYSystemLogGetAllOnPage>("SY_SystemLogGetAllOnPage", DP)).ToList();
+		}
+	}
+
 	public class SYUnitGetDropdown
 	{
 		private SQLCon _sQLCon;
@@ -127,7 +165,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int Value { get; set; }
+		public int? Value { get; set; }
 		public string Text { get; set; }
 
 		public async Task<List<SYUnitGetDropdownNotMain>> SYUnitGetDropdownNotMainDAO()
