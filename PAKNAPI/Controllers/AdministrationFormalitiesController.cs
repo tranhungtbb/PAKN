@@ -198,7 +198,7 @@ namespace PAKNAPI.Controller
         }
 
 
-        [HttpPost]
+        [HttpPost,DisableRequestSizeLimit]
         [Authorize]
         [Route("AdministrationFormalitiesUpdate")]
         public async Task<ActionResult<object>> AdministrationFormalitiesUpdate()
@@ -243,6 +243,7 @@ namespace PAKNAPI.Controller
 
                         foreach (var item in request.LstXoaFile)
                         {
+                            if (string.IsNullOrWhiteSpace(item.FileAttach)) continue;
                             string filePath = Path.Combine(webRootPath, decrypt.DecryptData(item.FileAttach));
 
                             if (System.IO.File.Exists(filePath))
@@ -269,7 +270,8 @@ namespace PAKNAPI.Controller
 
                         foreach (var item in request.LstXoaFileForm)
                         {
-                            string filePath = Path.Combine(webRootPath, decrypt.DecryptData(item.FileAttach));
+                            if (string.IsNullOrWhiteSpace(item.FileAttach)) continue;
+                            string filePath = Path.Combine(webRootPath, item.FileAttach);
 
                             if (System.IO.File.Exists(filePath))
                             {
@@ -417,10 +419,10 @@ namespace PAKNAPI.Controller
                     {
                         foreach (var item in request.LstImplementationProcess)
                         {
-                            if (item.Id == 0)
+                            if (item.Id == null || item.Id == 0)
                             {
                                 DAMImplementationProcessCreateIN itemCreate = new DAMImplementationProcessCreateIN();
-                                itemCreate.AdministrationId = item.AdministrationId;
+                                itemCreate.AdministrationId = request.Data.Id;
                                 itemCreate.Name = item.Name;
                                 itemCreate.Result = item.Result;
                                 itemCreate.Time = item.Time;
@@ -437,10 +439,10 @@ namespace PAKNAPI.Controller
                     {
                         foreach (var item in request.LstCharges)
                         {
-                            if (item.Id == 0)
+                            if (item.Id == null || item.Id == 0)
                             {
                                 DAMChargesCreateIN itemCreate = new DAMChargesCreateIN();
-                                itemCreate.AdministrationId = item.AdministrationId;
+                                itemCreate.AdministrationId = request.Data.Id;
                                 itemCreate.Charges = item.Charges;
                                 itemCreate.Description = item.Description;
                                 await new DAMChargesCreate(_appSetting).DAMChargesCreateDAO(itemCreate);
