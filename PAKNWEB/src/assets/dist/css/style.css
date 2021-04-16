@@ -29824,3 +29824,13 @@ body .ui-tree .ui-tree-container .ui-treenode .ui-treenode-content .ui-tree-togg
   content:"\f2e5" !important;
   font-family: bootstrap-icons !important;
 }
+
+
+.select-caret-icon{
+  color: gray;
+  position: absolute;
+  right: 19pt;
+  top: 35pt;
+  font-size: 9pt;
+  cursor: pointer;
+}

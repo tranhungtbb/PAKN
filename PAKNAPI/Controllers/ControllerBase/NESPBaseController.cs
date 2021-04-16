@@ -56,29 +56,6 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-
-		[HttpGet]
-		[Route("NENewsGetListHomePage")]
-		public async Task<ActionResult<object>> NENewsGetListHome()
-		{
-			try
-			{
-				List<NENewsGetListHomePage> rsPUNewsGetListHomePage = await new NENewsGetListHomePage(_appSetting).PU_NewsGetListHomePage(true);
-				if (rsPUNewsGetListHomePage.Count < 4)
-				{
-					rsPUNewsGetListHomePage = await new NENewsGetListHomePage(_appSetting).PU_NewsGetListHomePage(false);
-				}
-				return new ResultApi { Success = ResultCode.OK, Result = rsPUNewsGetListHomePage };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-
 		[HttpGet]
 		[Authorize]
 		[Route("NENewsGetByIDBase")]
@@ -132,6 +109,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
+				_nENewsInsertIN.CreatedDate = DateTime.Now;
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsInsert(_appSetting).NENewsInsertDAO(_nENewsInsertIN) };
@@ -192,6 +170,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
+				_nENewsUpdateIN.UpdatedDate = DateTime.Now;
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN) };

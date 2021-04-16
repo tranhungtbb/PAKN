@@ -5,7 +5,7 @@ export class IndividualObject {
 		this.gender = true
 
 		//
-		this.nation = ''
+		this.nation = 'Việt Nam'
 		this.provinceId = ''
 		this.districtId = ''
 		this.wardsId = ''
@@ -23,7 +23,7 @@ export class IndividualObject {
 	districtId: any
 	wardsId: any
 	gender: boolean
-	_birthDay: string // ngay thang nam sinh
+	_birthDay: string
 
 	email: string
 	address: string
@@ -44,14 +44,26 @@ export class OrganizationObject {
 		this.RepresentativeGender = true
 
 		//
-		this.Nation = ''
+		this.RepresentativeName = ''
+		this.Email = ''
+		this.phone = ''
+
+		this.Address = ''
+		this.Nation = 'Việt Nam'
 		this.ProvinceId = ''
 		this.DistrictId = ''
 		this.WardsId = ''
 
+		this.Business = ''
+		this.BusinessRegistration = ''
+		this.DecisionOfEstablishing = ''
 		this.OrgProvinceId = ''
 		this.OrgDistrictId = ''
 		this.OrgWardsId = ''
+		this.OrgEmail = ''
+		this.OrgAddress = ''
+		this.OrgPhone = ''
+		this.Tax = ''
 
 		this.Status = 1
 		this.isActived = true

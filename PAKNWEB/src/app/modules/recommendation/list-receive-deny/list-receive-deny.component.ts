@@ -40,6 +40,7 @@ export class ListReceiveDenyComponent implements OnInit {
 	totalRecords: number = 0
 	idDelete: number = 0
 	lstHistories: any = []
+	isMain: boolean = this.storeageService.getIsMain()
 	ngOnInit() {
 		this.dataSearch.status = RECOMMENDATION_STATUS.RECEIVE_DENY
 		this.getDataForCreate()

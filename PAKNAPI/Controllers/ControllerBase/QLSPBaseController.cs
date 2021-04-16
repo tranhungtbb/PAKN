@@ -32,66 +32,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize("ThePolicy")]
-		[Route("DAMCompositionProfileFileFilesInsertBase")]
-		public async Task<ActionResult<object>> DAMCompositionProfileFileFilesInsertBase(DAMCompositionProfileFileFilesInsertIN _dAMCompositionProfileFileFilesInsertIN)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new DAMCompositionProfileFileFilesInsert(_appSetting).DAMCompositionProfileFileFilesInsertDAO(_dAMCompositionProfileFileFilesInsertIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize("ThePolicy")]
-		[Route("DAMCompositionProfileFileFilesInsertListBase")]
-		public async Task<ActionResult<object>> DAMCompositionProfileFileFilesInsertListBase(List<DAMCompositionProfileFileFilesInsertIN> _dAMCompositionProfileFileFilesInsertINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _dAMCompositionProfileFileFilesInsertIN in _dAMCompositionProfileFileFilesInsertINs)
-				{
-					var result = await new DAMCompositionProfileFileFilesInsert(_appSetting).DAMCompositionProfileFileFilesInsertDAO(_dAMCompositionProfileFileFilesInsertIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize("ThePolicy")]
 		[Route("QLDoanhNghiepInsertBase")]
 		public async Task<ActionResult<object>> QLDoanhNghiepInsertBase(QLDoanhNghiepInsertIN _qLDoanhNghiepInsertIN)
 		{

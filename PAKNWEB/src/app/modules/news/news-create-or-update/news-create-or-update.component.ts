@@ -9,15 +9,17 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 
 import { Router, ActivatedRoute } from '@angular/router'
-
+import { RESPONSE_STATUS } from '../../../constants/CONSTANTS'
 import { NewsService } from '../../../services/news.service'
 import { CatalogService } from '../../../services/catalog.service'
+import { NotificationService } from '../../../services/notification.service'
 
 import { NewsRelateModalComponent } from '../news-relate-modal/news-relate-modal.component'
 
 import { COMMONS } from '../../../commons/commons'
 import { AppSettings } from '../../../constants/app-setting'
 import { NewsModel } from '../../../models/NewsObject'
+import { from } from 'rxjs'
 
 declare var $: any
 
@@ -52,7 +54,8 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		private catalogService: CatalogService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		private sanitizer: DomSanitizer
+		private sanitizer: DomSanitizer,
+		private notificationService: NotificationService
 	) {}
 	allowImageExtend = ['image/jpeg', 'image/png']
 	public Editor = ClassicEditor
@@ -157,13 +160,14 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		this.model.isPublished = published
 		if (published) this.model.status = 1
 		else this.model.status = 2
-
 		if (this.model.id && this.model.id > 0) {
 			this.newsService.update(this.model).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error(COMMONS.UPDATE_FAILED)
 					return
 				}
+				// insert vào Notification
+				this.insertNotification(false)
 				this.toast.success(COMMONS.UPDATE_SUCCESS)
 				this.router.navigate(['/quan-tri/tin-tuc'])
 			})
@@ -174,6 +178,9 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					this.toast.error(errorMsg)
 					return
 				}
+				this.model.id = res.result
+				this.insertNotification(true)
+
 				this.toast.success(COMMONS.ADD_SUCCESS)
 				this.router.navigate(['/quan-tri/tin-tuc'])
 			})
@@ -267,5 +274,24 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 
 	public onReady(editor) {
 		editor.ui.getEditableElement().parentElement.insertBefore(editor.ui.view.toolbar.element, editor.ui.getEditableElement())
+	}
+
+	insertNotification(isCreate: boolean) {
+		if (this.model.status == 1) {
+			var obj = {
+				id: this.model.id,
+				title: this.model.title,
+				isCreateNews: isCreate,
+			}
+			if (this.model.isNotification == true) {
+				this.notificationService.insertNotificationTypeNews(obj).subscribe((res) => {
+					if ((res.success = RESPONSE_STATUS.success)) {
+						return
+					}
+				})
+			}
+			return
+		}
+		return
 	}
 }

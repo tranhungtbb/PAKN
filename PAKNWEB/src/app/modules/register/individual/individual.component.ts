@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { Router } from '@angular/router'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
+import { viLocale } from 'ngx-bootstrap/locale'
+import { defineLocale } from 'ngx-bootstrap/chronos'
 
 import { RegisterService } from 'src/app/services/register.service'
 import { DiadanhService } from 'src/app/services/diadanh.service'
@@ -22,15 +24,16 @@ export class IndividualComponent implements OnInit {
 		private router: Router,
 		private registerService: RegisterService,
 		private diadanhService: DiadanhService
-	) {}
-
-	date: Date = new Date()
+	) {
+		defineLocale('vi', viLocale)
+	}
+	dateNow: Date = new Date()
 
 	formLogin: FormGroup
 	formInfo: FormGroup
 	model: IndividualObject = new IndividualObject()
 
-	listNation: any[] = [{ id: 1, name: 'Việt Nam' }]
+	listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
 	listProvince: any[] = []
 	listDistrict: any[] = []
 	listVillage: any[] = []
@@ -40,8 +43,11 @@ export class IndividualComponent implements OnInit {
 		{ value: false, text: 'Nữ' },
 	]
 
+	nation_enable_type = false
+
 	ngOnInit() {
 		this.loadFormBuilder()
+		this.onChangeNation()
 	}
 
 	//get req
@@ -53,13 +59,23 @@ export class IndividualComponent implements OnInit {
 		this.listVillage = []
 
 		this.model.provinceId = ''
-		if (this.model.nation == 1) {
+
+		if (this.model.nation == 'Việt Nam') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listProvince = res.result.CAProvinceGetAll
+					this.model.provinceId = 37
 				}
 			})
 		} else {
+			if (this.model.nation == '#') {
+				this.nation_enable_type = true
+				this.model.nation = ''
+				//
+				// this.formInfo.controls.province.disable()
+				// this.formInfo.controls.district.disable()
+				// this.formInfo.controls.village.disable()
+			}
 		}
 	}
 	onChangeProvince() {
@@ -92,6 +108,19 @@ export class IndividualComponent implements OnInit {
 		}
 	}
 
+	onReset() {
+		this.formLogin.reset()
+		this.formInfo.reset()
+
+		this.fLoginSubmitted = false
+		this.fInfoSubmitted = false
+		this.model = new IndividualObject()
+		this.model._birthDay = ''
+		this.model._dateOfIssue = ''
+		this.model.fullName = ''
+		this.model.gender = true
+	}
+
 	onSave() {
 		this.fLoginSubmitted = true
 		this.fInfoSubmitted = true
@@ -101,6 +130,12 @@ export class IndividualComponent implements OnInit {
 		this.model._birthDay = fDob.value
 		this.model._dateOfIssue = fDateIssue.value
 
+		if (this.model.nation != this.listNation[0].value) {
+			this.model.provinceId = 0
+			this.model.districtId = 0
+			this.model.wardsId = 0
+		}
+
 		if (this.formLogin.invalid || this.formInfo.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return
@@ -109,7 +144,12 @@ export class IndividualComponent implements OnInit {
 		// req to server
 		this.registerService.registerIndividual(this.model).subscribe((res) => {
 			if (res.success != 'OK') {
-				this.toast.error(res.message)
+				let msg = res.message
+				if (msg.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
+					this.toast.error('Email đã tồn tại')
+				}
+
+				this.toast.error(msg)
 				return
 			}
 			this.toast.success('Đăng ký tài khoản thành công')
@@ -141,7 +181,7 @@ export class IndividualComponent implements OnInit {
 
 		//form thông tin
 		this.formInfo = this.formBuilder.group({
-			fullName: [this.model.fullName, [Validators.required]],
+			fullName: [this.model.fullName, [Validators.required, Validators.maxLength(100)]],
 			gender: [this.model.gender, [Validators.required]],
 			dob: [this.model._birthDay, [Validators.required]],
 			nation: [this.model.nation, [Validators.required]],
@@ -149,11 +189,11 @@ export class IndividualComponent implements OnInit {
 			district: [this.model.districtId, [Validators.required]],
 			village: [this.model.wardsId, [Validators.required]],
 
-			email: [this.model.email, [Validators.required, Validators.email]],
+			email: [this.model.email, [Validators.email]],
 			address: [this.model.address, [Validators.required]],
-			iDCard: [this.model.iDCard, [Validators.required, Validators.pattern(/^([0-9]){9,12}$/g)]],
-			placeIssue: [this.model.issuedPlace, [Validators.required]],
-			dateIssue: [this.model._dateOfIssue, [Validators.required]],
+			iDCard: [this.model.iDCard, [Validators.required, Validators.pattern(/^([0-9]){8,12}$/g)]],
+			placeIssue: [this.model.issuedPlace, []],
+			dateIssue: [this.model._dateOfIssue, []],
 		})
 	}
 }

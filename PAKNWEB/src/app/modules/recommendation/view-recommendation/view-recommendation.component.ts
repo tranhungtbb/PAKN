@@ -2,7 +2,13 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { COMMONS } from 'src/app/commons/commons'
 import { CONSTANTS, FILETYPE, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
-import { RecommendationConclusionObject, RecommendationForwardObject, RecommendationProcessObject, RecommendationViewObject } from 'src/app/models/recommendationObject'
+import {
+	RecommendationConclusionObject,
+	RecommendationForwardObject,
+	RecommendationProcessObject,
+	RecommendationSuggestObject,
+	RecommendationViewObject,
+} from 'src/app/models/recommendationObject'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -31,8 +37,13 @@ export class ViewRecommendationComponent implements OnInit {
 	fileAccept = CONSTANTS.FILEACCEPT
 	userLoginId: number = this.storeageService.getUserId()
 	unitLoginId: number = this.storeageService.getUnitId()
+	pageIndex: number = 1
+	pageSize: number = 20
+	listData = new Array<RecommendationSuggestObject>()
+	totalRecords: number = 0
+	@ViewChild('table', { static: false }) table: any
 	@ViewChild('file', { static: false }) public file: ElementRef
-	@ViewChild(RemindComponent, { static: false }) remindComponent: RemindComponent
+	@ViewChild(RemindComponent, { static: true }) remindComponent: RemindComponent
 	constructor(
 		private toastr: ToastrService,
 		private fileService: UploadFileService,
@@ -45,6 +56,7 @@ export class ViewRecommendationComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
+		this.remindComponent.viewRecommendation = this
 		this.buildFormForward()
 		this.getDropdown()
 		this.model = new RecommendationViewObject()
@@ -101,6 +113,46 @@ export class ViewRecommendationComponent implements OnInit {
 			(error) => {
 				console.log(error)
 			}
+	}
+
+	getListSuggest() {
+		let lstId = []
+		for (let index = 0; index < this.lstHashtagSelected.length; index++) {
+			lstId.push(this.lstHashtagSelected[index].value)
+		}
+		let request = {
+			ListIdHashtag: lstId.join(','),
+			PageIndex: this.pageIndex,
+			PageSize: this.pageSize,
+		}
+
+		this.recommendationService.recommendationGetSuggestReply(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if (response.result != null) {
+					this.listData = []
+					this.listData = response.result.MRRecommendationGetSuggestReply
+					this.totalRecords = response.result.TotalCount
+					$('#modalSuggestReply').modal('show')
+				}
+			} else {
+				this.toastr.error(response.message)
+			}
+		}),
+			(error) => {
+				console.log(error)
+				alert(error)
+			}
+	}
+
+	onPageChange(event: any) {
+		this.pageSize = event.rows
+		this.pageIndex = event.first / event.rows + 1
+		this.getListSuggest()
+	}
+
+	useConclustion(contentConclustion) {
+		this.modelConclusion.content = contentConclustion
+		$('#modalSuggestReply').modal('hide')
 	}
 
 	getShortName(string) {
@@ -224,6 +276,7 @@ export class ViewRecommendationComponent implements OnInit {
 				}
 		}
 	}
+
 	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
 	formForward: FormGroup
 	lstUnitNotMain: any = []

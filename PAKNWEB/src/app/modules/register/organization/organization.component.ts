@@ -20,24 +20,41 @@ declare var $: any
 	styleUrls: ['./organization.component.css'],
 })
 export class OrganizationComponent implements OnInit {
+	@ViewChild(OrgRepreFormComponent, { static: true })
+	private child_OrgRepreForm: OrgRepreFormComponent
+	@ViewChild(OrgFormAddressComponent, { static: true })
+	private child_OrgAddressForm: OrgFormAddressComponent
+
 	constructor(private toast: ToastrService, private formBuilder: FormBuilder, private registerService: RegisterService, private router: Router) {}
 
-	date: Date = new Date()
-
-	@ViewChild(OrgRepreFormComponent, { static: false }) child_OrgRepreForm: OrgRepreFormComponent
-	@ViewChild(OrgFormAddressComponent, { static: false }) child_OrgAddressForm: OrgFormAddressComponent
+	dateNow: Date = new Date()
 
 	formLogin: FormGroup
 	formOrgInfo: FormGroup
-
+	listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
 	model: OrganizationObject = new OrganizationObject()
-
+	nation_enable_type = false
 	ngOnInit() {
-		// this.child_OrgAddressForm.parentCompo = this
-		// this.child_OrgRepreForm.parentCompo = this
+		this.child_OrgAddressForm.model = this.model
+		this.child_OrgRepreForm.model = this.model
 		this.loadFormBuilder()
 	}
 
+	onReset() {
+		this.formLogin.reset()
+		this.formOrgInfo.reset()
+		this.child_OrgRepreForm.formInfo.reset()
+		this.child_OrgAddressForm.formOrgAddress.reset()
+
+		this.fLoginSubmitted = false
+		this.child_OrgRepreForm.fInfoSubmitted = false
+		this.fOrgInfoSubmitted = false
+		this.child_OrgAddressForm.fOrgAddressSubmitted = false
+		this.model = new OrganizationObject()
+		this.model._RepresentativeBirthDay = ''
+		this.model._DateOfIssue = ''
+		this.model.RepresentativeGender = true
+	}
 	onSave() {
 		this.fLoginSubmitted = true
 		this.child_OrgRepreForm.fInfoSubmitted = true
@@ -49,6 +66,16 @@ export class OrganizationComponent implements OnInit {
 		this.model._RepresentativeBirthDay = fDob.value
 		this.model._DateOfIssue = fIsDate.value
 
+		if (this.model.Nation != this.listNation[0].value) {
+			this.model.ProvinceId = 0
+			this.model.DistrictId = 0
+			this.model.WardsId = 0
+			//
+			this.model.OrgProvinceId = 0
+			this.model.OrgDistrictId = 0
+			this.model.OrgWardsId = 0
+		}
+
 		if (this.formLogin.invalid || this.formOrgInfo.invalid || this.child_OrgRepreForm.formInfo.invalid || this.child_OrgAddressForm.formOrgAddress.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return
@@ -56,7 +83,10 @@ export class OrganizationComponent implements OnInit {
 
 		this.registerService.registerOrganization(this.model).subscribe((res) => {
 			if (res.success != 'OK') {
-				this.toast.error(res.message)
+				let msg = res.message
+				if (msg.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
+					this.toast.error('Email đã tồn tại')
+				}
 				return
 			}
 			this.toast.success('Đăng ký tài khoản thành công')
@@ -88,11 +118,11 @@ export class OrganizationComponent implements OnInit {
 
 		this.formOrgInfo = this.formBuilder.group({
 			//---thông tin doanh nghiệp
-			Business: [this.model.Business, [Validators.required]], // tên tổ chức
-			RegistrationNum: [this.model.BusinessRegistration, [Validators.required]], //Số ĐKKD
-			DecisionFoundation: [this.model.DecisionOfEstablishing, [Validators.required]], //Quyết định thành lập
-			DateIssue: [this.model._DateOfIssue, [Validators.required]], //Ngày cấp/thành lập
-			Tax: [this.model.Tax, [Validators.required]], //Mã số thuế
+			Business: [this.model.Business, [Validators.required, Validators.maxLength(200)]], // tên tổ chức
+			RegistrationNum: [this.model.BusinessRegistration, [Validators.maxLength(20)]], //Số ĐKKD
+			DecisionFoundation: [this.model.DecisionOfEstablishing, [Validators.maxLength(20)]], //Quyết định thành lập
+			DateIssue: [this.model._DateOfIssue, []], //Ngày cấp/thành lập
+			Tax: [this.model.Tax, [Validators.required, Validators.maxLength(13)]], //Mã số thuế
 		})
 	}
 }

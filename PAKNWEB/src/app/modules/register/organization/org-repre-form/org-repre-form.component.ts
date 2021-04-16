@@ -6,25 +6,27 @@ import { OrganizationComponent } from '../organization.component'
 
 import { OrganizationObject } from 'src/app/models/RegisterObject'
 
+declare var $: any
 @Component({
 	selector: 'app-org-repre-form',
 	templateUrl: './org-repre-form.component.html',
 	styleUrls: ['./org-repre-form.component.css'],
 })
 export class OrgRepreFormComponent implements OnInit {
-	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService, public parentCompo: OrganizationComponent) {}
+	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService) {}
 
-	date: Date = new Date()
+	dateNow: Date = new Date()
 	formInfo: FormGroup
 	fInfoSubmitted = false
 
-	model: OrganizationObject = this.parentCompo.model
+	public model: OrganizationObject = new OrganizationObject()
+
 	get fInfo() {
 		return this.formInfo.controls
 	}
 
 	///
-	listNation: any[] = [{ id: 1, name: 'Việt Nam' }]
+	listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
 	listProvince: any[] = []
 	listDistrict: any[] = []
 	listVillage: any[] = []
@@ -33,6 +35,7 @@ export class OrgRepreFormComponent implements OnInit {
 		{ value: false, text: 'Nữ' },
 	]
 
+	nation_enable_type = false
 	//event
 	//event
 	onChangeNation() {
@@ -41,13 +44,21 @@ export class OrgRepreFormComponent implements OnInit {
 		this.listVillage = []
 
 		this.model.ProvinceId = ''
-		if (this.model.Nation == 1) {
+		if (this.model.Nation == 'Việt Nam') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listProvince = res.result.CAProvinceGetAll
+
+					this.model.ProvinceId = 37
+					this.model.OrgProvinceId = 37
+					$('#_OrgDistrictId').click()
 				}
 			})
 		} else {
+			if (this.model.Nation == '#') {
+				this.nation_enable_type = true
+				this.model.Nation = ''
+			}
 		}
 	}
 	onChangeProvince() {
@@ -84,15 +95,17 @@ export class OrgRepreFormComponent implements OnInit {
 		//form thông tin nguoi dai dien
 		this.formInfo = this.formBuilder.group({
 			//----thông tin người đại diện
-			RepresentativeName: [this.model.RepresentativeName, [Validators.required]], // tên người đại diện
-			Email: [this.model.Email, [Validators.required, Validators.email]],
+			RepresentativeName: [this.model.RepresentativeName, [Validators.required, Validators.maxLength(100)]], // tên người đại diện
+			Email: [this.model.Email, [Validators.email]],
 			Gender: [this.model.RepresentativeGender, [Validators.required]],
-			DOB: [this.model._RepresentativeBirthDay, [Validators.required]],
+			DOB: [this.model._RepresentativeBirthDay, []],
 			Nation: [this.model.Nation, [Validators.required]],
 			Province: [this.model.ProvinceId, [Validators.required]], //int
 			District: [this.model.DistrictId, [Validators.required]], // int
 			Village: [this.model.WardsId, [Validators.required]], // int
-			Address: [this.model.Address, [Validators.required]],
+			Address: [this.model.Address, []],
 		})
+
+		this.onChangeNation()
 	}
 }

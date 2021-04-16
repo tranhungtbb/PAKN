@@ -11,11 +11,10 @@ import { OrganizationObject } from 'src/app/models/RegisterObject'
 	styleUrls: ['./org-form-address.component.css'],
 })
 export class OrgFormAddressComponent implements OnInit {
-	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService, public parentCompo: OrganizationComponent) {}
-
+	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService) {}
 	formOrgAddress: FormGroup
 	fOrgAddressSubmitted = false
-	model: OrganizationObject = this.parentCompo.model
+	public model: OrganizationObject = new OrganizationObject()
 
 	get fOrgAdr() {
 		return this.formOrgAddress.controls
@@ -30,6 +29,7 @@ export class OrgFormAddressComponent implements OnInit {
 		{ value: false, text: 'Nữ' },
 	]
 
+	nation_enable_type = false
 	//event
 	onChangeNation() {
 		this.listProvince = []
@@ -37,7 +37,7 @@ export class OrgFormAddressComponent implements OnInit {
 		this.listVillage = []
 
 		this.model.OrgProvinceId = ''
-		if (this.model.Nation == 1) {
+		if (this.model.Nation == 'Việt Nam') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listProvince = res.result.CAProvinceGetAll
@@ -83,9 +83,9 @@ export class OrgFormAddressComponent implements OnInit {
 
 	ngOnInit() {
 		this.formOrgAddress = this.formBuilder.group({
-			OrgProvince: [this.model.OrgProvinceId, [Validators.required]], //int
-			OrgDistrict: [this.model.OrgDistrictId, [Validators.required]], //int
-			OrgVillage: [this.model.OrgWardsId, [Validators.required]], //int
+			OrgProvince: [this.model.OrgProvinceId, []], //int
+			OrgDistrict: [this.model.OrgDistrictId, []], //int
+			OrgVillage: [this.model.OrgWardsId, []], //int
 			OrgAddress: [this.model.OrgAddress, [Validators.required]],
 			OrgPhone: [this.model.OrgPhone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
 			OrgEmail: [this.model.OrgEmail, [Validators.required, Validators.email]],

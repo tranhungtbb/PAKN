@@ -21,12 +21,11 @@
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
-									<th style="width: 150px">
+									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Mã số PAKN</strong>
+											<strong>STT</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100" (keydown.enter)="dataStateChange()" />
 									</th>
 									<th style="width: 350px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -53,11 +52,18 @@
 											<ng-select style="width:200px;" [(ngModel)]="dataSearch.field" [closeOnSelect]="true" [searchable]="false" [clearable]="false"
 												(change)="dataStateChange()">
 												<ng-option value="">--Chọn lĩnh vực--</ng-option>
-												<ng-option *ngFor="let item of lstField" [value]="item.value">
-													{{item.text | htmlToPlaintext}}
+												<ng-option *ngFor="let item of lstFieldFilter" [value]="item.value">
+													{{item.text }}
 												</ng-option>
 											</ng-select>
 										</div>
+									</th>
+									<th style="width: 350px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Nơi có CTKN</strong>
+											<span class="caret-tb"></span>
+										</p>
+										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.content" maxlength="100" (keydown.enter)="dataStateChange()" />
 									</th>
 									<th style="width: 160px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -82,14 +88,13 @@
 							</ng-template>
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
+									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
-										<strong><a [routerLink]="['/quan-tri/kien-nghi/chi-tiet-knct/',item.id]" class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
-									</td>
-									<td>
-										<p class="text-2line mb-0">{{item.content}}</p>
+										<a class="text-2line mb-0" [routerLink]="['/quan-tri/kien-nghi/chi-tiet-knct/',item.id]" title="Xem chi tiết">{{item.content}}</a>
 									</td>
 									<td>{{item.department}}</td>
 									<td>{{item.fieldName}}</td>
+									<td>{{item.place}}</td>
 									<td>
 										<span *ngIf="item.status == 1" class="badge rounded-pill badge-outline-green2">Chưa giải
 											quyết</span>
