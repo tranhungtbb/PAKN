@@ -25,6 +25,7 @@ export class AppheaderComponent implements OnInit {
 
 	listData: any[] = []
 	totalRecords: number = 0
+	emailUser: string = ''
 
 	pageSizeGrid: number = 10
 	files: any
@@ -387,14 +388,23 @@ export class AppheaderComponent implements OnInit {
 			PageSize: this.pageSize,
 			UserId: localStorage.getItem('userId'),
 		}
-		console.log(request)
 		this.userService.getSystemLogin(request).subscribe(response => {
-			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
 					this.listData = response.result.SYSystemLogGetAllOnPage
 					this.totalRecords = response.result.SYSystemLogGetAllOnPage[0].rowNumber
+				}
+			} else {
+			}
+		})
+		let req = {
+			Id: localStorage.getItem('userId'),
+		}
+		this.userService.getById(req).subscribe(response => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if (response.result != null) {
+					this.emailUser = response.result.SYUserGetByID[0].email
 				}
 			} else {
 			}

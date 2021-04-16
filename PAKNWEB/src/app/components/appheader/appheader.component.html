@@ -399,7 +399,7 @@
 								<span class="ml-2">Đăng xuất </span>
 							</a>
 							<a (click)="showModalDetail()" class="dropdown-item ai-icon">
-								<i class="bi bi-person-square"></i>
+								<i class="bi bi-person-fill"></i>
 								<span class="ml-2">Lịch sử cá nhân </span>
 							</a>
 						</div>
@@ -418,7 +418,7 @@
 						<button class="close btn-close-modal" data-dismiss="modal">
 							×
 						</button>
-						<p class="modal-title h3">Lịch sử: liemnt@gmail.com</p>
+						<p class="modal-title h3">Lịch sử: {{emailUser}}</p>
 					</div>
 					<div class="modal-body no-padding-bottom" style="padding: 1.1rem;">
 						<div class="form-horizontal" [formGroup]="form" #formDir="ngForm">
@@ -443,8 +443,8 @@
 								</div>
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1"></label>
-									<button (click)="dataStateChange()" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" type="button"><i class="fas fa-search">Tìm
-											kiếm</i>
+									<button (click)="dataStateChange()" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" type="button">Tìm
+										kiếm
 									</button>
 								</div>
 							</div>
@@ -460,7 +460,7 @@
 
 											<ng-template pTemplate="body" let-item>
 												<tr>
-													<td>{{item.createdDate}}</td>
+													<td>{{item.createdDate | date:'HH:mm'}} - {{item.createdDate | date: 'dd/MM/yyyy'}} </td>
 													<td>{{item.description}}</td>
 													<td>
 														<span *ngIf="item.status == 1" class="badge rounded-pill badge-success">Thành công</span>
