@@ -305,7 +305,7 @@
 				</div>
 				<ul class="navbar-nav header-right align-items-center">
 					<li class="nav-item dropdown notification_dropdown">
-						<a class="nav-link text-dark bg-transparent" href="/cong-bo/trang-chu">
+						<a class="nav-link text-dark bg-transparent" href="index.html">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
 								<path fill-rule="evenodd"
 									d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
@@ -398,7 +398,7 @@
 								<i class="bi bi-box-arrow-right"></i>
 								<span class="ml-2">Đăng xuất </span>
 							</a>
-							<a href="#" class="dropdown-item ai-icon">
+							<a (click)="showModalDetail()" class="dropdown-item ai-icon">
 								<i class="bi bi-person-square"></i>
 								<span class="ml-2">Lịch sử cá nhân </span>
 							</a>
@@ -407,6 +407,88 @@
 				</ul>
 			</div>
 		</nav>
+	</div>
+</div>
+<div class="modal fade" id="modalDetail">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 60%" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">Lịch sử: liemnt@gmail.com</p>
+					</div>
+					<div class="modal-body no-padding-bottom" style="padding: 1.1rem;">
+						<div class="form-horizontal" [formGroup]="form" #formDir="ngForm">
+							<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 5px 0px;">
+								<div class="col-12 col-lg-4 form-group">
+									<label class="mb-1">Từ ngày</label>
+									<input class="form-control form-control-sm" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="fromDate"
+										formControlName="fromDate" [(ngModel)]="dataSearch.fromDate" (keydown.enter)="dataStateChange()" appBsDatepickerInvalid
+										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+									<div class="input-group-addon">
+										<i class="far fa-calendar-alt" (click)="dataStateChange()" [attr.aria-expanded]="n.isOpen"></i>
+									</div>
+								</div>
+								<div class="col-12 col-lg-4 form-group">
+									<label class="mb-1">Đến ngày</label>
+									<input class="form-control form-control-sm" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="toDate"
+										[(ngModel)]="dataSearch.toDate" formControlName="toDate" (keydown.enter)="dataStateChange()" appBsDatepickerInvalid
+										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+									<div class="input-group-addon">
+										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+									</div>
+								</div>
+								<div class="col-12 col-lg-4 form-group">
+									<label class="mb-1"></label>
+									<button (click)="dataStateChange()" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" type="button"><i class="fas fa-search">Tìm
+											kiếm</i>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="card mb-0 shadow-none">
+									<div class="table-responsive">
+
+										<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+											currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true"
+											autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+
+											<ng-template pTemplate="body" let-item>
+												<tr>
+													<td>{{item.createdDate}}</td>
+													<td>{{item.description}}</td>
+													<td>
+														<span *ngIf="item.status == 1" class="badge rounded-pill badge-success">Thành công</span>
+														<span *ngIf="item.status == 2" class="badge rounded-pill badge-outline-blue">Đang giải quyết</span>
+														<span *ngIf="item.status == 3" class="badge rounded-pill badge-success">Đã giải quyết</span>
+													</td>
+												</tr>
+											</ng-template>
+											<ng-template pTemplate="emptymessage">
+												<tr>
+													<td class="text-center" colspan="5">Không có dữ liệu</td>
+												</tr>
+											</ng-template>
+										</p-table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <div class="modal-footer"> -->
+
+					<!-- <button data-dismiss="modal" style="text-transform: none;" class="btn btn-primary btn-sm"> Đóng
+                <i class="far fa-times"></i>
+              </button> -->
+					<!-- </div> -->
+				</div>
+			</form>
+		</div>
 	</div>
 </div>
 <!--**********************************

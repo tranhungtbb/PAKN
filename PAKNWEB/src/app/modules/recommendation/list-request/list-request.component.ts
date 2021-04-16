@@ -109,7 +109,7 @@ export class ListRequestComponent implements OnInit {
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
-
+		console.log(request)
 		this._service.recommendationGetListProcess(request).subscribe(response => {
 			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
