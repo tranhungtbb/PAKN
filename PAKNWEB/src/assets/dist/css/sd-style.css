@@ -1265,7 +1265,7 @@ body .ui-tree{
 /* Handle */
 .mini-scroll::-webkit-scrollbar-thumb,
 .deznav-scroll::-webkit-scrollbar-thumb {
-	background: #c2c2c2;
+	background: #DAE2F3;
 	border-radius: 10px;
 }
 
@@ -1290,39 +1290,46 @@ body .ui-table .ui-table-thead > tr > th{
 	border-color: #f0f1f5!important;
 }
 body .ui-paginator{
-	background-color: #ffffff;
-	margin-bottom: 15px;
-	border: none;
+	background-color: #ffffff!important;
+	margin: 15px 0;
+	border: none!important;
+	height: 50px;
 }
 body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
 	border: 0;
-	box-shadow: none;
-	line-height: 42px;
-	color: #0283e1;
-	background-color: transparent;
-	font-size: 1.3rem;
-	font-weight: bolder;
+	box-shadow: none; 
+	line-height: 48px!important;
+	color: #0283e1!important;
+	background-color: transparent!important;
+	font-size: 1.8rem;
+	font-weight: normal;
 }
 body .ui-paginator .ui-paginator-first:not(.ui-state-disabled):not(.ui-state-active):hover, 
 body .ui-paginator .ui-paginator-prev:not(.ui-state-disabled):not(.ui-state-active):hover, 
 body .ui-paginator .ui-paginator-next:not(.ui-state-disabled):not(.ui-state-active):hover, 
 body .ui-paginator .ui-paginator-last:not(.ui-state-disabled):not(.ui-state-active):hover,
 body .ui-paginator .ui-paginator-pages .ui-paginator-page:not(.ui-state-active):hover {
-	background: transparent;
-	color: #0283E1;
+	background-color: transparent!important;
+	color: #0283E1!important;
 }
 body .ui-paginator .ui-paginator-pages .ui-paginator-page{
 	font-size: 1.2rem;
 	background: transparent;
 	color: #6e6e6e;
 	border: 0;
+	font-size: 1.3rem;
+	height: 50px!important;
 }
 .ui-paginator .ui-paginator-icon{
 	margin-top: 0!important;
+	top: 16px!important;
+}
+body .ui-widget{
+	font-family: 'Inter', sans-serif!important;
+	font-size: 1rem;
 }
 body .ui-paginator .ui-paginator-current{
-	line-height: 50px;
-	font-weight: bold;
+	line-height: 50px!important;
 }
 .form-control.ng-select{	
 	padding: 0;

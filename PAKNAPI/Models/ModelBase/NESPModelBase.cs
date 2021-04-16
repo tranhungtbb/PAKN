@@ -94,7 +94,6 @@ namespace PAKNAPI.ModelBase
 		public bool? IsNotification { get; set; }
 		public string NewsRelateIds { get; set; }
 
-
 		public async Task<List<NENewsGetByID>> NENewsGetByIDDAO(int? Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -278,8 +277,7 @@ namespace PAKNAPI.ModelBase
 		public int? WithdrawBy { get; set; }
 		public DateTime? WithdrawDate { get; set; }
 		public string NewsRelateIds { get; set; }
-
-		public bool IsNotification { get; set; }
+		public bool? IsNotification { get; set; }
 	}
 
 	public class NERelateGetAll

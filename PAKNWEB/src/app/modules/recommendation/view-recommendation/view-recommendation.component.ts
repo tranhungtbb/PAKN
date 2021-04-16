@@ -121,7 +121,7 @@ export class ViewRecommendationComponent implements OnInit {
 			lstId.push(this.lstHashtagSelected[index].value)
 		}
 		let request = {
-			ListIdHashtag: lstId,
+			ListIdHashtag: lstId.join(','),
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
@@ -132,6 +132,7 @@ export class ViewRecommendationComponent implements OnInit {
 					this.listData = []
 					this.listData = response.result.MRRecommendationGetSuggestReply
 					this.totalRecords = response.result.TotalCount
+					$('#modalSuggestReply').modal('show')
 				}
 			} else {
 				this.toastr.error(response.message)
@@ -141,6 +142,17 @@ export class ViewRecommendationComponent implements OnInit {
 				console.log(error)
 				alert(error)
 			}
+	}
+
+	onPageChange(event: any) {
+		this.pageSize = event.rows
+		this.pageIndex = event.first / event.rows + 1
+		this.getListSuggest()
+	}
+
+	useConclustion(contentConclustion) {
+		this.modelConclusion.content = contentConclustion
+		$('#modalSuggestReply').modal('hide')
 	}
 
 	getShortName(string) {
@@ -264,6 +276,7 @@ export class ViewRecommendationComponent implements OnInit {
 				}
 		}
 	}
+
 	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
 	formForward: FormGroup
 	lstUnitNotMain: any = []

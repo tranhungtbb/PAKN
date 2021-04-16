@@ -47,7 +47,7 @@
 	</div>
 	<div class="w-100"></div>
 	<div class="col form-group">
-		<label class="mb-1">Email <span class="cl-red">(*)</span></label>
+		<label class="mb-1">Email </label>
 		<input [svTrim] [(ngModel)]="model.Email" formControlName="Email" type="text" placeholder="Nhập..." class="form-control border-brown">
 		<div *ngIf="(fInfoSubmitted && fInfo.Email.invalid)||(fInfo.Email.invalid && (fInfo.Email.dirty || fInfo.Email.touched))" class="has-error m-b-12">
 			<div *ngIf="fInfo.Email.errors.required">
@@ -86,7 +86,7 @@
 	</div>
 	<div class="w-100"></div>
 	<div class="col form-group">
-		<label class="mb-1">Ngày tháng năm sinh <span class="cl-red">(*)</span></label>
+		<label class="mb-1">Ngày tháng năm sinh </label>
 		<div class="input-group">
 			<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dob" [(ngModel)]="model._RepresentativeBirthDay"
 				formControlName="DOB" appBsDatepickerInvalid [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}"
@@ -103,7 +103,7 @@
 		</div>
 	</div>
 	<div class="col col-lg-8 form-group">
-		<label class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></label>
+		<label class="mb-1">Địa chỉ cụ thể </label>
 		<input [svTrim] [(ngModel)]="model.Address" formControlName="Address" type="text" placeholder="Nhập..." class="form-control border-brown">
 		<div *ngIf="(fInfoSubmitted && fInfo.Address.invalid)||(fInfo.Address.invalid && (fInfo.Address.dirty || fInfo.Address.touched))" class="has-error m-b-12">
 			<div *ngIf="fInfo.Address.errors.required">

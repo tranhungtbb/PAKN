@@ -44,18 +44,7 @@ namespace PAKNAPI.Controllers
 		{
 			// tải file
 			string filePath = "";
-			//try
-			//{
-			//	if (files != null && files.Any())
-			//	{
-			//		var info = await _fileService.Save(files, "User");
-			//		filePath = info[0].Path;
-			//	}
-			//}
-			//catch (Exception e)
-			//{
-			//	new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Xảy ra lỗi trong quá trình tải file" };
-			//}
+			
 
 			try
 			{
@@ -65,7 +54,6 @@ namespace PAKNAPI.Controllers
 					filePath = info[0].Path;
 				}
 
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				//generate mật khẩu
 				byte[] salt = new byte[128 / 8];
 				using (var rng = RandomNumberGenerator.Create())
@@ -90,9 +78,9 @@ namespace PAKNAPI.Controllers
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 				//xóa file đã tải
-				if(!string.IsNullOrEmpty(filePath))
+				if (!string.IsNullOrEmpty(filePath))
 					await _fileService.Remove(filePath);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -132,12 +120,6 @@ namespace PAKNAPI.Controllers
 
 				var result = await new SYUserUpdate(_appSetting).SYUserUpdateDAO(model);
 
-				// xóa avatar cũ
-				//if (!string.IsNullOrEmpty(modelOld[0].Avatar) && !string.IsNullOrEmpty(filePath))
-				//{
-				//	await _fileService.Remove(modelOld[0].Avatar);
-				//}
-
 			}
 			catch (Exception ex)
 			{
@@ -173,7 +155,7 @@ namespace PAKNAPI.Controllers
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 
@@ -260,7 +242,7 @@ namespace PAKNAPI.Controllers
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 
@@ -337,7 +319,7 @@ namespace PAKNAPI.Controllers
 			catch (Exception ex)
             {
 				_bugsnag.Notify(ex);
-
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message};
 			}
 
@@ -432,6 +414,7 @@ namespace PAKNAPI.Controllers
 			catch(Exception ex)
             {
 				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 
@@ -481,6 +464,8 @@ namespace PAKNAPI.Controllers
 			}
 			catch(Exception ex)
             {
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
         }
@@ -564,6 +549,7 @@ namespace PAKNAPI.Controllers
             catch (Exception ex)
             {
 				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message};
 			}
         }

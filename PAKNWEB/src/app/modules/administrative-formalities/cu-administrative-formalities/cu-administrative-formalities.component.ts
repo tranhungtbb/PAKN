@@ -17,32 +17,40 @@ declare var $: any
 	styleUrls: ['./cu-administrative-formalities.component.css'],
 })
 export class CU_AdministrativeFormalitiesComponent implements OnInit {
-	form: FormGroup;
-	model: AdministrativeFormalitiesObject = new AdministrativeFormalitiesObject();
-	titleObject: string = 'Cá nhân';
+	form: FormGroup
+	model: AdministrativeFormalitiesObject = new AdministrativeFormalitiesObject()
+	titleObject: string = 'Cá nhân'
 
-	lstUnit: any[] = [];
-	lstField: any[] = [];
-	lstBusiness: any[] = [];
-	lstIndividual: any[] = [];
-	lstObject: any[] = [];
-	fileAccept = CONSTANTS.FILEACCEPT;
-	fileAcceptForm = CONSTANTS.FILEACCEPT_FORM_ADMINISTRATION;
-	files: any[] = [];
-	lstXoaFile: any[] = [];
-	lstXoaFileForm: any[] = [];
-	submitted: boolean = false;
-	lstTypeSend: any[] = [{ value: null, text: "-- Chọn mức độ trực tuyến --" }, { value: true, text: "Nộp trực tuyến" }, { value: false, text: "Nộp qua mạng" }];
-	lstBind: any[] = [{ value: null, text: "-- Chọn bắt buộc --" }, { value: true, text: "Có" }, { value: false, text: "Không" }];
-	@ViewChild('file', { static: false }) public file: ElementRef;
+	lstUnit: any[] = []
+	lstField: any[] = []
+	lstBusiness: any[] = []
+	lstIndividual: any[] = []
+	lstObject: any[] = []
+	fileAccept = CONSTANTS.FILEACCEPT
+	fileAcceptForm = CONSTANTS.FILEACCEPT_FORM_ADMINISTRATION
+	files: any[] = []
+	lstXoaFile: any[] = []
+	lstXoaFileForm: any[] = []
+	submitted: boolean = false
+	lstTypeSend: any[] = [
+		{ value: null, text: '-- Chọn mức độ trực tuyến --' },
+		{ value: true, text: 'Nộp trực tuyến' },
+		{ value: false, text: 'Nộp qua mạng' },
+	]
+	lstBind: any[] = [
+		// { value: null, text: '-- Chọn bắt buộc --' },
+		{ value: true, text: 'Có' },
+		{ value: false, text: 'Không' },
+	]
+	@ViewChild('file', { static: false }) public file: ElementRef
 
-	lstCompositionProfile: any[] = [];
-	lstCharges: any[] = [];
-	lstImplementationProcess: any[] = [];
+	lstCompositionProfile: any[] = []
+	lstCharges: any[] = []
+	lstImplementationProcess: any[] = []
 
-	typeDelete: number;
-	itemDelete: any;
-	lstDelete: any[] = []; //list id , type tp hồ sơ, trình tự thực hiện, lệ phí
+	typeDelete: number
+	itemDelete: any
+	lstDelete: any[] = [] //list id , type tp hồ sơ, trình tự thực hiện, lệ phí
 	constructor(
 		private toastr: ToastrService,
 		private fileService: UploadFileService,
@@ -51,7 +59,7 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 		private _serviceCatalog: CatalogService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute
-	) { }
+	) {}
 
 	ngOnInit() {
 		this.model = new AdministrativeFormalitiesObject()
@@ -65,18 +73,32 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 		})
 	}
 
+	getBind(value: string) {
+		this.lstBind.find((c) => c.value == value).text
+	}
 	getData() {
 		let request = {
 			Id: this.model.id,
 		}
 		this.afService.getById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this.model = response.result.data;
-				this.files = response.result.files;
-				this.lstCharges = response.result.lstCharges;
-				this.lstCompositionProfile = response.result.lstCompositionProfile;
-				this.lstImplementationProcess = response.result.lstImplementationProcess;
-
+				this.model = response.result.data
+				this.files = response.result.files
+				this.lstCharges = response.result.lstCharges.map((c, i) => {
+					c.eedit = false
+					c.index = i
+					return c
+				})
+				this.lstCompositionProfile = response.result.lstCompositionProfile.map((c, i) => {
+					c.eedit = false
+					c.index = i
+					return c
+				})
+				this.lstImplementationProcess = response.result.lstImplementationProcess.map((c, i) => {
+					c.eedit = false
+					c.index = i
+					return c
+				})
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -92,15 +114,15 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 				this.lstUnit = response.result.lstUnit
 				this.lstField = response.result.lstField
 				var defaultValueUnit = {
-					text: "-- Chọn đơn vị tiếp nhận --",
-					value: null
+					text: '-- Chọn đơn vị tiếp nhận --',
+					value: null,
 				}
 				var defaultValueField = {
-					text: "-- Chọn lĩnh vực --",
-					value: null
+					text: '-- Chọn lĩnh vực --',
+					value: null,
 				}
-				this.lstUnit.unshift(defaultValueUnit);
-				this.lstField.unshift(defaultValueField);
+				this.lstUnit.unshift(defaultValueUnit)
+				this.lstField.unshift(defaultValueField)
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -110,9 +132,8 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 			}
 	}
 
-
 	builForm() {
-		this.model = new AdministrativeFormalitiesObject();
+		this.model = new AdministrativeFormalitiesObject()
 		this.form = new FormGroup({
 			// code: new FormControl(this.model.code, [Validators.required]),
 			name: new FormControl(this.model.name, [Validators.required]),
@@ -207,24 +228,39 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 
 	onSave(status) {
 		this.submitted = true
-		this.model.status = status;
-		this.model.name = this.model.name.trim();
-		this.model.rankReceive = this.model.rankReceive.trim();
-		this.model.fileNum = this.model.fileNum.trim();
-		this.model.amountTime = this.model.amountTime.trim();
-		this.model.proceed = this.model.proceed.trim();
-		this.model.object = this.model.object.trim();
-		this.model.organization = this.model.organization.trim();
-		if (this.model.name == null || this.model.name == ''
-			|| this.model.rankReceive == null || this.model.rankReceive == ''
-			|| this.model.fileNum == null || this.model.fileNum == ''
-			|| this.model.amountTime == null || this.model.amountTime == ''
-			|| this.model.proceed == null || this.model.proceed == ''
-			|| this.model.object == null || this.model.object == ''
-			|| this.model.organization == null || this.model.organization == '') {
-			return;
+		this.model.status = status
+		this.model.name = this.model.name.trim()
+		this.model.rankReceive = this.model.rankReceive.trim()
+		this.model.fileNum = this.model.fileNum.trim()
+		this.model.amountTime = this.model.amountTime.trim()
+		this.model.proceed = this.model.proceed.trim()
+		this.model.object = this.model.object.trim()
+		this.model.organization = this.model.organization.trim()
+		if (
+			this.model.name == null ||
+			this.model.name == '' ||
+			this.model.rankReceive == null ||
+			this.model.rankReceive == '' ||
+			this.model.fileNum == null ||
+			this.model.fileNum == '' ||
+			this.model.amountTime == null ||
+			this.model.amountTime == '' ||
+			this.model.proceed == null ||
+			this.model.proceed == '' ||
+			this.model.object == null ||
+			this.model.object == '' ||
+			this.model.organization == null ||
+			this.model.organization == ''
+		) {
+			this.toastr.error('Dữ liệu không hợp lệ')
+			return
 		}
 		if (this.form.invalid) {
+			this.toastr.error('Dữ liệu không hợp lệ')
+			return
+		}
+		if (this.formEditing) {
+			this.toastr.error('Dữ liệu không hợp lệ, vui lòng kiểm tra các mục: Thành phần hồ sơ, Trình tự thực hiện, Lệ phí')
 			return
 		}
 		const request = {
@@ -232,7 +268,10 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 			Files: this.files,
 			LstXoaFile: this.lstXoaFile,
 			LstXoaFileForm: this.lstXoaFileForm,
-			LstCompositionProfile: this.lstCompositionProfile,
+			LstCompositionProfile: this.lstCompositionProfile.map((e, i) => {
+				e.index = i
+				return e
+			}),
 			LstCharges: this.lstCharges,
 			LstImplementationProcess: this.lstImplementationProcess,
 			LstDelete: this.lstDelete,
@@ -264,83 +303,118 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 		}
 	}
 
+	formEditing = false
+
+	onSaveCompositionProfile(_item: any) {
+		if (_item.nameExhibit == null || _item.nameExhibit == '') {
+			_item.eedit = true
+			this.formEditing = true
+			return
+		}
+		_item.eedit = !_item.eedit
+		this.formEditing = !this.formEditing
+	}
 	onAddCompositionProfile() {
 		var cp = {
-			index: this.lstCompositionProfile.length + 1,
+			index: this.lstCompositionProfile.length,
 			nameExhibit: '',
 			originalForm: '',
 			copyForm: '',
 			form: '',
-			isBind: null,
-			files: []
+			isBind: true,
+			files: [],
+			eedit: true,
 		}
-		this.lstCompositionProfile.push(cp);
+		this.lstCompositionProfile.push(cp)
+		this.formEditing = true
 	}
 
+	onSaveCharges(_item: any) {
+		if (_item.charges == null || _item.charges == '' || _item.description == null || _item.description == '') {
+			_item.eedit = true
+			this.formEditing = true
+			return
+		}
+		_item.eedit = !_item.eedit
+		this.formEditing = !this.formEditing
+	}
 	onAddCharges() {
 		var cp = {
-			index: this.lstCharges.length + 1,
+			index: this.lstCharges.length,
 			charges: '',
 			description: '',
+			eedit: true,
 		}
-		this.lstCharges.push(cp);
+		this.lstCharges.push(cp)
+		this.formEditing = true
 	}
 
+	onSaveImplementationProcess(_item: any) {
+		if (_item.name == null || _item.name == '' || _item.unit == null || _item.unit == '' || _item.time == null || _item.time == '') {
+			_item.eedit = true
+			this.formEditing = true
+			return
+		}
+		_item.eedit = !_item.eedit
+		this.formEditing = !this.formEditing
+	}
 	onAddImplementationProcess() {
 		var cp = {
-			index: this.lstImplementationProcess.length + 1,
+			index: this.lstImplementationProcess.length,
 			name: '',
 			unit: '',
 			time: '',
 			result: '',
+			eedit: true,
 		}
-		this.lstImplementationProcess.push(cp);
+		this.lstImplementationProcess.push(cp)
+		this.formEditing = true
 	}
 	preDelete(item, type) {
-		this.itemDelete = item;
-		this.typeDelete = type;
+		this.itemDelete = item
+		this.typeDelete = type
 		$('#modalDelete').modal('show')
 	}
 
 	onDelete() {
 		if (this.typeDelete == 1) {
-			this.onRemoveCompositionProfile();
+			this.onRemoveCompositionProfile()
 		} else if (this.typeDelete == 2) {
-			this.onRemoveImplementationProcess();
+			this.onRemoveImplementationProcess()
 		} else if (this.typeDelete == 3) {
-			this.onRemoveCharges();
+			this.onRemoveCharges()
 		}
-		this.itemDelete = null;
-		this.typeDelete = null;
+		this.itemDelete = null
+		this.typeDelete = null
 		$('#modalDelete').modal('hide')
 	}
 	onRemoveCompositionProfile() {
-		var index = this.lstCompositionProfile.indexOf(this.itemDelete);
+		var index = this.lstCompositionProfile.indexOf(this.itemDelete)
 		var idDelete = {
 			id: this.itemDelete.id,
-			type: this.typeDelete
+			type: this.typeDelete,
 		}
-		this.lstCompositionProfile.splice(index, 1);
-		this.lstDelete.push(idDelete);
+		this.lstCompositionProfile.splice(index, 1)
+		this.lstDelete.push(idDelete)
 	}
 
 	onRemoveCharges() {
-		var index = this.lstCharges.indexOf(this.itemDelete);
+		var index = this.lstCharges.indexOf(this.itemDelete)
 		var idDelete = {
 			id: this.itemDelete.id,
-			type: this.typeDelete
+			type: this.typeDelete,
 		}
-		this.lstCharges.splice(index, 1);
-		this.lstDelete.push(idDelete);
+		this.lstCharges.splice(index, 1)
+		this.lstDelete.push(idDelete)
 	}
 
 	onRemoveImplementationProcess() {
-		var index = this.lstImplementationProcess.indexOf(this.itemDelete);
+		var index = this.lstImplementationProcess.indexOf(this.itemDelete)
 		var idDelete = {
 			id: this.itemDelete.id,
-			type: this.typeDelete
+			type: this.typeDelete,
 		}
-		this.lstImplementationProcess.splice(index, 1);
-		this.lstDelete.push(idDelete);
+		this.lstImplementationProcess.splice(index, 1)
+		this.lstDelete.push(idDelete)
 	}
 }
