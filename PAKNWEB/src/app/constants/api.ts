@@ -172,4 +172,7 @@ export class Api {
 	public static AdministrativeFormalitiesInsert = 'AdministrationFormalities/AdministrationFormalitiesInsert'
 	public static AdministrativeFormalitiesUpdate = 'AdministrationFormalities/AdministrationFormalitiesUpdate'
 	public static AdministrativeFormalitiesDelete = 'DAMSPBase/DAMAdministrationDeleteBase'
+
+	// Notification
+	public static NotificationInsertTypeNews = 'SYNotification/SYNotificationInsertTypeNews'
 }

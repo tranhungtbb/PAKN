@@ -25,8 +25,8 @@ namespace PAKNAPI.Models.AdministrationFormalities
 			administration.Data = (await _sQLCon.ExecuteListDapperAsync<DAMAdministrationGetById>("DAM_Administration_GetById", DP)).FirstOrDefault();
 			administration.Files = (await _sQLCon.ExecuteListDapperAsync<DAMFileObj>("[DAM_Administration_FilesGetByAdministrationId]", DP)).ToList();
 			administration.LstCompositionProfile = (await _sQLCon.ExecuteListDapperAsync<DAMCompositionProfileCreateObj>("[DAM_CompositionProfile_GetByAdministration]", DP)).ToList();
-			administration.LstCharges = (await _sQLCon.ExecuteListDapperAsync<DAMChargesCreateIN>("[DAM_Charges_GetByAdministration]", DP)).ToList();
-			administration.LstImplementationProcess = (await _sQLCon.ExecuteListDapperAsync<DAMImplementationProcessCreateIN>("[DAM_ImplementationProcess_GetByAdministration]", DP)).ToList();
+			administration.LstCharges = (await _sQLCon.ExecuteListDapperAsync<DAMChargesGetById>("[DAM_Charges_GetByAdministration]", DP)).ToList();
+			administration.LstImplementationProcess = (await _sQLCon.ExecuteListDapperAsync<DAMImplementationProcessUpdateIN>("[DAM_ImplementationProcess_GetByAdministration]", DP)).ToList();
 
             if (administration.LstCompositionProfile != null && administration.LstCompositionProfile.Count > 0)
             {
