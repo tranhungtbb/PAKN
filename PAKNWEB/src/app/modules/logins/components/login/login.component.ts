@@ -116,7 +116,6 @@ export class LoginComponent implements OnInit {
 					this.authenService.login(this.user).subscribe(
 						data => {
 							if (data.success === RESPONSE_STATUS.success) {
-								console.log(data)
 								localStorage.clear()
 								this.shareData.setIsLogin(true)
 								this.storeageService.setAccessToken(data.accessToken)
