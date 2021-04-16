@@ -17,6 +17,7 @@ import { CatalogService } from 'src/app/services/catalog.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { RemindComponent } from 'src/app/modules/recommendation/remind/remind.component'
+import { NotificationService } from 'src/app/services/notification.service'
 declare var $: any
 
 @Component({
@@ -52,7 +53,8 @@ export class ViewRecommendationComponent implements OnInit {
 		private _serviceCatalog: CatalogService,
 		private router: Router,
 		private _fb: FormBuilder,
-		private activatedRoute: ActivatedRoute
+		private activatedRoute: ActivatedRoute,
+		private notificationService: NotificationService
 	) {}
 
 	ngOnInit() {
@@ -265,6 +267,7 @@ export class ViewRecommendationComponent implements OnInit {
 			this.recommendationService.recommendationProcessConclusion(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
+					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.model.id }).subscribe((res) => {})
 					this.toastr.success(COMMONS.PROCESS_SUCCESS)
 					return this.router.navigate(['/quan-tri/kien-nghi/dang-giai-quyet'])
 				} else {

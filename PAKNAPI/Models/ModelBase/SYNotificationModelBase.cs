@@ -21,6 +21,10 @@ namespace PAKNAPI.Models.ModelBase
 		public string Title { get; set; }
 		public string Content { get; set; }
 		public bool IsViewed { get; set; }
+		public bool IsReaded { get; set; }
+		public int RowNumber { get; set; }
+
+		
 
 		public SYNotificationModel() { }
 	}
@@ -52,32 +56,33 @@ namespace PAKNAPI.Models.ModelBase
 			DP.Add("@Title", _syNotificationModel.Title);
 			DP.Add("@Content", _syNotificationModel.Content);
 			DP.Add("@IsViewed", _syNotificationModel.IsViewed);
+			DP.Add("@IsReaded", _syNotificationModel.IsReaded);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_NotificationInsert", DP));
 		}
 	}
 
-	public class SYNotificationGetListByUserId
+	public class SYNotificationGetListByReceiveId
 	{
 		private SQLCon _sQLCon;
 
-		public SYNotificationGetListByUserId(IAppSetting appSetting)
+		public SYNotificationGetListByReceiveId(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
 
 
-		public SYNotificationGetListByUserId()
+		public SYNotificationGetListByReceiveId()
 		{
 		}
 
-		public async Task<List<SYNotificationModel>> SYPermissionCheckByUserIdDAO(int? UserId)
+		public async Task<List<SYNotificationModel>> SYNotificationGetListByReceiveIdDAO(int? ReceiveId)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("UserId", UserId);
+			DP.Add("Id", ReceiveId);
 
-			return (await _sQLCon.ExecuteListDapperAsync<SYNotificationModel>("SY_PermissionCheckByUserId", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<SYNotificationModel>("SY_NotificationGetListByReceiveId", DP)).ToList();
 		}
 
 

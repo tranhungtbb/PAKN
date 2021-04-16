@@ -14,11 +14,11 @@ export class NotificationService {
 		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.NotificationInsertTypeNews)
 	}
 
-	getListOrderByCountClick(query: any): Observable<any> {
-		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PuRecomentdationGetListOrderByCountClick)
+	insertNotificationTypeRecommendation(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NotificationInsertTypeRecommendation)
 	}
 
-	getById(query: any): Observable<any> {
-		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PuRecommendationGetById)
+	getListNotificationByReceiveId(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NotificationGetList)
 	}
 }

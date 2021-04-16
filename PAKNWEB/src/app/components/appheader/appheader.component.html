@@ -326,51 +326,15 @@
 						<div class="dropdown-menu dropdown-menu-right">
 							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:380px;">
 								<ul class="timeline">
-									<li>
-										<a href="#" class="timeline-panel">
+									<li *ngFor="let item of notifications">
+										<a href="javascript:void(0)" (click)="onClickNotification(item.dataId,item.type, item.typeSend)" class="timeline-panel">
 											<div class="media mr-2 grd-brown">
 												<i class="bi bi-file-earmark-medical cl-brown"></i>
 											</div>
 											<div class="media-body">
-												<small class="d-block">Vừa xong</small>
-												<p class="mb-0 text-uppercase">PAKN chờ xử lý</p>
-												<p class="mb-1 h4">Nguyễn Thị Liêm gửi một phản ánh, kiến nghị về lĩnh vực Y tế</p>
-											</div>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="timeline-panel">
-											<div class="media mr-2 grd-brown">
-												<i class="bi bi-file-earmark-medical cl-brown"></i>
-											</div>
-											<div class="media-body">
-												<small class="d-block">30 phút trước</small>
-												<p class="mb-0 text-uppercase cl-blue2">PAKN đã được tiếp nhận</p>
-												<p class="mb-1 h4">Công an thành phố Nha Trang đã tiếp nhận kiến nghị số 10007.23</p>
-											</div>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="timeline-panel">
-											<div class="media mr-2 grd-brown">
-												<i class="bi bi-file-earmark-medical cl-brown"></i>
-											</div>
-											<div class="media-body">
-												<small class="d-block">12 giờ trước</small>
-												<p class="mb-0 text-uppercase cl-blue">PAKN đã giải quyết</p>
-												<p class="mb-1 h4">Công an thành phố Nha Trang đã giải quyết xong kiến nghị số 10007.23</p>
-											</div>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="timeline-panel">
-											<div class="media mr-2 grd-brown">
-												<i class="bi bi-file-earmark-medical cl-brown"></i>
-											</div>
-											<div class="media-body">
-												<small class="d-block">1 ngày trước</small>
-												<p class="mb-0 text-uppercase cl-red">PAKN bị từ chối</p>
-												<p class="mb-1 h4">Công an thành phố Nha Trang đã từ chối kiến nghị số 10007.23</p>
+												<small class="d-block" style="color: #222222;">{{item.sendDate | date : 'HH:mm dd/MM/yyyy'}}</small>
+												<p class="mb-0 text-uppercase" [ngClass]="{ 'red-title': checkDeny(item.typeSend) == true }">{{item.title}}</p>
+												<p class="mb-1 h4" style="color: #222222;">{{item.content}}</p>
 											</div>
 										</a>
 									</li>

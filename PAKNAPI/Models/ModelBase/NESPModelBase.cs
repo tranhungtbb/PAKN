@@ -58,6 +58,38 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<NENewsGetAllOnPage>("NE_NewsGetAllOnPage", DP)).ToList();
 		}
 	}
+	public class NENewsGetListHomePage
+	{
+		private SQLCon _sQLCon;
+
+		public NENewsGetListHomePage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public NENewsGetListHomePage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string PostType { get; set; }
+		public bool IsPublished { get; set; }
+		public int Status { get; set; }
+
+
+		public String CreateDate { get; set; }
+
+
+		public async Task<List<NENewsGetListHomePage>> PU_NewsGetListHomePage(bool? check)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Check", check);
+			return (await _sQLCon.ExecuteListDapperAsync<NENewsGetListHomePage>("[PU_NewsGetList]", DP)).ToList();
+		}
+	}
+
 
 	public class NENewsGetByID
 	{

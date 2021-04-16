@@ -8,7 +8,9 @@ import { ToastrService } from 'ngx-toastr'
 import { UserObject } from '../../models/UserObject'
 import { UserService } from '../../services/user.service'
 import { DataService } from '../../services/sharedata.service'
-import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
+import { NotificationService } from 'src/app/services/notification.service'
+import { from } from 'rxjs'
 
 declare var $: any
 @HostListener('window:scroll', ['$event'])
@@ -58,6 +60,8 @@ export class AppheaderComponent implements OnInit {
 	lstChucVu: any = []
 	lstPhongBan: any = []
 
+	Notifications: any[]
+
 	constructor(
 		private formBuilder: FormBuilder,
 		private router: Router,
@@ -67,7 +71,8 @@ export class AppheaderComponent implements OnInit {
 		private _router: Router,
 		private _fb: FormBuilder,
 		private toastr: ToastrService,
-		private sharedataService: DataService
+		private sharedataService: DataService,
+		private notificationService: NotificationService
 	) {}
 
 	user: ChangePasswordUserObject = {
@@ -96,10 +101,23 @@ export class AppheaderComponent implements OnInit {
 				this.totalThongBao = result.totalRecords
 			}
 		})
+
+		this.notificationService.getListNotificationByReceiveId({}).subscribe((res) => {
+			if ((res.success = RESPONSE_STATUS.success)) {
+				this.Notifications = res.result.syNotifications
+			}
+			return
+		})
 	}
 
 	get f() {
 		return this.updateForm.controls
+	}
+	checkDeny(status: any) {
+		if (status == RECOMMENDATION_STATUS.PROCESS_DENY || status == RECOMMENDATION_STATUS.RECEIVE_DENY || status == RECOMMENDATION_STATUS.APPROVE_DENY) {
+			return true
+		}
+		return false
 	}
 
 	// buildForm() {
