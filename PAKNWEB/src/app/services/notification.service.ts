@@ -37,6 +37,11 @@ export class NotificationService {
 		}
 		return this.http.post(AppSettings.API_ADDRESS + Api.NotificationGetList, form, httpPackage)
 	}
+
+	updateIsViewedNotification(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NotificationUpdateIsViewed)
+	}
+
 	deleteNotification(query: any): Observable<any> {
 		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.NotificationDelete)
 	}

@@ -72,13 +72,14 @@
 								<tr>
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
-										<strong [ngClass]="{ 'highlight': item.isViewed == true }"><a (click)="preView(item)" class="ellipsis"
-												title="Xem chi tiết">{{item.title}}</a></strong>
+										<p [ngClass]="{ 'highlight': item.isViewed == true }">{{item.title}}
+										</p>
 									</td>
 									<td>{{item.content}}</td>
 									<td>
-										<span type="button" *ngIf="item.type == 1" class="badge rounded-pill bg-success">Bài viết</span>
-										<span type="button" *ngIf="item.type == 2" class="badge rounded-pill badge-light">Phản ánh kiến nghị</span>
+										<span type="button" *ngIf="item.type == 1">Bài viết</span>
+										<span type="button" *ngIf="item.type == 2">Phản ánh kiến nghị</span>
+										<span type="button" *ngIf="item.type == 3">Nhắc việc</span>
 									</td>
 
 									<td>{{item.sendDate | date : 'dd/MM/yyyy HH:mm'}}</td>

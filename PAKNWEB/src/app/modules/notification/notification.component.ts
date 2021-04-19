@@ -49,6 +49,10 @@ export class NotificationComponent implements OnInit {
 				if (response.result != null) {
 					this.notifications = response.result.syNotifications
 					this.totalRecords = response.result.TotalCount
+					debugger
+					this.notificationService.updateIsViewedNotification({}).subscribe((res) => {
+						console.log(res)
+					})
 				}
 			} else {
 				this._toastr.error(response.message)
