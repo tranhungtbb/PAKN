@@ -23,6 +23,7 @@ BEGIN
 		[Title],
 		[Content],
 		[IsViewed],
+		[IsReaded],
 		[TypeSend],
 		[ReceiveOrgId]
 	FROM [SY_Notification]
@@ -54,6 +55,7 @@ BEGIN
 		[Title],
 		[Content],
 		[IsViewed],
+		[IsReaded],
 		[TypeSend],
 		[ReceiveOrgId]
 	FROM [SY_Notification]
@@ -87,6 +89,7 @@ BEGIN
 		[Title],
 		[Content],
 		[IsViewed],
+		[IsReaded],
 		[TypeSend],
 		[ReceiveOrgId]
 	FROM [SY_Notification]
@@ -116,6 +119,7 @@ CREATE PROCEDURE [dbo].[SY_NotificationInsert]
 	@Title nvarchar(150) = null,
 	@Content nvarchar(1000) = null,
 	@IsViewed bit = null,
+	@IsReaded bit = null,
 	@TypeSend smallint = null,
 	@ReceiveOrgId int = null
 AS
@@ -131,6 +135,7 @@ BEGIN
 		[Title],
 		[Content],
 		[IsViewed],
+		[IsReaded],
 		[TypeSend],
 		[ReceiveOrgId]
 	)
@@ -145,6 +150,7 @@ BEGIN
 		@Title,
 		@Content,
 		@IsViewed,
+		@IsReaded,
 		@TypeSend,
 		@ReceiveOrgId
 	)
@@ -172,6 +178,7 @@ CREATE PROCEDURE [dbo].[SY_NotificationUpdate]
 	@Title nvarchar(150) = null,
 	@Content nvarchar(1000) = null,
 	@IsViewed bit = null,
+	@IsReaded bit = null,
 	@TypeSend smallint = null,
 	@ReceiveOrgId int = null
 AS
@@ -186,6 +193,7 @@ BEGIN
 		[Title] = @Title,
 		[Content] = @Content,
 		[IsViewed] = @IsViewed,
+		[IsReaded] = @IsReaded,
 		[TypeSend] = @TypeSend,
 		[ReceiveOrgId] = @ReceiveOrgId
 	WHERE [Id] = @Id

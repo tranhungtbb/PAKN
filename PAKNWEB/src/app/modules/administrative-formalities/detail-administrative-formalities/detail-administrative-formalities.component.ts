@@ -80,7 +80,10 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		this.afService.getById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.data
-				this.files = response.result.lstFiles
+				this.files = response.result.files
+				this.lstCharges = response.result.lstCharges
+				this.lstCompositionProfile = response.result.lstCompositionProfile
+				this.lstImplementationProcess = response.result.lstImplementationProcess
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -354,5 +357,11 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		}
 		this.lstImplementationProcess.splice(index, 1)
 		this.lstDelete.push(idDelete)
+	}
+
+	public getFileBin(path: string) {
+		this.fileService.downloadFile({ path }).subscribe((res) => {
+			console.log(res)
+		})
 	}
 }

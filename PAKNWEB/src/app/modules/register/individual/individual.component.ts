@@ -130,7 +130,7 @@ export class IndividualComponent implements OnInit {
 		this.model._birthDay = fDob.value
 		this.model._dateOfIssue = fDateIssue.value
 
-		if (this.model.nation != this.listNation[0].value) {
+		if (this.model.nation != this.listNation[0].id) {
 			this.model.provinceId = 0
 			this.model.districtId = 0
 			this.model.wardsId = 0
