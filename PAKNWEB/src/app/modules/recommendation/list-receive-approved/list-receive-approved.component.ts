@@ -8,6 +8,7 @@ import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, R
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { COMMONS } from 'src/app/commons/commons'
+import { NotificationService } from 'src/app/services/notification.service'
 
 declare var $: any
 
@@ -22,7 +23,8 @@ export class ListReceiveApprovedComponent implements OnInit {
 		private storeageService: UserInfoStorageService,
 		private _toastr: ToastrService,
 		private _fb: FormBuilder,
-		private _shareData: DataService
+		private _shareData: DataService,
+		private notificationService: NotificationService
 	) {}
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
@@ -223,6 +225,7 @@ export class ListReceiveApprovedComponent implements OnInit {
 		this._service.recommendationForward(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modal-tc-pakn').modal('hide')
+				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelForward.recommendationId }).subscribe((res) => {})
 				this.getList()
 				this._toastr.success(COMMONS.FORWARD_SUCCESS)
 			} else {

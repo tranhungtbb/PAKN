@@ -111,8 +111,18 @@
 							</svg>
 						</div>
 						<div class="media-body">
-							<span><i>Cơ quan chức năng giải quyết:</i></span>
-							<p class="h4 font-italic font-weight-bold">Trung tâm phản ánh kiến nghị tỉnh Khánh Hoà:</p>
+							<div class="row">
+								<div class="col-md-8">
+									<span><i>Cơ quan chức năng giải quyết:</i></span>
+									<p class="h4 font-italic font-weight-bold">Trung tâm phản ánh kiến nghị tỉnh Khánh Hoà:</p>
+								</div>
+								<div class="col-md-4">
+									<button *ngIf="lstHashtagSelected.length > 0" type="button" class="btn btn-sm rounded bg-white text-dark border pull-right"
+										(click)="getListSuggest()">
+										<i class="bi bi-lightbulb"></i> Gợi ý kết quả
+									</button>
+								</div>
+							</div>
 							<ng-container *ngIf="model.status == 7">
 								<textarea class="form-control" [(ngModel)]="modelConclusion.content" rows="10" placeholder="Nhập nội dung..."></textarea>
 								<div class="row">
@@ -398,15 +408,15 @@
 </div>
 
 <div class="modal fade" id="modalSuggestReply">
-	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="min-width: 80%;">
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0">
-				<p class="modal-title h4">Gửi đơn vị giải quyết</p>
+				<p class="modal-title h4">Gợi ý kết quả trả lời kiến nghị</p>
 				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
 				</button>
 			</div>
-			<div class="modal-body pt-3 pb-0">
-				<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+			<div class="modal-body pt-3 pb-3">
+				<p-table #table [value]="listData" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
 					currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
 					tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 					<ng-template pTemplate="header" class="bg-thead">
@@ -414,25 +424,21 @@
 							<th style="width: 120px">
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Mã số PAKN</strong>
-									<span class="caret-tb"></span>
 								</p>
 							</th>
 							<th>
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Tên CN/DN</strong>
-									<span class="caret-tb"></span>
 								</p>
 							</th>
 							<th style="width: 350px">
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Tiêu đề</strong>
-									<span class="caret-tb"></span>
 								</p>
 							</th>
 							<th style="width: 90px">
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Ngày gửi</strong>
-									<span class="caret-tb"></span>
 								</p>
 							</th>
 							<th style="width: 100px">
@@ -443,7 +449,7 @@
 					<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 						<tr>
 							<td>
-								<strong><a [routerLink]="['/quan-tri/kien-nghi/chi-tiet/',item.id]" class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
+								<strong><a class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
 							</td>
 							<td>
 								<strong><a class="ellipsis">{{item.name}}</a></strong>
@@ -454,9 +460,10 @@
 							<td>{{item.sendDate | date:'dd/MM/yyyy'}}</td>
 							<td>
 								<div class="d-flex justify-content-end">
-									<a [routerLink]="['/quan-tri/kien-nghi/chi-tiet/',item.id]" class="btn-icon grd-brown text-brown mr-2" title="Xem chi tiết"><i
+									<a href="quan-tri/kien-nghi/chi-tiet/{{item.id}}" target="_blank" class="btn-icon grd-brown text-brown mr-2" title="Xem chi tiết"><i
 											class="bi bi-eye"></i></a>
-									<a class="btn-icon grd-xanhngoc text-white mr-2" title="Sử dụng câu trả lời"><i class="bi bi-file-earmark-check"></i></a>
+									<a class="btn-icon grd-xanhngoc text-white mr-2" (click)="useConclustion(item.contentReply)" title="Sử dụng câu trả lời"><i
+											class="bi bi-file-earmark-check"></i></a>
 								</div>
 							</td>
 						</tr>

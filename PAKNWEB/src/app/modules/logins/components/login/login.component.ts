@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
 			captcha: new FormControl(this.captchaCode, [Validators.required]),
 			isRemember: new FormControl(this.isSaveLogin, []),
 		})
-		this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((data) => {
+		this.http.get<{ ip: string }>('https://jsonip.com/').subscribe(data => {
 			if (data != null) {
 				this.storeageService.setIpAddress(data.ip)
 			}
@@ -111,10 +111,10 @@ export class LoginComponent implements OnInit {
 			var constdata = {
 				CaptchaCode: this.captchaCode,
 			}
-			this.captchaService.send(constdata).subscribe((result) => {
+			this.captchaService.send(constdata).subscribe(result => {
 				if (result.success === RESPONSE_STATUS.success) {
 					this.authenService.login(this.user).subscribe(
-						(data) => {
+						data => {
 							if (data.success === RESPONSE_STATUS.success) {
 								localStorage.clear()
 								this.shareData.setIsLogin(true)
@@ -131,7 +131,7 @@ export class LoginComponent implements OnInit {
 								this.storeageService.setRole(data.role)
 								this.storeageService.setFullName(data.fullName)
 								this.storeageService.setTypeObject(data.typeObject)
-								this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((dataIP) => {
+								this.http.get<{ ip: string }>('https://jsonip.com/').subscribe(dataIP => {
 									if (dataIP != null) {
 										this.storeageService.setIpAddress(dataIP.ip)
 									}
@@ -154,7 +154,7 @@ export class LoginComponent implements OnInit {
 								this.captchaCode = ''
 							}
 						},
-						(error) => {
+						error => {
 							console.error(error)
 							this.reloadImage()
 							this.captchaCode = ''
@@ -188,10 +188,10 @@ export class LoginComponent implements OnInit {
 			var constdata = {
 				CaptchaCode: this.captchaCodeProduct,
 			}
-			this.captchaService.send(constdata).subscribe((result) => {
+			this.captchaService.send(constdata).subscribe(result => {
 				if (result.success === RESPONSE_STATUS.success) {
 					this.authenService.login(this.userProduct).subscribe(
-						(data) => {
+						data => {
 							if (data.success === RESPONSE_STATUS.success) {
 								localStorage.clear()
 								this.shareData.setIsLogin(true)
@@ -206,7 +206,7 @@ export class LoginComponent implements OnInit {
 								this.storeageService.setRole(data.role)
 								this.storeageService.setFullName(data.fullName)
 								this.storeageService.setTypeObject(data.typeObject)
-								this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((dataIP) => {
+								this.http.get<{ ip: string }>('https://jsonip.com/').subscribe(dataIP => {
 									if (dataIP != null) {
 										this.storeageService.setIpAddress(dataIP.ip)
 									}
@@ -228,7 +228,7 @@ export class LoginComponent implements OnInit {
 								this.toastr.error(data.message, 'Tên tài khoản hoặc mật khẩu không chính xác')
 							}
 						},
-						(error) => {
+						error => {
 							console.error(error)
 							this.reloadImage()
 							this.captchaCodeProduct = ''

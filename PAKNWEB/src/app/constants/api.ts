@@ -91,6 +91,7 @@ export class Api {
 	public static UserUpdate = 'User/Update' //'SYUserSPBase/SYUserUpdateBase'
 	public static UserDelete = 'User/Delete' //'SYUserSPBase/SYUserDeleteBase'GetAvatar
 	public static UserGetAvatar = 'User/GetAvatar' //'SYUserSPBase/SYUserDeleteBase'
+	public static SystemLogin = 'SYSPBase/SYSystemLogGetAllOnPageBase'
 
 	//SY_Role
 	public static RoleGetAll = 'SYSPBase/SYRoleGetAllBase'
@@ -171,4 +172,9 @@ export class Api {
 	public static AdministrativeFormalitiesInsert = 'AdministrationFormalities/AdministrationFormalitiesInsert'
 	public static AdministrativeFormalitiesUpdate = 'AdministrationFormalities/AdministrationFormalitiesUpdate'
 	public static AdministrativeFormalitiesDelete = 'DAMSPBase/DAMAdministrationDeleteBase'
+
+	// Notification
+	public static NotificationInsertTypeNews = 'SYNotification/SYNotificationInsertTypeNews'
+	public static NotificationInsertTypeRecommendation = 'SYNotification/SYNotificationInsertTypeRecommendation'
+	public static NotificationGetList = 'SYNotification/SYNotificationGetListOnPage'
 }

@@ -24,4 +24,5 @@ export class NewsModel {
 	createdBy: number
 	updatedAt: string
 	updatedBy: number
+	isNotification: boolean
 }
