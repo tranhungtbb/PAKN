@@ -21,7 +21,7 @@
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
-									<th style="width: 3%;">
+									<th style="width: 5%;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>STT</strong>
 										</p>
@@ -34,6 +34,14 @@
 										<input class="form-control form-control-sm" [(ngModel)]="model.title" maxlength="100" (keydown.enter)="dataStateChange()"
 											placeholder="Nhập tên..." />
 									</th>
+									<th style="width: 40%;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Nội dung thông báo</strong>
+											<span class="caret-tb"></span>
+										</p>
+										<input class="form-control form-control-sm" [(ngModel)]="model.content" maxlength="100" (keydown.enter)="dataStateChange()"
+											placeholder="Nhập nội dung..." />
+									</th>
 									<th style="width: 10%;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Loại thông báo</strong>
@@ -41,35 +49,39 @@
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
 											<ng-select class="" [clearable]="false" [items]="listType" placeholder="Loại thông báo" bindLabel="text" bindValue="value"
-												[(ngModel)]="isActived" [closeOnSelect]="true" (change)="dataStateChange()">
+												[(ngModel)]="model.type" [closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>
 									</th>
-									<th style="width: 10%;">
+									<th style="width: 15%;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Thời gian thông báo</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [clearable]="false" [items]="listStatus" placeholder="Thời gian thông báo" bindLabel="text" bindValue="value"
-												[(ngModel)]="isActived" [closeOnSelect]="true" (change)="dataStateChange()">
-											</ng-select>
+										<input class="form-control form-control-sm" (bsValueChange)="sendDateChange($event)" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker"
+											maxlength="10" appBsDatepickerInvalid [maxDate]="dateNow"
+											[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+										<div class="input-group-addon">
+											<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 										</div>
 									</th>
-									<th style="width: 15%;" class="text-right"><strong>THAO TÁC</strong></th>
+									<th style="width: 10%;" class="text-right"><strong>THAO TÁC</strong></th>
 								</tr>
 							</ng-template>
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
-										<strong class="highlight"><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.title}}</a></strong>
+										<strong [ngClass]="{ 'highlight': item.isViewed == true }"><a (click)="preView(item)" class="ellipsis"
+												title="Xem chi tiết">{{item.title}}</a></strong>
 									</td>
-									<td>{{item.type}}</td>
+									<td>{{item.content}}</td>
 									<td>
 										<span type="button" *ngIf="item.type == 1" class="badge rounded-pill bg-success">Bài viết</span>
 										<span type="button" *ngIf="item.type == 2" class="badge rounded-pill badge-light">Phản ánh kiến nghị</span>
 									</td>
+
+									<td>{{item.sendDate | date : 'dd/MM/yyyy HH:mm'}}</td>
 									<td>
 										<div class="hover-active d-flex justify-content-end">
 											<a (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i

@@ -177,4 +177,5 @@ export class Api {
 	public static NotificationInsertTypeNews = 'SYNotification/SYNotificationInsertTypeNews'
 	public static NotificationInsertTypeRecommendation = 'SYNotification/SYNotificationInsertTypeRecommendation'
 	public static NotificationGetList = 'SYNotification/SYNotificationGetListOnPage'
+	public static NotificationDelete = 'SYNotification/SYNotificationDelete'
 }
