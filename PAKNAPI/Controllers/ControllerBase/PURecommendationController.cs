@@ -68,7 +68,7 @@ namespace PAKNAPI.ControllerBase
 			try
 			{
 				var rsPURecommendationOnPage = await new PURecommendation(_appSetting).PURecommendationGetListOrderByCountClick(Status);
-				return new ResultApi { Success = ResultCode.OK, Result = rsPURecommendationOnPage };
+				return new ResultApi { Success = ResultCode.OK, Result = rsPURecommendationOnPage.Skip(3).ToList() };
 			}
 			catch (Exception ex)
 			{

@@ -243,7 +243,7 @@ namespace PAKNAPI.Controller
                     }
                 }
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-                return new ResultApi { Success = ResultCode.OK };
+                return new ResultApi { Success = ResultCode.OK, Result = Id };
             }
             catch (Exception ex)
             {

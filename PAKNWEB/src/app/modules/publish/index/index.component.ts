@@ -75,7 +75,6 @@ export class IndexComponent implements OnInit {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.DAMAdministrationGetList) {
 					this.Administrations = res.result.DAMAdministrationGetList
-					console.log(this.Administrations)
 				}
 			}
 			return

@@ -8,7 +8,11 @@ import { ToastrService } from 'ngx-toastr'
 import { UserObject } from '../../models/UserObject'
 import { UserService } from '../../services/user.service'
 import { DataService } from '../../services/sharedata.service'
-import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+
+import { RESPONSE_STATUS, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
+import { NotificationService } from 'src/app/services/notification.service'
+import { from } from 'rxjs'
+
 declare var $: any
 @HostListener('window:scroll', ['$event'])
 @Component({
@@ -68,6 +72,8 @@ export class AppheaderComponent implements OnInit {
 	lstChucVu: any = []
 	lstPhongBan: any = []
 
+	Notifications: any[]
+
 	constructor(
 		private formBuilder: FormBuilder,
 		private router: Router,
@@ -77,7 +83,8 @@ export class AppheaderComponent implements OnInit {
 		private _router: Router,
 		private _fb: FormBuilder,
 		private toastr: ToastrService,
-		private sharedataService: DataService
+		private sharedataService: DataService,
+		private notificationService: NotificationService
 	) {}
 
 	user: ChangePasswordUserObject = {
@@ -101,7 +108,7 @@ export class AppheaderComponent implements OnInit {
 			newpassword: new FormControl(this.user.NewPassword, [Validators.required]),
 			confirmpassword: new FormControl(this.user.ConfirmPassword, [Validators.required]),
 		})
-		this.sharedataService.getnotificationDropdown.subscribe(data => {
+		this.sharedataService.getnotificationDropdown.subscribe((data) => {
 			if (data) {
 				var result: any = data
 				this.listThongBao = []
@@ -109,10 +116,23 @@ export class AppheaderComponent implements OnInit {
 				this.totalThongBao = result.totalRecords
 			}
 		})
+
+		this.notificationService.getListNotificationByReceiveId({}).subscribe((res) => {
+			if ((res.success = RESPONSE_STATUS.success)) {
+				this.Notifications = res.result.syNotifications
+			}
+			return
+		})
 	}
 
 	get f() {
 		return this.updateForm.controls
+	}
+	checkDeny(status: any) {
+		if (status == RECOMMENDATION_STATUS.PROCESS_DENY || status == RECOMMENDATION_STATUS.RECEIVE_DENY || status == RECOMMENDATION_STATUS.APPROVE_DENY) {
+			return true
+		}
+		return false
 	}
 
 	// buildForm() {
@@ -167,7 +187,7 @@ export class AppheaderComponent implements OnInit {
 		}
 		var data = this.userForm.value
 		this.user = data
-		this.authenService.chagepassword(this.user).subscribe(data => {
+		this.authenService.chagepassword(this.user).subscribe((data) => {
 			if (data.status === 1) {
 				$('#myModal').modal('hide')
 				this.toastr.success('Thay đổi mật khẩu thành công')
@@ -175,7 +195,7 @@ export class AppheaderComponent implements OnInit {
 				this.toastr.error(data.message)
 			}
 		}),
-			err => {
+			(err) => {
 				console.error(err)
 			}
 	}
@@ -266,7 +286,7 @@ export class AppheaderComponent implements OnInit {
 	}
 
 	signOut(): void {
-		this.authenService.logOut({}).subscribe(success => {
+		this.authenService.logOut({}).subscribe((success) => {
 			if (success.success == RESPONSE_STATUS.success) {
 				this.sharedataService.setIsLogin(false)
 				this.storageService.setReturnUrl('')
@@ -388,7 +408,7 @@ export class AppheaderComponent implements OnInit {
 			PageSize: this.pageSize,
 			UserId: localStorage.getItem('userId'),
 		}
-		this.userService.getSystemLogin(request).subscribe(response => {
+		this.userService.getSystemLogin(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
@@ -403,7 +423,7 @@ export class AppheaderComponent implements OnInit {
 		let req = {
 			Id: localStorage.getItem('userId'),
 		}
-		this.userService.getById(req).subscribe(response => {
+		this.userService.getById(req).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.emailUser = response.result.SYUserGetByID[0].email

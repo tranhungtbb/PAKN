@@ -8,6 +8,7 @@ import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, R
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { stat } from 'fs'
 import { COMMONS } from 'src/app/commons/commons'
+import { NotificationService } from 'src/app/services/notification.service'
 
 declare var $: any
 
@@ -17,7 +18,13 @@ declare var $: any
 	styleUrls: ['./list-process-wait.component.css'],
 })
 export class ListProcessWaitComponent implements OnInit {
-	constructor(private _service: RecommendationService, private storeageService: UserInfoStorageService, private _toastr: ToastrService, private _shareData: DataService) {}
+	constructor(
+		private _service: RecommendationService,
+		private storeageService: UserInfoStorageService,
+		private _toastr: ToastrService,
+		private _shareData: DataService,
+		private notificationService: NotificationService
+	) {}
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
@@ -158,6 +165,7 @@ export class ListProcessWaitComponent implements OnInit {
 		this._service.recommendationProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
+				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
 				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
 				this.getList()
 			} else {
@@ -180,6 +188,7 @@ export class ListProcessWaitComponent implements OnInit {
 			this._service.recommendationProcess(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
+					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
 					this._toastr.success(COMMONS.DENY_SUCCESS)
 					this.getList()
 				} else {
