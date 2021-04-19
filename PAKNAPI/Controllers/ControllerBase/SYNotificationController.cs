@@ -45,8 +45,8 @@ namespace PAKNAPI.Controllers
         {
             try
             {
-                //lấy tất cả danh sách người dùng
-                List<SYUser> lstUser = await new SYUser(_appSetting).SYUserGetAll();
+                //lấy tất cả danh sách người dùng là cá nhân, doanh nghiệp
+                List<SYUser> lstUser = await new SYUser(_appSetting).SYUserGetNonSystem();
                 if (lstUser.Count > 0)
                 {
                     string senderName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
@@ -290,10 +290,10 @@ namespace PAKNAPI.Controllers
         #region SYNotificationGetAll
         [HttpGet]
         [Authorize]
-        [Route("SYNotificationGetAll")]
-        public async Task<object> SYNotificationGetAll() {
+        [Route("SYNotificationGetListOnPage")]
+        public async Task<object> SYNotificationGetListOnPage(int PageSize, int PageIndex) {
             try {
-                var syNotifications = await new SYNotificationGetListByReceiveId(_appSetting).SYNotificationGetListByReceiveIdDAO((int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext));
+                var syNotifications = await new SYNotificationGetListOnPageByReceiveId(_appSetting).SYNotificationGetListOnPageByReceiveIdDAO((int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext), PageSize, PageIndex);
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"syNotifications", syNotifications},
@@ -301,6 +301,33 @@ namespace PAKNAPI.Controllers
                     };
                 return new ResultApi { Success = ResultCode.OK, Result = json };
             } catch (Exception ex) {
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+        #endregion
+
+
+
+        #region SYNotificationUpdateIsViewed
+        [HttpGet]
+        [Authorize]
+        [Route("SYNotificationUpdateIsViewed")]
+        public async Task<object> SYNotificationUpdateIsViewed()
+        {
+            try
+            {
+                var count = await new SYNotificationGetListOnPageByReceiveId(_appSetting).SYNotificatioUpdateIsViewedByReceiveIdDAO((int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext));
+                if (count > 0)
+                {
+                    return new ResultApi { Success = ResultCode.OK, Result = count };
+                }
+                else
+                {
+                    return new ResultApi{ Success = ResultCode.ORROR};
+                }
+            }
+            catch (Exception ex)
+            {
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }

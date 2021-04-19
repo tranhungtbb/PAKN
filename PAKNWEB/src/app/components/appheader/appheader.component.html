@@ -324,9 +324,18 @@
 							<div class="pulse-css"></div>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
-							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:380px;">
-								<ul class="timeline">
-									<li *ngFor="let item of notifications">
+							<div class="header-notification">
+								<div class="red-bar"></div>
+								<div class="title-notification">
+									<div style="font-weight: 500;
+                  font-size: 16px; text-transform: uppercase;">Thông báo</div>
+									<div style="font-size: 12px;">có <span style="color: red;">{{ViewedCount}}</span> thông báo mới</div>
+								</div>
+								<div class="notifications"><a href="javascript:void(0)" (click)="redirectListNotification()">Xem tất cả<i class="ti-arrow-right"></i></a></div>
+							</div>
+							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:auto;">
+								<ul class="timeline" *ngIf="Notifications">
+									<li *ngFor="let item of Notifications" class="item-notification">
 										<a href="javascript:void(0)" (click)="onClickNotification(item.dataId,item.type, item.typeSend)" class="timeline-panel">
 											<div class="media mr-2 grd-brown">
 												<i class="bi bi-file-earmark-medical cl-brown"></i>
@@ -339,8 +348,13 @@
 										</a>
 									</li>
 								</ul>
+								<div *ngIf="!Notifications" style="display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;">
+									<div>Bạn chưa có thông báo nào</div>
+								</div>
 							</div>
-							<a class="all-notification" href="#">Xem tất cả thông báo <i class="ti-arrow-right"></i></a>
 						</div>
 					</li>
 					<li class="nav-item dropdown header-profile">

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { BusinessComponent } from './business.component'
 import { DashboardComponent } from './dash-board/dash-board.component'
+import { NotificationComponent } from './notification/notification.component'
 
 const routes: Routes = [
 	{
@@ -23,6 +24,7 @@ const routes: Routes = [
 			{ path: 'thiet-lap-chung', loadChildren: './setting/setting.module#SettingModule' },
 			{ path: 'ho-tro', loadChildren: './support/support.module#SupportModule' },
 			{ path: 'thu-tuc-hanh-chinh', loadChildren: './administrative-formalities/administrative-formalities.module#AdministrativeFormalitiesModule' },
+			{ path: 'thong-bao', component: NotificationComponent },
 		],
 	},
 ]
@@ -31,4 +33,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class BusinessRoutingModule { }
+export class BusinessRoutingModule {}

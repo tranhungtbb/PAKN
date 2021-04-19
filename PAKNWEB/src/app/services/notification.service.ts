@@ -18,7 +18,7 @@ export class NotificationService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NotificationInsertTypeRecommendation)
 	}
 
-	getListNotificationByReceiveId(query: any): Observable<any> {
+	getListNotificationOnPageByReceiveId(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NotificationGetList)
 	}
 }

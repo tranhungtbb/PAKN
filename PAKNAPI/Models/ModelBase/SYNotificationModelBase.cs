@@ -23,6 +23,7 @@ namespace PAKNAPI.Models.ModelBase
 		public bool IsViewed { get; set; }
 		public bool IsReaded { get; set; }
 		public int RowNumber { get; set; }
+		public int ViewedCount { get; set; }
 
 		
 
@@ -62,27 +63,37 @@ namespace PAKNAPI.Models.ModelBase
 		}
 	}
 
-	public class SYNotificationGetListByReceiveId
+	public class SYNotificationGetListOnPageByReceiveId
 	{
 		private SQLCon _sQLCon;
 
-		public SYNotificationGetListByReceiveId(IAppSetting appSetting)
+		public SYNotificationGetListOnPageByReceiveId(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
 
 
-		public SYNotificationGetListByReceiveId()
+		public SYNotificationGetListOnPageByReceiveId()
 		{
 		}
 
-		public async Task<List<SYNotificationModel>> SYNotificationGetListByReceiveIdDAO(int? ReceiveId)
+		public async Task<List<SYNotificationModel>> SYNotificationGetListOnPageByReceiveIdDAO(int? ReceiveId, int PageSize, int PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", ReceiveId);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYNotificationModel>("SY_NotificationGetListByReceiveId", DP)).ToList();
+		}
+
+		public async Task<int> SYNotificatioUpdateIsViewedByReceiveIdDAO(int? ReceiveId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ReceiveId", ReceiveId);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_NotificationUpdateIsViewedByReceiveId", DP));
 		}
 
 

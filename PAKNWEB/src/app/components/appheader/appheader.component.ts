@@ -73,6 +73,7 @@ export class AppheaderComponent implements OnInit {
 	lstPhongBan: any = []
 
 	Notifications: any[]
+	ViewedCount: number = 0
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -117,9 +118,14 @@ export class AppheaderComponent implements OnInit {
 			}
 		})
 
-		this.notificationService.getListNotificationByReceiveId({}).subscribe((res) => {
+		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: 5, PageIndex: 1 }).subscribe((res) => {
 			if ((res.success = RESPONSE_STATUS.success)) {
 				this.Notifications = res.result.syNotifications
+				this.Notifications.forEach((item) => {
+					if (item.isViewed == true) {
+						this.ViewedCount += 1
+					}
+				})
 			}
 			return
 		})
@@ -133,6 +139,10 @@ export class AppheaderComponent implements OnInit {
 			return true
 		}
 		return false
+	}
+
+	redirectListNotification() {
+		this.router.navigate(['/quan-tri/thong-bao'])
 	}
 
 	// buildForm() {
