@@ -8,6 +8,7 @@ import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, R
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { stat } from 'fs'
 import { COMMONS } from 'src/app/commons/commons'
+import { NotificationService } from 'src/app/services/notification.service'
 
 declare var $: any
 
@@ -17,7 +18,14 @@ declare var $: any
 	styleUrls: ['./list-approve-wait.component.css'],
 })
 export class ListApproveWaitComponent implements OnInit {
-	constructor(private _service: RecommendationService, private storeageService: UserInfoStorageService, private _toastr: ToastrService, private _shareData: DataService) {}
+	constructor(
+		private _service: RecommendationService,
+		private storeageService: UserInfoStorageService,
+		private _toastr: ToastrService,
+		private _shareData: DataService,
+		private notificationService: NotificationService
+	) {}
+
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
@@ -42,7 +50,6 @@ export class ListApproveWaitComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
-	isMain: boolean = this.storeageService.getIsMain()
 	ngOnInit() {
 		this.dataSearch.status = RECOMMENDATION_STATUS.APPROVE_WAIT
 		this.getDataForCreate()
@@ -159,6 +166,7 @@ export class ListApproveWaitComponent implements OnInit {
 		this._service.recommendationProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
+				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
 				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
 				this.getList()
 			} else {
@@ -181,6 +189,9 @@ export class ListApproveWaitComponent implements OnInit {
 			this._service.recommendationProcess(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
+					debugger
+					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
+
 					this._toastr.success(COMMONS.DENY_SUCCESS)
 					this.getList()
 				} else {

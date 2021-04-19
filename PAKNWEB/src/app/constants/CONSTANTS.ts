@@ -65,6 +65,11 @@ export class STEP_RECOMMENDATION {
 	public static APPROVE = 3 //3 Phê duyệt
 }
 
+export class TYPE_NOTIFICATION {
+	public static NEWS = 1 // thông báo tin tức
+	public static RECOMMENDATION = 2 // thông báo PAKN
+}
+
 export class PROCESS_STATUS_RECOMMENDATION {
 	public static WAIT = 1 //Chờ xử lý
 	public static APPROVED = 2 //2 Đồng ý xử lý

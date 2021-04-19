@@ -13,6 +13,7 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 import { AppSettings } from 'src/app/constants/app-setting'
 import { Api } from 'src/app/constants/api'
 import { CaptchaService } from 'src/app/services/captcha-service'
+import { NotificationService } from 'src/app/services/notification.service'
 
 @Component({
 	selector: 'app-user-create-recommendation',
@@ -49,7 +50,8 @@ export class CreateRecommendationComponent implements OnInit {
 		private _serviceCatalog: CatalogService,
 		private router: Router,
 		private captchaService: CaptchaService,
-		private activatedRoute: ActivatedRoute
+		private activatedRoute: ActivatedRoute,
+		private notificationService: NotificationService
 	) {}
 
 	ngOnInit() {
@@ -267,6 +269,7 @@ export class CreateRecommendationComponent implements OnInit {
 				if (this.model.id == 0) {
 					this.recommendationService.recommendationInsert(request).subscribe((response) => {
 						if (response.success == RESPONSE_STATUS.success) {
+							this.notificationService.insertNotificationTypeRecommendation({ recommendationId: response.result }).subscribe((res) => {})
 							this.toastr.success(COMMONS.ADD_SUCCESS)
 							return this.router.navigate(['/cong-bo/phan-anh-kien-nghi'])
 						} else {

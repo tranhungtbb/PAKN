@@ -9,6 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { HashtagObject } from 'src/app/models/hashtagObject'
 import { CatalogService } from 'src/app/services/catalog.service'
+import { NotificationService } from 'src/app/services/notification.service'
 
 @Component({
 	selector: 'app-create-recommendation',
@@ -46,7 +47,8 @@ export class CreateRecommendationComponent implements OnInit {
 		private recommendationService: RecommendationService,
 		private _serviceCatalog: CatalogService,
 		private router: Router,
-		private activatedRoute: ActivatedRoute
+		private activatedRoute: ActivatedRoute,
+		private notificationService: NotificationService
 	) {}
 
 	ngOnInit() {
@@ -243,6 +245,9 @@ export class CreateRecommendationComponent implements OnInit {
 			this.recommendationService.recommendationInsert(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.toastr.success(COMMONS.ADD_SUCCESS)
+
+					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: response.result }).subscribe((res) => {})
+
 					return this.router.navigate(['/quan-tri/kien-nghi/danh-sach-tong-hop'])
 				} else {
 					this.toastr.error(response.message)

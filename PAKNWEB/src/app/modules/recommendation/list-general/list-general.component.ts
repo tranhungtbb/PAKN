@@ -51,7 +51,6 @@ export class ListGeneralComponent implements OnInit {
 	idDelete: number = 0
 	lstHistories: any = []
 	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
-	isMain: boolean = this.storeageService.getIsMain()
 	ngOnInit() {
 		this.buildForm()
 		this.getDataForCreate()
@@ -205,7 +204,6 @@ export class ListGeneralComponent implements OnInit {
 			}
 	}
 	preForward(id: number) {
-		this.submitted = false
 		this.modelForward = new RecommendationForwardObject()
 		this.modelForward.recommendationId = id
 		this.rebuilForm()

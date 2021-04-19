@@ -20,30 +20,29 @@ export class UserService {
 	getById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetById)
 	}
-	insert(data: any, files:any = null): Observable<any> {
+	insert(data: any, files: any = null): Observable<any> {
+		let form = new FormData()
 
-		let form = new FormData();
-
-		for(let item in data){
-			form.append(item,data[item])
+		for (let item in data) {
+			form.append(item, data[item])
 		}
-		if(files != null && files.length > 0){
-			for(let item of files){
-				form.append('files',item,item.name);
+		if (files != null && files.length > 0) {
+			for (let item of files) {
+				form.append('files', item, item.name)
 			}
 		}
 
 		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.UserInsert)
 	}
-	update(data: any, files:any = null): Observable<any> {
-		let form = new FormData();
+	update(data: any, files: any = null): Observable<any> {
+		let form = new FormData()
 
-		for(let key in data){
+		for (let key in data) {
 			form.append(key, data[key])
 		}
-		if(files != null && files.length > 0){
-			for(let item of files){
-				form.append('files', item, item.name);
+		if (files != null && files.length > 0) {
+			for (let item of files) {
+				form.append('files', item, item.name)
 			}
 		}
 		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.UserUpdate)
@@ -52,8 +51,12 @@ export class UserService {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserDelete)
 	}
 
-	getAvatar(id:number): Observable<any> {
-		let url = AppSettings.API_ADDRESS + Api.UserGetAvatar + "/" +id;
+	getAvatar(id: number): Observable<any> {
+		let url = AppSettings.API_ADDRESS + Api.UserGetAvatar + '/' + id
 		return this.serviceInvoker.get({}, url)
+	}
+	getSystemLogin(request: any): Observable<any> {
+		let url = AppSettings.API_ADDRESS + Api.SystemLogin
+		return this.serviceInvoker.get(request, url)
 	}
 }

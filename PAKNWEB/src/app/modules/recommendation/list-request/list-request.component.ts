@@ -100,23 +100,26 @@ export class ListRequestComponent implements OnInit {
 		this.dataSearch.code = this.dataSearch.code.trim()
 		this.dataSearch.name = this.dataSearch.name.trim()
 		this.dataSearch.content = this.dataSearch.content.trim()
+		this.dataSearch.unitId = this.dataSearch.unitId.trim()
+		this.dataSearch.place = this.dataSearch.place.trim()
 		let request = {
 			Code: this.dataSearch.code,
 			Content: this.dataSearch.content,
-			Unit: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
+			Unit: this.dataSearch.unitId,
+			Place: this.dataSearch.place,
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
 			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
-
+		console.log(request)
 		this._service.recommendationGetListProcess(request).subscribe(response => {
 			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
 					this.listData = response.result.MRRecommendationKNCTGetAllWithProcess
-					this.totalRecords = response.result.MRRecommendationKNCTGetAllWithProcess[0].rowNumber
+					this.totalRecords = response.result.MRRecommendationKNCTGetAllWithProcess.length != 0 ? response.result.MRRecommendationKNCTGetAllWithProcess[0].rowNumber : 0
 				}
 			} else {
 				this._toastr.error(response.message)

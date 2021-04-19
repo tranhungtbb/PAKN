@@ -5,7 +5,7 @@
 	<form [formGroup]="formData" class="form-row align-items-center" autocomplete="off">
 		<div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Họ và Tên <span class="cl-red">(*)</span></label>
-			<input [svTrim] [(ngModel)]="model.fullName" formControlName="fullName" type="text" placeholder="Nhập..." class="form-control border-brown">
+			<input [svTrim] maxlength="50" [(ngModel)]="model.fullName" formControlName="fullName" type="text" placeholder="Nhập..." class="form-control border-brown">
 			<div *ngIf="(submitted && f.fullName.invalid)||(f.fullName.invalid && (f.fullName.dirty || f.fullName.touched))" class="has-error m-b-12">
 				<div *ngIf="f.fullName.errors.required">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -14,7 +14,7 @@
 		</div>
 		<div class="col-12 col-lg-8 form-group">
 			<label class="mb-1">Email</label>
-			<input [svTrim] [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập..." class="form-control border-brown">
+			<input [svTrim] maxlength="50" [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập..." class="form-control border-brown">
 			<div *ngIf="(submitted && f.email.invalid)||(f.email.invalid && (f.email.dirty || f.email.touched))" class="has-error m-b-12">
 				<div *ngIf="f.email.errors.required">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -26,7 +26,7 @@
 		</div>
 		<!-- row2 -->
 		<div class="col-12 col-lg-4 form-group">
-			<label class="mb-1">Quốc tịch</label>
+			<label class="mb-1">Quốc tịch <span class="cl-red">(*)</span></label>
 			<ng-select [(ngModel)]="model.nation" formControlName="nation" class="form-control" placeholder="Chọn..." [clearable]="false" [closeOnSelect]="true"
 				(change)="onChangeNation(true)">
 				<ng-option value="">Chọn...</ng-option>
@@ -80,7 +80,7 @@
 		</div>
 		<div class="col-12 col-lg-8 form-group">
 			<label class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></label>
-			<input [svTrim] [(ngModel)]="model.address" formControlName="address" type="text" placeholder="Nhập..." class="form-control border-brown">
+			<input [svTrim] maxlength="200" [(ngModel)]="model.address" formControlName="address" type="text" placeholder="Nhập..." class="form-control border-brown">
 
 			<div *ngIf="(submitted && f.address.invalid)||(f.address.invalid && (f.address.dirty || f.address.touched))" class="has-error m-b-12">
 				<div *ngIf="f.address.errors.required">
@@ -90,21 +90,21 @@
 		</div>
 		<!-- row 4 -->
 		<div class="col-12 col-lg-4 form-group">
-			<label class="mb-1">Số CMND / CCCD / Hộ chiếu </label>
-			<input [svTrim] [(ngModel)]="model.idCard" formControlName="idCard" type="text" placeholder="Nhập..." class="form-control border-brown">
+			<label class="mb-1">Số CMND / CCCD / Hộ chiếu <span class="cl-red">(*)</span></label>
+			<input [svTrim] maxlength="12" [(ngModel)]="model.idCard" formControlName="idCard" type="text" placeholder="Nhập..." class="form-control border-brown">
 
 			<div *ngIf="(submitted && f.idCard.invalid)||(f.idCard.invalid && (f.idCard.dirty || f.idCard.touched))" class="has-error m-b-12">
 				<div *ngIf="f.idCard.errors.required">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
 				</div>
-				<div *ngIf="fInfo.idCard.errors.pattern">
+				<div *ngIf="f.idCard.errors.pattern">
 					<span class="help-block">Số CMND/CCCD không hợp lệ!</span>
 				</div>
 			</div>
 		</div>
 		<div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Nơi cấp</label>
-			<input [svTrim] [(ngModel)]="model.issuedPlace" formControlName="issuedPlace" type="text" placeholder="Nhập..." class="form-control border-brown">
+			<input [svTrim] maxlength="200" [(ngModel)]="model.issuedPlace" formControlName="issuedPlace" type="text" placeholder="Nhập..." class="form-control border-brown">
 
 			<div *ngIf="(submitted && f.issuedPlace.invalid)||(f.issuedPlace.invalid && (f.issuedPlace.dirty || f.issuedPlace.touched))" class="has-error m-b-12">
 				<div *ngIf="f.issuedPlace.errors.required">
@@ -126,9 +126,10 @@
 			</div>
 		</div>
 		<div class="col-12 col-lg-4 form-group">
-			<label class="mb-1">Ngày tháng năm sinh</label>
+			<label class="mb-1">Ngày tháng năm sinh <span class="cl-red">(*)</span></label>
 			<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dateOfBirth" [(ngModel)]="model.dateOfBirth"
-				formControlName="dateOfBirth" appBsDatepickerInvalid [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+				formControlName="dateOfBirth" appBsDatepickerInvalid
+				[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true,language:'vi'}" />
 			<div class="input-group-addon">
 				<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 			</div>

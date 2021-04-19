@@ -16,7 +16,7 @@ export class Api {
 	// FileUpload/Download
 	public static DownloadApp = 'UploadFiles/DownloadApp'
 	public static GetEncryptedPath = 'UploadFiles/GetEncryptedPath'
-	public static download = 'UploadFiles/DownloadFile'
+	public static download = 'Files/DownloadFile'
 	public static DownloadFilebyId = 'UploadFiles/DownloadFilebyId'
 	public static downloadFileSupport = 'UploadFiles/DownloadFileSupport'
 	public static GetFile = 'UploadFiles/GetFile'
@@ -91,6 +91,7 @@ export class Api {
 	public static UserUpdate = 'User/Update' //'SYUserSPBase/SYUserUpdateBase'
 	public static UserDelete = 'User/Delete' //'SYUserSPBase/SYUserDeleteBase'GetAvatar
 	public static UserGetAvatar = 'User/GetAvatar' //'SYUserSPBase/SYUserDeleteBase'
+	public static SystemLogin = 'SYSPBase/SYSystemLogGetAllOnPageBase'
 
 	//SY_Role
 	public static RoleGetAll = 'SYSPBase/SYRoleGetAllBase'
@@ -174,4 +175,6 @@ export class Api {
 
 	// Notification
 	public static NotificationInsertTypeNews = 'SYNotification/SYNotificationInsertTypeNews'
+	public static NotificationInsertTypeRecommendation = 'SYNotification/SYNotificationInsertTypeRecommendation'
+	public static NotificationGetList = 'SYNotification/SYNotificationGetListOnPage'
 }

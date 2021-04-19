@@ -84,7 +84,11 @@ export class UploadFileService {
 		return this.http.get(AppSettings.API_ADDRESS + Api.DownloadApp, { responseType: 'blob', params: data }).pipe(tap())
 	}
 	downloadFile(data: any) {
-		return this.http.get(AppSettings.API_ADDRESS + Api.download, { responseType: 'blob', params: data }).pipe(tap(), catchError(this.handleError<Blob>()))
+		var form = new FormData()
+		for (let item in data) {
+			form.append(item, data[item])
+		}
+		return this.http.post(AppSettings.API_ADDRESS + Api.download, form, { responseType: 'blob' }).pipe(tap(), catchError(this.handleError<Blob>()))
 	}
 
 	downloadFilebyId(data: any) {
