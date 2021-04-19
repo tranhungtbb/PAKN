@@ -119,7 +119,7 @@ export class ListRequestComponent implements OnInit {
 				if (response.result != null) {
 					this.listData = []
 					this.listData = response.result.MRRecommendationKNCTGetAllWithProcess
-					this.totalRecords = response.result.MRRecommendationKNCTGetAllWithProcess[0].rowNumber
+					this.totalRecords = response.result.MRRecommendationKNCTGetAllWithProcess.length != 0 ? response.result.MRRecommendationKNCTGetAllWithProcess[0].rowNumber : 0
 				}
 			} else {
 				this._toastr.error(response.message)

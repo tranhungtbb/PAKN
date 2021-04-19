@@ -423,11 +423,13 @@ export class AppheaderComponent implements OnInit {
 				if (response.result != null) {
 					this.listData = []
 					this.listData = response.result.SYSystemLogGetAllOnPage
-					this.totalRecords = response.result.SYSystemLogGetAllOnPage[0].rowNumber
+					this.totalRecords = response.result.SYSystemLogGetAllOnPage.length != 0 ? response.result.SYSystemLogGetAllOnPage[0].rowNumber : 0
 				}
 			} else {
 			}
 		})
+	}
+	getUserDetail() {
 		let req = {
 			Id: localStorage.getItem('userId'),
 		}
@@ -446,7 +448,7 @@ export class AppheaderComponent implements OnInit {
 	}
 	showModalDetail(): void {
 		$('#modalDetail').modal('show')
-
+		this.getUserDetail()
 		this.getList()
 	}
 }
