@@ -110,6 +110,15 @@ export class RecommendationConclusionObject {
 	content: string = ''
 }
 
+export class RecommendationSuggestObject {
+	id: number = 0
+	code: string = ''
+	title: string = ''
+	name: string = ''
+	sendDate: Date = null
+	contentReply: string = ''
+}
+
 export class PuRecommendation {
 	id: number = 0
 	name: string
