@@ -28,7 +28,7 @@ export class AccountUpdateInfoComponent implements OnInit {
 	model: UserInfoObject = new UserInfoObject()
 	modeCopy: UserInfoObject
 
-	listNation: any[] = [{ id: '1', name: 'Việt Nam' }]
+	listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
 	listProvince: any[] = []
 	listDistrict: any[] = []
 	listVillage: any[] = []
@@ -47,7 +47,7 @@ export class AccountUpdateInfoComponent implements OnInit {
 
 			this.model.provinceId = ''
 		}
-		if (this.model.nation == 1 || this.model.nation == '1') {
+		if (this.model.nation == 'Việt Nam') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listProvince = res.result.CAProvinceGetAll
@@ -105,11 +105,11 @@ export class AccountUpdateInfoComponent implements OnInit {
 			email: [this.model.email, [Validators.required, Validators.email]],
 			//phone: [this.model.phone, [Validators.required,Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
 			nation: [this.model.nation, [Validators.required]],
-			provinceId: [this.model.provinceId, [Validators.required]],
-			districtId: [this.model.districtId, [Validators.required]],
-			wardsId: [this.model.wardsId, [Validators.required]],
+			provinceId: [this.model.provinceId, []],
+			districtId: [this.model.districtId, []],
+			wardsId: [this.model.wardsId, []],
 			address: [this.model.address, [Validators.required]],
-			idCard: [this.model.idCard, [Validators.required, Validators.pattern(/^([0-9]){9,12}$/g)]],
+			idCard: [this.model.idCard, [Validators.required, Validators.pattern(/^([0-9]){8,12}$/g)]],
 			issuedPlace: [this.model.issuedPlace, [Validators.required]],
 			issuedDate: [this.model.issuedDate, [Validators.required]],
 			gender: [this.model.gender, [Validators.required]],
@@ -123,13 +123,12 @@ export class AccountUpdateInfoComponent implements OnInit {
 				return
 			}
 			this.model = res.result
-			this.model = res.result
 			this.onChangeNation()
 		})
 	}
 
 	onReSet() {
-		this.model = { ...this.modeCopy }
+		this.getUserInfo()
 	}
 	submitted = false
 	onSave() {

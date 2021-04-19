@@ -98,7 +98,6 @@
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Ngày cấp / Thành lập </label>
-					<!-- <input [svTrim] [(ngModel)]="model.DateIssue" formControlName="DateIssue" type="date" placeholder="Nhập..." class="form-control border-brown"> -->
 					<div class="input-group">
 						<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_IsDate" [(ngModel)]="model._DateOfIssue"
 							formControlName="DateIssue" appBsDatepickerInvalid
@@ -117,11 +116,9 @@
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Mã số thuế <span class="cl-red">(*)</span></label>
-					<input [svTrim] numbersOnly [(ngModel)]="model.Tax" formControlName="Tax" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] numbersOnly maxlength="13" [(ngModel)]="model.Tax" formControlName="Tax" type="text" placeholder="Nhập..." class="form-control border-brown">
 					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.Tax.invalid)||(fOrgInfo.Tax.invalid && (fOrgInfo.Tax.dirty || fOrgInfo.Tax.touched))" class="has-error m-b-12">
-						<div *ngIf="fOrgInfo.Tax.errors.required">
-							<span class="help-block">Trường dữ liệu này không được để trống</span>
-						</div>
+
 						<div *ngIf="fOrgInfo.Business.errors.maxlength">
 							<span class="help-block">Chỉ nhập tối đa 13 ký tự</span>
 						</div>

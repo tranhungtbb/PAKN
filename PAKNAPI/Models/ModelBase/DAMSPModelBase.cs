@@ -163,6 +163,9 @@ namespace PAKNAPI.ModelBase
 		public string Note { get; set; }
 		public byte? Status { get; set; }
 		public bool? IsShow { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public DateTime? PublishedDate { get; set; }
+		public long? CreatedBy { get; set; }
 
 		public async Task<List<DAMAdministrationGetById>> DAMAdministrationGetByIdDAO(int? Id)
 		{

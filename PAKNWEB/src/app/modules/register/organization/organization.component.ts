@@ -40,6 +40,8 @@ export class OrganizationComponent implements OnInit {
 		this.loadFormBuilder()
 	}
 
+	serverMsg = {}
+
 	onReset() {
 		this.formLogin.reset()
 		this.formOrgInfo.reset()
@@ -66,7 +68,7 @@ export class OrganizationComponent implements OnInit {
 		this.model._RepresentativeBirthDay = fDob.value
 		this.model._DateOfIssue = fIsDate.value
 
-		if (this.model.Nation != this.listNation[0].value) {
+		if (this.model.Nation != this.listNation[0].id) {
 			this.model.ProvinceId = 0
 			this.model.DistrictId = 0
 			this.model.WardsId = 0
@@ -87,6 +89,13 @@ export class OrganizationComponent implements OnInit {
 				if (msg.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
 					this.toast.error('Email đã tồn tại')
 				}
+				if (msg.includes(`UNIQUE KEY constraint 'UK_BI_Business_OrgEmail'`)) {
+					this.toast.error('Email Văn phòng đại diện đã tồn tại')
+				}
+				if (msg.includes(`UNIQUE KEY constraint 'UK_BI_Business_Email'`)) {
+					this.toast.error('Email Người đại diện đã tồn tại')
+				}
+
 				return
 			}
 			this.toast.success('Đăng ký tài khoản thành công')
