@@ -100,9 +100,9 @@ export class OrgRepreFormComponent implements OnInit {
 			Gender: [this.model.RepresentativeGender, [Validators.required]],
 			DOB: [this.model._RepresentativeBirthDay, []],
 			Nation: [this.model.Nation, [Validators.required]],
-			Province: [this.model.ProvinceId, [Validators.required]], //int
-			District: [this.model.DistrictId, [Validators.required]], // int
-			Village: [this.model.WardsId, [Validators.required]], // int
+			Province: [this.model.ProvinceId, []], //int
+			District: [this.model.DistrictId, []], // int
+			Village: [this.model.WardsId, []], // int
 			Address: [this.model.Address, []],
 		})
 

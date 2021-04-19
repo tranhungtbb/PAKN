@@ -33,7 +33,7 @@
 		</div>
 	</div>
 	<div class="col form-group">
-		<label class="mb-1">Tỉnh / Thành phố <span class="cl-red">(*)</span></label>
+		<label class="mb-1">Tỉnh / Thành phố</label>
 		<ng-select [disabled]="nation_enable_type" [(ngModel)]="model.ProvinceId" formControlName="Province" class="form-control" placeholder="Chọn..." [clearable]="false"
 			[closeOnSelect]="true" (change)="onChangeProvince()">
 			<ng-option value="">Chọn...</ng-option>
@@ -59,7 +59,7 @@
 		</div>
 	</div>
 	<div class="col form-group">
-		<label class="mb-1">Huyện / Quận / thị xã... <span class="cl-red">(*)</span></label>
+		<label class="mb-1">Huyện / Quận / thị xã...</label>
 		<ng-select [disabled]="nation_enable_type" [(ngModel)]="model.DistrictId" formControlName="District" class="form-control" placeholder="Chọn..." [clearable]="false"
 			[closeOnSelect]="true" (change)="onChangeDistrict()">
 			<ng-option value="">Chọn...</ng-option>
@@ -72,7 +72,7 @@
 		</div>
 	</div>
 	<div class="col form-group">
-		<label class="mb-1">Xã / Phường / Thị trấn <span class="cl-red">(*)</span></label>
+		<label class="mb-1">Xã / Phường / Thị trấn</label>
 		<ng-select [disabled]="nation_enable_type" [(ngModel)]="model.WardsId" formControlName="Village" class="form-control" placeholder="Chọn..." [clearable]="false"
 			[closeOnSelect]="true">
 			<ng-option value="">Chọn...</ng-option>
