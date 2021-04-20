@@ -13,8 +13,6 @@ import { UserCreateOrUpdateComponent } from '../user/user-create-or-update/user-
 
 import { COMMONS } from 'src/app/commons/commons'
 import { UnitObject } from 'src/app/models/unitObject'
-import { UserObject2 } from 'src/app/models/UserObject'
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast'
 
 declare var jquery: any
 declare var $: any
@@ -188,10 +186,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 						unitLevel: e.unitLevel,
 						children: [],
 					}
-					// if (e.unitLevel < 3) {
-					// 	item['expandedIcon'] = 'pi bi-dash-circle-fill' //change [ngClass]=\"{'bi-plus-circle-fill':!node.expanded,'bi-dash-circle-fill':node.expanded}
-					// 	item['collapsedIcon'] = 'pi bi-plus-circle-fill'
-					// }
 
 					return item
 				})

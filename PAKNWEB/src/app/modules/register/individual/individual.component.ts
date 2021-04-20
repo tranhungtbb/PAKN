@@ -167,7 +167,7 @@ export class IndividualComponent implements OnInit {
 		this.formLogin = this.formBuilder.group(
 			{
 				phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
-				password: [this.model.password, [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*d)[A-Za-zd]{6,}$/)]],
+				password: [this.model.password, [Validators.required]], //, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)
 				rePassword: [this.model.rePassword, [Validators.required]],
 			},
 			{ validator: MustMatch('password', 'rePassword') }
@@ -185,7 +185,7 @@ export class IndividualComponent implements OnInit {
 
 			email: [this.model.email, [Validators.email]],
 			address: [this.model.address, [Validators.required]],
-			iDCard: [this.model.iDCard, [Validators.required, Validators.pattern(/^([0-9]){8,12}$/g)]],
+			iDCard: [this.model.iDCard, [Validators.required]], //, Validators.pattern(/^([0-9]){8,12}$/g)
 			placeIssue: [this.model.issuedPlace, []],
 			dateIssue: [this.model._dateOfIssue, []],
 		})

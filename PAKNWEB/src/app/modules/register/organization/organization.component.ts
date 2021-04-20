@@ -56,7 +56,7 @@ export class OrganizationComponent implements OnInit {
 		this.model._RepresentativeBirthDay = '12/12/2000'
 		this.model.Address = 'số 12 Cầu Giấy - Hà Nội'
 		this.model.OrgAddress = '120 Xuân Mai'
-		this.model.OrgPhone = '0356489552'
+		this.model.OrgPhone = '0956489552'
 		this.model.OrgEmail = 'doanhnghiep@mail.com'
 	}
 
