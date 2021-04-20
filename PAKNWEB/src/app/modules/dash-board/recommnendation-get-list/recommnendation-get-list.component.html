@@ -1,1 +1,30 @@
-<p>recommnendation-get-list works!</p>
+<div class="card-header" style="background: #F2F7FB">
+	<h5 class="card-title">Danh sách phản ánh kiến nghị chưa giải quyết</h5>
+	<span class="badge badge-rounded bg-white text-dark" style="font-size: 1.2rem">{{totalRecords}}</span>
+</div>
+<div class="card-body pb-2">
+	<div *ngFor="let item of listData" class="card border-bottom mb-3 p-0 shadow-none rounded-0">
+		<div class="card-header p-0 d-flex align-items-center">
+			<div class="media align-items-center">
+				<div class="avatar-circle mr-2">
+					DL
+				</div>
+				<div class="media-body">
+					<p class="my-0 h5">{{item.name}}</p>
+				</div>
+			</div>
+			<span>{{item.createdDate | date:"dd/MM/yyyy HH:mm"}}</span>
+		</div>
+		<div class="card-body px-0 py-3">
+			<p class="card-text mb-1">
+				<a class="h4" [routerLink]="['../kien-nghi/chi-tiet',item.id]">
+					<!--http://localhost:4200/quan-tri/kien-nghi/chi-tiet/95-->
+					{{item.title}}
+				</a>
+			</p>
+			<p class="card-text">
+				{{item.content}}
+			</p>
+		</div>
+	</div>
+</div>
