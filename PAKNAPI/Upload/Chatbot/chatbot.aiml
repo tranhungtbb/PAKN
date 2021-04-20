@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<aiml version="1.0">
+  <category id="0">
+    <pattern>*</pattern>
+    <template>
+      <random>
+        <li>Bạn vui lòng hỏi câu khác...</li>
+        <li>Bạn vui lòng hỏi câu hỏi có trong thư viện.</li>
+      </random>
+    </template>
+  </category>
+  <category id="1">
+    <pattern>câu hỏi 1</pattern>
+    <template>trả l 1</template>
+  </category>
+  <category id="3">
+    <pattern>dgdgdg</pattern>
+    <template>dgdgdgdgdg</template>
+  </category>
+  <category id="4">
+    <pattern>dgdg</pattern>
+    <template>ppppppppp</template>
+  </category>
+</aiml>
