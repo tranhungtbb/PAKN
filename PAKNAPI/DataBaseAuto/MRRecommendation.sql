@@ -284,21 +284,3 @@ BEGIN
 END
 GO
 /* End MR_RecommendationDeleteAll */
-
-/* Start MR_RecommendationCount */
-IF EXISTS
-(
-	SELECT *
-	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[MR_RecommendationCount]') AND type IN ( N'P', N'PC' )
-)
-DROP PROCEDURE [MR_RecommendationCount];
-GO
-CREATE PROCEDURE [dbo].[MR_RecommendationCount]
-AS
-BEGIN
-	SELECT Count(*)
-	FROM [MR_Recommendation]
-END
-GO
-/* End MR_RecommendationCount */

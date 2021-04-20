@@ -221,4 +221,13 @@ export class RecommendationService {
 
 		return this.serviceInvoker.getFilewithHeaders(request, AppSettings.API_ADDRESS + Api.FieldExport, headers)
 	}
+
+	getDataGraph(request): Observable<any> {
+		let headers = new HttpHeaders({
+			logAction: encodeURIComponent(LOG_ACTION.EXPORT),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		})
+
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationGetDataGraph)
+	}
 }

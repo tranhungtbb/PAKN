@@ -156,21 +156,3 @@ BEGIN
 END
 GO
 /* End MR_Recommendation_GenCodeDeleteAll */
-
-/* Start MR_Recommendation_GenCodeCount */
-IF EXISTS
-(
-	SELECT *
-	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[MR_Recommendation_GenCodeCount]') AND type IN ( N'P', N'PC' )
-)
-DROP PROCEDURE [MR_Recommendation_GenCodeCount];
-GO
-CREATE PROCEDURE [dbo].[MR_Recommendation_GenCodeCount]
-AS
-BEGIN
-	SELECT Count(*)
-	FROM [MR_Recommendation_GenCode]
-END
-GO
-/* End MR_Recommendation_GenCodeCount */

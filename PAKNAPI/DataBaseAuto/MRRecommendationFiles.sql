@@ -172,21 +172,3 @@ BEGIN
 END
 GO
 /* End MR_Recommendation_FilesDeleteAll */
-
-/* Start MR_Recommendation_FilesCount */
-IF EXISTS
-(
-	SELECT *
-	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[MR_Recommendation_FilesCount]') AND type IN ( N'P', N'PC' )
-)
-DROP PROCEDURE [MR_Recommendation_FilesCount];
-GO
-CREATE PROCEDURE [dbo].[MR_Recommendation_FilesCount]
-AS
-BEGIN
-	SELECT Count(*)
-	FROM [MR_Recommendation_Files]
-END
-GO
-/* End MR_Recommendation_FilesCount */
