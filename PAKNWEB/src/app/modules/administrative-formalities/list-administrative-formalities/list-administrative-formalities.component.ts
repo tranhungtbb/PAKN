@@ -25,13 +25,13 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 		private _fb: FormBuilder,
 		private _toastr: ToastrService,
 		private _shareData: DataService
-	) { }
+	) {}
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
 		{ value: 1, text: 'Đang soạn thảo' },
 		{ value: 2, text: 'Đã công bố' },
-		{ value: 3, text: 'Đã thu hồi' }
+		{ value: 3, text: 'Đã thu hồi' },
 	]
 	formForward: FormGroup
 	lstUnitNotMain: any = []
@@ -83,7 +83,6 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 	get f() {
 		return this.formForward.controls
 	}
-
 
 	getList() {
 		this.dataSearch.code = this.dataSearch.code.trim()

@@ -17,32 +17,40 @@ declare var $: any
 	styleUrls: ['./detail-administrative-formalities.component.css'],
 })
 export class DetailAdministrativeFormalitiesComponent implements OnInit {
-	form: FormGroup;
-	model: AdministrativeFormalitiesObject = new AdministrativeFormalitiesObject();
-	titleObject: string = 'Cá nhân';
+	form: FormGroup
+	model: AdministrativeFormalitiesObject = new AdministrativeFormalitiesObject()
+	titleObject: string = 'Cá nhân'
 
-	lstUnit: any[] = [];
-	lstField: any[] = [];
-	lstBusiness: any[] = [];
-	lstIndividual: any[] = [];
-	lstObject: any[] = [];
-	fileAccept = CONSTANTS.FILEACCEPT;
-	fileAcceptForm = CONSTANTS.FILEACCEPT_FORM_ADMINISTRATION;
-	files: any[] = [];
-	lstXoaFile: any[] = [];
-	lstXoaFileForm: any[] = [];
-	submitted: boolean = false;
-	lstTypeSend: any[] = [{ value: null, text: "-- Chọn mức độ trực tuyến --" }, { value: true, text: "Nộp trực tuyến" }, { value: false, text: "Nộp qua mạng" }];
-	lstBind: any[] = [{ value: null, text: "-- Chọn bắt buộc --" }, { value: true, text: "Có" }, { value: false, text: "Không" }];
-	@ViewChild('file', { static: false }) public file: ElementRef;
+	lstUnit: any[] = []
+	lstField: any[] = []
+	lstBusiness: any[] = []
+	lstIndividual: any[] = []
+	lstObject: any[] = []
+	fileAccept = CONSTANTS.FILEACCEPT
+	fileAcceptForm = CONSTANTS.FILEACCEPT_FORM_ADMINISTRATION
+	files: any[] = []
+	lstXoaFile: any[] = []
+	lstXoaFileForm: any[] = []
+	submitted: boolean = false
+	lstTypeSend: any[] = [
+		{ value: null, text: '-- Chọn mức độ trực tuyến --' },
+		{ value: true, text: 'Nộp trực tuyến' },
+		{ value: false, text: 'Nộp qua mạng' },
+	]
+	lstBind: any[] = [
+		{ value: null, text: '-- Chọn bắt buộc --' },
+		{ value: true, text: 'Có' },
+		{ value: false, text: 'Không' },
+	]
+	@ViewChild('file', { static: false }) public file: ElementRef
 
-	lstCompositionProfile: any[] = [];
-	lstCharges: any[] = [];
-	lstImplementationProcess: any[] = [];
+	lstCompositionProfile: any[] = []
+	lstCharges: any[] = []
+	lstImplementationProcess: any[] = []
 
-	typeDelete: number;
-	itemDelete: any;
-	lstDelete: any[] = []; //list id , type tp hồ sơ, trình tự thực hiện, lệ phí
+	typeDelete: number
+	itemDelete: any
+	lstDelete: any[] = [] //list id , type tp hồ sơ, trình tự thực hiện, lệ phí
 	constructor(
 		private toastr: ToastrService,
 		private fileService: UploadFileService,
@@ -51,13 +59,13 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		private _serviceCatalog: CatalogService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute
-	) { }
+	) {}
 
 	ngOnInit() {
 		this.model = new AdministrativeFormalitiesObject()
 		this.getDropdown()
 		this.activatedRoute.params.subscribe((params) => {
-			this.model.id = +params['id']
+			this.model.id = params['id']
 			if (this.model.id != 0) {
 				this.getData()
 			}
@@ -71,9 +79,11 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		}
 		this.afService.getById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this.model = response.result.model
-				this.files = response.result.lstFiles
-
+				this.model = response.result.data
+				this.files = response.result.files
+				this.lstCharges = response.result.lstCharges
+				this.lstCompositionProfile = response.result.lstCompositionProfile
+				this.lstImplementationProcess = response.result.lstImplementationProcess
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -89,15 +99,15 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 				this.lstUnit = response.result.lstUnit
 				this.lstField = response.result.lstField
 				var defaultValueUnit = {
-					text: "-- Chọn đơn vị tiếp nhận --",
-					value: null
+					text: '-- Chọn đơn vị tiếp nhận --',
+					value: null,
 				}
 				var defaultValueField = {
-					text: "-- Chọn lĩnh vực --",
-					value: null
+					text: '-- Chọn lĩnh vực --',
+					value: null,
 				}
-				this.lstUnit.unshift(defaultValueUnit);
-				this.lstField.unshift(defaultValueField);
+				this.lstUnit.unshift(defaultValueUnit)
+				this.lstField.unshift(defaultValueField)
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -107,9 +117,8 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 			}
 	}
 
-
 	builForm() {
-		this.model = new AdministrativeFormalitiesObject();
+		this.model = new AdministrativeFormalitiesObject()
 		this.form = new FormGroup({
 			// code: new FormControl(this.model.code, [Validators.required]),
 			name: new FormControl(this.model.name, [Validators.required]),
@@ -204,22 +213,31 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 
 	onSave(status) {
 		this.submitted = true
-		this.model.status = status;
-		this.model.name = this.model.name.trim();
-		this.model.rankReceive = this.model.rankReceive.trim();
-		this.model.fileNum = this.model.fileNum.trim();
-		this.model.amountTime = this.model.amountTime.trim();
-		this.model.proceed = this.model.proceed.trim();
-		this.model.object = this.model.object.trim();
-		this.model.organization = this.model.organization.trim();
-		if (this.model.name == null || this.model.name == ''
-			|| this.model.rankReceive == null || this.model.rankReceive == ''
-			|| this.model.fileNum == null || this.model.fileNum == ''
-			|| this.model.amountTime == null || this.model.amountTime == ''
-			|| this.model.proceed == null || this.model.proceed == ''
-			|| this.model.object == null || this.model.object == ''
-			|| this.model.organization == null || this.model.organization == '') {
-			return;
+		this.model.status = status
+		this.model.name = this.model.name.trim()
+		this.model.rankReceive = this.model.rankReceive.trim()
+		this.model.fileNum = this.model.fileNum.trim()
+		this.model.amountTime = this.model.amountTime.trim()
+		this.model.proceed = this.model.proceed.trim()
+		this.model.object = this.model.object.trim()
+		this.model.organization = this.model.organization.trim()
+		if (
+			this.model.name == null ||
+			this.model.name == '' ||
+			this.model.rankReceive == null ||
+			this.model.rankReceive == '' ||
+			this.model.fileNum == null ||
+			this.model.fileNum == '' ||
+			this.model.amountTime == null ||
+			this.model.amountTime == '' ||
+			this.model.proceed == null ||
+			this.model.proceed == '' ||
+			this.model.object == null ||
+			this.model.object == '' ||
+			this.model.organization == null ||
+			this.model.organization == ''
+		) {
+			return
 		}
 		if (this.form.invalid) {
 			return
@@ -269,9 +287,9 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 			copyForm: '',
 			form: '',
 			isBind: null,
-			files: []
+			files: [],
 		}
-		this.lstCompositionProfile.push(cp);
+		this.lstCompositionProfile.push(cp)
 	}
 
 	onAddCharges() {
@@ -280,7 +298,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 			charges: '',
 			description: '',
 		}
-		this.lstCharges.push(cp);
+		this.lstCharges.push(cp)
 	}
 
 	onAddImplementationProcess() {
@@ -291,53 +309,59 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 			time: '',
 			result: '',
 		}
-		this.lstImplementationProcess.push(cp);
+		this.lstImplementationProcess.push(cp)
 	}
 	preDelete(item, type) {
-		this.itemDelete = item;
-		this.typeDelete = type;
+		this.itemDelete = item
+		this.typeDelete = type
 		$('#modalDelete').modal('show')
 	}
 
 	onDelete() {
 		if (this.typeDelete == 1) {
-			this.onRemoveCompositionProfile();
+			this.onRemoveCompositionProfile()
 		} else if (this.typeDelete == 2) {
-			this.onRemoveImplementationProcess();
+			this.onRemoveImplementationProcess()
 		} else if (this.typeDelete == 3) {
-			this.onRemoveCharges();
+			this.onRemoveCharges()
 		}
-		this.itemDelete = null;
-		this.typeDelete = null;
+		this.itemDelete = null
+		this.typeDelete = null
 		$('#modalDelete').modal('hide')
 	}
 	onRemoveCompositionProfile() {
-		var index = this.lstCompositionProfile.indexOf(this.itemDelete);
+		var index = this.lstCompositionProfile.indexOf(this.itemDelete)
 		var idDelete = {
 			id: this.itemDelete.id,
-			type: this.typeDelete
+			type: this.typeDelete,
 		}
-		this.lstCompositionProfile.splice(index, 1);
-		this.lstDelete.push(idDelete);
+		this.lstCompositionProfile.splice(index, 1)
+		this.lstDelete.push(idDelete)
 	}
 
 	onRemoveCharges() {
-		var index = this.lstCharges.indexOf(this.itemDelete);
+		var index = this.lstCharges.indexOf(this.itemDelete)
 		var idDelete = {
 			id: this.itemDelete.id,
-			type: this.typeDelete
+			type: this.typeDelete,
 		}
-		this.lstCharges.splice(index, 1);
-		this.lstDelete.push(idDelete);
+		this.lstCharges.splice(index, 1)
+		this.lstDelete.push(idDelete)
 	}
 
 	onRemoveImplementationProcess() {
-		var index = this.lstImplementationProcess.indexOf(this.itemDelete);
+		var index = this.lstImplementationProcess.indexOf(this.itemDelete)
 		var idDelete = {
 			id: this.itemDelete.id,
-			type: this.typeDelete
+			type: this.typeDelete,
 		}
-		this.lstImplementationProcess.splice(index, 1);
-		this.lstDelete.push(idDelete);
+		this.lstImplementationProcess.splice(index, 1)
+		this.lstDelete.push(idDelete)
+	}
+
+	public getFileBin(path: string) {
+		this.fileService.downloadFile({ path }).subscribe((res) => {
+			console.log(res)
+		})
 	}
 }

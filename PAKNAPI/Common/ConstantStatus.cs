@@ -30,4 +30,10 @@
 		public const int DENY = 3;//3 Từ chối xử lý
 		public const int FORWARD = 4;//3 Chuyển xử lý
 	}
+
+	public static class TYPENOTIFICATION
+	{
+		public const int NEWS = 1; // thông báo tin tức
+		public const int RECOMMENDATION = 2; // thông báo PAKN
+	}
 }

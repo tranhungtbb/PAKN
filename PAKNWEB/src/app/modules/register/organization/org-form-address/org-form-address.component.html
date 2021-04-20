@@ -53,7 +53,8 @@
 	</div>
 	<div class="col form-group">
 		<label class="mb-1">Địện thoại <span class="cl-red">(*)</span></label>
-		<input numbersOnly stopLength="10" [(ngModel)]="model.OrgPhone" formControlName="OrgPhone" type="text" placeholder="Nhập..." class="form-control border-brown">
+		<input numbersOnly stopLength="10" [(ngModel)]="model.OrgPhone" pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$" formControlName="OrgPhone" type="text" placeholder="Nhập..."
+			class="form-control border-brown">
 		<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgPhone.invalid)||(fOrgAdr.OrgPhone.invalid && (fOrgAdr.OrgPhone.dirty || fOrgAdr.OrgPhone.touched))"
 			class="has-error m-b-12">
 			<div *ngIf="fOrgAdr.OrgPhone.errors.required">

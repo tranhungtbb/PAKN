@@ -16,7 +16,7 @@ export class Api {
 	// FileUpload/Download
 	public static DownloadApp = 'UploadFiles/DownloadApp'
 	public static GetEncryptedPath = 'UploadFiles/GetEncryptedPath'
-	public static download = 'UploadFiles/DownloadFile'
+	public static download = 'Files/DownloadFile'
 	public static DownloadFilebyId = 'UploadFiles/DownloadFilebyId'
 	public static downloadFileSupport = 'UploadFiles/DownloadFileSupport'
 	public static GetFile = 'UploadFiles/GetFile'
@@ -175,4 +175,8 @@ export class Api {
 
 	// Notification
 	public static NotificationInsertTypeNews = 'SYNotification/SYNotificationInsertTypeNews'
+	public static NotificationInsertTypeRecommendation = 'SYNotification/SYNotificationInsertTypeRecommendation'
+	public static NotificationGetList = 'SYNotification/SYNotificationGetListOnPage'
+	public static NotificationDelete = 'SYNotification/SYNotificationDelete'
+	public static NotificationUpdateIsViewed = 'SYNotification/SYNotificationUpdateIsViewed'
 }

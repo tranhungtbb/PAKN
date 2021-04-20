@@ -25,3 +25,6 @@
 	/* font-style: italic; */
 	font-weight: 100;
 }
+.grd-ab {
+	background-image: linear-gradient(to bottom, white 50%, #f7fbff 50%);
+}

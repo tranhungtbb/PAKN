@@ -40,7 +40,8 @@ BEGIN
 		[CreatedBy],
 		[CreatedDate],
 		[UpdatedBy],
-		[UpdatedDate]
+		[UpdatedDate],
+		[PublishedDate]
 	FROM [DAM_Administration]
 	WHERE [Id] = @Id
 END
@@ -87,7 +88,8 @@ BEGIN
 		[CreatedBy],
 		[CreatedDate],
 		[UpdatedBy],
-		[UpdatedDate]
+		[UpdatedDate],
+		[PublishedDate]
 	FROM [DAM_Administration]
 END
 GO
@@ -136,7 +138,8 @@ BEGIN
 		[CreatedBy],
 		[CreatedDate],
 		[UpdatedBy],
-		[UpdatedDate]
+		[UpdatedDate],
+		[PublishedDate]
 	FROM [DAM_Administration]
 	ORDER BY [Id]
 	OFFSET (@PageIndex-1) * @PageSize ROWS
@@ -181,7 +184,8 @@ CREATE PROCEDURE [dbo].[DAM_AdministrationInsert]
 	@CreatedBy bigint = null,
 	@CreatedDate datetime = null,
 	@UpdatedBy bigint = null,
-	@UpdatedDate datetime = null
+	@UpdatedDate datetime = null,
+	@PublishedDate datetime = null
 AS
 BEGIN
 	INSERT INTO [DAM_Administration]
@@ -212,7 +216,8 @@ BEGIN
 		[CreatedBy],
 		[CreatedDate],
 		[UpdatedBy],
-		[UpdatedDate]
+		[UpdatedDate],
+		[PublishedDate]
 	)
 	VALUES
 	(
@@ -242,7 +247,8 @@ BEGIN
 		@CreatedBy,
 		@CreatedDate,
 		@UpdatedBy,
-		@UpdatedDate
+		@UpdatedDate,
+		@PublishedDate
 	)
 END
 GO
@@ -285,7 +291,8 @@ CREATE PROCEDURE [dbo].[DAM_AdministrationUpdate]
 	@CreatedBy bigint = null,
 	@CreatedDate datetime = null,
 	@UpdatedBy bigint = null,
-	@UpdatedDate datetime = null
+	@UpdatedDate datetime = null,
+	@PublishedDate datetime = null
 AS
 BEGIN
 	UPDATE [DAM_Administration] SET
@@ -315,7 +322,8 @@ BEGIN
 		[CreatedBy] = @CreatedBy,
 		[CreatedDate] = @CreatedDate,
 		[UpdatedBy] = @UpdatedBy,
-		[UpdatedDate] = @UpdatedDate
+		[UpdatedDate] = @UpdatedDate,
+		[PublishedDate] = @PublishedDate
 	WHERE [Id] = @Id
 END
 GO

@@ -130,12 +130,6 @@ export class IndividualComponent implements OnInit {
 		this.model._birthDay = fDob.value
 		this.model._dateOfIssue = fDateIssue.value
 
-		if (this.model.nation != this.listNation[0].value) {
-			this.model.provinceId = 0
-			this.model.districtId = 0
-			this.model.wardsId = 0
-		}
-
 		if (this.formLogin.invalid || this.formInfo.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return
@@ -173,7 +167,7 @@ export class IndividualComponent implements OnInit {
 		this.formLogin = this.formBuilder.group(
 			{
 				phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
-				password: [this.model.password, [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/g)]],
+				password: [this.model.password, [Validators.required]], //, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)
 				rePassword: [this.model.rePassword, [Validators.required]],
 			},
 			{ validator: MustMatch('password', 'rePassword') }
@@ -185,13 +179,13 @@ export class IndividualComponent implements OnInit {
 			gender: [this.model.gender, [Validators.required]],
 			dob: [this.model._birthDay, [Validators.required]],
 			nation: [this.model.nation, [Validators.required]],
-			province: [this.model.provinceId, [Validators.required]],
-			district: [this.model.districtId, [Validators.required]],
-			village: [this.model.wardsId, [Validators.required]],
+			province: [this.model.provinceId, []],
+			district: [this.model.districtId, []],
+			village: [this.model.wardsId, []],
 
 			email: [this.model.email, [Validators.email]],
 			address: [this.model.address, [Validators.required]],
-			iDCard: [this.model.iDCard, [Validators.required, Validators.pattern(/^([0-9]){8,12}$/g)]],
+			iDCard: [this.model.iDCard, [Validators.required]], //, Validators.pattern(/^([0-9]){8,12}$/g)
 			placeIssue: [this.model.issuedPlace, []],
 			dateIssue: [this.model._dateOfIssue, []],
 		})

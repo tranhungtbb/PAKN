@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Drawing;
 using System.Drawing.Imaging;
 using PAKNAPI.ModelBase;
+using PAKNAPI.Services.FileUpload;
 
 namespace PAKNAPI.Controllers
 {
@@ -22,11 +23,14 @@ namespace PAKNAPI.Controllers
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IAppSetting _appSetting;
+        private readonly IFileService _fileService;
 
-        public UploadFileController(IWebHostEnvironment webHostEnvironment, IAppSetting appSetting)
+        public UploadFileController(IWebHostEnvironment webHostEnvironment, IAppSetting appSetting,
+            IFileService fileService)
         {
             _webHostEnvironment = webHostEnvironment;
             _appSetting = appSetting;
+            _fileService = fileService;
         }
 
 
@@ -57,7 +61,7 @@ namespace PAKNAPI.Controllers
                     Directory.CreateDirectory(folderPath);
                 }
 
-                string fileNamePath = Path.Combine(folderPath,fileName);
+                string fileNamePath = Path.Combine(folderPath, fileName);
 
                 using (var memoryStream = System.IO.File.Create(fileNamePath))
                 {
@@ -108,7 +112,7 @@ namespace PAKNAPI.Controllers
         }
         [HttpPost]
         [Route("get-news-avatar")]
-        public async Task<List<object>> GetNewsAvatars([FromBody]string[] newsIds)
+        public async Task<List<object>> GetNewsAvatars([FromBody] string[] newsIds)
         {
             string contentRootPath = _webHostEnvironment.ContentRootPath;
 
@@ -116,9 +120,9 @@ namespace PAKNAPI.Controllers
             try
             {
 
-                List<NENewsGetAllOnPage> rsNENewsGetAllOnPage = await new NENewsGetAllOnPage(_appSetting).NENewsGetAllOnPageDAO(string.Join(",", newsIds),int.MaxValue,1,null,null,null);
+                List<NENewsGetAllOnPage> rsNENewsGetAllOnPage = await new NENewsGetAllOnPage(_appSetting).NENewsGetAllOnPageDAO(string.Join(",", newsIds), int.MaxValue, 1, null, null, null);
 
-                if(rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Any())
+                if (rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Any())
                 {
                     foreach (var item in rsNENewsGetAllOnPage)
                     {
@@ -143,12 +147,34 @@ namespace PAKNAPI.Controllers
                 }
                 return listAvatarByte;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return new List<object>();
             }
         }
 
+        [HttpGet]
+        [Route("DownloadBin")]
+        public async Task<byte[]> DownloadBin(string path)
+        {
+            Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
+            var filePath = decrypt.DecryptData(path);
+
+            byte[] bin = await _fileService.GetBinary(filePath);
+
+            return bin;
+
+        }
+        [HttpPost]
+        [Route("DownloadFile")]
+        public async Task<IActionResult> DownloadFile([FromForm]string path)
+        {
+            Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
+            var filePath = decrypt.DecryptData(path);
+
+            byte[] bin = await _fileService.GetBinary(filePath);
+            return new FileContentResult(bin, "application/octet-stream");
+        }
         private async Task<byte[]> getFileBin(string filePath)
         {
             string contentRootPath = _webHostEnvironment.ContentRootPath;

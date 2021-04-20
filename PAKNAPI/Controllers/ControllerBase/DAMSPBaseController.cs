@@ -110,6 +110,31 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Route("DAMAdministrationGetListHomePage")]
+		public async Task<ActionResult<object>> DAMAdministrationGetListHomePage()
+		{
+			try
+			{
+				List<DAMAdministrationGetListHomePage> rsDAMAdministrationGetList = await new DAMAdministrationGetListHomePage(_appSetting).DAMAdministrationGetListHomePageDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"DAMAdministrationGetList", rsDAMAdministrationGetList.Take(4).ToList()},
+						{"TotalCount", rsDAMAdministrationGetList != null && rsDAMAdministrationGetList.Count > 0 ? rsDAMAdministrationGetList[0].RowNumber : 0},
+
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("DAMAdministrationFilesDeleteListBase")]

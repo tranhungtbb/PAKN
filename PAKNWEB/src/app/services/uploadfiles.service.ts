@@ -84,7 +84,11 @@ export class UploadFileService {
 		return this.http.get(AppSettings.API_ADDRESS + Api.DownloadApp, { responseType: 'blob', params: data }).pipe(tap())
 	}
 	downloadFile(data: any) {
-		return this.http.get(AppSettings.API_ADDRESS + Api.download, { responseType: 'blob', params: data }).pipe(tap(), catchError(this.handleError<Blob>()))
+		var form = new FormData()
+		for (let item in data) {
+			form.append(item, data[item])
+		}
+		return this.http.post(AppSettings.API_ADDRESS + Api.download, form, { responseType: 'blob' }).pipe(tap(), catchError(this.handleError<Blob>()))
 	}
 
 	downloadFilebyId(data: any) {
@@ -98,7 +102,7 @@ export class UploadFileService {
 	checkFileWasExitsted(event: any, files: any[]) {
 		if (event.target.files.length > 0) {
 			for (var i = 0; i < event.target.files.length; i++) {
-				if (event.target.files[i].size > 10485760) {
+				if (event.target.files[i].size > 20485760) {
 					return 3
 				} else {
 					if (files.length === 0) {
@@ -119,7 +123,7 @@ export class UploadFileService {
 	checkFileWasExitstedThuMuc(event: any, files: any[]) {
 		if (event.target.files.length > 0) {
 			for (var i = 0; i < event.target.files.length; i++) {
-				if (event.target.files[i].size > 10485760) {
+				if (event.target.files[i].size > 20485760) {
 					return 3
 				} else {
 					if (files.length === 0) {

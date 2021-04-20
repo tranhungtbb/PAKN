@@ -38,7 +38,29 @@ export class OrganizationComponent implements OnInit {
 		this.child_OrgAddressForm.model = this.model
 		this.child_OrgRepreForm.model = this.model
 		this.loadFormBuilder()
+
+		this.model.phone = '0356489552'
+		this.model.password = '123abc'
+		this.model.rePassword = '123abc'
+
+		this.model.Business = 'Công ty vận tải hàng không'
+		this.model.BusinessRegistration = '12346798abcd'
+		this.model.DecisionOfEstablishing = '134679ancd'
+		this.model._DateOfIssue = '12/12/2000'
+		this.model.Tax = '132456798'
+
+		this.model.RepresentativeGender = true
+
+		this.model.RepresentativeName = 'NGuyễn Văn Tường'
+		this.model.Email = 'ngvantuong@mail.com'
+		this.model._RepresentativeBirthDay = '12/12/2000'
+		this.model.Address = 'số 12 Cầu Giấy - Hà Nội'
+		this.model.OrgAddress = '120 Xuân Mai'
+		this.model.OrgPhone = '0956489552'
+		this.model.OrgEmail = 'doanhnghiep@mail.com'
 	}
+
+	serverMsg = {}
 
 	onReset() {
 		this.formLogin.reset()
@@ -66,16 +88,6 @@ export class OrganizationComponent implements OnInit {
 		this.model._RepresentativeBirthDay = fDob.value
 		this.model._DateOfIssue = fIsDate.value
 
-		if (this.model.Nation != this.listNation[0].value) {
-			this.model.ProvinceId = 0
-			this.model.DistrictId = 0
-			this.model.WardsId = 0
-			//
-			this.model.OrgProvinceId = 0
-			this.model.OrgDistrictId = 0
-			this.model.OrgWardsId = 0
-		}
-
 		if (this.formLogin.invalid || this.formOrgInfo.invalid || this.child_OrgRepreForm.formInfo.invalid || this.child_OrgAddressForm.formOrgAddress.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return
@@ -87,6 +99,13 @@ export class OrganizationComponent implements OnInit {
 				if (msg.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
 					this.toast.error('Email đã tồn tại')
 				}
+				if (msg.includes(`UNIQUE KEY constraint 'UK_BI_Business_OrgEmail'`)) {
+					this.toast.error('Email Văn phòng đại diện đã tồn tại')
+				}
+				if (msg.includes(`UNIQUE KEY constraint 'UK_BI_Business_Email'`)) {
+					this.toast.error('Email Người đại diện đã tồn tại')
+				}
+
 				return
 			}
 			this.toast.success('Đăng ký tài khoản thành công')
