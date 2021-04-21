@@ -26,3 +26,13 @@ export class NewsModel {
 	updatedBy: number
 	isNotification: boolean
 }
+
+export class HISNewsModel {
+	id: number
+	objectId: number
+	type: number
+	content: string
+	status: number
+	createBy: number
+	createDate: Date
+}

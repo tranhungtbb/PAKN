@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr'
 
 import { NewsService } from 'src/app/services/news.service'
 import { CatalogService } from 'src/app/services/catalog.service'
+import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 
 import { COMMONS } from 'src/app/commons/commons'
 import { NewsModel } from 'src/app/models/NewsObject'
@@ -35,6 +36,7 @@ export class NewsComponent implements OnInit {
 	]
 	totalCount: number = 0
 	pageCount: number = 0
+	listHisNews: any[]
 
 	ngOnInit() {
 		this.getListPaged()
@@ -69,6 +71,20 @@ export class NewsComponent implements OnInit {
 				// load image
 				this.getNewsAvatars()
 			})
+	}
+
+	getHisNewsListByNewsId(id: any) {
+		this.newsService.getListHisNewsByNewsId({ NewsId: id }).subscribe((res) => {
+			if ((res.success = RESPONSE_STATUS.success)) {
+				this.listHisNews = res.result
+			}
+			return
+		})
+	}
+
+	getHistory(id: any) {
+		this.getHisNewsListByNewsId(id)
+		$('#modal-history').modal('show')
 	}
 
 	modalConfirm_message = 'Anh/chị có chắc chắn thực hiện hành động này?'

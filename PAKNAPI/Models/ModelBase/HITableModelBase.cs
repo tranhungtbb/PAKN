@@ -225,7 +225,7 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-	public class HISNewsOnPage
+		public class HISNewsOnPage
 	{
 		public int Id { get; set; }
 		public int ObjectId { get; set; }
@@ -272,6 +272,14 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<HISNews>("HIS_NewsGetAll", DP)).ToList();
 		}
+
+		public async Task<List<HISNews>> HISNewsGetByNewsId(int ObjectId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ObjectId", ObjectId);
+			return (await _sQLCon.ExecuteListDapperAsync<HISNews>("[HIS_NewsGetListByNewsId]", DP)).ToList();
+		}
+
 
 		public async Task<List<HISNewsOnPage>> HISNewsGetAllOnPage(int PageSize, int PageIndex)
 		{

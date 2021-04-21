@@ -25,12 +25,12 @@ namespace PAKNAPI.Controllers
     [Route("api/SYNotification")]
     [ApiController]
 
-    public class SYNotificationController : BaseApiController
+    public class NotificationController : BaseApiController
     {
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;
 
-        public SYNotificationController(IAppSetting appSetting, IClient bugsnag)
+        public NotificationController(IAppSetting appSetting, IClient bugsnag)
         {
             _appSetting = appSetting;
             _bugsnag = bugsnag;

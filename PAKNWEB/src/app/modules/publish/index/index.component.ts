@@ -66,7 +66,9 @@ export class IndexComponent implements OnInit {
 			if (res.result) {
 				this.news = res.result
 				this.getNewsAvatars()
+				console.log(this.news)
 				this.firstNews = this.news[0]
+				console.log(this.firstNews)
 			}
 			return
 		})
@@ -83,7 +85,7 @@ export class IndexComponent implements OnInit {
 
 	ngAfterViewInit() {
 		setTimeout(function () {
-			$('.owl-carousel').owlCarousel({
+			$('#owl-news').owlCarousel({
 				loop: false,
 				margin: 30,
 				nav: false,
