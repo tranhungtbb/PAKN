@@ -548,6 +548,29 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationForwardGetByRecommendationIdBase")]
+		public async Task<ActionResult<object>> MRRecommendationForwardGetByRecommendationIdBase(int? RecommendationId)
+		{
+			try
+			{
+				List<MRRecommendationForwardGetByRecommendationId> rsMRRecommendationForwardGetByRecommendationId = await new MRRecommendationForwardGetByRecommendationId(_appSetting).MRRecommendationForwardGetByRecommendationIdDAO(RecommendationId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationForwardGetByRecommendationId", rsMRRecommendationForwardGetByRecommendationId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("MRRecommendationForwardInsertBase")]
@@ -758,55 +781,6 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationGenCodeUpdateNumber(_appSetting).MRRecommendationGenCodeUpdateNumberDAO() };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize]
-		[Route("MRRecommendationGetSuggestCreateBase")]
-		public async Task<ActionResult<object>> MRRecommendationGetSuggestCreateBase(string Title)
-		{
-			try
-			{
-				List<MRRecommendationGetSuggestCreate> rsMRRecommendationGetSuggestCreate = await new MRRecommendationGetSuggestCreate(_appSetting).MRRecommendationGetSuggestCreateDAO(Title);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"MRRecommendationGetSuggestCreate", rsMRRecommendationGetSuggestCreate},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize]
-		[Route("MRRecommendationGetSuggestReplyBase")]
-		public async Task<ActionResult<object>> MRRecommendationGetSuggestReplyBase(string ListIdHashtag, int? PageSize, int? PageIndex)
-		{
-			try
-			{
-				List<MRRecommendationGetSuggestReply> rsMRRecommendationGetSuggestReply = await new MRRecommendationGetSuggestReply(_appSetting).MRRecommendationGetSuggestReplyDAO(ListIdHashtag, PageSize, PageIndex);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"MRRecommendationGetSuggestReply", rsMRRecommendationGetSuggestReply},
-						{"TotalCount", rsMRRecommendationGetSuggestReply != null && rsMRRecommendationGetSuggestReply.Count > 0 ? rsMRRecommendationGetSuggestReply[0].RowNumber : 0},
-						{"PageIndex", rsMRRecommendationGetSuggestReply != null && rsMRRecommendationGetSuggestReply.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsMRRecommendationGetSuggestReply != null && rsMRRecommendationGetSuggestReply.Count > 0 ? PageSize : 0},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1057,9 +1031,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"MRRecommendationGetAllWithProcess", rsMRRecommendationGetAllWithProcess},
-						{"TotalCount", rsMRRecommendationGetAllWithProcess != null && rsMRRecommendationGetAllWithProcess.Count > 0 ? rsMRRecommendationGetAllWithProcess[0].RowNumber : 0},
-						{"PageIndex", rsMRRecommendationGetAllWithProcess != null && rsMRRecommendationGetAllWithProcess.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsMRRecommendationGetAllWithProcess != null && rsMRRecommendationGetAllWithProcess.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -1118,6 +1089,29 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationGetDataGraphBase")]
+		public async Task<ActionResult<object>> MRRecommendationGetDataGraphBase(int? UnitProcessId, long? UserProcessId)
+		{
+			try
+			{
+				List<MRRecommendationGetDataGraph> rsMRRecommendationGetDataGraph = await new MRRecommendationGetDataGraph(_appSetting).MRRecommendationGetDataGraphDAO(UnitProcessId, UserProcessId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationGetDataGraph", rsMRRecommendationGetDataGraph},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("MRRecommendationInsertBase")]
@@ -1139,7 +1133,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("MRRecommendationKNCTCheckExistedIdBase")]
 		public async Task<ActionResult<object>> MRRecommendationKNCTCheckExistedIdBase(int? RecommendationKNCTId)
 		{
@@ -1162,7 +1156,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("MRRecommendationKNCTFilesDeleteBase")]
 		public async Task<ActionResult<object>> MRRecommendationKNCTFilesDeleteBase(MRRecommendationKNCTFilesDeleteIN _mRRecommendationKNCTFilesDeleteIN)
 		{
@@ -1182,7 +1176,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("MRRecommendationKNCTFilesDeleteListBase")]
 		public async Task<ActionResult<object>> MRRecommendationKNCTFilesDeleteListBase(List<MRRecommendationKNCTFilesDeleteIN> _mRRecommendationKNCTFilesDeleteINs)
 		{
@@ -1222,7 +1216,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("MRRecommendationKNCTFilesGetByRecommendationIdBase")]
 		public async Task<ActionResult<object>> MRRecommendationKNCTFilesGetByRecommendationIdBase(int? Id)
 		{
@@ -1245,7 +1239,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("MRRecommendationKNCTFilesInsertBase")]
 		public async Task<ActionResult<object>> MRRecommendationKNCTFilesInsertBase(MRRecommendationKNCTFilesInsertIN _mRRecommendationKNCTFilesInsertIN)
 		{
@@ -1265,7 +1259,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("MRRecommendationKNCTFilesInsertListBase")]
 		public async Task<ActionResult<object>> MRRecommendationKNCTFilesInsertListBase(List<MRRecommendationKNCTFilesInsertIN> _mRRecommendationKNCTFilesInsertINs)
 		{
@@ -1305,7 +1299,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("MRRecommendationKNCTGetAllWithProcessBase")]
 		public async Task<ActionResult<object>> MRRecommendationKNCTGetAllWithProcessBase(string Code, string Content, string Unit, string Place, int? Field, int? Status, int? PageSize, int? PageIndex)
 		{
@@ -1315,6 +1309,9 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"MRRecommendationKNCTGetAllWithProcess", rsMRRecommendationKNCTGetAllWithProcess},
+						{"TotalCount", rsMRRecommendationKNCTGetAllWithProcess != null && rsMRRecommendationKNCTGetAllWithProcess.Count > 0 ? rsMRRecommendationKNCTGetAllWithProcess[0].RowNumber : 0},
+						{"PageIndex", rsMRRecommendationKNCTGetAllWithProcess != null && rsMRRecommendationKNCTGetAllWithProcess.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsMRRecommendationKNCTGetAllWithProcess != null && rsMRRecommendationKNCTGetAllWithProcess.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -1328,7 +1325,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("MRRecommendationKNCTGetByIdBase")]
 		public async Task<ActionResult<object>> MRRecommendationKNCTGetByIdBase(int? Id)
 		{
@@ -1351,7 +1348,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("MRRecommendationKNCTInsertBase")]
 		public async Task<ActionResult<object>> MRRecommendationKNCTInsertBase(MRRecommendationKNCTInsertIN _mRRecommendationKNCTInsertIN)
 		{
@@ -1371,7 +1368,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("MRRecommendationKNCTUpdateBase")]
 		public async Task<ActionResult<object>> MRRecommendationKNCTUpdateBase(MRRecommendationKNCTUpdateIN _mRRecommendationKNCTUpdateIN)
 		{
@@ -1391,7 +1388,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("MRRecommendationKNCTUpdateListBase")]
 		public async Task<ActionResult<object>> MRRecommendationKNCTUpdateListBase(List<MRRecommendationKNCTUpdateIN> _mRRecommendationKNCTUpdateINs)
 		{

@@ -1302,7 +1302,7 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<SYUser>("[SY_UserGetByUnitId]", DP)).ToList();
 		}
 
-		
+
 		public async Task<List<SYUserOnPage>> SYUserGetAllOnPage(int PageSize, int PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();

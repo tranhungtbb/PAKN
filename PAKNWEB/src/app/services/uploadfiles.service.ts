@@ -102,7 +102,7 @@ export class UploadFileService {
 	checkFileWasExitsted(event: any, files: any[]) {
 		if (event.target.files.length > 0) {
 			for (var i = 0; i < event.target.files.length; i++) {
-				if (event.target.files[i].size > 10485760) {
+				if (event.target.files[i].size > 20485760) {
 					return 3
 				} else {
 					if (files.length === 0) {
@@ -123,7 +123,7 @@ export class UploadFileService {
 	checkFileWasExitstedThuMuc(event: any, files: any[]) {
 		if (event.target.files.length > 0) {
 			for (var i = 0; i < event.target.files.length; i++) {
-				if (event.target.files[i].size > 10485760) {
+				if (event.target.files[i].size > 20485760) {
 					return 3
 				} else {
 					if (files.length === 0) {

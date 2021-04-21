@@ -11,93 +11,6 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
-	public class CAClassifyKNCTOnPage
-	{
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public int? RowNumber; // int, null
-	}
-
-	public class CAClassifyKNCT
-	{
-		private SQLCon _sQLCon;
-
-		public CAClassifyKNCT(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public CAClassifyKNCT()
-		{
-		}
-
-		public int Id { get; set; }
-		public string Name { get; set; }
-
-		public async Task<CAClassifyKNCT> CAClassifyKNCTGetByID(int? Id)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-
-			return (await _sQLCon.ExecuteListDapperAsync<CAClassifyKNCT>("CA_ClassifyKNCTGetByID", DP)).ToList().FirstOrDefault();
-		}
-
-		public async Task<List<CAClassifyKNCT>> CAClassifyKNCTGetAll()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<CAClassifyKNCT>("CA_ClassifyKNCTGetAll", DP)).ToList();
-		}
-
-		public async Task<List<CAClassifyKNCTOnPage>> CAClassifyKNCTGetAllOnPage(int PageSize, int PageIndex)
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			return (await _sQLCon.ExecuteListDapperAsync<CAClassifyKNCTOnPage>("CA_ClassifyKNCTGetAllOnPage", DP)).ToList();
-		}
-
-		public async Task<int?> CAClassifyKNCTInsert(CAClassifyKNCT _cAClassifyKNCT)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Name", _cAClassifyKNCT.Name);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_ClassifyKNCTInsert", DP));
-		}
-
-		public async Task<int> CAClassifyKNCTUpdate(CAClassifyKNCT _cAClassifyKNCT)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _cAClassifyKNCT.Id);
-			DP.Add("Name", _cAClassifyKNCT.Name);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_ClassifyKNCTUpdate", DP));
-		}
-
-		public async Task<int> CAClassifyKNCTDelete(CAClassifyKNCT _cAClassifyKNCT)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _cAClassifyKNCT.Id);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_ClassifyKNCTDelete", DP));
-		}
-
-		public async Task<int> CAClassifyKNCTDeleteAll()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_ClassifyKNCTDeleteAll", DP));
-		}
-
-		public async Task<int> CAClassifyKNCTCount()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteDapperAsync<int>("CA_ClassifyKNCTCount", DP));
-		}
-	}
-
 	public class CADepartmentOnPage
 	{
 		public int Id { get; set; }
@@ -514,100 +427,12 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-	public class CAFieldKNCTOnPage
-	{
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public int? RowNumber; // int, null
-	}
-
-	public class CAFieldKNCT
-	{
-		private SQLCon _sQLCon;
-
-		public CAFieldKNCT(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public CAFieldKNCT()
-		{
-		}
-
-		public int Id { get; set; }
-		public string Name { get; set; }
-
-		public async Task<CAFieldKNCT> CAFieldKNCTGetByID(int? Id)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-
-			return (await _sQLCon.ExecuteListDapperAsync<CAFieldKNCT>("CA_FieldKNCTGetByID", DP)).ToList().FirstOrDefault();
-		}
-
-		public async Task<List<CAFieldKNCT>> CAFieldKNCTGetAll()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<CAFieldKNCT>("CA_FieldKNCTGetAll", DP)).ToList();
-		}
-
-		public async Task<List<CAFieldKNCTOnPage>> CAFieldKNCTGetAllOnPage(int PageSize, int PageIndex)
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			return (await _sQLCon.ExecuteListDapperAsync<CAFieldKNCTOnPage>("CA_FieldKNCTGetAllOnPage", DP)).ToList();
-		}
-
-		public async Task<int?> CAFieldKNCTInsert(CAFieldKNCT _cAFieldKNCT)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Name", _cAFieldKNCT.Name);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldKNCTInsert", DP));
-		}
-
-		public async Task<int> CAFieldKNCTUpdate(CAFieldKNCT _cAFieldKNCT)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _cAFieldKNCT.Id);
-			DP.Add("Name", _cAFieldKNCT.Name);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldKNCTUpdate", DP));
-		}
-
-		public async Task<int> CAFieldKNCTDelete(CAFieldKNCT _cAFieldKNCT)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _cAFieldKNCT.Id);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldKNCTDelete", DP));
-		}
-
-		public async Task<int> CAFieldKNCTDeleteAll()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldKNCTDeleteAll", DP));
-		}
-
-		public async Task<int> CAFieldKNCTCount()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteDapperAsync<int>("CA_FieldKNCTCount", DP));
-		}
-	}
-
 	public class CAHashtagOnPage
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public bool IsActived { get; set; }
 		public int? RowNumber; // int, null
-		public int? QuantityUser { get; set; }
 	}
 
 	public class CAHashtag
@@ -642,15 +467,12 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<CAHashtag>("CA_HashtagGetAll", DP)).ToList();
 		}
 
-		public async Task<List<CAHashtagOnPage>> CAHashtagGetAllOnPage(int PageSize, int PageIndex, string Name, int? QuantityUser, bool? IsActived)
+		public async Task<List<CAHashtagOnPage>> CAHashtagGetAllOnPage(int PageSize, int PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
-			DP.Add("Name", Name);
-			DP.Add("QuantityUser", QuantityUser);
-			DP.Add("IsActived", IsActived);
 			return (await _sQLCon.ExecuteListDapperAsync<CAHashtagOnPage>("CA_HashtagGetAllOnPage", DP)).ToList();
 		}
 

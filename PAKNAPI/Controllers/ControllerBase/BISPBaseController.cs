@@ -31,7 +31,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIBusinessGetRepresentativeByIdBase")]
 		public async Task<ActionResult<object>> BIBusinessGetRepresentativeByIdBase(long? Id)
 		{
@@ -54,7 +54,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIBusinessGetRepresentativeEmailBase")]
 		public async Task<ActionResult<object>> BIBusinessGetRepresentativeEmailBase(string Email)
 		{
@@ -77,7 +77,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIBusinessInsertBase")]
 		public async Task<ActionResult<object>> BIBusinessInsertBase(BIBusinessInsertIN _bIBusinessInsertIN)
 		{
@@ -97,7 +97,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIBusinessInsertListBase")]
 		public async Task<ActionResult<object>> BIBusinessInsertListBase(List<BIBusinessInsertIN> _bIBusinessInsertINs)
 		{
@@ -137,7 +137,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIBusinessUpdateInfoBase")]
 		public async Task<ActionResult<object>> BIBusinessUpdateInfoBase(BIBusinessUpdateInfoIN _bIBusinessUpdateInfoIN)
 		{
@@ -157,7 +157,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIBusinessUpdateInfoListBase")]
 		public async Task<ActionResult<object>> BIBusinessUpdateInfoListBase(List<BIBusinessUpdateInfoIN> _bIBusinessUpdateInfoINs)
 		{
@@ -197,7 +197,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIIndividualGetByEmailBase")]
 		public async Task<ActionResult<object>> BIIndividualGetByEmailBase(string Email)
 		{
@@ -220,7 +220,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIIndividualGetByIDBase")]
 		public async Task<ActionResult<object>> BIIndividualGetByIDBase(long? Id)
 		{
@@ -243,7 +243,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIIndividualInsertBase")]
 		public async Task<ActionResult<object>> BIIndividualInsertBase(BIIndividualInsertIN _bIIndividualInsertIN)
 		{
@@ -263,7 +263,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIIndividualInsertListBase")]
 		public async Task<ActionResult<object>> BIIndividualInsertListBase(List<BIIndividualInsertIN> _bIIndividualInsertINs)
 		{
@@ -303,7 +303,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIInvididualUpdateInfoBase")]
 		public async Task<ActionResult<object>> BIInvididualUpdateInfoBase(BIInvididualUpdateInfoIN _bIInvididualUpdateInfoIN)
 		{
@@ -323,7 +323,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BIInvididualUpdateInfoListBase")]
 		public async Task<ActionResult<object>> BIInvididualUpdateInfoListBase(List<BIInvididualUpdateInfoIN> _bIInvididualUpdateInfoINs)
 		{

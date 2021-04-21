@@ -56,9 +56,6 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		
-
-
 		[HttpGet]
 		[Authorize]
 		[Route("NENewsGetByIDBase")]
@@ -70,29 +67,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"NENewsGetByID", rsNENewsGetByID},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize]
-		[Route("NENewsGetByIDOnJoinBase")]
-		public async Task<ActionResult<object>> NENewsGetByIDOnJoinBase(int? Id)
-		{
-			try
-			{
-				List<NENewsGetByIDOnJoin> rsNENewsGetByIDOnJoin = await new NENewsGetByIDOnJoin(_appSetting).NENewsGetByIDOnJoinDAO(Id);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"NENewsGetByIDOnJoin", rsNENewsGetByIDOnJoin},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -174,29 +148,6 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize]
-		[Route("NERelateGetAllBase")]
-		public async Task<ActionResult<object>> NERelateGetAllBase(int? NewsId)
-		{
-			try
-			{
-				List<NERelateGetAll> rsNERelateGetAll = await new NERelateGetAll(_appSetting).NERelateGetAllDAO(NewsId);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"NERelateGetAll", rsNERelateGetAll},
-					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)

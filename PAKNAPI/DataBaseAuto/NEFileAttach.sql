@@ -172,21 +172,3 @@ BEGIN
 END
 GO
 /* End NE_FileAttachDeleteAll */
-
-/* Start NE_FileAttachCount */
-IF EXISTS
-(
-	SELECT *
-	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[NE_FileAttachCount]') AND type IN ( N'P', N'PC' )
-)
-DROP PROCEDURE [NE_FileAttachCount];
-GO
-CREATE PROCEDURE [dbo].[NE_FileAttachCount]
-AS
-BEGIN
-	SELECT Count(*)
-	FROM [NE_FileAttach]
-END
-GO
-/* End NE_FileAttachCount */

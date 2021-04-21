@@ -188,21 +188,3 @@ BEGIN
 END
 GO
 /* End HIS_SMSDeleteAll */
-
-/* Start HIS_SMSCount */
-IF EXISTS
-(
-	SELECT *
-	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[HIS_SMSCount]') AND type IN ( N'P', N'PC' )
-)
-DROP PROCEDURE [HIS_SMSCount];
-GO
-CREATE PROCEDURE [dbo].[HIS_SMSCount]
-AS
-BEGIN
-	SELECT Count(*)
-	FROM [HIS_SMS]
-END
-GO
-/* End HIS_SMSCount */

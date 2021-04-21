@@ -148,21 +148,3 @@ BEGIN
 END
 GO
 /* End CA_ClassifyKNCTDeleteAll */
-
-/* Start CA_ClassifyKNCTCount */
-IF EXISTS
-(
-	SELECT *
-	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[CA_ClassifyKNCTCount]') AND type IN ( N'P', N'PC' )
-)
-DROP PROCEDURE [CA_ClassifyKNCTCount];
-GO
-CREATE PROCEDURE [dbo].[CA_ClassifyKNCTCount]
-AS
-BEGIN
-	SELECT Count(*)
-	FROM [CA_ClassifyKNCT]
-END
-GO
-/* End CA_ClassifyKNCTCount */

@@ -87,7 +87,7 @@ export class OrgFormAddressComponent implements OnInit {
 			OrgDistrict: [this.model.OrgDistrictId, []], //int
 			OrgVillage: [this.model.OrgWardsId, []], //int
 			OrgAddress: [this.model.OrgAddress, [Validators.required]],
-			OrgPhone: [this.model.OrgPhone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
+			OrgPhone: [this.model.OrgPhone, [Validators.required]], //, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)
 			OrgEmail: [this.model.OrgEmail, [Validators.required, Validators.email]],
 		})
 	}
