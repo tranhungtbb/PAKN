@@ -158,7 +158,7 @@ export class Api {
 	public static RegisterIndividual = 'User/InvididualRegister'
 	public static RegisterOrganization = 'User/OrganizationRegister'
 	public static IndividualCheckExists = 'BISPBase/BIIndividualCheckExistsBase'
-	public static OrganizationCheckExists = 'BISPBase/BIIndividualCheckExistsBase'
+	public static OrganizationCheckExists = 'BISPBase/BIBusinessCheckExistsBase'
 
 	public static RecommendationRequestGetByIdView = 'MRSPBase/MRRecommendationKNCTGetByIdBase'
 	public static RecommendationRequestGetFile = 'MRSPBase/MRRecommendationKNCTFilesGetByRecommendationIdBase'

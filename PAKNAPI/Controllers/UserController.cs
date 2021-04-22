@@ -196,11 +196,11 @@ namespace PAKNAPI.Controllers
 				DateTime birdDay, dateOfIssue;
 				if (!DateTime.TryParseExact(_RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
 				{
-					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
 				}
 				if (!DateTime.TryParseExact(_DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
 				{
-					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 				}
 
 				///mod loginInfo
@@ -274,7 +274,7 @@ namespace PAKNAPI.Controllers
 
 				var check_idCard = await new BIIndividualCheckExists().BIIndividualCheckExistsDAO("IDCard", model.IDCard);
 				if(check_idCard[0].Exists.Value)
-					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND/CCCD không hợp lệ!" };
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND/CCCD đã tồn tại" };
 
 				if (loginInfo.Password != loginInfo.RePassword)
 				{
@@ -282,13 +282,15 @@ namespace PAKNAPI.Controllers
 				}
 
 				DateTime birdDay, dateOfIssue;
+				
 				if (!DateTime.TryParseExact(_BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
 				{
-					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
 				}
+				
 				if (!DateTime.TryParseExact(_DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
 				{
-					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 				}
 
 				///mod loginInfo
@@ -472,7 +474,7 @@ namespace PAKNAPI.Controllers
 					Password = newPwd["Password"],
 					Salt = newPwd["Salt"]
 				};
-
+				_model.Id = accInfo[0].Id;
 				var rs = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_model);
 
 				return new Models.Results.ResultApi { Success = ResultCode.OK};

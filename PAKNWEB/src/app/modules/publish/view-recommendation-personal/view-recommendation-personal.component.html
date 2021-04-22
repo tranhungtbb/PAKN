@@ -38,18 +38,26 @@
 						<div class="media-body">
 							<p class="h4 font-italic font-weight-bold">Nội dung kiến nghị:</p>
 							<p>{{model.content}}</p>
-							<p>
-								<button type="button" class="btn border btn-block text-dark p-0">
-									<span class="rounded grd-xanhngoc text-white p-3 mr-3">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
-											<path
-												d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z">
-											</path>
-										</svg>
+							<p class="btn-group">
+								<button type="button" class="btn border text-dark p-2 rounded-lg mr-3" *ngFor="let item of filesModel">
+									<span class=" mr-2" *ngIf="item.fileType == 1">
+										<img src="../../../../assets/dist/images/file-word.svg" style="width: 40px" alt="">
 									</span>
+									<span class=" mr-2" *ngIf="item.fileType == 2">
+										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 40px" alt="">
+									</span>
+									<span class=" mr-2" *ngIf="item.fileType == 4">
+										<img src="../../../../assets/dist/images/file-image.svg" style="width: 40px" alt="">
+									</span>
+									<span class=" mr-2" *ngIf="item.fileType == 3">
+										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 40px" alt="">
+									</span>
+									<span class=" mr-2" *ngIf="item.fileType == 6">
+										<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 40px" alt="">
+									</span>
+
 									<span class="text-left text-truncate">
-										<small class="small">Tài liệu đính kèm</small><br>
-										<span class="mr-3 attach-hover" *ngFor="let item of filesModel">{{item.name}}</span>
+										<span class="mr-3 attach-hover">{{item.name}}</span>
 									</span>
 								</button>
 							</p>
