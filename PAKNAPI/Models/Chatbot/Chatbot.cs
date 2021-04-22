@@ -19,7 +19,7 @@ namespace PAKNAPI.Models.Chatbot
 		public ChatbotDelete(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-			_filePath = @"D:\TLI\PAKN\pakn\PAKNAPI\Upload\Chatbot\chatbot.aiml";
+			_filePath = @"..\Chatbot\binaries\aiml\chatbot.aiml";
 		}
 
 		public ChatbotDelete()
@@ -143,7 +143,7 @@ namespace PAKNAPI.Models.Chatbot
 		{
 			_appSetting = appSetting;
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-			_filePath = @"D:\TLI\PAKN\pakn\PAKNAPI\Upload\Chatbot\chatbot.aiml";
+			_filePath = @"..\Chatbot\binaries\aiml\chatbot.aiml";
 		}
 
 		public ChatbotInsert()
@@ -152,15 +152,15 @@ namespace PAKNAPI.Models.Chatbot
 
 		public async Task<int> ChatbotInsertDAO(ChatbotInsertIN _chatbotInsertIN)
 		{
+			string nextCategoryId = await new ChatbotGetNextCategoryId(_appSetting).ChatbotGetMaxCategoryIdDAO();
+			_chatbotInsertIN.CategoryId = nextCategoryId;
+
 			await ChatbotInsertFile(_chatbotInsertIN);
 			return await InsertChatbotDAO(_chatbotInsertIN);
 		}
 
 		private async Task<int> InsertChatbotDAO(ChatbotInsertIN _chatbotInsertIN)
 		{
-			string nextCategoryId = await new ChatbotGetNextCategoryId(_appSetting).ChatbotGetMaxCategoryIdDAO();
-			_chatbotInsertIN.CategoryId = nextCategoryId;
-
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Question", _chatbotInsertIN.Question);
 			DP.Add("Answer", _chatbotInsertIN.Answer);
@@ -329,7 +329,7 @@ namespace PAKNAPI.Models.Chatbot
 		public ChatbotUpdate(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-			_filePath = @"D:\TLI\PAKN\pakn\PAKNAPI\Upload\Chatbot\chatbot.aiml";
+			_filePath = @"..\Chatbot\binaries\aiml\chatbot.aiml";
 		}
 
 		public ChatbotUpdate()

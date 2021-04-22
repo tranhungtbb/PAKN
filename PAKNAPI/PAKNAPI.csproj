@@ -42,7 +42,6 @@
     <Folder Include="DataBaseAuto\" />
     <Folder Include="Models\Results\" />
     <Folder Include="BusinessLogic\" />
-    <Folder Include="Upload\Chatbot\" />
 	<Folder Include="Upload\Remind\" />
   </ItemGroup>
   
