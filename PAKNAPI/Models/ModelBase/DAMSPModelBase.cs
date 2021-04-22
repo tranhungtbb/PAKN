@@ -255,6 +255,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Status", _dAMAdministrationInsertIN.Status);
 			DP.Add("IsShow", _dAMAdministrationInsertIN.IsShow);
 			DP.Add("CreatedBy", _dAMAdministrationInsertIN.CreatedBy);
+			DP.Add("AdministrationId", _dAMAdministrationInsertIN.AdministrationId);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("DAM_Administration_Insert", DP);
 		}
@@ -286,6 +287,7 @@ namespace PAKNAPI.ModelBase
 		public byte? Status { get; set; }
 		public bool? IsShow { get; set; }
 		public int? CreatedBy { get; set; }
+		public int? AdministrationId { get; set; }
 	}
 
 	public class DAMAdministrationUpdate
@@ -363,7 +365,35 @@ namespace PAKNAPI.ModelBase
 		public int? UpdatedBy { get; set; }
 	}
 
-	
+	public class DAMAdministrationGetListHomePage
+	{
+		private SQLCon _sQLCon;
+
+		public DAMAdministrationGetListHomePage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public DAMAdministrationGetListHomePage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Name { get; set; }
+		public string Object { get; set; }
+		public string Organization { get; set; }
+		public byte? Status { get; set; }
+		public string FiledName { get; set; }
+
+		public async Task<List<DAMAdministrationGetListHomePage>> DAMAdministrationGetListHomePageDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<DAMAdministrationGetListHomePage>("DAM_AdministrationGetListHomePage", DP)).ToList();
+		}
+	}
 
 	public class DAMChargesCreate
 	{

@@ -146,14 +146,19 @@
 				<div class="w-100"></div>
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Email</label>
-					<input [svTrim] [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập..." class="form-control border-brown"
+						(change)="onCheckExist('Email',$event.target.value)">
 					<!--  -->
-					<div *ngIf="(fLoginSubmitted && fInfo.email.invalid)||(fInfo.email.invalid && (fInfo.email.dirty || fInfo.email.touched))" class="has-error m-b-12">
+					<div *ngIf="(fLoginSubmitted && fInfo.email.invalid)||(fInfo.email.invalid && (fInfo.email.dirty || fInfo.email.touched)) || email_exists"
+						class="has-error m-b-12">
 						<div *ngIf="fInfo.email.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
 						<div *ngIf="fInfo.email.errors.email">
 							<span class="help-block">Email không hợp lệ</span>
+						</div>
+						<div *ngIf="email_exists">
+							<span class="help-block">Email đã tồn tại</span>
 						</div>
 					</div>
 				</div>

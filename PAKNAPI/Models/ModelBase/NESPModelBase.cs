@@ -103,6 +103,51 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class NENewsGetByIDOnJoin
+	{
+		private SQLCon _sQLCon;
+
+		public NENewsGetByIDOnJoin(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public NENewsGetByIDOnJoin()
+		{
+		}
+
+		public string PostType { get; set; }
+		public bool IsPublished { get; set; }
+		public int Status { get; set; }
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Summary { get; set; }
+		public string Contents { get; set; }
+		public string ImagePath { get; set; }
+		public int? NewsType { get; set; }
+		public int? ViewCount { get; set; }
+		public string Url { get; set; }
+		public int? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public int? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? PublishedBy { get; set; }
+		public DateTime? PublishedDate { get; set; }
+		public int? WithdrawBy { get; set; }
+		public DateTime? WithdrawDate { get; set; }
+		public int? NewsRelates_Id { get; set; }
+		public string NewsRelates_Title { get; set; }
+		public string NewsRelates_ImagePath { get; set; }
+
+		public async Task<List<NENewsGetByIDOnJoin>> NENewsGetByIDOnJoinDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<NENewsGetByIDOnJoin>("NE_NewsGetByIDOnJoin", DP)).ToList();
+		}
+	}
+
 	public class NENewsInsert
 	{
 		private SQLCon _sQLCon;
@@ -233,5 +278,31 @@ namespace PAKNAPI.ModelBase
 		public DateTime? WithdrawDate { get; set; }
 		public string NewsRelateIds { get; set; }
 		public bool? IsNotification { get; set; }
+	}
+
+	public class NERelateGetAll
+	{
+		private SQLCon _sQLCon;
+
+		public NERelateGetAll(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public NERelateGetAll()
+		{
+		}
+
+		public int Id { get; set; }
+		public int? NewsId { get; set; }
+		public int? NewsIdRelate { get; set; }
+
+		public async Task<List<NERelateGetAll>> NERelateGetAllDAO(int? NewsId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("NewsId", NewsId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<NERelateGetAll>("NE_RelateGetAll", DP)).ToList();
+		}
 	}
 }

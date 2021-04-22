@@ -457,6 +457,49 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("CAFieldKNCTGetDropdownBase")]
+		public async Task<ActionResult<object>> CAFieldKNCTGetDropdownBase()
+		{
+			try
+			{
+				List<CAFieldKNCTGetDropdown> rsCAFieldKNCTGetDropdown = await new CAFieldKNCTGetDropdown(_appSetting).CAFieldKNCTGetDropdownDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAFieldKNCTGetDropdown", rsCAFieldKNCTGetDropdown},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("CAFieldKNCTInsertBase")]
+		public async Task<ActionResult<object>> CAFieldKNCTInsertBase(CAFieldKNCTInsertIN _cAFieldKNCTInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldKNCTInsert(_appSetting).CAFieldKNCTInsertDAO(_cAFieldKNCTInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("CAFieldUpdateBase")]
@@ -846,6 +889,9 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAPositionGetAllOnPage", rsCAPositionGetAllOnPage},
+						{"TotalCount", rsCAPositionGetAllOnPage != null && rsCAPositionGetAllOnPage.Count > 0 ? rsCAPositionGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsCAPositionGetAllOnPage != null && rsCAPositionGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsCAPositionGetAllOnPage != null && rsCAPositionGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -869,6 +915,29 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAPositionGetByID", rsCAPositionGetByID},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAPositionGetDropdownBase")]
+		public async Task<ActionResult<object>> CAPositionGetDropdownBase()
+		{
+			try
+			{
+				List<CAPositionGetDropdown> rsCAPositionGetDropdown = await new CAPositionGetDropdown(_appSetting).CAPositionGetDropdownDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAPositionGetDropdown", rsCAPositionGetDropdown},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -1053,6 +1122,29 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("CAUnitGetTreeBase")]
+		public async Task<ActionResult<object>> CAUnitGetTreeBase()
+		{
+			try
+			{
+				List<CAUnitGetTree> rsCAUnitGetTree = await new CAUnitGetTree(_appSetting).CAUnitGetTreeDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAUnitGetTree", rsCAUnitGetTree},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("CAUnitInsertBase")]
@@ -1173,6 +1265,29 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("CAUserGetByUnitIdBase")]
+		public async Task<ActionResult<object>> CAUserGetByUnitIdBase(int? PageIndex, int? PageSize, string UserName, string FullName, string Phone, bool? IsActive, int? UnitId)
+		{
+			try
+			{
+				List<CAUserGetByUnitId> rsCAUserGetByUnitId = await new CAUserGetByUnitId(_appSetting).CAUserGetByUnitIdDAO(PageIndex, PageSize, UserName, FullName, Phone, IsActive, UnitId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAUserGetByUnitId", rsCAUserGetByUnitId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("CAWordDeleteBase")]
@@ -1270,6 +1385,29 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAWordGetByID", rsCAWordGetByID},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAWordGetListSuggestBase")]
+		public async Task<ActionResult<object>> CAWordGetListSuggestBase()
+		{
+			try
+			{
+				List<CAWordGetListSuggest> rsCAWordGetListSuggest = await new CAWordGetListSuggest(_appSetting).CAWordGetListSuggestDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAWordGetListSuggest", rsCAWordGetListSuggest},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

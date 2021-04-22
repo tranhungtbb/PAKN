@@ -185,6 +185,9 @@ namespace PAKNAPI.Controllers
         {
 			try
 			{
+
+
+
 				if (loginInfo.Password != loginInfo.RePassword)
 				{
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu không khớp" };
@@ -258,9 +261,21 @@ namespace PAKNAPI.Controllers
 			[FromForm] string _DateOfIssue)
 		{
 
-
             try
             {
+
+				var check_email = await new BIIndividualCheckExists().BIIndividualCheckExistsDAO("Email",model.Email);
+                if (check_email[0].Exists.Value)
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
+
+				var check_phone = await new BIIndividualCheckExists().BIIndividualCheckExistsDAO("Phone", model.Phone);
+				if (check_phone[0].Exists.Value)
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+
+				var check_idCard = await new BIIndividualCheckExists().BIIndividualCheckExistsDAO("IDCard", model.IDCard);
+				if(check_idCard[0].Exists.Value)
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND/CCCD không hợp lệ!" };
+
 				if (loginInfo.Password != loginInfo.RePassword)
 				{
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu không khớp" };

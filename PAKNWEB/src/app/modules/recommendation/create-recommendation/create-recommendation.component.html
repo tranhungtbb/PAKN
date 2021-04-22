@@ -47,8 +47,8 @@
 					<div class="row">
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">{{titleObject}} <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" [items]="lstObject" bindValue="value" bindLabel="text" (change)="changeObject()" formControlName="sendId"
-								[(ngModel)]="model.sendId">
+							<ng-select placeholder="Chọn..." class="form-control" [items]="lstObject" bindValue="value" bindLabel="text" (change)="changeObject()"
+								formControlName="sendId" [(ngModel)]="model.sendId">
 								<ng-template ng-option-tmp let-item="item">
 									<div title="{{item.text}}">{{item.text}}</div>
 								</ng-template>
@@ -79,7 +79,8 @@
 					<div class="row">
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">Lĩnh vực <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" [items]="lstField" bindValue="value" bindLabel="text" formControlName="field" [(ngModel)]="model.field">
+							<ng-select placeholder="Chọn..." class="form-control" [items]="lstField" bindValue="value" bindLabel="text" formControlName="field"
+								[(ngModel)]="model.field">
 								<ng-template ng-option-tmp let-item="item">
 									<div title="{{item.text}}">{{item.text}}</div>
 								</ng-template>
@@ -111,7 +112,8 @@
 					<div class="form-row align-items-end justify-content-between">
 						<div class="col-12 form-group">
 							<label class="mb-1">Đơn vị tiếp nhận <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" [items]="lstUnit" bindValue="value" bindLabel="text" formControlName="unitId" [(ngModel)]="model.unitId">
+							<ng-select placeholder="Chọn..." class="form-control" [items]="lstUnit" bindValue="value" bindLabel="text" formControlName="unitId"
+								[(ngModel)]="model.unitId">
 								<ng-template ng-option-tmp let-item="item">
 									<div title="{{item.text}}">{{item.text}}</div>
 								</ng-template>
@@ -125,7 +127,7 @@
 						<div class="w-100"></div>
 						<div class="col form-group">
 							<label class="mb-1"><i class="bi bi-tags mr-2"></i>Hashtags</label>
-							<ng-select class="form-control" [items]="lstHashtag" bindValue="value" bindLabel="text" formControlName="hashtag"
+							<ng-select placeholder="Chọn..." class="form-control" [items]="lstHashtag" bindValue="value" bindLabel="text" formControlName="hashtag"
 								(keydown.enter)="onCreateHashtag($event)" [(ngModel)]="hashtagId" [virtualScroll]="true">
 								<ng-template ng-option-tmp let-item="item">
 									<div title="{{item.text}}">{{item.text}}</div>
@@ -151,7 +153,7 @@
 				</div>
 				<div class="col-12 col-lg-6 pt-4 pl-lg-4">
 					<div class="form-group">
-						<label class="mb-1"><i class="bi bi-tags mr-2"></i>PAKN về việc <span class="cl-red">(*)</span></label>
+						<label class="mb-1">PAKN về việc <span class="cl-red">(*)</span></label>
 						<input class="form-control " type="text" [(ngModel)]="model.title" maxlength="500" formControlName="title" placeholder="Nhập..." />
 						<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error">
 							<div *ngIf="f.title.errors.required">

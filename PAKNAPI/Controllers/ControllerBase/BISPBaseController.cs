@@ -31,7 +31,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BIBusinessGetRepresentativeByIdBase")]
 		public async Task<ActionResult<object>> BIBusinessGetRepresentativeByIdBase(long? Id)
 		{
@@ -54,7 +54,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BIBusinessGetRepresentativeEmailBase")]
 		public async Task<ActionResult<object>> BIBusinessGetRepresentativeEmailBase(string Email)
 		{
@@ -77,7 +77,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BIBusinessInsertBase")]
 		public async Task<ActionResult<object>> BIBusinessInsertBase(BIBusinessInsertIN _bIBusinessInsertIN)
 		{
@@ -97,7 +97,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BIBusinessInsertListBase")]
 		public async Task<ActionResult<object>> BIBusinessInsertListBase(List<BIBusinessInsertIN> _bIBusinessInsertINs)
 		{
@@ -137,7 +137,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BIBusinessUpdateInfoBase")]
 		public async Task<ActionResult<object>> BIBusinessUpdateInfoBase(BIBusinessUpdateInfoIN _bIBusinessUpdateInfoIN)
 		{
@@ -157,7 +157,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BIBusinessUpdateInfoListBase")]
 		public async Task<ActionResult<object>> BIBusinessUpdateInfoListBase(List<BIBusinessUpdateInfoIN> _bIBusinessUpdateInfoINs)
 		{
@@ -197,7 +197,30 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
+		[Route("BIIndividualCheckExistsBase")]
+		public async Task<ActionResult<object>> BIIndividualCheckExistsBase(string Field, string Value)
+		{
+			try
+			{
+				List<BIIndividualCheckExists> rsBIIndividualCheckExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO(Field, Value);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"BIIndividualCheckExists", rsBIIndividualCheckExists},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
 		[Route("BIIndividualGetByEmailBase")]
 		public async Task<ActionResult<object>> BIIndividualGetByEmailBase(string Email)
 		{
@@ -220,7 +243,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BIIndividualGetByIDBase")]
 		public async Task<ActionResult<object>> BIIndividualGetByIDBase(long? Id)
 		{
@@ -243,7 +266,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BIIndividualInsertBase")]
 		public async Task<ActionResult<object>> BIIndividualInsertBase(BIIndividualInsertIN _bIIndividualInsertIN)
 		{
@@ -263,7 +286,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BIIndividualInsertListBase")]
 		public async Task<ActionResult<object>> BIIndividualInsertListBase(List<BIIndividualInsertIN> _bIIndividualInsertINs)
 		{
@@ -303,7 +326,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BIInvididualUpdateInfoBase")]
 		public async Task<ActionResult<object>> BIInvididualUpdateInfoBase(BIInvididualUpdateInfoIN _bIInvididualUpdateInfoIN)
 		{
@@ -323,7 +346,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BIInvididualUpdateInfoListBase")]
 		public async Task<ActionResult<object>> BIInvididualUpdateInfoListBase(List<BIInvididualUpdateInfoIN> _bIInvididualUpdateInfoINs)
 		{

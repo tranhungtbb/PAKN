@@ -410,35 +410,6 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-	public class MRRecommendationForwardGetByRecommendationId
-	{
-		private SQLCon _sQLCon;
-
-		public MRRecommendationForwardGetByRecommendationId(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public MRRecommendationForwardGetByRecommendationId()
-		{
-		}
-
-		public int Id { get; set; }
-		public int RecommendationId { get; set; }
-		public long? UserSendId { get; set; }
-		public long ReceiveId { get; set; }
-		public int? UnitReceiveId { get; set; }
-		public byte? Step { get; set; }
-
-		public async Task<List<MRRecommendationForwardGetByRecommendationId>> MRRecommendationForwardGetByRecommendationIdDAO(int? RecommendationId)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("RecommendationId", RecommendationId);
-
-			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationForwardGetByRecommendationId>("MR_Recommendation_ForwardGetByRecommendationId", DP)).ToList();
-		}
-	}
-
 	public class MRRecommendationForwardInsert
 	{
 		private SQLCon _sQLCon;
@@ -621,6 +592,66 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_GenCode_UpdateNumber", DP));
+		}
+	}
+
+	public class MRRecommendationGetSuggestCreate
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGetSuggestCreate(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGetSuggestCreate()
+		{
+		}
+
+		public int? Rank { get; set; }
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string CreatedDate { get; set; }
+
+		public async Task<List<MRRecommendationGetSuggestCreate>> MRRecommendationGetSuggestCreateDAO(string Title)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Title", Title);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetSuggestCreate>("MR_Recommendation_GetSuggestCreate", DP)).ToList();
+		}
+	}
+
+	public class MRRecommendationGetSuggestReply
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGetSuggestReply(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGetSuggestReply()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Title { get; set; }
+		public string Name { get; set; }
+		public DateTime? SendDate { get; set; }
+		public string ContentReply { get; set; }
+		public int? CountHashtag { get; set; }
+
+		public async Task<List<MRRecommendationGetSuggestReply>> MRRecommendationGetSuggestReplyDAO(string ListIdHashtag, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ListIdHashtag", ListIdHashtag);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetSuggestReply>("MR_Recommendation_GetSuggestReply", DP)).ToList();
 		}
 	}
 
@@ -914,33 +945,6 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByIDView>("MR_RecommendationGetByIDView", DP)).ToList();
-		}
-	}
-
-	public class MRRecommendationGetDataGraph
-	{
-		private SQLCon _sQLCon;
-
-		public MRRecommendationGetDataGraph(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public MRRecommendationGetDataGraph()
-		{
-		}
-
-		public int? Count { get; set; }
-		public byte? Status { get; set; }
-		public string StatusName { get; set; }
-
-		public async Task<List<MRRecommendationGetDataGraph>> MRRecommendationGetDataGraphDAO(int? UnitProcessId, long? UserProcessId)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("UnitProcessId", UnitProcessId);
-			DP.Add("UserProcessId", UserProcessId);
-
-			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetDataGraph>("MR_RecommendationGetDataGraph", DP)).ToList();
 		}
 	}
 

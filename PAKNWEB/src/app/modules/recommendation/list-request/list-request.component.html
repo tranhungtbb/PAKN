@@ -21,7 +21,7 @@
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
-									<th>
+									<th style="width: 50px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>STT</strong>
 											<span class="caret-tb"></span>
@@ -32,7 +32,8 @@
 											<strong>Nội dung</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.content" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input placeholder="Nhập nội dung..." class="form-control form-control-sm" [(ngModel)]="dataSearch.content" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
 									</th>
 									<th style="min-width: 160px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -40,7 +41,8 @@
 											<span class="caret-tb"></span>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<input class="form-control form-control-sm" [(ngModel)]="dataSearch.unitId" maxlength="100" (keydown.enter)="dataStateChange()" />
+											<input placeholder="Nhập tên..." class="form-control form-control-sm" [(ngModel)]="dataSearch.unitId" maxlength="100"
+												(keydown.enter)="dataStateChange()" />
 										</div>
 									</th>
 									<th style="width: 200px">
@@ -50,7 +52,7 @@
 										</p>
 										<div style="width: 200px" class="dropdown bootstrap-select form-control form-control-sm">
 											<ng-select style="width:200px;" [(ngModel)]="dataSearch.field" [closeOnSelect]="true" [searchable]="false" [clearable]="false"
-												(change)="dataStateChange()">
+												(change)="dataStateChange()" placeholder="--Chọn lĩnh vực--">
 												<ng-option value="">--Chọn lĩnh vực--</ng-option>
 												<ng-option *ngFor="let item of lstFieldFilter" [value]="item.value">
 													{{item.text }}
@@ -63,7 +65,8 @@
 											<strong>Nơi có CTKN</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.place" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.place" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
 									</th>
 									<th style="width: 160px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -72,7 +75,7 @@
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
 											<ng-select style="width:130px;" [(ngModel)]="dataSearch.status" [closeOnSelect]="true" [searchable]="false" [clearable]="false"
-												(change)="dataStateChange()">
+												(change)="dataStateChange()" placeholder="Tất cả trạng thái">
 												<ng-option value="">Tất cả trạng thái</ng-option>
 												<ng-option *ngFor="let item of listStatus" [value]="item.value">
 													{{item.text}}
