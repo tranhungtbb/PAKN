@@ -223,7 +223,11 @@ export class FieldComponent implements OnInit, AfterViewInit {
 		}
 		this._service.fieldDelete(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
+				if (response.result > 0) {
+					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
+				} else {
+					this._toastr.error('Lĩnh vực này đang được sử dụng!')
+				}
 				$('#modalConfirmDelete').modal('hide')
 				this.getList()
 			} else {

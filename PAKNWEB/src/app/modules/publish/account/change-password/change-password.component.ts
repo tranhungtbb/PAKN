@@ -23,8 +23,8 @@ export class ChangePasswordComponent implements OnInit {
 	ngOnInit() {
 		this.formChangePwd = this.formBuider.group(
 			{
-				oldPassword: [this.model.oldPassword, [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/g)]],
-				newPassword: [this.model.newPassword, [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/g)]],
+				oldPassword: [this.model.oldPassword, [Validators.required]],
+				newPassword: [this.model.newPassword, [Validators.required]],
 				rePassword: [this.model.rePassword, [Validators.required]],
 			},
 			{ validator: MustMatch('newPassword', 'rePassword') }

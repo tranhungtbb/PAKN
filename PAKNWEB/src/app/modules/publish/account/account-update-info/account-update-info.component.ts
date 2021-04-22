@@ -109,7 +109,7 @@ export class AccountUpdateInfoComponent implements OnInit {
 			districtId: [this.model.districtId, []],
 			wardsId: [this.model.wardsId, []],
 			address: [this.model.address, [Validators.required]],
-			idCard: [this.model.idCard, [Validators.required, Validators.pattern(/^([0-9]){8,12}$/g)]],
+			idCard: [this.model.idCard, [Validators.required]],
 			issuedPlace: [this.model.issuedPlace, [Validators.required]],
 			issuedDate: [this.model.issuedDate, [Validators.required]],
 			gender: [this.model.gender, [Validators.required]],

@@ -390,19 +390,19 @@
 <div class="modal fade" id="modalDetail">
 	<div class="modal-dialog modal-dialog-centered" style="max-width: 60%" role="document">
 		<div class="modal-content rounded">
-			<form class="form-horizontal">
+			<form class="form-horizontal" autocomplete="off">
 				<div class="panel panel-default no-margin">
 					<div class="modal-header" style="border: none;">
 						<button class="close btn-close-modal" data-dismiss="modal">
 							×
 						</button>
-						<p class="modal-title h3">Lịch sử: {{emailUser}}</p>
+						<p class="modal-title h3">Lịch sử: <span class="text-primary">{{emailUser}}</span></p>
 					</div>
 					<div class="modal-body no-padding-bottom" style="padding: 1.1rem;">
 						<div class="form-horizontal" [formGroup]="form" #formDir="ngForm">
 							<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 5px 0px;">
 								<div class="col-12 col-lg-4 form-group">
-									<label class="mb-1">Từ ngày</label>
+									<label class="mb-1 text-uppercase"><strong>Từ ngày</strong></label>
 									<input class="form-control form-control-sm" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="fromDate"
 										formControlName="fromDate" [(ngModel)]="dataSearch.fromDate" (keydown.enter)="dataStateChange()" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
@@ -411,7 +411,7 @@
 									</div>
 								</div>
 								<div class="col-12 col-lg-4 form-group">
-									<label class="mb-1">Đến ngày</label>
+									<label class="mb-1 text-uppercase"><strong>Đến ngày</strong></label>
 									<input class="form-control form-control-sm" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="toDate"
 										[(ngModel)]="dataSearch.toDate" formControlName="toDate" (keydown.enter)="dataStateChange()" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
@@ -421,7 +421,7 @@
 								</div>
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1"></label>
-									<button (click)="dataStateChange()" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" type="button">Tìm
+									<button (click)="dataStateChange()" style="text-transform: none;" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" type="button">Tìm
 										kiếm
 									</button>
 								</div>

@@ -9,6 +9,7 @@ import { RegisterService } from 'src/app/services/register.service'
 import { DiadanhService } from 'src/app/services/diadanh.service'
 
 import { COMMONS } from 'src/app/commons/commons'
+import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { IndividualObject } from 'src/app/models/RegisterObject'
 
 declare var $: any
@@ -135,6 +136,11 @@ export class IndividualComponent implements OnInit {
 			return
 		}
 
+		if (this.email_exists || this.phone_exists || this.idCard_exists) {
+			this.toast.error('Dữ liệu không hợp lệ')
+			return
+		}
+
 		// req to server
 		this.registerService.registerIndividual(this.model).subscribe((res) => {
 			if (res.success != 'OK') {
@@ -189,6 +195,25 @@ export class IndividualComponent implements OnInit {
 			placeIssue: [this.model.issuedPlace, []],
 			dateIssue: [this.model._dateOfIssue, []],
 		})
+	}
+
+	// server exists
+	phone_exists: boolean = false
+	email_exists: boolean = false
+	idCard_exists: boolean = false
+	onCheckExist(field: string, value: string) {
+		this.registerService
+			.individualCheckExists({
+				field,
+				value,
+			})
+			.subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					if (field == 'Phone') this.phone_exists = res.result.BIIndividualCheckExists[0].exists
+					else if (field == 'Email') this.email_exists = res.result.BIIndividualCheckExists[0].exists
+					else if (field == 'IDCard') this.idCard_exists = res.result.BIIndividualCheckExists[0].exists
+				}
+			})
 	}
 }
 function MustMatch(controlName: string, matchingControlName: string) {
