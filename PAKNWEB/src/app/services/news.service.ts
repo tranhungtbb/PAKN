@@ -71,4 +71,16 @@ export class NewsService {
 		}
 		return this.http.post(AppSettings.API_ADDRESS + Api.NewsGetAvatars, data, httpPackage)
 	}
+
+	hisNewsCreate(data: any): Observable<any> {
+		const httpPackage = {
+			headers: this.tempheaders,
+			reportProgress: true,
+		}
+		return this.http.post(AppSettings.API_ADDRESS + Api.HisNewsInsert, data, httpPackage)
+	}
+
+	getListHisNewsByNewsId(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.HisNewsGetListByNewsId)
+	}
 }

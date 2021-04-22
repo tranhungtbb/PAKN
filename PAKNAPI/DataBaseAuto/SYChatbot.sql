@@ -14,10 +14,11 @@ AS
 BEGIN
 	SELECT
 		[Id],
-		[Name],
+		[Question],
+		[Answer],
 		[IsActived],
 		[IsDeleted],
-		[Description]
+		[CategoryId]
 	FROM [SY_Chatbot]
 	WHERE [Id] = @Id
 END
@@ -38,10 +39,11 @@ AS
 BEGIN
 	SELECT
 		[Id],
-		[Name],
+		[Question],
+		[Answer],
 		[IsActived],
 		[IsDeleted],
-		[Description]
+		[CategoryId]
 	FROM [SY_Chatbot]
 END
 GO
@@ -64,10 +66,11 @@ BEGIN
 	SELECT
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
 		[Id],
-		[Name],
+		[Question],
+		[Answer],
 		[IsActived],
 		[IsDeleted],
-		[Description]
+		[CategoryId]
 	FROM [SY_Chatbot]
 	ORDER BY [Id]
 	OFFSET (@PageIndex-1) * @PageSize ROWS
@@ -86,25 +89,28 @@ IF EXISTS
 DROP PROCEDURE [SY_ChatbotInsert];
 GO
 CREATE PROCEDURE [dbo].[SY_ChatbotInsert]
-	@Name nvarchar(100) = null,
+	@Question nvarchar(1000) = null,
+	@Answer nvarchar(1000) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
-	@Description nvarchar(1000) = null
+	@CategoryId int = null
 AS
 BEGIN
 	INSERT INTO [SY_Chatbot]
 	(
-		[Name],
+		[Question],
+		[Answer],
 		[IsActived],
 		[IsDeleted],
-		[Description]
+		[CategoryId]
 	)
 	VALUES
 	(
-		@Name,
+		@Question,
+		@Answer,
 		@IsActived,
 		@IsDeleted,
-		@Description
+		@CategoryId
 	)
 END
 GO
@@ -121,17 +127,19 @@ DROP PROCEDURE [SY_ChatbotUpdate];
 GO
 CREATE PROCEDURE [dbo].[SY_ChatbotUpdate]
 	@Id int = null,
-	@Name nvarchar(100) = null,
+	@Question nvarchar(1000) = null,
+	@Answer nvarchar(1000) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
-	@Description nvarchar(1000) = null
+	@CategoryId int = null
 AS
 BEGIN
 	UPDATE [SY_Chatbot] SET
-		[Name] = @Name,
+		[Question] = @Question,
+		[Answer] = @Answer,
 		[IsActived] = @IsActived,
 		[IsDeleted] = @IsDeleted,
-		[Description] = @Description
+		[CategoryId] = @CategoryId
 	WHERE [Id] = @Id
 END
 GO

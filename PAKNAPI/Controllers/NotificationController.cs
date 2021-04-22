@@ -25,12 +25,12 @@ namespace PAKNAPI.Controllers
     [Route("api/SYNotification")]
     [ApiController]
 
-    public class SYNotificationController : BaseApiController
+    public class NotificationController : BaseApiController
     {
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;
 
-        public SYNotificationController(IAppSetting appSetting, IClient bugsnag)
+        public NotificationController(IAppSetting appSetting, IClient bugsnag)
         {
             _appSetting = appSetting;
             _bugsnag = bugsnag;
@@ -64,7 +64,7 @@ namespace PAKNAPI.Controllers
                         model.IsViewed = true;
                         model.IsReaded = false;
                         // insert vào db-
-                        var count = await new SYNotificationInsert(_appSetting).SYNotificationInsertDAO(model);
+                        var count = await new SYNotification(_appSetting).SYNotificationInsertDAO(model);
                     }
                     return new ResultApi { Success = ResultCode.OK, Message = "Success" };
                 }
@@ -147,7 +147,7 @@ namespace PAKNAPI.Controllers
                                 recommendation.SendId != item.Id ?
                                 sender.FullName + " vừa gửi một PAKN." : "Bạn vừa tạo một PAKN.";
                             // insert notification
-                            await new SYNotificationInsert(_appSetting).SYNotificationInsertDAO(notification);
+                            await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
                         }
 
                         // người gửi PAKN
@@ -155,7 +155,7 @@ namespace PAKNAPI.Controllers
                         notification.ReceiveId = sender.Id;
                         notification.Title = "PAKN ĐÃ ĐƯỢC TIẾP NHẬN";
                         notification.Content = "Phản ánh kiến nghị số " + recommendation.Code + " của bạn đã được tiếp nhận.";
-                        await new SYNotificationInsert(_appSetting).SYNotificationInsertDAO(notification);
+                        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
                         break;
                     case STATUS_RECOMMENDATION.RECEIVE_DENY: //3 Từ chối xử lý
 
@@ -164,7 +164,7 @@ namespace PAKNAPI.Controllers
                         notification.ReceiveId = sender.Id;
                         notification.Title = "PAKN BỊ TỪ CHỐI";
                         notification.Content = "Phản ánh kiến nghị số " + recommendation.Code + " của bạn đã bị từ chối.";
-                        await new SYNotificationInsert(_appSetting).SYNotificationInsertDAO(notification);
+                        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
 
                         break;
                     case STATUS_RECOMMENDATION.RECEIVE_APPROVED: //4 Đã tiếp nhận
@@ -176,12 +176,12 @@ namespace PAKNAPI.Controllers
                             notification.ReceiveId = item.Id;
                             notification.ReceiveOrgId = item.UnitId;
                             // insert notification
-                            await new SYNotificationInsert(_appSetting).SYNotificationInsertDAO(notification);
+                            await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
                         }
 
                         // người gửi PAKN
                         notification.ReceiveId = sender.Id;
-                        await new SYNotificationInsert(_appSetting).SYNotificationInsertDAO(notification);
+                        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
 
                         break;
                     case STATUS_RECOMMENDATION.PROCESS_WAIT: //5 Chờ giải quyết
@@ -198,7 +198,7 @@ namespace PAKNAPI.Controllers
                             notification.ReceiveId = item.Id;
                             notification.ReceiveOrgId = item.UnitId;
                             // insert notification
-                            await new SYNotificationInsert(_appSetting).SYNotificationInsertDAO(notification);
+                            await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
                         }
 
                         break;
@@ -212,7 +212,7 @@ namespace PAKNAPI.Controllers
                         notification.Title = "PAKN BỊ TỪ CHỐI GIẢI QUYẾT";
                         notification.Content = "PAKN của bạn đã bị " + unitReceive.Name + " từ chối giải quyết";
                         notification.ReceiveId = sender.Id;
-                        await new SYNotificationInsert(_appSetting).SYNotificationInsertDAO(notification);
+                        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
 
                         break;
                     //case STATUS_RECOMMENDATION.PROCESSING: //7 Đang giải quyết
@@ -227,7 +227,7 @@ namespace PAKNAPI.Controllers
                         notification.Title = "PAKN CHỜ PHÊ DUYỆT";
                         notification.Content = "Bạn có PAKN số " + recommendation.Code + " chờ phê duyệt";
                         notification.ReceiveId = approver.Id;
-                        await new SYNotificationInsert(_appSetting).SYNotificationInsertDAO(notification);
+                        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
 
                         break;
                     case STATUS_RECOMMENDATION.APPROVE_DENY: //9 Từ chối phê duyệt
@@ -243,13 +243,13 @@ namespace PAKNAPI.Controllers
                             notification.ReceiveId = item.Id;
                             notification.ReceiveOrgId = item.UnitId;
                             // insert notification
-                            await new SYNotificationInsert(_appSetting).SYNotificationInsertDAO(notification);
+                            await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
                         }
 
                         //người gửi PAKN
                         notification.ReceiveId = sender.Id;
                         notification.Content = "Lãnh đạo đơn vị " + unitReceive.Name + " đã từ chối phê duyệt PAKN số " + recommendation.Code + " của bạn";
-                        await new SYNotificationInsert(_appSetting).SYNotificationInsertDAO(notification);
+                        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
 
                         break;
                     case STATUS_RECOMMENDATION.FINISED: //10 Đã giải quyết
@@ -265,12 +265,12 @@ namespace PAKNAPI.Controllers
                             notification.ReceiveId = item.Id;
                             notification.ReceiveOrgId = item.UnitId;
                             // insert notification
-                            await new SYNotificationInsert(_appSetting).SYNotificationInsertDAO(notification);
+                            await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
                         }
 
                         // người gửi PAKN
                         notification.ReceiveId = sender.Id;
-                        await new SYNotificationInsert(_appSetting).SYNotificationInsertDAO(notification);
+                        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
                         break;
                 }
                 return new ResultApi { Success = ResultCode.OK, Message = "Success" };
@@ -288,16 +288,25 @@ namespace PAKNAPI.Controllers
 
 
         #region SYNotificationGetAll
-        [HttpGet]
+        [HttpPost]
         [Authorize]
         [Route("SYNotificationGetListOnPage")]
-        public async Task<object> SYNotificationGetListOnPage(int PageSize, int PageIndex) {
-            try {
-                var syNotifications = await new SYNotificationGetListOnPageByReceiveId(_appSetting).SYNotificationGetListOnPageByReceiveIdDAO((int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext), PageSize, PageIndex);
+        public async Task<object> SYNotificationGetListOnPage() {
+            try{
+                var jss = new JsonSerializerSettings
+                {
+                    DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                    DateTimeZoneHandling = DateTimeZoneHandling.Local,
+                    DateParseHandling = DateParseHandling.DateTimeOffset,
+                };
+                var model = JsonConvert.DeserializeObject<SYNotificationGetList>(Request.Form["model"].ToString(), jss);
+                var syNotifications = await new SYNotificationGetListOnPageByReceiveId(_appSetting).SYNotificationGetListOnPageByReceiveIdDAO((int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext), model.PageSize, model.PageIndex, model.Title , model.Content , model.Type , model.SendDate);
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"syNotifications", syNotifications},
-                        {"TotalCount", syNotifications != null && syNotifications.Count > 0 ? syNotifications[0].RowNumber : 0}
+                        {"TotalCount", syNotifications != null && syNotifications.Count > 0 ? syNotifications[0].RowNumber : 0},
+                        {"PageIndex", syNotifications != null && syNotifications.Count > 0 ? model.PageIndex : 0},
+                        {"PageSize", syNotifications != null && syNotifications.Count > 0 ? model.PageSize : 0}
                     };
                 return new ResultApi { Success = ResultCode.OK, Result = json };
             } catch (Exception ex) {
@@ -332,6 +341,37 @@ namespace PAKNAPI.Controllers
             }
         }
         #endregion
+
+        [HttpPost]
+        [Authorize]
+        [Route("SYNotificationDelete")]
+        public async Task<ActionResult<object>> SYNotificationDelete(SYNotificationModel _syNotification)
+        {
+            try
+            {
+                int count = await new SYNotification(_appSetting).SYNotificationDelete(_syNotification);
+                if (count > 0)
+                {
+                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+                    return new ResultApi { Success = ResultCode.OK, Result = count };
+                }
+                else
+                {
+                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+                    return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+                }
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
 
 
     }

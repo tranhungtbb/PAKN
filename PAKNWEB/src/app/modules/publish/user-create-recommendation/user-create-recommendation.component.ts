@@ -14,6 +14,7 @@ import { AppSettings } from 'src/app/constants/app-setting'
 import { Api } from 'src/app/constants/api'
 import { CaptchaService } from 'src/app/services/captcha-service'
 import { NotificationService } from 'src/app/services/notification.service'
+import { UnitService } from '../../../services/unit.service'
 
 @Component({
 	selector: 'app-user-create-recommendation',
@@ -42,7 +43,12 @@ export class CreateRecommendationComponent implements OnInit {
 	captchaCode: string = null
 	resultsRecommendation: any = []
 	lstDictionariesWord: any = []
+
+	unitSelected: any = { name: null, id: null }
+	lstUnitTree: any[] = []
+
 	constructor(
+		private unitService: UnitService,
 		private toastr: ToastrService,
 		private fileService: UploadFileService,
 		private recommendationService: RecommendationService,
@@ -70,6 +76,13 @@ export class CreateRecommendationComponent implements OnInit {
 			}
 			this.builForm()
 		})
+	}
+
+	//unit select event
+	onSelectUnit(item: any) {
+		this.unitSelected = item
+		$('#_unitId .ng-input input').val(item.name)
+		this.model.unitId = item.id
 	}
 
 	searchRecommendation() {
@@ -161,32 +174,58 @@ export class CreateRecommendationComponent implements OnInit {
 	}
 	getDropdown() {
 		let request = {}
-		this.recommendationService.recommendationGetDataForCreate(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this.lstUnit = response.result.lstUnit
-				this.lstField = response.result.lstField
-				this.lstHashtag = response.result.lstHashTag
-				this.lstBusiness = response.result.lstBusiness
-				this.lstIndividual = response.result.lstIndividual
-				this.lstObject = response.result.lstIndividual
-				this.model.code = response.result.code
-			} else {
-				this.toastr.error(response.message)
-			}
-		}),
+		this.recommendationService.recommendationGetDataForCreate(request).subscribe(
+			(response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					//this.lstUnit = response.result.lstUnit
+					this.lstField = response.result.lstField
+					this.lstHashtag = response.result.lstHashTag
+					this.lstBusiness = response.result.lstBusiness
+					this.lstIndividual = response.result.lstIndividual
+					this.lstObject = response.result.lstIndividual
+					this.model.code = response.result.code
+				} else {
+					this.toastr.error(response.message)
+				}
+			},
 			(error) => {
 				console.log(error)
 			}
-		this._serviceCatalog.wordGetListSuggest(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this.lstDictionariesWord = response.result.CAWordGetListSuggest
-			} else {
-				this.toastr.error(response.message)
-			}
-		}),
+		)
+		this._serviceCatalog.wordGetListSuggest(request).subscribe(
+			(response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					this.lstDictionariesWord = response.result.CAWordGetListSuggest
+				} else {
+					this.toastr.error(response.message)
+				}
+			},
 			(error) => {
 				console.log(error)
 			}
+		)
+
+		this.unitService.getAll({}).subscribe(
+			(res) => {
+				if (res.success != 'OK') return
+				let listUnit = res.result.CAUnitGetAll.map((e) => {
+					let item = {
+						id: e.id,
+						name: e.name,
+						parentId: e.parentId == null ? 0 : e.parentId,
+						unitLevel: e.unitLevel,
+						children: [],
+					}
+					return item
+				})
+
+				this.lstUnit = listUnit
+				this.lstUnitTree = this.unflatten(listUnit)
+			},
+			(err) => {
+				console.log(err)
+			}
+		)
 	}
 
 	builForm() {
@@ -223,7 +262,7 @@ export class CreateRecommendationComponent implements OnInit {
 		} else if (check === 2) {
 			this.toastr.error('Không được phép đẩy trùng tên file lên hệ thống')
 		} else {
-			this.toastr.error('File tải lên vượt quá dung lượng cho phép 10MB')
+			this.toastr.error('File tải lên vượt quá dung lượng cho phép 20MB')
 		}
 		this.file.nativeElement.value = ''
 	}
@@ -327,5 +366,35 @@ export class CreateRecommendationComponent implements OnInit {
 	}
 	showEditContent() {
 		$('#contentRecommendation').removeClass('show')
+	}
+
+	private unflatten(arr): any[] {
+		var tree = [],
+			mappedArr = {},
+			arrElem,
+			mappedElem
+
+		// First map the nodes of the array to an object -> create a hash table.
+		for (var i = 0, len = arr.length; i < len; i++) {
+			arrElem = arr[i]
+			mappedArr[arrElem.id] = arrElem
+			mappedArr[arrElem.id]['children'] = []
+		}
+
+		for (var id in mappedArr) {
+			if (mappedArr.hasOwnProperty(id)) {
+				mappedElem = mappedArr[id]
+				// If the element is not at the root level, add it to its parent array of children.
+				if (mappedElem.parentId) {
+					if (!mappedArr[mappedElem['parentId']]) continue
+					mappedArr[mappedElem['parentId']]['children'].push(mappedElem)
+				}
+				// If the element is at the root level, add it to first level elements array.
+				else {
+					tree.push(mappedElem)
+				}
+			}
+		}
+		return tree
 	}
 }

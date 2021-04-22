@@ -29,18 +29,29 @@ namespace PAKNAPI.Models.ModelBase
 
 		public SYNotificationModel() { }
 	}
-    public class SYNotificationInsert
+
+	public class SYNotificationGetList {
+		public int PageSize { get; set; }
+		public int PageIndex { get; set; }
+		public string? Title { get; set; }
+		public string? Content { get; set; }
+		public int? Type { get; set; }
+		public DateTime? SendDate { get; set; }
+
+		public SYNotificationGetList(){}
+	}
+    public class SYNotification
     {
 		private SQLCon _sQLCon;
 
-		public SYNotificationInsert(IAppSetting appSetting)
+		public SYNotification(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
 		
 
-		public SYNotificationInsert()
+		public SYNotification()
 		{
 		}
 
@@ -61,6 +72,16 @@ namespace PAKNAPI.Models.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_NotificationInsert", DP));
 		}
+
+		// delete
+
+		public async Task<int> SYNotificationDelete(SYNotificationModel _syNotification)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _syNotification.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SYNotificationDelete", DP));
+		}
 	}
 
 	public class SYNotificationGetListOnPageByReceiveId
@@ -78,10 +99,14 @@ namespace PAKNAPI.Models.ModelBase
 		{
 		}
 
-		public async Task<List<SYNotificationModel>> SYNotificationGetListOnPageByReceiveIdDAO(int? ReceiveId, int PageSize, int PageIndex)
+		public async Task<List<SYNotificationModel>> SYNotificationGetListOnPageByReceiveIdDAO(int? ReceiveId, int PageSize, int PageIndex, string? Title, string? Content, int? Type, DateTime? SendDate)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", ReceiveId);
+			DP.Add("Title", Title);
+			DP.Add("Content", Content);
+			DP.Add("Type", Type);
+			DP.Add("SendDate", SendDate);
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
 

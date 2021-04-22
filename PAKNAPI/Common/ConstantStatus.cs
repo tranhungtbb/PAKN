@@ -36,4 +36,13 @@
 		public const int NEWS = 1; // thông báo tin tức
 		public const int RECOMMENDATION = 2; // thông báo PAKN
 	}
+
+	public class STATUS_HISNEWS
+	{
+		public const int CREATE = 0; //khoi tao
+		public const int COMPILE = 1; // soan thao
+		public const int UPDATE = 2; //2 cap nhap
+		public const int PUBLIC = 3; //3 cong bo
+		public const int CANCEL = 4; //3 huy cong bo
+	}
 }

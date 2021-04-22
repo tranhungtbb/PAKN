@@ -15,7 +15,8 @@ import { TableModule } from 'primeng/table'
 import { ScrollPanelModule } from 'primeng/scrollpanel'
 import { VirtualScrollerModule } from 'primeng/virtualscroller'
 import { DashboardComponent } from './dash-board/dash-board.component'
-import { NotificationComponent } from './notification/notification.component'
+import { NotificationComponent } from './notification/notification.component';
+import { RecommnendationGetListComponent } from './dash-board/recommnendation-get-list/recommnendation-get-list.component'
 
 @NgModule({
 	imports: [
@@ -32,6 +33,6 @@ import { NotificationComponent } from './notification/notification.component'
 		ScrollPanelModule,
 		VirtualScrollerModule,
 	],
-	declarations: [BusinessComponent, AppheaderComponent, AppfooterComponent, AppmenuComponent, DashboardComponent, NotificationComponent],
+	declarations: [BusinessComponent, AppheaderComponent, AppfooterComponent, AppmenuComponent, DashboardComponent, NotificationComponent, RecommnendationGetListComponent],
 })
 export class BusinessModule {}

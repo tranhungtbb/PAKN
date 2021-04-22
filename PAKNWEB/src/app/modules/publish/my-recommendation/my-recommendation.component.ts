@@ -144,6 +144,8 @@ export class MyRecommendationComponent implements OnInit {
 				$('#modalConfirmSend').modal('hide')
 				this.toastr.success(COMMONS.SEND_SUCCESS)
 				this.getList()
+				let item = this.listData.find((c) => c.id == this.recommandationId)
+				if (item) item.status = status
 			} else {
 				this.toastr.error(response.message)
 			}

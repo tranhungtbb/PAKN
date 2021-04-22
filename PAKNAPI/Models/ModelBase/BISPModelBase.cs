@@ -25,8 +25,8 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int? RowNumber { get; set; }
-		public int WardsId { get; set; }
-		public int DistrictId { get; set; }
+		public int? WardsId { get; set; }
+		public int? DistrictId { get; set; }
 		public string RepresentativeName { get; set; }
 		public string Code { get; set; }
 		public bool IsActived { get; set; }
@@ -70,8 +70,8 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int? RowNumber { get; set; }
-		public int WardsId { get; set; }
-		public int DistrictId { get; set; }
+		public int? WardsId { get; set; }
+		public int? DistrictId { get; set; }
 		public string RepresentativeName { get; set; }
 		public string Code { get; set; }
 		public bool IsActived { get; set; }

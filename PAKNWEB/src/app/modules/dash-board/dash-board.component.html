@@ -23,8 +23,8 @@
 							<p class="card-title h4 mb-4">PAKN<br> Đã giải quyết</p>
 							<div class="position-relative">
 								<span class="data-attr"
-									data-peity='{ "fill": ["rgb(52, 181, 58)", "rgba(223, 255, 230, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 120 }'>6.7/10</span>
-								<span class="h1 position-absolute number-chart counter">670</span>
+									data-peity='{ "fill": ["rgb(52, 181, 58)", "rgba(223, 255, 230, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 120 }'>{{dataGraph['stt_10'].percent}}/10</span>
+								<span class="h1 position-absolute number-chart counter">{{dataGraph['stt_10'].count}}</span>
 							</div>
 						</div>
 					</div>
@@ -34,144 +34,36 @@
 							<div class="position-relative">
 								<span class="data-attr"
 									data-peity='{ "fill": ["rgb(22, 115, 216)", "rgba(227, 241, 255, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>4.6/10</span>
-								<span class="h1 position-absolute number-chart counter">460</span>
+								<span class="h1 position-absolute number-chart counter">{{dataGraph.stt_5.count}}</span>
 							</div>
 
 						</div>
 					</div>
 					<div class="col-6 col-lg-3 text-center">
 						<div class="card py-3 py-xl-4">
-							<p class="card-title h4 mb-4">PAKN<br> Bị từ chối</p>
+							<p class="card-title h4 mb-4">PAKN<br> Từ chối giải quyết</p>
 							<div class="position-relative">
 								<span class="data-attr"
 									data-peity='{ "fill": ["rgb(218, 34, 34)", "rgba(255, 226, 226, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>1.5/10</span>
-								<span class="h1 position-absolute number-chart counter">150</span>
+								<span class="h1 position-absolute number-chart counter">{{dataGraph.stt_6.count}}</span>
 							</div>
 
 						</div>
 					</div>
 					<div class="col-6 col-lg-3 text-center">
 						<div class="card py-3 py-xl-4">
-							<p class="card-title h4 mb-4">PAKN<br> Chờ tiếp nhận</p>
+							<p class="card-title h4 mb-4">PAKN<br> Chờ xử lý</p>
 							<div class="position-relative">
 								<span class="data-attr"
-									data-peity='{ "fill": ["rgb(37, 167, 208)", "rgba(226, 248, 255, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>6.1/10</span>
-								<span class="h1 position-absolute number-chart counter">610</span>
+									data-peity='{ "fill": ["rgb(37, 167, 208)", "rgba(226, 248, 255, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>5/10</span>
+								<span class="h1 position-absolute number-chart counter">{{dataGraph.stt_2.count}}</span>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="card mx-lg-4">
-					<div class="card-header" style="background: #F2F7FB">
-						<h5 class="card-title">Danh sách phản ánh kiến nghị chưa giải quyết</h5>
-						<span class="badge badge-rounded bg-white text-dark" style="font-size: 1.2rem">50</span>
-					</div>
-					<div class="card-body pb-2">
-						<div class="card border-bottom mb-3 p-0 shadow-none rounded-0">
-							<div class="card-header p-0 d-flex align-items-center">
-								<div class="media align-items-center">
-									<div class="avatar-circle mr-2">
-										DL
-									</div>
-									<div class="media-body">
-										<p class="my-0 h5">Nguyễn Đức Lượng</p>
-									</div>
-								</div>
-								<span>7:30 | 14/01/2021</span>
-							</div>
-							<div class="card-body px-0 py-3">
-								<p class="card-text mb-1">
-									<a class="h4" href="#">
-										Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-									</a>
-								</p>
-								<p class="card-text">
-									<a class="text-2line" href="#">
-										Kính gửi: Bộ Thông Tin và Truyền Thông Tôi tên là Nguyễn Đức Lượng, là chủ thuê bao di động trả trước Mobifone: 0778231999 Sim này tôi ít sử
-										dụng do đã có
-									</a>
-								</p>
-							</div>
-						</div>
-						<div class="card border-bottom mb-3 p-0 shadow-none rounded-0">
-							<div class="card-header p-0 d-flex align-items-center">
-								<div class="media align-items-center">
-									<div class="avatar-circle mr-2">
-										DL
-									</div>
-									<div class="media-body">
-										<p class="my-0 h5">Nguyễn Đức Lượng</p>
-									</div>
-								</div>
-								<span>7:30 | 14/01/2021</span>
-							</div>
-							<div class="card-body px-0 py-3">
-								<p class="card-text mb-1">
-									<a class="h4" href="#">
-										Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-									</a>
-								</p>
-								<p class="card-text">
-									<a class="text-2line" href="#">
-										Kính gửi: Bộ Thông Tin và Truyền Thông Tôi tên là Nguyễn Đức Lượng, là chủ thuê bao di động trả trước Mobifone: 0778231999 Sim này tôi ít sử
-										dụng do đã có
-									</a>
-								</p>
-							</div>
-						</div>
-						<div class="card border-bottom mb-3 p-0 shadow-none rounded-0">
-							<div class="card-header p-0 d-flex align-items-center">
-								<div class="media align-items-center">
-									<div class="avatar-circle mr-2">
-										DL
-									</div>
-									<div class="media-body">
-										<p class="my-0 h5">Nguyễn Đức Lượng</p>
-									</div>
-								</div>
-								<span>7:30 | 14/01/2021</span>
-							</div>
-							<div class="card-body px-0 py-3">
-								<p class="card-text mb-1">
-									<a class="h4" href="#">
-										Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-									</a>
-								</p>
-								<p class="card-text">
-									<a class="text-2line" href="#">
-										Kính gửi: Bộ Thông Tin và Truyền Thông Tôi tên là Nguyễn Đức Lượng, là chủ thuê bao di động trả trước Mobifone: 0778231999 Sim này tôi ít sử
-										dụng do đã có
-									</a>
-								</p>
-							</div>
-						</div>
-						<div class="card mb-0 p-0 shadow-none rounded-0">
-							<div class="card-header p-0 d-flex align-items-center">
-								<div class="media align-items-center">
-									<div class="avatar-circle mr-2">
-										DL
-									</div>
-									<div class="media-body">
-										<p class="my-0 h5">Nguyễn Đức Lượng</p>
-									</div>
-								</div>
-								<span>7:30 | 14/01/2021</span>
-							</div>
-							<div class="card-body px-0 py-3">
-								<p class="card-text mb-1">
-									<a class="h4" href="#">
-										Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-									</a>
-								</p>
-								<p class="card-text">
-									<a class="text-2line" href="#">
-										Kính gửi: Bộ Thông Tin và Truyền Thông Tôi tên là Nguyễn Đức Lượng, là chủ thuê bao di động trả trước Mobifone: 0778231999 Sim này tôi ít sử
-										dụng do đã có
-									</a>
-								</p>
-							</div>
-						</div>
-					</div>
+					<!-- danh sach phan anh kien nghi -->
+					<app-recommnendation-get-list></app-recommnendation-get-list>
 				</div>
 				<div class="card mb-3 mb-lg-2 mx-lg-4">
 					<div class="card-header" style="background: #FFEEDC">

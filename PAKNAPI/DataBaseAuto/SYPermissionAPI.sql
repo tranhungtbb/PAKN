@@ -156,21 +156,3 @@ BEGIN
 END
 GO
 /* End SY_PermissionAPIDeleteAll */
-
-/* Start SY_PermissionAPICount */
-IF EXISTS
-(
-	SELECT *
-	FROM sys.objects
-	WHERE object_id = OBJECT_ID(N'[SY_PermissionAPICount]') AND type IN ( N'P', N'PC' )
-)
-DROP PROCEDURE [SY_PermissionAPICount];
-GO
-CREATE PROCEDURE [dbo].[SY_PermissionAPICount]
-AS
-BEGIN
-	SELECT Count(*)
-	FROM [SY_PermissionAPI]
-END
-GO
-/* End SY_PermissionAPICount */

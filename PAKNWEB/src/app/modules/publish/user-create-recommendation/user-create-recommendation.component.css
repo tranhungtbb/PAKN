@@ -9,3 +9,9 @@ form.form-row {
 .bg-white.captcha.border.d-flex.justify-content-between.align-items-center.rounded-xl.shadow.position-absolute {
 	top: auto;
 }
+.bg-hover:hover {
+	color: rgb(61, 61, 255);
+}
+p.active {
+	color: rgb(61, 61, 255);
+}
