@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
 
 import { DiadanhService } from 'src/app/services/diadanh.service'
-import { OrganizationComponent } from '../organization.component'
+import { RegisterService } from 'src/app/services/register.service'
 
 import { OrganizationObject } from 'src/app/models/RegisterObject'
+import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 
 declare var $: any
 @Component({
@@ -13,7 +14,7 @@ declare var $: any
 	styleUrls: ['./org-repre-form.component.css'],
 })
 export class OrgRepreFormComponent implements OnInit {
-	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService) {}
+	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService, private registerService: RegisterService) {}
 
 	dateNow: Date = new Date()
 	formInfo: FormGroup
@@ -107,5 +108,21 @@ export class OrgRepreFormComponent implements OnInit {
 		})
 
 		this.onChangeNation()
+	}
+
+	email_exists: boolean = false
+	idCard_exists: boolean = false
+	onCheckExist(field: string, value: string) {
+		this.registerService
+			.businessCheckExists({
+				field,
+				value,
+			})
+			.subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					if (field == 'Email') this.email_exists = res.result.BIBusinessCheckExists[0].exists
+					else if (field == 'IDCard') this.idCard_exists = res.result.BIBusinessCheckExists[0].exists
+				}
+			})
 	}
 }
