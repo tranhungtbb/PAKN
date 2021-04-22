@@ -15,8 +15,8 @@ namespace PAKNAPI.ModelBase
 	{
 		public long Id { get; set; }
 		public int? ProvinceId { get; set; }
-		public int WardsId { get; set; }
-		public int DistrictId { get; set; }
+		public int? WardsId { get; set; }
+		public int? DistrictId { get; set; }
 		public string RepresentativeName { get; set; }
 		public string Code { get; set; }
 		public string Address { get; set; }
@@ -66,8 +66,8 @@ namespace PAKNAPI.ModelBase
 
 		public long Id { get; set; }
 		public int? ProvinceId { get; set; }
-		public int WardsId { get; set; }
-		public int DistrictId { get; set; }
+		public int? WardsId { get; set; }
+		public int? DistrictId { get; set; }
 		public string RepresentativeName { get; set; }
 		public string Code { get; set; }
 		public string Address { get; set; }
@@ -127,8 +127,6 @@ namespace PAKNAPI.ModelBase
 		public async Task<int?> BIBusinessInsert(BIBusiness _bIBusiness)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("WardsId", _bIBusiness.WardsId);
-			DP.Add("DistrictId", _bIBusiness.DistrictId);
 			DP.Add("RepresentativeName", _bIBusiness.RepresentativeName);
 			DP.Add("IsActived", _bIBusiness.IsActived);
 			DP.Add("IsDeleted", _bIBusiness.IsDeleted);
@@ -137,6 +135,8 @@ namespace PAKNAPI.ModelBase
 			DP.Add("RepresentativeBirthDay", _bIBusiness.RepresentativeBirthDay);
 			DP.Add("Business", _bIBusiness.Business);
 			DP.Add("ProvinceId", _bIBusiness.ProvinceId);
+			DP.Add("WardsId", _bIBusiness.WardsId);
+			DP.Add("DistrictId", _bIBusiness.DistrictId);
 			DP.Add("CreatedDate", _bIBusiness.CreatedDate);
 			DP.Add("UpdatedDate", _bIBusiness.UpdatedDate);
 			DP.Add("CreatedBy", _bIBusiness.CreatedBy);
@@ -168,8 +168,6 @@ namespace PAKNAPI.ModelBase
 		public async Task<int> BIBusinessUpdate(BIBusiness _bIBusiness)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("WardsId", _bIBusiness.WardsId);
-			DP.Add("DistrictId", _bIBusiness.DistrictId);
 			DP.Add("RepresentativeName", _bIBusiness.RepresentativeName);
 			DP.Add("IsActived", _bIBusiness.IsActived);
 			DP.Add("IsDeleted", _bIBusiness.IsDeleted);
@@ -179,6 +177,8 @@ namespace PAKNAPI.ModelBase
 			DP.Add("RepresentativeBirthDay", _bIBusiness.RepresentativeBirthDay);
 			DP.Add("Business", _bIBusiness.Business);
 			DP.Add("ProvinceId", _bIBusiness.ProvinceId);
+			DP.Add("WardsId", _bIBusiness.WardsId);
+			DP.Add("DistrictId", _bIBusiness.DistrictId);
 			DP.Add("CreatedDate", _bIBusiness.CreatedDate);
 			DP.Add("UpdatedDate", _bIBusiness.UpdatedDate);
 			DP.Add("CreatedBy", _bIBusiness.CreatedBy);

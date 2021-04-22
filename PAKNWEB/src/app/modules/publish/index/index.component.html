@@ -24,7 +24,7 @@
 					</div>
 				</div>
 				<div class="col col-lg-7">
-					<div class="owl-carousel owl-theme h-100">
+					<div id="owl-news" class="owl-carousel owl-theme h-100">
 						<div class="item" *ngFor="let item of news">
 							<div class="card mb-lg-0">
 								<a href="javascript:void(0)" (click)="redirectDetailNews(item.id)" class="image-box ratio-16-9 rounded">
@@ -37,7 +37,7 @@
 									<p class="card-title text-3line"><a href="javascript:void(0)" (click)="redirectDetailNews(item.id)">{{item.title}}</a></p>
 								</div>
 								<div class="card-body px-4 pt-2 pb-3">
-									<p class="card-text text-2line"><a href="javascript:void(0)" (click)="redirectDetailNews(item.id)" innerHTML="{{item.summary | Change}}"></a>
+									<p class="card-text text-2line"><a href="javascript:void(0)" (click)="redirectDetailNews(item.id)">{{item.summary}}</a>
 									</p>
 								</div>
 							</div>
@@ -208,3 +208,4 @@
 </div>
 
 <script src="../../../../assets/dist/js/owl.carousel.min.js"></script>
+<!-- <script src="../../../../assets/dist/js/sd-js.js"></script> -->

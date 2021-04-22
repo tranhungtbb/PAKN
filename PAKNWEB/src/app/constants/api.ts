@@ -42,6 +42,7 @@ export class Api {
 	public static RecommendationExport = 'MRSPBase/MRRecommendationExportBase'
 	public static RecommendationGetSuggestCreate = 'MRSPBase/MRRecommendationGetSuggestCreateBase'
 	public static RecommendationGetSuggestReply = 'MRSPBase/MRRecommendationGetSuggestReplyBase'
+	public static RecommendationGetDataGraph = 'MRSPBase/MRRecommendationGetDataGraphBase'
 
 	public static PuRecommendationGetAllOnPage = 'PURecommendation/PURecommendationAllOnPage'
 	public static PuRecomentdationGetListOrderByCountClick = 'PURecommendation/PURecommendationGetListOrderByCountClick'
@@ -59,10 +60,10 @@ export class Api {
 
 	//Field
 	public static HashtagGetAll = 'CATableBase/CAHashtagGetAll'
-	public static HashtagGetList = 'CATableBase/CAHashtagGetAllOnPage'
+	public static HashtagGetList = 'CAHashtag/CAHashtagGetAllOnPage'
 	public static HashtagGetById = 'CACategorySPBase/CAHashtagGetByID'
 	public static HashtagInsert = 'CATableBase/CAHashtagInsert'
-	public static HashtagUpdate = 'CATableBase/CAHashtagUpdate'
+	public static HashtagUpdate = 'CAHashtag/CAHashtagUpdate'
 	public static HashtagUpdateStatus = 'CATableBase/'
 	public static HashtagDelete = 'CATableBase/CAHashtagDelete'
 
@@ -121,7 +122,7 @@ export class Api {
 
 	//tin tuc
 	public static NewsGetAllOnPage = 'NESPBase/NENewsGetAllOnPageBase'
-	public static NewsGetListHomePage = 'NESPBase/NENewsGetListHomePage'
+	public static NewsGetListHomePage = 'NENews/NENewsGetListHomePage'
 	public static NewsGetById = 'NESPBase/NENewsGetByIDBase'
 	public static NewsInsert = 'NESPBase/NENewsInsertBase'
 	public static NewsUpdate = 'NESPBase/NENewsUpdateBase'
@@ -130,6 +131,8 @@ export class Api {
 	public static NewsRelatesGetAll = 'NESPBase/NERelateGetAllBase'
 	public static NewsGetAvatar = 'files/get-news-avatar'
 	public static NewsGetAvatars = 'files/get-news-avatar'
+	public static HisNewsInsert = 'HITableBase/HISNewsInsert'
+	public static HisNewsGetListByNewsId = 'HITableBase/HISNewsGetByNewsId'
 
 	//Department
 	public static DepartmentGetList = 'CACategorySPBase/CADepartmentGetAllOnPageBase'
@@ -166,7 +169,7 @@ export class Api {
 	//Administrative Formalities
 	public static AdministrativeFormalitiesGetDropdown = 'AdministrativeFormalities/AdministrativeFormalitiesGetDropdown'
 	public static AdministrativeFormalitiesGetList = 'DAMSPBase/DAMAdministrationGetListBase'
-	public static AdministrativeFormalitiesGetListHomePage = 'DAMSPBase/DAMAdministrationGetListHomePage'
+	public static AdministrativeFormalitiesGetListHomePage = 'DAMAdministration/DAMAdministrationGetListHomePage'
 	public static AdministrativeFormalitiesGetById = 'AdministrationFormalities/AdministrationFormalitiesGetByID'
 	public static AdministrativeFormalitiesGetByIdView = 'AdministrativeFormalities/RecommendationGetByIdView'
 	public static AdministrativeFormalitiesInsert = 'AdministrationFormalities/AdministrationFormalitiesInsert'

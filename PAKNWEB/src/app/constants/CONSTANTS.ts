@@ -77,6 +77,14 @@ export class PROCESS_STATUS_RECOMMENDATION {
 	public static FORWARD = 4 //3 Chuyển xử lý
 }
 
+export class STATUS_HISNEWS {
+	public static CREATE = 0 //khoi tao
+	public static COMPILE = 1 // soan thao
+	public static UPDATE = 2 //2 cap nhap
+	public static PUBLIC = 3 //3 cong bo
+	public static CANCEL = 4 //3 huy cong bo
+}
+
 export const FILETYPE = [
 	{ text: 'application/msword', value: 1 },
 	{ text: 'text/plain', value: 1 },

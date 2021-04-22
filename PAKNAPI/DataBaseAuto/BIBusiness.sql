@@ -13,8 +13,6 @@ CREATE PROCEDURE [dbo].[BI_BusinessGetByID]
 AS
 BEGIN
 	SELECT
-		[WardsId],
-		[DistrictId],
 		[RepresentativeName],
 		[IsActived],
 		[IsDeleted],
@@ -24,6 +22,8 @@ BEGIN
 		[RepresentativeBirthDay],
 		[Business],
 		[ProvinceId],
+		[WardsId],
+		[DistrictId],
 		[CreatedDate],
 		[UpdatedDate],
 		[CreatedBy],
@@ -67,8 +67,6 @@ CREATE PROCEDURE [dbo].[BI_BusinessGetAll]
 AS
 BEGIN
 	SELECT
-		[WardsId],
-		[DistrictId],
 		[RepresentativeName],
 		[IsActived],
 		[IsDeleted],
@@ -78,6 +76,8 @@ BEGIN
 		[RepresentativeBirthDay],
 		[Business],
 		[ProvinceId],
+		[WardsId],
+		[DistrictId],
 		[CreatedDate],
 		[UpdatedDate],
 		[CreatedBy],
@@ -123,8 +123,6 @@ AS
 BEGIN
 	SELECT
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
-		[WardsId],
-		[DistrictId],
 		[RepresentativeName],
 		[IsActived],
 		[IsDeleted],
@@ -134,6 +132,8 @@ BEGIN
 		[RepresentativeBirthDay],
 		[Business],
 		[ProvinceId],
+		[WardsId],
+		[DistrictId],
 		[CreatedDate],
 		[UpdatedDate],
 		[CreatedBy],
@@ -176,8 +176,6 @@ IF EXISTS
 DROP PROCEDURE [BI_BusinessInsert];
 GO
 CREATE PROCEDURE [dbo].[BI_BusinessInsert]
-	@WardsId int = null,
-	@DistrictId int = null,
 	@RepresentativeName nvarchar(256) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
@@ -186,6 +184,8 @@ CREATE PROCEDURE [dbo].[BI_BusinessInsert]
 	@RepresentativeBirthDay date = null,
 	@Business nvarchar(255) = null,
 	@ProvinceId int = null,
+	@WardsId int = null,
+	@DistrictId int = null,
 	@CreatedDate datetime = null,
 	@UpdatedDate datetime = null,
 	@CreatedBy int = null,
@@ -214,8 +214,6 @@ AS
 BEGIN
 	INSERT INTO [BI_Business]
 	(
-		[WardsId],
-		[DistrictId],
 		[RepresentativeName],
 		[IsActived],
 		[IsDeleted],
@@ -224,6 +222,8 @@ BEGIN
 		[RepresentativeBirthDay],
 		[Business],
 		[ProvinceId],
+		[WardsId],
+		[DistrictId],
 		[CreatedDate],
 		[UpdatedDate],
 		[CreatedBy],
@@ -251,8 +251,6 @@ BEGIN
 	)
 	VALUES
 	(
-		@WardsId,
-		@DistrictId,
 		@RepresentativeName,
 		@IsActived,
 		@IsDeleted,
@@ -261,6 +259,8 @@ BEGIN
 		@RepresentativeBirthDay,
 		@Business,
 		@ProvinceId,
+		@WardsId,
+		@DistrictId,
 		@CreatedDate,
 		@UpdatedDate,
 		@CreatedBy,
@@ -300,8 +300,6 @@ IF EXISTS
 DROP PROCEDURE [BI_BusinessUpdate];
 GO
 CREATE PROCEDURE [dbo].[BI_BusinessUpdate]
-	@WardsId int = null,
-	@DistrictId int = null,
 	@RepresentativeName nvarchar(256) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
@@ -311,6 +309,8 @@ CREATE PROCEDURE [dbo].[BI_BusinessUpdate]
 	@RepresentativeBirthDay date = null,
 	@Business nvarchar(255) = null,
 	@ProvinceId int = null,
+	@WardsId int = null,
+	@DistrictId int = null,
 	@CreatedDate datetime = null,
 	@UpdatedDate datetime = null,
 	@CreatedBy int = null,
@@ -338,8 +338,6 @@ CREATE PROCEDURE [dbo].[BI_BusinessUpdate]
 AS
 BEGIN
 	UPDATE [BI_Business] SET
-		[WardsId] = @WardsId,
-		[DistrictId] = @DistrictId,
 		[RepresentativeName] = @RepresentativeName,
 		[IsActived] = @IsActived,
 		[IsDeleted] = @IsDeleted,
@@ -348,6 +346,8 @@ BEGIN
 		[RepresentativeBirthDay] = @RepresentativeBirthDay,
 		[Business] = @Business,
 		[ProvinceId] = @ProvinceId,
+		[WardsId] = @WardsId,
+		[DistrictId] = @DistrictId,
 		[CreatedDate] = @CreatedDate,
 		[UpdatedDate] = @UpdatedDate,
 		[CreatedBy] = @CreatedBy,

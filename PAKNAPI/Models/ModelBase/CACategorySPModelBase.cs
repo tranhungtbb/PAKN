@@ -480,57 +480,6 @@ namespace PAKNAPI.ModelBase
 		public string Description { get; set; }
 	}
 
-	public class CAFieldKNCTGetDropdown
-	{
-		private SQLCon _sQLCon;
-
-		public CAFieldKNCTGetDropdown(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public CAFieldKNCTGetDropdown()
-		{
-		}
-
-		public int Value { get; set; }
-		public string Text { get; set; }
-
-		public async Task<List<CAFieldKNCTGetDropdown>> CAFieldKNCTGetDropdownDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<CAFieldKNCTGetDropdown>("CA_FieldKNCTGetDropdown", DP)).ToList();
-		}
-	}
-
-	public class CAFieldKNCTInsert
-	{
-		private SQLCon _sQLCon;
-
-		public CAFieldKNCTInsert(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public CAFieldKNCTInsert()
-		{
-		}
-
-		public async Task<int?> CAFieldKNCTInsertDAO(CAFieldKNCTInsertIN _cAFieldKNCTInsertIN)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Name", _cAFieldKNCTInsertIN.Name);
-
-			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_FieldKNCTInsert", DP);
-		}
-	}
-
-	public class CAFieldKNCTInsertIN
-	{
-		public string Name { get; set; }
-	}
-
 	public class CAFieldUpdate
 	{
 		private SQLCon _sQLCon;
@@ -956,30 +905,6 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-	public class CAPositionGetDropdown
-	{
-		private SQLCon _sQLCon;
-
-		public CAPositionGetDropdown(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public CAPositionGetDropdown()
-		{
-		}
-
-		public int Value { get; set; }
-		public string Text { get; set; }
-
-		public async Task<List<CAPositionGetDropdown>> CAPositionGetDropdownDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<CAPositionGetDropdown>("CA_PositionGetDropdown", DP)).ToList();
-		}
-	}
-
 	public class CAPositionInsert
 	{
 		private SQLCon _sQLCon;
@@ -1182,35 +1107,6 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-	public class CAUnitGetTree
-	{
-		private SQLCon _sQLCon;
-
-		public CAUnitGetTree(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public CAUnitGetTree()
-		{
-		}
-
-		public int? RowNumber { get; set; }
-		public int ProvindeId { get; set; }
-		public string ProvindeName { get; set; }
-		public int? DistrictId { get; set; }
-		public string DistrictName { get; set; }
-		public int? WardsId { get; set; }
-		public string WardsName { get; set; }
-
-		public async Task<List<CAUnitGetTree>> CAUnitGetTreeDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<CAUnitGetTree>("CA_UnitGetTree", DP)).ToList();
-		}
-	}
-
 	public class CAUnitInsert
 	{
 		private SQLCon _sQLCon;
@@ -1303,40 +1199,6 @@ namespace PAKNAPI.ModelBase
 		public bool? IsMain { get; set; }
 	}
 
-	public class CAUserGetByUnitId
-	{
-		private SQLCon _sQLCon;
-
-		public CAUserGetByUnitId(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public CAUserGetByUnitId()
-		{
-		}
-
-		public long Id { get; set; }
-		public string FullName { get; set; }
-		public string Phone { get; set; }
-		public bool IsActived { get; set; }
-		public short? UnitId { get; set; }
-
-		public async Task<List<CAUserGetByUnitId>> CAUserGetByUnitIdDAO(int? PageIndex, int? PageSize, string UserName, string FullName, string Phone, bool? IsActive, int? UnitId)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("PageSize", PageSize);
-			DP.Add("UserName", UserName);
-			DP.Add("FullName", FullName);
-			DP.Add("Phone", Phone);
-			DP.Add("IsActive", IsActive);
-			DP.Add("UnitId", UnitId);
-
-			return (await _sQLCon.ExecuteListDapperAsync<CAUserGetByUnitId>("CA_UserGetByUnitId", DP)).ToList();
-		}
-	}
-
 	public class CAWordDelete
 	{
 		private SQLCon _sQLCon;
@@ -1422,30 +1284,6 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAWordGetByID>("CA_WordGetByID", DP)).ToList();
-		}
-	}
-
-	public class CAWordGetListSuggest
-	{
-		private SQLCon _sQLCon;
-
-		public CAWordGetListSuggest(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public CAWordGetListSuggest()
-		{
-		}
-
-		public string Name { get; set; }
-		public string Description { get; set; }
-
-		public async Task<List<CAWordGetListSuggest>> CAWordGetListSuggestDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<CAWordGetListSuggest>("CA_WordGetListSuggest", DP)).ToList();
 		}
 	}
 

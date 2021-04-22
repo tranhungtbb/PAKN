@@ -29,3 +29,13 @@
 	overflow: hidden;
 	text-align: left;
 }
+
+.scroll-y::-webkit-scrollbar {
+	width: 6px;
+	background-color: #ddd;
+}
+
+.scroll-y::-webkit-scrollbar-thumb {
+	background-color: #5d5a5a;
+	border-radius: 5px;
+}

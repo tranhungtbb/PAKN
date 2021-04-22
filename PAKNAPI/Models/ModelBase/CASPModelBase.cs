@@ -11,155 +11,30 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
-	public class CADistrictGetAll
+	public class CAFieldKNCTInsert
 	{
 		private SQLCon _sQLCon;
 
-		public CADistrictGetAll(IAppSetting appSetting)
+		public CAFieldKNCTInsert(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public CADistrictGetAll()
+		public CAFieldKNCTInsert()
 		{
 		}
 
-		public short Id { get; set; }
+		public async Task<int?> CAFieldKNCTInsertDAO(CAFieldKNCTInsertIN _cAFieldKNCTInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _cAFieldKNCTInsertIN.Name);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_FieldKNCTInsert", DP);
+		}
+	}
+
+	public class CAFieldKNCTInsertIN
+	{
 		public string Name { get; set; }
-		public string Code { get; set; }
-
-		public async Task<List<CADistrictGetAll>> CADistrictGetAllDAO(byte? ProvinceId)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("ProvinceId", ProvinceId);
-
-			return (await _sQLCon.ExecuteListDapperAsync<CADistrictGetAll>("CA_DistrictGetAll", DP)).ToList();
-		}
-	}
-
-	public class CAFieldGetDropdown
-	{
-		private SQLCon _sQLCon;
-
-		public CAFieldGetDropdown(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public CAFieldGetDropdown()
-		{
-		}
-
-		public int Value { get; set; }
-		public string Text { get; set; }
-
-		public async Task<List<CAFieldGetDropdown>> CAFieldGetDropdownDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<CAFieldGetDropdown>("CA_FieldGetDropdown", DP)).ToList();
-		}
-	}
-
-	public class CAHashtagGetAll
-	{
-		private SQLCon _sQLCon;
-
-		public CAHashtagGetAll(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public CAHashtagGetAll()
-		{
-		}
-
-		public int? RowNumber { get; set; }
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public bool IsActived { get; set; }
-
-		public async Task<List<CAHashtagGetAll>> CAHashtagGetAllDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<CAHashtagGetAll>("CA_HashtagGetAll", DP)).ToList();
-		}
-	}
-
-	public class CAHashtagGetDropdown
-	{
-		private SQLCon _sQLCon;
-
-		public CAHashtagGetDropdown(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public CAHashtagGetDropdown()
-		{
-		}
-
-		public int Value { get; set; }
-		public string Text { get; set; }
-
-		public async Task<List<CAHashtagGetDropdown>> CAHashtagGetDropdownDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<CAHashtagGetDropdown>("CA_HashtagGetDropdown", DP)).ToList();
-		}
-	}
-
-	public class CAProvinceGetAll
-	{
-		private SQLCon _sQLCon;
-
-		public CAProvinceGetAll(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public CAProvinceGetAll()
-		{
-		}
-
-		public short Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-
-		public async Task<List<CAProvinceGetAll>> CAProvinceGetAllDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<CAProvinceGetAll>("CA_ProvinceGetAll", DP)).ToList();
-		}
-	}
-
-	public class CAVillageGetAll
-	{
-		private SQLCon _sQLCon;
-
-		public CAVillageGetAll(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public CAVillageGetAll()
-		{
-		}
-
-		public short Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-
-		public async Task<List<CAVillageGetAll>> CAVillageGetAllDAO(byte? ProvinceId, byte? DistrictId)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("ProvinceId", ProvinceId);
-			DP.Add("DistrictId", DistrictId);
-
-			return (await _sQLCon.ExecuteListDapperAsync<CAVillageGetAll>("CA_VillageGetAll", DP)).ToList();
-		}
 	}
 }

@@ -15,10 +15,10 @@ import { CatalogService } from '../../../services/catalog.service'
 import { NotificationService } from '../../../services/notification.service'
 
 import { NewsRelateModalComponent } from '../news-relate-modal/news-relate-modal.component'
-
+import { CONSTANTS, STATUS_HISNEWS } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from '../../../commons/commons'
 import { AppSettings } from '../../../constants/app-setting'
-import { NewsModel } from '../../../models/NewsObject'
+import { NewsModel, HISNewsModel } from '../../../models/NewsObject'
 import { from } from 'rxjs'
 
 declare var $: any
@@ -70,6 +70,9 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		{ text: 'Bài viết thường', value: '0' },
 		{ text: 'nổi bật', value: '1' },
 	]
+	hisPublic: boolean = false
+
+	hisNewsModel: HISNewsModel = new HISNewsModel()
 
 	postTypeSelected: any[] = []
 
@@ -94,6 +97,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 						return
 					}
 					this.model = res.result.NENewsGetByID[0]
+					this.hisPublic = this.model.isPublished
 					this.postTypeSelected = this.model.postType.trim().split(',')
 					//lay danh sach bai viet lien quan
 					this.getNewsRelatesInfo()
@@ -168,6 +172,22 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				}
 				// insert vào Notification
 				this.insertNotification(false)
+
+				// cap nhap
+				this.hisNewsModel.status = STATUS_HISNEWS.UPDATE
+				this.hisNewsModel.objectId = this.model.id
+				this.hisNewsModel.type = 1 // tin tức
+				this.newsService.hisNewsCreate(this.hisNewsModel).subscribe()
+
+				if (published == true) {
+					this.hisNewsModel.status = STATUS_HISNEWS.PUBLIC
+					this.newsService.hisNewsCreate(this.hisNewsModel).subscribe()
+				}
+				if (published == false && this.hisPublic == true) {
+					this.hisNewsModel.status = STATUS_HISNEWS.CANCEL
+					this.newsService.hisNewsCreate(this.hisNewsModel).subscribe()
+				}
+
 				this.toast.success(COMMONS.UPDATE_SUCCESS)
 				this.router.navigate(['/quan-tri/tin-tuc'])
 			})
@@ -180,6 +200,18 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				}
 				this.model.id = res.result
 				this.insertNotification(true)
+
+				// khởi tạo
+				this.hisNewsModel.status = STATUS_HISNEWS.CREATE
+				this.hisNewsModel.objectId = res.result
+				this.hisNewsModel.type = 1 // tin tức
+				this.newsService.hisNewsCreate(this.hisNewsModel).subscribe()
+				// soạn thảo
+
+				if (published == true) {
+					this.hisNewsModel.status = STATUS_HISNEWS.PUBLIC
+					this.newsService.hisNewsCreate(this.hisNewsModel).subscribe()
+				}
 
 				this.toast.success(COMMONS.ADD_SUCCESS)
 				this.router.navigate(['/quan-tri/tin-tuc'])
