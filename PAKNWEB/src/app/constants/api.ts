@@ -131,8 +131,8 @@ export class Api {
 	public static NewsRelatesGetAll = 'NESPBase/NERelateGetAllBase'
 	public static NewsGetAvatar = 'files/get-news-avatar'
 	public static NewsGetAvatars = 'files/get-news-avatar'
-	public static HisNewsInsert = 'HITableBase/HISNewsInsert'
-	public static HisNewsGetListByNewsId = 'HITableBase/HISNewsGetByNewsId'
+	public static HisNewsInsert = 'HISNews/HISNewsInsert'
+	public static HisNewsGetListByNewsId = 'HISNews/HISNewsGetByNewsId'
 
 	//Department
 	public static DepartmentGetList = 'CACategorySPBase/CADepartmentGetAllOnPageBase'
