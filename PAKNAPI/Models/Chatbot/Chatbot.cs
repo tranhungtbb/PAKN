@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using PAKNAPI.Common;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,33 +10,8 @@ using System.Xml.Linq;
 namespace PAKNAPI.Models.Chatbot
 {
 
-	#region ChatbotCount
-	public class ChatbotCount
-	{
-		private SQLCon _sQLCon;
-
-		public ChatbotCount(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public ChatbotCount()
-		{
-		}
-
-		public async Task<List<ChatbotCount>> ChatbotCountDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<ChatbotCount>("ChatbotCount", DP)).ToList();
-		}
-
-	}
-
-	#endregion
-
-	#region ChatbotDelete
-	public class ChatbotDelete
+    #region ChatbotDelete
+    public class ChatbotDelete
 	{
 		private SQLCon _sQLCon;
 		private string _filePath;
@@ -67,18 +41,18 @@ namespace PAKNAPI.Models.Chatbot
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("ChatbotDelete", DP));
 		}
 
-		public async Task<int> ChatbotDeleteQuestion(ChatbotDeleteIN _chatbotDeleteIN)
+		public async Task<bool> ChatbotDeleteQuestion(ChatbotDeleteIN _chatbotDeleteIN)
 		{
 			XDocument xDocument = XDocument.Load(_filePath);
 			var categoryFilter = xDocument.Descendants("category").Where(c => c.Attribute("id").Value.Equals(_chatbotDeleteIN.CategoryId.ToString())).FirstOrDefault();
 			if (categoryFilter == null)
             {
-				return _chatbotDeleteIN.CategoryId;
+				return false;
 			}
 			categoryFilter.Remove();
 			xDocument.Save(_filePath);
-			await Task.Delay(0);
-			return _chatbotDeleteIN.CategoryId;
+			await Task.Delay(10);
+			return true;
 		}
 
 	}
@@ -395,7 +369,7 @@ namespace PAKNAPI.Models.Chatbot
 			var categoryFilter = xDocument.Descendants("category").Where(c => c.Attribute("id").Value.Equals(_chatbotUpdateIN.CategoryId.ToString())).FirstOrDefault();
 			categoryFilter.Remove();
 			xDocument.Save(_filePath);
-			await Task.Delay(0);
+			await Task.Delay(10);
 			return _chatbotUpdateIN.CategoryId;
 		}
 
@@ -411,7 +385,7 @@ namespace PAKNAPI.Models.Chatbot
 			categoryFilter.SetElementValue("pattern", _chatbotUpdateIN.Question);
 			categoryFilter.SetElementValue("template", _chatbotUpdateIN.Answer);
 			xDocument.Save(_filePath);
-			await Task.Delay(0);
+			await Task.Delay(10);
 			return _chatbotUpdateIN.CategoryId;
 		}
 
