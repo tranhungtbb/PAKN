@@ -24,6 +24,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	activeUrl: string = ''
 	isHasToken: boolean = this.storageService.getIsHaveToken()
 	typeUserLoginPublish: number = this.storageService.getTypeObject()
+	currentFullnName: string = this.storageService.getFullName()
 
 	notifications: any[]
 	ViewedCount: number = 0

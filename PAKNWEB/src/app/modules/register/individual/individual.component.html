@@ -6,13 +6,18 @@
 				<div class="form-group">
 					<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
 					<input numbersOnly stopLength="10" [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." autocomplete="off"
-						class="form-control border-brown">
+						class="form-control border-brown" (change)="onCheckExist('Phone',$event.target.value)">
 					<div *ngIf="(fLoginSubmitted && fLogin.phone.invalid)||(fLogin.phone.invalid && (fLogin.phone.dirty || fLogin.phone.touched))" class="has-error m-b-12">
 						<div *ngIf="fLogin.phone.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
 						<div *ngIf="fLogin.phone.errors.pattern">
 							<span class="help-block">Số điện thoại không đúng</span>
+						</div>
+					</div>
+					<div *ngIf="phone_exists && fLogin.phone.valid" class="has-error m-b-12">
+						<div *ngIf="phone_exists">
+							<span class="help-block">Số điện thoại đã tồn tại</span>
 						</div>
 					</div>
 				</div>
@@ -146,14 +151,17 @@
 				<div class="w-100"></div>
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Email</label>
-					<input [svTrim] [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập..." class="form-control border-brown"
+						(change)="onCheckExist('Email',$event.target.value)">
 					<!--  -->
 					<div *ngIf="(fLoginSubmitted && fInfo.email.invalid)||(fInfo.email.invalid && (fInfo.email.dirty || fInfo.email.touched))" class="has-error m-b-12">
-						<div *ngIf="fInfo.email.errors.required">
-							<span class="help-block">Trường dữ liệu này không được để trống</span>
-						</div>
 						<div *ngIf="fInfo.email.errors.email">
 							<span class="help-block">Email không hợp lệ</span>
+						</div>
+					</div>
+					<div *ngIf="email_exists && fInfo.email.valid" class="has-error m-b-12">
+						<div *ngIf="email_exists">
+							<span class="help-block">Email đã tồn tại</span>
 						</div>
 					</div>
 				</div>
@@ -172,7 +180,7 @@
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Số CMND / CCCD / Hộ chiếu <span class="cl-red">(*)</span></label>
 					<input svDisabledSpaceKey stopLength="12" [(ngModel)]="model.iDCard" formControlName="iDCard" type="text" placeholder="Nhập..."
-						class="form-control border-brown" pattern="^([0-9]){8,12}$">
+						class="form-control border-brown" pattern="^([0-9]){8,12}$" (change)="onCheckExist('IDCard',$event.target.value)">
 					<!--  -->
 					<div *ngIf="(fLoginSubmitted && fInfo.iDCard.invalid)||(fInfo.iDCard.invalid && (fInfo.iDCard.dirty || fInfo.iDCard.touched))" class="has-error m-b-12">
 						<div *ngIf="fInfo.iDCard.errors.required">
@@ -180,6 +188,11 @@
 						</div>
 						<div *ngIf="fInfo.iDCard.errors.pattern">
 							<span class="help-block">Số CMND/CCCD không hợp lệ!</span>
+						</div>
+					</div>
+					<div *ngIf="idCard_exists && fInfo.iDCard.valid" class="has-error m-b-12">
+						<div *ngIf="idCard_exists">
+							<span class="help-block">Số CMND/CCCD đã tồn tại</span>
 						</div>
 					</div>
 				</div>

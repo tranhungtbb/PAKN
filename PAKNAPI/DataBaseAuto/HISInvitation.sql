@@ -188,3 +188,21 @@ BEGIN
 END
 GO
 /* End HIS_InvitationDeleteAll */
+
+/* Start HIS_InvitationCount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[HIS_InvitationCount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [HIS_InvitationCount];
+GO
+CREATE PROCEDURE [dbo].[HIS_InvitationCount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [HIS_Invitation]
+END
+GO
+/* End HIS_InvitationCount */

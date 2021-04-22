@@ -31,7 +31,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("SYUserChangePwdBase")]
 		public async Task<ActionResult<object>> SYUserChangePwdBase(SYUserChangePwdIN _sYUserChangePwdIN)
 		{
@@ -51,7 +51,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("SYUserChangePwdListBase")]
 		public async Task<ActionResult<object>> SYUserChangePwdListBase(List<SYUserChangePwdIN> _sYUserChangePwdINs)
 		{
@@ -152,15 +152,18 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize]
-		[Route("SYUserGetAllBase")]
-		public async Task<ActionResult<object>> SYUserGetAllBase()
+		[Route("SYUserGetAllOnPageBase")]
+		public async Task<ActionResult<object>> SYUserGetAllOnPageBase(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived, int? UnitId, int? TypeId)
 		{
 			try
 			{
-				List<SYUserGetAll> rsSYUserGetAll = await new SYUserGetAll(_appSetting).SYUserGetAllDAO();
+				List<SYUserGetAllOnPage> rsSYUserGetAllOnPage = await new SYUserGetAllOnPage(_appSetting).SYUserGetAllOnPageDAO(PageSize, PageIndex, UserName, FullName, Phone, IsActived, UnitId, TypeId);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"SYUserGetAll", rsSYUserGetAll},
+						{"SYUserGetAllOnPage", rsSYUserGetAllOnPage},
+						{"TotalCount", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? rsSYUserGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -198,29 +201,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize]
-		[Route("SYUserGetByUnitIdBase")]
-		public async Task<ActionResult<object>> SYUserGetByUnitIdBase(int? UnitId)
-		{
-			try
-			{
-				List<SYUserGetByUnitId> rsSYUserGetByUnitId = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(UnitId);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"SYUserGetByUnitId", rsSYUserGetByUnitId},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize]
 		[Route("SYUserGetNameByIdBase")]
 		public async Task<ActionResult<object>> SYUserGetNameByIdBase(long? Id)
 		{
@@ -230,29 +210,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYUserGetNameById", rsSYUserGetNameById},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize]
-		[Route("SYUserGetNonSystemBase")]
-		public async Task<ActionResult<object>> SYUserGetNonSystemBase()
-		{
-			try
-			{
-				List<SYUserGetNonSystem> rsSYUserGetNonSystem = await new SYUserGetNonSystem(_appSetting).SYUserGetNonSystemDAO();
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"SYUserGetNonSystem", rsSYUserGetNonSystem},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -314,6 +271,29 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYUsersGetDropdownByUnitIdBase")]
+		public async Task<ActionResult<object>> SYUsersGetDropdownByUnitIdBase(int? UnitId)
+		{
+			try
+			{
+				List<SYUsersGetDropdownByUnitId> rsSYUsersGetDropdownByUnitId = await new SYUsersGetDropdownByUnitId(_appSetting).SYUsersGetDropdownByUnitIdDAO(UnitId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUsersGetDropdownByUnitId", rsSYUsersGetDropdownByUnitId},
+					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)

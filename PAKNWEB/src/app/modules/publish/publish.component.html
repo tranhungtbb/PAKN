@@ -14,7 +14,7 @@
 					<ul *ngIf="isHasToken" class="navbar-nav header-right align-items-center">
 						<li class="nav-item d-none d-lg-block">
 							<div class="header-info">
-								<span class="text-white">Xin chào! <strong>Nguyễn Thị Liêm</strong></span>
+								<span class="text-white">Xin chào! <strong>{{currentFullnName}}</strong></span>
 							</div>
 						</li>
 						<li class="nav-item dropdown notification_dropdown" *ngIf="typeUserLoginPublish == 1">
@@ -76,7 +76,7 @@
 									<i class="bi bi-file-earmark-medical"></i>
 									<span class="ml-2">PAKN của tôi </span>
 								</a>
-								<a href="#" class="dropdown-item ai-icon">
+								<a [routerLink]="['/cong-bo/tai-khoan/thay-doi-mat-khau']" class="dropdown-item ai-icon">
 									<i class="bi bi-key"></i>
 									<span class="ml-2">Đổi mật khẩu </span>
 								</a>
@@ -119,19 +119,19 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" [ngClass]="{'active': activeUrl == 'gioi-thieu'}" (click)="routingMenu('gioi-thieu')">giới thiệu</a>
+							<a class="nav-link" routerLinkActive="active" [routerLink]="['./gioi-thieu']">giới thiệu</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" [ngClass]="{'active': activeUrl == 'thu-tuc-hanh-chinh'}" (click)="routingMenu('thu-tuc-hanh-chinh')">Thủ tục hành chính</a>
+							<a class="nav-link" routerLinkActive="active" [routerLink]="['./thu-tuc-hanh-chinh']">Thủ tục hành chính</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" [ngClass]="{'active': activeUrl == 'tin-tuc-su-kien'}" (click)="routingMenu('tin-tuc-su-kien')">Tin tức sự kiện</a>
+							<a class="nav-link" routerLinkActive="active" [routerLink]="['./tin-tuc-su-kien']">Tin tức sự kiện</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" [ngClass]="{'active': activeUrl == 'phan-anh-kien-nghi'}" (click)="routingMenu('phan-anh-kien-nghi')">phản ánh - kiến nghị</a>
+							<a class="nav-link" routerLinkActive="active" [routerLink]="['./phan-anh-kien-nghi']">phản ánh - kiến nghị</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" [ngClass]="{'active': activeUrl == 'ho-tro'}" (click)="routingMenu('ho-tro')">hỗ trợ</a>
+							<a class="nav-link" routerLinkActive="active" [routerLink]="['./ho-tro']">hỗ trợ</a>
 						</li>
 					</ul>
 					<div class="header-left">

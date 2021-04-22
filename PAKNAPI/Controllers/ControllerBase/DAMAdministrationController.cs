@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using Bugsnag;
 using Microsoft.AspNetCore.Http;
-using PAKNAPI.Models.ModelBase;
+using PAKNAPI.ModelBase;
 
 namespace PAKNAPI.Controllers.ControllerBase
 {

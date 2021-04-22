@@ -91,8 +91,8 @@
 		<!-- row 4 -->
 		<div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Số CMND / CCCD / Hộ chiếu <span class="cl-red">(*)</span></label>
-			<input [svTrim] maxlength="12" [(ngModel)]="model.idCard" formControlName="idCard" type="text" placeholder="Nhập..." class="form-control border-brown">
-
+			<input [svTrim] maxlength="12" [(ngModel)]="model.idCard" formControlName="idCard" type="text" placeholder="Nhập..." class="form-control border-brown"
+				pattern="^([0-9]{8}|[0-9]{9}|[0-9]{12})$">
 			<div *ngIf="(submitted && f.idCard.invalid)||(f.idCard.invalid && (f.idCard.dirty || f.idCard.touched))" class="has-error m-b-12">
 				<div *ngIf="f.idCard.errors.required">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>

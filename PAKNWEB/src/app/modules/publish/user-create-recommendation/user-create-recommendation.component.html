@@ -38,7 +38,7 @@
 						<label class="mb-1">Nội dung <span class="cl-red">(*)</span></label>
 						<div class="group-content-recommendation">
 							<textarea id="inputContent" class="form-control" [(ngModel)]="model.content" formControlName="content" style="height: 158px;" rows="6"
-								placeholder="Nhập nội dung..." (blur)="hightLightText()" maxlength="500"></textarea>
+								placeholder="Nhập nội dung..." (blur)="hightLightText()"></textarea>
 							<div id="contentRecommendation" (click)="showEditContent()"></div>
 						</div>
 						<div *ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error">
@@ -49,25 +49,21 @@
 					</div>
 					<div class="col-12 col-lg form-group">
 						<label class="mb-1">Đơn vị tiếp nhận </label>
-						<!-- <ng-select class="form-control" [items]="lstUnit" bindValue="value" bindLabel="text" placeholder="Chọn..." formControlName="unitId"
-							[(ngModel)]="model.unitId">
-							<ng-template ng-option-tmp let-item="item">
-								<div title="{{item.text}}">{{item.text}}</div>
-							</ng-template>
-						</ng-select> -->
-						<ng-select id="_unitId" class="form-control" [items]="lstUnitTree" placeholder="Chọn..." formControlName="unitId" [ngModel]="unitSelected.name">
+						<ng-select id="_unitId" class="form-control" [items]="lstUnitTree" placeholder="Chọn..." formControlName="unitId" [ngModel]="unitSelected.name"
+							[clearable]="false">
 							<ng-template ng-option-tmp let-item="item">
 								<ul>
 									<li>
 										<p (click)="onSelectUnit(item)" class="bg-hover mb-0" [ngClass]="{'active':item.id == model.unitId}">
 											<strong>{{item.name}}</strong>
 										</p>
-										<ul class="pl-3">
+										<ul class="">
 											<li *ngFor="let item_c1 of item.children">
-												<p (click)="onSelectUnit(item_c1)" class="bg-hover mb-0" [ngClass]="{'active':item_c1.id == model.unitId}">{{item_c1.name}}</p>
-												<ul class="pl-3">
+												<p (click)="onSelectUnit(item_c1)" class="bg-hover mb-0" [ngClass]="{'active':item_c1.id == model.unitId}">- {{item_c1.name}}</p>
+												<ul class="">
 													<li *ngFor="let item_c2 of item_c1.children">
-														<p (click)="onSelectUnit(item_c2)" class="bg-hover mb-0" [ngClass]="{'active':item_c2.id == model.unitId}">{{item_c2.name}}
+														<p (click)="onSelectUnit(item_c2)" class="bg-hover mb-0" [ngClass]="{'active':item_c2.id == model.unitId}">
+															-- {{item_c2.name}}
 														</p>
 													</li>
 												</ul>
