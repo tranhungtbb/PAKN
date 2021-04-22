@@ -177,16 +177,19 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				this.hisNewsModel.status = STATUS_HISNEWS.UPDATE
 				this.hisNewsModel.objectId = this.model.id
 				this.hisNewsModel.type = 1 // tin tức
-				this.newsService.hisNewsCreate(this.hisNewsModel).subscribe()
-
-				if (published == true) {
-					this.hisNewsModel.status = STATUS_HISNEWS.PUBLIC
-					this.newsService.hisNewsCreate(this.hisNewsModel).subscribe()
-				}
-				if (published == false && this.hisPublic == true) {
-					this.hisNewsModel.status = STATUS_HISNEWS.CANCEL
-					this.newsService.hisNewsCreate(this.hisNewsModel).subscribe()
-				}
+				this.newsService.hisNewsCreate(this.hisNewsModel).subscribe((res) => {
+					if ((res.success = RESPONSE_STATUS.success)) {
+						if (published == true) {
+							this.hisNewsModel.status = STATUS_HISNEWS.PUBLIC
+							this.newsService.hisNewsCreate(this.hisNewsModel).subscribe()
+						}
+						if (published == false && this.hisPublic == true) {
+							this.hisNewsModel.status = STATUS_HISNEWS.CANCEL
+							this.newsService.hisNewsCreate(this.hisNewsModel).subscribe()
+						}
+					}
+					return
+				})
 
 				this.toast.success(COMMONS.UPDATE_SUCCESS)
 				this.router.navigate(['/quan-tri/tin-tuc'])
@@ -205,13 +208,17 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				this.hisNewsModel.status = STATUS_HISNEWS.CREATE
 				this.hisNewsModel.objectId = res.result
 				this.hisNewsModel.type = 1 // tin tức
-				this.newsService.hisNewsCreate(this.hisNewsModel).subscribe()
+				this.newsService.hisNewsCreate(this.hisNewsModel).subscribe((res) => {
+					if ((res.success = RESPONSE_STATUS.success)) {
+						if (published == true) {
+							this.hisNewsModel.status = STATUS_HISNEWS.PUBLIC
+							this.newsService.hisNewsCreate(this.hisNewsModel).subscribe()
+						}
+						return
+					}
+					return
+				})
 				// soạn thảo
-
-				if (published == true) {
-					this.hisNewsModel.status = STATUS_HISNEWS.PUBLIC
-					this.newsService.hisNewsCreate(this.hisNewsModel).subscribe()
-				}
 
 				this.toast.success(COMMONS.ADD_SUCCESS)
 				this.router.navigate(['/quan-tri/tin-tuc'])
