@@ -244,3 +244,21 @@ BEGIN
 END
 GO
 /* End MR_Recommendation_ForwardDeleteAll */
+
+/* Start MR_Recommendation_ForwardCount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[MR_Recommendation_ForwardCount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [MR_Recommendation_ForwardCount];
+GO
+CREATE PROCEDURE [dbo].[MR_Recommendation_ForwardCount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [MR_Recommendation_Forward]
+END
+GO
+/* End MR_Recommendation_ForwardCount */

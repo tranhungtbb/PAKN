@@ -97,15 +97,18 @@ export class OrganizationComponent implements OnInit {
 			if (res.success != 'OK') {
 				let msg = res.message
 				if (msg.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
-					this.toast.error('Email đã tồn tại')
+					this.toast.error('Email Người đại diện đã tồn tại')
+					return
 				}
 				if (msg.includes(`UNIQUE KEY constraint 'UK_BI_Business_OrgEmail'`)) {
 					this.toast.error('Email Văn phòng đại diện đã tồn tại')
+					return
 				}
 				if (msg.includes(`UNIQUE KEY constraint 'UK_BI_Business_Email'`)) {
 					this.toast.error('Email Người đại diện đã tồn tại')
+					return
 				}
-
+				this.toast.error(msg)
 				return
 			}
 			this.toast.success('Đăng ký tài khoản thành công')

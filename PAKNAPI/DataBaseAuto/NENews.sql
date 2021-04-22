@@ -292,3 +292,21 @@ BEGIN
 END
 GO
 /* End NE_NewsDeleteAll */
+
+/* Start NE_NewsCount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[NE_NewsCount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [NE_NewsCount];
+GO
+CREATE PROCEDURE [dbo].[NE_NewsCount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [NE_News]
+END
+GO
+/* End NE_NewsCount */

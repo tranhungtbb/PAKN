@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using Bugsnag;
-using PAKNAPI.Models.ModelBase;
 
 namespace PAKNAPI.ControllerBase
 {
@@ -110,9 +109,6 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
-		
-
 
 		[HttpPost]
 		[Authorize("ThePolicy")]

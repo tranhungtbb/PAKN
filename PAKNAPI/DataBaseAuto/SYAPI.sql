@@ -156,3 +156,21 @@ BEGIN
 END
 GO
 /* End SY_APIDeleteAll */
+
+/* Start SY_APICount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[SY_APICount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [SY_APICount];
+GO
+CREATE PROCEDURE [dbo].[SY_APICount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [SY_API]
+END
+GO
+/* End SY_APICount */

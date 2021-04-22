@@ -164,3 +164,21 @@ BEGIN
 END
 GO
 /* End MR_Recommendation_HashtagDeleteAll */
+
+/* Start MR_Recommendation_HashtagCount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[MR_Recommendation_HashtagCount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [MR_Recommendation_HashtagCount];
+GO
+CREATE PROCEDURE [dbo].[MR_Recommendation_HashtagCount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [MR_Recommendation_Hashtag]
+END
+GO
+/* End MR_Recommendation_HashtagCount */

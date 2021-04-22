@@ -30,6 +30,278 @@ namespace PAKNAPI.ControllerBase
 			_bugsnag = bugsnag;
 		}
 
+		#region SYAPI
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYAPIGetByID")]
+		public async Task<ActionResult<object>> SYAPIGetByID(int? Id)
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYAPI(_appSetting).SYAPIGetByID(Id) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYAPIGetAll")]
+		public async Task<ActionResult<object>> SYAPIGetAll()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYAPI(_appSetting).SYAPIGetAll() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYAPIGetAllOnPage")]
+		public async Task<ActionResult<object>> SYAPIGetAllOnPage(int PageSize, int PageIndex)
+		{
+			try
+			{
+				List<SYAPIOnPage> rsSYAPIOnPage = await new SYAPI(_appSetting).SYAPIGetAllOnPage(PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYAPI", rsSYAPIOnPage},
+						{"TotalCount", rsSYAPIOnPage != null && rsSYAPIOnPage.Count > 0 ? rsSYAPIOnPage[0].RowNumber : 0},
+						{"PageIndex", rsSYAPIOnPage != null && rsSYAPIOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsSYAPIOnPage != null && rsSYAPIOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYAPIInsert")]
+		public async Task<ActionResult<object>> SYAPIInsert(SYAPI _sYAPI)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYAPI(_appSetting).SYAPIInsert(_sYAPI) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYAPIListInsert")]
+		public async Task<ActionResult<object>> SYAPIListInsert(List<SYAPI> _sYAPIs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (SYAPI _sYAPI in _sYAPIs)
+				{
+					int? result = await new SYAPI(_appSetting).SYAPIInsert(_sYAPI);
+					if (result != null)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYAPIUpdate")]
+		public async Task<ActionResult<object>> SYAPIUpdate(SYAPI _sYAPI)
+		{
+			try
+			{
+				int count = await new SYAPI(_appSetting).SYAPIUpdate(_sYAPI);
+				if (count > 0)
+				{
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYAPIDelete")]
+		public async Task<ActionResult<object>> SYAPIDelete(SYAPI _sYAPI)
+		{
+			try
+			{
+				int count = await new SYAPI(_appSetting).SYAPIDelete(_sYAPI);
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYAPIListDelete")]
+		public async Task<ActionResult<object>> SYAPIListDelete(List<SYAPI> _sYAPIs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (SYAPI _sYAPI in _sYAPIs)
+				{
+					var result = await new SYAPI(_appSetting).SYAPIDelete(_sYAPI);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYAPIDeleteAll")]
+		public async Task<ActionResult<object>> SYAPIDeleteAll()
+		{
+			try
+			{
+				int count = await new SYAPI(_appSetting).SYAPIDeleteAll();
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYAPICount")]
+		public async Task<ActionResult<object>> SYAPICount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYAPI(_appSetting).SYAPICount() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		#endregion SYAPI
+
 		#region SYCaptCha
 
 		[HttpGet]
@@ -845,6 +1117,278 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		#endregion SYPermission
+
+		#region SYPermissionAPI
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYPermissionAPIGetByID")]
+		public async Task<ActionResult<object>> SYPermissionAPIGetByID(int? Id)
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionAPI(_appSetting).SYPermissionAPIGetByID(Id) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYPermissionAPIGetAll")]
+		public async Task<ActionResult<object>> SYPermissionAPIGetAll()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionAPI(_appSetting).SYPermissionAPIGetAll() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYPermissionAPIGetAllOnPage")]
+		public async Task<ActionResult<object>> SYPermissionAPIGetAllOnPage(int PageSize, int PageIndex)
+		{
+			try
+			{
+				List<SYPermissionAPIOnPage> rsSYPermissionAPIOnPage = await new SYPermissionAPI(_appSetting).SYPermissionAPIGetAllOnPage(PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYPermissionAPI", rsSYPermissionAPIOnPage},
+						{"TotalCount", rsSYPermissionAPIOnPage != null && rsSYPermissionAPIOnPage.Count > 0 ? rsSYPermissionAPIOnPage[0].RowNumber : 0},
+						{"PageIndex", rsSYPermissionAPIOnPage != null && rsSYPermissionAPIOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsSYPermissionAPIOnPage != null && rsSYPermissionAPIOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYPermissionAPIInsert")]
+		public async Task<ActionResult<object>> SYPermissionAPIInsert(SYPermissionAPI _sYPermissionAPI)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionAPI(_appSetting).SYPermissionAPIInsert(_sYPermissionAPI) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYPermissionAPIListInsert")]
+		public async Task<ActionResult<object>> SYPermissionAPIListInsert(List<SYPermissionAPI> _sYPermissionAPIs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (SYPermissionAPI _sYPermissionAPI in _sYPermissionAPIs)
+				{
+					int? result = await new SYPermissionAPI(_appSetting).SYPermissionAPIInsert(_sYPermissionAPI);
+					if (result != null)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYPermissionAPIUpdate")]
+		public async Task<ActionResult<object>> SYPermissionAPIUpdate(SYPermissionAPI _sYPermissionAPI)
+		{
+			try
+			{
+				int count = await new SYPermissionAPI(_appSetting).SYPermissionAPIUpdate(_sYPermissionAPI);
+				if (count > 0)
+				{
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYPermissionAPIDelete")]
+		public async Task<ActionResult<object>> SYPermissionAPIDelete(SYPermissionAPI _sYPermissionAPI)
+		{
+			try
+			{
+				int count = await new SYPermissionAPI(_appSetting).SYPermissionAPIDelete(_sYPermissionAPI);
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYPermissionAPIListDelete")]
+		public async Task<ActionResult<object>> SYPermissionAPIListDelete(List<SYPermissionAPI> _sYPermissionAPIs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (SYPermissionAPI _sYPermissionAPI in _sYPermissionAPIs)
+				{
+					var result = await new SYPermissionAPI(_appSetting).SYPermissionAPIDelete(_sYPermissionAPI);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYPermissionAPIDeleteAll")]
+		public async Task<ActionResult<object>> SYPermissionAPIDeleteAll()
+		{
+			try
+			{
+				int count = await new SYPermissionAPI(_appSetting).SYPermissionAPIDeleteAll();
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYPermissionAPICount")]
+		public async Task<ActionResult<object>> SYPermissionAPICount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionAPI(_appSetting).SYPermissionAPICount() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		#endregion SYPermissionAPI
 
 		#region SYPermissionCategory
 
@@ -3021,6 +3565,278 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		#endregion SYUser
+
+		#region SYUserRoleMap
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYUserRoleMapGetByID")]
+		public async Task<ActionResult<object>> SYUserRoleMapGetByID(int? UserId)
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserRoleMap(_appSetting).SYUserRoleMapGetByID(UserId) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYUserRoleMapGetAll")]
+		public async Task<ActionResult<object>> SYUserRoleMapGetAll()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserRoleMap(_appSetting).SYUserRoleMapGetAll() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYUserRoleMapGetAllOnPage")]
+		public async Task<ActionResult<object>> SYUserRoleMapGetAllOnPage(int PageSize, int PageIndex)
+		{
+			try
+			{
+				List<SYUserRoleMapOnPage> rsSYUserRoleMapOnPage = await new SYUserRoleMap(_appSetting).SYUserRoleMapGetAllOnPage(PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserRoleMap", rsSYUserRoleMapOnPage},
+						{"TotalCount", rsSYUserRoleMapOnPage != null && rsSYUserRoleMapOnPage.Count > 0 ? rsSYUserRoleMapOnPage[0].RowNumber : 0},
+						{"PageIndex", rsSYUserRoleMapOnPage != null && rsSYUserRoleMapOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsSYUserRoleMapOnPage != null && rsSYUserRoleMapOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYUserRoleMapInsert")]
+		public async Task<ActionResult<object>> SYUserRoleMapInsert(SYUserRoleMap _sYUserRoleMap)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserRoleMap(_appSetting).SYUserRoleMapInsert(_sYUserRoleMap) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYUserRoleMapListInsert")]
+		public async Task<ActionResult<object>> SYUserRoleMapListInsert(List<SYUserRoleMap> _sYUserRoleMaps)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (SYUserRoleMap _sYUserRoleMap in _sYUserRoleMaps)
+				{
+					int? result = await new SYUserRoleMap(_appSetting).SYUserRoleMapInsert(_sYUserRoleMap);
+					if (result != null)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYUserRoleMapUpdate")]
+		public async Task<ActionResult<object>> SYUserRoleMapUpdate(SYUserRoleMap _sYUserRoleMap)
+		{
+			try
+			{
+				int count = await new SYUserRoleMap(_appSetting).SYUserRoleMapUpdate(_sYUserRoleMap);
+				if (count > 0)
+				{
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYUserRoleMapDelete")]
+		public async Task<ActionResult<object>> SYUserRoleMapDelete(SYUserRoleMap _sYUserRoleMap)
+		{
+			try
+			{
+				int count = await new SYUserRoleMap(_appSetting).SYUserRoleMapDelete(_sYUserRoleMap);
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYUserRoleMapListDelete")]
+		public async Task<ActionResult<object>> SYUserRoleMapListDelete(List<SYUserRoleMap> _sYUserRoleMaps)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (SYUserRoleMap _sYUserRoleMap in _sYUserRoleMaps)
+				{
+					var result = await new SYUserRoleMap(_appSetting).SYUserRoleMapDelete(_sYUserRoleMap);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYUserRoleMapDeleteAll")]
+		public async Task<ActionResult<object>> SYUserRoleMapDeleteAll()
+		{
+			try
+			{
+				int count = await new SYUserRoleMap(_appSetting).SYUserRoleMapDeleteAll();
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYUserRoleMapCount")]
+		public async Task<ActionResult<object>> SYUserRoleMapCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserRoleMap(_appSetting).SYUserRoleMapCount() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		#endregion SYUserRoleMap
 
 		#region SYUserGroupUser
 
