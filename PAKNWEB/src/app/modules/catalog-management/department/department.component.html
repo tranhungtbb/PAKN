@@ -93,7 +93,7 @@
 										</ng-select>
 									</div>
 								</th>
-								<th class="text-right" style="width: 100px;">
+								<th class="text-right" style="width: 110px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Thao tác</strong>
 									</p>
@@ -104,7 +104,7 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									<a (click)="preView(item)" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.name}}</a>
+									<strong (click)="preView(item)" class="highlight" title="Xem chi tiết">{{item.name}}</strong>
 								</td>
 								<td>
 									<a (click)="preView(item)" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.groupName}}</a>

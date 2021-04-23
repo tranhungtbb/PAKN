@@ -26,35 +26,35 @@
 						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
-								<th style="width: 50px">
+								<th style="width: 5%">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>STT</strong>
 									</p>
 								</th>
-								<th style="width: 350px">
+								<th style="width: 25%">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Tên chức vụ</strong>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
 								</th>
-								<th>
+								<th style="width: 45%">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Mô tả</strong>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="description" maxlength="100" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập mô tả..." />
 								</th>
-								<th style="width: 160px">
+								<th style="width: 15%">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Trạng thái</strong>
 									</p>
-									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
+									<div style="width: 100%" class="dropdown bootstrap-select form-control form-control-sm">
 										<ng-select [clearable]="false" class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
 											[(ngModel)]="isActived" [closeOnSelect]="true" (change)="dataStateChange()">
 										</ng-select>
 									</div>
 								</th>
-								<th class="text-right" style="width: 100px;">
+								<th class="text-right" style="width: 15%;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Thao tác</strong>
 									</p>
@@ -65,7 +65,7 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									<strong><a (click)="preView(item)" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.name}}</a></strong>
+									<strong (click)="preView(item)" class="highlight" type="button" title="Xem chi tiết">{{item.name}}</strong>
 								</td>
 								<td>{{item.description}}</td>
 								<td>

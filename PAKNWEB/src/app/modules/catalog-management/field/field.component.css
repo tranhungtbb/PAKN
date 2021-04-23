@@ -2,7 +2,8 @@
 	cursor: pointer;
 }
 strong.highlight:hover {
-	color: red;
+	color: #42a4ff;
+	cursor: pointer;
 }
 strong.highlight {
 	cursor: pointer;
