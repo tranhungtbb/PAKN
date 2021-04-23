@@ -54,7 +54,7 @@
 	<div class="col form-group">
 		<label class="mb-1">Địện thoại <span class="cl-red">(*)</span></label>
 		<input numbersOnly stopLength="10" [(ngModel)]="model.OrgPhone" pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$" formControlName="OrgPhone" type="text" placeholder="Nhập..."
-			class="form-control border-brown">
+			class="form-control border-brown" (change)="onCheckExist('OrgPhone',$event.target.value)">
 		<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgPhone.invalid)||(fOrgAdr.OrgPhone.invalid && (fOrgAdr.OrgPhone.dirty || fOrgAdr.OrgPhone.touched))"
 			class="has-error m-b-12">
 			<div *ngIf="fOrgAdr.OrgPhone.errors.required">
@@ -64,10 +64,16 @@
 				<span class="help-block">Định dạng số điện thoại không hợp lệ</span>
 			</div>
 		</div>
+		<div *ngIf="orgPhone_exists && fOrgAdr.OrgPhone.valid" class="has-error m-b-12">
+			<div *ngIf="orgPhone_exists">
+				<span class="help-block">Số điện thoại đã tồn tại</span>
+			</div>
+		</div>
 	</div>
 	<div class="col form-group">
 		<label class="mb-1">Email <span class="cl-red">(*)</span></label>
-		<input [svTrim] [(ngModel)]="model.OrgEmail" formControlName="OrgEmail" type="text" placeholder="Nhập..." class="form-control border-brown">
+		<input [svTrim] [(ngModel)]="model.OrgEmail" formControlName="OrgEmail" type="text" placeholder="Nhập..." class="form-control border-brown"
+			(change)="onCheckExist('OrgEmail',$event.target.value)">
 		<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgEmail.invalid)||(fOrgAdr.OrgEmail.invalid && (fOrgAdr.OrgEmail.dirty || fOrgAdr.OrgEmail.touched))"
 			class="has-error m-b-12">
 			<div *ngIf="fOrgAdr.OrgEmail.errors.required">
@@ -75,6 +81,11 @@
 			</div>
 			<div *ngIf="fOrgAdr.OrgEmail.errors.email">
 				<span class="help-block">Định dạng email không hợp lệ</span>
+			</div>
+		</div>
+		<div *ngIf="orgEmail_exists && fOrgAdr.OrgEmail.valid" class="has-error m-b-12">
+			<div *ngIf="orgEmail_exists">
+				<span class="help-block">Số điện thoại đã tồn tại</span>
 			</div>
 		</div>
 	</div>

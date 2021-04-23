@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
 import { DiadanhService } from 'src/app/services/diadanh.service'
+import { RegisterService } from 'src/app/services/register.service'
 
 import { OrganizationComponent } from '../organization.component'
 import { OrganizationObject } from 'src/app/models/RegisterObject'
+import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 
 @Component({
 	selector: 'app-org-form-address',
@@ -11,7 +13,7 @@ import { OrganizationObject } from 'src/app/models/RegisterObject'
 	styleUrls: ['./org-form-address.component.css'],
 })
 export class OrgFormAddressComponent implements OnInit {
-	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService) {}
+	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService, private registerService: RegisterService) {}
 	formOrgAddress: FormGroup
 	fOrgAddressSubmitted = false
 	public model: OrganizationObject = new OrganizationObject()
@@ -90,5 +92,21 @@ export class OrgFormAddressComponent implements OnInit {
 			OrgPhone: [this.model.OrgPhone, [Validators.required]], //, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)
 			OrgEmail: [this.model.OrgEmail, [Validators.required, Validators.email]],
 		})
+	}
+
+	orgPhone_exists = false
+	orgEmail_exists = false
+	onCheckExist(field: string, value: string) {
+		this.registerService
+			.businessCheckExists({
+				field,
+				value,
+			})
+			.subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					if (field == 'OrgPhone') this.orgPhone_exists = res.result.BIBusinessCheckExists[0].exists
+					else if (field == 'OrgEmail') this.orgEmail_exists = res.result.BIBusinessCheckExists[0].exists
+				}
+			})
 	}
 }

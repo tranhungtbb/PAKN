@@ -51,7 +51,8 @@ export class DashboardComponent implements OnInit {
 					return acc
 				}, 0)
 				let data = res.result.MRRecommendationGetDataGraph.reduce((acc, item, index) => {
-					item.percent = ((item.count / this.totalCount) * 10).toPrecision(2)
+					item.per_10 = ((item.count / this.totalCount) * 10).toPrecision(2)
+					item.per_100 = ((item.count / this.totalCount) * 100).toPrecision(2)
 					acc['stt_' + item.status] = item
 					return acc
 				}, {})

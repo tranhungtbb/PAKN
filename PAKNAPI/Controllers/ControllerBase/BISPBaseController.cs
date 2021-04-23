@@ -32,6 +32,29 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
+		[Route("BIBusinessCheckExistsBase")]
+		public async Task<ActionResult<object>> BIBusinessCheckExistsBase(string Field, string Value)
+		{
+			try
+			{
+				List<BIBusinessCheckExists> rsBIBusinessCheckExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO(Field, Value);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"BIBusinessCheckExists", rsBIBusinessCheckExists},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
 		[Route("BIBusinessGetRepresentativeByIdBase")]
 		public async Task<ActionResult<object>> BIBusinessGetRepresentativeByIdBase(long? Id)
 		{
