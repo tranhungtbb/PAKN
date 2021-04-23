@@ -60,6 +60,32 @@ namespace PAKNAPI.ControllerBase
 
 		#endregion PURecommendationAllOnPage
 
+
+		[HttpGet]
+		[Authorize]
+		[Route("PURecommendationStatisticsGetByUserIdBase")]
+		public async Task<ActionResult<object>> PURecommendationStatisticsGetByUserIdBase()
+		{
+			try
+			{
+				var UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				List<PURecommendationStatisticsGetByUserId> rsPURecommendationStatisticsGetByUserId = await new PURecommendationStatisticsGetByUserId(_appSetting).PURecommendationStatisticsGetByUserIdDAO((int)UserId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"PURecommendationStatisticsGetByUserId", rsPURecommendationStatisticsGetByUserId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
 		#region PURecommendationGetListOrderByCountClick
 		[HttpGet]
 		[Route("PURecommendationGetListOrderByCountClick")]

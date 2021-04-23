@@ -109,7 +109,7 @@ export class AppheaderComponent implements OnInit {
 			newpassword: new FormControl(this.user.NewPassword, [Validators.required]),
 			confirmpassword: new FormControl(this.user.ConfirmPassword, [Validators.required]),
 		})
-		this.sharedataService.getnotificationDropdown.subscribe((data) => {
+		this.sharedataService.getnotificationDropdown.subscribe(data => {
 			if (data) {
 				var result: any = data
 				this.listThongBao = []
@@ -118,10 +118,10 @@ export class AppheaderComponent implements OnInit {
 			}
 		})
 
-		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: 5, PageIndex: 1 }).subscribe((res) => {
+		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: 5, PageIndex: 1 }).subscribe(res => {
 			if ((res.success = RESPONSE_STATUS.success)) {
 				this.Notifications = res.result.syNotifications
-				this.Notifications.forEach((item) => {
+				this.Notifications.forEach(item => {
 					if (item.isViewed == true) {
 						this.ViewedCount += 1
 					}
@@ -197,7 +197,7 @@ export class AppheaderComponent implements OnInit {
 		}
 		var data = this.userForm.value
 		this.user = data
-		this.authenService.chagepassword(this.user).subscribe((data) => {
+		this.authenService.chagepassword(this.user).subscribe(data => {
 			if (data.status === 1) {
 				$('#myModal').modal('hide')
 				this.toastr.success('Thay đổi mật khẩu thành công')
@@ -205,7 +205,7 @@ export class AppheaderComponent implements OnInit {
 				this.toastr.error(data.message)
 			}
 		}),
-			(err) => {
+			err => {
 				console.error(err)
 			}
 	}
@@ -296,7 +296,7 @@ export class AppheaderComponent implements OnInit {
 	}
 
 	signOut(): void {
-		this.authenService.logOut({}).subscribe((success) => {
+		this.authenService.logOut({}).subscribe(success => {
 			if (success.success == RESPONSE_STATUS.success) {
 				this.sharedataService.setIsLogin(false)
 				this.storageService.setReturnUrl('')
@@ -411,14 +411,15 @@ export class AppheaderComponent implements OnInit {
 		this.getList()
 	}
 	getList() {
-		let request = {
+		let req = {
 			FromDate: this.dataSearch.fromDate != null ? this.dataSearch.fromDate.toLocaleDateString() : '',
 			ToDate: this.dataSearch.toDate != null ? this.dataSearch.toDate.toLocaleDateString() : '',
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 			UserId: localStorage.getItem('userId'),
 		}
-		this.userService.getSystemLogin(request).subscribe((response) => {
+		console.log(req)
+		this.userService.getSystemLogin(req).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
@@ -433,7 +434,7 @@ export class AppheaderComponent implements OnInit {
 		let req = {
 			Id: localStorage.getItem('userId'),
 		}
-		this.userService.getById(req).subscribe((response) => {
+		this.userService.getById(req).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.emailUser = response.result.SYUserGetByID[0].email

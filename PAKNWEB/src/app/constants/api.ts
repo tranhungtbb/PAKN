@@ -49,6 +49,7 @@ export class Api {
 	public static PuRecommendationGetById = 'PURecommendation/PURecommendationGetById'
 	public static PuChangeSatisfaction = 'PURecommendation/ChangeSatisfaction'
 	public static PuRecommendationCountClick = 'PURecommendation/PURecommendationCountClick'
+	public static PURecommendationStatisticsGetByUserId = 'PURecommendation/PURecommendationStatisticsGetByUserIdBase'
 
 	//Field
 	public static FieldGetList = 'CACategorySPBase/CAFieldGetAllOnPageBase'
@@ -184,4 +185,11 @@ export class Api {
 	public static NotificationGetList = 'SYNotification/SYNotificationGetListOnPage'
 	public static NotificationDelete = 'SYNotification/SYNotificationDelete'
 	public static NotificationUpdateIsViewed = 'SYNotification/SYNotificationUpdateIsViewed'
+
+	//Chatbot
+	public static ChatbotGetList = 'Chatbot/ChatbotGetAllOnPageBase'
+	public static ChatbotDelete = 'Chatbot/ChatbotDeleteBase'
+	public static ChatbotGetById = 'Chatbot/ChatbotGetByID'
+	public static ChatbotUpdate = 'Chatbot/ChatbotUpdateBase'
+	public static ChatbotInsertQuestion = 'Chatbot/ChatbotInsertQuestion'
 }

@@ -28,4 +28,8 @@ export class PuRecommendationService {
 	countClick(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PuRecommendationCountClick)
 	}
+
+	recommendationStatisticsGetByUserId(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PURecommendationStatisticsGetByUserId)
+	}
 }
