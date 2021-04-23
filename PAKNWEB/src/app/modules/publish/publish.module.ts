@@ -24,6 +24,7 @@ import { EditorModule } from 'primeng/editor'
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
 import { ViewNewsComponent } from './view-news/view-news.component'
 import { ViewAdministrativeProceduresComponent } from './view-administrative-procedures/view-administrative-procedures.component'
+import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 
 @NgModule({
 	declarations: [
@@ -40,6 +41,7 @@ import { ViewAdministrativeProceduresComponent } from './view-administrative-pro
 		MyRecommendationComponent,
 		ViewRecommendationPersonalComponent,
 		ViewAdministrativeProceduresComponent,
+		ViewRightComponent,
 	],
 	imports: [
 		CommonModule,

@@ -10,6 +10,7 @@ import { HashtagObject } from 'src/app/models/hashtagObject'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 
 declare var $: any
 
@@ -19,6 +20,7 @@ declare var $: any
 	styleUrls: ['./view-recommendation-personal.component.css'],
 })
 export class ViewRecommendationPersonalComponent implements OnInit {
+	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	model: RecommendationViewObject = new RecommendationViewObject()
 	modelConclusion: RecommendationConclusionObject = new RecommendationConclusionObject()
 	lstHashtag: any[] = []
@@ -41,7 +43,7 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 		private router: Router,
 		private _fb: FormBuilder,
 		private activatedRoute: ActivatedRoute
-	) { }
+	) {}
 
 	ngOnInit() {
 		this.buildFormForward()

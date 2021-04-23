@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
 
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { RESPONSE_STATUS, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
 import { PuRecommendation } from 'src/app/models/recommendationObject'
+import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 
 @Component({
 	selector: 'app-reflections-recommendations',
@@ -12,6 +13,7 @@ import { PuRecommendation } from 'src/app/models/recommendationObject'
 })
 export class ReflectionsRecommendationsComponent implements OnInit {
 	// property
+	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	public KeySearch: string = ''
 	public PageSize = 20
 	public PageIndex = 1
