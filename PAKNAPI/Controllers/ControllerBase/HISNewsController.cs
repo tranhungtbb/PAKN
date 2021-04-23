@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using Bugsnag;
 using Microsoft.AspNetCore.Http;
+using PAKNAPI.Models.ModelBase;
+
 
 namespace PAKNAPI.Controllers.ControllerBase
 {
@@ -74,5 +76,25 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+
+		[HttpGet]
+		[Authorize]
+		[Route("HISNewsGetByNewsId")]
+		public async Task<ActionResult<object>> HISNewsGetByNewsId(int NewsId)
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new HISNewsModel(_appSetting).HISNewsGetByNewsId(NewsId) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 	}
 }

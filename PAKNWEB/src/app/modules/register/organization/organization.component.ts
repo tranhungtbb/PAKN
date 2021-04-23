@@ -3,6 +3,9 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
 import { Router } from '@angular/router'
+import { viLocale } from 'ngx-bootstrap/locale'
+import { defineLocale } from 'ngx-bootstrap/chronos'
+import { BsLocaleService } from 'ngx-bootstrap/datepicker'
 
 import { OrgFormAddressComponent } from './org-form-address/org-form-address.component'
 import { OrgRepreFormComponent } from './org-repre-form/org-repre-form.component'
@@ -11,6 +14,7 @@ import { RegisterService } from 'src/app/services/register.service'
 
 import { COMMONS } from 'src/app/commons/commons'
 import { OrganizationObject } from 'src/app/models/RegisterObject'
+import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 
 declare var $: any
 
@@ -25,7 +29,15 @@ export class OrganizationComponent implements OnInit {
 	@ViewChild(OrgFormAddressComponent, { static: true })
 	private child_OrgAddressForm: OrgFormAddressComponent
 
-	constructor(private toast: ToastrService, private formBuilder: FormBuilder, private registerService: RegisterService, private router: Router) {}
+	constructor(
+		private localeService: BsLocaleService,
+		private toast: ToastrService,
+		private formBuilder: FormBuilder,
+		private registerService: RegisterService,
+		private router: Router
+	) {
+		defineLocale('vi', viLocale)
+	}
 
 	dateNow: Date = new Date()
 
@@ -35,29 +47,11 @@ export class OrganizationComponent implements OnInit {
 	model: OrganizationObject = new OrganizationObject()
 	nation_enable_type = false
 	ngOnInit() {
+		this.localeService.use('vi')
+
 		this.child_OrgAddressForm.model = this.model
 		this.child_OrgRepreForm.model = this.model
 		this.loadFormBuilder()
-
-		this.model.phone = '0356489552'
-		this.model.password = '123abc'
-		this.model.rePassword = '123abc'
-
-		this.model.Business = 'Công ty vận tải hàng không'
-		this.model.BusinessRegistration = '12346798abcd'
-		this.model.DecisionOfEstablishing = '134679ancd'
-		this.model._DateOfIssue = '12/12/2000'
-		this.model.Tax = '132456798'
-
-		this.model.RepresentativeGender = true
-
-		this.model.RepresentativeName = 'NGuyễn Văn Tường'
-		this.model.Email = 'ngvantuong@mail.com'
-		this.model._RepresentativeBirthDay = '12/12/2000'
-		this.model.Address = 'số 12 Cầu Giấy - Hà Nội'
-		this.model.OrgAddress = '120 Xuân Mai'
-		this.model.OrgPhone = '0956489552'
-		this.model.OrgEmail = 'doanhnghiep@mail.com'
 	}
 
 	serverMsg = {}
@@ -88,6 +82,19 @@ export class OrganizationComponent implements OnInit {
 		this.model._RepresentativeBirthDay = fDob.value
 		this.model._DateOfIssue = fIsDate.value
 
+		if (
+			this.phone_exists ||
+			this.busiDeci_exists ||
+			this.busiDeci_exists ||
+			this.child_OrgAddressForm.orgEmail_exists ||
+			this.child_OrgAddressForm.orgPhone_exists ||
+			this.child_OrgRepreForm.email_exists ||
+			this.child_OrgRepreForm.idCard_exists
+		) {
+			this.toast.error('Dữ liệu không hợp lệ')
+			return
+		}
+
 		if (this.formLogin.invalid || this.formOrgInfo.invalid || this.child_OrgRepreForm.formInfo.invalid || this.child_OrgAddressForm.formOrgAddress.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return
@@ -97,15 +104,18 @@ export class OrganizationComponent implements OnInit {
 			if (res.success != 'OK') {
 				let msg = res.message
 				if (msg.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
-					this.toast.error('Email đã tồn tại')
+					this.toast.error('Email Người đại diện đã tồn tại')
+					return
 				}
 				if (msg.includes(`UNIQUE KEY constraint 'UK_BI_Business_OrgEmail'`)) {
 					this.toast.error('Email Văn phòng đại diện đã tồn tại')
+					return
 				}
 				if (msg.includes(`UNIQUE KEY constraint 'UK_BI_Business_Email'`)) {
 					this.toast.error('Email Người đại diện đã tồn tại')
+					return
 				}
-
+				this.toast.error(msg)
 				return
 			}
 			this.toast.success('Đăng ký tài khoản thành công')
@@ -143,6 +153,25 @@ export class OrganizationComponent implements OnInit {
 			DateIssue: [this.model._DateOfIssue, []], //Ngày cấp/thành lập
 			Tax: [this.model.Tax, [Validators.required, Validators.maxLength(13)]], //Mã số thuế
 		})
+	}
+
+	//kiểm tra dữ liệu đã tồn tại
+	phone_exists: boolean = false
+	busiRegis_exists = false
+	busiDeci_exists = false
+	onCheckExist(field: string, value: string) {
+		this.registerService
+			.businessCheckExists({
+				field,
+				value,
+			})
+			.subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					if (field == 'Phone') this.phone_exists = res.result.BIBusinessCheckExists[0].exists
+					else if (field == 'BusinessRegistration') this.busiRegis_exists = res.result.BIBusinessCheckExists[0].exists
+					else if (field == 'DecisionOfEstablishing') this.busiDeci_exists = res.result.BIBusinessCheckExists[0].exists
+				}
+			})
 	}
 }
 function MustMatch(controlName: string, matchingControlName: string) {

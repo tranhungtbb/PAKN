@@ -11,6 +11,32 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
+	public class BIBusinessCheckExists
+	{
+		private SQLCon _sQLCon;
+
+		public BIBusinessCheckExists(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public BIBusinessCheckExists()
+		{
+		}
+
+		public bool? Exists { get; set; }
+		public string Value { get; set; }
+
+		public async Task<List<BIBusinessCheckExists>> BIBusinessCheckExistsDAO(string Field, string Value)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Field", Field);
+			DP.Add("Value", Value);
+
+			return (await _sQLCon.ExecuteListDapperAsync<BIBusinessCheckExists>("BI_Business_CheckExists", DP)).ToList();
+		}
+	}
+
 	public class BIBusinessGetRepresentativeById
 	{
 		private SQLCon _sQLCon;
@@ -241,6 +267,32 @@ namespace PAKNAPI.ModelBase
 		public string IssuedPlace { get; set; }
 		public DateTime? IssuedDate { get; set; }
 		public bool? Gender { get; set; }
+	}
+
+	public class BIIndividualCheckExists
+	{
+		private SQLCon _sQLCon;
+
+		public BIIndividualCheckExists(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public BIIndividualCheckExists()
+		{
+		}
+
+		public bool? Exists { get; set; }
+		public string Value { get; set; }
+
+		public async Task<List<BIIndividualCheckExists>> BIIndividualCheckExistsDAO(string Field, string Value)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Field", Field);
+			DP.Add("Value", Value);
+
+			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualCheckExists>("BI_Individual_CheckExists", DP)).ToList();
+		}
 	}
 
 	public class BIIndividualGetByEmail
