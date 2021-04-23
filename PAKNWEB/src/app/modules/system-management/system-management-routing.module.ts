@@ -9,6 +9,7 @@ import { GroupUserComponent } from './components/group-user/group-user.component
 import { UserComponent } from './components/user/user.component'
 import { UnitComponent } from './components/unit/unit.component'
 import { UserCreateOrUpdateComponent } from './components/user/user-create-or-update/user-create-or-update.component'
+import { ChatBotComponent } from './components/chat-bot/chat-bot.component'
 
 const routes: Routes = [
 	{
@@ -22,6 +23,7 @@ const routes: Routes = [
 			{ path: 'lich-su-he-thong', component: SystemLogComponent },
 			{ path: 'co-cau-to-chuc', component: UnitComponent },
 			{ path: 'nguoi-dung/them-moi', component: UserCreateOrUpdateComponent },
+			{ path: 'quan-ly-chat-bot', component: ChatBotComponent },
 		],
 	},
 ]
