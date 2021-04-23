@@ -11,6 +11,33 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
+	public class PURecommendationStatisticsGetByUserId
+	{
+		private SQLCon _sQLCon;
+
+		public PURecommendationStatisticsGetByUserId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public PURecommendationStatisticsGetByUserId()
+		{
+		}
+
+		public int? ReceiveWait { get; set; }
+		public int? ReceiveApproved { get; set; }
+		public int? Finised { get; set; }
+		public int? Approve { get; set; }
+
+		public async Task<List<PURecommendationStatisticsGetByUserId>> PURecommendationStatisticsGetByUserIdDAO(int? UserId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", UserId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<PURecommendationStatisticsGetByUserId>("PU_Recommendation_StatisticsGetByUserId", DP)).ToList();
+		}
+	}
+
 	public class PURecommendationGetAllOnPage
 	{
 		private SQLCon _sQLCon;

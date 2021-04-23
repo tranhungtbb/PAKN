@@ -29,6 +29,8 @@ export class IndexComponent implements OnInit {
 	news: any[]
 	firstNews: any
 	Administrations: any[]
+	recommendationStatistics: any
+	totalRecommentdation: number = 0
 	ngOnInit() {
 		this.getData()
 	}
@@ -66,9 +68,7 @@ export class IndexComponent implements OnInit {
 			if (res.result) {
 				this.news = res.result
 				this.getNewsAvatars()
-				console.log(this.news)
 				this.firstNews = this.news[0]
-				console.log(this.firstNews)
 			}
 			return
 		})
@@ -77,6 +77,16 @@ export class IndexComponent implements OnInit {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.DAMAdministrationGetList) {
 					this.Administrations = res.result.DAMAdministrationGetList
+				}
+			}
+			return
+		})
+
+		this._service.recommendationStatisticsGetByUserId({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.recommendationStatistics = res.result.PURecommendationStatisticsGetByUserId[0]
+				for (const iterator in this.recommendationStatistics) {
+					this.totalRecommentdation += this.recommendationStatistics[iterator]
 				}
 			}
 			return

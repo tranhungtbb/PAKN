@@ -119,11 +119,11 @@
 				<div class="sb-tk-pakn mb-4">
 					<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between">
 						<h4 class="text-uppercase">Thống kê PAKN của tôi</h4>
-						<h4 class="counter">60</h4>
+						<h4 class="counter">{{totalRecommentdation}}</h4>
 					</div>
 					<div class="card-body p-0">
 						<p class="mb-1">Chờ xử lý
-							<span class="pull-right font-weight-bold cl-yellow counter">20</span>
+							<span class="pull-right font-weight-bold cl-yellow counter">{{recommendationStatistics.receiveWait}}</span>
 						</p>
 						<div class="progress ">
 							<div class="progress-bar grd-yellow1 progress-animated" style="width: 85%; height:6px;" role="progressbar">
@@ -131,7 +131,7 @@
 						</div>
 
 						<p class="mb-1 mt-4">Đã tiếp nhận
-							<span class="pull-right font-weight-bold cl-blue2 counter">12</span>
+							<span class="pull-right font-weight-bold cl-blue2 counter">{{recommendationStatistics.receiveApproved}}</span>
 						</p>
 						<div class="progress ">
 							<div class="progress-bar grd-xanhngoc progress-animated" style="width: 35%; height:6px;" role="progressbar">
@@ -139,7 +139,7 @@
 						</div>
 
 						<p class="mb-1 mt-4">Đã trả lời
-							<span class="pull-right font-weight-bold cl-blue counter">13</span>
+							<span class="pull-right font-weight-bold cl-blue counter">{{recommendationStatistics.finised}}</span>
 						</p>
 						<div class="progress ">
 							<div class="progress-bar grd-blue progress-animated" style="width: 40%; height:6px;" role="progressbar">
@@ -147,7 +147,7 @@
 						</div>
 
 						<p class="mb-1 mt-4">Bị từ chối
-							<span class="pull-right font-weight-bold cl-red counter">05</span>
+							<span class="pull-right font-weight-bold cl-red counter">{{recommendationStatistics.approve}}</span>
 						</p>
 						<div class="progress ">
 							<div class="progress-bar grd-red progress-animated" style="width: 15%; height:6px;" role="progressbar">

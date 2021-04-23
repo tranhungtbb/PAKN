@@ -276,11 +276,18 @@
 						</div>
 					</div>
 
-					<div class="tags">
+					<div class="tags" *ngIf="model.status != 10">
 						<div class="alert border alert-dark d-inline-flex fade show py-2 pl-3 pr-2 mr-1 align-items-center" *ngFor="let item of lstHashtagSelected">
 							<strong>{{item.text}}</strong>
 							<button type="button" class="close h-100 pl-2" (click)="onRemoveHashtag(item)"><span><i class="mdi mdi-close"></i></span>
 							</button>
+						</div>
+					</div>
+
+					<div class="tags" *ngIf="model.status == 10">
+						<div class="alert border alert-dark d-inline-flex fade show py-2 pl-3 pr-2 mr-1 align-items-center" *ngFor="let item of lstHashtagSelected">
+							<strong>{{item.text}}</strong>
+
 						</div>
 					</div>
 				</div>

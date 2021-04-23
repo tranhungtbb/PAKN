@@ -137,7 +137,7 @@
 				</button>
 			</div>
 			<div class="modal-body" style="padding: 1rem; height: auto;">
-				<div *ngIf="!listHisNews || listHisNews.length == 0">Bạn chưa có thông báo nào!</div>
+				<div *ngIf="!listHisNews || listHisNews.length == 0">Không có lịch sử cho tin tức</div>
 				<div *ngIf="listHisNews && listHisNews.length > 0" id="DZ_W_TimeLine" class="widget-timeline h-100 dz-scroll">
 					<ul class="timeline" style="padding: 0px">
 						<li *ngFor="let item of listHisNews">
