@@ -37,4 +37,7 @@ export class RegisterService {
 	individualCheckExists(params: any): Observable<any> {
 		return this.serviceInvoker.get(params, AppSettings.API_ADDRESS + Api.IndividualCheckExists)
 	}
+	businessCheckExists(params: any): Observable<any> {
+		return this.serviceInvoker.get(params, AppSettings.API_ADDRESS + Api.OrganizationCheckExists)
+	}
 }
