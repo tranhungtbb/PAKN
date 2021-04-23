@@ -71,6 +71,7 @@ export class ChatBotComponent implements OnInit {
 
 	getList() {
 		this.question = this.question.trim()
+		this.answer = this.answer.trim()
 
 		let request = {
 			Question: this.question.trim(),

@@ -162,8 +162,8 @@ namespace PAKNAPI.Models.Chatbot
 		private async Task<int> InsertChatbotDAO(ChatbotInsertIN _chatbotInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Question", _chatbotInsertIN.Question);
-			DP.Add("Answer", _chatbotInsertIN.Answer);
+			DP.Add("Question", _chatbotInsertIN.Question.Trim());
+			DP.Add("Answer", _chatbotInsertIN.Answer.Trim());
 			DP.Add("CategoryId", _chatbotInsertIN.CategoryId);
 			DP.Add("IsActived", _chatbotInsertIN.IsActived);
 			DP.Add("IsDeleted", _chatbotInsertIN.IsDeleted);
@@ -257,8 +257,8 @@ namespace PAKNAPI.Models.Chatbot
 
 							write.WriteStartElement("category");
 							write.WriteAttributeString("id", _chatbotInsertIN.CategoryId);
-							write.WriteElementString("pattern", _chatbotInsertIN.Question);
-							write.WriteElementString("template", _chatbotInsertIN.Answer);
+							write.WriteElementString("pattern", _chatbotInsertIN.Question.Trim());
+							write.WriteElementString("template", _chatbotInsertIN.Answer.Trim());
 							write.WriteEndElement();
 						}
 					}
@@ -277,8 +277,8 @@ namespace PAKNAPI.Models.Chatbot
 
 			XElement xElement = new XElement("category");
 			xElement.SetAttributeValue("id", _chatbotInsertIN.CategoryId);
-			xElement.SetElementValue("pattern", _chatbotInsertIN.Question);
-			xElement.SetElementValue("template", _chatbotInsertIN.Answer);
+			xElement.SetElementValue("pattern", _chatbotInsertIN.Question.Trim());
+			xElement.SetElementValue("template", _chatbotInsertIN.Answer.Trim());
 			xDocument.Element("aiml").Add(xElement);
 			xDocument.Save(_filePath);
 		}
@@ -354,8 +354,8 @@ namespace PAKNAPI.Models.Chatbot
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _chatbotUpdateIN.Id);
-			DP.Add("Question", _chatbotUpdateIN.Question);
-			DP.Add("Answer", _chatbotUpdateIN.Answer);
+			DP.Add("Question", _chatbotUpdateIN.Question.Trim());
+			DP.Add("Answer", _chatbotUpdateIN.Answer.Trim());
 			DP.Add("CategoryId", _chatbotUpdateIN.CategoryId);
 			DP.Add("IsActived", _chatbotUpdateIN.IsActived);
 			DP.Add("IsDeleted", _chatbotUpdateIN.IsDeleted);
@@ -382,8 +382,8 @@ namespace PAKNAPI.Models.Chatbot
 				AddFileQuestion(_chatbotUpdateIN);
 				return _chatbotUpdateIN.CategoryId;
 			}
-			categoryFilter.SetElementValue("pattern", _chatbotUpdateIN.Question);
-			categoryFilter.SetElementValue("template", _chatbotUpdateIN.Answer);
+			categoryFilter.SetElementValue("pattern", _chatbotUpdateIN.Question.Trim());
+			categoryFilter.SetElementValue("template", _chatbotUpdateIN.Answer.Trim());
 			xDocument.Save(_filePath);
 			await Task.Delay(10);
 			return _chatbotUpdateIN.CategoryId;
@@ -395,8 +395,8 @@ namespace PAKNAPI.Models.Chatbot
 
 			XElement xElement = new XElement("category");
 			xElement.SetAttributeValue("id", _chatbotUpdateIN.CategoryId);
-			xElement.SetElementValue("pattern", _chatbotUpdateIN.Question);
-			xElement.SetElementValue("template", _chatbotUpdateIN.Answer);
+			xElement.SetElementValue("pattern", _chatbotUpdateIN.Question.Trim());
+			xElement.SetElementValue("template", _chatbotUpdateIN.Answer.Trim());
 			xDocument.Element("aiml").Add(xElement);
 			xDocument.Save(_filePath);
 		}
