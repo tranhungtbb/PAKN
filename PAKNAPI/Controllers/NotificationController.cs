@@ -46,7 +46,7 @@ namespace PAKNAPI.Controllers
             try
             {
                 //lấy tất cả danh sách người dùng là cá nhân, doanh nghiệp
-                List<SYUser> lstUser = await new SYUser(_appSetting).SYUserGetNonSystem();
+                List<SYUserGetNonSystem> lstUser = await new SYUserGetNonSystem(_appSetting).SYUserGetNonSystemDAO();
                 if (lstUser.Count > 0)
                 {
                     string senderName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
@@ -100,13 +100,13 @@ namespace PAKNAPI.Controllers
                 SYUser sender = await new SYUser(_appSetting).SYUserGetByID(recommendation.SendId);
 
                 // danh sách người thuộc đơn vị mà PAKN gửi đến
-                List<SYUser> lstUser = await new SYUser(_appSetting).SYUserGetByUnitId((int)recommendation.UnitId);
+                List<SYUserGetByUnitId> lstUser = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO((int)recommendation.UnitId);
 
                 List<RecommendationForward> lstRMForward = new List<RecommendationForward>();
                 int unitReceiveId, receiveId;
 
                 // danh sách người dùng thuộc đơn vị mà PAKN gửi đến đơn vị đó
-                List<SYUser> listUserReceiveResolve = new List<SYUser>();
+                List<SYUserGetByUnitId> listUserReceiveResolve = new List<SYUserGetByUnitId>();
 
                 // thông tin người giải quyết
                 SYUser approver = new SYUser();
@@ -191,7 +191,7 @@ namespace PAKNAPI.Controllers
 
                         lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
                         unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
-                        listUserReceiveResolve = await new SYUser(_appSetting).SYUserGetByUnitId(unitReceiveId);
+                        listUserReceiveResolve = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(unitReceiveId);
 
                         foreach (var item in listUserReceiveResolve)
                         {
