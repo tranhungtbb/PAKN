@@ -948,6 +948,33 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class MRRecommendationGetDataGraph
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGetDataGraph(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGetDataGraph()
+		{
+		}
+
+		public int? Count { get; set; }
+		public byte? Status { get; set; }
+		public string StatusName { get; set; }
+
+		public async Task<List<MRRecommendationGetDataGraph>> MRRecommendationGetDataGraphDAO(int? UnitProcessId, long? UserProcessId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UnitProcessId", UnitProcessId);
+			DP.Add("UserProcessId", UserProcessId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetDataGraph>("MR_RecommendationGetDataGraph", DP)).ToList();
+		}
+	}
+
 	public class MRRecommendationInsert
 	{
 		private SQLCon _sQLCon;

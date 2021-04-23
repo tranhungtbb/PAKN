@@ -17,6 +17,7 @@ using Bugsnag;
 using Microsoft.AspNetCore.Http;
 using PAKNAPI.Models.ModelBase;
 
+
 namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/HISNews")]
