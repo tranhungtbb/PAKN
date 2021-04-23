@@ -26,6 +26,7 @@ export class CreateRecommendationComponent implements OnInit {
 		{ value: 3, text: 'Trả đơn' },
 		{ value: 4, text: 'Từ chối xử lý' },
 	]
+	treeUnit: any[]
 	lstUnit: any[] = []
 	lstField: any[] = []
 	lstBusiness: any[] = []
@@ -54,7 +55,7 @@ export class CreateRecommendationComponent implements OnInit {
 	ngOnInit() {
 		this.model = new RecommendationObject()
 		this.getDropdown()
-		this.activatedRoute.params.subscribe((params) => {
+		this.activatedRoute.params.subscribe(params => {
 			this.model.id = +params['id']
 			if (this.model.id != 0) {
 				this.getData()
@@ -77,13 +78,13 @@ export class CreateRecommendationComponent implements OnInit {
 			if (isExist == false) {
 				this.modelHashTagAdd = new HashtagObject()
 				this.modelHashTagAdd.name = e.target.value
-				this._serviceCatalog.hashtagInsert(this.modelHashTagAdd).subscribe((response) => {
+				this._serviceCatalog.hashtagInsert(this.modelHashTagAdd).subscribe(response => {
 					if (response.success == RESPONSE_STATUS.success) {
 						this.hashtagId = response.result
 						this.getDropdown()
 					}
 				}),
-					(error) => {
+					error => {
 						console.error(error)
 					}
 			}
@@ -120,7 +121,7 @@ export class CreateRecommendationComponent implements OnInit {
 		let request = {
 			Id: this.model.id,
 		}
-		this.recommendationService.recommendationGetById(request).subscribe((response) => {
+		this.recommendationService.recommendationGetById(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.model
 				this.lstHashtagSelected = response.result.lstHashtag
@@ -133,15 +134,27 @@ export class CreateRecommendationComponent implements OnInit {
 				this.toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.log(error)
 			}
 	}
 	getDropdown() {
 		let request = {}
-		this.recommendationService.recommendationGetDataForCreate(request).subscribe((response) => {
+		this.recommendationService.recommendationGetDataForCreate(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this.lstUnit = response.result.lstUnit
+				this.lstUnit = response.result.lstUnit.map(e => {
+					let item = {
+						id: e.value,
+						name: e.text,
+						parentId: e.parentId == null ? 0 : e.parentId,
+						unitLevel: e.unitLevel,
+						children: [],
+					}
+
+					return item
+				})
+				this.treeUnit = this.unflatten(this.lstUnit)
+				console.log(this.lstUnit)
 				this.lstField = response.result.lstField
 				this.lstHashtag = response.result.lstHashTag
 				this.lstBusiness = response.result.lstBusiness
@@ -152,7 +165,7 @@ export class CreateRecommendationComponent implements OnInit {
 				this.toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.log(error)
 			}
 	}
@@ -201,7 +214,7 @@ export class CreateRecommendationComponent implements OnInit {
 		const check = this.fileService.checkFileWasExitsted(event, this.files)
 		if (check === 1) {
 			for (let item of event.target.files) {
-				FILETYPE.forEach((fileType) => {
+				FILETYPE.forEach(fileType => {
 					if (item.type == fileType.text) {
 						item.fileType = fileType.value
 						this.files.push(item)
@@ -242,22 +255,22 @@ export class CreateRecommendationComponent implements OnInit {
 			LstXoaFile: this.lstXoaFile,
 		}
 		if (this.model.id == 0) {
-			this.recommendationService.recommendationInsert(request).subscribe((response) => {
+			this.recommendationService.recommendationInsert(request).subscribe(response => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.toastr.success(COMMONS.ADD_SUCCESS)
 
-					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: response.result }).subscribe((res) => {})
+					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: response.result }).subscribe(res => {})
 
 					return this.router.navigate(['/quan-tri/kien-nghi/danh-sach-tong-hop'])
 				} else {
 					this.toastr.error(response.message)
 				}
 			}),
-				(err) => {
+				err => {
 					console.error(err)
 				}
 		} else {
-			this.recommendationService.recommendationUpdate(request).subscribe((response) => {
+			this.recommendationService.recommendationUpdate(request).subscribe(response => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.toastr.success(COMMONS.UPDATE_SUCCESS)
 					return this.router.navigate(['/quan-tri/kien-nghi/danh-sach-tong-hop'])
@@ -265,9 +278,38 @@ export class CreateRecommendationComponent implements OnInit {
 					this.toastr.error(response.message)
 				}
 			}),
-				(err) => {
+				err => {
 					console.error(err)
 				}
 		}
+	}
+	private unflatten(arr): any[] {
+		var tree = [],
+			mappedArr = {},
+			arrElem,
+			mappedElem
+
+		// First map the nodes of the array to an object -> create a hash table.
+		for (var i = 0, len = arr.length; i < len; i++) {
+			arrElem = arr[i]
+			mappedArr[arrElem.id] = arrElem
+			mappedArr[arrElem.id]['children'] = []
+		}
+
+		for (var id in mappedArr) {
+			if (mappedArr.hasOwnProperty(id)) {
+				mappedElem = mappedArr[id]
+				// If the element is not at the root level, add it to its parent array of children.
+				if (mappedElem.parentId) {
+					if (!mappedArr[mappedElem['parentId']]) continue
+					mappedArr[mappedElem['parentId']]['children'].push(mappedElem)
+				}
+				// If the element is at the root level, add it to first level elements array.
+				else {
+					tree.push(mappedElem)
+				}
+			}
+		}
+		return tree
 	}
 }

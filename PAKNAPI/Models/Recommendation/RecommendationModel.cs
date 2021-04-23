@@ -10,7 +10,7 @@ namespace PAKNAPI.Models.Recommendation
 	public class RecommendationGetDataForCreateResponse
     {
         public string Code { get; set; }
-        public List<DropdownObject> lstUnit { get; set; }
+        public List<DropdownTree> lstUnit { get; set; }
         public List<DropdownObject> lstField { get; set; }
         public List<DropdownObject> lstIndividual { get; set; }
         public List<DropdownObject> lstBusiness { get; set; }
