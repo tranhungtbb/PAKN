@@ -19,7 +19,7 @@ export class ChatBotComponent implements OnInit {
 
 	listData = new Array<ChatbotObject>()
 	listStatus: any = [
-		{ value: '', text: '--Chọn trạng thái--' },
+		{ value: '', text: 'Chọn trạng thái' },
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
 	]
@@ -54,7 +54,7 @@ export class ChatBotComponent implements OnInit {
 	buildForm() {
 		this.form = this._fb.group({
 			question: [this.model.question, Validators.required],
-			answer: [this.model.answer],
+			answer: [this.model.answer, Validators.required],
 			categoryId: [this.model.categoryId],
 			isActived: [this.model.isActived, Validators.required],
 		})
@@ -73,7 +73,7 @@ export class ChatBotComponent implements OnInit {
 		this.question = this.question.trim()
 
 		let request = {
-			Question: this.question,
+			Question: this.question.trim(),
 			Answer: this.answer.trim(),
 			CategoryId: this.categoryId,
 			isActived: this.isActived != null ? this.isActived : '',
@@ -195,7 +195,6 @@ export class ChatBotComponent implements OnInit {
 	}
 
 	preUpdate(data) {
-		console.log('preUpdate', data)
 		let request = {
 			Id: data.id,
 			Type: 1,
@@ -216,14 +215,12 @@ export class ChatBotComponent implements OnInit {
 			}
 	}
 	preDelete(id: number, categoryId: number) {
-		console.log('preDelete', id, categoryId)
 		this.idDelete = id
 		this.categoryIdDelete = categoryId
 		$('#modalConfirmDelete').modal('show')
 	}
 
 	onDelete(id: number, categoryIdDelete: number) {
-		console.log('onDelete', id, categoryIdDelete)
 		let request = {
 			Id: id,
 			CategoryId: categoryIdDelete,

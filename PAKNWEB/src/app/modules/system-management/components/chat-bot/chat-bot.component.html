@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
-				<li class="breadcrumb-item active"><a class="font-weight-bold">DANH SÁCH CÂU HỎI</a></li>
+				<li class="breadcrumb-item active"><a class="font-weight-bold">THƯ VIỆN CHAT BOT</a></li>
 			</ol>
 			<div class="btn-group group-button-table" role="group">
 
@@ -129,9 +129,14 @@
 						</div>
 						<div class="row form-group">
 							<div class="col-sm-12">
-								<label class="control-label">Trả lời</label>
-								<textarea placeholder="Nhập..." class="form-control" formControlName="answer" type="text" rows="4" [(ngModel)]="model.answer"
+								<label class="control-label">Trả lời <span class="text-danger">(*)</span></label>
+								<textarea placeholder="Nhập..." svTrim class="form-control" formControlName="answer" type="text" rows="4" [(ngModel)]="model.answer"
 									maxlength="255"></textarea>
+								<div *ngIf="(submitted && f.answer.invalid) || (f.answer.invalid && (f.answer.dirty || f.answer.touched))" class="has-error m-b-12">
+									<div *ngIf="f.answer.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
