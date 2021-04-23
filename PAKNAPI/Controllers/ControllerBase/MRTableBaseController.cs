@@ -282,6 +282,24 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("HISRecommendationCount")]
+		public async Task<ActionResult<object>> HISRecommendationCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new HISRecommendation(_appSetting).HISRecommendationCount() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion HISRecommendation
 
 		#region MRRecommendation
@@ -526,6 +544,24 @@ namespace PAKNAPI.ControllerBase
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationCount")]
+		public async Task<ActionResult<object>> MRRecommendationCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendation(_appSetting).MRRecommendationCount() };
 			}
 			catch (Exception ex)
 			{
@@ -790,6 +826,24 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationConclusionCount")]
+		public async Task<ActionResult<object>> MRRecommendationConclusionCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationConclusion(_appSetting).MRRecommendationConclusionCount() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion MRRecommendationConclusion
 
 		#region MRRecommendationConclusionFiles
@@ -1034,6 +1088,24 @@ namespace PAKNAPI.ControllerBase
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationConclusionFilesCount")]
+		public async Task<ActionResult<object>> MRRecommendationConclusionFilesCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationConclusionFiles(_appSetting).MRRecommendationConclusionFilesCount() };
 			}
 			catch (Exception ex)
 			{
@@ -1298,6 +1370,24 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationFilesCount")]
+		public async Task<ActionResult<object>> MRRecommendationFilesCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationFiles(_appSetting).MRRecommendationFilesCount() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion MRRecommendationFiles
 
 		#region MRRecommendationForward
@@ -1542,6 +1632,24 @@ namespace PAKNAPI.ControllerBase
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationForwardCount")]
+		public async Task<ActionResult<object>> MRRecommendationForwardCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationForward(_appSetting).MRRecommendationForwardCount() };
 			}
 			catch (Exception ex)
 			{
@@ -1806,6 +1914,24 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationGenCodeCount")]
+		public async Task<ActionResult<object>> MRRecommendationGenCodeCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationGenCode(_appSetting).MRRecommendationGenCodeCount() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion MRRecommendationGenCode
 
 		#region MRRecommendationHashtag
@@ -2050,6 +2176,24 @@ namespace PAKNAPI.ControllerBase
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationHashtagCount")]
+		public async Task<ActionResult<object>> MRRecommendationHashtagCount()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationHashtag(_appSetting).MRRecommendationHashtagCount() };
 			}
 			catch (Exception ex)
 			{

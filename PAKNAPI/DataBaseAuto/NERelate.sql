@@ -156,3 +156,21 @@ BEGIN
 END
 GO
 /* End NE_RelateDeleteAll */
+
+/* Start NE_RelateCount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[NE_RelateCount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [NE_RelateCount];
+GO
+CREATE PROCEDURE [dbo].[NE_RelateCount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [NE_Relate]
+END
+GO
+/* End NE_RelateCount */

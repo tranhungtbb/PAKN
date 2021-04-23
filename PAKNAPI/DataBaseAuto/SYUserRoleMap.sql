@@ -144,3 +144,21 @@ BEGIN
 END
 GO
 /* End SY_User_Role_MapDeleteAll */
+
+/* Start SY_User_Role_MapCount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[SY_User_Role_MapCount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [SY_User_Role_MapCount];
+GO
+CREATE PROCEDURE [dbo].[SY_User_Role_MapCount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [SY_User_Role_Map]
+END
+GO
+/* End SY_User_Role_MapCount */

@@ -109,6 +109,13 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("HIS_RecommendationDeleteAll", DP));
 		}
+
+		public async Task<int> HISRecommendationCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("HIS_RecommendationCount", DP));
+		}
 	}
 
 	public class MRRecommendationOnPage
@@ -257,6 +264,13 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationDeleteAll", DP));
 		}
+
+		public async Task<int> MRRecommendationCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("MR_RecommendationCount", DP));
+		}
 	}
 
 	public class MRRecommendationConclusionOnPage
@@ -357,6 +371,13 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_ConclusionDeleteAll", DP));
 		}
+
+		public async Task<int> MRRecommendationConclusionCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("MR_Recommendation_ConclusionCount", DP));
+		}
 	}
 
 	public class MRRecommendationConclusionFilesOnPage
@@ -449,6 +470,13 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_Conclusion_FilesDeleteAll", DP));
 		}
+
+		public async Task<int> MRRecommendationConclusionFilesCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("MR_Recommendation_Conclusion_FilesCount", DP));
+		}
 	}
 
 	public class MRRecommendationFilesOnPage
@@ -540,6 +568,13 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_FilesDeleteAll", DP));
+		}
+
+		public async Task<int> MRRecommendationFilesCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("MR_Recommendation_FilesCount", DP));
 		}
 	}
 
@@ -669,6 +704,13 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_ForwardDeleteAll", DP));
 		}
+
+		public async Task<int> MRRecommendationForwardCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("MR_Recommendation_ForwardCount", DP));
+		}
 	}
 
 	public class MRRecommendationGenCodeOnPage
@@ -752,6 +794,13 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_GenCodeDeleteAll", DP));
+		}
+
+		public async Task<int> MRRecommendationGenCodeCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("MR_Recommendation_GenCodeCount", DP));
 		}
 	}
 
@@ -840,6 +889,13 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_HashtagDeleteAll", DP));
+		}
+
+		public async Task<int> MRRecommendationHashtagCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteDapperAsync<int>("MR_Recommendation_HashtagCount", DP));
 		}
 	}
 }

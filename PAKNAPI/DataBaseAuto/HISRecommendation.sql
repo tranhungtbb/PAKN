@@ -188,3 +188,21 @@ BEGIN
 END
 GO
 /* End HIS_RecommendationDeleteAll */
+
+/* Start HIS_RecommendationCount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[HIS_RecommendationCount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [HIS_RecommendationCount];
+GO
+CREATE PROCEDURE [dbo].[HIS_RecommendationCount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [HIS_Recommendation]
+END
+GO
+/* End HIS_RecommendationCount */

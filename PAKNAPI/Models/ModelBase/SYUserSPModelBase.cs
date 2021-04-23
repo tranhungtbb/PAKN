@@ -69,16 +69,16 @@ namespace PAKNAPI.ModelBase
 		public long? Id { get; set; }
 	}
 
-	public class SYUserGetAll
+	public class SYUserGetAllOnPage
 	{
 		private SQLCon _sQLCon;
 
-		public SYUserGetAll(IAppSetting appSetting)
+		public SYUserGetAllOnPage(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public SYUserGetAll()
+		public SYUserGetAllOnPage()
 		{
 		}
 
@@ -102,11 +102,19 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public int? PositionId { get; set; }
 
-		public async Task<List<SYUserGetAll>> SYUserGetAllDAO()
+		public async Task<List<SYUserGetAllOnPage>> SYUserGetAllOnPageDAO(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived, int? UnitId, int? TypeId)
 		{
 			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("UserName", UserName);
+			DP.Add("FullName", FullName);
+			DP.Add("Phone", Phone);
+			DP.Add("IsActived", IsActived);
+			DP.Add("UnitId", UnitId);
+			DP.Add("TypeId", TypeId);
 
-			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAll>("SY_UserGetAll", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPage>("SY_UserGetAllOnPage", DP)).ToList();
 		}
 	}
 
@@ -219,47 +227,6 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-	public class SYUserGetNonSystem
-	{
-		private SQLCon _sQLCon;
-
-		public SYUserGetNonSystem(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public SYUserGetNonSystem()
-		{
-		}
-
-		public int? RowNumber { get; set; }
-		public long Id { get; set; }
-		public string FullName { get; set; }
-		public string UserName { get; set; }
-		public string Password { get; set; }
-		public string Salt { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
-		public bool Gender { get; set; }
-		public byte Type { get; set; }
-		public bool IsSuperAdmin { get; set; }
-		public string Email { get; set; }
-		public string Phone { get; set; }
-		public int? UnitId { get; set; }
-		public byte? CountLock { get; set; }
-		public DateTime? LockEndOut { get; set; }
-		public string Avatar { get; set; }
-		public string Address { get; set; }
-		public int? PositionId { get; set; }
-
-		public async Task<List<SYUserGetNonSystem>> SYUserGetNonSystemDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetNonSystem>("SY_UserGetNonSystem", DP)).ToList();
-		}
-	}
-
 	public class SYUserInsert
 	{
 		private SQLCon _sQLCon;
@@ -321,6 +288,31 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public int? PositionId { get; set; }
 		public string RoleIds { get; set; }
+	}
+
+	public class SYUsersGetDropdownByUnitId
+	{
+		private SQLCon _sQLCon;
+
+		public SYUsersGetDropdownByUnitId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUsersGetDropdownByUnitId()
+		{
+		}
+
+		public long Value { get; set; }
+		public string Text { get; set; }
+
+		public async Task<List<SYUsersGetDropdownByUnitId>> SYUsersGetDropdownByUnitIdDAO(int? UnitId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UnitId", UnitId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUsersGetDropdownByUnitId>("SY_UsersGetDropdownByUnitId", DP)).ToList();
+		}
 	}
 
 	public class SYUserUpdate

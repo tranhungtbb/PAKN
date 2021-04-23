@@ -188,3 +188,21 @@ BEGIN
 END
 GO
 /* End MR_Recommendation_ConclusionDeleteAll */
+
+/* Start MR_Recommendation_ConclusionCount */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[MR_Recommendation_ConclusionCount]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [MR_Recommendation_ConclusionCount];
+GO
+CREATE PROCEDURE [dbo].[MR_Recommendation_ConclusionCount]
+AS
+BEGIN
+	SELECT Count(*)
+	FROM [MR_Recommendation_Conclusion]
+END
+GO
+/* End MR_Recommendation_ConclusionCount */
