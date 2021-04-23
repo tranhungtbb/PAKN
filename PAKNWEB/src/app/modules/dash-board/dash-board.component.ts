@@ -30,13 +30,14 @@ export class DashboardComponent implements OnInit {
 		stt_2: { count: 0 },
 		stt_6: { count: 0 },
 		stt_5: { count: 0 },
-		stt_10: { count: 0 },
+		stt_10: { count: 5 },
 	}
 
 	totalCount = 0
 
 	ngOnInit() {
 		this.getDataGraph()
+		$('.data-attr').peity('donut')
 	}
 
 	getDataGraph() {
