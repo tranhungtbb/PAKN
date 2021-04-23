@@ -49,6 +49,7 @@ export class Api {
 	public static PuRecommendationGetById = 'PURecommendation/PURecommendationGetById'
 	public static PuChangeSatisfaction = 'PURecommendation/ChangeSatisfaction'
 	public static PuRecommendationCountClick = 'PURecommendation/PURecommendationCountClick'
+	public static PURecommendationStatisticsGetByUserId = 'PURecommendation/PURecommendationStatisticsGetByUserIdBase'
 
 	//Field
 	public static FieldGetList = 'CACategorySPBase/CAFieldGetAllOnPageBase'
