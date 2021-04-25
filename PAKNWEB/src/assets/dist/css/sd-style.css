@@ -59,7 +59,7 @@ a:hover{
 }
 
 .cl-brown{
-	color: #707C97;
+	color: #5581B0;
 }
 .bg-brown{
 	background: #743F15;
@@ -83,10 +83,10 @@ a:hover{
 	background: #25A7D0;
 }
 .cl-red{
-	color: #1673D8;
+	color: #DA2222;
 }
 .bg-red{
-	background: #1673D8;
+	background: #DA2222;
 }
 .grd-green{
 	background: linear-gradient(180deg, #70F376 0%, #259F2A 100%);
@@ -686,7 +686,6 @@ transition: all .3s ease-in-out;
 .avatar-circle {
   width: 40px;
   height: 40px;
-  background-color: #FFD3D3;
   border-radius: 50%;
   font-family: sans-serif;
   color: #1673D8;
