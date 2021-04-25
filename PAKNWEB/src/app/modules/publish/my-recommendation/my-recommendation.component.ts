@@ -14,6 +14,7 @@ import { AppSettings } from 'src/app/constants/app-setting'
 import { Api } from 'src/app/constants/api'
 import { CaptchaService } from 'src/app/services/captcha-service'
 import { UserService } from 'src/app/services/user.service'
+import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 
 declare var $: any
 @Component({
@@ -31,6 +32,9 @@ export class MyRecommendationComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	listData = new Array<RecommendationObject>()
+	recommendationStatistics: any
+	totalRecommentdation: number = 0
+
 	constructor(
 		private toastr: ToastrService,
 		private fileService: UploadFileService,
@@ -39,15 +43,29 @@ export class MyRecommendationComponent implements OnInit {
 		private _serviceCatalog: CatalogService,
 		private router: Router,
 		private captchaService: CaptchaService,
-		private userService: UserService
+		private userService: UserService,
+		private puRecommendationService: PuRecommendationService
 	) {}
 
 	ngOnInit() {
 		this.userName = this.storageService.getFullName()
 		this.getSoDienThoai()
 		this.getList()
-	}
 
+		this.puRecommendationService.recommendationStatisticsGetByUserId({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.recommendationStatistics = res.result.PURecommendationStatisticsGetByUserId[0]
+				for (const iterator in this.recommendationStatistics) {
+					this.totalRecommentdation += this.recommendationStatistics[iterator]
+				}
+			}
+			return
+		})
+	}
+	Percent(value: any) {
+		var result = Math.ceil((value / this.totalRecommentdation) * 100)
+		return result
+	}
 	getSoDienThoai() {
 		this.userService.getById({ id: this.storageService.getUserId() }).subscribe((res) => {
 			if (res.success != 'OK') return

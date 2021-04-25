@@ -43,6 +43,7 @@ export class Api {
 	public static RecommendationGetSuggestCreate = 'MRSPBase/MRRecommendationGetSuggestCreateBase'
 	public static RecommendationGetSuggestReply = 'MRSPBase/MRRecommendationGetSuggestReplyBase'
 	public static RecommendationGetDataGraph = 'MRSPBase/MRRecommendationGetDataGraphBase'
+	public static RecommendationGetByHashtagAllOnPage = 'MRSPBase/MRRecommendationGetByHashtagAllOnPageBase'
 
 	public static PuRecommendationGetAllOnPage = 'PURecommendation/PURecommendationAllOnPage'
 	public static PuRecomentdationGetListOrderByCountClick = 'PURecommendation/PURecommendationGetListOrderByCountClick'

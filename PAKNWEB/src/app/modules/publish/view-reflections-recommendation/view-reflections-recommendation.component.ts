@@ -3,7 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { RESPONSE_STATUS, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
-
+import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
+import { ViewChild } from '@angular/core'
 declare var require: any
 const FileSaver = require('file-saver')
 
@@ -24,6 +25,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	constructor(private service: PuRecommendationService, private activatedRoute: ActivatedRoute, public router: Router, private _toastr: ToastrService) {
 		this.checkSatisfaction = false
 	}
+	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	ngOnInit() {
 		this.getRecommendationById()
 		this.setSatisfaction()
