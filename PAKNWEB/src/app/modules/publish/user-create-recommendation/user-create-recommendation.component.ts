@@ -15,6 +15,7 @@ import { Api } from 'src/app/constants/api'
 import { CaptchaService } from 'src/app/services/captcha-service'
 import { NotificationService } from 'src/app/services/notification.service'
 import { UnitService } from '../../../services/unit.service'
+import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 
 @Component({
 	selector: 'app-user-create-recommendation',
@@ -39,6 +40,7 @@ export class CreateRecommendationComponent implements OnInit {
 	modelHashTagAdd: HashtagObject = new HashtagObject()
 	dateNow: Date = new Date()
 	@ViewChild('file', { static: false }) public file: ElementRef
+	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	captchaImage: any = ''
 	captchaCode: string = null
 	resultsRecommendation: any = []

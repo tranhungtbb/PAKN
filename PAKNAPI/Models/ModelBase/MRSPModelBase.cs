@@ -864,6 +864,51 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class MRRecommendationGetByHashtagAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGetByHashtagAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGetByHashtagAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Title { get; set; }
+		public string Content { get; set; }
+		public short? TypeObject { get; set; }
+		public long? SendId { get; set; }
+		public string Name { get; set; }
+		public byte? Status { get; set; }
+		public DateTime? SendDate { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public long? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+
+		public async Task<List<MRRecommendationGetByHashtagAllOnPage>> MRRecommendationGetByHashtagAllOnPageDAO(string Code, string SendName, string Title, string Content, int? Status, int? UnitId, int? HashtagId, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Code", Code);
+			DP.Add("SendName", SendName);
+			DP.Add("Title", Title);
+			DP.Add("Content", Content);
+			DP.Add("Status", Status);
+			DP.Add("UnitId", UnitId);
+			DP.Add("HashtagId", HashtagId);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByHashtagAllOnPage>("MR_RecommendationGetByHashtagAllOnPage", DP)).ToList();
+		}
+	}
+
 	public class MRRecommendationGetByID
 	{
 		private SQLCon _sQLCon;

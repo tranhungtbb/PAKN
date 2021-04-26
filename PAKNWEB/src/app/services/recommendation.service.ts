@@ -230,4 +230,8 @@ export class RecommendationService {
 
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationGetDataGraph)
 	}
+
+	recommendationGetByHashtagAllOnPage(request): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationGetByHashtagAllOnPage)
+	}
 }

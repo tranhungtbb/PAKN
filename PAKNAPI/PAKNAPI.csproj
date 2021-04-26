@@ -50,6 +50,12 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
+  
+	<ItemGroup>
+	  <Reference Include="SV.MailSMS">
+	    <HintPath>Libs\SV.MailSMS.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
 	<Target Name="CreateAppDataFolder" AfterTargets="AfterPublish">
 		<MakeDir Directories="$(PublishUrl)AppData" Condition="!Exists('$(PublishUrl)AppData')" />
 	</Target>

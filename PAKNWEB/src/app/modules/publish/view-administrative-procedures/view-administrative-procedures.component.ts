@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 
 @Component({
 	selector: 'app-view-administrative-procedures',
@@ -7,6 +8,6 @@ import { Component, OnInit } from '@angular/core'
 })
 export class ViewAdministrativeProceduresComponent implements OnInit {
 	constructor() {}
-
+	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	ngOnInit() {}
 }

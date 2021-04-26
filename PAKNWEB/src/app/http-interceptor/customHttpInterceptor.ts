@@ -51,7 +51,7 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 					if (err.status === 401) {
 						this.env.isContentLoading = false
 						this.storeageService.clearStoreage()
-						this._router.navigate(['/dang-nhap'])
+						this._router.navigate(['/cong-bo/trang-chu'])
 					} else if (err.status === 403) {
 						this.env.isContentLoading = false
 						this._router.navigate(['/forbidden'])

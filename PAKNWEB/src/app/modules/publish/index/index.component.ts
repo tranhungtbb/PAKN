@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
 import { DomSanitizer } from '@angular/platform-browser'
 
@@ -6,6 +6,7 @@ import { PuRecommendation } from 'src/app/models/recommendationObject'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { NewsService } from 'src/app/services/news.service'
 import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
+import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 
 declare var $: any
@@ -23,14 +24,13 @@ export class IndexComponent implements OnInit {
 		private _serviceAdministrative: AdministrativeFormalitiesService,
 		private sanitizer: DomSanitizer
 	) {}
+	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 
 	RecommendationsOrderByCountClick: Array<PuRecommendation>
 	ReflectionsRecommendations: Array<PuRecommendation>
 	news: any[]
 	firstNews: any
 	Administrations: any[]
-	recommendationStatistics: any
-	totalRecommentdation: number = 0
 	ngOnInit() {
 		this.getData()
 	}
@@ -77,16 +77,6 @@ export class IndexComponent implements OnInit {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.DAMAdministrationGetList) {
 					this.Administrations = res.result.DAMAdministrationGetList
-				}
-			}
-			return
-		})
-
-		this._service.recommendationStatisticsGetByUserId({}).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				this.recommendationStatistics = res.result.PURecommendationStatisticsGetByUserId[0]
-				for (const iterator in this.recommendationStatistics) {
-					this.totalRecommentdation += this.recommendationStatistics[iterator]
 				}
 			}
 			return

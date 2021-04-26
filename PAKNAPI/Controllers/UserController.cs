@@ -28,13 +28,15 @@ namespace PAKNAPI.Controllers
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;
 		private readonly IHttpContextAccessor _httpContextAccessor;
+		private Microsoft.Extensions.Configuration.IConfiguration _config;
 		public UserController(IFileService fileService, IAppSetting appSetting, IClient bugsnag,
-			IHttpContextAccessor httpContextAccessor)
+			IHttpContextAccessor httpContextAccessor, Microsoft.Extensions.Configuration.IConfiguration config)
 		{
 			_fileService = fileService;
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
 			_httpContextAccessor = httpContextAccessor;
+			_config = config;
 		}
 
 		[HttpPost, DisableRequestSizeLimit]
@@ -312,7 +314,11 @@ namespace PAKNAPI.Controllers
 				model.UpdatedDate = DateTime.Now;
 				model.Status = 1;
 				model.IsDeleted = false;
-
+				string contentSMSOPT = "(Trung tam tiep nhan PAKN tinh Khanh Hoa) Xin chao: " + model.FullName +". Mat khau dang nhap he thong la: " + account.Password + ". Xin cam on!";
+				SV.MailSMS.Model.SMTPSettings settings = new SV.MailSMS.Model.SMTPSettings();
+				settings.COM = _config["SmsCOM"].ToString();
+				SV.MailSMS.Control.SMSs sMSs = new SV.MailSMS.Control.SMSs(settings);
+				sMSs.SendOTPSMS(model.Phone,contentSMSOPT);
 				var rs2 = await new BIIndividualInsert(_appSetting).BIIndividualInsertDAO(model);
 
 			}
@@ -326,6 +332,17 @@ namespace PAKNAPI.Controllers
 			return new Models.Results.ResultApi { Success = ResultCode.OK };
 		}
 
+		[HttpGet]
+		[Route("SendDemo")]
+		public string SendDemo()
+        {
+			string contentSMSOPT = "(Trung tam tiep nhan PAKN tinh Khanh Hoa) Xin chao: Trần Thanh Quyền. Mat khau dang nhap he thong la: abcAbc123123. Xin cam on!";
+			SV.MailSMS.Model.SMTPSettings settings = new SV.MailSMS.Model.SMTPSettings();
+			settings.COM = _config["SmsCOM"].ToString();
+			SV.MailSMS.Control.SMSs sMSs = new SV.MailSMS.Control.SMSs(settings);
+			sMSs.SendOTPSMS("0984881580", contentSMSOPT);
+			return "ok";
+		}
 
 		[HttpGet]
 		[Route("UserGetInfo")]
