@@ -2,7 +2,8 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
-				<li class="breadcrumb-item active"><a class="font-weight-bold"> NHÓM SỞ NGÀNH</a></li>
+				<li class="breadcrumb-item"><a>Danh mục</a></li>
+				<li class="breadcrumb-item active"><a class="font-weight-bold">Nhóm sở ngành</a></li>
 			</ol>
 			<div class="btn-group group-button-table" role="group">
 
@@ -64,7 +65,7 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									<strong><a (click)="preView(item)" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.name}}</a></strong>
+									<strong (click)="preView(item)" class="highlight" type="button" title="Xem chi tiết">{{item.name}}</strong>
 								</td>
 								<td>{{item.description}}</td>
 								<td>

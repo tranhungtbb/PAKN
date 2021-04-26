@@ -43,12 +43,14 @@ export class Api {
 	public static RecommendationGetSuggestCreate = 'MRSPBase/MRRecommendationGetSuggestCreateBase'
 	public static RecommendationGetSuggestReply = 'MRSPBase/MRRecommendationGetSuggestReplyBase'
 	public static RecommendationGetDataGraph = 'MRSPBase/MRRecommendationGetDataGraphBase'
+	public static RecommendationGetByHashtagAllOnPage = 'MRSPBase/MRRecommendationGetByHashtagAllOnPageBase'
 
 	public static PuRecommendationGetAllOnPage = 'PURecommendation/PURecommendationAllOnPage'
 	public static PuRecomentdationGetListOrderByCountClick = 'PURecommendation/PURecommendationGetListOrderByCountClick'
 	public static PuRecommendationGetById = 'PURecommendation/PURecommendationGetById'
 	public static PuChangeSatisfaction = 'PURecommendation/ChangeSatisfaction'
 	public static PuRecommendationCountClick = 'PURecommendation/PURecommendationCountClick'
+	public static PURecommendationStatisticsGetByUserId = 'PURecommendation/PURecommendationStatisticsGetByUserIdBase'
 
 	//Field
 	public static FieldGetList = 'CACategorySPBase/CAFieldGetAllOnPageBase'
@@ -184,4 +186,11 @@ export class Api {
 	public static NotificationGetList = 'SYNotification/SYNotificationGetListOnPage'
 	public static NotificationDelete = 'SYNotification/SYNotificationDelete'
 	public static NotificationUpdateIsViewed = 'SYNotification/SYNotificationUpdateIsViewed'
+
+	//Chatbot
+	public static ChatbotGetList = 'Chatbot/ChatbotGetAllOnPageBase'
+	public static ChatbotDelete = 'Chatbot/ChatbotDeleteBase'
+	public static ChatbotGetById = 'Chatbot/ChatbotGetByID'
+	public static ChatbotUpdate = 'Chatbot/ChatbotUpdateBase'
+	public static ChatbotInsertQuestion = 'Chatbot/ChatbotInsertQuestion'
 }

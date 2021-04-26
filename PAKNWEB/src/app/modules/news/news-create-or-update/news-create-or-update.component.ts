@@ -20,6 +20,7 @@ import { COMMONS } from '../../../commons/commons'
 import { AppSettings } from '../../../constants/app-setting'
 import { NewsModel, HISNewsModel } from '../../../models/NewsObject'
 import { from } from 'rxjs'
+import { switchMap } from 'rxjs/operators'
 
 declare var $: any
 
@@ -190,6 +191,11 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					}
 					return
 				})
+
+				// this.newsService.hisNewsCreate(this.hisNewsModel).pipe(
+				// 	switchMap(result=> result.success),
+				// 	switchMap(success =>this.newsService.hisNewsCreate({...this.hisNewsModel,"status" : STATUS_HISNEWS.PUBLIC}))
+				// )
 
 				this.toast.success(COMMONS.UPDATE_SUCCESS)
 				this.router.navigate(['/quan-tri/tin-tuc'])

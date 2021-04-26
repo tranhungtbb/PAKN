@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
 import { DomSanitizer } from '@angular/platform-browser'
 
@@ -6,6 +6,7 @@ import { PuRecommendation } from 'src/app/models/recommendationObject'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { NewsService } from 'src/app/services/news.service'
 import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
+import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 
 declare var $: any
@@ -23,6 +24,7 @@ export class IndexComponent implements OnInit {
 		private _serviceAdministrative: AdministrativeFormalitiesService,
 		private sanitizer: DomSanitizer
 	) {}
+	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 
 	RecommendationsOrderByCountClick: Array<PuRecommendation>
 	ReflectionsRecommendations: Array<PuRecommendation>
@@ -66,9 +68,7 @@ export class IndexComponent implements OnInit {
 			if (res.result) {
 				this.news = res.result
 				this.getNewsAvatars()
-				console.log(this.news)
 				this.firstNews = this.news[0]
-				console.log(this.firstNews)
 			}
 			return
 		})

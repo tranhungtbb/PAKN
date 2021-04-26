@@ -7,7 +7,8 @@ import { HashtagService } from 'src/app/services/hashtag.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { of } from 'rxjs'
+import { RecommendationService } from 'src/app/services/recommendation.service'
+import { from, of } from 'rxjs'
 import { stringify } from '@angular/compiler/src/util'
 
 declare var $: any
@@ -41,12 +42,47 @@ export class HashtagComponent implements OnInit {
 	public Title: string
 	public IdDelete: number
 	submitted: boolean = false
+	listData: any[]
+	recommendationsGetByHashtag: any[]
 
 	@ViewChild('table', { static: false }) table: any
+	@ViewChild('tableMRR', { static: false }) tableMRR: any
 
-	constructor(private service: HashtagService, private _toastr: ToastrService, private formBuilder: FormBuilder, private _shareData: DataService) {
+	listMrrStatus: any = [
+		{ value: '', text: 'Trạng thái' },
+		{ value: 2, text: 'Chờ xử lý' },
+		{ value: 3, text: 'Từ chối xử lý' },
+		{ value: 4, text: 'Đã tiếp nhận' },
+		{ value: 5, text: 'Chờ giải quyết' },
+		{ value: 6, text: 'Từ chối giải quyết' },
+		{ value: 7, text: 'Đang giải quyết' },
+		{ value: 8, text: 'Chờ phê duyệt' },
+		{ value: 9, text: 'Từ chối phê duyệt' },
+		{ value: 10, text: 'Đã giải quyết' },
+	]
+
+	mrrCode: any
+	mrrSendName: any
+	mrrTitle: any
+	mrrContent: any
+	mrrStatus: any
+	mrrPageSize: Number
+	mrrPageIndex: Number
+	mrrHashtagId: Number
+
+	totalRecord2: number = 0
+
+	constructor(
+		private service: HashtagService,
+		private _toastr: ToastrService,
+		private formBuilder: FormBuilder,
+		private _shareData: DataService,
+		private recommendationService: RecommendationService
+	) {
 		this.PageIndex = 1
 		this.PageSize = 20
+		this.mrrPageSize = 10
+		this.mrrPageIndex = 1
 	}
 
 	ngOnInit() {
@@ -104,10 +140,39 @@ export class HashtagComponent implements OnInit {
 		})
 	}
 
+	listRecommendationByHashtag(id: any) {
+		this.mrrHashtagId = id
+		var obj = {
+			Code: this.mrrCode != null ? this.mrrCode : '',
+			SendName: this.mrrSendName != null ? this.mrrSendName : '',
+			Title: this.mrrTitle != null ? this.mrrTitle : '',
+			Content: this.mrrContent != null ? this.mrrContent : '',
+			Status: this.mrrStatus != null ? this.mrrStatus : '',
+			UnitId: Number(localStorage.getItem('unitId')),
+			HashtagId: id,
+			PageSize: this.mrrPageSize,
+			PageIndex: this.mrrPageIndex,
+		}
+		this.service.recommendationGetByHashtagAllOnPage(obj).subscribe((res) => {
+			if ((res.success = RESPONSE_STATUS.success)) {
+				this.recommendationsGetByHashtag = res.result.MRRecommendationGetByHashtagAllOnPage
+				this.totalRecord2 = this.recommendationsGetByHashtag.length > 0 ? this.recommendationsGetByHashtag[0].rowNumber : 0
+				$('#modalRecommendationGetByHashtag').modal('show')
+			}
+			return
+		})
+	}
+
 	onPageChange(event: any) {
 		this.PageSize = event.rows
 		this.PageIndex = event.first / event.rows + 1
 		this.GetListHashtag()
+	}
+
+	onPageChange2(event: any) {
+		this.mrrPageSize = event.rows
+		this.mrrPageIndex = event.first / event.rows + 1
+		this.listRecommendationByHashtag(this.mrrHashtagId)
 	}
 
 	dataStateChange() {
@@ -115,6 +180,13 @@ export class HashtagComponent implements OnInit {
 		this.PageIndex = 1
 		this.PageSize = 20
 		this.GetListHashtag()
+	}
+
+	dataStateChange2() {
+		this.table.first = 0
+		this.mrrPageIndex = 1
+		this.mrrPageSize = 20
+		this.listRecommendationByHashtag(this.mrrHashtagId)
 	}
 
 	preCreate() {

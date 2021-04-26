@@ -28,13 +28,15 @@ namespace PAKNAPI.Controllers
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;
 		private readonly IHttpContextAccessor _httpContextAccessor;
+		private Microsoft.Extensions.Configuration.IConfiguration _config;
 		public UserController(IFileService fileService, IAppSetting appSetting, IClient bugsnag,
-			IHttpContextAccessor httpContextAccessor)
+			IHttpContextAccessor httpContextAccessor, Microsoft.Extensions.Configuration.IConfiguration config)
 		{
 			_fileService = fileService;
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
 			_httpContextAccessor = httpContextAccessor;
+			_config = config;
 		}
 
 		[HttpPost, DisableRequestSizeLimit]
@@ -185,9 +187,6 @@ namespace PAKNAPI.Controllers
         {
 			try
 			{
-
-
-
 				if (loginInfo.Password != loginInfo.RePassword)
 				{
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu không khớp" };
@@ -196,11 +195,11 @@ namespace PAKNAPI.Controllers
 				DateTime birdDay, dateOfIssue;
 				if (!DateTime.TryParseExact(_RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
 				{
-					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
 				}
 				if (!DateTime.TryParseExact(_DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
 				{
-					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 				}
 
 				///mod loginInfo
@@ -261,36 +260,22 @@ namespace PAKNAPI.Controllers
 			[FromForm] string _DateOfIssue)
 		{
 
+
             try
             {
-
-				var check_email = await new BIIndividualCheckExists().BIIndividualCheckExistsDAO("Email",model.Email);
-                if (check_email[0].Exists.Value)
-					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
-
-				var check_phone = await new BIIndividualCheckExists().BIIndividualCheckExistsDAO("Phone", model.Phone);
-				if (check_phone[0].Exists.Value)
-					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
-
-				var check_idCard = await new BIIndividualCheckExists().BIIndividualCheckExistsDAO("IDCard", model.IDCard);
-				if(check_idCard[0].Exists.Value)
-					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND/CCCD đã tồn tại" };
-
 				if (loginInfo.Password != loginInfo.RePassword)
 				{
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu không khớp" };
 				}
 
 				DateTime birdDay, dateOfIssue;
-				
 				if (!DateTime.TryParseExact(_BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
 				{
-					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
 				}
-				
 				if (!DateTime.TryParseExact(_DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
 				{
-					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 				}
 
 				///mod loginInfo
@@ -329,7 +314,11 @@ namespace PAKNAPI.Controllers
 				model.UpdatedDate = DateTime.Now;
 				model.Status = 1;
 				model.IsDeleted = false;
-
+				string contentSMSOPT = "(Trung tam tiep nhan PAKN tinh Khanh Hoa) Xin chao: " + model.FullName +". Mat khau dang nhap he thong la: " + account.Password + ". Xin cam on!";
+				SV.MailSMS.Model.SMTPSettings settings = new SV.MailSMS.Model.SMTPSettings();
+				settings.COM = _config["SmsCOM"].ToString();
+				SV.MailSMS.Control.SMSs sMSs = new SV.MailSMS.Control.SMSs(settings);
+				sMSs.SendOTPSMS(model.Phone,contentSMSOPT);
 				var rs2 = await new BIIndividualInsert(_appSetting).BIIndividualInsertDAO(model);
 
 			}
@@ -343,6 +332,17 @@ namespace PAKNAPI.Controllers
 			return new Models.Results.ResultApi { Success = ResultCode.OK };
 		}
 
+		[HttpGet]
+		[Route("SendDemo")]
+		public string SendDemo()
+        {
+			string contentSMSOPT = "(Trung tam tiep nhan PAKN tinh Khanh Hoa) Xin chao: Trần Thanh Quyền. Mat khau dang nhap he thong la: abcAbc123123. Xin cam on!";
+			SV.MailSMS.Model.SMTPSettings settings = new SV.MailSMS.Model.SMTPSettings();
+			settings.COM = _config["SmsCOM"].ToString();
+			SV.MailSMS.Control.SMSs sMSs = new SV.MailSMS.Control.SMSs(settings);
+			sMSs.SendOTPSMS("0984881580", contentSMSOPT);
+			return "ok";
+		}
 
 		[HttpGet]
 		[Route("UserGetInfo")]
@@ -474,7 +474,7 @@ namespace PAKNAPI.Controllers
 					Password = newPwd["Password"],
 					Salt = newPwd["Salt"]
 				};
-				_model.Id = accInfo[0].Id;
+
 				var rs = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_model);
 
 				return new Models.Results.ResultApi { Success = ResultCode.OK};

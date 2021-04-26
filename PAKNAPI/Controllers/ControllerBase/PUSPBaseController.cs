@@ -31,6 +31,29 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("PURecommendationStatisticsGetByUserIdBase")]
+		public async Task<ActionResult<object>> PURecommendationStatisticsGetByUserIdBase(int? UserId)
+		{
+			try
+			{
+				List<PURecommendationStatisticsGetByUserId> rsPURecommendationStatisticsGetByUserId = await new PURecommendationStatisticsGetByUserId(_appSetting).PURecommendationStatisticsGetByUserIdDAO(UserId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"PURecommendationStatisticsGetByUserId", rsPURecommendationStatisticsGetByUserId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
 		[Authorize]
 		[Route("PURecommendationGetAllOnPageBase")]
 		public async Task<ActionResult<object>> PURecommendationGetAllOnPageBase(string KeySearch, int? Status, int? PageSize, int? PageIndex)

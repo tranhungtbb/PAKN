@@ -16,6 +16,11 @@ export class HashtagService {
 	getAll(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.HashtagGetAll)
 	}
+
+	recommendationGetByHashtagAllOnPage(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.RecommendationGetByHashtagAllOnPage)
+	}
+
 	getById(query: any): Observable<any> {
 		let headers = new Headers()
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.HashtagGetById)
