@@ -35,19 +35,19 @@
 						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
-								<th style="width: 3%;">
+								<th style="width: 50px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>STT</strong>
 									</p>
 								</th>
-								<th style="width: 30%;">
+								<th style="max-width: 180px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Tên lĩnh vực</strong>
 										<span class="caret-tb"></span>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
 								</th>
-								<th style="width: 50%;">
+								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Mô tả</strong>
 										<span class="caret-tb"></span>
@@ -55,7 +55,7 @@
 									<input type="text" class="form-control form-control-sm" [(ngModel)]="description" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập mô tả...">
 								</th>
-								<th style="width: 10%;">
+								<th style="width: 130px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Trạng thái</strong>
 										<span class="caret-tb"></span>
@@ -66,7 +66,7 @@
 										</ng-select>
 									</div>
 								</th>
-								<th style="width: 15%;" class="text-right"><strong>THAO TÁC</strong></th>
+								<th style="width: 110px;" class="text-right"><strong>THAO TÁC</strong></th>
 							</tr>
 						</ng-template>
 						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">

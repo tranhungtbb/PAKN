@@ -27,7 +27,7 @@
 							<div class="message" *ngFor="let item of resultsRecommendation">
 								<div>
 									<a href="/cong-bo/phan-anh-kien-nghi/{{item.id}}" target="_blank" class="col-mail col-mail-2">
-										<div class="subject">{{item.title}}</div>
+										<div class="subject" innerHTML="{{item.title}}"></div>
 										<div class="date">{{item.createdDate}}</div>
 									</a>
 								</div>

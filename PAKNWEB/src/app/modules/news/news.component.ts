@@ -4,10 +4,10 @@ import { ToastrService } from 'ngx-toastr'
 
 import { NewsService } from 'src/app/services/news.service'
 import { CatalogService } from 'src/app/services/catalog.service'
-import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS, STATUS_HISNEWS } from 'src/app/constants/CONSTANTS'
 
 import { COMMONS } from 'src/app/commons/commons'
-import { NewsModel } from 'src/app/models/NewsObject'
+import { NewsModel, HISNewsModel } from 'src/app/models/NewsObject'
 declare var $: any
 @Component({
 	selector: 'app-news',
@@ -17,7 +17,7 @@ declare var $: any
 //acbd
 export class NewsComponent implements OnInit {
 	constructor(private newsService: NewsService, private catalogService: CatalogService, private toast: ToastrService, private sanitizer: DomSanitizer) {}
-
+	hisNewsModel: HISNewsModel = new HISNewsModel()
 	query: any = {
 		pageSize: 20,
 		pageIndex: 1,
@@ -115,7 +115,10 @@ export class NewsComponent implements OnInit {
 					this.toast.error('Xảy ra lỗi trong quá trình xử lý')
 					return
 				}
-
+				this.hisNewsModel.objectId = this.modalConfirm_item_id
+				this.hisNewsModel.type = 1 // tin tức
+				this.hisNewsModel.status = item.isPublished ? STATUS_HISNEWS.PUBLIC : STATUS_HISNEWS.CANCEL
+				this.newsService.hisNewsCreate(this.hisNewsModel).subscribe((res) => console.log(res))
 				this.toast.success(item.isPublished ? 'Đã công bố' : 'Đã thu hồi')
 			})
 		}
