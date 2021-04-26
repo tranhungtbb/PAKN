@@ -845,6 +845,10 @@ namespace PAKNAPI.ModelBase
 		public long? UpdatedBy { get; set; }
 		public DateTime? UpdatedDate { get; set; }
 		public int? ProcessId { get; set; }
+		public int? UnitSendId { get; set; }
+		public long? UserSendId { get; set; }
+		public long? ReceiveId { get; set; }
+		public int? UnitReceiveId { get; set; }
 
 		public async Task<List<MRRecommendationGetAllWithProcess>> MRRecommendationGetAllWithProcessDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId, int? PageSize, int? PageIndex)
 		{
