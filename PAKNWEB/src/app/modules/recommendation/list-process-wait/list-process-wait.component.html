@@ -47,23 +47,25 @@
 											<strong>Tên Cá nhân/ Doanh nghiệp</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
 									</th>
 									<th style="width: 350px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tiêu đề</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.content" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.content" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
 									</th>
-									<th>
+									<th style="width: 200px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>ĐV tiếp nhận</strong>
+											<strong>Đơn vị tiếp nhận</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [items]="lstUnit" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.unitId" [closeOnSelect]="true"
-												(change)="dataStateChange()">
+										<div style="width: 200px" class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select placeholder="Chọn..." class="" [items]="lstUnit" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.unitId"
+												[closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>
 									</th>
@@ -73,8 +75,8 @@
 											<span class="caret-tb"></span>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field" [closeOnSelect]="true"
-												(change)="dataStateChange()">
+											<ng-select placeholder="Chọn..." class="" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field"
+												[closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>
 									</th>
