@@ -1,7 +1,8 @@
 <form class="form-row px-3" [formGroup]="formInfo">
 	<div class="col form-group">
 		<label class="mb-1">Người đại diện <span class="cl-red">(*)</span></label>
-		<input [svTrim] [(ngModel)]="model.RepresentativeName" formControlName="RepresentativeName" type="text" placeholder="Nhập..." class="form-control border-brown">
+		<input [svTrim] maxlength="100" [(ngModel)]="model.RepresentativeName" formControlName="RepresentativeName" type="text" placeholder="Nhập..."
+			class="form-control border-brown">
 		<div *ngIf="(fInfoSubmitted && fInfo.RepresentativeName.invalid)||(fInfo.RepresentativeName.invalid && (fInfo.RepresentativeName.dirty || fInfo.RepresentativeName.touched))"
 			class="has-error m-b-12">
 			<div *ngIf="fInfo.RepresentativeName.errors.required">
