@@ -404,25 +404,10 @@ namespace PAKNAPI.Controllers
 						return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Thông tin tài khoản không tồn tại" };
 					}
 
-					var model = new AccountInfoModel
-					{
-						UserName = accInfo[0].UserName,
-						FullName = info[0].RepresentativeName,
-						Gender = info[0].RepresentativeGender.Value,
-						DateOfBirth = info[0].RepresentativeBirthDay.ToString("dd/MM/yyyy"),
-						Email = info[0].Email,
-						Phone = info[0].Phone,
-						Nation = info[0].Nation,
-						ProvinceId = info[0].ProvinceId.Value,
-						DistrictId = info[0].DistrictId.Value,
-						WardsId = info[0].WardsId.Value,
-						Address = info[0].Address,
-						IdCard = info[0].IDCard,
-						//IssuedPlace = info[0].IssuedPlace,
-						//IssuedDate = info[0].DateOfIssue.Value.ToString("dd/MM/yyyy"),
-					};
+					BusinessAccountInfoModel model = new BusinessAccountInfoModel(info[0]);
 
-
+					model.UserName = accInfo[0].UserName;
+					model.FullName = accInfo[0].FullName;
 
 					return new Models.Results.ResultApi { Success = ResultCode.OK, Result = model };
 				}
@@ -474,6 +459,7 @@ namespace PAKNAPI.Controllers
 					Password = newPwd["Password"],
 					Salt = newPwd["Salt"]
 				};
+				_model.Id = accInfo[0].Id;
 
 				var rs = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_model);
 

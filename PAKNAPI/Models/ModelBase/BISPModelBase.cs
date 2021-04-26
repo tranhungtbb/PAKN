@@ -118,6 +118,16 @@ namespace PAKNAPI.ModelBase
 		public string PermanentPlace { get; set; }
 		public string Nation { get; set; }
 
+		public string BusinessRegistration{get;set;}
+		public string DecisionOfEstablishing { get;set;}
+		public string Tax { get;set;}
+		public int OrgProvinceId{get;set;}
+		public int OrgDistrictId { get;set;}
+		public int OrgWardsId { get;set;}
+		public string OrgAddress { get;set;}
+		public string OrgPhone { get;set;}
+		public string OrgEmail { get; set; }
+
 		public async Task<List<BIBusinessGetRepresentativeEmail>> BIBusinessGetRepresentativeEmailDAO(string Email)
 		{
 			DynamicParameters DP = new DynamicParameters();

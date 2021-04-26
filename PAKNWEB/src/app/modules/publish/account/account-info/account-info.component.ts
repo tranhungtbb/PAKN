@@ -29,6 +29,14 @@ export class AccountInfoComponent implements OnInit {
 	model: UserInfoObject = new UserInfoObject()
 
 	ngOnInit() {
+		var userType = this.storageService.getTypeObject()
+
+		// chuyển hướng trang xem tài khoản doanh nghiệp
+		if (userType == 3 && this.router.url.includes('/tai-khoan/thong-tin')) {
+			this.router.navigate(['/cong-bo/tai-khoan/thong-tin-doanh-nghiep'])
+			return
+		}
+
 		this.getUserInfo()
 
 		if (this.router.url.includes('/tai-khoan/thong-tin')) {
