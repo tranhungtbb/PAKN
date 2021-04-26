@@ -26,6 +26,8 @@ export class CreateRecommendationComponent implements OnInit {
 		{ value: 3, text: 'Trả đơn' },
 		{ value: 4, text: 'Từ chối xử lý' },
 	]
+	title: string = 'Thêm mới'
+	spc: string = '-'
 	treeUnit: any[]
 	lstUnit: any[] = []
 	lstField: any[] = []
@@ -59,8 +61,10 @@ export class CreateRecommendationComponent implements OnInit {
 			this.model.id = +params['id']
 			if (this.model.id != 0) {
 				this.getData()
+				this.title = 'Sửa'
 			} else {
 				this.model.typeObject = 1
+				this.title = 'Thêm mới'
 			}
 			this.builForm()
 		})
@@ -154,7 +158,7 @@ export class CreateRecommendationComponent implements OnInit {
 					return item
 				})
 				this.treeUnit = this.unflatten(this.lstUnit)
-				console.log(this.lstUnit)
+				console.log(this.treeUnit)
 				this.lstField = response.result.lstField
 				this.lstHashtag = response.result.lstHashTag
 				this.lstBusiness = response.result.lstBusiness
