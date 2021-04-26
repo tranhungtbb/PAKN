@@ -26,12 +26,14 @@ namespace PAKNAPI.ModelBase
 
 		public bool? Exists { get; set; }
 		public string Value { get; set; }
+		public long? Id { get; set; }
 
-		public async Task<List<BIBusinessCheckExists>> BIBusinessCheckExistsDAO(string Field, string Value)
+		public async Task<List<BIBusinessCheckExists>> BIBusinessCheckExistsDAO(string Field, string Value, long? Id )
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Field", Field);
 			DP.Add("Value", Value);
+			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<BIBusinessCheckExists>("BI_Business_CheckExists", DP)).ToList();
 		}
@@ -398,12 +400,14 @@ namespace PAKNAPI.ModelBase
 
 		public bool? Exists { get; set; }
 		public string Value { get; set; }
+		public long? Id { get; set; }
 
-		public async Task<List<BIIndividualCheckExists>> BIIndividualCheckExistsDAO(string Field, string Value)
+		public async Task<List<BIIndividualCheckExists>> BIIndividualCheckExistsDAO(string Field, string Value, long?Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Field", Field);
 			DP.Add("Value", Value);
+			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualCheckExists>("BI_Individual_CheckExists", DP)).ToList();
 		}

@@ -225,6 +225,7 @@ export class IndividualComponent implements OnInit {
 			.individualCheckExists({
 				field,
 				value,
+				id: 0,
 			})
 			.subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
