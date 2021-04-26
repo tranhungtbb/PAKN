@@ -26,6 +26,7 @@ export class ListProcessWaitComponent implements OnInit {
 		private notificationService: NotificationService
 	) {}
 	userLoginId: number = this.storeageService.getUserId()
+	unitLoginId: number = this.storeageService.getUnitId()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
 		{ value: 2, text: 'Chờ xử lý' },

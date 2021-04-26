@@ -2,7 +2,13 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { COMMONS } from 'src/app/commons/commons'
 import { CONSTANTS, FILETYPE, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
-import { RecommendationConclusionObject, RecommendationForwardObject, RecommendationProcessObject, RecommendationViewObject, RecommendationSuggestObject } from 'src/app/models/recommendationObject'
+import {
+	RecommendationConclusionObject,
+	RecommendationForwardObject,
+	RecommendationProcessObject,
+	RecommendationViewObject,
+	RecommendationSuggestObject,
+} from 'src/app/models/recommendationObject'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -12,6 +18,7 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { RemindComponent } from 'src/app/modules/recommendation/remind/remind.component'
 import { NotificationService } from 'src/app/services/notification.service'
+import { AppSettings } from 'src/app/constants/app-setting'
 declare var $: any
 
 @Component({
@@ -34,7 +41,9 @@ export class ViewRecommendationComponent implements OnInit {
 	unitLoginId: number = this.storeageService.getUnitId()
 	pageIndex: number = 1
 	pageSize: number = 20
+	APIADDRESS: string
 	listData = new Array<RecommendationSuggestObject>()
+	suggest: boolean = false
 	totalRecords: number = 0
 	@ViewChild('table', { static: false }) table: any
 	@ViewChild('file', { static: false }) public file: ElementRef
@@ -52,16 +61,25 @@ export class ViewRecommendationComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
+		this.APIADDRESS = AppSettings.API_ADDRESS.replace('api/', '')
 		this.remindComponent.viewRecommendation = this
 		this.buildFormForward()
 		this.getDropdown()
 		this.model = new RecommendationViewObject()
-		this.activatedRoute.params.subscribe(params => {
+		this.activatedRoute.params.subscribe((params) => {
 			this.model.id = +params['id']
 			if (this.model.id != 0) {
 				this.getData()
 			} else {
 				this.model.typeObject = 1
+			}
+		})
+
+		this.activatedRoute.queryParams.subscribe((params) => {
+			let suggest = params['suggest']
+			debugger
+			if (suggest) {
+				this.suggest = suggest
 			}
 		})
 	}
@@ -70,12 +88,13 @@ export class ViewRecommendationComponent implements OnInit {
 		let request = {
 			Id: this.model.id,
 		}
-		this.recommendationService.recommendationGetByIdView(request).subscribe(response => {
+		this.recommendationService.recommendationGetByIdView(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.model
 				if (this.model.status > RECOMMENDATION_STATUS.PROCESSING) {
 					this.modelConclusion = response.result.modelConclusion
 					this.files = response.result.filesConclusion
+					console.log(this.files)
 				} else {
 					this.modelConclusion = new RecommendationConclusionObject()
 				}
@@ -90,7 +109,7 @@ export class ViewRecommendationComponent implements OnInit {
 				this.toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 			}
 	}
@@ -98,7 +117,7 @@ export class ViewRecommendationComponent implements OnInit {
 		let request = {
 			UnitId: this.storeageService.getUnitId(),
 		}
-		this.recommendationService.recommendationGetDataForProcess(request).subscribe(response => {
+		this.recommendationService.recommendationGetDataForProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.lstHashtag = response.result.lstHashtag
 				this.lstUsers = response.result.lstUsers
@@ -106,7 +125,7 @@ export class ViewRecommendationComponent implements OnInit {
 				this.toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 			}
 	}
@@ -122,7 +141,7 @@ export class ViewRecommendationComponent implements OnInit {
 			PageSize: this.pageSize,
 		}
 
-		this.recommendationService.recommendationGetSuggestReply(request).subscribe(response => {
+		this.recommendationService.recommendationGetSuggestReply(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
@@ -134,7 +153,7 @@ export class ViewRecommendationComponent implements OnInit {
 				this.toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 				alert(error)
 			}
@@ -173,13 +192,13 @@ export class ViewRecommendationComponent implements OnInit {
 			if (isExist == false) {
 				this.modelHashTagAdd = new HashtagObject()
 				this.modelHashTagAdd.name = e.target.value
-				this._serviceCatalog.hashtagInsert(this.modelHashTagAdd).subscribe(response => {
+				this._serviceCatalog.hashtagInsert(this.modelHashTagAdd).subscribe((response) => {
 					if (response.success == RESPONSE_STATUS.success) {
 						this.hashtagId = response.result
 						this.getDropdown()
 					}
 				}),
-					error => {
+					(error) => {
 						console.error(error)
 					}
 			}
@@ -219,7 +238,7 @@ export class ViewRecommendationComponent implements OnInit {
 		const check = this.fileService.checkFileWasExitsted(event, this.files)
 		if (check === 1) {
 			for (let item of event.target.files) {
-				FILETYPE.forEach(fileType => {
+				FILETYPE.forEach((fileType) => {
 					if (item.type == fileType.text) {
 						item.fileType = fileType.value
 						this.files.push(item)
@@ -258,17 +277,17 @@ export class ViewRecommendationComponent implements OnInit {
 				Files: this.files,
 				RecommendationStatus: RECOMMENDATION_STATUS.APPROVE_WAIT,
 			}
-			this.recommendationService.recommendationProcessConclusion(request).subscribe(response => {
+			this.recommendationService.recommendationProcessConclusion(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
-					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.model.id }).subscribe((res) => {})
+					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.model.id }).subscribe(res => {})
 					this.toastr.success(COMMONS.PROCESS_SUCCESS)
 					return this.router.navigate(['/quan-tri/kien-nghi/dang-giai-quyet'])
 				} else {
 					this.toastr.error(response.message)
 				}
 			}),
-				err => {
+				(err) => {
 					console.error(err)
 				}
 		}
@@ -302,7 +321,7 @@ export class ViewRecommendationComponent implements OnInit {
 		this.modelForward = new RecommendationForwardObject()
 		this.modelForward.recommendationId = this.model.id
 		this.rebuilFormForward()
-		this.recommendationService.recommendationGetDataForForward({}).subscribe(response => {
+		this.recommendationService.recommendationGetDataForForward({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.lstUnitNotMain = response.result.lstUnitNotMain
@@ -312,7 +331,7 @@ export class ViewRecommendationComponent implements OnInit {
 				this.toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 			}
 	}
@@ -329,7 +348,7 @@ export class ViewRecommendationComponent implements OnInit {
 			_mRRecommendationForwardInsertIN: this.modelForward,
 			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
 		}
-		this.recommendationService.recommendationForward(request).subscribe(response => {
+		this.recommendationService.recommendationForward(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalForward').modal('hide')
 				this.getData()
@@ -338,7 +357,7 @@ export class ViewRecommendationComponent implements OnInit {
 				this.toastr.error(response.message)
 			}
 		}),
-			err => {
+			(err) => {
 				console.error(err)
 			}
 	}
@@ -377,7 +396,7 @@ export class ViewRecommendationComponent implements OnInit {
 			RecommendationStatus: this.recommendationStatusProcess,
 			ReactionaryWord: this.modelProcess.reactionaryWord,
 		}
-		this.recommendationService.recommendationProcess(request).subscribe(response => {
+		this.recommendationService.recommendationProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
 				if (this.recommendationStatusProcess == RECOMMENDATION_STATUS.FINISED) {
@@ -390,7 +409,7 @@ export class ViewRecommendationComponent implements OnInit {
 				this.toastr.error(response.message)
 			}
 		}),
-			err => {
+			(err) => {
 				console.error(err)
 			}
 	}
@@ -403,7 +422,7 @@ export class ViewRecommendationComponent implements OnInit {
 				_mRRecommendationForwardProcessIN: this.modelProcess,
 				RecommendationStatus: this.recommendationStatusProcess,
 			}
-			this.recommendationService.recommendationProcess(request).subscribe(response => {
+			this.recommendationService.recommendationProcess(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
 					this.toastr.success(COMMONS.DENY_SUCCESS)
@@ -412,7 +431,7 @@ export class ViewRecommendationComponent implements OnInit {
 					this.toastr.error(response.message)
 				}
 			}),
-				err => {
+				(err) => {
 					console.error(err)
 				}
 		}

@@ -7,7 +7,7 @@
 					<li class="breadcrumb-item active"><a class="font-weight-bold"> Chi tiết PAKN</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
-					<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" appSvBackButton>
+					<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" appSvBackButton *ngIf="suggest == false">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left mr-2" viewBox="0 0 16 16">
 							<path fill-rule="evenodd"
 								d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
@@ -96,7 +96,28 @@
 									</span>
 									<span class="text-left text-truncate">
 										<small class="small">Tài liệu đính kèm</small><br>
-										<span class="mr-2" *ngFor="let item of filesModel">{{item.name}}<br></span>
+										<div *ngFor="let file of filesModel">
+											<a *ngIf="file.fileType == 1" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+												<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
+												<span class="small">{{file.name}}</span>
+											</a>
+											<a *ngIf="file.fileType == 2" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+												<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;" alt="">
+												<span class="small">{{file.name}}</span>
+											</a>
+											<a *ngIf="file.fileType == 3" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+												<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
+												<span class="small">{{file.name}}</span>
+											</a>
+											<a *ngIf="file.fileType == 4" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+												<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;" alt="">
+												<span class="small">{{file.name}}</span>
+											</a>
+											<a *ngIf="file.fileType == 6" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+												<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;" alt="">
+												<span class="small">{{file.name}}</span>
+											</a>
+										</div>
 									</span>
 								</button>
 							</p>
@@ -117,7 +138,7 @@
 									<p class="h4 font-italic font-weight-bold">Trung tâm phản ánh kiến nghị tỉnh Khánh Hoà:</p>
 								</div>
 								<div class="col-md-4">
-									<button *ngIf="lstHashtagSelected.length > 0" type="button" class="btn btn-sm rounded bg-white text-dark border pull-right"
+									<button *ngIf="lstHashtagSelected.length > 0 && suggest == false" type="button" class="btn btn-sm rounded bg-white text-dark border pull-right"
 										(click)="getListSuggest()">
 										<i class="bi bi-lightbulb"></i> Gợi ý kết quả
 									</button>
@@ -246,8 +267,30 @@
 										</span>
 										<span class="text-left text-truncate">
 											<small class="small">Tài liệu đính kèm</small><br>
-											<span class="mr-2" *ngFor="let item of files">{{item.name}}</span>
+											<div *ngFor="let file of files">
+												<a *ngIf="file.fileType == 1" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+													<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
+													<span class="small">{{file.name}}</span>
+												</a>
+												<a *ngIf="file.fileType == 2" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+													<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;" alt="">
+													<span class="small">{{file.name}}</span>
+												</a>
+												<a *ngIf="file.fileType == 3" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+													<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
+													<span class="small">{{file.name}}</span>
+												</a>
+												<a *ngIf="file.fileType == 4" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+													<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;" alt="">
+													<span class="small">{{file.name}}</span>
+												</a>
+												<a *ngIf="file.fileType == 6" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+													<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;" alt="">
+													<span class="small">{{file.name}}</span>
+												</a>
+											</div>
 										</span>
+
 									</button>
 								</p>
 							</ng-container>
@@ -467,8 +510,8 @@
 							<td>{{item.sendDate | date:'dd/MM/yyyy'}}</td>
 							<td>
 								<div class="d-flex justify-content-end">
-									<a href="quan-tri/kien-nghi/chi-tiet/{{item.id}}" target="_blank" class="btn-icon grd-brown text-brown mr-2" title="Xem chi tiết"><i
-											class="bi bi-eye"></i></a>
+									<a href="quan-tri/kien-nghi/chi-tiet/{{item.id}}?suggest=true" target="_blank" class="btn-icon grd-brown text-brown mr-2"
+										title="Xem chi tiết"><i class="bi bi-eye"></i></a>
 									<a class="btn-icon grd-xanhngoc text-white mr-2" (click)="useConclustion(item.contentReply)" title="Sử dụng câu trả lời"><i
 											class="bi bi-file-earmark-check"></i></a>
 								</div>

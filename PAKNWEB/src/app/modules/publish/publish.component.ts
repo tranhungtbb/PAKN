@@ -28,6 +28,7 @@ export class PublishComponent implements OnInit, OnChanges {
 
 	notifications: any[]
 	ViewedCount: number = 0
+	index: number = 0
 
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
@@ -49,6 +50,10 @@ export class PublishComponent implements OnInit, OnChanges {
 		this.loadScript('assets/dist/js/owl.carousel.min.js')
 		this.loadScript('assets/dist/js/sd-js.js')
 
+		this.getListNotification()
+	}
+
+	getListNotification() {
 		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: 5, PageIndex: 1 }).subscribe((res) => {
 			if ((res.success = RESPONSE_STATUS.success)) {
 				this.notifications = res.result.syNotifications
@@ -61,6 +66,19 @@ export class PublishComponent implements OnInit, OnChanges {
 			return
 		})
 	}
+
+	updateNotifications() {
+		if (this.index == 0) {
+			this.notificationService.updateIsViewedNotification({}).subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.index = this.index + 1
+					this.getListNotification()
+				}
+				return
+			})
+		}
+	}
+
 	ngOnChanges() {
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {

@@ -6,7 +6,7 @@
 		<div class="col-lg-12">
 			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
 				<li class="breadcrumb-item"><a>Phản ánh, Kiến nghị</a></li>
-				<li class="breadcrumb-item active"><a class="font-weight-bold">Thêm mới</a></li>
+				<li class="breadcrumb-item active"><a class="font-weight-bold">{{title}}</a></li>
 			</ol>
 			<div class="btn-group group-button-table" role="group">
 				<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" appSvBackButton>
@@ -112,11 +112,24 @@
 					<div class="form-row align-items-end justify-content-between">
 						<div class="col-12 form-group">
 							<label class="mb-1">Đơn vị tiếp nhận <span class="cl-red">(*)</span></label>
-							<ng-select placeholder="Chọn..." class="form-control" [items]="lstUnit" bindValue="id" bindLabel="name" formControlName="unitId"
-								[(ngModel)]="model.unitId">
-								<ng-template ng-option-tmp let-item="item">
-									<div title="{{item.name}}">{{item.name}}</div>
-								</ng-template>
+							<ng-select formControlName="unitId" class="form-control" [(ngModel)]="model.unitId" [closeOnSelect]="true" [searchable]="false" [clearable]="false"
+								placeholder="Chọn...">
+								<div *ngFor="let item of treeUnit">
+									<ng-option [value]="item.id">
+										{{item.name}}
+									</ng-option>
+									<div *ngFor="let child1 of item.children">
+										<ng-option [value]="child1.id" style="padding-left: 100px;">
+											{{spc}}{{spc}}{{ child1.name}}
+										</ng-option>
+										<div *ngFor="let child2 of child1.children">
+											<ng-option [value]="child2.id">
+												{{spc}}{{spc}}{{spc}}{{ child2.name}}
+											</ng-option>
+										</div>
+									</div>
+								</div>
+
 							</ng-select>
 							<div *ngIf="(submitted && f.unitId.invalid) || (f.unitId.invalid && (f.unitId.dirty || f.unitId.touched))" class="has-error">
 								<div *ngIf="f.unitId.errors.required">

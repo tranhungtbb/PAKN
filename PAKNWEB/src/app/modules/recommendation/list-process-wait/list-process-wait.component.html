@@ -47,23 +47,25 @@
 											<strong>Tên Cá nhân/ Doanh nghiệp</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
 									</th>
 									<th style="width: 350px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tiêu đề</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.content" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.content" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
 									</th>
-									<th>
+									<th style="width: 200px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>ĐV tiếp nhận</strong>
+											<strong>Đơn vị tiếp nhận</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [items]="lstUnit" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.unitId" [closeOnSelect]="true"
-												(change)="dataStateChange()">
+										<div style="width: 200px" class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select placeholder="Chọn..." class="" [items]="lstUnit" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.unitId"
+												[closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>
 									</th>
@@ -73,8 +75,8 @@
 											<span class="caret-tb"></span>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field" [closeOnSelect]="true"
-												(change)="dataStateChange()">
+											<ng-select placeholder="Chọn..." class="" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field"
+												[closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>
 									</th>
@@ -113,9 +115,11 @@
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
-											<a class="btn-icon grd-xanhngoc text-white mr-2" (click)="preProcess(item.id,item.processId,2)" title="Tiếp nhận giải quyết">
+											<a class="btn-icon grd-xanhngoc text-white mr-2" *ngIf="item.unitReceiveId == unitLoginId"
+												(click)="preProcess(item.id,item.processId,2)" title="Tiếp nhận giải quyết">
 												<i class="bi bi-file-earmark-check"></i></a>
-											<a class="btn-icon grd-red text-white mr-2" (click)="preProcess(item.id,item.processId,3)" title="Từ chối giải quyết">
+											<a class="btn-icon grd-red text-white mr-2" *ngIf="item.unitReceiveId == unitLoginId" (click)="preProcess(item.id,item.processId,3)"
+												title="Từ chối giải quyết">
 												<i class="bi bi-file-earmark-break"></i></a>
 											<a class="btn-icon" (click)="getHistories(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
