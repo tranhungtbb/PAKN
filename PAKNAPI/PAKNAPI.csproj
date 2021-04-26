@@ -42,6 +42,7 @@
     <Folder Include="DataBaseAuto\" />
     <Folder Include="Models\Results\" />
     <Folder Include="BusinessLogic\" />
+    <Folder Include="Chatbot\" />
 	<Folder Include="Upload\Remind\" />
   </ItemGroup>
   
@@ -49,6 +50,12 @@
 		<Content Include="Upload\Remind\**">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+	</ItemGroup>
+  
+	<ItemGroup>
+	  <Reference Include="SV.MailSMS">
+	    <HintPath>Libs\SV.MailSMS.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 	<Target Name="CreateAppDataFolder" AfterTargets="AfterPublish">
 		<MakeDir Directories="$(PublishUrl)AppData" Condition="!Exists('$(PublishUrl)AppData')" />

@@ -18,6 +18,7 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { RemindComponent } from 'src/app/modules/recommendation/remind/remind.component'
 import { NotificationService } from 'src/app/services/notification.service'
+import { AppSettings } from 'src/app/constants/app-setting'
 declare var $: any
 
 @Component({
@@ -40,6 +41,7 @@ export class ViewRecommendationComponent implements OnInit {
 	unitLoginId: number = this.storeageService.getUnitId()
 	pageIndex: number = 1
 	pageSize: number = 20
+	APIADDRESS: string
 	listData = new Array<RecommendationSuggestObject>()
 	suggest: boolean = false
 	totalRecords: number = 0
@@ -59,6 +61,7 @@ export class ViewRecommendationComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
+		this.APIADDRESS = AppSettings.API_ADDRESS.replace('api/', '')
 		this.remindComponent.viewRecommendation = this
 		this.buildFormForward()
 		this.getDropdown()
@@ -91,6 +94,7 @@ export class ViewRecommendationComponent implements OnInit {
 				if (this.model.status > RECOMMENDATION_STATUS.PROCESSING) {
 					this.modelConclusion = response.result.modelConclusion
 					this.files = response.result.filesConclusion
+					console.log(this.files)
 				} else {
 					this.modelConclusion = new RecommendationConclusionObject()
 				}
@@ -276,7 +280,7 @@ export class ViewRecommendationComponent implements OnInit {
 			this.recommendationService.recommendationProcessConclusion(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
-					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.model.id }).subscribe((res) => {})
+					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.model.id }).subscribe(res => {})
 					this.toastr.success(COMMONS.PROCESS_SUCCESS)
 					return this.router.navigate(['/quan-tri/kien-nghi/dang-giai-quyet'])
 				} else {

@@ -196,7 +196,7 @@
 						<div class="row form-group">
 							<div class="col-sm-4">
 								<label class="control-label">Điện thoại <span class="text-danger">(*)</span></label>
-								<input svTrim placeholder="Nhập..." class="form-control" formControlName="phone" [(ngModel)]="model.phone" maxlength="100" />
+								<input svTrim placeholder="Nhập..." class="form-control" formControlName="phone" [(ngModel)]="model.phone" maxlength="10" />
 								<div *ngIf="(submitted && f.phone.invalid) || (f.phone.invalid && (f.phone.dirty || f.phone.touched))" class="has-error m-b-12">
 									<div *ngIf="f.phone.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>

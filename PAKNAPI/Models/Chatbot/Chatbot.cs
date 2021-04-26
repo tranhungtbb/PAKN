@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Hosting;
 using PAKNAPI.Common;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,11 @@ namespace PAKNAPI.Models.Chatbot
 		private SQLCon _sQLCon;
 		private string _filePath;
 
-		public ChatbotDelete(IAppSetting appSetting)
+		public ChatbotDelete(IWebHostEnvironment webHostEnvironment, IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-			_filePath = @"..\Chatbot\binaries\aiml\chatbot.aiml";
+			string folder = "Chatbot\\binaries\\aiml\\chatbot.aiml";
+			_filePath = System.IO.Path.Combine(webHostEnvironment.ContentRootPath, folder);
 		}
 
 		public ChatbotDelete()
@@ -139,11 +141,12 @@ namespace PAKNAPI.Models.Chatbot
 		private string _filePath;
 		private readonly IAppSetting _appSetting;
 
-		public ChatbotInsert(IAppSetting appSetting)
+		public ChatbotInsert(IWebHostEnvironment webHostEnvironment, IAppSetting appSetting)
 		{
 			_appSetting = appSetting;
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-			_filePath = @"..\Chatbot\binaries\aiml\chatbot.aiml";
+			string folder = "Chatbot\\binaries\\aiml\\chatbot.aiml";
+			_filePath = System.IO.Path.Combine(webHostEnvironment.ContentRootPath, folder);
 		}
 
 		public ChatbotInsert()
@@ -326,10 +329,11 @@ namespace PAKNAPI.Models.Chatbot
 		private SQLCon _sQLCon;
 		private string _filePath;
 
-		public ChatbotUpdate(IAppSetting appSetting)
+		public ChatbotUpdate(IWebHostEnvironment webHostEnvironment, IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-			_filePath = @"..\Chatbot\binaries\aiml\chatbot.aiml";
+			string folder = "Chatbot\\binaries\\aiml\\chatbot.aiml";
+			_filePath = System.IO.Path.Combine(webHostEnvironment.ContentRootPath, folder);
 		}
 
 		public ChatbotUpdate()

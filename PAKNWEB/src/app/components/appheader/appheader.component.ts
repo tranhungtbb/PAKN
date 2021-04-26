@@ -448,7 +448,7 @@ export class AppheaderComponent implements OnInit {
 		this.getList()
 	}
 	showModalDetail(): void {
-		$('#modalDetail').modal('show')
+		$('#modalDetailLog').modal('show')
 		this.getUserDetail()
 		this.getList()
 	}
