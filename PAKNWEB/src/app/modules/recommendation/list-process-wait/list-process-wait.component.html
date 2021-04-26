@@ -115,9 +115,11 @@
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
-											<a class="btn-icon grd-xanhngoc text-white mr-2" (click)="preProcess(item.id,item.processId,2)" title="Tiếp nhận giải quyết">
+											<a class="btn-icon grd-xanhngoc text-white mr-2" *ngIf="item.unitReceiveId == unitLoginId"
+												(click)="preProcess(item.id,item.processId,2)" title="Tiếp nhận giải quyết">
 												<i class="bi bi-file-earmark-check"></i></a>
-											<a class="btn-icon grd-red text-white mr-2" (click)="preProcess(item.id,item.processId,3)" title="Từ chối giải quyết">
+											<a class="btn-icon grd-red text-white mr-2" *ngIf="item.unitReceiveId == unitLoginId" (click)="preProcess(item.id,item.processId,3)"
+												title="Từ chối giải quyết">
 												<i class="bi bi-file-earmark-break"></i></a>
 											<a class="btn-icon" (click)="getHistories(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>

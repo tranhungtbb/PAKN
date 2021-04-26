@@ -1020,6 +1020,7 @@ transition: all .3s ease-in-out;
 }
 .table>:not(:last-child)>:last-child>*{
 	border-color: #f0f1f5;
+	padding: 0.571em 0.557em;
 }
 .table>:not(caption)>*>*{
 	border-bottom: 0;

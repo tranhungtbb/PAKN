@@ -25,6 +25,7 @@ export class ListGeneralComponent implements OnInit {
 		private _shareData: DataService
 	) {}
 	userLoginId: number = this.storeageService.getUserId()
+	unitLoginId: number = this.storeageService.getUnitId()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
 		{ value: 2, text: 'Chờ xử lý' },

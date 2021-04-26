@@ -8,7 +8,7 @@ import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { AuthenticationService } from 'src/app/services/authentication.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { DiadanhService } from 'src/app/services/diadanh.service'
-
+import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { UserInfoObject } from 'src/app/models/UserObject'
 @Component({
 	selector: 'app-account-info',
@@ -23,10 +23,13 @@ export class AccountInfoComponent implements OnInit {
 		private storageService: UserInfoStorageService,
 		private authenService: AuthenticationService,
 		private sharedataService: DataService,
-		private diadanhService: DiadanhService
+		private diadanhService: DiadanhService,
+		private puRecommendationService: PuRecommendationService
 	) {}
 
 	model: UserInfoObject = new UserInfoObject()
+	recommendationStatistics: any
+	totalRecommentdation: number = 0
 
 	ngOnInit() {
 		this.getUserInfo()
@@ -38,6 +41,20 @@ export class AccountInfoComponent implements OnInit {
 		} else if (this.router.url.includes('/tai-khoan/chinh-sua-thong-tin')) {
 			this.viewVisiable = 'edit'
 		}
+		this.puRecommendationService.recommendationStatisticsGetByUserId({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.recommendationStatistics = res.result.PURecommendationStatisticsGetByUserId[0]
+				for (const iterator in this.recommendationStatistics) {
+					this.totalRecommentdation += this.recommendationStatistics[iterator]
+				}
+			}
+			return
+		})
+	}
+
+	Percent(value: any) {
+		var result = Math.ceil((value / this.totalRecommentdation) * 100)
+		return result
 	}
 
 	viewVisiable: string = 'info' //info, pwd, edit

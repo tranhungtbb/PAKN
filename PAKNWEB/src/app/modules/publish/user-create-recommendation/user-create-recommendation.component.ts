@@ -93,6 +93,16 @@ export class CreateRecommendationComponent implements OnInit {
 			this.recommendationService.recommendationGetSuggestCreate({ Title: this.model.title }).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.resultsRecommendation = response.result.MRRecommendationGetSuggestCreate
+					for (let item of this.model.title.trim().toLowerCase().split(' ')) {
+						this.resultsRecommendation.forEach((recommens) => {
+							recommens.title.split(' ').forEach((element) => {
+								debugger
+								if (item == element.toLowerCase()) {
+									recommens.title = recommens.title.replaceAll(element, '<span class ="text-primary">' + element + '</span>')
+								}
+							})
+						})
+					}
 				} else {
 					this.toastr.error(response.message)
 				}
@@ -399,4 +409,8 @@ export class CreateRecommendationComponent implements OnInit {
 		}
 		return tree
 	}
+}
+
+class ItemResultsRecommendation {
+	title: string
 }
