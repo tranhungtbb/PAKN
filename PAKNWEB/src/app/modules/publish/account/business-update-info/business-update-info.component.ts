@@ -3,6 +3,7 @@ import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { AccountService } from 'src/app/services/account.service'
 import { FormBuilder, FormControl, FormGroup, Validator, Validators } from '@angular/forms'
+import { COMMONS } from 'src/app/commons/commons'
 
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
@@ -50,25 +51,25 @@ export class BusinessUpdateInfoComponent implements OnInit {
 	ngOnInit() {
 		this.getUserInfo()
 		this.formUpdateAccountInfo = this.formBuider.group({
-			representativeName: [this.model.representativeName],
-			representativeBirthDay: [this.model.representativeBirthDay],
+			representativeName: [this.model.representativeName, [Validators.required]],
+			representativeBirthDay: [this.model.representativeBirthDay, [Validators.required]],
 			email: [this.model.email],
 			nation: [this.model.nation],
 			provinceId: [this.model.provinceId],
 			districtId: [this.model.districtId],
 			wardsId: [this.model.wardsId],
-			address: [this.model.address],
+			address: [this.model.address, [Validators.required]],
 			representativeGender: [this.model.representativeGender],
-			fullName: [this.model.fullName],
+			fullName: [this.model.fullName, [Validators.required]],
 			businessRegistration: [this.model.businessRegistration],
 			decisionOfEstablishing: [this.model.decisionOfEstablishing],
 			dateOfIssue: [this.model.dateOfBirth],
-			tax: [this.model.tax],
+			tax: [this.model.tax, [Validators.required]],
 			orgProvinceId: [this.model.orgProvinceId],
 			orgDistrictId: [this.model.orgDistrictId],
 			orgWardsId: [this.model.orgWardsId],
-			orgAddress: [this.model.orgAddress],
-			orgPhone: [this.model.orgPhone],
+			orgAddress: [this.model.orgAddress, [Validators.required]],
+			orgPhone: [this.model.orgPhone, [Validators.required]],
 			orgEmail: [this.model.orgEmail],
 		})
 	}
@@ -93,9 +94,18 @@ export class BusinessUpdateInfoComponent implements OnInit {
 	submitted = false
 	onSave() {
 		this.submitted = true
+		let fDob: any = document.querySelector('#_dateOfBirth')
+		let fDateIssue: any = document.querySelector('#_dateOfIssue')
 
-		this.model.dateOfBirth = document.querySelector('#_dateOfBirth').nodeValue
-		this.model.dateOfIssue = document.querySelector('#_dateOfIssue').nodeValue
+		this.model.dateOfBirth = fDob.value
+		this.model.dateOfIssue = fDateIssue.value
+
+		if (!this.model.wardsId) this.model.wardsId = ''
+		if (!this.model.provinceId) this.model.provinceId = ''
+		if (!this.model.districtId) this.model.districtId = ''
+		if (!this.model.orgProvinceId) this.model.orgProvinceId = ''
+		if (!this.model.orgDistrictId) this.model.orgDistrictId = ''
+		if (!this.model.orgWardsId) this.model.orgWardsId = ''
 
 		console.log(this.model)
 
@@ -103,6 +113,16 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
+
+		this.accountService.updateInfoUserCurrent(this.model).subscribe((res) => {
+			if (res.success != 'OK') {
+				this.toast.error(res.message)
+				return
+			}
+
+			this.toast.success(COMMONS.UPDATE_SUCCESS)
+			this.router.navigate(['/cong-bo/tai-khoan/thong-tin'])
+		})
 	}
 
 	onChangeNation(clearable = false) {

@@ -476,7 +476,7 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Route("UpdateCurrentInfo")]
 		[Authorize]
-		public async Task<object> UpdateCurrentInfo([FromForm] AccountInfoModel model)
+		public async Task<object> UpdateCurrentInfo([FromForm] AccountInfoModel model,[FromForm] BusinessAccountInfoModel businessModel)
         {
             try
             {
@@ -493,11 +493,11 @@ namespace PAKNAPI.Controllers
 				DateTime birdDay, dateOfIssue;
 				if (!DateTime.TryParseExact(model.DateOfBirth, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
 				{
-					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
 				}
 				if (!DateTime.TryParseExact(model.IssuedDate, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
 				{
-					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 				}
 
 				if (accInfo[0].TypeId == 2)
@@ -525,12 +525,21 @@ namespace PAKNAPI.Controllers
 				}
 				else if (accInfo[0].TypeId == 3)
                 {
+					if (!DateTime.TryParseExact(businessModel.RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
+					{
+						//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+					}
+					if (!DateTime.TryParseExact(businessModel.DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
+					{
+						//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+					}
+
 					var info = await new BIBusinessGetRepresentativeEmail(_appSetting).BIBusinessGetRepresentativeEmailDAO(accInfo[0].Email);
 					
 					var _model = new BIBusinessUpdateInfoIN
 					{
 						Id = info[0].Id,
-						FullName = model.FullName,
+						FullName = businessModel.RepresentativeName,
 						DateOfBirth = birdDay,
 						Email = model.Email,
 						Nation = model.Nation,
@@ -539,9 +548,18 @@ namespace PAKNAPI.Controllers
 						WardsId = model.WardsId,
 						Address = model.Address,
 						IdCard = model.IdCard,
-						IssuedPlace = model.IssuedPlace,
 						IssuedDate = dateOfIssue,
 						Gender = model.Gender,
+						BusinessRegistration = businessModel.BusinessRegistration,
+						DecisionOfEstablishing = businessModel.DecisionOfEstablishing,
+						Tax = businessModel.Tax,
+						OrgProvinceId = businessModel.OrgProvinceId,
+						OrgDistrictId = businessModel.OrgDistrictId,
+						OrgWardsId = businessModel.OrgWardsId,
+						OrgAddress = businessModel.OrgAddress,
+						OrgPhone = businessModel.OrgPhone,
+						OrgEmail = businessModel.OrgEmail,
+						Business = businessModel.Business
 					};
 					var rs = await new BIBusinessUpdateInfo(_appSetting).BIBusinessUpdateInfoDAO(_model);
 				}

@@ -14,9 +14,9 @@ namespace PAKNAPI.Models
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Nation { get; set; }
-        public int ProvinceId { get; set; }
-        public int DistrictId { get; set; }
-        public int WardsId { get; set; }
+        public int? ProvinceId { get; set; }
+        public int? DistrictId { get; set; }
+        public int? WardsId { get; set; }
         public string Address { get; set; }
         public string IdCard { get; set; }
         public string IssuedPlace { get; set; }
@@ -26,7 +26,7 @@ namespace PAKNAPI.Models
 
     public class BusinessAccountInfoModel
     {
-
+        public BusinessAccountInfoModel() { }
         public BusinessAccountInfoModel(BIBusinessGetRepresentativeEmail entity)
         {
             DistrictId = entity.DistrictId;
@@ -58,7 +58,7 @@ namespace PAKNAPI.Models
             OrgAddress = entity.OrgAddress;
             OrgPhone = entity.OrgPhone;
             OrgEmail = entity.OrgEmail;
-
+            Business = entity.Business;
         }
 
         public string UserName { get; set; }
@@ -88,11 +88,12 @@ namespace PAKNAPI.Models
         public string BusinessRegistration { get; set; }
         public string DecisionOfEstablishing { get; set; }
         public string Tax { get; set; }
-        public int OrgProvinceId { get; set; }
-        public int OrgDistrictId { get; set; }
-        public int OrgWardsId { get; set; }
+        public int? OrgProvinceId { get; set; }
+        public int? OrgDistrictId { get; set; }
+        public int? OrgWardsId { get; set; }
         public string OrgAddress { get; set; }
         public string OrgPhone { get; set; }
         public string OrgEmail { get; set; }
+        public string Business { get; set; }
     }
 }
