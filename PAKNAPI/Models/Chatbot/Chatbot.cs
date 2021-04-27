@@ -134,6 +134,42 @@ namespace PAKNAPI.Models.Chatbot
 
 	#endregion
 
+	#region ChatbotInsertData
+	public class ChatbotInsertData
+    {
+		private SQLCon _sQLCon;
+		private readonly IAppSetting _appSetting;
+
+		public ChatbotInsertData(IAppSetting appSetting)
+		{
+			_appSetting = appSetting;
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public ChatbotInsertData()
+		{
+		}
+
+		public async Task<int> InsertDataChatbotDAO(ChatbotDataInsertIN _chatbotDataInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", _chatbotDataInsertIN.UserId);
+			DP.Add("Question", _chatbotDataInsertIN.Question.Trim());
+			DP.Add("Answer", _chatbotDataInsertIN.Answer.Trim());
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("DataChatbotInsert", DP));
+		}
+	}
+
+	public class ChatbotDataInsertIN
+	{
+		public string Id { get; set; }
+		public string UserId { get; set; }
+		public string Question { get; set; }
+		public string Answer { get; set; }
+
+	}
+	#endregion
+
 	#region ChatbotInsert
 	public class ChatbotInsert
 	{
