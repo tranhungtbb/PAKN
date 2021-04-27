@@ -145,9 +145,8 @@ export class PublishComponent implements OnInit, OnChanges {
 		let btnChat = document.getElementById('btn-chat')
 		btnChat.classList.toggle('togger-show-chatbot')
 	}
-	// Gửi câu hỏi đến server chatbot
+	// Send question to server chatbot
 	send() {
-		console.log('send', this.message)
 		if (this.message.trim() === '') {
 			return
 		}
@@ -161,7 +160,7 @@ export class PublishComponent implements OnInit, OnChanges {
 		// get userID
 		let kluid = localStorage.getItem('kluid')
 
-		// Nếu chưa tồn tại userid
+		// not exist userid
 		if (!kluid) {
 			this.chatBotService.getNewUserId().subscribe(
 				(data) => {
@@ -181,7 +180,7 @@ export class PublishComponent implements OnInit, OnChanges {
 		}
 	}
 
-	sendToServer() {
+	async sendToServer() {
 		let kluid = localStorage.getItem('kluid')
 
 		const data = {
@@ -198,7 +197,13 @@ export class PublishComponent implements OnInit, OnChanges {
 					message: res.ResponseText.toString(),
 				})
 
-				console.log('messages', this.messages)
+				const dataChatbot = {
+					userId: kluid,
+					question: this.message,
+					answer: res.ResponseText.toString(),
+				}
+
+				this.insertDataChatBot(dataChatbot)
 				this.message = ''
 
 				document.getElementById('messages-content').style.overflow = 'scroll'
@@ -210,6 +215,17 @@ export class PublishComponent implements OnInit, OnChanges {
 				console.log(error)
 			}
 		)
+	}
+	insertDataChatBot(obj: any) {
+		this.chatBotService.chatbotInsertData(obj).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if (response.result == -1) {
+					return
+				} else {
+				}
+			} else {
+			}
+		})
 	}
 	/*================ CHAT BOT ===============*/
 }

@@ -33,12 +33,13 @@ export class ChatbotService {
 	chatbotInsertQuestion(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.ChatbotInsertQuestion)
 	}
-
 	getNewUserId() {
 		return this.http.get(urlChatbot + '/Conversation/new')
 	}
-
 	sendToServer(kluid, data) {
 		return this.http.post(urlChatbot + '/Conversation/' + kluid, data)
+	}
+	chatbotInsertData(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.ChatbotInsertData)
 	}
 }
