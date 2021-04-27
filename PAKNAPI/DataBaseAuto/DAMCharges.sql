@@ -16,7 +16,8 @@ BEGIN
 		[Id],
 		[AdministrationId],
 		[Charges],
-		[Description]
+		[Description],
+		[ChargesId]
 	FROM [DAM_Charges]
 	WHERE [Id] = @Id
 END
@@ -39,7 +40,8 @@ BEGIN
 		[Id],
 		[AdministrationId],
 		[Charges],
-		[Description]
+		[Description],
+		[ChargesId]
 	FROM [DAM_Charges]
 END
 GO
@@ -64,7 +66,8 @@ BEGIN
 		[Id],
 		[AdministrationId],
 		[Charges],
-		[Description]
+		[Description],
+		[ChargesId]
 	FROM [DAM_Charges]
 	ORDER BY [Id]
 	OFFSET (@PageIndex-1) * @PageSize ROWS
@@ -85,20 +88,23 @@ GO
 CREATE PROCEDURE [dbo].[DAM_ChargesInsert]
 	@AdministrationId int = null,
 	@Charges nvarchar(10) = null,
-	@Description nvarchar(max) = null
+	@Description nvarchar(max) = null,
+	@ChargesId int = null
 AS
 BEGIN
 	INSERT INTO [DAM_Charges]
 	(
 		[AdministrationId],
 		[Charges],
-		[Description]
+		[Description],
+		[ChargesId]
 	)
 	VALUES
 	(
 		@AdministrationId,
 		@Charges,
-		@Description
+		@Description,
+		@ChargesId
 	)
 END
 GO
@@ -117,13 +123,15 @@ CREATE PROCEDURE [dbo].[DAM_ChargesUpdate]
 	@Id int = null,
 	@AdministrationId int = null,
 	@Charges nvarchar(10) = null,
-	@Description nvarchar(max) = null
+	@Description nvarchar(max) = null,
+	@ChargesId int = null
 AS
 BEGIN
 	UPDATE [DAM_Charges] SET
 		[AdministrationId] = @AdministrationId,
 		[Charges] = @Charges,
-		[Description] = @Description
+		[Description] = @Description,
+		[ChargesId] = @ChargesId
 	WHERE [Id] = @Id
 END
 GO

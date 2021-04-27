@@ -353,7 +353,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> MRRecommendationFilesInsertDAO(MRRecommendationFilesInsertIN _mRRecommendationFilesInsertIN)
+		public async Task<decimal?> MRRecommendationFilesInsertDAO(MRRecommendationFilesInsertIN _mRRecommendationFilesInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("RecommendationId", _mRRecommendationFilesInsertIN.RecommendationId);
@@ -361,7 +361,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("FileType", _mRRecommendationFilesInsertIN.FileType);
 			DP.Add("FilePath", _mRRecommendationFilesInsertIN.FilePath);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_FilesInsert", DP));
+			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("MR_Recommendation_FilesInsert", DP);
 		}
 	}
 
@@ -551,6 +551,66 @@ namespace PAKNAPI.ModelBase
 		public DateTime? ExpiredDate { get; set; }
 		public DateTime? ProcessingDate { get; set; }
 		public bool? IsViewed { get; set; }
+	}
+
+	public class MRRecommendationFullTextDeleteByRecommendationId
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationFullTextDeleteByRecommendationId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationFullTextDeleteByRecommendationId()
+		{
+		}
+
+		public async Task<int> MRRecommendationFullTextDeleteByRecommendationIdDAO(MRRecommendationFullTextDeleteByRecommendationIdIN _mRRecommendationFullTextDeleteByRecommendationIdIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationId", _mRRecommendationFullTextDeleteByRecommendationIdIN.RecommendationId);
+			DP.Add("FileId", _mRRecommendationFullTextDeleteByRecommendationIdIN.FileId);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_FullTextDeleteByRecommendationId", DP));
+		}
+	}
+
+	public class MRRecommendationFullTextDeleteByRecommendationIdIN
+	{
+		public int? RecommendationId { get; set; }
+		public int? FileId { get; set; }
+	}
+
+	public class MRRecommendationFullTextInsert
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationFullTextInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationFullTextInsert()
+		{
+		}
+
+		public async Task<int> MRRecommendationFullTextInsertDAO(MRRecommendationFullTextInsertIN _mRRecommendationFullTextInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationId", _mRRecommendationFullTextInsertIN.RecommendationId);
+			DP.Add("FileId", _mRRecommendationFullTextInsertIN.FileId);
+			DP.Add("FullText", _mRRecommendationFullTextInsertIN.FullText);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_FullTextInsert", DP));
+		}
+	}
+
+	public class MRRecommendationFullTextInsertIN
+	{
+		public int? RecommendationId { get; set; }
+		public int? FileId { get; set; }
+		public string FullText { get; set; }
 	}
 
 	public class MRRecommendationGenCodeGetCode

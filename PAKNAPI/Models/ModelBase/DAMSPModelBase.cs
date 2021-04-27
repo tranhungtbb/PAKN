@@ -414,6 +414,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("AdministrationId", _dAMChargesCreateIN.AdministrationId);
 			DP.Add("Charges", _dAMChargesCreateIN.Charges);
 			DP.Add("Description", _dAMChargesCreateIN.Description);
+			DP.Add("ChargesId", _dAMChargesCreateIN.ChargesId);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("DAM_Charges_Create", DP));
 		}
@@ -424,6 +425,7 @@ namespace PAKNAPI.ModelBase
 		public int? AdministrationId { get; set; }
 		public string Charges { get; set; }
 		public string Description { get; set; }
+		public int? ChargesId { get; set; }
 	}
 
 	public class DAMChargesDeleteById
@@ -470,6 +472,7 @@ namespace PAKNAPI.ModelBase
 		public int? AdministrationId { get; set; }
 		public string Charges { get; set; }
 		public string Description { get; set; }
+		public int? ChargesId { get; set; }
 
 		public async Task<List<DAMChargesGetByAdministration>> DAMChargesGetByAdministrationDAO(int? Id)
 		{
@@ -497,6 +500,7 @@ namespace PAKNAPI.ModelBase
 		public int? AdministrationId { get; set; }
 		public string Charges { get; set; }
 		public string Description { get; set; }
+		public int? ChargesId { get; set; }
 
 		public async Task<List<DAMChargesGetById>> DAMChargesGetByIdDAO(int? Id)
 		{
@@ -732,8 +736,8 @@ namespace PAKNAPI.ModelBase
 		public string NameExhibit { get; set; }
 		public string Form { get; set; }
 		public string FormType { get; set; }
-		public int? OriginalForm { get; set; }
-		public int? CopyForm { get; set; }
+		public string OriginalForm { get; set; }
+		public string CopyForm { get; set; }
 		public bool? IsBind { get; set; }
 	}
 

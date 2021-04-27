@@ -355,6 +355,23 @@ namespace PAKNAPI.Controller
                             item.CopyTo(stream);
                         }
                         await new MRRecommendationFilesInsert(_appSetting).MRRecommendationFilesInsertDAO(file);
+                        string contentType = "";
+                        string content = "";
+                        contentType = FileContentType.GetTypeOfFile(filePath);
+                        switch (contentType)
+                        {
+                            case ".pdf":
+                                content = FileUtils.ExtractDataFromPDFFile(filePath);
+                                break;
+
+                            case ".docx":
+                                content = FileUtils.ReadFileDocExtension(filePath);
+                                break;
+
+                            case ".doc":
+                                content = FileUtils.ExtractDocFile(filePath);
+                                break;
+                        }
                     }
                 }
                 MRRecommendationHashtagDeleteByRecommendationIdIN hashtagDeleteByRecommendationIdIN = new MRRecommendationHashtagDeleteByRecommendationIdIN();
