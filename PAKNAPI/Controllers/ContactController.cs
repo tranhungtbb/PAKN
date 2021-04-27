@@ -75,7 +75,7 @@ namespace PAKNAPI.Controllers
 							Action = "Login",
 							IPAddress = baseRequest.ipAddress,
 							MACAddress = baseRequest.macAddress,
-							Description = baseRequest.logAction + " " + baseRequest.logObject,
+							Description = baseRequest.logAction,
 							CreatedDate = DateTime.Now,
 							Status = 1,
 							Exception = null

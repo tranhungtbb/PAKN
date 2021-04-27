@@ -13,6 +13,7 @@ export class RESPONSE_STATUS {
 
 export class LOG_ACTION {
 	public static login = 'Đăng nhập'
+	public static logOut = 'Đăng xuất'
 	public static GETLIST = 'Trả về danh sách'
 	public static GETINFO = 'Trả về thông tin'
 	public static INSERT = 'Thêm mới'
@@ -23,6 +24,7 @@ export class LOG_ACTION {
 }
 
 export class LOG_OBJECT {
+	public static NO_CONTENT = ''
 	public static login = 'Đăng nhập'
 	public static CA_FIELD = 'Danh mục lĩnh vực'
 	public static CA_WORD = 'Danh mục thư viện từ ngữ'
