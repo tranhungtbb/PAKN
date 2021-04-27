@@ -65,28 +65,42 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-	public class SYRoleGetAll
+	/*
+	PAKN_Test.dbo.SY_RoleGetAll
+	Invalid column name 'Code'.
+	*/
+
+	public class SYRoleGetAllOnPage
 	{
 		private SQLCon _sQLCon;
 
-		public SYRoleGetAll(IAppSetting appSetting)
+		public SYRoleGetAllOnPage(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public SYRoleGetAll()
+		public SYRoleGetAllOnPage()
 		{
 		}
 
+		public int? RowNumber { get; set; }
 		public int Id { get; set; }
+		public string OrderNumber { get; set; }
 		public string Name { get; set; }
-		public string Code { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
 
-		public async Task<List<SYRoleGetAll>> SYRoleGetAllDAO()
+		public async Task<List<SYRoleGetAllOnPage>> SYRoleGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
 		{
 			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("Name", Name);
+			DP.Add("Description", Description);
+			DP.Add("IsActived", IsActived);
 
-			return (await _sQLCon.ExecuteListDapperAsync<SYRoleGetAll>("SY_RoleGetAll", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<SYRoleGetAllOnPage>("SY_RoleGetAllOnPage", DP)).ToList();
 		}
 	}
 

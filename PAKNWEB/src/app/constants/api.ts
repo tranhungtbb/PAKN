@@ -98,6 +98,7 @@ export class Api {
 
 	//SY_Role
 	public static RoleGetAll = 'SYSPBase/SYRoleGetAllBase'
+	public static RoleGetAllOnPage = 'SYSPBase/SYRoleGetAllOnPageBase'
 
 	//NewsType
 	public static NewsTypeGetList = 'CACategorySPBase/CANewsTypeGetAllOnPageBase'

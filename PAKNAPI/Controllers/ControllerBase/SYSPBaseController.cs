@@ -114,16 +114,19 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
-		[Route("SYRoleGetAllBase")]
-		public async Task<ActionResult<object>> SYRoleGetAllBase()
+		[Authorize("ThePolicy")]
+		[Route("SYRoleGetAllOnPageBase")]
+		public async Task<ActionResult<object>> SYRoleGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
 		{
 			try
 			{
-				List<SYRoleGetAll> rsSYRoleGetAll = await new SYRoleGetAll(_appSetting).SYRoleGetAllDAO();
+				List<SYRoleGetAllOnPage> rsSYRoleGetAllOnPage = await new SYRoleGetAllOnPage(_appSetting).SYRoleGetAllOnPageDAO(PageSize, PageIndex, Name, Description, IsActived);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"SYRoleGetAll", rsSYRoleGetAll},
+						{"SYRoleGetAllOnPage", rsSYRoleGetAllOnPage},
+						{"TotalCount", rsSYRoleGetAllOnPage != null && rsSYRoleGetAllOnPage.Count > 0 ? rsSYRoleGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsSYRoleGetAllOnPage != null && rsSYRoleGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsSYRoleGetAllOnPage != null && rsSYRoleGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
