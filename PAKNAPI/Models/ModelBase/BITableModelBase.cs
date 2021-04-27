@@ -48,6 +48,7 @@ namespace PAKNAPI.ModelBase
 		public bool? RepresentativeGender { get; set; }
 		public DateTime RepresentativeBirthDay { get; set; }
 		public string Business { get; set; }
+		public long UserId { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -99,6 +100,7 @@ namespace PAKNAPI.ModelBase
 		public bool? RepresentativeGender { get; set; }
 		public DateTime RepresentativeBirthDay { get; set; }
 		public string Business { get; set; }
+		public long UserId { get; set; }
 
 		public async Task<BIBusiness> BIBusinessGetByID(long? Id)
 		{
@@ -133,6 +135,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("OrgPhone", _bIBusiness.OrgPhone);
 			DP.Add("OrgEmail", _bIBusiness.OrgEmail);
 			DP.Add("RepresentativeBirthDay", _bIBusiness.RepresentativeBirthDay);
+			DP.Add("UserId", _bIBusiness.UserId);
 			DP.Add("Business", _bIBusiness.Business);
 			DP.Add("ProvinceId", _bIBusiness.ProvinceId);
 			DP.Add("WardsId", _bIBusiness.WardsId);
@@ -175,6 +178,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("OrgEmail", _bIBusiness.OrgEmail);
 			DP.Add("Id", _bIBusiness.Id);
 			DP.Add("RepresentativeBirthDay", _bIBusiness.RepresentativeBirthDay);
+			DP.Add("UserId", _bIBusiness.UserId);
 			DP.Add("Business", _bIBusiness.Business);
 			DP.Add("ProvinceId", _bIBusiness.ProvinceId);
 			DP.Add("WardsId", _bIBusiness.WardsId);
@@ -256,6 +260,7 @@ namespace PAKNAPI.ModelBase
 		public int? CreatedBy { get; set; }
 		public int? UpdatedBy { get; set; }
 		public int? Status { get; set; }
+		public long UserId { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -296,6 +301,7 @@ namespace PAKNAPI.ModelBase
 		public int? CreatedBy { get; set; }
 		public int? UpdatedBy { get; set; }
 		public int? Status { get; set; }
+		public long UserId { get; set; }
 
 		public async Task<BIIndividual> BIIndividualGetByID(long? Id)
 		{
@@ -327,6 +333,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("FullName", _bIIndividual.FullName);
 			DP.Add("IsActived", _bIIndividual.IsActived);
 			DP.Add("IsDeleted", _bIIndividual.IsDeleted);
+			DP.Add("UserId", _bIIndividual.UserId);
 			DP.Add("ProvinceId", _bIIndividual.ProvinceId);
 			DP.Add("WardsId", _bIIndividual.WardsId);
 			DP.Add("DistrictId", _bIIndividual.DistrictId);
@@ -358,6 +365,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsActived", _bIIndividual.IsActived);
 			DP.Add("IsDeleted", _bIIndividual.IsDeleted);
 			DP.Add("Id", _bIIndividual.Id);
+			DP.Add("UserId", _bIIndividual.UserId);
 			DP.Add("ProvinceId", _bIIndividual.ProvinceId);
 			DP.Add("WardsId", _bIIndividual.WardsId);
 			DP.Add("DistrictId", _bIIndividual.DistrictId);

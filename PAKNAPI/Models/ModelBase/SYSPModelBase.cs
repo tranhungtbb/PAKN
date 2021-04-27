@@ -65,30 +65,10 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-	public class SYRoleGetAll
-	{
-		private SQLCon _sQLCon;
-
-		public SYRoleGetAll(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public SYRoleGetAll()
-		{
-		}
-
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-
-		public async Task<List<SYRoleGetAll>> SYRoleGetAllDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<SYRoleGetAll>("SY_RoleGetAll", DP)).ToList();
-		}
-	}
+	/*
+	PAKN_Test.dbo.SY_RoleGetAll
+	Invalid column name 'Code'.
+	*/
 
 	public class SYSystemLogGetAllOnPage
 	{

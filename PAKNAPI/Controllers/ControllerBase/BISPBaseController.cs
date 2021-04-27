@@ -55,6 +55,29 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
+		[Route("BIBusinessGetByUserIdBase")]
+		public async Task<ActionResult<object>> BIBusinessGetByUserIdBase(long? UserId)
+		{
+			try
+			{
+				List<BIBusinessGetByUserId> rsBIBusinessGetByUserId = await new BIBusinessGetByUserId(_appSetting).BIBusinessGetByUserIdDAO(UserId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"BIBusinessGetByUserId", rsBIBusinessGetByUserId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
 		[Route("BIBusinessGetDropdownBase")]
 		public async Task<ActionResult<object>> BIBusinessGetDropdownBase()
 		{
@@ -244,84 +267,15 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("BIIndividualCheckExistsBase")]
-		public async Task<ActionResult<object>> BIIndividualCheckExistsBase(string Field, string Value)
+		[Route("BIIndividualGetByUserIdBase")]
+		public async Task<ActionResult<object>> BIIndividualGetByUserIdBase(long? UserId)
 		{
 			try
 			{
-				List<BIIndividualCheckExists> rsBIIndividualCheckExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO(Field, Value);
+				List<BIIndividualGetByUserId> rsBIIndividualGetByUserId = await new BIIndividualGetByUserId(_appSetting).BIIndividualGetByUserIdDAO(UserId);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"BIIndividualCheckExists", rsBIIndividualCheckExists},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("BIIndividualGetByEmailBase")]
-		public async Task<ActionResult<object>> BIIndividualGetByEmailBase(string Email)
-		{
-			try
-			{
-				List<BIIndividualGetByEmail> rsBIIndividualGetByEmail = await new BIIndividualGetByEmail(_appSetting).BIIndividualGetByEmailDAO(Email);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"BIIndividualGetByEmail", rsBIIndividualGetByEmail},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("BIIndividualGetByIDBase")]
-		public async Task<ActionResult<object>> BIIndividualGetByIDBase(long? Id)
-		{
-			try
-			{
-				List<BIIndividualGetByID> rsBIIndividualGetByID = await new BIIndividualGetByID(_appSetting).BIIndividualGetByIDDAO(Id);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"BIIndividualGetByID", rsBIIndividualGetByID},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("BIIndividualGetDropdownBase")]
-		public async Task<ActionResult<object>> BIIndividualGetDropdownBase()
-		{
-			try
-			{
-				List<BIIndividualGetDropdown> rsBIIndividualGetDropdown = await new BIIndividualGetDropdown(_appSetting).BIIndividualGetDropdownDAO();
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"BIIndividualGetDropdown", rsBIIndividualGetDropdown},
+						{"BIIndividualGetByUserId", rsBIIndividualGetByUserId},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
