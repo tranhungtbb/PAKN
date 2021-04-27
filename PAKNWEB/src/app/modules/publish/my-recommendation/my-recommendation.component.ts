@@ -121,26 +121,27 @@ export class MyRecommendationComponent implements OnInit {
 	filterMyRecommendation(status: any) {
 		switch (status) {
 			case 1:
-				// đã tiếp nhận
-				this.listData = this.listDataNotChange.filter((item) => {
-					if (item.status == 4 || item.status == 5 || item.status == 7 || item.status == 8) return item
-				})
-				break
-			case 2:
 				// chờ xl
 				this.listData = this.listDataNotChange.filter((item) => {
 					if (item.status == 2) return item
 				})
 				break
+			case 2:
+				// đã tiếp nhận
+
+				this.listData = this.listDataNotChange.filter((item) => {
+					if (item.status == 4 || item.status == 5 || item.status == 7 || item.status == 8) return item
+				})
+				break
 			case 3:
-				// bị từ chối
+				// đã trả lời
 				this.listData = this.listDataNotChange.filter((item) => {
 					if (item.status == 10) return item
 				})
 
 				break
 			case 4:
-				// đã trả lời
+				// bị từ chối
 				this.listData = this.listDataNotChange.filter((item) => {
 					if (item.status == 3 || item.status == 6 || item.status == 9) return item
 				})
