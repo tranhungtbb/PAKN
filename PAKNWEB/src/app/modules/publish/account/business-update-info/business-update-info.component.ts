@@ -4,6 +4,9 @@ import { ToastrService } from 'ngx-toastr'
 import { AccountService } from 'src/app/services/account.service'
 import { FormBuilder, FormControl, FormGroup, Validator, Validators } from '@angular/forms'
 import { COMMONS } from 'src/app/commons/commons'
+import { viLocale } from 'ngx-bootstrap/locale'
+import { defineLocale } from 'ngx-bootstrap/chronos'
+import { BsLocaleService } from 'ngx-bootstrap/datepicker'
 
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { RESPONSE_STATUS, REGEX } from 'src/app/constants/CONSTANTS'
@@ -19,6 +22,7 @@ import { AccountSideLeftComponent } from '../account-side-left/account-side-left
 })
 export class BusinessUpdateInfoComponent implements OnInit {
 	constructor(
+		private localeService: BsLocaleService,
 		private formBuider: FormBuilder,
 		private toast: ToastrService,
 		private router: Router,
@@ -27,7 +31,9 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		private authenService: AuthenticationService,
 		private sharedataService: DataService,
 		private diadanhService: DiadanhService
-	) {}
+	) {
+		defineLocale('vi', viLocale)
+	}
 
 	formUpdateAccountInfo: FormGroup
 
