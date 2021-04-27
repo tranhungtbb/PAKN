@@ -207,16 +207,16 @@
 	</div>
 	<section id="form-chat" class="avenue-messenger togger-show-chatbot">
 		<div class="menu">
-			<div class="button grd-xanhngoc" (click)="toggleChatForm()">&times;</div>
+			<div class="button" (click)="toggleChatForm()">&times;</div>
 		</div>
 		<div class="agent-face">
 			<div class="half">
-				<img class="agent circle" alt="Bot" src="../../../assets/dist/images/chatbot1.jpg">
+				<img class="agent circle" alt="Bot" src="../../../assets/dist/images/chatbot2.png">
 			</div>
 		</div>
-		<div class=" chat">
+		<div class="chat">
 			<div class="chat-title">
-				<h1>Bot</h1>
+				<h1>...</h1>
 			</div>
 			<div class="messages">
 				<div class="messages-content" id="messages-content">
@@ -231,7 +231,7 @@
 			</div>
 			<div class="message-box">
 				<textarea name="message" class="message-input" [(ngModel)]="message" placeholder="Hãy viết gì đó..." (keydown.enter)="send()"></textarea>
-				<button type="submit" class="message-submit" (click)="send()">Send</button>
+				<button type="submit" class="message-submit" (click)="send()">Gửi</button>
 			</div>
 		</div>
 	</section>
