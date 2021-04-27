@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser'
 import { PuRecommendation } from 'src/app/models/recommendationObject'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
 declare var $: any
 
@@ -14,11 +15,12 @@ declare var $: any
 	styleUrls: ['./view-right.component.css'],
 })
 export class ViewRightComponent implements OnInit {
-	constructor(private _service: PuRecommendationService, private _router: Router, private sanitizer: DomSanitizer) {}
+	constructor(private _service: PuRecommendationService, private _router: Router, private sanitizer: DomSanitizer, private storageService: UserInfoStorageService) {}
 
 	RecommendationsOrderByCountClick: Array<PuRecommendation>
-	recommendationStatistics: any
+	recommendationStatistics: any = {}
 	totalRecommentdation: number = 0
+	isLogin: boolean = this.storageService.getIsHaveToken()
 	ngOnInit() {
 		this.getData()
 	}
@@ -31,16 +33,17 @@ export class ViewRightComponent implements OnInit {
 				}
 			}
 		})
-
-		this._service.recommendationStatisticsGetByUserId({}).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				this.recommendationStatistics = res.result.PURecommendationStatisticsGetByUserId[0]
-				for (const iterator in this.recommendationStatistics) {
-					this.totalRecommentdation += this.recommendationStatistics[iterator]
+		if (this.isLogin) {
+			this._service.recommendationStatisticsGetByUserId({}).subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success && res.result != null) {
+					this.recommendationStatistics = res.result.PURecommendationStatisticsGetByUserId[0]
+					for (const iterator in this.recommendationStatistics) {
+						this.totalRecommentdation += this.recommendationStatistics[iterator]
+					}
 				}
-			}
-			return
-		})
+				return
+			})
+		}
 	}
 
 	redirectDetailRecommendaton(id: any) {

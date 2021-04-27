@@ -41,15 +41,19 @@ export class AccountInfoComponent implements OnInit {
 		} else if (this.router.url.includes('/tai-khoan/chinh-sua-thong-tin')) {
 			this.viewVisiable = 'edit'
 		}
-		this.puRecommendationService.recommendationStatisticsGetByUserId({}).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				this.recommendationStatistics = res.result.PURecommendationStatisticsGetByUserId[0]
-				for (const iterator in this.recommendationStatistics) {
-					this.totalRecommentdation += this.recommendationStatistics[iterator]
+		if (this.storageService.getIsHaveToken()) {
+			this.puRecommendationService.recommendationStatisticsGetByUserId({}).subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					if (res.result != null) {
+						this.recommendationStatistics = res.result.PURecommendationStatisticsGetByUserId[0]
+						for (const iterator in this.recommendationStatistics) {
+							this.totalRecommentdation += this.recommendationStatistics[iterator]
+						}
+					}
 				}
-			}
-			return
-		})
+				return
+			})
+		}
 	}
 
 	Percent(value: any) {

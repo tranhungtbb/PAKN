@@ -53,7 +53,7 @@ export class MyRecommendationComponent implements OnInit {
 		this.getList()
 
 		this.puRecommendationService.recommendationStatisticsGetByUserId({}).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
+			if (res.success == RESPONSE_STATUS.success && res.result != null) {
 				this.recommendationStatistics = res.result.PURecommendationStatisticsGetByUserId[0]
 				for (const iterator in this.recommendationStatistics) {
 					this.totalRecommentdation += this.recommendationStatistics[iterator]
