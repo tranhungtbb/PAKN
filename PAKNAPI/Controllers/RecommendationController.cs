@@ -198,7 +198,36 @@ namespace PAKNAPI.Controller
                             {
                                 item.CopyTo(stream);
                             }
-                            await new MRRecommendationFilesInsert(_appSetting).MRRecommendationFilesInsertDAO(file);
+                            int FileId = Int32.Parse((await new MRRecommendationFilesInsert(_appSetting).MRRecommendationFilesInsertDAO(file)).ToString());
+                            string contentType = "";
+                            string content = "";
+                            contentType = FileContentType.GetTypeOfFile(filePath);
+                            bool isHasFullText = false;
+                            switch (contentType)
+                            {
+                                case ".pdf":
+                                    content = FileUtils.ExtractDataFromPDFFile(filePath);
+                                    isHasFullText = true;
+                                    break;
+
+                                case ".docx":
+                                    content = FileUtils.ReadFileDocExtension(filePath);
+                                    isHasFullText = true;
+                                    break;
+
+                                case ".doc":
+                                    content = FileUtils.ExtractDocFile(filePath);
+                                    isHasFullText = true;
+                                    break;
+                            }
+                            if (isHasFullText)
+                            {
+                                MRRecommendationFullTextInsertIN fulltext = new MRRecommendationFullTextInsertIN();
+                                fulltext.RecommendationId = Id;
+                                fulltext.FileId = FileId;
+                                fulltext.FullText = content;
+                                await new MRRecommendationFullTextInsert(_appSetting).MRRecommendationFullTextInsertDAO(fulltext);
+                            }
                         }
                     }
                     MRRecommendationHashtagInsertIN _mRRecommendationHashtagInsertIN = new MRRecommendationHashtagInsertIN();
@@ -331,6 +360,10 @@ namespace PAKNAPI.Controller
                         MRRecommendationFilesDeleteIN fileDel = new MRRecommendationFilesDeleteIN();
                         fileDel.Id = item.Id;
                         await new MRRecommendationFilesDelete(_appSetting).MRRecommendationFilesDeleteDAO(fileDel);
+                        MRRecommendationFullTextDeleteByRecommendationIdIN fulltextDel = new MRRecommendationFullTextDeleteByRecommendationIdIN();
+                        fulltextDel.RecommendationId = item.RecommendationId;
+                        fulltextDel.FileId = item.Id;
+                        await new MRRecommendationFullTextDeleteByRecommendationId(_appSetting).MRRecommendationFullTextDeleteByRecommendationIdDAO(fulltextDel);
                     }
 
                 }
@@ -354,23 +387,35 @@ namespace PAKNAPI.Controller
                         {
                             item.CopyTo(stream);
                         }
-                        await new MRRecommendationFilesInsert(_appSetting).MRRecommendationFilesInsertDAO(file);
+                        int FileId = Int32.Parse((await new MRRecommendationFilesInsert(_appSetting).MRRecommendationFilesInsertDAO(file)).ToString());
                         string contentType = "";
                         string content = "";
                         contentType = FileContentType.GetTypeOfFile(filePath);
+                        bool isHasFullText = false;
                         switch (contentType)
                         {
                             case ".pdf":
                                 content = FileUtils.ExtractDataFromPDFFile(filePath);
+                                isHasFullText = true;
                                 break;
 
                             case ".docx":
                                 content = FileUtils.ReadFileDocExtension(filePath);
+                                isHasFullText = true;
                                 break;
 
                             case ".doc":
                                 content = FileUtils.ExtractDocFile(filePath);
+                                isHasFullText = true;
                                 break;
+                        }
+                        if (isHasFullText)
+                        {
+                            MRRecommendationFullTextInsertIN fulltext = new MRRecommendationFullTextInsertIN();
+                            fulltext.RecommendationId = request.Data.Id;
+                            fulltext.FileId = FileId;
+                            fulltext.FullText = content;
+                            await new MRRecommendationFullTextInsert(_appSetting).MRRecommendationFullTextInsertDAO(fulltext);
                         }
                     }
                 }
