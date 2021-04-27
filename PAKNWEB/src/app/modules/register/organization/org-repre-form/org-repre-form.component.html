@@ -14,9 +14,8 @@
 	</div>
 	<div class="col form-group">
 		<label class="mb-1">Quốc tịch <span class="cl-red">(*)</span></label>
-		<ng-select *ngIf="!nation_enable_type" [(ngModel)]="model.Nation" formControlName="Nation" class="form-control" placeholder="Chọn..." [clearable]="false"
-			[closeOnSelect]="true" (change)="onChangeNation()">
-			<ng-option value="">Chọn...</ng-option>
+		<ng-select *ngIf="!nation_enable_type" [(ngModel)]="model.Nation" formControlName="Nation" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
+			(change)="onChangeNation()">
 			<ng-option *ngFor="let vill of listNation" [value]="vill.id">{{vill.name}}</ng-option>
 			<ng-option value="#">Khác</ng-option>
 		</ng-select>
@@ -34,9 +33,8 @@
 	</div>
 	<div class="col form-group">
 		<label class="mb-1">Tỉnh / Thành phố</label>
-		<ng-select [disabled]="nation_enable_type" [(ngModel)]="model.ProvinceId" formControlName="Province" class="form-control" placeholder="Chọn..." [clearable]="false"
-			[closeOnSelect]="true" (change)="onChangeProvince()">
-			<ng-option value="">Chọn...</ng-option>
+		<ng-select [disabled]="nation_enable_type" [(ngModel)]="model.ProvinceId" formControlName="Province" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
+			(change)="onChangeProvince()">
 			<ng-option *ngFor="let vill of listProvince" [value]="vill.id">{{vill.name}}</ng-option>
 		</ng-select>
 		<div *ngIf="(fInfoSubmitted && fInfo.Province.invalid)||(fInfo.Province.invalid && (fInfo.Province.dirty || fInfo.Province.touched))" class="has-error m-b-12">
@@ -66,9 +64,8 @@
 	</div>
 	<div class="col form-group">
 		<label class="mb-1">Huyện / Quận / thị xã...</label>
-		<ng-select [disabled]="nation_enable_type" [(ngModel)]="model.DistrictId" formControlName="District" class="form-control" placeholder="Chọn..." [clearable]="false"
-			[closeOnSelect]="true" (change)="onChangeDistrict()">
-			<ng-option value="">Chọn...</ng-option>
+		<ng-select [disabled]="nation_enable_type" [(ngModel)]="model.DistrictId" formControlName="District" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
+			(change)="onChangeDistrict()">
 			<ng-option *ngFor="let vill of listDistrict" [value]="vill.id">{{vill.name}}</ng-option>
 		</ng-select>
 		<div *ngIf="(fInfoSubmitted && fInfo.District.invalid)||(fInfo.District.invalid && (fInfo.District.dirty || fInfo.District.touched))" class="has-error m-b-12">
@@ -79,9 +76,7 @@
 	</div>
 	<div class="col form-group">
 		<label class="mb-1">Xã / Phường / Thị trấn</label>
-		<ng-select [disabled]="nation_enable_type" [(ngModel)]="model.WardsId" formControlName="Village" class="form-control" placeholder="Chọn..." [clearable]="false"
-			[closeOnSelect]="true">
-			<ng-option value="">Chọn...</ng-option>
+		<ng-select [disabled]="nation_enable_type" [(ngModel)]="model.WardsId" formControlName="Village" class="form-control" placeholder="Chọn..." [closeOnSelect]="true">
 			<ng-option *ngFor="let vill of listVillage" [value]="vill.id">{{vill.name}}</ng-option>
 		</ng-select>
 		<div *ngIf="(fInfoSubmitted && fInfo.Village.invalid)||(fInfo.Village.invalid && (fInfo.Village.dirty || fInfo.Village.touched))" class="has-error m-b-12">

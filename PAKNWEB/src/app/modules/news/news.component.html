@@ -36,9 +36,8 @@
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
 											<!-- [items]="listNewCategories" bindLabel="name" bindValue="id" -->
-											<ng-select class="" placeholder="" [closeOnSelect]="true" [(ngModel)]="query.newsType" (change)="filterChange()" style="width: 170px;"
-												[clearable]="false">
-												<ng-option value="">Tất cả loại tin tức</ng-option>
+											<ng-select class="" placeholder="Loại tin tức" [closeOnSelect]="true" [(ngModel)]="query.newsType" (change)="filterChange()"
+												style="width: 170px;">
 												<ng-option *ngFor="let nt of listNewCategories" [value]="nt.id">
 													{{nt.name}}
 												</ng-option>
@@ -52,9 +51,8 @@
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
 											<!-- [items]="listStatus" bindLabel="text" bindValue="value" -->
-											<ng-select class="" placeholder="" [closeOnSelect]="true" [(ngModel)]="query.status" (change)="filterChange()" [searchable]="false"
-												[clearable]="false" style="width: 170px;">
-												<ng-option value="">Tất cả trạng thái</ng-option>
+											<ng-select class="" placeholder="Trạng thái" [closeOnSelect]="true" [(ngModel)]="query.status" (change)="filterChange()"
+												[searchable]="false" style="width: 170px;">
 												<ng-option *ngFor="let stt of listStatus" [value]="stt.value">
 													{{stt.text}}
 												</ng-option>

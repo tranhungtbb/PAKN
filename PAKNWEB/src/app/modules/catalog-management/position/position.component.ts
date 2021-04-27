@@ -19,7 +19,6 @@ export class PositionComponent implements OnInit {
 
 	listData = new Array<FieldObject>()
 	listStatus: any = [
-		{ value: '', text: 'Chọn trạng thái' },
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
 	]
@@ -42,7 +41,7 @@ export class PositionComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		$('#modal').on('keypress', function (e) {
+		$('#modal').on('keypress', function(e) {
 			if (e.which == 13) e.preventDefault()
 		})
 	}
@@ -77,7 +76,7 @@ export class PositionComponent implements OnInit {
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
-		this._service.positionGetList(request).subscribe((response) => {
+		this._service.positionGetList(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
@@ -89,7 +88,7 @@ export class PositionComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.log(error)
 				alert(error)
 			}
@@ -146,7 +145,7 @@ export class PositionComponent implements OnInit {
 			return
 		}
 		if (this.model.id == 0 || this.model.id == null) {
-			this._service.CreatePosition(this.model).subscribe((response) => {
+			this._service.CreatePosition(this.model).subscribe(response => {
 				console.log(response)
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
@@ -162,12 +161,12 @@ export class PositionComponent implements OnInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				(error) => {
+				error => {
 					console.error(error)
 					alert(error)
 				}
 		} else {
-			this._service.UpdatePosition(this.model).subscribe((response) => {
+			this._service.UpdatePosition(this.model).subscribe(response => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -182,7 +181,7 @@ export class PositionComponent implements OnInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				(error) => {
+				error => {
 					console.error(error)
 					alert(error)
 				}
@@ -194,7 +193,7 @@ export class PositionComponent implements OnInit {
 			Id: data.id,
 			Type: 1,
 		}
-		this._service.positionGetById(request).subscribe((response) => {
+		this._service.positionGetById(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.rebuilForm()
 				this.title = 'Chỉnh sửa chức vụ'
@@ -204,7 +203,7 @@ export class PositionComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.error(error)
 				alert(error)
 			}
@@ -218,7 +217,7 @@ export class PositionComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.positionDelete(request).subscribe((response) => {
+		this._service.positionDelete(request).subscribe(response => {
 			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result > 0) {
@@ -233,7 +232,7 @@ export class PositionComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.error(error)
 			}
 	}
@@ -245,7 +244,7 @@ export class PositionComponent implements OnInit {
 			Id: data.id,
 		}
 		data.isActived = !data.isActived
-		this._service.positionUpdateStatus(data).subscribe((res) => {
+		this._service.positionUpdateStatus(data).subscribe(res => {
 			$('#modalConfirmUpdateStatus').modal('hide')
 			if (res.success == 'OK') {
 				if (data.isActived == true) {
@@ -257,7 +256,7 @@ export class PositionComponent implements OnInit {
 				this._toastr.error(res.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.error(error)
 			}
 	}

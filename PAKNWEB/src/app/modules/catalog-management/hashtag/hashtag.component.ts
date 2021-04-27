@@ -26,7 +26,6 @@ export class HashtagComponent implements OnInit {
 	cols: any[]
 
 	public listStatus: any = [
-		{ value: '', text: 'Chọn trạng thái' },
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
 	]
@@ -94,7 +93,7 @@ export class HashtagComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		$('#modal').on('keypress', function (e) {
+		$('#modal').on('keypress', function(e) {
 			if (e.which == 13) e.preventDefault()
 		})
 	}
@@ -131,7 +130,7 @@ export class HashtagComponent implements OnInit {
 		if (typeof this.QuantityUser !== 'undefined' && this.QuantityUser != null) {
 			obj['QuantityUser'] = this.QuantityUser
 		}
-		this.service.getAllPagedList(obj).subscribe((res) => {
+		this.service.getAllPagedList(obj).subscribe(res => {
 			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 				if (res.result) {
 					this.listHastag = res.result.CAHashtag
@@ -156,7 +155,7 @@ export class HashtagComponent implements OnInit {
 			PageSize: this.mrrPageSize,
 			PageIndex: this.mrrPageIndex,
 		}
-		this.service.recommendationGetByHashtagAllOnPage(obj).subscribe((res) => {
+		this.service.recommendationGetByHashtagAllOnPage(obj).subscribe(res => {
 			if ((res.success = RESPONSE_STATUS.success)) {
 				this.recommendationsGetByHashtag = res.result.MRRecommendationGetByHashtagAllOnPage
 				this.totalRecord2 = this.recommendationsGetByHashtag.length > 0 ? this.recommendationsGetByHashtag[0].rowNumber : 0
@@ -235,7 +234,7 @@ export class HashtagComponent implements OnInit {
 		}
 		// create
 		if (this.hashtag.id == 0) {
-			this.service.create(this.hashtag).subscribe((res) => {
+			this.service.create(this.hashtag).subscribe(res => {
 				if (res != 'undefined') {
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result == -1) {
@@ -253,7 +252,7 @@ export class HashtagComponent implements OnInit {
 		}
 		// update
 		else {
-			this.service.update(this.hashtag).subscribe((res) => {
+			this.service.update(this.hashtag).subscribe(res => {
 				$('#modalConfirmChangeStatus').modal('hide')
 				debugger
 				if (res != 'undefined') {
@@ -278,7 +277,7 @@ export class HashtagComponent implements OnInit {
 
 	// delete
 	onDelete() {
-		this.service.delete({ id: this.IdDelete }).subscribe((res) => {
+		this.service.delete({ id: this.IdDelete }).subscribe(res => {
 			$('#modalConfirmDelete').modal('hide')
 			if (res != 'undefined') {
 				if (res.success == RESPONSE_STATUS.success) {
