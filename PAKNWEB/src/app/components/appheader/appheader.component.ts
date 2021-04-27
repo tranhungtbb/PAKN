@@ -73,6 +73,7 @@ export class AppheaderComponent implements OnInit {
 	lstPhongBan: any = []
 
 	Notifications: any[]
+	numberNotifications: any = 5
 	ViewedCount: number = 0
 
 	constructor(
@@ -109,7 +110,7 @@ export class AppheaderComponent implements OnInit {
 			newpassword: new FormControl(this.user.NewPassword, [Validators.required]),
 			confirmpassword: new FormControl(this.user.ConfirmPassword, [Validators.required]),
 		})
-		this.sharedataService.getnotificationDropdown.subscribe(data => {
+		this.sharedataService.getnotificationDropdown.subscribe((data) => {
 			if (data) {
 				var result: any = data
 				this.listThongBao = []
@@ -117,11 +118,15 @@ export class AppheaderComponent implements OnInit {
 				this.totalThongBao = result.totalRecords
 			}
 		})
+		this.getNotifications(this.numberNotifications)
+	}
 
-		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: 5, PageIndex: 1 }).subscribe(res => {
+	getNotifications(PageSize: Number) {
+		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: PageSize, PageIndex: 1 }).subscribe((res) => {
 			if ((res.success = RESPONSE_STATUS.success)) {
 				this.Notifications = res.result.syNotifications
-				this.Notifications.forEach(item => {
+				this.ViewedCount = 0
+				this.Notifications.forEach((item) => {
 					if (item.isViewed == true) {
 						this.ViewedCount += 1
 					}
@@ -197,7 +202,7 @@ export class AppheaderComponent implements OnInit {
 		}
 		var data = this.userForm.value
 		this.user = data
-		this.authenService.chagepassword(this.user).subscribe(data => {
+		this.authenService.chagepassword(this.user).subscribe((data) => {
 			if (data.status === 1) {
 				$('#myModal').modal('hide')
 				this.toastr.success('Thay đổi mật khẩu thành công')
@@ -205,7 +210,7 @@ export class AppheaderComponent implements OnInit {
 				this.toastr.error(data.message)
 			}
 		}),
-			err => {
+			(err) => {
 				console.error(err)
 			}
 	}
@@ -296,7 +301,7 @@ export class AppheaderComponent implements OnInit {
 	}
 
 	signOut(): void {
-		this.authenService.logOut({}).subscribe(success => {
+		this.authenService.logOut({}).subscribe((success) => {
 			if (success.success == RESPONSE_STATUS.success) {
 				this.sharedataService.setIsLogin(false)
 				this.storageService.setReturnUrl('')
@@ -374,11 +379,9 @@ export class AppheaderComponent implements OnInit {
 	}
 
 	onScroll(event: any) {
-		if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) {
-			if (this.pageSizeGrid < this.totalThongBao) {
-				this.pageSizeGrid = this.pageSizeGrid + 10
-				// this.getNotification();
-			}
+		if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 50) {
+			this.numberNotifications = this.numberNotifications + 5
+			this.getNotifications(this.numberNotifications)
 		}
 	}
 
@@ -419,7 +422,7 @@ export class AppheaderComponent implements OnInit {
 			UserId: localStorage.getItem('userId'),
 		}
 		console.log(req)
-		this.userService.getSystemLogin(req).subscribe(response => {
+		this.userService.getSystemLogin(req).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
@@ -434,7 +437,7 @@ export class AppheaderComponent implements OnInit {
 		let req = {
 			Id: localStorage.getItem('userId'),
 		}
-		this.userService.getById(req).subscribe(response => {
+		this.userService.getById(req).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.emailUser = response.result.SYUserGetByID[0].email
