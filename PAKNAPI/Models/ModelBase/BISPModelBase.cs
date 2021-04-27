@@ -118,6 +118,17 @@ namespace PAKNAPI.ModelBase
 		public string PermanentPlace { get; set; }
 		public string Nation { get; set; }
 
+		public string BusinessRegistration{get;set;}
+		public string DecisionOfEstablishing { get;set;}
+		public string Tax { get;set;}
+		public int OrgProvinceId{get;set;}
+		public int OrgDistrictId { get;set;}
+		public int OrgWardsId { get;set;}
+		public string OrgAddress { get;set;}
+		public string OrgPhone { get;set;}
+		public string OrgEmail { get; set; }
+		public string Business { get; set; }
+
 		public async Task<List<BIBusinessGetRepresentativeEmail>> BIBusinessGetRepresentativeEmailDAO(string Email)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -248,6 +259,18 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IssuedDate", _bIBusinessUpdateInfoIN.IssuedDate);
 			DP.Add("Gender", _bIBusinessUpdateInfoIN.Gender);
 
+			DP.Add("BusinessRegistration", _bIBusinessUpdateInfoIN.BusinessRegistration);
+			DP.Add("DecisionOfEstablishing", _bIBusinessUpdateInfoIN.DecisionOfEstablishing);
+			DP.Add("Tax", _bIBusinessUpdateInfoIN.Tax);
+			DP.Add("OrgProvinceId", _bIBusinessUpdateInfoIN.OrgProvinceId);
+			DP.Add("OrgDistrictId", _bIBusinessUpdateInfoIN.OrgDistrictId);
+			DP.Add("OrgWardsId", _bIBusinessUpdateInfoIN.OrgWardsId);
+			DP.Add("OrgAddress", _bIBusinessUpdateInfoIN.OrgAddress);
+			DP.Add("OrgPhone", _bIBusinessUpdateInfoIN.OrgPhone);
+			DP.Add("OrgEmail", _bIBusinessUpdateInfoIN.OrgEmail);
+			DP.Add("Business", _bIBusinessUpdateInfoIN.Business);
+
+
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_BusinessUpdateInfo", DP));
 		}
 	}
@@ -267,6 +290,17 @@ namespace PAKNAPI.ModelBase
 		public string IssuedPlace { get; set; }
 		public DateTime? IssuedDate { get; set; }
 		public bool? Gender { get; set; }
+
+		public string BusinessRegistration{get;set;}
+		public string DecisionOfEstablishing{get;set;}
+		public string Tax { get;set;}
+		public int? OrgProvinceId { get;set;}
+		public int? OrgDistrictId { get;set;}
+		public int? OrgWardsId { get;set;}
+		public string OrgAddress { get;set;}
+		public string OrgPhone { get;set;}
+		public string OrgEmail { get; set; }
+		public string Business { get; set; }
 	}
 
 	public class BIIndividualCheckExists

@@ -91,7 +91,18 @@ export class NewsComponent implements OnInit {
 	modalConfirm_type = 'delete'
 	modalConfirm_item_id = 0
 	onOpenModalConfirm(id: number, type: string) {
+		if (type == 'delete') {
+			this.modalConfirm_message = 'Anh/chị có chắc chắn thực hiện hành động này?'
+		} else {
+			let item = this.listDataPaged.find((c) => c.id == id)
+			if (item.isPublished == false) {
+				this.modalConfirm_message = 'Anh/chị có muốn công bố bài viết này?'
+			} else {
+				this.modalConfirm_message = 'Anh/chị có muốn hủy công bố bài viết này?'
+			}
+		}
 		$('#modal-confirm').modal('show')
+
 		this.modalConfirm_type = type
 		this.modalConfirm_item_id = id
 	}
