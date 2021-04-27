@@ -123,20 +123,20 @@
 				</div>
 				<nav aria-label="navigation">
 					<ul class="pagination pagination-lg justify-content-between align-items-center">
-						<li class="page-item" [ngClass]="{ 'disabled': PageIndex === 1 }">
-							<a (click)="changePagination(PageIndex - 1)" class="page-link border text-uppercase rounded-pill" href="javascript:void(0)" tabindex="-1"
+						<li class="page-item" [ngClass]="{ 'disabled': pageIndex === 1 }">
+							<a (click)="changePagination(pageIndex - 1)" class="page-link border text-uppercase rounded-pill" href="javascript:void(0)" tabindex="-1"
 								aria-disabled="true"><i class="bi bi-chevron-left mr-2"></i>Trước</a>
 						</li>
 						<li class="d-flex justify-content-center align-items-center">
-							<a *ngIf="PageIndex > 4">...</a>
-							<p class="mb-0 page-item" *ngFor="let item of pagination; let i = index" [ngClass]="{ 'active': item.index === PageIndex }">
-								<a (click)="changePagination(item.index)" *ngIf="i - 3 < PageIndex && i + 5 > PageIndex" class="page-link"
+							<a *ngIf="pageIndex > 4">...</a>
+							<p class="mb-0 page-item" *ngFor="let item of pagination; let i = index" [ngClass]="{ 'active': item.index === pageIndex }">
+								<a (click)="changePagination(item.index)" *ngIf="i - 3 < pageIndex && i + 5 > pageIndex" class="page-link"
 									href="javascript:void(0)">{{item.index}}</a>
 							</p>
-							<a *ngIf="PageIndex < pagination.length -4">...</a>
+							<a *ngIf="pageIndex < pagination.length -4">...</a>
 						</li>
-						<li class="page-item" [ngClass]="{ 'disabled': PageIndex === Total }">
-							<a (click)="changePagination(PageIndex + 1)" class="page-link border text-uppercase rounded-pill" href="javascript:void(0)">Sau<i
+						<li class="page-item" [ngClass]="{ 'disabled': pageIndex === Total }">
+							<a (click)="changePagination(pageIndex + 1)" class="page-link border text-uppercase rounded-pill" href="javascript:void(0)">Sau<i
 									class="bi bi-chevron-right ml-2"></i></a>
 						</li>
 					</ul>
