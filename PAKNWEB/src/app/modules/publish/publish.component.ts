@@ -152,7 +152,7 @@ export class PublishComponent implements OnInit, OnChanges {
 		}
 
 		this.messages.push({
-			who: 'Me',
+			who: 'Tôi',
 			isReply: false,
 			message: this.message,
 		})
