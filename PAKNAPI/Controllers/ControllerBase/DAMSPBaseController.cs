@@ -776,6 +776,66 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize("ThePolicy")]
+		[Route("DAMCompositionProfileUpdateBase")]
+		public async Task<ActionResult<object>> DAMCompositionProfileUpdateBase(DAMCompositionProfileUpdateIN _dAMCompositionProfileUpdateIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new DAMCompositionProfileUpdate(_appSetting).DAMCompositionProfileUpdateDAO(_dAMCompositionProfileUpdateIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("DAMCompositionProfileUpdateListBase")]
+		public async Task<ActionResult<object>> DAMCompositionProfileUpdateListBase(List<DAMCompositionProfileUpdateIN> _dAMCompositionProfileUpdateINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _dAMCompositionProfileUpdateIN in _dAMCompositionProfileUpdateINs)
+				{
+					var result = await new DAMCompositionProfileUpdate(_appSetting).DAMCompositionProfileUpdateDAO(_dAMCompositionProfileUpdateIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
 		[Route("DAMImplementationProcessCreateBase")]
 		public async Task<ActionResult<object>> DAMImplementationProcessCreateBase(DAMImplementationProcessCreateIN _dAMImplementationProcessCreateIN)
 		{

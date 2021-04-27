@@ -55,6 +55,29 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
+		[Route("BIBusinessGetByUserIdBase")]
+		public async Task<ActionResult<object>> BIBusinessGetByUserIdBase(long? UserId)
+		{
+			try
+			{
+				List<BIBusinessGetByUserId> rsBIBusinessGetByUserId = await new BIBusinessGetByUserId(_appSetting).BIBusinessGetByUserIdDAO(UserId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"BIBusinessGetByUserId", rsBIBusinessGetByUserId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
 		[Route("BIBusinessGetDropdownBase")]
 		public async Task<ActionResult<object>> BIBusinessGetDropdownBase()
 		{
@@ -214,6 +237,149 @@ namespace PAKNAPI.ControllerBase
 				foreach (var _bIBusinessUpdateInfoIN in _bIBusinessUpdateInfoINs)
 				{
 					var result = await new BIBusinessUpdateInfo(_appSetting).BIBusinessUpdateInfoDAO(_bIBusinessUpdateInfoIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("BIIndividualGetByUserIdBase")]
+		public async Task<ActionResult<object>> BIIndividualGetByUserIdBase(long? UserId)
+		{
+			try
+			{
+				List<BIIndividualGetByUserId> rsBIIndividualGetByUserId = await new BIIndividualGetByUserId(_appSetting).BIIndividualGetByUserIdDAO(UserId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"BIIndividualGetByUserId", rsBIIndividualGetByUserId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("BIIndividualInsertBase")]
+		public async Task<ActionResult<object>> BIIndividualInsertBase(BIIndividualInsertIN _bIIndividualInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new BIIndividualInsert(_appSetting).BIIndividualInsertDAO(_bIIndividualInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("BIIndividualInsertListBase")]
+		public async Task<ActionResult<object>> BIIndividualInsertListBase(List<BIIndividualInsertIN> _bIIndividualInsertINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _bIIndividualInsertIN in _bIIndividualInsertINs)
+				{
+					var result = await new BIIndividualInsert(_appSetting).BIIndividualInsertDAO(_bIIndividualInsertIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("BIInvididualUpdateInfoBase")]
+		public async Task<ActionResult<object>> BIInvididualUpdateInfoBase(BIInvididualUpdateInfoIN _bIInvididualUpdateInfoIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new BIInvididualUpdateInfo(_appSetting).BIInvididualUpdateInfoDAO(_bIInvididualUpdateInfoIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("BIInvididualUpdateInfoListBase")]
+		public async Task<ActionResult<object>> BIInvididualUpdateInfoListBase(List<BIInvididualUpdateInfoIN> _bIInvididualUpdateInfoINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _bIInvididualUpdateInfoIN in _bIInvididualUpdateInfoINs)
+				{
+					var result = await new BIInvididualUpdateInfo(_appSetting).BIInvididualUpdateInfoDAO(_bIInvididualUpdateInfoIN);
 					if (result > 0)
 					{
 						count++;
