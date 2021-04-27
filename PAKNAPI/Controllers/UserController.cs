@@ -404,25 +404,10 @@ namespace PAKNAPI.Controllers
 						return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Thông tin tài khoản không tồn tại" };
 					}
 
-					var model = new AccountInfoModel
-					{
-						UserName = accInfo[0].UserName,
-						FullName = info[0].RepresentativeName,
-						Gender = info[0].RepresentativeGender.Value,
-						DateOfBirth = info[0].RepresentativeBirthDay.ToString("dd/MM/yyyy"),
-						Email = info[0].Email,
-						Phone = info[0].Phone,
-						Nation = info[0].Nation,
-						ProvinceId = info[0].ProvinceId.Value,
-						DistrictId = info[0].DistrictId.Value,
-						WardsId = info[0].WardsId.Value,
-						Address = info[0].Address,
-						IdCard = info[0].IDCard,
-						//IssuedPlace = info[0].IssuedPlace,
-						//IssuedDate = info[0].DateOfIssue.Value.ToString("dd/MM/yyyy"),
-					};
+					BusinessAccountInfoModel model = new BusinessAccountInfoModel(info[0]);
 
-
+					model.UserName = accInfo[0].UserName;
+					model.FullName = accInfo[0].FullName;
 
 					return new Models.Results.ResultApi { Success = ResultCode.OK, Result = model };
 				}
@@ -474,6 +459,7 @@ namespace PAKNAPI.Controllers
 					Password = newPwd["Password"],
 					Salt = newPwd["Salt"]
 				};
+				_model.Id = accInfo[0].Id;
 
 				var rs = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_model);
 
@@ -490,7 +476,7 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Route("UpdateCurrentInfo")]
 		[Authorize]
-		public async Task<object> UpdateCurrentInfo([FromForm] AccountInfoModel model)
+		public async Task<object> UpdateCurrentInfo([FromForm] AccountInfoModel model,[FromForm] BusinessAccountInfoModel businessModel)
         {
             try
             {
@@ -507,11 +493,11 @@ namespace PAKNAPI.Controllers
 				DateTime birdDay, dateOfIssue;
 				if (!DateTime.TryParseExact(model.DateOfBirth, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
 				{
-					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
 				}
 				if (!DateTime.TryParseExact(model.IssuedDate, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
 				{
-					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 				}
 
 				if (accInfo[0].TypeId == 2)
@@ -539,12 +525,21 @@ namespace PAKNAPI.Controllers
 				}
 				else if (accInfo[0].TypeId == 3)
                 {
+					if (!DateTime.TryParseExact(businessModel.RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
+					{
+						//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+					}
+					if (!DateTime.TryParseExact(businessModel.DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
+					{
+						//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+					}
+
 					var info = await new BIBusinessGetRepresentativeEmail(_appSetting).BIBusinessGetRepresentativeEmailDAO(accInfo[0].Email);
 					
 					var _model = new BIBusinessUpdateInfoIN
 					{
 						Id = info[0].Id,
-						FullName = model.FullName,
+						FullName = businessModel.RepresentativeName,
 						DateOfBirth = birdDay,
 						Email = model.Email,
 						Nation = model.Nation,
@@ -553,9 +548,18 @@ namespace PAKNAPI.Controllers
 						WardsId = model.WardsId,
 						Address = model.Address,
 						IdCard = model.IdCard,
-						IssuedPlace = model.IssuedPlace,
 						IssuedDate = dateOfIssue,
 						Gender = model.Gender,
+						BusinessRegistration = businessModel.BusinessRegistration,
+						DecisionOfEstablishing = businessModel.DecisionOfEstablishing,
+						Tax = businessModel.Tax,
+						OrgProvinceId = businessModel.OrgProvinceId,
+						OrgDistrictId = businessModel.OrgDistrictId,
+						OrgWardsId = businessModel.OrgWardsId,
+						OrgAddress = businessModel.OrgAddress,
+						OrgPhone = businessModel.OrgPhone,
+						OrgEmail = businessModel.OrgEmail,
+						Business = businessModel.Business
 					};
 					var rs = await new BIBusinessUpdateInfo(_appSetting).BIBusinessUpdateInfoDAO(_model);
 				}
