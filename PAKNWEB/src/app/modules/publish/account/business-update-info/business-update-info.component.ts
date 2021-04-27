@@ -6,7 +6,7 @@ import { FormBuilder, FormControl, FormGroup, Validator, Validators } from '@ang
 import { COMMONS } from 'src/app/commons/commons'
 
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS, REGEX } from 'src/app/constants/CONSTANTS'
 import { AuthenticationService } from 'src/app/services/authentication.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { DiadanhService } from 'src/app/services/diadanh.service'
@@ -48,13 +48,16 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		{ value: false, text: 'Nữ' },
 	]
 
+	//regex
+	regex_phone: string = REGEX.PHONE_VN
+
 	ngOnInit() {
 		this.getUserInfo()
 		this.formUpdateAccountInfo = this.formBuider.group({
 			representativeName: [this.model.representativeName, [Validators.required]],
-			representativeBirthDay: [this.model.representativeBirthDay, [Validators.required]],
-			email: [this.model.email],
-			nation: [this.model.nation],
+			representativeBirthDay: [this.model.representativeBirthDay],
+			email: [this.model.email, [Validators.email]],
+			nation: [this.model.nation, [Validators.required]],
 			provinceId: [this.model.provinceId],
 			districtId: [this.model.districtId],
 			wardsId: [this.model.wardsId],
@@ -63,14 +66,15 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			fullName: [this.model.fullName, [Validators.required]],
 			businessRegistration: [this.model.businessRegistration],
 			decisionOfEstablishing: [this.model.decisionOfEstablishing],
-			dateOfIssue: [this.model.dateOfBirth],
+			dateOfIssue: [this.model.dateOfIssue],
 			tax: [this.model.tax, [Validators.required]],
 			orgProvinceId: [this.model.orgProvinceId],
 			orgDistrictId: [this.model.orgDistrictId],
 			orgWardsId: [this.model.orgWardsId],
 			orgAddress: [this.model.orgAddress, [Validators.required]],
 			orgPhone: [this.model.orgPhone, [Validators.required]],
-			orgEmail: [this.model.orgEmail],
+			orgEmail: [this.model.orgEmail, [Validators.email]],
+			business: [this.model.business, [Validators.required]],
 		})
 	}
 
@@ -99,6 +103,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 
 		this.model.dateOfBirth = fDob.value
 		this.model.dateOfIssue = fDateIssue.value
+		this.model.fullName = this.model.representativeName
 
 		if (!this.model.wardsId) this.model.wardsId = ''
 		if (!this.model.provinceId) this.model.provinceId = ''
@@ -123,6 +128,10 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			this.toast.success(COMMONS.UPDATE_SUCCESS)
 			this.router.navigate(['/cong-bo/tai-khoan/thong-tin'])
 		})
+	}
+
+	onReset() {
+		this.getUserInfo()
 	}
 
 	onChangeNation(clearable = false) {

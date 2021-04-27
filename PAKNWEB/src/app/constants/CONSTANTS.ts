@@ -116,3 +116,7 @@ export const FILETYPE = [
 	{ text: 'application/vnd.ms-powerpoint.template.macroEnabled.12', value: 6 },
 	{ text: 'application/vnd.ms-powerpoint.slideshow.macroEnabled.12', value: 6 },
 ]
+
+export class REGEX {
+	public static PHONE_VN = '^(84|0[3|5|7|8|9])+([0-9]{8})$'
+}
