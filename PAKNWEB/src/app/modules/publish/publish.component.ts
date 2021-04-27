@@ -6,6 +6,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { NotificationService } from 'src/app/services/notification.service'
 import { stat } from 'fs'
+import { ChatbotService } from 'src/app/services/chatbot.service'
 
 @Component({
 	selector: 'app-publish',
@@ -18,7 +19,8 @@ export class PublishComponent implements OnInit, OnChanges {
 		private storageService: UserInfoStorageService,
 		private authenService: AuthenticationService,
 		private sharedataService: DataService,
-		private notificationService: NotificationService
+		private notificationService: NotificationService,
+		private chatBotService: ChatbotService
 	) {}
 
 	activeUrl: string = ''
@@ -29,7 +31,6 @@ export class PublishComponent implements OnInit, OnChanges {
 	notifications: any[]
 	ViewedCount: number = 0
 	index: number = 0
-
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
@@ -52,6 +53,16 @@ export class PublishComponent implements OnInit, OnChanges {
 
 		this.getListNotification()
 	}
+
+	botname: string = 'Bot'
+	message: string = ''
+	messages: any = [
+		{
+			who: this.botname,
+			isReply: true,
+			message: 'Vui lòng nhập câu hỏi...',
+		},
+	]
 
 	getListNotification() {
 		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: 5, PageIndex: 1 }).subscribe((res) => {
@@ -125,4 +136,80 @@ export class PublishComponent implements OnInit, OnChanges {
 		}
 		return false
 	}
+
+	/*================ CHAT BOT ===============*/
+	toggleChatForm() {
+		let formChat = document.getElementById('form-chat')
+		formChat.classList.toggle('togger-show-chatbot')
+
+		let btnChat = document.getElementById('btn-chat')
+		btnChat.classList.toggle('togger-show-chatbot')
+	}
+	// Gửi câu hỏi đến server chatbot
+	send() {
+		console.log('send', this.message)
+		if (this.message.trim() === '') {
+			return
+		}
+
+		this.messages.push({
+			who: 'Me',
+			isReply: false,
+			message: this.message,
+		})
+
+		// get userID
+		let kluid = localStorage.getItem('kluid')
+
+		// Nếu chưa tồn tại userid
+		if (!kluid) {
+			this.chatBotService.getNewUserId().subscribe(
+				(data) => {
+					let newUs = null
+					newUs = data
+					if (newUs.UserID) {
+						localStorage.setItem('kluid', newUs.UserID)
+						this.sendToServer()
+					}
+				},
+				(error) => {
+					console.log(error)
+				}
+			)
+		} else {
+			this.sendToServer()
+		}
+	}
+
+	sendToServer() {
+		let kluid = localStorage.getItem('kluid')
+
+		const data = {
+			Sentence: this.message,
+		}
+
+		this.chatBotService.sendToServer(kluid, data).subscribe(
+			(response) => {
+				let res = null
+				res = response
+				this.messages.push({
+					who: this.botname,
+					isReply: true,
+					message: res.ResponseText.toString(),
+				})
+
+				console.log('messages', this.messages)
+				this.message = ''
+
+				document.getElementById('messages-content').style.overflow = 'scroll'
+				setTimeout(function () {
+					document.getElementById('messages-content').scrollTo(0, 1000)
+				}, 500)
+			},
+			(error) => {
+				console.log(error)
+			}
+		)
+	}
+	/*================ CHAT BOT ===============*/
 }
