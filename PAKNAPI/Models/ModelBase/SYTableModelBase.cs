@@ -871,7 +871,6 @@ namespace PAKNAPI.ModelBase
 		public int Id { get; set; }
 		public string OrderNumber { get; set; }
 		public string Name { get; set; }
-		public string Code { get; set; }
 		public string Description { get; set; }
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
@@ -894,7 +893,6 @@ namespace PAKNAPI.ModelBase
 		public int Id { get; set; }
 		public string OrderNumber { get; set; }
 		public string Name { get; set; }
-		public string Code { get; set; }
 		public string Description { get; set; }
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
@@ -927,7 +925,6 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _sYRole.Name);
-			DP.Add("Code", _sYRole.Code);
 			DP.Add("IsActived", _sYRole.IsActived);
 			DP.Add("IsDeleted", _sYRole.IsDeleted);
 			DP.Add("Description", _sYRole.Description);
@@ -941,7 +938,6 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _sYRole.Id);
 			DP.Add("Name", _sYRole.Name);
-			DP.Add("Code", _sYRole.Code);
 			DP.Add("IsActived", _sYRole.IsActived);
 			DP.Add("IsDeleted", _sYRole.IsDeleted);
 			DP.Add("Description", _sYRole.Description);

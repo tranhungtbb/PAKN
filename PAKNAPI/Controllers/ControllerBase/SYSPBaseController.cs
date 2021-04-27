@@ -114,29 +114,6 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
-		[Route("SYRoleGetAllBase")]
-		public async Task<ActionResult<object>> SYRoleGetAllBase()
-		{
-			try
-			{
-				List<SYRoleGetAll> rsSYRoleGetAll = await new SYRoleGetAll(_appSetting).SYRoleGetAllDAO();
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"SYRoleGetAll", rsSYRoleGetAll},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("SYSystemLogGetAllOnPageBase")]
 		public async Task<ActionResult<object>> SYSystemLogGetAllOnPageBase(int? UserId, int? PageSize, int? PageIndex, DateTime? FromDate, DateTime? ToDate)

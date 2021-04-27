@@ -367,7 +367,7 @@ namespace PAKNAPI.Controllers
                 }
                 else if (accInfo[0].TypeId == 2)
                 {
-					var info = await new BIIndividualGetByEmail(_appSetting).BIIndividualGetByEmailDAO(accInfo[0].Email);
+					var info = await new BIIndividualGetByUserId(_appSetting).BIIndividualGetByUserIdDAO(accInfo[0].Id);
 					if(info == null || !info.Any())
                     {
 						return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Thông tin tài khoản không tồn tại" };
@@ -398,7 +398,7 @@ namespace PAKNAPI.Controllers
 				}
 				else if (accInfo[0].TypeId == 3)
                 {
-					var info = await new BIBusinessGetRepresentativeEmail(_appSetting).BIBusinessGetRepresentativeEmailDAO(accInfo[0].Email);
+					var info = await new BIBusinessGetByUserId(_appSetting).BIBusinessGetByUserIdDAO(accInfo[0].Id);
 					if (info == null || !info.Any())
 					{
 						return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Thông tin tài khoản không tồn tại" };
@@ -502,7 +502,7 @@ namespace PAKNAPI.Controllers
 
 				if (accInfo[0].TypeId == 2)
                 {
-					var info = await new BIIndividualGetByEmail(_appSetting).BIIndividualGetByEmailDAO(accInfo[0].Email);
+					var info = await new BIBusinessGetByUserId(_appSetting).BIBusinessGetByUserIdDAO(accInfo[0].Id);
 
 					var _model = new BIInvididualUpdateInfoIN
 					{
