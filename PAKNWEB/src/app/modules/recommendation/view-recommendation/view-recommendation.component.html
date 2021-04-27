@@ -346,13 +346,33 @@
 							<strong *ngIf="model.typeObject == 2" class="h4 font-weight-bold">Doanh nghiệp</strong>
 						</li>
 						<li class="list-group-item">
-							Lĩnh Vực: <strong class="h4 font-weight-bold">{{model.fieldName}}</strong>
+							Lĩnh vực: <strong class="h4 font-weight-bold">{{model.fieldName}}</strong>
 						</li>
 						<li class="list-group-item">
 							Đơn vị tiếp nhận: <strong class="h4 font-weight-bold">{{model.unitName}}</strong>
 						</li>
+						<li class="list-group-item">
+							Người tiếp nhận: <strong class="h4 font-weight-bold">{{model.receiveName}}</strong>
+						</li>
+						<li class="list-group-item">
+							Đơn vị giải quyết: <strong class="h4 font-weight-bold">{{model.processUnitName}}</strong>
+						</li>
 					</ul>
 					<app-remind></app-remind>
+					<ul class="list-group list-group-flush" *ngIf="model.status >= 5">
+						<li class="list-group-item">
+							Hạn giải quyết: <strong class="h4 font-weight-bold">{{model.expriredDate | date:'dd/MM/yyyy'}}</strong>
+						</li>
+						<li class="list-group-item" *ngIf="model.status >= 6">
+							Ngày giải quyết: <strong class="h4 font-weight-bold">{{model.processingDate | date:'dd/MM/yyyy'}}</strong>
+						</li>
+						<li class="list-group-item" *ngIf="model.status >= 8">
+							Người phê duyệt: <strong class="h4 font-weight-bold">{{model.approvedName}}</strong>
+						</li>
+						<li class="list-group-item" *ngIf="model.status >= 9">
+							Ngày phê duyệt: <strong class="h4 font-weight-bold">{{model.approvedDate | date:'dd/MM/yyyy'}}</strong>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>

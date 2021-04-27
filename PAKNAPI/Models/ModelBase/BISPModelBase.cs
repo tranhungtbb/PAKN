@@ -37,6 +37,30 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class BIBusinessGetDropdown
+	{
+		private SQLCon _sQLCon;
+
+		public BIBusinessGetDropdown(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public BIBusinessGetDropdown()
+		{
+		}
+
+		public long Value { get; set; }
+		public string Text { get; set; }
+
+		public async Task<List<BIBusinessGetDropdown>> BIBusinessGetDropdownDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<BIBusinessGetDropdown>("BI_BusinessGetDropdown", DP)).ToList();
+		}
+	}
+
 	public class BIBusinessGetRepresentativeById
 	{
 		private SQLCon _sQLCon;
@@ -117,15 +141,14 @@ namespace PAKNAPI.ModelBase
 		public string NativePlace { get; set; }
 		public string PermanentPlace { get; set; }
 		public string Nation { get; set; }
-
-		public string BusinessRegistration{get;set;}
-		public string DecisionOfEstablishing { get;set;}
-		public string Tax { get;set;}
-		public int OrgProvinceId{get;set;}
-		public int OrgDistrictId { get;set;}
-		public int OrgWardsId { get;set;}
-		public string OrgAddress { get;set;}
-		public string OrgPhone { get;set;}
+		public string BusinessRegistration { get; set; }
+		public string DecisionOfEstablishing { get; set; }
+		public string Tax { get; set; }
+		public int? OrgProvinceId { get; set; }
+		public int? OrgDistrictId { get; set; }
+		public int? OrgWardsId { get; set; }
+		public string OrgAddress { get; set; }
+		public string OrgPhone { get; set; }
 		public string OrgEmail { get; set; }
 		public string Business { get; set; }
 
@@ -187,6 +210,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("NativePlace", _bIBusinessInsertIN.NativePlace);
 			DP.Add("PermanentPlace", _bIBusinessInsertIN.PermanentPlace);
 			DP.Add("Nation", _bIBusinessInsertIN.Nation);
+			DP.Add("Business", _bIBusinessInsertIN.Business);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_BusinessInsert", DP));
 		}
@@ -227,6 +251,7 @@ namespace PAKNAPI.ModelBase
 		public string NativePlace { get; set; }
 		public string PermanentPlace { get; set; }
 		public string Nation { get; set; }
+		public string Business { get; set; }
 	}
 
 	public class BIBusinessUpdateInfo
@@ -258,7 +283,6 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IssuedPlace", _bIBusinessUpdateInfoIN.IssuedPlace);
 			DP.Add("IssuedDate", _bIBusinessUpdateInfoIN.IssuedDate);
 			DP.Add("Gender", _bIBusinessUpdateInfoIN.Gender);
-
 			DP.Add("BusinessRegistration", _bIBusinessUpdateInfoIN.BusinessRegistration);
 			DP.Add("DecisionOfEstablishing", _bIBusinessUpdateInfoIN.DecisionOfEstablishing);
 			DP.Add("Tax", _bIBusinessUpdateInfoIN.Tax);
@@ -269,7 +293,6 @@ namespace PAKNAPI.ModelBase
 			DP.Add("OrgPhone", _bIBusinessUpdateInfoIN.OrgPhone);
 			DP.Add("OrgEmail", _bIBusinessUpdateInfoIN.OrgEmail);
 			DP.Add("Business", _bIBusinessUpdateInfoIN.Business);
-
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_BusinessUpdateInfo", DP));
 		}
@@ -290,15 +313,14 @@ namespace PAKNAPI.ModelBase
 		public string IssuedPlace { get; set; }
 		public DateTime? IssuedDate { get; set; }
 		public bool? Gender { get; set; }
-
-		public string BusinessRegistration{get;set;}
-		public string DecisionOfEstablishing{get;set;}
-		public string Tax { get;set;}
-		public int? OrgProvinceId { get;set;}
-		public int? OrgDistrictId { get;set;}
-		public int? OrgWardsId { get;set;}
-		public string OrgAddress { get;set;}
-		public string OrgPhone { get;set;}
+		public string BusinessRegistration { get; set; }
+		public string DecisionOfEstablishing { get; set; }
+		public string Tax { get; set; }
+		public int? OrgProvinceId { get; set; }
+		public int? OrgDistrictId { get; set; }
+		public int? OrgWardsId { get; set; }
+		public string OrgAddress { get; set; }
+		public string OrgPhone { get; set; }
 		public string OrgEmail { get; set; }
 		public string Business { get; set; }
 	}
@@ -420,6 +442,30 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualGetByID>("BI_IndividualGetByID", DP)).ToList();
+		}
+	}
+
+	public class BIIndividualGetDropdown
+	{
+		private SQLCon _sQLCon;
+
+		public BIIndividualGetDropdown(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public BIIndividualGetDropdown()
+		{
+		}
+
+		public long Value { get; set; }
+		public string Text { get; set; }
+
+		public async Task<List<BIIndividualGetDropdown>> BIIndividualGetDropdownDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualGetDropdown>("BI_IndividualGetDropdown", DP)).ToList();
 		}
 	}
 
