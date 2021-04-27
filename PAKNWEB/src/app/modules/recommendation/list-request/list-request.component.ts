@@ -46,6 +46,7 @@ export class ListRequestComponent implements OnInit {
 	idDelete: number = 0
 	lstHistories: any = []
 	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
+	dateNow: Date = new Date()
 	ngOnInit() {
 		this.buildForm()
 		this.getDataForCreate()

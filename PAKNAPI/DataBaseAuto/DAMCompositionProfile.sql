@@ -99,8 +99,8 @@ CREATE PROCEDURE [dbo].[DAM_CompositionProfileInsert]
 	@NameExhibit nvarchar(2000) = null,
 	@Form nvarchar(100) = null,
 	@FormType nvarchar(50) = null,
-	@OriginalForm tinyint = null,
-	@CopyForm tinyint = null,
+	@OriginalForm nvarchar(20) = null,
+	@CopyForm nvarchar(20) = null,
 	@IsBind bit = null
 AS
 BEGIN
@@ -143,8 +143,8 @@ CREATE PROCEDURE [dbo].[DAM_CompositionProfileUpdate]
 	@NameExhibit nvarchar(2000) = null,
 	@Form nvarchar(100) = null,
 	@FormType nvarchar(50) = null,
-	@OriginalForm tinyint = null,
-	@CopyForm tinyint = null,
+	@OriginalForm nvarchar(20) = null,
+	@CopyForm nvarchar(20) = null,
 	@IsBind bit = null
 AS
 BEGIN

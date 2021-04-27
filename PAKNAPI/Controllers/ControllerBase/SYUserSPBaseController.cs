@@ -31,66 +31,6 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
-		[Route("SYUserChangePwdBase")]
-		public async Task<ActionResult<object>> SYUserChangePwdBase(SYUserChangePwdIN _sYUserChangePwdIN)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_sYUserChangePwdIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize("ThePolicy")]
-		[Route("SYUserChangePwdListBase")]
-		public async Task<ActionResult<object>> SYUserChangePwdListBase(List<SYUserChangePwdIN> _sYUserChangePwdINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _sYUserChangePwdIN in _sYUserChangePwdINs)
-				{
-					var result = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_sYUserChangePwdIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
 		[Authorize]
 		[Route("SYUserDeleteBase")]
 		public async Task<ActionResult<object>> SYUserDeleteBase(SYUserDeleteIN _sYUserDeleteIN)
@@ -152,32 +92,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize]
-		[Route("SYUserGetAllOnPageBase")]
-		public async Task<ActionResult<object>> SYUserGetAllOnPageBase(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived, int? UnitId, int? TypeId)
-		{
-			try
-			{
-				List<SYUserGetAllOnPage> rsSYUserGetAllOnPage = await new SYUserGetAllOnPage(_appSetting).SYUserGetAllOnPageDAO(PageSize, PageIndex, UserName, FullName, Phone, IsActived, UnitId, TypeId);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"SYUserGetAllOnPage", rsSYUserGetAllOnPage},
-						{"TotalCount", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? rsSYUserGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageSize : 0},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize]
 		[Route("SYUserGetByIDBase")]
 		public async Task<ActionResult<object>> SYUserGetByIDBase(long? Id)
 		{
@@ -187,29 +101,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYUserGetByID", rsSYUserGetByID},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize]
-		[Route("SYUserGetNameByIdBase")]
-		public async Task<ActionResult<object>> SYUserGetNameByIdBase(long? Id)
-		{
-			try
-			{
-				List<SYUserGetNameById> rsSYUserGetNameById = await new SYUserGetNameById(_appSetting).SYUserGetNameByIdDAO(Id);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"SYUserGetNameById", rsSYUserGetNameById},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -271,29 +162,6 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize]
-		[Route("SYUsersGetDropdownByUnitIdBase")]
-		public async Task<ActionResult<object>> SYUsersGetDropdownByUnitIdBase(int? UnitId)
-		{
-			try
-			{
-				List<SYUsersGetDropdownByUnitId> rsSYUsersGetDropdownByUnitId = await new SYUsersGetDropdownByUnitId(_appSetting).SYUsersGetDropdownByUnitIdDAO(UnitId);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"SYUsersGetDropdownByUnitId", rsSYUsersGetDropdownByUnitId},
-					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)

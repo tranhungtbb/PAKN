@@ -24,14 +24,14 @@ BEGIN
 		[Gender],
 		[Type],
 		[IsSuperAdmin],
-		[Email],
-		[Phone],
-		[UnitId],
 		[CountLock],
 		[LockEndOut],
 		[Avatar],
 		[Address],
-		[PositionId]
+		[PositionId],
+		[Email],
+		[Phone],
+		[UnitId]
 	FROM [SY_User]
 	WHERE [Id] = @Id
 END
@@ -62,14 +62,14 @@ BEGIN
 		[Gender],
 		[Type],
 		[IsSuperAdmin],
-		[Email],
-		[Phone],
-		[UnitId],
 		[CountLock],
 		[LockEndOut],
 		[Avatar],
 		[Address],
-		[PositionId]
+		[PositionId],
+		[Email],
+		[Phone],
+		[UnitId]
 	FROM [SY_User]
 END
 GO
@@ -102,14 +102,14 @@ BEGIN
 		[Gender],
 		[Type],
 		[IsSuperAdmin],
-		[Email],
-		[Phone],
-		[UnitId],
 		[CountLock],
 		[LockEndOut],
 		[Avatar],
 		[Address],
-		[PositionId]
+		[PositionId],
+		[Email],
+		[Phone],
+		[UnitId]
 	FROM [SY_User]
 	ORDER BY [Id]
 	OFFSET (@PageIndex-1) * @PageSize ROWS
@@ -138,14 +138,14 @@ CREATE PROCEDURE [dbo].[SY_UserInsert]
 	@Gender bit = null,
 	@Type tinyint = null,
 	@IsSuperAdmin bit = null,
-	@Email nvarchar(256) = null,
-	@Phone varchar(11) = null,
-	@UnitId int = null,
 	@CountLock tinyint = null,
 	@LockEndOut datetime = null,
 	@Avatar nvarchar(255) = null,
 	@Address nvarchar(500) = null,
-	@PositionId int = null
+	@PositionId int = null,
+	@Email nvarchar(256) = null,
+	@Phone varchar(11) = null,
+	@UnitId int = null
 AS
 BEGIN
 	INSERT INTO [SY_User]
@@ -160,14 +160,14 @@ BEGIN
 		[Gender],
 		[Type],
 		[IsSuperAdmin],
-		[Email],
-		[Phone],
-		[UnitId],
 		[CountLock],
 		[LockEndOut],
 		[Avatar],
 		[Address],
-		[PositionId]
+		[PositionId],
+		[Email],
+		[Phone],
+		[UnitId]
 	)
 	VALUES
 	(
@@ -181,14 +181,14 @@ BEGIN
 		@Gender,
 		@Type,
 		@IsSuperAdmin,
-		@Email,
-		@Phone,
-		@UnitId,
 		@CountLock,
 		@LockEndOut,
 		@Avatar,
 		@Address,
-		@PositionId
+		@PositionId,
+		@Email,
+		@Phone,
+		@UnitId
 	)
 END
 GO
@@ -215,14 +215,14 @@ CREATE PROCEDURE [dbo].[SY_UserUpdate]
 	@Gender bit = null,
 	@Type tinyint = null,
 	@IsSuperAdmin bit = null,
-	@Email nvarchar(256) = null,
-	@Phone varchar(11) = null,
-	@UnitId int = null,
 	@CountLock tinyint = null,
 	@LockEndOut datetime = null,
 	@Avatar nvarchar(255) = null,
 	@Address nvarchar(500) = null,
-	@PositionId int = null
+	@PositionId int = null,
+	@Email nvarchar(256) = null,
+	@Phone varchar(11) = null,
+	@UnitId int = null
 AS
 BEGIN
 	UPDATE [SY_User] SET
@@ -236,14 +236,14 @@ BEGIN
 		[Gender] = @Gender,
 		[Type] = @Type,
 		[IsSuperAdmin] = @IsSuperAdmin,
-		[Email] = @Email,
-		[Phone] = @Phone,
-		[UnitId] = @UnitId,
 		[CountLock] = @CountLock,
 		[LockEndOut] = @LockEndOut,
 		[Avatar] = @Avatar,
 		[Address] = @Address,
-		[PositionId] = @PositionId
+		[PositionId] = @PositionId,
+		[Email] = @Email,
+		[Phone] = @Phone,
+		[UnitId] = @UnitId
 	WHERE [Id] = @Id
 END
 GO
