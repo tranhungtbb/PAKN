@@ -262,8 +262,47 @@ END
 GO
 /* End ChatbotGetNextCategoryId */
 
+IF EXISTS( SELECT * FROM sys.tables WHERE name = 'SY_DataChatbot' )
+BEGIN
+    DROP TABLE [dbo].[SY_DataChatbot];
+END
+
+CREATE TABLE [dbo].[SY_DataChatbot] (
+    [Id] INT         		IDENTITY (1, 1) NOT NULL,
+	[UserId]				NVARCHAR (255) DEFAULT '',
+    [Question]      		NVARCHAR (1000) NOT NULL,
+	[Answer]				NVARCHAR (1000) NOT NULL
+    CONSTRAINT [PK_SY_DataChatbot] PRIMARY KEY CLUSTERED ([Id] ASC)
+)
 
 
-
-
-
+/* Start DataChatbotInsert */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[DataChatbotInsert]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [DataChatbotInsert];
+GO
+CREATE PROCEDURE [dbo].[DataChatbotInsert]
+	@UserId  nvarchar(255) = null,
+	@Question nvarchar(1000) = null,
+	@Answer nvarchar(1000) = null
+AS
+BEGIN
+	INSERT INTO [SY_DataChatbot]
+	(
+		[UserId],
+		[Question],
+		[Answer]
+	)
+	VALUES
+	(
+		@UserId,
+		@Question,
+		@Answer
+	)
+END
+GO
+/* End DataChatbotInsert */
