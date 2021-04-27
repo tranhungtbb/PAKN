@@ -199,5 +199,44 @@
 	<!--**********************************
             Footer end
         ***********************************-->
+	<!--**********************************
+            Chatbot start
+  ***********************************-->
+	<div>
+		<button id="btn-chat" class="btn btn-primary btn-show-toggle-chatbot grd-xanhngoc" (click)="toggleChatForm()">Chat</button>
+	</div>
+	<section id="form-chat" class="avenue-messenger togger-show-chatbot">
+		<div class="menu">
+			<div class="button grd-xanhngoc" (click)="toggleChatForm()">&times;</div>
+		</div>
+		<div class="agent-face">
+			<div class="half">
+				<img class="agent circle" alt="Bot" src="../../../assets/dist/images/chatbot1.jpg">
+			</div>
+		</div>
+		<div class=" chat">
+			<div class="chat-title">
+				<h1>Bot</h1>
+			</div>
+			<div class="messages">
+				<div class="messages-content" id="messages-content">
+					<ul>
+						<li *ngFor="let message of messages; let i = index" class="mt-1">
+							<h4 class="ml-1">{{message.who}}:</h4>
+							<div *ngIf="message.isReply" class="bubble reply">{{message.message}}</div>
+							<div *ngIf="!message.isReply" class="bubble me">{{message.message}}</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="message-box">
+				<textarea name="message" class="message-input" [(ngModel)]="message" placeholder="Hãy viết gì đó..." (keydown.enter)="send()"></textarea>
+				<button type="submit" class="message-submit" (click)="send()">Send</button>
+			</div>
+		</div>
+	</section>
+	<!--**********************************
+								Chatbot end
+	***********************************-->
 
 </div>

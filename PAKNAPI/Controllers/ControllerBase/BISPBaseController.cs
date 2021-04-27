@@ -55,6 +55,29 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
+		[Route("BIBusinessGetDropdownBase")]
+		public async Task<ActionResult<object>> BIBusinessGetDropdownBase()
+		{
+			try
+			{
+				List<BIBusinessGetDropdown> rsBIBusinessGetDropdown = await new BIBusinessGetDropdown(_appSetting).BIBusinessGetDropdownDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"BIBusinessGetDropdown", rsBIBusinessGetDropdown},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
 		[Route("BIBusinessGetRepresentativeByIdBase")]
 		public async Task<ActionResult<object>> BIBusinessGetRepresentativeByIdBase(long? Id)
 		{
@@ -276,6 +299,29 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"BIIndividualGetByID", rsBIIndividualGetByID},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("BIIndividualGetDropdownBase")]
+		public async Task<ActionResult<object>> BIIndividualGetDropdownBase()
+		{
+			try
+			{
+				List<BIIndividualGetDropdown> rsBIIndividualGetDropdown = await new BIIndividualGetDropdown(_appSetting).BIIndividualGetDropdownDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"BIIndividualGetDropdown", rsBIIndividualGetDropdown},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

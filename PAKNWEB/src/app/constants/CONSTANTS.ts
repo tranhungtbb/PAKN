@@ -13,6 +13,7 @@ export class RESPONSE_STATUS {
 
 export class LOG_ACTION {
 	public static login = 'Đăng nhập'
+	public static logOut = 'Đăng xuất'
 	public static GETLIST = 'Trả về danh sách'
 	public static GETINFO = 'Trả về thông tin'
 	public static INSERT = 'Thêm mới'
@@ -23,6 +24,7 @@ export class LOG_ACTION {
 }
 
 export class LOG_OBJECT {
+	public static NO_CONTENT = ''
 	public static login = 'Đăng nhập'
 	public static CA_FIELD = 'Danh mục lĩnh vực'
 	public static CA_WORD = 'Danh mục thư viện từ ngữ'
@@ -116,3 +118,7 @@ export const FILETYPE = [
 	{ text: 'application/vnd.ms-powerpoint.template.macroEnabled.12', value: 6 },
 	{ text: 'application/vnd.ms-powerpoint.slideshow.macroEnabled.12', value: 6 },
 ]
+
+export class REGEX {
+	public static PHONE_VN = '^(84|0[3|5|7|8|9])+([0-9]{8})$'
+}

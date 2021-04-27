@@ -27,7 +27,11 @@ export class AccountSideLeftComponent implements OnInit {
 		private diadanhService: DiadanhService
 	) {}
 	model: any = { userName: '' }
-	ngOnInit() {}
+	urlPath: string
+	ngOnInit() {
+		let urlPathArr = this.router.url.split('/')
+		this.urlPath = urlPathArr[urlPathArr.length - 1]
+	}
 
 	signOut(): void {
 		this.authenService.logOut({}).subscribe((success) => {
