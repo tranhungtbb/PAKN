@@ -987,6 +987,12 @@ namespace PAKNAPI.ModelBase
 		public long? UserActive { get; set; }
 		public int? IdProcess { get; set; }
 		public byte? StepProcess { get; set; }
+		public string ReceiveName { get; set; }
+		public string ProcessUnitName { get; set; }
+		public DateTime? ExpriredDate { get; set; }
+		public DateTime? ProcessingDate { get; set; }
+		public string ApprovedName { get; set; }
+		public DateTime? ApprovedDate { get; set; }
 
 		public async Task<List<MRRecommendationGetByIDView>> MRRecommendationGetByIDViewDAO(int? Id)
 		{
