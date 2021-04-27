@@ -54,6 +54,7 @@ export class ListReceiveApprovedComponent implements OnInit {
 	lstUnitNotMain: any = []
 	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
 	formForward: FormGroup
+	dateNow: Date = new Date()
 	ngOnInit() {
 		this.buildForm()
 		this.dataSearch.status = RECOMMENDATION_STATUS.RECEIVE_APPROVED

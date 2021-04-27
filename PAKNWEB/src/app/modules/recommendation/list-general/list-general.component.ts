@@ -51,6 +51,7 @@ export class ListGeneralComponent implements OnInit {
 	totalRecords: number = 0
 	idDelete: number = 0
 	lstHistories: any = []
+	dateNow: Date = new Date()
 	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
 	ngOnInit() {
 		this.buildForm()

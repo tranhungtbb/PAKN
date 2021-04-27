@@ -45,6 +45,7 @@ export class ViewRecommendationComponent implements OnInit {
 	listData = new Array<RecommendationSuggestObject>()
 	suggest: boolean = false
 	totalRecords: number = 0
+	dateNow: Date = new Date()
 	@ViewChild('table', { static: false }) table: any
 	@ViewChild('file', { static: false }) public file: ElementRef
 	@ViewChild(RemindComponent, { static: true }) remindComponent: RemindComponent
