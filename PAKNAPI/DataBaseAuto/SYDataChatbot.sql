@@ -85,7 +85,7 @@ GO
 CREATE PROCEDURE [dbo].[SY_DataChatbotInsert]
 	@Question nvarchar(1000) = null,
 	@Answer nvarchar(1000) = null,
-	@UserId uniqueidentifier = null
+	@UserId nvarchar(255) = null
 AS
 BEGIN
 	INSERT INTO [SY_DataChatbot]
@@ -117,7 +117,7 @@ CREATE PROCEDURE [dbo].[SY_DataChatbotUpdate]
 	@Id int = null,
 	@Question nvarchar(1000) = null,
 	@Answer nvarchar(1000) = null,
-	@UserId uniqueidentifier = null
+	@UserId nvarchar(255) = null
 AS
 BEGIN
 	UPDATE [SY_DataChatbot] SET

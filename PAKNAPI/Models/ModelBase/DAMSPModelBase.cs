@@ -414,6 +414,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("AdministrationId", _dAMChargesCreateIN.AdministrationId);
 			DP.Add("Charges", _dAMChargesCreateIN.Charges);
 			DP.Add("Description", _dAMChargesCreateIN.Description);
+			DP.Add("ChargesId", _dAMChargesCreateIN.ChargesId);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("DAM_Charges_Create", DP));
 		}
@@ -424,6 +425,7 @@ namespace PAKNAPI.ModelBase
 		public int? AdministrationId { get; set; }
 		public string Charges { get; set; }
 		public string Description { get; set; }
+		public int? ChargesId { get; set; }
 	}
 
 	public class DAMChargesDeleteById
@@ -470,6 +472,7 @@ namespace PAKNAPI.ModelBase
 		public int? AdministrationId { get; set; }
 		public string Charges { get; set; }
 		public string Description { get; set; }
+		public int? ChargesId { get; set; }
 
 		public async Task<List<DAMChargesGetByAdministration>> DAMChargesGetByAdministrationDAO(int? Id)
 		{
@@ -497,6 +500,7 @@ namespace PAKNAPI.ModelBase
 		public int? AdministrationId { get; set; }
 		public string Charges { get; set; }
 		public string Description { get; set; }
+		public int? ChargesId { get; set; }
 
 		public async Task<List<DAMChargesGetById>> DAMChargesGetByIdDAO(int? Id)
 		{
@@ -563,6 +567,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("OriginalForm", _dAMCompositionProfileCreateIN.OriginalForm);
 			DP.Add("CopyForm", _dAMCompositionProfileCreateIN.CopyForm);
 			DP.Add("IsBind", _dAMCompositionProfileCreateIN.IsBind);
+			DP.Add("CompositionProfileId", _dAMCompositionProfileCreateIN.CompositionProfileId);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("DAM_CompositionProfile_Create", DP);
 		}
@@ -574,9 +579,10 @@ namespace PAKNAPI.ModelBase
 		public string NameExhibit { get; set; }
 		public string Form { get; set; }
 		public string FormType { get; set; }
-		public int? OriginalForm { get; set; }
-		public int? CopyForm { get; set; }
+		public string OriginalForm { get; set; }
+		public string CopyForm { get; set; }
 		public bool? IsBind { get; set; }
+		public int? CompositionProfileId { get; set; }
 	}
 
 	public class DAMCompositionProfileDeleteById
@@ -694,37 +700,6 @@ namespace PAKNAPI.ModelBase
 		public string FileAttach { get; set; }
 	}
 
-	public class DAMCompositionProfileGetByAdministration
-	{
-		private SQLCon _sQLCon;
-
-		public DAMCompositionProfileGetByAdministration(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public DAMCompositionProfileGetByAdministration()
-		{
-		}
-
-		public int Id { get; set; }
-		public int AdministrationId { get; set; }
-		public string NameExhibit { get; set; }
-		public string Form { get; set; }
-		public string FormType { get; set; }
-		public byte? OriginalForm { get; set; }
-		public byte? CopyForm { get; set; }
-		public bool? IsBind { get; set; }
-
-		public async Task<List<DAMCompositionProfileGetByAdministration>> DAMCompositionProfileGetByAdministrationDAO(int? Id)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-
-			return (await _sQLCon.ExecuteListDapperAsync<DAMCompositionProfileGetByAdministration>("DAM_CompositionProfile_GetByAdministration", DP)).ToList();
-		}
-	}
-
 	public class DAMCompositionProfileUpdate
 	{
 		private SQLCon _sQLCon;
@@ -761,8 +736,8 @@ namespace PAKNAPI.ModelBase
 		public string NameExhibit { get; set; }
 		public string Form { get; set; }
 		public string FormType { get; set; }
-		public int? OriginalForm { get; set; }
-		public int? CopyForm { get; set; }
+		public string OriginalForm { get; set; }
+		public string CopyForm { get; set; }
 		public bool? IsBind { get; set; }
 	}
 

@@ -65,11 +65,6 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-	/*
-	PAKN_Test.dbo.SY_RoleGetAll
-	Invalid column name 'Code'.
-	*/
-
 	public class SYSystemLogGetAllOnPage
 	{
 		private SQLCon _sQLCon;

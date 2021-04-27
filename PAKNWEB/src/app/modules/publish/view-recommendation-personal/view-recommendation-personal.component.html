@@ -39,7 +39,7 @@
 							<p class="h4 font-italic font-weight-bold">Nội dung kiến nghị:</p>
 							<p>{{model.content}}</p>
 							<p class="btn-group">
-								<button type="button" class="btn border text-dark p-2 rounded-lg mr-3" *ngFor="let item of filesModel">
+								<button type="button" class="btn border text-dark p-2 rounded-lg mr-3" *ngFor="let item of filesModel" style="max-width:230px;">
 									<span class=" mr-2" *ngIf="item.fileType == 1">
 										<img src="../../../../assets/dist/images/file-word.svg" style="width: 40px" alt="">
 									</span>
@@ -56,24 +56,24 @@
 										<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 40px" alt="">
 									</span>
 
-									<span class="text-left text-truncate">
+									<span class="text-left text-truncate" title="{{item.name}}">
 										<span class="mr-3 attach-hover">{{item.name}}</span>
 									</span>
 								</button>
 							</p>
 						</div>
 					</div>
-					<div class="media pb-4" *ngIf="model.status > 6">
+					<div class="media pb-4" *ngIf="model.status >= 6">
 						<div class="mr-3">
 							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-chat-left-text-fill" style="color: #88C88B;"
-								viewBox="0 0 16 16">
+								viewBox="0 0 16 16" [style.color]="{'red':model.status == 6}">
 								<path
 									d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
 							</svg>
 						</div>
 						<div class="media-body">
 							<p class="h4 font-italic font-weight-bold">Trung tâm phản ánh kiến nghị tỉnh Khánh Hoà trả lời:</p>
-							<ng-container *ngIf="model.status == 7">
+							<ng-container *ngIf="model.status == 5">
 								<textarea class="form-control" [(ngModel)]="modelConclusion.content" rows="10" placeholder="Nhập nội dung..."></textarea>
 								<div class="row">
 									<div class="col-12 attach-ct mt-3">
@@ -183,7 +183,10 @@
 									<div class="w-100"></div>
 								</div>
 							</ng-container>
-							<ng-container *ngIf="model.status > 7">
+							<ng-container *ngIf="model.status == 6">
+								<p>{{modelConclusion.reasonDeny}}</p>
+							</ng-container>
+							<ng-container *ngIf="model.status > 6">
 								<p>{{modelConclusion.content}}</p>
 								<!-- <p>
 									<button type="button" class="btn border btn-block text-dark p-0">

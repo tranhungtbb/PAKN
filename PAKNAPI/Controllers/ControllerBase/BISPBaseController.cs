@@ -267,6 +267,29 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
+		[Route("BIIndividualCheckExistsBase")]
+		public async Task<ActionResult<object>> BIIndividualCheckExistsBase(string Field, string Value)
+		{
+			try
+			{
+				List<BIIndividualCheckExists> rsBIIndividualCheckExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO(Field, Value);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"BIIndividualCheckExists", rsBIIndividualCheckExists},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
 		[Route("BIIndividualGetByUserIdBase")]
 		public async Task<ActionResult<object>> BIIndividualGetByUserIdBase(long? UserId)
 		{

@@ -869,7 +869,7 @@ namespace PAKNAPI.ModelBase
 	public class SYRoleOnPage
 	{
 		public int Id { get; set; }
-		public string OrderNumber { get; set; }
+		public int? OrderNumber { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public bool IsActived { get; set; }
@@ -891,7 +891,7 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int Id { get; set; }
-		public string OrderNumber { get; set; }
+		public int? OrderNumber { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public bool IsActived { get; set; }
@@ -1305,14 +1305,14 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Gender", _sYUser.Gender);
 			DP.Add("Type", _sYUser.Type);
 			DP.Add("IsSuperAdmin", _sYUser.IsSuperAdmin);
-			DP.Add("Email", _sYUser.Email);
-			DP.Add("Phone", _sYUser.Phone);
-			DP.Add("UnitId", _sYUser.UnitId);
 			DP.Add("CountLock", _sYUser.CountLock);
 			DP.Add("LockEndOut", _sYUser.LockEndOut);
 			DP.Add("Avatar", _sYUser.Avatar);
 			DP.Add("Address", _sYUser.Address);
 			DP.Add("PositionId", _sYUser.PositionId);
+			DP.Add("Email", _sYUser.Email);
+			DP.Add("Phone", _sYUser.Phone);
+			DP.Add("UnitId", _sYUser.UnitId);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserInsert", DP));
 		}
@@ -1331,14 +1331,14 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Gender", _sYUser.Gender);
 			DP.Add("Type", _sYUser.Type);
 			DP.Add("IsSuperAdmin", _sYUser.IsSuperAdmin);
-			DP.Add("Email", _sYUser.Email);
-			DP.Add("Phone", _sYUser.Phone);
-			DP.Add("UnitId", _sYUser.UnitId);
 			DP.Add("CountLock", _sYUser.CountLock);
 			DP.Add("LockEndOut", _sYUser.LockEndOut);
 			DP.Add("Avatar", _sYUser.Avatar);
 			DP.Add("Address", _sYUser.Address);
 			DP.Add("PositionId", _sYUser.PositionId);
+			DP.Add("Email", _sYUser.Email);
+			DP.Add("Phone", _sYUser.Phone);
+			DP.Add("UnitId", _sYUser.UnitId);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserUpdate", DP));
 		}
