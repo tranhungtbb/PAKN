@@ -402,6 +402,22 @@ namespace PAKNAPI.Controller
                 request._mRRecommendationForwardInsertIN.SendDate = DateTime.Now;
                 await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(request._mRRecommendationForwardInsertIN);
 
+                if (!request.IsList)
+                {
+                    MRRecommendationHashtagDeleteByRecommendationIdIN hashtagDeleteByRecommendationIdIN = new MRRecommendationHashtagDeleteByRecommendationIdIN();
+                    hashtagDeleteByRecommendationIdIN.Id = request._mRRecommendationForwardInsertIN.RecommendationId;
+                    await new MRRecommendationHashtagDeleteByRecommendationId(_appSetting).MRRecommendationHashtagDeleteByRecommendationIdDAO(hashtagDeleteByRecommendationIdIN);
+                    MRRecommendationHashtagInsertIN _mRRecommendationHashtagInsertIN = new MRRecommendationHashtagInsertIN();
+                    foreach (var item in request.ListHashTag)
+                    {
+                        _mRRecommendationHashtagInsertIN = new MRRecommendationHashtagInsertIN();
+                        _mRRecommendationHashtagInsertIN.RecommendationId = request._mRRecommendationForwardInsertIN.RecommendationId;
+                        _mRRecommendationHashtagInsertIN.HashtagId = item.Value;
+                        _mRRecommendationHashtagInsertIN.HashtagName = item.Text;
+                        await new MRRecommendationHashtagInsert(_appSetting).MRRecommendationHashtagInsertDAO(_mRRecommendationHashtagInsertIN);
+                    }
+                }
+
                 MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
                 _mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
                 _mRRecommendationUpdateStatusIN.Id = request._mRRecommendationForwardInsertIN.RecommendationId;
@@ -450,6 +466,22 @@ namespace PAKNAPI.Controller
                 _mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
                 _mRRecommendationUpdateStatusIN.Id = request._mRRecommendationForwardProcessIN.RecommendationId;
                 await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
+
+                if (!request.IsList)
+                {
+                    MRRecommendationHashtagDeleteByRecommendationIdIN hashtagDeleteByRecommendationIdIN = new MRRecommendationHashtagDeleteByRecommendationIdIN();
+                    hashtagDeleteByRecommendationIdIN.Id = request._mRRecommendationForwardProcessIN.RecommendationId;
+                    await new MRRecommendationHashtagDeleteByRecommendationId(_appSetting).MRRecommendationHashtagDeleteByRecommendationIdDAO(hashtagDeleteByRecommendationIdIN);
+                    MRRecommendationHashtagInsertIN _mRRecommendationHashtagInsertIN = new MRRecommendationHashtagInsertIN();
+                    foreach (var item in request.ListHashTag)
+                    {
+                        _mRRecommendationHashtagInsertIN = new MRRecommendationHashtagInsertIN();
+                        _mRRecommendationHashtagInsertIN.RecommendationId = request._mRRecommendationForwardProcessIN.RecommendationId;
+                        _mRRecommendationHashtagInsertIN.HashtagId = item.Value;
+                        _mRRecommendationHashtagInsertIN.HashtagName = item.Text;
+                        await new MRRecommendationHashtagInsert(_appSetting).MRRecommendationHashtagInsertDAO(_mRRecommendationHashtagInsertIN);
+                    }
+                }
 
                 HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
                 hisData.ObjectId = request._mRRecommendationForwardProcessIN.RecommendationId;

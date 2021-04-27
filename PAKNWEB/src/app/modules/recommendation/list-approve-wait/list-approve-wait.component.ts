@@ -162,6 +162,7 @@ export class ListApproveWaitComponent implements OnInit {
 			_mRRecommendationForwardProcessIN: this.modelProcess,
 			RecommendationStatus: RECOMMENDATION_STATUS.FINISED,
 			ReactionaryWord: this.modelProcess.reactionaryWord,
+			IsList: true,
 		}
 		this._service.recommendationProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -185,6 +186,7 @@ export class ListApproveWaitComponent implements OnInit {
 			var request = {
 				_mRRecommendationForwardProcessIN: this.modelProcess,
 				RecommendationStatus: RECOMMENDATION_STATUS.APPROVE_DENY,
+				IsList: true,
 			}
 			this._service.recommendationProcess(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
