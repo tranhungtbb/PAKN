@@ -227,6 +227,8 @@ namespace PAKNAPI.Controllers
 				};
 				var rs1 = await new SYUserInsert(_appSetting).SYUserInsertDAO(account);
 
+				var accRs = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(account.UserName);
+
 				///mod model
 				///
 				model.DateOfIssue = dateOfIssue;
@@ -237,6 +239,7 @@ namespace PAKNAPI.Controllers
 				model.UpdatedDate = DateTime.Now;
 				model.Status = 1;
 				model.IsDeleted = false;
+				model.UserId = accRs[0].Id;
 
 				var rs2 = await new BIBusinessInsert(_appSetting).BIBusinessInsertDAO(model);
 
@@ -244,7 +247,7 @@ namespace PAKNAPI.Controllers
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 
@@ -303,7 +306,7 @@ namespace PAKNAPI.Controllers
 				};
 					var rs1 = await new SYUserInsert(_appSetting).SYUserInsertDAO(account);
 
-
+				var accRs = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(account.UserName);
 				///mod model
 				///
 				model.DateOfIssue = dateOfIssue;
@@ -314,6 +317,7 @@ namespace PAKNAPI.Controllers
 				model.UpdatedDate = DateTime.Now;
 				model.Status = 1;
 				model.IsDeleted = false;
+				model.UserId = accRs[0].Id;
 				string contentSMSOPT = "(Trung tam tiep nhan PAKN tinh Khanh Hoa) Xin chao: " + model.FullName +". Mat khau dang nhap he thong la: " + account.Password + ". Xin cam on!";
 				SV.MailSMS.Model.SMTPSettings settings = new SV.MailSMS.Model.SMTPSettings();
 				settings.COM = _config["SmsCOM"].ToString();
@@ -534,7 +538,7 @@ namespace PAKNAPI.Controllers
 						//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 					}
 
-					var info = await new BIBusinessGetRepresentativeEmail(_appSetting).BIBusinessGetRepresentativeEmailDAO(accInfo[0].Email);
+					var info = await new BIBusinessGetByUserId(_appSetting).BIBusinessGetByUserIdDAO(accInfo[0].Id);
 					
 					var _model = new BIBusinessUpdateInfoIN
 					{

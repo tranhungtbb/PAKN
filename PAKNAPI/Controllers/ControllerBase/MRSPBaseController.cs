@@ -485,8 +485,6 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-
-
 		[HttpGet]
 		[Authorize]
 		[Route("MRRecommendationForwardGetByIDBase")]
@@ -662,6 +660,126 @@ namespace PAKNAPI.ControllerBase
 				foreach (var _mRRecommendationForwardUpdateIN in _mRRecommendationForwardUpdateINs)
 				{
 					var result = await new MRRecommendationForwardUpdate(_appSetting).MRRecommendationForwardUpdateDAO(_mRRecommendationForwardUpdateIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationFullTextDeleteByRecommendationIdBase")]
+		public async Task<ActionResult<object>> MRRecommendationFullTextDeleteByRecommendationIdBase(MRRecommendationFullTextDeleteByRecommendationIdIN _mRRecommendationFullTextDeleteByRecommendationIdIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationFullTextDeleteByRecommendationId(_appSetting).MRRecommendationFullTextDeleteByRecommendationIdDAO(_mRRecommendationFullTextDeleteByRecommendationIdIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationFullTextDeleteByRecommendationIdListBase")]
+		public async Task<ActionResult<object>> MRRecommendationFullTextDeleteByRecommendationIdListBase(List<MRRecommendationFullTextDeleteByRecommendationIdIN> _mRRecommendationFullTextDeleteByRecommendationIdINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _mRRecommendationFullTextDeleteByRecommendationIdIN in _mRRecommendationFullTextDeleteByRecommendationIdINs)
+				{
+					var result = await new MRRecommendationFullTextDeleteByRecommendationId(_appSetting).MRRecommendationFullTextDeleteByRecommendationIdDAO(_mRRecommendationFullTextDeleteByRecommendationIdIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationFullTextInsertBase")]
+		public async Task<ActionResult<object>> MRRecommendationFullTextInsertBase(MRRecommendationFullTextInsertIN _mRRecommendationFullTextInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationFullTextInsert(_appSetting).MRRecommendationFullTextInsertDAO(_mRRecommendationFullTextInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationFullTextInsertListBase")]
+		public async Task<ActionResult<object>> MRRecommendationFullTextInsertListBase(List<MRRecommendationFullTextInsertIN> _mRRecommendationFullTextInsertINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _mRRecommendationFullTextInsertIN in _mRRecommendationFullTextInsertINs)
+				{
+					var result = await new MRRecommendationFullTextInsert(_appSetting).MRRecommendationFullTextInsertDAO(_mRRecommendationFullTextInsertIN);
 					if (result > 0)
 					{
 						count++;

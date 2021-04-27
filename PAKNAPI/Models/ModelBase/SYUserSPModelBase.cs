@@ -11,6 +11,37 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
+	public class SYUserChangePwd
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserChangePwd(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserChangePwd()
+		{
+		}
+
+		public async Task<int> SYUserChangePwdDAO(SYUserChangePwdIN _sYUserChangePwdIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYUserChangePwdIN.Id);
+			DP.Add("Password", _sYUserChangePwdIN.Password);
+			DP.Add("Salt", _sYUserChangePwdIN.Salt);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserChangePwd", DP));
+		}
+	}
+
+	public class SYUserChangePwdIN
+	{
+		public long? Id { get; set; }
+		public string Password { get; set; }
+		public string Salt { get; set; }
+	}
+
 	public class SYUserDelete
 	{
 		private SQLCon _sQLCon;
@@ -78,6 +109,72 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetByID>("SY_UserGetByID", DP)).ToList();
+		}
+	}
+
+	public class SYUserGetByUserName
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserGetByUserName(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserGetByUserName()
+		{
+		}
+
+		public long Id { get; set; }
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public string Password { get; set; }
+		public string Salt { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public bool Gender { get; set; }
+		public byte Type { get; set; }
+		public bool IsSuperAdmin { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public int? UnitId { get; set; }
+		public byte? CountLock { get; set; }
+		public DateTime? LockEndOut { get; set; }
+		public string Avatar { get; set; }
+		public string Address { get; set; }
+		public int? PositionId { get; set; }
+		public int TypeId { get; set; }
+
+		public async Task<List<SYUserGetByUserName>> SYUserGetByUserNameDAO(string UserName)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserName", UserName);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetByUserName>("SY_UserGetByUserName", DP)).ToList();
+		}
+	}
+
+	public class SYUserGetNameById
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserGetNameById(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserGetNameById()
+		{
+		}
+
+		public string FullName { get; set; }
+
+		public async Task<List<SYUserGetNameById>> SYUserGetNameByIdDAO(long? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetNameById>("SY_UserGetNameById", DP)).ToList();
 		}
 	}
 
