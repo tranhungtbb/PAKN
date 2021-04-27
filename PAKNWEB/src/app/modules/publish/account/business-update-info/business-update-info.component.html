@@ -55,7 +55,19 @@
 								<p class="mb-1">Quốc tịch <span class="cl-red">(*)</span></p>
 								<p class="h4 mb-0 pb-3 border-bottom" *ngIf="!editable">{{model.nation}}</p>
 								<div class="form-group" *ngIf="editable">
-									<input type="text" class="form-control" [(ngModel)]="model.nation" formControlName="nation">
+									<!--  -->
+									<ng-select [(ngModel)]="model.nation" *ngIf="!nation_enable_type" formControlName="nation" class="form-control" placeholder="Chọn..."
+										[clearable]="false" [closeOnSelect]="true" (change)="onChangeNation(true)">
+										<ng-option value="">Chọn...</ng-option>
+										<ng-option *ngFor="let nation of listNation" [value]="nation.id">{{nation.name}}</ng-option>
+										<ng-option value="#">Khác</ng-option>
+									</ng-select>
+									<input [svTrim] *ngIf="nation_enable_type" [(ngModel)]="model.nation" formControlName="nation" type="text" placeholder="Nhập..."
+										class="form-control border-brown">
+									<span *ngIf="nation_enable_type" class="select-caret-icon" (click)="nation_enable_type = false; model.nation=''">
+										<i class="bi bi-caret-down-fill"></i>
+									</span>
+									<!--  -->
 									<div *ngIf="(submitted && f.nation.invalid)||(f.nation.invalid && (f.nation.dirty || f.nation.touched))" class="has-error m-b-12">
 										<div *ngIf="f.nation.errors.required">
 											<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -168,10 +180,15 @@
 								</div>
 							</div>
 							<div class="col">
-								<p class="mb-1">Mã số thuế</p>
+								<p class="mb-1">Mã số thuế <span class="cl-red">(*)</span></p>
 								<p class="h4 mb-0 pb-3 border-bottom" *ngIf="!editable">{{model.tax}}</p>
 								<div class="form-group" *ngIf="editable">
 									<input type="text" class="form-control" [(ngModel)]="model.tax" formControlName="tax" maxlength="13" numbersOnly>
+									<div *ngIf="(submitted && f.tax.invalid)||(f.tax.invalid && (f.tax.dirty || f.tax.touched))" class="has-error m-b-12">
+										<div *ngIf="f.tax.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
