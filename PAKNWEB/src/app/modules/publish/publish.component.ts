@@ -145,7 +145,7 @@ export class PublishComponent implements OnInit, OnChanges {
 		let btnChat = document.getElementById('btn-chat')
 		btnChat.classList.toggle('togger-show-chatbot')
 	}
-	// Gửi câu hỏi đến server chatbot
+	// Send question to server chatbot
 	send() {
 		if (this.message.trim() === '') {
 			return
@@ -160,7 +160,7 @@ export class PublishComponent implements OnInit, OnChanges {
 		// get userID
 		let kluid = localStorage.getItem('kluid')
 
-		// Nếu chưa tồn tại userid
+		// not exist userid
 		if (!kluid) {
 			this.chatBotService.getNewUserId().subscribe(
 				(data) => {
@@ -227,6 +227,5 @@ export class PublishComponent implements OnInit, OnChanges {
 			}
 		})
 	}
-
 	/*================ CHAT BOT ===============*/
 }
