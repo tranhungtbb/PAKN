@@ -24,40 +24,40 @@
 				</ul>
 				<div class="sb-tk-pakn mb-4">
 					<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between">
-						<h4 class="text-uppercase">Thống kê PAKN của tôi</h4>
+						<h4 class="text-uppercase pointer" (click)="filterMyRecommendation(0)">Thống kê PAKN của tôi</h4>
 						<h4 class="counter">{{totalRecommentdation}}</h4>
 					</div>
 					<div class="card-body p-0">
-						<p class="mb-1">Chờ xử lý
+						<p class="mb-1 pointer" (click)="filterMyRecommendation(1)">Chờ xử lý
 							<span class="pull-right font-weight-bold cl-yellow counter">{{recommendationStatistics.receiveWait}}</span>
 						</p>
-						<div class="progress ">
+						<div class="progress pointer" (click)="filterMyRecommendation(1)">
 							<div class="progress-bar grd-yellow1 progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.receiveWait)"
 								role="progressbar">
 							</div>
 						</div>
 
-						<p class="mb-1 mt-4">Đã tiếp nhận
+						<p class="mb-1 mt-4 pointer" (click)="filterMyRecommendation(2)">Đã tiếp nhận
 							<span class="pull-right font-weight-bold cl-blue2 counter">{{recommendationStatistics.receiveApproved}}</span>
 						</p>
-						<div class="progress ">
+						<div class="progress pointer" (click)="filterMyRecommendation(2)">
 							<div class="progress-bar grd-xanhngoc progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.receiveApproved)"
 								role="progressbar">
 							</div>
 						</div>
 
-						<p class="mb-1 mt-4">Đã trả lời
+						<p class="mb-1 mt-4 pointer" (click)="filterMyRecommendation(3)">Đã trả lời
 							<span class="pull-right font-weight-bold cl-blue counter">{{recommendationStatistics.finised}}</span>
 						</p>
-						<div class="progress ">
+						<div class="progress pointer" (click)="filterMyRecommendation(3)">
 							<div class="progress-bar grd-blue progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.finised)" role="progressbar">
 							</div>
 						</div>
 
-						<p class="mb-1 mt-4">Bị từ chối
+						<p class="mb-1 mt-4 pointer" (click)="filterMyRecommendation(4)">Bị từ chối
 							<span class="pull-right font-weight-bold cl-red counter">{{recommendationStatistics.approve}}</span>
 						</p>
-						<div class="progress ">
+						<div class="progress pointer" (click)="filterMyRecommendation(4)">
 							<div class="progress-bar grd-red progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.approve)" role="progressbar">
 							</div>
 						</div>
@@ -112,21 +112,9 @@
 								</a>
 								<a *ngIf="item.status == 1" class="btn-icon grd-red text-white mr-2 .pointer" (click)="preDelete(item.id)" title="Xóa"><i
 										class="bi bi-trash"></i></a>
-								<!-- <span *ngIf="item.status == 1" class="badge rounded-pill badge-outline-light">Đang soạn thảo</span>
-								<span *ngIf="item.status == 2" class="badge rounded-pill badge-outline-light bg-white">Chờ xử lý</span>
-								<span *ngIf="item.status == 3" class="badge rounded-pill bg-red">Từ chối xử lý</span>
-								<span *ngIf="item.status == 4" class="badge rounded-pill bg-blue2">Đã tiếp nhận</span>
-								<span *ngIf="item.status == 5" class="badge rounded-pill badge-outline-green2">Chờ giải quyết</span>
-								<span *ngIf="item.status == 6" class="badge rounded-pill bg-red">Từ chối giải quyết</span>
-								<span *ngIf="item.status == 7" class="badge rounded-pill badge-outline-blue">Đang giải quyết</span>
-								<span *ngIf="item.status == 8" class="badge rounded-pill badge-outline-success">Chờ phê duyệt</span>
-								<span *ngIf="item.status == 9" class="badge rounded-pill bg-red">Từ chối phê duyệt</span>
-								<span *ngIf="item.status == 10" class="badge rounded-pill badge-success">Đã giải quyết</span> -->
-
-								<span *ngIf="item.status == 2" class="badge rounded-pill badge-outline-blue">Đã tiếp nhận</span>
-								<span *ngIf="item.status == 4 || item.status == 5 || item.status == 7 || item.status == 8" class="badge rounded-pill"
-									style="background-color: #D29914;">Chờ xử
-									lý</span>
+								<span *ngIf="item.status == 2" class="badge rounded-pill" style="background-color: #D29914;">Chờ xử lý</span>
+								<span *ngIf="item.status == 4 || item.status == 5 || item.status == 7 || item.status == 8" class="badge rounded-pill badge-outline-blue">Đã tiếp
+									nhận</span>
 								<span *ngIf="item.status == 3 || item.status == 6 || item.status == 9" class="badge rounded-pill bg-red">Bị từ chối</span>
 								<span *ngIf="item.status == 10" class="badge rounded-pill badge-outline-blue">Đã trả lời</span>
 							</div>
@@ -135,21 +123,21 @@
 				</div>
 				<nav aria-label="navigation">
 					<ul class="pagination pagination-lg justify-content-between align-items-center">
-						<li class="page-item" [ngClass]="{ 'disabled': pageIndex === 1 }">
-							<a (click)="changePagination(pageIndex - 1)" class="page-link border text-uppercase rounded-pill" href="javascript:void(0)" tabindex="-1"
+						<li class="page-item" [ngClass]="{ 'disabled': PageIndex === 1 }">
+							<a (click)="changePagination(PageIndex - 1)" class="page-link border text-uppercase rounded-pill" href="javascript:void(0)" tabindex="-1"
 								aria-disabled="true"><i class="bi bi-chevron-left mr-2"></i>Trước</a>
 						</li>
 						<li class="d-flex justify-content-center align-items-center">
-							<a *ngIf="pageIndex > 4">...</a>
-							<p class="mb-0 page-item" *ngFor="let item of pagination; let i = index" [ngClass]="{ 'active': item.index === pageIndex }">
-								<a (click)="changePagination(item.index)" *ngIf="i - 3 < pageIndex && i + 5 > pageIndex" class="page-link"
+							<a *ngIf="PageIndex > 4">...</a>
+							<p class="mb-0 page-item" *ngFor="let item of pagination; let i = index" [ngClass]="{ 'active': item.index === PageIndex }">
+								<a (click)="changePagination(item.index)" *ngIf="i - 3 < PageIndex && i + 5 > PageIndex" class="page-link"
 									href="javascript:void(0)">{{item.index}}</a>
 							</p>
-							<a *ngIf="pageIndex < pagination.length -4">...</a>
+							<a *ngIf="PageIndex < pagination.length -4">...</a>
 						</li>
-						<li class="page-item" [ngClass]="{ 'disabled': pageIndex === totalRecords }">
-							<a (click)="changePagination(pageIndex + 1)" class="page-link border text-uppercase rounded-pill" href="javascript:void(0)">Sau
-								<i class="bi bi-chevron-right ml-2"></i></a>
+						<li class="page-item" [ngClass]="{ 'disabled': PageIndex === Total }">
+							<a (click)="changePagination(PageIndex + 1)" class="page-link border text-uppercase rounded-pill" href="javascript:void(0)">Sau<i
+									class="bi bi-chevron-right ml-2"></i></a>
 						</li>
 					</ul>
 				</nav>

@@ -25,7 +25,6 @@ export class FieldComponent implements OnInit, AfterViewInit {
 
 	listData = new Array<FieldObject>()
 	listStatus: any = [
-		{ value: '', text: 'Chọn trạng thái' },
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
 	]
@@ -48,7 +47,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		$('#modal').on('keypress', function (e) {
+		$('#modal').on('keypress', function(e) {
 			if (e.which == 13) e.preventDefault()
 		})
 	}
@@ -83,7 +82,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
-		this._service.fieldGetList(request).subscribe((response) => {
+		this._service.fieldGetList(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
@@ -94,7 +93,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.log(error)
 				alert(error)
 			}
@@ -155,7 +154,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 			return
 		}
 		if (this.model.id == 0 || this.model.id == null) {
-			this._service.fieldInsert(this.model).subscribe((response) => {
+			this._service.fieldInsert(this.model).subscribe(response => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -169,12 +168,12 @@ export class FieldComponent implements OnInit, AfterViewInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				(error) => {
+				error => {
 					console.error(error)
 					alert(error)
 				}
 		} else {
-			this._service.fieldUpdate(this.model).subscribe((response) => {
+			this._service.fieldUpdate(this.model).subscribe(response => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -188,7 +187,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				(error) => {
+				error => {
 					console.error(error)
 					alert(error)
 				}
@@ -200,7 +199,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 			Id: data.id,
 			Type: 1,
 		}
-		this._service.fieldGetById(request).subscribe((response) => {
+		this._service.fieldGetById(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.rebuilForm()
 				this.title = 'Chỉnh sửa lĩnh vực'
@@ -210,7 +209,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.error(error)
 				alert(error)
 			}
@@ -224,7 +223,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 		let request = {
 			Id: id,
 		}
-		this._service.fieldDelete(request).subscribe((response) => {
+		this._service.fieldDelete(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result > 0) {
 					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
@@ -237,13 +236,13 @@ export class FieldComponent implements OnInit, AfterViewInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.error(error)
 			}
 	}
 
 	onUpdateStatus() {
-		this._service.fieldUpdateStatus(this.model).subscribe((res) => {
+		this._service.fieldUpdateStatus(this.model).subscribe(res => {
 			if (res.success == 'OK') {
 				$('#modalConfirmChangeStatus').modal('hide')
 				this.getList()
@@ -256,7 +255,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 				this._toastr.error(res.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.error(error)
 			}
 	}
@@ -271,7 +270,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 			IsActived: this.isActived,
 		}
 
-		this._service.fieldExportExcel(request).subscribe((response) => {
+		this._service.fieldExportExcel(request).subscribe(response => {
 			var today = new Date()
 			var dd = String(today.getDate()).padStart(2, '0')
 			var mm = String(today.getMonth() + 1).padStart(2, '0')

@@ -3,7 +3,10 @@
 	<div class="container-fluid p-0">
 		<div class="row">
 			<div class="col-lg-12">
-				<div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách tin tức</div>
+				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+					<li class="breadcrumb-item"><a>Tin tức sự kiện</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold">Danh sách tổng hợp</a></li>
+				</ol>
 				<div class="btn-group group-button-table" role="group">
 
 					<a [routerLink]="['./them-moi']" class="btn grd-xanhngoc btn-sm rounded border-0 text-white">
@@ -36,9 +39,8 @@
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
 											<!-- [items]="listNewCategories" bindLabel="name" bindValue="id" -->
-											<ng-select class="" placeholder="" [closeOnSelect]="true" [(ngModel)]="query.newsType" (change)="filterChange()" style="width: 170px;"
-												[clearable]="false">
-												<ng-option value="">Tất cả loại tin tức</ng-option>
+											<ng-select class="" placeholder="Loại tin tức" [closeOnSelect]="true" [(ngModel)]="query.newsType" (change)="filterChange()"
+												style="width: 170px;">
 												<ng-option *ngFor="let nt of listNewCategories" [value]="nt.id">
 													{{nt.name}}
 												</ng-option>
@@ -52,9 +54,8 @@
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
 											<!-- [items]="listStatus" bindLabel="text" bindValue="value" -->
-											<ng-select class="" placeholder="" [closeOnSelect]="true" [(ngModel)]="query.status" (change)="filterChange()" [searchable]="false"
-												[clearable]="false" style="width: 170px;">
-												<ng-option value="">Tất cả trạng thái</ng-option>
+											<ng-select class="" placeholder="Trạng thái" [closeOnSelect]="true" [(ngModel)]="query.status" (change)="filterChange()"
+												[searchable]="false" style="width: 170px;">
 												<ng-option *ngFor="let stt of listStatus" [value]="stt.value">
 													{{stt.text}}
 												</ng-option>

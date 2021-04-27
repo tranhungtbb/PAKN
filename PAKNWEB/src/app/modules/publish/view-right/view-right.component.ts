@@ -17,7 +17,7 @@ export class ViewRightComponent implements OnInit {
 	constructor(private _service: PuRecommendationService, private _router: Router, private sanitizer: DomSanitizer) {}
 
 	RecommendationsOrderByCountClick: Array<PuRecommendation>
-	recommendationStatistics: any
+	recommendationStatistics: any = new RecommendationStatistics()
 	totalRecommentdation: number = 0
 	ngOnInit() {
 		this.getData()
@@ -51,4 +51,11 @@ export class ViewRightComponent implements OnInit {
 		var result = Math.ceil((value / this.totalRecommentdation) * 100)
 		return result
 	}
+}
+
+class RecommendationStatistics {
+	approve: Number
+	finised: Number
+	receiveApproved: Number
+	receiveWait: Number
 }

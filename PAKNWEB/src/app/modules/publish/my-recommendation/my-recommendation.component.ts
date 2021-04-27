@@ -31,8 +31,10 @@ export class MyRecommendationComponent implements OnInit {
 	pagination = []
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
+	listDataNotChange = new Array<RecommendationObject>()
 	listData = new Array<RecommendationObject>()
-	recommendationStatistics: any
+
+	recommendationStatistics: any = new RecommendationStatistics()
 	totalRecommentdation: number = 0
 
 	constructor(
@@ -54,6 +56,7 @@ export class MyRecommendationComponent implements OnInit {
 
 		this.puRecommendationService.recommendationStatisticsGetByUserId({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
+				console.log(res.result.PURecommendationStatisticsGetByUserId[0])
 				this.recommendationStatistics = res.result.PURecommendationStatisticsGetByUserId[0]
 				for (const iterator in this.recommendationStatistics) {
 					this.totalRecommentdation += this.recommendationStatistics[iterator]
@@ -93,6 +96,7 @@ export class MyRecommendationComponent implements OnInit {
 		this.recommendationService.recommendationGetListProcess(request).subscribe((res) => {
 			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 				if (res.result.MRRecommendationGetAllWithProcess.length > 0) {
+					this.listDataNotChange = res.result.MRRecommendationGetAllWithProcess
 					this.listData = res.result.MRRecommendationGetAllWithProcess
 					this.pageIndex = res.result.pageIndex
 					this.totalRecords = res.result.TotalCount
@@ -112,6 +116,40 @@ export class MyRecommendationComponent implements OnInit {
 				console.log(error)
 				alert(error)
 			}
+	}
+
+	filterMyRecommendation(status: any) {
+		switch (status) {
+			case 1:
+				// chờ xl
+				this.listData = this.listDataNotChange.filter((item) => {
+					if (item.status == 2) return item
+				})
+				break
+			case 2:
+				// đã tiếp nhận
+
+				this.listData = this.listDataNotChange.filter((item) => {
+					if (item.status == 4 || item.status == 5 || item.status == 7 || item.status == 8) return item
+				})
+				break
+			case 3:
+				// đã trả lời
+				this.listData = this.listDataNotChange.filter((item) => {
+					if (item.status == 10) return item
+				})
+
+				break
+			case 4:
+				// bị từ chối
+				this.listData = this.listDataNotChange.filter((item) => {
+					if (item.status == 3 || item.status == 6 || item.status == 9) return item
+				})
+				break
+			default:
+				this.listData = this.listDataNotChange
+				break
+		}
 	}
 
 	dataStateChange() {
@@ -178,6 +216,7 @@ export class MyRecommendationComponent implements OnInit {
 		for (let i = 0; i < Math.ceil(this.totalRecords / this.pageSize); i++) {
 			this.pagination.push({ index: i + 1 })
 		}
+		console.log(this.pagination)
 	}
 
 	changePagination(index: any) {
@@ -196,4 +235,11 @@ export class MyRecommendationComponent implements OnInit {
 		}
 		return
 	}
+}
+
+class RecommendationStatistics {
+	approve: Number
+	finised: Number
+	receiveApproved: Number
+	receiveWait: Number
 }
