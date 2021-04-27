@@ -49,8 +49,8 @@
 										<strong>Trạng thái</strong>
 									</p>
 									<div style="width: 100%" class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select [clearable]="false" class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
-											[(ngModel)]="isActived" [closeOnSelect]="true" (change)="dataStateChange()">
+										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="isActived"
+											[closeOnSelect]="true" (change)="dataStateChange()">
 										</ng-select>
 									</div>
 								</th>
@@ -116,8 +116,8 @@
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label">Trạng thái <span class="text-danger">(*)</span></label>
-								<ng-select [clearable]="false" class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text"
-									formControlName="isActived" [(ngModel)]="model.isActived" style="font-weight: 600;">
+								<ng-select class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
+									[(ngModel)]="model.isActived" style="font-weight: 600;">
 								</ng-select>
 								<div *ngIf="(submitted && f.isActived.invalid) || (f.isActived.invalid && (f.isActived.dirty || f.isActived.touched))" class="has-error m-b-12">
 									<div *ngIf="f.isActived.errors.required">

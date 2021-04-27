@@ -1496,6 +1496,7 @@ body .ui-editor-container .ui-editor-content {
 }
 .group-content-recommendation #contentRecommendation.show{
 	display: block;
+	width: 100%;
 }
 .txthighlight{
 	color: #1673D8;

@@ -53,7 +53,6 @@ export class CreateRecommendationComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private notificationService: NotificationService
 	) {}
-
 	ngOnInit() {
 		this.model = new RecommendationObject()
 		this.getDropdown()
@@ -68,6 +67,17 @@ export class CreateRecommendationComponent implements OnInit {
 			}
 			this.builForm()
 		})
+		this.recommendationService.recommendationGetDataForCreate({}).subscribe(response => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if (response.result != null) {
+					this.lstUnit = response.result.lstUnit
+				}
+			} else {
+			}
+		}),
+			error => {
+				console.log(error)
+			}
 	}
 
 	onCreateHashtag(e) {
@@ -146,19 +156,9 @@ export class CreateRecommendationComponent implements OnInit {
 		let request = {}
 		this.recommendationService.recommendationGetDataForCreate(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this.lstUnit = response.result.lstUnit.map(e => {
-					let item = {
-						id: e.value,
-						name: e.text,
-						parentId: e.parentId == null ? 0 : e.parentId,
-						unitLevel: e.unitLevel,
-						children: [],
-					}
-
-					return item
-				})
-				this.treeUnit = this.unflatten(this.lstUnit)
-				console.log(this.treeUnit)
+				if (response.result != null) {
+					this.lstUnit = response.result.lstUnit
+				}
 				this.lstField = response.result.lstField
 				this.lstHashtag = response.result.lstHashTag
 				this.lstBusiness = response.result.lstBusiness

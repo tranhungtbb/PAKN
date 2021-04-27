@@ -51,12 +51,9 @@
 											<span class="caret-tb"></span>
 										</p>
 										<div style="width: 200px" class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select style="width:200px;" [(ngModel)]="dataSearch.field" [closeOnSelect]="true" [searchable]="false" [clearable]="false"
-												(change)="dataStateChange()" placeholder="--Chọn lĩnh vực--">
-												<ng-option value="">--Chọn lĩnh vực--</ng-option>
-												<ng-option *ngFor="let item of lstFieldFilter" [value]="item.value">
-													{{item.text }}
-												</ng-option>
+
+											<ng-select placeholder="Chọn lĩnh vực" class="" [items]="lstFieldFilter" bindLabel="text" bindValue="value"
+												[(ngModel)]="dataSearch.field" [closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>
 									</th>
@@ -73,13 +70,9 @@
 											<strong>Trạng thái</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select style="width:130px;" [(ngModel)]="dataSearch.status" [closeOnSelect]="true" [searchable]="false" [clearable]="false"
-												(change)="dataStateChange()" placeholder="Tất cả trạng thái">
-												<ng-option value="">Tất cả trạng thái</ng-option>
-												<ng-option *ngFor="let item of listStatus" [value]="item.value">
-													{{item.text}}
-												</ng-option>
+										<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select placeholder="Trạng thái" class="" [items]="listStatus" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
+												[closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>
 									</th>

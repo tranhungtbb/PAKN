@@ -278,6 +278,7 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 		var request = {
 			_mRRecommendationForwardInsertIN: this.modelForward,
 			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
+			IsList: false,
 		}
 		this.recommendationService.recommendationForward(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -326,6 +327,8 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 			_mRRecommendationForwardProcessIN: this.modelProcess,
 			RecommendationStatus: this.recommendationStatusProcess,
 			ReactionaryWord: this.modelProcess.reactionaryWord,
+			ListHashTag: this.lstHashtagSelected,
+			IsList: false,
 		}
 		this.recommendationService.recommendationProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -352,6 +355,8 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 			var request = {
 				_mRRecommendationForwardProcessIN: this.modelProcess,
 				RecommendationStatus: this.recommendationStatusProcess,
+				ListHashTag: this.lstHashtagSelected,
+				IsList: false,
 			}
 			this.recommendationService.recommendationProcess(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
