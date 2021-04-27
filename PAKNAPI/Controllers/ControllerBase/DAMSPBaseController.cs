@@ -633,6 +633,66 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize("ThePolicy")]
+		[Route("DAMCompositionProfileDeleteByIdBase")]
+		public async Task<ActionResult<object>> DAMCompositionProfileDeleteByIdBase(DAMCompositionProfileDeleteByIdIN _dAMCompositionProfileDeleteByIdIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new DAMCompositionProfileDeleteById(_appSetting).DAMCompositionProfileDeleteByIdDAO(_dAMCompositionProfileDeleteByIdIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("DAMCompositionProfileDeleteByIdListBase")]
+		public async Task<ActionResult<object>> DAMCompositionProfileDeleteByIdListBase(List<DAMCompositionProfileDeleteByIdIN> _dAMCompositionProfileDeleteByIdINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _dAMCompositionProfileDeleteByIdIN in _dAMCompositionProfileDeleteByIdINs)
+				{
+					var result = await new DAMCompositionProfileDeleteById(_appSetting).DAMCompositionProfileDeleteByIdDAO(_dAMCompositionProfileDeleteByIdIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
 		[Route("DAMCompositionProfileFileFilesDeleteBase")]
 		public async Task<ActionResult<object>> DAMCompositionProfileFileFilesDeleteBase(DAMCompositionProfileFileFilesDeleteIN _dAMCompositionProfileFileFilesDeleteIN)
 		{

@@ -347,10 +347,10 @@ namespace PAKNAPI.Controller
                             {
                                 DAMCompositionProfileCreateIN itemCreate = new DAMCompositionProfileCreateIN();
                                 itemCreate.AdministrationId = item.AdministrationId;
-                                itemCreate.CopyForm = item.CopyForm;
+                                itemCreate.CopyForm = item.CopyForm.ToString();
                                 itemCreate.IsBind = item.IsBind;
                                 itemCreate.NameExhibit = item.NameExhibit;
-                                itemCreate.OriginalForm = item.OriginalForm;
+                                itemCreate.OriginalForm = item.OriginalForm.ToString();
                                 int? idCP = Int32.Parse((await new DAMCompositionProfileCreate(_appSetting).DAMCompositionProfileCreateDAO(itemCreate)).ToString());
 
                                 if (request.Files != null && request.Files.Count > 0)

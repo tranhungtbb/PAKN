@@ -563,6 +563,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("OriginalForm", _dAMCompositionProfileCreateIN.OriginalForm);
 			DP.Add("CopyForm", _dAMCompositionProfileCreateIN.CopyForm);
 			DP.Add("IsBind", _dAMCompositionProfileCreateIN.IsBind);
+			DP.Add("CompositionProfileId", _dAMCompositionProfileCreateIN.CompositionProfileId);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("DAM_CompositionProfile_Create", DP);
 		}
@@ -577,6 +578,34 @@ namespace PAKNAPI.ModelBase
 		public string OriginalForm { get; set; }
 		public string CopyForm { get; set; }
 		public bool? IsBind { get; set; }
+		public int? CompositionProfileId { get; set; }
+	}
+
+	public class DAMCompositionProfileDeleteById
+	{
+		private SQLCon _sQLCon;
+
+		public DAMCompositionProfileDeleteById(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public DAMCompositionProfileDeleteById()
+		{
+		}
+
+		public async Task<int> DAMCompositionProfileDeleteByIdDAO(DAMCompositionProfileDeleteByIdIN _dAMCompositionProfileDeleteByIdIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _dAMCompositionProfileDeleteByIdIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("DAM_CompositionProfile_DeleteById", DP));
+		}
+	}
+
+	public class DAMCompositionProfileDeleteByIdIN
+	{
+		public int? Id { get; set; }
 	}
 
 	public class DAMCompositionProfileFileFilesDelete
