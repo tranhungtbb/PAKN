@@ -126,7 +126,7 @@ export class PublishComponent implements OnInit, OnChanges {
 			if (typeSend == RECOMMENDATION_STATUS.FINISED) {
 				this._router.navigate(['/cong-bo/phan-anh-kien-nghi/' + id])
 			} else {
-				return
+				this._router.navigate(['/cong-bo/chi-tiet-kien-nghi/' + id])
 			}
 		}
 	}

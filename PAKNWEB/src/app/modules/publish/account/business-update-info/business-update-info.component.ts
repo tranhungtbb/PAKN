@@ -4,6 +4,9 @@ import { ToastrService } from 'ngx-toastr'
 import { AccountService } from 'src/app/services/account.service'
 import { FormBuilder, FormControl, FormGroup, Validator, Validators } from '@angular/forms'
 import { COMMONS } from 'src/app/commons/commons'
+import { viLocale } from 'ngx-bootstrap/locale'
+import { defineLocale } from 'ngx-bootstrap/chronos'
+import { BsLocaleService } from 'ngx-bootstrap/datepicker'
 
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { RESPONSE_STATUS, REGEX } from 'src/app/constants/CONSTANTS'
@@ -19,6 +22,7 @@ import { AccountSideLeftComponent } from '../account-side-left/account-side-left
 })
 export class BusinessUpdateInfoComponent implements OnInit {
 	constructor(
+		private localeService: BsLocaleService,
 		private formBuider: FormBuilder,
 		private toast: ToastrService,
 		private router: Router,
@@ -27,7 +31,9 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		private authenService: AuthenticationService,
 		private sharedataService: DataService,
 		private diadanhService: DiadanhService
-	) {}
+	) {
+		defineLocale('vi', viLocale)
+	}
 
 	formUpdateAccountInfo: FormGroup
 
@@ -48,6 +54,10 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		{ value: false, text: 'Nữ' },
 	]
 
+	//
+	nation_enable_type = false
+	orgnation_enable_type = false
+
 	//regex
 	regex_phone: string = REGEX.PHONE_VN
 
@@ -63,7 +73,6 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			wardsId: [this.model.wardsId],
 			address: [this.model.address, [Validators.required]],
 			representativeGender: [this.model.representativeGender],
-			fullName: [this.model.fullName, [Validators.required]],
 			businessRegistration: [this.model.businessRegistration],
 			decisionOfEstablishing: [this.model.decisionOfEstablishing],
 			dateOfIssue: [this.model.dateOfIssue],
@@ -144,6 +153,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			this.listOrgVillage = []
 
 			this.model.provinceId = ''
+			this.model.orgProvinceId = ''
 		}
 		if (this.model.nation == 'Việt Nam') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
@@ -155,6 +165,14 @@ export class BusinessUpdateInfoComponent implements OnInit {
 				}
 			})
 		} else {
+			if (this.model.nation == '#') {
+				this.nation_enable_type = true
+				this.model.nation = ''
+				//
+				// this.formInfo.controls.province.disable()
+				// this.formInfo.controls.district.disable()
+				// this.formInfo.controls.village.disable()
+			}
 		}
 	}
 	onChangeProvince(clearable = false) {

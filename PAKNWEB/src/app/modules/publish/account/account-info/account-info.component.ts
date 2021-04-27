@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { AccountService } from 'src/app/services/account.service'
@@ -10,6 +10,7 @@ import { DataService } from 'src/app/services/sharedata.service'
 import { DiadanhService } from 'src/app/services/diadanh.service'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { UserInfoObject } from 'src/app/models/UserObject'
+import { AccountSideLeftComponent } from '../account-side-left/account-side-left.component'
 @Component({
 	selector: 'app-account-info',
 	templateUrl: './account-info.component.html',
@@ -30,6 +31,7 @@ export class AccountInfoComponent implements OnInit {
 	model: UserInfoObject = new UserInfoObject()
 	recommendationStatistics: any
 	totalRecommentdation: number = 0
+	@ViewChild(AccountSideLeftComponent, { static: false }) child_SideLeft: AccountSideLeftComponent
 
 	ngOnInit() {
 		var userType = this.storageService.getTypeObject()
@@ -79,6 +81,8 @@ export class AccountInfoComponent implements OnInit {
 			}
 			this.model = res.result
 			this.onChangeNation()
+
+			this.child_SideLeft.model = this.model
 		})
 	}
 	signOut(): void {

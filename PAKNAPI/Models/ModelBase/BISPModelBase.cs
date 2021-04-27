@@ -37,6 +37,62 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class BIBusinessGetByUserId
+	{
+		private SQLCon _sQLCon;
+
+		public BIBusinessGetByUserId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public BIBusinessGetByUserId()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int? WardsId { get; set; }
+		public int? DistrictId { get; set; }
+		public string RepresentativeName { get; set; }
+		public string Code { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public long Id { get; set; }
+		public DateTime RepresentativeBirthDay { get; set; }
+		public int? ProvinceId { get; set; }
+		public int? Status { get; set; }
+		public bool? RepresentativeGender { get; set; }
+		public DateTime? DateOfIssue { get; set; }
+		public string Address { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Representative { get; set; }
+		public string IDCard { get; set; }
+		public string Place { get; set; }
+		public string NativePlace { get; set; }
+		public string PermanentPlace { get; set; }
+		public string Nation { get; set; }
+		public string BusinessRegistration { get; set; }
+		public string DecisionOfEstablishing { get; set; }
+		public string Tax { get; set; }
+		public int? OrgProvinceId { get; set; }
+		public int? OrgDistrictId { get; set; }
+		public int? OrgWardsId { get; set; }
+		public string OrgAddress { get; set; }
+		public string OrgPhone { get; set; }
+		public string OrgEmail { get; set; }
+		public string Business { get; set; }
+		public long UserId { get; set; }
+
+		public async Task<List<BIBusinessGetByUserId>> BIBusinessGetByUserIdDAO(long? UserId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", UserId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<BIBusinessGetByUserId>("BI_BusinessGetByUserId", DP)).ToList();
+		}
+	}
+
 	public class BIBusinessGetDropdown
 	{
 		private SQLCon _sQLCon;
@@ -211,6 +267,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("PermanentPlace", _bIBusinessInsertIN.PermanentPlace);
 			DP.Add("Nation", _bIBusinessInsertIN.Nation);
 			DP.Add("Business", _bIBusinessInsertIN.Business);
+			DP.Add("UserId", _bIBusinessInsertIN.UserId);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_BusinessInsert", DP));
 		}
@@ -252,6 +309,7 @@ namespace PAKNAPI.ModelBase
 		public string PermanentPlace { get; set; }
 		public string Nation { get; set; }
 		public string Business { get; set; }
+		public long? UserId { get; set; }
 	}
 
 	public class BIBusinessUpdateInfo
@@ -325,42 +383,16 @@ namespace PAKNAPI.ModelBase
 		public string Business { get; set; }
 	}
 
-	public class BIIndividualCheckExists
+	public class BIIndividualGetByUserId
 	{
 		private SQLCon _sQLCon;
 
-		public BIIndividualCheckExists(IAppSetting appSetting)
+		public BIIndividualGetByUserId(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public BIIndividualCheckExists()
-		{
-		}
-
-		public bool? Exists { get; set; }
-		public string Value { get; set; }
-
-		public async Task<List<BIIndividualCheckExists>> BIIndividualCheckExistsDAO(string Field, string Value)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Field", Field);
-			DP.Add("Value", Value);
-
-			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualCheckExists>("BI_Individual_CheckExists", DP)).ToList();
-		}
-	}
-
-	public class BIIndividualGetByEmail
-	{
-		private SQLCon _sQLCon;
-
-		public BIIndividualGetByEmail(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public BIIndividualGetByEmail()
+		public BIIndividualGetByUserId()
 		{
 		}
 
@@ -388,84 +420,14 @@ namespace PAKNAPI.ModelBase
 		public string Nation { get; set; }
 		public DateTime? BirthDay { get; set; }
 		public bool? Gender { get; set; }
+		public long UserId { get; set; }
 
-		public async Task<List<BIIndividualGetByEmail>> BIIndividualGetByEmailDAO(string Email)
+		public async Task<List<BIIndividualGetByUserId>> BIIndividualGetByUserIdDAO(long? UserId)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Email", Email);
+			DP.Add("UserId", UserId);
 
-			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualGetByEmail>("BI_IndividualGetByEmail", DP)).ToList();
-		}
-	}
-
-	public class BIIndividualGetByID
-	{
-		private SQLCon _sQLCon;
-
-		public BIIndividualGetByID(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public BIIndividualGetByID()
-		{
-		}
-
-		public string FullName { get; set; }
-		public string Code { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
-		public long Id { get; set; }
-		public int? ProvinceId { get; set; }
-		public int? WardsId { get; set; }
-		public int? DistrictId { get; set; }
-		public DateTime? DateOfIssue { get; set; }
-		public DateTime? CreatedDate { get; set; }
-		public DateTime? UpdatedDate { get; set; }
-		public int? CreatedBy { get; set; }
-		public int? UpdatedBy { get; set; }
-		public int? Status { get; set; }
-		public string Address { get; set; }
-		public string Email { get; set; }
-		public string Phone { get; set; }
-		public string IDCard { get; set; }
-		public string IssuedPlace { get; set; }
-		public string NativePlace { get; set; }
-		public string PermanentPlace { get; set; }
-		public string Nation { get; set; }
-		public DateTime? BirthDay { get; set; }
-		public bool? Gender { get; set; }
-
-		public async Task<List<BIIndividualGetByID>> BIIndividualGetByIDDAO(long? Id)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-
-			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualGetByID>("BI_IndividualGetByID", DP)).ToList();
-		}
-	}
-
-	public class BIIndividualGetDropdown
-	{
-		private SQLCon _sQLCon;
-
-		public BIIndividualGetDropdown(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public BIIndividualGetDropdown()
-		{
-		}
-
-		public long Value { get; set; }
-		public string Text { get; set; }
-
-		public async Task<List<BIIndividualGetDropdown>> BIIndividualGetDropdownDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualGetDropdown>("BI_IndividualGetDropdown", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualGetByUserId>("BI_IndividualGetByUserId", DP)).ToList();
 		}
 	}
 
@@ -508,6 +470,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Nation", _bIIndividualInsertIN.Nation);
 			DP.Add("BirthDay", _bIIndividualInsertIN.BirthDay);
 			DP.Add("Gender", _bIIndividualInsertIN.Gender);
+			DP.Add("UserId", _bIIndividualInsertIN.UserId);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_IndividualInsert", DP));
 		}
@@ -538,6 +501,7 @@ namespace PAKNAPI.ModelBase
 		public string Nation { get; set; }
 		public DateTime? BirthDay { get; set; }
 		public bool? Gender { get; set; }
+		public long? UserId { get; set; }
 	}
 
 	public class BIInvididualUpdateInfo
