@@ -98,6 +98,7 @@ export class Api {
 
 	//SY_Role
 	public static RoleGetAll = 'SYSPBase/SYRoleGetAllBase'
+	public static RoleGetAllOnPage = 'SYSPBase/SYRoleGetAllOnPageBase'
 
 	//NewsType
 	public static NewsTypeGetList = 'CACategorySPBase/CANewsTypeGetAllOnPageBase'
@@ -193,4 +194,5 @@ export class Api {
 	public static ChatbotGetById = 'Chatbot/ChatbotGetByID'
 	public static ChatbotUpdate = 'Chatbot/ChatbotUpdateBase'
 	public static ChatbotInsertQuestion = 'Chatbot/ChatbotInsertQuestion'
+	public static ChatbotInsertData = 'Chatbot/ChatbotInsertData'
 }

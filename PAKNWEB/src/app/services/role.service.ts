@@ -17,9 +17,9 @@ export class RoleService {
 	getAll(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.RoleGetAll)
 	}
-	// getAllPagedList(query: any): Observable<any> {
-	// 	return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetPagedList)
-	// }
+	getAllPagedList(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.RoleGetAllOnPage)
+	}
 	// insert(data: any): Observable<any> {
 	// 	return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserInsert)
 	// }

@@ -1,0 +1,121 @@
+<div class="content-body">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="breadcrumb title-module px-0 bg-transparent" style="font-size: 18px;font-weight: 600;">
+				<p class="mb-0 h4">Trang chủ / Tin tức / <strong>Tạo tin tức</strong> </p>
+			</div>
+			<div class="btn-group group-button-table" role="group">
+				<a class="btn btn-sm btn-default rounded mr-3" style="border: 1px solid gray;" [routerLink]="['/quan-tri','tin-tuc']">
+					<i class="bi bi-arrow-left"></i>&nbsp;
+					Quay lại
+				</a>
+				<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3">Xem trước</button>
+				<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave($event)">&nbsp;&nbsp;&nbsp;&nbsp;Lưu&nbsp;&nbsp;&nbsp;&nbsp;</button>
+				<button class="btn btn-sm grd-green rounded text-white border-0" (click)="onSave($event,true)">Công bố</button>
+			</div>
+		</div>
+	</div>
+	<form [formGroup]="newsForm">
+		<div class="container mr-0 ml-0">
+			<div class="row">
+				<div class="col-md-9 col-lg-9 col-xl-9 col-xxl-8">
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">tiêu đề</span> <span class="cl-red">(*)</span></label>
+						<input formControlName="title" [(ngModel)]="model.title" type="text" class="form-control input-sm" placeholder="Nhập...">
+						<div *ngIf="(submitted && f.title.invalid)||(f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
+							<div *ngIf="f.title.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+							<div *ngIf="f.title.errors.maxlength">
+								<span class="help-block">Chỉ nhập tối đa 500 kí tự</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">tóm tắt</span></label>
+						<textarea class="form-control text-area-height" cols="10" formControlName="summary" [(ngModel)]="model.summary" placeholder="Nhập..."></textarea>
+						<!-- <div *ngIf="(submitted && f.summary.invalid)||(f.summary.invalid && (f.summary.dirty || f.summary.touched))" class="has-error m-b-12">
+							<div *ngIf="f.summary.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+						</div> -->
+					</div>
+					<div class="col-12 col-lg-12 form-group mb-6">
+						<div class="clearfix mb-2">
+							<label class="mb-1"><span class="text-uppercase">bài viết liên quan</span><span class="cl-red">(*)</span></label>
+							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline pull-right" (click)="onModalNewsRelate()">
+								<i class="bi bi-list"></i> Chọn bài
+							</button>
+						</div>
+						<div class="col-md-12 pr-0 pl-0">
+							<div class="btn btn-default p-2 border mb-2" style="position: relative; overflow-x: hidden;" *ngFor="let relateItem of newsRelatesSelected">
+								<img class="rounded border" style="min-height: 52px;" width="80" [src]="relateItem.imageBin" />
+								<span class="col-md-10" style="white-space: nowrap;
+								display: inline-block;
+								overflow: hidden;
+    						text-align: left;">
+									&nbsp;<strong>{{relateItem.title}}</strong>
+								</span>
+								<span class="mt-1 mr-1 relate-del-btn" (click)="removeRelate(relateItem.id)">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+										<path
+											d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+									</svg>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-12 form-group">
+						<ckeditor id="editor" [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents" (ready)="onReady($event)" [config]="ckConfig"></ckeditor>
+					</div>
+				</div>
+				<div class="col-md-3 col-lg-3 col-xl-3 col-xxl-4">
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">Loại tin tức</span></label>
+						<ng-select formControlName="newsType" [(ngModel)]="model.newsType" class="form-control" placeholder="Chọn...">
+							<ng-option value=''>Chon...</ng-option>
+							<ng-option *ngFor="let cate of listNewsTypes" [value]="cate.id">{{cate.name}}</ng-option>
+						</ng-select>
+					</div>
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1 dis-block"><span class="text-uppercase">kiểu bài</span></label>
+						<div class="checkbox dis-inline mr-3" *ngFor="let pType of postTypes">
+							<label>
+								<!-- formControlName="postType" [(ngModel)]="postTypeSelected" [value]="pType.value" -->
+								<input type="checkbox" [checked]="postTypeSelected.indexOf(pType.value) != -1" (change)="onChangePostType(pType.value,$event.target.checked)">
+								<span class="text-uppercase"> {{pType.text}}</span>
+							</label>
+						</div>
+					</div>
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">ảnh đại diện</span></label>
+						<input type="file" [hidden]="true" id="avatar-image" (change)="onAvatarChange($event)">
+						<div class="news-avatar" (click)="onChangeAvatar()">
+							<img [src]="avatarUrl" alt="">
+						</div>
+					</div>
+					<!-- <div class="col-12 col-lg-12 form-group mb-6">
+						<label class="mb-1">
+							<span class="text-uppercase">upload media</span>
+							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline pull-right"><i class="bi bi-upload"></i> Thêm mới</button>
+						</label>
+						<input type="file" [hidden]="true">
+						<div class="col-sm-12 col-md-12 pl-0 pr-0">
+							<div class="btn btn-sm-btn-default border p-2">
+								<img src="" alt="" width="50" height="50">&nbsp;
+								<span>File 01</span>
+							</div>
+						</div>
+					</div> -->
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">thông báo</span></label>
+						<div class="checkbox">
+							<label><input [(ngModel)]="model.isNotification" type="checkbox" formControlName="pushNotify" checked> Gửi thông báo đến người dân, doanh nghiệp</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<app-news-relate-modal></app-news-relate-modal>
