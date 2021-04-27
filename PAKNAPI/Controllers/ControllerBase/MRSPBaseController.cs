@@ -485,46 +485,6 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpPost]
-		[Authorize]
-		[Route("MRRecommendationFilesInsertListBase")]
-		public async Task<ActionResult<object>> MRRecommendationFilesInsertListBase(List<MRRecommendationFilesInsertIN> _mRRecommendationFilesInsertINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationFilesInsertIN in _mRRecommendationFilesInsertINs)
-				{
-					var result = await new MRRecommendationFilesInsert(_appSetting).MRRecommendationFilesInsertDAO(_mRRecommendationFilesInsertIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
 		[HttpGet]
 		[Authorize]
 		[Route("MRRecommendationForwardGetByIDBase")]

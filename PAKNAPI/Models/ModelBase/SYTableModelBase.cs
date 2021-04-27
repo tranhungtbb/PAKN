@@ -869,7 +869,7 @@ namespace PAKNAPI.ModelBase
 	public class SYRoleOnPage
 	{
 		public int Id { get; set; }
-		public string OrderNumber { get; set; }
+		public int? OrderNumber { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public bool IsActived { get; set; }
@@ -891,7 +891,7 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int Id { get; set; }
-		public string OrderNumber { get; set; }
+		public int? OrderNumber { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public bool IsActived { get; set; }

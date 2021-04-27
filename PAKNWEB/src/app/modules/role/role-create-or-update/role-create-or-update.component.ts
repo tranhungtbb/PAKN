@@ -1,25 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { DomSanitizer } from '@angular/platform-browser'
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-//import * as ClassicEditor from '../../../../ckeditor'
-
-//import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'
-
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 
 import { Router, ActivatedRoute } from '@angular/router'
 import { RESPONSE_STATUS } from '../../../constants/CONSTANTS'
-import { NewsService } from '../../../services/news.service'
-import { CatalogService } from '../../../services/catalog.service'
-import { NotificationService } from '../../../services/notification.service'
-
 import { CONSTANTS, STATUS_HISNEWS } from 'src/app/constants/CONSTANTS'
-import { COMMONS } from '../../../commons/commons'
-import { AppSettings } from '../../../constants/app-setting'
-import { NewsModel, HISNewsModel } from '../../../models/NewsObject'
+import { COMMONS } from 'src/app/commons/commons'
+import { RoleObject } from '../../../models/roleObject'
+import { RoleService } from '../../../services/role.service'
 import { from } from 'rxjs'
-import { switchMap } from 'rxjs/operators'
 
 declare var $: any
 
@@ -29,269 +18,95 @@ declare var $: any
 	styleUrls: ['./role-create-or-update.component.css'],
 })
 export class RoleCreateOrUpdateComponent implements OnInit {
-	constructor(
-		private toast: ToastrService,
-		private formBuilder: FormBuilder,
-		private newsService: NewsService,
-		private catalogService: CatalogService,
-		private router: Router,
-		private activatedRoute: ActivatedRoute,
-		private sanitizer: DomSanitizer,
-		private notificationService: NotificationService
-	) {}
-	allowImageExtend = ['image/jpeg', 'image/png']
-	public Editor = ClassicEditor
-	public ckConfig = {
-		placeholder: 'Nhập...',
-	}
+	constructor(private _toastr: ToastrService, private formBuilder: FormBuilder, private router: Router, private roleService: RoleService, private activatedRoute: ActivatedRoute) {}
 
-	model: NewsModel = new NewsModel()
-	newsForm: FormGroup
-	listNewsTypes: any[]
-	postTypes: any[] = [
-		{ text: 'Bài viết thường', value: '0' },
-		{ text: 'nổi bật', value: '1' },
+	model: RoleObject = new RoleObject()
+	form: FormGroup
+	submitted = false
+	listStatus: any = [
+		{ value: '', text: 'Trạng thái' },
+		{ value: true, text: 'Hiệu lực' },
+		{ value: false, text: 'Hết hiệu lực' },
 	]
-	hisPublic: boolean = false
-
-	hisNewsModel: HISNewsModel = new HISNewsModel()
-
-	postTypeSelected: any[] = []
-
-	newsRelatesSelected: any[] = []
-	categoriesSelected: any[]
-	avatarUrl: any = 'assets/dist/images/no.jpg'
 
 	ngOnInit() {
-		this.newsForm = this.formBuilder.group({
-			title: [this.model.title, [Validators.required, Validators.maxLength(500)]],
-			summary: [this.model.summary],
-			contents: [this.model.contents],
-			newsType: [this.model.newsType],
-			postType: [this.model.postType],
-			pushNotify: [''],
+		this.form = this.formBuilder.group({
+			name: [this.model.name, [Validators.required, Validators.maxLength(100)]],
+			IsActived: [this.model.isActived],
 		})
+		this.getRoleById()
+	}
 
+	getRoleById() {
 		this.activatedRoute.params.subscribe((params) => {
-			if (params['id']) {
-				this.newsService.getById({ id: params['id'] }).subscribe((res) => {
-					if (res.success != 'OK') {
-						return
-					}
-					this.model = res.result.NENewsGetByID[0]
-					this.hisPublic = this.model.isPublished
-					this.postTypeSelected = this.model.postType.trim().split(',')
-					//lay danh sach bai viet lien quan
-					this.getNewsRelatesInfo()
-
-					//get current avatar
-					if (this.model.imagePath != null && this.model.imagePath.trim() != '') {
-						this.newsService.getAvatars([this.model.id]).subscribe((res) => {
-							if (res) {
-								let objectURL = 'data:image/jpeg;base64,' + res[0].byteImage
-								this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-							}
-						})
+			this.model.id = +params['id']
+			if (this.model.id && this.model.id != 0) {
+				this.roleService.getRoleById({ id: this.model.id }).subscribe((res) => {
+					if (res.success == RESPONSE_STATUS.success) {
+						if (res.result.SYRoleGetByID) {
+							this.model = { ...res.result.SYRoleGetByID }
+						}
 					}
 				})
 			}
 		})
-
-		//get all news type
-		this.catalogService
-			.newsTypeGetList({
-				pageSize: 10000,
-				pageIndex: 1,
-			})
-			.subscribe((res) => {
-				if (res.success != 'OK') {
-					return
-				}
-				this.listNewsTypes = res.result.CANewsTypeGetAllOnPage
-			})
-	}
-
-	getNewsRelatesInfo() {
-		if (this.model.newsRelateIds != null && this.model.newsRelateIds != '') {
-			this.newsService
-				.getAllPagedList({
-					pageIndex: 1,
-					pageSize: 100,
-					newsIds: this.model.newsRelateIds,
-				})
-				.subscribe((res) => {
-					if (res.success != 'OK') {
-						return
-					}
-					this.newsRelatesSelected = res.result.NENewsGetAllOnPage
-
-					//get avatar
-					this.getNewsRelateAvatar()
-				})
-		}
 	}
 
 	get f() {
-		return this.newsForm.controls
+		return this.form.controls
 	}
 
-	submitted = false
-	onSave(event, published = false) {
+	rebuilForm() {
+		this.form.reset({
+			name: this.model.name,
+			isActived: this.model.isActived,
+		})
+	}
+
+	onSave() {
 		this.submitted = true
-		if (this.newsForm.invalid) {
+		this.model.name = this.model.name.trim()
+		if (this.model.name == '') return
+		if (this.form.invalid) {
 			return
 		}
-		if (this.postTypeSelected.length > 0) this.model.postType = this.postTypeSelected.toString()
-		//return
-		this.model.isPublished = published
-		if (published) this.model.status = 1
-		else this.model.status = 2
-		if (this.model.id && this.model.id > 0) {
-			this.newsService.update(this.model).subscribe((res) => {
-				if (res.success != 'OK') {
-					this.toast.error(COMMONS.UPDATE_FAILED)
-					return
-				}
-				// insert vào Notification
-				this.insertNotification(false)
-
-				// cap nhap
-				this.hisNewsModel.status = STATUS_HISNEWS.UPDATE
-				this.hisNewsModel.objectId = this.model.id
-				this.hisNewsModel.type = 1 // tin tức
-				this.newsService.hisNewsCreate(this.hisNewsModel).subscribe((res) => {
-					if ((res.success = RESPONSE_STATUS.success)) {
-						if (published == true) {
-							this.hisNewsModel.status = STATUS_HISNEWS.PUBLIC
-							this.newsService.hisNewsCreate(this.hisNewsModel).subscribe()
-						}
-						if (published == false && this.hisPublic == true) {
-							this.hisNewsModel.status = STATUS_HISNEWS.CANCEL
-							this.newsService.hisNewsCreate(this.hisNewsModel).subscribe()
-						}
+		if (this.model.id == 0 || this.model.id == null) {
+			this.roleService.insert(this.model).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					if (response.result == -1) {
+						this._toastr.error('Vai trò đã bị trùng tên')
+					} else {
+						this._toastr.success(COMMONS.ADD_SUCCESS)
+						this.redirectList()
 					}
-					return
-				})
-
-				// this.newsService.hisNewsCreate(this.hisNewsModel).pipe(
-				// 	switchMap(result=> result.success),
-				// 	switchMap(success =>this.newsService.hisNewsCreate({...this.hisNewsModel,"status" : STATUS_HISNEWS.PUBLIC}))
-				// )
-
-				this.toast.success(COMMONS.UPDATE_SUCCESS)
-				this.router.navigate(['/quan-tri/tin-tuc'])
-			})
+				} else {
+					this._toastr.error(response.message)
+				}
+			}),
+				(error) => {
+					console.error(error)
+					alert(error)
+				}
 		} else {
-			this.newsService.create(this.model).subscribe((res) => {
-				if (res.success != 'OK') {
-					let errorMsg = COMMONS.ADD_FAILED
-					this.toast.error(errorMsg)
-					return
-				}
-				this.model.id = res.result
-				this.insertNotification(true)
-
-				// khởi tạo
-				this.hisNewsModel.status = STATUS_HISNEWS.CREATE
-				this.hisNewsModel.objectId = res.result
-				this.hisNewsModel.type = 1 // tin tức
-				this.newsService.hisNewsCreate(this.hisNewsModel).subscribe((res) => {
-					if ((res.success = RESPONSE_STATUS.success)) {
-						if (published == true) {
-							this.hisNewsModel.status = STATUS_HISNEWS.PUBLIC
-							this.newsService.hisNewsCreate(this.hisNewsModel).subscribe()
-						}
-						return
+			this.roleService.update(this.model).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					if (response.result == -1) {
+						this._toastr.error('Vai trò đã bị trùng tên')
+					} else {
+						this._toastr.success(COMMONS.UPDATE_SUCCESS)
+						this.redirectList()
 					}
-					return
-				})
-				// soạn thảo
-
-				this.toast.success(COMMONS.ADD_SUCCESS)
-				this.router.navigate(['/quan-tri/tin-tuc'])
-			})
-		}
-	}
-	onChangePostType(id: any, selected: boolean) {
-		if (selected) {
-			if (!this.postTypeSelected.includes(id)) this.postTypeSelected.push(id)
-		} else {
-			this.postTypeSelected.splice(this.postTypeSelected.indexOf(id), 1)
-		}
-	}
-
-	removeRelate(id: number) {
-		let index = this.newsRelatesSelected.indexOf(this.newsRelatesSelected.find((c) => c.id == id))
-		if (index >= 0) {
-			this.newsRelatesSelected.splice(index, 1)
-			this.model.newsRelateIds = this.newsRelatesSelected.map((c) => c.id).toString()
-		}
-	}
-
-	onChangeAvatar() {
-		$('#avatar-image').click()
-	}
-	onAvatarChange(event: any) {
-		console.log(event)
-		var file = event.target.files[0]
-
-		if (!this.allowImageExtend.includes(file.type)) {
-			this.toast.error('Chỉ chọn tệp tin ảnh')
-			return
-		}
-
-		let formData = new FormData()
-		formData.append('file', file, file.name)
-
-		this.newsService.uploadFile(formData).subscribe((res) => {
-			if (res.success != 'OK') {
-				this.toast.error('Xảy ra lỗi trong quá trình xử lý')
-				return
-			}
-			this.model.imagePath = res.result.path
-
-			let avatarPath = this.model.imagePath.split('/')
-			this.newsService.getAvatar(avatarPath[avatarPath.length - 1]).subscribe((res) => {
-				if (res) {
-					let objectURL = 'data:image/jpeg;base64,' + res
-					this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+				} else {
+					this._toastr.error(response.message)
 				}
-			})
-		})
-	}
-
-	getNewsRelateAvatar() {
-		this.newsService.getAvatars(this.newsRelatesSelected.map((c) => c.id)).subscribe((res) => {
-			if (res) {
-				for (let img of res) {
-					let item = this.newsRelatesSelected.find((c) => c.id == img.id)
-					let objectURL = 'data:image/jpeg;base64,' + img.byteImage
-					item.imageBin = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+			}),
+				(error) => {
+					console.error(error)
+					alert(error)
 				}
-			}
-		})
-	}
-
-	public onReady(editor) {
-		editor.ui.getEditableElement().parentElement.insertBefore(editor.ui.view.toolbar.element, editor.ui.getEditableElement())
-	}
-
-	insertNotification(isCreate: boolean) {
-		if (this.model.status == 1) {
-			var obj = {
-				id: this.model.id,
-				title: this.model.title,
-				isCreateNews: isCreate,
-			}
-			if (this.model.isNotification == true) {
-				this.notificationService.insertNotificationTypeNews(obj).subscribe((res) => {
-					if ((res.success = RESPONSE_STATUS.success)) {
-						return
-					}
-				})
-			}
-			return
 		}
-		return
+	}
+	redirectList() {
+		this.router.navigate(['quan-tri/vai-tro'])
 	}
 }

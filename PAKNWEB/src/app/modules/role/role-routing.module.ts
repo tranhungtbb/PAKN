@@ -7,7 +7,7 @@ import { RoleCreateOrUpdateComponent } from './role-create-or-update/role-create
 const routes: Routes = [
 	{ path: '', component: RoleComponent },
 	{ path: 'them-moi', component: RoleCreateOrUpdateComponent },
-	{ path: 'chinh-sua/:id', component: RoleCreateOrUpdateComponent },
+	{ path: 'cap-nhap/:id', component: RoleCreateOrUpdateComponent },
 ]
 
 @NgModule({
