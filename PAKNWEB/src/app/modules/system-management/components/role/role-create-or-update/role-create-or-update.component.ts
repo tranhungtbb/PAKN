@@ -18,38 +18,46 @@ declare var $: any
 	styleUrls: ['./role-create-or-update.component.css'],
 })
 export class RoleCreateOrUpdateComponent implements OnInit {
-	constructor(private _toastr: ToastrService, private formBuilder: FormBuilder, private router: Router, private roleService: RoleService, private activatedRoute: ActivatedRoute) {}
-
 	model: RoleObject = new RoleObject()
 	form: FormGroup
 	submitted = false
+	action: any
 	listStatus: any = [
-		{ value: '', text: 'Trạng thái' },
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
 	]
+	constructor(private _toastr: ToastrService, private formBuilder: FormBuilder, private router: Router, private roleService: RoleService, private activatedRoute: ActivatedRoute) {}
 
 	ngOnInit() {
-		this.form = this.formBuilder.group({
-			name: [this.model.name, [Validators.required, Validators.maxLength(100)]],
-			IsActived: [this.model.isActived],
-		})
 		this.getRoleById()
+		this.buildForm()
+	}
+
+	buildForm() {
+		this.form = this.formBuilder.group({
+			name: [this.model.name, Validators.required],
+			isActived: [this.model.isActived, Validators.required],
+			orderNumber: [this.model.orderNumber],
+			description: [this.model.description],
+		})
 	}
 
 	getRoleById() {
 		this.activatedRoute.params.subscribe((params) => {
-			this.model.id = +params['id']
-			if (this.model.id && this.model.id != 0) {
+			let id = +params['id']
+			this.model.id = isNaN(id) == true ? 0 : id
+			if (this.model.id != 0) {
 				this.roleService.getRoleById({ id: this.model.id }).subscribe((res) => {
+					debugger
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result.SYRoleGetByID) {
-							this.model = { ...res.result.SYRoleGetByID }
+							this.model = { ...res.result.SYRoleGetByID[0] }
 						}
 					}
 				})
 			}
 		})
+		this.action = this.model.id == 0 ? 'Thêm mới' : 'Cập nhập'
 	}
 
 	get f() {
@@ -60,11 +68,14 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 		this.form.reset({
 			name: this.model.name,
 			isActived: this.model.isActived,
+			orderNumber: this.model.orderNumber,
+			description: this.model.description,
 		})
 	}
 
 	onSave() {
 		this.submitted = true
+		this.rebuilForm()
 		this.model.name = this.model.name.trim()
 		if (this.model.name == '') return
 		if (this.form.invalid) {
@@ -92,6 +103,9 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error('Vai trò đã bị trùng tên')
+					} else if (response.result == 0) {
+						this._toastr.success(COMMONS.UPDATE_FAILED)
+						this.redirectList()
 					} else {
 						this._toastr.success(COMMONS.UPDATE_SUCCESS)
 						this.redirectList()
@@ -107,6 +121,6 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 		}
 	}
 	redirectList() {
-		this.router.navigate(['quan-tri/vai-tro'])
+		this.router.navigate(['quan-tri/he-thong/vai-tro'])
 	}
 }
