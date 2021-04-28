@@ -108,16 +108,18 @@ namespace PAKNAPI.ModelBase
 		public int? RowNumber { get; set; }
 		public int Id { get; set; }
 		public int? OrderNumber { get; set; }
+		public int? UserCount { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
 
-		public async Task<List<SYRoleGetAllOnPage>> SYRoleGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
+		public async Task<List<SYRoleGetAllOnPage>> SYRoleGetAllOnPageDAO(int? PageSize, int? PageIndex, int? UserCount, string Name, string Description, bool? IsActived)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
+			DP.Add("UserCount", UserCount);
 			DP.Add("Name", Name);
 			DP.Add("Description", Description);
 			DP.Add("IsActived", IsActived);

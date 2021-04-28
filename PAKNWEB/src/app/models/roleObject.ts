@@ -5,5 +5,9 @@ export class RoleObject {
 	description: string
 	isActived: boolean
 	isDeleted: boolean
-	constructor() {}
+	userCount: Number
+	constructor() {
+		this.id = 0
+		this.isDeleted = false
+	}
 }
