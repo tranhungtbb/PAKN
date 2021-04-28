@@ -11,6 +11,30 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
+	public class DAMAdministrationCheckExistedId
+	{
+		private SQLCon _sQLCon;
+
+		public DAMAdministrationCheckExistedId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public DAMAdministrationCheckExistedId()
+		{
+		}
+
+		public int? Total { get; set; }
+
+		public async Task<List<DAMAdministrationCheckExistedId>> DAMAdministrationCheckExistedIdDAO(int? AdministrationId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("AdministrationId", AdministrationId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<DAMAdministrationCheckExistedId>("DAM_Administration_CheckExistedId", DP)).ToList();
+		}
+	}
+
 	public class DAMAdministrationDelete
 	{
 		private SQLCon _sQLCon;
@@ -36,6 +60,27 @@ namespace PAKNAPI.ModelBase
 	public class DAMAdministrationDeleteIN
 	{
 		public int? Id { get; set; }
+	}
+
+	public class DAMAdministrationDeleteAll
+	{
+		private SQLCon _sQLCon;
+
+		public DAMAdministrationDeleteAll(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public DAMAdministrationDeleteAll()
+		{
+		}
+
+		public async Task<int> DAMAdministrationDeleteAllDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("DAM_Administration_Delete_All", DP));
+		}
 	}
 
 	public class DAMAdministrationFilesDelete

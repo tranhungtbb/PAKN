@@ -112,7 +112,6 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
 		[HttpPost]
 		[Authorize]
 		[Route("SYRoleDeleteBase")]
@@ -385,6 +384,29 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYUserGetByUnitId", rsSYUserGetByUnitId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYUserGetByUserNameBase")]
+		public async Task<ActionResult<object>> SYUserGetByUserNameBase(string UserName)
+		{
+			try
+			{
+				List<SYUserGetByUserName> rsSYUserGetByUserName = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(UserName);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserGetByUserName", rsSYUserGetByUserName},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
