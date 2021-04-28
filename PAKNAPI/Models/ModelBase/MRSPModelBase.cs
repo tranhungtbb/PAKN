@@ -1053,6 +1053,7 @@ namespace PAKNAPI.ModelBase
 		public DateTime? ProcessingDate { get; set; }
 		public string ApprovedName { get; set; }
 		public DateTime? ApprovedDate { get; set; }
+		public string ReasonDeny { get; set; }
 
 		public async Task<List<MRRecommendationGetByIDView>> MRRecommendationGetByIDViewDAO(int? Id)
 		{

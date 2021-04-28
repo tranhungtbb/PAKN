@@ -93,7 +93,7 @@ CREATE PROCEDURE [dbo].[SY_RoleInsert]
 	@IsActived bit = null,
 	@IsDeleted bit = null,
 	@Description nvarchar(1000) = null,
-	@OrderNumber nchar(10) = null
+	@OrderNumber int = null
 AS
 BEGIN
 	INSERT INTO [SY_Role]
@@ -131,7 +131,7 @@ CREATE PROCEDURE [dbo].[SY_RoleUpdate]
 	@IsActived bit = null,
 	@IsDeleted bit = null,
 	@Description nvarchar(1000) = null,
-	@OrderNumber nchar(10) = null
+	@OrderNumber int = null
 AS
 BEGIN
 	UPDATE [SY_Role] SET

@@ -73,7 +73,6 @@
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">Loại tin tức</span></label>
 						<ng-select formControlName="newsType" [(ngModel)]="model.newsType" class="form-control" placeholder="Chọn...">
-							<ng-option value=''>Chon...</ng-option>
 							<ng-option *ngFor="let cate of listNewsTypes" [value]="cate.id">{{cate.name}}</ng-option>
 						</ng-select>
 					</div>

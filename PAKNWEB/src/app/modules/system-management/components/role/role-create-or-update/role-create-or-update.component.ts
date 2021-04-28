@@ -3,11 +3,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 
 import { Router, ActivatedRoute } from '@angular/router'
-import { RESPONSE_STATUS } from '../../../constants/CONSTANTS'
+import { RESPONSE_STATUS } from '../../../../../constants/CONSTANTS'
 import { CONSTANTS, STATUS_HISNEWS } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
-import { RoleObject } from '../../../models/roleObject'
-import { RoleService } from '../../../services/role.service'
+import { RoleObject } from '../../../../../models/roleObject'
+import { RoleService } from '../../../../../services/role.service'
 import { from } from 'rxjs'
 
 declare var $: any

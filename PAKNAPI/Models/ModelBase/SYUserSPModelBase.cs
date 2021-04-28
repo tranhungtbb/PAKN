@@ -11,6 +11,37 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
+	public class SYUserChangePwd
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserChangePwd(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserChangePwd()
+		{
+		}
+
+		public async Task<int> SYUserChangePwdDAO(SYUserChangePwdIN _sYUserChangePwdIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYUserChangePwdIN.Id);
+			DP.Add("Password", _sYUserChangePwdIN.Password);
+			DP.Add("Salt", _sYUserChangePwdIN.Salt);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserChangePwd", DP));
+		}
+	}
+
+	public class SYUserChangePwdIN
+	{
+		public long? Id { get; set; }
+		public string Password { get; set; }
+		public string Salt { get; set; }
+	}
+
 	public class SYUserDelete
 	{
 		private SQLCon _sQLCon;
@@ -78,6 +109,30 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetByID>("SY_UserGetByID", DP)).ToList();
+		}
+	}
+
+	public class SYUserGetNameById
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserGetNameById(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserGetNameById()
+		{
+		}
+
+		public string FullName { get; set; }
+
+		public async Task<List<SYUserGetNameById>> SYUserGetNameByIdDAO(long? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetNameById>("SY_UserGetNameById", DP)).ToList();
 		}
 	}
 

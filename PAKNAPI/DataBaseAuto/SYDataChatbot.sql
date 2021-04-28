@@ -9,13 +9,15 @@ IF EXISTS
 DROP PROCEDURE [SY_DataChatbotGetByID];
 GO
 CREATE PROCEDURE [dbo].[SY_DataChatbotGetByID]
-	@Id int = null
+	@Id bigint = null
 AS
 BEGIN
 	SELECT
 		[Id],
+		[FullName],
 		[Question],
 		[Answer],
+		[Kluid],
 		[UserId]
 	FROM [SY_DataChatbot]
 	WHERE [Id] = @Id
@@ -37,8 +39,10 @@ AS
 BEGIN
 	SELECT
 		[Id],
+		[FullName],
 		[Question],
 		[Answer],
+		[Kluid],
 		[UserId]
 	FROM [SY_DataChatbot]
 END
@@ -62,8 +66,10 @@ BEGIN
 	SELECT
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
 		[Id],
+		[FullName],
 		[Question],
 		[Answer],
+		[Kluid],
 		[UserId]
 	FROM [SY_DataChatbot]
 	ORDER BY [Id]
@@ -83,21 +89,27 @@ IF EXISTS
 DROP PROCEDURE [SY_DataChatbotInsert];
 GO
 CREATE PROCEDURE [dbo].[SY_DataChatbotInsert]
+	@FullName nvarchar(255) = null,
 	@Question nvarchar(1000) = null,
 	@Answer nvarchar(1000) = null,
-	@UserId nvarchar(255) = null
+	@Kluid nvarchar(255) = null,
+	@UserId bigint = null
 AS
 BEGIN
 	INSERT INTO [SY_DataChatbot]
 	(
+		[FullName],
 		[Question],
 		[Answer],
+		[Kluid],
 		[UserId]
 	)
 	VALUES
 	(
+		@FullName,
 		@Question,
 		@Answer,
+		@Kluid,
 		@UserId
 	)
 END
@@ -114,15 +126,19 @@ IF EXISTS
 DROP PROCEDURE [SY_DataChatbotUpdate];
 GO
 CREATE PROCEDURE [dbo].[SY_DataChatbotUpdate]
-	@Id int = null,
+	@Id bigint = null,
+	@FullName nvarchar(255) = null,
 	@Question nvarchar(1000) = null,
 	@Answer nvarchar(1000) = null,
-	@UserId nvarchar(255) = null
+	@Kluid nvarchar(255) = null,
+	@UserId bigint = null
 AS
 BEGIN
 	UPDATE [SY_DataChatbot] SET
+		[FullName] = @FullName,
 		[Question] = @Question,
 		[Answer] = @Answer,
+		[Kluid] = @Kluid,
 		[UserId] = @UserId
 	WHERE [Id] = @Id
 END
@@ -139,7 +155,7 @@ IF EXISTS
 DROP PROCEDURE [SY_DataChatbotDelete];
 GO
 CREATE PROCEDURE [dbo].[SY_DataChatbotDelete]
-	@Id int = null
+	@Id bigint = null
 AS
 BEGIN
 	DELETE [SY_DataChatbot]
