@@ -331,9 +331,9 @@ export class ListGeneralComponent implements OnInit {
 	onExport() {
 		let passingObj: any = {}
 		passingObj = this.dataSearch
-		;(passingObj.UnitProcessId = this.storeageService.getUnitId()),
-			(passingObj.UserProcessId = this.storeageService.getUserId()),
-			(passingObj = this._shareData.setobjectsearch(passingObj))
-		passingObj = this._router.navigate([this._router.url + '/xuat-file/Recommendation_ListGeneral'])
+		passingObj.UnitProcessId = this.storeageService.getUnitId()
+		passingObj.UserProcessId = this.storeageService.getUserId()
+		passingObj = this._shareData.setobjectsearch(passingObj)
+		passingObj = this._router.navigate(['/quan-tri/kien-nghi/xuat-file/Recommendation_ListGeneral'])
 	}
 }

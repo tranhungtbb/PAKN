@@ -54,6 +54,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="Common\ESConnection.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="ExportGrid\Recommendation_ListGeneral.repx" />
   </ItemGroup>
   <ItemGroup>

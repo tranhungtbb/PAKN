@@ -27,7 +27,6 @@ namespace WebApi
         }
         public EmbeddedResourceReportStorageService EmbeddedResourceReportStorage { get; private set; }
         public ConcurrentDictionary<string, ReportDetails> Reports { get; private set; }
-        private IAppSetting appSetting;
         IEnumerable<string> reportUrlsFromAssemblies;
         IEnumerable<string> ReportsFromResources
         {

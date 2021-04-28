@@ -51,7 +51,9 @@ export class ReportViewerComponent implements AfterViewInit {
 
 	ngAfterViewInit() {
 		if (isPlatformBrowser(this.platformId)) {
-			this.route.params.subscribe((params) => {})
+			this.route.params.subscribe((params) => {
+				this.model.module = params['module']
+			})
 			if (this.model.module == 'Recommendation_ListGeneral') {
 				this.backLinkLoc = true
 				var url = 'Recommendation_ListGeneral?' + JSON.stringify(this.objectsearch)
