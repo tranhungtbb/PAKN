@@ -4,7 +4,7 @@ import { Router } from '@angular/router'
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
-import { RoleObject } from '../../models/roleObject'
+import { RoleObject } from '../../../../models/roleObject'
 import { from } from 'rxjs'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 

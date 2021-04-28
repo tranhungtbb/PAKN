@@ -15,11 +15,11 @@
 // }
 export class UnitObject {
 	constructor() {
-		this.isActived = true
 		this.isDeleted = false
 		this.unitLevel = 1
 		this.isMain = false
 		this.parentId = 0
+		this.isActived = null
 	}
 	id: number
 	name: string

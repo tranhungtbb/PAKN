@@ -18,12 +18,13 @@ const routes: Routes = [
 		children: [
 			{ path: 'cau-hinh-email', component: EmailSettingComponent },
 			{ path: 'cau-hinh-sms', component: SmsSettingComponent },
-			{ path: 'vai-tro', component: GroupUserComponent },
+			// { path: 'vai-tro', component: GroupUserComponent },
 			{ path: 'nguoi-dung', component: UserComponent },
 			{ path: 'lich-su-he-thong', component: SystemLogComponent },
 			{ path: 'co-cau-to-chuc', component: UnitComponent },
 			{ path: 'nguoi-dung/them-moi', component: UserCreateOrUpdateComponent },
 			{ path: 'quan-ly-chat-bot', component: ChatBotComponent },
+			{ path: 'vai-tro', loadChildren: './components/role/role.module#RoleModule' },
 		],
 	},
 ]
