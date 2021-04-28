@@ -26,7 +26,7 @@ import { UnitComponent } from './components/unit/unit.component'
 import { UserCreateOrUpdateComponent } from './components/user/user-create-or-update/user-create-or-update.component'
 import { UnitFilterPipe } from 'src/app/pipes/unit-filter.pipe'
 import { ChatBotComponent } from './components/chat-bot/chat-bot.component'
-// import {} from './components/role/role.component'
+// import { RoleComponent } from './components/role/role.component'
 
 @NgModule({
 	imports: [

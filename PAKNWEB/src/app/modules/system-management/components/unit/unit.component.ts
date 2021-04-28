@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
 import { ToastrService } from 'ngx-toastr'
 import { MatDialog, MatDialogModule } from '@angular/material'
 import { TreeNode } from 'primeng/api'
+import { REGEX } from 'src/app/constants/CONSTANTS'
 
 import { UnitService } from '../../../../services/unit.service'
 import { UserService } from '../../../../services/user.service'
@@ -31,6 +32,8 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		{ value: true, text: 'Nam' },
 		{ value: false, text: 'Nữ' },
 	]
+
+	regex_phone = REGEX.PHONE_VN
 
 	treeUnit: any[]
 	listUnitPaged: any[] = []
@@ -441,11 +444,12 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			}
 			this._toastr.success(COMMONS.DELETE_SUCCESS)
 
-			if (this.unitObject.id != id) {
+			if (this.unitObject.id == id) {
 				this.getAllUnitShortInfo()
 				this.getUnitPagedList()
 			} else {
 				this.getAllUnitShortInfo(this.unitObject)
+				this.getUnitPagedList()
 			}
 		})
 	}

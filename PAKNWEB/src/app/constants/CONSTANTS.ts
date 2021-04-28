@@ -47,7 +47,7 @@ export class MESSAGE_COMMON {
 }
 
 export class RECOMMENDATION_STATUS {
-	public static CREATED = 1
+	public static CREATED = 1 // đang soạn thảo
 	public static RECEIVE_WAIT = 2 //2 Chờ xử lý
 	public static RECEIVE_DENY = 3 //3 Từ chối xử lý
 	public static RECEIVE_APPROVED = 4 //4 Đã tiếp nhận

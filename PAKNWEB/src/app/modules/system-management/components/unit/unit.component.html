@@ -346,8 +346,8 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
-							<input onlyNumber="true" stopLength="10" svTrim formControlName="phone" [(ngModel)]="modelUnit.phone" type="text" class="form-control"
-								placeholder="Nhập...">
+							<input onlyNumber="true" stopLength="10" formControlName="phone" [(ngModel)]="modelUnit.phone" type="text" class="form-control" placeholder="Nhập..."
+								pattern="regex_phone">
 							<div *ngIf="(unitFormSubmitted && fUnit.phone.invalid)||(fUnit.phone.invalid && (fUnit.phone.dirty || fUnit.phone.touched))" class="has-error m-b-12">
 								<div *ngIf="fUnit.phone.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
