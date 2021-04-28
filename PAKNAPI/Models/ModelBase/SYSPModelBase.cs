@@ -242,6 +242,48 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYUserGetByUserName
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserGetByUserName(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserGetByUserName()
+		{
+		}
+
+		public long Id { get; set; }
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public string Password { get; set; }
+		public string Salt { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public bool Gender { get; set; }
+		public byte Type { get; set; }
+		public bool IsSuperAdmin { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public int? UnitId { get; set; }
+		public byte? CountLock { get; set; }
+		public DateTime? LockEndOut { get; set; }
+		public string Avatar { get; set; }
+		public string Address { get; set; }
+		public int? PositionId { get; set; }
+		public int TypeId { get; set; }
+
+		public async Task<List<SYUserGetByUserName>> SYUserGetByUserNameDAO(string UserName)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserName", UserName);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetByUserName>("SY_UserGetByUserName", DP)).ToList();
+		}
+	}
+
 	public class SYUserGetNonSystem
 	{
 		private SQLCon _sQLCon;
