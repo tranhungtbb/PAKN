@@ -27,7 +27,7 @@ namespace PAKNAPI.Models
     public class BusinessAccountInfoModel
     {
         public BusinessAccountInfoModel() { }
-        public BusinessAccountInfoModel(BIBusinessGetRepresentativeEmail entity)
+        public BusinessAccountInfoModel(BIBusinessGetByUserId entity)
         {
             DistrictId = entity.DistrictId;
             RepresentativeName = entity.RepresentativeName;

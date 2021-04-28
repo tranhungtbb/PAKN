@@ -65,13 +65,17 @@ namespace PAKNAPI.Models.Recommendation
     public class RecommendationForwardRequest
     {
         public MRRecommendationForwardInsertIN _mRRecommendationForwardInsertIN { get; set; }
+        public List<DropdownObject> ListHashTag { get; set; }
         public byte RecommendationStatus { get; set; }
+        public bool IsList { get; set; }
     }
     public class RecommendationForwardProcess
     {
         public MRRecommendationForwardProcessIN _mRRecommendationForwardProcessIN { get; set; }
+        public List<DropdownObject> ListHashTag { get; set; }
         public byte RecommendationStatus { get; set; }
         public bool? ReactionaryWord { get; set; }
+        public bool IsList { get; set; }
     }
     public class RecommendationOnProcessConclusionProcess
     {

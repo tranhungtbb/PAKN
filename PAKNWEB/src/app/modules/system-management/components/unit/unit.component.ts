@@ -129,10 +129,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				parentId: this.query.parentId,
 				pageSize: this.query.pageSize,
 				pageIndex: this.query.pageIndex,
-				name: this.query.name,
-				email: this.query.email,
-				phone: this.query.phone,
-				address: this.query.address,
+				name: this.query.name.trim(),
+				email: this.query.email.trim(),
+				phone: this.query.phone.trim(),
+				address: this.query.address.trim(),
 				isActived: this.query.isActived == null ? '' : this.query.isActived,
 			})
 			.subscribe(
@@ -210,10 +210,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				unitid: this.unitObject.id,
 				pageSize: this.queryUser.pageSize,
 				pageIndex: this.queryUser.pageIndex,
-				userName: this.queryUser.userName,
-				email: this.queryUser.email,
-				fullName: this.queryUser.fullName,
-				phone: this.queryUser.phone,
+				userName: this.queryUser.userName.trim(),
+				email: this.queryUser.email.trim(),
+				fullName: this.queryUser.fullName.trim(),
+				phone: this.queryUser.phone.trim(),
 				isActived: this.queryUser.isActived == null ? '' : this.queryUser.isActived,
 			})
 			.subscribe(res => {
@@ -375,18 +375,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		})
 	}
 
-	//////expand node
-	// expandNode(node: any) {
-	// 	let _node = this.searchTree(this.treeUnit, node.id)
-	// 	if (_node) this.expandRecursive(_node, true)
-	// }
-	// private expandRecursive(node: any, isExpand: boolean) {
-	// 	node.expanded = isExpand
-	// 	if (node.parentId) {
-	// 		let pNode = this.searchTree(this.treeUnit, node.parentId)
-	// 		this.expandRecursive(pNode, isExpand)
-	// 	}
-	// }
 	private searchTree(data, value, key = 'id', sub = 'children', tempObj: any = {}) {
 		if (value && data) {
 			data.find(node => {
@@ -453,7 +441,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			}
 			this._toastr.success(COMMONS.DELETE_SUCCESS)
 
-			if (this.unitObject.id == id) {
+			if (this.unitObject.id != id) {
 				this.getAllUnitShortInfo()
 				this.getUnitPagedList()
 			} else {

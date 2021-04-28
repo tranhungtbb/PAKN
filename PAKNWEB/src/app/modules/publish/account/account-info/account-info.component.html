@@ -2,68 +2,7 @@
 	<div class="container pt-5">
 		<div class="row justify-content-between">
 			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct">
-				<div class="media pt-3 mb-3">
-					<div class="avatar-circle bg-light mr-2">
-						<i class="bi bi-person-fill text-dark" style="font-size: 24px"></i>
-					</div>
-					<div class="media-body">
-						<p class="my-0 font-weight-bolder h4">{{model.fullName}}</p>
-						<p class="mb-0 small">Tài khoản: {{model.userName}}</p>
-					</div>
-				</div>
-				<ul class="nav nav-qltknd flex-column">
-					<li class="nav-item border-bottom">
-						<a class="nav-link px-0 h5" routerLinkActive="active" aria-current="page" [routerLink]="['../thong-tin']">Thông tin tài khoản</a>
-					</li>
-					<li class="nav-item border-bottom">
-						<a class="nav-link px-0 h5" routerLinkActive="active" [routerLink]="['../thay-doi-mat-khau']">Đổi mật khẩu</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link px-0 h5" href="javascript:void(0);" (click)="signOut()">Đăng xuất</a>
-					</li>
-				</ul>
-				<div class="sb-tk-pakn mb-4">
-					<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between">
-						<h4 class="text-uppercase">Thống kê PAKN của tôi</h4>
-						<h4 class="counter">{{totalRecommentdation}}</h4>
-					</div>
-					<div class="card-body p-0">
-						<p class="mb-1">Chờ xử lý
-							<span class="pull-right font-weight-bold cl-yellow counter">{{recommendationStatistics.receiveWait}}</span>
-						</p>
-						<div class="progress ">
-							<div class="progress-bar grd-yellow1 progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.receiveWait)"
-								role="progressbar">
-							</div>
-						</div>
-
-						<p class="mb-1 mt-4">Đã tiếp nhận
-							<span class="pull-right font-weight-bold cl-blue2 counter">{{recommendationStatistics.receiveApproved}}</span>
-						</p>
-						<div class="progress ">
-							<div class="progress-bar grd-xanhngoc progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.receiveApproved)"
-								role="progressbar">
-							</div>
-						</div>
-
-						<p class="mb-1 mt-4">Đã trả lời
-							<span class="pull-right font-weight-bold cl-blue counter">{{recommendationStatistics.finised}}</span>
-						</p>
-						<div class="progress ">
-							<div class="progress-bar grd-blue progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.finised)" role="progressbar">
-							</div>
-						</div>
-
-						<p class="mb-1 mt-4">Bị từ chối
-							<span class="pull-right font-weight-bold cl-red counter">{{recommendationStatistics.approve}}</span>
-						</p>
-						<div class="progress ">
-							<div class="progress-bar grd-red progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.approve)" role="progressbar">
-							</div>
-						</div>
-
-					</div>
-				</div>
+				<app-account-side-left></app-account-side-left>
 			</div>
 			<div class="col main-ct pl-3 pl-lg-4">
 				<div *ngIf="viewVisiable == 'info'" class="box">

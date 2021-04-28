@@ -17,16 +17,20 @@ export class RoleService {
 	getAll(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.RoleGetAll)
 	}
-	// getAllPagedList(query: any): Observable<any> {
-	// 	return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetPagedList)
-	// }
-	// insert(data: any): Observable<any> {
-	// 	return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserInsert)
-	// }
-	// update(data: any): Observable<any> {
-	// 	return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserUpdate)
-	// }
-	// delete(data: any): Observable<any> {
-	// 	return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserDelete)
-	// }
+	getAllPagedList(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.RoleGetAllOnPage)
+	}
+
+	getRoleById(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.RoleGetById)
+	}
+	insert(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.RoleInsert)
+	}
+	update(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.RoleUpdate)
+	}
+	delete(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.RoleDelete)
+	}
 }

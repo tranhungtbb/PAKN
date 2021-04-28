@@ -119,5 +119,20 @@ namespace PAKNAPI.Controllers.ChatbotController
             }
         }
 
+        [HttpPost]
+        [Route("ChatbotInsertData")]
+        public async Task<object> ChatbotInsertData(ChatbotDataInsertIN _chatbotDataInsertIN)
+        {
+            try
+            {
+                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = await new ChatbotInsertData(_appSetting).InsertDataChatbotDAO(_chatbotDataInsertIN) };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
     }
 }

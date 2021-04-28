@@ -23,8 +23,8 @@ export class AuthenticationService {
 
 	logOut(data: any): Observable<any> {
 		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logAction: encodeURIComponent(LOG_ACTION.logOut),
+			logObject: encodeURIComponent(LOG_OBJECT.NO_CONTENT),
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.logOut, headers)
 	}

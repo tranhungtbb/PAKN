@@ -198,7 +198,36 @@ namespace PAKNAPI.Controller
                             {
                                 item.CopyTo(stream);
                             }
-                            await new MRRecommendationFilesInsert(_appSetting).MRRecommendationFilesInsertDAO(file);
+                            int FileId = Int32.Parse((await new MRRecommendationFilesInsert(_appSetting).MRRecommendationFilesInsertDAO(file)).ToString());
+                            string contentType = "";
+                            string content = "";
+                            contentType = FileContentType.GetTypeOfFile(filePath);
+                            bool isHasFullText = false;
+                            switch (contentType)
+                            {
+                                case ".pdf":
+                                    content = FileUtils.ExtractDataFromPDFFile(filePath);
+                                    isHasFullText = true;
+                                    break;
+
+                                case ".docx":
+                                    content = FileUtils.ReadFileDocExtension(filePath);
+                                    isHasFullText = true;
+                                    break;
+
+                                case ".doc":
+                                    content = FileUtils.ExtractDocFile(filePath);
+                                    isHasFullText = true;
+                                    break;
+                            }
+                            if (isHasFullText)
+                            {
+                                MRRecommendationFullTextInsertIN fulltext = new MRRecommendationFullTextInsertIN();
+                                fulltext.RecommendationId = Id;
+                                fulltext.FileId = FileId;
+                                fulltext.FullText = content;
+                                await new MRRecommendationFullTextInsert(_appSetting).MRRecommendationFullTextInsertDAO(fulltext);
+                            }
                         }
                     }
                     MRRecommendationHashtagInsertIN _mRRecommendationHashtagInsertIN = new MRRecommendationHashtagInsertIN();
@@ -331,6 +360,10 @@ namespace PAKNAPI.Controller
                         MRRecommendationFilesDeleteIN fileDel = new MRRecommendationFilesDeleteIN();
                         fileDel.Id = item.Id;
                         await new MRRecommendationFilesDelete(_appSetting).MRRecommendationFilesDeleteDAO(fileDel);
+                        MRRecommendationFullTextDeleteByRecommendationIdIN fulltextDel = new MRRecommendationFullTextDeleteByRecommendationIdIN();
+                        fulltextDel.RecommendationId = item.RecommendationId;
+                        fulltextDel.FileId = item.Id;
+                        await new MRRecommendationFullTextDeleteByRecommendationId(_appSetting).MRRecommendationFullTextDeleteByRecommendationIdDAO(fulltextDel);
                     }
 
                 }
@@ -354,7 +387,36 @@ namespace PAKNAPI.Controller
                         {
                             item.CopyTo(stream);
                         }
-                        await new MRRecommendationFilesInsert(_appSetting).MRRecommendationFilesInsertDAO(file);
+                        int FileId = Int32.Parse((await new MRRecommendationFilesInsert(_appSetting).MRRecommendationFilesInsertDAO(file)).ToString());
+                        string contentType = "";
+                        string content = "";
+                        contentType = FileContentType.GetTypeOfFile(filePath);
+                        bool isHasFullText = false;
+                        switch (contentType)
+                        {
+                            case ".pdf":
+                                content = FileUtils.ExtractDataFromPDFFile(filePath);
+                                isHasFullText = true;
+                                break;
+
+                            case ".docx":
+                                content = FileUtils.ReadFileDocExtension(filePath);
+                                isHasFullText = true;
+                                break;
+
+                            case ".doc":
+                                content = FileUtils.ExtractDocFile(filePath);
+                                isHasFullText = true;
+                                break;
+                        }
+                        if (isHasFullText)
+                        {
+                            MRRecommendationFullTextInsertIN fulltext = new MRRecommendationFullTextInsertIN();
+                            fulltext.RecommendationId = request.Data.Id;
+                            fulltext.FileId = FileId;
+                            fulltext.FullText = content;
+                            await new MRRecommendationFullTextInsert(_appSetting).MRRecommendationFullTextInsertDAO(fulltext);
+                        }
                     }
                 }
                 MRRecommendationHashtagDeleteByRecommendationIdIN hashtagDeleteByRecommendationIdIN = new MRRecommendationHashtagDeleteByRecommendationIdIN();
@@ -401,6 +463,22 @@ namespace PAKNAPI.Controller
                 request._mRRecommendationForwardInsertIN.UnitSendId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
                 request._mRRecommendationForwardInsertIN.SendDate = DateTime.Now;
                 await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(request._mRRecommendationForwardInsertIN);
+
+                if (!request.IsList)
+                {
+                    MRRecommendationHashtagDeleteByRecommendationIdIN hashtagDeleteByRecommendationIdIN = new MRRecommendationHashtagDeleteByRecommendationIdIN();
+                    hashtagDeleteByRecommendationIdIN.Id = request._mRRecommendationForwardInsertIN.RecommendationId;
+                    await new MRRecommendationHashtagDeleteByRecommendationId(_appSetting).MRRecommendationHashtagDeleteByRecommendationIdDAO(hashtagDeleteByRecommendationIdIN);
+                    MRRecommendationHashtagInsertIN _mRRecommendationHashtagInsertIN = new MRRecommendationHashtagInsertIN();
+                    foreach (var item in request.ListHashTag)
+                    {
+                        _mRRecommendationHashtagInsertIN = new MRRecommendationHashtagInsertIN();
+                        _mRRecommendationHashtagInsertIN.RecommendationId = request._mRRecommendationForwardInsertIN.RecommendationId;
+                        _mRRecommendationHashtagInsertIN.HashtagId = item.Value;
+                        _mRRecommendationHashtagInsertIN.HashtagName = item.Text;
+                        await new MRRecommendationHashtagInsert(_appSetting).MRRecommendationHashtagInsertDAO(_mRRecommendationHashtagInsertIN);
+                    }
+                }
 
                 MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
                 _mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
@@ -450,6 +528,22 @@ namespace PAKNAPI.Controller
                 _mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
                 _mRRecommendationUpdateStatusIN.Id = request._mRRecommendationForwardProcessIN.RecommendationId;
                 await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
+
+                if (!request.IsList)
+                {
+                    MRRecommendationHashtagDeleteByRecommendationIdIN hashtagDeleteByRecommendationIdIN = new MRRecommendationHashtagDeleteByRecommendationIdIN();
+                    hashtagDeleteByRecommendationIdIN.Id = request._mRRecommendationForwardProcessIN.RecommendationId;
+                    await new MRRecommendationHashtagDeleteByRecommendationId(_appSetting).MRRecommendationHashtagDeleteByRecommendationIdDAO(hashtagDeleteByRecommendationIdIN);
+                    MRRecommendationHashtagInsertIN _mRRecommendationHashtagInsertIN = new MRRecommendationHashtagInsertIN();
+                    foreach (var item in request.ListHashTag)
+                    {
+                        _mRRecommendationHashtagInsertIN = new MRRecommendationHashtagInsertIN();
+                        _mRRecommendationHashtagInsertIN.RecommendationId = request._mRRecommendationForwardProcessIN.RecommendationId;
+                        _mRRecommendationHashtagInsertIN.HashtagId = item.Value;
+                        _mRRecommendationHashtagInsertIN.HashtagName = item.Text;
+                        await new MRRecommendationHashtagInsert(_appSetting).MRRecommendationHashtagInsertDAO(_mRRecommendationHashtagInsertIN);
+                    }
+                }
 
                 HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
                 hisData.ObjectId = request._mRRecommendationForwardProcessIN.RecommendationId;

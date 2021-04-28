@@ -54,6 +54,7 @@ export class ListReceiveApprovedComponent implements OnInit {
 	lstUnitNotMain: any = []
 	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
 	formForward: FormGroup
+	dateNow: Date = new Date()
 	ngOnInit() {
 		this.buildForm()
 		this.dataSearch.status = RECOMMENDATION_STATUS.RECEIVE_APPROVED
@@ -192,6 +193,7 @@ export class ListReceiveApprovedComponent implements OnInit {
 		})
 	}
 	preForward(id: number) {
+		this.submitted = false
 		this.modelForward = new RecommendationForwardObject()
 		this.modelForward.recommendationId = id
 		this.rebuilForm()
@@ -221,6 +223,7 @@ export class ListReceiveApprovedComponent implements OnInit {
 		var request = {
 			_mRRecommendationForwardInsertIN: this.modelForward,
 			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
+			IsList: true,
 		}
 		this._service.recommendationForward(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {

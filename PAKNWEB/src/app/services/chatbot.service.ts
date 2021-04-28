@@ -5,8 +5,9 @@ import { Observable } from 'rxjs'
 import { AppSettings } from '../constants/app-setting'
 import { Api } from '../constants/api'
 import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
-
 import { UserInfoStorageService } from '../commons/user-info-storage.service'
+
+const urlChatbot = 'http://localhost:8880/api'
 
 @Injectable({
 	providedIn: 'root',
@@ -31,5 +32,14 @@ export class ChatbotService {
 	}
 	chatbotInsertQuestion(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.ChatbotInsertQuestion)
+	}
+	getNewUserId() {
+		return this.http.get(urlChatbot + '/Conversation/new')
+	}
+	sendToServer(kluid, data) {
+		return this.http.post(urlChatbot + '/Conversation/' + kluid, data)
+	}
+	chatbotInsertData(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.ChatbotInsertData)
 	}
 }

@@ -98,6 +98,11 @@ export class Api {
 
 	//SY_Role
 	public static RoleGetAll = 'SYSPBase/SYRoleGetAllBase'
+	public static RoleGetAllOnPage = 'SYSPBase/SYRoleGetAllOnPageBase'
+	public static RoleInsert = 'SYSPBase/SYRoleInsertBase'
+	public static RoleUpdate = 'SYSPBase/SYRoleUpdateBase'
+	public static RoleDelete = 'SYSPBase/SYRoleDeleteBase'
+	public static RoleGetById = 'SYSPBase/SYRoleGetByIDBase'
 
 	//NewsType
 	public static NewsTypeGetList = 'CACategorySPBase/CANewsTypeGetAllOnPageBase'
@@ -193,4 +198,5 @@ export class Api {
 	public static ChatbotGetById = 'Chatbot/ChatbotGetByID'
 	public static ChatbotUpdate = 'Chatbot/ChatbotUpdateBase'
 	public static ChatbotInsertQuestion = 'Chatbot/ChatbotInsertQuestion'
+	public static ChatbotInsertData = 'Chatbot/ChatbotInsertData'
 }

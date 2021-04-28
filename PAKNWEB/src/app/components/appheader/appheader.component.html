@@ -333,8 +333,8 @@
 								</div>
 								<div class="notifications"><a href="javascript:void(0)" (click)="redirectListNotification()">Xem tất cả<i class="ti-arrow-right"></i></a></div>
 							</div>
-							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:auto;">
-								<ul class="timeline" *ngIf="Notifications">
+							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" (scroll)="onScroll($event)" style="height: 550px;">
+								<ul class="timeline" id="notificationScroll" *ngIf="Notifications">
 									<li *ngFor="let item of Notifications" class="item-notification">
 										<a href="javascript:void(0)" (click)="onClickNotification(item.dataId,item.type, item.typeSend)" class="timeline-panel">
 											<div class="media mr-2 grd-brown">

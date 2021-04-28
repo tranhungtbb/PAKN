@@ -99,6 +99,12 @@ export class RecommendationViewObject {
 	userActive: number
 	idProcess: number
 	stepProcess: number
+	receiveName: string
+	processUnitName: string
+	expriredDate: Date
+	processingDate: Date
+	approvedName: string
+	approvedDate: Date
 }
 export class RecommendationConclusionObject {
 	id: number = 0

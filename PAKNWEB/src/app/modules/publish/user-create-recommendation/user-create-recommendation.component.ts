@@ -96,7 +96,6 @@ export class CreateRecommendationComponent implements OnInit {
 					for (let item of this.model.title.trim().toLowerCase().split(' ')) {
 						this.resultsRecommendation.forEach((recommens) => {
 							recommens.title.split(' ').forEach((element) => {
-								debugger
 								if (item == element.toLowerCase()) {
 									recommens.title = recommens.title.replaceAll(element, '<span class ="text-primary">' + element + '</span>')
 								}
@@ -174,6 +173,9 @@ export class CreateRecommendationComponent implements OnInit {
 				this.files = response.result.lstFiles
 				if (this.model.sendDate) {
 					this.model.sendDate = new Date(this.model.sendDate)
+					let unitItem = this.lstUnit.find((c) => c.id == this.model.unitId)
+					$('#_unitId .ng-input input').val(unitItem.name)
+					$('#_unitId .ng-select-container').addClass('ng-has-value')
 				}
 				this.hightLightText()
 			} else {

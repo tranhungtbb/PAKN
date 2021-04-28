@@ -151,13 +151,21 @@ namespace PAKNAPI.Controllers
                         }
 
                         // người gửi PAKN
-
-                        notification.ReceiveId = sender.Id;
-                        notification.Title = "PAKN ĐÃ ĐƯỢC TIẾP NHẬN";
-                        notification.Content = "Phản ánh kiến nghị số " + recommendation.Code + " của bạn đã được tiếp nhận.";
-                        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
+                        
                         break;
                     case STATUS_RECOMMENDATION.RECEIVE_DENY: //3 Từ chối xử lý
+
+                        //foreach (var item in lstUser)
+                        //{
+                        //    notification.ReceiveId = item.Id;
+                        //    notification.ReceiveOrgId = item.UnitId;
+                        //    notification.Title = "PAKN số " + recommendation.Code + " đã bị từ chối xử lý";
+                        //    notification.Content =
+                        //        recommendation.SendId != item.Id ?
+                        //        sender.FullName + " vừa gửi một PAKN." : "Bạn vừa tạo một PAKN.";
+                        //    // insert notification
+                        //    await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
+                        //}
 
                         // người gửi PAKN
 

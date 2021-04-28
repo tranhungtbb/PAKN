@@ -4,9 +4,12 @@ import { ToastrService } from 'ngx-toastr'
 import { AccountService } from 'src/app/services/account.service'
 import { FormBuilder, FormControl, FormGroup, Validator, Validators } from '@angular/forms'
 import { COMMONS } from 'src/app/commons/commons'
+import { viLocale } from 'ngx-bootstrap/locale'
+import { defineLocale } from 'ngx-bootstrap/chronos'
+import { BsLocaleService } from 'ngx-bootstrap/datepicker'
 
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS, REGEX } from 'src/app/constants/CONSTANTS'
 import { AuthenticationService } from 'src/app/services/authentication.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { DiadanhService } from 'src/app/services/diadanh.service'
@@ -19,6 +22,7 @@ import { AccountSideLeftComponent } from '../account-side-left/account-side-left
 })
 export class BusinessUpdateInfoComponent implements OnInit {
 	constructor(
+		private localeService: BsLocaleService,
 		private formBuider: FormBuilder,
 		private toast: ToastrService,
 		private router: Router,
@@ -27,7 +31,9 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		private authenService: AuthenticationService,
 		private sharedataService: DataService,
 		private diadanhService: DiadanhService
-	) {}
+	) {
+		defineLocale('vi', viLocale)
+	}
 
 	formUpdateAccountInfo: FormGroup
 
@@ -48,29 +54,36 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		{ value: false, text: 'Nữ' },
 	]
 
+	//
+	nation_enable_type = false
+	orgnation_enable_type = false
+
+	//regex
+	regex_phone: string = REGEX.PHONE_VN
+
 	ngOnInit() {
 		this.getUserInfo()
 		this.formUpdateAccountInfo = this.formBuider.group({
 			representativeName: [this.model.representativeName, [Validators.required]],
-			representativeBirthDay: [this.model.representativeBirthDay, [Validators.required]],
-			email: [this.model.email],
-			nation: [this.model.nation],
+			representativeBirthDay: [this.model.representativeBirthDay],
+			email: [this.model.email, [Validators.email]],
+			nation: [this.model.nation, [Validators.required]],
 			provinceId: [this.model.provinceId],
 			districtId: [this.model.districtId],
 			wardsId: [this.model.wardsId],
 			address: [this.model.address, [Validators.required]],
 			representativeGender: [this.model.representativeGender],
-			fullName: [this.model.fullName, [Validators.required]],
 			businessRegistration: [this.model.businessRegistration],
 			decisionOfEstablishing: [this.model.decisionOfEstablishing],
-			dateOfIssue: [this.model.dateOfBirth],
+			dateOfIssue: [this.model.dateOfIssue],
 			tax: [this.model.tax, [Validators.required]],
 			orgProvinceId: [this.model.orgProvinceId],
 			orgDistrictId: [this.model.orgDistrictId],
 			orgWardsId: [this.model.orgWardsId],
 			orgAddress: [this.model.orgAddress, [Validators.required]],
 			orgPhone: [this.model.orgPhone, [Validators.required]],
-			orgEmail: [this.model.orgEmail],
+			orgEmail: [this.model.orgEmail, [Validators.email]],
+			business: [this.model.business, [Validators.required]],
 		})
 	}
 
@@ -99,6 +112,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 
 		this.model.dateOfBirth = fDob.value
 		this.model.dateOfIssue = fDateIssue.value
+		this.model.fullName = this.model.representativeName
 
 		if (!this.model.wardsId) this.model.wardsId = ''
 		if (!this.model.provinceId) this.model.provinceId = ''
@@ -125,6 +139,10 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		})
 	}
 
+	onReset() {
+		this.getUserInfo()
+	}
+
 	onChangeNation(clearable = false) {
 		if (clearable) {
 			this.listProvince = []
@@ -135,6 +153,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			this.listOrgVillage = []
 
 			this.model.provinceId = ''
+			this.model.orgProvinceId = ''
 		}
 		if (this.model.nation == 'Việt Nam') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
@@ -146,6 +165,14 @@ export class BusinessUpdateInfoComponent implements OnInit {
 				}
 			})
 		} else {
+			if (this.model.nation == '#') {
+				this.nation_enable_type = true
+				this.model.nation = ''
+				//
+				// this.formInfo.controls.province.disable()
+				// this.formInfo.controls.district.disable()
+				// this.formInfo.controls.village.disable()
+			}
 		}
 	}
 	onChangeProvince(clearable = false) {

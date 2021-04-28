@@ -45,6 +45,7 @@ export class ViewRecommendationComponent implements OnInit {
 	listData = new Array<RecommendationSuggestObject>()
 	suggest: boolean = false
 	totalRecords: number = 0
+	dateNow: Date = new Date()
 	@ViewChild('table', { static: false }) table: any
 	@ViewChild('file', { static: false }) public file: ElementRef
 	@ViewChild(RemindComponent, { static: true }) remindComponent: RemindComponent
@@ -280,7 +281,7 @@ export class ViewRecommendationComponent implements OnInit {
 			this.recommendationService.recommendationProcessConclusion(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
-					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.model.id }).subscribe(res => {})
+					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.model.id }).subscribe((res) => {})
 					this.toastr.success(COMMONS.PROCESS_SUCCESS)
 					return this.router.navigate(['/quan-tri/kien-nghi/dang-giai-quyet'])
 				} else {
@@ -347,6 +348,8 @@ export class ViewRecommendationComponent implements OnInit {
 		var request = {
 			_mRRecommendationForwardInsertIN: this.modelForward,
 			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
+			ListHashTag: this.lstHashtagSelected,
+			IsList: false,
 		}
 		this.recommendationService.recommendationForward(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -395,6 +398,8 @@ export class ViewRecommendationComponent implements OnInit {
 			_mRRecommendationForwardProcessIN: this.modelProcess,
 			RecommendationStatus: this.recommendationStatusProcess,
 			ReactionaryWord: this.modelProcess.reactionaryWord,
+			ListHashTag: this.lstHashtagSelected,
+			IsList: false,
 		}
 		this.recommendationService.recommendationProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -421,6 +426,8 @@ export class ViewRecommendationComponent implements OnInit {
 			var request = {
 				_mRRecommendationForwardProcessIN: this.modelProcess,
 				RecommendationStatus: this.recommendationStatusProcess,
+				ListHashTag: this.lstHashtagSelected,
+				IsList: false,
 			}
 			this.recommendationService.recommendationProcess(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {

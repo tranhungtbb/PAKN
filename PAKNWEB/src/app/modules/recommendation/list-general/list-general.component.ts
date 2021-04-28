@@ -51,6 +51,7 @@ export class ListGeneralComponent implements OnInit {
 	totalRecords: number = 0
 	idDelete: number = 0
 	lstHistories: any = []
+	dateNow: Date = new Date()
 	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
 	ngOnInit() {
 		this.buildForm()
@@ -207,6 +208,7 @@ export class ListGeneralComponent implements OnInit {
 	preForward(id: number) {
 		this.modelForward = new RecommendationForwardObject()
 		this.modelForward.recommendationId = id
+		this.submitted = false
 		this.rebuilForm()
 		this._service.recommendationGetDataForForward({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -234,6 +236,7 @@ export class ListGeneralComponent implements OnInit {
 		var request = {
 			_mRRecommendationForwardInsertIN: this.modelForward,
 			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
+			IsList: true,
 		}
 		this._service.recommendationForward(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -283,6 +286,7 @@ export class ListGeneralComponent implements OnInit {
 			_mRRecommendationForwardProcessIN: this.modelProcess,
 			RecommendationStatus: this.recommendationStatusProcess,
 			ReactionaryWord: this.modelProcess.reactionaryWord,
+			IsList: true,
 		}
 		this._service.recommendationProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -305,6 +309,7 @@ export class ListGeneralComponent implements OnInit {
 			var request = {
 				_mRRecommendationForwardProcessIN: this.modelProcess,
 				RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_DENY,
+				IsList: true,
 			}
 			this._service.recommendationProcess(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
