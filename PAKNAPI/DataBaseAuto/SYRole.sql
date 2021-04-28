@@ -15,7 +15,6 @@ BEGIN
 	SELECT
 		[Id],
 		[Name],
-		[Code],
 		[IsActived],
 		[IsDeleted],
 		[Description],
@@ -41,7 +40,6 @@ BEGIN
 	SELECT
 		[Id],
 		[Name],
-		[Code],
 		[IsActived],
 		[IsDeleted],
 		[Description],
@@ -69,7 +67,6 @@ BEGIN
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
 		[Id],
 		[Name],
-		[Code],
 		[IsActived],
 		[IsDeleted],
 		[Description],
@@ -93,17 +90,15 @@ DROP PROCEDURE [SY_RoleInsert];
 GO
 CREATE PROCEDURE [dbo].[SY_RoleInsert]
 	@Name nvarchar(100) = null,
-	@Code nvarchar(50) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
 	@Description nvarchar(1000) = null,
-	@OrderNumber nchar(10) = null
+	@OrderNumber int = null
 AS
 BEGIN
 	INSERT INTO [SY_Role]
 	(
 		[Name],
-		[Code],
 		[IsActived],
 		[IsDeleted],
 		[Description],
@@ -112,7 +107,6 @@ BEGIN
 	VALUES
 	(
 		@Name,
-		@Code,
 		@IsActived,
 		@IsDeleted,
 		@Description,
@@ -134,16 +128,14 @@ GO
 CREATE PROCEDURE [dbo].[SY_RoleUpdate]
 	@Id int = null,
 	@Name nvarchar(100) = null,
-	@Code nvarchar(50) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
 	@Description nvarchar(1000) = null,
-	@OrderNumber nchar(10) = null
+	@OrderNumber int = null
 AS
 BEGIN
 	UPDATE [SY_Role] SET
 		[Name] = @Name,
-		[Code] = @Code,
 		[IsActived] = @IsActived,
 		[IsDeleted] = @IsDeleted,
 		[Description] = @Description,

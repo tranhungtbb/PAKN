@@ -30,6 +30,29 @@ namespace PAKNAPI.ControllerBase
 			_bugsnag = bugsnag;
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("DAMAdministrationCheckExistedIdBase")]
+		public async Task<ActionResult<object>> DAMAdministrationCheckExistedIdBase(int? AdministrationId)
+		{
+			try
+			{
+				List<DAMAdministrationCheckExistedId> rsDAMAdministrationCheckExistedId = await new DAMAdministrationCheckExistedId(_appSetting).DAMAdministrationCheckExistedIdDAO(AdministrationId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"DAMAdministrationCheckExistedId", rsDAMAdministrationCheckExistedId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("DAMAdministrationDeleteBase")]
@@ -80,6 +103,26 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("DAMAdministrationDeleteAllBase")]
+		public async Task<ActionResult<object>> DAMAdministrationDeleteAllBase()
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new DAMAdministrationDeleteAll(_appSetting).DAMAdministrationDeleteAllDAO() };
 			}
 			catch (Exception ex)
 			{
@@ -823,29 +866,6 @@ namespace PAKNAPI.ControllerBase
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("DAMCompositionProfileGetByAdministrationBase")]
-		public async Task<ActionResult<object>> DAMCompositionProfileGetByAdministrationBase(int? Id)
-		{
-			try
-			{
-				List<DAMCompositionProfileGetByAdministration> rsDAMCompositionProfileGetByAdministration = await new DAMCompositionProfileGetByAdministration(_appSetting).DAMCompositionProfileGetByAdministrationDAO(Id);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"DAMCompositionProfileGetByAdministration", rsDAMCompositionProfileGetByAdministration},
-					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)

@@ -9,7 +9,7 @@ IF EXISTS
 DROP PROCEDURE [SY_ChatbotGetByID];
 GO
 CREATE PROCEDURE [dbo].[SY_ChatbotGetByID]
-	@Id int = null
+	@Id bigint = null
 AS
 BEGIN
 	SELECT
@@ -126,7 +126,7 @@ IF EXISTS
 DROP PROCEDURE [SY_ChatbotUpdate];
 GO
 CREATE PROCEDURE [dbo].[SY_ChatbotUpdate]
-	@Id int = null,
+	@Id bigint = null,
 	@Question nvarchar(1000) = null,
 	@Answer nvarchar(1000) = null,
 	@IsActived bit = null,
@@ -155,7 +155,7 @@ IF EXISTS
 DROP PROCEDURE [SY_ChatbotDelete];
 GO
 CREATE PROCEDURE [dbo].[SY_ChatbotDelete]
-	@Id int = null
+	@Id bigint = null
 AS
 BEGIN
 	DELETE [SY_Chatbot]

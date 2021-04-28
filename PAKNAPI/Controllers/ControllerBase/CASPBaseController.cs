@@ -54,6 +54,49 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("CAFieldDAMGetDropdownBase")]
+		public async Task<ActionResult<object>> CAFieldDAMGetDropdownBase()
+		{
+			try
+			{
+				List<CAFieldDAMGetDropdown> rsCAFieldDAMGetDropdown = await new CAFieldDAMGetDropdown(_appSetting).CAFieldDAMGetDropdownDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAFieldDAMGetDropdown", rsCAFieldDAMGetDropdown},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("CAFieldDAMInsertBase")]
+		public async Task<ActionResult<object>> CAFieldDAMInsertBase(CAFieldDAMInsertIN _cAFieldDAMInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldDAMInsert(_appSetting).CAFieldDAMInsertDAO(_cAFieldDAMInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
 		[Authorize]
 		[Route("CAFieldGetDropdownBase")]
 		public async Task<ActionResult<object>> CAFieldGetDropdownBase()

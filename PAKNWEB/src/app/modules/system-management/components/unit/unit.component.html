@@ -117,7 +117,7 @@
 											<div class="dropdown bootstrap-select form-control form-control-sm">
 												<!-- [items]="listStatus" bindLabel="text" bindValue="value" -->
 												<ng-select style="width:130px;" [(ngModel)]="queryUser.isActived" [closeOnSelect]="true" [searchable]="false"
-													(change)="onUserFilterChange()">
+													(change)="onUserFilterChange()" placeholder="Chọn...">
 													<ng-option *ngFor="let item of listStatus" [value]="item.value">
 														{{item.text}}
 													</ng-option>

@@ -20,7 +20,8 @@ BEGIN
 		[FormType],
 		[OriginalForm],
 		[CopyForm],
-		[IsBind]
+		[IsBind],
+		[CompositionProfileId]
 	FROM [DAM_CompositionProfile]
 	WHERE [Id] = @Id
 END
@@ -47,7 +48,8 @@ BEGIN
 		[FormType],
 		[OriginalForm],
 		[CopyForm],
-		[IsBind]
+		[IsBind],
+		[CompositionProfileId]
 	FROM [DAM_CompositionProfile]
 END
 GO
@@ -76,7 +78,8 @@ BEGIN
 		[FormType],
 		[OriginalForm],
 		[CopyForm],
-		[IsBind]
+		[IsBind],
+		[CompositionProfileId]
 	FROM [DAM_CompositionProfile]
 	ORDER BY [Id]
 	OFFSET (@PageIndex-1) * @PageSize ROWS
@@ -99,9 +102,10 @@ CREATE PROCEDURE [dbo].[DAM_CompositionProfileInsert]
 	@NameExhibit nvarchar(2000) = null,
 	@Form nvarchar(100) = null,
 	@FormType nvarchar(50) = null,
-	@OriginalForm tinyint = null,
-	@CopyForm tinyint = null,
-	@IsBind bit = null
+	@OriginalForm nvarchar(20) = null,
+	@CopyForm nvarchar(20) = null,
+	@IsBind bit = null,
+	@CompositionProfileId int = null
 AS
 BEGIN
 	INSERT INTO [DAM_CompositionProfile]
@@ -112,7 +116,8 @@ BEGIN
 		[FormType],
 		[OriginalForm],
 		[CopyForm],
-		[IsBind]
+		[IsBind],
+		[CompositionProfileId]
 	)
 	VALUES
 	(
@@ -122,7 +127,8 @@ BEGIN
 		@FormType,
 		@OriginalForm,
 		@CopyForm,
-		@IsBind
+		@IsBind,
+		@CompositionProfileId
 	)
 END
 GO
@@ -143,9 +149,10 @@ CREATE PROCEDURE [dbo].[DAM_CompositionProfileUpdate]
 	@NameExhibit nvarchar(2000) = null,
 	@Form nvarchar(100) = null,
 	@FormType nvarchar(50) = null,
-	@OriginalForm tinyint = null,
-	@CopyForm tinyint = null,
-	@IsBind bit = null
+	@OriginalForm nvarchar(20) = null,
+	@CopyForm nvarchar(20) = null,
+	@IsBind bit = null,
+	@CompositionProfileId int = null
 AS
 BEGIN
 	UPDATE [DAM_CompositionProfile] SET
@@ -155,7 +162,8 @@ BEGIN
 		[FormType] = @FormType,
 		[OriginalForm] = @OriginalForm,
 		[CopyForm] = @CopyForm,
-		[IsBind] = @IsBind
+		[IsBind] = @IsBind,
+		[CompositionProfileId] = @CompositionProfileId
 	WHERE [Id] = @Id
 END
 GO

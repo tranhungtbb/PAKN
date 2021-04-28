@@ -37,6 +37,62 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class CAFieldDAMGetDropdown
+	{
+		private SQLCon _sQLCon;
+
+		public CAFieldDAMGetDropdown(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAFieldDAMGetDropdown()
+		{
+		}
+
+		public int? Value { get; set; }
+		public string Text { get; set; }
+		public int? ParentId { get; set; }
+
+		public async Task<List<CAFieldDAMGetDropdown>> CAFieldDAMGetDropdownDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAFieldDAMGetDropdown>("CA_FieldDAMGetDropdown", DP)).ToList();
+		}
+	}
+
+	public class CAFieldDAMInsert
+	{
+		private SQLCon _sQLCon;
+
+		public CAFieldDAMInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAFieldDAMInsert()
+		{
+		}
+
+		public async Task<int?> CAFieldDAMInsertDAO(CAFieldDAMInsertIN _cAFieldDAMInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("FieldDAMId", _cAFieldDAMInsertIN.FieldDAMId);
+			DP.Add("Name", _cAFieldDAMInsertIN.Name);
+			DP.Add("ParentId", _cAFieldDAMInsertIN.ParentId);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_FieldDAMInsert", DP);
+		}
+	}
+
+	public class CAFieldDAMInsertIN
+	{
+		public int? FieldDAMId { get; set; }
+		public string Name { get; set; }
+		public int? ParentId { get; set; }
+	}
+
 	public class CAFieldGetDropdown
 	{
 		private SQLCon _sQLCon;

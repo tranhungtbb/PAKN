@@ -353,7 +353,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> MRRecommendationFilesInsertDAO(MRRecommendationFilesInsertIN _mRRecommendationFilesInsertIN)
+		public async Task<decimal?> MRRecommendationFilesInsertDAO(MRRecommendationFilesInsertIN _mRRecommendationFilesInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("RecommendationId", _mRRecommendationFilesInsertIN.RecommendationId);
@@ -361,7 +361,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("FileType", _mRRecommendationFilesInsertIN.FileType);
 			DP.Add("FilePath", _mRRecommendationFilesInsertIN.FilePath);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_FilesInsert", DP));
+			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("MR_Recommendation_FilesInsert", DP);
 		}
 	}
 
@@ -987,6 +987,13 @@ namespace PAKNAPI.ModelBase
 		public long? UserActive { get; set; }
 		public int? IdProcess { get; set; }
 		public byte? StepProcess { get; set; }
+		public string ReceiveName { get; set; }
+		public string ProcessUnitName { get; set; }
+		public DateTime? ExpriredDate { get; set; }
+		public DateTime? ProcessingDate { get; set; }
+		public string ApprovedName { get; set; }
+		public DateTime? ApprovedDate { get; set; }
+		public string ReasonDeny { get; set; }
 
 		public async Task<List<MRRecommendationGetByIDView>> MRRecommendationGetByIDViewDAO(int? Id)
 		{

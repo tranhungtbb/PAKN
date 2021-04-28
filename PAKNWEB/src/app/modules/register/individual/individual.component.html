@@ -71,7 +71,6 @@
 					<label class="mb-1">Quốc tịch <span class="cl-red">(*)</span></label>
 					<ng-select [(ngModel)]="model.nation" *ngIf="!nation_enable_type" formControlName="nation" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
 						(change)="onChangeNation()">
-						<ng-option value="">Chọn...</ng-option>
 						<ng-option *ngFor="let nation of listNation" [value]="nation.id">{{nation.name}}</ng-option>
 						<ng-option value="#">Khác</ng-option>
 					</ng-select>
