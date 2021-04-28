@@ -237,18 +237,19 @@ namespace PAKNAPI.ModelBase
 		public int? RowNumber { get; set; }
 		public string Code { get; set; }
 		public string Name { get; set; }
-		public string UnitName { get; set; }
 		public string FieldName { get; set; }
 		public string Object { get; set; }
 		public byte? Status { get; set; }
 		public int Id { get; set; }
+		public string Organization { get; set; }
 
-		public async Task<List<DAMAdministrationGetList>> DAMAdministrationGetListDAO(string Code, string Name, string Object, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex, int? TotalRecords)
+		public async Task<List<DAMAdministrationGetList>> DAMAdministrationGetListDAO(string Code, string Name, string Object, string Organization, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex, int? TotalRecords)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Code", Code);
 			DP.Add("Name", Name);
 			DP.Add("Object", Object);
+			DP.Add("Organization", Organization);
 			DP.Add("UnitId", UnitId);
 			DP.Add("Field", Field);
 			DP.Add("Status", Status);

@@ -65,7 +65,7 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 	}
 
 	getDataForCreate() {
-		this.recommendationService.recommendationGetDataForCreate({}).subscribe((response) => {
+		this.recommendationService.recommendationGetDataForCreate({}).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.lstUnit = response.result.lstUnit
@@ -75,7 +75,7 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.log(error)
 			}
 	}
@@ -99,18 +99,20 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 			PageSize: this.pageSize,
 		}
 
-		this.afService.getList(request).subscribe((response) => {
+		this.afService.getList(request).subscribe(response => {
+			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
 					this.listData = response.result.DAMAdministrationGetList
+					console.log(response.result.DAMAdministrationGetList)
 					this.totalRecords = response.result.TotalCount
 				}
 			} else {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.log(error)
 				alert(error)
 			}
@@ -158,7 +160,7 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this.afService.delete(request).subscribe((response) => {
+		this.afService.delete(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				$('#modalConfirmDelete').modal('hide')
@@ -167,7 +169,7 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.error(error)
 			}
 	}
