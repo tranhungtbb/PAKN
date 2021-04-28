@@ -51,7 +51,7 @@
   </ItemGroup>
   
 	<ItemGroup>
-		<Content Include="Upload\Remind\**">
+		<Content Include="Upload\**">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
