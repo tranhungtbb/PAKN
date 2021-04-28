@@ -65,114 +65,6 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-	public class SYRoleGetAllOnPage
-	{
-		private SQLCon _sQLCon;
-
-		public SYRoleGetAllOnPage(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public SYRoleGetAllOnPage()
-		{
-		}
-
-		public int? RowNumber { get; set; }
-		public int Id { get; set; }
-		public int? OrderNumber { get; set; }
-		public int? UserCount { get; set; }
-		public string Name { get; set; }
-		public string Description { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
-
-		public async Task<List<SYRoleGetAllOnPage>> SYRoleGetAllOnPageDAO(int? PageSize, int? PageIndex, int? UserCount, string Name, string Description, bool? IsActived)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("UserCount", UserCount);
-			DP.Add("Name", Name);
-			DP.Add("Description", Description);
-			DP.Add("IsActived", IsActived);
-
-			return (await _sQLCon.ExecuteListDapperAsync<SYRoleGetAllOnPage>("SY_RoleGetAllOnPage", DP)).ToList();
-		}
-	}
-
-	public class SYRoleInsert
-	{
-		private SQLCon _sQLCon;
-
-		public SYRoleInsert(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public SYRoleInsert()
-		{
-		}
-
-		public async Task<int?> SYRoleInsertDAO(SYRoleInsertIN _sYRoleInsertIN)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("OrderNumber", _sYRoleInsertIN.OrderNumber);
-			DP.Add("Name", _sYRoleInsertIN.Name);
-			DP.Add("IsActived", _sYRoleInsertIN.IsActived);
-			DP.Add("IsDeleted", _sYRoleInsertIN.IsDeleted);
-			DP.Add("Description", _sYRoleInsertIN.Description);
-
-			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_RoleInsert", DP);
-		}
-	}
-
-	public class SYRoleInsertIN
-	{
-		public int? OrderNumber { get; set; }
-		public string Name { get; set; }
-		public bool? IsActived { get; set; }
-		public bool? IsDeleted { get; set; }
-		public string Description { get; set; }
-	}
-
-	public class SYRoleUpdate
-	{
-		private SQLCon _sQLCon;
-
-		public SYRoleUpdate(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public SYRoleUpdate()
-		{
-		}
-
-		public async Task<int?> SYRoleUpdateDAO(SYRoleUpdateIN _sYRoleUpdateIN)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _sYRoleUpdateIN.Id);
-			DP.Add("OrderNumber", _sYRoleUpdateIN.OrderNumber);
-			DP.Add("Name", _sYRoleUpdateIN.Name);
-			DP.Add("IsActived", _sYRoleUpdateIN.IsActived);
-			DP.Add("IsDeleted", _sYRoleUpdateIN.IsDeleted);
-			DP.Add("Description", _sYRoleUpdateIN.Description);
-
-			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_RoleUpdate", DP);
-		}
-	}
-
-	public class SYRoleUpdateIN
-	{
-		public int? Id { get; set; }
-		public int? OrderNumber { get; set; }
-		public string Name { get; set; }
-		public bool? IsActived { get; set; }
-		public bool? IsDeleted { get; set; }
-		public string Description { get; set; }
-	}
-
 	public class SYSystemLogGetAllOnPage
 	{
 		private SQLCon _sQLCon;
@@ -347,6 +239,48 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UnitId", UnitId);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetByUnitId>("SY_UserGetByUnitId", DP)).ToList();
+		}
+	}
+
+	public class SYUserGetByUserName
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserGetByUserName(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserGetByUserName()
+		{
+		}
+
+		public long Id { get; set; }
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public string Password { get; set; }
+		public string Salt { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public bool Gender { get; set; }
+		public byte Type { get; set; }
+		public bool IsSuperAdmin { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public int? UnitId { get; set; }
+		public byte? CountLock { get; set; }
+		public DateTime? LockEndOut { get; set; }
+		public string Avatar { get; set; }
+		public string Address { get; set; }
+		public int? PositionId { get; set; }
+		public int TypeId { get; set; }
+
+		public async Task<List<SYUserGetByUserName>> SYUserGetByUserNameDAO(string UserName)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserName", UserName);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetByUserName>("SY_UserGetByUserName", DP)).ToList();
 		}
 	}
 

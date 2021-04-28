@@ -20,7 +20,6 @@ export class RoleComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 
 	listStatus: any = [
-		{ value: '', text: 'Trạng thái' },
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
 	]
@@ -32,6 +31,7 @@ export class RoleComponent implements OnInit {
 	name: string = ''
 	description: string = ''
 	isActived: boolean
+	userCount: Number
 	totalRecords: Number
 	listData: any[]
 
@@ -47,6 +47,7 @@ export class RoleComponent implements OnInit {
 				PageIndex: this.pageIndex,
 				PageSize: this.pageSize,
 				Name: this.name == null ? '' : this.name,
+				UserCount: this.userCount == null ? '' : this.userCount,
 				Description: this.description == null ? '' : this.description,
 				IsActived: this.isActived == null ? '' : this.isActived,
 			})
@@ -114,10 +115,10 @@ export class RoleComponent implements OnInit {
 	}
 
 	redirectCreate() {
-		this.routes.navigate(['quan-tri/vai-tro/them-moi'])
+		this.routes.navigate(['quan-tri/he-thong/vai-tro/them-moi'])
 	}
 
 	redirectUpdate(id: number) {
-		this.routes.navigate(['quan-tri/vai-tro/cap-nhap/' + id])
+		this.routes.navigate(['quan-tri/he-thong/vai-tro/cap-nhap/' + id])
 	}
 }
