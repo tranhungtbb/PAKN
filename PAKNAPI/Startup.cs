@@ -35,7 +35,7 @@ namespace BookLibAPI
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddCors();
-			services.AddMvc().AddNewtonsoftJson();
+			services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver()).AddNewtonsoftJson();
 			services.AddMvc(options =>
 			{
 				options.Filters.Add(new AuthorizeFilter("ThePolicy"));
