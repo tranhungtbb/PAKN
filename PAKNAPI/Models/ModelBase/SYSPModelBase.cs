@@ -64,32 +64,6 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<SYPermissionCheckByUserId>("SY_PermissionCheckByUserId", DP)).ToList();
 		}
 	}
-	public class SYRoleDelete
-	{
-		private SQLCon _sQLCon;
-
-		public SYRoleDelete(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public SYRoleDelete()
-		{
-		}
-
-		public async Task<int> SYRoleDeleteDAO(SYRoleDeleteIN _sYRoleDeleteIN)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _sYRoleDeleteIN.Id);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_RoleDelete", DP));
-		}
-	}
-
-	public class SYRoleDeleteIN
-	{
-		public int? Id { get; set; }
-	}
 
 	public class SYRoleGetAllOnPage
 	{
@@ -227,6 +201,7 @@ namespace PAKNAPI.ModelBase
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
 	}
+
 	public class SYSystemLogGetAllOnPage
 	{
 		private SQLCon _sQLCon;
@@ -362,6 +337,42 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYUserGetByRoleIdAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserGetByRoleIdAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserGetByRoleIdAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public byte Type { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public int? UnitId { get; set; }
+		public string Address { get; set; }
+
+		public async Task<List<SYUserGetByRoleIdAllOnPage>> SYUserGetByRoleIdAllOnPageDAO(int? PageSize, int? PageIndex, int? RoleId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("RoleId", RoleId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetByRoleIdAllOnPage>("SY_UserGetByRoleIdAllOnPage", DP)).ToList();
+		}
+	}
+
 	public class SYUserGetByUnitId
 	{
 		private SQLCon _sQLCon;
@@ -446,6 +457,30 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYUserGetIsSystem
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserGetIsSystem(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserGetIsSystem()
+		{
+		}
+
+		public long value { get; set; }
+		public string text { get; set; }
+
+		public async Task<List<SYUserGetIsSystem>> SYUserGetIsSystemDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetIsSystem>("SY_UserGetIsSystem", DP)).ToList();
+		}
+	}
+
 	public class SYUserGetNonSystem
 	{
 		private SQLCon _sQLCon;
@@ -485,5 +520,63 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetNonSystem>("SY_UserGetNonSystem", DP)).ToList();
 		}
+	}
+
+	public class SYUserRoleMapDelete
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserRoleMapDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserRoleMapDelete()
+		{
+		}
+
+		public async Task<int> SYUserRoleMapDeleteDAO(SYUserRoleMapDeleteIN _sYUserRoleMapDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", _sYUserRoleMapDeleteIN.UserId);
+			DP.Add("RoleId", _sYUserRoleMapDeleteIN.RoleId);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserRoleMapDelete", DP));
+		}
+	}
+
+	public class SYUserRoleMapDeleteIN
+	{
+		public long? UserId { get; set; }
+		public long? RoleId { get; set; }
+	}
+
+	public class SYUserRoleMapInsert
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserRoleMapInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserRoleMapInsert()
+		{
+		}
+
+		public async Task<int> SYUserRoleMapInsertDAO(SYUserRoleMapInsertIN _sYUserRoleMapInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", _sYUserRoleMapInsertIN.UserId);
+			DP.Add("RoleId", _sYUserRoleMapInsertIN.RoleId);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserRoleMapInsert", DP));
+		}
+	}
+
+	public class SYUserRoleMapInsertIN
+	{
+		public long? UserId { get; set; }
+		public long? RoleId { get; set; }
 	}
 }

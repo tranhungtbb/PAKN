@@ -20,6 +20,19 @@ export class UserService {
 	getById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetById)
 	}
+
+	getByRoleIdOnPage(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetByRoleIdOnPage)
+	}
+
+	getIsSystem(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetIsSystem)
+	}
+
+	insertMultiUserRole(query: any): Observable<any> {
+		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.InsertMultiUserRole)
+	}
+
 	insert(data: any, files: any = null): Observable<any> {
 		let form = new FormData()
 
@@ -49,6 +62,10 @@ export class UserService {
 	}
 	delete(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserDelete)
+	}
+
+	deleteUserRole(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.DeleteUserRole)
 	}
 
 	getAvatar(id: number): Observable<any> {

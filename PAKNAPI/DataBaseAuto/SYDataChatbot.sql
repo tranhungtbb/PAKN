@@ -13,10 +13,12 @@ CREATE PROCEDURE [dbo].[SY_DataChatbotGetByID]
 AS
 BEGIN
 	SELECT
-		[Id],
 		[FullName],
 		[Question],
 		[Answer],
+		[IsActived],
+		[IsDeleted],
+		[Id],
 		[Kluid],
 		[UserId]
 	FROM [SY_DataChatbot]
@@ -38,10 +40,12 @@ CREATE PROCEDURE [dbo].[SY_DataChatbotGetAll]
 AS
 BEGIN
 	SELECT
-		[Id],
 		[FullName],
 		[Question],
 		[Answer],
+		[IsActived],
+		[IsDeleted],
+		[Id],
 		[Kluid],
 		[UserId]
 	FROM [SY_DataChatbot]
@@ -65,10 +69,12 @@ AS
 BEGIN
 	SELECT
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
-		[Id],
 		[FullName],
 		[Question],
 		[Answer],
+		[IsActived],
+		[IsDeleted],
+		[Id],
 		[Kluid],
 		[UserId]
 	FROM [SY_DataChatbot]
@@ -92,6 +98,8 @@ CREATE PROCEDURE [dbo].[SY_DataChatbotInsert]
 	@FullName nvarchar(255) = null,
 	@Question nvarchar(1000) = null,
 	@Answer nvarchar(1000) = null,
+	@IsActived bit = null,
+	@IsDeleted bit = null,
 	@Kluid nvarchar(255) = null,
 	@UserId bigint = null
 AS
@@ -101,6 +109,8 @@ BEGIN
 		[FullName],
 		[Question],
 		[Answer],
+		[IsActived],
+		[IsDeleted],
 		[Kluid],
 		[UserId]
 	)
@@ -109,6 +119,8 @@ BEGIN
 		@FullName,
 		@Question,
 		@Answer,
+		@IsActived,
+		@IsDeleted,
 		@Kluid,
 		@UserId
 	)
@@ -126,10 +138,12 @@ IF EXISTS
 DROP PROCEDURE [SY_DataChatbotUpdate];
 GO
 CREATE PROCEDURE [dbo].[SY_DataChatbotUpdate]
-	@Id bigint = null,
 	@FullName nvarchar(255) = null,
 	@Question nvarchar(1000) = null,
 	@Answer nvarchar(1000) = null,
+	@IsActived bit = null,
+	@IsDeleted bit = null,
+	@Id bigint = null,
 	@Kluid nvarchar(255) = null,
 	@UserId bigint = null
 AS
@@ -138,6 +152,8 @@ BEGIN
 		[FullName] = @FullName,
 		[Question] = @Question,
 		[Answer] = @Answer,
+		[IsActived] = @IsActived,
+		[IsDeleted] = @IsDeleted,
 		[Kluid] = @Kluid,
 		[UserId] = @UserId
 	WHERE [Id] = @Id

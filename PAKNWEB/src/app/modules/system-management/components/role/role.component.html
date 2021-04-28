@@ -56,9 +56,9 @@
 										placeholder="Nhập mô tả...">
 								</th>
 
-								<th style="width: 200px;">
+								<th style="width: 160px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Số lượng sử dụng</strong>
+										<strong>Số người</strong>
 										<span class="caret-tb"></span>
 									</p>
 									<input type="text" class="form-control form-control-sm" [(ngModel)]="userCount" (keydown.enter)="dataStateChange()"
@@ -75,7 +75,7 @@
 										</ng-select>
 									</div>
 								</th>
-								<th style="width: 100px;" class="text-right"><strong>THAO TÁC</strong></th>
+								<th style="width: 100px;" class="text-center"><strong>THAO TÁC</strong></th>
 							</tr>
 						</ng-template>
 						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -95,9 +95,10 @@
 										lực</span>
 								</td>
 								<td style="text-align: center;">
-									<div class="hover-active d-flex justify-content-end">
-										<a (click)="redirectUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-										<a (click)="confirm(item,'delete')" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
+									<div class="d-flex justify-content-end">
+										<a (click)="showListUser(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i class="bi bi-person-plus"></i></a>
+										<a (click)="redirectUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i class="bi bi-pencil-square"></i></a>
+										<a (click)="confirm(item,'delete')" class="btn-icon grd-red text-white cursor" data-toggle="modal" data-target="#modal-tc-pakn"><i
 												class="bi bi-trash"></i></a>
 									</div>
 								</td>
@@ -143,30 +144,106 @@
 	</div>
 </div>
 
-<!-- 
-
-<div class="modal fade" id="modalConfirmDelete">
-	<div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
+<div class="modal fade" id="modalUsersByRoleId">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="min-width: 90%;">
 		<div class="modal-content rounded">
-			<form class="form-horizontal">
-				<div class="panel panel-default no-margin">
-					<div class="modal-header" style="border: none;">
-						<button class="close btn-close-modal" data-dismiss="modal">
-							×
-						</button>
-					</div>
-					<div class="modal-body no-padding-bottom" style="border: none;">
-						<div style="text-align: center;">
-							<strong class="change-status-title">Bạn có chắc chắn thực hiện hành động này?</strong>
-						</div>
-					</div>
-					<div class="modal-footer" style="border: none; justify-content: center;">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác
-							nhận</button>
-					</div>
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4">Danh sách người dùng</p>
+				<button class="close btn-close-modal" data-dismiss="modal">
+					×
+				</button>
+			</div>
+			<div style="display: flex; margin: 10px 20px;">
+				<div style="width: 15%;" class="text-center-x">Chọn người dùng</div>
+				<div style="width: 75%;">
+					<ng-select class="form-control" [items]="listUserIsSystem" multiple="true" bindValue="value" bindLabel="text" [(ngModel)]="listItem"
+						(selected)="selected($event)" (removed)="removed($event)"></ng-select>
+
 				</div>
-			</form>
+				<div style="width: 10%;" class="text-center-x">
+					<button type="button" (click)="onCreateUserRole()" class="btn grd-xanhngoc btn-sm rounded border-0 text-white text-center-x"
+						style="width: 60%; height: 100%;">Thêm</button>
+				</div>
+			</div>
+			<div class="modal-body pt-3 pb-3">
+				<p-table #table2 [value]="listUser" [lazy]="true" (onLazyLoad)="onPageChange2($event)" [paginator]="true" [showCurrentPageReport]="true"
+					currentPageReportTemplate="Tổng số {{userTotalRecords}}" [rows]="userPageSize" [totalRecords]="userTotalRecords" [responsive]="true" autoLayout="true"
+					tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+					<ng-template pTemplate="header" class="bg-thead">
+						<tr>
+							<th>
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Tên người dùng</strong>
+									<span class="caret-tb"></span>
+								</p>
+							</th>
+
+							<th>
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Tên đăng nhập</strong>
+									<span class="caret-tb"></span>
+								</p>
+							</th>
+
+							<th>
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Phone</strong>
+									<span class="caret-tb"></span>
+								</p>
+							</th>
+
+							<th style="width: 180px;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Trạng thái</strong>
+									<span class="caret-tb"></span>
+								</p>
+							</th>
+							<td style="text-align: center; width: 100px;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Thao tác</strong>
+								</p>
+							</td>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+						<tr>
+							<td>
+								<strong class="highlight"><a class="ellipsis" title="Xem chi tiết">{{item.fullName}}</a></strong>
+							</td>
+
+							<td>
+								<p>{{item.userName}}</p>
+							</td>
+							<td>
+								<p>{{item.phone}}</p>
+							</td>
+							<td>
+								<span type="button" *ngIf="item.isActived == true" class="badge rounded-pill bg-success">Hiệu
+									lực</span>
+								<span type="button" *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Hết hiệu
+									lực</span>
+							</td>
+							<td class="text-center">
+								<div class="hover-active">
+									<a class="btn-icon grd-red text-white" (click)="onDeleteUserRole(item.id)" data-toggle="modal" data-target="#modal-tc-pakn"><i
+											class="bi bi-trash"></i></a>
+								</div>
+							</td>
+
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="emptymessage">
+						<tr>
+							<td class="text-center" colspan="5">Không có dữ liệu</td>
+						</tr>
+					</ng-template>
+				</p-table>
+			</div>
+			<!-- <div style="display: flex; float: right;">
+				<button class="btn grd-xanhngoc btn-sm rounded border-0 text-white" data-dismiss="modal" type="button">
+					Đóng </button>
+			</div> -->
 		</div>
+
 	</div>
-</div> -->
+</div>

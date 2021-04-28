@@ -9,6 +9,7 @@ import { COMMONS } from 'src/app/commons/commons'
 import { RoleObject } from '../../../../../models/roleObject'
 import { RoleService } from '../../../../../services/role.service'
 import { from } from 'rxjs'
+import { UserService } from 'src/app/services/user.service'
 
 declare var $: any
 
@@ -26,11 +27,24 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
 	]
-	constructor(private _toastr: ToastrService, private formBuilder: FormBuilder, private router: Router, private roleService: RoleService, private activatedRoute: ActivatedRoute) {}
+	listUserIsSystem: any[]
+	listItemUserSelected: any[]
+	userId: any
+	constructor(
+		private _toastr: ToastrService,
+		private formBuilder: FormBuilder,
+		private router: Router,
+		private roleService: RoleService,
+		private userService: UserService,
+		private activatedRoute: ActivatedRoute
+	) {
+		this.listItemUserSelected = []
+	}
 
 	ngOnInit() {
 		this.getRoleById()
 		this.buildForm()
+		this.getUsersIsSystem()
 	}
 
 	buildForm() {
@@ -39,6 +53,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 			isActived: [this.model.isActived, Validators.required],
 			orderNumber: [this.model.orderNumber],
 			description: [this.model.description],
+			userId: [this.userId],
 		})
 	}
 
@@ -60,6 +75,16 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 		this.action = this.model.id == 0 ? 'Thêm mới' : 'Cập nhập'
 	}
 
+	getUsersIsSystem() {
+		this.userService.getIsSystem({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.listUserIsSystem = res.result.SYUserGetIsSystem
+			} else {
+				this.listUserIsSystem = []
+			}
+		})
+	}
+
 	get f() {
 		return this.form.controls
 	}
@@ -70,6 +95,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 			isActived: this.model.isActived,
 			orderNumber: this.model.orderNumber,
 			description: this.model.description,
+			userId: this.userId,
 		})
 	}
 
@@ -122,5 +148,10 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 	}
 	redirectList() {
 		this.router.navigate(['quan-tri/he-thong/vai-tro'])
+	}
+
+	onCreateUser(data: any) {
+		this.listItemUserSelected.push(data)
+		console.log(this.listItemUserSelected)
 	}
 }
