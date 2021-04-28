@@ -231,6 +231,15 @@ export class RecommendationService {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationGetDataGraph)
 	}
 
+	getSendUserDataGraph(request): Observable<any> {
+		let headers = new HttpHeaders({
+			logAction: encodeURIComponent(LOG_ACTION.EXPORT),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		})
+
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationGetSendUserDataGraph)
+	}
+
 	recommendationGetByHashtagAllOnPage(request): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationGetByHashtagAllOnPage)
 	}

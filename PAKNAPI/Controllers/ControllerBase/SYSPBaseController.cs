@@ -116,19 +116,56 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("SYRoleGetAllOnPageBase")]
-		public async Task<ActionResult<object>> SYRoleGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
+		public async Task<ActionResult<object>> SYRoleGetAllOnPageBase(int? PageSize, int? PageIndex, int? UserCount, string Name, string Description, bool? IsActived)
 		{
 			try
 			{
-				List<SYRoleGetAllOnPage> rsSYRoleGetAllOnPage = await new SYRoleGetAllOnPage(_appSetting).SYRoleGetAllOnPageDAO(PageSize, PageIndex, Name, Description, IsActived);
+				List<SYRoleGetAllOnPage> rsSYRoleGetAllOnPage = await new SYRoleGetAllOnPage(_appSetting).SYRoleGetAllOnPageDAO(PageSize, PageIndex, UserCount, Name, Description, IsActived);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYRoleGetAllOnPage", rsSYRoleGetAllOnPage},
-						{"TotalCount", rsSYRoleGetAllOnPage != null && rsSYRoleGetAllOnPage.Count > 0 ? rsSYRoleGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsSYRoleGetAllOnPage != null && rsSYRoleGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsSYRoleGetAllOnPage != null && rsSYRoleGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYRoleInsertBase")]
+		public async Task<ActionResult<object>> SYRoleInsertBase(SYRoleInsertIN _sYRoleInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYRoleInsert(_appSetting).SYRoleInsertDAO(_sYRoleInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYRoleUpdateBase")]
+		public async Task<ActionResult<object>> SYRoleUpdateBase(SYRoleUpdateIN _sYRoleUpdateIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYRoleUpdate(_appSetting).SYRoleUpdateDAO(_sYRoleUpdateIN) };
 			}
 			catch (Exception ex)
 			{
@@ -254,66 +291,6 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpPost]
-		[Authorize("ThePolicy")]
-		[Route("SYUserChangePwdBase")]
-		public async Task<ActionResult<object>> SYUserChangePwdBase(SYUserChangePwdIN _sYUserChangePwdIN)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_sYUserChangePwdIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize("ThePolicy")]
-		[Route("SYUserChangePwdListBase")]
-		public async Task<ActionResult<object>> SYUserChangePwdListBase(List<SYUserChangePwdIN> _sYUserChangePwdINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _sYUserChangePwdIN in _sYUserChangePwdINs)
-				{
-					var result = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_sYUserChangePwdIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("SYUserGetByUnitIdBase")]
@@ -325,29 +302,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYUserGetByUnitId", rsSYUserGetByUnitId},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("SYUserGetNameByIdBase")]
-		public async Task<ActionResult<object>> SYUserGetNameByIdBase(long? Id)
-		{
-			try
-			{
-				List<SYUserGetNameById> rsSYUserGetNameById = await new SYUserGetNameById(_appSetting).SYUserGetNameByIdDAO(Id);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"SYUserGetNameById", rsSYUserGetNameById},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
