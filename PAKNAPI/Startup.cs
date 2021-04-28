@@ -45,9 +45,9 @@ namespace BookLibAPI
 			{
 				options.Filters.Add(new AuthorizeFilter("ThePolicy"));
 			});
-			services.AddMvc().AddDefaultReportingControllers();
+			services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver()).AddDefaultReportingControllers();
 
-			services.AddMvc().ConfigureApplicationPartManager(x =>
+			services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver()).ConfigureApplicationPartManager(x =>
 			{
 				var parts = x.ApplicationParts;
 				var aspNetCoreReportingAssemblyName = typeof(DevExpress.AspNetCore.Reporting.WebDocumentViewer.WebDocumentViewerController).Assembly.GetName().Name;
@@ -58,7 +58,7 @@ namespace BookLibAPI
 				}
 			});
 
-			services.AddMvc().AddNewtonsoftJson(o =>
+			services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver()).AddNewtonsoftJson(o =>
 			{
 				
 				o.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
