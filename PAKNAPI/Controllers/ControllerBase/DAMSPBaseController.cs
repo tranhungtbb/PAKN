@@ -302,11 +302,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("DAMAdministrationGetListBase")]
-		public async Task<ActionResult<object>> DAMAdministrationGetListBase(string Code, string Name, string Object, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex, int? TotalRecords)
+		public async Task<ActionResult<object>> DAMAdministrationGetListBase(string Code, string Name, string Object, string Organization, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex, int? TotalRecords)
 		{
 			try
 			{
-				List<DAMAdministrationGetList> rsDAMAdministrationGetList = await new DAMAdministrationGetList(_appSetting).DAMAdministrationGetListDAO(Code, Name, Object, UnitId, Field, Status, PageSize, PageIndex, TotalRecords);
+				List<DAMAdministrationGetList> rsDAMAdministrationGetList = await new DAMAdministrationGetList(_appSetting).DAMAdministrationGetListDAO(Code, Name, Object, Organization, UnitId, Field, Status, PageSize, PageIndex, TotalRecords);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"DAMAdministrationGetList", rsDAMAdministrationGetList},
