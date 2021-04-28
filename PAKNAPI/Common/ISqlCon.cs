@@ -75,7 +75,6 @@ namespace PAKNAPI.Commons.SQL
 		Task<IEnumerable<T>> ExecuteListAsync<T>(string sqlText, CommandType cmdType = CommandType.StoredProcedure, DynamicParameters dp = null);
 		Task<IEnumerable<T>> ExecuteTextListAsync<T>(string sqlText, DynamicParameters dp = null);
 		Task<IEnumerable<T>> ExecuteProcListAsync<T>(string sqlText, DynamicParameters dp = null);
-		Task<IEnumerable<T>> ExecuteProcListIsolationAsync<T>(string sqlText, DynamicParameters dp, ESConnection con);
 
 		/// <summary>
 		/// 
@@ -164,12 +163,9 @@ namespace PAKNAPI.Commons.SQL
 		T ExecuteScalarDapper<T>(string ProcedureName, DynamicParameters DP);
 		Task<T> ExecuteScalarDapperAsync<T>(string ProcedureName, DynamicParameters DP);
 		IEnumerable<T> ExecuteListDapper<T>(string ProcedureName, DynamicParameters DP);
-		IEnumerable<T> ExecuteListIsolationDapper<T>(string sqlText, DynamicParameters dp, ESConnection con);
-
 		Task<IEnumerable<T>> ExecuteListDapperAsync<T>(string ProcedureName, DynamicParameters DP);
 		T GetFirstOrDefaultEntityDapper<T>(string ProcedureName, DynamicParameters DP);
 		Task<T> GetFirstOrDefaultEntityDapperAsync<T>(string ProcedureName, DynamicParameters DP);
-		Task<T> GetFirstOrDefaultEntityIsolationDapperAsync<T>(string ProcedureName, DynamicParameters DP, ESConnection con);
 		Dapper.SqlMapper.GridReader GetQueryMultipleAsync(string ProcedureName, DynamicParameters DP);
 	}
 }

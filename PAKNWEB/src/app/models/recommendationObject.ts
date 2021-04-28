@@ -40,7 +40,7 @@ export class RecommendationSearchObject {
 		this.content = ''
 		this.place = ''
 		this.field = null
-		this.unitId = null
+		this.unitId = ''
 		this.status = null
 	}
 	code: string
