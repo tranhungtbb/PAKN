@@ -19,11 +19,6 @@ using PAKNAPI.Services.FileUpload;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Http;
 using System.IO;
-using Newtonsoft.Json;
-using DevExpress.AspNetCore.Reporting;
-using DevExpress.AspNetCore;
-using WebApi;
-using DevExpress.XtraReports.Web.WebDocumentViewer;
 
 namespace BookLibAPI
 {
@@ -40,32 +35,11 @@ namespace BookLibAPI
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddCors();
-			//service0
+			services.AddMvc().AddNewtonsoftJson();
 			services.AddMvc(options =>
 			{
 				options.Filters.Add(new AuthorizeFilter("ThePolicy"));
 			});
-			services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver()).AddDefaultReportingControllers();
-
-			services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver()).ConfigureApplicationPartManager(x =>
-			{
-				var parts = x.ApplicationParts;
-				var aspNetCoreReportingAssemblyName = typeof(DevExpress.AspNetCore.Reporting.WebDocumentViewer.WebDocumentViewerController).Assembly.GetName().Name;
-				var reportingPart = parts.FirstOrDefault(part => part.Name == aspNetCoreReportingAssemblyName);
-				if (reportingPart != null)
-				{
-					parts.Remove(reportingPart);
-				}
-			});
-
-			services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver()).AddNewtonsoftJson(o =>
-			{
-				
-				o.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
-				o.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
-			});
-			//services.AddSignalR();
-			services.AddSingleton<WebDocumentViewerOperationLogger, WebDocumentViewerOperationLogger>();
 
 			services.AddControllers().AddNewtonsoftJson(); ;
 			services.AddTransient<CustomMiddleware>();
@@ -96,8 +70,6 @@ namespace BookLibAPI
 			//services.AddMvc(options => {
 			//	options.OutputFormatters.Insert(0, new XmlDataContractSerializerOutputFormatter());
 			//}).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
-			services.AddDevExpressControls();
 
 			services.AddAuthentication(options =>
 			{
@@ -176,16 +148,11 @@ namespace BookLibAPI
 
 			app.UseHttpsRedirection();
 			//// note
-			DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension.RegisterExtensionGlobal(new ReportStorageWebExtension1());
-			DevExpress.XtraReports.Configuration.Settings.Default.UserDesignerOptions.DataBindingMode = DevExpress.XtraReports.UI.DataBindingMode.Bindings;
-			app.UseDevExpressControls();
-			app.UseStaticFiles();
 			app.UseStaticFiles();
 			app.UseStaticFiles(new StaticFileOptions()
 			{
 				FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Upload/Remind")),
-				RequestPath = new PathString("/Upload/Remind"),
-				ServeUnknownFileTypes = true // serve extensionless file
+				RequestPath = new PathString("/Upload/Remind")
 			});
 
 
