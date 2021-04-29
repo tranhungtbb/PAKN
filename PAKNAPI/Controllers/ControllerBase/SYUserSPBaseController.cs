@@ -174,6 +174,32 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYUserGetAllOnPageBase")]
+		public async Task<ActionResult<object>> SYUserGetAllOnPageBase(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived, int? UnitId, int? TypeId, string SortDir, string SortField)
+		{
+			try
+			{
+				List<SYUserGetAllOnPage> rsSYUserGetAllOnPage = await new SYUserGetAllOnPage(_appSetting).SYUserGetAllOnPageDAO(PageSize, PageIndex, UserName, FullName, Phone, IsActived, UnitId, TypeId, SortDir, SortField);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserGetAllOnPage", rsSYUserGetAllOnPage},
+						{"TotalCount", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? rsSYUserGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
 		[Authorize]
 		[Route("SYUserGetByIDBase")]
 		public async Task<ActionResult<object>> SYUserGetByIDBase(long? Id)
@@ -334,6 +360,66 @@ namespace PAKNAPI.ControllerBase
 				foreach (var _sYUserUpdateIN in _sYUserUpdateINs)
 				{
 					var result = await new SYUserUpdate(_appSetting).SYUserUpdateDAO(_sYUserUpdateIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYUserUpdateInfoBase")]
+		public async Task<ActionResult<object>> SYUserUpdateInfoBase(SYUserUpdateInfoIN _sYUserUpdateInfoIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserUpdateInfo(_appSetting).SYUserUpdateInfoDAO(_sYUserUpdateInfoIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYUserUpdateInfoListBase")]
+		public async Task<ActionResult<object>> SYUserUpdateInfoListBase(List<SYUserUpdateInfoIN> _sYUserUpdateInfoINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _sYUserUpdateInfoIN in _sYUserUpdateInfoINs)
+				{
+					var result = await new SYUserUpdateInfo(_appSetting).SYUserUpdateInfoDAO(_sYUserUpdateInfoIN);
 					if (result > 0)
 					{
 						count++;

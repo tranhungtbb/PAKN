@@ -186,6 +186,7 @@ namespace PAKNAPI.ModelBase
 
 		public int Id { get; set; }
 		public string Name { get; set; }
+		public string FieldName { get; set; }
 		public string Code { get; set; }
 		public string CountryCode { get; set; }
 		public int UnitReceive { get; set; }

@@ -30,7 +30,8 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		private storageService: UserInfoStorageService,
 		private authenService: AuthenticationService,
 		private sharedataService: DataService,
-		private diadanhService: DiadanhService
+		private diadanhService: DiadanhService,
+		private userLocal: UserInfoStorageService
 	) {
 		defineLocale('vi', viLocale)
 	}
@@ -133,7 +134,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 				this.toast.error(res.message)
 				return
 			}
-
+			this.userLocal.setFullName(this.model.fullName)
 			this.toast.success(COMMONS.UPDATE_SUCCESS)
 			this.router.navigate(['/cong-bo/tai-khoan/thong-tin'])
 		})

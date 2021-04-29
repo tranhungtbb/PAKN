@@ -103,6 +103,57 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYUserGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public string Password { get; set; }
+		public string Salt { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public bool Gender { get; set; }
+		public byte Type { get; set; }
+		public bool IsSuperAdmin { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public int? UnitId { get; set; }
+		public byte? CountLock { get; set; }
+		public DateTime? LockEndOut { get; set; }
+		public string Avatar { get; set; }
+		public string Address { get; set; }
+		public int? PositionId { get; set; }
+
+		public async Task<List<SYUserGetAllOnPage>> SYUserGetAllOnPageDAO(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived, int? UnitId, int? TypeId, string SortDir, string SortField)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("UserName", UserName);
+			DP.Add("FullName", FullName);
+			DP.Add("Phone", Phone);
+			DP.Add("IsActived", IsActived);
+			DP.Add("UnitId", UnitId);
+			DP.Add("TypeId", TypeId);
+			DP.Add("SortDir", SortDir);
+			DP.Add("SortField", SortField);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPage>("SY_UserGetAllOnPage", DP)).ToList();
+		}
+	}
+
 	public class SYUserGetByID
 	{
 		private SQLCon _sQLCon;
@@ -332,6 +383,37 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public int? PositionId { get; set; }
 		public string RoleIds { get; set; }
+	}
+
+	public class SYUserUpdateInfo
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserUpdateInfo(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserUpdateInfo()
+		{
+		}
+
+		public async Task<int> SYUserUpdateInfoDAO(SYUserUpdateInfoIN _sYUserUpdateInfoIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYUserUpdateInfoIN.Id);
+			DP.Add("FullName", _sYUserUpdateInfoIN.FullName);
+			DP.Add("Address", _sYUserUpdateInfoIN.Address);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserUpdateInfo", DP));
+		}
+	}
+
+	public class SYUserUpdateInfoIN
+	{
+		public long? Id { get; set; }
+		public string FullName { get; set; }
+		public string Address { get; set; }
 	}
 
 	public class SYUSRGetPermissionByUserId
