@@ -66,12 +66,28 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result.SYRoleGetByID) {
 							this.model = { ...res.result.SYRoleGetByID[0] }
+							this.getUsersByRoleId(this.model.id)
 						}
 					}
 				})
 			}
 		})
 		this.action = this.model.id == 0 ? 'Thêm mới' : 'Cập nhập'
+	}
+
+	getUsersByRoleId(roleId: any) {
+		this.userService.getByRoleId(roleId).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				debugger
+				res.result.SYUserGetAllByRoleId.forEach((element) => {
+					var obj = {
+						value: element.id,
+						text: element.name,
+					}
+					this.listItemUserSelected.push(obj)
+				})
+			}
+		})
 	}
 
 	getUsersIsSystem() {

@@ -91,7 +91,8 @@ export class Api {
 	// user
 	public static UserGetPagedList = 'SYUserSPBase/SYUserGetAllOnPageBase'
 	public static UserGetById = 'SYUserSPBase/SYUserGetByIDBase'
-	public static UserGetByRoleIdOnPage = 'SYSPBase/SYUserGetByRoleIdAllOnPageBase'
+	public static UserGetByRoleIdOnPage = 'SYUserSPBase/SYUserGetByRoleIdAllOnPageBase'
+	public static UserGetByRoleId = 'SYUserSPBase/SYUserGetAllByRoleIdBase'
 	public static UserInsert = 'User/Create' //'SYUserSPBase/SYUserInsertBase'
 	public static UserUpdate = 'User/Update' //'SYUserSPBase/SYUserUpdateBase'
 	public static UserDelete = 'User/Delete' //'SYUserSPBase/SYUserDeleteBase'GetAvatar
