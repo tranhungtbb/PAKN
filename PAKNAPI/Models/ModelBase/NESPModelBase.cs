@@ -280,6 +280,35 @@ namespace PAKNAPI.ModelBase
 		public bool? IsNotification { get; set; }
 	}
 
+	public class NENewsViewDetail
+	{
+		private SQLCon _sQLCon;
+
+		public NENewsViewDetail(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public NENewsViewDetail()
+		{
+		}
+
+		public string Title { get; set; }
+		public string Summary { get; set; }
+		public string Contents { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public string ImagePath { get; set; }
+		public string NewsRelateIds { get; set; }
+
+		public async Task<List<NENewsViewDetail>> NENewsViewDetailDAO(long? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<NENewsViewDetail>("NE_NewsViewDetail", DP)).ToList();
+		}
+	}
+
 	public class NERelateGetAll
 	{
 		private SQLCon _sQLCon;

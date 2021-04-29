@@ -2,17 +2,8 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
-				<li class="breadcrumb-item active"><a class="font-weight-bold">THƯ VIỆN CHAT BOT</a></li>
+				<li class="breadcrumb-item active"><a class="font-weight-bold">LỊCH SỬ CHATBOT</a></li>
 			</ol>
-			<div class="btn-group group-button-table" role="group">
-
-				<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="preCreate()">
-					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-					</svg>
-					Thêm mới
-				</button>
-			</div>
 		</div>
 	</div>
 	<div class="row">
@@ -30,6 +21,13 @@
 										<strong>STT</strong>
 									</p>
 								</th>
+								<th style="width: 250px">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>Tên</strong>
+									</p>
+									<input class="form-control form-control-sm" [(ngModel)]="fullName" maxlength="100" (keydown.enter)="dataStateChange()"
+										placeholder="Nhập tên..." />
+								</th>
 								<th style="width: 350px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Câu hỏi</strong>
@@ -44,41 +42,18 @@
 									<input class="form-control form-control-sm" [(ngModel)]="answer" maxlength="100" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập câu trả lời..." />
 								</th>
-								<th style="width: 160px">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Trạng thái</strong>
-									</p>
-									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="isActived"
-											[closeOnSelect]="true" (change)="dataStateChange()">
-										</ng-select>
-									</div>
-								</th>
-								<th class="text-right" style="width: 100px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Thao tác</strong>
-									</p>
-								</th>
 							</tr>
 						</ng-template>
 						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
+									<strong><a (click)="preView(item)" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.fullName}}</a></strong>
+								</td>
+								<td>
 									<strong><a (click)="preView(item)" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.question}}</a></strong>
 								</td>
 								<td>{{item.answer}}</td>
-								<td>
-									<span type="button" (click)="preUpdateStatus(item)" *ngIf="item.isActived == true" class="badge rounded-pill bg-success">Hiệu lực</span>
-									<span type="button" (click)="preUpdateStatus(item)" *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Hết hiệu lực</span>
-								</td>
-								<td style="max-width: 100px;">
-									<div class="d-flex justify-content-end">
-										<a type="button" (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-										<a type="button" (click)="preDelete(item.id, item.categoryId)" class="btn-icon grd-red text-white" data-toggle="modal"
-											data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
-									</div>
-								</td>
 							</tr>
 						</ng-template>
 						<ng-template pTemplate="emptymessage">
@@ -117,21 +92,13 @@
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label">Trạng thái <span class="text-danger">(*)</span></label>
-								<ng-select class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
-									[(ngModel)]="model.isActived" style="font-weight: 600;">
-								</ng-select>
-								<div *ngIf="(submitted && f.isActived.invalid) || (f.isActived.invalid && (f.isActived.dirty || f.isActived.touched))" class="has-error m-b-12">
-									<div *ngIf="f.isActived.errors.required">
-										<span class="help-block">Trường dữ liệu này không để trống</span>
-									</div>
-								</div>
 							</div>
 						</div>
 						<div class="row form-group">
 							<div class="col-sm-12">
 								<label class="control-label">Trả lời <span class="text-danger">(*)</span></label>
-								<textarea placeholder="Nhập trả lời..." class="form-control" textareaTrim formControlName="answer" type="text" rows="4"
-									[(ngModel)]="model.answer"></textarea>
+								<textarea placeholder="Nhập..." svTrim class="form-control" formControlName="answer" type="text" rows="4" [(ngModel)]="model.answer"
+									maxlength="255"></textarea>
 								<div *ngIf="(submitted && f.answer.invalid) || (f.answer.invalid && (f.answer.dirty || f.answer.touched))" class="has-error m-b-12">
 									<div *ngIf="f.answer.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -184,10 +151,10 @@
 								<label class="control-label lb600">Trạng thái: </label>
 							</div>
 							<div class="col-sm-4" style="text-align: right;">
-								<span style="padding: 7px;" *ngIf="model.isActived == true" class="badge rounded-pill bg-success">Hiệu
+								<!-- <span style="padding: 7px;" *ngIf="model.isActived == true" class="badge rounded-pill bg-success">Hiệu
 									lực</span>
 								<span style="padding: 7px;" *ngIf="model.isActived == false" class="badge rounded-pill badge-light">Hết
-									hiệu lực</span>
+									hiệu lực</span> -->
 							</div>
 						</div>
 					</div>

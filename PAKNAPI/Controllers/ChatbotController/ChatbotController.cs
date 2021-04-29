@@ -67,6 +67,30 @@ namespace PAKNAPI.Controllers.ChatbotController
 
         [HttpGet]
         [Authorize("ThePolicy")]
+        [Route("HistoryChatbotGetAllOnPage")]
+        public async Task<ActionResult<object>> HistoryChatbotGetAllOnPage(int? PageSize, int? PageIndex, string FullName, string Question, string Answer)
+        {
+            try
+            {
+                List<HistoryChatbotGetAllOnPage> rsHistoryChatbotGetAllOnPage = await new HistoryChatbotGetAllOnPage(_appSetting).HistoryChatbotGetAllOnPageDAO(PageSize, PageIndex, FullName, Question, Answer);
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"HistoryChatbotGetAllOnPage", rsHistoryChatbotGetAllOnPage},
+                        {"TotalCount", rsHistoryChatbotGetAllOnPage != null && rsHistoryChatbotGetAllOnPage.Count > 0 ? rsHistoryChatbotGetAllOnPage[0].RowNumber : 0},
+                        {"PageIndex", rsHistoryChatbotGetAllOnPage != null && rsHistoryChatbotGetAllOnPage.Count > 0 ? PageIndex : 0},
+                        {"PageSize", rsHistoryChatbotGetAllOnPage != null && rsHistoryChatbotGetAllOnPage.Count > 0 ? PageSize : 0},
+                    };
+                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [HttpGet]
+        [Authorize("ThePolicy")]
         [Route("ChatbotGetByID")]
         public async Task<ActionResult<object>> ChatbotGetByIDBase(int? Id)
         {

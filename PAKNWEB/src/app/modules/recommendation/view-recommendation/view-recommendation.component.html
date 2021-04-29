@@ -4,7 +4,7 @@
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
 					<li class="breadcrumb-item"><a>Phản ánh, Kiến nghị</a></li>
-					<li class="breadcrumb-item active"><a class="font-weight-bold"> Chi tiết PAKN</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold"> Chi tiết Phản ánh, kiến nghị</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
 					<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" appSvBackButton *ngIf="suggest == false">
@@ -465,7 +465,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<p class="h4 text-center mb-3">Bạn có chắc chắn từ chối <strong>PAKN</strong> này ko?</p>
+				<p class="h4 text-center mb-3">Bạn có chắc chắn từ chối <strong>Phản ánh, kiến nghị</strong> này ko?</p>
 				<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="modelProcess.reasonDeny" maxlength="500"></textarea>
 				<div class="custom-control custom-checkbox checkbox-danger mt-3" *ngIf="model.status == 2">
 					<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord" id="basic_checkbox_1">
@@ -496,7 +496,7 @@
 						<tr>
 							<th style="width: 120px">
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-									<strong>Mã số PAKN</strong>
+									<strong>Mã số Phản ánh, kiến nghị</strong>
 								</p>
 							</th>
 							<th>

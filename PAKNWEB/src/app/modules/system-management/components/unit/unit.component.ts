@@ -59,6 +59,14 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		address: '',
 		isActived: null,
 	}
+
+	//sort
+	unitSortDir = 'DESC'
+	unitSortField = 'ID'
+
+	usSortDir = 'DESC'
+	usSortField = 'ID'
+
 	totalCount_Unit: number = 0
 	unitPageCount: number = 0
 
@@ -127,6 +135,11 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.collapsed_checked[item] = !this.collapsed_checked[item]
 	}
 
+	onSortUnit(fieldName: string) {
+		this.unitSortField = fieldName
+		this.unitSortDir = this.unitSortDir == 'DESC' ? 'ASC' : 'DESC'
+		this.getUnitPagedList()
+	}
 	getUnitPagedList(): void {
 		this.unitService
 			.getAllPagedList({
@@ -138,6 +151,8 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				phone: this.query.phone.trim(),
 				address: this.query.address.trim(),
 				isActived: this.query.isActived == null ? '' : this.query.isActived,
+				sortDir: this.unitSortDir,
+				sortField: this.unitSortField,
 			})
 			.subscribe(
 				(res) => {
@@ -208,6 +223,11 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 
 	/*start user area*/
+	onSortUser(fieldName: string) {
+		this.usSortField = fieldName
+		this.usSortDir = this.usSortDir == 'DESC' ? 'ASC' : 'DESC'
+		this.getUserPagedList()
+	}
 	getUserPagedList() {
 		this.userService
 			.getAllPagedList({
@@ -219,6 +239,8 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				fullName: this.queryUser.fullName.trim(),
 				phone: this.queryUser.phone.trim(),
 				isActived: this.queryUser.isActived == null ? '' : this.queryUser.isActived,
+				sortDir: this.usSortDir,
+				sortField: this.usSortField,
 			})
 			.subscribe((res) => {
 				if (res.success != 'OK') return

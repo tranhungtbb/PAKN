@@ -552,7 +552,8 @@ namespace PAKNAPI.Controllers
 
 				if (accInfo[0].TypeId == 2)
                 {
-					var info = await new BIBusinessGetByUserId(_appSetting).BIBusinessGetByUserIdDAO(accInfo[0].Id);
+					accInfo[0].FullName = model.FullName;
+					var info = await new BIIndividualGetByUserId(_appSetting).BIIndividualGetByUserIdDAO(accInfo[0].Id);
 
 					var _model = new BIInvididualUpdateInfoIN
 					{
@@ -575,6 +576,7 @@ namespace PAKNAPI.Controllers
 				}
 				else if (accInfo[0].TypeId == 3)
                 {
+					accInfo[0].FullName = businessModel.RepresentativeName;
 					if (!DateTime.TryParseExact(businessModel.RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
 					{
 						//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
@@ -613,7 +615,14 @@ namespace PAKNAPI.Controllers
 					};
 					var rs = await new BIBusinessUpdateInfo(_appSetting).BIBusinessUpdateInfoDAO(_model);
 				}
-                
+
+				//update account
+
+				var rsUpdateAcc = new SYUserUpdateInfo(_appSetting).SYUserUpdateInfoDAO(new SYUserUpdateInfoIN { 
+					Id=accInfo[0].Id,
+					FullName= accInfo[0].FullName,
+					Address = accInfo[0].Address,
+				});
 
 				return new Models.Results.ResultApi { Success = ResultCode.OK};
 			}

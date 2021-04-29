@@ -317,6 +317,30 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYUnitGetDropdownLevel
+	{
+		private SQLCon _sQLCon;
+
+		public SYUnitGetDropdownLevel(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUnitGetDropdownLevel()
+		{
+		}
+
+		public int? Value { get; set; }
+		public string Text { get; set; }
+
+		public async Task<List<SYUnitGetDropdownLevel>> SYUnitGetDropdownLevelDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUnitGetDropdownLevel>("SY_UnitGetDropdownLevel", DP)).ToList();
+		}
+	}
+
 	public class SYUnitGetDropdownNotMain
 	{
 		private SQLCon _sQLCon;
@@ -511,5 +535,32 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetNonSystem>("SY_UserGetNonSystem", DP)).ToList();
 		}
+	}
+
+	public class SYNotificationDelete
+	{
+		private SQLCon _sQLCon;
+
+		public SYNotificationDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYNotificationDelete()
+		{
+		}
+
+		public async Task<int> SYNotificationDeleteDAO(SYNotificationDeleteIN _sYNotificationDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYNotificationDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SYNotificationDelete", DP));
+		}
+	}
+
+	public class SYNotificationDeleteIN
+	{
+		public int? Id { get; set; }
 	}
 }
