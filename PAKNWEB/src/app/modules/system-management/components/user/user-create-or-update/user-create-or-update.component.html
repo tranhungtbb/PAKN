@@ -32,7 +32,7 @@
 					</div>
 					<div class="form-row">
 						<div class="col-12 col-lg-8 form-group">
-							<label class="mb-1">Email/Tên đăng nhập <span class="cl-red">(*)</span></label>
+							<label class="mb-1">Email <span class="cl-red">(*)</span></label>
 							<input svTrim formControlName="email" [(ngModel)]="modelUser.email" type="text" class="form-control" placeholder="Nhập...">
 							<div *ngIf="(userFormSubmitted && fUser.email.invalid)||(fUser.email.invalid && (fUser.email.dirty || fUser.email.touched))" class="has-error m-b-12">
 								<div *ngIf="fUser.email.errors.required">

@@ -17,7 +17,7 @@
 					</div>
 					<div *ngIf="phone_exists && fLogin.phone.valid" class="has-error m-b-12">
 						<div *ngIf="phone_exists">
-							<span class="help-block">Số điện thoại đã tồn tại</span>
+							<span class="help-block">Số điện thoại đã được sử dụng</span>
 						</div>
 					</div>
 				</div>
@@ -57,7 +57,7 @@
 			<form [formGroup]="formInfo" class="form-row px-3" autocomplete="off">
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Họ và Tên <span class="cl-red">(*)</span></label>
-					<input [svTrim] [(ngModel)]="model.fullName" formControlName="fullName" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] maxlength="100" [(ngModel)]="model.fullName" formControlName="fullName" type="text" placeholder="Nhập..." class="form-control border-brown">
 					<div *ngIf="(fLoginSubmitted && fInfo.fullName.invalid)||(fInfo.fullName.invalid && (fInfo.fullName.dirty || fInfo.fullName.touched))" class="has-error m-b-12">
 						<div *ngIf="fInfo.fullName.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -157,7 +157,7 @@
 					</div>
 					<div *ngIf="email_exists && fInfo.email.valid" class="has-error m-b-12">
 						<div *ngIf="email_exists">
-							<span class="help-block">Email đã tồn tại</span>
+							<span class="help-block">Email đã được sử dụng</span>
 						</div>
 					</div>
 				</div>
@@ -188,7 +188,7 @@
 					</div>
 					<div *ngIf="idCard_exists && fInfo.iDCard.valid" class="has-error m-b-12">
 						<div *ngIf="idCard_exists">
-							<span class="help-block">Số CMND/CCCD đã tồn tại</span>
+							<span class="help-block">Số CMND/CCCD đã được sử dụng</span>
 						</div>
 					</div>
 				</div>

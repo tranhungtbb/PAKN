@@ -112,10 +112,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 				$('#seclect-avatar').val('')
 
 				if (res.success != 'OK') {
-					let errorMsg = COMMONS.UPDATE_FAILED
-					if (res.message.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
-						errorMsg = 'Email đã được sử dụng'
-					}
+					let errorMsg = res.message
 					this.toast.error(errorMsg)
 					return
 				}
@@ -129,10 +126,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 				$('#seclect-avatar').val('')
 
 				if (res.success != 'OK') {
-					let errorMsg = COMMONS.ADD_FAILED
-					if (res.message.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
-						errorMsg = 'Email đã được sử dụng'
-					}
+					let errorMsg = res.message
 					this.toast.error(errorMsg)
 					return
 				}
