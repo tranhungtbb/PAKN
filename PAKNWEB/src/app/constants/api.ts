@@ -98,6 +98,7 @@ export class Api {
 	public static UserDelete = 'User/Delete' //'SYUserSPBase/SYUserDeleteBase'GetAvatar
 	public static UserGetAvatar = 'User/GetAvatar' //'SYUserSPBase/SYUserDeleteBase'
 	public static SystemLogin = 'SYSPBase/SYSystemLogGetAllOnPageBase'
+	public static SystemLoginAdmin = 'SYSPBase/SYSystemLogGetAllOnPageBaseAdmin'
 	public static UserGetIsSystem = 'SYUserSPBase/SYUserGetIsSystemBase'
 	public static DeleteUserRole = 'SYUserSPBase/SYUserRoleMapDeleteBase'
 	public static InsertMultiUserRole = 'UserMapRole/SYUserRoleMapListInsert'
