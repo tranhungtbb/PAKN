@@ -191,6 +191,8 @@ namespace PAKNAPI.Controllers
 				{
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu không khớp" };
 				}
+				var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(loginInfo.Phone);
+				if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tài khoản đăng nhập đã được sử dụng" };
 
 				DateTime birdDay, dateOfIssue;
 				if (!DateTime.TryParseExact(_RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
@@ -295,6 +297,10 @@ namespace PAKNAPI.Controllers
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu không khớp" };
 				}
 
+				var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(loginInfo.Phone);
+				if(hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tài khoản đăng nhập đã được sử dụng" };
+
+
 				DateTime birdDay, dateOfIssue;
 				if (!DateTime.TryParseExact(_BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
 				{
@@ -358,11 +364,11 @@ namespace PAKNAPI.Controllers
 				model.Status = 1;
 				model.IsDeleted = false;
 				model.UserId = accRs[0].Id;
-				string contentSMSOPT = "(Trung tam tiep nhan PAKN tinh Khanh Hoa) Xin chao: " + model.FullName +". Mat khau dang nhap he thong la: " + account.Password + ". Xin cam on!";
-				SV.MailSMS.Model.SMTPSettings settings = new SV.MailSMS.Model.SMTPSettings();
-				settings.COM = _config["SmsCOM"].ToString();
-				SV.MailSMS.Control.SMSs sMSs = new SV.MailSMS.Control.SMSs(settings);
-				sMSs.SendOTPSMS(model.Phone,contentSMSOPT);
+				//string contentSMSOPT = "(Trung tam tiep nhan PAKN tinh Khanh Hoa) Xin chao: " + model.FullName +". Mat khau dang nhap he thong la: " + account.Password + ". Xin cam on!";
+				//SV.MailSMS.Model.SMTPSettings settings = new SV.MailSMS.Model.SMTPSettings();
+				//settings.COM = _config["SmsCOM"].ToString();
+				//SV.MailSMS.Control.SMSs sMSs = new SV.MailSMS.Control.SMSs(settings);
+				//sMSs.SendOTPSMS(model.Phone,contentSMSOPT);
 				var rs2 = await new BIIndividualInsert(_appSetting).BIIndividualInsertDAO(model);
 
 			}

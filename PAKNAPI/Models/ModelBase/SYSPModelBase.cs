@@ -65,6 +65,194 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYRoleDelete
+	{
+		private SQLCon _sQLCon;
+
+		public SYRoleDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYRoleDelete()
+		{
+		}
+
+		public async Task<int> SYRoleDeleteDAO(SYRoleDeleteIN _sYRoleDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYRoleDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_RoleDelete", DP));
+		}
+	}
+
+	public class SYRoleDeleteIN
+	{
+		public int? Id { get; set; }
+	}
+
+	public class SYRoleGetAll
+	{
+		private SQLCon _sQLCon;
+
+		public SYRoleGetAll(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYRoleGetAll()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+
+		public async Task<List<SYRoleGetAll>> SYRoleGetAllDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYRoleGetAll>("SY_RoleGetAll", DP)).ToList();
+		}
+	}
+
+	public class SYRoleGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public SYRoleGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYRoleGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public int? OrderNumber { get; set; }
+		public int? UserCount { get; set; }
+		public string Name { get; set; }
+		public string Description { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+
+		public async Task<List<SYRoleGetAllOnPage>> SYRoleGetAllOnPageDAO(int? PageSize, int? PageIndex, int? UserCount, string Name, string Description, bool? IsActived)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("UserCount", UserCount);
+			DP.Add("Name", Name);
+			DP.Add("Description", Description);
+			DP.Add("IsActived", IsActived);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYRoleGetAllOnPage>("SY_RoleGetAllOnPage", DP)).ToList();
+		}
+	}
+
+	public class SYRoleGetByID
+	{
+		private SQLCon _sQLCon;
+
+		public SYRoleGetByID(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYRoleGetByID()
+		{
+		}
+
+		public int Id { get; set; }
+		public int? OrderNumber { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
+
+		public async Task<List<SYRoleGetByID>> SYRoleGetByIDDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYRoleGetByID>("SY_RoleGetByID", DP)).ToList();
+		}
+	}
+
+	public class SYRoleInsert
+	{
+		private SQLCon _sQLCon;
+
+		public SYRoleInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYRoleInsert()
+		{
+		}
+
+		public async Task<int?> SYRoleInsertDAO(SYRoleInsertIN _sYRoleInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("OrderNumber", _sYRoleInsertIN.OrderNumber);
+			DP.Add("Name", _sYRoleInsertIN.Name);
+			DP.Add("IsActived", _sYRoleInsertIN.IsActived);
+			DP.Add("IsDeleted", _sYRoleInsertIN.IsDeleted);
+			DP.Add("Description", _sYRoleInsertIN.Description);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_RoleInsert", DP);
+		}
+	}
+
+	public class SYRoleInsertIN
+	{
+		public int? OrderNumber { get; set; }
+		public string Name { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public string Description { get; set; }
+	}
+
+	public class SYRoleUpdate
+	{
+		private SQLCon _sQLCon;
+
+		public SYRoleUpdate(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYRoleUpdate()
+		{
+		}
+
+		public async Task<int?> SYRoleUpdateDAO(SYRoleUpdateIN _sYRoleUpdateIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYRoleUpdateIN.Id);
+			DP.Add("OrderNumber", _sYRoleUpdateIN.OrderNumber);
+			DP.Add("Name", _sYRoleUpdateIN.Name);
+			DP.Add("IsActived", _sYRoleUpdateIN.IsActived);
+			DP.Add("IsDeleted", _sYRoleUpdateIN.IsDeleted);
+			DP.Add("Description", _sYRoleUpdateIN.Description);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_RoleUpdate", DP);
+		}
+	}
+
+	public class SYRoleUpdateIN
+	{
+		public int? Id { get; set; }
+		public int? OrderNumber { get; set; }
+		public string Name { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public string Description { get; set; }
+	}
+
 	public class SYSystemLogGetAllOnPage
 	{
 		private SQLCon _sQLCon;

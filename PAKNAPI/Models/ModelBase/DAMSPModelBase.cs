@@ -211,6 +211,7 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate { get; set; }
 		public DateTime? PublishedDate { get; set; }
 		public long? CreatedBy { get; set; }
+		public int? AdministrationId { get; set; }
 
 		public async Task<List<DAMAdministrationGetById>> DAMAdministrationGetByIdDAO(int? Id)
 		{
