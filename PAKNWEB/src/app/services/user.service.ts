@@ -7,6 +7,7 @@ import { Api } from '../constants/api'
 // import { retry } from 'rxjs/operators';
 // import { request } from 'http';
 import { UserInfoStorageService } from '../commons/user-info-storage.service'
+import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 
 @Injectable({
 	providedIn: 'root',
@@ -26,7 +27,11 @@ export class UserService {
 	}
 
 	getByRoleId(query: any): Observable<any> {
-		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetByRoleId)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.getwithHeaders(query, AppSettings.API_ADDRESS + Api.UserGetByRoleId, headers)
 	}
 
 	getIsSystem(query: any): Observable<any> {
