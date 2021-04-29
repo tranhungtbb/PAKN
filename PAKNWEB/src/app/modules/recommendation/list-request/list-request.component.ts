@@ -58,13 +58,13 @@ export class ListRequestComponent implements OnInit {
 	}
 
 	getDataForCreate() {
-		this._service.recommendationGetDataForCreate({}).subscribe((response) => {
+		this._service.recommendationGetDataForCreate({}).subscribe(response => {
 			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					console.log(response.result.CAFieldKNCTGetDropdown)
 					this.lstFields = response.result.CAFieldKNCTGetDropdown
-					this.lstFieldFilter = this.lstFields.filter((lstField) => {
+					this.lstFieldFilter = this.lstFields.filter(lstField => {
 						return lstField.text != null
 					})
 				}
@@ -72,7 +72,7 @@ export class ListRequestComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.log(error)
 			}
 	}
@@ -101,12 +101,12 @@ export class ListRequestComponent implements OnInit {
 		this.dataSearch.code = this.dataSearch.code.trim()
 		this.dataSearch.name = this.dataSearch.name.trim()
 		this.dataSearch.content = this.dataSearch.content.trim()
-		this.dataSearch.unitId = this.dataSearch.unitId.trim()
+		this.dataSearch.unit = this.dataSearch.unit.trim()
 		this.dataSearch.place = this.dataSearch.place.trim()
 		let request = {
 			Code: this.dataSearch.code,
 			Content: this.dataSearch.content,
-			Unit: this.dataSearch.unitId,
+			Unit: this.dataSearch.unit,
 			Place: this.dataSearch.place,
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
 			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
@@ -114,7 +114,7 @@ export class ListRequestComponent implements OnInit {
 			PageSize: this.pageSize,
 		}
 		console.log(request)
-		this._service.recommendationGetListProcess(request).subscribe((response) => {
+		this._service.recommendationGetListProcess(request).subscribe(response => {
 			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
@@ -126,7 +126,7 @@ export class ListRequestComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.log(error)
 				alert(error)
 			}
@@ -174,7 +174,7 @@ export class ListRequestComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.recommendationDelete(request).subscribe((response) => {
+		this._service.recommendationDelete(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				$('#modalConfirmDelete').modal('hide')
@@ -183,7 +183,7 @@ export class ListRequestComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.error(error)
 			}
 	}
@@ -192,7 +192,7 @@ export class ListRequestComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.recommendationGetHistories(request).subscribe((response) => {
+		this._service.recommendationGetHistories(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.lstHistories = response.result.HISRecommendationGetByObjectId
 				$('#modal-history-pakn').modal('show')
@@ -200,7 +200,7 @@ export class ListRequestComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.log(error)
 			}
 	}
@@ -209,7 +209,7 @@ export class ListRequestComponent implements OnInit {
 		this.modelForward = new RecommendationForwardObject()
 		this.modelForward.recommendationId = id
 		this.rebuilForm()
-		this._service.recommendationGetDataForForward({}).subscribe((response) => {
+		this._service.recommendationGetDataForForward({}).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.lstUnitNotMain = response.result.lstUnitNotMain
@@ -219,7 +219,7 @@ export class ListRequestComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.log(error)
 			}
 	}
@@ -236,7 +236,7 @@ export class ListRequestComponent implements OnInit {
 			_mRRecommendationForwardInsertIN: this.modelForward,
 			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
 		}
-		this._service.recommendationForward(request).subscribe((response) => {
+		this._service.recommendationForward(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modal-tc-pakn').modal('hide')
 				this.getList()
@@ -245,7 +245,7 @@ export class ListRequestComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(err) => {
+			err => {
 				console.error(err)
 			}
 	}
@@ -286,7 +286,7 @@ export class ListRequestComponent implements OnInit {
 			ReactionaryWord: this.modelProcess.reactionaryWord,
 			IsList: true,
 		}
-		this._service.recommendationProcess(request).subscribe((response) => {
+		this._service.recommendationProcess(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
 				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
@@ -295,7 +295,7 @@ export class ListRequestComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(err) => {
+			err => {
 				console.error(err)
 			}
 	}
@@ -309,7 +309,7 @@ export class ListRequestComponent implements OnInit {
 				RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_DENY,
 				IsList: true,
 			}
-			this._service.recommendationProcess(request).subscribe((response) => {
+			this._service.recommendationProcess(request).subscribe(response => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
 					this._toastr.success(COMMONS.DENY_SUCCESS)
@@ -318,7 +318,7 @@ export class ListRequestComponent implements OnInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				(err) => {
+				err => {
 					console.error(err)
 				}
 		}
@@ -329,7 +329,7 @@ export class ListRequestComponent implements OnInit {
 			IsActived: this.isActived,
 		}
 
-		this._service.recommendationExportExcel(request).subscribe((response) => {
+		this._service.recommendationExportExcel(request).subscribe(response => {
 			var today = new Date()
 			var dd = String(today.getDate()).padStart(2, '0')
 			var mm = String(today.getMonth() + 1).padStart(2, '0')

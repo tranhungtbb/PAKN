@@ -39,8 +39,9 @@ export class RecommendationSearchObject {
 		this.title = ''
 		this.content = ''
 		this.place = ''
+		this.unit = ''
 		this.field = null
-		this.unitId = ''
+		this.unitId = null
 		this.status = null
 	}
 	code: string
@@ -51,6 +52,7 @@ export class RecommendationSearchObject {
 	field: number
 	status: number
 	place: string
+	unit: string
 }
 export class RecommendationForwardObject {
 	id: number = 0

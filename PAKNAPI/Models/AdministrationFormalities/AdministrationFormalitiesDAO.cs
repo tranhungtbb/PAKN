@@ -23,10 +23,12 @@ namespace PAKNAPI.Models.AdministrationFormalities
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", Id);
 			administration.Data = (await _sQLCon.ExecuteListDapperAsync<DAMAdministrationGetById>("DAM_Administration_GetById", DP)).FirstOrDefault();
-			administration.Files = (await _sQLCon.ExecuteListDapperAsync<DAMFileObj>("[DAM_Administration_FilesGetByAdministrationId]", DP)).ToList();
-			administration.LstCompositionProfile = (await _sQLCon.ExecuteListDapperAsync<DAMCompositionProfileCreateObj>("[DAM_CompositionProfile_GetByAdministration]", DP)).ToList();
-			administration.LstCharges = (await _sQLCon.ExecuteListDapperAsync<DAMChargesGetById>("[DAM_Charges_GetByAdministration]", DP)).ToList();
-			administration.LstImplementationProcess = (await _sQLCon.ExecuteListDapperAsync<DAMImplementationProcessUpdateIN>("[DAM_ImplementationProcess_GetByAdministration]", DP)).ToList();
+			DynamicParameters DPAdminis = new DynamicParameters();
+			DPAdminis.Add("Id", administration.Data.AdministrationId);
+			administration.Files = (await _sQLCon.ExecuteListDapperAsync<DAMFileObj>("[DAM_Administration_FilesGetByAdministrationId]", DPAdminis)).ToList();
+			administration.LstCompositionProfile = (await _sQLCon.ExecuteListDapperAsync<DAMCompositionProfileCreateObj>("[DAM_CompositionProfile_GetByAdministration]", DPAdminis)).ToList();
+			administration.LstCharges = (await _sQLCon.ExecuteListDapperAsync<DAMChargesGetById>("[DAM_Charges_GetByAdministration]", DPAdminis)).ToList();
+			administration.LstImplementationProcess = (await _sQLCon.ExecuteListDapperAsync<DAMImplementationProcessUpdateIN>("[DAM_ImplementationProcess_GetByAdministration]", DPAdminis)).ToList();
 
             if (administration.LstCompositionProfile != null && administration.LstCompositionProfile.Count > 0)
             {

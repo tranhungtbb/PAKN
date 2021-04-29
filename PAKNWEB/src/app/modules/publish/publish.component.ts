@@ -197,8 +197,14 @@ export class PublishComponent implements OnInit, OnChanges {
 					message: res.ResponseText.toString(),
 				})
 
+				let userId = localStorage.getItem('userId')
+				userId = userId === '' || userId === null ? null : userId
+				let fullName = this.currentFullnName === '' || this.currentFullnName === null ? '' : this.currentFullnName
+
 				const dataChatbot = {
-					userId: kluid,
+					kluid: kluid,
+					userId: userId,
+					fullName: fullName,
 					question: this.message,
 					answer: res.ResponseText.toString(),
 				}

@@ -27,6 +27,7 @@ import { UserCreateOrUpdateComponent } from './components/user/user-create-or-up
 import { UnitFilterPipe } from 'src/app/pipes/unit-filter.pipe'
 import { ChatBotComponent } from './components/chat-bot/chat-bot.component'
 // import { RoleComponent } from './components/role/role.component'
+import { HistoryChatBotComponent } from './components/history-chat-bot/history-chat-bot.component'
 
 @NgModule({
 	imports: [
@@ -60,6 +61,7 @@ import { ChatBotComponent } from './components/chat-bot/chat-bot.component'
 		UserCreateOrUpdateComponent,
 		UnitFilterPipe,
 		ChatBotComponent,
+		HistoryChatBotComponent,
 	],
 	entryComponents: [UserCreateOrUpdateComponent],
 })

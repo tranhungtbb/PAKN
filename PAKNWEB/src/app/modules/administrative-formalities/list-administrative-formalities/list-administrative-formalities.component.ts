@@ -50,6 +50,7 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 		name: '',
 		title: '',
 		object: '',
+		organization: '',
 		field: null,
 		unitId: null,
 		status: null,
@@ -65,11 +66,11 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 	}
 
 	getDataForCreate() {
-		this.recommendationService.recommendationGetDataForCreate({}).subscribe(response => {
+		this.afService.getCAFieldDAM({}).subscribe(response => {
+			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
-					this.lstUnit = response.result.lstUnit
-					this.lstField = response.result.lstField
+					this.lstField = response.result.CAFieldDAMGetDropdown
 				}
 			} else {
 				this._toastr.error(response.message)
@@ -88,10 +89,12 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 		this.dataSearch.code = this.dataSearch.code.trim()
 		this.dataSearch.name = this.dataSearch.name.trim()
 		this.dataSearch.object = this.dataSearch.object.trim()
+		this.dataSearch.organization = this.dataSearch.organization.trim()
 		let request = {
 			Code: this.dataSearch.code,
 			Name: this.dataSearch.name,
 			Object: this.dataSearch.object,
+			Organization: this.dataSearch.organization,
 			UnitId: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
 			Status: this.dataSearch.status != null ? this.dataSearch.status : '',

@@ -98,6 +98,8 @@ export class Api {
 	public static UserDelete = 'User/Delete' //'SYUserSPBase/SYUserDeleteBase'GetAvatar
 	public static UserGetAvatar = 'User/GetAvatar' //'SYUserSPBase/SYUserDeleteBase'
 	public static SystemLogin = 'SYSPBase/SYSystemLogGetAllOnPageBase'
+	public static SystemLoginAdmin = 'SYSPBase/SYSystemLogGetAllOnPageAdminBase'
+	public static SystemLogDelete = 'SYSPBase/SYSystemLogDeleteBase'
 	public static UserGetIsSystem = 'SYUserSPBase/SYUserGetIsSystemBase'
 	public static DeleteUserRole = 'SYUserSPBase/SYUserRoleMapDeleteBase'
 	public static InsertMultiUserRole = 'UserMapRole/SYUserRoleMapListInsert'
@@ -191,6 +193,7 @@ export class Api {
 	public static AdministrativeFormalitiesInsert = 'AdministrationFormalities/AdministrationFormalitiesInsert'
 	public static AdministrativeFormalitiesUpdate = 'AdministrationFormalities/AdministrationFormalitiesUpdate'
 	public static AdministrativeFormalitiesDelete = 'DAMSPBase/DAMAdministrationDeleteBase'
+	public static AdministrativeFormalitiesCAFieldDAM = 'CASPBase/CAFieldDAMGetDropdownBase'
 
 	// Notification
 	public static NotificationInsertTypeNews = 'SYNotification/SYNotificationInsertTypeNews'
@@ -206,4 +209,5 @@ export class Api {
 	public static ChatbotUpdate = 'Chatbot/ChatbotUpdateBase'
 	public static ChatbotInsertQuestion = 'Chatbot/ChatbotInsertQuestion'
 	public static ChatbotInsertData = 'Chatbot/ChatbotInsertData'
+	public static ChatbotGetListHistory = 'Chatbot/HistoryChatbotGetAllOnPage'
 }

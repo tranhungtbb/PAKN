@@ -298,6 +298,7 @@ namespace PAKNAPI.ModelBase
 		public string Contents { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public string ImagePath { get; set; }
+		public string NewsRelateIds { get; set; }
 
 		public async Task<List<NENewsViewDetail>> NENewsViewDetailDAO(long? Id)
 		{
