@@ -114,6 +114,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 						this._toastr.error('Vai trò đã bị trùng tên')
 					} else {
 						this._toastr.success(COMMONS.ADD_SUCCESS)
+						this.onCreateUserRole(response.result)
 						this.redirectList()
 					}
 				} else {
@@ -134,6 +135,8 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 						this.redirectList()
 					} else {
 						this._toastr.success(COMMONS.UPDATE_SUCCESS)
+						this._toastr.success(COMMONS.ADD_SUCCESS)
+						this.onCreateUserRole(response.result)
 						this.redirectList()
 					}
 				} else {
@@ -150,8 +153,43 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 		this.router.navigate(['quan-tri/he-thong/vai-tro'])
 	}
 
-	onCreateUser(data: any) {
-		this.listItemUserSelected.push(data)
-		console.log(this.listItemUserSelected)
+	onCreateUser() {
+		if (this.listItemUserSelected.length == 0) {
+			let item = this.listUserIsSystem.find((x) => x.value == this.userId)
+			this.listItemUserSelected.push(item)
+			console.log(this.listItemUserSelected)
+		} else {
+			let check = this.listItemUserSelected.find((x) => x.value == this.userId)
+			if (check != undefined) {
+				this._toastr.error('Bạn đã chọn người này')
+				return
+			}
+			let item = this.listUserIsSystem.find((x) => x.value == this.userId)
+			this.listItemUserSelected.push(item)
+			console.log(this.listItemUserSelected)
+		}
+	}
+	onRemoveUser(item: any) {
+		this.listItemUserSelected = this.listItemUserSelected.filter((x) => x.value != item.value)
+		return
+	}
+
+	onCreateUserRole(roleId: any) {
+		if (this.listItemUserSelected.length == 0) {
+			return
+		} else {
+			let listModel = []
+			this.listItemUserSelected.forEach((item) => {
+				listModel.push({
+					UserId: item.value,
+					RoleId: roleId,
+				})
+			})
+			this.userService.insertMultiUserRole(listModel).subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.redirectList()
+				}
+			})
+		}
 	}
 }
