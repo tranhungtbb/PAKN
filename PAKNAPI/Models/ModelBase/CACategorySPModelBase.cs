@@ -1130,7 +1130,7 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public bool IsMain { get; set; }
 
-		public async Task<List<CAUnitGetAllOnPage>> CAUnitGetAllOnPageDAO(int? PageSize, int? PageIndex, int? ParentId, byte? UnitLevel, string Name, string Phone, string Email, string Address, bool? IsActived, bool? IsMain)
+		public async Task<List<CAUnitGetAllOnPage>> CAUnitGetAllOnPageDAO(int? PageSize, int? PageIndex, int? ParentId, byte? UnitLevel, string Name, string Phone, string Email, string Address, bool? IsActived, bool? IsMain, string SortDir, string SortField)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
@@ -1143,6 +1143,8 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Address", Address);
 			DP.Add("IsActived", IsActived);
 			DP.Add("IsMain", IsMain);
+			DP.Add("SortDir", SortDir);
+			DP.Add("SortField", SortField);
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAUnitGetAllOnPage>("CA_UnitGetAllOnPage", DP)).ToList();
 		}

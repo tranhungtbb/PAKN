@@ -155,8 +155,15 @@ export class Api {
 	public static DepartmentUpdateStatus = 'CACategorySPBase/CADepartmentUpdateBase'
 	public static DepartmentDelete = 'CACategorySPBase/CADepartmentDeleteBase'
 
+	//remind
 	public static RemindInsert = 'RMRemind/RemindInsert'
 	public static RemindGetList = 'RMRemind/RemindGetList'
+
+	//invitation
+
+	public static InnvitationInsert = 'INVSPBase/INVInvitation'
+	public static InvitationDelete = 'INVInvitation/INVInvitationDelete'
+	public static InvitationGetList = 'INVSPBase/INVInvitationGetAllOnPageBase'
 
 	//RequestRecommendation
 	public static RecommendationRequestGetListProcess = 'MRSPBase/MRRecommendationKNCTGetAllWithProcessBase'

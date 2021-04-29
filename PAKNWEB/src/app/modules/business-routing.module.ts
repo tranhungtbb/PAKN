@@ -25,6 +25,7 @@ const routes: Routes = [
 			{ path: 'ho-tro', loadChildren: './support/support.module#SupportModule' },
 			{ path: 'thu-tuc-hanh-chinh', loadChildren: './administrative-formalities/administrative-formalities.module#AdministrativeFormalitiesModule' },
 			{ path: 'thong-bao', component: NotificationComponent },
+			{ path: 'thu-moi', loadChildren: './invitation/invitation.module#InvitationModule' },
 		],
 	},
 ]
