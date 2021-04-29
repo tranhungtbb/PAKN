@@ -2,11 +2,12 @@ import { RoleService } from 'src/app/services/role.service'
 import { COMMONS } from 'src/app/commons/commons'
 import { Router } from '@angular/router'
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 import { RoleObject } from '../../../../models/roleObject'
 import { from } from 'rxjs'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { UserService } from 'src/app/services/user.service'
+import { retryWhen } from 'rxjs/operators'
 
 declare var $: any
 @Component({
@@ -16,8 +17,11 @@ declare var $: any
 })
 //acbd
 export class RoleComponent implements OnInit {
-	constructor(private roleService: RoleService, private toast: ToastrService, private routes: Router) {}
+	constructor(private roleService: RoleService, private toast: ToastrService, private routes: Router, private userService: UserService) {
+		this.listItem = []
+	}
 	@ViewChild('table', { static: false }) table: any
+	@ViewChild('table2', { static: false }) table2: any
 
 	listStatus: any = [
 		{ value: true, text: 'Hiệu lực' },
@@ -35,8 +39,21 @@ export class RoleComponent implements OnInit {
 	totalRecords: Number
 	listData: any[]
 
+	// LIST USER
+	listUser: any[]
+	listUserIsSystem: any[]
+	userPageIndex: Number = 1
+	userPageSize: Number = 10
+	userTotalRecords: Number
+	roleId: Number
+
+	// multi input
+
+	listItem: any[]
+
 	ngOnInit() {
 		this.getListPaged()
+		this.getUsersIsSystem()
 	}
 
 	getListPaged() {
@@ -59,6 +76,16 @@ export class RoleComponent implements OnInit {
 				this.listData = res.result.SYRoleGetAllOnPage
 				this.totalRecords = res.result.TotalCount
 			})
+	}
+
+	getUsersIsSystem() {
+		this.userService.getIsSystem({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.listUserIsSystem = res.result.SYUserGetIsSystem
+			} else {
+				this.listUserIsSystem = []
+			}
+		})
 	}
 
 	onPageChange(event: any) {
@@ -120,5 +147,84 @@ export class RoleComponent implements OnInit {
 
 	redirectUpdate(id: number) {
 		this.routes.navigate(['quan-tri/he-thong/vai-tro/cap-nhap/' + id])
+	}
+
+	showListUser(id: any) {
+		if (id == undefined) return
+		if (id != this.roleId) {
+			this.userPageIndex = 1
+			this.userPageSize = 10
+			this.listItem = []
+		}
+		this.roleId = id
+		var obj = {
+			PageIndex: this.userPageIndex,
+			PageSize: this.userPageSize,
+			RoleId: this.roleId,
+		}
+		this.userService.getByRoleIdOnPage(obj).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.listUser = res.result.SYUserGetByRoleIdAllOnPage
+				this.userPageIndex = res.result.PageIndex
+				this.userPageSize = res.result.PageSize
+				this.userTotalRecords = res.result.TotalCount
+				$('#modalUsersByRoleId').modal('show')
+			} else {
+				this.userPageIndex = 1
+				this.userPageSize = 10
+				this.userTotalRecords = 0
+			}
+			return
+		})
+	}
+
+	onPageChange2(event: any) {
+		this.userPageSize = event.rows
+		this.userPageIndex = event.first / event.rows + 1
+		this.showListUser(this.roleId)
+	}
+
+	onDeleteUserRole(userId: any) {
+		this.userService.deleteUserRole({ UserId: userId, RoleId: this.roleId }).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				if (res.result > 0) {
+					this.toast.success(COMMONS.DELETE_SUCCESS)
+					this.showListUser(this.roleId)
+					this.getListPaged()
+				} else {
+					this.toast.error(COMMONS.DELETE_FAILED)
+				}
+			} else {
+				this.toast.error(COMMONS.DELETE_FAILED)
+			}
+		})
+	}
+	onCreateUserRole() {
+		if (this.listItem.length == 0) {
+			this.toast.error('Vui lòng chọn người dùng')
+			return
+		} else {
+			let listModel = []
+			this.listItem.forEach((item) => {
+				listModel.push({
+					UserId: item,
+					RoleId: this.roleId,
+				})
+			})
+			this.userService.insertMultiUserRole(listModel).subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					if (res.result.CountSuccess == 0) {
+						this.toast.error(COMMONS.ADD_FAILED)
+						return
+					}
+					this.toast.success('Thêm mới thành công ' + res.result.CountSuccess + ' người dùng')
+					this.showListUser(this.roleId)
+					this.getListPaged()
+					this.listItem = []
+				} else {
+					this.toast.error(COMMONS.ADD_FAILED)
+				}
+			})
+		}
 	}
 }

@@ -1,3 +1,14 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import url('../../../../node_modules/devextreme/dist/css/dx.common.css');
+@import url('../../../../node_modules/devextreme/dist/css/dx.light.css');
+.cdk-overlay-pane {
+  max-width: 98vw !important;
+}
+
+.cdk-overlay-container {
+  z-index: 9999 !important;
+}
 body{
 	background: #fff;
 }
@@ -1286,6 +1297,19 @@ a:not([href]):not([tabindex]){
 }
 .header-right .header-profile .dropdown-item{
 	cursor: pointer;
+}
+
+.text-truncate .file-att:first-child{
+	padding-left: 0;
+}
+
+.file-att{
+	display: inline-block;
+	padding: 0 15px;
+	border-right: 1px solid #eeeeee;
+}
+.file-att i{
+	margin-left: 10px;
 }
 
 .table-sd thead,

@@ -8,6 +8,7 @@ import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, R
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { COMMONS } from 'src/app/commons/commons'
+import { Router } from '@angular/router'
 
 declare var $: any
 
@@ -22,6 +23,7 @@ export class ListGeneralComponent implements OnInit {
 		private storeageService: UserInfoStorageService,
 		private _fb: FormBuilder,
 		private _toastr: ToastrService,
+		private _router: Router,
 		private _shareData: DataService
 	) {}
 	userLoginId: number = this.storeageService.getUserId()
@@ -326,21 +328,12 @@ export class ListGeneralComponent implements OnInit {
 		}
 	}
 
-	exportExcel() {
-		let request = {
-			IsActived: this.isActived,
-		}
-
-		this._service.recommendationExportExcel(request).subscribe((response) => {
-			var today = new Date()
-			var dd = String(today.getDate()).padStart(2, '0')
-			var mm = String(today.getMonth() + 1).padStart(2, '0')
-			var yyyy = today.getFullYear()
-			var hh = String(today.getHours()).padStart(2, '0')
-			var minute = String(today.getMinutes()).padStart(2, '0')
-			var fileName = 'DM_ChucVuHanhChinh_' + yyyy + mm + dd + hh + minute
-			var blob = new Blob([response], { type: response.type })
-			importedSaveAs(blob, fileName)
-		})
+	onExport() {
+		let passingObj: any = {}
+		passingObj = this.dataSearch
+		passingObj.UnitProcessId = this.storeageService.getUnitId()
+		passingObj.UserProcessId = this.storeageService.getUserId()
+		passingObj = this._shareData.setobjectsearch(passingObj)
+		passingObj = this._router.navigate(['/quan-tri/kien-nghi/xuat-file/Recommendation_ListGeneral'])
 	}
 }
