@@ -89,4 +89,8 @@ export class UserService {
 		let url = AppSettings.API_ADDRESS + Api.SystemLoginAdmin
 		return this.serviceInvoker.get(request, url)
 	}
+	sysLogDelete(request: any): Observable<any> {
+		let url = AppSettings.API_ADDRESS + Api.SystemLogDelete
+		return this.serviceInvoker.get(request, url)
+	}
 }

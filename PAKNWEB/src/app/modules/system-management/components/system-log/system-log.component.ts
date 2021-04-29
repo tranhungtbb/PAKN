@@ -2,10 +2,11 @@ import { Component, OnInit, Pipe, Directive } from '@angular/core'
 import { FormGroup } from '@angular/forms'
 import { UserObject } from '../../../../models/UserObject'
 import { UserService } from '../../../../services/user.service'
+import { ToastrService } from 'ngx-toastr'
 
-import { RESPONSE_STATUS, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS, MESSAGE_COMMON } from 'src/app/constants/CONSTANTS'
 import { NullTemplateVisitor } from '@angular/compiler'
-
+declare var $: any
 @Component({
 	selector: 'app-system-log',
 	templateUrl: './system-log.component.html',
@@ -37,14 +38,6 @@ export class SystemLogComponent implements OnInit {
 	lstTimlineMore: Array<any> = []
 	model: UserObject = new UserObject()
 	submitted: boolean = false
-	listSexs: any[] = [
-		{ text: 'Nam', value: true },
-		{ text: 'Nữ', value: false },
-	]
-	lstDropDownLayout = [
-		{ value: 1, Text: 'Thành công' },
-		{ value: 0, Text: 'Thất bại' },
-	]
 	fromDate: string = ''
 	toDate: string = ''
 	form: FormGroup
@@ -62,19 +55,47 @@ export class SystemLogComponent implements OnInit {
 	pageSize: number = 20
 	lstChucVu: any = []
 	lstPhongBan: any = []
+	idDelete: number
+	listStatus: any = [
+		{ value: 1, text: 'Thành công' },
+		{ value: 0, text: 'Thất bại' },
+	]
 
 	Notifications: any[]
 	numberNotifications: any = 5
 	ViewedCount: number = 0
-	constructor(private userService: UserService) {}
+	constructor(private userService: UserService, private _toastr: ToastrService) {}
 
-	ngOnInit() {
-		this.getList()
-	}
+	ngOnInit() {}
 	onPageChange(event: any) {
 		this.pageSize = event.rows
 		this.pageIndex = event.first / event.rows + 1
 		this.getList()
+	}
+	dataStateChange() {
+		this.pageIndex = 1
+		this.getList()
+	}
+	preDelete(id: number) {
+		this.idDelete = id
+		$('#modalConfirmDelete').modal('show')
+	}
+	onDelete(id: number) {
+		let request = {
+			Id: id,
+		}
+		this.userService.sysLogDelete(request).subscribe(response => {
+			if (response.success == RESPONSE_STATUS.success) {
+				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
+				$('#modalConfirmDelete').modal('hide')
+				this.getList()
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			error => {
+				console.error(error)
+			}
 	}
 	getList() {
 		let req = {
