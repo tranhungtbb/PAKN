@@ -262,6 +262,30 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYUserGetIsSystem
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserGetIsSystem(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserGetIsSystem()
+		{
+		}
+
+		public long value { get; set; }
+		public string text { get; set; }
+
+		public async Task<List<SYUserGetIsSystem>> SYUserGetIsSystemDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetIsSystem>("SY_UserGetIsSystem", DP)).ToList();
+		}
+	}
+
 	public class SYUserGetNameById
 	{
 		private SQLCon _sQLCon;
