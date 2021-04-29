@@ -69,6 +69,40 @@ namespace PAKNAPI.ModelBase
 		public long? Id { get; set; }
 	}
 
+	public class SYUserGetAllByRoleId
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserGetAllByRoleId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserGetAllByRoleId()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public byte Type { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public int? UnitId { get; set; }
+		public string Address { get; set; }
+
+		public async Task<List<SYUserGetAllByRoleId>> SYUserGetAllByRoleIdDAO(int? RoleId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RoleId", RoleId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllByRoleId>("SY_UserGetAllByRoleId", DP)).ToList();
+		}
+	}
+
 	public class SYUserGetByID
 	{
 		private SQLCon _sQLCon;
@@ -109,6 +143,42 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetByID>("SY_UserGetByID", DP)).ToList();
+		}
+	}
+
+	public class SYUserGetByRoleIdAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserGetByRoleIdAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserGetByRoleIdAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public byte Type { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public int? UnitId { get; set; }
+		public string Address { get; set; }
+
+		public async Task<List<SYUserGetByRoleIdAllOnPage>> SYUserGetByRoleIdAllOnPageDAO(int? PageSize, int? PageIndex, int? RoleId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("RoleId", RoleId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetByRoleIdAllOnPage>("SY_UserGetByRoleIdAllOnPage", DP)).ToList();
 		}
 	}
 

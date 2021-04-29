@@ -63,7 +63,6 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 			this.model.id = isNaN(id) == true ? 0 : id
 			if (this.model.id != 0) {
 				this.roleService.getRoleById({ id: this.model.id }).subscribe((res) => {
-					debugger
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result.SYRoleGetByID) {
 							this.model = { ...res.result.SYRoleGetByID[0] }

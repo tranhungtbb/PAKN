@@ -152,6 +152,29 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize]
+		[Route("SYUserGetAllByRoleIdBase")]
+		public async Task<ActionResult<object>> SYUserGetAllByRoleIdBase(int? RoleId)
+		{
+			try
+			{
+				List<SYUserGetAllByRoleId> rsSYUserGetAllByRoleId = await new SYUserGetAllByRoleId(_appSetting).SYUserGetAllByRoleIdDAO(RoleId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserGetAllByRoleId", rsSYUserGetAllByRoleId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
 		[Route("SYUserGetByIDBase")]
 		public async Task<ActionResult<object>> SYUserGetByIDBase(long? Id)
 		{
@@ -161,6 +184,29 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYUserGetByID", rsSYUserGetByID},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYUserGetByRoleIdAllOnPageBase")]
+		public async Task<ActionResult<object>> SYUserGetByRoleIdAllOnPageBase(int? PageSize, int? PageIndex, int? RoleId)
+		{
+			try
+			{
+				List<SYUserGetByRoleIdAllOnPage> rsSYUserGetByRoleIdAllOnPage = await new SYUserGetByRoleIdAllOnPage(_appSetting).SYUserGetByRoleIdAllOnPageDAO(PageSize, PageIndex, RoleId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserGetByRoleIdAllOnPage", rsSYUserGetByRoleIdAllOnPage},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
