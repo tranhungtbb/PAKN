@@ -25,11 +25,8 @@ const routes: Routes = [
 			{ path: 'co-cau-to-chuc', component: UnitComponent },
 			{ path: 'nguoi-dung/them-moi', component: UserCreateOrUpdateComponent },
 			{ path: 'quan-ly-chat-bot', component: ChatBotComponent },
-<<<<<<< HEAD
 			{ path: 'vai-tro', loadChildren: './components/role/role.module#RoleModule' },
-=======
 			{ path: 'lich-su-chat-bot', component: HistoryChatBotComponent },
->>>>>>> feature/chatbot
 		],
 	},
 ]
