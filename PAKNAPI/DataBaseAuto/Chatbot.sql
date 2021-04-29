@@ -4,7 +4,7 @@ BEGIN
 END
 
 CREATE TABLE [dbo].[SY_Chatbot] (
-    [Id] INT         		IDENTITY (1, 1) NOT NULL,
+    [Id] BIGINT         	IDENTITY (1, 1) NOT NULL,
     [Question]      		NVARCHAR (1000) NOT NULL,
 	[Answer]				NVARCHAR (1000) NOT NULL,
 	[CategoryId] 			INT        ,
@@ -93,7 +93,7 @@ BEGIN
 		(ISNULL(@Question,'') = '' OR (SYCB.[Question] like N'%' + @Question + N'%')) AND  
 		(ISNULL(@Answer,'') = '' OR (SYCB.[Answer] like N'%' + @Answer + N'%')) AND 
 		(@IsActived IS NULL OR (SYCB.[IsActived] = @IsActived))
-	ORDER BY [Id]
+	ORDER BY [Id] DESC
 	OFFSET (@PageIndex-1) * @PageSize ROWS
 	FETCH NEXT @PageSize ROWS ONLY
 END
@@ -262,19 +262,22 @@ END
 GO
 /* End ChatbotGetNextCategoryId */
 
+/* Start CREATE TABLE [dbo].[SY_DataChatbot] */
 IF EXISTS( SELECT * FROM sys.tables WHERE name = 'SY_DataChatbot' )
 BEGIN
-    DROP TABLE [dbo].[SY_DataChatbot];
+    DROP TABLE [dbo].[SY_DataChatbot]
 END
 
 CREATE TABLE [dbo].[SY_DataChatbot] (
-    [Id] INT         		IDENTITY (1, 1) NOT NULL,
-	[UserId]				NVARCHAR (255) DEFAULT '',
+    [Id] BIGINT         	IDENTITY (1, 1) NOT NULL,
+	[Kluid]					NVARCHAR (255) DEFAULT '',
+	[UserId]				BIGINT,
+	[FullName]      		NVARCHAR (255) NOT NULL,
     [Question]      		NVARCHAR (1000) NOT NULL,
 	[Answer]				NVARCHAR (1000) NOT NULL
     CONSTRAINT [PK_SY_DataChatbot] PRIMARY KEY CLUSTERED ([Id] ASC)
 )
-
+/* End CREATE TABLE [dbo].[SY_DataChatbot] */
 
 /* Start DataChatbotInsert */
 IF EXISTS
@@ -286,23 +289,66 @@ IF EXISTS
 DROP PROCEDURE [DataChatbotInsert];
 GO
 CREATE PROCEDURE [dbo].[DataChatbotInsert]
-	@UserId  nvarchar(255) = null,
-	@Question nvarchar(1000) = null,
-	@Answer nvarchar(1000) = null
+	@Kluid		NVARCHAR(255) = NULL,
+	@UserId		BIGINT = NULL,
+	@FullName    NVARCHAR(255) = NULL,
+	@Question NVARCHAR(1000) = null,
+	@Answer NVARCHAR(1000) = null
 AS
 BEGIN
 	INSERT INTO [SY_DataChatbot]
 	(
+		[Kluid],
 		[UserId],
+		[FullName],
 		[Question],
 		[Answer]
 	)
 	VALUES
 	(
+		@Kluid,
 		@UserId,
+		@FullName,
 		@Question,
 		@Answer
 	)
 END
 GO
 /* End DataChatbotInsert */
+
+/* Start HistoryChatbotGetAllOnPage */
+IF EXISTS
+(
+	SELECT *
+	FROM sys.objects
+	WHERE object_id = OBJECT_ID(N'[HistoryChatbotGetAllOnPage]') AND type IN ( N'P', N'PC' )
+)
+DROP PROCEDURE [HistoryChatbotGetAllOnPage];
+GO
+CREATE PROCEDURE [dbo].[HistoryChatbotGetAllOnPage]
+	@PageSize int = null,
+	@PageIndex int = null,
+	@FullName nvarchar(256) = null,
+	@Question nvarchar(256) = null,
+	@Answer nvarchar(256) = null
+AS
+BEGIN
+	SELECT
+		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
+		[Id],
+		[Kluid],
+		[UserId],
+		[FullName] ,
+		[Question] ,
+		[Answer]
+	FROM [SY_DataChatbot] SYCB
+	WHERE 
+		(ISNULL(@FullName,'') = '' OR (SYCB.[FullName] like N'%' + @FullName + N'%')) AND
+		(ISNULL(@Question,'') = '' OR (SYCB.[Question] like N'%' + @Question + N'%')) AND  
+		(ISNULL(@Answer,'') = '' OR (SYCB.[Answer] like N'%' + @Answer + N'%')) 
+	ORDER BY [Id] DESC
+	OFFSET (@PageIndex-1) * @PageSize ROWS
+	FETCH NEXT @PageSize ROWS ONLY
+END
+GO
+/* End HistoryChatbotGetAllOnPage */

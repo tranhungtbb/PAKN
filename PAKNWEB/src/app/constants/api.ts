@@ -207,4 +207,5 @@ export class Api {
 	public static ChatbotUpdate = 'Chatbot/ChatbotUpdateBase'
 	public static ChatbotInsertQuestion = 'Chatbot/ChatbotInsertQuestion'
 	public static ChatbotInsertData = 'Chatbot/ChatbotInsertData'
+	public static ChatbotGetListHistory = 'Chatbot/HistoryChatbotGetAllOnPage'
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using PAKNAPI.Common;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +12,8 @@ using System.Xml.Linq;
 namespace PAKNAPI.Models.Chatbot
 {
 
-    #region ChatbotDelete
-    public class ChatbotDelete
+	#region ChatbotDelete
+	public class ChatbotDelete
 	{
 		private SQLCon _sQLCon;
 		private string _filePath;
@@ -101,7 +102,46 @@ namespace PAKNAPI.Models.Chatbot
 			return (await _sQLCon.ExecuteListDapperAsync<ChatbotGetAllOnPage>("ChatbotGetAllOnPage", DP)).ToList();
 		}
 	}
+	#endregion
 
+	#region HistoryChatbotGetAllOnPage
+	public class HistoryChatbotGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public HistoryChatbotGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public HistoryChatbotGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public long UserId { get; set; }
+		public string FullName { get; set; }
+		public string Kluid { get; set; }
+		public string Question { get; set; }
+		public string Answer { get; set; }
+
+		public async Task<List<HistoryChatbotGetAllOnPage>> HistoryChatbotGetAllOnPageDAO(int? PageSize, int? PageIndex, string FullName, string Question, string Answer)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("FullName", FullName);
+			DP.Add("Question", Question);
+			DP.Add("Answer", Answer);
+
+			return (await _sQLCon.ExecuteListDapperAsync<HistoryChatbotGetAllOnPage>("HistoryChatbotGetAllOnPage", DP)).ToList();
+		}
+	}
+
+	#endregion
+
+	#region ChatbotGetByID
 	public class ChatbotGetByID
 	{
 		private SQLCon _sQLCon;
@@ -121,7 +161,6 @@ namespace PAKNAPI.Models.Chatbot
 		public int CategoryId { get; set; }
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
-		
 
 		public async Task<List<ChatbotGetByID>> ChatbotGetByIDDAO(int? Id)
 		{
@@ -131,7 +170,6 @@ namespace PAKNAPI.Models.Chatbot
 			return (await _sQLCon.ExecuteListDapperAsync<ChatbotGetByID>("ChatbotGetByID", DP)).ToList();
 		}
 	}
-
 	#endregion
 
 	#region ChatbotInsertData
@@ -153,7 +191,9 @@ namespace PAKNAPI.Models.Chatbot
 		public async Task<int> InsertDataChatbotDAO(ChatbotDataInsertIN _chatbotDataInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Kluid", _chatbotDataInsertIN.Kluid);
 			DP.Add("UserId", _chatbotDataInsertIN.UserId);
+			DP.Add("FullName", _chatbotDataInsertIN.FullName);
 			DP.Add("Question", _chatbotDataInsertIN.Question.Trim());
 			DP.Add("Answer", _chatbotDataInsertIN.Answer.Trim());
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("DataChatbotInsert", DP));
@@ -163,7 +203,9 @@ namespace PAKNAPI.Models.Chatbot
 	public class ChatbotDataInsertIN
 	{
 		public string Id { get; set; }
+		public string Kluid { get; set; }
 		public string UserId { get; set; }
+		public string FullName { get; set; }
 		public string Question { get; set; }
 		public string Answer { get; set; }
 
@@ -184,6 +226,7 @@ namespace PAKNAPI.Models.Chatbot
 			string folder = "Chatbot\\binaries\\aiml\\chatbot.aiml";
 			_filePath = System.IO.Path.Combine(webHostEnvironment.ContentRootPath, folder);
 		}
+
 
 		public ChatbotInsert()
 		{
@@ -407,6 +450,10 @@ namespace PAKNAPI.Models.Chatbot
 		{
 			XDocument xDocument = XDocument.Load(_filePath);
 			var categoryFilter = xDocument.Descendants("category").Where(c => c.Attribute("id").Value.Equals(_chatbotUpdateIN.CategoryId.ToString())).FirstOrDefault();
+			if (categoryFilter == null)
+			{
+				return _chatbotUpdateIN.CategoryId;
+			}
 			categoryFilter.Remove();
 			xDocument.Save(_filePath);
 			await Task.Delay(10);
