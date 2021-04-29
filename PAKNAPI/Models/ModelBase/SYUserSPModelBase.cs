@@ -262,30 +262,6 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-	public class SYUserGetIsSystem
-	{
-		private SQLCon _sQLCon;
-
-		public SYUserGetIsSystem(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public SYUserGetIsSystem()
-		{
-		}
-
-		public long value { get; set; }
-		public string text { get; set; }
-
-		public async Task<List<SYUserGetIsSystem>> SYUserGetIsSystemDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetIsSystem>("SY_UserGetIsSystem", DP)).ToList();
-		}
-	}
-
 	public class SYUserGetNameById
 	{
 		private SQLCon _sQLCon;
@@ -371,35 +347,6 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public int? PositionId { get; set; }
 		public string RoleIds { get; set; }
-	}
-
-	public class SYUserRoleMapDelete
-	{
-		private SQLCon _sQLCon;
-
-		public SYUserRoleMapDelete(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public SYUserRoleMapDelete()
-		{
-		}
-
-		public async Task<int> SYUserRoleMapDeleteDAO(SYUserRoleMapDeleteIN _sYUserRoleMapDeleteIN)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("UserId", _sYUserRoleMapDeleteIN.UserId);
-			DP.Add("RoleId", _sYUserRoleMapDeleteIN.RoleId);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserRoleMapDelete", DP));
-		}
-	}
-
-	public class SYUserRoleMapDeleteIN
-	{
-		public long? UserId { get; set; }
-		public long? RoleId { get; set; }
 	}
 
 	public class SYUserUpdate

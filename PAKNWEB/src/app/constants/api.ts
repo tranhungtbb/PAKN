@@ -146,6 +146,7 @@ export class Api {
 	public static NewsGetAvatars = 'files/get-news-avatar'
 	public static HisNewsInsert = 'HISNews/HISNewsInsert'
 	public static HisNewsGetListByNewsId = 'HISNews/HISNewsGetByNewsId'
+	public static NewsGetViewDetail = 'NESPBase/NENewsViewDetailBase'
 
 	//Department
 	public static DepartmentGetList = 'CACategorySPBase/CADepartmentGetAllOnPageBase'

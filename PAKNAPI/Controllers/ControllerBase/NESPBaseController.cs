@@ -183,6 +183,28 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Route("NENewsViewDetailBase")]
+		public async Task<ActionResult<object>> NENewsViewDetailBase(long? Id)
+		{
+			try
+			{
+				List<NENewsViewDetail> rsNENewsViewDetail = await new NENewsViewDetail(_appSetting).NENewsViewDetailDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"NENewsViewDetail", rsNENewsViewDetail},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
 		[Authorize]
 		[Route("NERelateGetAllBase")]
 		public async Task<ActionResult<object>> NERelateGetAllBase(int? NewsId)

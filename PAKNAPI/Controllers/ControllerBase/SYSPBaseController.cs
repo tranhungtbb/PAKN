@@ -207,9 +207,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYRoleGetAllOnPage", rsSYRoleGetAllOnPage},
-						{"TotalCount", rsSYRoleGetAllOnPage != null && rsSYRoleGetAllOnPage.Count > 0 ? rsSYRoleGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsSYRoleGetAllOnPage != null && rsSYRoleGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsSYRoleGetAllOnPage != null && rsSYRoleGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -319,6 +316,29 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYUnitGetDropdown", rsSYUnitGetDropdown},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYUnitGetDropdownLevelBase")]
+		public async Task<ActionResult<object>> SYUnitGetDropdownLevelBase()
+		{
+			try
+			{
+				List<SYUnitGetDropdownLevel> rsSYUnitGetDropdownLevel = await new SYUnitGetDropdownLevel(_appSetting).SYUnitGetDropdownLevelDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUnitGetDropdownLevel", rsSYUnitGetDropdownLevel},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -458,6 +478,66 @@ namespace PAKNAPI.ControllerBase
 					{
 						{"SYUserGetNonSystem", rsSYUserGetNonSystem},
 					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYNotificationDeleteBase")]
+		public async Task<ActionResult<object>> SYNotificationDeleteBase(SYNotificationDeleteIN _sYNotificationDeleteIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYNotificationDelete(_appSetting).SYNotificationDeleteDAO(_sYNotificationDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYNotificationDeleteListBase")]
+		public async Task<ActionResult<object>> SYNotificationDeleteListBase(List<SYNotificationDeleteIN> _sYNotificationDeleteINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _sYNotificationDeleteIN in _sYNotificationDeleteINs)
+				{
+					var result = await new SYNotificationDelete(_appSetting).SYNotificationDeleteDAO(_sYNotificationDeleteIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
