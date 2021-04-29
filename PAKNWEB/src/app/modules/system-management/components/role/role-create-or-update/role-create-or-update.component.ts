@@ -51,7 +51,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 		this.form = this.formBuilder.group({
 			name: [this.model.name, Validators.required],
 			isActived: [this.model.isActived, Validators.required],
-			orderNumber: [this.model.orderNumber],
+			orderNumber: [this.model.orderNumber, Validators.pattern(/^-?(0|[1-9]\d*)?$/)],
 			description: [this.model.description],
 			userId: [this.userId],
 		})
@@ -66,7 +66,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result.SYRoleGetByID) {
 							this.model = { ...res.result.SYRoleGetByID[0] }
-							this.getUsersByRoleId(this.model.id)
+							this.getUsersByRoleId(id)
 						}
 					}
 				})
@@ -76,13 +76,13 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 	}
 
 	getUsersByRoleId(roleId: any) {
-		this.userService.getByRoleId(roleId).subscribe((res) => {
+		this.userService.getByRoleId({ RoleId: roleId }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				debugger
 				res.result.SYUserGetAllByRoleId.forEach((element) => {
 					var obj = {
 						value: element.id,
-						text: element.name,
+						text: element.userName,
 					}
 					this.listItemUserSelected.push(obj)
 				})
@@ -127,13 +127,16 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error('Vai trò đã bị trùng tên')
+						return
 					} else {
 						this._toastr.success(COMMONS.ADD_SUCCESS)
 						this.onCreateUserRole(response.result)
 						this.redirectList()
+						return
 					}
 				} else {
 					this._toastr.error(response.message)
+					return
 				}
 			}),
 				(error) => {
@@ -148,11 +151,12 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 					} else if (response.result == 0) {
 						this._toastr.success(COMMONS.UPDATE_FAILED)
 						this.redirectList()
+						return
 					} else {
 						this._toastr.success(COMMONS.UPDATE_SUCCESS)
-						this._toastr.success(COMMONS.ADD_SUCCESS)
 						this.onCreateUserRole(response.result)
 						this.redirectList()
+						return
 					}
 				} else {
 					this._toastr.error(response.message)
