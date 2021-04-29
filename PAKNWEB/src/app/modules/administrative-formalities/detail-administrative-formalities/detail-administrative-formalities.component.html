@@ -31,8 +31,8 @@
 		<div class="row">
 			<div class="col-md-9 col-lg-9">
 				<div class="table-reponsive p-4">
-					<p-table #table [value]="lstCompositionProfile" tableStyleClass="table table-sd table-responsive-md mb-0">
-						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+					<table class="table">
+						<tbody>
 							<tr>
 								<td style="width: 20%;">Tên thủ tục</td>
 								<td>{{model.name}}</td>
@@ -47,11 +47,11 @@
 							</tr>
 							<tr>
 								<td>Lĩnh vực</td>
-								<td>{{model.field}}</td>
+								<td>{{model.fieldName}}</td>
 							</tr>
 							<tr>
 								<td>Mức độ trực tuyến</td>
-								<td>{{model.typeSend}}</td>
+								<td><input disabled value="{{model.typeSend}}" type="checkbox" [checked]="model.typeSend"></td>
 							</tr>
 							<tr>
 								<td>Số bộ hồ sơ</td>
@@ -59,7 +59,7 @@
 							</tr>
 							<tr>
 								<td>Thời gian giải quyết</td>
-								<td>{{model.amountTime}}</td>
+								<td>{{model.amountTime}} ngày kể từ khi nhận đủ hồ sơ hợp lệ</td>
 							</tr>
 							<tr>
 								<td>Cơ quan thực hiện </td>
@@ -95,19 +95,19 @@
 							</tr>
 							<tr>
 								<td>Căn cứ pháp lý</td>
-								<td>{{model.legalGrounds}}</td>
+								<td>{{model.legalGrounds | htmlToPlaintext}}</td>
 							</tr>
 							<tr>
 								<td>Yêu cầu, điều kiện</td>
-								<td>{{model.request}}</td>
+								<td>{{model.request | htmlToPlaintext}}</td>
 							</tr>
 							<tr>
 								<td>Đánh giá tác động TTHC</td>
-								<td>{{model.request}}</td>
+								<td>{{model.request | htmlToPlaintext}}</td>
 							</tr>
 							<tr>
 								<td>Ghi chú </td>
-								<td>{{model.request}}</td>
+								<td>{{model.request | htmlToPlaintext}}</td>
 							</tr>
 							<tr>
 								<td>Tài liệu đính kèm</td>
@@ -131,9 +131,8 @@
 									</ng-container>
 								</td>
 							</tr>
-						</ng-template>
-					</p-table>
-
+						</tbody>
+					</table>
 				</div>
 				<!-- thành phần hồ sơ -->
 				<div class="row p-4">
@@ -147,7 +146,7 @@
 							<p-table #table [value]="lstCompositionProfile" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 								<ng-template pTemplate="header" class="bg-thead">
 									<tr>
-										<th style="width: 80px">
+										<th style="width: 50px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>STT</strong>
 												<span class="caret-tb"></span>
@@ -159,25 +158,25 @@
 												<span class="caret-tb"></span>
 											</p>
 										</th>
-										<th style="width: 150px">
+										<th style="width: 120px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong>SL bản chính</strong>
+												<strong>bản chính</strong>
 												<span class="caret-tb"></span>
 											</p>
 										</th>
-										<th style="width: 150px">
+										<th style="width: 100px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong>SL bản sao</strong>
+												<strong>bản sao</strong>
 												<span class="caret-tb"></span>
 											</p>
 										</th>
-										<th style="width: 250px">
+										<th style="width: 200px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Mẫu đơn tờ khai</strong>
 												<span class="caret-tb"></span>
 											</p>
 										</th>
-										<th style="width: 200px">
+										<th style="width: 100px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Bắt buộc</strong>
 												<span class="caret-tb"></span>
@@ -393,19 +392,19 @@
 						<span>Mã thủ tục: </span><span class="pull-right">{{model.code}}</span>
 					</p>
 					<p class="p-3 m-0 border-bottom">
-						<span>Mã quản lý quốc gia: </span><span class="pull-right">{{model.countryCode}}</span>
+						<span>Mã quản lý quốc gia: </span><br><span class="pull-right">{{model.countryCode}}</span>
 					</p>
 					<p class="p-3 m-0 border-bottom">
 						<span>Ngày tạo: </span><span class="pull-right">{{model.createdDate | date : 'dd/MM/yyyy'}}</span>
 					</p>
-					<p class="p-3 m-0 border-bottom">
+					<!-- <p class="p-3 m-0 border-bottom">
 						<span>Người tạo: </span><span class="pull-right">{{model.createdBy}}</span>
-					</p>
+					</p> -->
 					<p class="p-3 m-0 border-bottom">
 						<span>Ngày công bố: </span><span class="pull-right">{{model.createdDate | date : 'dd/MM/yyyy' }}</span>
 					</p>
 				</div>
-				<div class="">
+				<!-- <div class="">
 					<div class="grd-ab p-3">
 						<button class="btn btn-sm grd-blue border-0 text-white"> <i class="pi pi-send"></i> Gửi đơn vị</button>
 					</div>
@@ -419,7 +418,7 @@
 							</p>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>

@@ -59,4 +59,8 @@ export class UserService {
 		let url = AppSettings.API_ADDRESS + Api.SystemLogin
 		return this.serviceInvoker.get(request, url)
 	}
+	getSystemLoginAdmin(request: any): Observable<any> {
+		let url = AppSettings.API_ADDRESS + Api.SystemLoginAdmin
+		return this.serviceInvoker.get(request, url)
+	}
 }

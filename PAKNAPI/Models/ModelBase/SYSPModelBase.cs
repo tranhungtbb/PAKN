@@ -103,6 +103,46 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYSystemLogGetAllOnPageAdmin
+	{
+		private SQLCon _sQLCon;
+
+		public SYSystemLogGetAllOnPageAdmin(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYSystemLogGetAllOnPageAdmin()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+		public long UserId { get; set; }
+		public string FullName { get; set; }
+		public string IPAddress { get; set; }
+		public string MACAddress { get; set; }
+		public string Description { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public byte Status { get; set; }
+		public string Action { get; set; }
+		public string Exception { get; set; }
+
+		public async Task<List<SYSystemLogGetAllOnPageAdmin>> SYSystemLogGetAllOnPageAdminDAO(int? UserId, int? PageSize, int? PageIndex, DateTime? FromDate, DateTime? ToDate, int? Status, string Description)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", UserId);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("FromDate", FromDate);
+			DP.Add("ToDate", ToDate);
+			DP.Add("Status", Status);
+			DP.Add("Description", Description);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYSystemLogGetAllOnPageAdmin>("SY_SystemLogGetAllOnPageAdmin", DP)).ToList();
+		}
+	}
+
 	public class SYUnitGetDropdown
 	{
 		private SQLCon _sQLCon;

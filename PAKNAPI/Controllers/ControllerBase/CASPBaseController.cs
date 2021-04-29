@@ -188,6 +188,26 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("CAUnitDAMInsertBase")]
+		public async Task<ActionResult<object>> CAUnitDAMInsertBase(CAUnitDAMInsertIN _cAUnitDAMInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAUnitDAMInsert(_appSetting).CAUnitDAMInsertDAO(_cAUnitDAMInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("CAVillageGetAllBase")]

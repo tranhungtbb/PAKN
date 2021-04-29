@@ -192,6 +192,35 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class CAUnitDAMInsert
+	{
+		private SQLCon _sQLCon;
+
+		public CAUnitDAMInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAUnitDAMInsert()
+		{
+		}
+
+		public async Task<int?> CAUnitDAMInsertDAO(CAUnitDAMInsertIN _cAUnitDAMInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UnitId", _cAUnitDAMInsertIN.UnitId);
+			DP.Add("Name", _cAUnitDAMInsertIN.Name);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_UnitDAMInsert", DP);
+		}
+	}
+
+	public class CAUnitDAMInsertIN
+	{
+		public int? UnitId { get; set; }
+		public string Name { get; set; }
+	}
+
 	public class CAVillageGetAll
 	{
 		private SQLCon _sQLCon;
