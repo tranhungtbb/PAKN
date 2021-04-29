@@ -88,7 +88,7 @@
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong class="no-wrap">Tên đăng nhập</strong>
-												<span class="caret-tb"></span>
+												<span class="caret-tb" (click)="onSortUser('UserName')"></span>
 											</p>
 											<input [(ngModel)]="queryUser.userName" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
 												(change)="onUserFilterChange()">
@@ -96,7 +96,7 @@
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong class="no-wrap">Tên người dùng</strong>
-												<span class="caret-tb"></span>
+												<span class="caret-tb" (click)="onSortUser('FullName')"></span>
 											</p>
 											<input [(ngModel)]="queryUser.fullName" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
 												(change)="onUserFilterChange()">
@@ -104,7 +104,7 @@
 										<th style="min-width: 150px;">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong class="no-wrap">Số điện thoại</strong>
-												<span class="caret-tb"></span>
+												<span class="caret-tb" (click)="onSortUser('phone')"></span>
 											</p>
 											<input [(ngModel)]="queryUser.phone" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
 												(change)="onUserFilterChange()">
@@ -112,7 +112,7 @@
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong class="no-wrap">Trạng thái</strong>
-												<span class="caret-tb"></span>
+												<span class="caret-tb" (click)="onSortUser('IsActive')"></span>
 											</p>
 											<div class="dropdown bootstrap-select form-control form-control-sm">
 												<!-- [items]="listStatus" bindLabel="text" bindValue="value" -->
@@ -194,28 +194,28 @@
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong class="no-wrap">Tên đơn vị</strong>
-												<span class="caret-tb"></span>
+												<span class="caret-tb" (click)="onSortUnit('Name')"></span>
 											</p>
 											<input type="text" [(ngModel)]="query.name" (change)="unitFilterChange()" placeholder="Nhập ..." class="form-control form-control-sm">
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong class="no-wrap">Số điện thoại</strong>
-												<span class="caret-tb"></span>
+												<span class="caret-tb" (click)="onSortUnit('Phone')"></span>
 											</p>
 											<input type="text" [(ngModel)]="query.phone" (change)="unitFilterChange()" placeholder="Nhập ..." class="form-control form-control-sm">
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong class="no-wrap">Email</strong>
-												<span class="caret-tb"></span>
+												<span class="caret-tb" (click)="onSortUnit('Email')"></span>
 											</p>
 											<input type="text" [(ngModel)]="query.email" (change)="unitFilterChange()" placeholder="Nhập ..." class="form-control form-control-sm">
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong class="no-wrap">Địa chỉ</strong>
-												<span class="caret-tb"></span>
+												<span class="caret-tb" (click)="onSortUnit('Address')"></span>
 											</p>
 											<input type="text" [(ngModel)]="query.address" (change)="unitFilterChange()" placeholder="Nhập ..."
 												class="form-control form-control-sm">
@@ -223,7 +223,7 @@
 										<th style="width: 160px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead text-uppercase">
 												<strong class="no-wrap">Trạng thái</strong>
-												<span class="caret-tb"></span>
+												<span class="caret-tb" (click)="onSortUnit('IsActive')"></span>
 											</p>
 											<div class="dropdown bootstrap-select form-control form-control-sm">
 												<!-- [items]="listStatus" bindLabel="text" bindValue="value"  -->
@@ -236,7 +236,7 @@
 											</div>
 
 										</th>
-										<th class="text-right"><strong>Thao tác</strong></th>
+										<th class="text-right text-uppercase"><strong>Thao tác</strong></th>
 									</tr>
 								</ng-template>
 								<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -347,7 +347,7 @@
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
 							<input onlyNumber="true" stopLength="10" formControlName="phone" [(ngModel)]="modelUnit.phone" type="text" class="form-control" placeholder="Nhập..."
-								pattern="regex_phone">
+								pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$">
 							<div *ngIf="(unitFormSubmitted && fUnit.phone.invalid)||(fUnit.phone.invalid && (fUnit.phone.dirty || fUnit.phone.touched))" class="has-error m-b-12">
 								<div *ngIf="fUnit.phone.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>

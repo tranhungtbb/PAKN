@@ -7,6 +7,7 @@ import { FormBuilder, FormControl, FormGroup, Validator, Validators } from '@ang
 import { DataService } from 'src/app/services/sharedata.service'
 import { DiadanhService } from 'src/app/services/diadanh.service'
 import { UserInfoObject } from 'src/app/models/UserObject'
+import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { resultMemoize } from '@ngrx/store'
 import { COMMONS } from 'src/app/commons/commons'
 
@@ -21,7 +22,8 @@ export class AccountUpdateInfoComponent implements OnInit {
 		private toast: ToastrService,
 		private accountService: AccountService,
 		private router: Router,
-		private diadanhService: DiadanhService
+		private diadanhService: DiadanhService,
+		private userLocal: UserInfoStorageService
 	) {}
 
 	formData: FormGroup
@@ -151,6 +153,7 @@ export class AccountUpdateInfoComponent implements OnInit {
 				return
 			}
 
+			this.userLocal.setFullName(this.model.fullName)
 			this.toast.success(COMMONS.UPDATE_SUCCESS)
 			this.router.navigate(['/cong-bo/tai-khoan/thong-tin'])
 		})

@@ -1,5 +1,5 @@
 export class CONSTANTS {
-	public static FILEACCEPT = '.pdf, .png, .jpg, .jpeg, .doc, .docx, .xls, .xlsx'
+	public static FILEACCEPT = '.pdf, .png, .jpg, .jpeg, .doc, .docx, .xls, .xlsx, .zip, .rar, .mp4, .mov'
 	public static FILEACCEPT_FORM_ADMINISTRATION = '.pdf, .doc, .docx, .xls, .xlsx'
 	public static PAGE_SIZE = 20
 	public static PAGE_INDEX = 1

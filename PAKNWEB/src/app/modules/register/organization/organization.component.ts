@@ -52,7 +52,6 @@ export class OrganizationComponent implements OnInit {
 		this.child_OrgAddressForm.model = this.model
 		this.child_OrgRepreForm.model = this.model
 		this.loadFormBuilder()
-		///
 	}
 
 	serverMsg = {}
