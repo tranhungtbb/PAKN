@@ -14,6 +14,7 @@ AS
 BEGIN
 	SELECT
 		[Id],
+		[GroupId],
 		[Name],
 		[IsActived],
 		[IsDeleted],
@@ -38,6 +39,7 @@ AS
 BEGIN
 	SELECT
 		[Id],
+		[GroupId],
 		[Name],
 		[IsActived],
 		[IsDeleted],
@@ -64,6 +66,7 @@ BEGIN
 	SELECT
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
 		[Id],
+		[GroupId],
 		[Name],
 		[IsActived],
 		[IsDeleted],
@@ -86,6 +89,7 @@ IF EXISTS
 DROP PROCEDURE [CA_WordInsert];
 GO
 CREATE PROCEDURE [dbo].[CA_WordInsert]
+	@GroupId int = null,
 	@Name nvarchar(100) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
@@ -94,6 +98,7 @@ AS
 BEGIN
 	INSERT INTO [CA_Word]
 	(
+		[GroupId],
 		[Name],
 		[IsActived],
 		[IsDeleted],
@@ -101,6 +106,7 @@ BEGIN
 	)
 	VALUES
 	(
+		@GroupId,
 		@Name,
 		@IsActived,
 		@IsDeleted,
@@ -121,6 +127,7 @@ DROP PROCEDURE [CA_WordUpdate];
 GO
 CREATE PROCEDURE [dbo].[CA_WordUpdate]
 	@Id int = null,
+	@GroupId int = null,
 	@Name nvarchar(100) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
@@ -128,6 +135,7 @@ CREATE PROCEDURE [dbo].[CA_WordUpdate]
 AS
 BEGIN
 	UPDATE [CA_Word] SET
+		[GroupId] = @GroupId,
 		[Name] = @Name,
 		[IsActived] = @IsActived,
 		[IsDeleted] = @IsDeleted,

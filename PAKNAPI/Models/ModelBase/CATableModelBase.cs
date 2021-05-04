@@ -1087,6 +1087,7 @@ namespace PAKNAPI.ModelBase
 	public class CAWordOnPage
 	{
 		public int Id { get; set; }
+		public int GroupId { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public bool IsActived { get; set; }
@@ -1108,6 +1109,7 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int Id { get; set; }
+		public int GroupId { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public bool IsActived { get; set; }
@@ -1140,6 +1142,7 @@ namespace PAKNAPI.ModelBase
 		public async Task<int?> CAWordInsert(CAWord _cAWord)
 		{
 			DynamicParameters DP = new DynamicParameters();
+			DP.Add("GroupId", _cAWord.GroupId);
 			DP.Add("Name", _cAWord.Name);
 			DP.Add("IsActived", _cAWord.IsActived);
 			DP.Add("IsDeleted", _cAWord.IsDeleted);
@@ -1152,6 +1155,7 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _cAWord.Id);
+			DP.Add("GroupId", _cAWord.GroupId);
 			DP.Add("Name", _cAWord.Name);
 			DP.Add("IsActived", _cAWord.IsActived);
 			DP.Add("IsDeleted", _cAWord.IsDeleted);
