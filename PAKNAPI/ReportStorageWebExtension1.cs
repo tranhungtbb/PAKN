@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 using PAKNAPI.Common;
 using PAKNAPI.Models;
 
-namespace WebApi
+namespace PAKNAPI
 {
     public class ReportStorageWebExtension1 : DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension
     {
@@ -79,7 +79,7 @@ namespace WebApi
             };
 
             string reportname = myUri.AbsolutePath.ToString().Replace('/', ' ');
-            var assembly = typeof(WebApi.ReportStorageWebExtension1).Assembly;
+            var assembly = typeof(PAKNAPI.ReportStorageWebExtension1).Assembly;
             string UserId = HttpUtility.ParseQueryString(myUri.Query).Get("UserId");
             string objectReport = "";
             Stream resource = null;
@@ -87,6 +87,13 @@ namespace WebApi
             MemoryStream ms = new MemoryStream();
             string Dates = "Ngày " + DateTime.Now.Day + " tháng " + DateTime.Now.Month + " năm " + DateTime.Now.Year;
             DynamicParameters parameters = new DynamicParameters();
+            try
+            {
+                objectReport = url.Split('?')[1];
+            }
+            catch
+            {
+            }
             switch (reportname.Trim())
             {
                 case "Recommendation_ListGeneral":
@@ -94,7 +101,7 @@ namespace WebApi
 
 
 
-                    resource = assembly.GetManifestResourceStream("ApiCentralProcessingSystem.ExportGrid.Recommendation_ListGeneral.repx");
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.Recommendation_ListGeneral.repx");
                     result = XtraReport.FromStream(resource);
                     result.Parameters["Code"].Value = paramExportNhatKyThanhTra.Code;
                     result.Parameters["SendName"].Value = paramExportNhatKyThanhTra.SendName;
@@ -102,6 +109,8 @@ namespace WebApi
                     result.Parameters["UnitId"].Value = paramExportNhatKyThanhTra.UnitId;
                     result.Parameters["Field"].Value = paramExportNhatKyThanhTra.Field;
                     result.Parameters["Status"].Value = paramExportNhatKyThanhTra.Status;
+                    result.Parameters["UnitProcessId"].Value = paramExportNhatKyThanhTra.UnitProcessId;
+                    result.Parameters["UserProcessId"].Value = paramExportNhatKyThanhTra.UserProcessId;
                     result.SaveLayoutToXml(ms);
                     if (ms != null)
                     {

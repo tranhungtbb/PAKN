@@ -1,13 +1,9 @@
-import { Component, ViewChild, AfterViewInit, Renderer2, Input, ElementRef, Inject, PLATFORM_ID, ViewEncapsulation } from '@angular/core'
-import { isPlatformBrowser } from '@angular/common'
-import * as ko from 'knockout'
-// import { Html, DevExpress } from "devexpress-reporting/dx-web-document-viewer";
+import { Component, ViewChild, Renderer2, Input, ElementRef, Inject, PLATFORM_ID, ViewEncapsulation } from '@angular/core'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router'
 import { UserInfoStorageService } from '../../commons/user-info-storage.service'
 import { AppSettings } from '../../constants/app-setting'
 import { DataService } from '../../services/sharedata.service'
 
-// declare var jquery: any;
 declare var $: any
 
 @Component({
@@ -24,14 +20,6 @@ declare var $: any
 	],
 })
 export class ReportViewerComponent {
-	constructor(
-		private renderer: Renderer2,
-		@Inject(PLATFORM_ID) private platformId: Object,
-		private route: ActivatedRoute,
-		private localStorage: UserInfoStorageService,
-		private router: Router,
-		private shareData: DataService
-	) {}
 	@ViewChild('scripts', { static: false })
 	scripts: ElementRef
 
@@ -40,7 +28,7 @@ export class ReportViewerComponent {
 
 	backLinkLoc: boolean = false
 	objectsearch: any = {}
-	paramsAdded: boolean = false
+
 	// The URL of a report to open in the Report Designer when the application starts.
 	public reportUrl: string = this.shareData.sendReportUrl
 	// URI of your backend project.
@@ -50,6 +38,14 @@ export class ReportViewerComponent {
 	// invokeAction: string = '/WebDocumentViewer/Invoke';
 	// Uncomment this line if you use an ASP.NET Core backend
 	invokeAction: string = 'DXXRDV'
+	constructor(
+		private renderer: Renderer2,
+		@Inject(PLATFORM_ID) private platformId: Object,
+		private route: ActivatedRoute,
+		private localStorage: UserInfoStorageService,
+		private router: Router,
+		private shareData: DataService
+	) {}
 
 	backLink() {
 		if (!this.backLinkLoc) {
