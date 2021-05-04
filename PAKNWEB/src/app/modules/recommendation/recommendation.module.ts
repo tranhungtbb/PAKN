@@ -46,11 +46,11 @@ import { HtmlToPlaintextPipe } from 'src/app/pipes/html-filter.pipe'
 		TreeTableModule,
 		TableModule,
 		NgSelectModule,
+		HtmlToPlaintextPipe,
 		ContextMenuModule,
 	],
 	declarations: [
 		RecommendationComponent,
-		HtmlToPlaintextPipe,
 		ListGeneralComponent,
 		CreateRecommendationComponent,
 		ListReceiveWaitComponent,

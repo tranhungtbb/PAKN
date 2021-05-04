@@ -16,13 +16,7 @@ import { DetailAdministrativeFormalitiesComponent } from './detail-administrativ
 
 import { HtmlToPlaintextPipe } from 'src/app/pipes/html-filter.pipe'
 @NgModule({
-	declarations: [
-		AdministrativeFormalitiesComponent,
-		CU_AdministrativeFormalitiesComponent,
-		ListAdministrativeFormalitiesComponent,
-		DetailAdministrativeFormalitiesComponent,
-		HtmlToPlaintextPipe,
-	],
+	declarations: [AdministrativeFormalitiesComponent, CU_AdministrativeFormalitiesComponent, ListAdministrativeFormalitiesComponent, DetailAdministrativeFormalitiesComponent],
 	imports: [
 		CommonModule,
 		AdministrativeFormalitiesRoutingModule,
@@ -34,6 +28,7 @@ import { HtmlToPlaintextPipe } from 'src/app/pipes/html-filter.pipe'
 		CKEditorModule,
 		MatDialogModule,
 		TableModule,
+		HtmlToPlaintextPipe,
 	],
 })
 export class AdministrativeFormalitiesModule {}
