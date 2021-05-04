@@ -41,7 +41,6 @@ export class ListReactionaryWordComponent implements OnInit {
 	totalRecords: number = 0
 	idDelete: number = 0
 	ngOnInit() {
-		this.dataSearch.status = RECOMMENDATION_STATUS.PROCESS_DENY
 		this.getDataForCreate()
 		this.getList()
 	}
@@ -88,7 +87,7 @@ export class ListReactionaryWordComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
-					this.listData = response.result.MRRecommendationGetAllWithProcess
+					this.listData = response.result.MRRecommendationGetAllReactionaryWord
 					this.totalRecords = response.result.TotalCount
 				}
 			} else {
