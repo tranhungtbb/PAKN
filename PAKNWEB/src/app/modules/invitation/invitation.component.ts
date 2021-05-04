@@ -25,7 +25,8 @@ export class InvitationComponent implements OnInit {
 	model: any = new InvitationObject()
 	title: string = ''
 	place: string = ''
-	date: string
+	startDate: any
+	endDate: any
 	status: Number
 	pageIndex: Number = 1
 	pageSize: Number = 20
@@ -45,6 +46,8 @@ export class InvitationComponent implements OnInit {
 			.invitationGetList({
 				PageIndex: this.pageIndex,
 				PageSize: this.pageSize,
+				StartDate: this.startDate == null ? '' : this.startDate,
+				EndDate: this.endDate == null ? '' : this.endDate,
 				Title: this.title == null ? '' : this.title,
 				Place: this.place == null ? '' : this.place,
 				Status: this.status == null ? '' : this.status,
@@ -101,6 +104,20 @@ export class InvitationComponent implements OnInit {
 		this.routes.navigate(['quan-tri/thu-moi/cap-nhap/' + id])
 	}
 	sendDateChange(data) {
-		this.date = data
+		if (data != null) {
+			let count = 0
+			for (const iterator of data) {
+				var date = JSON.stringify(new Date(iterator)).slice(1, 11)
+				if (count == 0) {
+					this.startDate = date
+				} else {
+					this.endDate = date
+				}
+				count++
+			}
+		} else {
+			this.startDate = this.endDate = ''
+		}
+		this.getListPaged()
 	}
 }
