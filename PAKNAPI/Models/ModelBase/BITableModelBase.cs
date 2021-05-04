@@ -46,7 +46,7 @@ namespace PAKNAPI.ModelBase
 		public int? UpdatedBy { get; set; }
 		public int? Status { get; set; }
 		public bool? RepresentativeGender { get; set; }
-		public DateTime RepresentativeBirthDay { get; set; }
+		public DateTime? RepresentativeBirthDay { get; set; }
 		public string Business { get; set; }
 		public long UserId { get; set; }
 		public int? RowNumber; // int, null
@@ -98,7 +98,7 @@ namespace PAKNAPI.ModelBase
 		public int? UpdatedBy { get; set; }
 		public int? Status { get; set; }
 		public bool? RepresentativeGender { get; set; }
-		public DateTime RepresentativeBirthDay { get; set; }
+		public DateTime? RepresentativeBirthDay { get; set; }
 		public string Business { get; set; }
 		public long UserId { get; set; }
 
@@ -133,19 +133,19 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsActived", _bIBusiness.IsActived);
 			DP.Add("IsDeleted", _bIBusiness.IsDeleted);
 			DP.Add("OrgPhone", _bIBusiness.OrgPhone);
-			DP.Add("OrgEmail", _bIBusiness.OrgEmail);
-			DP.Add("RepresentativeBirthDay", _bIBusiness.RepresentativeBirthDay);
 			DP.Add("UserId", _bIBusiness.UserId);
-			DP.Add("Business", _bIBusiness.Business);
 			DP.Add("ProvinceId", _bIBusiness.ProvinceId);
 			DP.Add("WardsId", _bIBusiness.WardsId);
 			DP.Add("DistrictId", _bIBusiness.DistrictId);
+			DP.Add("OrgEmail", _bIBusiness.OrgEmail);
 			DP.Add("CreatedDate", _bIBusiness.CreatedDate);
 			DP.Add("UpdatedDate", _bIBusiness.UpdatedDate);
 			DP.Add("CreatedBy", _bIBusiness.CreatedBy);
 			DP.Add("UpdatedBy", _bIBusiness.UpdatedBy);
 			DP.Add("Status", _bIBusiness.Status);
 			DP.Add("RepresentativeGender", _bIBusiness.RepresentativeGender);
+			DP.Add("RepresentativeBirthDay", _bIBusiness.RepresentativeBirthDay);
+			DP.Add("Business", _bIBusiness.Business);
 			DP.Add("BusinessRegistration", _bIBusiness.BusinessRegistration);
 			DP.Add("DecisionOfEstablishing", _bIBusiness.DecisionOfEstablishing);
 			DP.Add("DateOfIssue", _bIBusiness.DateOfIssue);
@@ -175,20 +175,20 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsActived", _bIBusiness.IsActived);
 			DP.Add("IsDeleted", _bIBusiness.IsDeleted);
 			DP.Add("OrgPhone", _bIBusiness.OrgPhone);
-			DP.Add("OrgEmail", _bIBusiness.OrgEmail);
 			DP.Add("Id", _bIBusiness.Id);
-			DP.Add("RepresentativeBirthDay", _bIBusiness.RepresentativeBirthDay);
 			DP.Add("UserId", _bIBusiness.UserId);
-			DP.Add("Business", _bIBusiness.Business);
 			DP.Add("ProvinceId", _bIBusiness.ProvinceId);
 			DP.Add("WardsId", _bIBusiness.WardsId);
 			DP.Add("DistrictId", _bIBusiness.DistrictId);
+			DP.Add("OrgEmail", _bIBusiness.OrgEmail);
 			DP.Add("CreatedDate", _bIBusiness.CreatedDate);
 			DP.Add("UpdatedDate", _bIBusiness.UpdatedDate);
 			DP.Add("CreatedBy", _bIBusiness.CreatedBy);
 			DP.Add("UpdatedBy", _bIBusiness.UpdatedBy);
 			DP.Add("Status", _bIBusiness.Status);
 			DP.Add("RepresentativeGender", _bIBusiness.RepresentativeGender);
+			DP.Add("RepresentativeBirthDay", _bIBusiness.RepresentativeBirthDay);
+			DP.Add("Business", _bIBusiness.Business);
 			DP.Add("BusinessRegistration", _bIBusiness.BusinessRegistration);
 			DP.Add("DecisionOfEstablishing", _bIBusiness.DecisionOfEstablishing);
 			DP.Add("DateOfIssue", _bIBusiness.DateOfIssue);

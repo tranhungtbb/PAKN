@@ -10,6 +10,7 @@ export class RecommendationObject {
 		this.sendId = null
 		this.name = ''
 		this.status = null
+		this.reactionaryWord = false
 		this.sendDate = null
 		this.createdBy = null
 		this.createdDate = null
@@ -26,6 +27,7 @@ export class RecommendationObject {
 	sendId: number
 	name: string
 	status: number
+	reactionaryWord: boolean
 	sendDate: Date
 	createdBy: number
 	createdDate: Date

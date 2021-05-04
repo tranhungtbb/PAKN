@@ -58,7 +58,7 @@ namespace PAKNAPI.ModelBase
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
 		public long Id { get; set; }
-		public DateTime RepresentativeBirthDay { get; set; }
+		public DateTime? RepresentativeBirthDay { get; set; }
 		public int? ProvinceId { get; set; }
 		public int? Status { get; set; }
 		public bool? RepresentativeGender { get; set; }
@@ -138,7 +138,7 @@ namespace PAKNAPI.ModelBase
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
 		public long Id { get; set; }
-		public DateTime RepresentativeBirthDay { get; set; }
+		public DateTime? RepresentativeBirthDay { get; set; }
 		public int? ProvinceId { get; set; }
 		public int? Status { get; set; }
 		public bool? RepresentativeGender { get; set; }
@@ -183,7 +183,7 @@ namespace PAKNAPI.ModelBase
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
 		public long Id { get; set; }
-		public DateTime RepresentativeBirthDay { get; set; }
+		public DateTime? RepresentativeBirthDay { get; set; }
 		public int? ProvinceId { get; set; }
 		public int? Status { get; set; }
 		public bool? RepresentativeGender { get; set; }
