@@ -19,8 +19,11 @@ using PAKNAPI.Services.FileUpload;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using DevExpress.AspNetCore.Reporting;
+using DevExpress.AspNetCore;
+using PAKNAPI;
 
-namespace BookLibAPI
+namespace PAKNAPI
 {
 
 	public class Startup
@@ -35,6 +38,18 @@ namespace BookLibAPI
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddCors();
+			services.AddMvc().AddDefaultReportingControllers();
+
+			services.AddMvc().ConfigureApplicationPartManager(x =>
+			{
+				var parts = x.ApplicationParts;
+				var aspNetCoreReportingAssemblyName = typeof(DevExpress.AspNetCore.Reporting.WebDocumentViewer.WebDocumentViewerController).Assembly.GetName().Name;
+				var reportingPart = parts.FirstOrDefault(part => part.Name == aspNetCoreReportingAssemblyName);
+				if (reportingPart != null)
+				{
+					parts.Remove(reportingPart);
+				}
+			});
 			services.AddMvc().AddNewtonsoftJson();
 			services.AddMvc(options =>
 			{
@@ -46,6 +61,8 @@ namespace BookLibAPI
 			services.AddHttpContextAccessor();
 			services.AddTransient<IAppSetting, AppSetting>();
 			services.AddTransient<IFileService, FileService>();
+
+			services.AddDevExpressControls();
 
 			//services.Configure<CsSetting>(Configuration.GetSection("Default"));
 
@@ -127,12 +144,10 @@ namespace BookLibAPI
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
-				//app.UseSwagger();
-				//app.UseSwaggerUI(c =>
-				//{
-				//	c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-				//	c.RoutePrefix = string.Empty;
-				//});
+			}
+			else
+			{
+				app.UseHsts();
 			}
 
 			app.UseMiddleware<CustomMiddleware>();
@@ -155,6 +170,12 @@ namespace BookLibAPI
 				RequestPath = new PathString("/Upload/Remind")
 			});
 
+			// Dev
+			DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension.RegisterExtensionGlobal(new ReportStorageWebExtension1());
+			DevExpress.XtraReports.Configuration.Settings.Default.UserDesignerOptions.DataBindingMode = DevExpress.XtraReports.UI.DataBindingMode.Bindings;
+			app.UseDevExpressControls();
+			app.UseStaticFiles();
+			// end
 
 			app.UseRouting();
 

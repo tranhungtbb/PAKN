@@ -43,7 +43,7 @@
 									"with": "src/environments/environment.prod.ts"
 								}
 							],
-							"optimization": false,
+							"optimization": true,
 							"outputHashing": "all",
 							"sourceMap": false,
 							"extractCss": true,
@@ -51,7 +51,14 @@
 							"aot": true,
 							"extractLicenses": true,
 							"vendorChunk": false,
-							"buildOptimizer": true
+							"buildOptimizer": true,
+							"budgets": [
+								{
+									"type": "all",
+									"maximumWarning": "90mb",
+									"maximumError": "100mb"
+								}
+							]
 						}
 					}
 				},
@@ -80,8 +87,8 @@
 						"polyfills": "src/polyfills.ts",
 						"tsConfig": "src/tsconfig.spec.json",
 						"karmaConfig": "src/karma.conf.js",
-						"styles": ["src/assets/dist/css/sd-style.css"],
-						"scripts": ["src/assets/dist/js/owl.carousel.min.js"],
+						"styles": ["src/styles.css"],
+						"scripts": [],
 						"assets": ["src/favicon.ico", "src/assets"]
 					}
 				},
@@ -120,8 +127,5 @@
 			}
 		}
 	},
-	"defaultProject": "ClientApp",
-	"cli": {
-		"analytics": "1c9f4a20-294c-4402-b2dd-d92777427f14"
-	}
+	"defaultProject": "ClientApp"
 }

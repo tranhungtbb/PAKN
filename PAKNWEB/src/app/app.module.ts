@@ -25,6 +25,7 @@ import { TreeModule } from 'primeng/tree'
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer'
 import { ImageViewerModule } from 'ng2-image-viewer'
 import { UnitFilterPipe } from './pipes/unit-filter.pipe'
+import { DxReportViewerModule } from 'devexpress-reporting-angular'
 
 @NgModule({
 	declarations: [AppComponent, SvFocusDirective, ConfirmDialogComponent, ViewFileDialogComponent],
@@ -56,7 +57,8 @@ import { UnitFilterPipe } from './pipes/unit-filter.pipe'
 		EffectsModule.forRoot([]),
 		PdfJsViewerModule,
 		ImageViewerModule,
-		TreeModule
+		TreeModule,
+		DxReportViewerModule,
 	],
 	providers: [
 		{

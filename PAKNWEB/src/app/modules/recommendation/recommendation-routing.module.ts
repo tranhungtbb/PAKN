@@ -15,7 +15,6 @@ import { ViewRecommendationComponent } from './view-recommendation/view-recommen
 import { ListApproveDenyComponent } from './list-approve-deny/list-approve-deny.component'
 import { ListApprovedComponent } from './list-approved/list-approved.component'
 import { DetailRecommendationComponent } from './detail-recommendation/detail-recommendation.component'
-import { ReportViewerComponent } from '../report-view/report-viewcomponent'
 
 const routes: Routes = [
 	{
@@ -36,7 +35,6 @@ const routes: Routes = [
 			{ path: 'da-giai-quyet', component: ListApprovedComponent },
 			{ path: 'danh-sach-knct', component: ListRequestComponent },
 			{ path: 'chi-tiet-knct/:id', component: DetailRecommendationComponent },
-			{ path: 'xuat-file/:module', component: ReportViewerComponent },
 		],
 	},
 ]

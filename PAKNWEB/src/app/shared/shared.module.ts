@@ -5,7 +5,6 @@ import { DisableControlDirective } from '../directives/disable-control.directive
 import { SvTrimDirective } from '../directives/sv-trim.directive'
 import { SvMoneyDirective } from '../directives/sv-money.directive'
 import { HasPermissionDirective } from '../directives/sv-permission.directive'
-import { ReportViewerComponent } from '../modules/report-view/report-viewcomponent'
 import { SvVoiceDirective } from '../directives/sv-voice.directive'
 import { NumberOnlyDirective } from '../directives/sv-number.directive'
 import { ReCaptchaDirective } from '../directives/sv-reCaptcha.directive'
@@ -27,7 +26,6 @@ import { SvTextAreaTrimDirective } from '../directives/sv-textarea-trim.directiv
 		SvTrimDirective,
 		SvMoneyDirective,
 		HasPermissionDirective,
-		ReportViewerComponent,
 		SvVoiceDirective,
 		NumberOnlyDirective,
 		ReCaptchaDirective,
@@ -48,7 +46,6 @@ import { SvTextAreaTrimDirective } from '../directives/sv-textarea-trim.directiv
 		SvTrimDirective,
 		SvMoneyDirective,
 		HasPermissionDirective,
-		ReportViewerComponent,
 		SvVoiceDirective,
 		NumberOnlyDirective,
 		ReCaptchaDirective,

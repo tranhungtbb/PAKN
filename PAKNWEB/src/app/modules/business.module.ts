@@ -14,10 +14,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
 import { TableModule } from 'primeng/table'
 import { ScrollPanelModule } from 'primeng/scrollpanel'
 import { VirtualScrollerModule } from 'primeng/virtualscroller'
-import { DashboardComponent } from './dash-board/dash-board.component'
-import { NotificationComponent } from './notification/notification.component';
-import { RecommnendationGetListComponent } from './dash-board/recommnendation-get-list/recommnendation-get-list.component'
+import { DxDropDownBoxModule, DxTreeViewModule, DxDataGridModule } from 'devextreme-angular'
+import { DxReportViewerModule } from 'devexpress-reporting-angular'
 
+import { DashboardComponent } from './dash-board/dash-board.component'
+import { NotificationComponent } from './notification/notification.component'
+import { RecommnendationGetListComponent } from './dash-board/recommnendation-get-list/recommnendation-get-list.component'
+import { ReportViewerComponent } from './report-view/report-viewcomponent'
 @NgModule({
 	imports: [
 		CommonModule,
@@ -32,7 +35,20 @@ import { RecommnendationGetListComponent } from './dash-board/recommnendation-ge
 		TableModule,
 		ScrollPanelModule,
 		VirtualScrollerModule,
+		DxTreeViewModule,
+		DxDropDownBoxModule,
+		DxDataGridModule,
+		DxReportViewerModule,
 	],
-	declarations: [BusinessComponent, AppheaderComponent, AppfooterComponent, AppmenuComponent, DashboardComponent, NotificationComponent, RecommnendationGetListComponent],
+	declarations: [
+		BusinessComponent,
+		AppheaderComponent,
+		AppfooterComponent,
+		AppmenuComponent,
+		DashboardComponent,
+		NotificationComponent,
+		RecommnendationGetListComponent,
+		ReportViewerComponent,
+	],
 })
 export class BusinessModule {}
