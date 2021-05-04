@@ -16,6 +16,7 @@ import { saveAs as importedSaveAs } from 'file-saver'
 import { DataService } from '../services/sharedata.service'
 defineLocale('vi', viLocale)
 
+declare var $: any
 @Component({
 	selector: 'app-business',
 	templateUrl: './business.component.html',

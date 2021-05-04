@@ -93,4 +93,9 @@ export class UserService {
 		let url = AppSettings.API_ADDRESS + Api.SystemLogDelete
 		return this.serviceInvoker.get(request, url)
 	}
+
+	getCurrentUser(): Observable<any> {
+		let url = AppSettings.API_ADDRESS + Api.SystemLogDelete
+		return this.serviceInvoker.get({}, url)
+	}
 }
