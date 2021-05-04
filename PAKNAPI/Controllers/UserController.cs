@@ -417,8 +417,8 @@ namespace PAKNAPI.Controllers
 
                 if (accInfo[0].TypeId == 1)
                 {
-
-                }
+					return new Models.Results.ResultApi { Success = ResultCode.OK, Result = accInfo[0] };
+				}
                 else if (accInfo[0].TypeId == 2)
                 {
 					var info = await new BIIndividualGetByUserId(_appSetting).BIIndividualGetByUserIdDAO(accInfo[0].Id);
