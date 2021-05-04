@@ -1541,6 +1541,32 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("CAWordGetAllOnPageBase")]
+		public async Task<ActionResult<object>> CAWordGetAllOnPageBase(int? PageSize, int? PageIndex, int? GroupId, string Name, string Description, bool? IsActived)
+		{
+			try
+			{
+				List<CAWordGetAllOnPage> rsCAWordGetAllOnPage = await new CAWordGetAllOnPage(_appSetting).CAWordGetAllOnPageDAO(PageSize, PageIndex, GroupId, Name, Description, IsActived);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAWordGetAllOnPage", rsCAWordGetAllOnPage},
+						{"TotalCount", rsCAWordGetAllOnPage != null && rsCAWordGetAllOnPage.Count > 0 ? rsCAWordGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsCAWordGetAllOnPage != null && rsCAWordGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsCAWordGetAllOnPage != null && rsCAWordGetAllOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
 		[Authorize]
 		[Route("CAWordGetByIDBase")]
 		public async Task<ActionResult<object>> CAWordGetByIDBase(int? Id)
