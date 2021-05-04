@@ -90,7 +90,7 @@
 												<strong class="no-wrap">Tên đăng nhập</strong>
 												<span class="caret-tb" (click)="onSortUser('UserName')"></span>
 											</p>
-											<input [(ngModel)]="queryUser.userName" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
+											<input svTrim [(ngModel)]="queryUser.userName" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
 												(change)="onUserFilterChange()">
 										</th>
 										<th>
@@ -98,7 +98,7 @@
 												<strong class="no-wrap">Tên người dùng</strong>
 												<span class="caret-tb" (click)="onSortUser('FullName')"></span>
 											</p>
-											<input [(ngModel)]="queryUser.fullName" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
+											<input svTrim [(ngModel)]="queryUser.fullName" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
 												(change)="onUserFilterChange()">
 										</th>
 										<th style="min-width: 150px;">
@@ -106,7 +106,7 @@
 												<strong class="no-wrap">Số điện thoại</strong>
 												<span class="caret-tb" (click)="onSortUser('phone')"></span>
 											</p>
-											<input [(ngModel)]="queryUser.phone" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
+											<input svTrim [(ngModel)]="queryUser.phone" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
 												(change)="onUserFilterChange()">
 										</th>
 										<th>
@@ -196,28 +196,31 @@
 												<strong class="no-wrap">Tên đơn vị</strong>
 												<span class="caret-tb" (click)="onSortUnit('Name')"></span>
 											</p>
-											<input type="text" [(ngModel)]="query.name" (change)="unitFilterChange()" placeholder="Nhập ..." class="form-control form-control-sm">
+											<input svTrim type="text" [(ngModel)]="query.name" (change)="unitFilterChange()" placeholder="Nhập ..."
+												class="form-control form-control-sm">
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong class="no-wrap">Số điện thoại</strong>
 												<span class="caret-tb" (click)="onSortUnit('Phone')"></span>
 											</p>
-											<input type="text" [(ngModel)]="query.phone" (change)="unitFilterChange()" placeholder="Nhập ..." class="form-control form-control-sm">
+											<input svTrim type="text" [(ngModel)]="query.phone" (change)="unitFilterChange()" placeholder="Nhập ..."
+												class="form-control form-control-sm">
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong class="no-wrap">Email</strong>
 												<span class="caret-tb" (click)="onSortUnit('Email')"></span>
 											</p>
-											<input type="text" [(ngModel)]="query.email" (change)="unitFilterChange()" placeholder="Nhập ..." class="form-control form-control-sm">
+											<input svTrim type="text" [(ngModel)]="query.email" (change)="unitFilterChange()" placeholder="Nhập ..."
+												class="form-control form-control-sm">
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong class="no-wrap">Địa chỉ</strong>
 												<span class="caret-tb" (click)="onSortUnit('Address')"></span>
 											</p>
-											<input type="text" [(ngModel)]="query.address" (change)="unitFilterChange()" placeholder="Nhập ..."
+											<input svTrim type="text" [(ngModel)]="query.address" (change)="unitFilterChange()" placeholder="Nhập ..."
 												class="form-control form-control-sm">
 										</th>
 										<th style="width: 160px">
