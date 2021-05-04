@@ -15,7 +15,9 @@ BEGIN
 	SELECT
 		[UserId],
 		[InvitationId],
-		[Watched]
+		[Watched],
+		[SendEmail],
+		[SendSMS]
 	FROM [INV_Invitation_User_Map]
 	WHERE [UserId] = @UserId
 END
@@ -37,7 +39,9 @@ BEGIN
 	SELECT
 		[UserId],
 		[InvitationId],
-		[Watched]
+		[Watched],
+		[SendEmail],
+		[SendSMS]
 	FROM [INV_Invitation_User_Map]
 END
 GO
@@ -61,7 +65,9 @@ BEGIN
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
 		[UserId],
 		[InvitationId],
-		[Watched]
+		[Watched],
+		[SendEmail],
+		[SendSMS]
 	FROM [INV_Invitation_User_Map]
 	ORDER BY [UserId,InvitationId]
 	OFFSET (@PageIndex-1) * @PageSize ROWS
@@ -80,16 +86,22 @@ IF EXISTS
 DROP PROCEDURE [INV_Invitation_User_MapInsert];
 GO
 CREATE PROCEDURE [dbo].[INV_Invitation_User_MapInsert]
-	@Watched bit = null
+	@Watched bit = null,
+	@SendEmail bit = null,
+	@SendSMS bit = null
 AS
 BEGIN
 	INSERT INTO [INV_Invitation_User_Map]
 	(
-		[Watched]
+		[Watched],
+		[SendEmail],
+		[SendSMS]
 	)
 	VALUES
 	(
-		@Watched
+		@Watched,
+		@SendEmail,
+		@SendSMS
 	)
 END
 GO
@@ -107,11 +119,15 @@ GO
 CREATE PROCEDURE [dbo].[INV_Invitation_User_MapUpdate]
 	@UserId int = null,
 	@InvitationId int = null,
-	@Watched bit = null
+	@Watched bit = null,
+	@SendEmail bit = null,
+	@SendSMS bit = null
 AS
 BEGIN
 	UPDATE [INV_Invitation_User_Map] SET
-		[Watched] = @Watched
+		[Watched] = @Watched,
+		[SendEmail] = @SendEmail,
+		[SendSMS] = @SendSMS
 	WHERE [UserId] = @UserId
 END
 GO

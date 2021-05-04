@@ -67,7 +67,7 @@
 		</div>
 	</div>
 	<div class="col form-group">
-		<label class="mb-1">Email <span class="cl-red">(*)</span></label>
+		<label class="mb-1">Email </label>
 		<input [svTrim] [(ngModel)]="model.OrgEmail" formControlName="OrgEmail" type="text" placeholder="Nhập..." class="form-control border-brown"
 			(change)="onCheckExist('OrgEmail',$event.target.value)">
 		<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgEmail.invalid)||(fOrgAdr.OrgEmail.invalid && (fOrgAdr.OrgEmail.dirty || fOrgAdr.OrgEmail.touched))"

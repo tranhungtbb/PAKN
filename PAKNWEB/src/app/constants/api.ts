@@ -149,6 +149,7 @@ export class Api {
 	public static HisNewsInsert = 'HISNews/HISNewsInsert'
 	public static HisNewsGetListByNewsId = 'HISNews/HISNewsGetByNewsId'
 	public static NewsGetViewDetail = 'NESPBase/NENewsViewDetailBase'
+	public static NewsGetAllRelates = 'NESPBase/NENewsGetAllRelatesBase'
 
 	//Department
 	public static DepartmentGetList = 'CACategorySPBase/CADepartmentGetAllOnPageBase'

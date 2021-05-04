@@ -4,13 +4,15 @@
 			<div class="col main-ct pr-3 pr-lg-5 col-lg-9">
 				<div>
 					<span>Trang chủ / <strong>Tin tức sự kiện</strong></span>
-					<button class="btn btn-sm btn-default border-1 border-brown pull-right" style="display: inline-block;">
+					<a class="btn btn-sm btn-default border-1 border-brown pull-right" style="display: inline-block;" *ngIf="viewDemo"
+						[routerLink]="['/quan-tri/tin-tuc/chinh-sua', model.id]">
 						<i class="pi pi-arrow-left"></i>
 						&nbsp;Quay lại
-					</button>
+					</a>
 				</div>
 				<div class="mt-5">
-					<h1>
+					<h1 style="line-height: 1.5;">
+						<span *ngIf="viewDemo" style="color: red;">(Xem trước) </span>
 						{{model.title}}
 					</h1>
 					<div class="mt-3 mb-2">
@@ -25,6 +27,22 @@
 						</p>
 					</div>
 					<div class="contents" [innerHTML]="model.contents"></div>
+				</div>
+				<div>
+					<div class="mb-4">
+						<h5 class="pb-2 border-bottom text-uppercase" style="font-size: 14pt;">Bài viết liên quan khác</h5>
+					</div>
+					<div *ngFor="let item of newsRelates; index as i" class="pb-2 mb-2 clearfix" [ngClass]="{'border-bottom':i < newsRelates.length-1}">
+						<img style="width:130px; min-height: 65px;" [src]="item.imagePath" class="rounded pull-left border">
+						<div class="col-md-9 pull-left">
+							<h5 style="font-weight:normal;">
+								<a [routerLink]="['/cong-bo/tin-tuc-su-kien/',item.id]" class="text-black">
+									{{item.title}}
+								</a>
+							</h5>
+							<time style="font-size: 11pt;">Ngày đăng: <strong>{{item.createdDate | date:'dd/MM/yyyy'}}</strong> </time>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">

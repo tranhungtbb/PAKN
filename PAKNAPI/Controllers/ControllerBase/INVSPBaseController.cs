@@ -232,31 +232,5 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
-		[HttpGet]
-		[Authorize]
-		[Route("INVInvitationGetAllOnPageBase")]
-		public async Task<ActionResult<object>> INVInvitationGetAllOnPageBase(int? PageSize, int? PageIndex, string Title, DateTime? StartDate, DateTime? EndDate, string Place, byte? Status)
-		{
-			try
-			{
-				List<INVInvitationGetAllOnPage> rsINVInvitationGetAllOnPage = await new INVInvitationGetAllOnPage(_appSetting).INVInvitationGetAllOnPageDAO(PageSize, PageIndex, Title, StartDate, EndDate, Place, Status);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"INVInvitationGetAllOnPage", rsINVInvitationGetAllOnPage},
-						{"TotalCount", rsINVInvitationGetAllOnPage != null && rsINVInvitationGetAllOnPage.Count > 0 ? rsINVInvitationGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsINVInvitationGetAllOnPage != null && rsINVInvitationGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsINVInvitationGetAllOnPage != null && rsINVInvitationGetAllOnPage.Count > 0 ? PageSize : 0},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
 	}
 }

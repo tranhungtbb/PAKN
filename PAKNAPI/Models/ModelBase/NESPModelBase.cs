@@ -59,6 +59,33 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class NENewsGetAllRelates
+	{
+		private SQLCon _sQLCon;
+
+		public NENewsGetAllRelates(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public NENewsGetAllRelates()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public string ImagePath { get; set; }
+
+		public async Task<List<NENewsGetAllRelates>> NENewsGetAllRelatesDAO(long? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<NENewsGetAllRelates>("NE_NewsGetAllRelates", DP)).ToList();
+		}
+	}
+
 	public class NENewsGetByID
 	{
 		private SQLCon _sQLCon;
@@ -293,6 +320,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
+		public int Id { get; set; }
 		public string Title { get; set; }
 		public string Summary { get; set; }
 		public string Contents { get; set; }

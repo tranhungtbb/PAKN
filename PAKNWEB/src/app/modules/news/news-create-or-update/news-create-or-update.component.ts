@@ -155,7 +155,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	}
 
 	submitted = false
-	onSave(event, published = false) {
+	onSave(event, published = false, viewDemo = false) {
 		this.submitted = true
 		if (this.newsForm.invalid) {
 			return
@@ -173,7 +173,11 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				}
 				// insert vào Notification
 				this.insertNotification(false)
-
+				if (viewDemo) {
+					//this.router.navigate()
+					window.open('/cong-bo/tin-tuc-su-kien/xem-truoc/' + this.model.id)
+					return
+				}
 				// cap nhap
 				this.hisNewsModel.status = STATUS_HISNEWS.UPDATE
 				this.hisNewsModel.objectId = this.model.id
@@ -209,6 +213,11 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				}
 				this.model.id = res.result
 				this.insertNotification(true)
+
+				if (viewDemo) {
+					window.open('/cong-bo/tin-tuc-su-kien/xem-truoc/' + this.model.id)
+					return
+				}
 
 				// khởi tạo
 				this.hisNewsModel.status = STATUS_HISNEWS.CREATE

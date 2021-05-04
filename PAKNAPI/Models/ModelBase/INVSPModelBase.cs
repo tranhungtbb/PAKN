@@ -124,41 +124,4 @@ namespace PAKNAPI.ModelBase
 	{
 		public int? Id { get; set; }
 	}
-
-	public class INVInvitationGetAllOnPage
-	{
-		private SQLCon _sQLCon;
-
-		public INVInvitationGetAllOnPage(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public INVInvitationGetAllOnPage()
-		{
-		}
-
-		public int? RowNumber { get; set; }
-		public int Id { get; set; }
-		public string Title { get; set; }
-		public DateTime StartDate { get; set; }
-		public DateTime EndDate { get; set; }
-		public string Place { get; set; }
-		public byte Status { get; set; }
-		public int? AmountWatched { get; set; }
-
-		public async Task<List<INVInvitationGetAllOnPage>> INVInvitationGetAllOnPageDAO(int? PageSize, int? PageIndex, string Title, DateTime? StartDate, DateTime? EndDate, string Place, byte? Status)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("Title", Title);
-			DP.Add("StartDate", StartDate);
-			DP.Add("EndDate", EndDate);
-			DP.Add("Place", Place);
-			DP.Add("Status", Status);
-
-			return (await _sQLCon.ExecuteListDapperAsync<INVInvitationGetAllOnPage>("INV_InvitationGetAllOnPage", DP)).ToList();
-		}
-	}
 }
