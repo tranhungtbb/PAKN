@@ -3,12 +3,7 @@
   <PropertyGroup>
     <Controller_SelectedScaffolderID>ApiControllerEmptyScaffolder</Controller_SelectedScaffolderID>
     <Controller_SelectedScaffolderCategoryPath>root/Common/Api</Controller_SelectedScaffolderCategoryPath>
-    <NameOfLastUsedPublishProfile>E:\DUONG\_pakn\pakn\PAKNAPI\Properties\PublishProfiles\FolderProfile.pubxml</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>E:\SV_2021\PhanAnhKienNghi\Source\pakn\PAKNAPI\Properties\PublishProfiles\FolderProfile.pubxml</NameOfLastUsedPublishProfile>
     <ShowAllFiles>true</ShowAllFiles>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Update="ExportGrid\Recommendation_ListGeneral.cs">
-      <SubType>Component</SubType>
-    </Compile>
-  </ItemGroup>
 </Project>
