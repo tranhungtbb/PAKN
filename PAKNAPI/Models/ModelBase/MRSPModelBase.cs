@@ -900,6 +900,56 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class MRRecommendationGetAllReactionaryWord
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGetAllReactionaryWord(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGetAllReactionaryWord()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Title { get; set; }
+		public string Content { get; set; }
+		public int? Field { get; set; }
+		public string FieldName { get; set; }
+		public int? UnitId { get; set; }
+		public string UnitName { get; set; }
+		public short? TypeObject { get; set; }
+		public long? SendId { get; set; }
+		public string Name { get; set; }
+		public byte? Status { get; set; }
+		public DateTime? SendDate { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public long? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+
+		public async Task<List<MRRecommendationGetAllReactionaryWord>> MRRecommendationGetAllReactionaryWordDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Code", Code);
+			DP.Add("SendName", SendName);
+			DP.Add("Content", Content);
+			DP.Add("UnitId", UnitId);
+			DP.Add("Field", Field);
+			DP.Add("Status", Status);
+			DP.Add("UnitProcessId", UnitProcessId);
+			DP.Add("UserProcessId", UserProcessId);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetAllReactionaryWord>("MR_RecommendationGetAllReactionaryWord", DP)).ToList();
+		}
+	}
+
 	public class MRRecommendationGetAllWithProcess
 	{
 		private SQLCon _sQLCon;

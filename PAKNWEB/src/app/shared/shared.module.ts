@@ -17,6 +17,7 @@ import { StopLengthDirective } from '../directives/stop-length.directive'
 import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
 import { DisabledSpaceKeyDirective } from 'src/app/directives/sv-disabled-space-key.directive'
 import { SvTextAreaTrimDirective } from '../directives/sv-textarea-trim.directive'
+import { HtmlToPlaintextPipe } from '../pipes/html-filter.pipe'
 
 @NgModule({
 	declarations: [
@@ -38,6 +39,7 @@ import { SvTextAreaTrimDirective } from '../directives/sv-textarea-trim.directiv
 		DisabledSpaceKeyDirective,
 		ChangePipe,
 		SvTextAreaTrimDirective,
+		HtmlToPlaintextPipe,
 	],
 	exports: [
 		ConfirmClickDirective,
@@ -58,6 +60,7 @@ import { SvTextAreaTrimDirective } from '../directives/sv-textarea-trim.directiv
 		DisabledSpaceKeyDirective,
 		ChangePipe,
 		SvTextAreaTrimDirective,
+		HtmlToPlaintextPipe,
 	],
 })
 export class SharedModule {}

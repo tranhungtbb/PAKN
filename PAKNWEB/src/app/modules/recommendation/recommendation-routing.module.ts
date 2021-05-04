@@ -15,6 +15,7 @@ import { ViewRecommendationComponent } from './view-recommendation/view-recommen
 import { ListApproveDenyComponent } from './list-approve-deny/list-approve-deny.component'
 import { ListApprovedComponent } from './list-approved/list-approved.component'
 import { DetailRecommendationComponent } from './detail-recommendation/detail-recommendation.component'
+import { ListReactionaryWordComponent } from './list-reactionary-word/list-reactionary-word.component'
 
 const routes: Routes = [
 	{
@@ -33,6 +34,7 @@ const routes: Routes = [
 			{ path: 'cho-phe-duyet', component: ListApproveWaitComponent },
 			{ path: 'tu-choi-phe-duyet', component: ListApproveDenyComponent },
 			{ path: 'da-giai-quyet', component: ListApprovedComponent },
+			{ path: 'chua-tu-ngu-bi-cam', component: ListReactionaryWordComponent },
 			{ path: 'danh-sach-knct', component: ListRequestComponent },
 			{ path: 'chi-tiet-knct/:id', component: DetailRecommendationComponent },
 		],

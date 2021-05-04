@@ -516,7 +516,7 @@ namespace PAKNAPI.Controller
                 request._mRRecommendationForwardProcessIN.ProcessingDate = DateTime.Now;
                 request._mRRecommendationForwardProcessIN.UserId = UserSendId;
                 await new MRRecommendationForwardProcess(_appSetting).MRRecommendationForwardProcessDAO(request._mRRecommendationForwardProcessIN);
-                if (request.RecommendationStatus == STATUS_RECOMMENDATION.PROCESS_DENY)
+                if (request.RecommendationStatus == STATUS_RECOMMENDATION.RECEIVE_DENY)
                 {
                     MRRecommendationUpdateReactionaryWordIN _mRRecommendationUpdateReactionaryWordIN = new MRRecommendationUpdateReactionaryWordIN();
                     _mRRecommendationUpdateReactionaryWordIN.Id = request._mRRecommendationForwardProcessIN.RecommendationId;
