@@ -1,0 +1,217 @@
+<div class="container-fluid p-0">
+	<div class="row">
+		<div class="col-lg-12">
+			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+				<li class="breadcrumb-item active"><a class="font-weight-bold">LỊCH SỬ CHATBOT</a></li>
+			</ol>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card mb-0 shadow-none">
+				<div class="table-responsive">
+
+					<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+						currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+						<ng-template pTemplate="header" class="bg-thead">
+							<tr>
+								<th style="width: 50px">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>STT</strong>
+									</p>
+								</th>
+								<th style="width: 250px">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>Tên</strong>
+									</p>
+									<input class="form-control form-control-sm" [(ngModel)]="fullName" maxlength="100" (keydown.enter)="dataStateChange()"
+										placeholder="Nhập tên..." />
+								</th>
+								<th style="width: 350px">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>Câu hỏi</strong>
+									</p>
+									<input class="form-control form-control-sm" [(ngModel)]="question" maxlength="100" (keydown.enter)="dataStateChange()"
+										placeholder="Nhập câu hỏi..." />
+								</th>
+								<th>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>Trả lời</strong>
+									</p>
+									<input class="form-control form-control-sm" [(ngModel)]="answer" maxlength="100" (keydown.enter)="dataStateChange()"
+										placeholder="Nhập câu trả lời..." />
+								</th>
+							</tr>
+						</ng-template>
+						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+							<tr>
+								<td class="text-center">{{rowIndex + 1}}</td>
+								<td>
+									<strong><a (click)="preView(item)" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.fullName}}</a></strong>
+								</td>
+								<td>
+									<strong><a (click)="preView(item)" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.question}}</a></strong>
+								</td>
+								<td>{{item.answer}}</td>
+							</tr>
+						</ng-template>
+						<ng-template pTemplate="emptymessage">
+							<tr>
+								<td class="text-center" colspan="5">Không có dữ liệu</td>
+							</tr>
+						</ng-template>
+					</p-table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="modal">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 60%" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal" [formGroup]="form" #formDir="ngForm">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">{{title}}</p>
+					</div>
+					<div class="modal-body no-padding-bottom">
+						<div class="row form-group">
+							<div class="col-sm-8">
+								<label class="control-label">Câu hỏi <span class="text-danger">(*)</span></label>
+								<input id="target" placeholder="Nhập câu hỏi..." svTrim class="form-control" formControlName="question" [(ngModel)]="model.question"
+									maxlength="100" />
+								<div *ngIf="(submitted && f.question.invalid) || (f.question.invalid && (f.question.dirty || f.question.touched))" class="has-error m-b-12">
+									<div *ngIf="f.question.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<label class="control-label">Trạng thái <span class="text-danger">(*)</span></label>
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-sm-12">
+								<label class="control-label">Trả lời <span class="text-danger">(*)</span></label>
+								<textarea placeholder="Nhập..." svTrim class="form-control" formControlName="answer" type="text" rows="4" [(ngModel)]="model.answer"
+									maxlength="255"></textarea>
+								<div *ngIf="(submitted && f.answer.invalid) || (f.answer.invalid && (f.answer.dirty || f.answer.touched))" class="has-error m-b-12">
+									<div *ngIf="f.answer.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer border-top-0">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onSave()">Xác nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalDetail">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 40%" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">Thông tin</p>
+					</div>
+					<div class="modal-body no-padding-bottom" style="padding: 1.1rem;">
+						<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 10px 0px;">
+							<div class="col-sm-4">
+								<label class="control-label lb600 detail-title">Câu hỏi: </label>
+							</div>
+							<div class="col-sm-6">
+								<strong>{{model.question}}</strong>
+							</div>
+						</div>
+						<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 10px 0px;">
+							<div class="col-sm-12">
+								<label class="control-label lb600">Trả lời: </label>
+							</div>
+							<div class="col-sm-12">
+								<p>{{model.answer}}</p>
+							</div>
+						</div>
+
+						<div class="row" style="padding: 10px 0px;">
+							<div class="col-sm-8">
+								<label class="control-label lb600">Trạng thái: </label>
+							</div>
+							<div class="col-sm-4" style="text-align: right;">
+								<!-- <span style="padding: 7px;" *ngIf="model.isActived == true" class="badge rounded-pill bg-success">Hiệu
+									lực</span>
+								<span style="padding: 7px;" *ngIf="model.isActived == false" class="badge rounded-pill badge-light">Hết
+									hiệu lực</span> -->
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalConfirmDelete">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+					</div>
+					<div class="modal-body no-padding-bottom" style="border: none;">
+						<div style="text-align: center;">
+							<strong class="change-status-title">Bạn có chắc chắn thực hiện hành động này?</strong>
+						</div>
+					</div>
+					<div class="modal-footer" style="border: none; justify-content: center;">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete, categoryIdDelete)">Xác
+							nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="modalConfirmUpdateStatus">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+					</div>
+					<div class="modal-body no-padding-bottom" style="border: none;">
+						<div style="text-align: center;">
+							<strong class="change-status-title">Bạn có chắc chắn thực hiện hành động này?</strong>
+						</div>
+					</div>
+					<div class="modal-footer" style="border: none; justify-content: center;">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onUpdateStatus(dataUpdate)">Xác
+							nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

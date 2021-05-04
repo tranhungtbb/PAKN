@@ -97,7 +97,7 @@ export class MyRecommendationComponent implements OnInit {
 				if (res.result.MRRecommendationGetAllWithProcess.length > 0) {
 					this.listDataNotChange = res.result.MRRecommendationGetAllWithProcess
 					this.listData = res.result.MRRecommendationGetAllWithProcess
-					this.pageIndex = res.result.pageIndex
+					//this.pageIndex = res.result.pageIndex
 					this.totalRecords = res.result.TotalCount
 					this.padi()
 				} else {

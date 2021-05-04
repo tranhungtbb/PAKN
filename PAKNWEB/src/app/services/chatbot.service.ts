@@ -42,4 +42,7 @@ export class ChatbotService {
 	chatbotInsertData(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.ChatbotInsertData)
 	}
+	chatbotGetListHistory(request: any): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.ChatbotGetListHistory)
+	}
 }

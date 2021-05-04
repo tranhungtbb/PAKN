@@ -130,8 +130,8 @@
 						<div class="row form-group">
 							<div class="col-sm-12">
 								<label class="control-label">Trả lời <span class="text-danger">(*)</span></label>
-								<textarea placeholder="Nhập..." svTrim class="form-control" formControlName="answer" type="text" rows="4" [(ngModel)]="model.answer"
-									maxlength="255"></textarea>
+								<textarea placeholder="Nhập trả lời..." class="form-control" textareaTrim formControlName="answer" type="text" rows="4"
+									[(ngModel)]="model.answer"></textarea>
 								<div *ngIf="(submitted && f.answer.invalid) || (f.answer.invalid && (f.answer.dirty || f.answer.touched))" class="has-error m-b-12">
 									<div *ngIf="f.answer.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>

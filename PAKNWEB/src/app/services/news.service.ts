@@ -83,4 +83,8 @@ export class NewsService {
 	getListHisNewsByNewsId(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.HisNewsGetListByNewsId)
 	}
+
+	getViewDetail(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NewsGetViewDetail)
+	}
 }

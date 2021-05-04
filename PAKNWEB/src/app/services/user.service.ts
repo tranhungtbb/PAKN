@@ -7,6 +7,7 @@ import { Api } from '../constants/api'
 // import { retry } from 'rxjs/operators';
 // import { request } from 'http';
 import { UserInfoStorageService } from '../commons/user-info-storage.service'
+import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 
 @Injectable({
 	providedIn: 'root',
@@ -20,6 +21,27 @@ export class UserService {
 	getById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetById)
 	}
+
+	getByRoleIdOnPage(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetByRoleIdOnPage)
+	}
+
+	getByRoleId(query: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		}
+		return this.serviceInvoker.getwithHeaders(query, AppSettings.API_ADDRESS + Api.UserGetByRoleId, headers)
+	}
+
+	getIsSystem(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetIsSystem)
+	}
+
+	insertMultiUserRole(query: any): Observable<any> {
+		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.InsertMultiUserRole)
+	}
+
 	insert(data: any, files: any = null): Observable<any> {
 		let form = new FormData()
 
@@ -51,12 +73,24 @@ export class UserService {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserDelete)
 	}
 
+	deleteUserRole(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.DeleteUserRole)
+	}
+
 	getAvatar(id: number): Observable<any> {
 		let url = AppSettings.API_ADDRESS + Api.UserGetAvatar + '/' + id
 		return this.serviceInvoker.get({}, url)
 	}
 	getSystemLogin(request: any): Observable<any> {
 		let url = AppSettings.API_ADDRESS + Api.SystemLogin
+		return this.serviceInvoker.get(request, url)
+	}
+	getSystemLoginAdmin(request: any): Observable<any> {
+		let url = AppSettings.API_ADDRESS + Api.SystemLoginAdmin
+		return this.serviceInvoker.get(request, url)
+	}
+	sysLogDelete(request: any): Observable<any> {
+		let url = AppSettings.API_ADDRESS + Api.SystemLogDelete
 		return this.serviceInvoker.get(request, url)
 	}
 }

@@ -186,6 +186,7 @@ namespace PAKNAPI.ModelBase
 
 		public int Id { get; set; }
 		public string Name { get; set; }
+		public string FieldName { get; set; }
 		public string Code { get; set; }
 		public string CountryCode { get; set; }
 		public int UnitReceive { get; set; }
@@ -211,6 +212,7 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate { get; set; }
 		public DateTime? PublishedDate { get; set; }
 		public long? CreatedBy { get; set; }
+		public int? AdministrationId { get; set; }
 
 		public async Task<List<DAMAdministrationGetById>> DAMAdministrationGetByIdDAO(int? Id)
 		{

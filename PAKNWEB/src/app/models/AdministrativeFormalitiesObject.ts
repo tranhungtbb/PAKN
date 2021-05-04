@@ -10,6 +10,7 @@ export class AdministrativeFormalitiesObject {
 	countryCode: string = ''
 	unitReceive: number = null
 	field: number = null
+	fieldName: string = ''
 	rankReceive: string = ''
 	typeSend: boolean = null
 	fileNum: string = ''
@@ -28,7 +29,7 @@ export class AdministrativeFormalitiesObject {
 	note: string = ''
 	status: number = 1
 	isShow: boolean = false
-
+	administrationId: number
 	//system field
 	createdDate: string
 	createdBy: number

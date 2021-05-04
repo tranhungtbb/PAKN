@@ -1,0 +1,4 @@
+.contents img,
+.contents .image img {
+	max-width: 100%;
+}

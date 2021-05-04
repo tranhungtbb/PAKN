@@ -37,7 +37,7 @@
 								<tr>
 									<th style="width: 150px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Mã số PAKN</strong>
+											<strong>Mã số Phản ánh, kiến nghị</strong>
 											<span class="caret-tb"></span>
 										</p>
 										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100" (keydown.enter)="dataStateChange()" />
@@ -98,7 +98,7 @@
 									</td>
 									<td><a class="ellipsis">{{item.name}}</a></td>
 									<td>
-										<p class="text-2line mb-0">{{item.content}}</p>
+										<p class="text-2line mb-0">{{item.title}}</p>
 									</td>
 									<td>{{item.unitName}}</td>
 									<td>{{item.fieldName}}</td>

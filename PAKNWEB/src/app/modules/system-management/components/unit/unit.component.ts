@@ -59,6 +59,14 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		address: '',
 		isActived: null,
 	}
+
+	//sort
+	unitSortDir = 'DESC'
+	unitSortField = 'ID'
+
+	usSortDir = 'DESC'
+	usSortField = 'ID'
+
 	totalCount_Unit: number = 0
 	unitPageCount: number = 0
 
@@ -104,19 +112,20 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				pageIndex: 1,
 				pageSize: 1000,
 			})
-			.subscribe(res => {
+			.subscribe((res) => {
 				if (res.success != 'OK') return
 				this.positionsList = res.result.CAPositionGetAllOnPage
 			})
-		this.roleService.getAll({}).subscribe(res => {
+		this.roleService.getAll({}).subscribe((res) => {
 			if (res.success != 'OK') return
 			this.rolesList = res.result.SYRoleGetAll
 		})
 
 		//bind parent
+	}
+	ngAfterViewInit() {
 		this.childCreateOrUpdateUser.parentUnit = this
 	}
-	ngAfterViewInit() {}
 
 	collapsed_checked: any = {
 		item01: false,
@@ -126,6 +135,11 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.collapsed_checked[item] = !this.collapsed_checked[item]
 	}
 
+	onSortUnit(fieldName: string) {
+		this.unitSortField = fieldName
+		this.unitSortDir = this.unitSortDir == 'DESC' ? 'ASC' : 'DESC'
+		this.getUnitPagedList()
+	}
 	getUnitPagedList(): void {
 		this.unitService
 			.getAllPagedList({
@@ -137,15 +151,17 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				phone: this.query.phone.trim(),
 				address: this.query.address.trim(),
 				isActived: this.query.isActived == null ? '' : this.query.isActived,
+				sortDir: this.unitSortDir,
+				sortField: this.unitSortField,
 			})
 			.subscribe(
-				res => {
+				(res) => {
 					if (res.success != 'OK') return
 					this.listUnitPaged = res.result.CAUnitGetAllOnPage
 					if (this.totalCount_Unit <= 0) this.totalCount_Unit = res.result.TotalCount
 					this.unitPageCount = Math.ceil(this.totalCount_Unit / this.query.pageSize)
 				},
-				err => {}
+				(err) => {}
 			)
 	}
 	unitFilterChange(): void {
@@ -170,7 +186,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 
 	getUnitInfo(id) {
-		this.unitService.getById({ id }).subscribe(res => {
+		this.unitService.getById({ id }).subscribe((res) => {
 			if (res.success != 'OK') return
 			this.unitObject = res.result.CAUnitGetByID[0]
 			this.getUserPagedList()
@@ -179,9 +195,9 @@ export class UnitComponent implements OnInit, AfterViewInit {
 
 	getAllUnitShortInfo(activeTreeNode: any = null) {
 		this.unitService.getAll({}).subscribe(
-			res => {
+			(res) => {
 				if (res.success != 'OK') return
-				let listUnit = res.result.CAUnitGetAll.map(e => {
+				let listUnit = res.result.CAUnitGetAll.map((e) => {
 					let item = {
 						id: e.id,
 						name: e.name,
@@ -202,11 +218,16 @@ export class UnitComponent implements OnInit, AfterViewInit {
 					//this.expandNode(activeTreeNode)
 				}
 			},
-			err => {}
+			(err) => {}
 		)
 	}
 
 	/*start user area*/
+	onSortUser(fieldName: string) {
+		this.usSortField = fieldName
+		this.usSortDir = this.usSortDir == 'DESC' ? 'ASC' : 'DESC'
+		this.getUserPagedList()
+	}
 	getUserPagedList() {
 		this.userService
 			.getAllPagedList({
@@ -218,11 +239,13 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				fullName: this.queryUser.fullName.trim(),
 				phone: this.queryUser.phone.trim(),
 				isActived: this.queryUser.isActived == null ? '' : this.queryUser.isActived,
+				sortDir: this.usSortDir,
+				sortField: this.usSortField,
 			})
-			.subscribe(res => {
+			.subscribe((res) => {
 				if (res.success != 'OK') return
 				this.listUserPaged = res.result.SYUserGetAllOnPage
-				if (this.totalCount_User <= 0) this.totalCount_User = res.result.TotalCount
+				if (res.result.TotalCount > 0) this.totalCount_User = res.result.TotalCount
 				this.userPageCount = Math.ceil(this.totalCount_User / this.query.pageSize)
 			})
 	}
@@ -241,11 +264,11 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 
 	onDelUser(id: number) {
-		let userObj = this.listUserPaged.find(c => c.id == id)
+		let userObj = this.listUserPaged.find((c) => c.id == id)
 
-		this.userService.delete(userObj).subscribe(res => {
+		this.userService.delete(userObj).subscribe((res) => {
 			if (res.success != 'OK') {
-				this._toastr.error(COMMONS.DELETE_FAILED)
+				this._toastr.error('Dữ liệu đang được sử dụng, không được phép xoá!')
 				return
 			}
 			this._toastr.success(COMMONS.DELETE_SUCCESS)
@@ -279,7 +302,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			}
 		} else {
 			this.modalCreateOrUpdateTitle = 'Chỉnh sửa cơ quan, đơn vị'
-			this.unitService.getById({ id }).subscribe(res => {
+			this.unitService.getById({ id }).subscribe((res) => {
 				if (res.success != 'OK') return
 				this.modelUnit = res.result.CAUnitGetByID[0]
 			})
@@ -302,12 +325,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		}
 
 		if (this.modelUnit.id != null && this.modelUnit.id > 0) {
-			this.unitService.update(this.modelUnit).subscribe(res => {
+			this.unitService.update(this.modelUnit).subscribe((res) => {
 				if (res.success != 'OK') {
-					let errorMsg = COMMONS.UPDATE_FAILED
-					if (res.message.includes(`UNIQUE KEY constraint 'UC_SY_Unit_Email'`)) {
-						errorMsg = 'Email đã được sử dụng'
-					}
+					let errorMsg = res.message
+					this._toastr.error(res.message)
 					return
 				}
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
@@ -323,12 +344,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				$('#modal-create-or-update').modal('hide')
 			})
 		} else {
-			this.unitService.create(this.modelUnit).subscribe(res => {
+			this.unitService.create(this.modelUnit).subscribe((res) => {
 				if (res.success != 'OK') {
-					let errorMsg = COMMONS.ADD_FAILED
-					if (res.message.includes(`UNIQUE KEY constraint 'UC_SY_Unit_Email'`)) {
-						errorMsg = 'Email đã được sử dụng'
-					}
+					let errorMsg = res.message
+					this._toastr.error(errorMsg)
 					return
 				}
 				this._toastr.success(COMMONS.ADD_SUCCESS)
@@ -340,11 +359,11 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 
 	onChangeUnitStatus(id: number) {
-		let item = this.listUnitPaged.find(c => c.id == id)
+		let item = this.listUnitPaged.find((c) => c.id == id)
 		if (item == null) item = this.unitObject
 
 		item.isActived = !item.isActived
-		this.unitService.update(item).subscribe(res => {
+		this.unitService.update(item).subscribe((res) => {
 			if (res.success != 'OK') {
 				this._toastr.error(COMMONS.UPDATE_FAILED)
 				item.isActived = !item.isActived
@@ -358,13 +377,13 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		})
 	}
 	onChangeUserStatus(id: number) {
-		let item = this.listUserPaged.find(c => c.id == id)
+		let item = this.listUserPaged.find((c) => c.id == id)
 
 		item.isActived = !item.isActived
 		item.typeId = 1
 		item.countLock = 0
 		item.lockEndOut = ''
-		this.userService.update(item).subscribe(res => {
+		this.userService.update(item).subscribe((res) => {
 			if (res.success != 'OK') {
 				this._toastr.error(COMMONS.UPDATE_FAILED)
 				item.isActived = !item.isActived
@@ -380,7 +399,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 
 	private searchTree(data, value, key = 'id', sub = 'children', tempObj: any = {}) {
 		if (value && data) {
-			data.find(node => {
+			data.find((node) => {
 				if (node[key] == value) {
 					tempObj.found = node
 					return node
@@ -406,7 +425,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	get getUnitParent(): any[] {
 		if (!this.unitFlatlist) return []
 		//if (!this.unitObject.parentId) return this.listUnitTreeview.filter((c) => c.unitLevel == this.modelUnit.unitLevel - 1 && c.parentId == this.unitObject.parentId)
-		return this.unitFlatlist.filter(c => c.unitLevel == this.modelUnit.unitLevel - 1)
+		return this.unitFlatlist.filter((c) => c.unitLevel == this.modelUnit.unitLevel - 1)
 	}
 
 	/*start - chức năng xác nhận hành động xóa*/
@@ -431,9 +450,9 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		$('#modal-confirm').modal('hide')
 	}
 	onDeleteUnit(id) {
-		let item = this.listUnitPaged.find(c => c.id == this.modelConfirm_itemId)
+		let item = this.listUnitPaged.find((c) => c.id == this.modelConfirm_itemId)
 		if (!item) item = this.unitObject
-		this.unitService.delete(item).subscribe(res => {
+		this.unitService.delete(item).subscribe((res) => {
 			if (res.success != 'OK') {
 				if (res.message.includes(`REFERENCE constraint "FK_SY_User_UnitId"`)) {
 					this._toastr.error(COMMONS.DELETE_FAILED + ', đơn vị đang được sử dụng trong quy trình')

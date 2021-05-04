@@ -91,11 +91,18 @@ export class Api {
 	// user
 	public static UserGetPagedList = 'SYUserSPBase/SYUserGetAllOnPageBase'
 	public static UserGetById = 'SYUserSPBase/SYUserGetByIDBase'
+	public static UserGetByRoleIdOnPage = 'SYUserSPBase/SYUserGetByRoleIdAllOnPageBase'
+	public static UserGetByRoleId = 'SYUserSPBase/SYUserGetAllByRoleIdBase'
 	public static UserInsert = 'User/Create' //'SYUserSPBase/SYUserInsertBase'
 	public static UserUpdate = 'User/Update' //'SYUserSPBase/SYUserUpdateBase'
 	public static UserDelete = 'User/Delete' //'SYUserSPBase/SYUserDeleteBase'GetAvatar
 	public static UserGetAvatar = 'User/GetAvatar' //'SYUserSPBase/SYUserDeleteBase'
 	public static SystemLogin = 'SYSPBase/SYSystemLogGetAllOnPageBase'
+	public static SystemLoginAdmin = 'SYSPBase/SYSystemLogGetAllOnPageAdminBase'
+	public static SystemLogDelete = 'SYSPBase/SYSystemLogDeleteBase'
+	public static UserGetIsSystem = 'SYUserSPBase/SYUserGetIsSystemBase'
+	public static DeleteUserRole = 'SYUserSPBase/SYUserRoleMapDeleteBase'
+	public static InsertMultiUserRole = 'UserMapRole/SYUserRoleMapListInsert'
 
 	//SY_Role
 	public static RoleGetAll = 'SYSPBase/SYRoleGetAllBase'
@@ -141,6 +148,7 @@ export class Api {
 	public static NewsGetAvatars = 'files/get-news-avatar'
 	public static HisNewsInsert = 'HISNews/HISNewsInsert'
 	public static HisNewsGetListByNewsId = 'HISNews/HISNewsGetByNewsId'
+	public static NewsGetViewDetail = 'NESPBase/NENewsViewDetailBase'
 
 	//Department
 	public static DepartmentGetList = 'CACategorySPBase/CADepartmentGetAllOnPageBase'
@@ -150,8 +158,15 @@ export class Api {
 	public static DepartmentUpdateStatus = 'CACategorySPBase/CADepartmentUpdateBase'
 	public static DepartmentDelete = 'CACategorySPBase/CADepartmentDeleteBase'
 
+	//remind
 	public static RemindInsert = 'RMRemind/RemindInsert'
 	public static RemindGetList = 'RMRemind/RemindGetList'
+
+	//invitation
+
+	public static InnvitationInsert = 'INVSPBase/INVInvitation'
+	public static InvitationDelete = 'INVInvitation/INVInvitationDelete'
+	public static InvitationGetList = 'INVSPBase/INVInvitationGetAllOnPageBase'
 
 	//RequestRecommendation
 	public static RecommendationRequestGetListProcess = 'MRSPBase/MRRecommendationKNCTGetAllWithProcessBase'
@@ -185,6 +200,7 @@ export class Api {
 	public static AdministrativeFormalitiesInsert = 'AdministrationFormalities/AdministrationFormalitiesInsert'
 	public static AdministrativeFormalitiesUpdate = 'AdministrationFormalities/AdministrationFormalitiesUpdate'
 	public static AdministrativeFormalitiesDelete = 'DAMSPBase/DAMAdministrationDeleteBase'
+	public static AdministrativeFormalitiesCAFieldDAM = 'CASPBase/CAFieldDAMGetDropdownBase'
 
 	// Notification
 	public static NotificationInsertTypeNews = 'SYNotification/SYNotificationInsertTypeNews'
@@ -200,4 +216,5 @@ export class Api {
 	public static ChatbotUpdate = 'Chatbot/ChatbotUpdateBase'
 	public static ChatbotInsertQuestion = 'Chatbot/ChatbotInsertQuestion'
 	public static ChatbotInsertData = 'Chatbot/ChatbotInsertData'
+	public static ChatbotGetListHistory = 'Chatbot/HistoryChatbotGetAllOnPage'
 }

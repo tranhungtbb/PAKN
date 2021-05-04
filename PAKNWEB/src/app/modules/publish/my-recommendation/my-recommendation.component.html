@@ -124,9 +124,9 @@
 				</div>
 				<nav aria-label="navigation">
 					<ul class="pagination pagination-lg justify-content-between align-items-center">
-						<li class="page-item" [ngClass]="{ 'disabled': pageIndex === 1 }">
-							<a (click)="changePagination(pageIndex - 1)" class="page-link border text-uppercase rounded-pill" href="javascript:void(0)" tabindex="-1"
-								aria-disabled="true"><i class="bi bi-chevron-left mr-2"></i>Trước</a>
+						<li class="page-item" [ngClass]="{ 'disabled': pageIndex == 1 }">
+							<a (click)="changePagination(pageIndex - 1)" class="page-link border text-uppercase rounded-pill p-3" href="javascript:void(0)" tabindex="-1"
+								aria-disabled="true">&nbsp;&nbsp;<i class="bi bi-chevron-left"></i>&nbsp;Trước</a>&nbsp;&nbsp;
 						</li>
 						<li class="d-flex justify-content-center align-items-center">
 							<a *ngIf="pageIndex > 4">...</a>
@@ -136,9 +136,10 @@
 							</p>
 							<a *ngIf="pageIndex < pagination.length -4">...</a>
 						</li>
-						<li class="page-item" [ngClass]="{ 'disabled': pageIndex === totalRecords }">
-							<a (click)="changePagination(pageIndex + 1)" class="page-link border text-uppercase rounded-pill" href="javascript:void(0)">Sau<i
-									class="bi bi-chevron-right ml-2"></i></a>
+						<li class="page-item" [ngClass]="{ 'disabled': pageIndex == totalRecords }">
+							<a (click)="changePagination(pageIndex + 1)" class="page-link border text-uppercase rounded-pill p-3" href="javascript:void(0)">
+								&nbsp;&nbsp;&nbsp;&nbsp;Sau&nbsp;<i class="bi bi-chevron-right"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+							</a>
 						</li>
 					</ul>
 				</nav>
