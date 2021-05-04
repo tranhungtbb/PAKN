@@ -1,19 +1,18 @@
 <div class="panel-group">
-  <section class="content-header">
-    <div class="row">
-      <button class="btn btn-sm btn-previous pull-right" appSvBackButton><i class="far fa-undo-alt"></i> Quay lại</button>
-    </div>
-  </section>
-  <section class="content n-d-t">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="panel row content-panel">
-          <div #scripts></div>
-          <div #control style="width:100%; height: 81vh">
-            <div data-bind="dxReportViewer: $data"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+	<section class="content-header">
+		<div class="row">
+			<button class="btn btn-sm btn-previous pull-right" appSvBackButton><i class="far fa-undo-alt"></i> Quay lại</button>
+		</div>
+	</section>
+	<section class="content n-d-t">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel row content-panel" *ngIf="paramsAdded">
+					<dx-report-viewer [reportUrl]="reportUrl" height="81vh">
+						<dxrv-request-options [invokeAction]="invokeAction" [host]="hostUrl"></dxrv-request-options>
+					</dx-report-viewer>
+				</div>
+			</div>
+		</div>
+	</section>
 </div>

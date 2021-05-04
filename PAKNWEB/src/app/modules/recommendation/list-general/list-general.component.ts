@@ -333,7 +333,8 @@ export class ListGeneralComponent implements OnInit {
 		passingObj = this.dataSearch
 		passingObj.UnitProcessId = this.storeageService.getUnitId()
 		passingObj.UserProcessId = this.storeageService.getUserId()
-		passingObj = this._shareData.setobjectsearch(passingObj)
-		passingObj = this._router.navigate(['/quan-tri/kien-nghi/xuat-file/Recommendation_ListGeneral'])
+		this._shareData.setobjectsearch(passingObj)
+		this._shareData.sendReportUrl = 'Recommendation_ListGeneral?' + JSON.stringify(passingObj)
+		this._router.navigate(['quan-tri/xuat-file'])
 	}
 }

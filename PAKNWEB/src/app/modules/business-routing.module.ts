@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router'
 import { BusinessComponent } from './business.component'
 import { DashboardComponent } from './dash-board/dash-board.component'
 import { NotificationComponent } from './notification/notification.component'
+import { ReportViewerComponent } from './report-view/report-viewcomponent'
 
 const routes: Routes = [
 	{
@@ -25,6 +26,7 @@ const routes: Routes = [
 			{ path: 'ho-tro', loadChildren: './support/support.module#SupportModule' },
 			{ path: 'thu-tuc-hanh-chinh', loadChildren: './administrative-formalities/administrative-formalities.module#AdministrativeFormalitiesModule' },
 			{ path: 'thong-bao', component: NotificationComponent },
+			{ path: 'xuat-file', component: ReportViewerComponent },
 		],
 	},
 ]
