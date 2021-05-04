@@ -107,8 +107,7 @@
 						<div class="row form-group">
 							<div class="col-sm-8">
 								<label class="control-label">Câu hỏi <span class="text-danger">(*)</span></label>
-								<input id="target" placeholder="Nhập câu hỏi..." svTrim class="form-control" formControlName="question" [(ngModel)]="model.question"
-									maxlength="100" />
+								<input id="target" placeholder="Nhập câu hỏi..." svTrim class="form-control" formControlName="question" [(ngModel)]="model.question" />
 								<div *ngIf="(submitted && f.question.invalid) || (f.question.invalid && (f.question.dirty || f.question.touched))" class="has-error m-b-12">
 									<div *ngIf="f.question.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
