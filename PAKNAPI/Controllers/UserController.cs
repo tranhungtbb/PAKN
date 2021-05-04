@@ -257,8 +257,10 @@ namespace PAKNAPI.Controllers
 
 				///mod model
 				///
-				model.DateOfIssue = dateOfIssue;
-				model.RepresentativeBirthDay = birdDay;
+				if (string.IsNullOrEmpty(_DateOfIssue)) model.DateOfIssue = null;
+				else model.DateOfIssue = dateOfIssue;
+				if (string.IsNullOrEmpty(_RepresentativeBirthDay)) model.RepresentativeBirthDay = null;
+				else model.RepresentativeBirthDay = birdDay;
 				model.CreatedDate = DateTime.Now;
 				model.CreatedBy = 0;
 				model.UpdatedBy = 0;
@@ -355,8 +357,10 @@ namespace PAKNAPI.Controllers
 				var accRs = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(account.UserName);
 				///mod model
 				///
-				model.DateOfIssue = dateOfIssue;
-				model.BirthDay = birdDay;
+				if (string.IsNullOrEmpty(_DateOfIssue)) model.DateOfIssue = null;
+				else model.DateOfIssue = dateOfIssue;
+				if (string.IsNullOrEmpty(_BirthDay)) model.BirthDay = null;
+				else model.BirthDay = birdDay;
 				model.CreatedDate = DateTime.Now;
 				model.CreatedBy = 0;
 				model.UpdatedBy = 0;
