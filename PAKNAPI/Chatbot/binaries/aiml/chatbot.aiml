@@ -9,4 +9,20 @@
       </random>
     </template>
   </category>
+  <category id="5">
+    <pattern>Không có gì</pattern>
+    <template>không có gì</template>
+  </category>
+  <category id="6">
+    <pattern>Bạn bao nhiêu tuổi</pattern>
+    <template>Tôi năm nay 18</template>
+  </category>
+  <category id="7">
+    <pattern>Bạn ở đâu</pattern>
+    <template>Tôi ở Hà Nội</template>
+  </category>
+  <category id="8">
+    <pattern>Không biết hỏi gì</pattern>
+    <template>không biết hỏi gì</template>
+  </category>
 </aiml>
