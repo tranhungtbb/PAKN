@@ -89,8 +89,8 @@ IF EXISTS
 DROP PROCEDURE [SY_ChatbotInsert];
 GO
 CREATE PROCEDURE [dbo].[SY_ChatbotInsert]
-	@Question nvarchar(1000) = null,
-	@Answer nvarchar(1000) = null,
+	@Question nvarchar(max) = null,
+	@Answer nvarchar(max) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
 	@CategoryId int = null
@@ -127,8 +127,8 @@ DROP PROCEDURE [SY_ChatbotUpdate];
 GO
 CREATE PROCEDURE [dbo].[SY_ChatbotUpdate]
 	@Id bigint = null,
-	@Question nvarchar(1000) = null,
-	@Answer nvarchar(1000) = null,
+	@Question nvarchar(max) = null,
+	@Answer nvarchar(max) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
 	@CategoryId int = null

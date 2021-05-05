@@ -253,6 +253,33 @@ namespace PAKNAPI.ModelBase
 		public string Description { get; set; }
 	}
 
+	public class SYSystemLogDelete
+	{
+		private SQLCon _sQLCon;
+
+		public SYSystemLogDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYSystemLogDelete()
+		{
+		}
+
+		public async Task<int> SYSystemLogDeleteDAO(SYSystemLogDeleteIN _sYSystemLogDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYSystemLogDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_SystemLogDelete", DP));
+		}
+	}
+
+	public class SYSystemLogDeleteIN
+	{
+		public int? Id { get; set; }
+	}
+
 	public class SYSystemLogGetAllOnPage
 	{
 		private SQLCon _sQLCon;
@@ -288,6 +315,45 @@ namespace PAKNAPI.ModelBase
 			DP.Add("ToDate", ToDate);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYSystemLogGetAllOnPage>("SY_SystemLogGetAllOnPage", DP)).ToList();
+		}
+	}
+
+	public class SYSystemLogGetAllOnPageAdmin
+	{
+		private SQLCon _sQLCon;
+
+		public SYSystemLogGetAllOnPageAdmin(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYSystemLogGetAllOnPageAdmin()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+		public long UserId { get; set; }
+		public string FullName { get; set; }
+		public string IPAddress { get; set; }
+		public string MACAddress { get; set; }
+		public string Description { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public byte Status { get; set; }
+		public string Action { get; set; }
+		public string Exception { get; set; }
+
+		public async Task<List<SYSystemLogGetAllOnPageAdmin>> SYSystemLogGetAllOnPageAdminDAO(int? UserId, int? PageSize, int? PageIndex, DateTime? CreateDate, byte? Status, string Description)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", UserId);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("CreateDate", CreateDate);
+			DP.Add("Status", Status);
+			DP.Add("Description", Description);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYSystemLogGetAllOnPageAdmin>("SY_SystemLogGetAllOnPageAdmin", DP)).ToList();
 		}
 	}
 
@@ -534,6 +600,30 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetNonSystem>("SY_UserGetNonSystem", DP)).ToList();
+		}
+	}
+
+	public class SYUsersGetDropdown
+	{
+		private SQLCon _sQLCon;
+
+		public SYUsersGetDropdown(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUsersGetDropdown()
+		{
+		}
+
+		public long Value { get; set; }
+		public string Text { get; set; }
+
+		public async Task<List<SYUsersGetDropdown>> SYUsersGetDropdownDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUsersGetDropdown>("SY_UsersGetDropdown", DP)).ToList();
 		}
 	}
 
