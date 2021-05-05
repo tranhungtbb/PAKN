@@ -11,10 +11,10 @@
 	width: 100%;
 }
 .bg-ligth-gold {
-	background-color: #fffaf5;
+	background-color: #ecf4ff;
 }
 .avatar-bg {
-	background: linear-gradient(to bottom, #fffaf5 50%, white 50%);
+	background: linear-gradient(to bottom, #ecf4ff 50%, white 50%);
 	margin-left: -30px;
 	margin-right: -30px;
 }

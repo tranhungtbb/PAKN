@@ -11,6 +11,7 @@ import { PositionService } from '../../../../../services/position.service'
 import { RoleService } from '../../../../../services/role.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { AccountService } from 'src/app/services/account.service'
+import { BusinessComponent } from 'src/app/modules/business.component'
 
 declare var $: any
 @Component({
@@ -42,10 +43,30 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 		{ value: false, text: 'Hết hiệu lực' },
 	]
 
-	ngOnInit() {}
+	public parent_BusinessComponent: BusinessComponent
+
+	ngOnInit() {
+		this.positionService
+			.positionGetList({
+				pageIndex: 1,
+				pageSize: 1000,
+			})
+			.subscribe((res) => {
+				if (res.success != 'OK') return
+				this.positionsList = res.result.CAPositionGetAllOnPage
+			})
+		this.roleService.getAll({}).subscribe((res) => {
+			if (res.success != 'OK') return
+			this.rolesList = res.result.SYRoleGetAll
+		})
+		this.unitService.getAll({}).subscribe((res) => {
+			if (res.success != 'OK') return
+			this.unitsList = res.result.CAUnitGetAll
+		})
+	}
 
 	ngAfterViewInit() {
-		this.openModal()
+		//this.openModal()
 		$('#modal-user-view-info').on('show.bs.modal', () => {})
 	}
 
@@ -53,8 +74,21 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 		this.accountService.getUserInfo().subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.model = res.result
+				this.getUserAvatar(this.model.id)
+
+				this.model.positionName = this.unitsList.find((c) => c.id == this.model.unitId).name
+				this.model.unitName = this.unitsList.find((c) => c.id == this.model.unitId).name
+
+				let rolesIds = this.model.roleIds.split(',').map((c) => parseInt(c))
+				let rolesNames = this.rolesList.filter((c) => rolesIds.includes(c.id)).map((c) => c.name)
+				this.model.rolesNames = rolesNames.join('; ')
 			}
 		})
+	}
+
+	public showEditUserInfo() {
+		this.parent_BusinessComponent.openModalEditInfo(this.model.id)
+		$('#modal-user-view-info').modal('hide')
 	}
 
 	public openModal(userId: number = 0) {
@@ -68,6 +102,15 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 
 	public closeModal() {
 		$('#modal-user-view-info').modal('hide')
-		this.router.navigate(['/quan-tri'])
+		//this.router.navigate(['/quan-tri'])
+	}
+
+	private getUserAvatar(id: number) {
+		this.userService.getAvatar(id).subscribe((res) => {
+			if (res) {
+				let objectURL = 'data:image/jpeg;base64,' + res
+				this.userAvatar = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+			}
+		})
 	}
 }
