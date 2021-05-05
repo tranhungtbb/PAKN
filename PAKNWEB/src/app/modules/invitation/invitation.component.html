@@ -89,7 +89,7 @@
 								<tr>
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
-										<strong class="highlight"><a (click)="redirectUpdate(item.id)" class="ellipsis" title="Cập nhập">{{item.title}}</a></strong>
+										<strong class="highlight"><a (click)="redirectUpdate(item.id, item.status)" class="ellipsis" title="Cập nhập">{{item.title}}</a></strong>
 									</td>
 									<td>{{item.startDate | date: 'HH:mm dd/MM/yyyy'}} <br> {{item.endDate | date: 'HH:mm dd/MM/yyyy'}} </td>
 									<td>
@@ -104,7 +104,8 @@
 									</td>
 									<td style="text-align: center;">
 										<div class="d-flex justify-content-end">
-											<a (click)="redirectUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i class="bi bi-pencil-square"></i></a>
+											<a *ngIf="item.status == 1" (click)=" redirectUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i
+													class="bi bi-pencil-square"></i></a>
 											<a (click)="confirm(item.id)" class="btn-icon grd-red text-white cursor" data-toggle="modal" data-target="#modal-tc-pakn"><i
 													class="bi bi-trash"></i></a>
 										</div>

@@ -318,6 +318,7 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
 	public class SYUnitChageStatus
 	{
 		private SQLCon _sQLCon;
@@ -346,6 +347,7 @@ namespace PAKNAPI.ModelBase
 		public long? Id { get; set; }
 		public bool? IsActived { get; set; }
 	}
+
 
 	public class SYUnitGetDropdown
 	{
