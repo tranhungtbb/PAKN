@@ -54,6 +54,9 @@ export class Api {
 	public static PuRecommendationCountClick = 'PURecommendation/PURecommendationCountClick'
 	public static PURecommendationStatisticsGetByUserId = 'PURecommendation/PURecommendationStatisticsGetByUserIdBase'
 
+	public static MRRecommendationCommentInsert = 'MRSPBase/MRCommnentInsertBase'
+	public static MRRecommendationCommentGetOnPage = 'MRSPBase/MRCommnentGetAllOnPageBase'
+
 	//Field
 	public static FieldGetList = 'CACategorySPBase/CAFieldGetAllOnPageBase'
 	public static FieldGetById = 'CACategorySPBase/CAFieldGetByIDBase'

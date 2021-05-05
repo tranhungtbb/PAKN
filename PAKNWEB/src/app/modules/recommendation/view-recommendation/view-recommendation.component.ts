@@ -8,6 +8,7 @@ import {
 	RecommendationProcessObject,
 	RecommendationViewObject,
 	RecommendationSuggestObject,
+	RecommnendationCommentObject,
 } from 'src/app/models/recommendationObject'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
@@ -19,6 +20,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { RemindComponent } from 'src/app/modules/recommendation/remind/remind.component'
 import { NotificationService } from 'src/app/services/notification.service'
 import { AppSettings } from 'src/app/constants/app-setting'
+import { RecommendationCommentService } from 'src/app/services/recommendation-comment.service'
+
 declare var $: any
 
 @Component({
@@ -58,7 +61,8 @@ export class ViewRecommendationComponent implements OnInit {
 		private router: Router,
 		private _fb: FormBuilder,
 		private activatedRoute: ActivatedRoute,
-		private notificationService: NotificationService
+		private notificationService: NotificationService,
+		private commentService: RecommendationCommentService
 	) {}
 
 	ngOnInit() {
@@ -78,7 +82,6 @@ export class ViewRecommendationComponent implements OnInit {
 
 		this.activatedRoute.queryParams.subscribe((params) => {
 			let suggest = params['suggest']
-			debugger
 			if (suggest) {
 				this.suggest = suggest
 			}
@@ -106,6 +109,9 @@ export class ViewRecommendationComponent implements OnInit {
 					this.model.sendDate = new Date(this.model.sendDate)
 				}
 				this.remindComponent.getListRemind()
+
+				this.commentQuery.recommendationId = this.model.id
+				this.getCommentPaged()
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -443,4 +449,44 @@ export class ViewRecommendationComponent implements OnInit {
 				}
 		}
 	}
+
+	//comment area
+	commentModel: RecommnendationCommentObject = new RecommnendationCommentObject()
+	commentQuery: any = {
+		pageSize: 20,
+		pageIndex: 1,
+		recommendationId: 0,
+	}
+	listCommentsPaged: any[] = []
+	total_Comments = 0
+
+	onSendComment() {
+		this.commentModel.userId = this.storeageService.getUserId()
+		this.commentModel.fullName = this.storeageService.getFullName()
+		this.commentModel.recommendationId = this.model.id
+		this.commentModel.contents = this.commentModel.contents.trim()
+		if (this.commentModel.contents == null || this.commentModel.contents == '') {
+			this.toastr.error('Không bỏ trống nội dung bình luận')
+			return
+		}
+
+		this.commentService.insert(this.commentModel).subscribe((res) => {
+			if (res.success != RESPONSE_STATUS.success) {
+				this.toastr.error('Xảy ra lỗi trong quá trình xử lý')
+				return
+			}
+			this.getCommentPaged()
+		})
+	}
+
+	getCommentPaged(pageindex = 1) {
+		this.commentQuery.pageIndex = pageindex
+		this.commentService.getAllOnPage(this.commentQuery).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.listCommentsPaged = this.listCommentsPaged.concat(res.result.MRCommnentGetAllOnPage)
+				if (res.result.TotalCount != null && res.result.TotalCount > 0) this.total_Comments = res.result.TotalCount
+			}
+		})
+	}
+	//end comment area
 }
