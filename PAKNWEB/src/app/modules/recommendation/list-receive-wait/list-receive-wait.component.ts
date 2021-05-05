@@ -8,6 +8,7 @@ import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, R
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { COMMONS } from 'src/app/commons/commons'
 import { NotificationService } from 'src/app/services/notification.service'
+import { Router } from '@angular/router'
 
 declare var $: any
 
@@ -22,7 +23,8 @@ export class ListReceiveWaitComponent implements OnInit {
 		private storeageService: UserInfoStorageService,
 		private _toastr: ToastrService,
 		private _shareData: DataService,
-		private notificationService: NotificationService
+		private notificationService: NotificationService,
+		private _router: Router
 	) {}
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
@@ -235,5 +237,15 @@ export class ListReceiveWaitComponent implements OnInit {
 			var blob = new Blob([response], { type: response.type })
 			importedSaveAs(blob, fileName)
 		})
+	}
+
+	onExport() {
+		let passingObj: any = {}
+		passingObj = this.dataSearch
+		passingObj.UnitProcessId = this.storeageService.getUnitId()
+		passingObj.UserProcessId = this.storeageService.getUserId()
+		this._shareData.setobjectsearch(passingObj)
+		this._shareData.sendReportUrl = 'Recommendation_ListGeneral?' + JSON.stringify(passingObj)
+		this._router.navigate(['quan-tri/xuat-file'])
 	}
 }
