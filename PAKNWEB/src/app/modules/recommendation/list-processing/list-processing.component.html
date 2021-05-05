@@ -7,7 +7,7 @@
 					<li class="breadcrumb-item active"><a class="font-weight-bold"> Đang giải quyết</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
-					<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
+					<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
 							<path
 								d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
@@ -37,7 +37,7 @@
 								<tr>
 									<th style="width: 150px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Mã số Phản ánh, kiến nghị</strong>
+											<strong>Mã số</strong>
 											<span class="caret-tb"></span>
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100"
@@ -45,7 +45,7 @@
 									</th>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Tên Cá nhân/ Doanh nghiệp</strong>
+											<strong>Tên CN/ DN</strong>
 											<span class="caret-tb"></span>
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100"

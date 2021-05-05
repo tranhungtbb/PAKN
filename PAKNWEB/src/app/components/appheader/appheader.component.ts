@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Input } from '@angular/core'
+import { Component, OnInit, HostListener, Input, ViewChild } from '@angular/core'
 import { UserInfoStorageService } from '../../commons/user-info-storage.service'
 import { AuthenticationService } from '../../services/authentication.service'
 import { Router } from '@angular/router'
@@ -12,6 +12,7 @@ import { DataService } from '../../services/sharedata.service'
 import { RESPONSE_STATUS, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
 import { NotificationService } from 'src/app/services/notification.service'
 import { from } from 'rxjs'
+import { UserViewInfoComponent } from '../../modules/system-management/components/user/user-view-info/user-view-info.component'
 
 declare var $: any
 @HostListener('window:scroll', ['$event'])

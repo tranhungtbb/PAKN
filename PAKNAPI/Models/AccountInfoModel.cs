@@ -35,7 +35,8 @@ namespace PAKNAPI.Models
             IsActived = entity.IsActived;
             IsDeleted= entity.IsDeleted;
             Id= entity.Id;
-            //RepresentativeBirthDay = entity.RepresentativeBirthDay.ToString("dd/MM/yyyy");
+
+            RepresentativeBirthDay = entity.RepresentativeBirthDay.Value.ToString("dd/MM/yyyy");
             ProvinceId= entity.ProvinceId;
             Status= entity.Status;
             RepresentativeGender = entity.RepresentativeGender;

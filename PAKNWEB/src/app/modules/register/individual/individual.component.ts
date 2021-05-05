@@ -134,6 +134,8 @@ export class IndividualComponent implements OnInit {
 		this.model._birthDay = fDob.value
 		this.model._dateOfIssue = fDateIssue.value
 
+		if (!this.model.email) this.model.email = ''
+
 		if (this.email_exists || this.phone_exists || this.idCard_exists) {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return

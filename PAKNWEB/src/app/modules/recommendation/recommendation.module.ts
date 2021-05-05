@@ -29,7 +29,8 @@ import { ListApprovedComponent } from './list-approved/list-approved.component'
 
 import { RemindComponent } from './remind/remind.component'
 
-import { DetailRecommendationComponent } from './detail-recommendation/detail-recommendation.component'
+import { DetailRecommendationComponent } from './detail-recommendation/detail-recommendation.component';
+import { ListReactionaryWordComponent } from './list-reactionary-word/list-reactionary-word.component'
 // import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
 @NgModule({
 	imports: [
@@ -65,6 +66,7 @@ import { DetailRecommendationComponent } from './detail-recommendation/detail-re
 		RemindComponent,
 		// ChangePipe,
 		DetailRecommendationComponent,
+		ListReactionaryWordComponent,
 	],
 })
 export class RecommendationModule {}

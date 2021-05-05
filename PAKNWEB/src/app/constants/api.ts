@@ -29,6 +29,7 @@ export class Api {
 	public static RecommendationGetDataForProcess = 'Recommendation/RecommendationGetDataForProcess'
 	public static RecommendationGetList = 'MRSPBase/MRRecommendationGetAllOnPageBase'
 	public static RecommendationGetListProcess = 'MRSPBase/MRRecommendationGetAllWithProcessBase'
+	public static RecommendationGetListReactionaryWord = 'MRSPBase/MRRecommendationGetAllReactionaryWordBase'
 	public static RecommendationGetById = 'Recommendation/RecommendationGetById'
 	public static RecommendationGetByIdView = 'Recommendation/RecommendationGetByIdView'
 	public static RecommendationGetHistories = 'MRSPBase/HISRecommendationGetByObjectIdBase'
@@ -52,6 +53,9 @@ export class Api {
 	public static PuChangeSatisfaction = 'PURecommendation/ChangeSatisfaction'
 	public static PuRecommendationCountClick = 'PURecommendation/PURecommendationCountClick'
 	public static PURecommendationStatisticsGetByUserId = 'PURecommendation/PURecommendationStatisticsGetByUserIdBase'
+
+	public static MRRecommendationCommentInsert = 'MRSPBase/MRCommnentInsertBase'
+	public static MRRecommendationCommentGetOnPage = 'MRSPBase/MRCommnentGetAllOnPageBase'
 
 	//Field
 	public static FieldGetList = 'CACategorySPBase/CAFieldGetAllOnPageBase'
@@ -99,7 +103,8 @@ export class Api {
 	public static UserGetAvatar = 'User/GetAvatar' //'SYUserSPBase/SYUserDeleteBase'
 	public static SystemLogin = 'SYSPBase/SYSystemLogGetAllOnPageBase'
 	public static SystemLoginAdmin = 'SYSPBase/SYSystemLogGetAllOnPageAdminBase'
-	public static SystemLogDelete = 'SYSPBase/SYSystemLogDeleteBase'
+	public static SystemLogDelete = 'AdministrationFormalities/SYSystemLogDeleteBase'
+	public static SystemGetUserDropDown = 'SYSPBase/SYUsersGetDropdownBase'
 	public static UserGetIsSystem = 'SYUserSPBase/SYUserGetIsSystemBase'
 	public static UserGetIsSystem2 = 'SYUserSPBase/SYUserGetIsSystem2Base'
 	public static DeleteUserRole = 'SYUserSPBase/SYUserRoleMapDeleteBase'
@@ -135,6 +140,14 @@ export class Api {
 	public static WordUpdateStatus = 'CACategorySPBase/CAWordUpdateBase'
 	public static WordDelete = 'CACategorySPBase/CAWordDeleteBase'
 	public static WordGetListSuggest = 'CACategorySPBase/CAWordGetListSuggestBase'
+	//GroupWord
+	public static GroupWordGetList = 'CACategorySPBase/CAGroupWordGetAllOnPageBase'
+	public static GroupWordGetById = 'CACategorySPBase/CAGroupWordGetByIDBase'
+	public static GroupWordInsert = 'CACategorySPBase/CAGroupWordInsertBase'
+	public static GroupWordUpdate = 'CACategorySPBase/CAGroupWordUpdateBase'
+	public static GroupWordUpdateStatus = 'CACategorySPBase/CAGroupWordUpdateBase'
+	public static GroupWordDelete = 'CACategorySPBase/CAGroupWordDeleteBase'
+	public static GroupWordGetListSuggest = 'CACategorySPBase/CAGroupWordGetListSuggestBase'
 
 	//tin tuc
 	public static NewsGetAllOnPage = 'NESPBase/NENewsGetAllOnPageBase'

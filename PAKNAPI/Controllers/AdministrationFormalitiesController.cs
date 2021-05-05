@@ -196,7 +196,26 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+        [HttpPost]
+        [Authorize("ThePolicy")]
+        [Route("SYSystemLogDeleteBase")]
+        public async Task<ActionResult<object>> SYSystemLogDeleteBase(int? Id)
+        {
+            try
+            {
+                SYSystemLogDeleteIN _sYSystemLogDeleteIN = new SYSystemLogDeleteIN();
+                _sYSystemLogDeleteIN.Id = Id;
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
+                return new ResultApi { Success = ResultCode.OK, Result = await new SYSystemLogDelete(_appSetting).SYSystemLogDeleteDAO(_sYSystemLogDeleteIN) };
+            }
+            catch (Exception ex)
+            {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
 
         [HttpPost,DisableRequestSizeLimit]
         [Authorize]

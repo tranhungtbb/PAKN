@@ -141,6 +141,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.getUnitPagedList()
 	}
 	getUnitPagedList(): void {
+		this.query.name = this.query.name.trim()
+		this.query.email = this.query.email.trim()
+		this.query.phone = this.query.phone.trim()
+		this.query.address = this.query.address.trim()
 		this.unitService
 			.getAllPagedList({
 				parentId: this.query.parentId,
@@ -204,6 +208,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 						parentId: e.parentId == null ? 0 : e.parentId,
 						unitLevel: e.unitLevel,
 						children: [],
+						label: e.name,
 					}
 
 					return item
@@ -229,6 +234,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.getUserPagedList()
 	}
 	getUserPagedList() {
+		this.queryUser.userName = this.queryUser.userName.trim()
+		this.queryUser.email = this.queryUser.email.trim()
+		this.queryUser.fullName = this.queryUser.fullName.trim()
+		this.queryUser.phone = this.queryUser.phone.trim()
 		this.userService
 			.getAllPagedList({
 				unitid: this.unitObject.id,

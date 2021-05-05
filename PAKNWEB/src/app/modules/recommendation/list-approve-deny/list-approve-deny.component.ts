@@ -6,6 +6,7 @@ import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { Router } from '@angular/router'
 
 declare var $: any
 @Component({
@@ -14,7 +15,13 @@ declare var $: any
 	styleUrls: ['./list-approve-deny.component.css'],
 })
 export class ListApproveDenyComponent implements OnInit {
-	constructor(private _service: RecommendationService, private storeageService: UserInfoStorageService, private _toastr: ToastrService, private _shareData: DataService) {}
+	constructor(
+		private _service: RecommendationService,
+		private storeageService: UserInfoStorageService,
+		private _toastr: ToastrService,
+		private _shareData: DataService,
+		private _router: Router
+	) {}
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
@@ -166,5 +173,15 @@ export class ListApproveDenyComponent implements OnInit {
 			var blob = new Blob([response], { type: response.type })
 			importedSaveAs(blob, fileName)
 		})
+	}
+
+	onExport() {
+		let passingObj: any = {}
+		passingObj = this.dataSearch
+		passingObj.UnitProcessId = this.storeageService.getUnitId()
+		passingObj.UserProcessId = this.storeageService.getUserId()
+		this._shareData.setobjectsearch(passingObj)
+		this._shareData.sendReportUrl = 'Recommendation_ListGeneral?' + JSON.stringify(passingObj)
+		this._router.navigate(['quan-tri/xuat-file'])
 	}
 }

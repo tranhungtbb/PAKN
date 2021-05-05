@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
-import { FieldObject } from 'src/app/models/fieldObject'
+import { WordObject } from 'src/app/models/fieldObject'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
@@ -17,17 +17,19 @@ declare var $: any
 export class WordLibraryComponent implements OnInit {
 	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) {}
 
-	listData = new Array<FieldObject>()
+	listData = new Array<WordObject>()
+	listGroup: any = []
 	listStatus: any = [
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
 	]
 	form: FormGroup
-	model: any = new FieldObject()
+	model: any = new WordObject()
 	submitted: boolean = false
 	isActived: boolean
 	title: string = ''
 	name: string = ''
+	groupId: number = null
 	description: string = ''
 	pageIndex: number = 1
 	pageSize: number = 20
@@ -37,11 +39,12 @@ export class WordLibraryComponent implements OnInit {
 	ngOnInit() {
 		this.buildForm()
 		this.getList()
+		this.getListGroup()
 	}
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		$('#modal').on('keypress', function(e) {
+		$('#modal').on('keypress', function (e) {
 			if (e.which == 13) e.preventDefault()
 		})
 	}
@@ -57,6 +60,7 @@ export class WordLibraryComponent implements OnInit {
 	buildForm() {
 		this.form = this._fb.group({
 			name: [this.model.name, Validators.required],
+			groupId: [this.model.groupId, Validators.required],
 			description: [this.model.description],
 			isActived: [this.model.isActived, Validators.required],
 		})
@@ -65,9 +69,28 @@ export class WordLibraryComponent implements OnInit {
 	rebuilForm() {
 		this.form.reset({
 			name: this.model.name,
+			groupId: this.model.groupId,
 			isActived: this.model.isActived,
 			description: this.model.description,
 		})
+	}
+
+	getListGroup() {
+		let request = {}
+		this._service.groupWordGetListSuggest(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if (response.result != null) {
+					this.listGroup = []
+					this.listGroup = response.result.CAGroupWordGetListSuggest
+				}
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(error) => {
+				console.log(error)
+				alert(error)
+			}
 	}
 
 	getList() {
@@ -76,23 +99,23 @@ export class WordLibraryComponent implements OnInit {
 		let request = {
 			Name: this.name,
 			Description: this.description.trim(),
+			GroupId: this.groupId != null ? this.groupId : '',
 			isActived: this.isActived != null ? this.isActived : '',
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
-		this._service.wordGetList(request).subscribe(response => {
+		this._service.wordGetList(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
 					this.listData = response.result.CAWordGetAllOnPage
 					this.totalRecords = response.result.TotalCount
-					console.log(this.totalRecords)
 				}
 			} else {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 				alert(error)
 			}
@@ -132,7 +155,7 @@ export class WordLibraryComponent implements OnInit {
 	}
 
 	preCreate() {
-		this.model = new FieldObject()
+		this.model = new WordObject()
 		this.rebuilForm()
 		this.submitted = false
 		this.title = 'Thêm mới thư viện từ ngữ'
@@ -145,7 +168,7 @@ export class WordLibraryComponent implements OnInit {
 			return
 		}
 		if (this.model.id == 0 || this.model.id == null) {
-			this._service.wordInsert(this.model).subscribe(response => {
+			this._service.wordInsert(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -160,12 +183,12 @@ export class WordLibraryComponent implements OnInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				error => {
+				(error) => {
 					console.error(error)
 					alert(error)
 				}
 		} else {
-			this._service.wordUpdate(this.model).subscribe(response => {
+			this._service.wordUpdate(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -180,7 +203,7 @@ export class WordLibraryComponent implements OnInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				error => {
+				(error) => {
 					console.error(error)
 					alert(error)
 				}
@@ -192,7 +215,7 @@ export class WordLibraryComponent implements OnInit {
 			Id: data.id,
 			Type: 1,
 		}
-		this._service.wordGetById(request).subscribe(response => {
+		this._service.wordGetById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.rebuilForm()
 				this.title = 'Chỉnh sửa thư viện từ ngữ'
@@ -202,7 +225,7 @@ export class WordLibraryComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 				alert(error)
 			}
@@ -216,7 +239,7 @@ export class WordLibraryComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.wordDelete(request).subscribe(response => {
+		this._service.wordDelete(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				$('#modalConfirmDelete').modal('hide')
@@ -225,7 +248,7 @@ export class WordLibraryComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 			}
 	}
@@ -237,7 +260,7 @@ export class WordLibraryComponent implements OnInit {
 			Id: data.id,
 		}
 		data.isActived = !data.isActived
-		this._service.wordUpdateStatus(data).subscribe(res => {
+		this._service.wordUpdateStatus(data).subscribe((res) => {
 			$('#modalConfirmUpdateStatus').modal('hide')
 			if (res.success == 'OK') {
 				if (data.isActived == true) {
@@ -249,7 +272,7 @@ export class WordLibraryComponent implements OnInit {
 				this._toastr.error(res.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 			}
 	}
@@ -264,7 +287,7 @@ export class WordLibraryComponent implements OnInit {
 			IsActived: this.isActived,
 		}
 
-		this._service.fieldExportExcel(request).subscribe(response => {
+		this._service.fieldExportExcel(request).subscribe((response) => {
 			var today = new Date()
 			var dd = String(today.getDate()).padStart(2, '0')
 			var mm = String(today.getMonth() + 1).padStart(2, '0')

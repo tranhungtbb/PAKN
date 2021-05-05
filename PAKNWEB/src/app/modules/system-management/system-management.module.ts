@@ -28,6 +28,8 @@ import { UnitFilterPipe } from 'src/app/pipes/unit-filter.pipe'
 import { ChatBotComponent } from './components/chat-bot/chat-bot.component'
 // import { RoleComponent } from './components/role/role.component'
 import { HistoryChatBotComponent } from './components/history-chat-bot/history-chat-bot.component'
+import { UserViewInfoComponent } from './components/user/user-view-info/user-view-info.component'
+import { BusinessModule } from '../business.module'
 
 @NgModule({
 	imports: [
@@ -48,6 +50,7 @@ import { HistoryChatBotComponent } from './components/history-chat-bot/history-c
 		MatCheckboxModule,
 		CKEditorModule,
 		MatDialogModule,
+		BusinessModule,
 	],
 	declarations: [
 		SystemManagemenetComponent,
@@ -58,10 +61,11 @@ import { HistoryChatBotComponent } from './components/history-chat-bot/history-c
 		GroupUserComponent,
 		UserComponent,
 		UnitComponent,
-		UserCreateOrUpdateComponent,
+		//UserCreateOrUpdateComponent,
 		UnitFilterPipe,
 		ChatBotComponent,
 		HistoryChatBotComponent,
+		//UserViewInfoComponent,
 	],
 	entryComponents: [UserCreateOrUpdateComponent],
 })
