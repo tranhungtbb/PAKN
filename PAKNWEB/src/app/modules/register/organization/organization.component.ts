@@ -173,6 +173,9 @@ export class OrganizationComponent implements OnInit {
 				}
 			})
 	}
+	backToHome() {
+		window.open('/cong-bo/trang-chu', '_self')
+	}
 }
 function MustMatch(controlName: string, matchingControlName: string) {
 	return (formGroup: FormGroup) => {

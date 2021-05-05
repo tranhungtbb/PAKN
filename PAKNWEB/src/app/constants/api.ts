@@ -82,6 +82,7 @@ export class Api {
 	public static UnitUpdate = 'CACategorySPBase/CAUnitUpdateBase'
 	public static UnitDeleteList = 'CACategorySPBase/CAUnitDeleteListBase'
 	public static UnitDelete = 'CACategorySPBase/CAUnitDeleteBase'
+	public static UnitChangeStatus = 'SYSPBase/SYUnitChageStatusBase'
 
 	public static FieldExport = 'CACategorySPBase/CAFieldExportBase'
 
@@ -101,6 +102,8 @@ export class Api {
 	public static UserUpdate = 'User/Update' //'SYUserSPBase/SYUserUpdateBase'
 	public static UserDelete = 'User/Delete' //'SYUserSPBase/SYUserDeleteBase'GetAvatar
 	public static UserGetAvatar = 'User/GetAvatar' //'SYUserSPBase/SYUserDeleteBase'
+	public static UserChangeStatus = 'SYUserSPBase/SYUserChangeStatusBase'
+
 	public static SystemLogin = 'SYSPBase/SYSystemLogGetAllOnPageBase'
 	public static SystemLoginAdmin = 'SYSPBase/SYSystemLogGetAllOnPageAdminBase'
 	public static SystemLogDelete = 'AdministrationFormalities/SYSystemLogDeleteBase'

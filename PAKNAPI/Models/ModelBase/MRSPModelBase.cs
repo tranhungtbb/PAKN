@@ -996,6 +996,7 @@ namespace PAKNAPI.ModelBase
 		public DateTime? UpdatedDate { get; set; }
 		public string FieldName { get; set; }
 		public string UnitName { get; set; }
+		public string GroupWordName { get; set; }
 
 		public async Task<List<MRRecommendationGetAllReactionaryWord>> MRRecommendationGetAllReactionaryWordDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId, int? PageSize, int? PageIndex)
 		{
