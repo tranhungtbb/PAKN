@@ -655,6 +655,33 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class MRRecommendationGetSendUserDataGraph
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGetSendUserDataGraph(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGetSendUserDataGraph()
+		{
+		}
+
+		public int? Count { get; set; }
+		public byte? Status { get; set; }
+
+		public async Task<List<MRRecommendationGetSendUserDataGraph>> MRRecommendationGetSendUserDataGraphDAO(long? SendId, DateTime? SendDateFrom, DateTime? SendDateTo)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("SendId", SendId);
+			DP.Add("SendDateFrom", SendDateFrom);
+			DP.Add("SendDateTo", SendDateTo);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetSendUserDataGraph>("MR_Recommendation_GetSendUserDataGraph", DP)).ToList();
+		}
+	}
+
 	public class MRRecommendationGetSuggestCreate
 	{
 		private SQLCon _sQLCon;
@@ -844,9 +871,7 @@ namespace PAKNAPI.ModelBase
 		public string Title { get; set; }
 		public string Content { get; set; }
 		public int? Field { get; set; }
-		public string FieldName { get; set; }
 		public int? UnitId { get; set; }
-		public string UnitName { get; set; }
 		public short? TypeObject { get; set; }
 		public long? SendId { get; set; }
 		public string Name { get; set; }
@@ -856,6 +881,8 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate { get; set; }
 		public long? UpdatedBy { get; set; }
 		public DateTime? UpdatedDate { get; set; }
+		public string FieldName { get; set; }
+		public string UnitName { get; set; }
 
 		public async Task<List<MRRecommendationGetAllOnPage>> MRRecommendationGetAllOnPageDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex)
 		{
@@ -870,6 +897,56 @@ namespace PAKNAPI.ModelBase
 			DP.Add("PageIndex", PageIndex);
 
 			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetAllOnPage>("MR_RecommendationGetAllOnPage", DP)).ToList();
+		}
+	}
+
+	public class MRRecommendationGetAllReactionaryWord
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGetAllReactionaryWord(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGetAllReactionaryWord()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Title { get; set; }
+		public string Content { get; set; }
+		public int? Field { get; set; }
+		public int? UnitId { get; set; }
+		public short? TypeObject { get; set; }
+		public long? SendId { get; set; }
+		public string Name { get; set; }
+		public byte? Status { get; set; }
+		public DateTime? SendDate { get; set; }
+		public long? CreatedBy { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public long? UpdatedBy { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public string FieldName { get; set; }
+		public string UnitName { get; set; }
+
+		public async Task<List<MRRecommendationGetAllReactionaryWord>> MRRecommendationGetAllReactionaryWordDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Code", Code);
+			DP.Add("SendName", SendName);
+			DP.Add("Content", Content);
+			DP.Add("UnitId", UnitId);
+			DP.Add("Field", Field);
+			DP.Add("Status", Status);
+			DP.Add("UnitProcessId", UnitProcessId);
+			DP.Add("UserProcessId", UserProcessId);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetAllReactionaryWord>("MR_RecommendationGetAllReactionaryWord", DP)).ToList();
 		}
 	}
 
@@ -1061,6 +1138,33 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByIDView>("MR_RecommendationGetByIDView", DP)).ToList();
+		}
+	}
+
+	public class MRRecommendationGetDataGraph
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGetDataGraph(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGetDataGraph()
+		{
+		}
+
+		public int? Count { get; set; }
+		public byte? Status { get; set; }
+		public string StatusName { get; set; }
+
+		public async Task<List<MRRecommendationGetDataGraph>> MRRecommendationGetDataGraphDAO(int? UnitProcessId, long? UserProcessId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UnitProcessId", UnitProcessId);
+			DP.Add("UserProcessId", UserProcessId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetDataGraph>("MR_RecommendationGetDataGraph", DP)).ToList();
 		}
 	}
 

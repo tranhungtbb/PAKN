@@ -292,6 +292,29 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYUserGetIsSystem2Base")]
+		public async Task<ActionResult<object>> SYUserGetIsSystem2Base()
+		{
+			try
+			{
+				List<SYUserGetIsSystem2> rsSYUserGetIsSystem2 = await new SYUserGetIsSystem2(_appSetting).SYUserGetIsSystem2DAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserGetIsSystem2", rsSYUserGetIsSystem2},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
 		[Authorize]
 		[Route("SYUserGetNameByIdBase")]
 		public async Task<ActionResult<object>> SYUserGetNameByIdBase(long? Id)

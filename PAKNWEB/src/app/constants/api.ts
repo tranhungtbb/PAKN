@@ -101,6 +101,7 @@ export class Api {
 	public static SystemLoginAdmin = 'SYSPBase/SYSystemLogGetAllOnPageAdminBase'
 	public static SystemLogDelete = 'SYSPBase/SYSystemLogDeleteBase'
 	public static UserGetIsSystem = 'SYUserSPBase/SYUserGetIsSystemBase'
+	public static UserGetIsSystem2 = 'SYUserSPBase/SYUserGetIsSystem2Base'
 	public static DeleteUserRole = 'SYUserSPBase/SYUserRoleMapDeleteBase'
 	public static InsertMultiUserRole = 'UserMapRole/SYUserRoleMapListInsert'
 
@@ -165,7 +166,8 @@ export class Api {
 
 	//invitation
 
-	public static InnvitationInsert = 'INVSPBase/INVInvitation'
+	public static InnvitationInsert = 'INVInvitation/INVInvitationInsert'
+	public static InnvitationUpdate = 'INVInvitation/INVInvitationUpdate'
 	public static InvitationDelete = 'INVInvitation/INVInvitationDelete'
 	public static InvitationGetList = 'INVSPBase/INVInvitationGetAllOnPageBase'
 

@@ -100,8 +100,11 @@ export class InvitationComponent implements OnInit {
 		this.routes.navigate(['quan-tri/thu-moi/them-moi'])
 	}
 
-	redirectUpdate(id: number) {
-		this.routes.navigate(['quan-tri/thu-moi/cap-nhap/' + id])
+	redirectUpdate(id: number, status: number) {
+		if (status == 1) {
+			this.routes.navigate(['quan-tri/thu-moi/cap-nhap/' + id])
+		}
+		return
 	}
 	sendDateChange(data) {
 		if (data != null) {

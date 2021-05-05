@@ -566,6 +566,187 @@ namespace PAKNAPI.ModelBase
 		public string Description { get; set; }
 	}
 
+	public class CAGroupWordDelete
+	{
+		private SQLCon _sQLCon;
+
+		public CAGroupWordDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAGroupWordDelete()
+		{
+		}
+
+		public async Task<int> CAGroupWordDeleteDAO(CAGroupWordDeleteIN _cAGroupWordDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAGroupWordDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_GroupWordDelete", DP));
+		}
+	}
+
+	public class CAGroupWordDeleteIN
+	{
+		public int? Id { get; set; }
+	}
+
+	public class CAGroupWordGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public CAGroupWordGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAGroupWordGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
+		public int? CountWord { get; set; }
+
+		public async Task<List<CAGroupWordGetAllOnPage>> CAGroupWordGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("Name", Name);
+			DP.Add("Description", Description);
+			DP.Add("IsActived", IsActived);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAGroupWordGetAllOnPage>("CA_GroupWordGetAllOnPage", DP)).ToList();
+		}
+	}
+
+	public class CAGroupWordGetByID
+	{
+		private SQLCon _sQLCon;
+
+		public CAGroupWordGetByID(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAGroupWordGetByID()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string Description { get; set; }
+
+		public async Task<List<CAGroupWordGetByID>> CAGroupWordGetByIDDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAGroupWordGetByID>("CA_GroupWordGetByID", DP)).ToList();
+		}
+	}
+
+	public class CAGroupWordGetListSuggest
+	{
+		private SQLCon _sQLCon;
+
+		public CAGroupWordGetListSuggest(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAGroupWordGetListSuggest()
+		{
+		}
+
+		public int Value { get; set; }
+		public string Text { get; set; }
+
+		public async Task<List<CAGroupWordGetListSuggest>> CAGroupWordGetListSuggestDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAGroupWordGetListSuggest>("CA_GroupWordGetListSuggest", DP)).ToList();
+		}
+	}
+
+	public class CAGroupWordInsert
+	{
+		private SQLCon _sQLCon;
+
+		public CAGroupWordInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAGroupWordInsert()
+		{
+		}
+
+		public async Task<decimal?> CAGroupWordInsertDAO(CAGroupWordInsertIN _cAGroupWordInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _cAGroupWordInsertIN.Name);
+			DP.Add("IsActived", _cAGroupWordInsertIN.IsActived);
+			DP.Add("IsDeleted", _cAGroupWordInsertIN.IsDeleted);
+			DP.Add("Description", _cAGroupWordInsertIN.Description);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("CA_GroupWordInsert", DP);
+		}
+	}
+
+	public class CAGroupWordInsertIN
+	{
+		public string Name { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public string Description { get; set; }
+	}
+
+	public class CAGroupWordUpdate
+	{
+		private SQLCon _sQLCon;
+
+		public CAGroupWordUpdate(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAGroupWordUpdate()
+		{
+		}
+
+		public async Task<int> CAGroupWordUpdateDAO(CAGroupWordUpdateIN _cAGroupWordUpdateIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cAGroupWordUpdateIN.Id);
+			DP.Add("Name", _cAGroupWordUpdateIN.Name);
+			DP.Add("IsActived", _cAGroupWordUpdateIN.IsActived);
+			DP.Add("IsDeleted", _cAGroupWordUpdateIN.IsDeleted);
+			DP.Add("Description", _cAGroupWordUpdateIN.Description);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_GroupWordUpdate", DP));
+		}
+	}
+
+	public class CAGroupWordUpdateIN
+	{
+		public int? Id { get; set; }
+		public string Name { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public string Description { get; set; }
+	}
+
 	public class CAHashtagDelete
 	{
 		private SQLCon _sQLCon;
@@ -1339,66 +1520,6 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-	public class CAWordDelete
-	{
-		private SQLCon _sQLCon;
-
-		public CAWordDelete(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public CAWordDelete()
-		{
-		}
-
-		public async Task<int> CAWordDeleteDAO(CAWordDeleteIN _cAWordDeleteIN)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _cAWordDeleteIN.Id);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_WordDelete", DP));
-		}
-	}
-
-	public class CAWordDeleteIN
-	{
-		public int? Id { get; set; }
-	}
-
-	public class CAWordGetAllOnPage
-	{
-		private SQLCon _sQLCon;
-
-		public CAWordGetAllOnPage(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public CAWordGetAllOnPage()
-		{
-		}
-
-		public int? RowNumber { get; set; }
-		public int Id { get; set; }
-		public string Name { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
-		public string Description { get; set; }
-
-		public async Task<List<CAWordGetAllOnPage>> CAWordGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("Name", Name);
-			DP.Add("Description", Description);
-			DP.Add("IsActived", IsActived);
-
-			return (await _sQLCon.ExecuteListDapperAsync<CAWordGetAllOnPage>("CA_WordGetAllOnPage", DP)).ToList();
-		}
-	}
-
 	public class CAWordGetByID
 	{
 		private SQLCon _sQLCon;
@@ -1413,6 +1534,7 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int Id { get; set; }
+		public int GroupId { get; set; }
 		public string Name { get; set; }
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
@@ -1424,30 +1546,6 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAWordGetByID>("CA_WordGetByID", DP)).ToList();
-		}
-	}
-
-	public class CAWordGetListSuggest
-	{
-		private SQLCon _sQLCon;
-
-		public CAWordGetListSuggest(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public CAWordGetListSuggest()
-		{
-		}
-
-		public string Name { get; set; }
-		public string Description { get; set; }
-
-		public async Task<List<CAWordGetListSuggest>> CAWordGetListSuggestDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<CAWordGetListSuggest>("CA_WordGetListSuggest", DP)).ToList();
 		}
 	}
 
@@ -1464,20 +1562,22 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int?> CAWordInsertDAO(CAWordInsertIN _cAWordInsertIN)
+		public async Task<int> CAWordInsertDAO(CAWordInsertIN _cAWordInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
+			DP.Add("GroupId", _cAWordInsertIN.GroupId);
 			DP.Add("Name", _cAWordInsertIN.Name);
 			DP.Add("IsActived", _cAWordInsertIN.IsActived);
 			DP.Add("IsDeleted", _cAWordInsertIN.IsDeleted);
 			DP.Add("Description", _cAWordInsertIN.Description);
 
-			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_WordInsert", DP);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_WordInsert", DP));
 		}
 	}
 
 	public class CAWordInsertIN
 	{
+		public int? GroupId { get; set; }
 		public string Name { get; set; }
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
@@ -1497,22 +1597,24 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int?> CAWordUpdateDAO(CAWordUpdateIN _cAWordUpdateIN)
+		public async Task<int> CAWordUpdateDAO(CAWordUpdateIN _cAWordUpdateIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _cAWordUpdateIN.Id);
+			DP.Add("GroupId", _cAWordUpdateIN.GroupId);
 			DP.Add("Name", _cAWordUpdateIN.Name);
 			DP.Add("IsActived", _cAWordUpdateIN.IsActived);
 			DP.Add("IsDeleted", _cAWordUpdateIN.IsDeleted);
 			DP.Add("Description", _cAWordUpdateIN.Description);
 
-			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_WordUpdate", DP);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_WordUpdate", DP));
 		}
 	}
 
 	public class CAWordUpdateIN
 	{
 		public int? Id { get; set; }
+		public int? GroupId { get; set; }
 		public string Name { get; set; }
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }

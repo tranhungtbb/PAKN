@@ -57,6 +57,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Authorize("ThePolicy")]
 		[Route("NENewsGetAllRelatesBase")]
 		public async Task<ActionResult<object>> NENewsGetAllRelatesBase(long? Id)
 		{
