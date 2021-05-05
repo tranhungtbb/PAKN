@@ -668,8 +668,8 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public string Name { get; set; }
-		public string Description { get; set; }
+		public int Value { get; set; }
+		public string Text { get; set; }
 
 		public async Task<List<CAGroupWordGetListSuggest>> CAGroupWordGetListSuggestDAO()
 		{
@@ -692,7 +692,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> CAGroupWordInsertDAO(CAGroupWordInsertIN _cAGroupWordInsertIN)
+		public async Task<decimal?> CAGroupWordInsertDAO(CAGroupWordInsertIN _cAGroupWordInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cAGroupWordInsertIN.Name);
@@ -700,7 +700,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cAGroupWordInsertIN.IsDeleted);
 			DP.Add("Description", _cAGroupWordInsertIN.Description);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_GroupWordInsert", DP));
+			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("CA_GroupWordInsert", DP);
 		}
 	}
 
@@ -1538,6 +1538,7 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
+		public string GroupName { get; set; }
 		public string Description { get; set; }
 
 		public async Task<List<CAWordGetAllOnPage>> CAWordGetAllOnPageDAO(int? PageSize, int? PageIndex, int? GroupId, string Name, string Description, bool? IsActived)

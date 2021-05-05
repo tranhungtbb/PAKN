@@ -90,7 +90,7 @@ DROP PROCEDURE [SY_ChatbotInsert];
 GO
 CREATE PROCEDURE [dbo].[SY_ChatbotInsert]
 	@Question nvarchar(1000) = null,
-	@Answer nvarchar(1000) = null,
+	@Answer nvarchar(max) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
 	@CategoryId int = null
@@ -128,7 +128,7 @@ GO
 CREATE PROCEDURE [dbo].[SY_ChatbotUpdate]
 	@Id bigint = null,
 	@Question nvarchar(1000) = null,
-	@Answer nvarchar(1000) = null,
+	@Answer nvarchar(max) = null,
 	@IsActived bit = null,
 	@IsDeleted bit = null,
 	@CategoryId int = null
