@@ -18,7 +18,7 @@ export class WordLibraryComponent implements OnInit {
 	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) {}
 
 	listData = new Array<WordObject>()
-	lstGroup: any = []
+	listGroup: any = []
 	listStatus: any = [
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
@@ -39,6 +39,7 @@ export class WordLibraryComponent implements OnInit {
 	ngOnInit() {
 		this.buildForm()
 		this.getList()
+		this.getListGroup()
 	}
 
 	ngAfterViewInit() {
@@ -59,6 +60,7 @@ export class WordLibraryComponent implements OnInit {
 	buildForm() {
 		this.form = this._fb.group({
 			name: [this.model.name, Validators.required],
+			groupId: [this.model.groupId, Validators.required],
 			description: [this.model.description],
 			isActived: [this.model.isActived, Validators.required],
 		})
@@ -67,9 +69,28 @@ export class WordLibraryComponent implements OnInit {
 	rebuilForm() {
 		this.form.reset({
 			name: this.model.name,
+			groupId: this.model.groupId,
 			isActived: this.model.isActived,
 			description: this.model.description,
 		})
+	}
+
+	getListGroup() {
+		let request = {}
+		this._service.groupWordGetListSuggest(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if (response.result != null) {
+					this.listGroup = []
+					this.listGroup = response.result.CAGroupWordGetListSuggest
+				}
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(error) => {
+				console.log(error)
+				alert(error)
+			}
 	}
 
 	getList() {
@@ -89,7 +110,6 @@ export class WordLibraryComponent implements OnInit {
 					this.listData = []
 					this.listData = response.result.CAWordGetAllOnPage
 					this.totalRecords = response.result.TotalCount
-					console.log(this.totalRecords)
 				}
 			} else {
 				this._toastr.error(response.message)
