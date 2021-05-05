@@ -18,7 +18,7 @@ export class SystemLogComponent implements OnInit {
 	myHours: any
 	pageindex: number
 	listPageIndex: any[] = []
-
+	listUser: any[] = []
 	listData: any[] = []
 	totalRecords: number = 0
 	emailUser: string = ''
@@ -66,7 +66,21 @@ export class SystemLogComponent implements OnInit {
 	ViewedCount: number = 0
 	constructor(private userService: UserService, private _toastr: ToastrService) {}
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.userService.getUserDropdown().subscribe(response => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if (response.result != null) {
+					this.listUser = []
+					this.listUser = response.result.SYUsersGetDropdown
+				}
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			error => {
+				console.error(error)
+			}
+	}
 	onPageChange(event: any) {
 		this.pageSize = event.rows
 		this.pageIndex = event.first / event.rows + 1
@@ -99,8 +113,7 @@ export class SystemLogComponent implements OnInit {
 	}
 	getList() {
 		let req = {
-			FromDate: this.dataSearch.fromDate != null ? this.dataSearch.fromDate.toLocaleDateString() : '',
-			ToDate: this.dataSearch.toDate != null ? this.dataSearch.toDate.toLocaleDateString() : '',
+			CreateDate: this.dataSearch.createDate != null ? this.dataSearch.createDate.toLocaleDateString() : '',
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 			//UserId: localStorage.getItem('userId'),
@@ -125,14 +138,12 @@ export class SystemLogComponent implements OnInit {
 
 export class SearchHistoryUser {
 	constructor() {
-		this.fromDate = null
-		this.toDate = null
+		this.createDate = null
 		this.status = null
 		this.description = ''
 		this.userId = null
 	}
-	fromDate: Date
-	toDate: Date
+	createDate: Date
 	description: string = ''
 	status: number = null
 	userId: number = null

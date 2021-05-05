@@ -91,11 +91,15 @@ export class UserService {
 	}
 	sysLogDelete(request: any): Observable<any> {
 		let url = AppSettings.API_ADDRESS + Api.SystemLogDelete
-		return this.serviceInvoker.get(request, url)
+		return this.serviceInvoker.post(request, url)
 	}
 
 	getCurrentUser(): Observable<any> {
 		let url = AppSettings.API_ADDRESS + Api.SystemLogDelete
+		return this.serviceInvoker.get({}, url)
+	}
+	getUserDropdown(): Observable<any> {
+		let url = AppSettings.API_ADDRESS + Api.SystemGetUserDropDown
 		return this.serviceInvoker.get({}, url)
 	}
 }
