@@ -318,6 +318,37 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
+	public class SYUnitChageStatus
+	{
+		private SQLCon _sQLCon;
+
+		public SYUnitChageStatus(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUnitChageStatus()
+		{
+		}
+
+		public async Task<int> SYUnitChageStatusDAO(SYUnitChageStatusIN _sYUnitChageStatusIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYUnitChageStatusIN.Id);
+			DP.Add("IsActived", _sYUnitChageStatusIN.IsActived);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UnitChageStatus", DP));
+		}
+	}
+
+	public class SYUnitChageStatusIN
+	{
+		public long? Id { get; set; }
+		public bool? IsActived { get; set; }
+	}
+
+
 	public class SYUnitGetDropdown
 	{
 		private SQLCon _sQLCon;

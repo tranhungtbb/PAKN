@@ -76,6 +76,9 @@ export class UserService {
 	delete(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserDelete)
 	}
+	changeStatus(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserChangeStatus)
+	}
 
 	deleteUserRole(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.DeleteUserRole)
