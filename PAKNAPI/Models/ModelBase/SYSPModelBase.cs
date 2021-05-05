@@ -253,6 +253,33 @@ namespace PAKNAPI.ModelBase
 		public string Description { get; set; }
 	}
 
+	public class SYSystemLogDelete
+	{
+		private SQLCon _sQLCon;
+
+		public SYSystemLogDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYSystemLogDelete()
+		{
+		}
+
+		public async Task<int> SYSystemLogDeleteDAO(SYSystemLogDeleteIN _sYSystemLogDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYSystemLogDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_SystemLogDelete", DP));
+		}
+	}
+
+	public class SYSystemLogDeleteIN
+	{
+		public int? Id { get; set; }
+	}
+
 	public class SYSystemLogGetAllOnPage
 	{
 		private SQLCon _sQLCon;

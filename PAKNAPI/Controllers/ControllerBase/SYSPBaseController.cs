@@ -285,6 +285,66 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYSystemLogDeleteBase")]
+		public async Task<ActionResult<object>> SYSystemLogDeleteBase(SYSystemLogDeleteIN _sYSystemLogDeleteIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYSystemLogDelete(_appSetting).SYSystemLogDeleteDAO(_sYSystemLogDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYSystemLogDeleteListBase")]
+		public async Task<ActionResult<object>> SYSystemLogDeleteListBase(List<SYSystemLogDeleteIN> _sYSystemLogDeleteINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _sYSystemLogDeleteIN in _sYSystemLogDeleteINs)
+				{
+					var result = await new SYSystemLogDelete(_appSetting).SYSystemLogDeleteDAO(_sYSystemLogDeleteIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("SYSystemLogGetAllOnPageBase")]

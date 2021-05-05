@@ -38,6 +38,10 @@ export class UserService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetIsSystem)
 	}
 
+	getIsSystem2(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetIsSystem2)
+	}
+
 	insertMultiUserRole(query: any): Observable<any> {
 		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.InsertMultiUserRole)
 	}
@@ -91,11 +95,15 @@ export class UserService {
 	}
 	sysLogDelete(request: any): Observable<any> {
 		let url = AppSettings.API_ADDRESS + Api.SystemLogDelete
-		return this.serviceInvoker.get(request, url)
+		return this.serviceInvoker.post(request, url)
 	}
 
 	getCurrentUser(): Observable<any> {
 		let url = AppSettings.API_ADDRESS + Api.SystemLogDelete
+		return this.serviceInvoker.get({}, url)
+	}
+	getUserDropdown(): Observable<any> {
+		let url = AppSettings.API_ADDRESS + Api.SystemGetUserDropDown
 		return this.serviceInvoker.get({}, url)
 	}
 }

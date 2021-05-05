@@ -38,16 +38,23 @@
 									<strong>Ngày tạo</strong>
 									<span class="caret-tb"></span>
 								</p>
-								<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100"
-									(keydown.enter)="dataStateChange()" />
+								<input class="form-control form-control-sm" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="createDate"
+									[(ngModel)]="dataSearch.createDate" (keydown.enter)="dataStateChange()" appBsDatepickerInvalid
+									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+								<div class="input-group-addon">
+									<i class="far fa-calendar-alt" (click)="dataStateChange()" [attr.aria-expanded]="n.isOpen"></i>
+								</div>
 							</th>
 							<th style="min-width: 350px">
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Người tạo</strong>
 									<span class="caret-tb"></span>
 								</p>
-								<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.content" maxlength="100"
-									(keydown.enter)="dataStateChange()" />
+								<div class="dropdown bootstrap-select form-control form-control-sm">
+									<ng-select class="" [items]="listUser" placeholder="Người tạo ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.userId"
+										[closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
+									</ng-select>
+								</div>
 							</th>
 							<th>
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">

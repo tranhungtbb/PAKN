@@ -29,6 +29,7 @@ export class LOG_OBJECT {
 	public static CA_FIELD = 'Danh mục lĩnh vực'
 	public static CA_WORD = 'Danh mục thư viện từ ngữ'
 	public static CA_GROUPWORD = 'Danh mục nhóm thư viện từ ngữ'
+	public static SY_SYSTEM = 'Lịch sử hệ thống'
 }
 
 export class MESSAGE_COMMON {

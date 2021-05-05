@@ -21,9 +21,8 @@ export class InvitationService {
 			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
 		})
 		const form = new FormData()
-		form.append('Model', JSON.stringify(request.Model))
-		form.append('SendOrgId', request.SendOrgId)
-		form.append('ReceiveOrgId', request.ReceiveOrgId)
+		form.append('Model', JSON.stringify(request.model))
+		form.append('InvitationUserMap', JSON.stringify(request.userMap))
 
 		if (request.Files) {
 			request.Files.forEach((item) => {
@@ -35,7 +34,36 @@ export class InvitationService {
 			headers: tempheaders,
 			reportProgress: true,
 		}
-		return this.http.post(AppSettings.API_ADDRESS + Api.RemindInsert, form, httpPackage)
+		return this.http.post(AppSettings.API_ADDRESS + Api.InnvitationInsert, form, httpPackage)
+	}
+
+	invitationGetById(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.InnvitationUpdate)
+	}
+
+	invitationUpdate(request: any): Observable<any> {
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
+			macAddress: '',
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		})
+		const form = new FormData()
+		form.append('Model', JSON.stringify(request.model))
+		form.append('InvitationUserMap', JSON.stringify(request.userMap))
+		form.append('LstFileDelete', JSON.stringify(request.lstFileDelete))
+
+		if (request.Files) {
+			request.Files.forEach((item) => {
+				form.append('QD', item)
+			})
+		}
+		tempheaders.append('Content-Type', 'application/json')
+		const httpPackage = {
+			headers: tempheaders,
+			reportProgress: true,
+		}
+		return this.http.post(AppSettings.API_ADDRESS + Api.InnvitationUpdate, form, httpPackage)
 	}
 
 	invitationGetList(query: any): Observable<any> {
