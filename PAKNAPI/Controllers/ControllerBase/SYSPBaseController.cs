@@ -369,29 +369,6 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("SYSystemLogGetAllOnPageAdminBase")]
-		public async Task<ActionResult<object>> SYSystemLogGetAllOnPageAdminBase(int? UserId, int? PageSize, int? PageIndex, DateTime? CreateDate, byte? Status, string Description)
-		{
-			try
-			{
-				List<SYSystemLogGetAllOnPageAdmin> rsSYSystemLogGetAllOnPageAdmin = await new SYSystemLogGetAllOnPageAdmin(_appSetting).SYSystemLogGetAllOnPageAdminDAO(UserId, PageSize, PageIndex, CreateDate, Status, Description);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"SYSystemLogGetAllOnPageAdmin", rsSYSystemLogGetAllOnPageAdmin},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
 		[Authorize]
 		[Route("SYUnitGetDropdownBase")]
 		public async Task<ActionResult<object>> SYUnitGetDropdownBase()
@@ -563,29 +540,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYUserGetNonSystem", rsSYUserGetNonSystem},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("SYUsersGetDropdownBase")]
-		public async Task<ActionResult<object>> SYUsersGetDropdownBase()
-		{
-			try
-			{
-				List<SYUsersGetDropdown> rsSYUsersGetDropdown = await new SYUsersGetDropdown(_appSetting).SYUsersGetDropdownDAO();
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"SYUsersGetDropdown", rsSYUsersGetDropdown},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

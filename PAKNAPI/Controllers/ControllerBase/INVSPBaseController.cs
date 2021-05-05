@@ -234,7 +234,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("INVInvitationUserMapDeleteByInvitationIdBase")]
 		public async Task<ActionResult<object>> INVInvitationUserMapDeleteByInvitationIdBase(INVInvitationUserMapDeleteByInvitationIdIN _iNVInvitationUserMapDeleteByInvitationIdIN)
 		{
@@ -254,7 +254,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("INVInvitationUserMapDeleteByInvitationIdListBase")]
 		public async Task<ActionResult<object>> INVInvitationUserMapDeleteByInvitationIdListBase(List<INVInvitationUserMapDeleteByInvitationIdIN> _iNVInvitationUserMapDeleteByInvitationIdINs)
 		{
@@ -317,7 +317,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("INVInvitationUserMapInsertBase")]
 		public async Task<ActionResult<object>> INVInvitationUserMapInsertBase(INVInvitationUserMapInsertIN _iNVInvitationUserMapInsertIN)
 		{
@@ -397,7 +397,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("INVInvitationGetAllOnPageBase")]
 		public async Task<ActionResult<object>> INVInvitationGetAllOnPageBase(int? PageSize, int? PageIndex, string Title, DateTime? StartDate, DateTime? EndDate, string Place, byte? Status)
 		{
@@ -446,7 +446,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("INVInvitationInsertBase")]
 		public async Task<ActionResult<object>> INVInvitationInsertBase(INVInvitationInsertIN _iNVInvitationInsertIN)
 		{
@@ -466,7 +466,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("INVInvitationUpdateBase")]
 		public async Task<ActionResult<object>> INVInvitationUpdateBase(INVInvitationUpdateIN _iNVInvitationUpdateIN)
 		{
