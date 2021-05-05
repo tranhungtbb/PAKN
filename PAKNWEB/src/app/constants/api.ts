@@ -29,6 +29,7 @@ export class Api {
 	public static RecommendationGetDataForProcess = 'Recommendation/RecommendationGetDataForProcess'
 	public static RecommendationGetList = 'MRSPBase/MRRecommendationGetAllOnPageBase'
 	public static RecommendationGetListProcess = 'MRSPBase/MRRecommendationGetAllWithProcessBase'
+	public static RecommendationGetListReactionaryWord = 'MRSPBase/MRRecommendationGetAllReactionaryWordBase'
 	public static RecommendationGetById = 'Recommendation/RecommendationGetById'
 	public static RecommendationGetByIdView = 'Recommendation/RecommendationGetByIdView'
 	public static RecommendationGetHistories = 'MRSPBase/HISRecommendationGetByObjectIdBase'
@@ -134,6 +135,14 @@ export class Api {
 	public static WordUpdateStatus = 'CACategorySPBase/CAWordUpdateBase'
 	public static WordDelete = 'CACategorySPBase/CAWordDeleteBase'
 	public static WordGetListSuggest = 'CACategorySPBase/CAWordGetListSuggestBase'
+	//GroupWord
+	public static GroupWordGetList = 'CACategorySPBase/CAGroupWordGetAllOnPageBase'
+	public static GroupWordGetById = 'CACategorySPBase/CAGroupWordGetByIDBase'
+	public static GroupWordInsert = 'CACategorySPBase/CAGroupWordInsertBase'
+	public static GroupWordUpdate = 'CACategorySPBase/CAGroupWordUpdateBase'
+	public static GroupWordUpdateStatus = 'CACategorySPBase/CAGroupWordUpdateBase'
+	public static GroupWordDelete = 'CACategorySPBase/CAGroupWordDeleteBase'
+	public static GroupWordGetListSuggest = 'CACategorySPBase/CAGroupWordGetListSuggestBase'
 
 	//tin tuc
 	public static NewsGetAllOnPage = 'NESPBase/NENewsGetAllOnPageBase'

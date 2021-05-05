@@ -20,7 +20,8 @@ import { WordLibraryComponent } from './word-library/word-library.component'
 import { DepartmentComponent } from './department/department.component'
 import { HashtagComponent } from './hashtag/hashtag.component'
 // import { RemindComponent } from '../recommendation/remind/remind.component'
-import { from } from 'rxjs'
+import { from } from 'rxjs';
+import { GroupWordComponent } from './group-word/group-word.component'
 
 @NgModule({
 	imports: [
@@ -47,6 +48,7 @@ import { from } from 'rxjs'
 		WordLibraryComponent,
 		DepartmentComponent,
 		HashtagComponent,
+		GroupWordComponent,
 		// RemindComponent,
 	],
 })

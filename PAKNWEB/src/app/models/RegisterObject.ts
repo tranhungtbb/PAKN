@@ -3,7 +3,7 @@ export class IndividualObject {
 		this.phone = null
 		this.password = null
 		this.gender = true
-
+		this.email = null
 		//
 		this.nation = 'Việt Nam'
 		this.provinceId = ''

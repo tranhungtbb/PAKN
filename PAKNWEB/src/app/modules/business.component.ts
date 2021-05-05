@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core'
 // declare var jquery: any;
 declare var $: any
 import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker'
@@ -14,14 +14,18 @@ import { environment } from '../../environments/environment'
 import { UploadFileService } from '../services/uploadfiles.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { DataService } from '../services/sharedata.service'
+import { UserViewInfoComponent } from './system-management/components/user/user-view-info/user-view-info.component'
+import { UserCreateOrUpdateComponent } from './system-management/components/user/user-create-or-update/user-create-or-update.component'
+
 defineLocale('vi', viLocale)
 
+declare var $: any
 @Component({
 	selector: 'app-business',
 	templateUrl: './business.component.html',
 	styleUrls: ['./business.component.css'],
 })
-export class BusinessComponent implements OnInit {
+export class BusinessComponent implements OnInit, AfterViewInit {
 	userId: number
 	url: string = ''
 
@@ -60,6 +64,9 @@ export class BusinessComponent implements OnInit {
 			})
 	}
 
+	@ViewChild(UserViewInfoComponent, { static: false }) child_UserViewInfoComponent: UserViewInfoComponent
+	@ViewChild(UserCreateOrUpdateComponent, { static: false }) child_UserCreateOrUpdateComponent: UserCreateOrUpdateComponent
+
 	ngOnInit() {
 		this.localeService.use('vi')
 		this.userInfoService.setReturnUrl('')
@@ -74,6 +81,16 @@ export class BusinessComponent implements OnInit {
 		this.loadScript('assets/dist/vendor/peity/jquery.peity.min.js')
 		this.loadScript('assets/dist/js/plugins-init/piety-init.js')
 		this.loadScript('assets/dist/js/dashboard/dashboard-1.js')
+	}
+	ngAfterViewInit() {
+		$('#show-modal-account-info').click(() => {
+			this.child_UserViewInfoComponent.openModal()
+		})
+		this.child_UserViewInfoComponent.parent_BusinessComponent = this
+	}
+
+	openModalEditInfo(userId: number) {
+		this.child_UserCreateOrUpdateComponent.openModal(0, userId, true)
 	}
 
 	public loadScript(url: string) {

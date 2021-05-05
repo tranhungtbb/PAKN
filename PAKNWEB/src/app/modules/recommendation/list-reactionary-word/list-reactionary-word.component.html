@@ -4,10 +4,10 @@
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
 					<li class="breadcrumb-item"><a>Phản ánh, Kiến nghị</a></li>
-					<li class="breadcrumb-item active"><a class="font-weight-bold"> Chờ xử lý</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold"> Chứa từ ngữ bị cấm</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
-					<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()">
+					<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
 							<path
 								d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
@@ -116,10 +116,12 @@
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
-											<a class="btn-icon grd-xanhngoc text-white mr-2" (click)="preProcess(item.id,item.processId,2)" title="Tiếp nhận giải quyết">
-												<i class="bi bi-file-earmark-check"></i></a>
-											<a class="btn-icon grd-red text-white mr-2" (click)="preProcess(item.id,item.processId,3)" title="Từ chối giải quyết">
-												<i class="bi bi-file-earmark-break"></i></a>
+											<a [routerLink]="['/quan-tri/kien-nghi/them-moi/', item.id]" *ngIf="item.status == 4 && item.createdBy == userLoginId"
+												class="btn-icon grd-brown text-brown mr-2" title="Cập nhật"><i class="bi bi-pencil-square"></i></a>
+											<a *ngIf="item.status == 2" class="btn-icon grd-xanhngoc text-white mr-2" title="Tiếp nhận xử lý"><i
+													class="bi bi-file-earmark-check"></i></a>
+											<a *ngIf="item.status == 2" href="#" class="btn-icon grd-red text-white mr-2" data-toggle="modal" data-target="#modal-tc-pakn"
+												title="Từ chối tiếp nhận"><i class="bi bi-file-earmark-break"></i></a>
 											<a class="btn-icon" (click)="getHistories(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
 									</td>
@@ -136,55 +138,7 @@
 			</div>
 		</div>
 	</div>
-</div>
 
-<div class="modal fade" id="modalAccept">
-	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
-		<div class="modal-content rounded">
-			<form class="form-horizontal">
-				<div class="panel panel-default no-margin">
-					<div class="modal-header">
-						<button class="close btn-close-modal" data-dismiss="modal">
-							×
-						</button>
-						<p class="modal-title h3">Xác nhận</p>
-					</div>
-					<div class="modal-body no-padding-bottom">
-						<div>
-							<p>Anh/Chị có chắc chắn thực hiện hành động này?</p>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onProcessAccept()">Xác nhận</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-
-<div class="modal fade" id="modalReject">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content rounded">
-			<div class="modal-header border-bottom-0">
-				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<p class="h4 text-center mb-3">Bạn có chắc chắn từ chối <strong>Phản ánh, kiến nghị</strong> này ko?</p>
-				<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="modelProcess.reasonDeny" maxlength="500"></textarea>
-				<div class="custom-control custom-checkbox checkbox-danger mt-3">
-					<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord" id="basic_checkbox_1">
-					<label class="custom-control-label" for="basic_checkbox_1">Chứa từ ngữ bị cấm</label>
-				</div>
-			</div>
-			<div class="modal-footer justify-content-center border-top-0">
-				<button type="button" class="btn btn-outline-secondary border" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger grd-red" (click)="onProcessDeny()">Xác nhận</button>
-			</div>
-		</div>
-	</div>
 </div>
 
 <div class="modal fade pr-0" id="modal-history-pakn">

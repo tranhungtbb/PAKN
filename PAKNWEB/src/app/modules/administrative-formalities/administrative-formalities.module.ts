@@ -13,16 +13,8 @@ import { AdministrativeFormalitiesComponent } from './administrative-formalities
 import { CU_AdministrativeFormalitiesComponent } from './cu-administrative-formalities/cu-administrative-formalities.component'
 import { ListAdministrativeFormalitiesComponent } from './list-administrative-formalities/list-administrative-formalities.component'
 import { DetailAdministrativeFormalitiesComponent } from './detail-administrative-formalities/detail-administrative-formalities.component'
-
-import { HtmlToPlaintextPipe } from 'src/app/pipes/html-filter.pipe'
 @NgModule({
-	declarations: [
-		AdministrativeFormalitiesComponent,
-		CU_AdministrativeFormalitiesComponent,
-		ListAdministrativeFormalitiesComponent,
-		DetailAdministrativeFormalitiesComponent,
-		HtmlToPlaintextPipe,
-	],
+	declarations: [AdministrativeFormalitiesComponent, CU_AdministrativeFormalitiesComponent, ListAdministrativeFormalitiesComponent, DetailAdministrativeFormalitiesComponent],
 	imports: [
 		CommonModule,
 		AdministrativeFormalitiesRoutingModule,

@@ -9,6 +9,7 @@ import { FieldComponent } from './field/field.component'
 import { NewsTypeComponent } from './news-type/news-type.component'
 import { WordLibraryComponent } from './word-library/word-library.component'
 import { HashtagComponent } from './hashtag/hashtag.component'
+import { GroupWordComponent } from './group-word/group-word.component'
 
 const routes: Routes = [
 	{
@@ -22,6 +23,7 @@ const routes: Routes = [
 			{ path: 'so-nganh', component: DepartmentComponent },
 			{ path: 'nhom-so-nganh', component: DepartmentGroupComponent },
 			{ path: 'hashtag', component: HashtagComponent },
+			{ path: 'nhom-thu-vien-tu', component: GroupWordComponent },
 		],
 	},
 ]

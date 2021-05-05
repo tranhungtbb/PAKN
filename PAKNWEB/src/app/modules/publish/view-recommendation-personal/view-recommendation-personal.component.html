@@ -63,17 +63,22 @@
 							</p>
 						</div>
 					</div>
-					<div class="media pb-4" *ngIf="model.status >= 6">
+					<div class="media pb-4" *ngIf="[3,6,9,10].includes(model.status)">
 						<div class="mr-3">
 							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-chat-left-text-fill" style="color: #88C88B;"
-								viewBox="0 0 16 16" [style.color]="{'red':model.status == 6}">
+								viewBox="0 0 16 16" [style.color]="{'red':[3,6,9].includes(model.status)}" *ngIf="[10].includes(model.status)">
+								<path
+									d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
+							</svg>
+							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-chat-left-text-fill" style="color: red"
+								viewBox="0 0 16 16" *ngIf="[3,6,9].includes(model.status)">
 								<path
 									d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
 							</svg>
 						</div>
 						<div class="media-body">
 							<p class="h4 font-italic font-weight-bold">Trung tâm phản ánh kiến nghị tỉnh Khánh Hoà trả lời:</p>
-							<ng-container *ngIf="model.status == 5">
+							<ng-container *ngIf="model.status == 1">
 								<textarea class="form-control" [(ngModel)]="modelConclusion.content" rows="10" placeholder="Nhập nội dung..."></textarea>
 								<div class="row">
 									<div class="col-12 attach-ct mt-3">
@@ -183,26 +188,11 @@
 									<div class="w-100"></div>
 								</div>
 							</ng-container>
-							<ng-container *ngIf="model.status == 6">
+							<ng-container *ngIf="[3,6,9].includes(model.status)">
 								<p>{{modelConclusion.reasonDeny}}</p>
 							</ng-container>
-							<ng-container *ngIf="model.status > 6">
+							<ng-container *ngIf="model.status == 10">
 								<p>{{modelConclusion.content}}</p>
-								<!-- <p>
-									<button type="button" class="btn border btn-block text-dark p-0">
-										<span class="rounded grd-green text-white p-3 mr-3">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
-												<path
-													d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z">
-												</path>
-											</svg>
-										</span>
-										<span class="text-left text-truncate">
-											<small class="small">Tài liệu đính kèm</small><br>
-											<span class="mr-2" *ngFor="let item of files">{{item.name}}</span>
-										</span>
-									</button>
-								</p> -->
 								<ng-container *ngFor="let item of filesModel">
 									<div class="col-auto mb-4" *ngIf="item.fileType == 1">
 										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
