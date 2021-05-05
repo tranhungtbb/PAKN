@@ -46,6 +46,8 @@ export class ViewRecommendationComponent implements OnInit {
 	suggest: boolean = false
 	totalRecords: number = 0
 	dateNow: Date = new Date()
+	lstGroupWord: any = []
+	lstGroupWordSelected: any = []
 	@ViewChild('table', { static: false }) table: any
 	@ViewChild('file', { static: false }) public file: ElementRef
 	@ViewChild(RemindComponent, { static: true }) remindComponent: RemindComponent
@@ -376,12 +378,28 @@ export class ViewRecommendationComponent implements OnInit {
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
 			if (this.model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
+				this.recommendationService.recommendationGetDataForProcess({}).subscribe((response) => {
+					if (response.success == RESPONSE_STATUS.success) {
+						if (response.result != null) {
+							this.lstGroupWord = response.result.lstGroupWord
+							this.lstGroupWordSelected = []
+							$('#modalReject').modal('show')
+						}
+					} else {
+						this.toastr.error(response.message)
+					}
+				}),
+					(error) => {
+						console.log(error)
+						alert(error)
+					}
 			} else if (this.model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESS_DENY
+				$('#modalReject').modal('show')
 			} else if (this.model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.APPROVE_DENY
+				$('#modalReject').modal('show')
 			}
-			$('#modalReject').modal('show')
 		} else {
 			if (this.model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_APPROVED
@@ -426,6 +444,8 @@ export class ViewRecommendationComponent implements OnInit {
 			var request = {
 				_mRRecommendationForwardProcessIN: this.modelProcess,
 				RecommendationStatus: this.recommendationStatusProcess,
+				ReactionaryWord: this.modelProcess.reactionaryWord,
+				ListGroupWordSelected: this.lstGroupWordSelected.join(','),
 				ListHashTag: this.lstHashtagSelected,
 				IsList: false,
 			}

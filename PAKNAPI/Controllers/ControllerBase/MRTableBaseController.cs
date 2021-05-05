@@ -1934,6 +1934,260 @@ namespace PAKNAPI.ControllerBase
 
 		#endregion MRRecommendationGenCode
 
+		#region MRRecommendationGroupWord
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationGroupWordGetByID")]
+		public async Task<ActionResult<object>> MRRecommendationGroupWordGetByID(int? Id)
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationGroupWord(_appSetting).MRRecommendationGroupWordGetByID(Id) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationGroupWordGetAll")]
+		public async Task<ActionResult<object>> MRRecommendationGroupWordGetAll()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationGroupWord(_appSetting).MRRecommendationGroupWordGetAll() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationGroupWordGetAllOnPage")]
+		public async Task<ActionResult<object>> MRRecommendationGroupWordGetAllOnPage(int PageSize, int PageIndex)
+		{
+			try
+			{
+				List<MRRecommendationGroupWordOnPage> rsMRRecommendationGroupWordOnPage = await new MRRecommendationGroupWord(_appSetting).MRRecommendationGroupWordGetAllOnPage(PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationGroupWord", rsMRRecommendationGroupWordOnPage},
+						{"TotalCount", rsMRRecommendationGroupWordOnPage != null && rsMRRecommendationGroupWordOnPage.Count > 0 ? rsMRRecommendationGroupWordOnPage[0].RowNumber : 0},
+						{"PageIndex", rsMRRecommendationGroupWordOnPage != null && rsMRRecommendationGroupWordOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsMRRecommendationGroupWordOnPage != null && rsMRRecommendationGroupWordOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationGroupWordInsert")]
+		public async Task<ActionResult<object>> MRRecommendationGroupWordInsert(MRRecommendationGroupWord _mRRecommendationGroupWord)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationGroupWord(_appSetting).MRRecommendationGroupWordInsert(_mRRecommendationGroupWord) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationGroupWordListInsert")]
+		public async Task<ActionResult<object>> MRRecommendationGroupWordListInsert(List<MRRecommendationGroupWord> _mRRecommendationGroupWords)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (MRRecommendationGroupWord _mRRecommendationGroupWord in _mRRecommendationGroupWords)
+				{
+					int? result = await new MRRecommendationGroupWord(_appSetting).MRRecommendationGroupWordInsert(_mRRecommendationGroupWord);
+					if (result != null)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationGroupWordUpdate")]
+		public async Task<ActionResult<object>> MRRecommendationGroupWordUpdate(MRRecommendationGroupWord _mRRecommendationGroupWord)
+		{
+			try
+			{
+				int count = await new MRRecommendationGroupWord(_appSetting).MRRecommendationGroupWordUpdate(_mRRecommendationGroupWord);
+				if (count > 0)
+				{
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationGroupWordDelete")]
+		public async Task<ActionResult<object>> MRRecommendationGroupWordDelete(MRRecommendationGroupWord _mRRecommendationGroupWord)
+		{
+			try
+			{
+				int count = await new MRRecommendationGroupWord(_appSetting).MRRecommendationGroupWordDelete(_mRRecommendationGroupWord);
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationGroupWordListDelete")]
+		public async Task<ActionResult<object>> MRRecommendationGroupWordListDelete(List<MRRecommendationGroupWord> _mRRecommendationGroupWords)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (MRRecommendationGroupWord _mRRecommendationGroupWord in _mRRecommendationGroupWords)
+				{
+					var result = await new MRRecommendationGroupWord(_appSetting).MRRecommendationGroupWordDelete(_mRRecommendationGroupWord);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationGroupWordDeleteAll")]
+		public async Task<ActionResult<object>> MRRecommendationGroupWordDeleteAll()
+		{
+			try
+			{
+				int count = await new MRRecommendationGroupWord(_appSetting).MRRecommendationGroupWordDeleteAll();
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		#endregion MRRecommendationGroupWord
+
 		#region MRRecommendationHashtag
 
 		[HttpGet]

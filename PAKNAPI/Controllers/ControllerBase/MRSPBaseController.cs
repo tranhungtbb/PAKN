@@ -849,29 +849,6 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("MRRecommendationGetSendUserDataGraphBase")]
-		public async Task<ActionResult<object>> MRRecommendationGetSendUserDataGraphBase(long? SendId, DateTime? SendDateFrom, DateTime? SendDateTo)
-		{
-			try
-			{
-				List<MRRecommendationGetSendUserDataGraph> rsMRRecommendationGetSendUserDataGraph = await new MRRecommendationGetSendUserDataGraph(_appSetting).MRRecommendationGetSendUserDataGraphDAO(SendId, SendDateFrom, SendDateTo);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"MRRecommendationGetSendUserDataGraph", rsMRRecommendationGetSendUserDataGraph},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
 		[Authorize]
 		[Route("MRRecommendationGetSuggestCreateBase")]
 		public async Task<ActionResult<object>> MRRecommendationGetSuggestCreateBase(string Title)
@@ -909,6 +886,66 @@ namespace PAKNAPI.ControllerBase
 						{"PageIndex", rsMRRecommendationGetSuggestReply != null && rsMRRecommendationGetSuggestReply.Count > 0 ? PageIndex : 0},
 						{"PageSize", rsMRRecommendationGetSuggestReply != null && rsMRRecommendationGetSuggestReply.Count > 0 ? PageSize : 0},
 					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationGroupWordInsertByListBase")]
+		public async Task<ActionResult<object>> MRRecommendationGroupWordInsertByListBase(MRRecommendationGroupWordInsertByListIN _mRRecommendationGroupWordInsertByListIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationGroupWordInsertByList(_appSetting).MRRecommendationGroupWordInsertByListDAO(_mRRecommendationGroupWordInsertByListIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationGroupWordInsertByListListBase")]
+		public async Task<ActionResult<object>> MRRecommendationGroupWordInsertByListListBase(List<MRRecommendationGroupWordInsertByListIN> _mRRecommendationGroupWordInsertByListINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _mRRecommendationGroupWordInsertByListIN in _mRRecommendationGroupWordInsertByListINs)
+				{
+					var result = await new MRRecommendationGroupWordInsertByList(_appSetting).MRRecommendationGroupWordInsertByListDAO(_mRRecommendationGroupWordInsertByListIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
@@ -1258,29 +1295,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"MRRecommendationGetByIDView", rsMRRecommendationGetByIDView},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("MRRecommendationGetDataGraphBase")]
-		public async Task<ActionResult<object>> MRRecommendationGetDataGraphBase(int? UnitProcessId, long? UserProcessId)
-		{
-			try
-			{
-				List<MRRecommendationGetDataGraph> rsMRRecommendationGetDataGraph = await new MRRecommendationGetDataGraph(_appSetting).MRRecommendationGetDataGraphDAO(UnitProcessId, UserProcessId);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"MRRecommendationGetDataGraph", rsMRRecommendationGetDataGraph},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

@@ -41,6 +41,8 @@ export class ListReceiveWaitComponent implements OnInit {
 	]
 	lstUnit: any = []
 	lstField: any = []
+	lstGroupWord: any = []
+	lstGroupWordSelected: any = []
 	dataSearch: RecommendationSearchObject = new RecommendationSearchObject()
 	submitted: boolean = false
 	isActived: boolean
@@ -152,7 +154,21 @@ export class ListReceiveWaitComponent implements OnInit {
 		this.modelProcess.reactionaryWord = false
 		this.modelProcess.reasonDeny = ''
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
-			$('#modalReject').modal('show')
+			this._service.recommendationGetDataForProcess({}).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					if (response.result != null) {
+						this.lstGroupWord = response.result.lstGroupWord
+						this.lstGroupWordSelected = []
+						$('#modalReject').modal('show')
+					}
+				} else {
+					this._toastr.error(response.message)
+				}
+			}),
+				(error) => {
+					console.log(error)
+					alert(error)
+				}
 		} else {
 			$('#modalAccept').modal('show')
 		}
@@ -187,6 +203,7 @@ export class ListReceiveWaitComponent implements OnInit {
 				_mRRecommendationForwardProcessIN: this.modelProcess,
 				RecommendationStatus: RECOMMENDATION_STATUS.RECEIVE_DENY,
 				ReactionaryWord: this.modelProcess.reactionaryWord,
+				ListGroupWordSelected: this.lstGroupWordSelected.join(','),
 				IsList: true,
 			}
 			this._service.recommendationProcess(request).subscribe((response) => {
