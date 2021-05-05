@@ -208,6 +208,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 						parentId: e.parentId == null ? 0 : e.parentId,
 						unitLevel: e.unitLevel,
 						children: [],
+						label: e.name,
 					}
 
 					return item

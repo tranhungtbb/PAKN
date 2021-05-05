@@ -18,6 +18,7 @@ import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
 import { DisabledSpaceKeyDirective } from 'src/app/directives/sv-disabled-space-key.directive'
 import { SvTextAreaTrimDirective } from '../directives/sv-textarea-trim.directive'
 import { HtmlToPlaintextPipe } from '../pipes/html-filter.pipe'
+import { UserCreateOrUpdateComponent } from '../modules/system-management/components/user/user-create-or-update/user-create-or-update.component'
 
 @NgModule({
 	declarations: [
