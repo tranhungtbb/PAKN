@@ -11,7 +11,7 @@
 				<!-- <form id="createUserForm" [formGroup]="createUserForm" (ngSubmit)="onSaveUser()"> -->
 				<div class="align-items-center mb-4 avatar-bg">
 					<div class="avatar-frame">
-						<img id="avatar-view" [src]="userAvatar" />
+						<img [src]="userAvatar" />
 						<span class="no-avatar-view">
 							<!-- <i class="pi pi-user"></i> -->
 							<svg width="78" height="78" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -23,57 +23,60 @@
 						</span>
 					</div>
 					<div class="text-center">
-						<p><strong>{{model.fullName}}</strong></p>
-						<p>Tài khoản: {{model.userName}}</p>
+						<p class="mb-0 h4"><strong>{{model.fullName}}</strong></p>
+						<p>Tài khoản: <strong>{{model.userName}}</strong></p>
 					</div>
 				</div>
 				<div class="box">
-					<div class="row">
+					<div class="row mb-3">
 						<div class="col">
 							<p class="mb-1">Số điện thoại</p>
-							<p class="h4 mb-0 pb-3 border-bottom">{{model.phone}}</p>
+							<p class="h4 mb-0 pb-2 border-bottom">{{model.phone}}</p>
 						</div>
 						<div class="col">
 							<p class="mb-1">Giới tính</p>
-							<p class="h4 mb-0 pb-3 border-bottom">
+							<p class="h4 mb-0 pb-2 border-bottom">
 								<span *ngIf="model.gender">Nam</span>
 								<span *ngIf="!model.gender">Nữ</span>
 							</p>
 						</div>
 						<div class="col">
 							<p class="mb-1">Chức vụ</p>
-							<p class="h4 mb-0 pb-3 border-bottom">{{model.fullName}}</p>
+							<p class="h4 mb-0 pb-2 border-bottom">{{model.positionName }}</p>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row mb-3">
 						<div class="col">
 							<p class="mb-1">Email</p>
-							<p class="h4 mb-0 pb-3 border-bottom">{{model.fullName}}</p>
+							<p class="h4 mb-0 pb-2 border-bottom">{{model.email}}</p>
 						</div>
 						<div class="col">
 							<p class="mb-1">Đơn vị</p>
-							<p class="h4 mb-0 pb-3 border-bottom">{{model.fullName}}</p>
+							<p class="h4 mb-0 pb-2 border-bottom">{{model.unitName}}</p>
 						</div>
 						<div class="col">
 							<p class="mb-1">Trạng thái</p>
-							<p class="h4 mb-0 pb-3 border-bottom">{{model.fullName}}</p>
+							<p class="h4 mb-0 pb-2 border-bottom">
+								<span *ngIf="model.isActived == listStatus[0].value" style="color: seagreen;">{{listStatus[0].text}}</span>
+								<span *ngIf="model.isActived == listStatus[1].value">{{listStatus[1].text}}</span>
+							</p>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row mb-3">
 						<div class="col">
 							<p class="mb-1">Địa chỉ</p>
-							<p class="h4 mb-0 pb-3 border-bottom">{{model.fullName}}</p>
+							<p class="h4 mb-0 pb-2 border-bottom">{{model.address}}</p>
 						</div>
 						<div class="col">
 							<p class="mb-1">Vai trò</p>
-							<p class="h4 mb-0 pb-3 border-bottom">{{model.fullName}}</p>
+							<p class="h4 mb-0 pb-2 border-bottom">{{model.rolesNames}}</p>
 						</div>
 					</div>
 				</div>
 				<!-- </form> -->
 			</div>
 			<div class="modal-footer border-top-0">
-				<button type="button" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Sửa thông tin</button>
+				<button type="button" class="btn btn-outline-secondary border px-5 bg-dark-alt" (click)="showEditUserInfo()">Sửa thông tin</button>
 				<!-- <button type="button" (click)="onSaveUser()" class="btn btn-danger border-0 px-5 grd-blue">
 					{{modal_btn_save}}
 				</button> -->

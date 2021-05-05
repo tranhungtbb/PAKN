@@ -32,6 +32,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	) {}
 
 	public parentUnit: UnitComponent
+	editByMyself: boolean = false
 
 	modelUser: UserObject2 = new UserObject2()
 	createUserForm: FormGroup
@@ -117,7 +118,11 @@ export class UserCreateOrUpdateComponent implements OnInit {
 					return
 				}
 				this.toast.success(COMMONS.UPDATE_SUCCESS)
-				this.parentUnit.getUserPagedList()
+
+				if (!this.editByMyself) {
+					this.parentUnit.getUserPagedList()
+				}
+
 				this.modelUser = new UserObject2()
 				$('#modal-user-create-or-update').modal('hide')
 			})
@@ -149,7 +154,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			return
 		}
 
-		let output: any = document.getElementById('avatar-view')
+		let output: any = document.getElementById('user-avatar-view')
 		output.src = URL.createObjectURL(file)
 		output.onload = function () {
 			URL.revokeObjectURL(output.src) // free memory
@@ -157,7 +162,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	}
 
 	modal_btn_save = 'Tạo mới'
-	openModal(unitId = 0, userId = 0): void {
+	openModal(unitId = 0, userId = 0, editByMyself = false): void {
 		this.createUserForm = this.formBuilder.group({
 			//userName: ['', [Validators.required]],
 			email: [this.modelUser.email, [Validators.required, Validators.email]],
@@ -196,8 +201,10 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			this.modelUser.isActived = true
 		}
 
-		$('#avatar-view').attr('src', '')
+		$('#user-avatar-view').attr('src', '')
 		$('#modal-user-create-or-update').modal('show')
+
+		this.editByMyself = editByMyself
 	}
 
 	userAvatar: any

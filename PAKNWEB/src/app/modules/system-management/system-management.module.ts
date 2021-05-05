@@ -27,8 +27,9 @@ import { UserCreateOrUpdateComponent } from './components/user/user-create-or-up
 import { UnitFilterPipe } from 'src/app/pipes/unit-filter.pipe'
 import { ChatBotComponent } from './components/chat-bot/chat-bot.component'
 // import { RoleComponent } from './components/role/role.component'
-import { HistoryChatBotComponent } from './components/history-chat-bot/history-chat-bot.component';
+import { HistoryChatBotComponent } from './components/history-chat-bot/history-chat-bot.component'
 import { UserViewInfoComponent } from './components/user/user-view-info/user-view-info.component'
+import { BusinessModule } from '../business.module'
 
 @NgModule({
 	imports: [
@@ -49,6 +50,7 @@ import { UserViewInfoComponent } from './components/user/user-view-info/user-vie
 		MatCheckboxModule,
 		CKEditorModule,
 		MatDialogModule,
+		BusinessModule,
 	],
 	declarations: [
 		SystemManagemenetComponent,
@@ -59,11 +61,11 @@ import { UserViewInfoComponent } from './components/user/user-view-info/user-vie
 		GroupUserComponent,
 		UserComponent,
 		UnitComponent,
-		UserCreateOrUpdateComponent,
+		//UserCreateOrUpdateComponent,
 		UnitFilterPipe,
 		ChatBotComponent,
 		HistoryChatBotComponent,
-		UserViewInfoComponent,
+		//UserViewInfoComponent,
 	],
 	entryComponents: [UserCreateOrUpdateComponent],
 })

@@ -38,6 +38,17 @@
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
 								</th>
+								<th style="width: 160px">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>Nhóm thư viện</strong>
+
+									</p>
+									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
+										<ng-select class="" [items]="listGroup" placeholder="Nhóm thư viện từ ..." bindLabel="text" bindValue="value" [(ngModel)]="groupId"
+											[closeOnSelect]="true" (change)="dataStateChange()">
+										</ng-select>
+									</div>
+								</th>
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Mô tả</strong>
@@ -70,6 +81,7 @@
 								<td>
 									<strong (click)="preView(item)" class="highlight" type="button" title="Xem chi tiết">{{item.name}}</strong>
 								</td>
+								<td>{{item.groupName}}</td>
 								<td>{{item.description}}</td>
 								<td>
 									<span type="button" (click)="preUpdateStatus(item)" *ngIf="item.isActived == true" class="badge rounded-pill bg-success">Hiệu lực</span>
@@ -108,7 +120,7 @@
 					</div>
 					<div class="modal-body no-padding-bottom">
 						<div class="row form-group">
-							<div class="col-sm-8">
+							<div class="col-sm-6">
 								<label class="control-label">Từ ngữ <span class="text-danger">(*)</span></label>
 								<input placeholder="Nhập..." id="target" svTrim class="form-control" formControlName="name" [(ngModel)]="model.name" maxlength="100" />
 								<div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))" class="has-error m-b-12">
@@ -117,7 +129,18 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-4">
+							<div class="col-sm-3">
+								<label class="control-label">Nhóm từ ngữ <span class="text-danger">(*)</span></label>
+								<ng-select class="form-control" [items]="listGroup" placeholder="Nhóm thư viện từ ..." bindLabel="text" bindValue="value"
+									[(ngModel)]="model.groupId" formControlName="groupId" [closeOnSelect]="true">
+								</ng-select>
+								<div *ngIf="(submitted && f.groupId.invalid) || (f.groupId.invalid && (f.groupId.dirty || f.groupId.touched))" class="has-error m-b-12">
+									<div *ngIf="f.groupId.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
 								<label class="control-label">Trạng thái <span class="text-danger">(*)</span></label>
 								<ng-select class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
 									[(ngModel)]="model.isActived" style="font-weight: 600;">
@@ -165,6 +188,14 @@
 							</div>
 							<div class="col-sm-6">
 								<strong>{{model.name}}</strong>
+							</div>
+						</div>
+						<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 10px 0px;">
+							<div class="col-sm-12">
+								<label class="control-label lb600">Nhóm từ ngữ: </label>
+							</div>
+							<div class="col-sm-12">
+								<p>{{model.groupName}}</p>
 							</div>
 						</div>
 						<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 10px 0px;">

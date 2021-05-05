@@ -12,9 +12,9 @@
 					<i class="pi pi-plus"></i>
 				</button>
 			</p>
-			<p-tree id="tree-unit" [value]="treeUnit">
+			<p-tree id="tree-unit" [value]="treeUnit" [filter]="true">
 
-				<ng-template let-node pTemplate="default">
+				<ng-template let-node pTemplate="default" style="width:100%; overflow: hidden;">
 					<a (click)="treeViewActive(node.id, node.unitLevel)" class="cursor-hand" [ngClass]="{'text-color-blue':(unitObject.id && unitObject.id == node.id)}">
 						<strong>{{node.name}}</strong>
 					</a>

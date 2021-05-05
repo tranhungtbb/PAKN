@@ -5,8 +5,8 @@ END
 
 CREATE TABLE [dbo].[SY_Chatbot] (
     [Id] BIGINT         	IDENTITY (1, 1) NOT NULL,
-    [Question]      		NVARCHAR (1000) NOT NULL,
-	[Answer]				NVARCHAR (1000) NOT NULL,
+    [Question]      		NVARCHAR (Max) NOT NULL,
+	[Answer]				NVARCHAR (Max) NOT NULL,
 	[CategoryId] 			INT        ,
 	[IsActived] 			BIT NOT NULL DEFAULT (0),
 	[IsDeleted] 			BIT NOT NULL DEFAULT (0),

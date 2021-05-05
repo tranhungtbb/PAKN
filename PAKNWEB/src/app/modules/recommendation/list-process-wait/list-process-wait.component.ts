@@ -9,6 +9,7 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 import { stat } from 'fs'
 import { COMMONS } from 'src/app/commons/commons'
 import { NotificationService } from 'src/app/services/notification.service'
+import { Router } from '@angular/router'
 
 declare var $: any
 
@@ -23,7 +24,8 @@ export class ListProcessWaitComponent implements OnInit {
 		private storeageService: UserInfoStorageService,
 		private _toastr: ToastrService,
 		private _shareData: DataService,
-		private notificationService: NotificationService
+		private notificationService: NotificationService,
+		private _router: Router
 	) {}
 	userLoginId: number = this.storeageService.getUserId()
 	unitLoginId: number = this.storeageService.getUnitId()
@@ -237,5 +239,15 @@ export class ListProcessWaitComponent implements OnInit {
 			var blob = new Blob([response], { type: response.type })
 			importedSaveAs(blob, fileName)
 		})
+	}
+
+	onExport() {
+		let passingObj: any = {}
+		passingObj = this.dataSearch
+		passingObj.UnitProcessId = this.storeageService.getUnitId()
+		passingObj.UserProcessId = this.storeageService.getUserId()
+		this._shareData.setobjectsearch(passingObj)
+		this._shareData.sendReportUrl = 'Recommendation_ListGeneral?' + JSON.stringify(passingObj)
+		this._router.navigate(['quan-tri/xuat-file'])
 	}
 }

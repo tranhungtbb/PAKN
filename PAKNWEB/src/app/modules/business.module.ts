@@ -21,6 +21,8 @@ import { DashboardComponent } from './dash-board/dash-board.component'
 import { NotificationComponent } from './notification/notification.component'
 import { RecommnendationGetListComponent } from './dash-board/recommnendation-get-list/recommnendation-get-list.component'
 import { ReportViewerComponent } from './report-view/report-viewcomponent'
+import { UserViewInfoComponent } from './system-management/components/user/user-view-info/user-view-info.component'
+import { UserCreateOrUpdateComponent } from './system-management/components/user/user-create-or-update/user-create-or-update.component'
 @NgModule({
 	imports: [
 		CommonModule,
@@ -49,6 +51,9 @@ import { ReportViewerComponent } from './report-view/report-viewcomponent'
 		NotificationComponent,
 		RecommnendationGetListComponent,
 		ReportViewerComponent,
+		UserViewInfoComponent,
+		UserCreateOrUpdateComponent,
 	],
+	exports: [UserCreateOrUpdateComponent],
 })
 export class BusinessModule {}
