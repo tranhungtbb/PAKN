@@ -54,5 +54,6 @@ import { UserCreateOrUpdateComponent } from './system-management/components/user
 		UserViewInfoComponent,
 		UserCreateOrUpdateComponent,
 	],
+	exports: [UserCreateOrUpdateComponent],
 })
 export class BusinessModule {}
