@@ -131,8 +131,8 @@
 							</div>
 							<div class="col-sm-3">
 								<label class="control-label">Nhóm từ ngữ <span class="text-danger">(*)</span></label>
-								<ng-select class="form-control" [items]="listGroup" placeholder="Nhóm thư viện từ ..." bindLabel="text" bindValue="value"
-									[(ngModel)]="model.groupId" formControlName="groupId" [closeOnSelect]="true">
+								<ng-select class="form-control" [items]="listGroup" placeholder="Chọn nhóm ..." bindLabel="text" bindValue="value" [(ngModel)]="model.groupId"
+									formControlName="groupId" [closeOnSelect]="true">
 								</ng-select>
 								<div *ngIf="(submitted && f.groupId.invalid) || (f.groupId.invalid && (f.groupId.dirty || f.groupId.touched))" class="has-error m-b-12">
 									<div *ngIf="f.groupId.errors.required">

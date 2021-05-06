@@ -1,0 +1,14 @@
+strong.highlight:hover {
+	color: #42a4ff;
+	cursor: pointer;
+}
+
+.text-center-x {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+.cursor {
+	cursor: pointer;
+}

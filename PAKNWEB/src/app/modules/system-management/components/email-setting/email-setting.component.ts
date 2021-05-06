@@ -65,6 +65,9 @@ export class EmailSettingComponent implements OnInit {
 	constructor(private _service: SystemconfigService, private _toastr: ToastrService, private _fb: FormBuilder) {}
 
 	ngOnInit() {
+		this.onCancel()
+	}
+	onCancel(){
 		this.buildForm()
 		this._service.getSystemEmail().subscribe(response => {
 			console.log(response)
