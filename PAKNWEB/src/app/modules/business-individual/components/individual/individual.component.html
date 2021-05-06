@@ -7,7 +7,7 @@
 	<div class="row ml-0">
 		<div class="col-auto treeView px-0">
 			<p class="p-3 h4 d-flex justify-content-between align-items-center shadow">
-				<span class="text-uppercase">Danh sách đơn vị</span>
+				<span class="text-uppercase">Danh sách huyện, xã</span>
 				<button type="button" class="btn grd-blue border-0 p-2 btn-sm text-white" (click)="modalCreateOrUpdate(0)">
 					<i class="pi pi-plus"></i>
 				</button>
@@ -15,3 +15,23 @@
 		</div>
 	</div>
 </div>
+
+<!-- Modal unit -->
+<div class="modal fade" id="modal-create-or-update">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">{{modalCreateOrUpdateTitle}}</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+
+			<div class="modal-body pb-0">
+				<div class="align-items-center form-group mb-4 border-bottom pb-3">
+					<strong class="h4 mr-5">Cấp đơn vị:</strong>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end modal unit -->
