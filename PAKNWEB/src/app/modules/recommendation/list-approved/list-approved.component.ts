@@ -95,6 +95,7 @@ export class ListApprovedComponent implements OnInit {
 				if (response.result != null) {
 					this.listData = []
 					this.listData = response.result.MRRecommendationGetAllWithProcess
+					console.log('đã giải quyết', this.listData)
 					this.totalRecords = response.result.TotalCount
 				}
 			} else {
@@ -178,8 +179,11 @@ export class ListApprovedComponent implements OnInit {
 	onExport() {
 		let passingObj: any = {}
 		passingObj = this.dataSearch
-		passingObj.UnitProcessId = this.storeageService.getUnitId()
-		passingObj.UserProcessId = this.storeageService.getUserId()
+		if (this.listData.length > 0) {
+			passingObj.UnitProcessId = this.storeageService.getUnitId()
+			passingObj.UserProcessId = this.storeageService.getUserId()
+		}
+		passingObj.TitleReport = 'DANH SÁCH ĐÃ GIẢI QUYẾT'
 		this._shareData.setobjectsearch(passingObj)
 		this._shareData.sendReportUrl = 'Recommendation_ListGeneral?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])
