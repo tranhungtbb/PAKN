@@ -7,6 +7,7 @@ import { UnitService } from '../../../../../services/unit.service'
 import { UserService } from '../../../../../services/user.service'
 import { PositionService } from '../../../../../services/position.service'
 import { RoleService } from '../../../../../services/role.service'
+import { AppSettings } from 'src/app/constants/app-setting'
 
 import { COMMONS } from 'src/app/commons/commons'
 import { UserObject2 } from 'src/app/models/UserObject'
@@ -191,7 +192,8 @@ export class UserCreateOrUpdateComponent implements OnInit {
 				if (res.success != 'OK') return
 				this.modelUser = res.result.SYUserGetByID[0]
 
-				if (this.modelUser.avatar != null && this.modelUser.avatar != '') this.getUserAvatar(this.modelUser.id)
+				//if (this.modelUser.avatar != null && this.modelUser.avatar != '') this.getUserAvatar(this.modelUser.id)
+				this.userAvatar = AppSettings.API_DOWNLOADFILES + '/' + this.modelUser.avatar
 
 				if (this.modelUser.roleIds) this.selectedRoles = this.modelUser.roleIds.split(',').map((c) => parseInt(c))
 				else this.selectedRoles = []
