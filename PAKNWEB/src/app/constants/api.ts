@@ -120,6 +120,8 @@ export class Api {
 	public static RoleUpdate = 'SYSPBase/SYRoleUpdateBase'
 	public static RoleDelete = 'SYSPBase/SYRoleDeleteBase'
 	public static RoleGetById = 'SYSPBase/SYRoleGetByIDBase'
+	public static RoleInsertPermission = 'SYSPBase/SYPermissionGroupUserInsertByListBase'
+	public static RoleGetDataForCreate = 'Role/GetDataForCreate'
 
 	//NewsType
 	public static NewsTypeGetList = 'CACategorySPBase/CANewsTypeGetAllOnPageBase'
@@ -186,6 +188,13 @@ export class Api {
 	public static InnvitationUpdate = 'INVInvitation/INVInvitationUpdate'
 	public static InvitationDelete = 'INVInvitation/INVInvitationDelete'
 	public static InvitationGetList = 'INVSPBase/INVInvitationGetAllOnPageBase'
+
+	//sms
+	public static SMSManagementGetOnPage = 'SMSSPBase/SMSQuanLyTinNhanGetAllOnPageBase'
+	public static SMSManagementInsert = 'SMSSPBase/SMSQuanLyTinNhanInsertBase'
+	public static SMSManagementUpdate = 'SMSSPBase/SMSQuanLyTinNhanUpdateBase'
+	public static SMSManagementDelete = 'SMSSPBase/SMSQuanLyTinNhanDeleteBase'
+	public static SMSManagementGetById = 'SMSSPBase/SMSQuanLyTinNhanGetByIdBase'
 
 	//RequestRecommendation
 	public static RecommendationRequestGetListProcess = 'MRSPBase/MRRecommendationKNCTGetAllWithProcessBase'

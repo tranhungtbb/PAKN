@@ -411,7 +411,7 @@ namespace PAKNAPI.ModelBase
 	{
 		public int Id { get; set; }
 		public int PermissionId { get; set; }
-		public int APIId { get; set; }
+		public int? APIId { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -430,7 +430,7 @@ namespace PAKNAPI.ModelBase
 
 		public int Id { get; set; }
 		public int PermissionId { get; set; }
-		public int APIId { get; set; }
+		public int? APIId { get; set; }
 
 		public async Task<SYPermissionAPI> SYPermissionAPIGetByID(int? Id)
 		{
