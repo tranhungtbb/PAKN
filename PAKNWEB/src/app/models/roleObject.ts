@@ -9,5 +9,6 @@ export class RoleObject {
 	constructor() {
 		this.id = 0
 		this.isDeleted = false
+		this.isActived = true
 	}
 }

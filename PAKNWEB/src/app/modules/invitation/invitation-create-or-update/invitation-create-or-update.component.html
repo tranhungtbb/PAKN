@@ -20,8 +20,8 @@
 			<div class="col-md-6" style="padding: 20px 20px 0px 40px; border-right: 1px solid #e5e5e5;">
 				<form class="form-horizontal" [formGroup]="form">
 					<div class="row form-group">
-						<div class="col-sm-12">
-							<label class="control-label">Tiêu đề<span class="text-danger">(*)</span></label>
+						<div class="col-sm-12 padding-col">
+							<label class="control-label department">Tiêu đề<span class="text-danger">(*)</span></label>
 							<input class="form-control" formControlName="title" [(ngModel)]="model.title" maxlength="100" placeholder="Nhập..." />
 							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
 								<div *ngIf="f.title.errors.required">
@@ -30,8 +30,8 @@
 							</div>
 						</div>
 
-						<div class="col-sm-6">
-							<label class="control-label">Thời gian bắt đầu</label>
+						<div class="col-sm-6 padding-col">
+							<label class="control-label department">Thời gian bắt đầu<span class="text-danger">(*)</span></label>
 							<div class="input-group">
 								<input class="form-control" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="startDate"
 									[(ngModel)]="model.startDate" appBsDatepickerInvalid [minDate]="dateNow"
@@ -46,8 +46,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-6">
-							<label class="control-label">Thời gian kết thúc</label>
+						<div class="col-sm-6 padding-col">
+							<label class="control-label department">Thời gian kết thúc<span class="text-danger">(*)</span></label>
 							<div class="input-group">
 								<input class="form-control" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="endDate"
 									[(ngModel)]="model.endDate" appBsDatepickerInvalid [minDate]="model.startDate"
@@ -62,8 +62,8 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-12">
-							<label class="control-label">Địa điểm</label>
+						<div class="col-sm-12 padding-col">
+							<label class="control-label department">Địa điểm <span class="text-danger">(*)</span></label>
 							<input class="form-control" [(ngModel)]="model.place" formControlName="place" placeholder="Nhập..." />
 							<div *ngIf="(submitted && f.place.invalid) || (f.place.invalid && (f.place.dirty || f.place.touched))" class="has-error m-b-12">
 								<div *ngIf="f.place.errors">
@@ -71,13 +71,13 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-12">
-							<label class="control-label">Ghi chú</label>
+						<div class="col-sm-12 padding-col">
+							<label class="control-label department">Ghi chú</label>
 							<input class="form-control" [(ngModel)]="model.note" formControlName="note" placeholder="Nhập..." />
 
 						</div>
-						<div class="col-sm-12">
-							<label class="control-label">Nội dung</label>
+						<div class="col-sm-12 padding-col">
+							<label class="control-label department">Nội dung <span class="text-danger">(*)</span></label>
 							<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" rows="5" placeholder="Nhập..."></textarea>
 							<div *ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error m-b-12">
 								<div *ngIf="f.content.errors">
