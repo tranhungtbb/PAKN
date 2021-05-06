@@ -898,6 +898,66 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationGroupWordInsertByListBase")]
+		public async Task<ActionResult<object>> MRRecommendationGroupWordInsertByListBase(MRRecommendationGroupWordInsertByListIN _mRRecommendationGroupWordInsertByListIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationGroupWordInsertByList(_appSetting).MRRecommendationGroupWordInsertByListDAO(_mRRecommendationGroupWordInsertByListIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationGroupWordInsertByListListBase")]
+		public async Task<ActionResult<object>> MRRecommendationGroupWordInsertByListListBase(List<MRRecommendationGroupWordInsertByListIN> _mRRecommendationGroupWordInsertByListINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _mRRecommendationGroupWordInsertByListIN in _mRRecommendationGroupWordInsertByListINs)
+				{
+					var result = await new MRRecommendationGroupWordInsertByList(_appSetting).MRRecommendationGroupWordInsertByListDAO(_mRRecommendationGroupWordInsertByListIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
 		[Authorize]
 		[Route("MRRecommendationHashtagDeleteByRecommendationIdBase")]
 		public async Task<ActionResult<object>> MRRecommendationHashtagDeleteByRecommendationIdBase(MRRecommendationHashtagDeleteByRecommendationIdIN _mRRecommendationHashtagDeleteByRecommendationIdIN)
