@@ -67,12 +67,14 @@ export class EmailSettingComponent implements OnInit {
 	ngOnInit() {
 		this.onCancel()
 	}
-	onCancel(){
+	onCancel() {
 		this.buildForm()
 		this._service.getSystemEmail().subscribe(response => {
 			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
-				this.model = response.result.SYEmailGetFirst[0]
+				if (response.result.SYEmailGetFirst.length != 0) {
+					this.model = response.result.SYEmailGetFirst[0]
+				}
 			} else {
 				this._toastr.error(response.message)
 			}
