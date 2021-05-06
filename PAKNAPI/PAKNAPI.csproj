@@ -46,6 +46,7 @@
     <Folder Include="Models\Results\" />
     <Folder Include="BusinessLogic\" />
     <Folder Include="Chatbot\" />
+    <Folder Include="Upload\User\" />
     <Folder Include="Upload\Remind\" />
   </ItemGroup>
   <ItemGroup>
@@ -60,7 +61,43 @@
     <None Remove="ExportGrid\Recommendation_ListGeneral.repx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Upload\News\01042021103900-2.jpg" />
+    <Content Include="Upload\News\01042021103916-5.jpg" />
+    <Content Include="Upload\News\07042021115111-3.png" />
+    <Content Include="Upload\News\07042021115204-2.png" />
+    <Content Include="Upload\News\13042021155214-fanart-2.jpg" />
+    <Content Include="Upload\News\13042021161810-fanart-2.jpg" />
+    <Content Include="Upload\News\13042021161824-36621cd6b73c47621e2d.jpg" />
+    <Content Include="Upload\News\13042021161831-b838e57a4f90bfcee681.jpg" />
+    <Content Include="Upload\News\13042021162012-IMG_20200913_154939.jpg" />
+    <Content Include="Upload\News\13042021162039-bfeda6410cabfcf5a5ba.jpg" />
+    <Content Include="Upload\News\13042021162126-6f381264b98e49d0109f.jpg" />
+    <Content Include="Upload\News\13042021162405-8633645ccfb63fe866a7.jpg" />
+    <Content Include="Upload\News\13042021165104-post1.png" />
+    <Content Include="Upload\News\20042021104323-đồng hồ.jpg" />
+    <Content Include="Upload\News\20042021104518-zRvHuwU.jpg" />
+    <Content Include="Upload\News\20042021104740-zRvHuwU.jpg" />
+    <Content Include="Upload\News\22042021142112-274025728e987ec62789.jpg" />
+    <Content Include="Upload\Recommendation\5\4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="ExportGrid\Recommendation_ListGeneral.repx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Upload\Invitation\23\Danh sach su dung tong dai voip 12.2020 chuan.xlsx" />
+    <None Include="Upload\Invitation\23\Note-cho-Hùng.docx" />
+    <None Include="Upload\Recommendation\2156\Danh mục lĩnh vực.docx" />
+    <None Include="Upload\Recommendation\2156\SQL và lưu ý.docx" />
+    <None Include="Upload\Recommendation\2168\HDSD_Chu_ky_so.docx" />
+    <None Include="Upload\Recommendation\2169\54766.GD_2021_00115.pdf" />
+    <None Include="Upload\Recommendation\3\CONNECTIVITYAPI-291220-0909.pdf" />
+    <None Include="Upload\Recommendation\46\Dev-C-.Net-public.pdf" />
+    <None Include="Upload\Recommendation\50\Edso-Labs-.NET-Developer.pdf" />
+    <None Include="Upload\Recommendation\51\file-2.pdf" />
+    <None Include="Upload\Recommendation\5\542919032021173803.pdf" />
+    <None Include="Upload\Recommendation\5\542919032021173832.pdf" />
+    <None Include="Upload\Recommendation\83\Danh mục lĩnh vực.docx" />
+    <None Include="Upload\Recommendation\Conclusion\31\Danh mục lĩnh vực.docx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Aspose.Pdf">
