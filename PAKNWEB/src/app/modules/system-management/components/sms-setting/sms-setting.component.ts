@@ -34,6 +34,9 @@ export class SmsSettingComponent implements OnInit {
 	constructor(private _service: SystemconfigService, private _toastr: ToastrService, private _fb: FormBuilder) {}
 
 	ngOnInit() {
+		this.onCancel()
+	}
+	onCancel(){
 		this.buildForm()
 		this._service.getSystemSMS().subscribe(response => {
 			console.log(response)
