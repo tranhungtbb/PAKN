@@ -79,6 +79,71 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate { get; set; }
 	}
 
+	public class MRCommnentGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public MRCommnentGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRCommnentGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public long ID { get; set; }
+		public long? UserId { get; set; }
+		public string FullName { get; set; }
+		public string Contents { get; set; }
+		public long? RecommendationId { get; set; }
+		public DateTime? CreatedDate { get; set; }
+
+		public async Task<List<MRCommnentGetAllOnPage>> MRCommnentGetAllOnPageDAO(int? PageSize, int? PageIndex, long? RecommendationId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("RecommendationId", RecommendationId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRCommnentGetAllOnPage>("MR_Commnent_GetAllOnPage", DP)).ToList();
+		}
+	}
+
+	public class MRCommnentInsert
+	{
+		private SQLCon _sQLCon;
+
+		public MRCommnentInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRCommnentInsert()
+		{
+		}
+
+		public async Task<int> MRCommnentInsertDAO(MRCommnentInsertIN _mRCommnentInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Contents", _mRCommnentInsertIN.Contents);
+			DP.Add("UserId", _mRCommnentInsertIN.UserId);
+			DP.Add("RecommendationId", _mRCommnentInsertIN.RecommendationId);
+			DP.Add("FullName", _mRCommnentInsertIN.FullName);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Commnent_Insert", DP));
+		}
+	}
+
+	public class MRCommnentInsertIN
+	{
+		public string Contents { get; set; }
+		public long? UserId { get; set; }
+		public long? RecommendationId { get; set; }
+		public string FullName { get; set; }
+	}
+
 	public class MRRecommendationCheckExistedCode
 	{
 		private SQLCon _sQLCon;
@@ -713,6 +778,35 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetSuggestReply>("MR_Recommendation_GetSuggestReply", DP)).ToList();
 		}
+	}
+
+	public class MRRecommendationGroupWordInsertByList
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGroupWordInsertByList(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGroupWordInsertByList()
+		{
+		}
+
+		public async Task<int> MRRecommendationGroupWordInsertByListDAO(MRRecommendationGroupWordInsertByListIN _mRRecommendationGroupWordInsertByListIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("lstid", _mRRecommendationGroupWordInsertByListIN.lstid);
+			DP.Add("RecommendationId", _mRRecommendationGroupWordInsertByListIN.RecommendationId);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_GroupWord_InsertByList", DP));
+		}
+	}
+
+	public class MRRecommendationGroupWordInsertByListIN
+	{
+		public string lstid { get; set; }
+		public int? RecommendationId { get; set; }
 	}
 
 	public class MRRecommendationHashtagDeleteByRecommendationId

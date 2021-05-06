@@ -26,6 +26,7 @@ namespace PAKNAPI.Models.Recommendation
     {
         public List<DropdownObject> lstHashtag { get; set; }
         public List<DropdownObject> lstUsers { get; set; }
+        public List<DropdownObject> lstGroupWord { get; set; }
     }
 	public class RecommendationInsertRequest
     {
@@ -75,6 +76,7 @@ namespace PAKNAPI.Models.Recommendation
         public List<DropdownObject> ListHashTag { get; set; }
         public byte RecommendationStatus { get; set; }
         public bool? ReactionaryWord { get; set; }
+        public string ListGroupWordSelected { get; set; }
         public bool IsList { get; set; }
     }
     public class RecommendationOnProcessConclusionProcess

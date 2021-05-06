@@ -1377,6 +1377,7 @@ body .ui-paginator .ui-paginator-current{
 	min-height: 56px;
 	padding-left: 13px;
 	padding-top: 12px;
+	padding-bottom: 7px;
 }
 .form-control-sm .ng-select .ng-select-container{
 	min-height: 28px;
@@ -1463,7 +1464,28 @@ body .ui-paginator .ui-dropdown .ui-dropdown-trigger, body .ui-paginator .ui-dro
 	top: 10px;
 	margin-left: 10px;
 }
-
+.form-control.ng-select-multiple{
+	height: auto;
+}
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+	font-size: .9em;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	background-color: #f5faff;
+	border-radius: 4px;
+	border: 1px solid #c2e0ff;
+	line-height: 30px;
+}
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-icon.left {
+	border-right: 1px solid #c2e0ff;
+}
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-icon {
+	cursor: pointer;
+}
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-icon, .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-label {
+	display: inline-block;
+	padding: 0 5px;
+}
 .pointer{
 	cursor: pointer;
 }

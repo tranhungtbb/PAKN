@@ -38,6 +38,10 @@ export class UserService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetIsSystem)
 	}
 
+	getIsSystem2(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetIsSystem2)
+	}
+
 	insertMultiUserRole(query: any): Observable<any> {
 		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.InsertMultiUserRole)
 	}
@@ -71,6 +75,9 @@ export class UserService {
 	}
 	delete(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserDelete)
+	}
+	changeStatus(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserChangeStatus)
 	}
 
 	deleteUserRole(data: any): Observable<any> {

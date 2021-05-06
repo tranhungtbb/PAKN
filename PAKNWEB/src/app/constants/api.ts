@@ -54,6 +54,9 @@ export class Api {
 	public static PuRecommendationCountClick = 'PURecommendation/PURecommendationCountClick'
 	public static PURecommendationStatisticsGetByUserId = 'PURecommendation/PURecommendationStatisticsGetByUserIdBase'
 
+	public static MRRecommendationCommentInsert = 'MRSPBase/MRCommnentInsertBase'
+	public static MRRecommendationCommentGetOnPage = 'MRSPBase/MRCommnentGetAllOnPageBase'
+
 	//Field
 	public static FieldGetList = 'CACategorySPBase/CAFieldGetAllOnPageBase'
 	public static FieldGetById = 'CACategorySPBase/CAFieldGetByIDBase'
@@ -79,6 +82,7 @@ export class Api {
 	public static UnitUpdate = 'CACategorySPBase/CAUnitUpdateBase'
 	public static UnitDeleteList = 'CACategorySPBase/CAUnitDeleteListBase'
 	public static UnitDelete = 'CACategorySPBase/CAUnitDeleteBase'
+	public static UnitChangeStatus = 'SYSPBase/SYUnitChageStatusBase'
 
 	public static FieldExport = 'CACategorySPBase/CAFieldExportBase'
 
@@ -98,11 +102,14 @@ export class Api {
 	public static UserUpdate = 'User/Update' //'SYUserSPBase/SYUserUpdateBase'
 	public static UserDelete = 'User/Delete' //'SYUserSPBase/SYUserDeleteBase'GetAvatar
 	public static UserGetAvatar = 'User/GetAvatar' //'SYUserSPBase/SYUserDeleteBase'
+	public static UserChangeStatus = 'SYUserSPBase/SYUserChangeStatusBase'
+
 	public static SystemLogin = 'SYSPBase/SYSystemLogGetAllOnPageBase'
 	public static SystemLoginAdmin = 'SYSPBase/SYSystemLogGetAllOnPageAdminBase'
 	public static SystemLogDelete = 'AdministrationFormalities/SYSystemLogDeleteBase'
 	public static SystemGetUserDropDown = 'SYSPBase/SYUsersGetDropdownBase'
 	public static UserGetIsSystem = 'SYUserSPBase/SYUserGetIsSystemBase'
+	public static UserGetIsSystem2 = 'SYUserSPBase/SYUserGetIsSystem2Base'
 	public static DeleteUserRole = 'SYUserSPBase/SYUserRoleMapDeleteBase'
 	public static InsertMultiUserRole = 'UserMapRole/SYUserRoleMapListInsert'
 
@@ -175,7 +182,8 @@ export class Api {
 
 	//invitation
 
-	public static InnvitationInsert = 'INVSPBase/INVInvitation'
+	public static InnvitationInsert = 'INVInvitation/INVInvitationInsert'
+	public static InnvitationUpdate = 'INVInvitation/INVInvitationUpdate'
 	public static InvitationDelete = 'INVInvitation/INVInvitationDelete'
 	public static InvitationGetList = 'INVSPBase/INVInvitationGetAllOnPageBase'
 

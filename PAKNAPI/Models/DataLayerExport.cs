@@ -7,6 +7,7 @@ namespace PAKNAPI.Models
 {
     public class ExportRecommendation
     {
+        public string TitleReport { get; set; }
         public string Code{get;set;}
         public string SendName{get;set;}
         public string Content{get;set;}

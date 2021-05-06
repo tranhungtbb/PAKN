@@ -804,6 +804,94 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class MRRecommendationGroupWordOnPage
+	{
+		public int Id { get; set; }
+		public int RecommendationId { get; set; }
+		public int? GroupWordId { get; set; }
+		public string GroupWordName { get; set; }
+		public int? RowNumber; // int, null
+	}
+
+	public class MRRecommendationGroupWord
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGroupWord(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGroupWord()
+		{
+		}
+
+		public int Id { get; set; }
+		public int RecommendationId { get; set; }
+		public int? GroupWordId { get; set; }
+		public string GroupWordName { get; set; }
+
+		public async Task<MRRecommendationGroupWord> MRRecommendationGroupWordGetByID(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGroupWord>("MR_Recommendation_GroupWordGetByID", DP)).ToList().FirstOrDefault();
+		}
+
+		public async Task<List<MRRecommendationGroupWord>> MRRecommendationGroupWordGetAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGroupWord>("MR_Recommendation_GroupWordGetAll", DP)).ToList();
+		}
+
+		public async Task<List<MRRecommendationGroupWordOnPage>> MRRecommendationGroupWordGetAllOnPage(int PageSize, int PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGroupWordOnPage>("MR_Recommendation_GroupWordGetAllOnPage", DP)).ToList();
+		}
+
+		public async Task<int?> MRRecommendationGroupWordInsert(MRRecommendationGroupWord _mRRecommendationGroupWord)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationId", _mRRecommendationGroupWord.RecommendationId);
+			DP.Add("GroupWordId", _mRRecommendationGroupWord.GroupWordId);
+			DP.Add("GroupWordName", _mRRecommendationGroupWord.GroupWordName);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_GroupWordInsert", DP));
+		}
+
+		public async Task<int> MRRecommendationGroupWordUpdate(MRRecommendationGroupWord _mRRecommendationGroupWord)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationGroupWord.Id);
+			DP.Add("RecommendationId", _mRRecommendationGroupWord.RecommendationId);
+			DP.Add("GroupWordId", _mRRecommendationGroupWord.GroupWordId);
+			DP.Add("GroupWordName", _mRRecommendationGroupWord.GroupWordName);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_GroupWordUpdate", DP));
+		}
+
+		public async Task<int> MRRecommendationGroupWordDelete(MRRecommendationGroupWord _mRRecommendationGroupWord)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationGroupWord.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_GroupWordDelete", DP));
+		}
+
+		public async Task<int> MRRecommendationGroupWordDeleteAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_GroupWordDeleteAll", DP));
+		}
+	}
+
 	public class MRRecommendationHashtagOnPage
 	{
 		public long Id { get; set; }

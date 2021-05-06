@@ -176,7 +176,6 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 		if (this.listItemUserSelected.length == 0) {
 			let item = this.listUserIsSystem.find((x) => x.value == this.userId)
 			this.listItemUserSelected.push(item)
-			console.log(this.listItemUserSelected)
 		} else {
 			let check = this.listItemUserSelected.find((x) => x.value == this.userId)
 			if (check != undefined) {
@@ -185,7 +184,6 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 			}
 			let item = this.listUserIsSystem.find((x) => x.value == this.userId)
 			this.listItemUserSelected.push(item)
-			console.log(this.listItemUserSelected)
 		}
 	}
 	onRemoveUser(item: any) {

@@ -299,6 +299,35 @@
 							</ng-container>
 						</div>
 					</div>
+					<div>
+						<div>
+							<p class="h3 text-uppercase mt-4" style="font-weight: normal;">Bình luận ({{total_Comments}})</p>
+						</div>
+						<div class="p-4 rounded-xl mb-4" style="background-color: #ededed;">
+							<textarea class="form-control rounded mb-2" rows="4" placeholder="Nhập bình luận..." [(ngModel)]="commentModel.contents"></textarea>
+							<button class="btn btn-sm grd-blue border-0 pl-4 pr-4 text-white" (click)="onSendComment()"> Gửi </button>
+						</div>
+						<div *ngFor="let item of listCommentsPaged" class="border-bottom mb-3">
+							<header class="clearfix">
+								<div class="cmt-avatar pull-left mr-2">
+									<img src="" alt="" class="">
+								</div>
+								<div class="col-md-9">
+									<p class="h5">{{item.fullName}}</p>
+									<time style="font-size: 10pt;">{{item.createdDate | date:'HH:mm - dd/MM/yyyy'}}</time>
+								</div>
+							</header>
+							<div class="cmt-contents">
+								<p>
+									{{item.contents}}
+								</p>
+							</div>
+						</div>
+						<div *ngIf="total_Comments > listCommentsPaged.length">
+							<p class="text-black"><a href="javascript:void(0);" (click)="getCommentPaged(commentQuery.pageIndex + 1)">Xem thêm bình luân khác <i
+										class="bi bi-arrow-right"></i></a></p>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct-ql pl-0 pt-4">
@@ -471,6 +500,9 @@
 					<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord" id="basic_checkbox_1">
 					<label class="custom-control-label" for="basic_checkbox_1">Chứa từ ngữ bị cấm</label>
 				</div>
+				<ng-select *ngIf="modelProcess.reactionaryWord && recommendationStatusProcess == 2" placeholder="Chọn nhóm từ ngữ" class="form-control" [items]="lstGroupWord"
+					bindLabel="text" bindValue="value" [(ngModel)]="lstGroupWordSelected" [closeOnSelect]="false" [multiple]="true">
+				</ng-select>
 			</div>
 			<div class="modal-footer justify-content-center border-top-0">
 				<button type="button" class="btn btn-outline-secondary border" data-dismiss="modal">Hủy</button>

@@ -370,9 +370,8 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	onChangeUnitStatus(id: number) {
 		let item = this.listUnitPaged.find((c) => c.id == id)
 		if (item == null) item = this.unitObject
-
 		item.isActived = !item.isActived
-		this.unitService.update(item).subscribe((res) => {
+		this.unitService.changeStatus(item).subscribe((res) => {
 			if (res.success != 'OK') {
 				this._toastr.error(COMMONS.UPDATE_FAILED)
 				item.isActived = !item.isActived
@@ -392,7 +391,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		item.typeId = 1
 		item.countLock = 0
 		item.lockEndOut = ''
-		this.userService.update(item).subscribe((res) => {
+		this.userService.changeStatus(item).subscribe((res) => {
 			if (res.success != 'OK') {
 				this._toastr.error(COMMONS.UPDATE_FAILED)
 				item.isActived = !item.isActived

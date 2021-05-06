@@ -43,6 +43,7 @@ namespace PAKNAPI.Models.Recommendation
 			RecommendationGetDataForProcessResponse data = new RecommendationGetDataForProcessResponse();
 			DynamicParameters DP = new DynamicParameters();
 			data.lstHashtag = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("CA_HashtagGetDropdown", DP)).ToList();
+			data.lstGroupWord = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("CA_GroupWordGetListSuggest", DP)).ToList();
 			DP.Add("UnitId", UnitId);
 			data.lstUsers = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("SY_UsersGetDropdownByUnitId", DP)).ToList();
 			return data;

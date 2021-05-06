@@ -522,6 +522,10 @@ namespace PAKNAPI.Controller
                     _mRRecommendationUpdateReactionaryWordIN.Id = request._mRRecommendationForwardProcessIN.RecommendationId;
                     _mRRecommendationUpdateReactionaryWordIN.ReactionaryWord = request.ReactionaryWord;
                     await new MRRecommendationUpdateReactionaryWord(_appSetting).MRRecommendationUpdateReactionaryWordDAO(_mRRecommendationUpdateReactionaryWordIN);
+                    MRRecommendationGroupWordInsertByListIN _mRRecommendationGroupWordInsertByListIN = new MRRecommendationGroupWordInsertByListIN();
+                    _mRRecommendationGroupWordInsertByListIN.RecommendationId = request._mRRecommendationForwardProcessIN.RecommendationId;
+                    _mRRecommendationGroupWordInsertByListIN.lstid = request.ListGroupWordSelected;
+                    await new MRRecommendationGroupWordInsertByList(_appSetting).MRRecommendationGroupWordInsertByListDAO(_mRRecommendationGroupWordInsertByListIN);
                 }
 
                 MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
