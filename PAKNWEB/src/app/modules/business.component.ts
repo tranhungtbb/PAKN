@@ -28,6 +28,7 @@ declare var $: any
 export class BusinessComponent implements OnInit, AfterViewInit {
 	userId: number
 	url: string = ''
+	currentRouter: string = ''
 
 	constructor(
 		private localeService: BsLocaleService,
@@ -87,6 +88,8 @@ export class BusinessComponent implements OnInit, AfterViewInit {
 			this.child_UserViewInfoComponent.openModal()
 		})
 		this.child_UserViewInfoComponent.parent_BusinessComponent = this
+
+		this.currentRouter = this._router.url
 	}
 
 	openModalEditInfo(userId: number) {

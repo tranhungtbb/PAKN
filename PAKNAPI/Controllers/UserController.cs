@@ -170,7 +170,7 @@ namespace PAKNAPI.Controllers
 		public async Task<byte[]> GetAvatar(int id)
 		{
 			var modelOld = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(id);
-			if (string.IsNullOrEmpty(modelOld[0].Avatar.Trim())) return null;
+			if (string.IsNullOrEmpty(modelOld[0].Avatar?.Trim())) return null;
 			var data = await _fileService.GetBinary(modelOld[0].Avatar);
 
 			return data;
