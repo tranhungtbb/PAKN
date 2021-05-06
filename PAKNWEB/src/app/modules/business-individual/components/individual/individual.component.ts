@@ -16,15 +16,14 @@ declare var $: any
 	templateUrl: './individual.component.html',
 	styleUrls: ['./individual.component.css'],
 })
-export class IndividualComponent implements OnInit {
+export class IndividualComponent implements OnInit, AfterViewInit {
 	listStatus: any = [
-		// { value: '', text: 'Toàn bộ' },
-		{ value: true, text: 'Hiệu lực' },
-		{ value: false, text: 'Hết hiệu lực' },
+		{ value: 0, text: 'Hết hiệu lực' },
+		{ value: 1, text: 'Hiệu lực' },
 	]
 	listGender: any = [
-		{ value: true, text: 'Nam' },
-		{ value: false, text: 'Nữ' },
+		{ value: true, text: 'Nữ' },
+		{ value: false, text: 'Nam' },
 	]
 
 	regex_phone = REGEX.PHONE_VN
@@ -38,8 +37,7 @@ export class IndividualComponent implements OnInit {
 	rolesList: any[] = []
 	positionsList: any[] = []
 
-	createUnitFrom: FormGroup
-	createIndividual: FormGroup
+	createIndividualForm: FormGroup
 
 	modelUnit: UnitObject = new UnitObject()
 	modelIndividual: IndividualObject = new IndividualObject()
@@ -85,31 +83,54 @@ export class IndividualComponent implements OnInit {
 
 	constructor(private formBuilder: FormBuilder, private _toastr: ToastrService, private dialog: MatDialog) {}
 
-	ngOnInit() {}
+	ngOnInit() {
+		/*individual form*/
+		this.createIndividualForm = this.formBuilder.group({
+			name: [this.modelIndividual.name, Validators.required],
+			email: [this.modelIndividual.email, [Validators.required, Validators.email]],
+			phone: [this.modelIndividual.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
+			identity: [this.modelIndividual.identity, Validators.required],
+			placeIssue: [this.modelIndividual.placeIssue],
+			dateIssue: [this.modelIndividual.dateIssue],
+			nation: [this.modelIndividual.nation, Validators.required],
+			province: [this.modelIndividual.province, Validators.required],
+			district: [this.modelIndividual.district, Validators.required],
+			village: [this.modelIndividual.village, Validators.required],
+			address: [this.modelIndividual.address, Validators.required],
+			gender: [this.modelIndividual.gender, Validators.required],
+			dOB: [this.modelIndividual.dOB, Validators.required],
+			status: [this.modelIndividual.status],
+		})
+	}
+	ngAfterViewInit() {
+		// this.childCreateOrUpdateUser.parentUnit = this
+	}
 
-	/*modal thêm / sửa đơn vị*/
+	/*modal thêm / sửa cá nhân*/
 	modalCreateOrUpdateTitle: string = 'Tạo mới cá nhân'
 	modalCreateOrUpdate(id: any, level: any = 1, parentId: any = 0) {
-		this.createUnitFrom = this.formBuilder.group({
-			name: [this.modelUnit.name, Validators.required],
-			unitLevel: [this.modelUnit.unitLevel, [Validators.required]],
-			isActived: [this.modelUnit.isActived],
-			parentId: [this.modelUnit.parentId, Validators.required],
-			description: [this.modelUnit.description],
-			email: [this.modelUnit.email, [Validators.required, Validators.email]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
-			phone: [this.modelUnit.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
-			address: [this.modelUnit.address],
+		this.createIndividualForm = this.formBuilder.group({
+			name: [this.modelIndividual.name, Validators.required],
+			email: [this.modelIndividual.email, [Validators.required, Validators.email]],
+			phone: [this.modelIndividual.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
+			identity: [this.modelIndividual.identity, Validators.required],
+			placeIssue: [this.modelIndividual.placeIssue],
+			dateIssue: [this.modelIndividual.dateIssue],
+			nation: [this.modelIndividual.nation, Validators.required],
+			province: [this.modelIndividual.province, Validators.required],
+			district: [this.modelIndividual.district, Validators.required],
+			village: [this.modelIndividual.village, Validators.required],
+			address: [this.modelIndividual.address, Validators.required],
+			gender: [this.modelIndividual.gender, Validators.required],
+			dOB: [this.modelIndividual.dOB, Validators.required],
+			status: [this.modelIndividual.status, Validators.required],
 		})
 
-		// this.unitFormSubmitted = false
+		this.individualFormSubmitted = false
 		if (id == 0) {
 			this.modalCreateOrUpdateTitle = 'Tạo mới cá nhân'
 			this.modelIndividual = new IndividualObject()
 			this.modelIndividual.name = ''
-			// if (this.modelUnit.unitLevel > 1) this.modelUnit.parentId = null
-			// else {
-			// 	this.modelUnit.parentId = 0
-			// }
 		} else {
 			this.modalCreateOrUpdateTitle = 'Chỉnh sửa cá nhân'
 			// this.unitService.getById({ id }).subscribe((res) => {
@@ -118,7 +139,19 @@ export class IndividualComponent implements OnInit {
 			// })
 		}
 		$('#modal-create-or-update').modal('show')
-		// this.modelUnit.unitLevel = level
-		// if (parentId > 0) this.modelUnit.parentId = parentId
+	}
+
+	get fIndividual() {
+		return this.createIndividualForm.controls
+	}
+
+	individualFormSubmitted = false
+	onSaveUnit() {
+		this.individualFormSubmitted = true
+
+		if (this.createIndividualForm.invalid) {
+			this._toastr.error('Dữ liệu không hợp lệ')
+			return
+		}
 	}
 }
