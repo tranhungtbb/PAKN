@@ -1274,6 +1274,7 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 		public int? ParentId { get; set; }
 		public byte UnitLevel { get; set; }
+		public bool IsActived { get; set; }
 
 		public async Task<List<CAUnitGetAll>> CAUnitGetAllDAO(int? ParentId, byte? UnitLevel)
 		{
@@ -1517,6 +1518,41 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UnitId", UnitId);
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAUserGetByUnitId>("CA_UserGetByUnitId", DP)).ToList();
+		}
+	}
+
+	public class CAWordGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public CAWordGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAWordGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public string GroupName { get; set; }
+		public string Description { get; set; }
+
+		public async Task<List<CAWordGetAllOnPage>> CAWordGetAllOnPageDAO(int? PageSize, int? PageIndex, int? GroupId, string Name, string Description, bool? IsActived)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("GroupId", GroupId);
+			DP.Add("Name", Name);
+			DP.Add("Description", Description);
+			DP.Add("IsActived", IsActived);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAWordGetAllOnPage>("CA_WordGetAllOnPage", DP)).ToList();
 		}
 	}
 

@@ -447,36 +447,44 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-
-	public class SYUnitChageStatus
+	public class SYSystemLogGetAllOnPageAdmin
 	{
 		private SQLCon _sQLCon;
 
-		public SYUnitChageStatus(IAppSetting appSetting)
+		public SYSystemLogGetAllOnPageAdmin(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public SYUnitChageStatus()
+		public SYSystemLogGetAllOnPageAdmin()
 		{
 		}
 
-		public async Task<int> SYUnitChageStatusDAO(SYUnitChageStatusIN _sYUnitChageStatusIN)
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+		public long UserId { get; set; }
+		public string FullName { get; set; }
+		public string IPAddress { get; set; }
+		public string MACAddress { get; set; }
+		public string Description { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public byte Status { get; set; }
+		public string Action { get; set; }
+		public string Exception { get; set; }
+
+		public async Task<List<SYSystemLogGetAllOnPageAdmin>> SYSystemLogGetAllOnPageAdminDAO(int? UserId, int? PageSize, int? PageIndex, DateTime? CreateDate, byte? Status, string Description)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _sYUnitChageStatusIN.Id);
-			DP.Add("IsActived", _sYUnitChageStatusIN.IsActived);
+			DP.Add("UserId", UserId);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("CreateDate", CreateDate);
+			DP.Add("Status", Status);
+			DP.Add("Description", Description);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UnitChageStatus", DP));
+			return (await _sQLCon.ExecuteListDapperAsync<SYSystemLogGetAllOnPageAdmin>("SY_SystemLogGetAllOnPageAdmin", DP)).ToList();
 		}
 	}
-
-	public class SYUnitChageStatusIN
-	{
-		public long? Id { get; set; }
-		public bool? IsActived { get; set; }
-	}
-
 
 	public class SYUnitGetDropdown
 	{
