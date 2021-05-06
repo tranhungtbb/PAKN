@@ -33,4 +33,11 @@ export class RoleService {
 	delete(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.RoleDelete)
 	}
+
+	getDataForCreate(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.RoleGetDataForCreate)
+	}
+	insertPermission(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.RoleInsertPermission)
+	}
 }
