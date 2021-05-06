@@ -3,6 +3,10 @@ import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { AccountService } from 'src/app/services/account.service'
 
+import { viLocale } from 'ngx-bootstrap/locale'
+import { defineLocale } from 'ngx-bootstrap/chronos'
+import { BsLocaleService } from 'ngx-bootstrap/datepicker'
+
 import { FormBuilder, FormControl, FormGroup, Validator, Validators } from '@angular/forms'
 import { DataService } from 'src/app/services/sharedata.service'
 import { DiadanhService } from 'src/app/services/diadanh.service'
@@ -18,13 +22,17 @@ import { COMMONS } from 'src/app/commons/commons'
 })
 export class AccountUpdateInfoComponent implements OnInit {
 	constructor(
+		private localeService: BsLocaleService,
 		private formBuider: FormBuilder,
 		private toast: ToastrService,
 		private accountService: AccountService,
 		private router: Router,
 		private diadanhService: DiadanhService,
 		private userLocal: UserInfoStorageService
-	) {}
+	) {
+		defineLocale('vi', viLocale)
+		this.localeService.use('vi')
+	}
 
 	formData: FormGroup
 	model: UserInfoObject = new UserInfoObject()

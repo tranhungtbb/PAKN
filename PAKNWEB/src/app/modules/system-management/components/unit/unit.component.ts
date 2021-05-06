@@ -125,6 +125,8 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 	ngAfterViewInit() {
 		this.childCreateOrUpdateUser.parentUnit = this
+
+		$('#tree-unit input.ui-tree-filter').attr('placeholder', 'Nhập...')
 	}
 
 	collapsed_checked: any = {
@@ -138,7 +140,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	onSortUnit(fieldName: string) {
 		this.unitSortField = fieldName
 		this.unitSortDir = this.unitSortDir == 'DESC' ? 'ASC' : 'DESC'
-		this.getUnitPagedList()
+		//this.getUnitPagedList()
 	}
 	getUnitPagedList(): void {
 		this.query.name = this.query.name.trim()
@@ -169,12 +171,12 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			)
 	}
 	unitFilterChange(): void {
-		this.getUnitPagedList()
+		//this.getUnitPagedList()
 	}
 	onPageChange(event): void {
 		this.query.pageSize = event.rows
 		this.query.pageIndex = event.first / event.rows + 1
-		this.getUnitPagedList()
+		//this.getUnitPagedList()
 	}
 
 	treeViewActive(id, level) {
@@ -186,7 +188,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.totalCount_User = 0
 
 		this.getUnitInfo(id)
-		this.getUnitPagedList()
+		//this.getUnitPagedList()
 	}
 
 	getUnitInfo(id) {
@@ -342,7 +344,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				}
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
 				// this.getAllUnitShortInfo()
-				//this.getUnitPagedList()
+				////this.getUnitPagedList()
 				this.treeViewActive(this.unitObject.id, this.unitObject.unitLevel)
 
 				// cập nhật tên ptree khi đã sửa thành công
@@ -379,7 +381,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			}
 			this._toastr.success(COMMONS.UPDATE_SUCCESS)
 			//this.getAllUnitShortInfo(this.unitObject)
-			this.getUnitPagedList()
+			//this.getUnitPagedList()
 			this.modelUnit = new UnitObject()
 			$('#modal-create-or-update').modal('hide')
 		})
@@ -399,7 +401,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			}
 			this._toastr.success(COMMONS.UPDATE_SUCCESS)
 			this.getAllUnitShortInfo(this.unitObject)
-			//this.getUnitPagedList()
+			////this.getUnitPagedList()
 			this.modelUnit = new UnitObject()
 			$('#modal-create-or-update').modal('hide')
 		})
@@ -473,10 +475,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 
 			if (this.unitObject.id == id) {
 				this.getAllUnitShortInfo()
-				this.getUnitPagedList()
+				//this.getUnitPagedList()
 			} else {
 				this.getAllUnitShortInfo(this.unitObject)
-				this.getUnitPagedList()
+				//this.getUnitPagedList()
 			}
 		})
 	}

@@ -69,10 +69,10 @@
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
 									<td>
-										<img class="avatar-size rounded-3" [src]="item.imageBin">
+										<img class="avatar-size rounded-3" [src]="item.imagePath">
 
-										<strong class="news-title col-sm-10">
-											<a [routerLink]="['./chinh-sua', item.id]" style="color: #222222;">
+										<strong class="news-title col-sm-10 highlight">
+											<a [routerLink]="['./chinh-sua', item.id]">
 												{{item.title}}</a>
 										</strong>
 									</td>

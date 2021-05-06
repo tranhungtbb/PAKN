@@ -153,8 +153,14 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	}
 	changeSelectAvatar(event: any) {
 		var file = event.target.files[0]
+
 		if (!['image/jpeg', 'image/png'].includes(file.type)) {
 			this.toast.error('Chỉ chọn tệp tin ảnh')
+			event.target.value = null
+			return
+		}
+		if (file.size > 3000000) {
+			this.toast.error('Ảnh dung lượng tối đa 3MB')
 			event.target.value = null
 			return
 		}

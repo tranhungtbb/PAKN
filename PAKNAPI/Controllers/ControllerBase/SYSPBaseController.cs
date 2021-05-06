@@ -134,6 +134,52 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYPermissionGetByFunctionBase")]
+		public async Task<ActionResult<object>> SYPermissionGetByFunctionBase(int? Id)
+		{
+			try
+			{
+				List<SYPermissionGetByFunction> rsSYPermissionGetByFunction = await new SYPermissionGetByFunction(_appSetting).SYPermissionGetByFunctionDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYPermissionGetByFunction", rsSYPermissionGetByFunction},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYPermissionCategoryGetBase")]
+		public async Task<ActionResult<object>> SYPermissionCategoryGetBase()
+		{
+			try
+			{
+				List<SYPermissionCategoryGet> rsSYPermissionCategoryGet = await new SYPermissionCategoryGet(_appSetting).SYPermissionCategoryGetDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYPermissionCategoryGet", rsSYPermissionCategoryGet},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
 		[Authorize]
 		[Route("SYPermissionCheckByUserIdBase")]
 		public async Task<ActionResult<object>> SYPermissionCheckByUserIdBase(int? UserId, string APIName)
@@ -145,6 +191,112 @@ namespace PAKNAPI.ControllerBase
 					{
 						{"SYPermissionCheckByUserId", rsSYPermissionCheckByUserId},
 					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYPermissionFunctionGetByCategoryBase")]
+		public async Task<ActionResult<object>> SYPermissionFunctionGetByCategoryBase(int? Id)
+		{
+			try
+			{
+				List<SYPermissionFunctionGetByCategory> rsSYPermissionFunctionGetByCategory = await new SYPermissionFunctionGetByCategory(_appSetting).SYPermissionFunctionGetByCategoryDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYPermissionFunctionGetByCategory", rsSYPermissionFunctionGetByCategory},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYPermissionGroupUserGetByGroupIdBase")]
+		public async Task<ActionResult<object>> SYPermissionGroupUserGetByGroupIdBase(int? GroupUserId)
+		{
+			try
+			{
+				List<SYPermissionGroupUserGetByGroupId> rsSYPermissionGroupUserGetByGroupId = await new SYPermissionGroupUserGetByGroupId(_appSetting).SYPermissionGroupUserGetByGroupIdDAO(GroupUserId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYPermissionGroupUserGetByGroupId", rsSYPermissionGroupUserGetByGroupId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYPermissionGroupUserInsertByListBase")]
+		public async Task<ActionResult<object>> SYPermissionGroupUserInsertByListBase(SYPermissionGroupUserInsertByListIN _sYPermissionGroupUserInsertByListIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionGroupUserInsertByList(_appSetting).SYPermissionGroupUserInsertByListDAO(_sYPermissionGroupUserInsertByListIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYPermissionGroupUserInsertByListListBase")]
+		public async Task<ActionResult<object>> SYPermissionGroupUserInsertByListListBase(List<SYPermissionGroupUserInsertByListIN> _sYPermissionGroupUserInsertByListINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _sYPermissionGroupUserInsertByListIN in _sYPermissionGroupUserInsertByListINs)
+				{
+					var result = await new SYPermissionGroupUserInsertByList(_appSetting).SYPermissionGroupUserInsertByListDAO(_sYPermissionGroupUserInsertByListIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)

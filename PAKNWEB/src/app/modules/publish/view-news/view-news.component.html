@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="row justify-content-between pt-5">
 			<div class="col main-ct pr-3 pr-lg-5 col-lg-9">
-				<div>
+				<div class="clearfix">
 					<span>Trang chủ / <strong>Tin tức sự kiện</strong></span>
 					<a class="btn btn-sm btn-default border-1 border-brown pull-right" style="display: inline-block;" *ngIf="viewDemo"
 						[routerLink]="['/quan-tri/tin-tuc/chinh-sua', model.id]">
@@ -10,7 +10,7 @@
 						&nbsp;Quay lại
 					</a>
 				</div>
-				<div class="mt-5">
+				<div class="">
 					<h1 style="line-height: 1.5;">
 						<span *ngIf="viewDemo" style="color: red;">(Xem trước) </span>
 						{{model.title}}

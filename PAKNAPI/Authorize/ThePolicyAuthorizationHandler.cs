@@ -40,7 +40,7 @@ namespace PAKNAPI.Authorize
 			{
 				//Insert to API table, only using for dev enviroment
 				SYAPIInsertIN _sYAPIInsertIN = new SYAPIInsertIN { Name = APIName, Authorize = true };
-				await new SYAPIInsert(_appSetting).SYAPIInsertDAO(_sYAPIInsertIN);
+				//await new SYAPIInsert(_appSetting).SYAPIInsertDAO(_sYAPIInsertIN);
 
 				//Check permission
 				List<SYPermissionCheckByUserId> rsSYPermissionCheckByUserId = await new SYPermissionCheckByUserId(_appSetting).SYPermissionCheckByUserIdDAO(Int32.Parse(userId.Value.ToString()), APIName);

@@ -29,6 +29,8 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 	]
 	listUserIsSystem: any[]
 	listItemUserSelected: any[]
+	listPermissionCategories: any[]
+	listPermissionGroupUserSelected: any[] = []
 	userId: any
 	constructor(
 		private _toastr: ToastrService,
@@ -58,16 +60,20 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 	}
 
 	getRoleById() {
-		this.activatedRoute.params.subscribe((params) => {
-			let id = +params['id']
-			this.model.id = isNaN(id) == true ? 0 : id
-			if (this.model.id != 0) {
-				this.roleService.getRoleById({ id: this.model.id }).subscribe((res) => {
-					if (res.success == RESPONSE_STATUS.success) {
-						if (res.result.SYRoleGetByID) {
-							this.model = { ...res.result.SYRoleGetByID[0] }
-							this.getUsersByRoleId(id)
-						}
+		this.roleService.getDataForCreate({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.listPermissionCategories = res.result
+				this.activatedRoute.params.subscribe((params) => {
+					let id = +params['id']
+					this.model.id = isNaN(id) == true ? 0 : id
+					if (this.model.id != 0) {
+						this.roleService.getRoleById({ id: this.model.id }).subscribe((res) => {
+							if (res.success == RESPONSE_STATUS.success) {
+								this.model = res.result.Data
+								this.listPermissionGroupUserSelected = res.result.ListPermission
+								this.onGroupUserLoadPermission(this.listPermissionGroupUserSelected)
+							}
+						})
 					}
 				})
 			}
@@ -131,6 +137,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 					} else {
 						this._toastr.success(COMMONS.ADD_SUCCESS)
 						this.onCreateUserRole(response.result)
+						this.onCreatePermission(response.result)
 						this.redirectList()
 						return
 					}
@@ -155,6 +162,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 					} else {
 						this._toastr.success(COMMONS.UPDATE_SUCCESS)
 						this.onCreateUserRole(response.result)
+						this.onCreatePermission(response.result)
 						this.redirectList()
 						return
 					}
@@ -170,6 +178,18 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 	}
 	redirectList() {
 		this.router.navigate(['quan-tri/he-thong/vai-tro'])
+	}
+
+	onCreatePermission(id) {
+		var request = {
+			lstid: this.listPermissionGroupUserSelected.join(','),
+			GroupUserId: id,
+		}
+		this.roleService.insertPermission(request).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.redirectList()
+			}
+		})
 	}
 
 	onCreateUser() {
@@ -207,6 +227,130 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 					this.redirectList()
 				}
 			})
+		}
+	}
+
+	onGroupUserLoadPermission(listPermissionGroupUserSelected): void {
+		this.clearPermisison()
+		for (var i = 0; i < this.listPermissionGroupUserSelected.length; i++) {
+			this.checkPermission(this.listPermissionGroupUserSelected[i], true)
+		}
+	}
+
+	onCategoryChange(ev, permisionCategory): void {
+		for (var i = 0; i < permisionCategory.function.length; i++) {
+			permisionCategory.function[i].selected = ev.checked
+			for (var j = 0; j < permisionCategory.function[i].permission.length; j++) {
+				permisionCategory.function[i].permission[j].selected = ev.checked
+				var permissionId = permisionCategory.function[i].permission[j].id
+				if (ev.checked) {
+					this.listPermissionGroupUserSelected.push(permissionId)
+				} else {
+					var index = this.listPermissionGroupUserSelected.indexOf(permissionId, 0)
+					if (index > -1) {
+						this.listPermissionGroupUserSelected.splice(index, 1)
+					}
+				}
+			}
+		}
+	}
+
+	onFunctionChange(ev, funct, permisionCategory): void {
+		for (var j = 0; j < funct.permission.length; j++) {
+			funct.permission[j].selected = ev.checked
+			var permissionId = funct.permission[j].id
+			if (ev.checked) {
+				this.listPermissionGroupUserSelected.push(permissionId)
+			} else {
+				var index = this.listPermissionGroupUserSelected.indexOf(permissionId, 0)
+				if (index > -1) {
+					this.listPermissionGroupUserSelected.splice(index, 1)
+				}
+			}
+		}
+		if (ev.checked) {
+			permisionCategory.selected = ev.checked
+		} else {
+			this.checkCategorySelected(permisionCategory)
+		}
+	}
+
+	onPermissionChange(event, permission, funct, permisionCategory): void {
+		this.checkFunctionSelected(permisionCategory, funct)
+		if (event.checked) {
+			this.listPermissionGroupUserSelected.push(permission.id)
+		} else {
+			var index = this.listPermissionGroupUserSelected.indexOf(permission.id, 0)
+			if (index > -1) {
+				this.listPermissionGroupUserSelected.splice(index, 1)
+			}
+		}
+	}
+
+	private checkCategorySelected(permisionCategory: any) {
+		var hasSelectedChild = false
+		for (var j = 0; j < permisionCategory.function.length; j++) {
+			if (permisionCategory.function[j].selected) {
+				hasSelectedChild = true
+				break
+			}
+		}
+		permisionCategory.selected = hasSelectedChild
+	}
+
+	private checkFunctionSelected(permisionCategory, funct) {
+		var hasSelectedChild = false
+		for (var j = 0; j < funct.permission.length; j++) {
+			if (funct.permission[j].selected) {
+				hasSelectedChild = true
+				break
+			}
+		}
+		funct.selected = hasSelectedChild
+		this.checkCategorySelected(permisionCategory)
+	}
+
+	private clearPermisison() {
+		for (var i = 0; i < this.listPermissionCategories.length; i++) {
+			var permissioncategory = this.listPermissionCategories[i]
+			permissioncategory.selected = false
+			permissioncategory.disabled = false
+			for (var j = 0; j < permissioncategory.function.length; j++) {
+				var funct = permissioncategory.function[j]
+				funct.selected = false
+				funct.disabled = false
+				for (var k = 0; k < funct.permission.length; k++) {
+					funct.permission[k].selected = false
+					funct.permission[k].disabled = false
+				}
+			}
+		}
+	}
+
+	private checkPermission(permissionId, isUserSelected) {
+		for (var i = 0; i < this.listPermissionCategories.length; i++) {
+			var permissioncategory = this.listPermissionCategories[i]
+			var isCategorySelected = this.listPermissionCategories[i].selected
+			var isCategoryDisabled = this.listPermissionCategories[i].disabled
+			for (var j = 0; j < permissioncategory.function.length; j++) {
+				var funct = permissioncategory.function[j]
+				var isFunctSelected = permissioncategory.function[j].selected
+				var isFunctDisabled = permissioncategory.function[j].disabled
+				for (var k = 0; k < funct.permission.length; k++) {
+					if (funct.permission[k].id == permissionId) {
+						funct.permission[k].selected = true
+						funct.permission[k].disabled = isUserSelected ? false : true
+						isCategorySelected = true
+						isFunctSelected = true
+						isCategoryDisabled = isUserSelected ? isCategoryDisabled : true
+						isFunctDisabled = isUserSelected ? isFunctDisabled : true
+					}
+				}
+				funct.selected = isFunctSelected
+				funct.disabled = isFunctDisabled
+			}
+			permissioncategory.selected = isCategorySelected
+			permissioncategory.disabled = isCategoryDisabled
 		}
 	}
 }

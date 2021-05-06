@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { NewsService } from 'src/app/services/news.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { AppSettings } from 'src/app/constants/app-setting'
 
 @Component({
 	selector: 'app-news',
@@ -43,7 +44,10 @@ export class ViewNewsComponent implements OnInit {
 	getNewsRelates(id) {
 		this.newsService.getAllRelates({ id }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				this.newsRelates = res.result.NENewsGetAllRelates
+				this.newsRelates = res.result.NENewsGetAllRelates.map((e) => {
+					e.imagePath = `${AppSettings.API_DOWNLOADFILES}/${e.imagePath}`
+					return e
+				})
 			}
 		})
 	}

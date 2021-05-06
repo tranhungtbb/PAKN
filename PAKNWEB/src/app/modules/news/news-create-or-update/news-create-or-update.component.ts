@@ -142,10 +142,13 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					if (res.success != 'OK') {
 						return
 					}
-					this.newsRelatesSelected = res.result.NENewsGetAllOnPage
+					this.newsRelatesSelected = res.result.NENewsGetAllOnPage.map((e) => {
+						e.imagePath = `${AppSettings.API_DOWNLOADFILES}/${e.imagePath}`
+						return e
+					})
 
 					//get avatar
-					this.getNewsRelateAvatar()
+					//this.getNewsRelateAvatar()
 				})
 		}
 	}
@@ -267,7 +270,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					if (res.result.NENewsGetAllOnPage) this.newsRelatesSelected = res.result.NENewsGetAllOnPage
 
 					//get avatar
-					this.getNewsRelateAvatar()
+					//this.getNewsRelateAvatar()
 				})
 		} else {
 			this.newsRelatesSelected = []
@@ -303,14 +306,15 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				return
 			}
 			this.model.imagePath = res.result.path
+			this.avatarUrl = `${AppSettings.API_DOWNLOADFILES}/${this.model.imagePath}`
 
-			let avatarPath = this.model.imagePath.split('/')
-			this.newsService.getAvatar(avatarPath[avatarPath.length - 1]).subscribe((res) => {
-				if (res) {
-					let objectURL = 'data:image/jpeg;base64,' + res
-					this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-				}
-			})
+			// let avatarPath = this.model.imagePath.split('/')
+			// this.newsService.getAvatar(avatarPath[avatarPath.length - 1]).subscribe((res) => {
+			// 	if (res) {
+			// 		let objectURL = 'data:image/jpeg;base64,' + res
+			// 		this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+			// 	}
+			// })
 		})
 	}
 
