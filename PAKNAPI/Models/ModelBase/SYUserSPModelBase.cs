@@ -40,6 +40,37 @@ namespace PAKNAPI.ModelBase
 		public long? RoleId { get; set; }
 	}
 
+public class SYUserRoleMapDelete
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserRoleMapDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserRoleMapDelete()
+		{
+		}
+
+		public async Task<int> SYUserRoleMapDeleteDAO(SYUserRoleMapDeleteIN _sYUserRoleMapDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", _sYUserRoleMapDeleteIN.UserId);
+			DP.Add("RoleId", _sYUserRoleMapDeleteIN.RoleId);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserRoleMapDelete", DP));
+		}
+	}
+
+	public class SYUserRoleMapDeleteIN
+	{
+		public long? UserId { get; set; }
+		public long? RoleId { get; set; }
+	}
+
+
+
 	public class SYUserChangePwd
 	{
 		private SQLCon _sQLCon;
