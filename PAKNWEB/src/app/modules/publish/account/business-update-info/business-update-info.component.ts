@@ -34,6 +34,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		private userLocal: UserInfoStorageService
 	) {
 		defineLocale('vi', viLocale)
+		this.localeService.use('vi')
 	}
 
 	formUpdateAccountInfo: FormGroup

@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr'
 import { NewsService } from 'src/app/services/news.service'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { RESPONSE_STATUS, STATUS_HISNEWS } from 'src/app/constants/CONSTANTS'
+import { AppSettings } from 'src/app/constants/app-setting'
 
 import { COMMONS } from 'src/app/commons/commons'
 import { NewsModel, HISNewsModel } from 'src/app/models/NewsObject'
@@ -46,7 +47,7 @@ export class NewsComponent implements OnInit {
 				pageSize: 10000,
 				pageIndex: 1,
 			})
-			.subscribe(res => {
+			.subscribe((res) => {
 				if (res.success != 'OK') {
 					return
 				}
@@ -63,18 +64,21 @@ export class NewsComponent implements OnInit {
 				newsType: this.query.newsType == null ? '' : this.query.newsType,
 				status: this.query.status == null ? '' : this.query.status,
 			})
-			.subscribe(res => {
+			.subscribe((res) => {
 				if (res.success != 'OK') return
-				this.listDataPaged = res.result.NENewsGetAllOnPage
+				this.listDataPaged = res.result.NENewsGetAllOnPage.map((item) => {
+					item.imagePath = `${AppSettings.API_DOWNLOADFILES}/${item.imagePath}`
+					return item
+				})
 
 				if (this.totalCount == null || this.totalCount == 0) this.totalCount = res.result.TotalCount
 				// load image
-				this.getNewsAvatars()
+				//this.getNewsAvatars()
 			})
 	}
 
 	getHisNewsListByNewsId(id: any) {
-		this.newsService.getListHisNewsByNewsId({ NewsId: id }).subscribe(res => {
+		this.newsService.getListHisNewsByNewsId({ NewsId: id }).subscribe((res) => {
 			if ((res.success = RESPONSE_STATUS.success)) {
 				this.listHisNews = res.result
 			}
@@ -107,9 +111,9 @@ export class NewsComponent implements OnInit {
 		this.modalConfirm_item_id = id
 	}
 	acceptConfirm() {
-		let item = this.listDataPaged.find(c => c.id == this.modalConfirm_item_id)
+		let item = this.listDataPaged.find((c) => c.id == this.modalConfirm_item_id)
 		if (this.modalConfirm_type == 'delete') {
-			this.newsService.delete({ id: item.id }).subscribe(res => {
+			this.newsService.delete({ id: item.id }).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error(COMMONS.DELETE_FAILED)
 					return
@@ -121,7 +125,7 @@ export class NewsComponent implements OnInit {
 			item.isPublished = !item.isPublished
 			if (item.isPublished) item.status = 1
 			else item.status = 0
-			this.newsService.update(item).subscribe(res => {
+			this.newsService.update(item).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error('Xảy ra lỗi trong quá trình xử lý')
 					return
@@ -129,7 +133,7 @@ export class NewsComponent implements OnInit {
 				this.hisNewsModel.objectId = this.modalConfirm_item_id
 				this.hisNewsModel.type = 1 // tin tức
 				this.hisNewsModel.status = item.isPublished ? STATUS_HISNEWS.PUBLIC : STATUS_HISNEWS.CANCEL
-				this.newsService.hisNewsCreate(this.hisNewsModel).subscribe(res => console.log(res))
+				this.newsService.hisNewsCreate(this.hisNewsModel).subscribe((res) => console.log(res))
 				this.toast.success(item.isPublished ? 'Đã công bố' : 'Đã thu hồi')
 			})
 		}
@@ -150,12 +154,12 @@ export class NewsComponent implements OnInit {
 	// }
 
 	getNewsAvatars() {
-		let ids = this.listDataPaged.map(c => c.id)
+		let ids = this.listDataPaged.map((c) => c.id)
 
-		this.newsService.getAvatars(ids).subscribe(res => {
+		this.newsService.getAvatars(ids).subscribe((res) => {
 			if (res) {
-				res.forEach(e => {
-					let item = this.listDataPaged.find(c => c.id == e.id)
+				res.forEach((e) => {
+					let item = this.listDataPaged.find((c) => c.id == e.id)
 					let objectURL = 'data:image/jpeg;base64,' + e.byteImage
 					item.imageBin = this.sanitizer.bypassSecurityTrustUrl(objectURL)
 				})
