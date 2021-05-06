@@ -120,6 +120,8 @@ export class Api {
 	public static RoleUpdate = 'SYSPBase/SYRoleUpdateBase'
 	public static RoleDelete = 'SYSPBase/SYRoleDeleteBase'
 	public static RoleGetById = 'SYSPBase/SYRoleGetByIDBase'
+	public static RoleInsertPermission = 'SYSPBase/SYPermissionGroupUserInsertByListBase'
+	public static RoleGetDataForCreate = 'Role/GetDataForCreate'
 
 	//NewsType
 	public static NewsTypeGetList = 'CACategorySPBase/CANewsTypeGetAllOnPageBase'
