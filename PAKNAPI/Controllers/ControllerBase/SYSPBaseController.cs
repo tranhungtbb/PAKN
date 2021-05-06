@@ -91,6 +91,49 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYEmailGetFirstBase")]
+		public async Task<ActionResult<object>> SYEmailGetFirstBase()
+		{
+			try
+			{
+				List<SYEmailGetFirst> rsSYEmailGetFirst = await new SYEmailGetFirst(_appSetting).SYEmailGetFirstDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYEmailGetFirst", rsSYEmailGetFirst},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYEmailInsertBase")]
+		public async Task<ActionResult<object>> SYEmailInsertBase(SYEmailInsertIN _sYEmailInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYEmailInsert(_appSetting).SYEmailInsertDAO(_sYEmailInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
 		[Authorize]
 		[Route("SYPermissionCheckByUserIdBase")]
 		public async Task<ActionResult<object>> SYPermissionCheckByUserIdBase(int? UserId, string APIName)
@@ -275,6 +318,49 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new SYRoleUpdate(_appSetting).SYRoleUpdateDAO(_sYRoleUpdateIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYSMSGetFirstBase")]
+		public async Task<ActionResult<object>> SYSMSGetFirstBase()
+		{
+			try
+			{
+				List<SYSMSGetFirst> rsSYSMSGetFirst = await new SYSMSGetFirst(_appSetting).SYSMSGetFirstDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYSMSGetFirst", rsSYSMSGetFirst},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYSMSInsertBase")]
+		public async Task<ActionResult<object>> SYSMSInsertBase(SYSMSInsertIN _sYSMSInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYSMSInsert(_appSetting).SYSMSInsertDAO(_sYSMSInsertIN) };
 			}
 			catch (Exception ex)
 			{
@@ -563,29 +649,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYUserGetNonSystem", rsSYUserGetNonSystem},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("SYUsersGetDropdownBase")]
-		public async Task<ActionResult<object>> SYUsersGetDropdownBase()
-		{
-			try
-			{
-				List<SYUsersGetDropdown> rsSYUsersGetDropdown = await new SYUsersGetDropdown(_appSetting).SYUsersGetDropdownDAO();
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"SYUsersGetDropdown", rsSYUsersGetDropdown},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

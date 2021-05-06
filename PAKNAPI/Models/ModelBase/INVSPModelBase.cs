@@ -51,6 +51,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
+		public int id { get; set; }
 		public int InvitationId { get; set; }
 		public string FileAttach { get; set; }
 		public string Name { get; set; }

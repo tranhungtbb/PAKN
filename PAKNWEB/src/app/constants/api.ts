@@ -228,4 +228,10 @@ export class Api {
 	public static ChatbotInsertQuestion = 'Chatbot/ChatbotInsertQuestion'
 	public static ChatbotInsertData = 'Chatbot/ChatbotInsertData'
 	public static ChatbotGetListHistory = 'Chatbot/HistoryChatbotGetAllOnPage'
+
+	//systemConfig
+	public static EmailGetFirstBase = 'SYSPBase/SYEmailGetFirstBase'
+	public static EmailConfigSystemUpdate = 'SYSPBase/SYEmailInsertBase'
+	public static SMSGetFirstBase = 'SYSPBase/SYSMSGetFirstBase'
+	public static SMSConfigSystemUpdate = 'SYSPBase/SYSMSInsertBase'
 }
