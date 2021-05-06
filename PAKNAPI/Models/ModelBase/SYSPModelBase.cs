@@ -40,6 +40,66 @@ namespace PAKNAPI.ModelBase
 		public bool? Authorize { get; set; }
 	}
 
+	public class SYEmailGetFirst
+	{
+		private SQLCon _sQLCon;
+
+		public SYEmailGetFirst(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYEmailGetFirst()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Email { get; set; }
+		public string Password { get; set; }
+		public string Port { get; set; }
+		public string Server { get; set; }
+
+		public async Task<List<SYEmailGetFirst>> SYEmailGetFirstDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYEmailGetFirst>("SY_EmailGetFirst", DP)).ToList();
+		}
+	}
+
+	public class SYEmailInsert
+	{
+		private SQLCon _sQLCon;
+
+		public SYEmailInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYEmailInsert()
+		{
+		}
+
+		public async Task<int?> SYEmailInsertDAO(SYEmailInsertIN _sYEmailInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Email", _sYEmailInsertIN.Email);
+			DP.Add("Password", _sYEmailInsertIN.Password);
+			DP.Add("Server", _sYEmailInsertIN.Server);
+			DP.Add("Port", _sYEmailInsertIN.Port);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_EmailInsert", DP);
+		}
+	}
+
+	public class SYEmailInsertIN
+	{
+		public string Email { get; set; }
+		public string Password { get; set; }
+		public string Server { get; set; }
+		public string Port { get; set; }
+	}
+
 	public class SYPermissionCheckByUserId
 	{
 		private SQLCon _sQLCon;
@@ -251,6 +311,75 @@ namespace PAKNAPI.ModelBase
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
+	}
+
+	public class SYSMSGetFirst
+	{
+		private SQLCon _sQLCon;
+
+		public SYSMSGetFirst(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYSMSGetFirst()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Linkwebservice { get; set; }
+		public string User { get; set; }
+		public string Password { get; set; }
+		public string Code { get; set; }
+		public string ServiceID { get; set; }
+		public string CommandCode { get; set; }
+		public bool? ContenType { get; set; }
+
+		public async Task<List<SYSMSGetFirst>> SYSMSGetFirstDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYSMSGetFirst>("SY_SMSGetFirst", DP)).ToList();
+		}
+	}
+
+	public class SYSMSInsert
+	{
+		private SQLCon _sQLCon;
+
+		public SYSMSInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYSMSInsert()
+		{
+		}
+
+		public async Task<int?> SYSMSInsertDAO(SYSMSInsertIN _sYSMSInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Linkwebservice", _sYSMSInsertIN.Linkwebservice);
+			DP.Add("User", _sYSMSInsertIN.User);
+			DP.Add("Password", _sYSMSInsertIN.Password);
+			DP.Add("Code", _sYSMSInsertIN.Code);
+			DP.Add("ServiceID", _sYSMSInsertIN.ServiceID);
+			DP.Add("CommandCode", _sYSMSInsertIN.CommandCode);
+			DP.Add("ContenType", _sYSMSInsertIN.ContenType);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_SMSInsert", DP);
+		}
+	}
+
+	public class SYSMSInsertIN
+	{
+		public string Linkwebservice { get; set; }
+		public string User { get; set; }
+		public string Password { get; set; }
+		public string Code { get; set; }
+		public string ServiceID { get; set; }
+		public string CommandCode { get; set; }
+		public bool? ContenType { get; set; }
 	}
 
 	public class SYSystemLogDelete

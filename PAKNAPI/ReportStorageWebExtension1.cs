@@ -99,10 +99,9 @@ namespace PAKNAPI
                 case "Recommendation_ListGeneral":
                     var paramExportNhatKyThanhTra = JsonConvert.DeserializeObject<ExportRecommendation>(objectReport, jss);
 
-
-
                     resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.Recommendation_ListGeneral.repx");
                     result = XtraReport.FromStream(resource);
+                    result.Parameters["TitleReport"].Value = paramExportNhatKyThanhTra.TitleReport;
                     result.Parameters["Code"].Value = paramExportNhatKyThanhTra.Code;
                     result.Parameters["SendName"].Value = paramExportNhatKyThanhTra.SendName;
                     result.Parameters["Content"].Value = paramExportNhatKyThanhTra.Content;

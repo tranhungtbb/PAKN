@@ -276,12 +276,14 @@ export class ListReceiveApprovedComponent implements OnInit {
 			importedSaveAs(blob, fileName)
 		})
 	}
-
 	onExport() {
 		let passingObj: any = {}
 		passingObj = this.dataSearch
-		passingObj.UnitProcessId = this.storeageService.getUnitId()
-		passingObj.UserProcessId = this.storeageService.getUserId()
+		if (this.listData.length > 0) {
+			passingObj.UnitProcessId = this.storeageService.getUnitId()
+			passingObj.UserProcessId = this.storeageService.getUserId()
+		}
+		passingObj.TitleReport = 'DANH SÁCH TIẾP NHẬN XỬ LÝ'
 		this._shareData.setobjectsearch(passingObj)
 		this._shareData.sendReportUrl = 'Recommendation_ListGeneral?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])

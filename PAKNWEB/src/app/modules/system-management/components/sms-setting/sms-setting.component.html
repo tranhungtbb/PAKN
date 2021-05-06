@@ -1,1 +1,137 @@
-<p>sms-setting works!</p>
+<div class="row">
+	<div class="col-lg-12">
+		<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+			<li class="breadcrumb-item"><a>Hệ thống</a></li>
+			<li class="breadcrumb-item active"><a class="font-weight-bold"> Cấu hình Email</a></li>
+		</ol>
+		<div class="btn-group group-button-table" role="group">
+			<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onCancel()">
+				Hủy
+			</button>
+			<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="onSave()">
+				Lưu
+			</button>
+		</div>
+	</div>
+</div>
+<div class="row" style="margin-top: 50px;">
+	<form class="form-horizontal" [formGroup]="form" #formDir="ngForm">
+		<div class="col-lg-12">
+			<div class="card mb-0 shadow-none">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2 border center rounded">
+						<div class="modal-body no-padding-bottom">
+							<div class="row form-group">
+								<div class="col-sm-6">
+									<label class="control-label">Link webservice <span class="text-danger">(*)</span></label>
+									<input id="linkwebservice" placeholder="Nhập..." svTrim class="form-control" formControlName="linkwebservice" [(ngModel)]="model.linkwebservice"
+										maxlength="100" />
+									<div *ngIf="(submitted && f.linkwebservice.invalid) || (f.linkwebservice.invalid && (f.linkwebservice.dirty || f.linkwebservice.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.linkwebservice.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<label class="control-label">User <span class="text-danger">(*)</span></label>
+									<input id="user" placeholder="Nhập..." svTrim class="form-control" formControlName="user" [(ngModel)]="model.user" maxlength="100" />
+									<div *ngIf="(submitted && f.user.invalid) || (f.user.invalid && (f.user.dirty || f.user.touched))" class="has-error m-b-12">
+										<div *ngIf="f.user.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="row form-group">
+								<div class="col-sm-6">
+									<label class="control-label">Password <span class="text-danger">(*)</span></label>
+									<input autocomplete="new-password" type="Password" id="sysPass" placeholder="Nhập..." svTrim class="form-control" formControlName="password"
+										[(ngModel)]="model.password" maxlength="100" />
+									<div *ngIf="(submitted && f.password.invalid) || (f.password.invalid && (f.password.dirty || f.password.touched))" class="has-error m-b-12">
+										<div *ngIf="f.password.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<label class="control-label">Code <span class="text-danger">(*)</span></label>
+									<input id="code" placeholder="Nhập..." svTrim class="form-control" formControlName="code" [(ngModel)]="model.code" maxlength="100" />
+									<div *ngIf="(submitted && f.code.invalid) || (f.code.invalid && (f.code.dirty || f.code.touched))" class="has-error m-b-12">
+										<div *ngIf="f.code.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-sm-6">
+									<label class="control-label">ServiceID <span class="text-danger">(*)</span></label>
+									<input id="ServiceID" placeholder="Nhập..." svTrim class="form-control" formControlName="serviceID" [(ngModel)]="model.serviceID"
+										maxlength="100" />
+									<div *ngIf="(submitted && f.serviceID.invalid) || (f.serviceID.invalid && (f.serviceID.dirty || f.serviceID.touched))" class="has-error m-b-12">
+										<div *ngIf="f.serviceID.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<label class="control-label">CommandCode <span class="text-danger">(*)</span></label>
+									<input id="CommandCode" placeholder="Nhập..." svTrim class="form-control" formControlName="commandCode" [(ngModel)]="model.commandCode"
+										maxlength="100" />
+									<div *ngIf="(submitted && f.commandCode.invalid) || (f.commandCode.invalid && (f.commandCode.dirty || f.commandCode.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.commandCode.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-sm-6">
+									<label class="control-label">ContenType <span class="text-danger">(*)</span></label>
+									<ng-select class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn..." bindLabel="text" formControlName="contenType"
+										[(ngModel)]="model.contenType" style="font-weight: 600;">
+									</ng-select>
+									<div *ngIf="(submitted && f.contenType.invalid) || (f.contenType.invalid && (f.contenType.dirty || f.contenType.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.contenType.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="modal fade" id="modalConfirmDelete">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<!-- <p class="modal-title h3">Xác nhận</p> -->
+					</div>
+					<div class="modal-body no-padding-bottom" style="border: none;">
+						<div style="text-align: center;">
+							<strong class="change-status-title">Bạn có chắc chắn thực hiện hành động này?</strong>
+						</div>
+					</div>
+					<div class="modal-footer" style="border: none; justify-content: center;">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue">Xác
+							nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

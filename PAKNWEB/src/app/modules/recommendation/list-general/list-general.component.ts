@@ -40,6 +40,8 @@ export class ListGeneralComponent implements OnInit {
 		{ value: 9, text: 'Từ chối phê duyệt' },
 		{ value: 10, text: 'Đã giải quyết' },
 	]
+	lstGroupWord: any = []
+	lstGroupWordSelected: any = []
 	formForward: FormGroup
 	lstUnitNotMain: any = []
 	lstUnit: any = []
@@ -266,12 +268,28 @@ export class ListGeneralComponent implements OnInit {
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
 			if (model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
+				this._service.recommendationGetDataForProcess({}).subscribe((response) => {
+					if (response.success == RESPONSE_STATUS.success) {
+						if (response.result != null) {
+							this.lstGroupWord = response.result.lstGroupWord
+							this.lstGroupWordSelected = []
+							$('#modalReject').modal('show')
+						}
+					} else {
+						this._toastr.error(response.message)
+					}
+				}),
+					(error) => {
+						console.log(error)
+						alert(error)
+					}
 			} else if (model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESS_DENY
+				$('#modalReject').modal('show')
 			} else if (model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.APPROVE_DENY
+				$('#modalReject').modal('show')
 			}
-			$('#modalReject').modal('show')
 		} else {
 			if (model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_APPROVED
@@ -311,6 +329,8 @@ export class ListGeneralComponent implements OnInit {
 			var request = {
 				_mRRecommendationForwardProcessIN: this.modelProcess,
 				RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_DENY,
+				ReactionaryWord: this.modelProcess.reactionaryWord,
+				ListGroupWordSelected: this.lstGroupWordSelected.join(','),
 				IsList: true,
 			}
 			this._service.recommendationProcess(request).subscribe((response) => {
@@ -327,12 +347,14 @@ export class ListGeneralComponent implements OnInit {
 				}
 		}
 	}
-
 	onExport() {
 		let passingObj: any = {}
 		passingObj = this.dataSearch
-		passingObj.UnitProcessId = this.storeageService.getUnitId()
-		passingObj.UserProcessId = this.storeageService.getUserId()
+		if (this.listData.length > 0) {
+			passingObj.UnitProcessId = this.storeageService.getUnitId()
+			passingObj.UserProcessId = this.storeageService.getUserId()
+		}
+		passingObj.TitleReport = 'DANH SÁCH TÔNG HỢP'
 		this._shareData.setobjectsearch(passingObj)
 		this._shareData.sendReportUrl = 'Recommendation_ListGeneral?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])

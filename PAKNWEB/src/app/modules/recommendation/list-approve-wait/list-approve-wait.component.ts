@@ -246,8 +246,11 @@ export class ListApproveWaitComponent implements OnInit {
 	onExport() {
 		let passingObj: any = {}
 		passingObj = this.dataSearch
-		passingObj.UnitProcessId = this.storeageService.getUnitId()
-		passingObj.UserProcessId = this.storeageService.getUserId()
+		if (this.listData.length > 0) {
+			passingObj.UnitProcessId = this.storeageService.getUnitId()
+			passingObj.UserProcessId = this.storeageService.getUserId()
+		}
+		passingObj.TitleReport = 'DANH SÁCH CHỜ PHÊ DUYỆT'
 		this._shareData.setobjectsearch(passingObj)
 		this._shareData.sendReportUrl = 'Recommendation_ListGeneral?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])

@@ -17,11 +17,11 @@ import { iterator } from 'rxjs/internal-compatibility'
 declare var $: any
 
 @Component({
-	selector: 'app-invitation-create-or-update',
-	templateUrl: './invitation-create-or-update.component.html',
-	styleUrls: ['./invitation-create-or-update.component.css'],
+	selector: 'sms-create-or-update',
+	templateUrl: './sms-create-or-update.component.html',
+	styleUrls: ['./sms-create-or-update.component.css'],
 })
-export class InvitationCreateOrUpdateComponent implements OnInit {
+export class SMSCreateOrUpdateComponent implements OnInit {
 	model: InvitationObject = new InvitationObject()
 	sendEmail: boolean = false
 	sendSMS: boolean = false
@@ -39,7 +39,6 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 	listItemUserSelected: Array<InvitationUserMapObject>
 	userMap: any[]
 	key: any = ''
-	fileAccept = CONSTANTS.FILEACCEPT
 	userId: any
 	@ViewChild('file', { static: false }) public file: ElementRef
 	constructor(
