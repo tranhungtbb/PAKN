@@ -7,7 +7,7 @@ import { Api } from '../constants/api'
 import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 import { UserInfoStorageService } from '../commons/user-info-storage.service'
 
-const urlChatbot = 'http://localhost:8880/api'
+const urlChatbot = 'http://14.177.236.88:8880/api'
 
 @Injectable({
 	providedIn: 'root',
