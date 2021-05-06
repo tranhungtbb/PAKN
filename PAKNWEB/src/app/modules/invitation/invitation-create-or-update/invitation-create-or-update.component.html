@@ -34,7 +34,7 @@
 							<label class="control-label department">Thời gian bắt đầu<span class="text-danger">(*)</span></label>
 							<div class="input-group">
 								<input class="form-control" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="startDate"
-									[(ngModel)]="model.startDate" appBsDatepickerInvalid [minDate]="dateNow"
+									[(ngModel)]="model.startDate" appBsDatepickerInvalid
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon">
 									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>

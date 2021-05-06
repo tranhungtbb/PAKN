@@ -454,56 +454,18 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-
-		[HttpPost]
+		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("SYUnitChageStatusBase")]
-		public async Task<ActionResult<object>> SYUnitChageStatusBase(SYUnitChageStatusIN _sYUnitChageStatusIN)
+		[Route("SYSystemLogGetAllOnPageAdminBase")]
+		public async Task<ActionResult<object>> SYSystemLogGetAllOnPageAdminBase(int? UserId, int? PageSize, int? PageIndex, DateTime? CreateDate, byte? Status, string Description)
 		{
 			try
 			{
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new SYUnitChageStatus(_appSetting).SYUnitChageStatusDAO(_sYUnitChageStatusIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize("ThePolicy")]
-		[Route("SYUnitChageStatusListBase")]
-		public async Task<ActionResult<object>> SYUnitChageStatusListBase(List<SYUnitChageStatusIN> _sYUnitChageStatusINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _sYUnitChageStatusIN in _sYUnitChageStatusINs)
-				{
-					var result = await new SYUnitChageStatus(_appSetting).SYUnitChageStatusDAO(_sYUnitChageStatusIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
+				List<SYSystemLogGetAllOnPageAdmin> rsSYSystemLogGetAllOnPageAdmin = await new SYSystemLogGetAllOnPageAdmin(_appSetting).SYSystemLogGetAllOnPageAdminDAO(UserId, PageSize, PageIndex, CreateDate, Status, Description);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
+						{"SYSystemLogGetAllOnPageAdmin", rsSYSystemLogGetAllOnPageAdmin},
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
@@ -514,7 +476,6 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
 
 		[HttpGet]
 		[Authorize]

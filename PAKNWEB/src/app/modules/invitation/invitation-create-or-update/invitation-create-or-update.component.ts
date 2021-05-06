@@ -39,6 +39,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 	listItemUserSelected: Array<InvitationUserMapObject>
 	userMap: any[]
 	key: any = ''
+	fileAccept = CONSTANTS.FILEACCEPT
 	userId: any
 	@ViewChild('file', { static: false }) public file: ElementRef
 	constructor(

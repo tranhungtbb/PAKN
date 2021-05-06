@@ -169,6 +169,16 @@ namespace PAKNAPI
 				FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Upload/Remind")),
 				RequestPath = new PathString("/Upload/Remind")
 			});
+			app.UseStaticFiles(new StaticFileOptions()
+			{
+				FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Upload/News")),
+				RequestPath = new PathString("/Upload/News")
+			});
+			app.UseStaticFiles(new StaticFileOptions()
+			{
+				FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Upload/User")),
+				RequestPath = new PathString("/Upload/User")
+			});
 
 			// Dev
 			DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension.RegisterExtensionGlobal(new ReportStorageWebExtension1());

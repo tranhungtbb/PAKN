@@ -278,7 +278,7 @@
 </div>
 
 
-<app-user-create-or-update></app-user-create-or-update>
+<app-user-create-or-update modalid="user-create-or-update-1"></app-user-create-or-update>
 <!-- Modal unit -->
 <div class="modal fade" id="modal-create-or-update">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -334,7 +334,7 @@
 						</div>
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">Email <span class="cl-red">(*)</span></label>
-							<input formControlName="email" [(ngModel)]="modelUnit.email" type="mail" class="form-control" placeholder="Nhập...">
+							<input svTrim formControlName="email" [(ngModel)]="modelUnit.email" type="mail" class="form-control" placeholder="Nhập...">
 							<div *ngIf="(unitFormSubmitted && fUnit.email.invalid)||(fUnit.email.invalid && (fUnit.email.dirty || fUnit.email.touched))" class="has-error m-b-12">
 								<div *ngIf="fUnit.email.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -359,11 +359,11 @@
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Địa chỉ</label>
-							<input formControlName="address" [(ngModel)]="modelUnit.address" type="text" class="form-control" placeholder="Nhập...">
+							<input svTrim formControlName="address" [(ngModel)]="modelUnit.address" type="text" class="form-control" placeholder="Nhập...">
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Mô tả</label>
-							<textarea [(ngModel)]="modelUnit.description" formControlName="description" class="form-control" rows="4" placeholder="Nhập..."></textarea>
+							<textarea svTrim [(ngModel)]="modelUnit.description" formControlName="description" class="form-control" rows="4" placeholder="Nhập..."></textarea>
 						</div>
 					</div>
 				</form>
