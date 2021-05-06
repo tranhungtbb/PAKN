@@ -119,7 +119,7 @@ export class Api {
 	public static RoleInsert = 'SYSPBase/SYRoleInsertBase'
 	public static RoleUpdate = 'SYSPBase/SYRoleUpdateBase'
 	public static RoleDelete = 'SYSPBase/SYRoleDeleteBase'
-	public static RoleGetById = 'SYSPBase/SYRoleGetByIDBase'
+	public static RoleGetById = 'Role/GetByID'
 	public static RoleInsertPermission = 'SYSPBase/SYPermissionGroupUserInsertByListBase'
 	public static RoleGetDataForCreate = 'Role/GetDataForCreate'
 

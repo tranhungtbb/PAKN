@@ -225,6 +225,29 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYPermissionGroupUserGetByGroupIdBase")]
+		public async Task<ActionResult<object>> SYPermissionGroupUserGetByGroupIdBase(int? GroupUserId)
+		{
+			try
+			{
+				List<SYPermissionGroupUserGetByGroupId> rsSYPermissionGroupUserGetByGroupId = await new SYPermissionGroupUserGetByGroupId(_appSetting).SYPermissionGroupUserGetByGroupIdDAO(GroupUserId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYPermissionGroupUserGetByGroupId", rsSYPermissionGroupUserGetByGroupId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("SYPermissionGroupUserInsertByListBase")]
