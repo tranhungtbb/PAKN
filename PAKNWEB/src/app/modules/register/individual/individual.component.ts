@@ -128,7 +128,7 @@ export class IndividualComponent implements OnInit {
 	onSave() {
 		this.fLoginSubmitted = true
 		this.fInfoSubmitted = true
-
+		console.log(this.model)
 		let fDob: any = document.querySelector('#_dob')
 		let fDateIssue: any = document.querySelector('#_dateIssue')
 		this.model._birthDay = fDob.value
@@ -155,6 +155,7 @@ export class IndividualComponent implements OnInit {
 			return
 		}
 
+		return
 		// req to server
 		this.registerService.registerIndividual(this.model).subscribe((res) => {
 			if (res.success != 'OK') {

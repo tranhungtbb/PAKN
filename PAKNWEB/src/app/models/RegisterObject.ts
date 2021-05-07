@@ -4,6 +4,9 @@ export class IndividualObject {
 		this.password = null
 		this.gender = true
 		this.email = null
+		this.fullName = ''
+		this.issuedPlace = ''
+		this.iDCard = ''
 		//
 		this.nation = 'Việt Nam'
 		this.provinceId = ''
