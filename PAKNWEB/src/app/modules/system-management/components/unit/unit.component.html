@@ -333,7 +333,8 @@
 						</div>
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">Email <span class="cl-red">(*)</span></label>
-							<input svTrim formControlName="email" [(ngModel)]="modelUnit.email" type="mail" class="form-control" placeholder="Nhập...">
+							<input formControlName="email" [(ngModel)]="modelUnit.email" type="mail" class="form-control" placeholder="Nhập..."
+								(change)="onCheckExist('Email',$event.target.value)">
 							<div *ngIf="(unitFormSubmitted && fUnit.email.invalid)||(fUnit.email.invalid && (fUnit.email.dirty || fUnit.email.touched))" class="has-error m-b-12">
 								<div *ngIf="fUnit.email.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -342,11 +343,16 @@
 									<span class="help-block">Định dạng email không đúng</span>
 								</div>
 							</div>
+							<div *ngIf="checkExists['Email'] && fUnit.email.valid" class="has-error m-b-12">
+								<div *ngIf="checkExists['Email']">
+									<span class="help-block">Email đã tồn tại</span>
+								</div>
+							</div>
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
 							<input onlyNumber="true" stopLength="10" formControlName="phone" [(ngModel)]="modelUnit.phone" type="text" class="form-control" placeholder="Nhập..."
-								pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$">
+								pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$" (change)="onCheckExist('Phone',$event.target.value)">
 							<div *ngIf="(unitFormSubmitted && fUnit.phone.invalid)||(fUnit.phone.invalid && (fUnit.phone.dirty || fUnit.phone.touched))" class="has-error m-b-12">
 								<div *ngIf="fUnit.phone.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -355,14 +361,19 @@
 									<span class="help-block">Định dạng số điện thoại không đúng</span>
 								</div>
 							</div>
+							<div *ngIf="checkExists['Phone'] && fUnit.phone.valid" class="has-error m-b-12">
+								<div *ngIf="checkExists['Phone']">
+									<span class="help-block">Số điện thoại đã tồn tại</span>
+								</div>
+							</div>
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Địa chỉ</label>
-							<input svTrim formControlName="address" [(ngModel)]="modelUnit.address" type="text" class="form-control" placeholder="Nhập...">
+							<input formControlName="address" [(ngModel)]="modelUnit.address" type="text" class="form-control" placeholder="Nhập...">
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Mô tả</label>
-							<textarea svTrim [(ngModel)]="modelUnit.description" formControlName="description" class="form-control" rows="4" placeholder="Nhập..."></textarea>
+							<textarea [(ngModel)]="modelUnit.description" formControlName="description" class="form-control" rows="4" placeholder="Nhập..."></textarea>
 						</div>
 					</div>
 				</form>

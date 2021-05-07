@@ -30,6 +30,29 @@ namespace PAKNAPI.ControllerBase
 			_bugsnag = bugsnag;
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYUserCheckExistsBase")]
+		public async Task<ActionResult<object>> SYUserCheckExistsBase(string Field, string Value, long? Id)
+		{
+			try
+			{
+				List<SYUserCheckExists> rsSYUserCheckExists = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO(Field, Value, Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserCheckExists", rsSYUserCheckExists},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("SYUserRoleMapInsertBase")]

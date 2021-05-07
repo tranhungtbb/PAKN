@@ -128,7 +128,6 @@ export class IndividualComponent implements OnInit {
 	onSave() {
 		this.fLoginSubmitted = true
 		this.fInfoSubmitted = true
-
 		let fDob: any = document.querySelector('#_dob')
 		let fDateIssue: any = document.querySelector('#_dateIssue')
 		this.model._birthDay = fDob.value
@@ -136,7 +135,7 @@ export class IndividualComponent implements OnInit {
 
 		if (!this.model.email) this.model.email = ''
 
-		if (this.email_exists || this.phone_exists || this.idCard_exists) {
+		if (this.checkExists['Phone'] || this.checkExists['Email'] || this.checkExists['IDCard']) {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
@@ -212,10 +211,16 @@ export class IndividualComponent implements OnInit {
 	}
 
 	// server exists
-	phone_exists: boolean = false
-	email_exists: boolean = false
-	idCard_exists: boolean = false
+	checkExists = {
+		Phone: false,
+		Email: false,
+		IDCard: false,
+	}
 	onCheckExist(field: string, value: string) {
+		if (value == null || value == '') {
+			this.checkExists[field] = false
+			return
+		}
 		this.registerService
 			.individualCheckExists({
 				field,
@@ -223,9 +228,10 @@ export class IndividualComponent implements OnInit {
 			})
 			.subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
-					if (field == 'Phone') this.phone_exists = res.result.BIIndividualCheckExists[0].exists
-					else if (field == 'Email') this.email_exists = res.result.BIIndividualCheckExists[0].exists
-					else if (field == 'IDCard') this.idCard_exists = res.result.BIIndividualCheckExists[0].exists
+					// if (field == 'Phone') this.phone_exists = res.result.BIIndividualCheckExists[0].exists
+					// else if (field == 'Email') this.email_exists = res.result.BIIndividualCheckExists[0].exists
+					// else if (field == 'IDCard') this.idCard_exists = res.result.BIIndividualCheckExists[0].exists
+					this.checkExists[field] = res.result.BIIndividualCheckExists[0].exists
 				}
 			})
 	}

@@ -9,10 +9,12 @@ import { PositionService } from '../../../../../services/position.service'
 import { RoleService } from '../../../../../services/role.service'
 import { AppSettings } from 'src/app/constants/app-setting'
 
+import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
 import { UserObject2 } from 'src/app/models/UserObject'
 
 import { UnitComponent } from '../../unit/unit.component'
+import file_uploader from 'devextreme/ui/file_uploader'
 
 declare var jquery: any
 declare var $: any
@@ -94,6 +96,24 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	get fUser() {
 		return this.createUserForm.controls
 	}
+	checkExists = {
+		Email: false,
+		Phone: false,
+	}
+	onCheckExist(field: string, value: string) {
+		this.userService
+			.checkExists({
+				field,
+				value,
+				id: this.modelUser.id ? this.modelUser.id : 0,
+			})
+			.subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.checkExists[field] = res.result.SYUserCheckExists[0].exists
+				}
+			})
+	}
+
 	userFormSubmitted = false
 	onSaveUser(): void {
 		this.userFormSubmitted = true
@@ -103,6 +123,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
+		if (this.checkExists['Email'] || this.checkExists['Phone']) return
 
 		//avatar file;
 		let files = $('#' + this.modalId + ' .seclect-avatar')[0].files

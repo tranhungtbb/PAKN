@@ -644,6 +644,33 @@ namespace PAKNAPI.ModelBase
 		public string Description { get; set; }
 	}
 
+	public class SYUnitCheckExists
+	{
+		private SQLCon _sQLCon;
+
+		public SYUnitCheckExists(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUnitCheckExists()
+		{
+		}
+
+		public bool? Exists { get; set; }
+		public string Value { get; set; }
+
+		public async Task<List<SYUnitCheckExists>> SYUnitCheckExistsDAO(string Field, string Value, long? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Field", Field);
+			DP.Add("Value", Value);
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUnitCheckExists>("SY_Unit_CheckExists", DP)).ToList();
+		}
+	}
+
 	public class SYUnitGetDropdown
 	{
 		private SQLCon _sQLCon;

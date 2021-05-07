@@ -5,7 +5,7 @@
 			<form class="px-3" [formGroup]="formLogin">
 				<div class="form-group">
 					<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
-					<input numbersOnly stopLength="10" [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." autocomplete="off"
+					<input numbersOnly maxlength="10" [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." autocomplete="off"
 						class="form-control border-brown" (change)="onCheckExist('Phone',$event.target.value)">
 					<div *ngIf="(fLoginSubmitted && fLogin.phone.invalid)||(fLogin.phone.invalid && (fLogin.phone.dirty || fLogin.phone.touched))" class="has-error m-b-12">
 						<div *ngIf="fLogin.phone.errors.required">
@@ -15,9 +15,9 @@
 							<span class="help-block">Định dạng số điện thoại không đúng</span>
 						</div>
 					</div>
-					<div *ngIf="phone_exists && fLogin.phone.valid" class="has-error m-b-12">
-						<div *ngIf="phone_exists">
-							<span class="help-block">Số điện thoại đã được sử dụng</span>
+					<div *ngIf="checkExists['Phone'] && fLogin.phone.valid" class="has-error m-b-12">
+						<div *ngIf="checkExists['Phone']">
+							<span class="help-block">Số điện thoại đã tồn tại</span>
 						</div>
 					</div>
 				</div>
@@ -87,8 +87,8 @@
 							<span class="help-block">Chỉ nhập tối đa 20 ký tự</span>
 						</div>
 					</div>
-					<div *ngIf="busiRegis_exists && fOrgInfo.RegistrationNum.valid" class="has-error m-b-12">
-						<div *ngIf="busiRegis_exists">
+					<div *ngIf="checkExists['BusinessRegistration'] && fOrgInfo.RegistrationNum.valid" class="has-error m-b-12">
+						<div *ngIf="checkExists['BusinessRegistration']">
 							<span class="help-block">Số chứng nhận ĐKKD đã tồn tại</span>
 						</div>
 					</div>
@@ -103,8 +103,8 @@
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
 					</div>
-					<div *ngIf="busiDeci_exists && fOrgInfo.DecisionFoundation.valid" class="has-error m-b-12">
-						<div *ngIf="busiDeci_exists">
+					<div *ngIf="checkExists['DecisionOfEstablishing'] && fOrgInfo.DecisionFoundation.valid" class="has-error m-b-12">
+						<div *ngIf="checkExists['DecisionOfEstablishing']">
 							<span class="help-block">Số quyết định thành lập đã tồn tại</span>
 						</div>
 					</div>

@@ -57,9 +57,9 @@
 				<span class="help-block">Định dạng email không hợp lệ</span>
 			</div>
 		</div>
-		<div *ngIf="email_exists && fInfo.Email.valid" class="has-error m-b-12">
-			<div *ngIf="email_exists">
-				<span class="help-block">Email đã được sử dụng</span>
+		<div *ngIf="checkExists['Email'] && fInfo.Email.valid" class="has-error m-b-12">
+			<div *ngIf="checkExists['Email']">
+				<span class="help-block">Email đã tồn tại</span>
 			</div>
 		</div>
 	</div>

@@ -307,14 +307,6 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			}
 			this.model.imagePath = res.result.path
 			this.avatarUrl = `${AppSettings.API_DOWNLOADFILES}/${this.model.imagePath}`
-
-			// let avatarPath = this.model.imagePath.split('/')
-			// this.newsService.getAvatar(avatarPath[avatarPath.length - 1]).subscribe((res) => {
-			// 	if (res) {
-			// 		let objectURL = 'data:image/jpeg;base64,' + res
-			// 		this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-			// 	}
-			// })
 		})
 	}
 
