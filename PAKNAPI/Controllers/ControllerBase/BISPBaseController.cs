@@ -393,6 +393,7 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("BIInvididualUpdateInfoBase")]

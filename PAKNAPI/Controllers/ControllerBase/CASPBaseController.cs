@@ -31,7 +31,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("CAAdministrativeUnitsGetDropDownBase")]
 		public async Task<ActionResult<object>> CAAdministrativeUnitsGetDropDownBase(int? Id)
 		{

@@ -529,6 +529,7 @@ namespace PAKNAPI.ModelBase
 		public bool? Gender { get; set; }
 		public long? UserId { get; set; }
 	}
+
 	public class BIIndividualOrBusinessGetDropListByProviceId
 	{
 		private SQLCon _sQLCon;
@@ -557,6 +558,7 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualOrBusinessGetDropListByProviceId>("BI_IndividualOrBusinessGetDropListByProviceId", DP)).ToList();
 		}
 	}
+
 	public class BIInvididualUpdateInfo
 	{
 		private SQLCon _sQLCon;
