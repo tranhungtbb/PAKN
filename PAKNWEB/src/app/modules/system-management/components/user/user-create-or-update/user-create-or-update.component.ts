@@ -14,6 +14,7 @@ import { COMMONS } from 'src/app/commons/commons'
 import { UserObject2 } from 'src/app/models/UserObject'
 
 import { UnitComponent } from '../../unit/unit.component'
+import file_uploader from 'devextreme/ui/file_uploader'
 
 declare var jquery: any
 declare var $: any
@@ -95,19 +96,20 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	get fUser() {
 		return this.createUserForm.controls
 	}
-	email_exists = false
-	phone_exists = false
+	checkExists = {
+		Email: false,
+		Phone: false,
+	}
 	onCheckExist(field: string, value: string) {
 		this.userService
 			.checkExists({
 				field,
 				value,
-				id: this.modelUser.id,
+				id: this.modelUser.id ? this.modelUser.id : 0,
 			})
 			.subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
-					if (field == 'Phone') this.phone_exists = res.result.SYUserCheckExists[0].exists
-					else if (field == 'Email') this.email_exists = res.result.SYUserCheckExists[0].exists
+					this.checkExists[field] = res.result.SYUserCheckExists[0].exists
 				}
 			})
 	}
@@ -121,7 +123,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
-		if (this.email_exists || this.phone_exists) return
+		if (this.checkExists['Email'] || this.checkExists['Phone']) return
 
 		//avatar file;
 		let files = $('#' + this.modalId + ' .seclect-avatar')[0].files

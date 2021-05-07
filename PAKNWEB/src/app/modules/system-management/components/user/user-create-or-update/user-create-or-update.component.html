@@ -41,8 +41,8 @@
 									<span class="help-block">Định dạng email không đúng</span>
 								</div>
 							</div>
-							<div *ngIf="email_exists && fUser.email.valid" class="has-error m-b-12">
-								<div *ngIf="email_exists">
+							<div *ngIf="checkExists['Email'] && fUser.email.valid" class="has-error m-b-12">
+								<div *ngIf="checkExists['Email']">
 									<span class="help-block">Email đã tồn tại</span>
 								</div>
 							</div>
@@ -69,8 +69,8 @@
 									<span class="help-block">Định dạng số điện thoại không đúng</span>
 								</div>
 							</div>
-							<div *ngIf="phone_exists && fUser.phone.valid" class="has-error m-b-12">
-								<div *ngIf="phone_exists">
+							<div *ngIf="checkExists['Phone'] && fUser.phone.valid" class="has-error m-b-12">
+								<div *ngIf="checkExists['Phone']">
 									<span class="help-block">Số điện thoại đã tồn tại</span>
 								</div>
 							</div>

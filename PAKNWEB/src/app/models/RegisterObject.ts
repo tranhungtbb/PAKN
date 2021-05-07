@@ -2,6 +2,7 @@ export class IndividualObject {
 	constructor() {
 		this.phone = null
 		this.password = null
+		this.rePassword = ''
 		this.gender = true
 		this.email = null
 		this.fullName = ''
