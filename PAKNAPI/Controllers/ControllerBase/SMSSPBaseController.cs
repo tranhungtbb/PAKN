@@ -364,6 +364,9 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SMSQuanLyTinNhanGetAllOnPage", rsSMSQuanLyTinNhanGetAllOnPage},
+						{"TotalCount", rsSMSQuanLyTinNhanGetAllOnPage != null && rsSMSQuanLyTinNhanGetAllOnPage.Count > 0 ? rsSMSQuanLyTinNhanGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsSMSQuanLyTinNhanGetAllOnPage != null && rsSMSQuanLyTinNhanGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsSMSQuanLyTinNhanGetAllOnPage != null && rsSMSQuanLyTinNhanGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

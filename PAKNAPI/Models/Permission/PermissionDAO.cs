@@ -48,6 +48,13 @@ namespace PAKNAPI.Models.Results
                 throw ex;
             }
         }
+        public async Task<List<int>> SYPermissionGroupUserGetByGroupId(int? GroupUserId)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("GroupUserId", GroupUserId);
+
+            return (await _sQLCon.ExecuteListDapperAsync<int>("SY_PermissionGroupUser_GetByGroupId", DP)).ToList();
+        }
     }
     public class PermissionCategoryObject
     {

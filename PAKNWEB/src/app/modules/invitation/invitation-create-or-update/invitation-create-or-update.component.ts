@@ -55,6 +55,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		this.files = []
 		this.userMap = []
 		this.lstFileDelete = []
+		this.action = 'Lưu'
 	}
 
 	ngOnInit() {
@@ -106,7 +107,6 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 				})
 			}
 		})
-		this.action = this.model.id == 0 ? 'Thêm mới' : 'Cập nhập'
 		this.title = this.model.id == 0 ? 'Thêm mới thư mời ' : 'Cập nhập thư mời'
 	}
 

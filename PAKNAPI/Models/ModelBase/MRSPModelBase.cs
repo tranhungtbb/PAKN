@@ -655,35 +655,6 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-	public class MRRecommendationGetDenyContents
-	{
-		private SQLCon _sQLCon;
-
-		public MRRecommendationGetDenyContents(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public MRRecommendationGetDenyContents()
-		{
-		}
-
-		public int Id { get; set; }
-		public int RecommendationId { get; set; }
-		public string Content { get; set; }
-		public string ReasonDeny { get; set; }
-		public DateTime? SendDate { get; set; }
-		public byte Status { get; set; }
-
-		public async Task<List<MRRecommendationGetDenyContents>> MRRecommendationGetDenyContentsDAO(long? RecommendationId)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("RecommendationId", RecommendationId);
-
-			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetDenyContents>("MR_Recommendation_GetDenyContents", DP)).ToList();
-		}
-	}
-
 	public class MRRecommendationGetSuggestCreate
 	{
 		private SQLCon _sQLCon;

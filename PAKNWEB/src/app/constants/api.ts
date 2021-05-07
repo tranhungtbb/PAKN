@@ -122,7 +122,7 @@ export class Api {
 	public static RoleInsert = 'SYSPBase/SYRoleInsertBase'
 	public static RoleUpdate = 'SYSPBase/SYRoleUpdateBase'
 	public static RoleDelete = 'SYSPBase/SYRoleDeleteBase'
-	public static RoleGetById = 'SYSPBase/SYRoleGetByIDBase'
+	public static RoleGetById = 'Role/GetByID'
 	public static RoleInsertPermission = 'SYSPBase/SYPermissionGroupUserInsertByListBase'
 	public static RoleGetDataForCreate = 'Role/GetDataForCreate'
 
@@ -194,10 +194,13 @@ export class Api {
 
 	//sms
 	public static SMSManagementGetOnPage = 'SMSSPBase/SMSQuanLyTinNhanGetAllOnPageBase'
-	public static SMSManagementInsert = 'SMSSPBase/SMSQuanLyTinNhanInsertBase'
-	public static SMSManagementUpdate = 'SMSSPBase/SMSQuanLyTinNhanUpdateBase'
-	public static SMSManagementDelete = 'SMSSPBase/SMSQuanLyTinNhanDeleteBase'
+	public static SMSManagementInsert = 'EmailSMS/SMSInsert'
+	public static SMSManagementUpdate = 'EmailSMS/SMSUpdate'
+	public static SMSManagementUpdateStatusSend = 'EmailSMS/SMSUpdateStatusTypeSend'
+	public static SMSManagementDelete = 'EmailSMS/SMSDelete'
 	public static SMSManagementGetById = 'SMSSPBase/SMSQuanLyTinNhanGetByIdBase'
+	public static AdministrativeUnits = 'CASPBase/CAAdministrativeUnitsGetDropDownBase'
+	public static GetListIndividualAndBusinessByAdmintrativeUnitId = 'BISPBase/BIIndividualOrBusinessGetDropListByProviceIdBase'
 
 	//RequestRecommendation
 	public static RecommendationRequestGetListProcess = 'MRSPBase/MRRecommendationKNCTGetAllWithProcessBase'
@@ -254,4 +257,9 @@ export class Api {
 	public static EmailConfigSystemUpdate = 'SYSPBase/SYEmailInsertBase'
 	public static SMSGetFirstBase = 'SYSPBase/SYSMSGetFirstBase'
 	public static SMSConfigSystemUpdate = 'SYSPBase/SYSMSInsertBase'
+	public static TimeConfigInsert = 'SYSPBase/SYTimeInsertBase'
+	public static TimeConfigUpdate = 'SYSPBase/SYTimeUpdateBase'
+	public static TimeConfigGetAllOnPage = 'SYSPBase/SYTimeGetAllOnPageBase'
+	public static TimeConfigDelete = 'SYSPBase/SYTimeDeleteBase'
+	public static TimeConfigGetById = 'SYSPBase/SYTimeGetByIdBase'
 }

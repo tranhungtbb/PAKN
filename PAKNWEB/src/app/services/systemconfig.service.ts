@@ -23,4 +23,19 @@ export class SystemconfigService {
 	updateSystemSMS(query: any): Observable<any> {
 		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.SMSConfigSystemUpdate)
 	}
+	getSystemTime(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.TimeConfigGetAllOnPage)
+	}
+	updateSystemTime(query: any): Observable<any> {
+		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.TimeConfigUpdate)
+	}
+	insertSystemTime(query: any): Observable<any> {
+		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.TimeConfigInsert)
+	}
+	deleteSystemTime(query: any): Observable<any> {
+		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.TimeConfigDelete)
+	}
+	getSystemTimeById(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.TimeConfigGetById)
+	}
 }

@@ -24,3 +24,12 @@ export class smsManagementGetAllOnPageObject {
 	type: string
 	constructor() {}
 }
+
+export class smsManagementMapObject {
+	id: number
+	category: boolean
+	name: boolean
+	administrativeUnitName: string
+	administrativeUnitId: number
+	constructor() {}
+}

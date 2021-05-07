@@ -24,17 +24,17 @@ export class SMSManagementComponent implements OnInit {
 	]
 
 	listCategory: any = [
-		{ value: 1, text: 'Người dân' },
-		{ value: 2, text: 'Doanh nghiệp' },
+		{ value: '1', text: 'Cá nhân' },
+		{ value: '2', text: 'Doanh nghiệp' },
 	]
 	title: string = ''
 	unitName: string = ''
-	type: string = '1,2'
+	type: string
 	status: Number
 	pageIndex: Number = 1
 	pageSize: Number = 20
 	totalRecords: Number
-	listData: any[]
+	listData: Array<smsManagementGetAllOnPageObject>
 
 	InvitationId: any
 
@@ -51,7 +51,7 @@ export class SMSManagementComponent implements OnInit {
 				PageSize: this.pageSize,
 				Title: this.title == null ? '' : this.title,
 				UnitName: this.unitName == null ? '' : this.unitName,
-				Type: this.type == null ? '1,2' : this.type,
+				Type: this.type == null ? '' : this.type,
 				Status: this.status == null ? '' : this.status,
 			})
 			.subscribe((res) => {
@@ -59,8 +59,19 @@ export class SMSManagementComponent implements OnInit {
 					this.totalRecords = 0
 					return
 				}
-				debugger
 				this.listData = res.result.SMSQuanLyTinNhanGetAllOnPage
+				this.listData.forEach((item) => {
+					let arr = item.type.split(',')
+					item.type = ''
+					arr.forEach((i) => {
+						this.listCategory.forEach((element) => {
+							if (i == element.value) {
+								item.type += element.text + ', '
+							}
+						})
+					})
+					item.type = item.type.substr(0, item.type.length - 2)
+				})
 				this.totalRecords = res.result.TotalCount
 			})
 	}
@@ -69,6 +80,24 @@ export class SMSManagementComponent implements OnInit {
 		this.pageSize = event.rows
 		this.pageIndex = event.first / event.rows + 1
 		this.getListPaged()
+	}
+
+	onSend(id: Number) {
+		$('#modalConfirmChangeStatus').modal('show')
+		this.InvitationId = id
+	}
+
+	onUpdateStatusTypeSend() {
+		$('#modalConfirmChangeStatus').modal('hide')
+		this.smsService.UpdateStatusSend({ idMSMS: this.InvitationId }).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.toast.success('Gửi thành công')
+				this.getListPaged()
+			} else {
+				this.toast.error('Lỗi khi gửi')
+				return
+			}
+		})
 	}
 
 	dataStateChange() {
@@ -100,13 +129,15 @@ export class SMSManagementComponent implements OnInit {
 	}
 
 	redirectCreate() {
-		this.routes.navigate(['quan-tri/thu-moi/them-moi'])
+		this.routes.navigate(['quan-tri/email-sms/sms/them-moi'])
 	}
 
 	redirectUpdate(id: number, status: number) {
 		if (status == 1) {
-			this.routes.navigate(['quan-tri/thu-moi/cap-nhap/' + id])
+			this.routes.navigate(['quan-tri/email-sms/sms/cap-nhap/' + id])
 		}
 		return
 	}
+
+	getHistory(id: number) {}
 }
