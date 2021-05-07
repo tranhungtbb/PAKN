@@ -82,6 +82,24 @@ export class SMSManagementComponent implements OnInit {
 		this.getListPaged()
 	}
 
+	onSend(id: Number) {
+		$('#modalConfirmChangeStatus').modal('show')
+		this.InvitationId = id
+	}
+
+	onUpdateStatusTypeSend() {
+		$('#modalConfirmChangeStatus').modal('hide')
+		this.smsService.UpdateStatusSend({ idMSMS: this.InvitationId }).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.toast.success('Gửi thành công')
+				this.getListPaged()
+			} else {
+				this.toast.error('Lỗi khi gửi')
+				return
+			}
+		})
+	}
+
 	dataStateChange() {
 		this.pageIndex = 1
 		this.table.first = 0
@@ -120,4 +138,6 @@ export class SMSManagementComponent implements OnInit {
 		}
 		return
 	}
+
+	getHistory(id: number) {}
 }

@@ -52,8 +52,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="w-100"></div>
-					<div class="col-sm-10 form-group">
+					<div class="col-sm-10 form-group padding-col">
 						<label class="mb-1 title-role">Thêm người dùng</label>
 						<ng-select placeholder="Nhập..." class="form-control" [items]="listUserIsSystem" bindValue="value" bindLabel="text" formControlName="userId"
 							[virtualScroll]="true" [(ngModel)]="userId">
@@ -62,7 +61,7 @@
 							</ng-template>
 						</ng-select>
 					</div>
-					<div class="col-sm-2 form-group" style="display: flex;align-items: center;padding : 23px 0px 0px 0px;">
+					<div class="col-sm-2 form-group padding-col" style="display: flex;align-items: center;padding : 23px 0px 0px 0px;">
 						<button type="button" class="btn grd-blue btn-block border-0 px-3 text-white center" style="width: 40px; height: 40px;" (click)="onCreateUser()">
 							<i class="bi bi-person-plus"></i>
 						</button>

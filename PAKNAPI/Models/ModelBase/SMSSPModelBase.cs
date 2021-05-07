@@ -235,6 +235,7 @@ namespace PAKNAPI.ModelBase
 		public DateTime? SendDate { get; set; }
 		public int? UserSend { get; set; }
 		public byte Status { get; set; }
+		public string Type { get; set; }
 
 		public async Task<List<SMSQuanLyTinNhanGetById>> SMSQuanLyTinNhanGetByIdDAO(int? Id)
 		{

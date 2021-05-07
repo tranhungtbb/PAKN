@@ -97,7 +97,7 @@
 									</td>
 									<td style="text-align: center;">
 										<div class="d-flex justify-content-end">
-											<a *ngIf="item.status == 1" class="btn-icon grd-blue text-white mr-2 cursor">
+											<a *ngIf="item.status == 1" class="btn-icon grd-blue text-white mr-2 cursor" (click)="onSend(item.id)">
 												<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
 													<path d="M13.5938 0.125927L0.468823 7.69624C-0.205005 8.08589
 													 -0.137622 9.07905 0.580151 9.37495L4.68757 11.0742V14.0625C4.68757 
@@ -112,8 +112,10 @@
 											</a>
 											<a *ngIf="item.status == 1" (click)=" redirectUpdate(item.id, item.status)" class="btn-icon grd-brown text-brown mr-2 cursor"><i
 													class="bi bi-pencil-square"></i></a>
-											<a *ngIf="item.status == 1" (click)="confirm(item.id)" class="btn-icon grd-red text-white cursor" data-toggle="modal"
-												data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
+											<a *ngIf="item.status == 1" (click)="confirm(item.id)" class="btn-icon grd-red text-white cursor"
+												[ngClass]="{ 'mr-2': item.status != 1 }" data-toggle="modal" data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
+											<a *ngIf="item.status != 1" class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i
+													class="bi bi-clock-history"></i></a>
 										</div>
 									</td>
 								</tr>
@@ -150,6 +152,33 @@
 					<div class="modal-footer" style="border: none; justify-content: center;">
 						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
 						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete()">Xác
+							nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalConfirmChangeStatus">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+					</div>
+					<div class="modal-body no-padding-bottom" style="border: none;">
+						<div style="text-align: center;">
+							<strong class="change-status-title">Bạn có mmuốn gửi SMS này?</strong>
+						</div>
+					</div>
+					<div class="modal-footer" style="border: none; justify-content: center;">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onUpdateStatusTypeSend()">Xác
 							nhận</button>
 					</div>
 				</div>

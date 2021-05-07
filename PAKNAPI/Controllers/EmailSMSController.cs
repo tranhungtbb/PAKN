@@ -81,7 +81,7 @@ namespace PAKNAPI.Controllers
 			{
 				response.model.CreateDate = DateTime.Now;
 				response.model.UserCreateId = (int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
-				if (response.model.Status == 2)
+				if (response.model.Status == STATUS_SMS.SEND)
 				{
 					response.model.SendDate = DateTime.Now;
 					response.model.UserSend = (int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
@@ -182,7 +182,7 @@ namespace PAKNAPI.Controllers
 				update.UpdateDate = DateTime.Now;
 				update.Type = response.model.Type;
 				update.UserUpdateId = (int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
-				if (response.model.Status == 2)
+				if (response.model.Status == STATUS_SMS.SEND)
 				{
 					update.SendDate = DateTime.Now;
 					update.UserSend = (int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
@@ -243,6 +243,48 @@ namespace PAKNAPI.Controllers
 						map.AdministrativeUnitId = item;
 						await new SMSTinNhanAdministrativeUnitMapInsert(_appSetting).SMSTinNhanAdministrativeUnitMapInsertDAO(map);
 					}
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					return new ResultApi { Success = ResultCode.OK };
+
+				}
+				else
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Error" };
+				}
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
+		[HttpGet]
+		[Authorize]
+		[Route("SMSUpdateStatusTypeSend")]
+		public async Task<object> SMSUpdateStatusTypeSend(int idMSMS)
+		{
+			try
+			{
+				SMSQuanLyTinNhanGetById model = (await new SMSQuanLyTinNhanGetById(_appSetting).SMSQuanLyTinNhanGetByIdDAO(idMSMS)).FirstOrDefault();
+
+				SMSQuanLyTinNhanUpdateIN update = new SMSQuanLyTinNhanUpdateIN();
+				update.Id = model.Id;
+				update.Title = model.Title;
+				update.Content = model.Content;
+				update.Signature = model.Signature;
+				update.Status = STATUS_SMS.SEND;
+				update.UpdateDate = DateTime.Now;
+				update.Type = model.Type;
+				update.UserUpdateId = (int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				update.SendDate = DateTime.Now;
+				update.UserSend = (int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				int id = Int32.Parse((await new SMSQuanLyTinNhanUpdate(_appSetting).SMSQuanLyTinNhanUpdateDAO(update)).ToString());
+
+				if (id > 0)
+				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 					return new ResultApi { Success = ResultCode.OK };
 

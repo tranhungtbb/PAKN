@@ -193,6 +193,7 @@ export class Api {
 	public static SMSManagementGetOnPage = 'SMSSPBase/SMSQuanLyTinNhanGetAllOnPageBase'
 	public static SMSManagementInsert = 'EmailSMS/SMSInsert'
 	public static SMSManagementUpdate = 'EmailSMS/SMSUpdate'
+	public static SMSManagementUpdateStatusSend = 'EmailSMS/SMSUpdateStatusTypeSend'
 	public static SMSManagementDelete = 'EmailSMS/SMSDelete'
 	public static SMSManagementGetById = 'SMSSPBase/SMSQuanLyTinNhanGetByIdBase'
 	public static AdministrativeUnits = 'CASPBase/CAAdministrativeUnitsGetDropDownBase'

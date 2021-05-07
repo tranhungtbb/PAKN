@@ -21,6 +21,10 @@ export class SMSManagementService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.SMSManagementUpdate)
 	}
 
+	UpdateStatusSend(request: any): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.SMSManagementUpdateStatusSend)
+	}
+
 	Update(request: any): Observable<any> {
 		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.SMSManagementUpdate)
 	}
