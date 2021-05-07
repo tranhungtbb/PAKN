@@ -530,35 +530,6 @@ namespace PAKNAPI.ModelBase
 		public long? UserId { get; set; }
 	}
 
-	public class BIIndividualOrBusinessGetDropListByProviceId
-	{
-		private SQLCon _sQLCon;
-
-		public BIIndividualOrBusinessGetDropListByProviceId(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public BIIndividualOrBusinessGetDropListByProviceId()
-		{
-		}
-
-		public long Id { get; set; }
-		public int Category { get; set; }
-		public string Name { get; set; }
-		public string AdministrativeUnitName { get; set; }
-		public short? AdministrativeUnitId { get; set; }
-
-		public async Task<List<BIIndividualOrBusinessGetDropListByProviceId>> BIIndividualOrBusinessGetDropListByProviceIdDAO(int? Id, int? Type)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-			DP.Add("Type", Type);
-
-			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualOrBusinessGetDropListByProviceId>("BI_IndividualOrBusinessGetDropListByProviceId", DP)).ToList();
-		}
-	}
-
 	public class BIInvididualUpdateInfo
 	{
 		private SQLCon _sQLCon;

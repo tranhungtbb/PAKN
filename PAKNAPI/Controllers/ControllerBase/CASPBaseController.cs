@@ -31,29 +31,6 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
-		[Route("CAAdministrativeUnitsGetDropDownBase")]
-		public async Task<ActionResult<object>> CAAdministrativeUnitsGetDropDownBase(int? Id)
-		{
-			try
-			{
-				List<CAAdministrativeUnitsGetDropDown> rsCAAdministrativeUnitsGetDropDown = await new CAAdministrativeUnitsGetDropDown(_appSetting).CAAdministrativeUnitsGetDropDownDAO(Id);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CAAdministrativeUnitsGetDropDown", rsCAAdministrativeUnitsGetDropDown},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("CADistrictGetAllBase")]
 		public async Task<ActionResult<object>> CADistrictGetAllBase(byte? ProvinceId)

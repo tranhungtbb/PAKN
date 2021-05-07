@@ -371,29 +371,6 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("BIIndividualOrBusinessGetDropListByProviceIdBase")]
-		public async Task<ActionResult<object>> BIIndividualOrBusinessGetDropListByProviceIdBase(int? Id, int? Type)
-		{
-			try
-			{
-				List<BIIndividualOrBusinessGetDropListByProviceId> rsBIIndividualOrBusinessGetDropListByProviceId = await new BIIndividualOrBusinessGetDropListByProviceId(_appSetting).BIIndividualOrBusinessGetDropListByProviceIdDAO(Id, Type);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"BIIndividualOrBusinessGetDropListByProviceId", rsBIIndividualOrBusinessGetDropListByProviceId},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("BIInvididualUpdateInfoBase")]
