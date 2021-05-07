@@ -191,10 +191,12 @@ export class Api {
 
 	//sms
 	public static SMSManagementGetOnPage = 'SMSSPBase/SMSQuanLyTinNhanGetAllOnPageBase'
-	public static SMSManagementInsert = 'SMSSPBase/SMSQuanLyTinNhanInsertBase'
-	public static SMSManagementUpdate = 'SMSSPBase/SMSQuanLyTinNhanUpdateBase'
-	public static SMSManagementDelete = 'SMSSPBase/SMSQuanLyTinNhanDeleteBase'
+	public static SMSManagementInsert = 'EmailSMS/SMSInsert'
+	public static SMSManagementUpdate = 'EmailSMS/SMSUpdate'
+	public static SMSManagementDelete = 'EmailSMS/SMSDelete'
 	public static SMSManagementGetById = 'SMSSPBase/SMSQuanLyTinNhanGetByIdBase'
+	public static AdministrativeUnits = 'CASPBase/CAAdministrativeUnitsGetDropDownBase'
+	public static GetListIndividualAndBusinessByAdmintrativeUnitId = 'BISPBase/BIIndividualOrBusinessGetDropListByProviceIdBase'
 
 	//RequestRecommendation
 	public static RecommendationRequestGetListProcess = 'MRSPBase/MRRecommendationKNCTGetAllWithProcessBase'

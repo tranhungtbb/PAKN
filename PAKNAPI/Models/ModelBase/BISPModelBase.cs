@@ -547,6 +547,7 @@ namespace PAKNAPI.ModelBase
 		public int Category { get; set; }
 		public string Name { get; set; }
 		public string AdministrativeUnitName { get; set; }
+		public short? AdministrativeUnitId { get; set; }
 
 		public async Task<List<BIIndividualOrBusinessGetDropListByProviceId>> BIIndividualOrBusinessGetDropListByProviceIdDAO(int? Id, int? Type)
 		{

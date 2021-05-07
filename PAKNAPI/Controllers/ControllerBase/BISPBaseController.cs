@@ -372,7 +372,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BIIndividualOrBusinessGetDropListByProviceIdBase")]
 		public async Task<ActionResult<object>> BIIndividualOrBusinessGetDropListByProviceIdBase(int? Id, int? Type)
 		{
