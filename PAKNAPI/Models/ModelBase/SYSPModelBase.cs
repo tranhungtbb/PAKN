@@ -447,36 +447,202 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-
-	public class SYUnitChageStatus
+	public class SYSystemLogGetAllOnPageAdmin
 	{
 		private SQLCon _sQLCon;
 
-		public SYUnitChageStatus(IAppSetting appSetting)
+		public SYSystemLogGetAllOnPageAdmin(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public SYUnitChageStatus()
+		public SYSystemLogGetAllOnPageAdmin()
 		{
 		}
 
-		public async Task<int> SYUnitChageStatusDAO(SYUnitChageStatusIN _sYUnitChageStatusIN)
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+		public long UserId { get; set; }
+		public string FullName { get; set; }
+		public string IPAddress { get; set; }
+		public string MACAddress { get; set; }
+		public string Description { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public byte Status { get; set; }
+		public string Action { get; set; }
+		public string Exception { get; set; }
+
+		public async Task<List<SYSystemLogGetAllOnPageAdmin>> SYSystemLogGetAllOnPageAdminDAO(int? UserId, int? PageSize, int? PageIndex, DateTime? CreateDate, byte? Status, string Description)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _sYUnitChageStatusIN.Id);
-			DP.Add("IsActived", _sYUnitChageStatusIN.IsActived);
+			DP.Add("UserId", UserId);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("CreateDate", CreateDate);
+			DP.Add("Status", Status);
+			DP.Add("Description", Description);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UnitChageStatus", DP));
+			return (await _sQLCon.ExecuteListDapperAsync<SYSystemLogGetAllOnPageAdmin>("SY_SystemLogGetAllOnPageAdmin", DP)).ToList();
 		}
 	}
 
-	public class SYUnitChageStatusIN
+	public class SYTimeDelete
 	{
-		public long? Id { get; set; }
-		public bool? IsActived { get; set; }
+		private SQLCon _sQLCon;
+
+		public SYTimeDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYTimeDelete()
+		{
+		}
+
+		public async Task<int> SYTimeDeleteDAO(SYTimeDeleteIN _sYTimeDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYTimeDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_TimeDelete", DP));
+		}
 	}
 
+	public class SYTimeDeleteIN
+	{
+		public int? Id { get; set; }
+	}
+
+	public class SYTimeGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public SYTimeGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYTimeGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool? IsActived { get; set; }
+		public DateTime? Time { get; set; }
+		public string Description { get; set; }
+
+		public async Task<List<SYTimeGetAllOnPage>> SYTimeGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Code, DateTime? Time, string Description, bool? IsActived)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("Name", Name);
+			DP.Add("Code", Code);
+			DP.Add("Time", Time);
+			DP.Add("Description", Description);
+			DP.Add("IsActived", IsActived);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYTimeGetAllOnPage>("SY_TimeGetAllOnPage", DP)).ToList();
+		}
+	}
+
+	public class SYTimeGetByID
+	{
+		private SQLCon _sQLCon;
+
+		public SYTimeGetByID(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYTimeGetByID()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool? IsActived { get; set; }
+		public DateTime? Time { get; set; }
+		public string Description { get; set; }
+
+		public async Task<List<SYTimeGetByID>> SYTimeGetByIDDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYTimeGetByID>("SY_TimeGetByID", DP)).ToList();
+		}
+	}
+
+	public class SYTimeInsert
+	{
+		private SQLCon _sQLCon;
+
+		public SYTimeInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYTimeInsert()
+		{
+		}
+
+		public async Task<int?> SYTimeInsertDAO(SYTimeInsertIN _sYTimeInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _sYTimeInsertIN.Name);
+			DP.Add("IsActived", _sYTimeInsertIN.IsActived);
+			DP.Add("Time", _sYTimeInsertIN.Time);
+			DP.Add("Description", _sYTimeInsertIN.Description);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_TimeInsert", DP);
+		}
+	}
+
+	public class SYTimeInsertIN
+	{
+		public string Name { get; set; }
+		public bool? IsActived { get; set; }
+		public DateTime? Time { get; set; }
+		public string Description { get; set; }
+	}
+
+	public class SYTimeUpdate
+	{
+		private SQLCon _sQLCon;
+
+		public SYTimeUpdate(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYTimeUpdate()
+		{
+		}
+
+		public async Task<int?> SYTimeUpdateDAO(SYTimeUpdateIN _sYTimeUpdateIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYTimeUpdateIN.Id);
+			DP.Add("Name", _sYTimeUpdateIN.Name);
+			DP.Add("IsActived", _sYTimeUpdateIN.IsActived);
+			DP.Add("Time", _sYTimeUpdateIN.Time);
+			DP.Add("Description", _sYTimeUpdateIN.Description);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_TimeUpdate", DP);
+		}
+	}
+
+	public class SYTimeUpdateIN
+	{
+		public int? Id { get; set; }
+		public string Name { get; set; }
+		public bool? IsActived { get; set; }
+		public DateTime? Time { get; set; }
+		public string Description { get; set; }
+	}
 
 	public class SYUnitGetDropdown
 	{

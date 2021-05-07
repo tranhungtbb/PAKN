@@ -242,4 +242,9 @@ export class Api {
 	public static EmailConfigSystemUpdate = 'SYSPBase/SYEmailInsertBase'
 	public static SMSGetFirstBase = 'SYSPBase/SYSMSGetFirstBase'
 	public static SMSConfigSystemUpdate = 'SYSPBase/SYSMSInsertBase'
+	public static TimeConfigInsert = 'SYSPBase/SYTimeInsertBase'
+	public static TimeConfigUpdate = 'SYSPBase/SYTimeUpdateBase'
+	public static TimeConfigGetAllOnPage = 'SYSPBase/SYTimeGetAllOnPageBase'
+	public static TimeConfigDelete = 'SYSPBase/SYTimeDeleteBase'
+	public static TimeConfigGetById = 'SYSPBase/SYTimeGetByIdBase'
 }

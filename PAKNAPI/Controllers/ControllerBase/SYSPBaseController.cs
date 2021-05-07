@@ -454,17 +454,19 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-
-		[HttpPost]
+		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("SYUnitChageStatusBase")]
-		public async Task<ActionResult<object>> SYUnitChageStatusBase(SYUnitChageStatusIN _sYUnitChageStatusIN)
+		[Route("SYSystemLogGetAllOnPageAdminBase")]
+		public async Task<ActionResult<object>> SYSystemLogGetAllOnPageAdminBase(int? UserId, int? PageSize, int? PageIndex, DateTime? CreateDate, byte? Status, string Description)
 		{
 			try
 			{
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new SYUnitChageStatus(_appSetting).SYUnitChageStatusDAO(_sYUnitChageStatusIN) };
+				List<SYSystemLogGetAllOnPageAdmin> rsSYSystemLogGetAllOnPageAdmin = await new SYSystemLogGetAllOnPageAdmin(_appSetting).SYSystemLogGetAllOnPageAdminDAO(UserId, PageSize, PageIndex, CreateDate, Status, Description);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYSystemLogGetAllOnPageAdmin", rsSYSystemLogGetAllOnPageAdmin},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -477,16 +479,36 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize("ThePolicy")]
-		[Route("SYUnitChageStatusListBase")]
-		public async Task<ActionResult<object>> SYUnitChageStatusListBase(List<SYUnitChageStatusIN> _sYUnitChageStatusINs)
+		[Route("SYTimeDeleteBase")]
+		public async Task<ActionResult<object>> SYTimeDeleteBase(SYTimeDeleteIN _sYTimeDeleteIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYTimeDelete(_appSetting).SYTimeDeleteDAO(_sYTimeDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYTimeDeleteListBase")]
+		public async Task<ActionResult<object>> SYTimeDeleteListBase(List<SYTimeDeleteIN> _sYTimeDeleteINs)
 		{
 			try
 			{
 				int count = 0;
 				int errcount = 0;
-				foreach (var _sYUnitChageStatusIN in _sYUnitChageStatusINs)
+				foreach (var _sYTimeDeleteIN in _sYTimeDeleteINs)
 				{
-					var result = await new SYUnitChageStatus(_appSetting).SYUnitChageStatusDAO(_sYUnitChageStatusIN);
+					var result = await new SYTimeDelete(_appSetting).SYTimeDeleteDAO(_sYTimeDeleteIN);
 					if (result > 0)
 					{
 						count++;
@@ -515,6 +537,91 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYTimeGetAllOnPageBase")]
+		public async Task<ActionResult<object>> SYTimeGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Code, DateTime? Time, string Description, bool? IsActived)
+		{
+			try
+			{
+				List<SYTimeGetAllOnPage> rsSYTimeGetAllOnPage = await new SYTimeGetAllOnPage(_appSetting).SYTimeGetAllOnPageDAO(PageSize, PageIndex, Name, Code, Time, Description, IsActived);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYTimeGetAllOnPage", rsSYTimeGetAllOnPage},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYTimeGetByIDBase")]
+		public async Task<ActionResult<object>> SYTimeGetByIDBase(int? Id)
+		{
+			try
+			{
+				List<SYTimeGetByID> rsSYTimeGetByID = await new SYTimeGetByID(_appSetting).SYTimeGetByIDDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYTimeGetByID", rsSYTimeGetByID},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYTimeInsertBase")]
+		public async Task<ActionResult<object>> SYTimeInsertBase(SYTimeInsertIN _sYTimeInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYTimeInsert(_appSetting).SYTimeInsertDAO(_sYTimeInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYTimeUpdateBase")]
+		public async Task<ActionResult<object>> SYTimeUpdateBase(SYTimeUpdateIN _sYTimeUpdateIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYTimeUpdate(_appSetting).SYTimeUpdateDAO(_sYTimeUpdateIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 
 		[HttpGet]
 		[Authorize]
