@@ -69,10 +69,9 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 					if (this.model.id != 0) {
 						this.roleService.getRoleById({ id: this.model.id }).subscribe((res) => {
 							if (res.success == RESPONSE_STATUS.success) {
-								if (res.result.SYRoleGetByID) {
-									this.model = { ...res.result.SYRoleGetByID[0] }
-									this.getUsersByRoleId(id)
-								}
+								this.model = res.result.Data
+								this.listPermissionGroupUserSelected = res.result.ListPermission
+								this.onGroupUserLoadPermission(this.listPermissionGroupUserSelected)
 							}
 						})
 					}

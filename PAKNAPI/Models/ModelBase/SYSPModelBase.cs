@@ -205,6 +205,30 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYPermissionGroupUserGetByGroupId
+	{
+		private SQLCon _sQLCon;
+
+		public SYPermissionGroupUserGetByGroupId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYPermissionGroupUserGetByGroupId()
+		{
+		}
+
+		public short PermissionId { get; set; }
+
+		public async Task<List<SYPermissionGroupUserGetByGroupId>> SYPermissionGroupUserGetByGroupIdDAO(int? GroupUserId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("GroupUserId", GroupUserId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYPermissionGroupUserGetByGroupId>("SY_PermissionGroupUser_GetByGroupId", DP)).ToList();
+		}
+	}
+
 	public class SYPermissionGroupUserInsertByList
 	{
 		private SQLCon _sQLCon;
