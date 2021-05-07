@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
+import { AppSettings } from 'src/app/constants/app-setting'
 
 import { NewsService } from 'src/app/services/news.service'
 import { CatalogService } from 'src/app/services/catalog.service'
@@ -66,12 +67,15 @@ export class NewsRelateModalComponent implements OnInit {
 			})
 			.subscribe((res) => {
 				if (res.success != 'OK') return
-				this.listDataPaged = res.result.NENewsGetAllOnPage.filter((c) => c.id != this.parentNews)
+				this.listDataPaged = res.result.NENewsGetAllOnPage.filter((c) => c.id != this.parentNews).map((item) => {
+					item.imagePath = `${AppSettings.API_DOWNLOADFILES}/${item.imagePath}`
+					return item
+				})
 				if (this.totalCount <= 0) this.totalCount = res.result.TotalCount
 				this.totalCount = Math.ceil(this.totalCount / this.query.pageSize)
 
 				//get avatars
-				this.getNewsAvatars()
+				//this.getNewsAvatars()
 
 				// lấy ds tin tức từ id
 				// if (this.newsIds != null && this.newsIds.length > 0)

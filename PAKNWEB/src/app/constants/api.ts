@@ -119,7 +119,9 @@ export class Api {
 	public static RoleInsert = 'SYSPBase/SYRoleInsertBase'
 	public static RoleUpdate = 'SYSPBase/SYRoleUpdateBase'
 	public static RoleDelete = 'SYSPBase/SYRoleDeleteBase'
-	public static RoleGetById = 'SYSPBase/SYRoleGetByIDBase'
+	public static RoleGetById = 'Role/GetByID'
+	public static RoleInsertPermission = 'SYSPBase/SYPermissionGroupUserInsertByListBase'
+	public static RoleGetDataForCreate = 'Role/GetDataForCreate'
 
 	//NewsType
 	public static NewsTypeGetList = 'CACategorySPBase/CANewsTypeGetAllOnPageBase'
@@ -186,6 +188,15 @@ export class Api {
 	public static InnvitationUpdate = 'INVInvitation/INVInvitationUpdate'
 	public static InvitationDelete = 'INVInvitation/INVInvitationDelete'
 	public static InvitationGetList = 'INVSPBase/INVInvitationGetAllOnPageBase'
+
+	//sms
+	public static SMSManagementGetOnPage = 'SMSSPBase/SMSQuanLyTinNhanGetAllOnPageBase'
+	public static SMSManagementInsert = 'EmailSMS/SMSInsert'
+	public static SMSManagementUpdate = 'EmailSMS/SMSUpdate'
+	public static SMSManagementDelete = 'EmailSMS/SMSDelete'
+	public static SMSManagementGetById = 'SMSSPBase/SMSQuanLyTinNhanGetByIdBase'
+	public static AdministrativeUnits = 'CASPBase/CAAdministrativeUnitsGetDropDownBase'
+	public static GetListIndividualAndBusinessByAdmintrativeUnitId = 'BISPBase/BIIndividualOrBusinessGetDropListByProviceIdBase'
 
 	//RequestRecommendation
 	public static RecommendationRequestGetListProcess = 'MRSPBase/MRRecommendationKNCTGetAllWithProcessBase'

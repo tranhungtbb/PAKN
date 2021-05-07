@@ -10,6 +10,7 @@ export class IndividualObject {
 		this.districtId = ''
 		this.wardsId = ''
 		this.isActived = true
+		this.address = ''
 	}
 	//thong tin dang nhap
 	phone: string

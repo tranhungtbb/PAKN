@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ElementRef } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
@@ -7,6 +7,7 @@ import { UnitService } from '../../../../../services/unit.service'
 import { UserService } from '../../../../../services/user.service'
 import { PositionService } from '../../../../../services/position.service'
 import { RoleService } from '../../../../../services/role.service'
+import { AppSettings } from 'src/app/constants/app-setting'
 
 import { COMMONS } from 'src/app/commons/commons'
 import { UserObject2 } from 'src/app/models/UserObject'
@@ -22,6 +23,7 @@ declare var $: any
 })
 export class UserCreateOrUpdateComponent implements OnInit {
 	constructor(
+		private elm: ElementRef,
 		private unitService: UnitService,
 		private userService: UserService,
 		private positionService: PositionService,
@@ -29,8 +31,11 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		private toast: ToastrService,
 		private roleService: RoleService,
 		private sanitizer: DomSanitizer
-	) {}
+	) {
+		this.modalId = elm.nativeElement.getAttribute('modalid')
+	}
 
+	modalId = ''
 	public parentUnit: UnitComponent
 	editByMyself: boolean = false
 
@@ -100,7 +105,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		}
 
 		//avatar file;
-		let files = $('#seclect-avatar')[0].files
+		let files = $('#' + this.modalId + ' .seclect-avatar')[0].files
 
 		this.modelUser.roleIds = this.selectedRoles.toString()
 		this.modelUser.userName = this.modelUser.email
@@ -110,7 +115,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 
 		if (this.modelUser.id != null && this.modelUser.id > 0) {
 			this.userService.update(this.modelUser, files).subscribe((res) => {
-				$('#seclect-avatar').val('')
+				$('#' + this.modalId + ' .seclect-avatar').val('')
 
 				if (res.success != 'OK') {
 					let errorMsg = res.message
@@ -124,11 +129,11 @@ export class UserCreateOrUpdateComponent implements OnInit {
 				}
 
 				this.modelUser = new UserObject2()
-				$('#modal-user-create-or-update').modal('hide')
+				$('#' + this.modalId).modal('hide')
 			})
 		} else {
 			this.userService.insert(this.modelUser, files).subscribe((res) => {
-				$('#seclect-avatar').val('')
+				$('#' + this.modalId + ' .seclect-avatar').val('')
 
 				if (res.success != 'OK') {
 					let errorMsg = res.message
@@ -138,23 +143,29 @@ export class UserCreateOrUpdateComponent implements OnInit {
 				this.toast.success(COMMONS.ADD_SUCCESS)
 				this.parentUnit.getUserPagedList()
 				this.modelUser = new UserObject2()
-				$('#modal-user-create-or-update').modal('hide')
+				$('#' + this.modalId).modal('hide')
 			})
 		}
 	}
 
 	onChangeAvatar() {
-		$('#seclect-avatar').click()
+		$('#' + this.modalId + ' .seclect-avatar').click()
 	}
 	changeSelectAvatar(event: any) {
 		var file = event.target.files[0]
+
 		if (!['image/jpeg', 'image/png'].includes(file.type)) {
 			this.toast.error('Chỉ chọn tệp tin ảnh')
 			event.target.value = null
 			return
 		}
+		if (file.size > 3000000) {
+			this.toast.error('Ảnh dung lượng tối đa 3MB')
+			event.target.value = null
+			return
+		}
 
-		let output: any = document.getElementById('user-avatar-view')
+		let output: any = $('#' + this.modalId + ' .user-avatar-view')[0]
 		output.src = URL.createObjectURL(file)
 		output.onload = function () {
 			URL.revokeObjectURL(output.src) // free memory
@@ -187,7 +198,8 @@ export class UserCreateOrUpdateComponent implements OnInit {
 				if (res.success != 'OK') return
 				this.modelUser = res.result.SYUserGetByID[0]
 
-				if (this.modelUser.avatar != null && this.modelUser.avatar != '') this.getUserAvatar(this.modelUser.id)
+				//if (this.modelUser.avatar != null && this.modelUser.avatar != '') this.getUserAvatar(this.modelUser.id)
+				this.userAvatar = AppSettings.API_DOWNLOADFILES + '/' + this.modelUser.avatar
 
 				if (this.modelUser.roleIds) this.selectedRoles = this.modelUser.roleIds.split(',').map((c) => parseInt(c))
 				else this.selectedRoles = []
@@ -201,8 +213,8 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			this.modelUser.isActived = true
 		}
 
-		$('#user-avatar-view').attr('src', '')
-		$('#modal-user-create-or-update').modal('show')
+		$('#' + this.modalId + ' .user-avatar-view').attr('src', '')
+		$('#' + this.modalId).modal('show')
 
 		this.editByMyself = editByMyself
 	}

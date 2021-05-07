@@ -4,6 +4,7 @@ import { CONSTANTS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { ToastrService } from 'ngx-toastr'
 import { DomSanitizer } from '@angular/platform-browser'
 import { Router } from '@angular/router'
+import { AppSettings } from 'src/app/constants/app-setting'
 
 import { UnitService } from '../../../../../services/unit.service'
 import { UserService } from '../../../../../services/user.service'
@@ -74,7 +75,8 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 		this.accountService.getUserInfo().subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.model = res.result
-				this.getUserAvatar(this.model.id)
+				//this.getUserAvatar(this.model.id)
+				this.userAvatar = AppSettings.API_DOWNLOADFILES + '/' + this.model.avatar
 
 				this.model.positionName = this.unitsList.find((c) => c.id == this.model.unitId).name
 				this.model.unitName = this.unitsList.find((c) => c.id == this.model.unitId).name

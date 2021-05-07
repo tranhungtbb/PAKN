@@ -69,7 +69,7 @@ export class EmailSettingComponent implements OnInit {
 	}
 	onCancel() {
 		this.buildForm()
-		this._service.getSystemEmail().subscribe(response => {
+		this._service.getSystemEmail().subscribe((response) => {
 			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result.SYEmailGetFirst.length != 0) {
@@ -79,7 +79,7 @@ export class EmailSettingComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 				alert(error)
 			}
@@ -117,7 +117,7 @@ export class EmailSettingComponent implements OnInit {
 		this.idDelete = id
 		$('#modalConfirmDelete').modal('show')
 	}
-
+	onDelete(id) {}
 	getList() {}
 	onSave() {
 		this.submitted = true
@@ -130,7 +130,7 @@ export class EmailSettingComponent implements OnInit {
 			Server: this.model.server,
 			Port: this.model.port,
 		}
-		this._service.updateSystemEmail(req).subscribe(response => {
+		this._service.updateSystemEmail(req).subscribe((response) => {
 			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success('Cập nhật cấu hình Email thành công')
@@ -138,7 +138,7 @@ export class EmailSettingComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 				alert(error)
 			}

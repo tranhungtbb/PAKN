@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { InvitationService } from 'src/app/services/invitation.service'
+import { SMSManagementService } from 'src/app/services/sms-management'
 import { COMMONS } from 'src/app/commons/commons'
 import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { InvitationObject } from 'src/app/models/invitationObject'
+import { smsManagementGetAllOnPageObject } from 'src/app/models/smsManagementObject'
 import { UserService } from 'src/app/services/user.service'
 
 declare var $: any
@@ -15,23 +15,26 @@ declare var $: any
 	styleUrls: ['./sms-management.component.css'],
 })
 export class SMSManagementComponent implements OnInit {
-	constructor(private invitationService: InvitationService, private toast: ToastrService, private routes: Router, private userService: UserService) {}
+	constructor(private smsService: SMSManagementService, private toast: ToastrService, private routes: Router, private userService: UserService) {}
 	@ViewChild('table', { static: false }) table: any
 
 	listStatus: any = [
 		{ value: 1, text: 'Đang soạn thảo' },
 		{ value: 2, text: 'Đã gửi' },
 	]
-	model: any = new InvitationObject()
+
+	listCategory: any = [
+		{ value: '1', text: 'Cá nhân' },
+		{ value: '2', text: 'Doanh nghiệp' },
+	]
 	title: string = ''
-	place: string = ''
-	startDate: any
-	endDate: any
+	unitName: string = ''
+	type: string
 	status: Number
 	pageIndex: Number = 1
 	pageSize: Number = 20
 	totalRecords: Number
-	listData: any[]
+	listData: Array<smsManagementGetAllOnPageObject>
 
 	InvitationId: any
 
@@ -41,15 +44,14 @@ export class SMSManagementComponent implements OnInit {
 
 	getListPaged() {
 		this.title = this.title.trim()
-		this.place = this.place.trim()
-		this.invitationService
-			.invitationGetList({
+		this.unitName = this.unitName.trim()
+		this.smsService
+			.GetListOnPage({
 				PageIndex: this.pageIndex,
 				PageSize: this.pageSize,
-				StartDate: this.startDate == null ? '' : this.startDate,
-				EndDate: this.endDate == null ? '' : this.endDate,
 				Title: this.title == null ? '' : this.title,
-				Place: this.place == null ? '' : this.place,
+				UnitName: this.unitName == null ? '' : this.unitName,
+				Type: this.type == null ? '' : this.type,
 				Status: this.status == null ? '' : this.status,
 			})
 			.subscribe((res) => {
@@ -57,7 +59,19 @@ export class SMSManagementComponent implements OnInit {
 					this.totalRecords = 0
 					return
 				}
-				this.listData = res.result.INVInvitationGetAllOnPage
+				this.listData = res.result.SMSQuanLyTinNhanGetAllOnPage
+				this.listData.forEach((item) => {
+					let arr = item.type.split(',')
+					item.type = ''
+					arr.forEach((i) => {
+						this.listCategory.forEach((element) => {
+							if (i == element.value) {
+								item.type += element.text + ', '
+							}
+						})
+					})
+					item.type = item.type.substr(0, item.type.length - 2)
+				})
 				this.totalRecords = res.result.TotalCount
 			})
 	}
@@ -81,7 +95,7 @@ export class SMSManagementComponent implements OnInit {
 
 	onDelete() {
 		$('#modalConfirm').modal('hide')
-		this.invitationService.delete({ id: this.InvitationId }).subscribe((res) => {
+		this.smsService.Delete({ id: this.InvitationId }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result > 0) {
 					this.toast.success(COMMONS.DELETE_SUCCESS)
@@ -97,30 +111,13 @@ export class SMSManagementComponent implements OnInit {
 	}
 
 	redirectCreate() {
-		this.routes.navigate(['quan-tri/thu-moi/them-moi'])
+		this.routes.navigate(['quan-tri/email-sms/sms/them-moi'])
 	}
 
 	redirectUpdate(id: number, status: number) {
 		if (status == 1) {
-			this.routes.navigate(['quan-tri/thu-moi/cap-nhap/' + id])
+			this.routes.navigate(['quan-tri/email-sms/sms/cap-nhap/' + id])
 		}
 		return
-	}
-	sendDateChange(data) {
-		if (data != null) {
-			let count = 0
-			for (const iterator of data) {
-				var date = JSON.stringify(new Date(iterator)).slice(1, 11)
-				if (count == 0) {
-					this.startDate = date
-				} else {
-					this.endDate = date
-				}
-				count++
-			}
-		} else {
-			this.startDate = this.endDate = ''
-		}
-		this.getListPaged()
 	}
 }

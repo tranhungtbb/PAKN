@@ -32,6 +32,12 @@ a{
 a:hover{
 	color: #25A7D0;
 }
+.mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+	background-color: #337ab7;
+}
+.mat-checkbox-layout .mat-checkbox-label{
+	white-space: normal	;
+}
 .btn-icon{
 	display: flex;
 	align-items: center;
@@ -835,6 +841,7 @@ transition: all .3s ease-in-out;
 }
 .deznav .metismenu ul{
 	padding: 0 32px 20px;
+	height: unset!important;
 }
 .deznav .metismenu ul>li{
 	border-left: 1px solid #ececec;
