@@ -607,6 +607,29 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYUnitCheckExistsBase")]
+		public async Task<ActionResult<object>> SYUnitCheckExistsBase(string Field, string Value, long? Id)
+		{
+			try
+			{
+				List<SYUnitCheckExists> rsSYUnitCheckExists = await new SYUnitCheckExists(_appSetting).SYUnitCheckExistsDAO(Field, Value, Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUnitCheckExists", rsSYUnitCheckExists},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
 		[Authorize]
 		[Route("SYUnitGetDropdownBase")]
 		public async Task<ActionResult<object>> SYUnitGetDropdownBase()

@@ -251,4 +251,8 @@ export class RecommendationService {
 	recommendationGetByHashtagAllOnPage(request): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationGetByHashtagAllOnPage)
 	}
+
+	getDenyContent(request): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationGetDenyContents)
+	}
 }

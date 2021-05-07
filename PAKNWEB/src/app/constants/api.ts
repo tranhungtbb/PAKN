@@ -46,6 +46,7 @@ export class Api {
 	public static RecommendationGetDataGraph = 'MRSPBase/MRRecommendationGetDataGraphBase'
 	public static RecommendationGetSendUserDataGraph = 'MRSPBase/MRRecommendationGetSendUserDataGraphBase'
 	public static RecommendationGetByHashtagAllOnPage = 'MRSPBase/MRRecommendationGetByHashtagAllOnPageBase'
+	public static RecommendationGetDenyContents = 'MRSPBase/MRRecommendationGetDenyContentsBase'
 
 	public static PuRecommendationGetAllOnPage = 'PURecommendation/PURecommendationAllOnPage'
 	public static PuRecomentdationGetListOrderByCountClick = 'PURecommendation/PURecommendationGetListOrderByCountClick'
@@ -83,6 +84,7 @@ export class Api {
 	public static UnitDeleteList = 'CACategorySPBase/CAUnitDeleteListBase'
 	public static UnitDelete = 'CACategorySPBase/CAUnitDeleteBase'
 	public static UnitChangeStatus = 'SYSPBase/SYUnitChageStatusBase'
+	public static UnitCheckExists = 'SYSPBase/SYUnitCheckExistsBase'
 
 	public static FieldExport = 'CACategorySPBase/CAFieldExportBase'
 
@@ -103,6 +105,7 @@ export class Api {
 	public static UserDelete = 'User/Delete' //'SYUserSPBase/SYUserDeleteBase'GetAvatar
 	public static UserGetAvatar = 'User/GetAvatar' //'SYUserSPBase/SYUserDeleteBase'
 	public static UserChangeStatus = 'SYUserSPBase/SYUserChangeStatusBase'
+	public static UserCheckExists = 'SYUserSPBase/SYUserCheckExistsBase'
 
 	public static SystemLogin = 'SYSPBase/SYSystemLogGetAllOnPageBase'
 	public static SystemLoginAdmin = 'SYSPBase/SYSystemLogGetAllOnPageAdminBase'
@@ -217,7 +220,7 @@ export class Api {
 	//tai khoan ca nhan, doanh nghiep
 	public static AccountGetInfo = 'user/UserGetInfo'
 	public static AccountChangePassword = 'User/UserChagePwd'
-	public static AccountUpdateInfo = 'User//UpdateCurrentInfo'
+	public static AccountUpdateInfo = 'User/UpdateCurrentInfo'
 
 	//Administrative Formalities
 	public static AdministrativeFormalitiesGetDropdown = 'AdministrativeFormalities/AdministrativeFormalitiesGetDropdown'

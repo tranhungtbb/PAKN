@@ -15,11 +15,11 @@ BEGIN
 	SELECT
 		[Id],
 		[ObjectId],
-		[Type],
-		[Content],
 		[Status],
 		[CreatedBy],
-		[CreatedDate]
+		[CreatedDate],
+		[Type],
+		[Content]
 	FROM [HIS_SMS]
 	WHERE [Id] = @Id
 END
@@ -41,11 +41,11 @@ BEGIN
 	SELECT
 		[Id],
 		[ObjectId],
-		[Type],
-		[Content],
 		[Status],
 		[CreatedBy],
-		[CreatedDate]
+		[CreatedDate],
+		[Type],
+		[Content]
 	FROM [HIS_SMS]
 END
 GO
@@ -69,11 +69,11 @@ BEGIN
 		COUNT(*) OVER ( ORDER BY (SELECT NULL)) as RowNumber,
 		[Id],
 		[ObjectId],
-		[Type],
-		[Content],
 		[Status],
 		[CreatedBy],
-		[CreatedDate]
+		[CreatedDate],
+		[Type],
+		[Content]
 	FROM [HIS_SMS]
 	ORDER BY [Id]
 	OFFSET (@PageIndex-1) * @PageSize ROWS
@@ -93,30 +93,30 @@ DROP PROCEDURE [HIS_SMSInsert];
 GO
 CREATE PROCEDURE [dbo].[HIS_SMSInsert]
 	@ObjectId int = null,
-	@Type int = null,
-	@Content nvarchar(500) = null,
 	@Status tinyint = null,
 	@CreatedBy bigint = null,
-	@CreatedDate datetime = null
+	@CreatedDate datetime = null,
+	@Type int = null,
+	@Content nvarchar(500) = null
 AS
 BEGIN
 	INSERT INTO [HIS_SMS]
 	(
 		[ObjectId],
-		[Type],
-		[Content],
 		[Status],
 		[CreatedBy],
-		[CreatedDate]
+		[CreatedDate],
+		[Type],
+		[Content]
 	)
 	VALUES
 	(
 		@ObjectId,
-		@Type,
-		@Content,
 		@Status,
 		@CreatedBy,
-		@CreatedDate
+		@CreatedDate,
+		@Type,
+		@Content
 	)
 END
 GO
@@ -134,20 +134,20 @@ GO
 CREATE PROCEDURE [dbo].[HIS_SMSUpdate]
 	@Id int = null,
 	@ObjectId int = null,
-	@Type int = null,
-	@Content nvarchar(500) = null,
 	@Status tinyint = null,
 	@CreatedBy bigint = null,
-	@CreatedDate datetime = null
+	@CreatedDate datetime = null,
+	@Type int = null,
+	@Content nvarchar(500) = null
 AS
 BEGIN
 	UPDATE [HIS_SMS] SET
 		[ObjectId] = @ObjectId,
-		[Type] = @Type,
-		[Content] = @Content,
 		[Status] = @Status,
 		[CreatedBy] = @CreatedBy,
-		[CreatedDate] = @CreatedDate
+		[CreatedDate] = @CreatedDate,
+		[Type] = @Type,
+		[Content] = @Content
 	WHERE [Id] = @Id
 END
 GO

@@ -84,6 +84,7 @@ namespace PAKNAPI.ModelBase
 		public int Category { get; set; }
 		public string Name { get; set; }
 		public string AdministrativeUnitName { get; set; }
+		public short? AdministrativeUnitId { get; set; }
 
 		public async Task<List<SMSGetListIndividualBusinessBySMSId>> SMSGetListIndividualBusinessBySMSIdDAO(int? SMSId)
 		{
@@ -212,11 +213,38 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-	/*
-	PAKN_Test.dbo.SMS_QuanLyTinNhanGetById
-	Invalid column name 'UnitId'.
-Invalid column name 'UnitId'.
-	*/
+	public class SMSQuanLyTinNhanGetById
+	{
+		private SQLCon _sQLCon;
+
+		public SMSQuanLyTinNhanGetById(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SMSQuanLyTinNhanGetById()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Content { get; set; }
+		public string Signature { get; set; }
+		public DateTime CreateDate { get; set; }
+		public int UserCreateId { get; set; }
+		public DateTime? SendDate { get; set; }
+		public int? UserSend { get; set; }
+		public byte Status { get; set; }
+		public string Type { get; set; }
+
+		public async Task<List<SMSQuanLyTinNhanGetById>> SMSQuanLyTinNhanGetByIdDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SMSQuanLyTinNhanGetById>("SMS_QuanLyTinNhanGetById", DP)).ToList();
+		}
+	}
 
 	public class SMSQuanLyTinNhanInsert
 	{
@@ -303,7 +331,7 @@ Invalid column name 'UnitId'.
 		public DateTime? SendDate { get; set; }
 		public int? UserSend { get; set; }
 		public int? Status { get; set; }
-		public int? Type { get; set; }
+		public string Type { get; set; }
 	}
 
 	public class SMSTinNhanAdministrativeUnitMapDeleteBySMSId

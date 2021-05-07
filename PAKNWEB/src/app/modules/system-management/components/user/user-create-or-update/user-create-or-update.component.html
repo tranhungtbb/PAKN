@@ -32,13 +32,18 @@
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">Email <span class="cl-red">(*)</span></label>
 							<input svTrim formControlName="email" [(ngModel)]="modelUser.email" type="text" class="form-control" placeholder="Nhập..."
-								[readonly]="modelUser.id != null && modelUser.id > 0">
+								[readonly]="modelUser.id != null && modelUser.id > 0" (change)="onCheckExist('Email',$event.target.value)">
 							<div *ngIf="(userFormSubmitted && fUser.email.invalid)||(fUser.email.invalid && (fUser.email.dirty || fUser.email.touched))" class="has-error m-b-12">
 								<div *ngIf="fUser.email.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
 								</div>
 								<div *ngIf="fUser.email.errors.email">
 									<span class="help-block">Định dạng email không đúng</span>
+								</div>
+							</div>
+							<div *ngIf="email_exists && fUser.email.valid" class="has-error m-b-12">
+								<div *ngIf="email_exists">
+									<span class="help-block">Email đã tồn tại</span>
 								</div>
 							</div>
 						</div>
@@ -55,13 +60,18 @@
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Điện thoại <span class="cl-red">(*)</span></label>
 							<input svTrim onlyNumber="true" stopLength="10" formControlName="phone" [(ngModel)]="modelUser.phone" type="text" class="form-control"
-								placeholder="Nhập...">
+								placeholder="Nhập..." (change)="onCheckExist('Phone',$event.target.value)">
 							<div *ngIf="(userFormSubmitted && fUser.phone.invalid)||(fUser.phone.invalid && (fUser.phone.dirty || fUser.phone.touched))" class="has-error m-b-12">
 								<div *ngIf="fUser.phone.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
 								</div>
 								<div *ngIf="fUser.phone.errors.pattern">
 									<span class="help-block">Định dạng số điện thoại không đúng</span>
+								</div>
+							</div>
+							<div *ngIf="phone_exists && fUser.phone.valid" class="has-error m-b-12">
+								<div *ngIf="phone_exists">
+									<span class="help-block">Số điện thoại đã tồn tại</span>
 								</div>
 							</div>
 						</div>

@@ -849,6 +849,29 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRRecommendationGetDenyContentsBase")]
+		public async Task<ActionResult<object>> MRRecommendationGetDenyContentsBase(long? RecommendationId)
+		{
+			try
+			{
+				List<MRRecommendationGetDenyContents> rsMRRecommendationGetDenyContents = await new MRRecommendationGetDenyContents(_appSetting).MRRecommendationGetDenyContentsDAO(RecommendationId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationGetDenyContents", rsMRRecommendationGetDenyContents},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
 		[Authorize]
 		[Route("MRRecommendationGetSuggestCreateBase")]
 		public async Task<ActionResult<object>> MRRecommendationGetSuggestCreateBase(string Title)
