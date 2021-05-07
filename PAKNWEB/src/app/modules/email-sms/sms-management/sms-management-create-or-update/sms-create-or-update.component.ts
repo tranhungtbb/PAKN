@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr'
 
 import { Router, ActivatedRoute } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { CONSTANTS, STATUS_HISNEWS, FILETYPE } from 'src/app/constants/CONSTANTS'
+import { STATUS_HIS_SMS } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
 import { SMSManagementService } from 'src/app/services/sms-management'
 import { smsManagementObject, smsManagementMapObject } from 'src/app/models/smsManagementObject'
@@ -184,7 +184,6 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 			}
 			this.individualBusinessInfo.push(ob)
 		})
-		debugger
 		s = s.filter((x, index) => s.indexOf(x) === index)
 		this.model.type = s.reduce((x, y) => {
 			return (x += y + ',')
@@ -198,6 +197,27 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 		if (this.model.id == 0 || this.model.id == null) {
 			this.smsService.Insert(obj).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
+					// insert his
+
+					this.smsService
+						.InsertHisSMS({
+							ObjectId: response.result,
+							Status: STATUS_HIS_SMS.CREATE,
+						})
+						.subscribe((res) => {
+							if (res.success == RESPONSE_STATUS.success) {
+								if (isSend == true) {
+									this.smsService
+										.InsertHisSMS({
+											ObjectId: response.result,
+											Status: STATUS_HIS_SMS.SEND,
+										})
+										.subscribe()
+								}
+								return
+							}
+						})
+
 					this._toastr.success(COMMONS.ADD_SUCCESS)
 					this.redirectList()
 					return
@@ -213,6 +233,26 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 		} else {
 			this.smsService.Update(obj).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
+					// ghi his
+
+					this.smsService
+						.InsertHisSMS({
+							ObjectId: response.result,
+							Status: STATUS_HIS_SMS.UPDATE,
+						})
+						.subscribe((res) => {
+							if (res.success == RESPONSE_STATUS.success) {
+								if (isSend == true) {
+									this.smsService
+										.InsertHisSMS({
+											ObjectId: response.result,
+											Status: STATUS_HIS_SMS.SEND,
+										})
+										.subscribe()
+								}
+							}
+						})
+
 					this._toastr.success(COMMONS.UPDATE_SUCCESS)
 					this.redirectList()
 					return

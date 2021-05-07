@@ -89,6 +89,12 @@ export class STATUS_HISNEWS {
 	public static CANCEL = 4 //3 huy cong bo
 }
 
+export class STATUS_HIS_SMS {
+	public static CREATE = 0 //khoi tao
+	public static UPDATE = 1 //2 cap nhap
+	public static SEND = 2 //3 cong bo
+}
+
 export const FILETYPE = [
 	{ text: 'application/msword', value: 1 },
 	{ text: 'text/plain', value: 1 },

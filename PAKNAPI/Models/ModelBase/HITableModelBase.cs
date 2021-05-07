@@ -338,9 +338,9 @@ namespace PAKNAPI.ModelBase
 		public int ObjectId { get; set; }
 		public int? Type { get; set; }
 		public string Content { get; set; }
-		public byte? Status { get; set; }
-		public long? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
+		public byte Status { get; set; }
+		public long CreatedBy { get; set; }
+		public DateTime CreatedDate { get; set; }
 		public int? RowNumber; // int, null
 	}
 
@@ -361,9 +361,9 @@ namespace PAKNAPI.ModelBase
 		public int ObjectId { get; set; }
 		public int? Type { get; set; }
 		public string Content { get; set; }
-		public byte? Status { get; set; }
-		public long? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
+		public byte Status { get; set; }
+		public long CreatedBy { get; set; }
+		public DateTime CreatedDate { get; set; }
 
 		public async Task<HISSMS> HISSMSGetByID(int? Id)
 		{
@@ -393,11 +393,11 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("ObjectId", _hISSMS.ObjectId);
-			DP.Add("Type", _hISSMS.Type);
-			DP.Add("Content", _hISSMS.Content);
 			DP.Add("Status", _hISSMS.Status);
 			DP.Add("CreatedBy", _hISSMS.CreatedBy);
 			DP.Add("CreatedDate", _hISSMS.CreatedDate);
+			DP.Add("Type", _hISSMS.Type);
+			DP.Add("Content", _hISSMS.Content);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("HIS_SMSInsert", DP));
 		}
@@ -407,11 +407,11 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _hISSMS.Id);
 			DP.Add("ObjectId", _hISSMS.ObjectId);
-			DP.Add("Type", _hISSMS.Type);
-			DP.Add("Content", _hISSMS.Content);
 			DP.Add("Status", _hISSMS.Status);
 			DP.Add("CreatedBy", _hISSMS.CreatedBy);
 			DP.Add("CreatedDate", _hISSMS.CreatedDate);
+			DP.Add("Type", _hISSMS.Type);
+			DP.Add("Content", _hISSMS.Content);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("HIS_SMSUpdate", DP));
 		}
