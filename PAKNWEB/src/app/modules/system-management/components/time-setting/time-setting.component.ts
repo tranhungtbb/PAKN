@@ -29,6 +29,7 @@ export class TimeSettingComponent implements OnInit {
 	title: string = ''
 	name: string = ''
 	time: Date
+	date1: Date
 	date11: Date = new Date('01/11/2021')
 	description: string = ''
 	pageIndex: number = 1
