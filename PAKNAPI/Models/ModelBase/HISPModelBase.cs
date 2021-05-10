@@ -1,82 +1,114 @@
-//using System;
-//using Dapper;
-//using System.Linq;
-//using System.Threading.Tasks;
-//using System.Web;
-//using System.Collections.Generic;
-//using Microsoft.Data.SqlClient;
-//using System.Data;
-//using PAKNAPI.Common;
-//using PAKNAPI.Models.Results;
+using System;
+using Dapper;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Collections.Generic;
+using Microsoft.Data.SqlClient;
+using System.Data;
+using PAKNAPI.Common;
+using PAKNAPI.Models.Results;
 
+namespace PAKNAPI.ModelBase
+{
+	public class HISSMSDeleteBySMSId
+	{
+		private SQLCon _sQLCon;
 
-//namespace PAKNAPI.ModelBase
-//{
-//	public class HISRecommendationGetByObjectId
-//	{
-//		private SQLCon _sQLCon;
+		public HISSMSDeleteBySMSId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
 
-//		public HISRecommendationGetByObjectId(IAppSetting appSetting)
-//		{
-//			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-//		}
+		public HISSMSDeleteBySMSId()
+		{
+		}
 
-//		public HISRecommendationGetByObjectId()
-//		{
-//		}
+		public async Task<int> HISSMSDeleteBySMSIdDAO(HISSMSDeleteBySMSIdIN _hISSMSDeleteBySMSIdIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("SMSId", _hISSMSDeleteBySMSIdIN.SMSId);
 
-//		public int Id { get; set; }
-//		public int ObjectId { get; set; }
-//		public int? Type { get; set; }
-//		public string Content { get; set; }
-//		public byte? Status { get; set; }
-//		public long? CreatedBy { get; set; }
-//		public string CreatedByName { get; set; }
-//		public DateTime? CreatedDate { get; set; }
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("HIS_SMSDeleteBySMSId", DP));
+		}
+	}
 
-//		public async Task<List<HISRecommendationGetByObjectId>> HISRecommendationGetByObjectIdDAO(int? Id)
-//		{
-//			DynamicParameters DP = new DynamicParameters();
-//			DP.Add("Id", Id);
+	public class HISSMSDeleteBySMSIdIN
+	{
+		public int? SMSId { get; set; }
+	}
 
-//			return (await _sQLCon.ExecuteListDapperAsync<HISRecommendationGetByObjectId>("HIS_RecommendationGetByObjectId", DP)).ToList();
-//		}
-//	}
+	public class HISSMSGetBySMSIdOnPage
+	{
+		private SQLCon _sQLCon;
 
-//	public class HISRecommendationInsert
-//	{
-//		private SQLCon _sQLCon;
+		public HISSMSGetBySMSIdOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
 
-//		public HISRecommendationInsert(IAppSetting appSetting)
-//		{
-//			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-//		}
+		public HISSMSGetBySMSIdOnPage()
+		{
+		}
 
-//		public HISRecommendationInsert()
-//		{
-//		}
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Content { get; set; }
+		public byte Status { get; set; }
+		public DateTime CreatedDate { get; set; }
+		public long CreatedBy { get; set; }
+		public string CreateName { get; set; }
 
-//		public async Task<int> HISRecommendationInsertDAO(HISRecommendationInsertIN _hISRecommendationInsertIN)
-//		{
-//			DynamicParameters DP = new DynamicParameters();
-//			DP.Add("ObjectId", _hISRecommendationInsertIN.ObjectId);
-//			DP.Add("Type", _hISRecommendationInsertIN.Type);
-//			DP.Add("Content", _hISRecommendationInsertIN.Content);
-//			DP.Add("Status", _hISRecommendationInsertIN.Status);
-//			DP.Add("CreatedBy", _hISRecommendationInsertIN.CreatedBy);
-//			DP.Add("CreatedDate", _hISRecommendationInsertIN.CreatedDate);
+		public async Task<List<HISSMSGetBySMSIdOnPage>> HISSMSGetBySMSIdOnPageDAO(int? PageSize, int? PageIndex, int? SMSId, string Content, string UserName, int? Status)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("SMSId", SMSId);
+			DP.Add("Content", Content);
+			DP.Add("UserName", UserName);
+			DP.Add("Status", Status);
 
-//			return (await _sQLCon.ExecuteNonQueryDapperAsync("HIS_RecommendationInsert", DP));
-//		}
-//	}
+			return (await _sQLCon.ExecuteListDapperAsync<HISSMSGetBySMSIdOnPage>("HIS_SMSGetBySMSIdOnPage", DP)).ToList();
+		}
+	}
 
-//	public class HISRecommendationInsertIN
-//	{
-//		public int? ObjectId { get; set; }
-//		public int? Type { get; set; }
-//		public string Content { get; set; }
-//		public byte? Status { get; set; }
-//		public long? CreatedBy { get; set; }
-//		public DateTime? CreatedDate { get; set; }
-//	}
-//}
+	public class HISSMSInsert
+	{
+		private SQLCon _sQLCon;
+
+		public HISSMSInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public HISSMSInsert()
+		{
+		}
+
+		public async Task<int> HISSMSInsertDAO(HISSMSInsertIN _hISSMSInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ObjectId", _hISSMSInsertIN.ObjectId);
+			DP.Add("Type", _hISSMSInsertIN.Type);
+			DP.Add("Content", _hISSMSInsertIN.Content);
+			DP.Add("Status", _hISSMSInsertIN.Status);
+			DP.Add("CreatedBy", _hISSMSInsertIN.CreatedBy);
+			DP.Add("CreatedName", _hISSMSInsertIN.CreatedName);
+			DP.Add("CreatedDate", _hISSMSInsertIN.CreatedDate);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("HIS_SMSInsert", DP));
+		}
+	}
+
+	public class HISSMSInsertIN
+	{
+		public string ObjectId { get; set; }
+		public int? Type { get; set; }
+		public string Content { get; set; }
+		public int? Status { get; set; }
+		public int? CreatedBy { get; set; }
+		public string CreatedName { get; set; }
+		public DateTime? CreatedDate { get; set; }
+	}
+}

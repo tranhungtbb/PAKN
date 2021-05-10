@@ -22,6 +22,7 @@ import { CustomHttpInterceptor } from './http-interceptor/customHttpInterceptor'
 import { ForbidenPageModule } from './modules/forbiden-page/forbiden-page.module'
 import { LoginsModule } from './modules/logins/logins.module'
 import { TreeModule } from 'primeng/tree'
+import { CalendarModule } from 'primeng/calendar'
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer'
 import { ImageViewerModule } from 'ng2-image-viewer'
 import { UnitFilterPipe } from './pipes/unit-filter.pipe'
@@ -32,6 +33,7 @@ import { DxReportViewerModule } from 'devexpress-reporting-angular'
 	entryComponents: [ConfirmDialogComponent, ViewFileDialogComponent],
 	imports: [
 		BrowserModule,
+		CalendarModule,
 		BrowserAnimationsModule,
 		FormsModule,
 		ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),

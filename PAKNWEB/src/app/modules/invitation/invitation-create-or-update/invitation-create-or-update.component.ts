@@ -2,6 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 
+import { defineLocale } from 'ngx-bootstrap/chronos'
+import { viLocale } from 'ngx-bootstrap/locale'
+import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker'
+
 import { Router, ActivatedRoute } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { CONSTANTS, STATUS_HISNEWS, FILETYPE } from 'src/app/constants/CONSTANTS'
@@ -15,6 +19,7 @@ import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { iterator } from 'rxjs/internal-compatibility'
 
 declare var $: any
+defineLocale('vi', viLocale)
 
 @Component({
 	selector: 'app-invitation-create-or-update',
@@ -41,6 +46,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 	key: any = ''
 	fileAccept = CONSTANTS.FILEACCEPT
 	userId: any
+	statusCurent: any = 1
 	@ViewChild('file', { static: false }) public file: ElementRef
 	constructor(
 		private _toastr: ToastrService,
@@ -49,19 +55,28 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		private invitationService: InvitationService,
 		private userService: UserService,
 		private activatedRoute: ActivatedRoute,
-		private fileService: UploadFileService
+		private fileService: UploadFileService,
+		private BsLocaleService: BsLocaleService
 	) {
 		this.listItemUserSelected = []
 		this.files = []
 		this.userMap = []
 		this.lstFileDelete = []
+		this.action = 'Lưu'
 	}
 
 	ngOnInit() {
+		this.BsLocaleService.use('vi')
 		this.getUsersIsSystem()
 		this.buildForm()
 		// this.getInvitatonModelById()
 	}
+
+	// ngAfterViewInit() {
+	// 	$('#endDate').datepicker({
+	// 		language: 'vi',
+	// 	})
+	// }
 
 	buildForm() {
 		this.form = this.formBuilder.group({
@@ -89,6 +104,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 							this.model.startDate = new Date(this.model.startDate)
 							this.model.endDate = new Date(this.model.endDate)
 							this.files = res.result.invFileAttach
+							this.statusCurent = this.model.status
 							for (const iterator of res.result.invitationUserMap) {
 								let item = this.listUserIsSystem.find((x) => x.id == iterator.userId)
 								var obj = new InvitationUserMapObject()
@@ -106,7 +122,6 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 				})
 			}
 		})
-		this.action = this.model.id == 0 ? 'Thêm mới' : 'Cập nhập'
 		this.title = this.model.id == 0 ? 'Thêm mới thư mời ' : 'Cập nhập thư mời'
 	}
 
@@ -142,16 +157,17 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 	onSave(isSend: boolean) {
 		this.model.status = isSend == false ? 1 : 2
 		this.submitted = true
-		if (this.listItemUserSelected.length == 0) {
-			this._toastr.error('Vui lòng chọn người tham dự')
-			return
-		}
+
 		this.model.title = this.model.title.trim()
 		this.model.content = this.model.content.trim()
 		this.model.place = this.model.place.trim()
 		this.rebuilForm()
 
 		if (this.form.invalid) {
+			return
+		}
+		if (this.listItemUserSelected.length == 0) {
+			this._toastr.error('Vui lòng chọn người tham dự')
 			return
 		}
 		for (const i of this.listItemUserSelected) {
@@ -178,8 +194,14 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 					this.redirectList()
 					return
 				} else {
-					this._toastr.error(response.message)
-					return
+					let res = isNaN(response.result) == true ? 0 : response.result
+					if (res == -1) {
+						this._toastr.error('Tiêu đề thư mời đã tồn tại')
+						return
+					} else {
+						this._toastr.error(response.message)
+						return
+					}
 				}
 			}),
 				(error) => {
@@ -189,12 +211,22 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		} else {
 			this.invitationService.invitationUpdate(obj).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
-					this._toastr.success(COMMONS.UPDATE_SUCCESS)
-					this.redirectList()
-					return
+					if (response.result == -1) {
+						this._toastr.error('Tiêu đề thư mời đã tồn tại')
+					} else {
+						this._toastr.success(COMMONS.UPDATE_SUCCESS)
+						this.redirectList()
+						return
+					}
 				} else {
-					this._toastr.error(response.message)
-					return
+					let res = isNaN(response.result) == true ? 0 : response.result
+					if (res == -1) {
+						this._toastr.error('Tiêu đề thư mời đã tồn tại')
+						return
+					} else {
+						this._toastr.error(response.message)
+						return
+					}
 				}
 			}),
 				(error) => {
@@ -208,6 +240,10 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 	}
 
 	onCreateUser() {
+		if (this.statusCurent == 2) {
+			this._toastr.error('Không thể thêm người tham dự')
+			return
+		}
 		if (this.userId != undefined) {
 			if (this.listItemUserSelected.length == 0) {
 				let item = this.listUserIsSystem.find((x) => x.id == this.userId)
@@ -243,6 +279,10 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		}
 	}
 	onRemoveUser(item: any) {
+		if (this.statusCurent == 2) {
+			this._toastr.error('Không thể xóa người tham dự')
+			return
+		}
 		this.listItemUserSelected = this.listItemUserSelected.filter((x) => x.userId != item.userId)
 		return
 	}

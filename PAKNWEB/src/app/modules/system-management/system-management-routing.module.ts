@@ -4,6 +4,7 @@ import { RoleGuardService } from '../../guards/role-guard.service'
 import { SystemManagemenetComponent } from './system-managemenet.component'
 import { SystemLogComponent } from './components/system-log/system-log.component'
 import { EmailSettingComponent } from './components/email-setting/email-setting.component'
+import { TimeSettingComponent } from './components/time-setting/time-setting.component'
 import { SmsSettingComponent } from './components/sms-setting/sms-setting.component'
 import { GroupUserComponent } from './components/group-user/group-user.component'
 import { UserComponent } from './components/user/user.component'
@@ -12,12 +13,12 @@ import { UserCreateOrUpdateComponent } from './components/user/user-create-or-up
 import { ChatBotComponent } from './components/chat-bot/chat-bot.component'
 import { HistoryChatBotComponent } from './components/history-chat-bot/history-chat-bot.component'
 import { UserViewInfoComponent } from './components/user/user-view-info/user-view-info.component'
-
 const routes: Routes = [
 	{
 		path: '',
 		component: SystemManagemenetComponent,
 		children: [
+			{ path: 'cau-hinh-time', component: TimeSettingComponent },
 			{ path: 'cau-hinh-email', component: EmailSettingComponent },
 			{ path: 'cau-hinh-sms', component: SmsSettingComponent },
 			// { path: 'vai-tro', component: GroupUserComponent },

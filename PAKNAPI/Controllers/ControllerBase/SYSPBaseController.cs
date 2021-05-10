@@ -134,52 +134,6 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("SYPermissionGetByFunctionBase")]
-		public async Task<ActionResult<object>> SYPermissionGetByFunctionBase(int? Id)
-		{
-			try
-			{
-				List<SYPermissionGetByFunction> rsSYPermissionGetByFunction = await new SYPermissionGetByFunction(_appSetting).SYPermissionGetByFunctionDAO(Id);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"SYPermissionGetByFunction", rsSYPermissionGetByFunction},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("SYPermissionCategoryGetBase")]
-		public async Task<ActionResult<object>> SYPermissionCategoryGetBase()
-		{
-			try
-			{
-				List<SYPermissionCategoryGet> rsSYPermissionCategoryGet = await new SYPermissionCategoryGet(_appSetting).SYPermissionCategoryGetDAO();
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"SYPermissionCategoryGet", rsSYPermissionCategoryGet},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
 		[Authorize]
 		[Route("SYPermissionCheckByUserIdBase")]
 		public async Task<ActionResult<object>> SYPermissionCheckByUserIdBase(int? UserId, string APIName)
@@ -191,112 +145,6 @@ namespace PAKNAPI.ControllerBase
 					{
 						{"SYPermissionCheckByUserId", rsSYPermissionCheckByUserId},
 					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("SYPermissionFunctionGetByCategoryBase")]
-		public async Task<ActionResult<object>> SYPermissionFunctionGetByCategoryBase(int? Id)
-		{
-			try
-			{
-				List<SYPermissionFunctionGetByCategory> rsSYPermissionFunctionGetByCategory = await new SYPermissionFunctionGetByCategory(_appSetting).SYPermissionFunctionGetByCategoryDAO(Id);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"SYPermissionFunctionGetByCategory", rsSYPermissionFunctionGetByCategory},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("SYPermissionGroupUserGetByGroupIdBase")]
-		public async Task<ActionResult<object>> SYPermissionGroupUserGetByGroupIdBase(int? GroupUserId)
-		{
-			try
-			{
-				List<SYPermissionGroupUserGetByGroupId> rsSYPermissionGroupUserGetByGroupId = await new SYPermissionGroupUserGetByGroupId(_appSetting).SYPermissionGroupUserGetByGroupIdDAO(GroupUserId);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"SYPermissionGroupUserGetByGroupId", rsSYPermissionGroupUserGetByGroupId},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize("ThePolicy")]
-		[Route("SYPermissionGroupUserInsertByListBase")]
-		public async Task<ActionResult<object>> SYPermissionGroupUserInsertByListBase(SYPermissionGroupUserInsertByListIN _sYPermissionGroupUserInsertByListIN)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionGroupUserInsertByList(_appSetting).SYPermissionGroupUserInsertByListDAO(_sYPermissionGroupUserInsertByListIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize("ThePolicy")]
-		[Route("SYPermissionGroupUserInsertByListListBase")]
-		public async Task<ActionResult<object>> SYPermissionGroupUserInsertByListListBase(List<SYPermissionGroupUserInsertByListIN> _sYPermissionGroupUserInsertByListINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _sYPermissionGroupUserInsertByListIN in _sYPermissionGroupUserInsertByListINs)
-				{
-					var result = await new SYPermissionGroupUserInsertByList(_appSetting).SYPermissionGroupUserInsertByListDAO(_sYPermissionGroupUserInsertByListIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
@@ -629,6 +477,198 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYTimeDeleteBase")]
+		public async Task<ActionResult<object>> SYTimeDeleteBase(SYTimeDeleteIN _sYTimeDeleteIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYTimeDelete(_appSetting).SYTimeDeleteDAO(_sYTimeDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYTimeDeleteListBase")]
+		public async Task<ActionResult<object>> SYTimeDeleteListBase(List<SYTimeDeleteIN> _sYTimeDeleteINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _sYTimeDeleteIN in _sYTimeDeleteINs)
+				{
+					var result = await new SYTimeDelete(_appSetting).SYTimeDeleteDAO(_sYTimeDeleteIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYTimeGetAllOnPageBase")]
+		public async Task<ActionResult<object>> SYTimeGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Code, DateTime? Time, string Description, bool? IsActived)
+		{
+			try
+			{
+				List<SYTimeGetAllOnPage> rsSYTimeGetAllOnPage = await new SYTimeGetAllOnPage(_appSetting).SYTimeGetAllOnPageDAO(PageSize, PageIndex, Name, Code, Time, Description, IsActived);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYTimeGetAllOnPage", rsSYTimeGetAllOnPage},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYTimeGetByIDBase")]
+		public async Task<ActionResult<object>> SYTimeGetByIDBase(int? Id)
+		{
+			try
+			{
+				List<SYTimeGetByID> rsSYTimeGetByID = await new SYTimeGetByID(_appSetting).SYTimeGetByIDDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYTimeGetByID", rsSYTimeGetByID},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYTimeGetDateActiveBase")]
+		public async Task<ActionResult<object>> SYTimeGetDateActiveBase()
+		{
+			try
+			{
+				List<SYTimeGetDateActive> rsSYTimeGetDateActive = await new SYTimeGetDateActive(_appSetting).SYTimeGetDateActiveDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYTimeGetDateActive", rsSYTimeGetDateActive},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYTimeInsertBase")]
+		public async Task<ActionResult<object>> SYTimeInsertBase(SYTimeInsertIN _sYTimeInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYTimeInsert(_appSetting).SYTimeInsertDAO(_sYTimeInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("SYTimeUpdateBase")]
+		public async Task<ActionResult<object>> SYTimeUpdateBase(SYTimeUpdateIN _sYTimeUpdateIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYTimeUpdate(_appSetting).SYTimeUpdateDAO(_sYTimeUpdateIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYUnitCheckExistsBase")]
+		public async Task<ActionResult<object>> SYUnitCheckExistsBase(string Field, string Value, long? Id)
+		{
+			try
+			{
+				List<SYUnitCheckExists> rsSYUnitCheckExists = await new SYUnitCheckExists(_appSetting).SYUnitCheckExistsDAO(Field, Value, Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUnitCheckExists", rsSYUnitCheckExists},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpGet]
 		[Authorize]
 		[Route("SYUnitGetDropdownBase")]
@@ -801,6 +841,29 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYUserGetNonSystem", rsSYUserGetNonSystem},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYUsersGetDropdownBase")]
+		public async Task<ActionResult<object>> SYUsersGetDropdownBase()
+		{
+			try
+			{
+				List<SYUsersGetDropdown> rsSYUsersGetDropdown = await new SYUsersGetDropdown(_appSetting).SYUsersGetDropdownDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUsersGetDropdown", rsSYUsersGetDropdown},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

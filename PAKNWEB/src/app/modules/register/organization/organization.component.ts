@@ -76,20 +76,20 @@ export class OrganizationComponent implements OnInit {
 		this.child_OrgRepreForm.fInfoSubmitted = true
 		this.fOrgInfoSubmitted = true
 		this.child_OrgAddressForm.fOrgAddressSubmitted = true
-
+		console.log(this.model)
 		let fDob: any = document.querySelector('#_dob')
 		let fIsDate: any = document.querySelector('#_IsDate')
 		this.model._RepresentativeBirthDay = fDob.value
 		this.model._DateOfIssue = fIsDate.value
 
 		if (
-			this.phone_exists ||
-			this.busiDeci_exists ||
-			this.busiDeci_exists ||
-			this.child_OrgAddressForm.orgEmail_exists ||
-			this.child_OrgAddressForm.orgPhone_exists ||
-			this.child_OrgRepreForm.email_exists ||
-			this.child_OrgRepreForm.idCard_exists
+			this.checkExists['Phone'] ||
+			this.checkExists['BusinessRegistration'] ||
+			this.checkExists['DecisionOfEstablishing'] ||
+			this.child_OrgAddressForm.checkExists['OrgEmail'] ||
+			this.child_OrgAddressForm.checkExists['OrgPhone'] ||
+			this.child_OrgRepreForm.checkExists['Email'] ||
+			this.child_OrgRepreForm.checkExists['IDCard']
 		) {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return
@@ -156,20 +156,28 @@ export class OrganizationComponent implements OnInit {
 	}
 
 	//kiểm tra dữ liệu đã tồn tại
-	phone_exists: boolean = false
-	busiRegis_exists = false
-	busiDeci_exists = false
+	checkExists = {
+		Phone: false,
+		BusinessRegistration: false,
+		DecisionOfEstablishing: false,
+	}
 	onCheckExist(field: string, value: string) {
+		if (value == null || value == '') {
+			this.checkExists[field] = false
+			return
+		}
 		this.registerService
 			.businessCheckExists({
 				field,
 				value,
+				id: 0,
 			})
 			.subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
-					if (field == 'Phone') this.phone_exists = res.result.BIBusinessCheckExists[0].exists
-					else if (field == 'BusinessRegistration') this.busiRegis_exists = res.result.BIBusinessCheckExists[0].exists
-					else if (field == 'DecisionOfEstablishing') this.busiDeci_exists = res.result.BIBusinessCheckExists[0].exists
+					// if (field == 'Phone') this.phone_exists = res.result.BIBusinessCheckExists[0].exists
+					// else if (field == 'BusinessRegistration') this.busiRegis_exists = res.result.BIBusinessCheckExists[0].exists
+					// else if (field == 'DecisionOfEstablishing') this.busiDeci_exists = res.result.BIBusinessCheckExists[0].exists
+					this.checkExists[field] = res.result.BIBusinessCheckExists[0].exists
 				}
 			})
 	}

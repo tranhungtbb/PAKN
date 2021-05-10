@@ -31,6 +31,11 @@ export class ChangePasswordComponent implements OnInit {
 		)
 	}
 
+	viewPassword: any = {
+		new: false,
+		reNew: false,
+	}
+
 	submited = false
 	onSave(event) {
 		this.submited = true

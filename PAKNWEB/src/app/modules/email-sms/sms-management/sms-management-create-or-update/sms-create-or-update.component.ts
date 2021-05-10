@@ -4,15 +4,13 @@ import { ToastrService } from 'ngx-toastr'
 
 import { Router, ActivatedRoute } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { CONSTANTS, STATUS_HISNEWS, FILETYPE } from 'src/app/constants/CONSTANTS'
+import { STATUS_HIS_SMS } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
-import { RoleObject } from 'src/app/models/roleObject'
-import { InvitationService } from 'src/app/services/invitation.service'
-import { InvitationObject, InvitationUserMapObject } from 'src/app/models/invitationObject'
+import { SMSManagementService } from 'src/app/services/sms-management'
+import { smsManagementObject, smsManagementMapObject } from 'src/app/models/smsManagementObject'
 import { from } from 'rxjs'
-import { UserService } from 'src/app/services/user.service'
-import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { iterator } from 'rxjs/internal-compatibility'
+import { TreeModule } from 'primeng/tree'
 
 declare var $: any
 
@@ -22,42 +20,38 @@ declare var $: any
 	styleUrls: ['./sms-create-or-update.component.css'],
 })
 export class SMSCreateOrUpdateComponent implements OnInit {
-	model: InvitationObject = new InvitationObject()
-	sendEmail: boolean = false
-	sendSMS: boolean = false
+	model: smsManagementObject = new smsManagementObject()
 	form: FormGroup
 	submitted = false
 	action: any
-	files: any[]
-	lstFileDelete: any[]
 	title: string
+	statusCurent: Number = 1
 	listStatus: any = [
 		{ value: 1, text: 'Đang soạn thảo' },
 		{ value: 2, text: 'Đã gửi' },
 	]
-	listUserIsSystem: any[]
-	listItemUserSelected: Array<InvitationUserMapObject>
-	userMap: any[]
-	key: any = ''
+	AdministrativeUnits: any[]
+	listItemUserSelected: Array<smsManagementMapObject>
+	administrativeUnitId: any
+	listIndividualAndBusinessGetByAdmintrativeId: any[]
 	userId: any
-	@ViewChild('file', { static: false }) public file: ElementRef
+	individual: boolean = true
+	business: boolean = true
+	individualBusinessInfo: any[]
 	constructor(
 		private _toastr: ToastrService,
 		private formBuilder: FormBuilder,
 		private router: Router,
-		private invitationService: InvitationService,
-		private userService: UserService,
-		private activatedRoute: ActivatedRoute,
-		private fileService: UploadFileService
+		private smsService: SMSManagementService,
+		private activatedRoute: ActivatedRoute
 	) {
 		this.listItemUserSelected = []
-		this.files = []
-		this.userMap = []
-		this.lstFileDelete = []
+		this.listIndividualAndBusinessGetByAdmintrativeId = []
+		this.individualBusinessInfo = []
 	}
 
 	ngOnInit() {
-		this.getUsersIsSystem()
+		this.getAdministrativeUnits()
 		this.buildForm()
 		// this.getInvitatonModelById()
 	}
@@ -65,14 +59,12 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	buildForm() {
 		this.form = this.formBuilder.group({
 			title: [this.model.title, Validators.required],
-			startDate: [this.model.startDate, Validators.required],
-			endDate: [this.model.endDate, Validators.required],
 			content: [this.model.content, Validators.required],
-			place: [this.model.place, Validators.required],
-			note: [this.model.note],
+			signature: [this.model.signature, Validators.required],
+			administrativeUnitId: [this.administrativeUnitId],
 			userId: [this.userId],
-			sendEmail: [this.sendEmail],
-			sendSMS: [this.sendSMS],
+			business: [this.business],
+			individual: [this.individual],
 		})
 	}
 
@@ -81,41 +73,29 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 			let id = +params['id']
 			this.model.id = isNaN(id) == true ? 0 : id
 			if (this.model.id != 0) {
-				this.invitationService.invitationGetById({ id: this.model.id }).subscribe((res) => {
+				this.smsService.GetById({ id: this.model.id }).subscribe((res) => {
 					if (res.success == RESPONSE_STATUS.success) {
+						debugger
 						if (res.result) {
 							this.model = { ...res.result.model }
-							this.model.startDate = new Date(this.model.startDate)
-							this.model.endDate = new Date(this.model.endDate)
-							this.files = res.result.invFileAttach
-							for (const iterator of res.result.invitationUserMap) {
-								let item = this.listUserIsSystem.find((x) => x.id == iterator.userId)
-								var obj = new InvitationUserMapObject()
-								obj.userId = iterator.userId
-								obj.sendEmail = iterator.sendEmail
-								obj.sendSMS = iterator.sendSMS
-								obj.fullName = item.fullName
-								obj.unitName = item.unitName
-								obj.positionName = item.positionName
-								obj.avatar = item.avatar
-								this.listItemUserSelected.push(obj)
-							}
+							this.statusCurent = this.model.status
+							this.listItemUserSelected = [...res.result.individualBusinessInfo]
 						}
 					}
 				})
 			}
 		})
-		this.action = this.model.id == 0 ? 'Thêm mới' : 'Cập nhập'
-		this.title = this.model.id == 0 ? 'Thêm mới thư mời ' : 'Cập nhập thư mời'
+		this.action = this.model.id == 0 ? 'Lưu' : 'Lưu'
+		this.title = this.model.id == 0 ? 'Soạn thảo SMS' : 'Soạn thảo SMS'
 	}
 
-	getUsersIsSystem() {
-		this.userService.getIsSystem2({}).subscribe((res) => {
+	getAdministrativeUnits() {
+		this.smsService.GetListAdmintrative({ id: 37 }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				this.listUserIsSystem = res.result.SYUserGetIsSystem2
+				this.AdministrativeUnits = res.result.CAAdministrativeUnitsGetDropDown
 				this.getInvitatonModelById()
 			} else {
-				this.listUserIsSystem = []
+				this.AdministrativeUnits = []
 			}
 		})
 	}
@@ -127,57 +107,134 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	rebuilForm() {
 		this.form.reset({
 			title: this.model.title,
-			startDate: this.model.startDate,
-			endDate: this.model.endDate,
 			content: this.model.content,
-			place: this.model.place,
-			note: this.model.note,
+			signature: this.model.signature,
+			administrativeUnitId: this.administrativeUnitId,
 			userId: this.userId,
-			sendEmail: this.sendEmail,
-			sendSMS: this.sendSMS,
+			individual: this.individual,
+			business: this.business,
 		})
+	}
+
+	onChange(category: number) {
+		if (category == 1) {
+			this.individual = !this.individual
+		} else if (category == 2) {
+			this.business = !this.business
+		}
+		this.onLoadListIndividualAndBusiness()
+	}
+
+	onLoadListIndividualAndBusiness() {
+		if (this.administrativeUnitId == undefined) {
+			this._toastr.error('Vui lòng chọn đơn vị')
+			return
+		}
+		let type: number = 0
+		if (this.individual == true && this.business == true) {
+			type = 3
+		} else {
+			if (this.individual == true) {
+				type = 1
+			} else if (this.business == true) {
+				type = 2
+			} else {
+				this._toastr.error('Vui lòng chọn cá nhân hoặc doanh nghiệp')
+				this.listIndividualAndBusinessGetByAdmintrativeId = []
+				return
+			}
+		}
+
+		this.smsService
+			.GetListIndividualAndBusinessByAdmintrativeUnitId({
+				id: this.administrativeUnitId,
+				type: type,
+			})
+			.subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					if (res.result.BIIndividualOrBusinessGetDropListByProviceId.length > 0) {
+						this.listIndividualAndBusinessGetByAdmintrativeId = res.result.BIIndividualOrBusinessGetDropListByProviceId
+					} else {
+						this.listIndividualAndBusinessGetByAdmintrativeId = []
+					}
+				} else {
+					this.listIndividualAndBusinessGetByAdmintrativeId = []
+				}
+			})
 	}
 
 	onSave(isSend: boolean) {
 		this.model.status = isSend == false ? 1 : 2
 		this.submitted = true
-		if (this.listItemUserSelected.length == 0) {
-			this._toastr.error('Vui lòng chọn người tham dự')
-			return
-		}
+
 		this.model.title = this.model.title.trim()
 		this.model.content = this.model.content.trim()
-		this.model.place = this.model.place.trim()
+		this.model.signature = this.model.signature.trim()
 		this.rebuilForm()
 
 		if (this.form.invalid) {
 			return
 		}
-		for (const i of this.listItemUserSelected) {
-			let item = {
-				UserId: i.userId,
-				InvitationId: 0,
-				Watched: false,
-				SendEmail: i.sendEmail,
-				SendSMS: i.sendSMS,
-			}
-			this.userMap.push(item)
+
+		if (this.listItemUserSelected.length == 0) {
+			this._toastr.error('Vui lòng chọn cá nhân, doanh nghiệp được gửi SMS')
+			return
 		}
+		var s = []
+		this.listItemUserSelected.forEach((item) => {
+			s.push(item.category)
+			let ob = {
+				Id: item.id,
+				Category: item.category,
+				AdmintrativeUnitId: item.administrativeUnitId,
+			}
+			this.individualBusinessInfo.push(ob)
+		})
+		s = s.filter((x, index) => s.indexOf(x) === index)
+		this.model.type = s.reduce((x, y) => {
+			return (x += y + ',')
+		}, '')
+		this.model.type = this.model.type.substring(0, this.model.type.length - 1)
 		var obj = {
 			model: this.model,
-			Files: this.files,
-			userMap: this.userMap,
-			lstFileDelete: this.lstFileDelete,
+			IndividualBusinessInfo: this.individualBusinessInfo,
 		}
 
 		if (this.model.id == 0 || this.model.id == null) {
-			this.invitationService.invitationInsert(obj).subscribe((response) => {
+			this.smsService.Insert(obj).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
+					// insert his
+
+					this.smsService
+						.InsertHisSMS({
+							ObjectId: response.result,
+							Status: STATUS_HIS_SMS.CREATE,
+						})
+						.subscribe((res) => {
+							if (res.success == RESPONSE_STATUS.success) {
+								if (isSend == true) {
+									this.smsService
+										.InsertHisSMS({
+											ObjectId: response.result,
+											Status: STATUS_HIS_SMS.SEND,
+										})
+										.subscribe()
+								}
+								return
+							}
+						})
 					this._toastr.success(COMMONS.ADD_SUCCESS)
 					this.redirectList()
 					return
 				} else {
-					this._toastr.error(response.message)
+					let res = isNaN(response.result) == true ? 0 : response.result
+					if (res == -1) {
+						this._toastr.error('Tiêu đề SMS đã tồn tại')
+						return
+					} else {
+						this._toastr.error(response.message)
+						return
+					}
 					return
 				}
 			}),
@@ -186,13 +243,40 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 					alert(error)
 				}
 		} else {
-			this.invitationService.invitationUpdate(obj).subscribe((response) => {
+			this.smsService.Update(obj).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
+					// ghi his
+
+					this.smsService
+						.InsertHisSMS({
+							ObjectId: response.result,
+							Status: STATUS_HIS_SMS.UPDATE,
+						})
+						.subscribe((res) => {
+							if (res.success == RESPONSE_STATUS.success) {
+								if (isSend == true) {
+									this.smsService
+										.InsertHisSMS({
+											ObjectId: response.result,
+											Status: STATUS_HIS_SMS.SEND,
+										})
+										.subscribe()
+								}
+							}
+						})
 					this._toastr.success(COMMONS.UPDATE_SUCCESS)
 					this.redirectList()
+
 					return
 				} else {
-					this._toastr.error(response.message)
+					let res = isNaN(response.result) == true ? 0 : response.result
+					if (res == -1) {
+						this._toastr.error('Tiêu đề SMS đã tồn tại')
+						return
+					} else {
+						this._toastr.error(response.message)
+						return
+					}
 					return
 				}
 			}),
@@ -203,96 +287,54 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 		}
 	}
 	redirectList() {
-		this.router.navigate(['quan-tri/thu-moi'])
+		this.router.navigate(['/quan-tri/email-sms/sms'])
 	}
 
 	onCreateUser() {
+		if (this.statusCurent == 2) {
+			this._toastr.error('Không thể thêm người dân, doanh nghiệp nhận SMS')
+			return
+		}
+		if (this.administrativeUnitId == undefined) {
+			this._toastr.error('Vui lòng chọn đơn vị')
+			return
+		}
 		if (this.userId != undefined) {
 			if (this.listItemUserSelected.length == 0) {
-				let item = this.listUserIsSystem.find((x) => x.id == this.userId)
-				var obj = new InvitationUserMapObject()
-				obj.userId = this.userId
-				obj.sendEmail = this.sendEmail
-				obj.sendSMS = this.sendSMS
-				obj.fullName = item.fullName
-				obj.unitName = item.unitName
-				obj.positionName = item.positionName
-				obj.avatar = item.avatar
+				let item = this.listIndividualAndBusinessGetByAdmintrativeId.find((x) => x.id == this.userId)
+				var obj = new smsManagementMapObject()
+				obj.id = this.userId
+				obj.category = item.category
+				obj.name = item.name
+				obj.administrativeUnitName = item.administrativeUnitName
+				obj.administrativeUnitId = item.administrativeUnitId
 				this.listItemUserSelected.push(obj)
 			} else {
-				let check = this.listItemUserSelected.find((x) => x.userId == this.userId)
+				let check = this.listItemUserSelected.find((x) => x.id == this.userId)
 				if (check != undefined) {
 					this._toastr.error('Bạn đã chọn người này')
 					return
 				}
-				let item = this.listUserIsSystem.find((x) => x.id == this.userId)
-				var obj = new InvitationUserMapObject()
-				obj.userId = this.userId
-				obj.sendEmail = this.sendEmail
-				obj.sendSMS = this.sendSMS
-				obj.unitName = item.unitName
-				obj.fullName = item.fullName
-				obj.positionName = item.positionName
-				obj.avatar = item.avatar
+				let item = this.listIndividualAndBusinessGetByAdmintrativeId.find((x) => x.id == this.userId)
+				var obj = new smsManagementMapObject()
+				obj.id = this.userId
+				obj.category = item.category
+				obj.name = item.name
+				obj.administrativeUnitName = item.administrativeUnitName
+				obj.administrativeUnitId = item.administrativeUnitId
 				this.listItemUserSelected.push(obj)
 			}
 		} else {
-			this._toastr.error('Vui lòng chọn người tham dự')
+			this._toastr.error('Vui lòng chọn cá nhân, doanh nghiệp')
 			return
 		}
 	}
 	onRemoveUser(item: any) {
-		this.listItemUserSelected = this.listItemUserSelected.filter((x) => x.userId != item.userId)
-		return
-	}
-
-	onUpdateUser(userId: any, isSendSMS: boolean) {
-		let item = this.listItemUserSelected.find((x) => x.userId == userId)
-		if (item != undefined) {
-			if (isSendSMS == true) {
-				item.sendSMS = !item.sendSMS
-			} else {
-				item.sendEmail = !item.sendEmail
-			}
-			let index = this.listItemUserSelected.indexOf(item)
-			this.listItemUserSelected.splice(index, 1, item)
-		}
-		return
-	}
-
-	onUpload(event) {
-		if (event.target.files.length == 0) {
+		if (this.statusCurent == 2) {
+			this._toastr.error('Không thể xóa người dân, doanh nghiệp nhận SMS')
 			return
 		}
-		const check = this.fileService.checkFileWasExitsted(event, this.files)
-		if (check === 1) {
-			for (let item of event.target.files) {
-				FILETYPE.forEach((fileType) => {
-					if (item.type == fileType.text) {
-						let max = this.files.reduce((a, b) => {
-							return a.id > b.id ? a.id : b.id
-						}, 0)
-						item.id = max + 1
-						item.fileType = fileType.value
-						this.files.push(item)
-					}
-				})
-				if (!item.fileType) {
-					this._toastr.error('Định dạng không được hỗ trợ')
-				}
-			}
-		} else if (check === 2) {
-			this._toastr.error('Không được phép đẩy trùng tên file lên hệ thống')
-		} else {
-			this._toastr.error('File tải lên vượt quá dung lượng cho phép 10MB')
-		}
-		this.file.nativeElement.value = ''
-	}
-
-	onRemoveFile(args) {
-		const index = this.files.indexOf(args)
-		const file = this.files[index]
-		this.lstFileDelete.push(file)
-		this.files.splice(index, 1)
+		this.listItemUserSelected = this.listItemUserSelected.filter((x) => x.id != item.id)
+		return
 	}
 }

@@ -33,6 +33,7 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 	fileAccept = CONSTANTS.FILEACCEPT
 	userLoginId: number = this.storeageService.getUserId()
 	unitLoginId: number = this.storeageService.getUnitId()
+	mrDenyContent: any = {}
 	@ViewChild('file', { static: false }) public file: ElementRef
 	constructor(
 		private toastr: ToastrService,
@@ -78,6 +79,9 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 				if (this.model.sendDate) {
 					this.model.sendDate = new Date(this.model.sendDate)
 				}
+				if ([3, 6, 9].includes(this.model.status)) {
+					this.getMrDenyContent(this.model.id)
+				}
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -87,8 +91,9 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 			}
 	}
 	getDropdown() {
+		let unitId = this.storeageService.getUnitId()
 		let request = {
-			UnitId: this.storeageService.getUnitId(),
+			UnitId: unitId ? unitId : '',
 		}
 		this.recommendationService.recommendationGetDataForProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -111,6 +116,15 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 			initials += names[names.length - 1].substring(0, 1).toUpperCase()
 		}
 		return initials
+	}
+	getMrDenyContent(mrId: number) {
+		this.recommendationService
+			.getDenyContent({
+				RecommendationId: mrId,
+			})
+			.subscribe((res) => {
+				this.mrDenyContent = res.result.MRRecommendationGetDenyContents[0]
+			})
 	}
 
 	onCreateHashtag(e) {

@@ -109,4 +109,9 @@ export class UserService {
 		let url = AppSettings.API_ADDRESS + Api.SystemGetUserDropDown
 		return this.serviceInvoker.get({}, url)
 	}
+
+	checkExists(req: any): Observable<any> {
+		let url = AppSettings.API_ADDRESS + Api.UserCheckExists
+		return this.serviceInvoker.get(req, url)
+	}
 }

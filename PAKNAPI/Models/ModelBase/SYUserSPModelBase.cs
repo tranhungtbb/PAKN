@@ -11,6 +11,33 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
+	public class SYUserCheckExists
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserCheckExists(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserCheckExists()
+		{
+		}
+
+		public bool? Exists { get; set; }
+		public string Value { get; set; }
+
+		public async Task<List<SYUserCheckExists>> SYUserCheckExistsDAO(string Field, string Value, long? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Field", Field);
+			DP.Add("Value", Value);
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserCheckExists>("SY_User_CheckExists", DP)).ToList();
+		}
+	}
+
 	public class SYUserRoleMapInsert
 	{
 		private SQLCon _sQLCon;

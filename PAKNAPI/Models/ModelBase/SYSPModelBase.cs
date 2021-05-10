@@ -100,59 +100,6 @@ namespace PAKNAPI.ModelBase
 		public string Port { get; set; }
 	}
 
-	public class SYPermissionGetByFunction
-	{
-		private SQLCon _sQLCon;
-
-		public SYPermissionGetByFunction(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public SYPermissionGetByFunction()
-		{
-		}
-
-		public short Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-		public short FunctionId { get; set; }
-		public short? ParentId { get; set; }
-
-		public async Task<List<SYPermissionGetByFunction>> SYPermissionGetByFunctionDAO(int? Id)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-
-			return (await _sQLCon.ExecuteListDapperAsync<SYPermissionGetByFunction>("SY_Permission_GetByFunction", DP)).ToList();
-		}
-	}
-
-	public class SYPermissionCategoryGet
-	{
-		private SQLCon _sQLCon;
-
-		public SYPermissionCategoryGet(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public SYPermissionCategoryGet()
-		{
-		}
-
-		public short Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-
-		public async Task<List<SYPermissionCategoryGet>> SYPermissionCategoryGetDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<SYPermissionCategoryGet>("SY_PermissionCategory_Get", DP)).ToList();
-		}
-	}
-
 	public class SYPermissionCheckByUserId
 	{
 		private SQLCon _sQLCon;
@@ -176,86 +123,6 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYPermissionCheckByUserId>("SY_PermissionCheckByUserId", DP)).ToList();
 		}
-	}
-
-	public class SYPermissionFunctionGetByCategory
-	{
-		private SQLCon _sQLCon;
-
-		public SYPermissionFunctionGetByCategory(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public SYPermissionFunctionGetByCategory()
-		{
-		}
-
-		public short Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
-		public short CategoryId { get; set; }
-
-		public async Task<List<SYPermissionFunctionGetByCategory>> SYPermissionFunctionGetByCategoryDAO(int? Id)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-
-			return (await _sQLCon.ExecuteListDapperAsync<SYPermissionFunctionGetByCategory>("SY_PermissionFunction_GetByCategory", DP)).ToList();
-		}
-	}
-
-	public class SYPermissionGroupUserGetByGroupId
-	{
-		private SQLCon _sQLCon;
-
-		public SYPermissionGroupUserGetByGroupId(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public SYPermissionGroupUserGetByGroupId()
-		{
-		}
-
-		public short PermissionId { get; set; }
-
-		public async Task<List<SYPermissionGroupUserGetByGroupId>> SYPermissionGroupUserGetByGroupIdDAO(int? GroupUserId)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("GroupUserId", GroupUserId);
-
-			return (await _sQLCon.ExecuteListDapperAsync<SYPermissionGroupUserGetByGroupId>("SY_PermissionGroupUser_GetByGroupId", DP)).ToList();
-		}
-	}
-
-	public class SYPermissionGroupUserInsertByList
-	{
-		private SQLCon _sQLCon;
-
-		public SYPermissionGroupUserInsertByList(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public SYPermissionGroupUserInsertByList()
-		{
-		}
-
-		public async Task<int> SYPermissionGroupUserInsertByListDAO(SYPermissionGroupUserInsertByListIN _sYPermissionGroupUserInsertByListIN)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("lstid", _sYPermissionGroupUserInsertByListIN.lstid);
-			DP.Add("GroupUserId", _sYPermissionGroupUserInsertByListIN.GroupUserId);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_PermissionGroupUser_InsertByList", DP));
-		}
-	}
-
-	public class SYPermissionGroupUserInsertByListIN
-	{
-		public string lstid { get; set; }
-		public int? GroupUserId { get; set; }
 	}
 
 	public class SYRoleDelete
@@ -619,6 +486,214 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYTimeDelete
+	{
+		private SQLCon _sQLCon;
+
+		public SYTimeDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYTimeDelete()
+		{
+		}
+
+		public async Task<int> SYTimeDeleteDAO(SYTimeDeleteIN _sYTimeDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYTimeDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_TimeDelete", DP));
+		}
+	}
+
+	public class SYTimeDeleteIN
+	{
+		public int? Id { get; set; }
+	}
+
+	public class SYTimeGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public SYTimeGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYTimeGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool? IsActived { get; set; }
+		public DateTime? Time { get; set; }
+		public string Description { get; set; }
+
+		public async Task<List<SYTimeGetAllOnPage>> SYTimeGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Code, DateTime? Time, string Description, bool? IsActived)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("Name", Name);
+			DP.Add("Code", Code);
+			DP.Add("Time", Time);
+			DP.Add("Description", Description);
+			DP.Add("IsActived", IsActived);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYTimeGetAllOnPage>("SY_TimeGetAllOnPage", DP)).ToList();
+		}
+	}
+
+	public class SYTimeGetByID
+	{
+		private SQLCon _sQLCon;
+
+		public SYTimeGetByID(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYTimeGetByID()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public bool? IsActived { get; set; }
+		public DateTime? Time { get; set; }
+		public string Description { get; set; }
+
+		public async Task<List<SYTimeGetByID>> SYTimeGetByIDDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYTimeGetByID>("SY_TimeGetByID", DP)).ToList();
+		}
+	}
+
+	public class SYTimeGetDateActive
+	{
+		private SQLCon _sQLCon;
+
+		public SYTimeGetDateActive(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYTimeGetDateActive()
+		{
+		}
+
+		public DateTime? Time { get; set; }
+
+		public async Task<List<SYTimeGetDateActive>> SYTimeGetDateActiveDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYTimeGetDateActive>("SY_TimeGetDateActive", DP)).ToList();
+		}
+	}
+
+	public class SYTimeInsert
+	{
+		private SQLCon _sQLCon;
+
+		public SYTimeInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYTimeInsert()
+		{
+		}
+
+		public async Task<int?> SYTimeInsertDAO(SYTimeInsertIN _sYTimeInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", _sYTimeInsertIN.Name);
+			DP.Add("IsActived", _sYTimeInsertIN.IsActived);
+			DP.Add("Time", _sYTimeInsertIN.Time);
+			DP.Add("Description", _sYTimeInsertIN.Description);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_TimeInsert", DP);
+		}
+	}
+
+	public class SYTimeInsertIN
+	{
+		public string Name { get; set; }
+		public bool? IsActived { get; set; }
+		public DateTime? Time { get; set; }
+		public string Description { get; set; }
+	}
+
+	public class SYTimeUpdate
+	{
+		private SQLCon _sQLCon;
+
+		public SYTimeUpdate(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYTimeUpdate()
+		{
+		}
+
+		public async Task<int?> SYTimeUpdateDAO(SYTimeUpdateIN _sYTimeUpdateIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYTimeUpdateIN.Id);
+			DP.Add("Name", _sYTimeUpdateIN.Name);
+			DP.Add("IsActived", _sYTimeUpdateIN.IsActived);
+			DP.Add("Time", _sYTimeUpdateIN.Time);
+			DP.Add("Description", _sYTimeUpdateIN.Description);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_TimeUpdate", DP);
+		}
+	}
+
+	public class SYTimeUpdateIN
+	{
+		public int? Id { get; set; }
+		public string Name { get; set; }
+		public bool? IsActived { get; set; }
+		public DateTime? Time { get; set; }
+		public string Description { get; set; }
+	}
+
+	public class SYUnitCheckExists
+	{
+		private SQLCon _sQLCon;
+
+		public SYUnitCheckExists(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUnitCheckExists()
+		{
+		}
+
+		public bool? Exists { get; set; }
+		public string Value { get; set; }
+
+		public async Task<List<SYUnitCheckExists>> SYUnitCheckExistsDAO(string Field, string Value, long? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Field", Field);
+			DP.Add("Value", Value);
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUnitCheckExists>("SY_Unit_CheckExists", DP)).ToList();
+		}
+	}
+
 	public class SYUnitGetDropdown
 	{
 		private SQLCon _sQLCon;
@@ -862,6 +937,30 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetNonSystem>("SY_UserGetNonSystem", DP)).ToList();
+		}
+	}
+
+	public class SYUsersGetDropdown
+	{
+		private SQLCon _sQLCon;
+
+		public SYUsersGetDropdown(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUsersGetDropdown()
+		{
+		}
+
+		public long Value { get; set; }
+		public string Text { get; set; }
+
+		public async Task<List<SYUsersGetDropdown>> SYUsersGetDropdownDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUsersGetDropdown>("SY_UsersGetDropdown", DP)).ToList();
 		}
 	}
 

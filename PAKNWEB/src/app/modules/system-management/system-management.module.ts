@@ -13,11 +13,13 @@ import { ContextMenuModule } from 'primeng/contextmenu'
 import { TableModule } from 'primeng/table'
 import { DropdownModule } from 'primeng/dropdown'
 import { TreeModule } from 'primeng/tree'
+import { CalendarModule } from 'primeng/calendar'
 import { TooltipModule } from 'primeng/tooltip'
 import { GMapModule } from 'primeng/gmap'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatDialogModule } from '@angular/material/dialog'
 import { EmailSettingComponent } from './components/email-setting/email-setting.component'
+import { TimeSettingComponent } from './components/time-setting/time-setting.component'
 import { SmsSettingComponent } from './components/sms-setting/sms-setting.component'
 import { OrganizationalStructureComponent } from './components/organizational-structure/organizational-structure.component'
 import { GroupUserComponent } from './components/group-user/group-user.component'
@@ -45,6 +47,7 @@ import { BusinessModule } from '../business.module'
 		TableModule,
 		DropdownModule,
 		TreeModule,
+		CalendarModule,
 		TooltipModule,
 		GMapModule,
 		MatCheckboxModule,
@@ -56,6 +59,7 @@ import { BusinessModule } from '../business.module'
 		SystemManagemenetComponent,
 		SystemLogComponent,
 		EmailSettingComponent,
+		TimeSettingComponent,
 		SmsSettingComponent,
 		OrganizationalStructureComponent,
 		GroupUserComponent,

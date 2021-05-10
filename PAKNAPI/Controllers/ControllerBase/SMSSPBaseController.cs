@@ -364,6 +364,32 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SMSQuanLyTinNhanGetAllOnPage", rsSMSQuanLyTinNhanGetAllOnPage},
+						{"TotalCount", rsSMSQuanLyTinNhanGetAllOnPage != null && rsSMSQuanLyTinNhanGetAllOnPage.Count > 0 ? rsSMSQuanLyTinNhanGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsSMSQuanLyTinNhanGetAllOnPage != null && rsSMSQuanLyTinNhanGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsSMSQuanLyTinNhanGetAllOnPage != null && rsSMSQuanLyTinNhanGetAllOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SMSQuanLyTinNhanGetByIdBase")]
+		public async Task<ActionResult<object>> SMSQuanLyTinNhanGetByIdBase(int? Id)
+		{
+			try
+			{
+				List<SMSQuanLyTinNhanGetById> rsSMSQuanLyTinNhanGetById = await new SMSQuanLyTinNhanGetById(_appSetting).SMSQuanLyTinNhanGetByIdDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SMSQuanLyTinNhanGetById", rsSMSQuanLyTinNhanGetById},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

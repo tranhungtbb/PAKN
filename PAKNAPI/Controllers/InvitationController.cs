@@ -88,7 +88,7 @@ namespace PAKNAPI.Controllers
 
 				invInvitation.Model.IsView = 0;
 				invInvitation.Model.Member = invInvitation.InvitationUserMap == null ? 0 : invInvitation.InvitationUserMap.Count();
-
+				
 				int id = Int32.Parse((await new INVInvitationInsert(_appSetting).INVInvitationInsertDAO(invInvitation.Model)).ToString());
 
 				if (id > 0)
@@ -130,7 +130,7 @@ namespace PAKNAPI.Controllers
 				}
 				else
 				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Error" };
+					return new ResultApi { Success = ResultCode.ORROR, Result = id, Message = "title already exists" };
 				}
 			}
 			catch (Exception ex) {
@@ -266,7 +266,7 @@ namespace PAKNAPI.Controllers
 				}
 				else
 				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Error" };
+					return new ResultApi { Success = ResultCode.ORROR, Result = id, Message = "title already exists" };
 				}
 			}
 			catch (Exception ex)

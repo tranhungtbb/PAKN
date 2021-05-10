@@ -77,7 +77,7 @@
 							</svg>
 						</div>
 						<div class="media-body">
-							<p class="h4 font-italic font-weight-bold">Trung tâm phản ánh kiến nghị tỉnh Khánh Hoà trả lời:</p>
+							<p class="h4 font-italic font-weight-bold">{{model.processUnitName}}:</p>
 							<ng-container *ngIf="model.status == 1">
 								<textarea class="form-control" [(ngModel)]="modelConclusion.content" rows="10" placeholder="Nhập nội dung..."></textarea>
 								<div class="row">
@@ -189,7 +189,7 @@
 								</div>
 							</ng-container>
 							<ng-container *ngIf="[3,6,9].includes(model.status)">
-								<p>{{modelConclusion.reasonDeny}}</p>
+								<p>{{mrDenyContent.reasonDeny}}</p>
 							</ng-container>
 							<ng-container *ngIf="model.status == 10">
 								<p>{{modelConclusion.content}}</p>

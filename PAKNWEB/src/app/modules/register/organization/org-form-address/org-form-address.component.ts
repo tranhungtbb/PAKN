@@ -94,18 +94,26 @@ export class OrgFormAddressComponent implements OnInit {
 		})
 	}
 
-	orgPhone_exists = false
-	orgEmail_exists = false
+	// orgPhone_exists = false
+	// orgEmail_exists = false
+	checkExists = {
+		OrgPhone: false,
+		OrgEmail: false,
+	}
 	onCheckExist(field: string, value: string) {
+		if (value == null || value == '') {
+			this.checkExists[field] = false
+			return
+		}
 		this.registerService
 			.businessCheckExists({
 				field,
 				value,
+				id: 0,
 			})
 			.subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
-					if (field == 'OrgPhone') this.orgPhone_exists = res.result.BIBusinessCheckExists[0].exists
-					else if (field == 'OrgEmail') this.orgEmail_exists = res.result.BIBusinessCheckExists[0].exists
+					this.checkExists[field] = res.result.BIBusinessCheckExists[0].exists
 				}
 			})
 	}

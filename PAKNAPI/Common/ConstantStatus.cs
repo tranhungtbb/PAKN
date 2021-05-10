@@ -45,4 +45,18 @@
 		public const int PUBLIC = 3; //3 cong bo
 		public const int CANCEL = 4; //3 huy cong bo
 	}
+
+	public class STATUS_SMS
+	{
+		public const int CREATE = 0; //khoi tao
+		public const int COMPILE = 1; // soan thao
+		public const int SEND = 2; //2 gửi
+	}
+
+	public class STATUS_HIS_SMS
+	{
+		public const int CREATE = 0; //khoi tao
+		public const int UPDATE = 1; // soan thao
+		public const int SEND = 2; //2 gửi
+	}
 }

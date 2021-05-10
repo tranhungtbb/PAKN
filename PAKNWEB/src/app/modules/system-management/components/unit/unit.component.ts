@@ -11,7 +11,7 @@ import { PositionService } from '../../../../services/position.service'
 import { RoleService } from '../../../../services/role.service'
 
 import { UserCreateOrUpdateComponent } from '../user/user-create-or-update/user-create-or-update.component'
-
+import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
 import { UnitObject } from 'src/app/models/unitObject'
 
@@ -127,6 +127,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.childCreateOrUpdateUser.parentUnit = this
 
 		$('#tree-unit input.ui-tree-filter').attr('placeholder', 'Nhập...')
+		$('#modal-create-or-update').on('hide.bs.modal', () => {
+			this.modelUnit = new UnitObject()
+			this.createUnitFrom.reset()
+		})
 	}
 
 	collapsed_checked: any = {
@@ -326,14 +330,38 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	get fUnit() {
 		return this.createUnitFrom.controls
 	}
+	checkExists = {
+		Phone: false,
+		Email: false,
+	}
+	onCheckExist(field: string, value: string) {
+		this.unitService
+			.checkExists({
+				field,
+				value,
+				id: this.modelUnit.id ? this.modelUnit.id : 0,
+			})
+			.subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.checkExists[field] = res.result.SYUnitCheckExists[0].exists
+				}
+			})
+	}
+
 	unitFormSubmitted = false
 	onSaveUnit() {
 		this.unitFormSubmitted = true
+
+		this.modelUnit.name = this.modelUnit.name.trim()
+		this.modelUnit.email = this.modelUnit.email.trim()
+		this.modelUnit.address = this.modelUnit.address.trim()
+		this.modelUnit.description = this.modelUnit.description.trim()
 
 		if (this.createUnitFrom.invalid) {
 			this._toastr.error('Dữ liệu không hợp lệ')
 			return
 		}
+		if (this.checkExists['Phone'] || this.checkExists['Email']) return
 
 		if (this.modelUnit.id != null && this.modelUnit.id > 0) {
 			this.unitService.update(this.modelUnit).subscribe((res) => {

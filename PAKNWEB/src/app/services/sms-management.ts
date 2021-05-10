@@ -17,8 +17,16 @@ export class SMSManagementService {
 		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.SMSManagementInsert)
 	}
 
+	InsertHisSMS(request: any): Observable<any> {
+		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.HISSMSInsert)
+	}
+
 	GetById(query: any): Observable<any> {
-		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.SMSManagementGetById)
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.SMSManagementUpdate)
+	}
+
+	UpdateStatusSend(request: any): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.SMSManagementUpdateStatusSend)
 	}
 
 	Update(request: any): Observable<any> {
@@ -31,6 +39,18 @@ export class SMSManagementService {
 
 	GetListOnPage(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.SMSManagementGetOnPage)
+	}
+
+	GetListHisOnPage(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.SMSManagementGetHisOnPage)
+	}
+
+	GetListAdmintrative(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.AdministrativeUnits)
+	}
+
+	GetListIndividualAndBusinessByAdmintrativeUnitId(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.GetListIndividualAndBusinessByAdmintrativeUnitId)
 	}
 
 	// delete(query: any): Observable<any> {

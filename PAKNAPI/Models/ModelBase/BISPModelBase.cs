@@ -26,12 +26,14 @@ namespace PAKNAPI.ModelBase
 
 		public bool? Exists { get; set; }
 		public string Value { get; set; }
+		public long? Id { get; set; }
 
-		public async Task<List<BIBusinessCheckExists>> BIBusinessCheckExistsDAO(string Field, string Value)
+		public async Task<List<BIBusinessCheckExists>> BIBusinessCheckExistsDAO(string Field, string Value, long? Id )
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Field", Field);
 			DP.Add("Value", Value);
+			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<BIBusinessCheckExists>("BI_Business_CheckExists", DP)).ToList();
 		}
@@ -398,12 +400,14 @@ namespace PAKNAPI.ModelBase
 
 		public bool? Exists { get; set; }
 		public string Value { get; set; }
+		public long? Id { get; set; }
 
-		public async Task<List<BIIndividualCheckExists>> BIIndividualCheckExistsDAO(string Field, string Value)
+		public async Task<List<BIIndividualCheckExists>> BIIndividualCheckExistsDAO(string Field, string Value, long?Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Field", Field);
 			DP.Add("Value", Value);
+			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualCheckExists>("BI_Individual_CheckExists", DP)).ToList();
 		}
@@ -528,6 +532,35 @@ namespace PAKNAPI.ModelBase
 		public DateTime? BirthDay { get; set; }
 		public bool? Gender { get; set; }
 		public long? UserId { get; set; }
+	}
+
+	public class BIIndividualOrBusinessGetDropListByProviceId
+	{
+		private SQLCon _sQLCon;
+
+		public BIIndividualOrBusinessGetDropListByProviceId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public BIIndividualOrBusinessGetDropListByProviceId()
+		{
+		}
+
+		public long Id { get; set; }
+		public int Category { get; set; }
+		public string Name { get; set; }
+		public string AdministrativeUnitName { get; set; }
+		public short? AdministrativeUnitId { get; set; }
+
+		public async Task<List<BIIndividualOrBusinessGetDropListByProviceId>> BIIndividualOrBusinessGetDropListByProviceIdDAO(int? Id, int? Type)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+			DP.Add("Type", Type);
+
+			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualOrBusinessGetDropListByProviceId>("BI_IndividualOrBusinessGetDropListByProviceId", DP)).ToList();
+		}
 	}
 
 	public class BIInvididualUpdateInfo

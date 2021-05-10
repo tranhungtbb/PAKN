@@ -38,4 +38,8 @@ export class UnitService {
 	changeStatus(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UnitChangeStatus)
 	}
+	checkExists(req: any): Observable<any> {
+		let url = AppSettings.API_ADDRESS + Api.UnitCheckExists
+		return this.serviceInvoker.get(req, url)
+	}
 }

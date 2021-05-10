@@ -25,6 +25,8 @@ namespace PAKNAPI.Models.ModelBase
 
         public int RowNumber { get; set; }
 
+        public string ProcessUnitName { get; set; }
+
         public PURecommendation(IAppSetting appSetting)
         {
             _sQLCon = new SQLCon(appSetting.GetConnectstring());
