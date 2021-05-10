@@ -251,4 +251,9 @@ export class Api {
 	public static EmailConfigSystemUpdate = 'SYSPBase/SYEmailInsertBase'
 	public static SMSGetFirstBase = 'SYSPBase/SYSMSGetFirstBase'
 	public static SMSConfigSystemUpdate = 'SYSPBase/SYSMSInsertBase'
+
+	//BusinessIndividual
+	public static BusinessIndividualGetDataForCreate = 'BusinessIndividual/BusinessIndividualGetDataForCreate'
+
+	public static IndividualChatbotGetAllOnPageBase = 'BusinessIndividual/IndividualGetAllOnPageBase'
 }

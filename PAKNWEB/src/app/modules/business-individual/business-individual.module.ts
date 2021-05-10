@@ -40,5 +40,6 @@ import { IndividualComponent } from './components/individual/individual.componen
 		MatDialogModule,
 	],
 	declarations: [BusinessIndividualComponent, BusinessComponent, IndividualComponent],
+	providers: [],
 })
 export class BusinessIndividualModule {}
