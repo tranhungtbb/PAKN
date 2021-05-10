@@ -940,6 +940,30 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYUsersGetDropdown
+	{
+		private SQLCon _sQLCon;
+
+		public SYUsersGetDropdown(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUsersGetDropdown()
+		{
+		}
+
+		public long Value { get; set; }
+		public string Text { get; set; }
+
+		public async Task<List<SYUsersGetDropdown>> SYUsersGetDropdownDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUsersGetDropdown>("SY_UsersGetDropdown", DP)).ToList();
+		}
+	}
+
 	public class SYNotificationDelete
 	{
 		private SQLCon _sQLCon;
