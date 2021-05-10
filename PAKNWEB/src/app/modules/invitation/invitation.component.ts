@@ -3,19 +3,30 @@ import { InvitationService } from 'src/app/services/invitation.service'
 import { COMMONS } from 'src/app/commons/commons'
 import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
+import { defineLocale } from 'ngx-bootstrap/chronos'
+import { viLocale } from 'ngx-bootstrap/locale'
+import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker'
 
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { InvitationObject } from 'src/app/models/invitationObject'
 import { UserService } from 'src/app/services/user.service'
 
 declare var $: any
+defineLocale('vi', viLocale)
+
 @Component({
 	selector: 'app-invitation',
 	templateUrl: './invitation.component.html',
 	styleUrls: ['./invitation.component.css'],
 })
 export class InvitationComponent implements OnInit {
-	constructor(private invitationService: InvitationService, private toast: ToastrService, private routes: Router, private userService: UserService) {}
+	constructor(
+		private invitationService: InvitationService,
+		private toast: ToastrService,
+		private routes: Router,
+		private userService: UserService,
+		private BsLocaleService: BsLocaleService
+	) {}
 	@ViewChild('table', { static: false }) table: any
 
 	listStatus: any = [
@@ -37,6 +48,7 @@ export class InvitationComponent implements OnInit {
 
 	ngOnInit() {
 		this.getListPaged()
+		this.BsLocaleService.use('vi')
 	}
 
 	getListPaged() {
@@ -100,10 +112,8 @@ export class InvitationComponent implements OnInit {
 		this.routes.navigate(['quan-tri/thu-moi/them-moi'])
 	}
 
-	redirectUpdate(id: number, status: number) {
-		if (status == 1) {
-			this.routes.navigate(['quan-tri/thu-moi/cap-nhap/' + id])
-		}
+	redirectUpdate(id: number) {
+		this.routes.navigate(['quan-tri/thu-moi/cap-nhap/' + id])
 		return
 	}
 	sendDateChange(data) {
@@ -122,5 +132,9 @@ export class InvitationComponent implements OnInit {
 			this.startDate = this.endDate = ''
 		}
 		this.getListPaged()
+	}
+
+	getHistory(id: any) {
+		return
 	}
 }

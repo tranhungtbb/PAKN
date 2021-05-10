@@ -133,7 +133,7 @@ namespace PAKNAPI.Controllers
 				}
 				else
 				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Error" };
+					return new ResultApi { Success = ResultCode.ORROR, Result = id, Message = "title already exists" };
 				}
 			}
 			catch (Exception ex) {
@@ -249,7 +249,7 @@ namespace PAKNAPI.Controllers
 				}
 				else
 				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Error" };
+					return new ResultApi { Success = ResultCode.ORROR, Result = id, Message = "title already exists" };
 				}
 			}
 			catch (Exception ex)
