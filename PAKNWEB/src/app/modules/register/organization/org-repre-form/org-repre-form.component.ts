@@ -110,9 +110,15 @@ export class OrgRepreFormComponent implements OnInit {
 		this.onChangeNation()
 	}
 
-	email_exists: boolean = false
-	idCard_exists: boolean = false
+	checkExists = {
+		Email: false,
+		IDCard: false,
+	}
 	onCheckExist(field: string, value: string) {
+		if (value == null || value == '') {
+			this.checkExists[field] = false
+			return
+		}
 		this.registerService
 			.businessCheckExists({
 				field,
@@ -120,8 +126,7 @@ export class OrgRepreFormComponent implements OnInit {
 			})
 			.subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
-					if (field == 'Email') this.email_exists = res.result.BIBusinessCheckExists[0].exists
-					else if (field == 'IDCard') this.idCard_exists = res.result.BIBusinessCheckExists[0].exists
+					this.checkExists[field] = res.result.BIBusinessCheckExists[0].exists
 				}
 			})
 	}

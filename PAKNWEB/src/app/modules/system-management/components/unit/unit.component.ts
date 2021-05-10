@@ -330,19 +330,20 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	get fUnit() {
 		return this.createUnitFrom.controls
 	}
-	email_exists = false
-	phone_exists = false
+	checkExists = {
+		Phone: false,
+		Email: false,
+	}
 	onCheckExist(field: string, value: string) {
 		this.unitService
 			.checkExists({
 				field,
 				value,
-				id: this.modelUnit.id,
+				id: this.modelUnit.id ? this.modelUnit.id : 0,
 			})
 			.subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
-					if (field == 'Phone') this.phone_exists = res.result.SYUnitCheckExists[0].exists
-					else if (field == 'Email') this.email_exists = res.result.SYUnitCheckExists[0].exists
+					this.checkExists[field] = res.result.SYUnitCheckExists[0].exists
 				}
 			})
 	}
@@ -360,7 +361,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			this._toastr.error('Dữ liệu không hợp lệ')
 			return
 		}
-		if (this.email_exists || this.phone_exists) return
+		if (this.checkExists['Phone'] || this.checkExists['Email']) return
 
 		if (this.modelUnit.id != null && this.modelUnit.id > 0) {
 			this.unitService.update(this.modelUnit).subscribe((res) => {

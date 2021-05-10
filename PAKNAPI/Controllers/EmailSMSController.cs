@@ -128,7 +128,7 @@ namespace PAKNAPI.Controllers
 						await new SMSTinNhanAdministrativeUnitMapInsert(_appSetting).SMSTinNhanAdministrativeUnitMapInsertDAO(map);
 					}
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-					return new ResultApi { Success = ResultCode.OK};
+					return new ResultApi { Success = ResultCode.OK , Result = id};
 
 				}
 				else
@@ -244,7 +244,7 @@ namespace PAKNAPI.Controllers
 						await new SMSTinNhanAdministrativeUnitMapInsert(_appSetting).SMSTinNhanAdministrativeUnitMapInsertDAO(map);
 					}
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-					return new ResultApi { Success = ResultCode.OK };
+					return new ResultApi { Success = ResultCode.OK, Result = id };
 
 				}
 				else
@@ -296,6 +296,43 @@ namespace PAKNAPI.Controllers
 			}
 			catch (Exception ex)
 			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("HISSMSInsert")]
+		public async Task<ActionResult<object>> HISNewsInsert(HISSMSInsertIN _hISSMS)
+		{
+			try
+			{
+				_hISSMS.CreatedBy = (int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				_hISSMS.CreatedName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
+				_hISSMS.CreatedDate = DateTime.Now;
+
+				switch (_hISSMS.Status)
+				{
+					case STATUS_HIS_SMS.CREATE:
+						_hISSMS.Content = _hISSMS.CreatedName + " đã khởi tạo SMS";
+						break;
+					case STATUS_HIS_SMS.UPDATE:
+						_hISSMS.Content = _hISSMS.CreatedName + " đã cập nhập SMS";
+						break;
+					case STATUS_HIS_SMS.SEND:
+						_hISSMS.Content = _hISSMS.CreatedName + " đã gửi SMS";
+						break;
+				}
+
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new HISSMSInsert(_appSetting).HISSMSInsertDAO(_hISSMS) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
