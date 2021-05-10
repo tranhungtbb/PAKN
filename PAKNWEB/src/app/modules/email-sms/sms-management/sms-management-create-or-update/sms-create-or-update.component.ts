@@ -10,6 +10,7 @@ import { SMSManagementService } from 'src/app/services/sms-management'
 import { smsManagementObject, smsManagementMapObject } from 'src/app/models/smsManagementObject'
 import { from } from 'rxjs'
 import { iterator } from 'rxjs/internal-compatibility'
+import { TreeModule } from 'primeng/tree'
 
 declare var $: any
 
@@ -24,6 +25,7 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	submitted = false
 	action: any
 	title: string
+	statusCurent: Number = 1
 	listStatus: any = [
 		{ value: 1, text: 'Đang soạn thảo' },
 		{ value: 2, text: 'Đã gửi' },
@@ -33,8 +35,8 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	administrativeUnitId: any
 	listIndividualAndBusinessGetByAdmintrativeId: any[]
 	userId: any
-	individual: boolean = false
-	business: boolean = false
+	individual: boolean = true
+	business: boolean = true
 	individualBusinessInfo: any[]
 	constructor(
 		private _toastr: ToastrService,
@@ -76,14 +78,19 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 						debugger
 						if (res.result) {
 							this.model = { ...res.result.model }
+							this.statusCurent = this.model.status
 							this.listItemUserSelected = [...res.result.individualBusinessInfo]
+							if (this.statusCurent == 2) {
+								this.title = 'Chi tiết SMS'
+							} else {
+								this.title = this.model.id == 0 ? 'Soạn thảo SMS' : 'Soạn thảo SMS'
+							}
 						}
 					}
 				})
 			}
 		})
 		this.action = this.model.id == 0 ? 'Lưu' : 'Lưu'
-		this.title = this.model.id == 0 ? 'Soạn thảo SMS' : 'Soạn thảo SMS'
 	}
 
 	getAdministrativeUnits() {
@@ -123,8 +130,11 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	}
 
 	onLoadListIndividualAndBusiness() {
-		this.listIndividualAndBusinessGetByAdmintrativeId = []
-		let type: number
+		if (this.administrativeUnitId == undefined) {
+			this._toastr.error('Vui lòng chọn đơn vị')
+			return
+		}
+		let type: number = 0
 		if (this.individual == true && this.business == true) {
 			type = 3
 		} else {
@@ -134,13 +144,11 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 				type = 2
 			} else {
 				this._toastr.error('Vui lòng chọn cá nhân hoặc doanh nghiệp')
+				this.listIndividualAndBusinessGetByAdmintrativeId = []
 				return
 			}
 		}
-		if (this.administrativeUnitId == undefined) {
-			this._toastr.error('Vui lòng chọn đơn vị')
-			return
-		}
+
 		this.smsService
 			.GetListIndividualAndBusinessByAdmintrativeUnitId({
 				id: this.administrativeUnitId,
@@ -162,16 +170,18 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	onSave(isSend: boolean) {
 		this.model.status = isSend == false ? 1 : 2
 		this.submitted = true
-		if (this.listItemUserSelected.length == 0) {
-			this._toastr.error('Chưa có cá nhân, doanh nghiệp được gửi')
-			return
-		}
+
 		this.model.title = this.model.title.trim()
 		this.model.content = this.model.content.trim()
 		this.model.signature = this.model.signature.trim()
 		this.rebuilForm()
 
 		if (this.form.invalid) {
+			return
+		}
+
+		if (this.listItemUserSelected.length == 0) {
+			this._toastr.error('Vui lòng chọn cá nhân, doanh nghiệp được gửi SMS')
 			return
 		}
 		var s = []
@@ -217,12 +227,18 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 								return
 							}
 						})
-
 					this._toastr.success(COMMONS.ADD_SUCCESS)
 					this.redirectList()
 					return
 				} else {
-					this._toastr.error(response.message)
+					let res = isNaN(response.result) == true ? 0 : response.result
+					if (res == -1) {
+						this._toastr.error('Tiêu đề SMS đã tồn tại')
+						return
+					} else {
+						this._toastr.error(response.message)
+						return
+					}
 					return
 				}
 			}),
@@ -252,12 +268,19 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 								}
 							}
 						})
-
 					this._toastr.success(COMMONS.UPDATE_SUCCESS)
 					this.redirectList()
+
 					return
 				} else {
-					this._toastr.error(response.message)
+					let res = isNaN(response.result) == true ? 0 : response.result
+					if (res == -1) {
+						this._toastr.error('Tiêu đề SMS đã tồn tại')
+						return
+					} else {
+						this._toastr.error(response.message)
+						return
+					}
 					return
 				}
 			}),
@@ -272,6 +295,14 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	}
 
 	onCreateUser() {
+		if (this.statusCurent == 2) {
+			this._toastr.error('Không thể thêm người dân, doanh nghiệp nhận SMS')
+			return
+		}
+		if (this.administrativeUnitId == undefined) {
+			this._toastr.error('Vui lòng chọn đơn vị')
+			return
+		}
 		if (this.userId != undefined) {
 			if (this.listItemUserSelected.length == 0) {
 				let item = this.listIndividualAndBusinessGetByAdmintrativeId.find((x) => x.id == this.userId)
@@ -303,6 +334,10 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 		}
 	}
 	onRemoveUser(item: any) {
+		if (this.statusCurent == 2) {
+			this._toastr.error('Không thể xóa người dân, doanh nghiệp nhận SMS')
+			return
+		}
 		this.listItemUserSelected = this.listItemUserSelected.filter((x) => x.id != item.id)
 		return
 	}

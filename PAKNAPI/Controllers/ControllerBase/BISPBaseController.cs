@@ -33,11 +33,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("BIBusinessCheckExistsBase")]
-		public async Task<ActionResult<object>> BIBusinessCheckExistsBase(string Field, string Value)
+		public async Task<ActionResult<object>> BIBusinessCheckExistsBase(string Field, string Value, long? Id)
 		{
 			try
 			{
-				List<BIBusinessCheckExists> rsBIBusinessCheckExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO(Field, Value);
+				List<BIBusinessCheckExists> rsBIBusinessCheckExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO(Field, Value,Id);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"BIBusinessCheckExists", rsBIBusinessCheckExists},
@@ -268,11 +268,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("BIIndividualCheckExistsBase")]
-		public async Task<ActionResult<object>> BIIndividualCheckExistsBase(string Field, string Value)
+		public async Task<ActionResult<object>> BIIndividualCheckExistsBase(string Field, string Value, long? Id)
 		{
 			try
 			{
-				List<BIIndividualCheckExists> rsBIIndividualCheckExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO(Field, Value);
+				List<BIIndividualCheckExists> rsBIIndividualCheckExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO(Field, Value, Id);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"BIIndividualCheckExists", rsBIIndividualCheckExists},
