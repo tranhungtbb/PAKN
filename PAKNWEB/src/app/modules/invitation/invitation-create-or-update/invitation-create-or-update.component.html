@@ -181,7 +181,7 @@
 					<div class="row form-group" style="padding-right: 10px;">
 						<div class="col-sm-12" style="padding: 0px 12px;">
 							<div class="title-user-map">Thành phần tham dự</div>
-							<div class="search-user">
+							<div class="search-user" *ngIf="statusCurent != 2">
 								<div class="department">Họ và tên</div>
 								<div class="" style="display: flex;">
 									<div class="input-serach" style="width: 50%;">
@@ -253,7 +253,7 @@
 										</label>
 									</div>
 								</div>
-								<div class="action padding-item center">
+								<div class="action padding-item center" *ngIf="statusCurent != 2">
 									<button type="button" style="width: 40px; height: 40px;" class="btn grd-blue btn-block border-0 px-3 text-white" (click)="onRemoveUser(item)">
 										<i class="bi bi-person-dash"></i>
 									</button>

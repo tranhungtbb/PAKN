@@ -80,13 +80,17 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 							this.model = { ...res.result.model }
 							this.statusCurent = this.model.status
 							this.listItemUserSelected = [...res.result.individualBusinessInfo]
+							if (this.statusCurent == 2) {
+								this.title = 'Chi tiết SMS'
+							} else {
+								this.title = this.model.id == 0 ? 'Soạn thảo SMS' : 'Soạn thảo SMS'
+							}
 						}
 					}
 				})
 			}
 		})
 		this.action = this.model.id == 0 ? 'Lưu' : 'Lưu'
-		this.title = this.model.id == 0 ? 'Soạn thảo SMS' : 'Soạn thảo SMS'
 	}
 
 	getAdministrativeUnits() {

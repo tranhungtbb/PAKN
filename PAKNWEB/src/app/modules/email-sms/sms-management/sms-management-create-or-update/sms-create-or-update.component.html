@@ -59,7 +59,7 @@
 					<div class="row form-group" style="padding-right: 10px;">
 						<div class="col-sm-12" style="padding: 0px 12px;">
 							<div class="title-user-map">Cá nhân doanh nghiệp nhận SMS</div>
-							<div class="search-user">
+							<div class="search-user" *ngIf="statusCurent != 2">
 								<div class="department">Đơn vị</div>
 								<div class="" style="display: flex;">
 									<div class="input-serach" style="width: 45%;">
@@ -124,7 +124,7 @@
 									<div class="title">Đơn vị</div>
 									<div class="department">{{item.administrativeUnitName}}</div>
 								</div>
-								<div class="action padding-item center">
+								<div class="action padding-item center" *ngIf="statusCurent != 2">
 									<button type="button" (click)="onRemoveUser(item)" style="width: 40px; height: 40px;"
 										class="btn grd-blue btn-block border-0 px-3 text-white center">
 										<i class="bi bi-dash"></i>
