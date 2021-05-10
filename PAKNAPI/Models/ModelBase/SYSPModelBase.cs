@@ -576,6 +576,29 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYTimeGetDateActive
+	{
+		private SQLCon _sQLCon;
+
+		public SYTimeGetDateActive(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYTimeGetDateActive()
+		{
+		}
+
+		public DateTime? Time { get; set; }
+
+		public async Task<List<SYTimeGetDateActive>> SYTimeGetDateActiveDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYTimeGetDateActive>("SY_TimeGetDateActive", DP)).ToList();
+		}
+	}
+
 	public class SYTimeInsert
 	{
 		private SQLCon _sQLCon;
@@ -914,6 +937,30 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetNonSystem>("SY_UserGetNonSystem", DP)).ToList();
+		}
+	}
+
+	public class SYUsersGetDropdown
+	{
+		private SQLCon _sQLCon;
+
+		public SYUsersGetDropdown(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUsersGetDropdown()
+		{
+		}
+
+		public long Value { get; set; }
+		public string Text { get; set; }
+
+		public async Task<List<SYUsersGetDropdown>> SYUsersGetDropdownDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUsersGetDropdown>("SY_UsersGetDropdown", DP)).ToList();
 		}
 	}
 

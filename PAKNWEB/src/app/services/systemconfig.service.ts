@@ -38,4 +38,7 @@ export class SystemconfigService {
 	getSystemTimeById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.TimeConfigGetById)
 	}
+	getSystemTimeDateActive(): Observable<any> {
+		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.TimeConfigGetDateActive)
+	}
 }

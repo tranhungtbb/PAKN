@@ -2,3 +2,8 @@ strong.highlight:hover {
 	color: #42a4ff;
 	cursor: pointer;
 }
+.center {
+	float: none;
+	margin-left: auto;
+	margin-right: auto;
+}
