@@ -61,7 +61,7 @@
 							</svg>
 						</div>
 						<div class="media-body">
-							<p class="h4 font-italic font-weight-bold">Trung tâm phản ánh kiến nghị tỉnh Khánh Hoà trả lời:</p>
+							<p class="h4 font-italic font-weight-bold">{{model.processUnitName}}:</p>
 							<p *ngIf="lstConclusion" innerHTML="{{lstConclusion.content | Change}}">
 							</p>
 							<p class="mb-4" *ngFor="let item of lstConclusionFiles; let i = index">

@@ -157,10 +157,8 @@ export class SMSManagementComponent implements OnInit {
 		this.routes.navigate(['quan-tri/email-sms/sms/them-moi'])
 	}
 
-	redirectUpdate(id: number, status: number) {
-		if (status == 1) {
-			this.routes.navigate(['quan-tri/email-sms/sms/cap-nhap/' + id])
-		}
+	redirectUpdate(id: number) {
+		this.routes.navigate(['quan-tri/email-sms/sms/cap-nhap/' + id])
 		return
 	}
 
@@ -174,7 +172,6 @@ export class SMSManagementComponent implements OnInit {
 			UserName: this.hisUserCreate == null ? '' : this.hisUserCreate,
 			Status: this.hisStatus == null ? '' : this.hisStatus,
 		}
-		debugger
 		this.smsService.GetListHisOnPage(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.HISSMSGetBySMSIdOnPage.length > 0) {

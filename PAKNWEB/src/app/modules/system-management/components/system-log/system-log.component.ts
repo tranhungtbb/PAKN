@@ -113,7 +113,7 @@ export class SystemLogComponent implements OnInit {
 	}
 	getList() {
 		let req = {
-			CreateDate: this.dataSearch.createDate != null ? this.dataSearch.createDate.toLocaleDateString() : '',
+			CreateDate: this.dataSearch.createDate == null ? '' : this.dataSearch.createDate.toLocaleDateString(),
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 			//UserId: localStorage.getItem('userId'),
@@ -121,7 +121,10 @@ export class SystemLogComponent implements OnInit {
 			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
 			UserId: this.dataSearch.userId != null ? this.dataSearch.userId : '',
 		}
-		console.log(req)
+		if (req.CreateDate == 'InvalidDate') {
+			this.listData = []
+			return
+		}
 		this.userService.getSystemLoginAdmin(req).subscribe(response => {
 			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {

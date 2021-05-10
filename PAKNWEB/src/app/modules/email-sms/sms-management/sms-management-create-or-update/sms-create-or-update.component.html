@@ -7,12 +7,12 @@
 					<li class="breadcrumb-item active"><a class="font-weight-bold">{{title}}</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
-					<a class="btn btn-sm btn-default rounded mr-3" style="border: 1px solid gray;" [routerLink]="['/quan-tri/he-thong','vai-tro']">
+					<a class="btn btn-sm btn-default rounded mr-3" style="border: 1px solid gray;" (click)="redirectList()">
 						<i class="bi bi-arrow-left"></i>&nbsp;
 						Quay lại
 					</a>
-					<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave(false)">{{action}}</button>
-					<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave(true)">Gửi</button>
+					<button *ngIf="statusCurent != 2" class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave(false)">{{action}}</button>
+					<button *ngIf="statusCurent != 2" class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave(true)">Gửi</button>
 				</div>
 			</div>
 		</div>
@@ -85,7 +85,14 @@
 												</label>
 											</div>
 										</div>
-										<div>
+										<div *ngIf="listIndividualAndBusinessGetByAdmintrativeId.length > 0">
+											<ng-select class="form-control" placeholder="Nhập..." [closeOnSelect]="true" formControlName="userId" [(ngModel)]="userId">
+												<ng-option *ngFor="let nt of listIndividualAndBusinessGetByAdmintrativeId" [value]="nt.id">
+													{{nt.name}}
+												</ng-option>
+											</ng-select>
+										</div>
+										<div *ngIf="listIndividualAndBusinessGetByAdmintrativeId.length == 0">
 											<ng-select class="form-control" placeholder="Nhập..." [closeOnSelect]="true" formControlName="userId" [(ngModel)]="userId">
 												<ng-option *ngFor="let nt of listIndividualAndBusinessGetByAdmintrativeId" [value]="nt.id">
 													{{nt.name}}
