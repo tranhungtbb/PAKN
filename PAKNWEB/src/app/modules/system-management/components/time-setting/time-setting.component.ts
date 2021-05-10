@@ -6,7 +6,7 @@ import { SystemconfigService } from '../../../../services/systemconfig.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-
+import { CalendarModule } from 'primeng/calendar'
 declare var $: any
 
 @Component({
@@ -29,15 +29,19 @@ export class TimeSettingComponent implements OnInit {
 	title: string = ''
 	name: string = ''
 	time: Date
+	date11: Date = new Date('01/11/2021')
 	description: string = ''
 	pageIndex: number = 1
 	pageSize: number = 20
+	listDate: []
+	lstDate = []
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
 	ngOnInit() {
 		this.buildForm()
 		this.getList()
+		this.getListDate()
 	}
 
 	ngAfterViewInit() {
@@ -59,7 +63,28 @@ export class TimeSettingComponent implements OnInit {
 			time: [this.model.time, Validators.required],
 		})
 	}
-
+	getListDate() {
+		this._service.getSystemTimeDateActive().subscribe(response => {
+			if (response.success == RESPONSE_STATUS.success) {
+				this.listDate = response.result.SYTimeGetDateActive
+				this.lstDate = this.listDate.map(({ time }) => new Date(time).getTime())
+				console.log(this.listDate)
+				console.log(this.lstDate)
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			error => {
+				console.error(error)
+				alert(error)
+			}
+	}
+	getMarkedDays(date) {
+		var i = new Date(date.month + 1 + '/' + date.day + '/' + date.year).getTime()
+		return this.lstDate.find(item => {
+			return item === i
+		})
+	}
 	rebuilForm() {
 		this.form.reset({
 			name: this.model.name,
@@ -149,6 +174,7 @@ export class TimeSettingComponent implements OnInit {
 			return
 		}
 		if (this.model.id == 0 || this.model.id == null) {
+			this.model.time = this.model.time.toLocaleDateString()
 			this._service.insertSystemTime(this.model).subscribe(response => {
 				console.log(response)
 				if (response.success == RESPONSE_STATUS.success) {
@@ -200,7 +226,7 @@ export class TimeSettingComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.rebuilForm()
 				this.title = 'Chỉnh sửa chức vụ'
-				this.model = response.result.CAPositionGetByID[0]
+				this.model = response.result.SYTimeGetByID[0]
 				$('#modal').modal('show')
 			} else {
 				this._toastr.error(response.message)

@@ -583,6 +583,29 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYTimeGetDateActiveBase")]
+		public async Task<ActionResult<object>> SYTimeGetDateActiveBase()
+		{
+			try
+			{
+				List<SYTimeGetDateActive> rsSYTimeGetDateActive = await new SYTimeGetDateActive(_appSetting).SYTimeGetDateActiveDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYTimeGetDateActive", rsSYTimeGetDateActive},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("SYTimeInsertBase")]

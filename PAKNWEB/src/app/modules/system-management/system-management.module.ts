@@ -13,6 +13,7 @@ import { ContextMenuModule } from 'primeng/contextmenu'
 import { TableModule } from 'primeng/table'
 import { DropdownModule } from 'primeng/dropdown'
 import { TreeModule } from 'primeng/tree'
+import { CalendarModule } from 'primeng/calendar'
 import { TooltipModule } from 'primeng/tooltip'
 import { GMapModule } from 'primeng/gmap'
 import { MatCheckboxModule } from '@angular/material/checkbox'
@@ -46,6 +47,7 @@ import { BusinessModule } from '../business.module'
 		TableModule,
 		DropdownModule,
 		TreeModule,
+		CalendarModule,
 		TooltipModule,
 		GMapModule,
 		MatCheckboxModule,
