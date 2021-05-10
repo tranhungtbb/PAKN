@@ -73,36 +73,42 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpPost]
-		[Authorize]
-		[Route("HISRecommendationInsertListBase")]
-		public async Task<ActionResult<object>> HISRecommendationInsertListBase(List<HISRecommendationInsertIN> _hISRecommendationInsertINs)
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("MRCommnentGetAllOnPageBase")]
+		public async Task<ActionResult<object>> MRCommnentGetAllOnPageBase(int? PageSize, int? PageIndex, long? RecommendationId)
 		{
 			try
 			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _hISRecommendationInsertIN in _hISRecommendationInsertINs)
-				{
-					var result = await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(_hISRecommendationInsertIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
+				List<MRCommnentGetAllOnPage> rsMRCommnentGetAllOnPage = await new MRCommnentGetAllOnPage(_appSetting).MRCommnentGetAllOnPageDAO(PageSize, PageIndex, RecommendationId);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
+						{"MRCommnentGetAllOnPage", rsMRCommnentGetAllOnPage},
+						{"TotalCount", rsMRCommnentGetAllOnPage != null && rsMRCommnentGetAllOnPage.Count > 0 ? rsMRCommnentGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsMRCommnentGetAllOnPage != null && rsMRCommnentGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsMRCommnentGetAllOnPage != null && rsMRCommnentGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("MRCommnentInsertBase")]
+		public async Task<ActionResult<object>> MRCommnentInsertBase(MRCommnentInsertIN _mRCommnentInsertIN)
+		{
+			try
+			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = json };
+				return new ResultApi { Success = ResultCode.OK, Result = await new MRCommnentInsert(_appSetting).MRCommnentInsertDAO(_mRCommnentInsertIN) };
 			}
 			catch (Exception ex)
 			{
@@ -146,46 +152,6 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationConclusionFilesDelete(_appSetting).MRRecommendationConclusionFilesDeleteDAO(_mRRecommendationConclusionFilesDeleteIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("MRRecommendationConclusionFilesDeleteListBase")]
-		public async Task<ActionResult<object>> MRRecommendationConclusionFilesDeleteListBase(List<MRRecommendationConclusionFilesDeleteIN> _mRRecommendationConclusionFilesDeleteINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationConclusionFilesDeleteIN in _mRRecommendationConclusionFilesDeleteINs)
-				{
-					var result = await new MRRecommendationConclusionFilesDelete(_appSetting).MRRecommendationConclusionFilesDeleteDAO(_mRRecommendationConclusionFilesDeleteIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -241,46 +207,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("MRRecommendationConclusionFilesInsertListBase")]
-		public async Task<ActionResult<object>> MRRecommendationConclusionFilesInsertListBase(List<MRRecommendationConclusionFilesInsertIN> _mRRecommendationConclusionFilesInsertINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationConclusionFilesInsertIN in _mRRecommendationConclusionFilesInsertINs)
-				{
-					var result = await new MRRecommendationConclusionFilesInsert(_appSetting).MRRecommendationConclusionFilesInsertDAO(_mRRecommendationConclusionFilesInsertIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
 		[Route("MRRecommendationConclusionDeleteBase")]
 		public async Task<ActionResult<object>> MRRecommendationConclusionDeleteBase(MRRecommendationConclusionDeleteIN _mRRecommendationConclusionDeleteIN)
 		{
@@ -289,46 +215,6 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationConclusionDelete(_appSetting).MRRecommendationConclusionDeleteDAO(_mRRecommendationConclusionDeleteIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("MRRecommendationConclusionDeleteListBase")]
-		public async Task<ActionResult<object>> MRRecommendationConclusionDeleteListBase(List<MRRecommendationConclusionDeleteIN> _mRRecommendationConclusionDeleteINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationConclusionDeleteIN in _mRRecommendationConclusionDeleteINs)
-				{
-					var result = await new MRRecommendationConclusionDelete(_appSetting).MRRecommendationConclusionDeleteDAO(_mRRecommendationConclusionDeleteIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -392,46 +278,6 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationFilesDelete(_appSetting).MRRecommendationFilesDeleteDAO(_mRRecommendationFilesDeleteIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("MRRecommendationFilesDeleteListBase")]
-		public async Task<ActionResult<object>> MRRecommendationFilesDeleteListBase(List<MRRecommendationFilesDeleteIN> _mRRecommendationFilesDeleteINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationFilesDeleteIN in _mRRecommendationFilesDeleteINs)
-				{
-					var result = await new MRRecommendationFilesDelete(_appSetting).MRRecommendationFilesDeleteDAO(_mRRecommendationFilesDeleteIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -530,46 +376,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("MRRecommendationForwardInsertListBase")]
-		public async Task<ActionResult<object>> MRRecommendationForwardInsertListBase(List<MRRecommendationForwardInsertIN> _mRRecommendationForwardInsertINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationForwardInsertIN in _mRRecommendationForwardInsertINs)
-				{
-					var result = await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_mRRecommendationForwardInsertIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
 		[Route("MRRecommendationForwardProcessBase")]
 		public async Task<ActionResult<object>> MRRecommendationForwardProcessBase(MRRecommendationForwardProcessIN _mRRecommendationForwardProcessIN)
 		{
@@ -590,46 +396,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("MRRecommendationForwardProcessListBase")]
-		public async Task<ActionResult<object>> MRRecommendationForwardProcessListBase(List<MRRecommendationForwardProcessIN> _mRRecommendationForwardProcessINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationForwardProcessIN in _mRRecommendationForwardProcessINs)
-				{
-					var result = await new MRRecommendationForwardProcess(_appSetting).MRRecommendationForwardProcessDAO(_mRRecommendationForwardProcessIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
 		[Route("MRRecommendationForwardUpdateBase")]
 		public async Task<ActionResult<object>> MRRecommendationForwardUpdateBase(MRRecommendationForwardUpdateIN _mRRecommendationForwardUpdateIN)
 		{
@@ -638,46 +404,6 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationForwardUpdate(_appSetting).MRRecommendationForwardUpdateDAO(_mRRecommendationForwardUpdateIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("MRRecommendationForwardUpdateListBase")]
-		public async Task<ActionResult<object>> MRRecommendationForwardUpdateListBase(List<MRRecommendationForwardUpdateIN> _mRRecommendationForwardUpdateINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationForwardUpdateIN in _mRRecommendationForwardUpdateINs)
-				{
-					var result = await new MRRecommendationForwardUpdate(_appSetting).MRRecommendationForwardUpdateDAO(_mRRecommendationForwardUpdateIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -710,46 +436,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize("ThePolicy")]
-		[Route("MRRecommendationFullTextDeleteByRecommendationIdListBase")]
-		public async Task<ActionResult<object>> MRRecommendationFullTextDeleteByRecommendationIdListBase(List<MRRecommendationFullTextDeleteByRecommendationIdIN> _mRRecommendationFullTextDeleteByRecommendationIdINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationFullTextDeleteByRecommendationIdIN in _mRRecommendationFullTextDeleteByRecommendationIdINs)
-				{
-					var result = await new MRRecommendationFullTextDeleteByRecommendationId(_appSetting).MRRecommendationFullTextDeleteByRecommendationIdDAO(_mRRecommendationFullTextDeleteByRecommendationIdIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize("ThePolicy")]
 		[Route("MRRecommendationFullTextInsertBase")]
 		public async Task<ActionResult<object>> MRRecommendationFullTextInsertBase(MRRecommendationFullTextInsertIN _mRRecommendationFullTextInsertIN)
 		{
@@ -758,46 +444,6 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationFullTextInsert(_appSetting).MRRecommendationFullTextInsertDAO(_mRRecommendationFullTextInsertIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize("ThePolicy")]
-		[Route("MRRecommendationFullTextInsertListBase")]
-		public async Task<ActionResult<object>> MRRecommendationFullTextInsertListBase(List<MRRecommendationFullTextInsertIN> _mRRecommendationFullTextInsertINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationFullTextInsertIN in _mRRecommendationFullTextInsertINs)
-				{
-					var result = await new MRRecommendationFullTextInsert(_appSetting).MRRecommendationFullTextInsertDAO(_mRRecommendationFullTextInsertIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -905,9 +551,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"MRRecommendationGetSuggestReply", rsMRRecommendationGetSuggestReply},
-						{"TotalCount", rsMRRecommendationGetSuggestReply != null && rsMRRecommendationGetSuggestReply.Count > 0 ? rsMRRecommendationGetSuggestReply[0].RowNumber : 0},
-						{"PageIndex", rsMRRecommendationGetSuggestReply != null && rsMRRecommendationGetSuggestReply.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsMRRecommendationGetSuggestReply != null && rsMRRecommendationGetSuggestReply.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -941,46 +584,6 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
-		[Route("MRRecommendationGroupWordInsertByListListBase")]
-		public async Task<ActionResult<object>> MRRecommendationGroupWordInsertByListListBase(List<MRRecommendationGroupWordInsertByListIN> _mRRecommendationGroupWordInsertByListINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationGroupWordInsertByListIN in _mRRecommendationGroupWordInsertByListINs)
-				{
-					var result = await new MRRecommendationGroupWordInsertByList(_appSetting).MRRecommendationGroupWordInsertByListDAO(_mRRecommendationGroupWordInsertByListIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
 		[Authorize]
 		[Route("MRRecommendationHashtagDeleteByRecommendationIdBase")]
 		public async Task<ActionResult<object>> MRRecommendationHashtagDeleteByRecommendationIdBase(MRRecommendationHashtagDeleteByRecommendationIdIN _mRRecommendationHashtagDeleteByRecommendationIdIN)
@@ -990,46 +593,6 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationHashtagDeleteByRecommendationId(_appSetting).MRRecommendationHashtagDeleteByRecommendationIdDAO(_mRRecommendationHashtagDeleteByRecommendationIdIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("MRRecommendationHashtagDeleteByRecommendationIdListBase")]
-		public async Task<ActionResult<object>> MRRecommendationHashtagDeleteByRecommendationIdListBase(List<MRRecommendationHashtagDeleteByRecommendationIdIN> _mRRecommendationHashtagDeleteByRecommendationIdINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationHashtagDeleteByRecommendationIdIN in _mRRecommendationHashtagDeleteByRecommendationIdINs)
-				{
-					var result = await new MRRecommendationHashtagDeleteByRecommendationId(_appSetting).MRRecommendationHashtagDeleteByRecommendationIdDAO(_mRRecommendationHashtagDeleteByRecommendationIdIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1085,46 +648,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("MRRecommendationHashtagInsertListBase")]
-		public async Task<ActionResult<object>> MRRecommendationHashtagInsertListBase(List<MRRecommendationHashtagInsertIN> _mRRecommendationHashtagInsertINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationHashtagInsertIN in _mRRecommendationHashtagInsertINs)
-				{
-					var result = await new MRRecommendationHashtagInsert(_appSetting).MRRecommendationHashtagInsertDAO(_mRRecommendationHashtagInsertIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
 		[Route("MRRecommendationDeleteBase")]
 		public async Task<ActionResult<object>> MRRecommendationDeleteBase(MRRecommendationDeleteIN _mRRecommendationDeleteIN)
 		{
@@ -1133,46 +656,6 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationDelete(_appSetting).MRRecommendationDeleteDAO(_mRRecommendationDeleteIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("MRRecommendationDeleteListBase")]
-		public async Task<ActionResult<object>> MRRecommendationDeleteListBase(List<MRRecommendationDeleteIN> _mRRecommendationDeleteINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationDeleteIN in _mRRecommendationDeleteINs)
-				{
-					var result = await new MRRecommendationDelete(_appSetting).MRRecommendationDeleteDAO(_mRRecommendationDeleteIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1194,9 +677,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"MRRecommendationGetAllOnPage", rsMRRecommendationGetAllOnPage},
-						{"TotalCount", rsMRRecommendationGetAllOnPage != null && rsMRRecommendationGetAllOnPage.Count > 0 ? rsMRRecommendationGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsMRRecommendationGetAllOnPage != null && rsMRRecommendationGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsMRRecommendationGetAllOnPage != null && rsMRRecommendationGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -1220,9 +700,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"MRRecommendationGetAllReactionaryWord", rsMRRecommendationGetAllReactionaryWord},
-						{"TotalCount", rsMRRecommendationGetAllReactionaryWord != null && rsMRRecommendationGetAllReactionaryWord.Count > 0 ? rsMRRecommendationGetAllReactionaryWord[0].RowNumber : 0},
-						{"PageIndex", rsMRRecommendationGetAllReactionaryWord != null && rsMRRecommendationGetAllReactionaryWord.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsMRRecommendationGetAllReactionaryWord != null && rsMRRecommendationGetAllReactionaryWord.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -1246,9 +723,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"MRRecommendationGetAllWithProcess", rsMRRecommendationGetAllWithProcess},
-						{"TotalCount", rsMRRecommendationGetAllWithProcess != null && rsMRRecommendationGetAllWithProcess.Count > 0 ? rsMRRecommendationGetAllWithProcess[0].RowNumber : 0},
-						{"PageIndex", rsMRRecommendationGetAllWithProcess != null && rsMRRecommendationGetAllWithProcess.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsMRRecommendationGetAllWithProcess != null && rsMRRecommendationGetAllWithProcess.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -1416,46 +890,6 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpPost]
-		[Authorize("ThePolicy")]
-		[Route("MRRecommendationKNCTFilesDeleteListBase")]
-		public async Task<ActionResult<object>> MRRecommendationKNCTFilesDeleteListBase(List<MRRecommendationKNCTFilesDeleteIN> _mRRecommendationKNCTFilesDeleteINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationKNCTFilesDeleteIN in _mRRecommendationKNCTFilesDeleteINs)
-				{
-					var result = await new MRRecommendationKNCTFilesDelete(_appSetting).MRRecommendationKNCTFilesDeleteDAO(_mRRecommendationKNCTFilesDeleteIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("MRRecommendationKNCTFilesGetByRecommendationIdBase")]
@@ -1489,46 +923,6 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationKNCTFilesInsert(_appSetting).MRRecommendationKNCTFilesInsertDAO(_mRRecommendationKNCTFilesInsertIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize("ThePolicy")]
-		[Route("MRRecommendationKNCTFilesInsertListBase")]
-		public async Task<ActionResult<object>> MRRecommendationKNCTFilesInsertListBase(List<MRRecommendationKNCTFilesInsertIN> _mRRecommendationKNCTFilesInsertINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationKNCTFilesInsertIN in _mRRecommendationKNCTFilesInsertINs)
-				{
-					var result = await new MRRecommendationKNCTFilesInsert(_appSetting).MRRecommendationKNCTFilesInsertDAO(_mRRecommendationKNCTFilesInsertIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1626,46 +1020,6 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
-		[Route("MRRecommendationKNCTUpdateListBase")]
-		public async Task<ActionResult<object>> MRRecommendationKNCTUpdateListBase(List<MRRecommendationKNCTUpdateIN> _mRRecommendationKNCTUpdateINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationKNCTUpdateIN in _mRRecommendationKNCTUpdateINs)
-				{
-					var result = await new MRRecommendationKNCTUpdate(_appSetting).MRRecommendationKNCTUpdateDAO(_mRRecommendationKNCTUpdateIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
 		[Authorize]
 		[Route("MRRecommendationUpdateBase")]
 		public async Task<ActionResult<object>> MRRecommendationUpdateBase(MRRecommendationUpdateIN _mRRecommendationUpdateIN)
@@ -1675,46 +1029,6 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationUpdate(_appSetting).MRRecommendationUpdateDAO(_mRRecommendationUpdateIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("MRRecommendationUpdateListBase")]
-		public async Task<ActionResult<object>> MRRecommendationUpdateListBase(List<MRRecommendationUpdateIN> _mRRecommendationUpdateINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationUpdateIN in _mRRecommendationUpdateINs)
-				{
-					var result = await new MRRecommendationUpdate(_appSetting).MRRecommendationUpdateDAO(_mRRecommendationUpdateIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -1747,46 +1061,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("MRRecommendationUpdateReactionaryWordListBase")]
-		public async Task<ActionResult<object>> MRRecommendationUpdateReactionaryWordListBase(List<MRRecommendationUpdateReactionaryWordIN> _mRRecommendationUpdateReactionaryWordINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationUpdateReactionaryWordIN in _mRRecommendationUpdateReactionaryWordINs)
-				{
-					var result = await new MRRecommendationUpdateReactionaryWord(_appSetting).MRRecommendationUpdateReactionaryWordDAO(_mRRecommendationUpdateReactionaryWordIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
 		[Route("MRRecommendationUpdateStatusBase")]
 		public async Task<ActionResult<object>> MRRecommendationUpdateStatusBase(MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN)
 		{
@@ -1795,46 +1069,6 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("MRRecommendationUpdateStatusListBase")]
-		public async Task<ActionResult<object>> MRRecommendationUpdateStatusListBase(List<MRRecommendationUpdateStatusIN> _mRRecommendationUpdateStatusINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _mRRecommendationUpdateStatusIN in _mRRecommendationUpdateStatusINs)
-				{
-					var result = await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
