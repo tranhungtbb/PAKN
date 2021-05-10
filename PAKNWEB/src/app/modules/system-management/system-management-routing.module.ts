@@ -13,7 +13,6 @@ import { UserCreateOrUpdateComponent } from './components/user/user-create-or-up
 import { ChatBotComponent } from './components/chat-bot/chat-bot.component'
 import { HistoryChatBotComponent } from './components/history-chat-bot/history-chat-bot.component'
 import { UserViewInfoComponent } from './components/user/user-view-info/user-view-info.component'
-
 const routes: Routes = [
 	{
 		path: '',

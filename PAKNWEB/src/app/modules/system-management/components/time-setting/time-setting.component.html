@@ -105,6 +105,15 @@
 		</div>
 	</div>
 </div>
+<div class="ui-g-12 ui-md-4 center">
+	<h3 style="text-align: center;">Lịch làm việc</h3>
+	<p-calendar [(ngModel)]="date1" [inline]="true">
+		<ng-template pTemplate="date" let-date>
+			<span [ngStyle]="{backgroundColor: getMarkedDays(date) ? '#81C784' : 'inherit'}"
+				style="border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">{{date.day}}</span>
+		</ng-template>
+	</p-calendar>
+</div>
 <div class="modal fade" id="modal">
 	<div class="modal-dialog modal-dialog-centered" style="min-width: 60%" role="document">
 		<div class="modal-content rounded">

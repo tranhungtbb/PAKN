@@ -262,4 +262,5 @@ export class Api {
 	public static TimeConfigGetAllOnPage = 'SYSPBase/SYTimeGetAllOnPageBase'
 	public static TimeConfigDelete = 'SYSPBase/SYTimeDeleteBase'
 	public static TimeConfigGetById = 'SYSPBase/SYTimeGetByIdBase'
+	public static TimeConfigGetDateActive = 'SYSPBase/SYTimeGetDateActiveBase'
 }
