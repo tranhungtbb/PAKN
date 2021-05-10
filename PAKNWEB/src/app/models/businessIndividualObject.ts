@@ -11,6 +11,8 @@ export class IndividualObject {
 		this.wardsId = ''
 		this.isActived = true
 		this.address = ''
+		this.IsDeleted = false
+		this.userId = ''
 	}
 	phone: string
 	fullName: string // fullName
@@ -31,6 +33,8 @@ export class IndividualObject {
 	PermanentPlace: string
 	NativePlace: string
 	isActived: boolean
+	IsDeleted: boolean
+	userId: string
 }
 
 export class BusinessionObject {
