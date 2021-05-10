@@ -281,7 +281,7 @@
 							<!-- row 5 -->
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Giới tính <span class="cl-red">(*)</span></label>
-								<ng-select class="form-control" [items]="listGender" placeholder="Chọn ..." bindLabel="text" bindValue="value" [(ngModel)]="gender">
+								<ng-select class="form-control" [items]="listGender" placeholder="Chọn ..." bindLabel="text" bindValue="value" [(ngModel)]="model.gender">
 								</ng-select>
 							</div>
 							<div class="col-12 col-lg-4 form-group">
@@ -302,7 +302,7 @@
 							</div>
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Trạng thái</label>
-								<ng-select class="form-control" [items]="listStatus" placeholder="Chọn ..." bindLabel="text" bindValue="value" [(ngModel)]="status"
+								<ng-select class="form-control" [items]="listStatus" placeholder="Chọn ..." bindLabel="text" bindValue="value" [(ngModel)]="model.status"
 									[closeOnSelect]="true">
 								</ng-select>
 							</div>
@@ -386,7 +386,7 @@
 					</div>
 					<div class="modal-footer" style="border: none; justify-content: center;">
 						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete, categoryIdDelete)">Xác
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue">Xác
 							nhận</button>
 					</div>
 				</div>
@@ -411,7 +411,7 @@
 					</div>
 					<div class="modal-footer" style="border: none; justify-content: center;">
 						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onUpdateStatus(dataUpdate)">Xác
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue">Xác
 							nhận</button>
 					</div>
 				</div>
