@@ -75,6 +75,46 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize("ThePolicy")]
+		[Route("DAMAdministrationDeleteListBase")]
+		public async Task<ActionResult<object>> DAMAdministrationDeleteListBase(List<DAMAdministrationDeleteIN> _dAMAdministrationDeleteINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _dAMAdministrationDeleteIN in _dAMAdministrationDeleteINs)
+				{
+					var result = await new DAMAdministrationDelete(_appSetting).DAMAdministrationDeleteDAO(_dAMAdministrationDeleteIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
 		[Route("DAMAdministrationDeleteAllBase")]
 		public async Task<ActionResult<object>> DAMAdministrationDeleteAllBase()
 		{
@@ -103,6 +143,46 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new DAMAdministrationFilesDelete(_appSetting).DAMAdministrationFilesDeleteDAO(_dAMAdministrationFilesDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("DAMAdministrationFilesDeleteListBase")]
+		public async Task<ActionResult<object>> DAMAdministrationFilesDeleteListBase(List<DAMAdministrationFilesDeleteIN> _dAMAdministrationFilesDeleteINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _dAMAdministrationFilesDeleteIN in _dAMAdministrationFilesDeleteINs)
+				{
+					var result = await new DAMAdministrationFilesDelete(_appSetting).DAMAdministrationFilesDeleteDAO(_dAMAdministrationFilesDeleteIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -146,6 +226,46 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new DAMAdministrationFilesInsert(_appSetting).DAMAdministrationFilesInsertDAO(_dAMAdministrationFilesInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("DAMAdministrationFilesInsertListBase")]
+		public async Task<ActionResult<object>> DAMAdministrationFilesInsertListBase(List<DAMAdministrationFilesInsertIN> _dAMAdministrationFilesInsertINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _dAMAdministrationFilesInsertIN in _dAMAdministrationFilesInsertINs)
+				{
+					var result = await new DAMAdministrationFilesInsert(_appSetting).DAMAdministrationFilesInsertDAO(_dAMAdministrationFilesInsertIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -242,6 +362,46 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("DAMAdministrationUpdateListBase")]
+		public async Task<ActionResult<object>> DAMAdministrationUpdateListBase(List<DAMAdministrationUpdateIN> _dAMAdministrationUpdateINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _dAMAdministrationUpdateIN in _dAMAdministrationUpdateINs)
+				{
+					var result = await new DAMAdministrationUpdate(_appSetting).DAMAdministrationUpdateDAO(_dAMAdministrationUpdateIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("DAMAdministrationGetListHomePageBase")]
@@ -287,6 +447,46 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize("ThePolicy")]
+		[Route("DAMChargesCreateListBase")]
+		public async Task<ActionResult<object>> DAMChargesCreateListBase(List<DAMChargesCreateIN> _dAMChargesCreateINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _dAMChargesCreateIN in _dAMChargesCreateINs)
+				{
+					var result = await new DAMChargesCreate(_appSetting).DAMChargesCreateDAO(_dAMChargesCreateIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
 		[Route("DAMChargesDeleteByIdBase")]
 		public async Task<ActionResult<object>> DAMChargesDeleteByIdBase(DAMChargesDeleteByIdIN _dAMChargesDeleteByIdIN)
 		{
@@ -295,6 +495,46 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new DAMChargesDeleteById(_appSetting).DAMChargesDeleteByIdDAO(_dAMChargesDeleteByIdIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("DAMChargesDeleteByIdListBase")]
+		public async Task<ActionResult<object>> DAMChargesDeleteByIdListBase(List<DAMChargesDeleteByIdIN> _dAMChargesDeleteByIdINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _dAMChargesDeleteByIdIN in _dAMChargesDeleteByIdINs)
+				{
+					var result = await new DAMChargesDeleteById(_appSetting).DAMChargesDeleteByIdDAO(_dAMChargesDeleteByIdIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -373,6 +613,46 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize("ThePolicy")]
+		[Route("DAMChargesUpdateListBase")]
+		public async Task<ActionResult<object>> DAMChargesUpdateListBase(List<DAMChargesUpdateIN> _dAMChargesUpdateINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _dAMChargesUpdateIN in _dAMChargesUpdateINs)
+				{
+					var result = await new DAMChargesUpdate(_appSetting).DAMChargesUpdateDAO(_dAMChargesUpdateIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
 		[Route("DAMCompositionProfileCreateBase")]
 		public async Task<ActionResult<object>> DAMCompositionProfileCreateBase(DAMCompositionProfileCreateIN _dAMCompositionProfileCreateIN)
 		{
@@ -413,6 +693,46 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize("ThePolicy")]
+		[Route("DAMCompositionProfileDeleteByIdListBase")]
+		public async Task<ActionResult<object>> DAMCompositionProfileDeleteByIdListBase(List<DAMCompositionProfileDeleteByIdIN> _dAMCompositionProfileDeleteByIdINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _dAMCompositionProfileDeleteByIdIN in _dAMCompositionProfileDeleteByIdINs)
+				{
+					var result = await new DAMCompositionProfileDeleteById(_appSetting).DAMCompositionProfileDeleteByIdDAO(_dAMCompositionProfileDeleteByIdIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
 		[Route("DAMCompositionProfileFileFilesDeleteBase")]
 		public async Task<ActionResult<object>> DAMCompositionProfileFileFilesDeleteBase(DAMCompositionProfileFileFilesDeleteIN _dAMCompositionProfileFileFilesDeleteIN)
 		{
@@ -421,6 +741,46 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new DAMCompositionProfileFileFilesDelete(_appSetting).DAMCompositionProfileFileFilesDeleteDAO(_dAMCompositionProfileFileFilesDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("DAMCompositionProfileFileFilesDeleteListBase")]
+		public async Task<ActionResult<object>> DAMCompositionProfileFileFilesDeleteListBase(List<DAMCompositionProfileFileFilesDeleteIN> _dAMCompositionProfileFileFilesDeleteINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _dAMCompositionProfileFileFilesDeleteIN in _dAMCompositionProfileFileFilesDeleteINs)
+				{
+					var result = await new DAMCompositionProfileFileFilesDelete(_appSetting).DAMCompositionProfileFileFilesDeleteDAO(_dAMCompositionProfileFileFilesDeleteIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -476,6 +836,46 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize("ThePolicy")]
+		[Route("DAMCompositionProfileFileFilesInsertListBase")]
+		public async Task<ActionResult<object>> DAMCompositionProfileFileFilesInsertListBase(List<DAMCompositionProfileFileFilesInsertIN> _dAMCompositionProfileFileFilesInsertINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _dAMCompositionProfileFileFilesInsertIN in _dAMCompositionProfileFileFilesInsertINs)
+				{
+					var result = await new DAMCompositionProfileFileFilesInsert(_appSetting).DAMCompositionProfileFileFilesInsertDAO(_dAMCompositionProfileFileFilesInsertIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
 		[Route("DAMCompositionProfileUpdateBase")]
 		public async Task<ActionResult<object>> DAMCompositionProfileUpdateBase(DAMCompositionProfileUpdateIN _dAMCompositionProfileUpdateIN)
 		{
@@ -484,6 +884,46 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new DAMCompositionProfileUpdate(_appSetting).DAMCompositionProfileUpdateDAO(_dAMCompositionProfileUpdateIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("DAMCompositionProfileUpdateListBase")]
+		public async Task<ActionResult<object>> DAMCompositionProfileUpdateListBase(List<DAMCompositionProfileUpdateIN> _dAMCompositionProfileUpdateINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _dAMCompositionProfileUpdateIN in _dAMCompositionProfileUpdateINs)
+				{
+					var result = await new DAMCompositionProfileUpdate(_appSetting).DAMCompositionProfileUpdateDAO(_dAMCompositionProfileUpdateIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -516,6 +956,46 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize("ThePolicy")]
+		[Route("DAMImplementationProcessCreateListBase")]
+		public async Task<ActionResult<object>> DAMImplementationProcessCreateListBase(List<DAMImplementationProcessCreateIN> _dAMImplementationProcessCreateINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _dAMImplementationProcessCreateIN in _dAMImplementationProcessCreateINs)
+				{
+					var result = await new DAMImplementationProcessCreate(_appSetting).DAMImplementationProcessCreateDAO(_dAMImplementationProcessCreateIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
 		[Route("DAMImplementationProcessDeleteByIdBase")]
 		public async Task<ActionResult<object>> DAMImplementationProcessDeleteByIdBase(DAMImplementationProcessDeleteByIdIN _dAMImplementationProcessDeleteByIdIN)
 		{
@@ -524,6 +1004,46 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new DAMImplementationProcessDeleteById(_appSetting).DAMImplementationProcessDeleteByIdDAO(_dAMImplementationProcessDeleteByIdIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("DAMImplementationProcessDeleteByIdListBase")]
+		public async Task<ActionResult<object>> DAMImplementationProcessDeleteByIdListBase(List<DAMImplementationProcessDeleteByIdIN> _dAMImplementationProcessDeleteByIdINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _dAMImplementationProcessDeleteByIdIN in _dAMImplementationProcessDeleteByIdINs)
+				{
+					var result = await new DAMImplementationProcessDeleteById(_appSetting).DAMImplementationProcessDeleteByIdDAO(_dAMImplementationProcessDeleteByIdIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -567,6 +1087,46 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new DAMImplementationProcessUpdate(_appSetting).DAMImplementationProcessUpdateDAO(_dAMImplementationProcessUpdateIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("DAMImplementationProcessUpdateListBase")]
+		public async Task<ActionResult<object>> DAMImplementationProcessUpdateListBase(List<DAMImplementationProcessUpdateIN> _dAMImplementationProcessUpdateINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _dAMImplementationProcessUpdateIN in _dAMImplementationProcessUpdateINs)
+				{
+					var result = await new DAMImplementationProcessUpdate(_appSetting).DAMImplementationProcessUpdateDAO(_dAMImplementationProcessUpdateIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{

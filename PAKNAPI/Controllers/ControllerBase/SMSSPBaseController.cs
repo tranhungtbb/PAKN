@@ -52,6 +52,46 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
+		[Route("SMSDoanhNghiepDeleteBySMSIdListBase")]
+		public async Task<ActionResult<object>> SMSDoanhNghiepDeleteBySMSIdListBase(List<SMSDoanhNghiepDeleteBySMSIdIN> _sMSDoanhNghiepDeleteBySMSIdINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _sMSDoanhNghiepDeleteBySMSIdIN in _sMSDoanhNghiepDeleteBySMSIdINs)
+				{
+					var result = await new SMSDoanhNghiepDeleteBySMSId(_appSetting).SMSDoanhNghiepDeleteBySMSIdDAO(_sMSDoanhNghiepDeleteBySMSIdIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
 		[Route("SMSDoanhNghiepInsertBase")]
 		public async Task<ActionResult<object>> SMSDoanhNghiepInsertBase(SMSDoanhNghiepInsertIN _sMSDoanhNghiepInsertIN)
 		{
@@ -60,6 +100,46 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new SMSDoanhNghiepInsert(_appSetting).SMSDoanhNghiepInsertDAO(_sMSDoanhNghiepInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SMSDoanhNghiepInsertListBase")]
+		public async Task<ActionResult<object>> SMSDoanhNghiepInsertListBase(List<SMSDoanhNghiepInsertIN> _sMSDoanhNghiepInsertINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _sMSDoanhNghiepInsertIN in _sMSDoanhNghiepInsertINs)
+				{
+					var result = await new SMSDoanhNghiepInsert(_appSetting).SMSDoanhNghiepInsertDAO(_sMSDoanhNghiepInsertIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -115,6 +195,46 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
+		[Route("SMSNguoiNhanDeleteBySMSIdListBase")]
+		public async Task<ActionResult<object>> SMSNguoiNhanDeleteBySMSIdListBase(List<SMSNguoiNhanDeleteBySMSIdIN> _sMSNguoiNhanDeleteBySMSIdINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _sMSNguoiNhanDeleteBySMSIdIN in _sMSNguoiNhanDeleteBySMSIdINs)
+				{
+					var result = await new SMSNguoiNhanDeleteBySMSId(_appSetting).SMSNguoiNhanDeleteBySMSIdDAO(_sMSNguoiNhanDeleteBySMSIdIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
 		[Route("SMSNguoiNhanInsertBase")]
 		public async Task<ActionResult<object>> SMSNguoiNhanInsertBase(SMSNguoiNhanInsertIN _sMSNguoiNhanInsertIN)
 		{
@@ -135,6 +255,46 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
+		[Route("SMSNguoiNhanInsertListBase")]
+		public async Task<ActionResult<object>> SMSNguoiNhanInsertListBase(List<SMSNguoiNhanInsertIN> _sMSNguoiNhanInsertINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _sMSNguoiNhanInsertIN in _sMSNguoiNhanInsertINs)
+				{
+					var result = await new SMSNguoiNhanInsert(_appSetting).SMSNguoiNhanInsertDAO(_sMSNguoiNhanInsertIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
 		[Route("SMSQuanLyTinNhanDeleteBase")]
 		public async Task<ActionResult<object>> SMSQuanLyTinNhanDeleteBase(SMSQuanLyTinNhanDeleteIN _sMSQuanLyTinNhanDeleteIN)
 		{
@@ -143,6 +303,46 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new SMSQuanLyTinNhanDelete(_appSetting).SMSQuanLyTinNhanDeleteDAO(_sMSQuanLyTinNhanDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SMSQuanLyTinNhanDeleteListBase")]
+		public async Task<ActionResult<object>> SMSQuanLyTinNhanDeleteListBase(List<SMSQuanLyTinNhanDeleteIN> _sMSQuanLyTinNhanDeleteINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _sMSQuanLyTinNhanDeleteIN in _sMSQuanLyTinNhanDeleteINs)
+				{
+					var result = await new SMSQuanLyTinNhanDelete(_appSetting).SMSQuanLyTinNhanDeleteDAO(_sMSQuanLyTinNhanDeleteIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -261,6 +461,46 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
+		[Route("SMSTinNhanAdministrativeUnitMapDeleteBySMSIdListBase")]
+		public async Task<ActionResult<object>> SMSTinNhanAdministrativeUnitMapDeleteBySMSIdListBase(List<SMSTinNhanAdministrativeUnitMapDeleteBySMSIdIN> _sMSTinNhanAdministrativeUnitMapDeleteBySMSIdINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _sMSTinNhanAdministrativeUnitMapDeleteBySMSIdIN in _sMSTinNhanAdministrativeUnitMapDeleteBySMSIdINs)
+				{
+					var result = await new SMSTinNhanAdministrativeUnitMapDeleteBySMSId(_appSetting).SMSTinNhanAdministrativeUnitMapDeleteBySMSIdDAO(_sMSTinNhanAdministrativeUnitMapDeleteBySMSIdIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
 		[Route("SMSTinNhanAdministrativeUnitMapInsertBase")]
 		public async Task<ActionResult<object>> SMSTinNhanAdministrativeUnitMapInsertBase(SMSTinNhanAdministrativeUnitMapInsertIN _sMSTinNhanAdministrativeUnitMapInsertIN)
 		{
@@ -269,6 +509,46 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new SMSTinNhanAdministrativeUnitMapInsert(_appSetting).SMSTinNhanAdministrativeUnitMapInsertDAO(_sMSTinNhanAdministrativeUnitMapInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SMSTinNhanAdministrativeUnitMapInsertListBase")]
+		public async Task<ActionResult<object>> SMSTinNhanAdministrativeUnitMapInsertListBase(List<SMSTinNhanAdministrativeUnitMapInsertIN> _sMSTinNhanAdministrativeUnitMapInsertINs)
+		{
+			try
+			{
+				int count = 0;
+				int errcount = 0;
+				foreach (var _sMSTinNhanAdministrativeUnitMapInsertIN in _sMSTinNhanAdministrativeUnitMapInsertINs)
+				{
+					var result = await new SMSTinNhanAdministrativeUnitMapInsert(_appSetting).SMSTinNhanAdministrativeUnitMapInsertDAO(_sMSTinNhanAdministrativeUnitMapInsertIN);
+					if (result > 0)
+					{
+						count++;
+					}
+					else
+					{
+						errcount++;
+					}
+				}
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
