@@ -353,6 +353,7 @@ export class IndividualComponent implements OnInit {
 		let fDateIssue: any = document.querySelector('#_dateIssue')
 		this.model._birthDay = fDob.value
 		this.model._dateOfIssue = fDateIssue.value
+		this.model.userId = this.userLoginId
 		if (!this.model.email) this.model.email = ''
 
 		if (this.email_exists || this.phone_exists || this.idCard_exists) {
