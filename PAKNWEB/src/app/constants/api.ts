@@ -267,7 +267,14 @@ export class Api {
 	public static TimeConfigGetById = 'SYSPBase/SYTimeGetByIdBase'
 	public static TimeConfigGetDateActive = 'SYSPBase/SYTimeGetDateActiveBase'
 
-	//BusinessIndividual
+	//Individual
 	public static BusinessIndividualGetDataForCreate = 'BusinessIndividual/BusinessIndividualGetDataForCreate'
-	public static IndividualChatbotGetAllOnPageBase = 'BusinessIndividual/IndividualGetAllOnPageBase'
+	public static IndividualGetAllOnPageBase = 'BusinessIndividual/IndividualGetAllOnPageBase'
+	public static IndivialChageStatusBase = 'BusinessIndividual/IndivialChageStatusBase'
+	public static IndivialDeleteBase = 'BusinessIndividual/IndivialDeleteBase'
+	public static InvididualRegister = 'BusinessIndividual/InvididualRegister'
+	public static InvididualGetByID = 'BusinessIndividual/InvididualGetByID'
+
+	//Business
+	public static BusinessGetAllOnPageBase = 'BusinessIndividual/BusinessGetAllOnPageBase'
 }

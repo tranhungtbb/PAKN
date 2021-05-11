@@ -85,13 +85,16 @@
 								<td>{{item.phone}}</td>
 								<td>{{item.email}}</td>
 								<td>
-									<span type="button" (click)="preUpdateStatus(item)" *ngIf="item.isActived == true" class="badge rounded-pill bg-success">Hiệu lực</span>
-									<span type="button" (click)="preUpdateStatus(item)" *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+									<span type="button" (click)="onOpenConfirmModal(item.id,'isActived')" *ngIf="item.isActived == true" class="badge rounded-pill bg-success">Hiệu
+										lực</span>
+									<span type="button" (click)="onOpenConfirmModal(item.id,'isActived')" *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Hết
+										hiệu
+										lực</span>
 								</td>
 								<td style="max-width: 100px;">
 									<div class="d-flex justify-content-end">
 										<a type="button" (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-										<a type="button" (click)="preDelete(item.id, item.categoryId)" class="btn-icon grd-red text-white" data-toggle="modal"
+										<a type="button" (click)="onOpenConfirmModal(item.id,'individual')" class="btn-icon grd-red text-white" data-toggle="modal"
 											data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
 									</div>
 								</td>
@@ -353,9 +356,9 @@
 								<label class="control-label lb600">Trạng thái: </label>
 							</div>
 							<div class="col-sm-4" style="text-align: right;">
-								<span style="padding: 7px;" *ngIf="model.isActived == true" class="badge rounded-pill bg-success">Hiệu
+								<span style="padding: 7px;" (click)="onOpenConfirmModal(item.id,'isActived')" *ngIf="model.isActived" class="badge rounded-pill bg-success">Hiệu
 									lực</span>
-								<span style="padding: 7px;" *ngIf="model.isActived == false" class="badge rounded-pill badge-light">Hết
+								<span style="padding: 7px;" (click)="onOpenConfirmModal(item.id,'isActived')" *ngIf="!model.isActived" class="badge rounded-pill badge-light">Hết
 									hiệu lực</span>
 							</div>
 						</div>
@@ -366,8 +369,6 @@
 		</div>
 	</div>
 </div>
-
-
 
 <div class="modal fade" id="modalConfirmDelete">
 	<div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
@@ -394,28 +395,25 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="modalConfirmUpdateStatus">
-	<div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
+
+<!-- confirm modal -->
+<div class="modal fade" id="modal-confirm">
+	<div class="modal-dialog modal-dialog-centered modal-md" role="document">
 		<div class="modal-content rounded">
-			<form class="form-horizontal">
-				<div class="panel panel-default no-margin">
-					<div class="modal-header" style="border: none;">
-						<button class="close btn-close-modal" data-dismiss="modal">
-							×
-						</button>
-					</div>
-					<div class="modal-body no-padding-bottom" style="border: none;">
-						<div style="text-align: center;">
-							<strong class="change-status-title">Bạn có chắc chắn thực hiện hành động này?</strong>
-						</div>
-					</div>
-					<div class="modal-footer" style="border: none; justify-content: center;">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue">Xác
-							nhận</button>
-					</div>
-				</div>
-			</form>
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-0">
+				<span>
+					Anh/chị có chắc chắn thực hiện hành động này?
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="acceptConfirm()">Đồng ý</button>
+			</div>
 		</div>
 	</div>
 </div>

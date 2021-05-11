@@ -1,15 +1,216 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { ToastrService } from 'ngx-toastr'
+import { BusinessIndividualService } from 'src/app/services/business-individual.service'
+import { DataService } from 'src/app/services/sharedata.service'
+import { saveAs as importedSaveAs } from 'file-saver'
+import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { COMMONS } from 'src/app/commons/commons'
+import { Router } from '@angular/router'
+import { BusinessionObject } from 'src/app/models/businessIndividualObject'
+import { BsLocaleService } from 'ngx-bootstrap/datepicker'
+import { viLocale } from 'ngx-bootstrap/locale'
+import { defineLocale } from 'ngx-bootstrap/chronos'
+import { DiadanhService } from 'src/app/services/diadanh.service'
+import { RegisterService } from 'src/app/services/register.service'
 
+declare var $: any
 @Component({
-  selector: 'app-business',
-  templateUrl: './business.component.html',
-  styleUrls: ['./business.component.css']
+	selector: 'app-business',
+	templateUrl: './business.component.html',
+	styleUrls: ['./business.component.css'],
 })
 export class BusinessComponent implements OnInit {
+	constructor(
+		private _service: BusinessIndividualService,
+		private storeageService: UserInfoStorageService,
+		private _fb: FormBuilder,
+		private _toastr: ToastrService,
+		private _router: Router,
+		private _shareData: DataService,
+		private localeService: BsLocaleService,
+		private diadanhService: DiadanhService,
+		private registerService: RegisterService
+	) {
+		defineLocale('vi', viLocale)
+	}
 
-  constructor() { }
+	dateNow: Date = new Date()
 
-  ngOnInit() {
-  }
+	listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
+	listProvince: any[] = []
+	listDistrict: any[] = []
+	listVillage: any[] = []
 
+	userLoginId: number = this.storeageService.getUserId()
+	unitLoginId: number = this.storeageService.getUnitId()
+	listData = new Array<BusinessionObject>()
+	listStatus: any = [
+		{ value: '', text: 'Chọn trạng thái' },
+		{ value: true, text: 'Hiệu lực' },
+		{ value: false, text: 'Hết hiệu lực' },
+	]
+
+	listGender: any[] = [
+		{ value: true, text: 'Nam' },
+		{ value: false, text: 'Nữ' },
+	]
+
+	listInvPaged: any[] = []
+
+	form: FormGroup
+	model: any = new BusinessionObject()
+	submitted: boolean = false
+	isActived: boolean
+	title: string = ''
+	representativeName: string = ''
+	address: string = ''
+	phone: string = ''
+	email: string = ''
+	pageIndex: number = 1
+	pageSize: number = 20
+	@ViewChild('table', { static: false }) table: any
+	totalRecords: number = 0
+	idDelete: number = 0
+
+	//sort
+	individualSortDir = 'DESC'
+	individualSortField = 'ID'
+
+	inSortDir = 'DESC'
+	inSortField = 'ID'
+
+	nation_enable_type = false
+
+	ngOnInit() {
+		this.buildForm()
+		this.getList()
+		this.localeService.use('vi')
+		this.loadFormBuilder()
+		this.onChangeNation()
+	}
+
+	buildForm() {
+		this.form = this._fb.group({
+			representativeName: [this.model.representativeName, Validators.required],
+			address: [this.model.address, Validators.required],
+			phone: [this.model.phone, Validators.required],
+			email: [this.model.email, Validators.required],
+			isActived: [this.model.isActived, Validators.required],
+		})
+	}
+
+	getList() {
+		this.representativeName = this.representativeName.trim()
+		this.address = this.address.trim()
+		this.phone = this.phone.trim()
+		this.email = this.email.trim()
+
+		let request = {
+			RepresentativeName: this.representativeName,
+			Address: this.address,
+			Phone: this.phone,
+			Email: this.email,
+			isActived: this.isActived != null ? this.isActived : '',
+			PageIndex: this.pageIndex,
+			PageSize: this.pageSize,
+			sortDir: this.inSortDir,
+			sortField: this.inSortField,
+		}
+		this._service.businessGetList(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if (response.result != null) {
+					this.listData = []
+					this.listData = response.result.BusinessGetAllOnPageBase
+					this.listInvPaged = response.result.BusinessGetAllOnPageBase
+					this.totalRecords = response.result.BusinessGetAllOnPageBase.length != 0 ? response.result.BusinessGetAllOnPageBase[0].rowNumber : 0
+				}
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(error) => {
+				console.log(error)
+				alert(error)
+			}
+	}
+
+	private loadFormBuilder() {
+		//form createIndividualForm
+		this.form = this._fb.group({
+			representativeName: [this.model.representativeName, [Validators.required, Validators.maxLength(100)]],
+			gender: [this.model.gender, [Validators.required]],
+			dob: [this.model._birthDay, [Validators.required]],
+			nation: [this.model.nation, [Validators.required]],
+			province: [this.model.provinceId, []],
+			district: [this.model.districtId, []],
+			village: [this.model.wardsId, []],
+			phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
+
+			email: [this.model.email, [Validators.email]],
+			address: [this.model.address, [Validators.required]],
+			iDCard: [this.model.iDCard, [Validators.required]], //, Validators.pattern(/^([0-9]){8,12}$/g)
+			issuedPlace: [this.model.issuedPlace, []],
+			dateIssue: [this.model._dateOfIssue, []],
+			isActived: [this.model.isActived],
+		})
+	}
+
+	onPageChange(event: any) {
+		this.pageSize = event.rows
+		this.pageIndex = event.first / event.rows + 1
+		this.getList()
+	}
+
+	//event
+	onChangeNation() {
+		this.listProvince = []
+		this.listDistrict = []
+		this.listVillage = []
+
+		this.model.provinceId = ''
+
+		if (this.model.nation == 'Việt Nam') {
+			this.diadanhService.getAllProvince().subscribe((res) => {
+				if (res.success == 'OK') {
+					this.listProvince = res.result.CAProvinceGetAll
+					this.model.provinceId = 37
+				}
+			})
+		} else {
+			if (this.model.nation == '#') {
+				this.nation_enable_type = true
+				this.model.nation = ''
+			}
+		}
+	}
+
+	onChangeProvince() {
+		this.listDistrict = []
+		this.listVillage = []
+		this.model.districtId = ''
+		this.model.wardsId = ''
+		if (this.model.provinceId != null && this.model.provinceId != '') {
+			this.diadanhService.getAllDistrict(this.model.provinceId).subscribe((res) => {
+				if (res.success == 'OK') {
+					this.listDistrict = res.result.CADistrictGetAll
+				}
+			})
+		} else {
+		}
+	}
+
+	onChangeDistrict() {
+		this.listVillage = []
+		this.model.wardsId = ''
+		if (this.model.districtId != null && this.model.districtId != '') {
+			this.diadanhService.getAllVillage(this.model.provinceId, this.model.districtId).subscribe((res) => {
+				if (res.success == 'OK') {
+					this.listVillage = res.result.CAVillageGetAll
+				}
+			})
+		} else {
+		}
+	}
 }

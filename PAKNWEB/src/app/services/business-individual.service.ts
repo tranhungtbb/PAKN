@@ -34,6 +34,29 @@ export class BusinessIndividualService {
 	}
 
 	individualGetList(request: any): Observable<any> {
-		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.IndividualChatbotGetAllOnPageBase)
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.IndividualGetAllOnPageBase)
+	}
+
+	individualChangeStatus(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialChageStatusBase)
+	}
+
+	individualDelete(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialDeleteBase)
+	}
+	individualRegister(data: any): Observable<any> {
+		let form = new FormData()
+
+		for (let item in data) {
+			form.append(item, data[item])
+		}
+		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.InvididualRegister)
+	}
+	individualById(request: any): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.InvididualGetByID)
+	}
+
+	businessGetList(request: any): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.BusinessGetAllOnPageBase)
 	}
 }

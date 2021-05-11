@@ -11,6 +11,8 @@ export class IndividualObject {
 		this.wardsId = ''
 		this.isActived = true
 		this.address = ''
+		this.IsDeleted = false
+		this.userId = ''
 	}
 	phone: string
 	fullName: string // fullName
@@ -31,9 +33,50 @@ export class IndividualObject {
 	PermanentPlace: string
 	NativePlace: string
 	isActived: boolean
+	IsDeleted: boolean
+	userId: string
 }
 
 export class BusinessionObject {
+	constructor() {
+		this.representativeName = ''
+		this.phone = null
+		this.gender = true
+		this.email = ''
+		//
+		this.nation = 'Việt Nam'
+		this.provinceId = ''
+		this.districtId = ''
+		this.wardsId = ''
+		this.isActived = true
+		this.address = ''
+		this.IsDeleted = false
+		this.userId = ''
+	}
+	phone: string
+	representativeName: string // representativeName
+	nation: any // quoc tich
+	provinceId: any
+	districtId: any
+	wardsId: any
+	gender: boolean
+	_birthDay: string
+
+	email: string
+	address: string
+
+	iDCard: string
+	issuedPlace: string
+	_dateOfIssue: string
+
+	PermanentPlace: string
+	NativePlace: string
+	isActived: boolean
+	IsDeleted: boolean
+	userId: string
+}
+
+export class BusinessionObject2 {
 	constructor() {
 		this.phone = null
 		this.RepresentativeGender = true

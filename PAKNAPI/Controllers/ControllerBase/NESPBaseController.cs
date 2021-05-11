@@ -41,9 +41,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"NENewsGetAllOnPage", rsNENewsGetAllOnPage},
-						{"TotalCount", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? rsNENewsGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -155,46 +152,6 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("NENewsUpdateListBase")]
-		public async Task<ActionResult<object>> NENewsUpdateListBase(List<NENewsUpdateIN> _nENewsUpdateINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _nENewsUpdateIN in _nENewsUpdateINs)
-				{
-					var result = await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
