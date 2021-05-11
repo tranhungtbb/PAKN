@@ -101,9 +101,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CADepartmentGetAllOnPage", rsCADepartmentGetAllOnPage},
-						{"TotalCount", rsCADepartmentGetAllOnPage != null && rsCADepartmentGetAllOnPage.Count > 0 ? rsCADepartmentGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsCADepartmentGetAllOnPage != null && rsCADepartmentGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsCADepartmentGetAllOnPage != null && rsCADepartmentGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -210,9 +207,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CADepartmentGroupGetAllOnPage", rsCADepartmentGroupGetAllOnPage},
-						{"TotalCount", rsCADepartmentGroupGetAllOnPage != null && rsCADepartmentGroupGetAllOnPage.Count > 0 ? rsCADepartmentGroupGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsCADepartmentGroupGetAllOnPage != null && rsCADepartmentGroupGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsCADepartmentGroupGetAllOnPage != null && rsCADepartmentGroupGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -399,9 +393,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAFieldGetAllOnPage", rsCAFieldGetAllOnPage},
-						{"TotalCount", rsCAFieldGetAllOnPage != null && rsCAFieldGetAllOnPage.Count > 0 ? rsCAFieldGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsCAFieldGetAllOnPage != null && rsCAFieldGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsCAFieldGetAllOnPage != null && rsCAFieldGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -591,9 +582,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAGroupWordGetAllOnPage", rsCAGroupWordGetAllOnPage},
-						{"TotalCount", rsCAGroupWordGetAllOnPage != null && rsCAGroupWordGetAllOnPage.Count > 0 ? rsCAGroupWordGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsCAGroupWordGetAllOnPage != null && rsCAGroupWordGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsCAGroupWordGetAllOnPage != null && rsCAGroupWordGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -803,9 +791,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAHashtagGetAllOnPage", rsCAHashtagGetAllOnPage},
-						{"TotalCount", rsCAHashtagGetAllOnPage != null && rsCAHashtagGetAllOnPage.Count > 0 ? rsCAHashtagGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsCAHashtagGetAllOnPage != null && rsCAHashtagGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsCAHashtagGetAllOnPage != null && rsCAHashtagGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -952,9 +937,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CANewsTypeGetAllOnPage", rsCANewsTypeGetAllOnPage},
-						{"TotalCount", rsCANewsTypeGetAllOnPage != null && rsCANewsTypeGetAllOnPage.Count > 0 ? rsCANewsTypeGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsCANewsTypeGetAllOnPage != null && rsCANewsTypeGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsCANewsTypeGetAllOnPage != null && rsCANewsTypeGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -1101,9 +1083,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAPositionGetAllOnPage", rsCAPositionGetAllOnPage},
-						{"TotalCount", rsCAPositionGetAllOnPage != null && rsCAPositionGetAllOnPage.Count > 0 ? rsCAPositionGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsCAPositionGetAllOnPage != null && rsCAPositionGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsCAPositionGetAllOnPage != null && rsCAPositionGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -1296,9 +1275,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAUnitGetAllOnPage", rsCAUnitGetAllOnPage},
-						{"TotalCount", rsCAUnitGetAllOnPage != null && rsCAUnitGetAllOnPage.Count > 0 ? rsCAUnitGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsCAUnitGetAllOnPage != null && rsCAUnitGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsCAUnitGetAllOnPage != null && rsCAUnitGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -1511,9 +1487,6 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAWordGetAllOnPage", rsCAWordGetAllOnPage},
-						{"TotalCount", rsCAWordGetAllOnPage != null && rsCAWordGetAllOnPage.Count > 0 ? rsCAWordGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsCAWordGetAllOnPage != null && rsCAWordGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsCAWordGetAllOnPage != null && rsCAWordGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

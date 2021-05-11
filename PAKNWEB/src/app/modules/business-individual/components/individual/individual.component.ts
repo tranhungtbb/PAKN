@@ -57,6 +57,8 @@ export class IndividualComponent implements OnInit {
 		{ value: false, text: 'Nữ' },
 	]
 
+	listInvPaged: any[] = []
+
 	form: FormGroup
 	model: any = new IndividualObject()
 	submitted: boolean = false
@@ -115,7 +117,6 @@ export class IndividualComponent implements OnInit {
 	onChangeProvince() {
 		this.listDistrict = []
 		this.listVillage = []
-
 		this.model.districtId = ''
 		this.model.wardsId = ''
 		if (this.model.provinceId != null && this.model.provinceId != '') {
@@ -130,7 +131,6 @@ export class IndividualComponent implements OnInit {
 
 	onChangeDistrict() {
 		this.listVillage = []
-
 		this.model.wardsId = ''
 		if (this.model.districtId != null && this.model.districtId != '') {
 			this.diadanhService.getAllVillage(this.model.provinceId, this.model.districtId).subscribe((res) => {
@@ -212,6 +212,7 @@ export class IndividualComponent implements OnInit {
 				if (response.result != null) {
 					this.listData = []
 					this.listData = response.result.IndividualGetAllOnPage
+					this.listInvPaged = response.result.IndividualGetAllOnPage
 					this.totalRecords = response.result.IndividualGetAllOnPage.length != 0 ? response.result.IndividualGetAllOnPage[0].rowNumber : 0
 				}
 			} else {
@@ -224,11 +225,60 @@ export class IndividualComponent implements OnInit {
 			}
 	}
 
-	dataUpdate: any
-	preUpdateStatus(data) {
-		this.dataUpdate = data
-		$('#modalConfirmUpdateStatus').modal('show')
+	/*start - chức năng xác nhận hành động xóa*/
+	modalConfirm_type = 'isActived'
+	modelConfirm_itemId: number = 0
+	onOpenConfirmModal(id: any, type = 'isActived') {
+		$('#modal-confirm').modal('show')
+		this.modalConfirm_type = type
+		this.modelConfirm_itemId = id
 	}
+	acceptConfirm() {
+		if (this.modalConfirm_type == 'isActived') {
+			this.onChangeIndividualStatus(this.modelConfirm_itemId)
+		} else if (this.modalConfirm_type == 'individual') {
+			this.onDeleteIndividual(this.modelConfirm_itemId)
+		}
+
+		$('#modal-confirm').modal('hide')
+	}
+	onChangeIndividualStatus(id: number) {
+		let item = this.listInvPaged.find((c) => c.id == id)
+		item.isActived = !item.isActived
+		this._service.individualChangeStatus(item).subscribe((res) => {
+			if (res.success != 'OK') {
+				this._toastr.error(COMMONS.UPDATE_FAILED)
+				item.isActived = !item.isActived
+				return
+			}
+			this._toastr.success(COMMONS.UPDATE_SUCCESS)
+			this.getList()
+			this.model = new IndividualObject()
+			$('#modal-create-or-update').modal('hide')
+		})
+	}
+	/*end - chức năng xác nhận hành động xóa*/
+	onDeleteIndividual(id) {
+		let item = this.listInvPaged.find((c) => c.id == id)
+		if (!item) item = this.model
+		this._service.individualDelete(item).subscribe((res) => {
+			if (res.success != 'OK') {
+				if (res.message.includes(`REFERENCE constraint "PK_BI_Individual"`)) {
+					this._toastr.error(COMMONS.DELETE_FAILED + ', Người dùng đã được xóa')
+					return
+				}
+				this.getList()
+				this._toastr.error(res.message)
+				return
+			}
+			this._toastr.success(COMMONS.DELETE_SUCCESS)
+
+			if (this.model.id == id) {
+				this.getList()
+			}
+		})
+	}
+	/*end - chức năng xác nhận hành động xóa*/
 
 	onPageChange(event: any) {
 		this.pageSize = event.rows
@@ -327,13 +377,12 @@ export class IndividualComponent implements OnInit {
 		}
 
 		// req to server
-		this.registerService.registerIndividual(this.model).subscribe((res) => {
+		this._service.individualRegister(this.model).subscribe((res) => {
 			if (res.success != 'OK') {
 				let msg = res.message
 				if (msg.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
 					this._toastr.error('Email đã tồn tại')
 				}
-
 				this._toastr.error(msg)
 				return
 			}
@@ -358,5 +407,26 @@ export class IndividualComponent implements OnInit {
 					else if (field == 'IDCard') this.idCard_exists = res.result.BIIndividualCheckExists[0].exists
 				}
 			})
+	}
+
+	preUpdate(data) {
+		let request = {
+			Id: data.id,
+			Type: 1,
+		}
+		this._service.individualById(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				this.rebuilForm()
+				this.title = 'Chỉnh sửa cá nhân'
+				this.model = response.result.InvididualGetByID[0]
+				$('#modal').modal('show')
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(error) => {
+				console.error(error)
+				alert(error)
+			}
 	}
 }

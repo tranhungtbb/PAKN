@@ -42,8 +42,8 @@
 										<strong>Ngày nghỉ</strong>
 										<span class="caret-tb"></span>
 									</p>
-									<input class="form-control form-control-sm" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="Time" [(ngModel)]="time"
-										(keydown.enter)="dataStateChange()" appBsDatepickerInvalid
+									<input class="form-control form-control-sm" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="TimeSearch"
+										[(ngModel)]="time" (keydown.enter)="dataStateChange()" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 									<div class="input-group-addon">
 										<i class="far fa-calendar-alt" (click)="dataStateChange()" [attr.aria-expanded]="n.isOpen"></i>
@@ -141,8 +141,8 @@
 						<div class="row form-group">
 							<div class="col-sm-6">
 								<label class="control-label">Ngày nghỉ <span class="text-danger">(*)</span></label>
-								<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="createTime" [(ngModel)]="model.time"
-									(keydown.enter)="dataStateChange()" appBsDatepickerInvalid formControlName="time"
+								<input readonly="readonly" class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="createTime"
+									[(ngModel)]="model.time" (keydown.enter)="dataStateChange()" appBsDatepickerInvalid formControlName="time"
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon">
 									<i class="far fa-calendar-alt" (click)="dataStateChange()" [attr.aria-expanded]="n.isOpen"></i>

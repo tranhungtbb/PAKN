@@ -25,7 +25,7 @@
 									<span class="caret-tb"></span>
 								</p>
 								<input class="form-control form-control-sm" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="createDate"
-									[(ngModel)]="dataSearch.createDate" (change)="dataStateChange()" appBsDatepickerInvalid
+									[(ngModel)]="dataSearch.createDate" (keydown.enter)="dataStateChange()" appBsDatepickerInvalid
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon">
 									<i class="far fa-calendar-alt" (click)="dataStateChange()" [attr.aria-expanded]="n.isOpen"></i>

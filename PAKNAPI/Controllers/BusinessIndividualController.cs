@@ -62,33 +62,6 @@ namespace PAKNAPI.Controllers
 		}
 
 
-		//[HttpGet]
-		//[Authorize]
-		//[Route("CAUnitGetAllOnPageBase")]
-		//public async Task<ActionResult<object>> CAUnitGetAllOnPageBase(int? PageSize, int? PageIndex, int? ParentId, byte? UnitLevel, string Name, string Phone, string Email, string Address, bool? IsActived, bool? IsMain, string SortDir, string SortField)
-		//{
-		//	try
-		//	{
-		//		List<CAUnitGetAllOnPage> rsCAUnitGetAllOnPage = await new CAUnitGetAllOnPage(_appSetting).CAUnitGetAllOnPageDAO(PageSize, PageIndex, ParentId, UnitLevel, Name, Phone, Email, Address, IsActived, IsMain, SortDir, SortField);
-		//		IDictionary<string, object> json = new Dictionary<string, object>
-		//			{
-		//				{"CAUnitGetAllOnPage", rsCAUnitGetAllOnPage},
-		//				{"TotalCount", rsCAUnitGetAllOnPage != null && rsCAUnitGetAllOnPage.Count > 0 ? rsCAUnitGetAllOnPage[0].RowNumber : 0},
-		//				{"PageIndex", rsCAUnitGetAllOnPage != null && rsCAUnitGetAllOnPage.Count > 0 ? PageIndex : 0},
-		//				{"PageSize", rsCAUnitGetAllOnPage != null && rsCAUnitGetAllOnPage.Count > 0 ? PageSize : 0},
-		//			};
-		//		return new ResultApi { Success = ResultCode.OK, Result = json };
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		_bugsnag.Notify(ex);
-		//		new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-		//		return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-		//	}
-		//}
-
-
 		[HttpGet]
         [Authorize]
         [Route("BusinessIndividualGetDataForCreate")]
@@ -132,7 +105,132 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		[HttpPost]
+		[Authorize]
+		[Route("IndivialDeleteBase")]
+		public async Task<ActionResult<object>> IndivialDeleteBase(IndivialDeleteIN _indivialDeleteIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
+				return new ResultApi { Success = ResultCode.OK, Result = await new IndivialDelete(_appSetting).IndivialDeleteDAO(_indivialDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("IndivialChageStatusBase")]
+		public async Task<ActionResult<object>> IndivialChageStatusBase(IndivialChageStatusIN _indivialChageStatusIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new IndivialChageStatus(_appSetting).IndivialChageStatusDAO(_indivialChageStatusIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Route("InvididualRegister")]
+		public async Task<object> InvididualRegister(
+			[FromForm] Models.BusinessIndividual.BIIndividualInsertIN model,
+			[FromForm] string _BirthDay,
+			[FromForm] string _DateOfIssue)
+		{
+			try
+			{
+				//var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
+				//if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+
+				///Phone,Email,IDCard
+				///check ton tai
+				//var checkExists = await new Models.BusinessIndividual.BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", model.Phone, 0);
+				//if (checkExists[0].Exists.Value)
+				//	return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+				//if (!string.IsNullOrEmpty(model.Email))
+				//{
+				//	checkExists = await new Models.BusinessIndividual.BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", model.Email, 0);
+				//	if (checkExists[0].Exists.Value)
+				//		return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
+				//}
+				//checkExists = await new Models.BusinessIndividual.BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", model.IDCard, 0);
+				//if (checkExists[0].Exists.Value)
+				//	return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
+
+				var rs2 = await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(model);
+
+			}
+			catch (Exception ex)
+			{
+				//_bugsnag.Notify(ex);
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+
+			return new Models.Results.ResultApi { Success = ResultCode.OK };
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("InvididualGetByID")]
+		public async Task<ActionResult<object>> InvididualGetByIDBase(int? Id)
+		{
+			try
+			{
+				List<InvididualGetByID> rsInvididualGetByID = await new InvididualGetByID(_appSetting).InvididualGetByIDDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"InvididualGetByID", rsInvididualGetByID},
+					};
+				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("BusinessGetAllOnPageBase")]
+		public async Task<ActionResult<object>> BusinessGetAllOnPageBase(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
+		{
+			try
+			{
+				List<BusinessGetAllOnPage> rsBusinessGetAllOnPageBase = await new BusinessGetAllOnPage(_appSetting).BusinessGetAllOnPageDAO(PageSize, PageIndex, FullName, Address, Phone, Email, IsActived, SortDir, SortField);
+				IDictionary<string, object> json = new Dictionary<string, object>
+						{
+							{"BusinessGetAllOnPageBase", rsBusinessGetAllOnPageBase},
+							{"TotalCount", rsBusinessGetAllOnPageBase != null && rsBusinessGetAllOnPageBase.Count > 0 ? rsBusinessGetAllOnPageBase[0].RowNumber : 0},
+							{"PageIndex", rsBusinessGetAllOnPageBase != null && rsBusinessGetAllOnPageBase.Count > 0 ? PageIndex : 0},
+							{"PageSize", rsBusinessGetAllOnPageBase != null && rsBusinessGetAllOnPageBase.Count > 0 ? PageSize : 0},
+						};
+				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 
 	}
 }

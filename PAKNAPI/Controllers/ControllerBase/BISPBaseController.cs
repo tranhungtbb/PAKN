@@ -37,7 +37,7 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				List<BIBusinessCheckExists> rsBIBusinessCheckExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO(Field, Value,Id);
+				List<BIBusinessCheckExists> rsBIBusinessCheckExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO(Field, Value, Id);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"BIBusinessCheckExists", rsBIBusinessCheckExists},

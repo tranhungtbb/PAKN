@@ -26,9 +26,8 @@ namespace PAKNAPI.ModelBase
 
 		public bool? Exists { get; set; }
 		public string Value { get; set; }
-		public long? Id { get; set; }
 
-		public async Task<List<BIBusinessCheckExists>> BIBusinessCheckExistsDAO(string Field, string Value, long? Id )
+		public async Task<List<BIBusinessCheckExists>> BIBusinessCheckExistsDAO(string Field, string Value, long? Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Field", Field);
@@ -400,9 +399,8 @@ namespace PAKNAPI.ModelBase
 
 		public bool? Exists { get; set; }
 		public string Value { get; set; }
-		public long? Id { get; set; }
 
-		public async Task<List<BIIndividualCheckExists>> BIIndividualCheckExistsDAO(string Field, string Value, long?Id)
+		public async Task<List<BIIndividualCheckExists>> BIIndividualCheckExistsDAO(string Field, string Value, long? Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Field", Field);
