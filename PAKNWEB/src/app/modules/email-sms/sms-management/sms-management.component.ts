@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr'
 
 import { STATUS_HIS_SMS } from 'src/app/constants/CONSTANTS'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { smsManagementGetAllOnPageObject } from 'src/app/models/smsManagementObject'
+import { smsManagementGetAllOnPageObject, smsManagementObject, smsManagementMapObject } from 'src/app/models/smsManagementObject'
 
 declare var $: any
 @Component({
@@ -52,10 +52,26 @@ export class SMSManagementComponent implements OnInit {
 	SMSId: Number
 	listHis: any[]
 
-	InvitationId: any
+	smsId: any
+
+	model: smsManagementObject = new smsManagementObject()
+	listItemUserSelected: Array<smsManagementMapObject>
 
 	ngOnInit() {
 		this.getListPaged()
+	}
+
+	getSMSModelById(id: any) {
+		this.smsService.GetById({ id: id }).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				if (res.result) {
+					debugger
+					this.model = { ...res.result.model }
+					this.listItemUserSelected = [...res.result.individualBusinessInfo]
+					$('#modalDetail').modal('show')
+				}
+			}
+		})
 	}
 
 	getListPaged() {
@@ -100,18 +116,18 @@ export class SMSManagementComponent implements OnInit {
 
 	onSend(id: Number) {
 		$('#modalConfirmChangeStatus').modal('show')
-		this.InvitationId = id
+		this.smsId = id
 	}
 
 	onUpdateStatusTypeSend() {
 		$('#modalConfirmChangeStatus').modal('hide')
-		this.smsService.UpdateStatusSend({ idMSMS: this.InvitationId }).subscribe((res) => {
+		this.smsService.UpdateStatusSend({ idMSMS: this.smsId }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				// ghi his
 
 				this.smsService
 					.InsertHisSMS({
-						ObjectId: this.InvitationId,
+						ObjectId: this.smsId,
 						Status: STATUS_HIS_SMS.SEND,
 					})
 					.subscribe()
@@ -132,13 +148,13 @@ export class SMSManagementComponent implements OnInit {
 	}
 
 	confirm(id: Number) {
-		this.InvitationId = id
+		this.smsId = id
 		$('#modalConfirm').modal('show')
 	}
 
 	onDelete() {
 		$('#modalConfirm').modal('hide')
-		this.smsService.Delete({ id: this.InvitationId }).subscribe((res) => {
+		this.smsService.Delete({ id: this.smsId }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result > 0) {
 					this.toast.success(COMMONS.DELETE_SUCCESS)

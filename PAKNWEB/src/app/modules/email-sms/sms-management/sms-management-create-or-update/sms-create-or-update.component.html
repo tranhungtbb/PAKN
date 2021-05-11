@@ -22,7 +22,7 @@
 					<div class="row form-group">
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Tiêu đề<span class="text-danger">(*)</span></label>
-							<input class="form-control" formControlName="title" [(ngModel)]="model.title" maxlength="100" placeholder="Nhập..." />
+							<input class="form-control" formControlName="title" [(ngModel)]="model.title" maxlength="50" placeholder="Nhập..." />
 							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
 								<div *ngIf="f.title.errors.required">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -32,7 +32,7 @@
 
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Nội dung<span class="text-danger">(*)</span></label>
-							<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" rows="7" placeholder="Nhập..."></textarea>
+							<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" maxlength="200" rows="7" placeholder="Nhập..."></textarea>
 							<div *ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error m-b-12">
 								<div *ngIf="f.content.errors">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -125,8 +125,8 @@
 									<div class="department">{{item.administrativeUnitName}}</div>
 								</div>
 								<div class="action padding-item center" *ngIf="statusCurent != 2">
-									<button type="button" (click)="onRemoveUser(item)" style="width: 40px; height: 40px;"
-										class="btn grd-blue btn-block border-0 px-3 text-white center">
+									<button type="button" (click)="onRemoveUser(item)" style="width: 40px; height: 40px;background: #E0E7FA; color: black;"
+										class="btn btn-block border-0 px-3 center">
 										<i class="bi bi-dash"></i>
 									</button>
 								</div>

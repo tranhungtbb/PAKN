@@ -377,7 +377,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("SMSQuanLyTinNhanGetByIdBase")]
 		public async Task<ActionResult<object>> SMSQuanLyTinNhanGetByIdBase(int? Id)
 		{

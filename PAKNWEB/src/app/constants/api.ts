@@ -97,6 +97,7 @@ export class Api {
 
 	// user
 	public static UserGetPagedList = 'SYUserSPBase/SYUserGetAllOnPageBase'
+	public static UserGetAllOnPagedList = 'User/SYUserGetAllOnPageList'
 	public static UserGetById = 'SYUserSPBase/SYUserGetByIDBase'
 	public static UserGetByRoleIdOnPage = 'SYUserSPBase/SYUserGetByRoleIdAllOnPageBase'
 	public static UserGetByRoleId = 'SYUserSPBase/SYUserGetAllByRoleIdBase'
