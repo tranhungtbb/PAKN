@@ -108,7 +108,7 @@ DROP PROCEDURE [SMS_QuanLyTinNhanInsert];
 GO
 CREATE PROCEDURE [dbo].[SMS_QuanLyTinNhanInsert]
 	@Title nvarchar(50) = null,
-	@Content nvarchar(100) = null,
+	@Content nvarchar(200) = null,
 	@Signature nvarchar(50) = null,
 	@CreateDate datetime = null,
 	@UserCreateId int = null,
@@ -164,7 +164,7 @@ GO
 CREATE PROCEDURE [dbo].[SMS_QuanLyTinNhanUpdate]
 	@Id int = null,
 	@Title nvarchar(50) = null,
-	@Content nvarchar(100) = null,
+	@Content nvarchar(200) = null,
 	@Signature nvarchar(50) = null,
 	@CreateDate datetime = null,
 	@UserCreateId int = null,
