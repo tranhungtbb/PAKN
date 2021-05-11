@@ -441,13 +441,14 @@ namespace PAKNAPI.Models.BusinessIndividual
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _invididualUpdateIN.Id);
 			DP.Add("FullName", _invididualUpdateIN.FullName);
-			DP.Add("BirthDay", _invididualUpdateIN.BirthDay);
+			DP.Add("DateOfBirth", _invididualUpdateIN.DateOfBirth);
 			DP.Add("Email", _invididualUpdateIN.Email);
 			DP.Add("Nation", _invididualUpdateIN.Nation);
 			DP.Add("ProvinceId", _invididualUpdateIN.ProvinceId);
 			DP.Add("DistrictId", _invididualUpdateIN.DistrictId);
 			DP.Add("WardsId", _invididualUpdateIN.WardsId);
 			DP.Add("Address", _invididualUpdateIN.Address);
+			DP.Add("IdCard", _invididualUpdateIN.IdCard);
 			DP.Add("IssuedPlace", _invididualUpdateIN.IssuedPlace);
 			DP.Add("IssuedDate", _invididualUpdateIN.IssuedDate);
 			DP.Add("Gender", _invididualUpdateIN.Gender);
@@ -458,19 +459,19 @@ namespace PAKNAPI.Models.BusinessIndividual
 
 	public class InvididualUpdateIN
 	{
-		public long Id { get; set; }
+		public long? Id { get; set; }
 		public string FullName { get; set; }
-		public DateTime BirthDay { get; set; }
+		public DateTime? DateOfBirth { get; set; }
 		public string Email { get; set; }
 		public string Nation { get; set; }
-		public int ProvinceId { get; set; }
-		public int DistrictId { get; set; }
-		public int WardsId { get; set; }
+		public int? ProvinceId { get; set; }
+		public int? DistrictId { get; set; }
+		public int? WardsId { get; set; }
 		public string Address { get; set; }
 		public string IdCard { get; set; }
 		public string IssuedPlace { get; set; }
-		public DateTime IssuedDate { get; set; }
-		public bool Gender { get; set; }
+		public DateTime? IssuedDate { get; set; }
+		public bool? Gender { get; set; }
 	}
 
 	#region InvididualGetByID

@@ -378,7 +378,6 @@ export class IndividualComponent implements OnInit {
 		}
 
 		if (this.model.id != null && this.model.id > 0) {
-			console.log('this.model', this.model)
 			this._service.invididualUpdate(this.model).subscribe((res) => {
 				if (res.success != 'OK') {
 					let errorMsg = res.message
