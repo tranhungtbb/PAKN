@@ -116,8 +116,8 @@
 
 									<div class="col-2 mb-2" *ngIf="item.fileType == 1">
 										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
-											<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert" aria-label="Close"><span><i
-														class="mdi mdi-close"></i></span>
+											<button *ngIf="statusCurent != 2" type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert"
+												aria-label="Close"><span><i class="mdi mdi-close"></i></span>
 											</button>
 											<a href="#" class="d-block text-center">
 												<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
@@ -128,8 +128,8 @@
 
 									<div class="col-2 mb-2" *ngIf="item.fileType == 3">
 										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
-											<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert" aria-label="Close"><span><i
-														class="mdi mdi-close"></i></span>
+											<button type="button" *ngIf="statusCurent != 2" (click)="onRemoveFile(item)" class="close" data-dismiss="alert"
+												aria-label="Close"><span><i class="mdi mdi-close"></i></span>
 											</button>
 											<a href="#" class="d-block text-center">
 												<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 45px" alt="">
@@ -140,7 +140,8 @@
 
 									<div class="col-2 mb-2" *ngIf="item.fileType == 4">
 										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
-											<button type="button" (click)="onRemoveFile(item)" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
+											<button type="button" *ngIf="statusCurent != 2" (click)="onRemoveFile(item)" class="close" (click)="onRemoveFile(item)"><span><i
+														class="mdi mdi-close"></i></span>
 											</button>
 											<a href="#" class="d-block text-center box-fileinput">
 												<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="">
@@ -151,8 +152,8 @@
 
 									<div class="col-2 mb-2" *ngIf="item.fileType == 2">
 										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
-											<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert" aria-label="Close"><span><i
-														class="mdi mdi-close"></i></span>
+											<button type="button" *ngIf="statusCurent != 2" (click)="onRemoveFile(item)" class="close" data-dismiss="alert"
+												aria-label="Close"><span><i class="mdi mdi-close"></i></span>
 											</button>
 											<a href="#" class="d-block text-center">
 												<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
@@ -162,8 +163,8 @@
 									</div>
 									<div class="col-2 mb-2" *ngIf="item.fileType == 6">
 										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
-											<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert" aria-label="Close"><span><i
-														class="mdi mdi-close"></i></span>
+											<button type="button" *ngIf="statusCurent != 2" (click)="onRemoveFile(item)" class="close" data-dismiss="alert"
+												aria-label="Close"><span><i class="mdi mdi-close"></i></span>
 											</button>
 											<a href="#" class="d-block text-center">
 												<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
@@ -244,13 +245,15 @@
 								</div>
 								<div class="type-send border-right padding-item">
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" [checked]="item.sendSMS == true" (click)="onUpdateUser(item.userId, true)">
+										<input class="form-check-input" type="checkbox" [checked]="item.sendSMS == true" [attr.disabled]="statusCurent == 2 ? '': null"
+											(click)="onUpdateUser(item.userId, true)">
 										<label class="form-check-label">
 											Gửi SMS
 										</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" [checked]="item.sendEmail == true" (click)="onUpdateUser(item.userId, false)">
+										<input class="form-check-input" type="checkbox" [checked]="item.sendEmail == true" [attr.disabled]="statusCurent == 2 ? '': null"
+											(click)="onUpdateUser(item.userId, false)">
 										<label class="form-check-label">
 											Gửi mail
 										</label>

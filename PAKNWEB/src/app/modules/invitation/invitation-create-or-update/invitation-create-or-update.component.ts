@@ -72,6 +72,13 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		// this.getInvitatonModelById()
 	}
 
+	// statusDisable() {
+	// 	if (this.statusCurent == 2) {
+	// 		return true
+	// 	}
+	// 	return false
+	// }
+
 	// ngAfterViewInit() {
 	// 	$('#endDate').datepicker({
 	// 		language: 'vi',
