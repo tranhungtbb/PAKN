@@ -109,15 +109,17 @@ namespace PAKNAPI.Controllers
 					//xóa avatar cũ
 					if(!string.IsNullOrEmpty(modelOld[0].Avatar))
 						await _fileService.Remove(modelOld[0].Avatar);
+					if (!string.IsNullOrEmpty(filePath))
+					{
+						model.Avatar = filePath;
+					}
 				}
+
 
 
 				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				
-				if (!string.IsNullOrEmpty(filePath))
-				{
-					model.Avatar = filePath;
-				}
+				
 				model.Password = modelOld[0].Password;
 				model.Salt = modelOld[0].Salt;
 

@@ -14,6 +14,7 @@ import { COMMONS } from 'src/app/commons/commons'
 import { UserObject2 } from 'src/app/models/UserObject'
 
 import { UnitComponent } from '../../unit/unit.component'
+import { UserComponent } from 'src/app/modules/system-management/components/user/user.component'
 import file_uploader from 'devextreme/ui/file_uploader'
 
 declare var jquery: any
@@ -35,10 +36,13 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		private sanitizer: DomSanitizer
 	) {
 		this.modalId = elm.nativeElement.getAttribute('modalid')
+		this.isOrganizational = elm.nativeElement.getAttribute('isOrganizational') == 'true' ? true : false
 	}
 
 	modalId = ''
+	isOrganizational: boolean = false
 	public parentUnit: UnitComponent
+	public parentUser: UserComponent
 	editByMyself: boolean = false
 
 	modelUser: UserObject2 = new UserObject2()
@@ -130,11 +134,12 @@ export class UserCreateOrUpdateComponent implements OnInit {
 
 		this.modelUser.roleIds = this.selectedRoles.toString()
 		this.modelUser.userName = this.modelUser.email
-		this.modelUser.avatar = ''
+		// this.modelUser.avatar = ''
 		this.modelUser.countLock = 0
 		this.modelUser.lockEndOut = ''
 
 		if (this.modelUser.id != null && this.modelUser.id > 0) {
+			this.modelUser.avatar = this.modelUser.avatar
 			this.userService.update(this.modelUser, files).subscribe((res) => {
 				$('#' + this.modalId + ' .seclect-avatar').val('')
 
@@ -144,9 +149,13 @@ export class UserCreateOrUpdateComponent implements OnInit {
 					return
 				}
 				this.toast.success(COMMONS.UPDATE_SUCCESS)
-
-				if (!this.editByMyself) {
-					this.parentUnit.getUserPagedList()
+				debugger
+				if (this.isOrganizational == true) {
+					if (!this.editByMyself) {
+						this.parentUnit.getUserPagedList()
+					}
+				} else {
+					this.parentUser.getList()
 				}
 
 				this.modelUser = new UserObject2()

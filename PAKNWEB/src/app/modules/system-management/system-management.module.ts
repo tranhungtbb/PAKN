@@ -69,8 +69,8 @@ import { BusinessModule } from '../business.module'
 		UnitFilterPipe,
 		ChatBotComponent,
 		HistoryChatBotComponent,
-		//UserViewInfoComponent,
+		// UserViewInfoComponent,
 	],
-	entryComponents: [UserCreateOrUpdateComponent],
+	entryComponents: [UserCreateOrUpdateComponent, UserViewInfoComponent],
 })
 export class SystemManagementModule {}

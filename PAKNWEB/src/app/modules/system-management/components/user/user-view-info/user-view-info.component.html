@@ -11,8 +11,8 @@
 				<!-- <form id="createUserForm" [formGroup]="createUserForm" (ngSubmit)="onSaveUser()"> -->
 				<div class="align-items-center mb-4 avatar-bg">
 					<div class="avatar-frame">
-						<img [src]="userAvatar" />
-						<span class="no-avatar-view">
+						<img *ngIf="userAvatar != ''" [src]="userAvatar" style="height: 100%; width: 100%; object-fit: cover;" />
+						<span class="no-avatar-view" *ngIf="userAvatar == ''">
 							<!-- <i class="pi pi-user"></i> -->
 							<svg width="78" height="78" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<path fill-rule="evenodd" clip-rule="evenodd"

@@ -13,6 +13,8 @@ import { RoleService } from '../../../../../services/role.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { AccountService } from 'src/app/services/account.service'
 import { BusinessComponent } from 'src/app/modules/business.component'
+import { UserComponent } from 'src/app/modules/system-management/components/user/user.component'
+import { from } from 'rxjs'
 
 declare var $: any
 @Component({
@@ -43,8 +45,9 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
 	]
-
+	userId: any
 	public parent_BusinessComponent: BusinessComponent
+	public parentUser: UserComponent
 
 	ngOnInit() {
 		this.positionService
@@ -72,25 +75,58 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 	}
 
 	private getInfo(id: number) {
-		this.accountService.getUserInfo().subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				this.model = res.result
-				//this.getUserAvatar(this.model.id)
-				this.userAvatar = AppSettings.API_DOWNLOADFILES + '/' + this.model.avatar
+		this.userId = id
+		if (id != null && id != undefined) {
+			this.userService.getById({ id: id }).subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					debugger
+					this.model = res.result.SYUserGetByID[0]
+					//this.getUserAvatar(this.model.id)
+					if (this.model.avatar == '' || this.model.avatar == null) {
+						this.userAvatar = ''
+					} else {
+						this.userAvatar = AppSettings.API_DOWNLOADFILES + '/' + this.model.avatar
+					}
 
-				this.model.positionName = this.unitsList.find((c) => c.id == this.model.unitId).name
-				this.model.unitName = this.unitsList.find((c) => c.id == this.model.unitId).name
+					this.model.positionName = this.unitsList.find((c) => c.id == this.model.unitId).name
+					this.model.unitName = this.unitsList.find((c) => c.id == this.model.unitId).name
 
-				let rolesIds = this.model.roleIds.split(',').map((c) => parseInt(c))
-				let rolesNames = this.rolesList.filter((c) => rolesIds.includes(c.id)).map((c) => c.name)
-				this.model.rolesNames = rolesNames.join('; ')
-			}
-		})
+					let rolesIds = this.model.roleIds.split(',').map((c) => parseInt(c))
+					let rolesNames = this.rolesList.filter((c) => rolesIds.includes(c.id)).map((c) => c.name)
+					this.model.rolesNames = rolesNames.join('; ')
+				} else {
+					this.userId = null
+				}
+			})
+		} else {
+			this.accountService.getUserInfo().subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.model = res.result
+					//this.getUserAvatar(this.model.id)
+					if (this.model.avatar == '' || this.model.avatar == null) {
+						this.userAvatar = ''
+					} else {
+						this.userAvatar = AppSettings.API_DOWNLOADFILES + '/' + this.model.avatar
+					}
+
+					this.model.positionName = this.unitsList.find((c) => c.id == this.model.unitId).name
+					this.model.unitName = this.unitsList.find((c) => c.id == this.model.unitId).name
+
+					let rolesIds = this.model.roleIds.split(',').map((c) => parseInt(c))
+					let rolesNames = this.rolesList.filter((c) => rolesIds.includes(c.id)).map((c) => c.name)
+					this.model.rolesNames = rolesNames.join('; ')
+				}
+			})
+		}
 	}
 
 	public showEditUserInfo() {
-		this.parent_BusinessComponent.openModalEditInfo(this.model.id)
 		$('#modal-user-view-info').modal('hide')
+		if (this.userId != null) {
+			this.parentUser.modalUserCreateOrUpdate(this.userId)
+		} else {
+			this.parent_BusinessComponent.openModalEditInfo(this.model.id)
+		}
 	}
 
 	public openModal(userId: number = 0) {
