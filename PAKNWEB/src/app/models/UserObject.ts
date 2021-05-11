@@ -55,6 +55,7 @@ export class UserObject2 {
 		this.email = ''
 		this.phone = ''
 		this.positionId = null
+		this.positionName = ''
 		this.roleIds = null
 		this.isActived = true
 		this.isDeleted = false
@@ -79,11 +80,13 @@ export class UserObject2 {
 	email: string
 	phone: string
 	unitId: number
+	unitName: string
 	countLock: number
 	lockEndOut: string
 	avatar: string
 	address: string
 	positionId: number
+	positionName: string
 	roleIds: string
 }
 

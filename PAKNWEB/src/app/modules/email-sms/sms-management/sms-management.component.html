@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
-					<li class="breadcrumb-item"><a>Thư mời</a></li>
+					<li class="breadcrumb-item"><a>SMS</a></li>
 					<li class="breadcrumb-item active"><a class="font-weight-bold"> Danh sách tổng hợp</a></li>
 				</ol>
 				<!-- <div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách lĩnh vực</div> -->
@@ -87,7 +87,7 @@
 								<tr>
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
-										<strong class="highlight"><a class="ellipsis" (click)=" redirectUpdate(item.id)" title="Cập nhập">{{item.title}}</a></strong>
+										<strong class="highlight"><a class="ellipsis" (click)=" getSMSModelById(item.id)" title="Cập nhập">{{item.title}}</a></strong>
 									</td>
 									<td>{{item.unitName}}</td>
 									<td>{{item.type}}</td>
@@ -112,10 +112,9 @@
 											</a>
 											<a *ngIf="item.status == 1" (click)=" redirectUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i
 													class="bi bi-pencil-square"></i></a>
-											<a *ngIf="item.status == 1" (click)="confirm(item.id)" class="btn-icon grd-red text-white cursor"
-												[ngClass]="{ 'mr-2': item.status != 1 }" data-toggle="modal" data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
-											<a *ngIf="item.status != 1" class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i
-													class="bi bi-clock-history"></i></a>
+											<a (click)="confirm(item.id)" class="btn-icon grd-red text-white cursor mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
+													class="bi bi-trash"></i></a>
+											<a class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
 									</td>
 								</tr>
@@ -263,12 +262,6 @@
 								<span *ngIf="item.status == 0" class="badge rounded-pill bg-blue2">Đã khởi tạo</span>
 								<span *ngIf="item.status == 1" class="badge rounded-pill badge-outline-green2">Đã cập nhập</span>
 								<span *ngIf="item.status == 2" class="badge rounded-pill bg-red">Đã gửi</span>
-								<!-- <span *ngIf="item.status == 5" class="badge rounded-pill badge-outline-green2">Chờ giải quyết</span>
-								<span *ngIf="item.status == 6" class="badge rounded-pill bg-red">Từ chối giải quyết</span>
-								<span *ngIf="item.status == 7" class="badge rounded-pill badge-outline-blue">Đang giải quyết</span>
-								<span *ngIf="item.status == 8" class="badge rounded-pill badge-outline-success">Chờ phê duyệt</span>
-								<span *ngIf="item.status == 9" class="badge rounded-pill bg-red">Từ chối phê duyệt</span>
-								<span *ngIf="item.status == 10" class="badge rounded-pill badge-success">Đã giải quyết</span> -->
 							</td>
 						</tr>
 					</ng-template>
@@ -279,6 +272,46 @@
 					</ng-template>
 				</p-table>
 			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalDetail">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 50%" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">{{model.title}}</p>
+					</div>
+					<div class="modal-body no-padding-bottom" style="padding: 1.1rem; padding-top: 0px;">
+						<div class="row" style="padding: 10px 0px;">
+							<div class="col-sm-12" style="border-top: 1px solid #EEEEEE; border-bottom: 1px solid #EEEEEE">
+								<p style="margin: 16px 0px;">{{model.content}}</p>
+							</div>
+							<div class="w-100"></div>
+							<div class="title-user-map">Cá nhân doanh nghiệp nhận SMS</div>
+							<div class="col-sm-4" style="padding: 5px !important;" *ngFor="let item of listItemUserSelected">
+								<div class="item-user">
+									<div class="info-user padding-item" style="padding-left: 0px;">
+										<!-- <div class="title" *ngIf="item.category ==1">Cá nhân</div>
+										<div class="title" *ngIf="item.category ==2">Doanh nghiệp</div> -->
+										<div class="title">{{item.administrativeUnitName}}</div>
+
+										<div class="department">{{item.name}}</div>
+
+									</div>
+								</div>
+							</div>
+							<div class="w-100"></div>
+						</div>
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>

@@ -12,3 +12,41 @@ strong.highlight:hover {
 .cursor {
 	cursor: pointer;
 }
+.title-user-map {
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 21px;
+	margin: 10px 0px;
+	text-transform: uppercase;
+	color: #1b1b3e;
+}
+.item-user {
+	display: flex;
+	color: #444463;
+	border: 1px solid #e5eaee;
+	box-sizing: border-box;
+	border-radius: 10px;
+	flex: none;
+	order: 2;
+	flex-grow: 0;
+	/* margin: 0px 5px; */
+	padding: 10px;
+}
+
+.department {
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 17px;
+	color: #1b1b3e;
+	order: 1;
+	flex-grow: 0;
+	margin: 4px 0px;
+}
+
+.title {
+	font-weight: 500;
+	font-size: 12px;
+	line-height: 15px;
+	flex-grow: 0;
+	/* margin: 4px 0px; */
+}

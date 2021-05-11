@@ -22,7 +22,8 @@
 					<div class="row form-group">
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Tiêu đề<span class="text-danger">(*)</span></label>
-							<input class="form-control" formControlName="title" [(ngModel)]="model.title" maxlength="100" placeholder="Nhập..." />
+							<input class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" formControlName="title" [(ngModel)]="model.title" maxlength="100"
+								placeholder="Nhập..." />
 							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
 								<div *ngIf="f.title.errors.required">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -33,8 +34,8 @@
 						<div class="col-sm-6 padding-col">
 							<label class="control-label department">Thời gian bắt đầu<span class="text-danger">(*)</span></label>
 							<div class="input-group">
-								<input class="form-control" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="startDate"
-									[(ngModel)]="model.startDate" appBsDatepickerInvalid
+								<input class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10"
+									formControlName="startDate" [(ngModel)]="model.startDate" appBsDatepickerInvalid
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon">
 									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
@@ -49,8 +50,8 @@
 						<div class="col-sm-6 padding-col">
 							<label class="control-label department">Thời gian kết thúc<span class="text-danger">(*)</span></label>
 							<div class="input-group">
-								<input class="form-control" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="endDate"
-									[(ngModel)]="model.endDate" appBsDatepickerInvalid [minDate]="model.startDate"
+								<input class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10"
+									formControlName="endDate" [(ngModel)]="model.endDate" appBsDatepickerInvalid [minDate]="model.startDate"
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon">
 									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
@@ -64,7 +65,7 @@
 						</div>
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Địa điểm <span class="text-danger">(*)</span></label>
-							<input class="form-control" [(ngModel)]="model.place" formControlName="place" placeholder="Nhập..." />
+							<input class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" [(ngModel)]="model.place" formControlName="place" placeholder="Nhập..." />
 							<div *ngIf="(submitted && f.place.invalid) || (f.place.invalid && (f.place.dirty || f.place.touched))" class="has-error m-b-12">
 								<div *ngIf="f.place.errors">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -73,12 +74,13 @@
 						</div>
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Ghi chú</label>
-							<input class="form-control" [(ngModel)]="model.note" formControlName="note" placeholder="Nhập..." />
+							<input class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" [(ngModel)]="model.note" formControlName="note" placeholder="Nhập..." />
 
 						</div>
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Nội dung <span class="text-danger">(*)</span></label>
-							<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" rows="5" placeholder="Nhập..."></textarea>
+							<textarea class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" [(ngModel)]="model.content" formControlName="content" rows="6"
+								placeholder="Nhập..."></textarea>
 							<div *ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error m-b-12">
 								<div *ngIf="f.content.errors">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -98,7 +100,7 @@
 								Tài liệu đính kèm
 							</p>
 							<div class="attach-file row">
-								<div class="col-2 mb-2">
+								<div class="col-2 mb-2" *ngIf="statusCurent != 2">
 									<div class="alert alert-dark d-flex align-items-center h-80">
 										<input type="file" style="display: none" #file id="file" (change)="onUpload($event)" class="inputfile inputfile-4 d-none" multiple
 											accept="{{fileAccept}}" />
@@ -214,7 +216,8 @@
 										</div>
 									</div>
 									<div class="action padding-item center">
-										<button type="button" style="width: 40px; height: 40px;" class="btn grd-blue btn-block border-0 px-3 text-white" (click)="onCreateUser()">
+										<button type="button" style="width: 40px; height: 40px;" class="btn grd-blue btn-block border-0 px-3 text-white center"
+											(click)="onCreateUser()">
 											<i class="bi bi-person-plus"></i>
 										</button>
 									</div>
@@ -254,7 +257,8 @@
 									</div>
 								</div>
 								<div class="action padding-item center" *ngIf="statusCurent != 2">
-									<button type="button" style="width: 40px; height: 40px;" class="btn grd-blue btn-block border-0 px-3 text-white" (click)="onRemoveUser(item)">
+									<button type="button" style="width: 40px; height: 40px; background: #E0E7FA; color: black;" class="btn btn-block border-0 px-3 center"
+										(click)="onRemoveUser(item)">
 										<i class="bi bi-person-dash"></i>
 									</button>
 								</div>
