@@ -1,0 +1,7 @@
+strong.highlight:hover {
+	color: #42a4ff;
+	cursor: pointer;
+}
+strong.highlight {
+	cursor: pointer;
+}

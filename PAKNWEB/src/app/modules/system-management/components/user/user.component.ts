@@ -8,6 +8,8 @@ import { PositionService } from 'src/app/services/position.service'
 import { RoleService } from 'src/app/services/role.service'
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
+import { UserCreateOrUpdateComponent } from 'src/app/modules/system-management/components/user/user-create-or-update/user-create-or-update.component'
+import { UserViewInfoComponent } from 'src/app/modules/system-management/components/user/user-view-info/user-view-info.component'
 
 declare var $: any
 @Component({
@@ -36,7 +38,7 @@ export class UserComponent implements OnInit {
 	unitsList: any[] = []
 
 	form: FormGroup
-	model: any = new UserObject2()
+	modelUser: any = new UserObject2()
 	submitted: boolean = false
 	isActived: boolean
 	userName: string = ''
@@ -47,12 +49,21 @@ export class UserComponent implements OnInit {
 	pageIndex: number = 1
 	pageSize: number = 20
 	@ViewChild('table', { static: false }) table: any
+	@ViewChild(UserCreateOrUpdateComponent, { static: false }) childCreateOrUpdateUser: UserCreateOrUpdateComponent
+	@ViewChild(UserViewInfoComponent, { static: false }) childDetailUser: UserViewInfoComponent
+
+	modalUserCreateOrUpdate(key: any = 0) {
+		this.childCreateOrUpdateUser.openModal(0, key)
+	}
+	modalUserInfo(id: any) {
+		this.childDetailUser.openModal(id)
+	}
 
 	totalRecords: number = 0
 	userId: number = 0
 	title: any
 	ngOnInit() {
-		this.buildForm()
+		// this.buildForm()
 		this.getList()
 		this.getDropDown()
 	}
@@ -61,28 +72,9 @@ export class UserComponent implements OnInit {
 		$('#modal').on('keypress', function (e) {
 			if (e.which == 13) e.preventDefault()
 		})
+		this.childCreateOrUpdateUser.parentUser = this
+		this.childDetailUser.parentUser = this
 	}
-
-	get f() {
-		return this.form.controls
-	}
-
-	buildForm() {
-		this.form = this._fb.group({
-			name: [this.model.name, Validators.required],
-			description: [this.model.description],
-			isActived: [this.model.isActived, Validators.required],
-		})
-	}
-
-	rebuilForm() {
-		this.form.reset({
-			name: this.model.name,
-			isActived: this.model.isActived,
-			description: this.model.description,
-		})
-	}
-
 	getDropDown() {
 		this.positionService
 			.positionGetList({
@@ -175,93 +167,6 @@ export class UserComponent implements OnInit {
 			this.pageSize = 20
 			this.getList()
 		}
-	}
-
-	// confirmChangeStatus(data) {
-	// 	this.model = { ...data }
-	// 	this.model.isActived = !data.isActived
-	// 	$('#modalConfirmChangeStatus').modal('show')
-	// }
-
-	preCreate() {
-		this.model = new UserObject2()
-		this.rebuilForm()
-		this.submitted = false
-		this.title = 'Thêm mới người dùng'
-		$('#modal').modal('show')
-	}
-
-	onSave() {
-		this.submitted = true
-		this.model.name = this.model.name.trim()
-		if (this.model.name == '') return
-		if (this.form.invalid) {
-			return
-		}
-		if (this.model.id == 0 || this.model.id == null) {
-			this._service.insert(this.model).subscribe((response) => {
-				if (response.success == RESPONSE_STATUS.success) {
-					if (response.result == -1) {
-						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
-						return
-					} else {
-						$('#modal').modal('hide')
-						this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
-						this.getList()
-					}
-				} else {
-					this._toastr.error(response.message)
-				}
-			}),
-				(error) => {
-					console.error(error)
-					alert(error)
-				}
-		} else {
-			this._service.update(this.model).subscribe((response) => {
-				if (response.success == RESPONSE_STATUS.success) {
-					if (response.result == -1) {
-						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
-						return
-					} else {
-						$('#modal').modal('hide')
-						this._toastr.success(MESSAGE_COMMON.UPDATE_SUCCESS)
-						this.getList()
-					}
-				} else {
-					this._toastr.error(response.message)
-				}
-			}),
-				(error) => {
-					console.error(error)
-					alert(error)
-				}
-		}
-	}
-
-	preUpdate(data) {
-		let request = {
-			Id: data.id,
-			Type: 1,
-		}
-		this._service.getById(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this.rebuilForm()
-				this.title = 'Chỉnh sửa lĩnh vực'
-				this.model = response.result.CAFieldGetByID[0]
-				$('#modal').modal('show')
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.error(error)
-				alert(error)
-			}
-	}
-	preDelete(id: number) {
-		this.userId = id
-		$('#modalConfirmDelete').modal('show')
 	}
 
 	onDelete() {
