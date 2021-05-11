@@ -42,8 +42,9 @@ export class BusinessIndividualService {
 	}
 
 	individualDelete(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialDeleteBase)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialDelete)
 	}
+
 	individualRegister(data: any): Observable<any> {
 		let form = new FormData()
 
@@ -52,8 +53,13 @@ export class BusinessIndividualService {
 		}
 		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.InvididualRegister)
 	}
+
 	individualById(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.InvididualGetByID)
+	}
+
+	invididualUpdate(request: any): Observable<any> {
+		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.InvididualUpdate)
 	}
 
 	businessGetList(request: any): Observable<any> {

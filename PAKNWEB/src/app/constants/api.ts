@@ -272,9 +272,10 @@ export class Api {
 	public static BusinessIndividualGetDataForCreate = 'BusinessIndividual/BusinessIndividualGetDataForCreate'
 	public static IndividualGetAllOnPageBase = 'BusinessIndividual/IndividualGetAllOnPageBase'
 	public static IndivialChageStatusBase = 'BusinessIndividual/IndivialChageStatusBase'
-	public static IndivialDeleteBase = 'BusinessIndividual/IndivialDeleteBase'
+	public static IndivialDelete = 'BusinessIndividual/IndivialDelete'
 	public static InvididualRegister = 'BusinessIndividual/InvididualRegister'
 	public static InvididualGetByID = 'BusinessIndividual/InvididualGetByID'
+	public static InvididualUpdate = 'BusinessIndividual/InvididualUpdate'
 
 	//Business
 	public static BusinessGetAllOnPageBase = 'BusinessIndividual/BusinessGetAllOnPageBase'

@@ -377,18 +377,36 @@ export class IndividualComponent implements OnInit {
 			return
 		}
 
-		// req to server
-		this._service.individualRegister(this.model).subscribe((res) => {
-			if (res.success != 'OK') {
-				let msg = res.message
-				if (msg.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
-					this._toastr.error('Email đã tồn tại')
+		if (this.model.id != null && this.model.id > 0) {
+			console.log('this.model', this.model)
+			this._service.invididualUpdate(this.model).subscribe((res) => {
+				if (res.success != 'OK') {
+					let errorMsg = res.message
+					this._toastr.error(res.message)
+					return
 				}
-				this._toastr.error(msg)
-				return
-			}
-			this._toastr.success('Đăng ký cá nhân thành công')
-		})
+				this._toastr.success(COMMONS.UPDATE_SUCCESS)
+				this.model = new IndividualObject()
+				$('#modal').modal('hide')
+				this.getList()
+			})
+		} else {
+			// individualRegister
+			this._service.individualRegister(this.model).subscribe((res) => {
+				if (res.success != 'OK') {
+					let msg = res.message
+					if (msg.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
+						this._toastr.error('Email đã tồn tại')
+					}
+					this._toastr.error(msg)
+					return
+				}
+				this._toastr.success(COMMONS.ADD_SUCCESS)
+				this.model = new IndividualObject()
+				$('#modal').modal('hide')
+				this.getList()
+			})
+		}
 	}
 
 	// server exists

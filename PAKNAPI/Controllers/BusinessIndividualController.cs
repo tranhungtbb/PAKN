@@ -107,8 +107,8 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Authorize]
-		[Route("IndivialDeleteBase")]
-		public async Task<ActionResult<object>> IndivialDeleteBase(IndivialDeleteIN _indivialDeleteIN)
+		[Route("IndivialDelete")]
+		public async Task<ActionResult<object>> IndivialDelete(IndivialDeleteIN _indivialDeleteIN)
 		{
 			try
 			{
@@ -157,11 +157,8 @@ namespace PAKNAPI.Controllers
                 var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
                 if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
 
-
-                //Phone,Email,IDCard
-                // check ton tai
-
-                var checkExists = await new Models.BusinessIndividual.BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", model.Phone, 0);
+				// check exist:Phone,Email,IDCard
+				var checkExists = await new Models.BusinessIndividual.BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", model.Phone, 0);
                 if (checkExists[0].Exists.Value)
                     return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
                 if (!string.IsNullOrEmpty(model.Email))
@@ -184,6 +181,26 @@ namespace PAKNAPI.Controllers
 			}
 
 			return new Models.Results.ResultApi { Success = ResultCode.OK };
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("InvididualUpdate")]
+		public async Task<ActionResult<object>> InvididualUpdate(InvididualUpdateIN _invididualUpdateIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new InvididualUpdate(_appSetting).InvididualUpdateDAO(_invididualUpdateIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
 		}
 
 		[HttpGet]
