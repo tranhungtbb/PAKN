@@ -38,7 +38,7 @@ export class BusinessIndividualService {
 	}
 
 	individualChangeStatus(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialChageStatusBase)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialChageStatus)
 	}
 
 	individualDelete(data: any): Observable<any> {
@@ -64,5 +64,13 @@ export class BusinessIndividualService {
 
 	businessGetList(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.BusinessGetAllOnPageBase)
+	}
+
+	businessChangeStatus(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BusinessChageStatus)
+	}
+
+	businessDelete(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BusinessDelete)
 	}
 }

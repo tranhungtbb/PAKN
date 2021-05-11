@@ -86,9 +86,9 @@
 								<td>{{item.phone}}</td>
 								<td>{{item.email}}</td>
 								<td>
-									<span type="button" *ngIf="item.isActived == true" class="badge rounded-pill bg-success">Hiệu
+									<span type="button" *ngIf="item.isActived == true" (click)="onOpenConfirmModal(item.id,'isActived')" class="badge rounded-pill bg-success">Hiệu
 										lực</span>
-									<span type="button" *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Hết
+									<span type="button" *ngIf="item.isActived == false" (click)="onOpenConfirmModal(item.id,'isActived')" class="badge rounded-pill badge-light">Hết
 										hiệu
 										lực</span>
 								</td>
@@ -112,3 +112,26 @@
 		</div>
 	</div>
 </div>
+
+<!-- start confirm modal -->
+<div class="modal fade" id="modal-confirm">
+	<div class="modal-dialog modal-dialog-centered modal-md" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-0">
+				<span>
+					Anh/chị có chắc chắn thực hiện hành động này?
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="acceptConfirm()">Đồng ý</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end confirm modal -->

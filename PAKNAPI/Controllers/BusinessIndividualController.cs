@@ -127,8 +127,8 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Authorize]
-		[Route("IndivialChageStatusBase")]
-		public async Task<ActionResult<object>> IndivialChageStatusBase(IndivialChageStatusIN _indivialChageStatusIN)
+		[Route("IndivialChageStatus")]
+		public async Task<ActionResult<object>> IndivialChageStatus(IndivialChageStatusIN _indivialChageStatusIN)
 		{
 			try
 			{
@@ -241,6 +241,46 @@ namespace PAKNAPI.Controllers
 							{"PageSize", rsBusinessGetAllOnPageBase != null && rsBusinessGetAllOnPageBase.Count > 0 ? PageSize : 0},
 						};
 				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("BusinessDelete")]
+		public async Task<ActionResult<object>> BusinessDelete(BusinessDeleteIN _businessDeleteIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new BusinessDelete(_appSetting).BusinessDeleteDAO(_businessDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("BusinessChageStatus")]
+		public async Task<ActionResult<object>> BusinessChageStatus(BusinessChageStatusIN _businessChageStatusIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new BusinessChageStatus(_appSetting).BusinessChageStatusDAO(_businessChageStatusIN) };
 			}
 			catch (Exception ex)
 			{

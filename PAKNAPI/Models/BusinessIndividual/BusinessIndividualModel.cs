@@ -49,6 +49,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 	}
 	#endregion
 
+	#region IndivialDelete
 	public class IndivialDelete
 	{
 		private SQLCon _sQLCon;
@@ -75,6 +76,10 @@ namespace PAKNAPI.Models.BusinessIndividual
 	{
 		public int? Id { get; set; }
 	}
+
+	#endregion
+
+	#region IndivialChageStatus
 
 	public class IndivialChageStatus
 	{
@@ -105,6 +110,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public bool? IsActived { get; set; }
 	}
 
+	#endregion
 
 	public class BusinessIndividualGetDataForCreateResponse
     {
