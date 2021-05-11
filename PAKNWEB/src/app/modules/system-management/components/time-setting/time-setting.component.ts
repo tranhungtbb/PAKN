@@ -68,9 +68,7 @@ export class TimeSettingComponent implements OnInit {
 		this._service.getSystemTimeDateActive().subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.listDate = response.result.SYTimeGetDateActive
-				this.lstDate = this.listDate.map(({ time }) => new Date(time).getTime())
-				console.log(this.listDate)
-				console.log(this.lstDate)
+				this.lstDate = this.listDate.map(({ time }) => new Date(time).setHours(0, 0, 0, 0))
 			} else {
 				this._toastr.error(response.message)
 			}
@@ -100,11 +98,14 @@ export class TimeSettingComponent implements OnInit {
 		this.description = this.description.trim()
 		let request = {
 			Name: this.name,
-			Time: this.time != null ? this.time.toLocaleDateString() : '',
+			Time: this.time == null || this.time.toString() == 'Invalid Date' ? '' : this.time.toLocaleDateString(),
 			Description: this.description.trim(),
 			isActived: this.isActived != null ? this.isActived : '',
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
+		}
+		if ($('#TimeSearch').val() == 'Invalid date') {
+			$('#TimeSearch').val('')
 		}
 		this._service.getSystemTime(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -165,7 +166,7 @@ export class TimeSettingComponent implements OnInit {
 		this.model = new FieldObject()
 		this.rebuilForm()
 		this.submitted = false
-		this.title = 'Thêm mới chức vụ'
+		this.title = 'Thêm mới ngày nghỉ'
 		$('#modal').modal('show')
 	}
 
@@ -174,8 +175,10 @@ export class TimeSettingComponent implements OnInit {
 		if (this.form.invalid) {
 			return
 		}
+
 		if (this.model.id == 0 || this.model.id == null) {
-			this.model.time = this.model.time.toLocaleDateString()
+			let timeStr = this.model.time.toLocaleDateString()
+			this.model.time = new Date(timeStr)
 			this._service.insertSystemTime(this.model).subscribe(response => {
 				console.log(response)
 				if (response.success == RESPONSE_STATUS.success) {
@@ -217,6 +220,7 @@ export class TimeSettingComponent implements OnInit {
 					alert(error)
 				}
 		}
+		this.getListDate()
 	}
 
 	preUpdate(data) {
@@ -226,8 +230,9 @@ export class TimeSettingComponent implements OnInit {
 		this._service.getSystemTimeById(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.rebuilForm()
-				this.title = 'Chỉnh sửa chức vụ'
+				this.title = 'Chỉnh sửa ngày nghỉ'
 				this.model = response.result.SYTimeGetByID[0]
+				this.model.time = new Date(this.model.time)
 				$('#modal').modal('show')
 			} else {
 				this._toastr.error(response.message)
@@ -253,7 +258,7 @@ export class TimeSettingComponent implements OnInit {
 				if (response.result > 0) {
 					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				} else {
-					this._toastr.error('Chức vụ này đang được sử dụng')
+					this._toastr.error('Ngày nghỉ này đang được sử dụng')
 				}
 
 				$('#modalConfirmDelete').modal('hide')
