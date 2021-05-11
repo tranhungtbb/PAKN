@@ -268,4 +268,30 @@ export class BusinessComponent implements OnInit {
 		})
 	}
 	/*end - chức năng xác nhận hành động xóa*/
+
+	preCreate() {
+		this.model = new BusinessionObject()
+		this.rebuilForm()
+		this.submitted = false
+		this.title = 'Thêm mới cá nhân'
+		$('#modal').modal('show')
+	}
+
+	rebuilForm() {
+		this.form.reset({
+			fullName: this.model.fullName,
+			address: this.model.address,
+			phone: this.model.phone,
+			email: this.model.email,
+			isActived: this.model.isActived,
+		})
+
+		// this.submitted = false
+		// this.model = new BusinessionObject()
+		// this.model._birthDay = ''
+		// this.model._dateOfIssue = ''
+		// this.model.fullName = ''
+		// this.model.email = ''
+		// this.model.gender = true
+	}
 }

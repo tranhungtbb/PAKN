@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router'
 import { BusinessIndividualComponent } from './business-individual.component'
 import { IndividualComponent } from './components/individual/individual.component'
 import { BusinessComponent } from './components/business/business.component'
+import { CreateUpdBusinessComponent } from './components/create-upd-business/create-upd-business.component'
 
 const routes: Routes = [
 	{
@@ -11,6 +12,7 @@ const routes: Routes = [
 		children: [
 			{ path: 'ca-nhan', component: IndividualComponent },
 			{ path: 'doanh-nghiep', component: BusinessComponent },
+			{ path: 'them-moi', component: CreateUpdBusinessComponent },
 		],
 	},
 ]
