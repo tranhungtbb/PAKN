@@ -181,6 +181,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 			this._toastr.error('Vui lòng chọn người tham dự')
 			return
 		}
+		this.userMap = []
 		for (const i of this.listItemUserSelected) {
 			let item = {
 				UserId: i.userId,

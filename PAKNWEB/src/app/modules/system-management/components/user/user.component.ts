@@ -200,7 +200,7 @@ export class UserComponent implements OnInit {
 		item.typeId = 1
 		item.countLock = 0
 		item.lockEndOut = ''
-		this._service.changeStatus(item).subscribe((res) => {
+		this._service.changeStatus({ Id: item.id, IsActived: item.isActived }).subscribe((res) => {
 			if (res.success != 'OK') {
 				this._toastr.error(COMMONS.UPDATE_FAILED)
 				//item.isActived = !item.isActived
@@ -211,4 +211,6 @@ export class UserComponent implements OnInit {
 		})
 	}
 	getHistory(id: any) {}
+
+	modalUserChangePassword(id: any) {}
 }

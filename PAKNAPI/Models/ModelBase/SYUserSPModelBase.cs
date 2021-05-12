@@ -98,6 +98,35 @@ namespace PAKNAPI.ModelBase
 		public string Salt { get; set; }
 	}
 
+	public class SYUserChangeStatus
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserChangeStatus(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserChangeStatus()
+		{
+		}
+
+		public async Task<int> SYUserChangeStatusDAO(SYUserChangeStatusIN _sYUserChangeStatusIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYUserChangeStatusIN.Id);
+			DP.Add("IsActived", _sYUserChangeStatusIN.IsActived);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserChangeStatus", DP));
+		}
+	}
+
+	public class SYUserChangeStatusIN
+	{
+		public long? Id { get; set; }
+		public bool? IsActived { get; set; }
+	}
+
 	public class SYUserDelete
 	{
 		private SQLCon _sQLCon;

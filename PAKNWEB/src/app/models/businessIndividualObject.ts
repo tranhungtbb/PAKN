@@ -149,3 +149,16 @@ export class OrganizationObject {
 	userId: number
 	id: number
 }
+
+export class IndividualExportObject {
+	constructor() {
+		this.fullName = ''
+		this.address = ''
+		this.phone = ''
+		this.email = ''
+	}
+	fullName: string
+	address: string
+	phone: string
+	email: string
+}
