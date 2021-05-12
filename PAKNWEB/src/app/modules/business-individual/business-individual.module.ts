@@ -17,7 +17,10 @@ import { GMapModule } from 'primeng/gmap'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatDialogModule } from '@angular/material/dialog'
 import { BusinessComponent } from './components/business/business.component'
-import { IndividualComponent } from './components/individual/individual.component'
+import { IndividualComponent } from './components/individual/individual.component';
+import { CreateUpdBusinessComponent } from './components/create-upd-business/create-upd-business.component';
+import { OrgFormAddressComponent } from './components/create-upd-business/org-form-address/org-form-address.component';
+import { OrgRepreFormComponent } from './components/create-upd-business/org-repre-form/org-repre-form.component'
 
 @NgModule({
 	imports: [
@@ -39,7 +42,7 @@ import { IndividualComponent } from './components/individual/individual.componen
 		CKEditorModule,
 		MatDialogModule,
 	],
-	declarations: [BusinessIndividualComponent, BusinessComponent, IndividualComponent],
+	declarations: [BusinessIndividualComponent, BusinessComponent, IndividualComponent, CreateUpdBusinessComponent, OrgFormAddressComponent, OrgRepreFormComponent],
 	providers: [],
 })
 export class BusinessIndividualModule {}

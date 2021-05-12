@@ -353,6 +353,7 @@ export class IndividualComponent implements OnInit {
 		let fDateIssue: any = document.querySelector('#_dateIssue')
 		this.model._birthDay = fDob.value
 		this.model._dateOfIssue = fDateIssue.value
+		this.model.userId = this.userLoginId
 		if (!this.model.email) this.model.email = ''
 
 		if (this.email_exists || this.phone_exists || this.idCard_exists) {
@@ -376,18 +377,35 @@ export class IndividualComponent implements OnInit {
 			return
 		}
 
-		// req to server
-		this._service.individualRegister(this.model).subscribe((res) => {
-			if (res.success != 'OK') {
-				let msg = res.message
-				if (msg.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
-					this._toastr.error('Email đã tồn tại')
+		if (this.model.id != null && this.model.id > 0) {
+			this._service.invididualUpdate(this.model).subscribe((res) => {
+				if (res.success != 'OK') {
+					let errorMsg = res.message
+					this._toastr.error(res.message)
+					return
 				}
-				this._toastr.error(msg)
-				return
-			}
-			this._toastr.success('Đăng ký cá nhân thành công')
-		})
+				this._toastr.success(COMMONS.UPDATE_SUCCESS)
+				this.model = new IndividualObject()
+				$('#modal').modal('hide')
+				this.getList()
+			})
+		} else {
+			// individualRegister
+			this._service.individualRegister(this.model).subscribe((res) => {
+				if (res.success != 'OK') {
+					let msg = res.message
+					if (msg.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
+						this._toastr.error('Email đã tồn tại')
+					}
+					this._toastr.error(msg)
+					return
+				}
+				this._toastr.success(COMMONS.ADD_SUCCESS)
+				this.model = new IndividualObject()
+				$('#modal').modal('hide')
+				this.getList()
+			})
+		}
 	}
 
 	// server exists
