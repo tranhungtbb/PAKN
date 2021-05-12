@@ -104,9 +104,7 @@ export class TimeSettingComponent implements OnInit {
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
-		if ($('#TimeSearch').val() == 'Invalid date') {
-			$('#TimeSearch').val('')
-		}
+		
 		this._service.getSystemTime(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
@@ -138,6 +136,11 @@ export class TimeSettingComponent implements OnInit {
 	dataStateChange() {
 		this.pageIndex = 1
 		this.table.first = 0
+		$(document).ready(function() {
+			if ($('#TimeSearch').val() == 'Invalid date') {
+				$('#TimeSearch').val('')
+			}
+		})
 		this.getList()
 	}
 

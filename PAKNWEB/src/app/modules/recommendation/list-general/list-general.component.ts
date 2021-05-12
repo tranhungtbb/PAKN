@@ -68,7 +68,7 @@ export class ListGeneralComponent implements OnInit {
 	}
 
 	getDataForCreate() {
-		this._service.recommendationGetDataForCreate({}).subscribe((response) => {
+		this._service.recommendationGetDataForCreate({}).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.lstUnit = response.result.lstUnit
@@ -78,7 +78,7 @@ export class ListGeneralComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.log(error)
 			}
 	}
@@ -120,7 +120,8 @@ export class ListGeneralComponent implements OnInit {
 			PageSize: this.pageSize,
 		}
 
-		this._service.recommendationGetListProcess(request).subscribe((response) => {
+		this._service.recommendationGetListProcess(request).subscribe(response => {
+			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
@@ -131,7 +132,7 @@ export class ListGeneralComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.log(error)
 				alert(error)
 			}
@@ -179,7 +180,7 @@ export class ListGeneralComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.recommendationDelete(request).subscribe((response) => {
+		this._service.recommendationDelete(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				$('#modalConfirmDelete').modal('hide')
@@ -188,7 +189,7 @@ export class ListGeneralComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.error(error)
 			}
 	}
@@ -197,7 +198,7 @@ export class ListGeneralComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.recommendationGetHistories(request).subscribe((response) => {
+		this._service.recommendationGetHistories(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.lstHistories = response.result.HISRecommendationGetByObjectId
 				$('#modal-history-pakn').modal('show')
@@ -205,7 +206,7 @@ export class ListGeneralComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.log(error)
 			}
 	}
@@ -214,7 +215,7 @@ export class ListGeneralComponent implements OnInit {
 		this.modelForward.recommendationId = id
 		this.submitted = false
 		this.rebuilForm()
-		this._service.recommendationGetDataForForward({}).subscribe((response) => {
+		this._service.recommendationGetDataForForward({}).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.lstUnitNotMain = response.result.lstUnitNotMain
@@ -224,7 +225,7 @@ export class ListGeneralComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.log(error)
 			}
 	}
@@ -242,7 +243,7 @@ export class ListGeneralComponent implements OnInit {
 			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
 			IsList: true,
 		}
-		this._service.recommendationForward(request).subscribe((response) => {
+		this._service.recommendationForward(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modal-tc-pakn').modal('hide')
 				this.getList()
@@ -251,7 +252,7 @@ export class ListGeneralComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(err) => {
+			err => {
 				console.error(err)
 			}
 	}
@@ -268,7 +269,7 @@ export class ListGeneralComponent implements OnInit {
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
 			if (model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
-				this._service.recommendationGetDataForProcess({}).subscribe((response) => {
+				this._service.recommendationGetDataForProcess({}).subscribe(response => {
 					if (response.success == RESPONSE_STATUS.success) {
 						if (response.result != null) {
 							this.lstGroupWord = response.result.lstGroupWord
@@ -279,7 +280,7 @@ export class ListGeneralComponent implements OnInit {
 						this._toastr.error(response.message)
 					}
 				}),
-					(error) => {
+					error => {
 						console.log(error)
 						alert(error)
 					}
@@ -308,7 +309,7 @@ export class ListGeneralComponent implements OnInit {
 			ReactionaryWord: this.modelProcess.reactionaryWord,
 			IsList: true,
 		}
-		this._service.recommendationProcess(request).subscribe((response) => {
+		this._service.recommendationProcess(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
 				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
@@ -317,7 +318,7 @@ export class ListGeneralComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(err) => {
+			err => {
 				console.error(err)
 			}
 	}
@@ -333,7 +334,7 @@ export class ListGeneralComponent implements OnInit {
 				ListGroupWordSelected: this.lstGroupWordSelected.join(','),
 				IsList: true,
 			}
-			this._service.recommendationProcess(request).subscribe((response) => {
+			this._service.recommendationProcess(request).subscribe(response => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
 					this._toastr.success(COMMONS.DENY_SUCCESS)
@@ -342,7 +343,7 @@ export class ListGeneralComponent implements OnInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				(err) => {
+				err => {
 					console.error(err)
 				}
 		}
