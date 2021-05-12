@@ -26,6 +26,7 @@ namespace PAKNAPI.ModelBase
 
 		public short? Id { get; set; }
 		public string Name { get; set; }
+		public byte? Levels { get; set; }
 
 		public async Task<List<CAAdministrativeUnitsGetDropDown>> CAAdministrativeUnitsGetDropDownDAO(int? Id)
 		{
