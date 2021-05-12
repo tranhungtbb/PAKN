@@ -294,4 +294,10 @@ export class BusinessComponent implements OnInit {
 		// this.model.email = ''
 		// this.model.gender = true
 	}
+
+	dataStateChange() {
+		this.pageIndex = 1
+		this.table.first = 0
+		this.getList()
+	}
 }

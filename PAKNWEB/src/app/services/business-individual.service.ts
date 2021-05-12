@@ -18,21 +18,6 @@ export class BusinessIndividualService {
 		}
 	}
 	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
-	businessIndividualGetDataForCreate(request: any): Observable<any> {
-		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
-		}
-		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.BusinessIndividualGetDataForCreate, headers)
-	}
-	businessIndividualGetListProcess(request: any): Observable<any> {
-		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
-		}
-		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetListProcess, headers)
-	}
-
 	individualGetList(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.IndividualGetAllOnPage)
 	}

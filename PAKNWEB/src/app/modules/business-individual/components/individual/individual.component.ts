@@ -191,10 +191,10 @@ export class IndividualComponent implements OnInit {
 	}
 
 	getList() {
-		this.fullName = this.fullName.trim()
-		this.address = this.address.trim()
-		this.phone = this.phone.trim()
-		this.email = this.email.trim()
+		// this.fullName = this.fullName.trim()
+		// this.address = this.address.trim()
+		// this.phone = this.phone.trim()
+		// this.email = this.email.trim()
 
 		this.dataSearch.fullName = this.dataSearch.fullName.trim()
 		this.dataSearch.address = this.dataSearch.address.trim()
