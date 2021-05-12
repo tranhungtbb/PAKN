@@ -78,6 +78,7 @@ export class BusinessionObject {
 
 export class OrganizationObject {
 	constructor() {
+		this.id = 0
 		this.phone = null
 		this.password = null
 		this.RepresentativeGender = true
@@ -146,4 +147,5 @@ export class OrganizationObject {
 	IsDeleted: boolean
 
 	userId: number
+	id: number
 }

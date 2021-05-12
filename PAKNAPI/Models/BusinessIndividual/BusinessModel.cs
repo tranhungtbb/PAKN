@@ -111,6 +111,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 
 	#endregion
 
+	#region BusinessInsert
 	public class BusinessInsert
 	{
 		private SQLCon _sQLCon;
@@ -204,5 +205,67 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public string Nation { get; set; }
 		public string Business { get; set; }
 		public long? UserId { get; set; }
+	}
+
+	#endregion
+
+
+	public class BusinessGetById
+	{
+		private SQLCon _sQLCon;
+
+		public BusinessGetById(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public BusinessGetById()
+		{
+		}
+
+		public long? Id { get; set; }
+		public int? WardsId { get; set; }
+		public int? DistrictId { get; set; }
+		public string RepresentativeName { get; set; }
+		public string Code { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public string OrgPhone { get; set; }
+		public string OrgEmail { get; set; }
+		public DateTime? RepresentativeBirthDay { get; set; }
+		public int? ProvinceId { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? CreatedBy { get; set; }
+		public int? UpdatedBy { get; set; }
+		public int? Status { get; set; }
+		public bool? RepresentativeGender { get; set; }
+		public string BusinessRegistration { get; set; }
+		public string DecisionOfEstablishing { get; set; }
+		public DateTime? DateOfIssue { get; set; }
+		public string Tax { get; set; }
+		public int? OrgProvinceId { get; set; }
+		public int? OrgDistrictId { get; set; }
+		public int? OrgWardsId { get; set; }
+		public string OrgAddress { get; set; }
+		public string Address { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Representative { get; set; }
+		public string IDCard { get; set; }
+		public string Place { get; set; }
+		public string NativePlace { get; set; }
+		public string PermanentPlace { get; set; }
+		public string Nation { get; set; }
+		public string Business { get; set; }
+		public long? UserId { get; set; }
+
+		public async Task<List<BusinessGetById>> BusinessGetByIdDAO(long? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<BusinessGetById>("BusinessGetById", DP)).ToList();
+		}
 	}
 }

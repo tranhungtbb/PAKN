@@ -184,7 +184,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("InvididualUpdate")]
 		public async Task<ActionResult<object>> InvididualUpdate(InvididualUpdateIN _invididualUpdateIN)
 		{
@@ -206,7 +206,7 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("InvididualGetByID")]
-		public async Task<ActionResult<object>> InvididualGetByIDBase(int? Id)
+		public async Task<ActionResult<object>> InvididualGetByID(long? Id)
 		{
 			try
 			{
@@ -226,7 +226,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BusinessGetAllOnPageBase")]
 		public async Task<ActionResult<object>> BusinessGetAllOnPageBase(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
 		{
@@ -252,7 +252,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BusinessDelete")]
 		public async Task<ActionResult<object>> BusinessDelete(BusinessDeleteIN _businessDeleteIN)
 		{
@@ -272,7 +272,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BusinessChageStatus")]
 		public async Task<ActionResult<object>> BusinessChageStatus(BusinessChageStatusIN _businessChageStatusIN)
 		{
@@ -292,8 +292,9 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
+		[Authorize("ThePolicy")]
 		[Route("BusinessRegister")]
-		public async Task<object> OrganizationRegister([FromForm] BusinessInsertIN model,
+		public async Task<object> BusinessRegister([FromForm] BusinessInsertIN model,
 			[FromForm] string _RepresentativeBirthDay,
 			[FromForm] string _DateOfIssue)
 		{
@@ -345,6 +346,28 @@ namespace PAKNAPI.Controllers
 			}
 
 			return new Models.Results.ResultApi { Success = ResultCode.OK };
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("BusinessGetByID")]
+		public async Task<ActionResult<object>> BusinessGetByID(long? Id)
+		{
+			try
+			{
+				List<BusinessGetById> rsBusinessGetById = await new BusinessGetById(_appSetting).BusinessGetByIdDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"BusinessGetById", rsBusinessGetById},
+					};
+				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
 		}
 
 	}

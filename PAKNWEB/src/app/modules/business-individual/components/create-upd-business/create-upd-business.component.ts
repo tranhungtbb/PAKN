@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 
 import { ToastrService } from 'ngx-toastr'
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
-import { Router } from '@angular/router'
 import { viLocale } from 'ngx-bootstrap/locale'
 import { defineLocale } from 'ngx-bootstrap/chronos'
 import { BsLocaleService } from 'ngx-bootstrap/datepicker'
@@ -18,6 +17,7 @@ import { COMMONS } from 'src/app/commons/commons'
 import { OrganizationObject } from 'src/app/models/businessIndividualObject'
 import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { ActivatedRoute, Router } from '@angular/router'
 
 declare var $: any
 @Component({
@@ -38,7 +38,8 @@ export class CreateUpdBusinessComponent implements OnInit {
 		private registerService: RegisterService,
 		private businessIndividualService: BusinessIndividualService,
 		private router: Router,
-		private storeageService: UserInfoStorageService
+		private storeageService: UserInfoStorageService,
+		private activatedRoute: ActivatedRoute
 	) {
 		defineLocale('vi', viLocale)
 	}
@@ -51,10 +52,23 @@ export class CreateUpdBusinessComponent implements OnInit {
 	model: OrganizationObject = new OrganizationObject()
 	nation_enable_type = false
 	userLoginId: number = this.storeageService.getUserId()
+	title: string = 'Thêm mới doanh nghiệp'
 
 	ngOnInit() {
 		this.localeService.use('vi')
 
+		// set
+		this.activatedRoute.params.subscribe((params) => {
+			this.model.id = +params['id']
+			if (this.model.id != 0) {
+				this.getData()
+				this.title = 'Cập nhật thông tin doanh nghiệp'
+			} else {
+				this.title = 'Thêm mới doanh nghiệp'
+			}
+			// this.builForm()
+		})
+		//
 		this.child_OrgAddressForm.model = this.model
 		this.child_OrgRepreForm.model = this.model
 		this.loadFormBuilder()
@@ -76,6 +90,22 @@ export class CreateUpdBusinessComponent implements OnInit {
 		this.model._RepresentativeBirthDay = ''
 		this.model._DateOfIssue = ''
 		this.model.RepresentativeGender = true
+	}
+
+	getData() {
+		let request = {
+			Id: this.model.id,
+		}
+		this.businessIndividualService.businessGetByID(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				this.model = response.result.BusinessGetById[0]
+			} else {
+				this.toast.error(response.message)
+			}
+		}),
+			(error) => {
+				console.log(error)
+			}
 	}
 
 	onSave() {
