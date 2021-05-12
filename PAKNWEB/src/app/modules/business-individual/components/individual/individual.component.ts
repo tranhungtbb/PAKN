@@ -44,7 +44,6 @@ export class IndividualComponent implements OnInit {
 	listVillage: any[] = []
 
 	userLoginId: number = this.storeageService.getUserId()
-	unitLoginId: number = this.storeageService.getUnitId()
 	listData = new Array<IndividualObject>()
 	listStatus: any = [
 		{ value: '', text: 'Chọn trạng thái' },

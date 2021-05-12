@@ -508,7 +508,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public DateTime? IssuedDate { get; set; }
 		public bool? Gender { get; set; }
 
-		public async Task<List<InvididualGetByID>> InvididualGetByIDDAO(int? Id)
+		public async Task<List<InvididualGetByID>> InvididualGetByIDDAO(long? Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", Id);

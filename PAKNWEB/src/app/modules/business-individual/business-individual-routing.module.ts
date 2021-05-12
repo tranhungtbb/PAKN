@@ -12,7 +12,7 @@ const routes: Routes = [
 		children: [
 			{ path: 'ca-nhan', component: IndividualComponent },
 			{ path: 'doanh-nghiep', component: BusinessComponent },
-			{ path: 'them-moi', component: CreateUpdBusinessComponent },
+			{ path: 'them-moi/:id', component: CreateUpdBusinessComponent },
 		],
 	},
 ]

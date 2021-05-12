@@ -184,7 +184,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("InvididualUpdate")]
 		public async Task<ActionResult<object>> InvididualUpdate(InvididualUpdateIN _invididualUpdateIN)
 		{
@@ -206,7 +206,7 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("InvididualGetByID")]
-		public async Task<ActionResult<object>> InvididualGetByIDBase(int? Id)
+		public async Task<ActionResult<object>> InvididualGetByID(long? Id)
 		{
 			try
 			{
@@ -226,7 +226,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BusinessGetAllOnPageBase")]
 		public async Task<ActionResult<object>> BusinessGetAllOnPageBase(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
 		{
@@ -252,7 +252,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BusinessDelete")]
 		public async Task<ActionResult<object>> BusinessDelete(BusinessDeleteIN _businessDeleteIN)
 		{
@@ -272,7 +272,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("BusinessChageStatus")]
 		public async Task<ActionResult<object>> BusinessChageStatus(BusinessChageStatusIN _businessChageStatusIN)
 		{
@@ -281,6 +281,105 @@ namespace PAKNAPI.Controllers
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new BusinessChageStatus(_appSetting).BusinessChageStatusDAO(_businessChageStatusIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("BusinessRegister")]
+		public async Task<object> BusinessRegister([FromForm] BusinessInsertIN model,
+			[FromForm] string _RepresentativeBirthDay,
+			[FromForm] string _DateOfIssue)
+		{
+			try
+			{
+				var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
+				if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tài khoản đăng nhập đã tồn tại" };
+
+				DateTime birdDay, dateOfIssue;
+				if (!DateTime.TryParseExact(_RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
+				{
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+				}
+				if (!DateTime.TryParseExact(_DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
+				{
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+				}
+
+				///Phone,Email,IDCard
+				///check ton tai
+				var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone", model.Phone, 0);
+				//if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+				//if (!string.IsNullOrEmpty(model.Email))
+				//{
+				//	checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Email", model.Email, 0);
+				//	if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện đã tồn tại" };
+				//}
+				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("IDCard", model.IDCard, 0);
+				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
+				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgPhone", model.OrgPhone, 0);
+				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại doanh nghiệp đã tồn tại" };
+				if (!string.IsNullOrEmpty(model.OrgEmail))
+				{
+					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgEmail", model.OrgEmail, 0);
+					if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email doanh nghiệp đã tồn tại" };
+				}
+				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("BusinessRegistration", model.BusinessRegistration, 0);
+				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số đăng ký kinh doanh đã tồn tại" };
+				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("DecisionOfEstablishing", model.DecisionOfEstablishing, 0);
+				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số quyết định thành lập đã tồn tại" };
+
+				var rs2 = await new BusinessInsert(_appSetting).BusinessInsertDAO(model);
+
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+
+			return new Models.Results.ResultApi { Success = ResultCode.OK };
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("BusinessGetByID")]
+		public async Task<ActionResult<object>> BusinessGetByID(long? Id)
+		{
+			try
+			{
+				List<BusinessGetById> rsBusinessGetById = await new BusinessGetById(_appSetting).BusinessGetByIdDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"BusinessGetById", rsBusinessGetById},
+					};
+				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("BusinessUpdate")]
+		public async Task<ActionResult<object>> BusinessUpdate([FromForm] BusinessUpdateInfoIN businessModel)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new BusinessUpdateInfo(_appSetting).BusinessUpdateInfoDAO(businessModel) };
 			}
 			catch (Exception ex)
 			{

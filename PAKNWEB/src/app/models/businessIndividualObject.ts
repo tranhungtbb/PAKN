@@ -51,7 +51,7 @@ export class BusinessionObject {
 		this.isActived = true
 		this.address = ''
 		this.IsDeleted = false
-		this.userId = ''
+		this.userId = null
 	}
 	phone: string
 	representativeName: string // representativeName
@@ -73,12 +73,14 @@ export class BusinessionObject {
 	NativePlace: string
 	isActived: boolean
 	IsDeleted: boolean
-	userId: string
+	userId: number
 }
 
-export class BusinessionObject2 {
+export class OrganizationObject {
 	constructor() {
+		this.id = 0
 		this.phone = null
+		this.password = null
 		this.RepresentativeGender = true
 
 		//
@@ -105,9 +107,15 @@ export class BusinessionObject2 {
 
 		this.Status = 1
 		this.isActived = true
+		this.IsDeleted = false
+		this.userId = null
 	}
 	//----thông tin tài khoản đăng nhập
 	phone: string
+	password: string
+	rePassword: string
+
+	//----thông tin người đại diện
 	RepresentativeName: string // RepresentativeName tên người đại diện
 	RepresentativeGender: boolean
 	_RepresentativeBirthDay: string
@@ -119,6 +127,7 @@ export class BusinessionObject2 {
 	Address: string
 	PermanentPlace: string // nơi thường trú
 	NativePlace: string // nguyên quán
+
 	//---thông tin doanh nghiệp
 	Business: string // tên tổ chức
 	Tax: string //Mã số thuế
@@ -135,131 +144,8 @@ export class BusinessionObject2 {
 
 	Status: number //
 	isActived: boolean
-}
+	IsDeleted: boolean
 
-export class BusinessIndividualObject {
-	constructor() {
-		this.id = 0
-		this.code = ''
-		this.title = ''
-		this.content = ''
-		this.field = null
-		this.unitId = null
-		this.typeObject = 1
-		this.sendId = null
-		this.name = ''
-		this.status = null
-		this.reactionaryWord = false
-		this.sendDate = null
-		this.createdBy = null
-		this.createdDate = null
-		this.updatedBy = null
-		this.updatedDate = null
-
-		this.phone = ''
-		this.fullName = ''
-		this.nation = ''
-		this.provinceId = ''
-		this.districtId = ''
-		this.wardsId = ''
-		this.gender = true
-		this._birthDay = ''
-		this.email = ''
-		this.address = ''
-		this.iDCard = ''
-		this.issuedPlace = ''
-		this._dateOfIssue = ''
-		this.PermanentPlace = ''
-		this.NativePlace = ''
-		this.isActived = true
-	}
+	userId: number
 	id: number
-	code: string
-	title: string
-	content: string
-	field: number
-	unitId: number
-	typeObject: number
-	sendId: number
-	name: string
-	status: number
-	reactionaryWord: boolean
-	sendDate: Date
-	createdBy: number
-	createdDate: Date
-	updatedBy: number
-	updatedDate: Date
-
-	phone: string
-	fullName: string // fullName
-	nation: any // quoc tich
-	provinceId: any
-	districtId: any
-	wardsId: any
-	gender: boolean
-	_birthDay: string
-	email: string
-	address: string
-	iDCard: string
-	issuedPlace: string
-	_dateOfIssue: string
-	PermanentPlace: string
-	NativePlace: string
-	isActived: boolean
-}
-export class BusinessIndividualSearchObject {
-	constructor() {
-		this.code = ''
-		this.name = ''
-		this.title = ''
-		this.content = ''
-		this.place = ''
-		this.unit = ''
-		this.field = null
-		this.unitId = null
-		this.status = null
-
-		this.phone = ''
-		this.fullName = ''
-		this.nation = ''
-		this.provinceId = ''
-		this.districtId = ''
-		this.wardsId = ''
-		this.gender = true
-		this._birthDay = ''
-		this.email = ''
-		this.address = ''
-		this.iDCard = ''
-		this.issuedPlace = ''
-		this._dateOfIssue = ''
-		this.PermanentPlace = ''
-		this.NativePlace = ''
-		this.isActived = true
-	}
-	code: string
-	name: string
-	title: string
-	content: string
-	unitId: string
-	field: number
-	status: number
-	place: string
-	unit: string
-
-	phone: string
-	fullName: string // fullName
-	nation: any // quoc tich
-	provinceId: any
-	districtId: any
-	wardsId: any
-	gender: boolean
-	_birthDay: string
-	email: string
-	address: string
-	iDCard: string
-	issuedPlace: string
-	_dateOfIssue: string
-	PermanentPlace: string
-	NativePlace: string
-	isActived: boolean
 }

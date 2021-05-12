@@ -281,4 +281,7 @@ export class Api {
 	public static BusinessGetAllOnPageBase = 'BusinessIndividual/BusinessGetAllOnPageBase'
 	public static BusinessChageStatus = 'BusinessIndividual/BusinessChageStatus'
 	public static BusinessDelete = 'BusinessIndividual/BusinessDelete'
+	public static BusinessRegister = 'BusinessIndividual/BusinessRegister'
+	public static BusinessGetByID = 'BusinessIndividual/BusinessGetByID'
+	public static BusinessUpdate = 'BusinessIndividual/BusinessUpdate'
 }
