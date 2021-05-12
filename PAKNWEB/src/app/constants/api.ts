@@ -283,4 +283,5 @@ export class Api {
 	public static BusinessDelete = 'BusinessIndividual/BusinessDelete'
 	public static BusinessRegister = 'BusinessIndividual/BusinessRegister'
 	public static BusinessGetByID = 'BusinessIndividual/BusinessGetByID'
+	public static BusinessUpdate = 'BusinessIndividual/BusinessUpdate'
 }

@@ -370,5 +370,25 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("BusinessUpdate")]
+		public async Task<ActionResult<object>> BusinessUpdate([FromForm] BusinessUpdateInfoIN businessModel)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new BusinessUpdateInfo(_appSetting).BusinessUpdateInfoDAO(businessModel) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 	}
 }

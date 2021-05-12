@@ -52,7 +52,7 @@ export class CreateUpdBusinessComponent implements OnInit {
 	model: OrganizationObject = new OrganizationObject()
 	nation_enable_type = false
 	userLoginId: number = this.storeageService.getUserId()
-	title: string = 'Thêm mới doanh nghiệp'
+	title: string = 'TẠO MỚI DOANH NGHIỆP'
 
 	ngOnInit() {
 		this.localeService.use('vi')
@@ -62,11 +62,10 @@ export class CreateUpdBusinessComponent implements OnInit {
 			this.model.id = +params['id']
 			if (this.model.id != 0) {
 				this.getData()
-				this.title = 'Cập nhật thông tin doanh nghiệp'
+				this.title = 'CẬP NHẬT THÔNG TIN'
 			} else {
-				this.title = 'Thêm mới doanh nghiệp'
+				this.title = 'TẠO MỚI DOANH NGHIỆP'
 			}
-			// this.builForm()
 		})
 		//
 		this.child_OrgAddressForm.model = this.model
@@ -137,28 +136,39 @@ export class CreateUpdBusinessComponent implements OnInit {
 			return
 		}
 
-		this.businessIndividualService.businessRegister(this.model).subscribe((res) => {
-			if (res.success != 'OK') {
-				let msg = res.message
-				if (msg.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
-					this.toast.error('Email Người đại diện đã tồn tại')
+		if (this.model.id != null && this.model.id > 0) {
+			this.businessIndividualService.businessUpdate(this.model).subscribe((res) => {
+				if (res.success != 'OK') {
+					let errorMsg = res.message
+					this.toast.error(res.message)
 					return
 				}
-				if (msg.includes(`UNIQUE KEY constraint 'UK_BI_Business_OrgEmail'`)) {
-					this.toast.error('Email Văn phòng đại diện đã tồn tại')
+				this.toast.success(COMMONS.UPDATE_SUCCESS)
+				this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/doanh-nghiep'])
+			})
+		} else {
+			this.businessIndividualService.businessRegister(this.model).subscribe((res) => {
+				if (res.success != 'OK') {
+					let msg = res.message
+					if (msg.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
+						this.toast.error('Email Người đại diện đã tồn tại')
+						return
+					}
+					if (msg.includes(`UNIQUE KEY constraint 'UK_BI_Business_OrgEmail'`)) {
+						this.toast.error('Email Văn phòng đại diện đã tồn tại')
+						return
+					}
+					if (msg.includes(`UNIQUE KEY constraint 'UK_BI_Business_Email'`)) {
+						this.toast.error('Email Người đại diện đã tồn tại')
+						return
+					}
+					this.toast.error(msg)
 					return
 				}
-				if (msg.includes(`UNIQUE KEY constraint 'UK_BI_Business_Email'`)) {
-					this.toast.error('Email Người đại diện đã tồn tại')
-					return
-				}
-				this.toast.error(msg)
-				return
-			}
-			this.toast.success('Đăng ký doanh nghiệp thành công')
-			this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/doanh-nghiep'])
-		})
-		//req to server
+				this.toast.success('Đăng ký doanh nghiệp thành công')
+				this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/doanh-nghiep'])
+			})
+		}
 	}
 
 	fLoginSubmitted = false

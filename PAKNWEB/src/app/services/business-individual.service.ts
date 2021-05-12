@@ -87,4 +87,8 @@ export class BusinessIndividualService {
 	businessGetByID(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.BusinessGetByID)
 	}
+
+	businessUpdate(request: any): Observable<any> {
+		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.BusinessUpdate)
+	}
 }
