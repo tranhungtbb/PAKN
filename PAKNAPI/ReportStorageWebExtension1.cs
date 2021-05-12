@@ -125,7 +125,7 @@ namespace PAKNAPI
                     result.Parameters["Address"].Value = paramExportIndividual.Address;
                     result.Parameters["Phone"].Value = paramExportIndividual.Phone;
                     result.Parameters["Email"].Value = paramExportIndividual.Email;
-                    result.Parameters["Status"].Value = paramExportIndividual.IsActived;
+                    //result.Parameters["IsActived"].Value = paramExportIndividual.IsActived;
                     result.SaveLayoutToXml(ms);
                     if (ms != null)
                     {

@@ -196,11 +196,16 @@ export class IndividualComponent implements OnInit {
 		this.phone = this.phone.trim()
 		this.email = this.email.trim()
 
+		this.dataSearch.fullName = this.dataSearch.fullName.trim()
+		this.dataSearch.address = this.dataSearch.address.trim()
+		this.dataSearch.phone = this.dataSearch.phone.trim()
+		this.dataSearch.email = this.dataSearch.email.trim()
+
 		let request = {
-			FullName: this.fullName,
-			Address: this.address,
-			Phone: this.phone,
-			Email: this.email,
+			FullName: this.dataSearch.fullName,
+			Address: this.dataSearch.address,
+			Phone: this.dataSearch.phone,
+			Email: this.dataSearch.email,
 			isActived: this.isActived != null ? this.isActived : '',
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
@@ -450,14 +455,9 @@ export class IndividualComponent implements OnInit {
 
 	onExport() {
 		let passingObj: any = {}
-		passingObj.fullName = this.model.fullName
-		passingObj.address = this.model.address
-		passingObj.phone = this.model.phone
-		passingObj.email = this.model.email
-		passingObj.status = this.model.isActived
+		passingObj = this.dataSearch
 		passingObj.TitleReport = 'DANH SÁCH CÁ NHÂN'
 		this._shareData.setobjectsearch(passingObj)
-		console.log('passingObj 2', passingObj)
 		this._shareData.sendReportUrl = 'Individual_List?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])
 	}

@@ -156,11 +156,9 @@ export class IndividualExportObject {
 		this.address = ''
 		this.phone = ''
 		this.email = ''
-		this.status = ''
 	}
 	fullName: string
 	address: string
 	phone: string
 	email: string
-	status: string
 }

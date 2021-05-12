@@ -45,7 +45,6 @@ namespace PAKNAPI.ExportGrid {
             this.label5 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRLabel>("label5");
 
             // Parameters
-            this.Status = reportInitializer.GetParameter("Status");
             this.TitleReport = reportInitializer.GetParameter("TitleReport");
             this.FullName = reportInitializer.GetParameter("FullName");
             this.Address = reportInitializer.GetParameter("Address");
@@ -98,7 +97,6 @@ namespace PAKNAPI.ExportGrid {
         private DevExpress.XtraReports.UI.XRControlStyle DetailData3_Odd;
         private DevExpress.XtraReports.UI.XRControlStyle DetailCaptionBackground3;
         private DevExpress.XtraReports.UI.XRControlStyle PageInfo;
-        private DevExpress.XtraReports.Parameters.Parameter Status;
         private DevExpress.XtraReports.Parameters.Parameter TitleReport;
         private DevExpress.XtraReports.Parameters.Parameter FullName;
         private DevExpress.XtraReports.Parameters.Parameter Address;
