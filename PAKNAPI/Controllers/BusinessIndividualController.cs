@@ -37,8 +37,8 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize]
-		[Route("IndividualGetAllOnPageBase")]
-		public async Task<ActionResult<object>> IndividualGetAllOnPageBase(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
+		[Route("IndividualGetAllOnPage")]
+		public async Task<ActionResult<object>> IndividualGetAllOnPage(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
 		{
 			try
 			{
@@ -107,8 +107,8 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Authorize]
-		[Route("IndivialDeleteBase")]
-		public async Task<ActionResult<object>> IndivialDeleteBase(IndivialDeleteIN _indivialDeleteIN)
+		[Route("IndivialDelete")]
+		public async Task<ActionResult<object>> IndivialDelete(IndivialDeleteIN _indivialDeleteIN)
 		{
 			try
 			{
@@ -127,8 +127,8 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Authorize]
-		[Route("IndivialChageStatusBase")]
-		public async Task<ActionResult<object>> IndivialChageStatusBase(IndivialChageStatusIN _indivialChageStatusIN)
+		[Route("IndivialChageStatus")]
+		public async Task<ActionResult<object>> IndivialChageStatus(IndivialChageStatusIN _indivialChageStatusIN)
 		{
 			try
 			{
@@ -154,25 +154,24 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				//var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
-				//if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+                var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
+                if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
 
-				///Phone,Email,IDCard
-				///check ton tai
-				//var checkExists = await new Models.BusinessIndividual.BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", model.Phone, 0);
-				//if (checkExists[0].Exists.Value)
-				//	return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
-				//if (!string.IsNullOrEmpty(model.Email))
-				//{
-				//	checkExists = await new Models.BusinessIndividual.BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", model.Email, 0);
-				//	if (checkExists[0].Exists.Value)
-				//		return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
-				//}
-				//checkExists = await new Models.BusinessIndividual.BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", model.IDCard, 0);
-				//if (checkExists[0].Exists.Value)
-				//	return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
+				// check exist:Phone,Email,IDCard
+				var checkExists = await new Models.BusinessIndividual.BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", model.Phone, 0);
+                if (checkExists[0].Exists.Value)
+                    return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+                if (!string.IsNullOrEmpty(model.Email))
+                {
+                    checkExists = await new Models.BusinessIndividual.BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", model.Email, 0);
+                    if (checkExists[0].Exists.Value)
+                        return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
+                }
+                checkExists = await new Models.BusinessIndividual.BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", model.IDCard, 0);
+                if (checkExists[0].Exists.Value)
+                    return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 
-				var rs2 = await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(model);
+                var rs2 = await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(model);
 
 			}
 			catch (Exception ex)
@@ -182,6 +181,26 @@ namespace PAKNAPI.Controllers
 			}
 
 			return new Models.Results.ResultApi { Success = ResultCode.OK };
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("InvididualUpdate")]
+		public async Task<ActionResult<object>> InvididualUpdate(InvididualUpdateIN _invididualUpdateIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new InvididualUpdate(_appSetting).InvididualUpdateDAO(_invididualUpdateIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
 		}
 
 		[HttpGet]
@@ -222,6 +241,46 @@ namespace PAKNAPI.Controllers
 							{"PageSize", rsBusinessGetAllOnPageBase != null && rsBusinessGetAllOnPageBase.Count > 0 ? PageSize : 0},
 						};
 				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("BusinessDelete")]
+		public async Task<ActionResult<object>> BusinessDelete(BusinessDeleteIN _businessDeleteIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new BusinessDelete(_appSetting).BusinessDeleteDAO(_businessDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("BusinessChageStatus")]
+		public async Task<ActionResult<object>> BusinessChageStatus(BusinessChageStatusIN _businessChageStatusIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new BusinessChageStatus(_appSetting).BusinessChageStatusDAO(_businessChageStatusIN) };
 			}
 			catch (Exception ex)
 			{

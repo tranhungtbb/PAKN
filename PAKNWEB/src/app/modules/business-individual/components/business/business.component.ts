@@ -213,4 +213,85 @@ export class BusinessComponent implements OnInit {
 		} else {
 		}
 	}
+
+	/*start - chức năng xác nhận hành động xóa*/
+	modalConfirm_type = 'isActived'
+	modelConfirm_itemId: number = 0
+	onOpenConfirmModal(id: any, type = 'isActived') {
+		$('#modal-confirm').modal('show')
+		this.modalConfirm_type = type
+		this.modelConfirm_itemId = id
+	}
+	acceptConfirm() {
+		if (this.modalConfirm_type == 'isActived') {
+			this.onChangeBusinessChangeStatus(this.modelConfirm_itemId)
+		} else if (this.modalConfirm_type == 'individual') {
+			this.onDeleteBusiness(this.modelConfirm_itemId)
+		}
+
+		$('#modal-confirm').modal('hide')
+	}
+	onChangeBusinessChangeStatus(id: number) {
+		let item = this.listInvPaged.find((c) => c.id == id)
+		item.isActived = !item.isActived
+		this._service.businessChangeStatus(item).subscribe((res) => {
+			if (res.success != 'OK') {
+				this._toastr.error(COMMONS.UPDATE_FAILED)
+				item.isActived = !item.isActived
+				return
+			}
+			this._toastr.success(COMMONS.UPDATE_SUCCESS)
+			this.getList()
+			this.model = new BusinessionObject()
+			$('#modal-create-or-update').modal('hide')
+		})
+	}
+	/*end - chức năng xác nhận hành động xóa*/
+	onDeleteBusiness(id) {
+		let item = this.listInvPaged.find((c) => c.id == id)
+		if (!item) item = this.model
+		this._service.businessDelete(item).subscribe((res) => {
+			if (res.success != 'OK') {
+				if (res.message.includes(`REFERENCE constraint "PK_BI_Business"`)) {
+					this._toastr.error(COMMONS.DELETE_FAILED + ', Doanh nghiệp đã được xóa')
+					return
+				}
+				this.getList()
+				this._toastr.error(res.message)
+				return
+			}
+			this._toastr.success(COMMONS.DELETE_SUCCESS)
+
+			if (this.model.id == id) {
+				this.getList()
+			}
+		})
+	}
+	/*end - chức năng xác nhận hành động xóa*/
+
+	preCreate() {
+		this.model = new BusinessionObject()
+		this.rebuilForm()
+		this.submitted = false
+		this.title = 'Thêm mới cá nhân'
+		$('#modal').modal('show')
+	}
+
+	rebuilForm() {
+		this.form.reset({
+			fullName: this.model.fullName,
+			address: this.model.address,
+			phone: this.model.phone,
+			email: this.model.email,
+			isActived: this.model.isActived,
+		})
+
+		// this.submitted = false
+		// this.model = new BusinessionObject()
+		// this.model._birthDay = ''
+		// this.model._dateOfIssue = ''
+		// this.model.fullName = ''
+		// this.model.email = ''
+		// this.model.gender = true
+	}
 }

@@ -24,7 +24,7 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	form: FormGroup
 	submitted = false
 	action: any
-	title: string
+	title: string = 'Soạn thảo SMS'
 	statusCurent: Number = 1
 	listStatus: any = [
 		{ value: 1, text: 'Đang soạn thảo' },
@@ -68,7 +68,7 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 		})
 	}
 
-	getInvitatonModelById() {
+	getSMSModelById() {
 		this.activatedRoute.params.subscribe((params) => {
 			let id = +params['id']
 			this.model.id = isNaN(id) == true ? 0 : id
@@ -83,7 +83,7 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 							if (this.statusCurent == 2) {
 								this.title = 'Chi tiết SMS'
 							} else {
-								this.title = this.model.id == 0 ? 'Soạn thảo SMS' : 'Soạn thảo SMS'
+								this.title = 'Soạn thảo SMS'
 							}
 						}
 					}
@@ -97,7 +97,7 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 		this.smsService.GetListAdmintrative({ id: 37 }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.AdministrativeUnits = res.result.CAAdministrativeUnitsGetDropDown
-				this.getInvitatonModelById()
+				this.getSMSModelById()
 			} else {
 				this.AdministrativeUnits = []
 			}
@@ -130,6 +130,7 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	}
 
 	onLoadListIndividualAndBusiness() {
+		this.userId = null
 		if (this.administrativeUnitId == undefined) {
 			this._toastr.error('Vui lòng chọn đơn vị')
 			return

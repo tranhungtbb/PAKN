@@ -72,6 +72,13 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		// this.getInvitatonModelById()
 	}
 
+	// statusDisable() {
+	// 	if (this.statusCurent == 2) {
+	// 		return true
+	// 	}
+	// 	return false
+	// }
+
 	// ngAfterViewInit() {
 	// 	$('#endDate').datepicker({
 	// 		language: 'vi',
@@ -309,6 +316,9 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		if (event.target.files.length == 0) {
 			return
 		}
+		if (this.statusCurent == 2) {
+			return
+		}
 		const check = this.fileService.checkFileWasExitsted(event, this.files)
 		if (check === 1) {
 			for (let item of event.target.files) {
@@ -335,6 +345,9 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 	}
 
 	onRemoveFile(args) {
+		if (this.statusCurent == 2) {
+			return
+		}
 		const index = this.files.indexOf(args)
 		const file = this.files[index]
 		this.lstFileDelete.push(file)

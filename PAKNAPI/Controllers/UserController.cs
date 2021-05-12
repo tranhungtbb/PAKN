@@ -17,6 +17,7 @@ using PAKNAPI.Models.Login;
 using System.Security.Claims;
 using System.Globalization;
 using PAKNAPI.Models;
+using PAKNAPI.Models.User;
 
 namespace PAKNAPI.Controllers
 {
@@ -108,15 +109,17 @@ namespace PAKNAPI.Controllers
 					//xóa avatar cũ
 					if(!string.IsNullOrEmpty(modelOld[0].Avatar))
 						await _fileService.Remove(modelOld[0].Avatar);
+					if (!string.IsNullOrEmpty(filePath))
+					{
+						model.Avatar = filePath;
+					}
 				}
+
 
 
 				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				
-				if (!string.IsNullOrEmpty(filePath))
-				{
-					model.Avatar = filePath;
-				}
+				
 				model.Password = modelOld[0].Password;
 				model.Salt = modelOld[0].Salt;
 
@@ -176,6 +179,31 @@ namespace PAKNAPI.Controllers
 			return data;
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYUserGetAllOnPageList")]
+		public async Task<ActionResult<object>> SYUserGetAllOnPageList(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived, int? UnitId, int? TypeId, int? PositionId)
+		{
+			try
+			{
+				List<SYUserGetAllOnPageList> rsSYUserGetAllOnPage = await new SYUserGetAllOnPageList(_appSetting).SYUserGetAllOnPageDAO(PageSize, PageIndex, UserName, FullName, Phone, IsActived, UnitId, TypeId, PositionId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserGetAllOnPage", rsSYUserGetAllOnPage},
+						{"TotalCount", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? rsSYUserGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 
 
 		#region nguoi dan, doanh nghiep

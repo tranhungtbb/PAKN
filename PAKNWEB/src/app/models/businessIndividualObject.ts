@@ -12,7 +12,7 @@ export class IndividualObject {
 		this.isActived = true
 		this.address = ''
 		this.IsDeleted = false
-		this.userId = ''
+		this.userId = null
 	}
 	phone: string
 	fullName: string // fullName
@@ -34,7 +34,7 @@ export class IndividualObject {
 	NativePlace: string
 	isActived: boolean
 	IsDeleted: boolean
-	userId: string
+	userId: number
 }
 
 export class BusinessionObject {

@@ -46,4 +46,67 @@ namespace PAKNAPI.Models.BusinessIndividual
 		}
 	}
 	#endregion
+
+	#region BusinessDelete
+	public class BusinessDelete
+	{
+		private SQLCon _sQLCon;
+
+		public BusinessDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public BusinessDelete()
+		{
+		}
+
+		public async Task<int> BusinessDeleteDAO(BusinessDeleteIN _businessDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _businessDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_BusinessDelete", DP));
+		}
+	}
+
+	public class BusinessDeleteIN
+	{
+		public long? Id { get; set; }
+	}
+
+	#endregion
+
+	#region  BusinessChageStatus
+
+	public class BusinessChageStatus
+	{
+		private SQLCon _sQLCon;
+
+		public BusinessChageStatus(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public BusinessChageStatus()
+		{
+		}
+
+		public async Task<int> BusinessChageStatusDAO(BusinessChageStatusIN _businessChageStatusIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _businessChageStatusIN.Id);
+			DP.Add("IsActived", _businessChageStatusIN.IsActived);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_BusinessChageStatus", DP));
+		}
+	}
+
+	public class BusinessChageStatusIN
+	{
+		public long? Id { get; set; }
+		public bool? IsActived { get; set; }
+	}
+
+	#endregion
 }

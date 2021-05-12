@@ -34,16 +34,17 @@ export class BusinessIndividualService {
 	}
 
 	individualGetList(request: any): Observable<any> {
-		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.IndividualGetAllOnPageBase)
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.IndividualGetAllOnPage)
 	}
 
 	individualChangeStatus(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialChageStatusBase)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialChageStatus)
 	}
 
 	individualDelete(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialDeleteBase)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialDelete)
 	}
+
 	individualRegister(data: any): Observable<any> {
 		let form = new FormData()
 
@@ -52,11 +53,24 @@ export class BusinessIndividualService {
 		}
 		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.InvididualRegister)
 	}
+
 	individualById(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.InvididualGetByID)
 	}
 
+	invididualUpdate(request: any): Observable<any> {
+		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.InvididualUpdate)
+	}
+
 	businessGetList(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.BusinessGetAllOnPageBase)
+	}
+
+	businessChangeStatus(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BusinessChageStatus)
+	}
+
+	businessDelete(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BusinessDelete)
 	}
 }

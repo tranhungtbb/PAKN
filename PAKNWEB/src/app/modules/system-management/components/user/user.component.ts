@@ -7,6 +7,9 @@ import { UnitService } from 'src/app/services/unit.service'
 import { PositionService } from 'src/app/services/position.service'
 import { RoleService } from 'src/app/services/role.service'
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { COMMONS } from 'src/app/commons/commons'
+import { UserCreateOrUpdateComponent } from 'src/app/modules/system-management/components/user/user-create-or-update/user-create-or-update.component'
+import { UserViewInfoComponent } from 'src/app/modules/system-management/components/user/user-view-info/user-view-info.component'
 
 declare var $: any
 @Component({
@@ -35,50 +38,43 @@ export class UserComponent implements OnInit {
 	unitsList: any[] = []
 
 	form: FormGroup
-	model: any = new UserObject2()
+	modelUser: any = new UserObject2()
 	submitted: boolean = false
 	isActived: boolean
 	userName: string = ''
 	fullName: string = ''
+	phone: string = ''
 	unitId: any
+	positionId: any
 	pageIndex: number = 1
 	pageSize: number = 20
 	@ViewChild('table', { static: false }) table: any
+	@ViewChild(UserCreateOrUpdateComponent, { static: false }) childCreateOrUpdateUser: UserCreateOrUpdateComponent
+	@ViewChild(UserViewInfoComponent, { static: false }) childDetailUser: UserViewInfoComponent
+
+	modalUserCreateOrUpdate(key: any = 0) {
+		this.childCreateOrUpdateUser.openModal(0, key)
+	}
+	modalUserInfo(id: any) {
+		this.childDetailUser.openModal(id)
+	}
 
 	totalRecords: number = 0
-	idDelete: number = 0
+	userId: number = 0
 	title: any
 	ngOnInit() {
-		this.buildForm()
+		// this.buildForm()
 		this.getList()
+		this.getDropDown()
 	}
 
 	ngAfterViewInit() {
 		$('#modal').on('keypress', function (e) {
 			if (e.which == 13) e.preventDefault()
 		})
+		this.childCreateOrUpdateUser.parentUser = this
+		this.childDetailUser.parentUser = this
 	}
-
-	get f() {
-		return this.form.controls
-	}
-
-	buildForm() {
-		this.form = this._fb.group({
-			name: [this.model.name, Validators.required],
-			description: [this.model.description],
-			isActived: [this.model.isActived, Validators.required],
-		})
-	}
-
-	rebuilForm() {
-		this.form.reset({
-			name: this.model.name,
-			isActived: this.model.isActived,
-			description: this.model.description,
-		})
-	}
-
 	getDropDown() {
 		this.positionService
 			.positionGetList({
@@ -106,21 +102,31 @@ export class UserComponent implements OnInit {
 			UserName: this.userName != null ? this.userName : '',
 			FullName: this.fullName != null ? this.fullName : '',
 			IsActived: this.isActived != null ? this.isActived : '',
-			Phone: '',
+			Phone: this.phone != null ? this.phone : '',
 			UnitId: this.unitId != null ? this.unitId : '',
+			PositionId: this.positionId != null ? this.positionId : '',
 			TypeId: 1, // auto 1
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
-		this._service.getAllPagedList(request).subscribe((response) => {
+		this._service.getAllOnPagedList(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				if (response.result != null) {
+				if (response.result.SYUserGetAllOnPage.length > 0) {
 					this.listData = response.result.SYUserGetAllOnPage
 					this.totalRecords = response.result.TotalCount
 					this.pageSize = response.result.PageSize
 					this.pageIndex = response.result.PageIndex
+				} else {
+					this.listData = []
+					this.totalRecords = 0
+					this.pageSize = 20
+					this.pageIndex = 1
 				}
 			} else {
+				this.listData = []
+				this.totalRecords = 0
+				this.pageSize = 20
+				this.pageIndex = 1
 				this._toastr.error(response.message)
 			}
 		}),
@@ -163,131 +169,46 @@ export class UserComponent implements OnInit {
 		}
 	}
 
-	confirmChangeStatus(data) {
-		this.model = { ...data }
-		this.model.isActived = !data.isActived
+	onDelete() {
+		let request = {
+			Id: this.userId,
+		}
+		$('#modalConfirmDelete').modal('hide')
+		this._service.delete(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
+
+				this.getList()
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(error) => {
+				console.error(error)
+			}
+	}
+
+	changeStatus(id: number) {
+		this.userId = id
 		$('#modalConfirmChangeStatus').modal('show')
 	}
 
-	preCreate() {
-		this.model = new UserObject2()
-		this.rebuilForm()
-		this.submitted = false
-		this.title = 'Thêm mới người dùng'
-		$('#modal').modal('show')
-	}
-
-	onSave() {
-		this.submitted = true
-		this.model.name = this.model.name.trim()
-		if (this.model.name == '') return
-		if (this.form.invalid) {
-			return
-		}
-		if (this.model.id == 0 || this.model.id == null) {
-			this._service.insert(this.model).subscribe((response) => {
-				if (response.success == RESPONSE_STATUS.success) {
-					if (response.result == -1) {
-						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
-						return
-					} else {
-						$('#modal').modal('hide')
-						this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
-						this.getList()
-					}
-				} else {
-					this._toastr.error(response.message)
-				}
-			}),
-				(error) => {
-					console.error(error)
-					alert(error)
-				}
-		} else {
-			this._service.update(this.model).subscribe((response) => {
-				if (response.success == RESPONSE_STATUS.success) {
-					if (response.result == -1) {
-						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
-						return
-					} else {
-						$('#modal').modal('hide')
-						this._toastr.success(MESSAGE_COMMON.UPDATE_SUCCESS)
-						this.getList()
-					}
-				} else {
-					this._toastr.error(response.message)
-				}
-			}),
-				(error) => {
-					console.error(error)
-					alert(error)
-				}
-		}
-	}
-
-	preUpdate(data) {
-		let request = {
-			Id: data.id,
-			Type: 1,
-		}
-		this._service.getById(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this.rebuilForm()
-				this.title = 'Chỉnh sửa lĩnh vực'
-				this.model = response.result.CAFieldGetByID[0]
-				$('#modal').modal('show')
-			} else {
-				this._toastr.error(response.message)
+	onChangeUserStatus() {
+		let item = this.listData.find((c) => c.id == this.userId)
+		$('#modalConfirmChangeStatus').modal('hide')
+		item.isActived = !item.isActived
+		item.typeId = 1
+		item.countLock = 0
+		item.lockEndOut = ''
+		this._service.changeStatus(item).subscribe((res) => {
+			if (res.success != 'OK') {
+				this._toastr.error(COMMONS.UPDATE_FAILED)
+				//item.isActived = !item.isActived
+				return
 			}
-		}),
-			(error) => {
-				console.error(error)
-				alert(error)
-			}
+			this._toastr.success(COMMONS.UPDATE_SUCCESS)
+			this.getList()
+		})
 	}
-	preDelete(id: number) {
-		this.idDelete = id
-		$('#modalConfirmDelete').modal('show')
-	}
-
-	onDelete(id: number) {
-		let request = {
-			Id: id,
-		}
-		this._service.delete(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				if (response.result > 0) {
-					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
-				} else {
-					this._toastr.error('Lĩnh vực này đang được sử dụng!')
-				}
-				$('#modalConfirmDelete').modal('hide')
-				this.getList()
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.error(error)
-			}
-	}
-
-	onUpdateStatus() {
-		this._service.update(this.model).subscribe((res) => {
-			if (res.success == 'OK') {
-				$('#modalConfirmChangeStatus').modal('hide')
-				this.getList()
-				if (this.model.isActived == true) {
-					this._toastr.success(MESSAGE_COMMON.UNLOCK_SUCCESS)
-				} else {
-					this._toastr.success(MESSAGE_COMMON.LOCK_SUCCESS)
-				}
-			} else {
-				this._toastr.error(res.message)
-			}
-		}),
-			(error) => {
-				console.error(error)
-			}
-	}
+	getHistory(id: any) {}
 }
