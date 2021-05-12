@@ -34,7 +34,7 @@ export class BusinessIndividualService {
 	}
 
 	individualGetList(request: any): Observable<any> {
-		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.IndividualGetAllOnPageBase)
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.IndividualGetAllOnPage)
 	}
 
 	individualChangeStatus(data: any): Observable<any> {

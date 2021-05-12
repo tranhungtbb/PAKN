@@ -88,6 +88,11 @@ export class SystemLogComponent implements OnInit {
 	}
 	dataStateChange() {
 		this.pageIndex = 1
+		$(document).ready(function() {
+			if ($('#createDate').val() == 'Invalid date') {
+				$('#createDate').val('')
+			}
+		})
 		this.getList()
 	}
 	preDelete(id: number) {
@@ -120,9 +125,6 @@ export class SystemLogComponent implements OnInit {
 			Description: this.dataSearch.description,
 			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
 			UserId: this.dataSearch.userId != null ? this.dataSearch.userId : '',
-		}
-		if ($('#createDate').val() == 'Invalid date') {
-			$('#createDate').val('')
 		}
 		this.userService.getSystemLoginAdmin(req).subscribe(response => {
 			console.log(response)
