@@ -270,7 +270,7 @@ export class Api {
 
 	//Individual
 	public static BusinessIndividualGetDataForCreate = 'BusinessIndividual/BusinessIndividualGetDataForCreate'
-	public static IndividualGetAllOnPageBase = 'BusinessIndividual/IndividualGetAllOnPageBase'
+	public static IndividualGetAllOnPage = 'BusinessIndividual/IndividualGetAllOnPage'
 	public static IndivialChageStatus = 'BusinessIndividual/IndivialChageStatus'
 	public static IndivialDelete = 'BusinessIndividual/IndivialDelete'
 	public static InvididualRegister = 'BusinessIndividual/InvididualRegister'
