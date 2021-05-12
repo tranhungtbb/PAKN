@@ -11,10 +11,13 @@ import { OrgFormAddressComponent } from './org-form-address/org-form-address.com
 import { OrgRepreFormComponent } from './org-repre-form/org-repre-form.component'
 
 import { RegisterService } from 'src/app/services/register.service'
+import { BusinessIndividualService } from 'src/app/services/business-individual.service'
 
 import { COMMONS } from 'src/app/commons/commons'
-import { OrganizationObject } from 'src/app/models/RegisterObject'
+// import { OrganizationObject } from 'src/app/models/RegisterObject'
+import { OrganizationObject } from 'src/app/models/businessIndividualObject'
 import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
 declare var $: any
 @Component({
@@ -33,7 +36,9 @@ export class CreateUpdBusinessComponent implements OnInit {
 		private toast: ToastrService,
 		private formBuilder: FormBuilder,
 		private registerService: RegisterService,
-		private router: Router
+		private businessIndividualService: BusinessIndividualService,
+		private router: Router,
+		private storeageService: UserInfoStorageService
 	) {
 		defineLocale('vi', viLocale)
 	}
@@ -45,6 +50,7 @@ export class CreateUpdBusinessComponent implements OnInit {
 	listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
 	model: OrganizationObject = new OrganizationObject()
 	nation_enable_type = false
+	userLoginId: number = this.storeageService.getUserId()
 
 	ngOnInit() {
 		this.localeService.use('vi')
@@ -77,11 +83,11 @@ export class CreateUpdBusinessComponent implements OnInit {
 		this.child_OrgRepreForm.fInfoSubmitted = true
 		this.fOrgInfoSubmitted = true
 		this.child_OrgAddressForm.fOrgAddressSubmitted = true
-		console.log(this.model)
 		let fDob: any = document.querySelector('#_dob')
 		let fIsDate: any = document.querySelector('#_IsDate')
 		this.model._RepresentativeBirthDay = fDob.value
 		this.model._DateOfIssue = fIsDate.value
+		this.model.userId = this.userLoginId
 
 		if (
 			this.checkExists['Phone'] ||
@@ -96,12 +102,12 @@ export class CreateUpdBusinessComponent implements OnInit {
 			return
 		}
 
-		if (this.formLogin.invalid || this.formOrgInfo.invalid || this.child_OrgRepreForm.formInfo.invalid || this.child_OrgAddressForm.formOrgAddress.invalid) {
+		if (this.formOrgInfo.invalid || this.child_OrgRepreForm.formInfo.invalid || this.child_OrgAddressForm.formOrgAddress.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
 
-		this.registerService.registerOrganization(this.model).subscribe((res) => {
+		this.businessIndividualService.businessRegister(this.model).subscribe((res) => {
 			if (res.success != 'OK') {
 				let msg = res.message
 				if (msg.includes(`UNIQUE KEY constraint 'UC_SY_User_Email'`)) {
@@ -119,8 +125,8 @@ export class CreateUpdBusinessComponent implements OnInit {
 				this.toast.error(msg)
 				return
 			}
-			this.toast.success('Đăng ký tài khoản thành công')
-			this.router.navigate(['/dang-nhap'])
+			this.toast.success('Đăng ký doanh nghiệp thành công')
+			this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/doanh-nghiep'])
 		})
 		//req to server
 	}

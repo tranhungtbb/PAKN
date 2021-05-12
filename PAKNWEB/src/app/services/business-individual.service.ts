@@ -73,4 +73,14 @@ export class BusinessIndividualService {
 	businessDelete(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BusinessDelete)
 	}
+
+	businessRegister(data: any): Observable<any> {
+		let form = new FormData()
+
+		for (let item in data) {
+			form.append(item, data[item])
+		}
+
+		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.BusinessRegister)
+	}
 }
