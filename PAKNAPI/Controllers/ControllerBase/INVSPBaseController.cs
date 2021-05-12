@@ -52,46 +52,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("INVFileAttachDeleteByIdListBase")]
-		public async Task<ActionResult<object>> INVFileAttachDeleteByIdListBase(List<INVFileAttachDeleteByIdIN> _iNVFileAttachDeleteByIdINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _iNVFileAttachDeleteByIdIN in _iNVFileAttachDeleteByIdINs)
-				{
-					var result = await new INVFileAttachDeleteById(_appSetting).INVFileAttachDeleteByIdDAO(_iNVFileAttachDeleteByIdIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
 		[Route("INVFileAttachDeleteByInvitationIdBase")]
 		public async Task<ActionResult<object>> INVFileAttachDeleteByInvitationIdBase(INVFileAttachDeleteByInvitationIdIN _iNVFileAttachDeleteByInvitationIdIN)
 		{
@@ -100,46 +60,6 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new INVFileAttachDeleteByInvitationId(_appSetting).INVFileAttachDeleteByInvitationIdDAO(_iNVFileAttachDeleteByInvitationIdIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("INVFileAttachDeleteByInvitationIdListBase")]
-		public async Task<ActionResult<object>> INVFileAttachDeleteByInvitationIdListBase(List<INVFileAttachDeleteByInvitationIdIN> _iNVFileAttachDeleteByInvitationIdINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _iNVFileAttachDeleteByInvitationIdIN in _iNVFileAttachDeleteByInvitationIdINs)
-				{
-					var result = await new INVFileAttachDeleteByInvitationId(_appSetting).INVFileAttachDeleteByInvitationIdDAO(_iNVFileAttachDeleteByInvitationIdIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -195,46 +115,6 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("INVFileAttachInsertListBase")]
-		public async Task<ActionResult<object>> INVFileAttachInsertListBase(List<INVFileAttachInsertIN> _iNVFileAttachInsertINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _iNVFileAttachInsertIN in _iNVFileAttachInsertINs)
-				{
-					var result = await new INVFileAttachInsert(_appSetting).INVFileAttachInsertDAO(_iNVFileAttachInsertIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
 		[Route("INVInvitationUserMapDeleteByInvitationIdBase")]
 		public async Task<ActionResult<object>> INVInvitationUserMapDeleteByInvitationIdBase(INVInvitationUserMapDeleteByInvitationIdIN _iNVInvitationUserMapDeleteByInvitationIdIN)
 		{
@@ -243,46 +123,6 @@ namespace PAKNAPI.ControllerBase
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new INVInvitationUserMapDeleteByInvitationId(_appSetting).INVInvitationUserMapDeleteByInvitationIdDAO(_iNVInvitationUserMapDeleteByInvitationIdIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("INVInvitationUserMapDeleteByInvitationIdListBase")]
-		public async Task<ActionResult<object>> INVInvitationUserMapDeleteByInvitationIdListBase(List<INVInvitationUserMapDeleteByInvitationIdIN> _iNVInvitationUserMapDeleteByInvitationIdINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _iNVInvitationUserMapDeleteByInvitationIdIN in _iNVInvitationUserMapDeleteByInvitationIdINs)
-				{
-					var result = await new INVInvitationUserMapDeleteByInvitationId(_appSetting).INVInvitationUserMapDeleteByInvitationIdDAO(_iNVInvitationUserMapDeleteByInvitationIdIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
@@ -356,46 +196,6 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpPost]
-		[Authorize]
-		[Route("INVInvitationDeleteListBase")]
-		public async Task<ActionResult<object>> INVInvitationDeleteListBase(List<INVInvitationDeleteIN> _iNVInvitationDeleteINs)
-		{
-			try
-			{
-				int count = 0;
-				int errcount = 0;
-				foreach (var _iNVInvitationDeleteIN in _iNVInvitationDeleteINs)
-				{
-					var result = await new INVInvitationDelete(_appSetting).INVInvitationDeleteDAO(_iNVInvitationDeleteIN);
-					if (result > 0)
-					{
-						count++;
-					}
-					else
-					{
-						errcount++;
-					}
-				}
-
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", errcount}
-					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
 		[HttpGet]
 		[Authorize]
 		[Route("INVInvitationGetAllOnPageBase")]
@@ -407,6 +207,9 @@ namespace PAKNAPI.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"INVInvitationGetAllOnPage", rsINVInvitationGetAllOnPage},
+						{"TotalCount", rsINVInvitationGetAllOnPage != null && rsINVInvitationGetAllOnPage.Count > 0 ? rsINVInvitationGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsINVInvitationGetAllOnPage != null && rsINVInvitationGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsINVInvitationGetAllOnPage != null && rsINVInvitationGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

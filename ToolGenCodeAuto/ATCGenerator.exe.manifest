@@ -49,7 +49,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>5oGAox1tN31wR0z5jvwQRtyLjFTSj8L8OlZHFqfic4w=</dsig:DigestValue>
+        <dsig:DigestValue>BFpX7UcDOs2n+jJzc6lPoogLh9RSLfx0GF9lHTbdVS8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,19 +61,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>kin0JpaPzm5HK3eyam1kPJiiz1btsapdCyPkVLo3G4E=</dsig:DigestValue>
+        <dsig:DigestValue>cxVRA7I3/aGEXia/c+oUfTcv9bSSPyEqEpedmpEk8AU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Db.dll" size="287232">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Db.dll" size="290304">
       <assemblyIdentity name="Db" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>PHGCn3JHUeMNRGREJ6+uYQ1+XC603Uyy4DUesxR/FTA=</dsig:DigestValue>
+        <dsig:DigestValue>kyQzqBgvCalKPUC26qi3PV3xlTXCs4ofCg7GlxqEJFI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
