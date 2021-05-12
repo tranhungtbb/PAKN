@@ -116,6 +116,22 @@ namespace PAKNAPI
                         return ms.ToArray();
                     }
                     break;
+                case "Individual_List":
+                    var paramExportIndividual = JsonConvert.DeserializeObject<ExportIndividual>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.Individual_List.repx");
+                    result = XtraReport.FromStream(resource);
+                    result.Parameters["TitleReport"].Value = paramExportIndividual.TitleReport;
+                    result.Parameters["FullName"].Value = paramExportIndividual.FullName;
+                    result.Parameters["Address"].Value = paramExportIndividual.Address;
+                    result.Parameters["Phone"].Value = paramExportIndividual.Phone;
+                    result.Parameters["Email"].Value = paramExportIndividual.Email;
+                    result.Parameters["Status"].Value = paramExportIndividual.IsActived;
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        return ms.ToArray();
+                    }
+                    break;
             }
             ReportDetails details = null;
             if (Reports.TryGetValue(url, out details))

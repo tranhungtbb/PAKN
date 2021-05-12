@@ -8,7 +8,7 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { COMMONS } from 'src/app/commons/commons'
 import { Router } from '@angular/router'
-import { IndividualObject } from 'src/app/models/businessIndividualObject'
+import { IndividualObject, IndividualExportObject } from 'src/app/models/businessIndividualObject'
 import { BsLocaleService } from 'ngx-bootstrap/datepicker'
 import { viLocale } from 'ngx-bootstrap/locale'
 import { defineLocale } from 'ngx-bootstrap/chronos'
@@ -72,6 +72,7 @@ export class IndividualComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
+	dataSearch: IndividualExportObject = new IndividualExportObject()
 
 	//sort
 	individualSortDir = 'DESC'
@@ -445,5 +446,19 @@ export class IndividualComponent implements OnInit {
 				console.error(error)
 				alert(error)
 			}
+	}
+
+	onExport() {
+		let passingObj: any = {}
+		passingObj.fullName = this.model.fullName
+		passingObj.address = this.model.address
+		passingObj.phone = this.model.phone
+		passingObj.email = this.model.email
+		passingObj.status = this.model.isActived
+		passingObj.TitleReport = 'DANH SÁCH CÁ NHÂN'
+		this._shareData.setobjectsearch(passingObj)
+		console.log('passingObj 2', passingObj)
+		this._shareData.sendReportUrl = 'Individual_List?' + JSON.stringify(passingObj)
+		this._router.navigate(['quan-tri/xuat-file'])
 	}
 }
