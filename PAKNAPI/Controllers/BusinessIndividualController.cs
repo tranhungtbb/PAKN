@@ -37,8 +37,8 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize]
-		[Route("IndividualGetAllOnPageBase")]
-		public async Task<ActionResult<object>> IndividualGetAllOnPageBase(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
+		[Route("IndividualGetAllOnPage")]
+		public async Task<ActionResult<object>> IndividualGetAllOnPage(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
 		{
 			try
 			{
