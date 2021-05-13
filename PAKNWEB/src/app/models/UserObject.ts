@@ -64,6 +64,7 @@ export class UserObject2 {
 		this.isSuperAdmin = false
 		this.typeId = 1
 		this.isActived = true
+		this.address = ''
 	}
 
 	id: number

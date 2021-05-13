@@ -47,13 +47,12 @@
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="userName" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập ..." />
 								</th>
-								<th style="width: 180px;">
+								<th style="max-width: 180px !important;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Họ và tên</strong>
 										<span class="caret-tb"></span>
 									</p>
-									<input type="text" class="form-control form-control-sm" [(ngModel)]="fullName" (keydown.enter)="dataStateChange()" placeholder="Nhập ..."
-										style="width: 180px !important;">
+									<input type="text" class="form-control form-control-sm" [(ngModel)]="fullName" (keydown.enter)="dataStateChange()" placeholder="Nhập ...">
 								</th>
 								<th style="width: 140px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -71,20 +70,20 @@
 										</ng-select>
 									</div>
 								</th>
-								<th style="width: 140px;">
+								<th style="width: 120px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Điện thoại</strong>
 										<span class="caret-tb"></span>
 									</p>
 									<input type="text" class="form-control form-control-sm" [(ngModel)]="phone" (keydown.enter)="dataStateChange()" placeholder="Nhập...">
 								</th>
-								<th style="width: 230px;">
+								<th style="width: 210px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Đơn vị</strong>
 										<span class="caret-tb"></span>
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select placeholder="Chọn..." [closeOnSelect]="true" [(ngModel)]="unitId" (change)="dataStateChange()" style="width: 230px !important;">
+										<ng-select placeholder="Chọn..." [closeOnSelect]="true" [(ngModel)]="unitId" (change)="dataStateChange()" style="width: 210px !important;">
 											<ng-option *ngFor="let nt of unitsList" [value]="nt.id">
 												{{nt.name}}
 											</ng-option>
@@ -102,7 +101,7 @@
 										</ng-select>
 									</div>
 								</th>
-								<th style="width: 100px;" class="text-right"><strong>THAO TÁC</strong></th>
+								<th style="text-align: center; width: 168px !important;"><strong>THAO TÁC</strong></th>
 							</tr>
 						</ng-template>
 						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -120,7 +119,7 @@
 									<span type="button" (click)="changeStatus(item.id)" *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Hết hiệu
 										lực</span>
 								</td>
-								<td style="text-align: center;">
+								<td>
 									<div class="hover-active d-flex justify-content-end">
 										<a (click)="modalUserCreateOrUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
 										<a (click)="modalUserChangePassword(item.id)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-key"></i></a>

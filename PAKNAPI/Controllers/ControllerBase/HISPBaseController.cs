@@ -93,11 +93,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("HISSMSGetBySMSIdOnPageBase")]
-		public async Task<ActionResult<object>> HISSMSGetBySMSIdOnPageBase(int? PageSize, int? PageIndex, int? SMSId, string Content, string UserName, int? Status)
+		public async Task<ActionResult<object>> HISSMSGetBySMSIdOnPageBase(int? PageSize, int? PageIndex, int? SMSId, string Content, string UserName, DateTime? CreateDate, int? Status)
 		{
 			try
 			{
-				List<HISSMSGetBySMSIdOnPage> rsHISSMSGetBySMSIdOnPage = await new HISSMSGetBySMSIdOnPage(_appSetting).HISSMSGetBySMSIdOnPageDAO(PageSize, PageIndex, SMSId, Content, UserName, Status);
+				List<HISSMSGetBySMSIdOnPage> rsHISSMSGetBySMSIdOnPage = await new HISSMSGetBySMSIdOnPage(_appSetting).HISSMSGetBySMSIdOnPageDAO(PageSize, PageIndex, SMSId, Content, UserName, CreateDate, Status);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"HISSMSGetBySMSIdOnPage", rsHISSMSGetBySMSIdOnPage},

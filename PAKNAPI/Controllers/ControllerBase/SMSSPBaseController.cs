@@ -156,11 +156,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize]
 		[Route("SMSQuanLyTinNhanGetAllOnPageBase")]
-		public async Task<ActionResult<object>> SMSQuanLyTinNhanGetAllOnPageBase(int? PageSize, int? PageIndex, string Title, string UnitName, string Type, byte? Status)
+		public async Task<ActionResult<object>> SMSQuanLyTinNhanGetAllOnPageBase(int? PageSize, int? PageIndex, string Title, int? UnitId, string Type, byte? Status)
 		{
 			try
 			{
-				List<SMSQuanLyTinNhanGetAllOnPage> rsSMSQuanLyTinNhanGetAllOnPage = await new SMSQuanLyTinNhanGetAllOnPage(_appSetting).SMSQuanLyTinNhanGetAllOnPageDAO(PageSize, PageIndex, Title, UnitName, Type, Status);
+				List<SMSQuanLyTinNhanGetAllOnPage> rsSMSQuanLyTinNhanGetAllOnPage = await new SMSQuanLyTinNhanGetAllOnPage(_appSetting).SMSQuanLyTinNhanGetAllOnPageDAO(PageSize, PageIndex, Title, UnitId, Type, Status);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SMSQuanLyTinNhanGetAllOnPage", rsSMSQuanLyTinNhanGetAllOnPage},

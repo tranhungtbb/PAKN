@@ -15,7 +15,9 @@ declare var $: any
 	styleUrls: ['./sms-management.component.css'],
 })
 export class SMSManagementComponent implements OnInit {
-	constructor(private smsService: SMSManagementService, private toast: ToastrService, private routes: Router) {}
+	constructor(private smsService: SMSManagementService, private toast: ToastrService, private routes: Router) {
+		this.AdministrativeUnits = []
+	}
 	@ViewChild('table', { static: false }) table: any
 	@ViewChild('table2', { static: false }) table2: any
 
@@ -35,7 +37,7 @@ export class SMSManagementComponent implements OnInit {
 		{ value: '2', text: 'Đã gửi' },
 	]
 	title: string = ''
-	unitName: string = ''
+	unitId: number
 	type: string
 	status: Number
 	pageIndex: Number = 1
@@ -45,12 +47,14 @@ export class SMSManagementComponent implements OnInit {
 
 	hisStatus: Number
 	hisContent: string
+	hisCreateDate: string
 	hisUserCreate: string
 	hisPageIndex: number = 1
 	hisPageSize: number = 10
 	hisTotalRecords: Number
 	SMSId: Number
 	listHis: any[]
+	AdministrativeUnits: any[] = []
 
 	smsId: any
 
@@ -59,6 +63,7 @@ export class SMSManagementComponent implements OnInit {
 
 	ngOnInit() {
 		this.getListPaged()
+		this.getAdministrativeUnits()
 	}
 
 	getSMSModelById(id: any) {
@@ -73,15 +78,26 @@ export class SMSManagementComponent implements OnInit {
 		})
 	}
 
+	getAdministrativeUnits() {
+		this.smsService.GetListAdmintrative({ id: 37 }).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.AdministrativeUnits = res.result.CAAdministrativeUnitsGetDropDown
+				// this.getSMSModelById()
+			} else {
+				this.AdministrativeUnits = []
+			}
+		})
+	}
+
 	getListPaged() {
 		this.title = this.title.trim()
-		this.unitName = this.unitName.trim()
+		// this.unitName = this.unitName.trim()
 		this.smsService
 			.GetListOnPage({
 				PageIndex: this.pageIndex,
 				PageSize: this.pageSize,
 				Title: this.title == null ? '' : this.title,
-				UnitName: this.unitName == null ? '' : this.unitName,
+				UnitId: this.unitId == null ? '' : this.unitId,
 				Type: this.type == null ? '' : this.type,
 				Status: this.status == null ? '' : this.status,
 			})
@@ -92,7 +108,8 @@ export class SMSManagementComponent implements OnInit {
 				}
 				this.listData = res.result.SMSQuanLyTinNhanGetAllOnPage
 				this.listData.forEach((item) => {
-					let arr = item.type.split(',')
+					let arr = []
+					item.type != null ? (arr = item.type.split(',')) : []
 					item.type = ''
 					arr.forEach((i) => {
 						this.listCategory.forEach((element) => {
@@ -184,9 +201,15 @@ export class SMSManagementComponent implements OnInit {
 		this.hisContent = ''
 		this.hisStatus = null
 		this.hisUserCreate = ''
+		this.hisCreateDate = ''
 	}
 
 	getHistory(id: Number) {
+		if (id == undefined) return
+		if (id != this.SMSId) {
+			this.hisPageSize = 10
+			this.hisPageIndex = 1
+		}
 		this.SMSId = id
 		this.hisContent == null ? '' : this.hisContent.trim()
 		this.hisUserCreate == null ? '' : this.hisUserCreate.trim()
@@ -194,6 +217,7 @@ export class SMSManagementComponent implements OnInit {
 			PageSize: this.hisPageSize,
 			PageIndex: this.hisPageIndex,
 			SMSId: id,
+			CreateDate: this.hisCreateDate == null ? '' : this.hisCreateDate,
 			Content: this.hisContent == null ? '' : this.hisContent,
 			UserName: this.hisUserCreate == null ? '' : this.hisUserCreate,
 			Status: this.hisStatus == null ? '' : this.hisStatus,
@@ -208,18 +232,31 @@ export class SMSManagementComponent implements OnInit {
 				} else {
 					this.listHis = []
 					this.hisTotalRecords = 0
-					this.hisPageSize = 20
+					this.hisPageSize = 10
 					this.hisPageIndex = 1
 				}
 				$('#modalHisSMS').modal('show')
 			} else {
 				this.listHis = []
 				this.hisTotalRecords = 0
-				this.hisPageSize = 20
+				this.hisPageSize = 10
 				this.hisPageIndex = 1
 				this.toast.error(res.message)
 			}
 		})
+	}
+
+	// sendDateChange(data) {
+	// 	this.hisCreateDate = data
+	// 	debugger
+	// 	this.getHistory(this.SMSId)
+	// }
+
+	sendDateChange(newDate) {
+		newDate != null ? (this.hisCreateDate = JSON.stringify(new Date(newDate)).slice(1, 11)) : (this.hisCreateDate = '')
+		// this.pageIndex = 1
+		// this.table.first = 0
+		this.getHistory(this.SMSId)
 	}
 
 	onPageChange2(event: any) {

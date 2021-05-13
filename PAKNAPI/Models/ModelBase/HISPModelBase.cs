@@ -59,7 +59,7 @@ namespace PAKNAPI.ModelBase
 		public long CreatedBy { get; set; }
 		public string CreateName { get; set; }
 
-		public async Task<List<HISSMSGetBySMSIdOnPage>> HISSMSGetBySMSIdOnPageDAO(int? PageSize, int? PageIndex, int? SMSId, string Content, string UserName, int? Status)
+		public async Task<List<HISSMSGetBySMSIdOnPage>> HISSMSGetBySMSIdOnPageDAO(int? PageSize, int? PageIndex, int? SMSId, string Content, string UserName, DateTime? CreateDate, int? Status)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
@@ -67,6 +67,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("SMSId", SMSId);
 			DP.Add("Content", Content);
 			DP.Add("UserName", UserName);
+			DP.Add("CreateDate", CreateDate);
 			DP.Add("Status", Status);
 
 			return (await _sQLCon.ExecuteListDapperAsync<HISSMSGetBySMSIdOnPage>("HIS_SMSGetBySMSIdOnPage", DP)).ToList();
