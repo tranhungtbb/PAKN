@@ -253,18 +253,14 @@ export class BusinessComponent implements OnInit {
 		this._service.businessDelete(item).subscribe((res) => {
 			if (res.success != 'OK') {
 				if (res.message.includes(`REFERENCE constraint "PK_BI_Business"`)) {
-					this._toastr.error(COMMONS.DELETE_FAILED + ', Doanh nghiệp đã được xóa')
+					this._toastr.error(COMMONS.DELETE_FAILED)
 					return
 				}
-				this.getList()
 				this._toastr.error(res.message)
 				return
 			}
 			this._toastr.success(COMMONS.DELETE_SUCCESS)
-
-			if (this.model.id == id) {
-				this.getList()
-			}
+			this.getList()
 		})
 	}
 	/*end - chức năng xác nhận hành động xóa*/
@@ -293,5 +289,11 @@ export class BusinessComponent implements OnInit {
 		// this.model.fullName = ''
 		// this.model.email = ''
 		// this.model.gender = true
+	}
+
+	dataStateChange() {
+		this.pageIndex = 1
+		this.table.first = 0
+		this.getList()
 	}
 }

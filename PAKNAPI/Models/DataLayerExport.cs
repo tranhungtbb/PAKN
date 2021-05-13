@@ -17,4 +17,15 @@ namespace PAKNAPI.Models
         public int? UnitProcessId { get; set; }
         public long? UserProcessId { get; set; }
     }
+
+    public class ExportIndividual
+    {
+        public string TitleReport { get; set; } 
+        public string Address { get; set; }
+        public string Email { get; set; }
+        public string FullName { get; set; }
+        public string Phone { get; set; }
+        public string RowNumber { get; set; }
+
+    }
 }

@@ -58,6 +58,7 @@
     <Compile Remove="Common\ESConnection.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="ExportGrid\Individual_List.repx" />
     <None Remove="ExportGrid\Recommendation_ListGeneral.repx" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +82,7 @@
     <Content Include="Upload\Recommendation\5\4.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ExportGrid\Individual_List.repx" />
     <EmbeddedResource Include="ExportGrid\Recommendation_ListGeneral.repx" />
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +110,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="ExportGrid\Individual_List.cs">
+      <DependentUpon>Individual_List.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\Individual_List.Designer.cs">
+      <DependentUpon>Individual_List.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\Recommendation_ListGeneral - Copy.cs">
+      <DependentUpon>Recommendation_ListGeneral.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\Recommendation_ListGeneral - Copy.Designer.cs">
+      <DependentUpon>Recommendation_ListGeneral.repx</DependentUpon>
+    </Compile>
     <Compile Update="ExportGrid\Recommendation_ListGeneral.cs">
       <DependentUpon>Recommendation_ListGeneral.repx</DependentUpon>
     </Compile>

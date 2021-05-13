@@ -269,7 +269,6 @@ export class Api {
 	public static TimeConfigGetDateActive = 'SYSPBase/SYTimeGetDateActiveBase'
 
 	//Individual
-	public static BusinessIndividualGetDataForCreate = 'BusinessIndividual/BusinessIndividualGetDataForCreate'
 	public static IndividualGetAllOnPage = 'BusinessIndividual/IndividualGetAllOnPage'
 	public static IndivialChageStatus = 'BusinessIndividual/IndivialChageStatus'
 	public static IndivialDelete = 'BusinessIndividual/IndivialDelete'

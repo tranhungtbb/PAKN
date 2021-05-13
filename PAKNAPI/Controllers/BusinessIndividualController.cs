@@ -61,50 +61,6 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
-
-		[HttpGet]
-        [Authorize]
-        [Route("BusinessIndividualGetDataForCreate")]
-        public async Task<ActionResult<object>> BusinessIndividualGetDataForCreate()
-        {
-            try
-            {
-                return new ResultApi { Success = ResultCode.OK, Result = await new BusinessIndividualDAO(_appSetting).BusinessIndividualGetDataForCreate() };
-            }
-            catch (Exception ex)
-            {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-            }
-        }
-
-		[HttpGet]
-		[Authorize]
-		[Route("BusinessIndividualGetAllWithProcessBase")]
-		public async Task<ActionResult<object>> BusinessIndividualGetAllWithProcessBase(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId, int? PageSize, int? PageIndex)
-		{
-			try
-			{
-				List<MRRecommendationGetAllWithProcess> rsMRRecommendationGetAllWithProcess = await new MRRecommendationGetAllWithProcess(_appSetting).MRRecommendationGetAllWithProcessDAO(Code, SendName, Content, UnitId, Field, Status, UnitProcessId, UserProcessId, PageSize, PageIndex);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"MRRecommendationGetAllWithProcess", rsMRRecommendationGetAllWithProcess},
-						{"TotalCount", rsMRRecommendationGetAllWithProcess != null && rsMRRecommendationGetAllWithProcess.Count > 0 ? rsMRRecommendationGetAllWithProcess[0].RowNumber : 0},
-						{"PageIndex", rsMRRecommendationGetAllWithProcess != null && rsMRRecommendationGetAllWithProcess.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsMRRecommendationGetAllWithProcess != null && rsMRRecommendationGetAllWithProcess.Count > 0 ? PageSize : 0},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				//_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
 		[HttpPost]
 		[Authorize]
 		[Route("IndivialDelete")]
@@ -228,11 +184,11 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("BusinessGetAllOnPageBase")]
-		public async Task<ActionResult<object>> BusinessGetAllOnPageBase(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
+		public async Task<ActionResult<object>> BusinessGetAllOnPageBase(int? PageSize, int? PageIndex, string RepresentativeName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
 		{
 			try
 			{
-				List<BusinessGetAllOnPage> rsBusinessGetAllOnPageBase = await new BusinessGetAllOnPage(_appSetting).BusinessGetAllOnPageDAO(PageSize, PageIndex, FullName, Address, Phone, Email, IsActived, SortDir, SortField);
+				List<BusinessGetAllOnPage> rsBusinessGetAllOnPageBase = await new BusinessGetAllOnPage(_appSetting).BusinessGetAllOnPageDAO(PageSize, PageIndex, RepresentativeName, Address, Phone, Email, IsActived, SortDir, SortField);
 				IDictionary<string, object> json = new Dictionary<string, object>
 						{
 							{"BusinessGetAllOnPageBase", rsBusinessGetAllOnPageBase},

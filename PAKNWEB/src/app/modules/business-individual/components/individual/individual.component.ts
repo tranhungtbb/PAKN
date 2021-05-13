@@ -8,7 +8,7 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { COMMONS } from 'src/app/commons/commons'
 import { Router } from '@angular/router'
-import { IndividualObject } from 'src/app/models/businessIndividualObject'
+import { IndividualObject, IndividualExportObject } from 'src/app/models/businessIndividualObject'
 import { BsLocaleService } from 'ngx-bootstrap/datepicker'
 import { viLocale } from 'ngx-bootstrap/locale'
 import { defineLocale } from 'ngx-bootstrap/chronos'
@@ -72,6 +72,7 @@ export class IndividualComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
+	dataSearch: IndividualExportObject = new IndividualExportObject()
 
 	//sort
 	individualSortDir = 'DESC'
@@ -190,16 +191,21 @@ export class IndividualComponent implements OnInit {
 	}
 
 	getList() {
-		this.fullName = this.fullName.trim()
-		this.address = this.address.trim()
-		this.phone = this.phone.trim()
-		this.email = this.email.trim()
+		// this.fullName = this.fullName.trim()
+		// this.address = this.address.trim()
+		// this.phone = this.phone.trim()
+		// this.email = this.email.trim()
+
+		this.dataSearch.fullName = this.dataSearch.fullName.trim()
+		this.dataSearch.address = this.dataSearch.address.trim()
+		this.dataSearch.phone = this.dataSearch.phone.trim()
+		this.dataSearch.email = this.dataSearch.email.trim()
 
 		let request = {
-			FullName: this.fullName,
-			Address: this.address,
-			Phone: this.phone,
-			Email: this.email,
+			FullName: this.dataSearch.fullName,
+			Address: this.dataSearch.address,
+			Phone: this.dataSearch.phone,
+			Email: this.dataSearch.email,
 			isActived: this.isActived != null ? this.isActived : '',
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
@@ -445,5 +451,14 @@ export class IndividualComponent implements OnInit {
 				console.error(error)
 				alert(error)
 			}
+	}
+
+	onExport() {
+		let passingObj: any = {}
+		passingObj = this.dataSearch
+		passingObj.TitleReport = 'DANH SÁCH CÁ NHÂN'
+		this._shareData.setobjectsearch(passingObj)
+		this._shareData.sendReportUrl = 'Individual_List?' + JSON.stringify(passingObj)
+		this._router.navigate(['quan-tri/xuat-file'])
 	}
 }
