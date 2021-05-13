@@ -54,8 +54,14 @@
 											<strong>Đơn vị nhận</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="unitName" maxlength="100" (keydown.enter)="dataStateChange()"
-											placeholder="Nhập tên..." />
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select placeholder="Chọn đơn vị ..." [(ngModel)]="unitId" [closeOnSelect]="true" style="width: 200px !important;"
+												(change)="dataStateChange()">
+												<ng-option *ngFor="let nt of AdministrativeUnits" [value]="nt.id">
+													{{nt.name}}
+												</ng-option>
+											</ng-select>
+										</div>
 									</th>
 
 									<th style="width: 200px;">
@@ -80,7 +86,7 @@
 											</ng-select>
 										</div>
 									</th>
-									<th style="width: 100px;" class="text-center"><strong>THAO TÁC</strong></th>
+									<th style="width: 168px !important;" class="text-center"><strong>THAO TÁC</strong></th>
 								</tr>
 							</ng-template>
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -98,7 +104,7 @@
 									</td>
 									<td style="text-align: center;">
 										<div class="d-flex justify-content-end">
-											<a *ngIf="item.status == 1" class="btn-icon grd-blue text-white mr-2 cursor" (click)="onSend(item.id)">
+											<a *ngIf="item.status == 1 && item.unitName != null" class="btn-icon grd-blue text-white mr-2 cursor" (click)="onSend(item.id)">
 												<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
 													<path d="M13.5938 0.125927L0.468823 7.69624C-0.205005 8.08589
 													 -0.137622 9.07905 0.580151 9.37495L4.68757 11.0742V14.0625C4.68757 
@@ -231,6 +237,15 @@
 									<strong>Ngày tạo</strong>
 									<span class="caret-tb"></span>
 								</p>
+								<div class="dropdown bootstrap-select form-control form-control-sm">
+									<input class="form-control form-control-sm" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" [(ngModel)]="hisCreateDate"
+										appBsDatepickerInvalid (bsValueChange)="sendDateChange($event)"
+										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+									<div class="input-group-addon">
+										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+									</div>
+								</div>
+
 							</th>
 
 							<th style="width: 180px;">
