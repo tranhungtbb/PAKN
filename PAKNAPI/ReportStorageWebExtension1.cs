@@ -126,7 +126,23 @@ namespace PAKNAPI
                     result.Parameters["Address"].Value = paramExportIndividual.Address;
                     result.Parameters["Phone"].Value = paramExportIndividual.Phone;
                     result.Parameters["Email"].Value = paramExportIndividual.Email;
-                    result.Parameters["IsActived"].Value = true;
+                    result.Parameters["Status"].Value = paramExportIndividual.Status;
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        return ms.ToArray();
+                    }
+                    break;
+                case "BI_Business_List":
+                    var paramExportBusiness = JsonConvert.DeserializeObject<ExportBusiness>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.BI_Business_List.repx");
+                    result = XtraReport.FromStream(resource);
+                    result.Parameters["TitleReport"].Value = paramExportBusiness.TitleReport;
+                    result.Parameters["RepresentativeName"].Value = paramExportBusiness.RepresentativeName;
+                    result.Parameters["Address"].Value = paramExportBusiness.Address;
+                    result.Parameters["Phone"].Value = paramExportBusiness.Phone;
+                    result.Parameters["Email"].Value = paramExportBusiness.Email;
+                    //result.Parameters["Status"].Value = paramExportBusiness.Status;
                     result.SaveLayoutToXml(ms);
                     if (ms != null)
                     {

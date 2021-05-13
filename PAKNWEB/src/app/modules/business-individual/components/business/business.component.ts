@@ -8,7 +8,7 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { COMMONS } from 'src/app/commons/commons'
 import { Router } from '@angular/router'
-import { BusinessionObject } from 'src/app/models/businessIndividualObject'
+import { BusinessionObject, BusinessExportObject } from 'src/app/models/businessIndividualObject'
 import { BsLocaleService } from 'ngx-bootstrap/datepicker'
 import { viLocale } from 'ngx-bootstrap/locale'
 import { defineLocale } from 'ngx-bootstrap/chronos'
@@ -73,6 +73,7 @@ export class BusinessComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
+	dataSearch: BusinessExportObject = new BusinessExportObject()
 
 	//sort
 	individualSortDir = 'DESC'
@@ -102,16 +103,20 @@ export class BusinessComponent implements OnInit {
 	}
 
 	getList() {
-		this.representativeName = this.representativeName.trim()
-		this.address = this.address.trim()
-		this.phone = this.phone.trim()
-		this.email = this.email.trim()
+		// this.representativeName = this.representativeName.trim()
+		// this.address = this.address.trim()
+		// this.phone = this.phone.trim()
+		// this.email = this.email.trim()
+		this.dataSearch.representativeName = this.dataSearch.representativeName.trim()
+		this.dataSearch.address = this.dataSearch.address.trim()
+		this.dataSearch.phone = this.dataSearch.phone.trim()
+		this.dataSearch.email = this.dataSearch.email.trim()
 
 		let request = {
-			RepresentativeName: this.representativeName,
-			Address: this.address,
-			Phone: this.phone,
-			Email: this.email,
+			RepresentativeName: this.dataSearch.representativeName,
+			Address: this.dataSearch.address,
+			Phone: this.dataSearch.phone,
+			Email: this.dataSearch.email,
 			isActived: this.isActived != null ? this.isActived : '',
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
@@ -246,7 +251,7 @@ export class BusinessComponent implements OnInit {
 			$('#modal-create-or-update').modal('hide')
 		})
 	}
-	/*end - chức năng xác nhận hành động xóa*/
+	/*start - chức năng xác nhận hành động xóa*/
 	onDeleteBusiness(id) {
 		let item = this.listInvPaged.find((c) => c.id == id)
 		if (!item) item = this.model
@@ -264,14 +269,6 @@ export class BusinessComponent implements OnInit {
 		})
 	}
 	/*end - chức năng xác nhận hành động xóa*/
-
-	preCreate() {
-		this.model = new BusinessionObject()
-		this.rebuilForm()
-		this.submitted = false
-		this.title = 'Thêm mới cá nhân'
-		$('#modal').modal('show')
-	}
 
 	rebuilForm() {
 		this.form.reset({
@@ -295,5 +292,15 @@ export class BusinessComponent implements OnInit {
 		this.pageIndex = 1
 		this.table.first = 0
 		this.getList()
+	}
+
+	onExport() {
+		let passingObj: any = {}
+		passingObj = this.dataSearch
+		passingObj.TitleReport = 'DANH SÁCH DOANH NGHIỆP'
+		this._shareData.setobjectsearch(passingObj)
+		console.log('passingObj', passingObj)
+		this._shareData.sendReportUrl = 'BI_Business_List?' + JSON.stringify(passingObj)
+		this._router.navigate(['quan-tri/xuat-file'])
 	}
 }

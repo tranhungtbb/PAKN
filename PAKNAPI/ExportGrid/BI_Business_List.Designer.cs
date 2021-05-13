@@ -10,9 +10,9 @@
 
 namespace PAKNAPI.ExportGrid {
     
-    public partial class BI_Individual_List : DevExpress.XtraReports.UI.XtraReport {
+    public partial class BI_Business_List : DevExpress.XtraReports.UI.XtraReport {
         private void InitializeComponent() {
-            DevExpress.XtraReports.ReportInitializer reportInitializer = new DevExpress.XtraReports.ReportInitializer(this, "PAKNAPI.ExportGrid.BI_Individual_List.repx");
+            DevExpress.XtraReports.ReportInitializer reportInitializer = new DevExpress.XtraReports.ReportInitializer(this, "PAKNAPI.ExportGrid.BI_Business_List.repx");
 
             // Controls
             this.topMarginBand1 = reportInitializer.GetControl<DevExpress.XtraReports.UI.TopMarginBand>("topMarginBand1");
@@ -30,7 +30,7 @@ namespace PAKNAPI.ExportGrid {
             this.tableCell2 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell2");
             this.tableCell17 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell17");
             this.tableCell4 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell4");
-            this.tableCell11 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell11");
+            this.tableCell5 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell5");
             this.table2 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTable>("table2");
             this.tableRow2 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableRow>("tableRow2");
             this.tableCell16 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell16");
@@ -38,20 +38,24 @@ namespace PAKNAPI.ExportGrid {
             this.tableCell9 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell9");
             this.tableCell18 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell18");
             this.tableCell7 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell7");
-            this.tableCell14 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell14");
+            this.tableCell12 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell12");
             this.label4 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRLabel>("label4");
             this.label5 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRLabel>("label5");
 
             // Parameters
+            this.Content = reportInitializer.GetParameter("Content");
+            this.Status = reportInitializer.GetParameter("Status");
+            this.UserProcessId = reportInitializer.GetParameter("UserProcessId");
+            this.NgayThang = reportInitializer.GetParameter("NgayThang");
+            this.HoTen = reportInitializer.GetParameter("HoTen");
             this.TitleReport = reportInitializer.GetParameter("TitleReport");
-            this.FullName = reportInitializer.GetParameter("FullName");
             this.Address = reportInitializer.GetParameter("Address");
+            this.RepresentativeName = reportInitializer.GetParameter("RepresentativeName");
             this.Phone = reportInitializer.GetParameter("Phone");
             this.Email = reportInitializer.GetParameter("Email");
-            this.Status = reportInitializer.GetParameter("Status");
 
             // Data Sources
-            this.sqlDataSource2 = reportInitializer.GetDataSource<DevExpress.DataAccess.Sql.SqlDataSource>("sqlDataSource2");
+            this.sqlDataSource1 = reportInitializer.GetDataSource<DevExpress.DataAccess.Sql.SqlDataSource>("sqlDataSource1");
 
             // Styles
             this.Title = reportInitializer.GetStyle("Title");
@@ -76,7 +80,7 @@ namespace PAKNAPI.ExportGrid {
         private DevExpress.XtraReports.UI.XRTableCell tableCell2;
         private DevExpress.XtraReports.UI.XRTableCell tableCell17;
         private DevExpress.XtraReports.UI.XRTableCell tableCell4;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell11;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell5;
         private DevExpress.XtraReports.UI.XRTable table2;
         private DevExpress.XtraReports.UI.XRTableRow tableRow2;
         private DevExpress.XtraReports.UI.XRTableCell tableCell16;
@@ -84,21 +88,25 @@ namespace PAKNAPI.ExportGrid {
         private DevExpress.XtraReports.UI.XRTableCell tableCell9;
         private DevExpress.XtraReports.UI.XRTableCell tableCell18;
         private DevExpress.XtraReports.UI.XRTableCell tableCell7;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell14;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell12;
         private DevExpress.XtraReports.UI.XRLabel label4;
         private DevExpress.XtraReports.UI.XRLabel label5;
-        private DevExpress.DataAccess.Sql.SqlDataSource sqlDataSource2;
         private DevExpress.XtraReports.UI.XRControlStyle Title;
         private DevExpress.XtraReports.UI.XRControlStyle DetailCaption3;
         private DevExpress.XtraReports.UI.XRControlStyle DetailData3;
         private DevExpress.XtraReports.UI.XRControlStyle DetailData3_Odd;
         private DevExpress.XtraReports.UI.XRControlStyle DetailCaptionBackground3;
         private DevExpress.XtraReports.UI.XRControlStyle PageInfo;
+        private DevExpress.XtraReports.Parameters.Parameter Content;
+        private DevExpress.XtraReports.Parameters.Parameter Status;
+        private DevExpress.XtraReports.Parameters.Parameter UserProcessId;
+        private DevExpress.XtraReports.Parameters.Parameter NgayThang;
+        private DevExpress.XtraReports.Parameters.Parameter HoTen;
         private DevExpress.XtraReports.Parameters.Parameter TitleReport;
-        private DevExpress.XtraReports.Parameters.Parameter FullName;
         private DevExpress.XtraReports.Parameters.Parameter Address;
+        private DevExpress.XtraReports.Parameters.Parameter RepresentativeName;
         private DevExpress.XtraReports.Parameters.Parameter Phone;
         private DevExpress.XtraReports.Parameters.Parameter Email;
-        private DevExpress.XtraReports.Parameters.Parameter Status;
+        private DevExpress.DataAccess.Sql.SqlDataSource sqlDataSource1;
     }
 }

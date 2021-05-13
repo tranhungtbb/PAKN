@@ -25,8 +25,19 @@ namespace PAKNAPI.Models
         public string Email { get; set; }
         public string FullName { get; set; }
         public string Phone { get; set; }
-        public string Status { get; set; }
-        public bool? IsActived { get; set; }
+        public int? Status { get; set; }
+        public string RowNumber { get; set; }
+
+    }
+
+    public class ExportBusiness
+    {
+        public string TitleReport { get; set; }
+        public string Address { get; set; }
+        public string Email { get; set; }
+        public string RepresentativeName { get; set; }
+        public string Phone { get; set; }
+        public int? Status { get; set; }
         public string RowNumber { get; set; }
 
     }

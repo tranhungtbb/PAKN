@@ -156,11 +156,26 @@ export class IndividualExportObject {
 		this.address = ''
 		this.phone = ''
 		this.email = ''
-		this.isActived = true
+		this.status = 0
 	}
 	fullName: string
 	address: string
 	phone: string
 	email: string
-	isActived: boolean
+	status: number
+}
+
+export class BusinessExportObject {
+	constructor() {
+		this.representativeName = ''
+		this.address = ''
+		this.phone = ''
+		this.email = ''
+		this.status = 0
+	}
+	representativeName: string
+	address: string
+	phone: string
+	email: string
+	status: number
 }

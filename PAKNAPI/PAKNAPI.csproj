@@ -58,6 +58,7 @@
     <Compile Remove="Common\ESConnection.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="ExportGrid\BI_Business_List.repx" />
     <None Remove="ExportGrid\BI_Individual_List.repx" />
     <None Remove="ExportGrid\Recommendation_ListGeneral.repx" />
   </ItemGroup>
@@ -83,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ExportGrid\BI_Individual_List.repx" />
+    <EmbeddedResource Include="ExportGrid\BI_Business_List.repx" />
     <EmbeddedResource Include="ExportGrid\Recommendation_ListGeneral.repx" />
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +112,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="ExportGrid\BI_Business_List.cs">
+      <DependentUpon>BI_Business_List.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\BI_Business_List.Designer.cs">
+      <DependentUpon>BI_Business_List.repx</DependentUpon>
+    </Compile>
     <Compile Update="ExportGrid\BI_Individual_List.cs">
       <DependentUpon>BI_Individual_List.repx</DependentUpon>
     </Compile>
