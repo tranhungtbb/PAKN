@@ -6,10 +6,10 @@
     <Item3 Ref="5" Visible="false" Description="Address" Name="Address" />
     <Item4 Ref="6" Visible="false" Description="Phone" Name="Phone" />
     <Item5 Ref="7" Visible="false" Description="Email" Name="Email" />
-    <Item6 Ref="9" Description="Status" ValueInfo="0" Name="Status" Type="#Ref-8" />
+    <Item6 Ref="9" Visible="false" Description="Status" ValueInfo="0" Name="Status" Type="#Ref-8" />
   </Parameters>
   <Bands>
-    <Item1 Ref="10" ControlType="TopMarginBand" Name="topMarginBand1" HeightF="39.5833321" />
+    <Item1 Ref="10" ControlType="TopMarginBand" Name="topMarginBand1" HeightF="40" />
     <Item2 Ref="11" ControlType="BottomMarginBand" Name="bottomMarginBand1" HeightF="0" />
     <Item3 Ref="12" ControlType="ReportHeaderBand" Name="reportHeaderBand1" HeightF="64.66666">
       <Controls>

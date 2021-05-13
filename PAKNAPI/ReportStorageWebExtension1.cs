@@ -142,7 +142,7 @@ namespace PAKNAPI
                     result.Parameters["Address"].Value = paramExportBusiness.Address;
                     result.Parameters["Phone"].Value = paramExportBusiness.Phone;
                     result.Parameters["Email"].Value = paramExportBusiness.Email;
-                    //result.Parameters["Status"].Value = paramExportBusiness.Status;
+                    result.Parameters["Status"].Value = paramExportBusiness.Status;
                     result.SaveLayoutToXml(ms);
                     if (ms != null)
                     {

@@ -201,7 +201,7 @@ export class IndividualComponent implements OnInit {
 			Address: this.dataSearch.address,
 			Phone: this.dataSearch.phone,
 			Email: this.dataSearch.email,
-			isActived: this.isActived != null ? this.isActived : false,
+			isActived: this.isActived != null ? this.isActived : true,
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 			sortDir: this.inSortDir,
