@@ -139,6 +139,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		this.modelUser.lockEndOut = ''
 
 		if (this.modelUser.id != null && this.modelUser.id > 0) {
+			debugger
 			this.modelUser.avatar = this.modelUser.avatar
 			this.userService.update(this.modelUser, files).subscribe((res) => {
 				$('#' + this.modalId + ' .seclect-avatar').val('')
@@ -149,7 +150,6 @@ export class UserCreateOrUpdateComponent implements OnInit {
 					return
 				}
 				this.toast.success(COMMONS.UPDATE_SUCCESS)
-				debugger
 				if (this.isOrganizational == true) {
 					if (!this.editByMyself) {
 						this.parentUnit.getUserPagedList()
@@ -170,8 +170,15 @@ export class UserCreateOrUpdateComponent implements OnInit {
 					this.toast.error(errorMsg)
 					return
 				}
+				if (this.isOrganizational == true) {
+					if (!this.editByMyself) {
+						this.parentUnit.getUserPagedList()
+					}
+				} else {
+					this.parentUser.getList()
+				}
 				this.toast.success(COMMONS.ADD_SUCCESS)
-				this.parentUnit.getUserPagedList()
+				// this.parentUnit.getUserPagedList()
 				this.modelUser = new UserObject2()
 				$('#' + this.modalId).modal('hide')
 			})
@@ -219,17 +226,22 @@ export class UserCreateOrUpdateComponent implements OnInit {
 
 		this.userFormSubmitted = false
 		this.modelUser = new UserObject2()
+		if (this.isOrganizational == true) {
+			this.modelUser.unitId = unitId
+		}
 
-		this.modelUser.unitId = unitId
 		if (userId > 0) {
 			this.modalTitle = 'Chỉnh sửa người dùng'
 			this.modal_btn_save = 'Cập nhật'
 			this.userService.getById({ id: userId }).subscribe((res) => {
 				if (res.success != 'OK') return
 				this.modelUser = res.result.SYUserGetByID[0]
-
 				//if (this.modelUser.avatar != null && this.modelUser.avatar != '') this.getUserAvatar(this.modelUser.id)
-				this.userAvatar = AppSettings.API_DOWNLOADFILES + '/' + this.modelUser.avatar
+				if (this.modelUser.avatar == '' || this.modelUser.avatar == null) {
+					this.userAvatar = ''
+				} else {
+					this.userAvatar = AppSettings.API_DOWNLOADFILES + '/' + this.modelUser.avatar
+				}
 
 				if (this.modelUser.roleIds) this.selectedRoles = this.modelUser.roleIds.split(',').map((c) => parseInt(c))
 				else this.selectedRoles = []
@@ -238,8 +250,8 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			this.modalTitle = 'Tạo mới người dùng'
 			this.modal_btn_save = 'Tạo mới'
 			//set value
+			this.modelUser.gender = true
 			this.modelUser.positionId = null
-			this.modelUser.gender = null
 			this.modelUser.isActived = true
 		}
 

@@ -43,13 +43,13 @@
 									</th>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Tiêu đề</strong>
+											<strong>Nội dung</strong>
 											<span class="caret-tb"></span>
 										</p>
 										<input class="form-control form-control-sm" [(ngModel)]="title" maxlength="100" (keydown.enter)="dataStateChange()"
 											placeholder="Nhập tên..." />
 									</th>
-									<th style="max-width: 300px;">
+									<th style="width: 200px; max-width: 250px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Đơn vị nhận</strong>
 											<span class="caret-tb"></span>
@@ -88,6 +88,7 @@
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
 										<strong class="highlight"><a class="ellipsis" (click)=" getSMSModelById(item.id)" title="Cập nhập">{{item.title}}</a></strong>
+										<span class="content-sms">{{item.content}}</span>
 									</td>
 									<td>{{item.unitName}}</td>
 									<td>{{item.type}}</td>
@@ -192,7 +193,7 @@
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0">
 				<p class="modal-title h4">Lịch sử SMS</p>
-				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				<button type="button" class="close" data-dismiss="modal" (click)="clearModelHis()"><span>&times;</span>
 				</button>
 			</div>
 			<div class="modal-body pt-3 pb-3">
@@ -278,7 +279,7 @@
 
 
 <div class="modal fade" id="modalDetail">
-	<div class="modal-dialog modal-dialog-centered" style="max-width: 50%" role="document">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 70%" role="document">
 		<div class="modal-content rounded">
 			<form class="form-horizontal">
 				<div class="panel panel-default no-margin">
@@ -295,7 +296,7 @@
 							</div>
 							<div class="w-100"></div>
 							<div class="title-user-map">Cá nhân doanh nghiệp nhận SMS</div>
-							<div class="col-sm-4" style="padding: 5px !important;" *ngFor="let item of listItemUserSelected">
+							<div class="col-sm-3" style="padding: 5px !important;" *ngFor="let item of listItemUserSelected">
 								<div class="item-user">
 									<div class="info-user padding-item" style="padding-left: 0px;">
 										<!-- <div class="title" *ngIf="item.category ==1">Cá nhân</div>

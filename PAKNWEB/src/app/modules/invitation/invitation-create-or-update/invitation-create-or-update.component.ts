@@ -127,7 +127,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 							if (this.statusCurent == 2) {
 								this.title = 'Chi tiết thư mời'
 							} else {
-								this.title = this.model.id == 0 ? 'Thêm mới thư mời ' : 'Cập nhập thư mời'
+								this.title = this.model.id == 0 ? 'Thêm mới thư mời ' : 'Cập nhật thư mời'
 							}
 						}
 					}

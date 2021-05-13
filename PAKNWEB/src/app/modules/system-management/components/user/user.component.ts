@@ -92,12 +92,18 @@ export class UserComponent implements OnInit {
 		this.unitService.getAll({}).subscribe((res) => {
 			if (res.success != 'OK') return
 			this.unitsList = res.result.CAUnitGetAll
+			// this.unitsList.forEach((item) => {
+			// 	if (item.name.length > 17) {
+			// 		item.name = item.name.substring(0, 17) + '..'
+			// 	}
+			// })
 		})
 	}
 
 	getList() {
 		this.userName = this.userName.trim()
 		this.fullName = this.fullName.trim()
+		this.phone = this.phone.trim()
 		let request = {
 			UserName: this.userName != null ? this.userName : '',
 			FullName: this.fullName != null ? this.fullName : '',
@@ -186,6 +192,11 @@ export class UserComponent implements OnInit {
 			(error) => {
 				console.error(error)
 			}
+	}
+
+	preDelete(id: any) {
+		this.userId = id
+		$('#modalConfirmDelete').modal('show')
 	}
 
 	changeStatus(id: number) {

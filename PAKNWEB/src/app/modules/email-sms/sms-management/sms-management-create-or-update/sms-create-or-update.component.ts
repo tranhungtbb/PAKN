@@ -180,11 +180,11 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 		if (this.form.invalid) {
 			return
 		}
-
-		if (this.listItemUserSelected.length == 0) {
+		if (this.listItemUserSelected.length == 0 && this.model.status == 2) {
 			this._toastr.error('Vui lòng chọn cá nhân, doanh nghiệp được gửi SMS')
 			return
 		}
+		debugger
 		var s = []
 		this.listItemUserSelected.forEach((item) => {
 			s.push(item.category)

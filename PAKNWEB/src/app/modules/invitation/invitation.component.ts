@@ -8,7 +8,7 @@ import { viLocale } from 'ngx-bootstrap/locale'
 import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker'
 
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { InvitationObject } from 'src/app/models/invitationObject'
+import { InvitationObject, InvitationUserMapObject } from 'src/app/models/invitationObject'
 import { UserService } from 'src/app/services/user.service'
 
 declare var $: any
@@ -26,7 +26,9 @@ export class InvitationComponent implements OnInit {
 		private routes: Router,
 		private userService: UserService,
 		private BsLocaleService: BsLocaleService
-	) {}
+	) {
+		this.listItemUserSelected = []
+	}
 	@ViewChild('table', { static: false }) table: any
 
 	listStatus: any = [
@@ -43,13 +45,27 @@ export class InvitationComponent implements OnInit {
 	pageSize: Number = 20
 	totalRecords: Number
 	listData: any[]
+	listItemUserSelected: any[]
+	listFile: any[]
+	listUserIsSystem: any[]
 
 	InvitationId: any
 
 	ngOnInit() {
 		this.getListPaged()
 		this.BsLocaleService.use('vi')
+		// this.getUsersIsSystem()
 	}
+
+	// getUsersIsSystem() {
+	// 	this.userService.getIsSystem2({}).subscribe((res) => {
+	// 		if (res.success == RESPONSE_STATUS.success) {
+	// 			this.listUserIsSystem = res.result.SYUserGetIsSystem2
+	// 		} else {
+	// 			this.listUserIsSystem = []
+	// 		}
+	// 	})
+	// }
 
 	getListPaged() {
 		this.title = this.title.trim()
@@ -116,6 +132,37 @@ export class InvitationComponent implements OnInit {
 		this.routes.navigate(['quan-tri/thu-moi/cap-nhap/' + id])
 		return
 	}
+
+	redirectDetail(id: number) {
+		this.routes.navigate(['quan-tri/thu-moi/chi-tiet/' + id])
+		return
+	}
+
+	// getInvitationModelById(id: any) {
+	// 	this.invitationService.invitationGetById({ id: id }).subscribe((res) => {
+	// 		if (res.success == RESPONSE_STATUS.success) {
+	// 			debugger
+	// 			if (res.result) {
+	// 				this.model = { ...res.result.model }
+	// 				this.listFile = { ...res.result.invFileAttach }
+	// 				for (const iterator of res.result.invitationUserMap) {
+	// 					let item = this.listUserIsSystem.find((x) => x.id == iterator.userId)
+	// 					var obj = new InvitationUserMapObject()
+	// 					obj.userId = iterator.userId
+	// 					obj.sendEmail = iterator.sendEmail
+	// 					obj.sendSMS = iterator.sendSMS
+	// 					obj.fullName = item.fullName
+	// 					obj.unitName = item.unitName
+	// 					obj.positionName = item.positionName
+	// 					obj.avatar = item.avatar
+	// 					this.listItemUserSelected.push(obj)
+	// 				}
+	// 				$('#modalDetail').modal('show')
+	// 			}
+	// 		}
+	// 	})
+	// }
+
 	sendDateChange(data) {
 		if (data != null) {
 			let count = 0

@@ -47,7 +47,7 @@ export class SMSManagementComponent implements OnInit {
 	hisContent: string
 	hisUserCreate: string
 	hisPageIndex: number = 1
-	hisPageSize: number = 20
+	hisPageSize: number = 10
 	hisTotalRecords: Number
 	SMSId: Number
 	listHis: any[]
@@ -65,7 +65,6 @@ export class SMSManagementComponent implements OnInit {
 		this.smsService.GetById({ id: id }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result) {
-					debugger
 					this.model = { ...res.result.model }
 					this.listItemUserSelected = [...res.result.individualBusinessInfo]
 					$('#modalDetail').modal('show')
@@ -103,6 +102,7 @@ export class SMSManagementComponent implements OnInit {
 						})
 					})
 					item.type = item.type.substr(0, item.type.length - 2)
+					item.title = item.title.concat('. ')
 				})
 				this.totalRecords = res.result.TotalCount
 			})
@@ -178,8 +178,18 @@ export class SMSManagementComponent implements OnInit {
 		return
 	}
 
+	clearModelHis() {
+		this.hisPageSize = 10
+		this.hisPageIndex = 1
+		this.hisContent = ''
+		this.hisStatus = null
+		this.hisUserCreate = ''
+	}
+
 	getHistory(id: Number) {
 		this.SMSId = id
+		this.hisContent == null ? '' : this.hisContent.trim()
+		this.hisUserCreate == null ? '' : this.hisUserCreate.trim()
 		var obj = {
 			PageSize: this.hisPageSize,
 			PageIndex: this.hisPageIndex,

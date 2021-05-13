@@ -17,8 +17,8 @@ export class smsManagementObject {
 
 export class smsManagementGetAllOnPageObject {
 	id: number
-	title: boolean
-	content: boolean
+	title: string
+	content: string
 	unitName: string
 	status: number
 	type: string

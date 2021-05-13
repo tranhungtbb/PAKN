@@ -31,7 +31,7 @@
 					<div class="form-row">
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">Email <span class="cl-red">(*)</span></label>
-							<input svTrim formControlName="email" [(ngModel)]="modelUser.email" type="text" class="form-control" placeholder="Nhập..."
+							<input svTrim formControlName="email" [(ngModel)]="modelUser.email" type="text" class="form-control" placeholder="Nhập..." maxlength="100"
 								[readonly]="modelUser.id != null && modelUser.id > 0" (change)="onCheckExist('Email',$event.target.value)">
 							<div *ngIf="(userFormSubmitted && fUser.email.invalid)||(fUser.email.invalid && (fUser.email.dirty || fUser.email.touched))" class="has-error m-b-12">
 								<div *ngIf="fUser.email.errors.required">
@@ -49,7 +49,7 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Họ và tên <span class="cl-red">(*)</span></label>
-							<input svTrim formControlName="fullName" [(ngModel)]="modelUser.fullName" type="text" class="form-control" placeholder="Nhập...">
+							<input svTrim formControlName="fullName" [(ngModel)]="modelUser.fullName" type="text" class="form-control" placeholder="Nhập..." maxlength="100">
 							<div *ngIf="(userFormSubmitted && fUser.fullName.invalid)||(fUser.fullName.invalid && (fUser.fullName.dirty || fUser.fullName.touched))"
 								class="has-error m-b-12">
 								<div *ngIf="fUser.fullName.errors.required">
@@ -101,7 +101,7 @@
 							</div>
 						</div>
 						<div class="col-12 col-lg-4 form-group">
-							<label class="mb-1">Giới tính</label>
+							<label class="mb-1">Giới tính <span class="cl-red">(*)</span></label>
 							<!--  -->
 							<ng-select class="form-control" placeholder="Chọn..." [items]="listGender" bindLabel="text" bindValue="value" [(ngModel)]="modelUser.gender"
 								formControlName="gender" [closeOnSelect]="true" [searchable]="false">
@@ -140,7 +140,7 @@
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Địa chỉ</label>
-							<textarea class="form-control" formControlName="address" [(ngModel)]="modelUser.address" rows="4" placeholder="Nhập..."></textarea>
+							<textarea class="form-control" formControlName="address" [(ngModel)]="modelUser.address" rows="4" placeholder="Nhập..." maxlength="300"></textarea>
 						</div>
 					</div>
 				</form>

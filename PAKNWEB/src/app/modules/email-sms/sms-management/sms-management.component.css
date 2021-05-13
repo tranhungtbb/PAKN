@@ -50,3 +50,12 @@ strong.highlight:hover {
 	flex-grow: 0;
 	/* margin: 4px 0px; */
 }
+
+/* .content-sms {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-line-clamp: 2;
+	height: auto;
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+} */

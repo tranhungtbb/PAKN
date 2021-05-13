@@ -40,19 +40,20 @@
 										<strong>STT</strong>
 									</p>
 								</th>
-								<th style="max-width: 160px;">
+								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Tên tài khoản</strong>
 										<span class="caret-tb"></span>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="userName" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập ..." />
 								</th>
-								<th style="max-width: 160px;">
+								<th style="width: 180px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Họ và tên</strong>
 										<span class="caret-tb"></span>
 									</p>
-									<input type="text" class="form-control form-control-sm" [(ngModel)]="fullName" (keydown.enter)="dataStateChange()" placeholder="Nhập ...">
+									<input type="text" class="form-control form-control-sm" [(ngModel)]="fullName" (keydown.enter)="dataStateChange()" placeholder="Nhập ..."
+										style="width: 180px !important;">
 								</th>
 								<th style="width: 140px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -70,20 +71,20 @@
 										</ng-select>
 									</div>
 								</th>
-								<th style="width: 120px;">
+								<th style="width: 140px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Điện thoại</strong>
 										<span class="caret-tb"></span>
 									</p>
 									<input type="text" class="form-control form-control-sm" [(ngModel)]="phone" (keydown.enter)="dataStateChange()" placeholder="Nhập...">
 								</th>
-								<th>
+								<th style="width: 230px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Đơn vị</strong>
 										<span class="caret-tb"></span>
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select placeholder="Chọn..." [closeOnSelect]="true" [(ngModel)]="unitId" (change)="dataStateChange()">
+										<ng-select placeholder="Chọn..." [closeOnSelect]="true" [(ngModel)]="unitId" (change)="dataStateChange()" style="width: 230px !important;">
 											<ng-option *ngFor="let nt of unitsList" [value]="nt.id">
 												{{nt.name}}
 											</ng-option>
