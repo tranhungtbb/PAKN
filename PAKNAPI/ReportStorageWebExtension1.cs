@@ -96,6 +96,7 @@ namespace PAKNAPI
             }
             switch (reportname.Trim())
             {
+
                 case "Recommendation_ListGeneral":
                     var paramExportNhatKyThanhTra = JsonConvert.DeserializeObject<ExportRecommendation>(objectReport, jss);
 
@@ -116,16 +117,16 @@ namespace PAKNAPI
                         return ms.ToArray();
                     }
                     break;
-                case "Individual_List":
+                case "BI_Individual_List":
                     var paramExportIndividual = JsonConvert.DeserializeObject<ExportIndividual>(objectReport, jss);
-                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.Individual_List.repx");
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.BI_Individual_List.repx");
                     result = XtraReport.FromStream(resource);
                     result.Parameters["TitleReport"].Value = paramExportIndividual.TitleReport;
                     result.Parameters["FullName"].Value = paramExportIndividual.FullName;
                     result.Parameters["Address"].Value = paramExportIndividual.Address;
                     result.Parameters["Phone"].Value = paramExportIndividual.Phone;
                     result.Parameters["Email"].Value = paramExportIndividual.Email;
-                    //result.Parameters["IsActived"].Value = paramExportIndividual.IsActived;
+                    result.Parameters["IsActived"].Value = true;
                     result.SaveLayoutToXml(ms);
                     if (ms != null)
                     {

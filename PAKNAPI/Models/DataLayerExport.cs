@@ -25,6 +25,8 @@ namespace PAKNAPI.Models
         public string Email { get; set; }
         public string FullName { get; set; }
         public string Phone { get; set; }
+        public string Status { get; set; }
+        public bool? IsActived { get; set; }
         public string RowNumber { get; set; }
 
     }

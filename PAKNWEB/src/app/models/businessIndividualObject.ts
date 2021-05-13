@@ -156,9 +156,11 @@ export class IndividualExportObject {
 		this.address = ''
 		this.phone = ''
 		this.email = ''
+		this.isActived = true
 	}
 	fullName: string
 	address: string
 	phone: string
 	email: string
+	isActived: boolean
 }

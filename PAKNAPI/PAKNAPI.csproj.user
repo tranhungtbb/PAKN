@@ -7,7 +7,7 @@
     <ShowAllFiles>true</ShowAllFiles>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="ExportGrid\Individual_List.cs">
+    <Compile Update="ExportGrid\BI_Individual_List.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
