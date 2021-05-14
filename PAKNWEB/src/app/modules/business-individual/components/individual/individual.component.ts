@@ -191,11 +191,6 @@ export class IndividualComponent implements OnInit {
 	}
 
 	getList() {
-		// this.fullName = this.fullName.trim()
-		// this.address = this.address.trim()
-		// this.phone = this.phone.trim()
-		// this.email = this.email.trim()
-
 		this.dataSearch.fullName = this.dataSearch.fullName.trim()
 		this.dataSearch.address = this.dataSearch.address.trim()
 		this.dataSearch.phone = this.dataSearch.phone.trim()
@@ -206,7 +201,7 @@ export class IndividualComponent implements OnInit {
 			Address: this.dataSearch.address,
 			Phone: this.dataSearch.phone,
 			Email: this.dataSearch.email,
-			isActived: this.isActived != null ? this.isActived : '',
+			isActived: this.isActived != null ? this.isActived : true,
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 			sortDir: this.inSortDir,
@@ -458,7 +453,8 @@ export class IndividualComponent implements OnInit {
 		passingObj = this.dataSearch
 		passingObj.TitleReport = 'DANH SÁCH CÁ NHÂN'
 		this._shareData.setobjectsearch(passingObj)
-		this._shareData.sendReportUrl = 'Individual_List?' + JSON.stringify(passingObj)
+		console.log('passingObj', passingObj)
+		this._shareData.sendReportUrl = 'BI_Individual_List?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])
 	}
 }

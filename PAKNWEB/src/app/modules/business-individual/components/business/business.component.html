@@ -5,7 +5,15 @@
 				<li class="breadcrumb-item active"><a class="font-weight-bold">QUẢN LÝ DOANH NGHIỆP</a></li>
 			</ol>
 			<div class="btn-group group-button-table" role="group">
-
+				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
+						<path
+							d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
+						<path
+							d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+					</svg>
+					Xuất excel
+				</button>
 				<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" [routerLink]="['/quan-tri/ca-nhan-doanh-nghiep/them-moi/0']">
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
@@ -42,21 +50,21 @@
 										<strong>Địa chỉ trụ sở</strong>
 										<span class="caret-tb" (click)="onSortUser('Address')"></span>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="address" maxlength="100" (keydown.enter)="dataStateChange()" />
+									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.address" maxlength="100" (keydown.enter)="dataStateChange()" />
 								</th>
 								<th style="width: 150px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Số điện thoại</strong>
 										<span class="caret-tb" (click)="onSortUser('Phone')"></span>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="phone" maxlength="11" (keydown.enter)="dataStateChange()" />
+									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.phone" maxlength="11" (keydown.enter)="dataStateChange()" />
 								</th>
 								<th style="width: 250px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Email</strong>
 										<span class="caret-tb" (click)="onSortUser('Email')"></span>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="email" maxlength="256" (keydown.enter)="dataStateChange()" />
+									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.email" maxlength="256" (keydown.enter)="dataStateChange()" />
 								</th>
 								<th style="width: 160px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -67,6 +75,7 @@
 										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="isActived"
 											[closeOnSelect]="true" (change)="dataStateChange()">
 										</ng-select>
+										<input hidden [(ngModel)]="dataSearch.status">
 									</div>
 								</th>
 								<th class="text-right" style="width: 100px;">

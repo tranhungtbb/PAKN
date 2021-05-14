@@ -112,93 +112,6 @@ namespace PAKNAPI.Models.BusinessIndividual
 
 	#endregion
 
-	public class BusinessIndividualGetDataForCreateResponse
-    {
-        public string Code { get; set; }
-        public List<DropdownTree> lstUnit { get; set; }
-        public List<DropdownObject> lstField { get; set; }
-        public List<DropdownObject> lstIndividual { get; set; }
-        public List<DropdownObject> lstBusiness { get; set; }
-        public List<DropdownObject> lstHashTag { get; set; }
-    }
-
-    public class BusinessIndividualGetDataForForwardResponse
-    {
-        public List<DropdownObject> lstUnitNotMain { get; set; }
-    }
-
-    public class BusinessIndividualGetDataForProcessResponse
-    {
-        public List<DropdownObject> lstHashtag { get; set; }
-        public List<DropdownObject> lstUsers { get; set; }
-        public List<DropdownObject> lstGroupWord { get; set; }
-    }
-    public class BusinessIndividualInsertRequest
-    {
-        public long? UserId { get; set; }
-        public int? UserType { get; set; }
-        public string UserFullName { get; set; }
-        //public MRRecommendationInsertIN Data { get; set; }
-        public List<DropdownObject> ListHashTag { get; set; }
-        //public List<MRRecommendationFiles> LstXoaFile { get; set; }
-        //public IFormFileCollection Files { get; set; }
-    }
-
-	public class BusinessIndividualGetAllWithProcess
-	{
-		private SQLCon _sQLCon;
-
-		public BusinessIndividualGetAllWithProcess(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public BusinessIndividualGetAllWithProcess()
-		{
-		}
-
-		public int? RowNumber { get; set; }
-		public int Id { get; set; }
-		public string Code { get; set; }
-		public string Title { get; set; }
-		public string Content { get; set; }
-		public int? Field { get; set; }
-		public string FieldName { get; set; }
-		public int? UnitId { get; set; }
-		public string UnitName { get; set; }
-		public short? TypeObject { get; set; }
-		public long? SendId { get; set; }
-		public string Name { get; set; }
-		public byte? Status { get; set; }
-		public DateTime? SendDate { get; set; }
-		public long? CreatedBy { get; set; }
-		public DateTime? CreatedDate { get; set; }
-		public long? UpdatedBy { get; set; }
-		public DateTime? UpdatedDate { get; set; }
-		public int? ProcessId { get; set; }
-		public int? UnitSendId { get; set; }
-		public long? UserSendId { get; set; }
-		public long? ReceiveId { get; set; }
-		public int? UnitReceiveId { get; set; }
-
-		public async Task<List<BusinessIndividualGetAllWithProcess>> BusinessIndividualGetAllWithProcessDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId, int? PageSize, int? PageIndex)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Code", Code);
-			DP.Add("SendName", SendName);
-			DP.Add("Content", Content);
-			DP.Add("UnitId", UnitId);
-			DP.Add("Field", Field);
-			DP.Add("Status", Status);
-			DP.Add("UnitProcessId", UnitProcessId);
-			DP.Add("UserProcessId", UserProcessId);
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-
-			return (await _sQLCon.ExecuteListDapperAsync<BusinessIndividualGetAllWithProcess>("MR_RecommendationGetAllWithProcess", DP)).ToList();
-		}
-	}
-
 	// Individual
 	public class BIIndividualCheckExists
 	{
@@ -347,35 +260,6 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public DateTime? BirthDay { get; set; }
 		public bool? Gender { get; set; }
 		public long? UserId { get; set; }
-	}
-
-	public class BIIndividualOrBusinessGetDropListByProviceId
-	{
-		private SQLCon _sQLCon;
-
-		public BIIndividualOrBusinessGetDropListByProviceId(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
-		public BIIndividualOrBusinessGetDropListByProviceId()
-		{
-		}
-
-		public long Id { get; set; }
-		public int Category { get; set; }
-		public string Name { get; set; }
-		public string AdministrativeUnitName { get; set; }
-		public short? AdministrativeUnitId { get; set; }
-
-		public async Task<List<BIIndividualOrBusinessGetDropListByProviceId>> BIIndividualOrBusinessGetDropListByProviceIdDAO(int? Id, int? Type)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-			DP.Add("Type", Type);
-
-			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualOrBusinessGetDropListByProviceId>("BI_IndividualOrBusinessGetDropListByProviceId", DP)).ToList();
-		}
 	}
 
 	public class BIInvididualUpdateInfo

@@ -76,6 +76,7 @@
 										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="isActived"
 											[closeOnSelect]="true" (change)="dataStateChange()">
 										</ng-select>
+										<input hidden [(ngModel)]="dataSearch.status">
 									</div>
 								</th>
 								<th class="text-right" style="width: 100px;">

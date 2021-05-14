@@ -58,7 +58,8 @@
     <Compile Remove="Common\ESConnection.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="ExportGrid\Individual_List.repx" />
+    <None Remove="ExportGrid\BI_Business_List.repx" />
+    <None Remove="ExportGrid\BI_Individual_List.repx" />
     <None Remove="ExportGrid\Recommendation_ListGeneral.repx" />
   </ItemGroup>
   <ItemGroup>
@@ -82,7 +83,8 @@
     <Content Include="Upload\Recommendation\5\4.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ExportGrid\Individual_List.repx" />
+    <EmbeddedResource Include="ExportGrid\BI_Individual_List.repx" />
+    <EmbeddedResource Include="ExportGrid\BI_Business_List.repx" />
     <EmbeddedResource Include="ExportGrid\Recommendation_ListGeneral.repx" />
   </ItemGroup>
   <ItemGroup>
@@ -110,11 +112,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="ExportGrid\Individual_List.cs">
-      <DependentUpon>Individual_List.repx</DependentUpon>
+    <Compile Update="ExportGrid\BI_Business_List.cs">
+      <DependentUpon>BI_Business_List.repx</DependentUpon>
     </Compile>
-    <Compile Update="ExportGrid\Individual_List.Designer.cs">
-      <DependentUpon>Individual_List.repx</DependentUpon>
+    <Compile Update="ExportGrid\BI_Business_List.Designer.cs">
+      <DependentUpon>BI_Business_List.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\BI_Individual_List.cs">
+      <DependentUpon>BI_Individual_List.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\BI_Individual_List.Designer.cs">
+      <DependentUpon>BI_Individual_List.repx</DependentUpon>
     </Compile>
     <Compile Update="ExportGrid\Recommendation_ListGeneral - Copy.cs">
       <DependentUpon>Recommendation_ListGeneral.repx</DependentUpon>

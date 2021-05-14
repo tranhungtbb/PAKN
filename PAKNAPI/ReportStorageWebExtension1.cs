@@ -96,6 +96,7 @@ namespace PAKNAPI
             }
             switch (reportname.Trim())
             {
+
                 case "Recommendation_ListGeneral":
                     var paramExportNhatKyThanhTra = JsonConvert.DeserializeObject<ExportRecommendation>(objectReport, jss);
 
@@ -116,16 +117,32 @@ namespace PAKNAPI
                         return ms.ToArray();
                     }
                     break;
-                case "Individual_List":
+                case "BI_Individual_List":
                     var paramExportIndividual = JsonConvert.DeserializeObject<ExportIndividual>(objectReport, jss);
-                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.Individual_List.repx");
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.BI_Individual_List.repx");
                     result = XtraReport.FromStream(resource);
                     result.Parameters["TitleReport"].Value = paramExportIndividual.TitleReport;
                     result.Parameters["FullName"].Value = paramExportIndividual.FullName;
                     result.Parameters["Address"].Value = paramExportIndividual.Address;
                     result.Parameters["Phone"].Value = paramExportIndividual.Phone;
                     result.Parameters["Email"].Value = paramExportIndividual.Email;
-                    //result.Parameters["IsActived"].Value = paramExportIndividual.IsActived;
+                    result.Parameters["Status"].Value = paramExportIndividual.Status;
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        return ms.ToArray();
+                    }
+                    break;
+                case "BI_Business_List":
+                    var paramExportBusiness = JsonConvert.DeserializeObject<ExportBusiness>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.BI_Business_List.repx");
+                    result = XtraReport.FromStream(resource);
+                    result.Parameters["TitleReport"].Value = paramExportBusiness.TitleReport;
+                    result.Parameters["RepresentativeName"].Value = paramExportBusiness.RepresentativeName;
+                    result.Parameters["Address"].Value = paramExportBusiness.Address;
+                    result.Parameters["Phone"].Value = paramExportBusiness.Phone;
+                    result.Parameters["Email"].Value = paramExportBusiness.Email;
+                    result.Parameters["Status"].Value = paramExportBusiness.Status;
                     result.SaveLayoutToXml(ms);
                     if (ms != null)
                     {
