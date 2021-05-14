@@ -186,11 +186,11 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	}
 
 	onChangeAvatar() {
-		$('#' + this.modalId + ' .seclect-avatar').click()
+		$('.seclect-avatar').click()
 	}
 	changeSelectAvatar(event: any) {
+		debugger
 		var file = event.target.files[0]
-
 		if (!['image/jpeg', 'image/png'].includes(file.type)) {
 			this.toast.error('Chỉ chọn tệp tin ảnh')
 			event.target.value = null
@@ -201,12 +201,11 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			event.target.value = null
 			return
 		}
-
-		let output: any = $('#' + this.modalId + ' .user-avatar-view')[0]
+		let output: any = $('.user-avatar-view')[0]
 		output.src = URL.createObjectURL(file)
-		output.onload = function () {
-			URL.revokeObjectURL(output.src) // free memory
-		}
+		// output.onload = function () {
+		// 	URL.revokeObjectURL(output.src) // free memory
+		// }
 	}
 
 	modal_btn_save = 'Tạo mới'
@@ -229,7 +228,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		if (this.isOrganizational == true) {
 			this.modelUser.unitId = unitId
 		}
-
+		debugger
 		if (userId > 0) {
 			this.modalTitle = 'Chỉnh sửa người dùng'
 			this.modal_btn_save = 'Cập nhật'
@@ -238,11 +237,10 @@ export class UserCreateOrUpdateComponent implements OnInit {
 				this.modelUser = res.result.SYUserGetByID[0]
 				//if (this.modelUser.avatar != null && this.modelUser.avatar != '') this.getUserAvatar(this.modelUser.id)
 				if (this.modelUser.avatar == '' || this.modelUser.avatar == null) {
-					this.userAvatar = ''
+					this.userAvatar = null
 				} else {
 					this.userAvatar = AppSettings.API_DOWNLOADFILES + '/' + this.modelUser.avatar
 				}
-
 				if (this.modelUser.roleIds) this.selectedRoles = this.modelUser.roleIds.split(',').map((c) => parseInt(c))
 				else this.selectedRoles = []
 			})
@@ -250,12 +248,13 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			this.modalTitle = 'Tạo mới người dùng'
 			this.modal_btn_save = 'Tạo mới'
 			//set value
+			this.userAvatar = null
 			this.modelUser.gender = true
 			this.modelUser.positionId = null
 			this.modelUser.isActived = true
 		}
 
-		$('#' + this.modalId + ' .user-avatar-view').attr('src', '')
+		// $('#' + this.modalId + ' .user-avatar-view').attr('src', '')
 		$('#' + this.modalId).modal('show')
 
 		this.editByMyself = editByMyself

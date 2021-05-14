@@ -75,11 +75,11 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 	}
 
 	private getInfo(id: number) {
+		this.model = {}
 		this.userId = id
 		if (id != null && id != undefined) {
 			this.userService.getById({ id: id }).subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
-					debugger
 					this.model = res.result.SYUserGetByID[0]
 					//this.getUserAvatar(this.model.id)
 					if (this.model.avatar == '' || this.model.avatar == null) {
@@ -94,6 +94,7 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 					let rolesIds = this.model.roleIds.split(',').map((c) => parseInt(c))
 					let rolesNames = this.rolesList.filter((c) => rolesIds.includes(c.id)).map((c) => c.name)
 					this.model.rolesNames = rolesNames.join('; ')
+					$('#modal-user-view-info').modal('show')
 				} else {
 					this.userId = null
 				}
@@ -135,7 +136,7 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 			return
 		}
 		this.getInfo(userId)
-		$('#modal-user-view-info').modal('show')
+		//$('#modal-user-view-info').modal('show')
 	}
 
 	public closeModal() {

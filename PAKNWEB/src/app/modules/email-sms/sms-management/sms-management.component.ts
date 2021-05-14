@@ -211,8 +211,8 @@ export class SMSManagementComponent implements OnInit {
 			this.hisPageIndex = 1
 		}
 		this.SMSId = id
-		this.hisContent == null ? '' : this.hisContent.trim()
-		this.hisUserCreate == null ? '' : this.hisUserCreate.trim()
+		this.hisContent == null ? (this.hisContent = '') : (this.hisContent = this.hisContent.trim())
+		this.hisUserCreate == null ? (this.hisContent = '') : (this.hisUserCreate = this.hisUserCreate.trim())
 		var obj = {
 			PageSize: this.hisPageSize,
 			PageIndex: this.hisPageIndex,

@@ -4,7 +4,7 @@
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
 					<!-- <li class="breadcrumb-item"><a>Vai trò</a></li> -->
-					<li class="breadcrumb-item active"><a class="font-weight-bold">{{title}}</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold">Chi tiết thư mời</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
 					<a class="btn btn-sm btn-default rounded mr-3" style="border: 1px solid gray;" (click)="redirectList()">
@@ -20,33 +20,33 @@
 					<div class="row form-group">
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Tiêu đề</label>
-							<input class="form-control" disabled maxlength="100" [value]="model.title" />
+							<input class="form-control background-xam1" disabled maxlength="100" [value]="model.title" />
 						</div>
 
 						<div class="col-sm-6 padding-col">
 							<label class="control-label department">Thời gian bắt đầu</label>
 							<div class="input-group">
-								<input class="form-control" disabled [value]="startDate" />
+								<input class="form-control background-xam1" disabled [value]="startDate" />
 							</div>
 						</div>
 						<div class="col-sm-6 padding-col">
 							<label class="control-label department">Thời gian kết thúc</label>
 							<div class="input-group">
-								<input class="form-control" disabled [value]="endDate" />
+								<input class="form-control background-xam1" disabled [value]="endDate" />
 							</div>
 						</div>
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Địa điểm </label>
-							<input class="form-control" disabled [value]="model.place" />
+							<input class="form-control background-xam1" disabled [value]="model.place" />
 						</div>
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Ghi chú</label>
-							<input class="form-control" disabled [value]="model.note" />
+							<input class="form-control background-xam1" disabled [value]="model.note" />
 
 						</div>
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Nội dung </label>
-							<textarea class="form-control" disabled rows="6" [value]="model.content"></textarea>
+							<textarea class="form-control background-xam1" disabled rows="6" [value]="model.content"></textarea>
 
 						</div>
 						<!-- tài liệu đính kèm -->
@@ -140,7 +140,7 @@
 
 						<div class="list-user">
 							<div class="title-user-map center" style="text-transform: none;" *ngIf="listItemUserSelected.length ==0">Chưa có thành phần tham dự</div>
-							<div class="col-sm-12 item-user" *ngFor="let item of listItemUserSelected">
+							<div class="col-sm-12 item-user background-xam1" *ngFor="let item of listItemUserSelected">
 								<div class="info-user border-right padding-item" style="display: flex; padding-left: 0px;">
 									<img style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px; margin-right: 5px;"
 										src="../../../../assets/dist/images/avatar/1.jpg" alt="">

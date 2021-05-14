@@ -27,7 +27,7 @@ const routes: Routes = [
 			{ path: 'thu-tuc-hanh-chinh', loadChildren: './administrative-formalities/administrative-formalities.module#AdministrativeFormalitiesModule' },
 			{ path: 'thong-bao', component: NotificationComponent },
 			{ path: 'xuat-file', component: ReportViewerComponent },
-			{ path: 'thu-moi', loadChildren: './invitation/invitation.module#InvitationModule' },
+			{ path: 'bao-cao', loadChildren: './statistic/statistic.module#StatisticModule' },
 		],
 	},
 ]
