@@ -52,6 +52,14 @@ export class UserComponent implements OnInit {
 	@ViewChild(UserCreateOrUpdateComponent, { static: false }) childCreateOrUpdateUser: UserCreateOrUpdateComponent
 	@ViewChild(UserViewInfoComponent, { static: false }) childDetailUser: UserViewInfoComponent
 
+	dataSearch2: HistoryUser = new HistoryUser()
+	listHisData: any[] = []
+	hisTotalRecords: number = 0
+	emailUser: any
+	hisPageIndex: any = 1
+	hisPageSize: any = 20
+	hisUserId: any
+
 	modalUserCreateOrUpdate(key: any = 0) {
 		this.childCreateOrUpdateUser.openModal(0, key)
 	}
@@ -74,6 +82,11 @@ export class UserComponent implements OnInit {
 		})
 		this.childCreateOrUpdateUser.parentUser = this
 		this.childDetailUser.parentUser = this
+
+		// this.form = this._fb.group({
+		// 	toDate: [this.dataSearch.toDate],
+		// 	fromDate: [this.dataSearch.toDate],
+		// })
 	}
 	getDropDown() {
 		this.positionService
@@ -181,11 +194,13 @@ export class UserComponent implements OnInit {
 		}
 		$('#modalConfirmDelete').modal('hide')
 		this._service.delete(request).subscribe((response) => {
+			debugger
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 
 				this.getList()
 			} else {
+				this.getList()
 				this._toastr.error(response.message)
 			}
 		}),
@@ -221,7 +236,67 @@ export class UserComponent implements OnInit {
 			this.getList()
 		})
 	}
-	getHistory(id: any) {}
+
+	cleaseHisModel() {
+		this.hisPageIndex = 1
+		this.hisPageSize = 20
+		this.hisUserId = null
+		this.dataSearch2.fromDate = null
+		this.dataSearch2.toDate = null
+	}
+
+	dataHisStateChange() {
+		this.hisPageIndex = 1
+		this.table.first = 0
+		this.getHistory(this.hisUserId, this.emailUser)
+	}
+
+	getHistory(id: any, email: any) {
+		if (id == undefined) return
+		if (id != this.hisUserId) {
+			this.cleaseHisModel()
+		}
+		this.hisUserId = id
+		this.listHisData = []
+		this.emailUser = email
+		let req = {
+			FromDate: this.dataSearch2.fromDate != null ? this.dataSearch2.fromDate : '',
+			ToDate: this.dataSearch2.toDate != null ? this.dataSearch2.toDate : '',
+			PageIndex: this.hisPageIndex,
+			PageSize: this.hisPageSize,
+			UserId: id,
+		}
+		this._service.getSystemLogin(req).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if (response.result != null) {
+					this.listHisData = response.result.SYSystemLogGetAllOnPage
+					this.hisTotalRecords = response.result.SYSystemLogGetAllOnPage.length != 0 ? response.result.SYSystemLogGetAllOnPage[0].rowNumber : 0
+					// this.hisPageIndex =
+					$('#modalHis').modal('show')
+				}
+			} else {
+			}
+		})
+	}
+
+	fromDateChange(newDate) {
+		newDate != null ? (this.dataSearch2.fromDate = JSON.stringify(new Date(newDate)).slice(1, 11)) : (this.dataSearch2.fromDate = '')
+
+		// this.getHistory(this.hisUserId, this.emailUser)
+	}
+
+	toDateChange(newDate) {
+		newDate != null ? (this.dataSearch2.toDate = JSON.stringify(new Date(newDate)).slice(1, 11)) : (this.dataSearch2.toDate = '')
+	}
 
 	modalUserChangePassword(id: any) {}
+}
+
+export class HistoryUser {
+	constructor() {
+		this.fromDate = null
+		this.toDate = null
+	}
+	fromDate: string
+	toDate: string
 }

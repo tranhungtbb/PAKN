@@ -146,15 +146,21 @@ namespace PAKNAPI.Controllers
 			try
 			{
 				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-				var modelOld = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(model.Id);
+				var modelOld = (await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(model.Id)).FirstOrDefault();
 
 				var result = await new SYUserDelete(_appSetting).SYUserDeleteDAO(model);
-
-				// xóa avatar cũ
-				if (string.IsNullOrEmpty(modelOld[0].Avatar))
+				if (result > 0)
 				{
-					await _fileService.Remove(modelOld[0].Avatar);
+					// xóa avatar cũ
+					if (modelOld != null && string.IsNullOrEmpty(modelOld.Avatar))
+					{
+						await _fileService.Remove(modelOld.Avatar);
+					}
 				}
+				else {
+					return new Models.Results.ResultApi { Success = ResultCode.OK, Result = result };
+				}
+				
 
 			}
 			catch (Exception ex)
