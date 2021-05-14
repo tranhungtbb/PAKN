@@ -217,7 +217,11 @@ export class GroupWordComponent implements OnInit {
 		}
 		this._service.groupWordDelete(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
+				if (response.result > 0) {
+					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
+				} else {
+					this._toastr.error('Nhóm thư viện từ ngữ này đang được sử dụng!')
+				}
 				$('#modalConfirmDelete').modal('hide')
 				this.getList()
 			} else {
