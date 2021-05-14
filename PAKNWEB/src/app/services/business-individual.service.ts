@@ -47,6 +47,10 @@ export class BusinessIndividualService {
 		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.InvididualUpdate)
 	}
 
+	invididualImportFile(data: any): Observable<any> {
+		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.InvididualImportFile)
+	}
+
 	businessGetList(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.BusinessGetAllOnPageBase)
 	}

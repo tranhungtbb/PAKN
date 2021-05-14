@@ -29,6 +29,7 @@
     <PackageReference Include="DevExtreme.AspNet.Data" Version="2.5.1" />
     <PackageReference Include="DocumentFormat.OpenXml" Version="2.12.3" />
     <PackageReference Include="EPocalipse.IFilter" Version="1.0.0" />
+    <PackageReference Include="EPPlus" Version="4.5.3.3" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
@@ -46,6 +47,7 @@
     <Folder Include="Models\Results\" />
     <Folder Include="BusinessLogic\" />
     <Folder Include="Chatbot\" />
+    <Folder Include="Upload\BusinessIndividual\" />
     <Folder Include="Upload\User\" />
     <Folder Include="Upload\Remind\" />
   </ItemGroup>

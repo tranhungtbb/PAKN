@@ -275,6 +275,7 @@ export class Api {
 	public static InvididualRegister = 'BusinessIndividual/InvididualRegister'
 	public static InvididualGetByID = 'BusinessIndividual/InvididualGetByID'
 	public static InvididualUpdate = 'BusinessIndividual/InvididualUpdate'
+	public static InvididualImportFile = 'BusinessIndividual/upload?folder=BusinessIndividual'
 
 	//Business
 	public static BusinessGetAllOnPageBase = 'BusinessIndividual/BusinessGetAllOnPageBase'

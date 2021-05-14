@@ -35,6 +35,90 @@ namespace PAKNAPI.Controllers
 			_hostingEnvironment = hostingEnvironment;
 		}
 
+		[HttpPost, DisableRequestSizeLimit]
+		[Route("upload")]
+		[Authorize]
+		public async Task<ActionResult<object>> Upload(string folder = null)
+		{
+			try
+			{
+
+				var file = Request.Form.Files[0];
+
+				if (file.Length <= 0)
+				{
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "File not found!" };
+				}
+
+				string contentRootPath = _hostingEnvironment.ContentRootPath;
+
+				string folderName = string.IsNullOrEmpty(folder) ? "Upload/Orther" : "Upload/" + folder;
+
+				string fileName = $"{DateTime.Now.ToString("ddMMyyyyHHmmss")}-{file.FileName}";
+				string folderPath = System.IO.Path.Combine(contentRootPath, folderName);
+
+				if (!System.IO.Directory.Exists(folderPath))
+				{
+					System.IO.Directory.CreateDirectory(folderPath);
+				}
+
+				string fileNamePath = System.IO.Path.Combine(folderPath, fileName);
+
+				using (var memoryStream = System.IO.File.Create(fileNamePath))
+				{
+					await file.CopyToAsync(memoryStream);
+				}
+
+				System.IO.FileInfo fileInfo = new System.IO.FileInfo(fileNamePath);
+
+                OfficeOpenXml.ExcelPackage package = new OfficeOpenXml.ExcelPackage(fileInfo);
+                OfficeOpenXml.ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
+
+				// get number of rows and columns in the sheet
+				int rows = worksheet.Dimension.Rows; // 20
+				int columns = worksheet.Dimension.Columns; // 7
+
+				//create a list to hold all the values
+				List<Models.BusinessIndividual.BIIndividualInsertIN> individualList = new List<Models.BusinessIndividual.BIIndividualInsertIN>();
+
+				// loop through the worksheet rows and columns
+				for (int i = 1; i <= rows; i++)
+				{
+					if (i == 1)
+                    {
+						continue;
+                    }						
+					Models.BusinessIndividual.BIIndividualInsertIN ind = new Models.BusinessIndividual.BIIndividualInsertIN();
+					ind.FullName = worksheet.Cells[i, 1].Value.ToString();
+					ind.Email = worksheet.Cells[i, 2].Value.ToString();
+					ind.Phone = worksheet.Cells[i, 3].Value.ToString();
+					ind.IDCard = worksheet.Cells[i, 4].Value.ToString();
+					ind.IssuedPlace = worksheet.Cells[i, 5].Value.ToString();
+					ind.Nation = worksheet.Cells[i, 6].Value.ToString();
+					ind.ProvinceId = Convert.ToInt32(worksheet.Cells[i, 7].Value.ToString());
+					ind.DistrictId = Convert.ToInt32(worksheet.Cells[i, 8].Value.ToString());
+					ind.WardsId = Convert.ToInt32(worksheet.Cells[i, 9].Value.ToString());
+					ind.PermanentPlace = worksheet.Cells[i, 10].Value.ToString();
+					ind.Address = worksheet.Cells[i, 11].Value.ToString();
+					ind.BirthDay = DateTime.Now;
+					ind.Status = Convert.ToInt32(worksheet.Cells[i, 12].Value.ToString());
+
+					individualList.Add(ind);
+				}
+
+				foreach(Models.BusinessIndividual.BIIndividualInsertIN ins in individualList)
+                {
+					await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(ins);
+				}					
+
+				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = fileInfo };
+			}
+			catch (Exception e)
+			{
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = e.Message };
+			}
+		}
+
 		[HttpGet]
 		[Authorize]
 		[Route("IndividualGetAllOnPage")]
@@ -347,4 +431,5 @@ namespace PAKNAPI.Controllers
 		}
 
 	}
+
 }

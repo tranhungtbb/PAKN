@@ -2,8 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { BusinessIndividualService } from 'src/app/services/business-individual.service'
 import { DataService } from 'src/app/services/sharedata.service'
-import { saveAs as importedSaveAs } from 'file-saver'
-import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS, FILETYPE, CONSTANTS } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { COMMONS } from 'src/app/commons/commons'
@@ -14,6 +13,7 @@ import { viLocale } from 'ngx-bootstrap/locale'
 import { defineLocale } from 'ngx-bootstrap/chronos'
 import { DiadanhService } from 'src/app/services/diadanh.service'
 import { RegisterService } from 'src/app/services/register.service'
+import { UploadFileService } from 'src/app/services/uploadfiles.service'
 
 declare var $: any
 @Component({
@@ -22,6 +22,7 @@ declare var $: any
 	styleUrls: ['./individual.component.css'],
 })
 export class IndividualComponent implements OnInit {
+	data: [][]
 	constructor(
 		private _service: BusinessIndividualService,
 		private storeageService: UserInfoStorageService,
@@ -31,11 +32,12 @@ export class IndividualComponent implements OnInit {
 		private _shareData: DataService,
 		private localeService: BsLocaleService,
 		private diadanhService: DiadanhService,
-		private registerService: RegisterService
+		private registerService: RegisterService,
+		private fileService: UploadFileService
 	) {
 		defineLocale('vi', viLocale)
 	}
-
+	allowExcelExtend = ['xlsx', 'image/jpeg', 'image/png', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
 	dateNow: Date = new Date()
 
 	listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
@@ -55,7 +57,8 @@ export class IndividualComponent implements OnInit {
 		{ value: true, text: 'Nam' },
 		{ value: false, text: 'Nữ' },
 	]
-
+	fileAccept = '.xls, .xlsx'
+	files: any[] = []
 	listInvPaged: any[] = []
 
 	form: FormGroup
@@ -453,8 +456,30 @@ export class IndividualComponent implements OnInit {
 		passingObj = this.dataSearch
 		passingObj.TitleReport = 'DANH SÁCH CÁ NHÂN'
 		this._shareData.setobjectsearch(passingObj)
-		console.log('passingObj', passingObj)
 		this._shareData.sendReportUrl = 'BI_Individual_List?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])
+	}
+
+	onExcelfileChange(event: any) {
+		let obj: any = {}
+		var file = event.target.files[0]
+		if (!this.allowExcelExtend.includes(file.type)) {
+			this._toastr.error('Chỉ chọn tệp excel')
+			return
+		}
+
+		let formData = new FormData()
+		formData.append('file', file, file.name)
+
+		this._service.invididualImportFile(formData).subscribe((res) => {
+			if (res.success != 'OK') {
+				this._toastr.error('Xảy ra lỗi trong quá trình xử lý')
+				return
+			}
+			this.model.imagePath = res.result.path
+		})
+	}
+	onChangeFileExcel() {
+		$('#excel-file').click()
 	}
 }
