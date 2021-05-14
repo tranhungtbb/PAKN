@@ -103,10 +103,6 @@ export class BusinessComponent implements OnInit {
 	}
 
 	getList() {
-		// this.representativeName = this.representativeName.trim()
-		// this.address = this.address.trim()
-		// this.phone = this.phone.trim()
-		// this.email = this.email.trim()
 		this.dataSearch.representativeName = this.dataSearch.representativeName.trim()
 		this.dataSearch.address = this.dataSearch.address.trim()
 		this.dataSearch.phone = this.dataSearch.phone.trim()

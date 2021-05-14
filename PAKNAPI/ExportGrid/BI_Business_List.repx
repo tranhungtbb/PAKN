@@ -32,19 +32,19 @@
                     <Item1 Ref="20" ControlType="XRTableCell" Name="tableCell15" Weight="0.060547391651502774" Multiline="true" Text="STT" TextAlignment="MiddleCenter" Font="Times New Roman, 10pt, style=Bold" ForeColor="Black" Padding="2,2,0,0,100" BorderColor="Black" Borders="All" BorderWidth="1">
                       <StylePriority Ref="21" UseFont="false" UseForeColor="false" UsePadding="false" UseBorderColor="false" UseBorders="false" UseBorderWidth="false" UseTextAlignment="false" />
                     </Item1>
-                    <Item2 Ref="22" ControlType="XRTableCell" Name="tableCell1" Weight="0.20561861849767338" Multiline="true" Text="Doanh nghiệp" TextAlignment="MiddleCenter" StyleName="DetailCaption3" Font="Times New Roman, 10pt, style=Bold" ForeColor="Black" Padding="2,2,0,0,100" BorderColor="Black" Borders="All" BorderWidth="1" Visible="false">
+                    <Item2 Ref="22" ControlType="XRTableCell" Name="tableCell1" Weight="0.20561861849767338" Multiline="true" Text="Doanh nghiệp" TextAlignment="MiddleCenter" StyleName="DetailCaption3" Font="Times New Roman, 10pt, style=Bold" ForeColor="Black" Padding="2,2,0,0,100" BorderColor="Black" Borders="All" BorderWidth="1">
                       <StylePriority Ref="23" UseFont="false" UseForeColor="false" UseBorderColor="false" UseBorders="false" UseBorderWidth="false" UseTextAlignment="false" />
                     </Item2>
-                    <Item3 Ref="24" ControlType="XRTableCell" Name="tableCell2" Weight="0.57284736326596475" Multiline="true" Text="Địa chỉ trụ sở" TextAlignment="MiddleCenter" StyleName="DetailCaption3" Font="Times New Roman, 10pt, style=Bold" ForeColor="Black" Padding="2,2,0,0,100" BorderColor="Black" Borders="All" BorderWidth="1" Visible="false">
+                    <Item3 Ref="24" ControlType="XRTableCell" Name="tableCell2" Weight="0.57284736326596475" Multiline="true" Text="Địa chỉ trụ sở" TextAlignment="MiddleCenter" StyleName="DetailCaption3" Font="Times New Roman, 10pt, style=Bold" ForeColor="Black" Padding="2,2,0,0,100" BorderColor="Black" Borders="All" BorderWidth="1">
                       <StylePriority Ref="25" UseFont="false" UseForeColor="false" UseBorderColor="false" UseBorders="false" UseBorderWidth="false" UseTextAlignment="false" />
                     </Item3>
-                    <Item4 Ref="26" ControlType="XRTableCell" Name="tableCell17" Weight="0.30506724413642428" Multiline="true" Text="Số điện thoại" TextAlignment="MiddleCenter" Font="Times New Roman, 10pt, style=Bold" ForeColor="Black" Padding="2,2,0,0,100" BorderColor="Black" Borders="All" BorderWidth="1" Visible="false">
+                    <Item4 Ref="26" ControlType="XRTableCell" Name="tableCell17" Weight="0.30506724413642428" Multiline="true" Text="Số điện thoại" TextAlignment="MiddleCenter" Font="Times New Roman, 10pt, style=Bold" ForeColor="Black" Padding="2,2,0,0,100" BorderColor="Black" Borders="All" BorderWidth="1">
                       <StylePriority Ref="27" UseFont="false" UseForeColor="false" UsePadding="false" UseBorderColor="false" UseBorders="false" UseBorderWidth="false" UseTextAlignment="false" />
                     </Item4>
-                    <Item5 Ref="28" ControlType="XRTableCell" Name="tableCell4" Weight="0.31844232825478969" Multiline="true" Text="Email" TextAlignment="MiddleCenter" Font="Times New Roman, 10pt, style=Bold" ForeColor="Black" Padding="2,2,0,0,100" BorderColor="Black" Borders="All" BorderWidth="1" Visible="false">
+                    <Item5 Ref="28" ControlType="XRTableCell" Name="tableCell4" Weight="0.31844232825478969" Multiline="true" Text="Email" TextAlignment="MiddleCenter" Font="Times New Roman, 10pt, style=Bold" ForeColor="Black" Padding="2,2,0,0,100" BorderColor="Black" Borders="All" BorderWidth="1">
                       <StylePriority Ref="29" UseFont="false" UseForeColor="false" UsePadding="false" UseBorderColor="false" UseBorders="false" UseBorderWidth="false" UseTextAlignment="false" />
                     </Item5>
-                    <Item6 Ref="30" ControlType="XRTableCell" Name="tableCell5" Weight="0.28091573584268564" Multiline="true" Text="Trạng thái" TextAlignment="MiddleCenter" Font="Times New Roman, 10pt, style=Bold" ForeColor="Black" Padding="2,2,0,0,100" BorderColor="Black" Borders="All" BorderWidth="1" Visible="false">
+                    <Item6 Ref="30" ControlType="XRTableCell" Name="tableCell5" Weight="0.28091573584268564" Multiline="true" Text="Trạng thái" TextAlignment="MiddleCenter" Font="Times New Roman, 10pt, style=Bold" ForeColor="Black" Padding="2,2,0,0,100" BorderColor="Black" Borders="All" BorderWidth="1">
                       <StylePriority Ref="31" UseFont="false" UseForeColor="false" UsePadding="false" UseBorderColor="false" UseBorders="false" UseBorderWidth="false" UseTextAlignment="false" />
                     </Item6>
                   </Cells>
@@ -64,7 +64,7 @@
                 <Item1 Ref="35" ControlType="XRTableCell" Name="tableCell16" Weight="0.067561396844232346" Multiline="true" Text="tableCell16" TextAlignment="MiddleCenter" Font="Times New Roman, 10pt" ForeColor="Black" Padding="2,2,0,0,100" Borders="All">
                   <Summary Ref="36" Running="Report" />
                   <ExpressionBindings>
-                    <Item1 Ref="37" Expression="sumRecordNumber([Id])" PropertyName="Text" EventName="BeforePrint" />
+                    <Item1 Ref="37" Expression="sumRecordNumber()" PropertyName="Text" EventName="BeforePrint" />
                   </ExpressionBindings>
                   <StylePriority Ref="38" UseFont="false" UseForeColor="false" UsePadding="false" UseBorders="false" UseTextAlignment="false" />
                 </Item1>
