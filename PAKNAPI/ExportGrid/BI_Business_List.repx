@@ -3,10 +3,10 @@
   <Parameters>
     <Item1 Ref="3" Visible="false" Description="Status" ValueInfo="0" Name="Status" Type="#Ref-2" />
     <Item2 Ref="5" Visible="false" Name="TitleReport" />
-    <Item3 Ref="6" Description="Address" AllowNull="true" Name="Address" />
-    <Item4 Ref="7" Description="RepresentativeName" AllowNull="true" Name="RepresentativeName" />
-    <Item5 Ref="8" Description="Phone" AllowNull="true" Name="Phone" />
-    <Item6 Ref="9" Description="Email" AllowNull="true" Name="Email" />
+    <Item3 Ref="6" Visible="false" Description="Address" AllowNull="true" Name="Address" />
+    <Item4 Ref="7" Visible="false" Description="RepresentativeName" AllowNull="true" Name="RepresentativeName" />
+    <Item5 Ref="8" Visible="false" Description="Phone" AllowNull="true" Name="Phone" />
+    <Item6 Ref="9" Visible="false" Description="Email" AllowNull="true" Name="Email" />
   </Parameters>
   <Bands>
     <Item1 Ref="10" ControlType="TopMarginBand" Name="topMarginBand1" HeightF="39.5833321" />

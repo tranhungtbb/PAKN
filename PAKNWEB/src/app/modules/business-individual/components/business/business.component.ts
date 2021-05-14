@@ -2,8 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { BusinessIndividualService } from 'src/app/services/business-individual.service'
 import { DataService } from 'src/app/services/sharedata.service'
-import { saveAs as importedSaveAs } from 'file-saver'
-import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { COMMONS } from 'src/app/commons/commons'
@@ -13,7 +12,6 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker'
 import { viLocale } from 'ngx-bootstrap/locale'
 import { defineLocale } from 'ngx-bootstrap/chronos'
 import { DiadanhService } from 'src/app/services/diadanh.service'
-import { RegisterService } from 'src/app/services/register.service'
 
 declare var $: any
 @Component({
@@ -30,8 +28,7 @@ export class BusinessComponent implements OnInit {
 		private _router: Router,
 		private _shareData: DataService,
 		private localeService: BsLocaleService,
-		private diadanhService: DiadanhService,
-		private registerService: RegisterService
+		private diadanhService: DiadanhService
 	) {
 		defineLocale('vi', viLocale)
 	}
@@ -72,8 +69,8 @@ export class BusinessComponent implements OnInit {
 	pageSize: number = 20
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
-	idDelete: number = 0
 	dataSearch: BusinessExportObject = new BusinessExportObject()
+	allowExcelExtend = ['xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
 
 	//sort
 	individualSortDir = 'DESC'
@@ -244,7 +241,6 @@ export class BusinessComponent implements OnInit {
 			this._toastr.success(COMMONS.UPDATE_SUCCESS)
 			this.getList()
 			this.model = new BusinessionObject()
-			$('#modal-create-or-update').modal('hide')
 		})
 	}
 	/*start - chức năng xác nhận hành động xóa*/
@@ -298,5 +294,28 @@ export class BusinessComponent implements OnInit {
 		console.log('passingObj', passingObj)
 		this._shareData.sendReportUrl = 'BI_Business_List?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])
+	}
+
+	onExcelfileChange(event: any) {
+		let obj: any = {}
+		var file = event.target.files[0]
+		if (!this.allowExcelExtend.includes(file.type)) {
+			this._toastr.error('Chỉ chọn tệp excel')
+			return
+		}
+
+		let formData = new FormData()
+		formData.append('file', file, file.name)
+
+		this._service.invididualImportFile(formData).subscribe((res) => {
+			if (res.success != 'OK') {
+				this._toastr.error('Xảy ra lỗi trong quá trình xử lý')
+				return
+			}
+			this.model.imagePath = res.result.path
+		})
+	}
+	onChangeFileExcel() {
+		$('#excel-file').click()
 	}
 }

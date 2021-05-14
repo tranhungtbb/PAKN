@@ -13,7 +13,6 @@ import { viLocale } from 'ngx-bootstrap/locale'
 import { defineLocale } from 'ngx-bootstrap/chronos'
 import { DiadanhService } from 'src/app/services/diadanh.service'
 import { RegisterService } from 'src/app/services/register.service'
-import { UploadFileService } from 'src/app/services/uploadfiles.service'
 
 declare var $: any
 @Component({
@@ -32,12 +31,11 @@ export class IndividualComponent implements OnInit {
 		private _shareData: DataService,
 		private localeService: BsLocaleService,
 		private diadanhService: DiadanhService,
-		private registerService: RegisterService,
-		private fileService: UploadFileService
+		private registerService: RegisterService
 	) {
 		defineLocale('vi', viLocale)
 	}
-	allowExcelExtend = ['xlsx', 'image/jpeg', 'image/png', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
+	allowExcelExtend = ['xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
 	dateNow: Date = new Date()
 
 	listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
@@ -64,7 +62,7 @@ export class IndividualComponent implements OnInit {
 	form: FormGroup
 	model: any = new IndividualObject()
 	submitted: boolean = false
-	isActived: boolean
+	isActived: boolean = false
 	title: string = ''
 	fullName: string = ''
 	address: string = ''
@@ -74,7 +72,6 @@ export class IndividualComponent implements OnInit {
 	pageSize: number = 20
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
-	idDelete: number = 0
 	dataSearch: IndividualExportObject = new IndividualExportObject()
 
 	//sort
@@ -257,7 +254,6 @@ export class IndividualComponent implements OnInit {
 			this._toastr.success(COMMONS.UPDATE_SUCCESS)
 			this.getList()
 			this.model = new IndividualObject()
-			$('#modal-create-or-update').modal('hide')
 		})
 	}
 	/*end - chức năng xác nhận hành động xóa*/
@@ -295,19 +291,6 @@ export class IndividualComponent implements OnInit {
 		this.getList()
 	}
 
-	changeState(event: any) {
-		if (event) {
-			if (event.target.value == 'null') {
-				this.isActived = null
-			} else {
-				this.isActived = event.target.value
-			}
-			this.pageIndex = 1
-			this.pageSize = 20
-			this.getList()
-		}
-	}
-
 	changeType(event: any) {
 		if (event) {
 			this.pageIndex = 1
@@ -329,7 +312,7 @@ export class IndividualComponent implements OnInit {
 	}
 
 	private loadFormBuilder() {
-		//form createIndividualForm
+		//form model
 		this.form = this._fb.group({
 			fullName: [this.model.fullName, [Validators.required, Validators.maxLength(100)]],
 			gender: [this.model.gender, [Validators.required]],
