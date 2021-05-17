@@ -60,13 +60,16 @@ namespace PAKNAPI.Common
             //Get User from Claims
             //string userId = logHelper.claim.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.GivenName).Value;
 
-            string userId = logHelper.claim.Claims.FirstOrDefault(c => c.Type == "Id").Value;
-            SYUser sYUser = await new SYUser(_appSetting).SYUserGetByID((long?)long.Parse(userId));
+            string userId = logHelper.claim.Claims.FirstOrDefault(c => c.Type == "Id")?.Value;
+
+            long _userId;
+            long.TryParse(userId, out _userId);
+            SYUser sYUser = await new SYUser(_appSetting).SYUserGetByID(_userId);
 
             SYLOGInsertIN sYSystemLogInsertIN = new SYLOGInsertIN
             {
-                UserId = sYUser.Id,
-                FullName = sYUser.FullName,
+                UserId = sYUser?.Id??0,
+                FullName = sYUser?.FullName??" ",
                 Action = logHelper.logAction,
                 IPAddress = logHelper.ipAddress,
                 MACAddress = logHelper.macAddress,

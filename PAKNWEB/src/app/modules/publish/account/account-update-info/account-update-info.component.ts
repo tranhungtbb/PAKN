@@ -150,6 +150,10 @@ export class AccountUpdateInfoComponent implements OnInit {
 		this.model.dateOfBirth = fDob.value
 		this.model.issuedDate = fDateIssue.value
 
+		if (!this.model.districtId) this.model.districtId = ''
+		if (!this.model.provinceId) this.model.provinceId = ''
+		if (!this.model.wardsId) this.model.wardsId = ''
+
 		if (this.formData.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return

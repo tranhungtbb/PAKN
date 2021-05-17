@@ -226,8 +226,14 @@ namespace PAKNAPI.Controllers
 				{
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu không khớp" };
 				}
-				var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(loginInfo.Phone);
-				if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tài khoản đăng nhập đã tồn tại" };
+				//var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(loginInfo.Phone);
+				//if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tài khoản đăng nhập đã tồn tại" };
+
+
+				var accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Phone", loginInfo.Phone, 0);
+				if (accCheckExist[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+				accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Email", model.Email, 0);
+				if (accCheckExist[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
 
 				DateTime birdDay, dateOfIssue;
 				if (!DateTime.TryParseExact(_RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
@@ -334,9 +340,13 @@ namespace PAKNAPI.Controllers
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu không khớp" };
 				}
 
-				var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(loginInfo.Phone);
-				if(hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+				//var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(loginInfo.Phone);
+				//if(hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
 
+				var accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Phone", loginInfo.Phone,0);
+				if (accCheckExist[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+				accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Email", model.Email, 0);
+				if (accCheckExist[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
 
 				DateTime birdDay, dateOfIssue;
 				if (!DateTime.TryParseExact(_BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
@@ -471,15 +481,19 @@ namespace PAKNAPI.Controllers
 						Email = info[0].Email,
 						Phone = info[0].Phone,
 						Nation = info[0].Nation,
-						ProvinceId = info[0].ProvinceId.Value,
-						DistrictId = info[0].DistrictId.Value,
-						WardsId = info[0].WardsId.Value,
+						ProvinceId = info[0].ProvinceId,
+						DistrictId = info[0].DistrictId,
+						WardsId = info[0].WardsId,
 						Address = info[0].Address,
 						IdCard = info[0].IDCard,
 						IssuedPlace = info[0].IssuedPlace,
 						IssuedDate = info[0].DateOfIssue.Value.ToString("dd/MM/yyyy"),
 					};
-
+                    if (!model.ProvinceId.HasValue)
+                    {
+						model.DistrictId = null;
+						model.WardsId = null;
+                    }
 
 
 					return new Models.Results.ResultApi { Success = ResultCode.OK, Result = model };
@@ -497,6 +511,15 @@ namespace PAKNAPI.Controllers
 
 					model.UserName = accInfo[0].UserName;
 					model.FullName = accInfo[0].FullName;
+					if (!model.ProvinceId.HasValue)
+					{
+						model.DistrictId = null;
+					}
+                    if (!model.OrgProvinceId.HasValue)
+                    {
+						model.OrgDistrictId = null;
+						model.OrgWardsId = null;
+                    }
 
 					return new Models.Results.ResultApi { Success = ResultCode.OK, Result = model };
 				}
@@ -637,21 +660,22 @@ namespace PAKNAPI.Controllers
                 {
 					///Phone,Email,IDCard
 					///check ton tai
-					var checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", model.Phone, accInfo[0].Id);
+					///
+					accInfo[0].FullName = model.FullName;
+					var info = await new BIIndividualGetByUserId(_appSetting).BIIndividualGetByUserIdDAO(accInfo[0].Id);
+
+					var checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", model.Phone, info[0].Id);
 					if (checkExists[0].Exists.Value)
 						return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
 					if (!string.IsNullOrEmpty(model.Email))
 					{
-						checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", model.Email, accInfo[0].Id);
+						checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", model.Email, info[0].Id);
 						if (checkExists[0].Exists.Value)
 							return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
 					}
-					checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", model.IdCard, accInfo[0].Id);
+					checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", model.IdCard, info[0].Id);
 					if (checkExists[0].Exists.Value)
 						return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
-
-					accInfo[0].FullName = model.FullName;
-					var info = await new BIIndividualGetByUserId(_appSetting).BIIndividualGetByUserIdDAO(accInfo[0].Id);
 
 					var _model = new BIInvididualUpdateInfoIN
 					{
@@ -675,25 +699,27 @@ namespace PAKNAPI.Controllers
 				else if (accInfo[0].TypeId == 3)
                 {
 					///check ton tai
-					var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone", businessModel.Phone, accInfo[0].Id);
+					///
+					var info = await new BIBusinessGetByUserId(_appSetting).BIBusinessGetByUserIdDAO(accInfo[0].Id);
+					var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone", businessModel.Phone, info[0].Id);
 					if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
 					if (!string.IsNullOrEmpty(model.Email))
 					{
-						checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Email", businessModel.Email, accInfo[0].Id);
+						checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Email", businessModel.Email, info[0].Id);
 						if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện đã tồn tại" };
 					}
-					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("IDCard", businessModel.IDCard, accInfo[0].Id);
+					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("IDCard", businessModel.IDCard, info[0].Id);
 					if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
-					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgPhone", businessModel.OrgPhone, accInfo[0].Id);
+					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgPhone", businessModel.OrgPhone, info[0].Id);
 					if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại doanh nghiệp đã tồn tại" };
 					if (!string.IsNullOrEmpty(businessModel.OrgEmail))
 					{
-						checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgEmail", businessModel.OrgEmail, accInfo[0].Id);
+						checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgEmail", businessModel.OrgEmail, info[0].Id);
 						if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email doanh nghiệp đã tồn tại" };
 					}
-					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("BusinessRegistration", businessModel.BusinessRegistration, accInfo[0].Id);
+					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("BusinessRegistration", businessModel.BusinessRegistration, info[0].Id);
 					if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số đăng ký kinh doanh đã tồn tại" };
-					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("DecisionOfEstablishing", businessModel.DecisionOfEstablishing, accInfo[0].Id);
+					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("DecisionOfEstablishing", businessModel.DecisionOfEstablishing, info[0].Id);
 					if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số quyết định thành lập đã tồn tại" };
 
 
@@ -707,7 +733,7 @@ namespace PAKNAPI.Controllers
 						//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 					}
 
-					var info = await new BIBusinessGetByUserId(_appSetting).BIBusinessGetByUserIdDAO(accInfo[0].Id);
+					
 					
 					var _model = new BIBusinessUpdateInfoIN
 					{
