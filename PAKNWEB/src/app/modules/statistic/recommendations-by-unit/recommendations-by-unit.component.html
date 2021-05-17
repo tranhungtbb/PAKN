@@ -27,58 +27,61 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-4">
-				<p-multiSelect [options]="listUnit" [(ngModel)]="listUnitSelected" optionLabel="fullName" [virtualScroll]="true" optionValue="id">
-					<ng-template let-userSelected pTemplate="selectedItems">
-						<ng-container *ngIf="userSelected && userSelected.length <= 4">
-							<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">
-								<span>{{val.fullName}}</span>
-							</div>
-						</ng-container>
+			<div class="form-serach">
+				<div class="col-md-4">
+					<p-multiSelect [options]="listUnit" [(ngModel)]="listUnitSelected" optionLabel="unitName" [virtualScroll]="true" optionValue="unitId"
+						(onChange)="dataStateChange()">
+						<ng-template let-userSelected pTemplate="selectedItems">
+							<ng-container *ngIf="userSelected && userSelected.length <= 2">
+								<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">
+									<span>{{val.unitName}}</span>
+								</div>
+							</ng-container>
 
-						<span *ngIf="!userSelected || userSelected.length === 0" class="ui-multiselected-empty-token ui-corner-all">Chọn thành phần tham
-							dự...</span>
-						<span *ngIf="userSelected && userSelected.length > 4" class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
-							thành phần được chọn</span>
-					</ng-template>
-					<ng-template let-user pTemplate="item">
-						<div style="font-size:14px">{{user.label}}</div>
-					</ng-template>
-				</p-multiSelect>
-			</div>
-			<div class="col-md-4">
-				<div class="row">
-					<div class="col-md-4">
-						<div class="dropdown bootstrap-select form-control form-control-sm" style="max-width: 180px;">
-							<ng-select [items]="listYear" placeholder="Năm ..." bindLabel="text" bindValue="value" [(ngModel)]="status" (change)="dataStateChange()">
-							</ng-select>
+							<span *ngIf="!userSelected || userSelected.length === 0" class="ui-multiselected-empty-token  ui-corner-all">Chọn đơn vị...</span>
+							<span *ngIf="userSelected && userSelected.length > 2" class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
+								đơn vị đã được chọn</span>
+						</ng-template>
+						<ng-template let-user pTemplate="item">
+							<div style="font-size:14px">{{user.label}}</div>
+						</ng-template>
+					</p-multiSelect>
+				</div>
+				<div class="col-md-4">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="dropdown bootstrap-select form-control form-control-sm">
+								<ng-select [items]="listYear" placeholder="Năm ..." bindLabel="text" bindValue="value" [(ngModel)]="year" [clearable]="false"
+									(onChange)="dataStateChange()">
+								</ng-select>
+							</div>
 						</div>
-					</div>
-					<div class="col-md-8">
-						<div class="dropdown bootstrap-select form-control form-control-sm" style="max-width: 180px;">
-							<ng-select [items]="lstTimeline" placeholder="Chọn mốc thời gian ..." bindLabel="text" bindValue="value" [(ngModel)]="status"
-								(change)="dataStateChange()">
-							</ng-select>
+						<div class="col-md-8">
+							<div class="dropdown bootstrap-select form-control form-control-sm">
+								<ng-select [items]="lstTimeline" placeholder="Chọn mốc thời gian ..." bindLabel="text" bindValue="value" [(ngModel)]="timeline"
+									(onChange)="dataStateChange()">
+								</ng-select>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="row">
-					<div class="col-md-6">
-						<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="fromDate" bsDatepicker #n="bsDatepicker" maxlength="10" id="fromDate"
-							appBsDatepickerInvalid (bsValueChange)="fromDateChange($event)"
-							[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-						<div class="input-group-addon">
-							<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
+				<div class="col-md-4">
+					<div class="row">
+						<div class="col-md-6">
+							<input class="form-control form-control-sm" placeholder="Từ ngày..." [(ngModel)]="fromDate" bsDatepicker #n="bsDatepicker" maxlength="10" id="fromDate"
+								appBsDatepickerInvalid (bsValueChange)="fromDateChange($event)"
+								[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+							<div class="input-group-addon">
+								<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
+							</div>
 						</div>
-					</div>
-					<div class="col-md-6">
-						<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="toDate" bsDatepicker #n="bsDatepicker" maxlength="10" id="fromDate"
-							appBsDatepickerInvalid (bsValueChange)="fromDateChange($event)"
-							[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-						<div class="input-group-addon">
-							<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
+						<div class="col-md-6">
+							<input class="form-control form-control-sm" placeholder="Đến ngày..." [(ngModel)]="toDate" bsDatepicker #n="bsDatepicker" maxlength="10" id="fromDate"
+								appBsDatepickerInvalid (bsValueChange)="toDateChange($event)"
+								[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+							<div class="input-group-addon">
+								<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -91,11 +94,6 @@
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
-									<th style="width: 50px;">
-										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>STT</strong>
-										</p>
-									</th>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Đơn vị</strong>
@@ -103,7 +101,7 @@
 										</p>
 									</th>
 
-									<th>
+									<th style=" max-width: 150px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tổng số</strong>
 											<span class="caret-tb"></span>
@@ -111,41 +109,41 @@
 									</th>
 
 
-									<th>
+									<th style=" max-width: 160px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Chờ xử lý</strong>
 											<span class="caret-tb"></span>
 										</p>
 									</th>
 
-									<th>
+									<th style=" max-width: 160px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tiếp nhận xử lý</strong>
 											<span class="caret-tb"></span>
 										</p>
 									</th>
 
-									<th>
+									<th style="max-width: 180px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Từ chối tiếp nhận</strong>
 											<span class="caret-tb"></span>
 										</p>
 									</th>
-									<th>
+									<th style="max-width: 160px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Chờ giải quyết</strong>
 											<span class="caret-tb"></span>
 										</p>
 									</th>
 
-									<th>
+									<th style=" max-width: 160px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Đang giải quyết</strong>
 											<span class="caret-tb"></span>
 										</p>
 									</th>
 
-									<th>
+									<th style="max-width: 160px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Đã giải quyết</strong>
 											<span class="caret-tb"></span>
@@ -157,7 +155,6 @@
 
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
-									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
 										<strong>{{item.unitName}}</strong>
 									</td>
@@ -186,7 +183,7 @@
 							</ng-template>
 							<ng-template pTemplate="emptymessage">
 								<tr>
-									<td class="text-center" colspan="7">Không có dữ liệu</td>
+									<td class="text-center" colspan="8">Không có dữ liệu</td>
 								</tr>
 							</ng-template>
 						</p-table>
