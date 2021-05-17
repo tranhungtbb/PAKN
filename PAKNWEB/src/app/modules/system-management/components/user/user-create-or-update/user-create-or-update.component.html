@@ -118,6 +118,8 @@
 							<ng-select class="form-control" [items]="rolesList" placeholder="Chọn..." bindLabel="name" bindValue="id" [(ngModel)]="selectedRoles"
 								formControlName="roleId" [closeOnSelect]="true" [multiple]="true">
 							</ng-select>
+
+
 							<div *ngIf="(userFormSubmitted && fUser.roleId.invalid)||(fUser.roleId.invalid && (fUser.roleId.dirty || fUser.roleId.touched))"
 								class="has-error m-b-12">
 								<div *ngIf="fUser.roleId.errors.required">
