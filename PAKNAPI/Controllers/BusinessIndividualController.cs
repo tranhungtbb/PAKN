@@ -1,28 +1,20 @@
 ﻿using Bugsnag;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
-using PAKNAPI.Services.FileUpload;
+using PAKNAPI.Models.BusinessIndividual;
+using PAKNAPI.Models.Results;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using PAKNAPI.App_Helper;
-using PAKNAPI.Models.Results;
-using PAKNAPI.Models.Login;
-using System.Security.Claims;
 using System.Globalization;
-using PAKNAPI.Models;
-using Microsoft.AspNetCore.Hosting;
-using PAKNAPI.Models.BusinessIndividual;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PAKNAPI.Controllers
 {
-	[Route("api/BusinessIndividual")]
+    [Route("api/BusinessIndividual")]
 	[ApiController]
 	public class BusinessIndividualController : BaseApiController
 	{
@@ -35,14 +27,189 @@ namespace PAKNAPI.Controllers
 			_hostingEnvironment = hostingEnvironment;
 		}
 
-		[HttpGet]
+		[HttpPost, DisableRequestSizeLimit]
+		[Route("ImportDataInvididual")]
 		[Authorize]
-		[Route("IndividualGetAllOnPage")]
-		public async Task<ActionResult<object>> IndividualGetAllOnPage(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
+		public async Task<ActionResult<object>> ImportDataInvididual(string folder = null)
 		{
 			try
 			{
-                List<IndividualGetAllOnPage> rsIndividualGetAllOnPageBase = await new IndividualGetAllOnPage(_appSetting).IndividualGetAllOnPageDAO(PageSize, PageIndex, FullName, Address, Phone, Email, IsActived, SortDir, SortField);
+
+				var file = Request.Form.Files[0];
+
+				if (file.Length <= 0)
+				{
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "File not found!" };
+				}
+
+				string contentRootPath = _hostingEnvironment.ContentRootPath;
+
+				string folderName = string.IsNullOrEmpty(folder) ? "Upload/Orther" : "Upload/" + folder;
+
+				string fileName = $"{DateTime.Now.ToString("ddMMyyyyHHmmss")}-{file.FileName}";
+				string folderPath = System.IO.Path.Combine(contentRootPath, folderName);
+
+				if (!System.IO.Directory.Exists(folderPath))
+				{
+					System.IO.Directory.CreateDirectory(folderPath);
+				}
+
+				string fileNamePath = System.IO.Path.Combine(folderPath, fileName);
+
+				using (var memoryStream = System.IO.File.Create(fileNamePath))
+				{
+					await file.CopyToAsync(memoryStream);
+				}
+
+				System.IO.FileInfo fileInfo = new System.IO.FileInfo(fileNamePath);
+
+                OfficeOpenXml.ExcelPackage package = new OfficeOpenXml.ExcelPackage(fileInfo);
+                OfficeOpenXml.ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
+
+				// get number of rows and columns in the sheet
+				int rows = worksheet.Dimension.Rows; // 20
+				int columns = worksheet.Dimension.Columns; // 7
+
+				//create a list to hold all the values
+				List<Models.BusinessIndividual.BIIndividualInsertIN> individualList = new List<Models.BusinessIndividual.BIIndividualInsertIN>();
+
+				// loop through the worksheet rows and columns
+				for (int i = 1; i <= rows; i++)
+				{
+					if (i == 1)
+                    {
+						continue;
+                    }						
+					Models.BusinessIndividual.BIIndividualInsertIN ind = new Models.BusinessIndividual.BIIndividualInsertIN();
+					ind.FullName = worksheet.Cells[i, 1].Value.ToString();
+					ind.Email = worksheet.Cells[i, 2].Value.ToString();
+					ind.Phone = worksheet.Cells[i, 3].Value.ToString();
+					ind.IDCard = worksheet.Cells[i, 4].Value.ToString();
+					ind.IssuedPlace = worksheet.Cells[i, 5].Value.ToString();
+					ind.Nation = worksheet.Cells[i, 6].Value.ToString();
+					ind.ProvinceId = Convert.ToInt32(worksheet.Cells[i, 7].Value.ToString());
+					ind.DistrictId = Convert.ToInt32(worksheet.Cells[i, 8].Value.ToString());
+					ind.WardsId = Convert.ToInt32(worksheet.Cells[i, 9].Value.ToString());
+					ind.PermanentPlace = worksheet.Cells[i, 10].Value.ToString();
+					ind.Address = worksheet.Cells[i, 11].Value.ToString();
+					ind.BirthDay = DateTime.Now;
+					ind.Status = Convert.ToInt32(worksheet.Cells[i, 12].Value.ToString());
+					ind.IsActived = true;
+					ind.IsDeleted = false;
+					ind.UserId = Convert.ToInt64(worksheet.Cells[i, 13].Value.ToString());
+
+					individualList.Add(ind);
+				}
+
+				foreach (Models.BusinessIndividual.BIIndividualInsertIN ins in individualList)
+                {
+					await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(ins);
+				}
+
+
+				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = fileInfo };
+			}
+			catch (Exception e)
+			{
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = e.Message };
+			}
+		}
+
+		[HttpPost, DisableRequestSizeLimit]
+		[Route("ImportDataBusiness")]
+		[Authorize]
+		public async Task<ActionResult<object>> ImportDataBusiness(string folder = null)
+		{
+			try
+			{
+				var file = Request.Form.Files[0];
+
+				if (file.Length <= 0)
+				{
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "File not found!" };
+				}
+
+				string contentRootPath = _hostingEnvironment.ContentRootPath;
+
+				string folderName = string.IsNullOrEmpty(folder) ? "Upload/Orther" : "Upload/" + folder;
+
+				string fileName = $"{DateTime.Now.ToString("ddMMyyyyHHmmss")}-{file.FileName}";
+				string folderPath = System.IO.Path.Combine(contentRootPath, folderName);
+
+				if (!System.IO.Directory.Exists(folderPath))
+				{
+					System.IO.Directory.CreateDirectory(folderPath);
+				}
+
+				string fileNamePath = System.IO.Path.Combine(folderPath, fileName);
+
+				using (var memoryStream = System.IO.File.Create(fileNamePath))
+				{
+					await file.CopyToAsync(memoryStream);
+				}
+
+				System.IO.FileInfo fileInfo = new System.IO.FileInfo(fileNamePath);
+
+				OfficeOpenXml.ExcelPackage package = new OfficeOpenXml.ExcelPackage(fileInfo);
+				OfficeOpenXml.ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
+
+				// get number of rows and columns in the sheet
+				int rows = worksheet.Dimension.Rows; // 20
+				int columns = worksheet.Dimension.Columns; // 7
+
+				//create a list to hold all the values
+				List<Models.BusinessIndividual.BIIndividualInsertIN> individualList = new List<Models.BusinessIndividual.BIIndividualInsertIN>();
+
+				// loop through the worksheet rows and columns
+				for (int i = 1; i <= rows; i++)
+				{
+					if (i == 1)
+					{
+						continue;
+					}
+					Models.BusinessIndividual.BIIndividualInsertIN ind = new Models.BusinessIndividual.BIIndividualInsertIN();
+					ind.FullName = worksheet.Cells[i, 1].Value.ToString();
+					ind.Email = worksheet.Cells[i, 2].Value.ToString();
+					ind.Phone = worksheet.Cells[i, 3].Value.ToString();
+					ind.IDCard = worksheet.Cells[i, 4].Value.ToString();
+					ind.IssuedPlace = worksheet.Cells[i, 5].Value.ToString();
+					ind.Nation = worksheet.Cells[i, 6].Value.ToString();
+					ind.ProvinceId = Convert.ToInt32(worksheet.Cells[i, 7].Value.ToString());
+					ind.DistrictId = Convert.ToInt32(worksheet.Cells[i, 8].Value.ToString());
+					ind.WardsId = Convert.ToInt32(worksheet.Cells[i, 9].Value.ToString());
+					ind.PermanentPlace = worksheet.Cells[i, 10].Value.ToString();
+					ind.Address = worksheet.Cells[i, 11].Value.ToString();
+					ind.BirthDay = DateTime.Now;
+					ind.Status = Convert.ToInt32(worksheet.Cells[i, 12].Value.ToString());
+					ind.IsActived = true;
+					ind.IsDeleted = false;
+					ind.UserId = Convert.ToInt64(worksheet.Cells[i, 13].Value.ToString());
+
+					individualList.Add(ind);
+				}
+
+				foreach (Models.BusinessIndividual.BIIndividualInsertIN ins in individualList)
+				{
+					await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(ins);
+				}
+
+
+				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = fileInfo };
+			}
+			catch (Exception e)
+			{
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = e.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("BI_IndividualGetAllOnPage")]
+		public async Task<ActionResult<object>> BI_IndividualGetAllOnPage(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
+		{
+			try
+			{
+                List<BI_IndividualGetAllOnPage> rsIndividualGetAllOnPageBase = await new BI_IndividualGetAllOnPage(_appSetting).BI_IndividualGetAllOnPageDAO(PageSize, PageIndex, FullName, Address, Phone, Email, IsActived, SortDir, SortField);
                 IDictionary<string, object> json = new Dictionary<string, object>
                         {
                             {"IndividualGetAllOnPage", rsIndividualGetAllOnPageBase},
@@ -63,14 +230,14 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Authorize]
-		[Route("IndivialDelete")]
-		public async Task<ActionResult<object>> IndivialDelete(IndivialDeleteIN _indivialDeleteIN)
+		[Route("BI_IndivialDelete")]
+		public async Task<ActionResult<object>> BI_IndivialDelete(BI_IndivialDeleteIN _bi_IndivialDeleteIN)
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new IndivialDelete(_appSetting).IndivialDeleteDAO(_indivialDeleteIN) };
+				return new ResultApi { Success = ResultCode.OK, Result = await new BI_IndivialDelete(_appSetting).BI_IndivialDeleteDAO(_bi_IndivialDeleteIN) };
 			}
 			catch (Exception ex)
 			{
@@ -83,14 +250,14 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Authorize]
-		[Route("IndivialChageStatus")]
-		public async Task<ActionResult<object>> IndivialChageStatus(IndivialChageStatusIN _indivialChageStatusIN)
+		[Route("BI_IndivialChangeStatus")]
+		public async Task<ActionResult<object>> BI_IndivialChangeStatus(BI_IndivialChageStatusIN _bI_IndivialChageStatusIN)
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new IndivialChageStatus(_appSetting).IndivialChageStatusDAO(_indivialChageStatusIN) };
+				return new ResultApi { Success = ResultCode.OK, Result = await new BI_IndivialChageStatus(_appSetting).IndivialChageStatusDAO(_bI_IndivialChageStatusIN) };
 			}
 			catch (Exception ex)
 			{
@@ -114,16 +281,16 @@ namespace PAKNAPI.Controllers
                 if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
 
 				// check exist:Phone,Email,IDCard
-				var checkExists = await new Models.BusinessIndividual.BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", model.Phone, 0);
+				var checkExists = await new Models.BusinessIndividual.BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", model.Phone, 0);
                 if (checkExists[0].Exists.Value)
                     return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
                 if (!string.IsNullOrEmpty(model.Email))
                 {
-                    checkExists = await new Models.BusinessIndividual.BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", model.Email, 0);
+                    checkExists = await new Models.BusinessIndividual.BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", model.Email, 0);
                     if (checkExists[0].Exists.Value)
                         return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
                 }
-                checkExists = await new Models.BusinessIndividual.BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", model.IDCard, 0);
+                checkExists = await new Models.BusinessIndividual.BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", model.IDCard, 0);
                 if (checkExists[0].Exists.Value)
                     return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 
@@ -347,4 +514,5 @@ namespace PAKNAPI.Controllers
 		}
 
 	}
+
 }

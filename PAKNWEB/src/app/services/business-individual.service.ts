@@ -1,33 +1,25 @@
 import { Injectable } from '@angular/core'
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { ServiceInvokerService } from '../commons/service-invoker.service'
 import { Observable, of } from 'rxjs'
 import { AppSettings } from '../constants/app-setting'
 import { Api } from '../constants/api'
-import { catchError, tap } from 'rxjs/operators'
-import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 import { UserInfoStorageService } from '../commons/user-info-storage.service'
 @Injectable({
 	providedIn: 'root',
 })
 export class BusinessIndividualService {
-	private handleError<T>(operation = 'operation', result?: T) {
-		return (error: any): Observable<T> => {
-			console.error(error) // log to console instead
-			return of(result as T)
-		}
-	}
 	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
 	individualGetList(request: any): Observable<any> {
-		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.IndividualGetAllOnPage)
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.BI_IndividualGetAllOnPage)
 	}
 
 	individualChangeStatus(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialChageStatus)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BI_IndivialChangeStatus)
 	}
 
 	individualDelete(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialDelete)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BI_IndivialDelete)
 	}
 
 	individualRegister(data: any): Observable<any> {
@@ -45,6 +37,10 @@ export class BusinessIndividualService {
 
 	invididualUpdate(request: any): Observable<any> {
 		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.InvididualUpdate)
+	}
+
+	invididualImportFile(data: any): Observable<any> {
+		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.InvididualImportFile)
 	}
 
 	businessGetList(request: any): Observable<any> {
@@ -75,5 +71,9 @@ export class BusinessIndividualService {
 
 	businessUpdate(request: any): Observable<any> {
 		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.BusinessUpdate)
+	}
+
+	businessImportFile(data: any): Observable<any> {
+		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.BusinessImportFile)
 	}
 }

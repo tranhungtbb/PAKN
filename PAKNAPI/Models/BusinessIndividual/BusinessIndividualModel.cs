@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace PAKNAPI.Models.BusinessIndividual
 {
-	#region IndividualGetAllOnPage
-	public class IndividualGetAllOnPage
+	#region BI_IndividualGetAllOnPage
+	public class BI_IndividualGetAllOnPage
 	{
 		private SQLCon _sQLCon;
 
-		public IndividualGetAllOnPage(IAppSetting appSetting)
+		public BI_IndividualGetAllOnPage(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public IndividualGetAllOnPage()
+		public BI_IndividualGetAllOnPage()
 		{
 		}
 
@@ -31,7 +31,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public bool IsDeleted { get; set; }
 
 
-		public async Task<List<IndividualGetAllOnPage>> IndividualGetAllOnPageDAO(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
+		public async Task<List<BI_IndividualGetAllOnPage>> BI_IndividualGetAllOnPageDAO(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
@@ -44,57 +44,57 @@ namespace PAKNAPI.Models.BusinessIndividual
 			DP.Add("SortDir", SortDir);
 			DP.Add("SortField", SortField);
 
-			return (await _sQLCon.ExecuteListDapperAsync<IndividualGetAllOnPage>("BI_IndividualGetAllOnPage", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<BI_IndividualGetAllOnPage>("BI_IndividualGetAllOnPage", DP)).ToList();
 		}
 	}
 	#endregion
 
-	#region IndivialDelete
-	public class IndivialDelete
+	#region BI_IndivialDelete
+	public class BI_IndivialDelete
 	{
 		private SQLCon _sQLCon;
 
-		public IndivialDelete(IAppSetting appSetting)
+		public BI_IndivialDelete(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public IndivialDelete()
+		public BI_IndivialDelete()
 		{
 		}
 
-		public async Task<int> IndivialDeleteDAO(IndivialDeleteIN _indivialDeleteIN)
+		public async Task<int> BI_IndivialDeleteDAO(BI_IndivialDeleteIN _bi_IndivialDeleteIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _indivialDeleteIN.Id);
+			DP.Add("Id", _bi_IndivialDeleteIN.Id);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_IndividualDelete", DP));
 		}
 	}
 
-	public class IndivialDeleteIN
+	public class BI_IndivialDeleteIN
 	{
 		public int? Id { get; set; }
 	}
 
 	#endregion
 
-	#region IndivialChageStatus
+	#region BI_IndivialChageStatus
 
-	public class IndivialChageStatus
+	public class BI_IndivialChageStatus
 	{
 		private SQLCon _sQLCon;
 
-		public IndivialChageStatus(IAppSetting appSetting)
+		public BI_IndivialChageStatus(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public IndivialChageStatus()
+		public BI_IndivialChageStatus()
 		{
 		}
 
-		public async Task<int> IndivialChageStatusDAO(IndivialChageStatusIN _indivialChageStatusIN)
+		public async Task<int> IndivialChageStatusDAO(BI_IndivialChageStatusIN _indivialChageStatusIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _indivialChageStatusIN.Id);
@@ -104,7 +104,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		}
 	}
 
-	public class IndivialChageStatusIN
+	public class BI_IndivialChageStatusIN
 	{
 		public int? Id { get; set; }
 		public bool? IsActived { get; set; }
@@ -113,16 +113,16 @@ namespace PAKNAPI.Models.BusinessIndividual
 	#endregion
 
 	// Individual
-	public class BIIndividualCheckExists
+	public class BI_IndividualCheckExists
 	{
 		private SQLCon _sQLCon;
 
-		public BIIndividualCheckExists(IAppSetting appSetting)
+		public BI_IndividualCheckExists(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public BIIndividualCheckExists()
+		public BI_IndividualCheckExists()
 		{
 		}
 
@@ -130,14 +130,14 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public string Value { get; set; }
 		public long? Id { get; set; }
 
-		public async Task<List<BIIndividualCheckExists>> BIIndividualCheckExistsDAO(string Field, string Value, long? Id)
+		public async Task<List<BI_IndividualCheckExists>> BIIndividualCheckExistsDAO(string Field, string Value, long? Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Field", Field);
 			DP.Add("Value", Value);
 			DP.Add("Id", Id);
 
-			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualCheckExists>("BI_Individual_CheckExists", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<BI_IndividualCheckExists>("BI_Individual_CheckExists", DP)).ToList();
 		}
 	}
 

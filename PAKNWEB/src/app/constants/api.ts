@@ -270,12 +270,13 @@ export class Api {
 	public static TimeConfigGetDateActive = 'SYSPBase/SYTimeGetDateActiveBase'
 
 	//Individual
-	public static IndividualGetAllOnPage = 'BusinessIndividual/IndividualGetAllOnPage'
-	public static IndivialChageStatus = 'BusinessIndividual/IndivialChageStatus'
-	public static IndivialDelete = 'BusinessIndividual/IndivialDelete'
+	public static BI_IndividualGetAllOnPage = 'BusinessIndividual/BI_IndividualGetAllOnPage'
+	public static BI_IndivialChangeStatus = 'BusinessIndividual/BI_IndivialChangeStatus'
+	public static BI_IndivialDelete = 'BusinessIndividual/BI_IndivialDelete'
 	public static InvididualRegister = 'BusinessIndividual/InvididualRegister'
 	public static InvididualGetByID = 'BusinessIndividual/InvididualGetByID'
 	public static InvididualUpdate = 'BusinessIndividual/InvididualUpdate'
+	public static InvididualImportFile = 'BusinessIndividual/ImportDataInvididual?folder=BusinessIndividual'
 
 	//Business
 	public static BusinessGetAllOnPageBase = 'BusinessIndividual/BusinessGetAllOnPageBase'
@@ -288,4 +289,7 @@ export class Api {
 	//Statistic
 
 	public static StatisticRecommendationByUnit = 'Statistic/STT_RecommendationByUnit'
+
+	// import
+	public static BusinessImportFile = 'BusinessIndividual/ImportDataBusiness?folder=BusinessIndividual'
 }
