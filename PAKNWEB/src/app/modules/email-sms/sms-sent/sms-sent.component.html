@@ -1,0 +1,290 @@
+<div class="content-body">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+					<li class="breadcrumb-item"><a>SMS</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold">Danh sách tin nhắn SMS đã gửi</a></li>
+				</ol>
+				<!-- <div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách lĩnh vực</div> -->
+				<div class="btn-group group-button-table" role="group">
+					<!-- <button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
+						<path
+							d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
+						<path
+							d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+					</svg>
+					Xuất excel
+				</button> -->
+					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="redirectCreate()">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+						</svg>
+						Thêm mới
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card mb-0 shadow-none">
+					<div class="table-responsive">
+
+						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+							<ng-template pTemplate="header" class="bg-thead">
+								<tr>
+									<th style="width: 50px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>STT</strong>
+										</p>
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Nội dung</strong>
+											<span class="caret-tb"></span>
+										</p>
+										<input class="form-control form-control-sm" [(ngModel)]="title" maxlength="100" (keydown.enter)="dataStateChange()"
+											placeholder="Nhập tên..." />
+									</th>
+									<th style="width: 200px; max-width: 250px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Đơn vị nhận</strong>
+											<span class="caret-tb"></span>
+										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select placeholder="Chọn đơn vị ..." [(ngModel)]="unitId" [closeOnSelect]="true" style="width: 200px !important;"
+												(change)="dataStateChange()">
+												<ng-option *ngFor="let nt of AdministrativeUnits" [value]="nt.id">
+													{{nt.name}}
+												</ng-option>
+											</ng-select>
+										</div>
+									</th>
+
+									<th style="width: 200px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Đối tượng nhận</strong>
+											<span class="caret-tb"></span>
+										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm" style="max-width: 180px;">
+											<ng-select class="" [items]="listCategory" placeholder="Đối tượng" bindLabel="text" bindValue="value" [(ngModel)]="type"
+												(change)="dataStateChange()">
+											</ng-select>
+										</div>
+									</th>
+									<th style="width: 180px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Trạng thái</strong>
+											<span class="caret-tb"></span>
+										</p>
+										<!-- <div class="dropdown bootstrap-select form-control form-control-sm" style="max-width: 180px;">
+											<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="status"
+												(change)="dataStateChange()">
+											</ng-select>
+										</div> -->
+									</th>
+									<th style="width: 100px;" class="text-center"><strong>THAO TÁC</strong></th>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+								<tr>
+									<td class="text-center">{{rowIndex + 1}}</td>
+									<td>
+										<strong class="highlight"><a class="ellipsis" (click)=" getSMSModelById(item.id)" title="Cập nhập">{{item.title}}</a></strong>
+										<span class="content-sms">{{item.content}}</span>
+									</td>
+									<td>{{item.unitName}}</td>
+									<td>{{item.type}}</td>
+									<td>
+										<span type="button" *ngIf="item.status == 1" class="badge rounded-pill badge-outline-light bg-white">Đang soạn thảo</span>
+										<span type="button" *ngIf="item.status == 2" class="badge rounded-pill blue-3">Đã gửi</span>
+									</td>
+									<td style="text-align: center;">
+										<div class="d-flex justify-content-end">
+											<a (click)="confirm(item.id)" class="btn-icon grd-red text-white cursor mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
+													class="bi bi-trash"></i></a>
+											<a class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
+										</div>
+									</td>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="emptymessage">
+								<tr>
+									<td class="text-center" colspan="6">Không có dữ liệu</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalConfirm">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+					</div>
+					<div class="modal-body no-padding-bottom" style="border: none;">
+						<div style="text-align: center;">
+							<strong class="change-status-title">Bạn có chắc chắn thực hiện hành động này?</strong>
+						</div>
+					</div>
+					<div class="modal-footer" style="border: none; justify-content: center;">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete()">Xác
+							nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalHisSMS">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="min-width: 90%;">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4">Lịch sử SMS</p>
+				<button type="button" class="close" data-dismiss="modal" (click)="clearModelHis()"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pt-3 pb-3">
+				<p-table #table2 [value]="listHis" [lazy]="true" (onLazyLoad)="onPageChange2($event)" [paginator]="true" [showCurrentPageReport]="true"
+					currentPageReportTemplate="Tổng số {{hisTotalRecords}}" [rows]="hisPageSize" [totalRecords]="hisTotalRecords" [responsive]="true" autoLayout="true"
+					tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+					<ng-template pTemplate="header" class="bg-thead">
+						<tr>
+							<th style="width: 5%">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>STT</strong>
+								</p>
+							</th>
+
+							<th style="width: 40%;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Nội dung</strong>
+									<span class="caret-tb"></span>
+								</p>
+								<input class="form-control form-control-sm" [(ngModel)]="hisContent" maxlength="100" (keydown.enter)="dataStateChange2()"
+									placeholder="Nhập nội dung..." />
+							</th>
+
+							<th style="width: 20%;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Người tạo</strong>
+									<span class="caret-tb"></span>
+								</p>
+								<input class="form-control form-control-sm" [(ngModel)]="hisUserCreate" maxlength="100" (keydown.enter)="dataStateChange2()"
+									placeholder="Nhập tên..." />
+							</th>
+
+							<th style="width: 15%;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Ngày tạo</strong>
+									<span class="caret-tb"></span>
+								</p>
+								<div class="dropdown bootstrap-select form-control form-control-sm">
+									<input class="form-control form-control-sm" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" [(ngModel)]="hisCreateDate"
+										appBsDatepickerInvalid (bsValueChange)="sendDateChange($event)"
+										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+									<div class="input-group-addon">
+										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+									</div>
+								</div>
+
+							</th>
+
+							<th style="width: 180px;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Trạng thái</strong>
+									<span class="caret-tb"></span>
+								</p>
+								<div class="dropdown bootstrap-select form-control form-control-sm">
+									<ng-select class="" [items]="listHisStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="hisStatus"
+										[closeOnSelect]="true" (change)="dataStateChange2()">
+									</ng-select>
+								</div>
+							</th>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+						<tr>
+							<td class="text-center">{{rowIndex + 1}}</td>
+							<td>
+								<strong class="highlight"><a class="ellipsis" title="Xem chi tiết">{{item.content}}</a></strong>
+							</td>
+
+							<td>
+								<p>{{item.createName}}</p>
+							</td>
+							<td>
+								<p>{{item.createdDate | date : 'dd/MM/yyyy HH:mm'}}</p>
+							</td>
+							<td>
+								<span *ngIf="item.status == 0" class="badge rounded-pill bg-blue2">Đã khởi tạo</span>
+								<span *ngIf="item.status == 1" class="badge rounded-pill badge-outline-green2">Đã cập nhập</span>
+								<span *ngIf="item.status == 2" class="badge rounded-pill bg-red">Đã gửi</span>
+							</td>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="emptymessage">
+						<tr>
+							<td class="text-center" colspan="5">Không có dữ liệu</td>
+						</tr>
+					</ng-template>
+				</p-table>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalDetail">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 70%" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">{{model.title}}</p>
+					</div>
+					<div class="modal-body no-padding-bottom" style="padding: 1.1rem; padding-top: 0px;">
+						<div class="row" style="padding: 10px 0px;">
+							<div class="col-sm-12" style="border-top: 1px solid #EEEEEE; border-bottom: 1px solid #EEEEEE">
+								<p style="margin: 16px 0px;">{{model.content}}</p>
+							</div>
+							<div class="w-100"></div>
+							<div class="title-user-map">Cá nhân doanh nghiệp nhận SMS</div>
+							<div class="col-sm-3" style="padding: 5px !important;" *ngFor="let item of listItemUserSelected">
+								<div class="item-user">
+									<div class="info-user padding-item" style="padding-left: 0px;">
+										<!-- <div class="title" *ngIf="item.category ==1">Cá nhân</div>
+										<div class="title" *ngIf="item.category ==2">Doanh nghiệp</div> -->
+										<div class="title">{{item.administrativeUnitName}}</div>
+
+										<div class="department">{{item.name}}</div>
+
+									</div>
+								</div>
+							</div>
+							<div class="w-100"></div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

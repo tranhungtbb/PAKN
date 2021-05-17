@@ -27,6 +27,8 @@ export class RecommendationsByUnitComponent implements OnInit {
 	pageSize: Number = 20
 	totalRecords: Number
 	listData: any[]
+	formDate: Date
+	toDate: Date
 
 	lstTimeline: any = [
 		{ value: 1, text: 'Qúy I' },
@@ -35,6 +37,12 @@ export class RecommendationsByUnitComponent implements OnInit {
 		{ value: 4, text: 'Quý III' },
 		{ value: 5, text: '6 tháng đầu năm' },
 		{ value: 6, text: '6 tháng cuối năm' },
+	]
+	listYear: any = [
+		{ value: 2020, text: '2020' },
+		{ value: 2021, text: '2021' },
+		{ value: 2022, text: '2022' },
+		{ value: 2023, text: '2023' },
 	]
 
 	constructor(
@@ -70,6 +78,7 @@ export class RecommendationsByUnitComponent implements OnInit {
 				return
 			}
 			this.listData = res.result.StatisticRecommendationByUnitGetAllOnPage
+
 			this.totalRecords = res.result.TotalCount
 			this.pageSize = res.result.PageSize
 			this.pageIndex = res.result.PageIndex

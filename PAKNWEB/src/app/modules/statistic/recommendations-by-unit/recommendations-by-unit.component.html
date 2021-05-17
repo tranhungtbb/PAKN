@@ -27,15 +27,70 @@
 			</div>
 		</div>
 		<div class="row">
+			<div class="col-md-4">
+				<p-multiSelect [options]="listUnit" [(ngModel)]="listUnitSelected" optionLabel="fullName" [virtualScroll]="true" optionValue="id">
+					<ng-template let-userSelected pTemplate="selectedItems">
+						<ng-container *ngIf="userSelected && userSelected.length <= 4">
+							<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">
+								<span>{{val.fullName}}</span>
+							</div>
+						</ng-container>
+
+						<span *ngIf="!userSelected || userSelected.length === 0" class="ui-multiselected-empty-token ui-corner-all">Chọn thành phần tham
+							dự...</span>
+						<span *ngIf="userSelected && userSelected.length > 4" class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
+							thành phần được chọn</span>
+					</ng-template>
+					<ng-template let-user pTemplate="item">
+						<div style="font-size:14px">{{user.label}}</div>
+					</ng-template>
+				</p-multiSelect>
+			</div>
+			<div class="col-md-4">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="dropdown bootstrap-select form-control form-control-sm" style="max-width: 180px;">
+							<ng-select [items]="listYear" placeholder="Năm ..." bindLabel="text" bindValue="value" [(ngModel)]="status" (change)="dataStateChange()">
+							</ng-select>
+						</div>
+					</div>
+					<div class="col-md-8">
+						<div class="dropdown bootstrap-select form-control form-control-sm" style="max-width: 180px;">
+							<ng-select [items]="lstTimeline" placeholder="Chọn mốc thời gian ..." bindLabel="text" bindValue="value" [(ngModel)]="status"
+								(change)="dataStateChange()">
+							</ng-select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="row">
+					<div class="col-md-6">
+						<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="fromDate" bsDatepicker #n="bsDatepicker" maxlength="10" id="fromDate"
+							appBsDatepickerInvalid (bsValueChange)="fromDateChange($event)"
+							[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+						<div class="input-group-addon">
+							<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="toDate" bsDatepicker #n="bsDatepicker" maxlength="10" id="fromDate"
+							appBsDatepickerInvalid (bsValueChange)="fromDateChange($event)"
+							[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+						<div class="input-group-addon">
+							<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="col-lg-12">
 				<div class="card mb-0 shadow-none">
 					<div class="table-responsive">
-
 						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
 							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
-								<!-- <tr>
+								<tr>
 									<th style="width: 50px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>STT</strong>
@@ -47,7 +102,14 @@
 											<span class="caret-tb"></span>
 										</p>
 									</th>
-									
+
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Tổng số</strong>
+											<span class="caret-tb"></span>
+										</p>
+									</th>
+
 
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -90,13 +152,17 @@
 										</p>
 									</th>
 
-								</tr> -->
+								</tr>
 							</ng-template>
+
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
 										<strong>{{item.unitName}}</strong>
+									</td>
+									<td>
+										<strong>{{item.total}}</strong>
 									</td>
 									<td>
 										<strong>{{item.receiveWait}}</strong>
