@@ -85,14 +85,15 @@ export class BusinessComponent implements OnInit, AfterViewInit {
 	}
 	ngAfterViewInit() {
 		$('#show-modal-account-info').click(() => {
-			this.child_UserViewInfoComponent.openModal(Number(localStorage.getItem('userId')))
+			this.child_UserViewInfoComponent.openModal()
 		})
 		this.child_UserViewInfoComponent.parent_BusinessComponent = this
+		// this.child_UserCreateOrUpdateComponent.parent_BusinessComponent = this
 
 		this.currentRouter = this._router.url
 	}
 
-	openModalEditInfo(userId: number) {
+	public openModalEditInfo(userId: number) {
 		this.child_UserCreateOrUpdateComponent.openModal(0, userId, true)
 	}
 

@@ -10,11 +10,11 @@ import { smsManagementGetAllOnPageObject, smsManagementObject, smsManagementMapO
 
 declare var $: any
 @Component({
-	selector: 'app-sms',
-	templateUrl: './sms-management.component.html',
-	styleUrls: ['./sms-management.component.css'],
+	selector: 'app-sms-sent',
+	templateUrl: './sms-sent.component.html',
+	styleUrls: ['./sms-sent.component.css'],
 })
-export class SMSManagementComponent implements OnInit {
+export class SMSSentComponent implements OnInit {
 	constructor(private smsService: SMSManagementService, private toast: ToastrService, private routes: Router) {
 		this.AdministrativeUnits = []
 	}
@@ -99,7 +99,7 @@ export class SMSManagementComponent implements OnInit {
 				Title: this.title == null ? '' : this.title,
 				UnitId: this.unitId == null ? '' : this.unitId,
 				Type: this.type == null ? '' : this.type,
-				Status: this.status == null ? '' : this.status,
+				Status: 2,
 			})
 			.subscribe((res) => {
 				if (res.success != RESPONSE_STATUS.success) {
@@ -136,37 +136,10 @@ export class SMSManagementComponent implements OnInit {
 		this.smsId = id
 	}
 
-	onUpdateStatusTypeSend() {
-		$('#modalConfirmChangeStatus').modal('hide')
-		this.smsService.UpdateStatusSend({ idMSMS: this.smsId }).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				// ghi his
-
-				this.smsService
-					.InsertHisSMS({
-						ObjectId: this.smsId,
-						Status: STATUS_HIS_SMS.SEND,
-					})
-					.subscribe()
-
-				this.toast.success('Gửi thành công')
-				this.getListPaged()
-			} else {
-				this.toast.error('Lỗi khi gửi')
-				return
-			}
-		})
-	}
-
 	dataStateChange() {
 		this.pageIndex = 1
 		this.table.first = 0
 		this.getListPaged()
-	}
-
-	confirm(id: Number) {
-		this.smsId = id
-		$('#modalConfirm').modal('show')
 	}
 
 	onDelete() {
@@ -190,11 +163,6 @@ export class SMSManagementComponent implements OnInit {
 		this.routes.navigate(['quan-tri/email-sms/sms/them-moi'])
 	}
 
-	redirectUpdate(id: number) {
-		this.routes.navigate(['quan-tri/email-sms/sms/cap-nhap/' + id])
-		return
-	}
-
 	clearModelHis() {
 		this.hisPageSize = 10
 		this.hisPageIndex = 1
@@ -202,10 +170,6 @@ export class SMSManagementComponent implements OnInit {
 		this.hisStatus = null
 		this.hisUserCreate = ''
 		this.hisCreateDate = ''
-	}
-
-	close() {
-		this.clearModelHis()
 	}
 
 	getHistory(id: Number) {

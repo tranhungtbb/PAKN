@@ -80,6 +80,11 @@ export class AccountInfoComponent implements OnInit {
 				return
 			}
 			this.model = res.result
+			// if (this.model.provinceId == null || this.model.provinceId < 0) {
+			// 	this.model.districtId = ''
+			// 	this.model.wardsId = ''
+			// }s
+
 			this.onChangeNation()
 
 			this.child_SideLeft.model = this.model

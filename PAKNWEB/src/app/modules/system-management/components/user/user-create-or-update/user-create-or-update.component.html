@@ -1,4 +1,4 @@
-<div class="modal fade" id="{{modalId}}">
+<div class="modal fade notscroll" id="{{modalId}}">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0 bg-ligth-gold">
@@ -11,7 +11,7 @@
 				<form id="createUserForm" [formGroup]="createUserForm" (ngSubmit)="onSaveUser()">
 					<div class="align-items-center mb-4 avatar-bg">
 						<div class="avatar-frame">
-							<img class="user-avatar-view" style="height: 100%; width: 100%; object-fit: cover;" />
+							<img class="user-avatar-view" [ngClass]="{ 'hide': userAvatar == null }" style="height: 100%; width: 100%; object-fit: cover;" />
 							<span class="no-avatar-view" *ngIf="userAvatar == null">
 								<svg width="78" height="78" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
 									<path fill-rule="evenodd" clip-rule="evenodd"
@@ -118,6 +118,8 @@
 							<ng-select class="form-control" [items]="rolesList" placeholder="Chọn..." bindLabel="name" bindValue="id" [(ngModel)]="selectedRoles"
 								formControlName="roleId" [closeOnSelect]="true" [multiple]="true">
 							</ng-select>
+
+
 							<div *ngIf="(userFormSubmitted && fUser.roleId.invalid)||(fUser.roleId.invalid && (fUser.roleId.dirty || fUser.roleId.touched))"
 								class="has-error m-b-12">
 								<div *ngIf="fUser.roleId.errors.required">

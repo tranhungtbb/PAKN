@@ -5,3 +5,6 @@ strong.highlight:hover {
 strong.highlight {
 	cursor: pointer;
 }
+.cursor {
+	cursor: pointer;
+}

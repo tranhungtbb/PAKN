@@ -20,6 +20,10 @@ export class UnitService {
 	getAll(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UnitGetAll)
 	}
+	getChildrenDropdown(): Observable<any> {
+		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.UnitGetChildrenDropdown)
+	}
+
 	getById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UnitGetById)
 	}

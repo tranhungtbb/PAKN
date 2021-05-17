@@ -14,9 +14,10 @@ import { TreeTableModule } from 'primeng/treetable'
 import { EmailSmsRoutingModule } from './email-sms-routing.module'
 import { EmailSmsComponent } from './email-sms.component'
 import { SMSCreateOrUpdateComponent } from './sms-management/sms-management-create-or-update/sms-create-or-update.component'
+import { SMSSentComponent } from './sms-sent/sms-sent.component'
 
 @NgModule({
-	declarations: [EmailSmsComponent],
+	declarations: [EmailSmsComponent, SMSSentComponent],
 	imports: [
 		CommonModule,
 		EmailSmsRoutingModule,

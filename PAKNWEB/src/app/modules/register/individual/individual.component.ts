@@ -63,12 +63,15 @@ export class IndividualComponent implements OnInit {
 		this.listVillage = []
 
 		this.model.provinceId = ''
+		this.model.districtId = ''
+		this.model.wardsId = ''
 
 		if (this.model.nation == 'Việt Nam') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listProvince = res.result.CAProvinceGetAll
 					this.model.provinceId = 37
+					this.onChangeProvince()
 				}
 			})
 		} else {
@@ -85,7 +88,6 @@ export class IndividualComponent implements OnInit {
 	onChangeProvince() {
 		this.listDistrict = []
 		this.listVillage = []
-
 		this.model.districtId = ''
 		this.model.wardsId = ''
 		if (this.model.provinceId != null && this.model.provinceId != '') {
@@ -100,7 +102,6 @@ export class IndividualComponent implements OnInit {
 
 	onChangeDistrict() {
 		this.listVillage = []
-
 		this.model.wardsId = ''
 		if (this.model.districtId != null && this.model.districtId != '') {
 			this.diadanhService.getAllVillage(this.model.provinceId, this.model.districtId).subscribe((res) => {

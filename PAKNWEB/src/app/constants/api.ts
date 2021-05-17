@@ -85,7 +85,7 @@ export class Api {
 	public static UnitDelete = 'CACategorySPBase/CAUnitDeleteBase'
 	public static UnitChangeStatus = 'SYSPBase/SYUnitChageStatusBase'
 	public static UnitCheckExists = 'SYSPBase/SYUnitCheckExistsBase'
-
+	public static UnitGetChildrenDropdown = 'Statistic/SY_UnitGetChildrenDropdown'
 	public static FieldExport = 'CACategorySPBase/CAFieldExportBase'
 
 	//Position
@@ -106,6 +106,7 @@ export class Api {
 	public static UserDelete = 'User/Delete' //'SYUserSPBase/SYUserDeleteBase'GetAvatar
 	public static UserGetAvatar = 'User/GetAvatar' //'SYUserSPBase/SYUserDeleteBase'
 	public static UserChangeStatus = 'SYUserSPBase/SYUserChangeStatusBase'
+	public static UserChangePwdInManage = 'User/UserChangePwdInManage'
 	public static UserCheckExists = 'SYUserSPBase/SYUserCheckExistsBase'
 
 	public static SystemLogin = 'SYSPBase/SYSystemLogGetAllOnPageBase'
@@ -285,4 +286,11 @@ export class Api {
 	public static BusinessGetByID = 'BusinessIndividual/BusinessGetByID'
 	public static BusinessUpdate = 'BusinessIndividual/BusinessUpdate'
 	public static ImportDataBusiness = 'BusinessIndividual/ImportDataBusiness?folder=BusinessIndividual'
+
+	//Statistic
+
+	public static StatisticRecommendationByUnit = 'Statistic/STT_RecommendationByUnit'
+
+	// import
+	public static BusinessImportFile = 'BusinessIndividual/ImportDataBusiness?folder=BusinessIndividual'
 }

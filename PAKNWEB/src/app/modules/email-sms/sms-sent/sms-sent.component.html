@@ -4,7 +4,7 @@
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
 					<li class="breadcrumb-item"><a>SMS</a></li>
-					<li class="breadcrumb-item active"><a class="font-weight-bold">Danh sách tin nhắn SMS</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold">Danh sách tin nhắn SMS đã gửi</a></li>
 				</ol>
 				<!-- <div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách lĩnh vực</div> -->
 				<div class="btn-group group-button-table" role="group">
@@ -80,13 +80,13 @@
 											<strong>Trạng thái</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<div class="dropdown bootstrap-select form-control form-control-sm" style="max-width: 180px;">
+										<!-- <div class="dropdown bootstrap-select form-control form-control-sm" style="max-width: 180px;">
 											<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="status"
 												(change)="dataStateChange()">
 											</ng-select>
-										</div>
+										</div> -->
 									</th>
-									<th style="width: 168px !important;" class="text-center"><strong>THAO TÁC</strong></th>
+									<th style="width: 100px;" class="text-center"><strong>THAO TÁC</strong></th>
 								</tr>
 							</ng-template>
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -104,21 +104,6 @@
 									</td>
 									<td style="text-align: center;">
 										<div class="d-flex justify-content-end">
-											<a *ngIf="item.status == 1 && item.unitName != null" class="btn-icon grd-blue text-white mr-2 cursor" (click)="onSend(item.id)">
-												<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
-													<path d="M13.5938 0.125927L0.468823 7.69624C-0.205005 8.08589
-													 -0.137622 9.07905 0.580151 9.37495L4.68757 11.0742V14.0625C4.68757 
-													 14.9472 5.795 15.331 6.34871 14.6572L8.12703 12.4951L11.8302 14.0244C12.3897 
-													 14.2558 13.0225 13.9013 13.1134 13.3007L14.9884 1.081C15.1085 0.298778 14.2677 
-													 -0.263722 13.5938 0.125927ZM5.62507 14.0625V11.4609L7.22175 12.1201L5.62507 
-													 14.0625ZM12.1876 13.1572L6.14656 10.6611L11.9913 3.75288C12.1319 3.58882 11.9063 
-													 3.36616 11.7423 3.50679L4.26277 9.88179L0.937573 8.51069L14.0626 0.93745L12.1876 13.1572Z" fill="white">
-
-													</path>
-												</svg>
-											</a>
-											<a *ngIf="item.status == 1" (click)=" redirectUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i
-													class="bi bi-pencil-square"></i></a>
 											<a (click)="confirm(item.id)" class="btn-icon grd-red text-white cursor mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
 													class="bi bi-trash"></i></a>
 											<a class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
@@ -166,35 +151,7 @@
 	</div>
 </div>
 
-
-<div class="modal fade" id="modalConfirmChangeStatus">
-	<div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
-		<div class="modal-content rounded">
-			<form class="form-horizontal">
-				<div class="panel panel-default no-margin">
-					<div class="modal-header" style="border: none;">
-						<button class="close btn-close-modal" data-dismiss="modal">
-							×
-						</button>
-					</div>
-					<div class="modal-body no-padding-bottom" style="border: none;">
-						<div style="text-align: center;">
-							<strong class="change-status-title">Bạn có mmuốn gửi SMS này?</strong>
-						</div>
-					</div>
-					<div class="modal-footer" style="border: none; justify-content: center;">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onUpdateStatusTypeSend()">Xác
-							nhận</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-
-
-<div class="modal fade" id="modalHisSMS" (close)="close()">
+<div class="modal fade" id="modalHisSMS">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="min-width: 90%;">
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0">

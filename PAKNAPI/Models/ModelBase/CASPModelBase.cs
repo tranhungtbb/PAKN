@@ -235,7 +235,7 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 		public string Code { get; set; }
 
-		public async Task<List<CAVillageGetAll>> CAVillageGetAllDAO(byte? ProvinceId, byte? DistrictId)
+		public async Task<List<CAVillageGetAll>> CAVillageGetAllDAO(short? ProvinceId, short? DistrictId)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("ProvinceId", ProvinceId);

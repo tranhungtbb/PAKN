@@ -37,7 +37,13 @@ export class UserComponent implements OnInit {
 	rolesList: any[] = []
 	unitsList: any[] = []
 
-	form: FormGroup
+	// change Password
+	formChangePassword: FormGroup
+	newPassword: string
+	rePassword: string
+	samePass = false
+
+	// object User
 	modelUser: any = new UserObject2()
 	submitted: boolean = false
 	isActived: boolean
@@ -48,10 +54,13 @@ export class UserComponent implements OnInit {
 	positionId: any
 	pageIndex: number = 1
 	pageSize: number = 20
+
+	// view child
 	@ViewChild('table', { static: false }) table: any
 	@ViewChild(UserCreateOrUpdateComponent, { static: false }) childCreateOrUpdateUser: UserCreateOrUpdateComponent
 	@ViewChild(UserViewInfoComponent, { static: false }) childDetailUser: UserViewInfoComponent
 
+	// history
 	dataSearch2: HistoryUser = new HistoryUser()
 	listHisData: any[] = []
 	hisTotalRecords: number = 0
@@ -70,10 +79,16 @@ export class UserComponent implements OnInit {
 	totalRecords: number = 0
 	userId: number = 0
 	title: any
+
 	ngOnInit() {
 		// this.buildForm()
 		this.getList()
 		this.getDropDown()
+
+		this.formChangePassword = this._fb.group({
+			newPassword: [this.newPassword, Validators.required],
+			rePassword: [this.rePassword, Validators.required],
+		})
 	}
 
 	ngAfterViewInit() {
@@ -82,11 +97,6 @@ export class UserComponent implements OnInit {
 		})
 		this.childCreateOrUpdateUser.parentUser = this
 		this.childDetailUser.parentUser = this
-
-		// this.form = this._fb.group({
-		// 	toDate: [this.dataSearch.toDate],
-		// 	fromDate: [this.dataSearch.toDate],
-		// })
 	}
 	getDropDown() {
 		this.positionService
@@ -105,11 +115,6 @@ export class UserComponent implements OnInit {
 		this.unitService.getAll({}).subscribe((res) => {
 			if (res.success != 'OK') return
 			this.unitsList = res.result.CAUnitGetAll
-			// this.unitsList.forEach((item) => {
-			// 	if (item.name.length > 17) {
-			// 		item.name = item.name.substring(0, 17) + '..'
-			// 	}
-			// })
 		})
 	}
 
@@ -188,23 +193,84 @@ export class UserComponent implements OnInit {
 		}
 	}
 
+	// changePass
+
+	get f() {
+		return this.formChangePassword.controls
+	}
+
+	rebuilForm() {
+		this.formChangePassword.reset({
+			newPassword: this.newPassword,
+			rePassword: this.rePassword,
+		})
+	}
+
+	clearChangePasswordModel() {
+		this.newPassword = ''
+		this.rePassword = ''
+	}
+	preChangePassword(id: any) {
+		this.submitted = false
+		if (id != this.userId) {
+			this.clearChangePasswordModel()
+		}
+		this.samePass = false
+		this.userId = id
+		this.rebuilForm()
+		$('#modalChangePassword').modal('show')
+	}
+
+	onChangePassword() {
+		this.submitted = true
+		this.newPassword = this.newPassword.trim()
+		this.rePassword = this.rePassword.trim()
+
+		this.rebuilForm()
+		if (this.formChangePassword.invalid) {
+			return
+		}
+		if (this.newPassword != this.rePassword) {
+			this.samePass = true
+			return
+		} else {
+			this.samePass = false
+		}
+		let obj = {
+			UserId: this.userId,
+			NewPassword: this.newPassword,
+			RePassword: this.rePassword,
+		}
+		this._service.changePasswordInManage(obj).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				$('#modalChangePassword').modal('hide')
+				this._toastr.success('Đổi mật khẩu thành công.')
+			} else {
+				this._toastr.error(res.message)
+			}
+		}),
+			(error) => {
+				console.error(error)
+				alert(error)
+			}
+	}
+
 	onDelete() {
 		let request = {
 			Id: this.userId,
 		}
 		$('#modalConfirmDelete').modal('hide')
 		this._service.delete(request).subscribe((response) => {
-			debugger
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
-
 				this.getList()
 			} else {
-				this.getList()
-				this._toastr.error(response.message)
+				// this.getList()
+				this._toastr.error('Không thể xóa người dùng đã nằm trong 1 qui trình')
 			}
 		}),
 			(error) => {
+				this._toastr.error(error)
 				console.error(error)
 			}
 	}
@@ -243,6 +309,18 @@ export class UserComponent implements OnInit {
 		this.hisUserId = null
 		this.dataSearch2.fromDate = null
 		this.dataSearch2.toDate = null
+		this.hisTotalRecords = 0
+	}
+
+	close() {
+		this.cleaseHisModel()
+		this.clearChangePasswordModel()
+	}
+
+	onHisPageChange(event: any) {
+		this.hisPageSize = event.rows
+		this.hisPageIndex = event.first / event.rows + 1
+		this.getHistory(this.hisUserId, this.emailUser)
 	}
 
 	dataHisStateChange() {
@@ -260,36 +338,50 @@ export class UserComponent implements OnInit {
 		this.listHisData = []
 		this.emailUser = email
 		let req = {
-			FromDate: this.dataSearch2.fromDate != null ? this.dataSearch2.fromDate : '',
-			ToDate: this.dataSearch2.toDate != null ? this.dataSearch2.toDate : '',
+			FromDate: this.dataSearch2.fromDate == null ? '' : (this.dataSearch2.fromDate = JSON.stringify(new Date(this.dataSearch2.fromDate)).slice(1, 11)),
+			ToDate: this.dataSearch2.toDate == null ? '' : (this.dataSearch2.toDate = JSON.stringify(new Date(this.dataSearch2.toDate)).slice(1, 11)),
 			PageIndex: this.hisPageIndex,
 			PageSize: this.hisPageSize,
 			UserId: id,
 		}
 		this._service.getSystemLogin(req).subscribe((response) => {
+			debugger
 			if (response.success == RESPONSE_STATUS.success) {
-				if (response.result != null) {
+				if (response.result.SYSystemLogGetAllOnPage.length > 0) {
 					this.listHisData = response.result.SYSystemLogGetAllOnPage
 					this.hisTotalRecords = response.result.SYSystemLogGetAllOnPage.length != 0 ? response.result.SYSystemLogGetAllOnPage[0].rowNumber : 0
-					// this.hisPageIndex =
+					this.hisPageIndex = response.result.$('#modalHis').modal('show')
+				} else {
+					this.cleaseHisModel()
+					this.listHisData = []
 					$('#modalHis').modal('show')
 				}
 			} else {
+				this.cleaseHisModel()
+				this.listHisData = []
 			}
 		})
 	}
 
 	fromDateChange(newDate) {
-		newDate != null ? (this.dataSearch2.fromDate = JSON.stringify(new Date(newDate)).slice(1, 11)) : (this.dataSearch2.fromDate = '')
-
+		if (newDate != null) {
+			this.dataSearch2.fromDate = JSON.stringify(new Date(newDate)).slice(1, 11)
+		} else {
+			this.dataSearch2.fromDate = null
+		}
 		// this.getHistory(this.hisUserId, this.emailUser)
 	}
 
 	toDateChange(newDate) {
-		newDate != null ? (this.dataSearch2.toDate = JSON.stringify(new Date(newDate)).slice(1, 11)) : (this.dataSearch2.toDate = '')
+		if (newDate != null) {
+			this.dataSearch2.toDate = JSON.stringify(new Date(newDate)).slice(1, 11)
+		} else {
+			this.dataSearch2.toDate = null
+		}
+		// this.getHistory(this.hisUserId, this.emailUser)
 	}
 
-	modalUserChangePassword(id: any) {}
+	// modalUserChangePassword(id: any) {}
 }
 
 export class HistoryUser {
@@ -297,6 +389,6 @@ export class HistoryUser {
 		this.fromDate = null
 		this.toDate = null
 	}
-	fromDate: string
-	toDate: string
+	fromDate: any
+	toDate: any
 }

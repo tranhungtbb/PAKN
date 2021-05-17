@@ -43,3 +43,15 @@
 .hide {
 	display: none;
 }
+
+.notscroll {
+	overflow-y: auto;
+}
+
+.notscroll::-webkit-scrollbar {
+	width: 0px;
+}
+
+span.ng-clear-wrapper {
+	z-index: 100000 !important;
+}

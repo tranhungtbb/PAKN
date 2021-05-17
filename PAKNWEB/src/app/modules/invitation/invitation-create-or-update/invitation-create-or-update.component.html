@@ -187,22 +187,43 @@
 							<div class="search-user" *ngIf="statusCurent != 2">
 								<div class="department">Họ và tên</div>
 								<div class="" style="display: flex;">
-									<div class="input-serach" style="width: 50%;">
-										<!-- <ng-select placeholder="Nhập..." class="form-control" [items]="listUserIsSystem" bindValue="value" bindLabel="text" formControlName="userId"
-											[virtualScroll]="true" [(ngModel)]="userId">
-											<ng-template ng-option-tmp let-item="item">
-												<div title="{{item.userName}}">{{item.userName}}</div>
-											</ng-template>
-										</ng-select> -->
+									<div class="input-serach" style="width: 60%;">
 
-										<ng-select class="form-control" placeholder="Nhập..." [closeOnSelect]="true" formControlName="userId" [(ngModel)]="userId">
+
+										<!-- <ng-select class="form-control" placeholder="Nhập..." [closeOnSelect]="true" formControlName="userId" [(ngModel)]="userId">
 											<ng-option *ngFor="let nt of listUserIsSystem" [value]="nt.id">
 												{{nt.userName}}
 											</ng-option>
-										</ng-select>
+										</ng-select> -->
+
+										<!-- <p-multiSelect class="multiselect-custom" [options]="listUserIsSystem" defaultLabel="Chọn thành phần..." optionLabel="userName"
+											optionValue="userName" (onChange)="haha($event)">
+
+										</p-multiSelect> -->
+
+										<p-multiSelect [options]="listUserIsSystem" formControlName="listUserSelected" [(ngModel)]="listUserSelected" optionLabel="fullName"
+											[virtualScroll]="true" optionValue="id">
+											<ng-template let-userSelected pTemplate="selectedItems">
+												<ng-container *ngIf="userSelected && userSelected.length <= 4">
+													<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">
+														<span>{{val.fullName}}</span>
+													</div>
+												</ng-container>
+
+												<span *ngIf="!userSelected || userSelected.length === 0" class="ui-multiselected-empty-token ui-corner-all">Chọn thành phần tham
+													dự...</span>
+												<span *ngIf="userSelected && userSelected.length > 4" class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
+													thành phần được chọn</span>
+											</ng-template>
+											<ng-template let-user pTemplate="item">
+												<div style="font-size:14px">{{user.label}}</div>
+											</ng-template>
+										</p-multiSelect>
+
+
 
 									</div>
-									<div style="width: 40%; display: flex;" class="center">
+									<div style="width: 35%; display: flex;" class="center">
 										<div class="form-check" style="margin: 5px;">
 											<input class="form-check-input" type="checkbox" [(ngModel)]="sendSMS" formControlName="sendSMS" id="sendSMS">
 											<label class="form-check-label" for="sendSMS">
@@ -232,8 +253,15 @@
 							<div class="title-user-map center" style="text-transform: none;" *ngIf="listItemUserSelected.length ==0">Chưa có thành phần tham dự</div>
 							<div class="col-sm-12 item-user" *ngFor="let item of listItemUserSelected">
 								<div class="info-user border-right padding-item" style="display: flex; padding-left: 0px;">
-									<img style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px; margin-right: 5px;"
-										src="../../../../assets/dist/images/avatar/1.jpg" alt="">
+									<span *ngIf="item.avatar == ''" class="no-avatar-view" style="width: 40px; height: 40px;">
+										<svg width="36" height="36" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd" clip-rule="evenodd"
+												d="M6.5 78C6.5 78 0 78 0 71.5C0 65 6.5 45.5 39 45.5C71.5 45.5 78 65 78 71.5C78 78 71.5 78 71.5 78H6.5ZM39 39C44.1717 39 49.1316 36.9455 52.7886 33.2886C56.4455 29.6316 58.5 24.6717 58.5 19.5C58.5 14.3283 56.4455 9.36838 52.7886 5.71142C49.1316 2.05446 44.1717 0 39 0C33.8283 0 28.8684 2.05446 25.2114 5.71142C21.5545 9.36838 19.5 14.3283 19.5 19.5C19.5 24.6717 21.5545 29.6316 25.2114 33.2886C28.8684 36.9455 33.8283 39 39 39Z"
+												fill="#743F15" />
+										</svg>
+									</span>
+									<img *ngIf="item.avatar !=''" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px; margin-right: 5px;" src="{{item.avatar}}"
+										alt="">
 									<div>
 										<div class="title">{{item.fullName}}</div>
 										<div class="department">{{item.positionName}}</div>

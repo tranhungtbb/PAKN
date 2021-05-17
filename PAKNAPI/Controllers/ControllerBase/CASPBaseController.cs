@@ -214,7 +214,7 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("CAVillageGetAllBase")]
-		public async Task<ActionResult<object>> CAVillageGetAllBase(byte? ProvinceId, byte? DistrictId)
+		public async Task<ActionResult<object>> CAVillageGetAllBase(short? ProvinceId, short? DistrictId)
 		{
 			try
 			{
