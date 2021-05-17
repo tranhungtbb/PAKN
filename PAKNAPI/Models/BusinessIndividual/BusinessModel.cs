@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 namespace PAKNAPI.Models.BusinessIndividual
 {
     #region IndividualGetAllOnPage
-    public class BusinessGetAllOnPage
+    public class BI_BusinessGetAllOnPage
 	{
 		private SQLCon _sQLCon;
 
-		public BusinessGetAllOnPage(IAppSetting appSetting)
+		public BI_BusinessGetAllOnPage(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public BusinessGetAllOnPage()
+		public BI_BusinessGetAllOnPage()
 		{
 		}
 
@@ -30,7 +30,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
 
-		public async Task<List<BusinessGetAllOnPage>> BusinessGetAllOnPageDAO(int? PageSize, int? PageIndex, string RepresentativeName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
+		public async Task<List<BI_BusinessGetAllOnPage>> BI_BusinessGetAllOnPageDAO(int? PageSize, int? PageIndex, string RepresentativeName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
@@ -43,67 +43,67 @@ namespace PAKNAPI.Models.BusinessIndividual
 			DP.Add("SortDir", SortDir);
 			DP.Add("SortField", SortField);
 
-			return (await _sQLCon.ExecuteListDapperAsync<BusinessGetAllOnPage>("BI_BusinessGetAllOnPage", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<BI_BusinessGetAllOnPage>("BI_BusinessGetAllOnPage", DP)).ToList();
 		}
 	}
 	#endregion
 
-	#region BusinessDelete
-	public class BusinessDelete
+	#region BI_BusinessDelete
+	public class BI_BusinessDelete
 	{
 		private SQLCon _sQLCon;
 
-		public BusinessDelete(IAppSetting appSetting)
+		public BI_BusinessDelete(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public BusinessDelete()
+		public BI_BusinessDelete()
 		{
 		}
 
-		public async Task<int> BusinessDeleteDAO(BusinessDeleteIN _businessDeleteIN)
+		public async Task<int> BusinessDeleteDAO(BI_BusinessDeleteIN _bI_BusinessDeleteIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _businessDeleteIN.Id);
+			DP.Add("Id", _bI_BusinessDeleteIN.Id);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_BusinessDelete", DP));
 		}
 	}
 
-	public class BusinessDeleteIN
+	public class BI_BusinessDeleteIN
 	{
 		public long? Id { get; set; }
 	}
 
 	#endregion
 
-	#region  BusinessChageStatus
+	#region  BI_BusinessChageStatus
 
-	public class BusinessChageStatus
+	public class BI_BusinessChageStatus
 	{
 		private SQLCon _sQLCon;
 
-		public BusinessChageStatus(IAppSetting appSetting)
+		public BI_BusinessChageStatus(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public BusinessChageStatus()
+		public BI_BusinessChageStatus()
 		{
 		}
 
-		public async Task<int> BusinessChageStatusDAO(BusinessChageStatusIN _businessChageStatusIN)
+		public async Task<int> BI_BusinessChageStatusDAO(BI_BusinessChageStatusIN _bI_BusinessChageStatusIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _businessChageStatusIN.Id);
-			DP.Add("IsActived", _businessChageStatusIN.IsActived);
+			DP.Add("Id", _bI_BusinessChageStatusIN.Id);
+			DP.Add("IsActived", _bI_BusinessChageStatusIN.IsActived);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_BusinessChageStatus", DP));
 		}
 	}
 
-	public class BusinessChageStatusIN
+	public class BI_BusinessChageStatusIN
 	{
 		public long? Id { get; set; }
 		public bool? IsActived { get; set; }
@@ -111,21 +111,21 @@ namespace PAKNAPI.Models.BusinessIndividual
 
 	#endregion
 
-	#region BusinessInsert
-	public class BusinessInsert
+	#region BI_BusinessInsert
+	public class BI_BusinessInsert
 	{
 		private SQLCon _sQLCon;
 
-		public BusinessInsert(IAppSetting appSetting)
+		public BI_BusinessInsert(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public BusinessInsert()
+		public BI_BusinessInsert()
 		{
 		}
 
-		public async Task<int> BusinessInsertDAO(BusinessInsertIN _businessInsertIN)
+		public async Task<int> BusinessInsertDAO(BI_BusinessInsertIN _businessInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("WardsId", _businessInsertIN.WardsId);
@@ -168,7 +168,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		}
 	}
 
-	public class BusinessInsertIN
+	public class BI_BusinessInsertIN
 	{
 		public int? WardsId { get; set; }
 		public int? DistrictId { get; set; }
@@ -209,17 +209,17 @@ namespace PAKNAPI.Models.BusinessIndividual
 
 	#endregion
 
-	#region BusinessGetById
-	public class BusinessGetById
+	#region BI_BusinessGetById
+	public class BI_BusinessGetById
 	{
 		private SQLCon _sQLCon;
 
-		public BusinessGetById(IAppSetting appSetting)
+		public BI_BusinessGetById(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public BusinessGetById()
+		public BI_BusinessGetById()
 		{
 		}
 
@@ -260,30 +260,30 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public string Business { get; set; }
 		public long? UserId { get; set; }
 
-		public async Task<List<BusinessGetById>> BusinessGetByIdDAO(long? Id)
+		public async Task<List<BI_BusinessGetById>> BusinessGetByIdDAO(long? Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", Id);
 
-			return (await _sQLCon.ExecuteListDapperAsync<BusinessGetById>("BusinessGetById", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<BI_BusinessGetById>("BusinessGetById", DP)).ToList();
 		}
 	}
 	#endregion
 
-	public class BusinessUpdateInfo
+	public class BI_BusinessUpdateInfo
 	{
 		private SQLCon _sQLCon;
 
-		public BusinessUpdateInfo(IAppSetting appSetting)
+		public BI_BusinessUpdateInfo(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public BusinessUpdateInfo()
+		public BI_BusinessUpdateInfo()
 		{
 		}
 
-		public async Task<int> BusinessUpdateInfoDAO(BusinessUpdateInfoIN _businessUpdateInfoIN)
+		public async Task<int> BI_BusinessUpdateInfoDAO(BI_BusinessUpdateInfoIN _businessUpdateInfoIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _businessUpdateInfoIN.Id);
@@ -314,7 +314,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		}
 	}
 
-	public class BusinessUpdateInfoIN
+	public class BI_BusinessUpdateInfoIN
 	{
 		public long? Id { get; set; }
 		public string FullName { get; set; }

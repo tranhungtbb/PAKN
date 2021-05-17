@@ -11,15 +11,15 @@ import { UserInfoStorageService } from '../commons/user-info-storage.service'
 export class BusinessIndividualService {
 	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
 	individualGetList(request: any): Observable<any> {
-		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.BI_IndividualGetAllOnPage)
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.IndividualGetAllOnPage)
 	}
 
 	individualChangeStatus(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BI_IndivialChangeStatus)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialChangeStatus)
 	}
 
 	individualDelete(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BI_IndivialDelete)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialDelete)
 	}
 
 	individualRegister(data: any): Observable<any> {
@@ -40,11 +40,11 @@ export class BusinessIndividualService {
 	}
 
 	invididualImportFile(data: any): Observable<any> {
-		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.InvididualImportFile)
+		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.ImportDataInvididual)
 	}
 
 	businessGetList(request: any): Observable<any> {
-		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.BusinessGetAllOnPageBase)
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.BusinessGetAllOnPage)
 	}
 
 	businessChangeStatus(data: any): Observable<any> {
@@ -74,6 +74,6 @@ export class BusinessIndividualService {
 	}
 
 	businessImportFile(data: any): Observable<any> {
-		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.BusinessImportFile)
+		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.ImportDataBusiness)
 	}
 }

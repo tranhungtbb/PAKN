@@ -313,41 +313,41 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public bool? Gender { get; set; }
 	}
 
-	public class InvididualUpdate
+	public class BI_InvididualUpdate
 	{
 		private SQLCon _sQLCon;
 
-		public InvididualUpdate(IAppSetting appSetting)
+		public BI_InvididualUpdate(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public InvididualUpdate()
+		public BI_InvididualUpdate()
 		{
 		}
 
-		public async Task<int> InvididualUpdateDAO(InvididualUpdateIN _invididualUpdateIN)
+		public async Task<int> BI_InvididualUpdateDAO(BI_InvididualUpdateIN _bI_InvididualUpdateIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _invididualUpdateIN.Id);
-			DP.Add("FullName", _invididualUpdateIN.FullName);
-			DP.Add("DateOfBirth", _invididualUpdateIN.DateOfBirth);
-			DP.Add("Email", _invididualUpdateIN.Email);
-			DP.Add("Nation", _invididualUpdateIN.Nation);
-			DP.Add("ProvinceId", _invididualUpdateIN.ProvinceId);
-			DP.Add("DistrictId", _invididualUpdateIN.DistrictId);
-			DP.Add("WardsId", _invididualUpdateIN.WardsId);
-			DP.Add("Address", _invididualUpdateIN.Address);
-			DP.Add("IdCard", _invididualUpdateIN.IdCard);
-			DP.Add("IssuedPlace", _invididualUpdateIN.IssuedPlace);
-			DP.Add("IssuedDate", _invididualUpdateIN.IssuedDate);
-			DP.Add("Gender", _invididualUpdateIN.Gender);
+			DP.Add("Id", _bI_InvididualUpdateIN.Id);
+			DP.Add("FullName", _bI_InvididualUpdateIN.FullName);
+			DP.Add("DateOfBirth", _bI_InvididualUpdateIN.DateOfBirth);
+			DP.Add("Email", _bI_InvididualUpdateIN.Email);
+			DP.Add("Nation", _bI_InvididualUpdateIN.Nation);
+			DP.Add("ProvinceId", _bI_InvididualUpdateIN.ProvinceId);
+			DP.Add("DistrictId", _bI_InvididualUpdateIN.DistrictId);
+			DP.Add("WardsId", _bI_InvididualUpdateIN.WardsId);
+			DP.Add("Address", _bI_InvididualUpdateIN.Address);
+			DP.Add("IdCard", _bI_InvididualUpdateIN.IdCard);
+			DP.Add("IssuedPlace", _bI_InvididualUpdateIN.IssuedPlace);
+			DP.Add("IssuedDate", _bI_InvididualUpdateIN.IssuedDate);
+			DP.Add("Gender", _bI_InvididualUpdateIN.Gender);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("InvididualUpdate", DP));
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_InvididualUpdate", DP));
 		}
 	}
 
-	public class InvididualUpdateIN
+	public class BI_InvididualUpdateIN
 	{
 		public long? Id { get; set; }
 		public string FullName { get; set; }
@@ -364,17 +364,17 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public bool? Gender { get; set; }
 	}
 
-	#region InvididualGetByID
-	public class InvididualGetByID
+	#region BI_InvididualGetByID
+	public class BI_InvididualGetByID
 	{
 		private SQLCon _sQLCon;
 
-		public InvididualGetByID(IAppSetting appSetting)
+		public BI_InvididualGetByID(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public InvididualGetByID()
+		public BI_InvididualGetByID()
 		{
 		}
 
@@ -392,12 +392,12 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public DateTime? IssuedDate { get; set; }
 		public bool? Gender { get; set; }
 
-		public async Task<List<InvididualGetByID>> InvididualGetByIDDAO(long? Id)
+		public async Task<List<BI_InvididualGetByID>> BI_InvididualGetByIDDAO(long? Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", Id);
 
-			return (await _sQLCon.ExecuteListDapperAsync<InvididualGetByID>("BI_IndividualGetByID", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<BI_InvididualGetByID>("BI_IndividualGetByID", DP)).ToList();
 		}
 	}
 	#endregion
