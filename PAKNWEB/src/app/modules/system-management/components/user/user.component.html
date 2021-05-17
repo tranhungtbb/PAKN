@@ -122,9 +122,8 @@
 								<td>
 									<div class="hover-active d-flex justify-content-end">
 										<a (click)="modalUserCreateOrUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-										<a (click)="modalUserChangePassword(item.id)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-key"></i></a>
-										<a class="btn-icon mr-2" style="cursor: pointer;" (click)="getHistory(item.id, item.userName)" title="Xem lịch sử"><i
-												class="bi bi-clock-history"></i></a>
+										<a (click)="preChangePassword(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i class="bi bi-key"></i></a>
+										<a class="btn-icon mr-2 cursor" (click)="getHistory(item.id, item.userName)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										<a (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
 												class="bi bi-trash"></i></a>
 
@@ -199,10 +198,10 @@
 </div>
 
 <app-user-create-or-update modalid="user-create-or-update-1" isOrganizational="false"></app-user-create-or-update>
-<app-user-view-info></app-user-view-info>
+<app-user-view-info modalid="user-info-1"></app-user-view-info>
 
 
-<div class="modal fade" id="modalHis">
+<div class="modal fade" id="modalHis" (close)="close()">
 	<div class="modal-dialog modal-dialog-centered" style="max-width: 60%" role="document">
 		<div class="modal-content rounded">
 			<!-- <form class="form-horizontal" autocomplete="off"> -->
@@ -218,8 +217,8 @@
 						<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 5px 0px;">
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1 text-uppercase"><strong>Từ ngày</strong></label>
-								<input class="form-control form-control-sm" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="fromDate" appBsDatepickerInvalid
-									(bsValueChange)="fromDateChange($event)"
+								<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="dataSearch2.fromDate" bsDatepicker #n="bsDatepicker" maxlength="10"
+									id="fromDate" appBsDatepickerInvalid (bsValueChange)="fromDateChange($event)"
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon">
 									<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
@@ -227,8 +226,8 @@
 							</div>
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1 text-uppercase"><strong>Đến ngày</strong></label>
-								<input class="form-control form-control-sm" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="toDate" appBsDatepickerInvalid
-									(bsValueChange)="toDateChange($event)"
+								<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="dataSearch2.toDate" bsDatepicker #n="bsDatepicker" maxlength="10"
+									id="toDate" appBsDatepickerInvalid (bsValueChange)="toDateChange($event)"
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon">
 									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
@@ -291,6 +290,52 @@
 				</div>
 			</div>
 			<!-- </form> -->
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalChangePassword" (close)="close()">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal" [formGroup]="formChangePassword" #formDir="ngForm">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">Đổi mật khẩu</p>
+					</div>
+					<div class="modal-body no-padding-bottom" style="border: none;">
+						<div class="row form-group">
+							<div class="col-sm-12">
+								<label class="control-label">Mật khẩu mới <span class="text-danger">(*)</span></label>
+								<input class="form-control" type="password" formControlName="newPassword" [(ngModel)]="newPassword" maxlength="50" placeholder="Nhập..." />
+								<div *ngIf="(submitted && f.newPassword.invalid) || (f.newPassword.invalid && (f.newPassword.dirty || f.newPassword.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="f.newPassword.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<label class="control-label">Xác nhận mật khẩu <span class="text-danger">(*)</span></label>
+								<input class="form-control" type="password" formControlName="rePassword" [(ngModel)]="rePassword" maxlength="50" placeholder="Nhập..." />
+								<div *ngIf="(submitted && f.rePassword.invalid) || (f.rePassword.invalid && (f.rePassword.dirty || f.rePassword.touched))" class="has-error m-b-12">
+									<div *ngIf="f.rePassword.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer" style="border: none; justify-content: center;">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onChangePassword()">Xác
+							nhận</button>
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>

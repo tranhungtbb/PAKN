@@ -1,22 +1,19 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
-
 import { defineLocale } from 'ngx-bootstrap/chronos'
 import { viLocale } from 'ngx-bootstrap/locale'
-import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker'
+import { BsLocaleService } from 'ngx-bootstrap/datepicker'
 
 import { Router, ActivatedRoute } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { AppSettings } from 'src/app/constants/app-setting'
 import { CONSTANTS, STATUS_HISNEWS, FILETYPE } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
-import { RoleObject } from 'src/app/models/roleObject'
 import { InvitationService } from 'src/app/services/invitation.service'
 import { InvitationObject, InvitationUserMapObject } from 'src/app/models/invitationObject'
-import { from } from 'rxjs'
 import { UserService } from 'src/app/services/user.service'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
-import { iterator } from 'rxjs/internal-compatibility'
 
 declare var $: any
 defineLocale('vi', viLocale)
@@ -28,8 +25,8 @@ defineLocale('vi', viLocale)
 })
 export class InvitationCreateOrUpdateComponent implements OnInit {
 	model: InvitationObject = new InvitationObject()
-	sendEmail: boolean = false
-	sendSMS: boolean = false
+	sendEmail: boolean = true
+	sendSMS: boolean = true
 	form: FormGroup
 	submitted = false
 	action: any
@@ -40,12 +37,12 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		{ value: 1, text: 'Đang soạn thảo' },
 		{ value: 2, text: 'Đã gửi' },
 	]
-	listUserIsSystem: any[]
+	listUserIsSystem: Array<UserIsSystem>
 	listItemUserSelected: Array<InvitationUserMapObject>
 	userMap: any[]
 	key: any = ''
 	fileAccept = CONSTANTS.FILEACCEPT
-	userId: any
+	listUserSelected: Array<UserIsSystem>
 	statusCurent: any = 1
 	@ViewChild('file', { static: false }) public file: ElementRef
 	constructor(
@@ -63,6 +60,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		this.userMap = []
 		this.lstFileDelete = []
 		this.action = 'Lưu'
+		this.listUserSelected = []
 	}
 
 	ngOnInit() {
@@ -72,19 +70,6 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		// this.getInvitatonModelById()
 	}
 
-	// statusDisable() {
-	// 	if (this.statusCurent == 2) {
-	// 		return true
-	// 	}
-	// 	return false
-	// }
-
-	// ngAfterViewInit() {
-	// 	$('#endDate').datepicker({
-	// 		language: 'vi',
-	// 	})
-	// }
-
 	buildForm() {
 		this.form = this.formBuilder.group({
 			title: [this.model.title, Validators.required],
@@ -93,7 +78,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 			content: [this.model.content, Validators.required],
 			place: [this.model.place, Validators.required],
 			note: [this.model.note],
-			userId: [this.userId],
+			listUserSelected: [this.listUserSelected],
 			sendEmail: [this.sendEmail],
 			sendSMS: [this.sendSMS],
 		})
@@ -114,6 +99,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 							this.statusCurent = this.model.status
 							for (const iterator of res.result.invitationUserMap) {
 								let item = this.listUserIsSystem.find((x) => x.id == iterator.userId)
+								this.listUserSelected.push(item)
 								var obj = new InvitationUserMapObject()
 								obj.userId = iterator.userId
 								obj.sendEmail = iterator.sendEmail
@@ -121,7 +107,12 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 								obj.fullName = item.fullName
 								obj.unitName = item.unitName
 								obj.positionName = item.positionName
-								obj.avatar = item.avatar
+								if (item.avatar == null || item.avatar == '') {
+									obj.avatar = ''
+								} else {
+									obj.avatar = AppSettings.API_DOWNLOADFILES + '/' + item.avatar
+								}
+								// obj.avatar = item.avatar
 								this.listItemUserSelected.push(obj)
 							}
 							if (this.statusCurent == 2) {
@@ -140,6 +131,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		this.userService.getIsSystem2({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.listUserIsSystem = res.result.SYUserGetIsSystem2
+				debugger
 				this.getInvitatonModelById()
 			} else {
 				this.listUserIsSystem = []
@@ -159,7 +151,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 			content: this.model.content,
 			place: this.model.place,
 			note: this.model.note,
-			userId: this.userId,
+			listUserSelected: this.listUserSelected,
 			sendEmail: this.sendEmail,
 			sendSMS: this.sendSMS,
 		})
@@ -252,49 +244,43 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 	}
 
 	onCreateUser() {
-		if (this.statusCurent == 2) {
-			this._toastr.error('Không thể thêm người tham dự')
+		if (this.sendEmail == false && this.sendSMS == false) {
+			this._toastr.error('Vui lòng chọn Gửi Mail,SMS')
 			return
 		}
-		if (this.userId != undefined) {
-			if (this.listItemUserSelected.length == 0) {
-				let item = this.listUserIsSystem.find((x) => x.id == this.userId)
-				var obj = new InvitationUserMapObject()
-				obj.userId = this.userId
-				obj.sendEmail = this.sendEmail
-				obj.sendSMS = this.sendSMS
-				obj.fullName = item.fullName
-				obj.unitName = item.unitName
-				obj.positionName = item.positionName
-				obj.avatar = item.avatar
-				this.listItemUserSelected.push(obj)
-			} else {
-				let check = this.listItemUserSelected.find((x) => x.userId == this.userId)
-				if (check != undefined) {
-					this._toastr.error('Bạn đã chọn người này')
-					return
+		let i = 0
+		if (this.listUserSelected != undefined && this.listUserSelected.length > 0) {
+			for (const iterator of this.listUserSelected) {
+				let check = this.listItemUserSelected.find((x) => x.userId == iterator.id)
+				if (check == undefined) {
+					var obj = new InvitationUserMapObject()
+					obj.userId = iterator.id
+					obj.sendEmail = this.sendEmail
+					obj.sendSMS = this.sendSMS
+					obj.unitName = iterator.unitName
+					obj.fullName = iterator.fullName
+					obj.positionName = iterator.positionName
+					if (iterator.avatar == null || iterator.avatar == '') {
+						obj.avatar = ''
+					} else {
+						obj.avatar = AppSettings.API_DOWNLOADFILES + '/' + iterator.avatar
+					}
+
+					this.listItemUserSelected.push(obj)
+					i++
 				}
-				let item = this.listUserIsSystem.find((x) => x.id == this.userId)
-				var obj = new InvitationUserMapObject()
-				obj.userId = this.userId
-				obj.sendEmail = this.sendEmail
-				obj.sendSMS = this.sendSMS
-				obj.unitName = item.unitName
-				obj.fullName = item.fullName
-				obj.positionName = item.positionName
-				obj.avatar = item.avatar
-				this.listItemUserSelected.push(obj)
 			}
+			if (i == 0) {
+				this._toastr.error('Vui lòng chọn người tham dự')
+				return
+			}
+			this._toastr.success('Thêm mới thành công ' + i + ' người tham dự')
 		} else {
 			this._toastr.error('Vui lòng chọn người tham dự')
 			return
 		}
 	}
 	onRemoveUser(item: any) {
-		if (this.statusCurent == 2) {
-			this._toastr.error('Không thể xóa người tham dự')
-			return
-		}
 		this.listItemUserSelected = this.listItemUserSelected.filter((x) => x.userId != item.userId)
 		return
 	}
@@ -354,4 +340,15 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		this.lstFileDelete.push(file)
 		this.files.splice(index, 1)
 	}
+}
+
+interface UserIsSystem {
+	avatar: string
+	email: string
+	fullName: string
+	id: number
+	phone: string
+	positionName: string
+	unitName: string
+	userName: string
 }

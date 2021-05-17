@@ -106,6 +106,7 @@ export class Api {
 	public static UserDelete = 'User/Delete' //'SYUserSPBase/SYUserDeleteBase'GetAvatar
 	public static UserGetAvatar = 'User/GetAvatar' //'SYUserSPBase/SYUserDeleteBase'
 	public static UserChangeStatus = 'SYUserSPBase/SYUserChangeStatusBase'
+	public static UserChangePwdInManage = 'User/UserChangePwdInManage'
 	public static UserCheckExists = 'SYUserSPBase/SYUserCheckExistsBase'
 
 	public static SystemLogin = 'SYSPBase/SYSystemLogGetAllOnPageBase'
@@ -283,4 +284,8 @@ export class Api {
 	public static BusinessRegister = 'BusinessIndividual/BusinessRegister'
 	public static BusinessGetByID = 'BusinessIndividual/BusinessGetByID'
 	public static BusinessUpdate = 'BusinessIndividual/BusinessUpdate'
+
+	//Statistic
+
+	public static StatisticRecommendationByUnit = 'Statistic/STT_RecommendationByUnit'
 }

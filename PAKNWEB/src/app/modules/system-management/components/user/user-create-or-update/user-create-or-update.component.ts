@@ -15,6 +15,7 @@ import { UserObject2 } from 'src/app/models/UserObject'
 
 import { UnitComponent } from '../../unit/unit.component'
 import { UserComponent } from 'src/app/modules/system-management/components/user/user.component'
+import { BusinessComponent } from 'src/app/modules/business.component'
 import file_uploader from 'devextreme/ui/file_uploader'
 
 declare var jquery: any
@@ -43,6 +44,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	isOrganizational: boolean = false
 	public parentUnit: UnitComponent
 	public parentUser: UserComponent
+	public parent_BusinessComponent: BusinessComponent
 	editByMyself: boolean = false
 
 	modelUser: UserObject2 = new UserObject2()
@@ -189,7 +191,6 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		$('.seclect-avatar').click()
 	}
 	changeSelectAvatar(event: any) {
-		debugger
 		var file = event.target.files[0]
 		if (!['image/jpeg', 'image/png'].includes(file.type)) {
 			this.toast.error('Chỉ chọn tệp tin ảnh')
@@ -201,11 +202,12 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			event.target.value = null
 			return
 		}
-		let output: any = $('.user-avatar-view')[0]
+		let output: any = $('#' + this.modalId + ' .user-avatar-view')
 		output.src = URL.createObjectURL(file)
-		// output.onload = function () {
-		// 	URL.revokeObjectURL(output.src) // free memory
-		// }
+		this.userAvatar = ''
+		output.onload = function () {
+			URL.revokeObjectURL(output.src) // free memory
+		}
 	}
 
 	modal_btn_save = 'Tạo mới'
@@ -226,7 +228,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		this.userFormSubmitted = false
 		this.modelUser = new UserObject2()
 		if (this.isOrganizational == true) {
-			this.modelUser.unitId = unitId
+			if (!this.editByMyself) this.modelUser.unitId = unitId
 		}
 		debugger
 		if (userId > 0) {
@@ -240,7 +242,10 @@ export class UserCreateOrUpdateComponent implements OnInit {
 					this.userAvatar = null
 				} else {
 					this.userAvatar = AppSettings.API_DOWNLOADFILES + '/' + this.modelUser.avatar
+					let output: any = $('#' + this.modalId + ' .user-avatar-view').attr('src', this.userAvatar)
+					// output.src = this.userAvatar
 				}
+
 				if (this.modelUser.roleIds) this.selectedRoles = this.modelUser.roleIds.split(',').map((c) => parseInt(c))
 				else this.selectedRoles = []
 			})

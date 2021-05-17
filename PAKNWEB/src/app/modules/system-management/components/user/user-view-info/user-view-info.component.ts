@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core'
+import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core'
 import { COMMONS } from 'src/app/commons/commons'
 import { CONSTANTS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { ToastrService } from 'ngx-toastr'
@@ -25,6 +25,7 @@ declare var $: any
 export class UserViewInfoComponent implements OnInit, AfterViewInit {
 	constructor(
 		private unitService: UnitService,
+		private element: ElementRef,
 		private userService: UserService,
 		private positionService: PositionService,
 		private toast: ToastrService,
@@ -33,10 +34,12 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 		private userStorage: UserInfoStorageService,
 		private accountService: AccountService,
 		private router: Router
-	) {}
+	) {
+		this.modalId = element.nativeElement.getAttribute('modalid')
+	}
 	userAvatar: any = ''
 	model: any = {}
-
+	modalId: any
 	positionsList: any[] = []
 	rolesList: any[] = []
 	unitsList: any[] = []
@@ -71,15 +74,15 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 
 	ngAfterViewInit() {
 		//this.openModal()
-		$('#modal-user-view-info').on('show.bs.modal', () => {})
+		$('#' + this.modalId).on('show.bs.modal', () => {})
 	}
 
 	private getInfo(id: number) {
 		this.model = {}
-		this.userId = id
-		if (id != null && id != undefined) {
+		if (id != null && id != undefined && id != 0) {
 			this.userService.getById({ id: id }).subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
+					this.userId = id
 					this.model = res.result.SYUserGetByID[0]
 					//this.getUserAvatar(this.model.id)
 					if (this.model.avatar == '' || this.model.avatar == null) {
@@ -94,7 +97,7 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 					let rolesIds = this.model.roleIds.split(',').map((c) => parseInt(c))
 					let rolesNames = this.rolesList.filter((c) => rolesIds.includes(c.id)).map((c) => c.name)
 					this.model.rolesNames = rolesNames.join('; ')
-					$('#modal-user-view-info').modal('show')
+					$('#' + this.modalId).modal('show')
 				} else {
 					this.userId = null
 				}
@@ -102,6 +105,7 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 		} else {
 			this.accountService.getUserInfo().subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
+					this.userId = null
 					this.model = res.result
 					//this.getUserAvatar(this.model.id)
 					if (this.model.avatar == '' || this.model.avatar == null) {
@@ -116,13 +120,15 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 					let rolesIds = this.model.roleIds.split(',').map((c) => parseInt(c))
 					let rolesNames = this.rolesList.filter((c) => rolesIds.includes(c.id)).map((c) => c.name)
 					this.model.rolesNames = rolesNames.join('; ')
+					$('#' + this.modalId).modal('show')
 				}
 			})
 		}
 	}
 
 	public showEditUserInfo() {
-		$('#modal-user-view-info').modal('hide')
+		$('#' + this.modalId).modal('hide')
+
 		if (this.userId != null) {
 			this.parentUser.modalUserCreateOrUpdate(this.userId)
 		} else {
@@ -140,7 +146,7 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 	}
 
 	public closeModal() {
-		$('#modal-user-view-info').modal('hide')
+		$('#' + this.modalId).modal('hide')
 		//this.router.navigate(['/quan-tri'])
 	}
 

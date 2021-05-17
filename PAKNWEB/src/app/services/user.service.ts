@@ -84,6 +84,10 @@ export class UserService {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserChangeStatus)
 	}
 
+	changePasswordInManage(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserChangePwdInManage)
+	}
+
 	deleteUserRole(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.DeleteUserRole)
 	}

@@ -1,1 +1,132 @@
-<div>hahaha</div>
+<div class="content-body">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+					<!-- <li class="breadcrumb-item"><a>Thư mời</a></li> -->
+					<li class="breadcrumb-item"><a class="font-weight-bold uppercase"> Báo cáo phản ánh kiến nghị theo đơn vị</a></li>
+				</ol>
+				<!-- <div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách lĩnh vực</div> -->
+				<div class="btn-group group-button-table" role="group">
+					<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
+							<path
+								d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
+							<path
+								d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+						</svg>
+						Xuất báo cáo
+					</button>
+					<!-- <button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="redirectCreate()">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+						</svg>
+						Thêm mới
+					</button> -->
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card mb-0 shadow-none">
+					<div class="table-responsive">
+
+						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+							<ng-template pTemplate="header" class="bg-thead">
+								<!-- <tr>
+									<th style="width: 50px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>STT</strong>
+										</p>
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Đơn vị</strong>
+											<span class="caret-tb"></span>
+										</p>
+									</th>
+									
+
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Chờ xử lý</strong>
+											<span class="caret-tb"></span>
+										</p>
+									</th>
+
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Tiếp nhận xử lý</strong>
+											<span class="caret-tb"></span>
+										</p>
+									</th>
+
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Từ chối tiếp nhận</strong>
+											<span class="caret-tb"></span>
+										</p>
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Chờ giải quyết</strong>
+											<span class="caret-tb"></span>
+										</p>
+									</th>
+
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Đang giải quyết</strong>
+											<span class="caret-tb"></span>
+										</p>
+									</th>
+
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Đã giải quyết</strong>
+											<span class="caret-tb"></span>
+										</p>
+									</th>
+
+								</tr> -->
+							</ng-template>
+							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+								<tr>
+									<td class="text-center">{{rowIndex + 1}}</td>
+									<td>
+										<strong>{{item.unitName}}</strong>
+									</td>
+									<td>
+										<strong>{{item.receiveWait}}</strong>
+									</td>
+									<td>
+										<strong>{{item.receiveApproved}}</strong>
+									</td>
+									<td>
+										<strong>{{item.receiveDeny}}</strong>
+									</td>
+									<td>
+										<strong>{{item.processWait}}</strong>
+									</td>
+									<td>
+										<strong>{{item.processing}}</strong>
+									</td>
+									<td>
+										<strong>{{item.finised}}</strong>
+									</td>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="emptymessage">
+								<tr>
+									<td class="text-center" colspan="7">Không có dữ liệu</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

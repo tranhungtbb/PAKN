@@ -43,3 +43,11 @@
 .hide {
 	display: none;
 }
+
+.notscroll {
+	overflow-y: auto;
+}
+
+.notscroll::-webkit-scrollbar {
+	width: 0px;
+}

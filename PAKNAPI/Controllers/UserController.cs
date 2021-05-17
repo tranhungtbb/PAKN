@@ -156,9 +156,10 @@ namespace PAKNAPI.Controllers
 					{
 						await _fileService.Remove(modelOld.Avatar);
 					}
+					return new Models.Results.ResultApi { Success = ResultCode.OK, Result = result };
 				}
 				else {
-					return new Models.Results.ResultApi { Success = ResultCode.OK, Result = result };
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Result = result };
 				}
 				
 
@@ -560,6 +561,50 @@ namespace PAKNAPI.Controllers
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
         }
+
+
+		[HttpPost]
+		[Route("UserChangePwdInManage")]
+		[Authorize]
+		public async Task<object> UserChangePwdInManage(ChangePwdInManage model)
+		{
+			try
+			{
+				
+				var accInfo = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(long.Parse(model.UserId.ToString()));
+				if (accInfo == null || !accInfo.Any())
+				{
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Tài khoản không tồn tại" };
+				}
+				
+				if (model.NewPassword != model.RePassword)
+				{
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu mới không trùng khớp" };
+				}
+
+				PasswordHasher hasher = new PasswordHasher();
+				
+
+				var newPwd = generatePassword(model.NewPassword);
+				var _model = new SYUserChangePwdIN
+				{
+					Password = newPwd["Password"],
+					Salt = newPwd["Salt"]
+				};
+				_model.Id = accInfo[0].Id;
+
+				var rs = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_model);
+
+				return new Models.Results.ResultApi { Success = ResultCode.OK };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 
 		[HttpPost]
 		[Route("UpdateCurrentInfo")]

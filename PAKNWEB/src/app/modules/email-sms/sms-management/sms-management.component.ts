@@ -204,6 +204,10 @@ export class SMSManagementComponent implements OnInit {
 		this.hisCreateDate = ''
 	}
 
+	close() {
+		this.clearModelHis()
+	}
+
 	getHistory(id: Number) {
 		if (id == undefined) return
 		if (id != this.SMSId) {
