@@ -156,6 +156,10 @@ export class UploadFileService {
 			duration: 2000,
 		})
 	}
+
+	getFileSupport(data: any): Observable<any> {
+		return this.serviceInvoker.get(data, AppSettings.API_ADDRESS + Api.getFileSupport)
+	}
 	private handleError<T>(operation = 'operation', result?: T) {
 		return (error: any): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
