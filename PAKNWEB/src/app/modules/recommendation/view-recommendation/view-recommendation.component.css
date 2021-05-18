@@ -8,3 +8,9 @@
 .cmt-avatar img {
 	width: 100%;
 }
+.truncate {
+	width: 50px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
