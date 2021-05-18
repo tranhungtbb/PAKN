@@ -75,10 +75,10 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 							}
 						})
 					}
+					this.action = this.model.id == 0 ? 'Thêm mới vai trò' : 'Chỉnh sửa vai trò'
 				})
 			}
 		})
-		this.action = this.model.id == 0 ? 'Thêm mới' : 'Cập nhập'
 	}
 
 	getUsersByRoleId(roleId: any) {

@@ -218,8 +218,7 @@
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1 text-uppercase"><strong>Từ ngày</strong></label>
 								<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="dataSearch2.fromDate" bsDatepicker #n="bsDatepicker" maxlength="10"
-									id="fromDate" appBsDatepickerInvalid (bsValueChange)="fromDateChange($event)"
-									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+									id="fromDate2" appBsDatepickerInvalid [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon">
 									<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
 								</div>
@@ -227,8 +226,7 @@
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1 text-uppercase"><strong>Đến ngày</strong></label>
 								<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="dataSearch2.toDate" bsDatepicker #n="bsDatepicker" maxlength="10"
-									id="toDate" appBsDatepickerInvalid (bsValueChange)="toDateChange($event)"
-									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+									id="toDate2" appBsDatepickerInvalid [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon">
 									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 								</div>
@@ -246,10 +244,31 @@
 							<div class="card mb-0 shadow-none">
 								<div class="table-responsive">
 
-									<p-table #table2 [value]="listHisData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+									<p-table #table2 [value]="listHisData" [lazy]="true" (onLazyLoad)="onHisPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
 										currentPageReportTemplate="Tổng số {{hisTotalRecords}}" [rows]="hisPageSize" [totalRecords]="hisTotalRecords" [responsive]="true"
 										autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
-
+										<ng-template pTemplate="header" class="bg-thead">
+											<tr>
+												<th>
+													<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+														<strong>Ngày tạo</strong>
+														<span class="caret-tb"></span>
+													</p>
+												</th>
+												<th>
+													<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+														<strong>Nội dung</strong>
+														<span class="caret-tb"></span>
+													</p>
+												</th>
+												<th>
+													<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+														<strong>Trạng thái</strong>
+														<span class="caret-tb"></span>
+													</p>
+												</th>
+											</tr>
+										</ng-template>
 										<ng-template pTemplate="body" let-item>
 											<tr>
 												<td>{{item.createdDate | date:'HH:mm'}} - {{item.createdDate | date: 'dd/MM/yyyy'}} </td>
@@ -324,6 +343,11 @@
 								<div *ngIf="(submitted && f.rePassword.invalid) || (f.rePassword.invalid && (f.rePassword.dirty || f.rePassword.touched))" class="has-error m-b-12">
 									<div *ngIf="f.rePassword.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+								<div *ngIf="samePass == true" class="has-error m-b-12">
+									<div>
+										<span class="help-block">Mật khẩu mới không trùng khớp</span>
 									</div>
 								</div>
 							</div>

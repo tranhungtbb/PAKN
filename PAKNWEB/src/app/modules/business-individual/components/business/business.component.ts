@@ -44,9 +44,8 @@ export class BusinessComponent implements OnInit {
 	unitLoginId: number = this.storeageService.getUnitId()
 	listData = new Array<BusinessionObject>()
 	listStatus: any = [
-		{ value: '', text: 'Chọn trạng thái' },
-		{ value: true, text: 'Hiệu lực' },
-		{ value: false, text: 'Hết hiệu lực' },
+		{ value: 0, text: 'Hết hiệu lực' },
+		{ value: 1, text: 'Hiệu lực' },
 	]
 
 	listGender: any[] = [
@@ -110,7 +109,7 @@ export class BusinessComponent implements OnInit {
 			Address: this.dataSearch.address,
 			Phone: this.dataSearch.phone,
 			Email: this.dataSearch.email,
-			isActived: this.isActived != null ? this.isActived : '',
+			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 			sortDir: this.inSortDir,
@@ -213,15 +212,15 @@ export class BusinessComponent implements OnInit {
 	}
 
 	/*start - chức năng xác nhận hành động xóa*/
-	modalConfirm_type = 'isActived'
+	modalConfirm_type = 'Status'
 	modelConfirm_itemId: number = 0
-	onOpenConfirmModal(id: any, type = 'isActived') {
+	onOpenConfirmModal(id: any, type = 'Status') {
 		$('#modal-confirm').modal('show')
 		this.modalConfirm_type = type
 		this.modelConfirm_itemId = id
 	}
 	acceptConfirm() {
-		if (this.modalConfirm_type == 'isActived') {
+		if (this.modalConfirm_type == 'Status') {
 			this.onChangeBusinessChangeStatus(this.modelConfirm_itemId)
 		} else if (this.modalConfirm_type == 'individual') {
 			this.onDeleteBusiness(this.modelConfirm_itemId)
@@ -231,11 +230,11 @@ export class BusinessComponent implements OnInit {
 	}
 	onChangeBusinessChangeStatus(id: number) {
 		let item = this.listInvPaged.find((c) => c.id == id)
-		item.isActived = !item.isActived
+		item.status = item.status ? 0 : 1
 		this._service.businessChangeStatus(item).subscribe((res) => {
 			if (res.success != 'OK') {
 				this._toastr.error(COMMONS.UPDATE_FAILED)
-				item.isActived = !item.isActived
+				item.status = item.status ? 0 : 1
 				return
 			}
 			this._toastr.success(COMMONS.UPDATE_SUCCESS)

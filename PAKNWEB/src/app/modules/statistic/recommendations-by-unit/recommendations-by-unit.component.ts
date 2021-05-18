@@ -34,10 +34,10 @@ export class RecommendationsByUnitComponent implements OnInit {
 	timeline: any
 
 	lstTimeline: any = [
-		{ value: 1, text: 'Qúy I' },
+		{ value: 1, text: 'Quý I' },
 		{ value: 2, text: 'Quý II' },
-		{ value: 3, text: 'Quý II' },
-		{ value: 4, text: 'Quý III' },
+		{ value: 3, text: 'Quý III' },
+		{ value: 4, text: 'Quý IV' },
 		{ value: 5, text: '6 tháng đầu năm' },
 		{ value: 6, text: '6 tháng cuối năm' },
 	]
@@ -79,7 +79,6 @@ export class RecommendationsByUnitComponent implements OnInit {
 	}
 
 	getList() {
-		debugger
 		if (this.listUnitSelected != null && this.listUnitSelected.length > 0) {
 			this.ltsUnitId = this.listUnitSelected.reduce((x, y) => {
 				return (x += y.unitId + ',')
@@ -91,9 +90,10 @@ export class RecommendationsByUnitComponent implements OnInit {
 			LtsUnitId: this.ltsUnitId,
 			Year: this.year,
 			Timeline: this.timeline == null ? '' : this.timeline,
-			FromDate: this.fromDate == null ? '' : this.fromDate,
-			ToDate: this.toDate == null ? '' : this.toDate,
+			FromDate: this.fromDate == null ? '' : (this.fromDate = JSON.stringify(new Date(this.fromDate)).slice(1, 11)),
+			ToDate: this.toDate == null ? '' : (this.toDate = JSON.stringify(new Date(this.toDate)).slice(1, 11)),
 		}
+		debugger
 		this._service.getStatisticRecommendationByUnit(obj).subscribe((res) => {
 			if (res.success != RESPONSE_STATUS.success) {
 				this.listData = []
@@ -129,11 +129,20 @@ export class RecommendationsByUnitComponent implements OnInit {
 	}
 
 	fromDateChange(data) {
-		data != null ? (this.fromDate = JSON.stringify(new Date(data)).slice(1, 11)) : (this.fromDate = '')
-		this.fromDate != '' ? this.getList() : ''
+		if (data != null) {
+			this.fromDate = JSON.stringify(new Date(data)).slice(1, 11)
+		} else {
+			this.fromDate = null
+		}
+		this.getList()
 	}
 	toDateChange(data) {
-		data != null ? (this.toDate = JSON.stringify(new Date(data)).slice(1, 11)) : (this.toDate = '')
-		this.toDate != '' ? this.getList() : ''
+		if (data != null) {
+			this.toDate = JSON.stringify(new Date(data)).slice(1, 11)
+			// this.getList()
+		} else {
+			this.toDate = null
+		}
+		this.getList()
 	}
 }

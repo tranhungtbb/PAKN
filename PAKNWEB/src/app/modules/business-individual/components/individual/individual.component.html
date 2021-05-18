@@ -2,7 +2,8 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
-				<li class="breadcrumb-item active"><a class="font-weight-bold">QUẢN LÝ CÁ NHÂN</a></li>
+				<li class="breadcrumb-item"><a>Cá nhân, Doanh nghiệp</a></li>
+				<li class="breadcrumb-item active"><a class="font-weight-bold">Danh sách cá nhân</a></li>
 			</ol>
 			<div class="btn-group group-button-table" role="group">
 				<input type="file" [hidden]="true" id="excel-file" (change)="onExcelfileChange($event)">
@@ -29,6 +30,7 @@
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 					</svg>
+					Thêm mới
 				</button>
 			</div>
 		</div>
@@ -54,7 +56,7 @@
 										<span class="caret-tb" (click)="onSortUser('FullName')"></span>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.fullName" maxlength="100" (keydown.enter)="dataStateChange()"
-										placeholder="" />
+										placeholder="Nhập ..." />
 								</th>
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -62,21 +64,23 @@
 										<span class="caret-tb" (click)="onSortUser('Address')"></span>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.address" maxlength="100" (keydown.enter)="dataStateChange()"
-										placeholder="" />
+										placeholder="Nhập ..." />
 								</th>
 								<th style="width: 150px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Số điện thoại</strong>
 										<span class="caret-tb" (click)="onSortUser('Phone')"></span>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.phone" maxlength="11" (keydown.enter)="dataStateChange()" placeholder="" />
+									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.phone" maxlength="11" (keydown.enter)="dataStateChange()"
+										placeholder="Nhập ..." />
 								</th>
 								<th style="width: 250px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Email</strong>
 										<span class="caret-tb" (click)="onSortUser('Email')"></span>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.email" maxlength="256" (keydown.enter)="dataStateChange()" placeholder="" />
+									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.email" maxlength="256" (keydown.enter)="dataStateChange()"
+										placeholder="Nhập ..." />
 								</th>
 								<th style="width: 160px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -84,10 +88,9 @@
 										<span class="caret-tb"></span>
 									</p>
 									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="isActived"
+										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
 											[closeOnSelect]="true" (change)="dataStateChange()">
 										</ng-select>
-										<input hidden [(ngModel)]="dataSearch.status">
 									</div>
 								</th>
 								<th class="text-right" style="width: 100px;">
@@ -107,16 +110,13 @@
 								<td>{{item.phone}}</td>
 								<td>{{item.email}}</td>
 								<td>
-									<span type="button" (click)="onOpenConfirmModal(item.id,'isActived')" *ngIf="item.isActived == true" class="badge rounded-pill bg-success">Hiệu
-										lực</span>
-									<span type="button" (click)="onOpenConfirmModal(item.id,'isActived')" *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Hết
-										hiệu
-										lực</span>
+									<span *ngIf="item.status == 0" class="badge rounded-pill badge-light" (click)="onOpenConfirmModal(item.id,'Status')">Hết hiệu lực</span>
+									<span *ngIf="item.status == 1" class="badge rounded-pill bg-success" (click)="onOpenConfirmModal(item.id,'Status')">Hiệu lực</span>
 								</td>
-								<td style="max-width: 100px;">
+								<td style=" max-width: 100px;">
 									<div class="d-flex justify-content-end">
 										<a type="button" (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-										<a type="button" (click)="onOpenConfirmModal(item.id,'individual')" class="btn-icon grd-red text-white" data-toggle="modal"
+										<a type="button" (click)="onOpenConfirmModal(item.id,'Individual')" class="btn-icon grd-red text-white" data-toggle="modal"
 											data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
 									</div>
 								</td>
@@ -345,54 +345,6 @@
 		</div>
 	</div>
 </div>
-
-<!-- <div class="modal fade" id="modalDetail">
-	<div class="modal-dialog modal-dialog-centered" style="max-width: 40%" role="document">
-		<div class="modal-content rounded">
-			<form class="form-horizontal">
-				<div class="panel panel-default no-margin">
-					<div class="modal-header" style="border: none;">
-						<button class="close btn-close-modal" data-dismiss="modal">
-							×
-						</button>
-						<p class="modal-title h3">Thông tin</p>
-					</div>
-					<div class="modal-body no-padding-bottom" style="padding: 1.1rem;">
-						<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 10px 0px;">
-							<div class="col-sm-4">
-								<label class="control-label lb600 detail-title">Câu hỏi: </label>
-							</div>
-							<div class="col-sm-6">
-								<strong>{{model.fullName}}</strong>
-							</div>
-						</div>
-						<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 10px 0px;">
-							<div class="col-sm-12">
-								<label class="control-label lb600">Trả lời: </label>
-							</div>
-							<div class="col-sm-12">
-								<p>{{model.address}}</p>
-							</div>
-						</div>
-
-						<div class="row" style="padding: 10px 0px;">
-							<div class="col-sm-8">
-								<label class="control-label lb600">Trạng thái: </label>
-							</div>
-							<div class="col-sm-4" style="text-align: right;">
-								<span style="padding: 7px;" (click)="onOpenConfirmModal(item.id,'isActived')" *ngIf="model.isActived" class="badge rounded-pill bg-success">Hiệu
-									lực</span>
-								<span style="padding: 7px;" (click)="onOpenConfirmModal(item.id,'isActived')" *ngIf="!model.isActived" class="badge rounded-pill badge-light">Hết
-									hiệu lực</span>
-							</div>
-						</div>
-					</div>
-
-				</div>
-			</form>
-		</div>
-	</div>
-</div> -->
 
 <!-- confirm modal -->
 <div class="modal fade" id="modal-confirm">

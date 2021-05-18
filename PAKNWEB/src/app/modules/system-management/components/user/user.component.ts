@@ -41,6 +41,7 @@ export class UserComponent implements OnInit {
 	formChangePassword: FormGroup
 	newPassword: string
 	rePassword: string
+	samePass = false
 
 	// object User
 	modelUser: any = new UserObject2()
@@ -214,6 +215,7 @@ export class UserComponent implements OnInit {
 		if (id != this.userId) {
 			this.clearChangePasswordModel()
 		}
+		this.samePass = false
 		this.userId = id
 		this.rebuilForm()
 		$('#modalChangePassword').modal('show')
@@ -223,9 +225,16 @@ export class UserComponent implements OnInit {
 		this.submitted = true
 		this.newPassword = this.newPassword.trim()
 		this.rePassword = this.rePassword.trim()
+
 		this.rebuilForm()
 		if (this.formChangePassword.invalid) {
 			return
+		}
+		if (this.newPassword != this.rePassword) {
+			this.samePass = true
+			return
+		} else {
+			this.samePass = false
 		}
 		let obj = {
 			UserId: this.userId,
@@ -300,11 +309,18 @@ export class UserComponent implements OnInit {
 		this.hisUserId = null
 		this.dataSearch2.fromDate = null
 		this.dataSearch2.toDate = null
+		this.hisTotalRecords = 0
 	}
 
 	close() {
 		this.cleaseHisModel()
 		this.clearChangePasswordModel()
+	}
+
+	onHisPageChange(event: any) {
+		this.hisPageSize = event.rows
+		this.hisPageIndex = event.first / event.rows + 1
+		this.getHistory(this.hisUserId, this.emailUser)
 	}
 
 	dataHisStateChange() {
@@ -318,40 +334,59 @@ export class UserComponent implements OnInit {
 		if (id != this.hisUserId) {
 			this.cleaseHisModel()
 		}
+		this.hisPageSize = 20
+		this.hisPageIndex = 1
 		this.hisUserId = id
 		this.listHisData = []
 		this.emailUser = email
 		let req = {
-			FromDate: this.dataSearch2.fromDate != null ? this.dataSearch2.fromDate : '',
-			ToDate: this.dataSearch2.toDate != null ? this.dataSearch2.toDate : '',
+			FromDate: this.dataSearch2.fromDate == null ? '' : JSON.stringify(new Date(this.dataSearch2.fromDate)).slice(1, 11),
+			ToDate: this.dataSearch2.toDate == null ? '' : JSON.stringify(new Date(this.dataSearch2.toDate)).slice(1, 11),
 			PageIndex: this.hisPageIndex,
 			PageSize: this.hisPageSize,
 			UserId: id,
 		}
 		this._service.getSystemLogin(req).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				if (response.result != null) {
+				if (response.result.SYSystemLogGetAllOnPage.length > 0) {
 					this.listHisData = response.result.SYSystemLogGetAllOnPage
 					this.hisTotalRecords = response.result.SYSystemLogGetAllOnPage.length != 0 ? response.result.SYSystemLogGetAllOnPage[0].rowNumber : 0
-					// this.hisPageIndex =
+					// this.hisPageIndex = response.result.
+					$('#modalHis').modal('show')
+				} else {
+					this.hisPageIndex = 1
+					this.hisPageSize = 20
+					this.hisTotalRecords = 0
+					this.listHisData = []
 					$('#modalHis').modal('show')
 				}
 			} else {
+				this.cleaseHisModel()
+				this.listHisData = []
 			}
 		})
 	}
 
-	fromDateChange(newDate) {
-		newDate != null ? (this.dataSearch2.fromDate = JSON.stringify(new Date(newDate)).slice(1, 11)) : (this.dataSearch2.fromDate = '')
+	// fromDateChange(newDate) {
+	// 	debugger
+	// 	if (newDate != null) {
+	// 		this.dataSearch2.fromDate = JSON.stringify(new Date(newDate)).slice(1, 11)
+	// 	} else {
+	// 		this.dataSearch2.fromDate = null
+	// 	}
+	// 	// this.getHistory(this.hisUserId, this.emailUser)
+	// }
 
-		// this.getHistory(this.hisUserId, this.emailUser)
-	}
+	// toDateChange(newDate) {
+	// 	if (newDate != null) {
+	// 		this.dataSearch2.toDate = JSON.stringify(new Date(newDate)).slice(1, 11)
+	// 	} else {
+	// 		this.dataSearch2.toDate = null
+	// 	}
+	// 	// this.getHistory(this.hisUserId, this.emailUser)
+	// }
 
-	toDateChange(newDate) {
-		newDate != null ? (this.dataSearch2.toDate = JSON.stringify(new Date(newDate)).slice(1, 11)) : (this.dataSearch2.toDate = '')
-	}
-
-	modalUserChangePassword(id: any) {}
+	// modalUserChangePassword(id: any) {}
 }
 
 export class HistoryUser {
@@ -359,6 +394,6 @@ export class HistoryUser {
 		this.fromDate = null
 		this.toDate = null
 	}
-	fromDate: string
-	toDate: string
+	fromDate: Date
+	toDate: Date
 }

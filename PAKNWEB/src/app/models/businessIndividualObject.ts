@@ -105,7 +105,7 @@ export class OrganizationObject {
 		this.OrgPhone = ''
 		this.Tax = ''
 
-		this.Status = 1
+		this.Status = null
 		this.isActived = true
 		this.IsDeleted = false
 		this.userId = null
@@ -156,7 +156,7 @@ export class IndividualExportObject {
 		this.address = ''
 		this.phone = ''
 		this.email = ''
-		this.status = 0
+		this.status = null
 	}
 	fullName: string
 	address: string
@@ -171,7 +171,7 @@ export class BusinessExportObject {
 		this.address = ''
 		this.phone = ''
 		this.email = ''
-		this.status = 0
+		this.status = null
 	}
 	representativeName: string
 	address: string

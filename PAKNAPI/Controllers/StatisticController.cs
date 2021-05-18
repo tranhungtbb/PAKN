@@ -60,6 +60,7 @@ namespace PAKNAPI.Controllers
 						{"PageIndex", mrrRecommendationByUnit != null && mrrRecommendationByUnit.Count > 0 ? PageIndex : 0},
 						{"PageSize", mrrRecommendationByUnit != null && mrrRecommendationByUnit.Count > 0 ? PageSize : 0},
 					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)

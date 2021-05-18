@@ -16,11 +16,19 @@ export class UserService {
 	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStronageService: UserInfoStorageService) {}
 
 	getAllPagedList(query: any): Observable<any> {
-		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetPagedList)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+		}
+		return this.serviceInvoker.getwithHeaders(query, AppSettings.API_ADDRESS + Api.UserGetPagedList, headers)
 	}
 
 	getAllOnPagedList(query: any): Observable<any> {
-		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetAllOnPagedList)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+		}
+		return this.serviceInvoker.getwithHeaders(query, AppSettings.API_ADDRESS + Api.UserGetAllOnPagedList, headers)
 	}
 	getById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetById)
@@ -33,7 +41,7 @@ export class UserService {
 	getByRoleId(query: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER_GET_BY_ROLE),
 		}
 		return this.serviceInvoker.getwithHeaders(query, AppSettings.API_ADDRESS + Api.UserGetByRoleId, headers)
 	}
@@ -47,10 +55,18 @@ export class UserService {
 	}
 
 	insertMultiUserRole(query: any): Observable<any> {
-		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.InsertMultiUserRole)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER_GET_BY_ROLE),
+		}
+		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.InsertMultiUserRole, headers)
 	}
 
 	insert(data: any, files: any = null): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+		}
 		let form = new FormData()
 
 		for (let item in data) {
@@ -62,10 +78,15 @@ export class UserService {
 			}
 		}
 
-		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.UserInsert)
+		return this.serviceInvoker.postwithHeaders(form, AppSettings.API_ADDRESS + Api.UserInsert, headers)
 	}
 	update(data: any, files: any = null): Observable<any> {
 		let form = new FormData()
+
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+		}
 
 		for (let key in data) {
 			form.append(key, data[key])
@@ -75,21 +96,37 @@ export class UserService {
 				form.append('files', item, item.name)
 			}
 		}
-		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.UserUpdate)
+		return this.serviceInvoker.postwithHeaders(form, AppSettings.API_ADDRESS + Api.UserUpdate, headers)
 	}
 	delete(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserDelete)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.UserDelete, headers)
 	}
 	changeStatus(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserChangeStatus)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.UserChangeStatus, headers)
 	}
 
 	changePasswordInManage(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UserChangePwdInManage)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.CHANGEPASSWORD),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.UserChangePwdInManage, headers)
 	}
 
 	deleteUserRole(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.DeleteUserRole)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER_GET_BY_ROLE),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.DeleteUserRole, headers)
 	}
 
 	getAvatar(id: number): Observable<any> {

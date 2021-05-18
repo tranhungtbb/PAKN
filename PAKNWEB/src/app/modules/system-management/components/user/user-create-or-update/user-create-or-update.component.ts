@@ -17,6 +17,7 @@ import { UnitComponent } from '../../unit/unit.component'
 import { UserComponent } from 'src/app/modules/system-management/components/user/user.component'
 import { BusinessComponent } from 'src/app/modules/business.component'
 import file_uploader from 'devextreme/ui/file_uploader'
+import { Console } from 'console'
 
 declare var jquery: any
 declare var $: any
@@ -141,8 +142,8 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		this.modelUser.lockEndOut = ''
 
 		if (this.modelUser.id != null && this.modelUser.id > 0) {
-			debugger
 			this.modelUser.avatar = this.modelUser.avatar
+			this.modelUser.address == null ? '' : this.modelUser.address.trim()
 			this.userService.update(this.modelUser, files).subscribe((res) => {
 				$('#' + this.modalId + ' .seclect-avatar').val('')
 
@@ -191,6 +192,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		$('.seclect-avatar').click()
 	}
 	changeSelectAvatar(event: any) {
+		debugger
 		var file = event.target.files[0]
 		if (!['image/jpeg', 'image/png'].includes(file.type)) {
 			this.toast.error('Chỉ chọn tệp tin ảnh')
@@ -203,7 +205,8 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			return
 		}
 		let output: any = $('#' + this.modalId + ' .user-avatar-view')
-		output.src = URL.createObjectURL(file)
+		// output.src = URL.createObjectURL(file)
+		output.attr('src', URL.createObjectURL(file))
 		this.userAvatar = ''
 		output.onload = function () {
 			URL.revokeObjectURL(output.src) // free memory
@@ -242,8 +245,8 @@ export class UserCreateOrUpdateComponent implements OnInit {
 					this.userAvatar = null
 				} else {
 					this.userAvatar = AppSettings.API_DOWNLOADFILES + '/' + this.modelUser.avatar
-					let output: any = $('#' + this.modalId + ' .user-avatar-view').attr('src', this.userAvatar)
-					// output.src = this.userAvatar
+					let output: any = $('#' + this.modalId + ' .user-avatar-view')
+					output.attr('src', this.userAvatar)
 				}
 
 				if (this.modelUser.roleIds) this.selectedRoles = this.modelUser.roleIds.split(',').map((c) => parseInt(c))
