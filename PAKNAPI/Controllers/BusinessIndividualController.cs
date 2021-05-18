@@ -205,11 +205,11 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Authorize]
 		[Route("IndividualGetAllOnPage")]
-		public async Task<ActionResult<object>> IndividualGetAllOnPage(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
+		public async Task<ActionResult<object>> IndividualGetAllOnPage(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, int? Status, string SortDir, string SortField)
 		{
 			try
 			{
-                List<BI_IndividualGetAllOnPage> rsIndividualGetAllOnPageBase = await new BI_IndividualGetAllOnPage(_appSetting).BI_IndividualGetAllOnPageDAO(PageSize, PageIndex, FullName, Address, Phone, Email, IsActived, SortDir, SortField);
+                List<BI_IndividualGetAllOnPage> rsIndividualGetAllOnPageBase = await new BI_IndividualGetAllOnPage(_appSetting).BI_IndividualGetAllOnPageDAO(PageSize, PageIndex, FullName, Address, Phone, Email, Status, SortDir, SortField);
                 IDictionary<string, object> json = new Dictionary<string, object>
                         {
                             {"IndividualGetAllOnPage", rsIndividualGetAllOnPageBase},
@@ -351,11 +351,11 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("BusinessGetAllOnPage")]
-		public async Task<ActionResult<object>> BusinessGetAllOnPage(int? PageSize, int? PageIndex, string RepresentativeName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
+		public async Task<ActionResult<object>> BusinessGetAllOnPage(int? PageSize, int? PageIndex, string RepresentativeName, string Address, string Phone, string Email, int? Status, string SortDir, string SortField)
 		{
 			try
 			{
-				List<BI_BusinessGetAllOnPage> rsBusinessGetAllOnPageBase = await new BI_BusinessGetAllOnPage(_appSetting).BI_BusinessGetAllOnPageDAO(PageSize, PageIndex, RepresentativeName, Address, Phone, Email, IsActived, SortDir, SortField);
+				List<BI_BusinessGetAllOnPage> rsBusinessGetAllOnPageBase = await new BI_BusinessGetAllOnPage(_appSetting).BI_BusinessGetAllOnPageDAO(PageSize, PageIndex, RepresentativeName, Address, Phone, Email, Status, SortDir, SortField);
 				IDictionary<string, object> json = new Dictionary<string, object>
 						{
 							{"BusinessGetAllOnPageBase", rsBusinessGetAllOnPageBase},

@@ -27,10 +27,10 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public string Address { get; set; }
 		public string Phone { get; set; }
 		public string Email { get; set; }
-		public bool IsActived { get; set; }
+		public byte? Status { get; set; }
 		public bool IsDeleted { get; set; }
 
-		public async Task<List<BI_BusinessGetAllOnPage>> BI_BusinessGetAllOnPageDAO(int? PageSize, int? PageIndex, string RepresentativeName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
+		public async Task<List<BI_BusinessGetAllOnPage>> BI_BusinessGetAllOnPageDAO(int? PageSize, int? PageIndex, string RepresentativeName, string Address, string Phone, string Email, int? Status, string SortDir, string SortField)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
@@ -39,7 +39,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 			DP.Add("Address", Address);
 			DP.Add("Phone", Phone);
 			DP.Add("Email", Email);
-			DP.Add("IsActived", IsActived);
+			DP.Add("Status", Status);
 			DP.Add("SortDir", SortDir);
 			DP.Add("SortField", SortField);
 
@@ -97,7 +97,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _bI_BusinessChageStatusIN.Id);
-			DP.Add("IsActived", _bI_BusinessChageStatusIN.IsActived);
+			DP.Add("Status", _bI_BusinessChageStatusIN.Status);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_BusinessChageStatus", DP));
 		}
@@ -106,7 +106,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 	public class BI_BusinessChageStatusIN
 	{
 		public long? Id { get; set; }
-		public bool? IsActived { get; set; }
+		public byte? Status { get; set; }
 	}
 
 	#endregion
