@@ -22,8 +22,7 @@
 					<div class="row form-group">
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Tiêu đề<span class="text-danger">(*)</span></label>
-							<input class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" formControlName="title" [(ngModel)]="model.title" maxlength="100"
-								placeholder="Nhập..." />
+							<input class="form-control" formControlName="title" [(ngModel)]="model.title" maxlength="100" placeholder="Nhập..." />
 							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
 								<div *ngIf="f.title.errors.required">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -34,24 +33,29 @@
 						<div class="col-sm-6 padding-col">
 							<label class="control-label department">Thời gian bắt đầu<span class="text-danger">(*)</span></label>
 							<div class="input-group">
-								<input class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10"
-									formControlName="startDate" [(ngModel)]="model.startDate" appBsDatepickerInvalid
-									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+								<input class="form-control" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="startDate"
+									[(ngModel)]="model.startDate" appBsDatepickerInvalid [bsConfig]="{ containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon">
 									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 								</div>
 							</div>
 							<div *ngIf="(submitted && f.startDate.invalid) || (f.startDate.invalid && (f.startDate.dirty || f.startDate.touched))" class="has-error">
+								<!-- <ng-container> -->
 								<div *ngIf="f.startDate.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
 								</div>
+								<div *ngIf="f.startDate.errors && !f.startDate.errors.required">
+									<span class="help-block">Định dạng ngày không đúng</span>
+								</div>
+
 							</div>
+
 						</div>
 						<div class="col-sm-6 padding-col">
 							<label class="control-label department">Thời gian kết thúc<span class="text-danger">(*)</span></label>
 							<div class="input-group">
-								<input class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10"
-									formControlName="endDate" [(ngModel)]="model.endDate" appBsDatepickerInvalid [minDate]="model.startDate"
+								<input class="form-control" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="endDate"
+									[(ngModel)]="model.endDate" appBsDatepickerInvalid [minDate]="model.startDate"
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon">
 									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
@@ -61,11 +65,14 @@
 								<div *ngIf="f.endDate.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
 								</div>
+								<div *ngIf="f.startDate.errors && !f.startDate.errors.required">
+									<span class="help-block">Định dạng ngày không đúng</span>
+								</div>
 							</div>
 						</div>
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Địa điểm <span class="text-danger">(*)</span></label>
-							<input class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" [(ngModel)]="model.place" formControlName="place" placeholder="Nhập..." />
+							<input class="form-control" [(ngModel)]="model.place" formControlName="place" placeholder="Nhập..." />
 							<div *ngIf="(submitted && f.place.invalid) || (f.place.invalid && (f.place.dirty || f.place.touched))" class="has-error m-b-12">
 								<div *ngIf="f.place.errors">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -74,13 +81,12 @@
 						</div>
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Ghi chú</label>
-							<input class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" [(ngModel)]="model.note" formControlName="note" placeholder="Nhập..." />
+							<input class="form-control" [(ngModel)]="model.note" formControlName="note" placeholder="Nhập..." />
 
 						</div>
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Nội dung <span class="text-danger">(*)</span></label>
-							<textarea class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" [(ngModel)]="model.content" formControlName="content" rows="6"
-								placeholder="Nhập..."></textarea>
+							<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" rows="6" placeholder="Nhập..."></textarea>
 							<div *ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error m-b-12">
 								<div *ngIf="f.content.errors">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -273,15 +279,13 @@
 								</div>
 								<div class="type-send border-right padding-item">
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" [checked]="item.sendSMS == true" [attr.disabled]="statusCurent == 2 ? '': null"
-											(click)="onUpdateUser(item.userId, true)">
+										<input class="form-check-input" type="checkbox" [checked]="item.sendSMS == true" (click)="onUpdateUser(item.userId, true)">
 										<label class="form-check-label">
 											Gửi SMS
 										</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" [checked]="item.sendEmail == true" [attr.disabled]="statusCurent == 2 ? '': null"
-											(click)="onUpdateUser(item.userId, false)">
+										<input class="form-check-input" type="checkbox" [checked]="item.sendEmail == true" (click)="onUpdateUser(item.userId, false)">
 										<label class="form-check-label">
 											Gửi mail
 										</label>

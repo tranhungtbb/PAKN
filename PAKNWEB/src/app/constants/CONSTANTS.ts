@@ -21,14 +21,38 @@ export class LOG_ACTION {
 	public static UPDATESTATUS = 'Cập nhật trạng thái'
 	public static DELETE = 'Xóa'
 	public static EXPORT = 'Xuất danh sách'
+	public static CHANGEPASSWORD = 'Đổi mật khẩu'
 }
 
 export class LOG_OBJECT {
 	public static NO_CONTENT = ''
 	public static login = 'Đăng nhập'
+
 	public static CA_FIELD = 'Danh mục lĩnh vực'
 	public static CA_WORD = 'Danh mục thư viện từ ngữ'
 	public static CA_GROUPWORD = 'Danh mục nhóm thư viện từ ngữ'
+	public static CA_DEPARTMENT = 'Danh mục sở ngành'
+	public static CA_DEPARTMENT_GROUP = 'Danh mục nhóm sở ngành'
+	public static CA_HASHTAG = 'Danh mục Hashtag'
+	public static CA_POSITION = 'Danh mục chức vụ'
+	public static CA_NEWS_TYPE = 'Danh mục loại tin tức'
+
+	public static SMS_EMAIL = 'Danh sách sms'
+	public static HIS_EMAIL = 'Lịch sử sms'
+	public static SY_INVITATION = 'Danh sách thư mời'
+	public static HIS_INVITATION = 'Lịch sử thư mời'
+
+	public static SY_ROLE = 'Vai trò hệ thống'
+
+	public static SY_USER = 'Người dùng hệ thống'
+	public static SY_USER_GET_BY_ROLE = 'Người dùng theo vai trò'
+
+	public static HIS_USER = 'Lịch sử người dùng hệ thống'
+
+	public static RM_REMIND = 'Danh sách nhắc nhở'
+
+	public static MR_BY_HASHTAG = 'Danh sách PAKN theo hashtag'
+
 	public static SY_SYSTEM = 'Lịch sử hệ thống'
 }
 

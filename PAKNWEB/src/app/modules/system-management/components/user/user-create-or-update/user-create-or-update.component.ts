@@ -142,8 +142,8 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		this.modelUser.lockEndOut = ''
 
 		if (this.modelUser.id != null && this.modelUser.id > 0) {
-			debugger
 			this.modelUser.avatar = this.modelUser.avatar
+			this.modelUser.address == null ? '' : this.modelUser.address.trim()
 			this.userService.update(this.modelUser, files).subscribe((res) => {
 				$('#' + this.modalId + ' .seclect-avatar').val('')
 

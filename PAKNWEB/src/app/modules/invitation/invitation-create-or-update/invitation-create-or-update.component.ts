@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 import { defineLocale } from 'ngx-bootstrap/chronos'
 import { viLocale } from 'ngx-bootstrap/locale'
@@ -70,13 +70,22 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		// this.getInvitatonModelById()
 	}
 
+	// ptDate(control: FormControl): { [key: string]: any } {
+	// 	let ptDatePattern =
+	// 		/^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$/g
+
+	// 	if (!control.value.match(ptDatePattern)) return { ptDate: true }
+
+	// 	return null
+	// }
+
 	buildForm() {
 		this.form = this.formBuilder.group({
-			title: [this.model.title, Validators.required],
-			startDate: [this.model.startDate, Validators.required],
-			endDate: [this.model.endDate, Validators.required],
-			content: [this.model.content, Validators.required],
-			place: [this.model.place, Validators.required],
+			title: [this.model.title, [Validators.required]],
+			startDate: [this.model.startDate, [Validators.required]],
+			endDate: [this.model.endDate, [Validators.required]],
+			content: [this.model.content, [Validators.required]],
+			place: [this.model.place, [Validators.required]],
 			note: [this.model.note],
 			listUserSelected: [this.listUserSelected],
 			sendEmail: [this.sendEmail],
