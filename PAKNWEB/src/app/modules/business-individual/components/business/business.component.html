@@ -52,7 +52,7 @@
 								<th style="width: 250px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Doanh nghiệp</strong>
-										<span class="caret-tb"></span>
+										<span class="caret-tb" (click)="onSortBusiness('RepresentativeName')"></span>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="representativeName" maxlength="100" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập ..." />
@@ -60,7 +60,7 @@
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Địa chỉ trụ sở</strong>
-										<span class="caret-tb" (click)="onSortUser('Address')"></span>
+										<span class="caret-tb" (click)="onSortBusiness('Address')"></span>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.address" maxlength="100" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập ..." />
@@ -68,7 +68,7 @@
 								<th style="width: 150px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Số điện thoại</strong>
-										<span class="caret-tb" (click)="onSortUser('Phone')"></span>
+										<span class="caret-tb" (click)="onSortBusiness('Phone')"></span>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.phone" maxlength="11" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập ..." />
@@ -76,7 +76,7 @@
 								<th style="width: 250px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Email</strong>
-										<span class="caret-tb" (click)="onSortUser('Email')"></span>
+										<span class="caret-tb" (click)="onSortBusiness('Email')"></span>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.email" maxlength="256" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập ..." />
@@ -84,7 +84,7 @@
 								<th style="width: 160px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Trạng thái</strong>
-										<span class="caret-tb"></span>
+										<span class="caret-tb" (click)="onSortBusiness('Status')"></span>
 									</p>
 									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
 										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
@@ -116,7 +116,7 @@
 									<div class="d-flex justify-content-end">
 										<a type="button" [routerLink]="['/quan-tri/ca-nhan-doanh-nghiep/them-moi/', item.id]" class="btn-icon grd-brown text-brown mr-2"><i
 												class="bi bi-pencil-square"></i></a>
-										<a type="button" (click)="onOpenConfirmModal(item.id,'individual')" class="btn-icon grd-red text-white" data-toggle="modal"
+										<a type="button" (click)="onOpenConfirmModal(item.id,'Individual')" class="btn-icon grd-red text-white" data-toggle="modal"
 											data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
 									</div>
 								</td>

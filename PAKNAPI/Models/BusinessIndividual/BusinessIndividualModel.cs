@@ -27,7 +27,8 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public string Address { get; set; }
 		public string Phone { get; set; }
 		public string Email { get; set; }
-		public byte? Status { get; set; }
+		public int? Status { get; set; }
+
 
 		public async Task<List<BI_IndividualGetAllOnPage>> BI_IndividualGetAllOnPageDAO(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, int? Status, string SortDir, string SortField)
 		{
@@ -376,19 +377,30 @@ namespace PAKNAPI.Models.BusinessIndividual
 		{
 		}
 
-		public long? Id { get; set; }
 		public string FullName { get; set; }
-		public DateTime? DateOfBirth { get; set; }
-		public string Email { get; set; }
-		public string Nation { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
 		public int? ProvinceId { get; set; }
-		public int? DistrictId { get; set; }
 		public int? WardsId { get; set; }
+		public int? DistrictId { get; set; }
+		public DateTime? DateOfIssue { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? CreatedBy { get; set; }
+		public int? UpdatedBy { get; set; }
+		public int? Status { get; set; }
+		public string Code { get; set; }
 		public string Address { get; set; }
-		public string IdCard { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string IDCard { get; set; }
 		public string IssuedPlace { get; set; }
-		public DateTime? IssuedDate { get; set; }
+		public string NativePlace { get; set; }
+		public string PermanentPlace { get; set; }
+		public string Nation { get; set; }
+		public DateTime? BirthDay { get; set; }
 		public bool? Gender { get; set; }
+		public long? UserId { get; set; }
 
 		public async Task<List<BI_InvididualGetByID>> BI_InvididualGetByIDDAO(long? Id)
 		{

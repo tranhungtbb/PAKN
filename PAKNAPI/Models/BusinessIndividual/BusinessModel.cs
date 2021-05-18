@@ -27,10 +27,10 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public string Address { get; set; }
 		public string Phone { get; set; }
 		public string Email { get; set; }
-		public byte? Status { get; set; }
+		public int? Status { get; set; }
 		public bool IsDeleted { get; set; }
 
-		public async Task<List<BI_BusinessGetAllOnPage>> BI_BusinessGetAllOnPageDAO(int? PageSize, int? PageIndex, string RepresentativeName, string Address, string Phone, string Email, int? Status, string SortDir, string SortField)
+		public async Task<List<BI_BusinessGetAllOnPage>> BI_BusinessGetAllOnPageDAO(int? PageSize, int? PageIndex, string RepresentativeName, string Address, string Phone, string Email, byte? Status, string SortDir, string SortField)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
