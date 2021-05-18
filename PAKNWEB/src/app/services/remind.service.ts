@@ -18,7 +18,7 @@ export class RemindService {
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.RM_REMIND),
 		})
 		const form = new FormData()
 		form.append('Model', JSON.stringify(request.Model))

@@ -334,25 +334,29 @@ export class UserComponent implements OnInit {
 		if (id != this.hisUserId) {
 			this.cleaseHisModel()
 		}
+		this.hisPageSize = 20
+		this.hisPageIndex = 1
 		this.hisUserId = id
 		this.listHisData = []
 		this.emailUser = email
 		let req = {
-			FromDate: this.dataSearch2.fromDate == null ? '' : (this.dataSearch2.fromDate = JSON.stringify(new Date(this.dataSearch2.fromDate)).slice(1, 11)),
-			ToDate: this.dataSearch2.toDate == null ? '' : (this.dataSearch2.toDate = JSON.stringify(new Date(this.dataSearch2.toDate)).slice(1, 11)),
+			FromDate: this.dataSearch2.fromDate == null ? '' : JSON.stringify(new Date(this.dataSearch2.fromDate)).slice(1, 11),
+			ToDate: this.dataSearch2.toDate == null ? '' : JSON.stringify(new Date(this.dataSearch2.toDate)).slice(1, 11),
 			PageIndex: this.hisPageIndex,
 			PageSize: this.hisPageSize,
 			UserId: id,
 		}
 		this._service.getSystemLogin(req).subscribe((response) => {
-			debugger
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result.SYSystemLogGetAllOnPage.length > 0) {
 					this.listHisData = response.result.SYSystemLogGetAllOnPage
 					this.hisTotalRecords = response.result.SYSystemLogGetAllOnPage.length != 0 ? response.result.SYSystemLogGetAllOnPage[0].rowNumber : 0
-					this.hisPageIndex = response.result.$('#modalHis').modal('show')
+					// this.hisPageIndex = response.result.
+					$('#modalHis').modal('show')
 				} else {
-					this.cleaseHisModel()
+					this.hisPageIndex = 1
+					this.hisPageSize = 20
+					this.hisTotalRecords = 0
 					this.listHisData = []
 					$('#modalHis').modal('show')
 				}
@@ -363,23 +367,24 @@ export class UserComponent implements OnInit {
 		})
 	}
 
-	fromDateChange(newDate) {
-		if (newDate != null) {
-			this.dataSearch2.fromDate = JSON.stringify(new Date(newDate)).slice(1, 11)
-		} else {
-			this.dataSearch2.fromDate = null
-		}
-		// this.getHistory(this.hisUserId, this.emailUser)
-	}
+	// fromDateChange(newDate) {
+	// 	debugger
+	// 	if (newDate != null) {
+	// 		this.dataSearch2.fromDate = JSON.stringify(new Date(newDate)).slice(1, 11)
+	// 	} else {
+	// 		this.dataSearch2.fromDate = null
+	// 	}
+	// 	// this.getHistory(this.hisUserId, this.emailUser)
+	// }
 
-	toDateChange(newDate) {
-		if (newDate != null) {
-			this.dataSearch2.toDate = JSON.stringify(new Date(newDate)).slice(1, 11)
-		} else {
-			this.dataSearch2.toDate = null
-		}
-		// this.getHistory(this.hisUserId, this.emailUser)
-	}
+	// toDateChange(newDate) {
+	// 	if (newDate != null) {
+	// 		this.dataSearch2.toDate = JSON.stringify(new Date(newDate)).slice(1, 11)
+	// 	} else {
+	// 		this.dataSearch2.toDate = null
+	// 	}
+	// 	// this.getHistory(this.hisUserId, this.emailUser)
+	// }
 
 	// modalUserChangePassword(id: any) {}
 }
@@ -389,6 +394,6 @@ export class HistoryUser {
 		this.fromDate = null
 		this.toDate = null
 	}
-	fromDate: any
-	toDate: any
+	fromDate: Date
+	toDate: Date
 }

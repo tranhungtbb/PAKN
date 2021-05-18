@@ -19,9 +19,9 @@ export class Api {
 	public static download = 'Files/DownloadFile'
 	public static DownloadFilebyId = 'UploadFiles/DownloadFilebyId'
 	public static downloadFileSupport = 'UploadFiles/DownloadFileSupport'
-	public static GetFile = 'UploadFiles/GetFile'
+	public static GetFile = 'Files/GetFile'
 	public static uploadfiles = 'UploadFiles/Uploadfiles'
-	public static getFileImage = 'UploadFiles/GetFile'
+	public static getFileImage = 'Files/GetFile'
 
 	//Recommendation
 	public static RecommendationGetDataForCreate = 'Recommendation/RecommendationGetDataForCreate'
@@ -270,21 +270,22 @@ export class Api {
 	public static TimeConfigGetDateActive = 'SYSPBase/SYTimeGetDateActiveBase'
 
 	//Individual
-	public static BI_IndividualGetAllOnPage = 'BusinessIndividual/BI_IndividualGetAllOnPage'
-	public static BI_IndivialChangeStatus = 'BusinessIndividual/BI_IndivialChangeStatus'
-	public static BI_IndivialDelete = 'BusinessIndividual/BI_IndivialDelete'
+	public static IndividualGetAllOnPage = 'BusinessIndividual/IndividualGetAllOnPage'
+	public static IndivialChangeStatus = 'BusinessIndividual/IndivialChangeStatus'
+	public static IndivialDelete = 'BusinessIndividual/IndivialDelete'
 	public static InvididualRegister = 'BusinessIndividual/InvididualRegister'
 	public static InvididualGetByID = 'BusinessIndividual/InvididualGetByID'
 	public static InvididualUpdate = 'BusinessIndividual/InvididualUpdate'
-	public static InvididualImportFile = 'BusinessIndividual/ImportDataInvididual?folder=BusinessIndividual'
+	public static ImportDataInvididual = 'BusinessIndividual/ImportDataInvididual?folder=BusinessIndividual'
 
 	//Business
-	public static BusinessGetAllOnPageBase = 'BusinessIndividual/BusinessGetAllOnPageBase'
+	public static BusinessGetAllOnPage = 'BusinessIndividual/BusinessGetAllOnPage'
 	public static BusinessChageStatus = 'BusinessIndividual/BusinessChageStatus'
 	public static BusinessDelete = 'BusinessIndividual/BusinessDelete'
 	public static BusinessRegister = 'BusinessIndividual/BusinessRegister'
 	public static BusinessGetByID = 'BusinessIndividual/BusinessGetByID'
 	public static BusinessUpdate = 'BusinessIndividual/BusinessUpdate'
+	public static ImportDataBusiness = 'BusinessIndividual/ImportDataBusiness?folder=BusinessIndividual'
 
 	//Statistic
 

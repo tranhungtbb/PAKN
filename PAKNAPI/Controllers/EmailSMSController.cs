@@ -59,7 +59,7 @@ namespace PAKNAPI.Controllers
 				SMSTinNhanAdministrativeUnitMapDeleteBySMSIdIN map = new SMSTinNhanAdministrativeUnitMapDeleteBySMSIdIN();
 				map.SMSId = _sMSQuanLyTinNhanDeleteIN.Id;
 				await new SMSTinNhanAdministrativeUnitMapDeleteBySMSId(_appSetting).SMSTinNhanAdministrativeUnitMapDeleteBySMSIdDAO(map);
-
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = await new SMSQuanLyTinNhanDelete(_appSetting).SMSQuanLyTinNhanDeleteDAO(_sMSQuanLyTinNhanDeleteIN) };
 			}
 			catch (Exception ex)
