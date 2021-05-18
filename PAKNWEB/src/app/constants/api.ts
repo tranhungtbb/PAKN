@@ -19,9 +19,9 @@ export class Api {
 	public static download = 'Files/DownloadFile'
 	public static DownloadFilebyId = 'UploadFiles/DownloadFilebyId'
 	public static downloadFileSupport = 'UploadFiles/DownloadFileSupport'
-	public static GetFile = 'UploadFiles/GetFile'
+	public static GetFile = 'Files/GetFile'
 	public static uploadfiles = 'UploadFiles/Uploadfiles'
-	public static getFileImage = 'UploadFiles/GetFile'
+	public static getFileImage = 'Files/GetFile'
 
 	//Recommendation
 	public static RecommendationGetDataForCreate = 'Recommendation/RecommendationGetDataForCreate'
