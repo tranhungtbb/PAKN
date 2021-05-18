@@ -87,7 +87,7 @@ namespace PAKNAPI.Controllers
 					await _fileService.Remove(filePath);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
-
+			new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 			return new Models.Results.ResultApi { Success = ResultCode.OK };
 		}
 
@@ -116,25 +116,21 @@ namespace PAKNAPI.Controllers
 				}
 
 
-
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-				
-				
 				model.Password = modelOld[0].Password;
 				model.Salt = modelOld[0].Salt;
-
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				var result = await new SYUserUpdate(_appSetting).SYUserUpdateDAO(model);
 
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 				//xóa file đã tải
 				await _fileService.Remove(filePath);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
-
+			new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 			return new Models.Results.ResultApi { Success = ResultCode.OK };
 		}
 
@@ -156,6 +152,7 @@ namespace PAKNAPI.Controllers
 					{
 						await _fileService.Remove(modelOld.Avatar);
 					}
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 					return new Models.Results.ResultApi { Success = ResultCode.OK, Result = result };
 				}
 				else {
@@ -170,7 +167,7 @@ namespace PAKNAPI.Controllers
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
-
+			new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 			return new Models.Results.ResultApi { Success = ResultCode.OK };
 		}
 
@@ -574,7 +571,7 @@ namespace PAKNAPI.Controllers
 				_model.Id = accInfo[0].Id;
 
 				var rs = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_model);
-
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new Models.Results.ResultApi { Success = ResultCode.OK};
 			}
 			catch(Exception ex)
@@ -617,7 +614,7 @@ namespace PAKNAPI.Controllers
 				_model.Id = accInfo[0].Id;
 
 				var rs = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_model);
-
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new Models.Results.ResultApi { Success = ResultCode.OK };
 			}
 			catch (Exception ex)
@@ -770,7 +767,7 @@ namespace PAKNAPI.Controllers
 					FullName= accInfo[0].FullName,
 					Address = accInfo[0].Address,
 				});
-
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new Models.Results.ResultApi { Success = ResultCode.OK};
 			}
             catch (Exception ex)

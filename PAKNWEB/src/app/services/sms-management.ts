@@ -14,7 +14,11 @@ export class SMSManagementService {
 	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
 
 	Insert(request: any): Observable<any> {
-		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.SMSManagementInsert)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.SMSManagementInsert, headers)
 	}
 
 	InsertHisSMS(request: any): Observable<any> {
@@ -26,23 +30,43 @@ export class SMSManagementService {
 	}
 
 	UpdateStatusSend(request: any): Observable<any> {
-		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.SMSManagementUpdateStatusSend)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL),
+		}
+		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.SMSManagementUpdateStatusSend, headers)
 	}
 
 	Update(request: any): Observable<any> {
-		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.SMSManagementUpdate)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.SMSManagementUpdate, headers)
 	}
 
 	Delete(request: any): Observable<any> {
-		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.SMSManagementDelete)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.SMSManagementDelete, headers)
 	}
 
 	GetListOnPage(query: any): Observable<any> {
-		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.SMSManagementGetOnPage)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL),
+		}
+		return this.serviceInvoker.getwithHeaders(query, AppSettings.API_ADDRESS + Api.SMSManagementGetOnPage, headers)
 	}
 
 	GetListHisOnPage(query: any): Observable<any> {
-		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.SMSManagementGetHisOnPage)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.HIS_EMAIL),
+		}
+		return this.serviceInvoker.getwithHeaders(query, AppSettings.API_ADDRESS + Api.SMSManagementGetHisOnPage, headers)
 	}
 
 	GetListAdmintrative(query: any): Observable<any> {
