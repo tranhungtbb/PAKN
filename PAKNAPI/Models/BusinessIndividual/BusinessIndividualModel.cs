@@ -330,16 +330,16 @@ namespace PAKNAPI.Models.BusinessIndividual
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _bI_InvididualUpdateIN.Id);
 			DP.Add("FullName", _bI_InvididualUpdateIN.FullName);
-			DP.Add("DateOfBirth", _bI_InvididualUpdateIN.DateOfBirth);
+			DP.Add("DateOfBirth", _bI_InvididualUpdateIN.BirthDay);
 			DP.Add("Email", _bI_InvididualUpdateIN.Email);
 			DP.Add("Nation", _bI_InvididualUpdateIN.Nation);
 			DP.Add("ProvinceId", _bI_InvididualUpdateIN.ProvinceId);
 			DP.Add("DistrictId", _bI_InvididualUpdateIN.DistrictId);
 			DP.Add("WardsId", _bI_InvididualUpdateIN.WardsId);
 			DP.Add("Address", _bI_InvididualUpdateIN.Address);
-			DP.Add("IdCard", _bI_InvididualUpdateIN.IdCard);
+			DP.Add("IdCard", _bI_InvididualUpdateIN.IDCard);
 			DP.Add("IssuedPlace", _bI_InvididualUpdateIN.IssuedPlace);
-			DP.Add("IssuedDate", _bI_InvididualUpdateIN.IssuedDate);
+			DP.Add("IssuedDate", _bI_InvididualUpdateIN.DateOfIssue);
 			DP.Add("Gender", _bI_InvididualUpdateIN.Gender);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_InvididualUpdate", DP));
@@ -350,17 +350,29 @@ namespace PAKNAPI.Models.BusinessIndividual
 	{
 		public long? Id { get; set; }
 		public string FullName { get; set; }
-		public DateTime? DateOfBirth { get; set; }
-		public string Email { get; set; }
-		public string Nation { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
 		public int? ProvinceId { get; set; }
-		public int? DistrictId { get; set; }
 		public int? WardsId { get; set; }
+		public int? DistrictId { get; set; }
+		public DateTime? DateOfIssue { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? CreatedBy { get; set; }
+		public int? UpdatedBy { get; set; }
+		public int? Status { get; set; }
+		public string Code { get; set; }
 		public string Address { get; set; }
-		public string IdCard { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string IDCard { get; set; }
 		public string IssuedPlace { get; set; }
-		public DateTime? IssuedDate { get; set; }
+		public string NativePlace { get; set; }
+		public string PermanentPlace { get; set; }
+		public string Nation { get; set; }
+		public DateTime? BirthDay { get; set; }
 		public bool? Gender { get; set; }
+		public long? UserId { get; set; }
 	}
 
 	#region BI_InvididualGetByID
@@ -386,6 +398,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public DateTime? DateOfIssue { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public DateTime? UpdatedDate { get; set; }
+		public DateTime? BirthDay { get; set; }
 		public int? CreatedBy { get; set; }
 		public int? UpdatedBy { get; set; }
 		public int? Status { get; set; }
@@ -398,7 +411,6 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public string NativePlace { get; set; }
 		public string PermanentPlace { get; set; }
 		public string Nation { get; set; }
-		public DateTime? BirthDay { get; set; }
 		public bool? Gender { get; set; }
 		public long? UserId { get; set; }
 
