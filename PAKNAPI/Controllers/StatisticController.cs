@@ -56,7 +56,6 @@ namespace PAKNAPI.Controllers
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"StatisticRecommendationByUnitGetAllOnPage", mrrRecommendationByUnit},
-						{"TotalCount", mrrRecommendationByUnit != null && mrrRecommendationByUnit.Count > 0 ? mrrRecommendationByUnit[0].RowNumber : 0},
 						{"PageIndex", mrrRecommendationByUnit != null && mrrRecommendationByUnit.Count > 0 ? PageIndex : 0},
 						{"PageSize", mrrRecommendationByUnit != null && mrrRecommendationByUnit.Count > 0 ? PageSize : 0},
 					};

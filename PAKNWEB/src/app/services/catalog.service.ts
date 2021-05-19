@@ -27,6 +27,10 @@ export class CatalogService {
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldGetList, headers)
 	}
 
+	fieldGetDropDown(): Observable<any> {
+		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.FieldGetDropDown)
+	}
+
 	fieldGetById(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETINFO),

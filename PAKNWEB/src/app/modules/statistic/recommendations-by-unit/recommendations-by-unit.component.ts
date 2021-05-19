@@ -50,6 +50,7 @@ export class RecommendationsByUnitComponent implements OnInit {
 	listUnit: any[]
 	listUnitSelected: any[]
 	ltsUnitId: any
+	ltsUnitIdAll: any
 
 	constructor(
 		private _toastr: ToastrService,
@@ -68,7 +69,7 @@ export class RecommendationsByUnitComponent implements OnInit {
 		this.unitService.getChildrenDropdown().subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.listUnit = res.result
-				this.ltsUnitId = this.listUnit.reduce((x, y) => {
+				this.ltsUnitId = this.ltsUnitIdAll = this.listUnit.reduce((x, y) => {
 					return (x += y.unitId + ',')
 				}, '')
 				this.getList()
@@ -83,17 +84,20 @@ export class RecommendationsByUnitComponent implements OnInit {
 			this.ltsUnitId = this.listUnitSelected.reduce((x, y) => {
 				return (x += y.unitId + ',')
 			}, '')
+			this.totalRecords = this.listUnitSelected.length
+		} else {
+			this.ltsUnitId = this.ltsUnitIdAll
+			this.totalRecords = this.listUnit.length
 		}
 		let obj = {
-			PageIndex: this.pageIndex,
-			PageSize: this.pageSize,
+			PageIndex: this.pageIndex == null ? 1 : this.pageIndex,
+			PageSize: this.pageSize == null ? 20 : this.pageSize,
 			LtsUnitId: this.ltsUnitId,
 			Year: this.year,
 			Timeline: this.timeline == null ? '' : this.timeline,
 			FromDate: this.fromDate == null ? '' : (this.fromDate = JSON.stringify(new Date(this.fromDate)).slice(1, 11)),
 			ToDate: this.toDate == null ? '' : (this.toDate = JSON.stringify(new Date(this.toDate)).slice(1, 11)),
 		}
-		debugger
 		this._service.getStatisticRecommendationByUnit(obj).subscribe((res) => {
 			if (res.success != RESPONSE_STATUS.success) {
 				this.listData = []
@@ -104,18 +108,15 @@ export class RecommendationsByUnitComponent implements OnInit {
 			} else {
 				if (res.result.StatisticRecommendationByUnitGetAllOnPage.length > 0) {
 					this.listData = res.result.StatisticRecommendationByUnitGetAllOnPage
-					this.totalRecords = res.result.TotalCount
-					this.pageSize = res.result.PageSize
-					this.pageIndex = res.result.PageIndex
 				} else {
 					this.listData = []
-					this.totalRecords = 0
 					this.pageIndex = 1
 					this.pageSize = 20
 				}
 			}
 		})
 	}
+
 	onPageChange(event: any) {
 		this.pageSize = event.rows
 		this.pageIndex = event.first / event.rows + 1

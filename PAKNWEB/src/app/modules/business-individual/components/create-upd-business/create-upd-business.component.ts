@@ -52,7 +52,7 @@ export class CreateUpdBusinessComponent implements OnInit {
 	model: OrganizationObject = new OrganizationObject()
 	nation_enable_type = false
 	userLoginId: number = this.storeageService.getUserId()
-	title: string = 'TẠO MỚI DOANH NGHIỆP'
+	title: string = 'Tạo mới doanh nghiệp'
 
 	ngOnInit() {
 		this.localeService.use('vi')
@@ -62,9 +62,9 @@ export class CreateUpdBusinessComponent implements OnInit {
 			this.model.id = +params['id']
 			if (this.model.id != 0) {
 				this.getData()
-				this.title = 'CẬP NHẬT THÔNG TIN'
+				this.title = 'Cập nhật thông tin'
 			} else {
-				this.title = 'TẠO MỚI DOANH NGHIỆP'
+				this.title = 'Tạo mới doanh nghiệp'
 			}
 		})
 		//

@@ -72,9 +72,6 @@ export class BusinessComponent implements OnInit {
 	allowExcelExtend = ['xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
 
 	//sort
-	individualSortDir = 'DESC'
-	individualSortField = 'ID'
-
 	inSortDir = 'DESC'
 	inSortField = 'ID'
 
@@ -97,7 +94,11 @@ export class BusinessComponent implements OnInit {
 			isActived: [this.model.isActived, Validators.required],
 		})
 	}
-
+	onSortBusiness(fieldName: string) {
+		this.inSortDir = this.inSortDir == 'DESC' ? 'ASC' : 'DESC'
+		this.inSortField = fieldName
+		this.getList()
+	}
 	getList() {
 		this.dataSearch.representativeName = this.dataSearch.representativeName.trim()
 		this.dataSearch.address = this.dataSearch.address.trim()
@@ -222,7 +223,7 @@ export class BusinessComponent implements OnInit {
 	acceptConfirm() {
 		if (this.modalConfirm_type == 'Status') {
 			this.onChangeBusinessChangeStatus(this.modelConfirm_itemId)
-		} else if (this.modalConfirm_type == 'individual') {
+		} else if (this.modalConfirm_type == 'Individual') {
 			this.onDeleteBusiness(this.modelConfirm_itemId)
 		}
 

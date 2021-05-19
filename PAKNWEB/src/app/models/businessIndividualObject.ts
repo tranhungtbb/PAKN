@@ -13,6 +13,7 @@ export class IndividualObject {
 		this.address = ''
 		this.IsDeleted = false
 		this.userId = null
+		this.status = 1
 	}
 	phone: string
 	fullName: string // fullName
@@ -35,6 +36,9 @@ export class IndividualObject {
 	isActived: boolean
 	IsDeleted: boolean
 	userId: number
+	status: number
+	id: number
+	imagePath: string
 }
 
 export class BusinessionObject {

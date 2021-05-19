@@ -14,14 +14,15 @@ export class Api {
 	public static getImageCaptcha = 'Captcha/GetCaptchaImage'
 
 	// FileUpload/Download
-	public static DownloadApp = 'UploadFiles/DownloadApp'
-	public static GetEncryptedPath = 'UploadFiles/GetEncryptedPath'
+	public static DownloadApp = 'Files/DownloadApp'
+	public static GetEncryptedPath = 'Files/GetEncryptedPath'
 	public static download = 'Files/DownloadFile'
-	public static DownloadFilebyId = 'UploadFiles/DownloadFilebyId'
-	public static downloadFileSupport = 'UploadFiles/DownloadFileSupport'
+	public static DownloadFilebyId = 'Files/DownloadFilebyId'
+	public static downloadFileSupport = 'Files/DownloadFileSupport'
 	public static GetFile = 'Files/GetFile'
-	public static uploadfiles = 'UploadFiles/Uploadfiles'
+	public static uploadfiles = 'Files/Uploadfiles'
 	public static getFileImage = 'Files/GetFile'
+	public static getFileSupport = 'Files/GetFileSupport'
 
 	//Recommendation
 	public static RecommendationGetDataForCreate = 'Recommendation/RecommendationGetDataForCreate'
@@ -60,6 +61,7 @@ export class Api {
 
 	//Field
 	public static FieldGetList = 'CACategorySPBase/CAFieldGetAllOnPageBase'
+	public static FieldGetDropDown = 'CASPBase/CAFieldGetDropdownBase'
 	public static FieldGetById = 'CACategorySPBase/CAFieldGetByIDBase'
 	public static FieldInsert = 'CACategorySPBase/CAFieldInsertBase'
 	public static FieldUpdate = 'CACategorySPBase/CAFieldUpdateBase'
