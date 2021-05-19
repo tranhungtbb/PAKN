@@ -1656,4 +1656,27 @@ namespace PAKNAPI.ModelBase
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
 	}
+	public class CA_WordGetListSuggest
+	{
+		private SQLCon _sQLCon;
+
+		public CA_WordGetListSuggest(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CA_WordGetListSuggest()
+		{
+		}
+
+		public string Name { get; set; }
+		public string Description { get; set; }
+
+		public async Task<List<CA_WordGetListSuggest>> CA_WordGetListSuggestDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<CA_WordGetListSuggest>("CA_WordGetListSuggest", DP)).ToList();
+		}
+	}
 }

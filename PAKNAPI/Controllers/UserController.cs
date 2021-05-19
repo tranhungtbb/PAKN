@@ -18,7 +18,10 @@ using System.Security.Claims;
 using System.Globalization;
 using PAKNAPI.Models;
 using PAKNAPI.Models.User;
+<<<<<<< HEAD
 using System.IO;
+=======
+>>>>>>> 9e7dcc20465d390574c774d9547d43290c556707
 
 namespace PAKNAPI.Controllers
 {
@@ -433,12 +436,19 @@ namespace PAKNAPI.Controllers
 		[Route("SendDemo")]
 		public string SendDemo()
         {
-			string contentSMSOPT = "(Trung tam tiep nhan PAKN tinh Khanh Hoa) Xin chao: Trần Thanh Quyền. Mat khau dang nhap he thong la: abcAbc123123. Xin cam on!";
-			SV.MailSMS.Model.SMTPSettings settings = new SV.MailSMS.Model.SMTPSettings();
-			settings.COM = _config["SmsCOM"].ToString();
-			SV.MailSMS.Control.SMSs sMSs = new SV.MailSMS.Control.SMSs(settings);
-			sMSs.SendOTPSMS("0984881580", contentSMSOPT);
-			return "ok";
+            try
+			{
+				string contentSMSOPT = "(Trung tam tiep nhan PAKN tinh Khanh Hoa) Xin chao: Trần Thanh Quyền. Mat khau dang nhap he thong la: abcAbc123123. Xin cam on!";
+				SV.MailSMS.Model.SMTPSettings settings = new SV.MailSMS.Model.SMTPSettings();
+				settings.COM = _config["SmsCOM"].ToString();
+				SV.MailSMS.Control.SMSs sMSs = new SV.MailSMS.Control.SMSs(settings);
+				string MessageResult = sMSs.SendOTPSMS("0984881580", contentSMSOPT);
+				return "ok";
+			}
+            catch (Exception ex)
+			{
+				return ex.Message;
+			}
 		}
 
 		[HttpGet]
@@ -779,41 +789,48 @@ namespace PAKNAPI.Controllers
 			}
         }
 
-		//public IActionResult Excel()
-		//{
-		//	using (var workbook = new XLWorkbook())
-		//	{
-		//		var worksheet = workbook.Worksheets.Add("Users");
-		//		var currentRow = 1;
-		//		worksheet.Cell(currentRow, 1).Value = "Id";
-		//		worksheet.Cell(currentRow, 2).Value = "Username";
-		//		foreach (var user in users)
-		//		{
-		//			currentRow++;
-		//			worksheet.Cell(currentRow, 1).Value = user.Id;
-		//			worksheet.Cell(currentRow, 2).Value = user.Username;
-		//		}
+    //    public async Task<IActionResult> ExportExcelHisUser(int ? id)
+    //    {
+    //        using (var workbook = new XLWorkbook())
+    //        {
+				//List<SYSystemLogGetAllOnPage> data  = await new SYSystemLogGetAllOnPage(_appSetting).SYSystemLogGetAllOnPageDAO(id, 1000, 1, null, null);
+				//var worksheet = workbook.Worksheets.Add("Users");
+    //            var currentRow = 1;
+    //            worksheet.Cell(currentRow, 1).Value = "Id";
+    //            worksheet.Cell(currentRow, 2).Value = "Username";
+				//worksheet.Cell(currentRow, 3).Value = "Id";
+				//worksheet.Cell(currentRow, 4).Value = "Username";
+				//worksheet.Cell(currentRow, 5).Value = "Id";
+				//foreach (var item in data)
+    //            {
+    //                currentRow++;
+    //                worksheet.Cell(currentRow, 1).Value = item.Id;
+				//	worksheet.Cell(currentRow, 2).Value = item.CreatedDate;
+				//	worksheet.Cell(currentRow, 3).Value = item.Action;
+				//	worksheet.Cell(currentRow, 4).Value = item.Description;
+				//	worksheet.Cell(currentRow, 5).Value = item.Status;
+				//}
 
-		//		using (var stream = new MemoryStream())
-		//		{
-		//			workbook.SaveAs(stream);
-		//			var content = stream.ToArray();
+    //            using (var stream = new MemoryStream())
+    //            {
+    //                workbook.SaveAs(stream);
+    //                var content = stream.ToArray();
 
-		//			return File(
-		//				content,
-		//				"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-		//				"users.xlsx");
-		//		}
-		//	}
-		//}
-
-
-		#endregion
+    //                return File(
+    //                    content,
+    //                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    //                    "users.xlsx");
+    //            }
+    //        }
+    //    }
 
 
-		#region private
+        #endregion
 
-		private Dictionary<string,string> generatePassword(string pwd)
+
+        #region private
+
+        private Dictionary<string,string> generatePassword(string pwd)
         {
 			byte[] salt = new byte[128 / 8];
 			using (var rng = RandomNumberGenerator.Create())

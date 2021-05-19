@@ -293,6 +293,7 @@ export class Api {
 	//Statistic
 
 	public static StatisticRecommendationByUnit = 'Statistic/STT_RecommendationByUnit'
+	public static StatisticRecommendationByField = 'Statistic/STT_RecommendationByField'
 
 	// import
 	public static BusinessImportFile = 'BusinessIndividual/ImportDataBusiness?folder=BusinessIndividual'

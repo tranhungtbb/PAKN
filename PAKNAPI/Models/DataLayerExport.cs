@@ -41,4 +41,22 @@ namespace PAKNAPI.Models
         public string RowNumber { get; set; }
 
     }
+
+    public class ExportHisUser
+    {
+        public string TitleReport { get; set; }
+        public int UserId { get; set; }
+
+        //public string? Action { get; set; }
+
+        //public string? CreateDate { get; set; }
+        //public string? IPAddress { get; set; }
+
+        //public int? Status { get; set; }
+        //public string? Description { get; set; }
+
+
+       
+
+    }
 }
