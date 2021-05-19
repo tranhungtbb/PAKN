@@ -98,7 +98,7 @@ export class RecommendationsByFieldComponent implements OnInit {
 			FromDate: this.fromDate == null ? '' : (this.fromDate = JSON.stringify(new Date(this.fromDate)).slice(1, 11)),
 			ToDate: this.toDate == null ? '' : (this.toDate = JSON.stringify(new Date(this.toDate)).slice(1, 11)),
 		}
-		this._service.getStatisticRecommendationByUnit(obj).subscribe((res) => {
+		this._service.getStatisticRecommendationByField(obj).subscribe((res) => {
 			if (res.success != RESPONSE_STATUS.success) {
 				this.listData = []
 				this.totalRecords = 0
@@ -106,8 +106,11 @@ export class RecommendationsByFieldComponent implements OnInit {
 				this.pageSize = 20
 				return
 			} else {
-				if (res.result.StatisticRecommendationByUnitGetAllOnPage.length > 0) {
-					this.listData = res.result.StatisticRecommendationByUnitGetAllOnPage
+				if (res.result.StatisticRecommendationByFieldGetAllOnPage.length > 0) {
+					this.listData = res.result.StatisticRecommendationByFieldGetAllOnPage
+					this.pageIndex = res.result.PageIndex
+					this.pageSize = res.result.PageSize
+					this.totalRecords = res.result.TotalCount
 				} else {
 					this.listData = []
 					this.pageIndex = 1

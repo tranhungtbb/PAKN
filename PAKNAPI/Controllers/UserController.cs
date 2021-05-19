@@ -18,8 +18,8 @@ using System.Security.Claims;
 using System.Globalization;
 using PAKNAPI.Models;
 using PAKNAPI.Models.User;
-using ClosedXML.Excel;
-using System.IO;
+//using ClosedXML.Excel;
+//using System.IO;
 
 namespace PAKNAPI.Controllers
 {
@@ -780,41 +780,48 @@ namespace PAKNAPI.Controllers
 			}
         }
 
-		//public IActionResult Excel()
-		//{
-		//	using (var workbook = new XLWorkbook())
-		//	{
-		//		var worksheet = workbook.Worksheets.Add("Users");
-		//		var currentRow = 1;
-		//		worksheet.Cell(currentRow, 1).Value = "Id";
-		//		worksheet.Cell(currentRow, 2).Value = "Username";
-		//		foreach (var user in users)
-		//		{
-		//			currentRow++;
-		//			worksheet.Cell(currentRow, 1).Value = user.Id;
-		//			worksheet.Cell(currentRow, 2).Value = user.Username;
-		//		}
+    //    public async Task<IActionResult> ExportExcelHisUser(int ? id)
+    //    {
+    //        using (var workbook = new XLWorkbook())
+    //        {
+				//List<SYSystemLogGetAllOnPage> data  = await new SYSystemLogGetAllOnPage(_appSetting).SYSystemLogGetAllOnPageDAO(id, 1000, 1, null, null);
+				//var worksheet = workbook.Worksheets.Add("Users");
+    //            var currentRow = 1;
+    //            worksheet.Cell(currentRow, 1).Value = "Id";
+    //            worksheet.Cell(currentRow, 2).Value = "Username";
+				//worksheet.Cell(currentRow, 3).Value = "Id";
+				//worksheet.Cell(currentRow, 4).Value = "Username";
+				//worksheet.Cell(currentRow, 5).Value = "Id";
+				//foreach (var item in data)
+    //            {
+    //                currentRow++;
+    //                worksheet.Cell(currentRow, 1).Value = item.Id;
+				//	worksheet.Cell(currentRow, 2).Value = item.CreatedDate;
+				//	worksheet.Cell(currentRow, 3).Value = item.Action;
+				//	worksheet.Cell(currentRow, 4).Value = item.Description;
+				//	worksheet.Cell(currentRow, 5).Value = item.Status;
+				//}
 
-		//		using (var stream = new MemoryStream())
-		//		{
-		//			workbook.SaveAs(stream);
-		//			var content = stream.ToArray();
+    //            using (var stream = new MemoryStream())
+    //            {
+    //                workbook.SaveAs(stream);
+    //                var content = stream.ToArray();
 
-		//			return File(
-		//				content,
-		//				"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-		//				"users.xlsx");
-		//		}
-		//	}
-		//}
-
-
-		#endregion
+    //                return File(
+    //                    content,
+    //                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    //                    "users.xlsx");
+    //            }
+    //        }
+    //    }
 
 
-		#region private
+        #endregion
 
-		private Dictionary<string,string> generatePassword(string pwd)
+
+        #region private
+
+        private Dictionary<string,string> generatePassword(string pwd)
         {
 			byte[] salt = new byte[128 / 8];
 			using (var rng = RandomNumberGenerator.Create())

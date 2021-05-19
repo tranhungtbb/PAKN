@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Input } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
+import { Router } from '@angular/router'
 
+import { DataService } from 'src/app/services/sharedata.service'
 import { UserObject, UserObject2 } from 'src/app/models/UserObject'
 import { UserService } from 'src/app/services/user.service'
 import { UnitService } from 'src/app/services/unit.service'
@@ -25,7 +27,9 @@ export class UserComponent implements OnInit {
 		private _toastr: ToastrService,
 		private _fb: FormBuilder,
 		private unitService: UnitService,
-		private positionService: PositionService
+		private positionService: PositionService,
+		private _shareData: DataService,
+		private _router: Router
 	) {}
 
 	listData = new Array<UserObject2>()
@@ -366,6 +370,18 @@ export class UserComponent implements OnInit {
 				this.listHisData = []
 			}
 		})
+	}
+	onExport() {
+		$('#modalHis').modal('hide')
+		let passingObj: any = {}
+		if (this.listHisData.length > 0) {
+			passingObj.UserId = this.hisUserId
+		}
+		passingObj.TitleReport = 'LỊCH SỬ NGƯỜI DÙNG'
+
+		this._shareData.setobjectsearch(passingObj)
+		this._shareData.sendReportUrl = 'HistoryUser?' + JSON.stringify(passingObj)
+		this._router.navigate(['quan-tri/xuat-file'])
 	}
 }
 

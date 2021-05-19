@@ -13,4 +13,8 @@ export class StatisticService {
 	getStatisticRecommendationByUnit(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationByUnit)
 	}
+
+	getStatisticRecommendationByField(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationByField)
+	}
 }
