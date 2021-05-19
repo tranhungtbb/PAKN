@@ -269,6 +269,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
+		[Authorize]
 		[Route("InvididualRegister")]
 		public async Task<object> InvididualRegister(
 			[FromForm] Models.BusinessIndividual.BIIndividualInsertIN model,
@@ -323,6 +324,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
+		[Authorize]
 		[Route("InvididualUpdate")]
 		public async Task<ActionResult<object>> InvididualUpdate(
 			[FromForm] Models.BusinessIndividual.BI_InvididualUpdateIN _bI_InvididualUpdateIN,
@@ -465,7 +467,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
-		//[Authorize("ThePolicy")]
+		[Authorize("ThePolicy")]
 		[Route("BusinessRegister")]
 		public async Task<object> BusinessRegister([FromForm] BI_BusinessInsertIN model,
 			[FromForm] string _RepresentativeBirthDay,

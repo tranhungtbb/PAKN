@@ -66,7 +66,7 @@ export class BusinessIndividualService {
 
 	businessRegister(data: any): Observable<any> {
 		let form = new FormData()
-
+		console.log('data', data)
 		for (let item in data) {
 			form.append(item, data[item])
 		}

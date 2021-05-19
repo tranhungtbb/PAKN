@@ -85,8 +85,8 @@ export class OrgFormAddressComponent implements OnInit {
 		this.onChangeNation()
 		this.formOrgAddress = this.formBuilder.group({
 			OrgProvince: [this.model.OrgProvinceId, []], //int
-			OrgDistrict: [this.model.OrgDistrictId, []], //int
-			OrgVillage: [this.model.OrgWardsId, []], //int
+			OrgDistrict: [this.model.OrgDistrictId, [Validators.required]], //int
+			OrgVillage: [this.model.OrgWardsId, [Validators.required]], //int
 			OrgAddress: [this.model.OrgAddress, [Validators.required]],
 			OrgPhone: [this.model.OrgPhone, [Validators.required]], //, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)
 			OrgEmail: [this.model.OrgEmail, [Validators.email]],
