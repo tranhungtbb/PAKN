@@ -18,7 +18,6 @@ using System.Security.Claims;
 using System.Globalization;
 using PAKNAPI.Models;
 using PAKNAPI.Models.User;
-using ClosedXML.Excel;
 using System.IO;
 
 namespace PAKNAPI.Controllers
