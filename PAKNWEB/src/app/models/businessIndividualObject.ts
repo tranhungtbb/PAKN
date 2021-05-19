@@ -37,6 +37,8 @@ export class IndividualObject {
 	IsDeleted: boolean
 	userId: number
 	status: number
+	id: number
+	imagePath: string
 }
 
 export class BusinessionObject {

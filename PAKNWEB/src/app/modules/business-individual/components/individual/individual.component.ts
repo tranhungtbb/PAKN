@@ -50,17 +50,17 @@ export class IndividualComponent implements OnInit {
 		{ value: 1, text: 'Hiệu lực' },
 	]
 
-	listGender: any = [
+	listGender: any[] = [
 		{ value: true, text: 'Nam' },
 		{ value: false, text: 'Nữ' },
 	]
 
 	fileAccept = '.xls, .xlsx'
-	files: any[] = []
+	// files: any[] = []
 	listInvPaged: any[] = []
 
 	form: FormGroup
-	model: any = new IndividualObject()
+	model: IndividualObject = new IndividualObject()
 	submitted: boolean = false
 	title: string = ''
 	pageIndex: number = 1
@@ -134,18 +134,6 @@ export class IndividualComponent implements OnInit {
 		}
 	}
 
-	// onReset() {
-	// 	this.form.reset()
-	// 	this.submitted = false
-	// 	this.model = new IndividualObject()
-
-	// 	this.model._birthDay = ''
-	// 	this.model._dateOfIssue = ''
-	// 	this.model.fullName = ''
-	// 	this.model.gender = true
-	// 	this.model.status = 1
-	// }
-
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
 	}
@@ -167,18 +155,18 @@ export class IndividualComponent implements OnInit {
 			address: this.model.address,
 			phone: this.model.phone,
 			email: this.model.email,
-			gender: this.model.gender,
-			status: this.model.status,
+			// gender: this.model.gender,
+			// status: this.model.status,
 		})
 
-		this.submitted = false
-		this.model = new IndividualObject()
-		this.model._birthDay = ''
-		this.model._dateOfIssue = ''
-		this.model.fullName = ''
-		this.model.email = ''
-		this.model.gender = true
-		this.model.status = 1
+		// this.submitted = false
+		// this.model = new IndividualObject()
+		// this.model._birthDay = ''
+		// this.model._dateOfIssue = ''
+		// this.model.fullName = ''
+		// this.model.email = ''
+		// this.model.gender = true
+		// this.model.status = 1
 	}
 	onSortIndividual(fieldName: string) {
 		this.inSortDir = this.inSortDir == 'DESC' ? 'ASC' : 'DESC'
@@ -294,7 +282,10 @@ export class IndividualComponent implements OnInit {
 
 	preCreate() {
 		this.model = new IndividualObject()
-		this.rebuilForm()
+		this.model.nation = 'Việt Nam'
+		this.model.provinceId = 37 // Tỉnh Khánh Hòa
+		this.model.gender = true // Giới tính Nam
+		this.model.status = 1 // Hiệu lực
 		this.submitted = false
 		this.title = 'Thêm mới cá nhân'
 		$('#modal').modal('show')
@@ -340,9 +331,7 @@ export class IndividualComponent implements OnInit {
 			return
 		}
 
-		console.log('form', this.form.invalid)
 		if (this.form.invalid) {
-			console.log('invalid 1', this.form.controls)
 			this._toastr.error('Dữ liệu không hợp lệ')
 			return
 		}

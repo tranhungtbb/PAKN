@@ -376,7 +376,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public BI_InvididualGetByID()
 		{
 		}
-
+		public long? Id { get; set; }
 		public string FullName { get; set; }
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }

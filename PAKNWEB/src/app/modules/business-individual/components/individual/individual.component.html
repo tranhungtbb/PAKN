@@ -151,6 +151,7 @@
 							<!-- row 1 -->
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Họ và tên <span class="cl-red">(*)</span></label>
+								<input type="file" [hidden]="true" [(ngModel)]="model.id">
 								<input svTrim maxlength="100" [(ngModel)]="model.fullName" formControlName="fullName" type="text" placeholder="Nhập..."
 									class="form-control border-brown">
 								<div *ngIf="(submitted && f.fullName.invalid)||(f.fullName.invalid && (f.fullName.dirty || f.fullName.touched))" class="has-error m-b-12">
@@ -297,7 +298,7 @@
 							<!-- row 5 -->
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Giới tính <span class="cl-red">(*)</span></label>
-								<ng-select [(ngModel)]="model.gender" formControlName="model.gender" class="form-control" placeholder="Chọn..." [closeOnSelect]="true">
+								<ng-select [(ngModel)]="model.gender" formControlName="gender" class="form-control" placeholder="Chọn..." [closeOnSelect]="true">
 									<ng-option *ngFor="let gen of listGender" [value]="gen.value">{{gen.text}}</ng-option>
 								</ng-select>
 							</div>
@@ -319,8 +320,8 @@
 							</div>
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Trạng thái</label>
-								<ng-select class="form-control" [items]="listStatus" placeholder="Chọn ..." bindLabel="text" bindValue="value" [(ngModel)]="model.status"
-									[closeOnSelect]="true">
+								<ng-select class="form-control" [items]="listStatus" formControlName="status" placeholder="Chọn ..." bindLabel="text" bindValue="value"
+									[(ngModel)]="model.status" [closeOnSelect]="true">
 								</ng-select>
 							</div>
 
