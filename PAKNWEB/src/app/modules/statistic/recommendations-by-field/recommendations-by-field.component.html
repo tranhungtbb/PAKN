@@ -4,7 +4,7 @@
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
 					<!-- <li class="breadcrumb-item"><a>Thư mời</a></li> -->
-					<li class="breadcrumb-item"><a class="font-weight-bold uppercase"> Báo cáo phản ánh kiến nghị theo đơn vị</a></li>
+					<li class="breadcrumb-item"><a class="font-weight-bold uppercase"> Báo cáo phản ánh kiến nghị theo lĩnh vực</a></li>
 				</ol>
 				<!-- <div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách lĩnh vực</div> -->
 				<div class="btn-group group-button-table" role="group">
@@ -94,7 +94,7 @@
 								<tr>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Đơn vị</strong>
+											<strong>Lĩnh vực</strong>
 											<span class="caret-tb"></span>
 										</p>
 									</th>
@@ -154,7 +154,7 @@
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
 									<td>
-										<strong>{{item.unitName}}</strong>
+										<strong>{{item.fieldName}}</strong>
 									</td>
 									<td>
 										<strong>{{item.total}}</strong>

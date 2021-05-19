@@ -18,6 +18,7 @@ import { UserComponent } from 'src/app/modules/system-management/components/user
 import { BusinessComponent } from 'src/app/modules/business.component'
 import file_uploader from 'devextreme/ui/file_uploader'
 import { Console } from 'console'
+import { debounceTime } from 'rxjs/operators'
 
 declare var jquery: any
 declare var $: any
@@ -140,10 +141,9 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		// this.modelUser.avatar = ''
 		this.modelUser.countLock = 0
 		this.modelUser.lockEndOut = ''
-
 		if (this.modelUser.id != null && this.modelUser.id > 0) {
 			this.modelUser.avatar = this.modelUser.avatar
-			this.modelUser.address == null ? '' : this.modelUser.address.trim()
+			this.modelUser.address == null ? (this.modelUser.address = '') : (this.modelUser.address = this.modelUser.address.trim())
 			this.userService.update(this.modelUser, files).subscribe((res) => {
 				$('#' + this.modalId + ' .seclect-avatar').val('')
 
@@ -189,7 +189,8 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	}
 
 	onChangeAvatar() {
-		$('.seclect-avatar').click()
+		debugger
+		$('#' + this.modalId + ' .seclect-avatar').click()
 	}
 	changeSelectAvatar(event: any) {
 		debugger

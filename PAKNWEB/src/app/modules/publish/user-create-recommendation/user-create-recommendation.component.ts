@@ -368,8 +368,9 @@ export class CreateRecommendationComponent implements OnInit {
 			let content = ''
 			content = this.model.content.replace(/\\n/g, String.fromCharCode(13, 10))
 			for (let index = 0; index < this.lstDictionariesWord.length; index++) {
+				var nameWord = new RegExp(this.lstDictionariesWord[index].name, 'i')
 				content = content.replace(
-					this.lstDictionariesWord[index].name,
+					nameWord,
 					'<span class="txthighlight" title="' + this.lstDictionariesWord[index].description + '">' + this.lstDictionariesWord[index].name + '</span>'
 				)
 			}

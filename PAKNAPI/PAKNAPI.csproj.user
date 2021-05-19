@@ -13,5 +13,8 @@
     <Compile Update="ExportGrid\BI_Individual_List.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="ExportGrid\HIS_SystemLog.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -43,6 +43,9 @@ namespace PAKNAPI.Models.AdministrationFormalities
     {
         public int? Id { get; set; }
         public int? Index { get; set; }
+        public string Name { get; set; }
+        public int FileType { get; set; }
+        public string FileAttach { get; set; }
         public List<DAMCompositionProfileObj> Files { get; set; }
     }
     public class DAMCompositionProfileUpdateObj : DAMCompositionProfileUpdateIN

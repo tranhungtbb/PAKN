@@ -61,6 +61,7 @@ export class Api {
 
 	//Field
 	public static FieldGetList = 'CACategorySPBase/CAFieldGetAllOnPageBase'
+	public static FieldGetDropDown = 'CASPBase/CAFieldGetDropdownBase'
 	public static FieldGetById = 'CACategorySPBase/CAFieldGetByIDBase'
 	public static FieldInsert = 'CACategorySPBase/CAFieldInsertBase'
 	public static FieldUpdate = 'CACategorySPBase/CAFieldUpdateBase'
@@ -291,6 +292,7 @@ export class Api {
 	//Statistic
 
 	public static StatisticRecommendationByUnit = 'Statistic/STT_RecommendationByUnit'
+	public static StatisticRecommendationByField = 'Statistic/STT_RecommendationByField'
 
 	// import
 	public static BusinessImportFile = 'BusinessIndividual/ImportDataBusiness?folder=BusinessIndividual'
