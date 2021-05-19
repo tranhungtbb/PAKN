@@ -312,7 +312,8 @@ export class IndividualComponent implements OnInit {
 			address: [this.model.address, [Validators.required]],
 			iDCard: [this.model.iDCard, [Validators.required]], //, Validators.pattern(/^([0-9]){8,12}$/g)
 			placeIssue: [this.model.issuedPlace, []],
-			dateIssue: [this.model._dateOfIssue, []],
+			// dateIssue: [this.model._dateOfIssue, []],
+			dateIssue: [this.model.dateOfIssue, []],
 			status: [this.model.status],
 		})
 	}
@@ -323,7 +324,10 @@ export class IndividualComponent implements OnInit {
 		let fDob: any = document.querySelector('#_dob')
 		let fDateIssue: any = document.querySelector('#_dateIssue')
 		this.model._birthDay = fDob.value
-		this.model._dateOfIssue = fDateIssue.value
+		// this.model.birthDay = fDob.value
+		console.log('fDob.value', fDob.value)
+		// this.model._dateOfIssue = fDateIssue.value
+		this.model.dateOfIssue = fDateIssue.value
 		this.model.userId = this.userLoginId
 		if (!this.model.email) this.model.email = ''
 
@@ -338,8 +342,13 @@ export class IndividualComponent implements OnInit {
 		}
 
 		//check ngày cấp < ngày sinh
-		let dateIssue = new Date(this.model._dateOfIssue)
-		let dateOfBirth = new Date(this.model._birthDay)
+		// let dateIssue = new Date(this.model._dateOfIssue)
+		// let dateOfBirth = new Date(this.model._birthDay)
+		let dateIssue = new Date(this.model.dateOfIssue)
+		let dateOfBirth = new Date(this.model.birthDay)
+
+		console.log('dateIssue', dateIssue)
+		console.log('dateOfBirth', dateOfBirth)
 
 		if (dateIssue < dateOfBirth) {
 			this._toastr.error('Ngày cấp phải lớn hơn ngày sinh')
@@ -347,6 +356,7 @@ export class IndividualComponent implements OnInit {
 		}
 
 		if (this.model.id != null && this.model.id > 0) {
+			console.log('this.model', this.model)
 			this._service.invididualUpdate(this.model).subscribe((res) => {
 				if (res.success != 'OK') {
 					let errorMsg = res.message
@@ -404,11 +414,16 @@ export class IndividualComponent implements OnInit {
 		this._service.individualById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				// this.rebuilForm()
-				this.model = new IndividualObject()
+				// this.model = new IndividualObject()
 				this.title = 'Chỉnh sửa cá nhân'
-				console.log('response', response)
+				console.log('InvididualGetByID', response.result.InvididualGetByID[0])
 				this.model = response.result.InvididualGetByID[0]
+				this.model.iDCard = response.result.InvididualGetByID[0].idCard
+				this.model._dateOfIssue = response.result.InvididualGetByID[0].dateOfIssue
+				this.model._birthDay = response.result.InvididualGetByID[0].birthDay
+				this.model.birthDate = new Date(response.result.InvididualGetByID[0].birthDay)
 				console.log('this.model', this.model)
+
 				$('#modal').modal('show')
 			} else {
 				this._toastr.error(response.message)

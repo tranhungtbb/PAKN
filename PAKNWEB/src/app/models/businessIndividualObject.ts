@@ -14,6 +14,8 @@ export class IndividualObject {
 		this.IsDeleted = false
 		this.userId = null
 		this.status = 1
+		this.birthDate = null
+		this.dateOfIssue = null
 	}
 	phone: string
 	fullName: string // fullName
@@ -39,6 +41,9 @@ export class IndividualObject {
 	status: number
 	id: number
 	imagePath: string
+	birthDay: string
+	birthDate: Date
+	dateOfIssue: Date
 }
 
 export class BusinessionObject {

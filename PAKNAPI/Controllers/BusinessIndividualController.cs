@@ -294,7 +294,23 @@ namespace PAKNAPI.Controllers
                 if (checkExists[0].Exists.Value)
                     return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 
-                var rs2 = await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(model);
+				DateTime birdDay, dateOfIssue;
+				if (!DateTime.TryParseExact(_BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
+				{
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+				}
+				if (!DateTime.TryParseExact(_DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
+				{
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+				}
+
+
+				if (string.IsNullOrEmpty(_DateOfIssue)) model.DateOfIssue = null;
+				else model.DateOfIssue = dateOfIssue;
+				if (string.IsNullOrEmpty(_BirthDay)) model.BirthDay = null;
+				else model.BirthDay = birdDay;
+
+				var rs2 = await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(model);
 
 			}
 			catch (Exception ex)
@@ -309,11 +325,30 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("InvididualUpdate")]
-		public async Task<ActionResult<object>> InvididualUpdate(BI_InvididualUpdateIN _bI_InvididualUpdateIN)
+		public async Task<ActionResult<object>> InvididualUpdate([FromForm] BI_InvididualUpdateIN _bI_InvididualUpdateIN, [FromForm] string _BirthDay,
+			[FromForm] string _DateOfIssue)
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(_bI_InvididualUpdateIN.Phone);
+				if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+
+				// check exist:Phone,Email,IDCard
+				var checkExists = await new Models.BusinessIndividual.BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", _bI_InvididualUpdateIN.Phone, 0);
+				if (checkExists[0].Exists.Value)
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+				if (!string.IsNullOrEmpty(_bI_InvididualUpdateIN.Email))
+				{
+					checkExists = await new Models.BusinessIndividual.BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", _bI_InvididualUpdateIN.Email, 0);
+					if (checkExists[0].Exists.Value)
+						return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
+				}
+				checkExists = await new Models.BusinessIndividual.BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", _bI_InvididualUpdateIN.IDCard, 0);
+				if (checkExists[0].Exists.Value)
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
+
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new BI_InvididualUpdate(_appSetting).BI_InvididualUpdateDAO(_bI_InvididualUpdateIN) };
 			}
