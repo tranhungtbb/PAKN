@@ -1,8 +1,7 @@
 <form class="form-row px-3" [formGroup]="formInfo">
 	<div class="col form-group">
 		<label class="mb-1">Người đại diện <span class="cl-red">(*)</span></label>
-		<input [svTrim] maxlength="100" [(ngModel)]="model.RepresentativeName" formControlName="RepresentativeName" type="text" placeholder="Nhập..."
-			class="form-control border-brown">
+		<input [svTrim] maxlength="100" [(ngModel)]="model.RepresentativeName" formControlName="RepresentativeName" type="text" placeholder="Nhập..." class="form-control">
 		<div *ngIf="(fInfoSubmitted && fInfo.RepresentativeName.invalid)||(fInfo.RepresentativeName.invalid && (fInfo.RepresentativeName.dirty || fInfo.RepresentativeName.touched))"
 			class="has-error m-b-12">
 			<div *ngIf="fInfo.RepresentativeName.errors.required">
@@ -47,7 +46,7 @@
 	<div class="w-100"></div>
 	<div class="col form-group">
 		<label class="mb-1">Email </label>
-		<input [svTrim] [(ngModel)]="model.Email" formControlName="Email" type="text" placeholder="Nhập..." class="form-control border-brown"
+		<input [svTrim] [(ngModel)]="model.Email" formControlName="Email" type="text" placeholder="Nhập..." class="form-control"
 			(change)="onCheckExist('Email',$event.target.value)">
 		<div *ngIf="(fInfoSubmitted && fInfo.Email.invalid)||(fInfo.Email.invalid && (fInfo.Email.dirty || fInfo.Email.touched))" class="has-error m-b-12">
 			<div *ngIf="fInfo.Email.errors.required">
@@ -106,7 +105,7 @@
 	</div>
 	<div class="col col-lg-8 form-group">
 		<label class="mb-1">Địa chỉ cụ thể </label>
-		<input [svTrim] [(ngModel)]="model.Address" formControlName="Address" type="text" placeholder="Nhập..." class="form-control border-brown">
+		<input [svTrim] [(ngModel)]="model.Address" formControlName="Address" type="text" placeholder="Nhập..." class="form-control">
 		<div *ngIf="(fInfoSubmitted && fInfo.Address.invalid)||(fInfo.Address.invalid && (fInfo.Address.dirty || fInfo.Address.touched))" class="has-error m-b-12">
 			<div *ngIf="fInfo.Address.errors.required">
 				<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -117,7 +116,15 @@
 	<div class="col form-group">
 		<label class="mb-1">SĐT người đại diện <span class="cl-red">(*)</span> </label>
 		<div class="input-group">
-			<input class="form-control" [(ngModel)]="phone" maxlength="11" placeholder="Nhập ..." />
+			<input numbersOnly class="form-control" [(ngModel)]="model.phone" formControlName="phone" maxlength="10" placeholder="Nhập ..." autocomplete="off" />
+		</div>
+		<div *ngIf="(fInfoSubmitted && fInfo.phone.invalid)||(fInfo.phone.invalid && (fInfo.phone.dirty || fInfo.phone.touched))" class="has-error m-b-12">
+			<div *ngIf="fInfo.phone.errors.required">
+				<span class="help-block">Trường dữ liệu này không được để trống</span>
+			</div>
+			<div *ngIf="fInfo.phone.errors.pattern">
+				<span class="help-block">Số điện thoại không đúng</span>
+			</div>
 		</div>
 	</div>
 	<div class="col col-lg-8 form-group">

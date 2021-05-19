@@ -88,8 +88,7 @@ export class BusinessionObject {
 export class OrganizationObject {
 	constructor() {
 		this.id = 0
-		this.phone = null
-		this.password = null
+		// this.phone = null
 		this.RepresentativeGender = true
 
 		//
@@ -121,8 +120,8 @@ export class OrganizationObject {
 	}
 	//----thông tin tài khoản đăng nhập
 	phone: string
-	password: string
-	rePassword: string
+	// password: string
+	// rePassword: string
 
 	//----thông tin người đại diện
 	RepresentativeName: string // RepresentativeName tên người đại diện

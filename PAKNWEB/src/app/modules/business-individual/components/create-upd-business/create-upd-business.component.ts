@@ -1,21 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-
 import { ToastrService } from 'ngx-toastr'
-import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { viLocale } from 'ngx-bootstrap/locale'
 import { defineLocale } from 'ngx-bootstrap/chronos'
 import { BsLocaleService } from 'ngx-bootstrap/datepicker'
-
 import { OrgFormAddressComponent } from './org-form-address/org-form-address.component'
 import { OrgRepreFormComponent } from './org-repre-form/org-repre-form.component'
-
 import { RegisterService } from 'src/app/services/register.service'
 import { BusinessIndividualService } from 'src/app/services/business-individual.service'
-
 import { COMMONS } from 'src/app/commons/commons'
-// import { OrganizationObject } from 'src/app/models/RegisterObject'
 import { OrganizationObject } from 'src/app/models/businessIndividualObject'
-import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { ActivatedRoute, Router } from '@angular/router'
 
@@ -46,7 +41,7 @@ export class CreateUpdBusinessComponent implements OnInit {
 
 	dateNow: Date = new Date()
 
-	formLogin: FormGroup
+	// formLogin: FormGroup
 	formOrgInfo: FormGroup
 	listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
 	model: OrganizationObject = new OrganizationObject()
@@ -76,12 +71,10 @@ export class CreateUpdBusinessComponent implements OnInit {
 	serverMsg = {}
 
 	onReset() {
-		this.formLogin.reset()
 		this.formOrgInfo.reset()
 		this.child_OrgRepreForm.formInfo.reset()
 		this.child_OrgAddressForm.formOrgAddress.reset()
 
-		this.fLoginSubmitted = false
 		this.child_OrgRepreForm.fInfoSubmitted = false
 		this.fOrgInfoSubmitted = false
 		this.child_OrgAddressForm.fOrgAddressSubmitted = false
@@ -108,7 +101,6 @@ export class CreateUpdBusinessComponent implements OnInit {
 	}
 
 	onSave() {
-		this.fLoginSubmitted = true
 		this.child_OrgRepreForm.fInfoSubmitted = true
 		this.fOrgInfoSubmitted = true
 		this.child_OrgAddressForm.fOrgAddressSubmitted = true
@@ -117,11 +109,13 @@ export class CreateUpdBusinessComponent implements OnInit {
 		this.model._RepresentativeBirthDay = fDob.value
 		this.model._DateOfIssue = fIsDate.value
 		this.model.userId = this.userLoginId
+		console.log('this.model', this.model)
 
 		if (
 			this.checkExists['Phone'] ||
 			this.checkExists['BusinessRegistration'] ||
 			this.checkExists['DecisionOfEstablishing'] ||
+			this.checkExists['Tax'] ||
 			this.child_OrgAddressForm.checkExists['OrgEmail'] ||
 			this.child_OrgAddressForm.checkExists['OrgPhone'] ||
 			this.child_OrgRepreForm.checkExists['Email'] ||
@@ -131,6 +125,9 @@ export class CreateUpdBusinessComponent implements OnInit {
 			return
 		}
 
+		console.log('this.formOrgInfo', this.formOrgInfo)
+		console.log('this.child_OrgRepreForm.formInfo', this.child_OrgRepreForm.formInfo)
+		console.log('this.child_OrgAddressForm.formOrgAddress', this.child_OrgAddressForm.formOrgAddress)
 		if (this.formOrgInfo.invalid || this.child_OrgRepreForm.formInfo.invalid || this.child_OrgAddressForm.formOrgAddress.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return
@@ -171,27 +168,12 @@ export class CreateUpdBusinessComponent implements OnInit {
 		}
 	}
 
-	fLoginSubmitted = false
 	fOrgInfoSubmitted = false
-
-	get fLogin() {
-		return this.formLogin.controls
-	}
 	get fOrgInfo() {
 		return this.formOrgInfo.controls
 	}
 
 	private loadFormBuilder() {
-		//form thông tin đăng nhập
-		this.formLogin = this.formBuilder.group(
-			{
-				phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/)]],
-				password: [this.model.password, [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)]],
-				rePassword: [this.model.rePassword, [Validators.required]],
-			},
-			{ validator: MustMatch('password', 'rePassword') }
-		)
-
 		this.formOrgInfo = this.formBuilder.group({
 			//---thông tin doanh nghiệp
 			Business: [this.model.Business, [Validators.required, Validators.maxLength(200)]], // tên tổ chức
@@ -226,26 +208,5 @@ export class CreateUpdBusinessComponent implements OnInit {
 					this.checkExists[field] = res.result.BIBusinessCheckExists[0].exists
 				}
 			})
-	}
-	backToHome() {
-		window.open('/cong-bo/trang-chu', '_self')
-	}
-}
-function MustMatch(controlName: string, matchingControlName: string) {
-	return (formGroup: FormGroup) => {
-		const control = formGroup.controls[controlName]
-		const matchingControl = formGroup.controls[matchingControlName]
-
-		if (matchingControl.errors && !matchingControl.errors.mustMatch) {
-			// return if another validator has already found an error on the matchingControl
-			return
-		}
-
-		// set error on matchingControl if validation fails
-		if (control.value !== matchingControl.value) {
-			matchingControl.setErrors({ mustMatch: true })
-		} else {
-			matchingControl.setErrors(null)
-		}
 	}
 }

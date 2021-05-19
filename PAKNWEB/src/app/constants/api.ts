@@ -282,7 +282,7 @@ export class Api {
 
 	//Business
 	public static BusinessGetAllOnPage = 'BusinessIndividual/BusinessGetAllOnPage'
-	public static BusinessChageStatus = 'BusinessIndividual/BusinessChageStatus'
+	public static BusinessChangeStatus = 'BusinessIndividual/BusinessChangeStatus'
 	public static BusinessDelete = 'BusinessIndividual/BusinessDelete'
 	public static BusinessRegister = 'BusinessIndividual/BusinessRegister'
 	public static BusinessGetByID = 'BusinessIndividual/BusinessGetByID'

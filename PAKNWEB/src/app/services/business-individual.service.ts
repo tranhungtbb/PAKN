@@ -57,7 +57,7 @@ export class BusinessIndividualService {
 	}
 
 	businessChangeStatus(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BusinessChageStatus)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BusinessChangeStatus)
 	}
 
 	businessDelete(data: any): Observable<any> {
