@@ -18,8 +18,6 @@ using System.Security.Claims;
 using System.Globalization;
 using PAKNAPI.Models;
 using PAKNAPI.Models.User;
-//using ClosedXML.Excel;
-//using System.IO;
 
 namespace PAKNAPI.Controllers
 {
@@ -434,12 +432,19 @@ namespace PAKNAPI.Controllers
 		[Route("SendDemo")]
 		public string SendDemo()
         {
-			string contentSMSOPT = "(Trung tam tiep nhan PAKN tinh Khanh Hoa) Xin chao: Trần Thanh Quyền. Mat khau dang nhap he thong la: abcAbc123123. Xin cam on!";
-			SV.MailSMS.Model.SMTPSettings settings = new SV.MailSMS.Model.SMTPSettings();
-			settings.COM = _config["SmsCOM"].ToString();
-			SV.MailSMS.Control.SMSs sMSs = new SV.MailSMS.Control.SMSs(settings);
-			sMSs.SendOTPSMS("0984881580", contentSMSOPT);
-			return "ok";
+            try
+			{
+				string contentSMSOPT = "(Trung tam tiep nhan PAKN tinh Khanh Hoa) Xin chao: Trần Thanh Quyền. Mat khau dang nhap he thong la: abcAbc123123. Xin cam on!";
+				SV.MailSMS.Model.SMTPSettings settings = new SV.MailSMS.Model.SMTPSettings();
+				settings.COM = _config["SmsCOM"].ToString();
+				SV.MailSMS.Control.SMSs sMSs = new SV.MailSMS.Control.SMSs(settings);
+				string MessageResult = sMSs.SendOTPSMS("0984881580", contentSMSOPT);
+				return "ok";
+			}
+            catch (Exception ex)
+			{
+				return ex.Message;
+			}
 		}
 
 		[HttpGet]

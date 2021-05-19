@@ -52,7 +52,25 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("DAMAdministrationUpdateShow")]
+		public async Task<ActionResult<object>> DAMAdministrationUpdateShow(DAMAdministrationUpdateShow _dAMAdministrationUpdateShowIN)
+        {
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
+				return new ResultApi { Success = ResultCode.OK, Result = null };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("DAMAdministrationDeleteBase")]
