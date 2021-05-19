@@ -282,6 +282,7 @@ export class IndividualComponent implements OnInit {
 
 	preCreate() {
 		this.model = new IndividualObject()
+		this.rebuilForm()
 		this.model.nation = 'Việt Nam'
 		this.model.provinceId = 37 // Tỉnh Khánh Hòa
 		this.model.gender = true // Giới tính Nam
