@@ -294,6 +294,7 @@ export class Api {
 
 	public static StatisticRecommendationByUnit = 'Statistic/STT_RecommendationByUnit'
 	public static StatisticRecommendationByField = 'Statistic/STT_RecommendationByField'
+	public static StatisticRecommendationByGroupWord = 'Statistic/STT_RecommendationByGroupWord'
 
 	// import
 	public static BusinessImportFile = 'BusinessIndividual/ImportDataBusiness?folder=BusinessIndividual'

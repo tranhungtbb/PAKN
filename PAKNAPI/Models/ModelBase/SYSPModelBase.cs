@@ -744,6 +744,30 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYUnitGetDropdownByListId
+	{
+		private SQLCon _sQLCon;
+
+		public SYUnitGetDropdownByListId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUnitGetDropdownByListId()
+		{
+		}
+
+		public int? Value { get; set; }
+		public string Text { get; set; }
+
+		public async Task<List<SYUnitGetDropdownByListId>> SYUnitGetDropdownByListIdDAO(string LtsUnitId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("LtsUnitId", LtsUnitId);
+			return (await _sQLCon.ExecuteListDapperAsync<SYUnitGetDropdownByListId>("SY_UnitGetDropdownByListId", DP)).ToList();
+		}
+	}
+
 	public class SYUnitGetDropdownNotMain
 	{
 		private SQLCon _sQLCon;

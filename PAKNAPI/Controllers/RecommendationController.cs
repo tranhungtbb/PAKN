@@ -525,6 +525,7 @@ namespace PAKNAPI.Controller
                     MRRecommendationGroupWordInsertByListIN _mRRecommendationGroupWordInsertByListIN = new MRRecommendationGroupWordInsertByListIN();
                     _mRRecommendationGroupWordInsertByListIN.RecommendationId = request._mRRecommendationForwardProcessIN.RecommendationId;
                     _mRRecommendationGroupWordInsertByListIN.lstid = request.ListGroupWordSelected;
+                    _mRRecommendationGroupWordInsertByListIN.UnitId = UnitSendId;
                     await new MRRecommendationGroupWordInsertByList(_appSetting).MRRecommendationGroupWordInsertByListDAO(_mRRecommendationGroupWordInsertByListIN);
                 }
 

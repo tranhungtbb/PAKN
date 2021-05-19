@@ -317,11 +317,11 @@
 			<div class="modal-body">
 				<p class="h4 text-center mb-3">Bạn có chắc chắn từ chối <strong>Phản ánh, kiến nghị</strong> này ko?</p>
 				<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="modelProcess.reasonDeny" maxlength="500"></textarea>
-				<div class="custom-control custom-checkbox checkbox-danger mt-3" *ngIf="recommendationStatusProcess == 2">
+				<div class="custom-control custom-checkbox checkbox-danger mt-3 mb-3" *ngIf="recommendationStatusProcess == 3">
 					<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord" id="basic_checkbox_1">
 					<label class="custom-control-label" for="basic_checkbox_1">Chứa từ ngữ bị cấm</label>
 				</div>
-				<ng-select *ngIf="modelProcess.reactionaryWord && recommendationStatusProcess == 2" placeholder="Chọn nhóm từ ngữ" class="form-control" [items]="lstGroupWord"
+				<ng-select *ngIf="modelProcess.reactionaryWord && recommendationStatusProcess == 3" placeholder="Chọn nhóm từ ngữ" class="form-control" [items]="lstGroupWord"
 					bindLabel="text" bindValue="value" [(ngModel)]="lstGroupWordSelected" [closeOnSelect]="false" [multiple]="true">
 				</ng-select>
 			</div>
