@@ -294,8 +294,8 @@ namespace PAKNAPI.Controllers
                 if (checkExists[0].Exists.Value)
                     return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 
-				DateTime birdDay, dateOfIssue;
-				if (!DateTime.TryParseExact(_BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
+				DateTime birthDay, dateOfIssue;
+				if (!DateTime.TryParseExact(_BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birthDay))
 				{
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
 				}
@@ -308,7 +308,7 @@ namespace PAKNAPI.Controllers
 				if (string.IsNullOrEmpty(_DateOfIssue)) model.DateOfIssue = null;
 				else model.DateOfIssue = dateOfIssue;
 				if (string.IsNullOrEmpty(_BirthDay)) model.BirthDay = null;
-				else model.BirthDay = birdDay;
+				else model.BirthDay = birthDay;
 
 				var rs2 = await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(model);
 
@@ -323,9 +323,10 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
 		[Route("InvididualUpdate")]
-		public async Task<ActionResult<object>> InvididualUpdate([FromForm] BI_InvididualUpdateIN _bI_InvididualUpdateIN, [FromForm] string _BirthDay,
+		public async Task<ActionResult<object>> InvididualUpdate(
+			[FromForm] Models.BusinessIndividual.BI_InvididualUpdateIN _bI_InvididualUpdateIN,
+			[FromForm] string _BirthDay,
 			[FromForm] string _DateOfIssue)
 		{
 			try
@@ -349,6 +350,20 @@ namespace PAKNAPI.Controllers
 				if (checkExists[0].Exists.Value)
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 
+				DateTime birthDay, dateOfIssue;
+				if (!DateTime.TryParseExact(_BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birthDay))
+				{
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+				}
+				if (!DateTime.TryParseExact(_DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
+				{
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+				}
+
+				if (string.IsNullOrEmpty(_DateOfIssue)) _bI_InvididualUpdateIN.DateOfIssue = null;
+				else _bI_InvididualUpdateIN.DateOfIssue = dateOfIssue;
+				if (string.IsNullOrEmpty(_BirthDay)) _bI_InvididualUpdateIN.BirthDay = null;
+				else _bI_InvididualUpdateIN.BirthDay = birthDay;
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new BI_InvididualUpdate(_appSetting).BI_InvididualUpdateDAO(_bI_InvididualUpdateIN) };
 			}
