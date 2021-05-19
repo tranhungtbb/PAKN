@@ -17,11 +17,11 @@ declare var $: any
 defineLocale('vi', viLocale)
 
 @Component({
-	selector: 'app-recommentdation-by-unit',
-	templateUrl: './recommendations-by-unit.component.html',
-	styleUrls: ['./recommendations-by-unit.component.css'],
+	selector: 'app-recommentdation-by-field',
+	templateUrl: './recommendations-by-field.component.html',
+	styleUrls: ['./recommendations-by-field.component.css'],
 })
-export class RecommendationsByUnitComponent implements OnInit {
+export class RecommendationsByFieldComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 
 	pageIndex: Number = 1

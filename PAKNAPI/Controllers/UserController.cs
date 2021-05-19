@@ -18,6 +18,8 @@ using System.Security.Claims;
 using System.Globalization;
 using PAKNAPI.Models;
 using PAKNAPI.Models.User;
+using ClosedXML.Excel;
+using System.IO;
 
 namespace PAKNAPI.Controllers
 {
@@ -777,6 +779,34 @@ namespace PAKNAPI.Controllers
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message};
 			}
         }
+
+		//public IActionResult Excel()
+		//{
+		//	using (var workbook = new XLWorkbook())
+		//	{
+		//		var worksheet = workbook.Worksheets.Add("Users");
+		//		var currentRow = 1;
+		//		worksheet.Cell(currentRow, 1).Value = "Id";
+		//		worksheet.Cell(currentRow, 2).Value = "Username";
+		//		foreach (var user in users)
+		//		{
+		//			currentRow++;
+		//			worksheet.Cell(currentRow, 1).Value = user.Id;
+		//			worksheet.Cell(currentRow, 2).Value = user.Username;
+		//		}
+
+		//		using (var stream = new MemoryStream())
+		//		{
+		//			workbook.SaveAs(stream);
+		//			var content = stream.ToArray();
+
+		//			return File(
+		//				content,
+		//				"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+		//				"users.xlsx");
+		//		}
+		//	}
+		//}
 
 
 		#endregion

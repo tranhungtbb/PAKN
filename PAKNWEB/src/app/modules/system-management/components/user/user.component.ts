@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Input } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
+
 import { UserObject, UserObject2 } from 'src/app/models/UserObject'
 import { UserService } from 'src/app/services/user.service'
 import { UnitService } from 'src/app/services/unit.service'
 import { PositionService } from 'src/app/services/position.service'
 import { RoleService } from 'src/app/services/role.service'
-import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { MESSAGE_COMMON, RESPONSE_STATUS, EXCEL_TYPE, EXCEL_EXTENSION } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
 import { UserCreateOrUpdateComponent } from 'src/app/modules/system-management/components/user/user-create-or-update/user-create-or-update.component'
 import { UserViewInfoComponent } from 'src/app/modules/system-management/components/user/user-view-info/user-view-info.component'
@@ -334,8 +335,8 @@ export class UserComponent implements OnInit {
 		if (id != this.hisUserId) {
 			this.cleaseHisModel()
 		}
-		this.hisPageSize = 20
-		this.hisPageIndex = 1
+		// this.hisPageSize = 20
+		// this.hisPageIndex = 1
 		this.hisUserId = id
 		this.listHisData = []
 		this.emailUser = email
@@ -366,27 +367,6 @@ export class UserComponent implements OnInit {
 			}
 		})
 	}
-
-	// fromDateChange(newDate) {
-	// 	debugger
-	// 	if (newDate != null) {
-	// 		this.dataSearch2.fromDate = JSON.stringify(new Date(newDate)).slice(1, 11)
-	// 	} else {
-	// 		this.dataSearch2.fromDate = null
-	// 	}
-	// 	// this.getHistory(this.hisUserId, this.emailUser)
-	// }
-
-	// toDateChange(newDate) {
-	// 	if (newDate != null) {
-	// 		this.dataSearch2.toDate = JSON.stringify(new Date(newDate)).slice(1, 11)
-	// 	} else {
-	// 		this.dataSearch2.toDate = null
-	// 	}
-	// 	// this.getHistory(this.hisUserId, this.emailUser)
-	// }
-
-	// modalUserChangePassword(id: any) {}
 }
 
 export class HistoryUser {

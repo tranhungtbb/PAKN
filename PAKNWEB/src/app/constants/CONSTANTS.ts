@@ -5,6 +5,9 @@ export class CONSTANTS {
 	public static PAGE_INDEX = 1
 }
 
+export const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
+export const EXCEL_EXTENSION = '.xlsx'
+
 export class RESPONSE_STATUS {
 	public static success = 'OK'
 	public static orror = 'ORROR'

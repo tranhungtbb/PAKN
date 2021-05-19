@@ -60,6 +60,7 @@ export class Api {
 
 	//Field
 	public static FieldGetList = 'CACategorySPBase/CAFieldGetAllOnPageBase'
+	public static FieldGetDropDown = 'CASPBase/CAFieldGetDropdownBase'
 	public static FieldGetById = 'CACategorySPBase/CAFieldGetByIDBase'
 	public static FieldInsert = 'CACategorySPBase/CAFieldInsertBase'
 	public static FieldUpdate = 'CACategorySPBase/CAFieldUpdateBase'
