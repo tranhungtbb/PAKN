@@ -56,15 +56,35 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("DAM_Administration_Delete", DP));
 		}
 	}
+	public class DAMAdministrationUpdateShow
+	{
+		private SQLCon _sQLCon;
 
+		public DAMAdministrationUpdateShow(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public DAMAdministrationUpdateShow()
+		{
+		}
+
+		public async Task<int> DAMAdministrationUpdateShowDAO(DAMAdministrationUpdateShowIN _dAMAdministrationUpdateShowIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _dAMAdministrationUpdateShowIN.Id);
+			DP.Add("Status", _dAMAdministrationUpdateShowIN.Status);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("DAM_Administration_UpdateShow", DP));
+		}
+	}
 	public class DAMAdministrationDeleteIN
 	{
 		public int? Id { get; set; }
 	}
-	public class DAMAdministrationUpdateShow
+	public class DAMAdministrationUpdateShowIN
     {
 		public int? Id { get; set; }
-		public bool IsShow { get; set; }
+		public int Status { get; set; }
     }
 
 	public class DAMAdministrationDeleteAll

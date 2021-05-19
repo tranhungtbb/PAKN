@@ -240,6 +240,7 @@ export class Api {
 	public static AdministrativeFormalitiesInsert = 'AdministrationFormalities/AdministrationFormalitiesInsert'
 	public static AdministrativeFormalitiesUpdate = 'AdministrationFormalities/AdministrationFormalitiesUpdate'
 	public static AdministrativeFormalitiesDelete = 'DAMSPBase/DAMAdministrationDeleteBase'
+	public static AdministrativeFormalitiesUpdateShow = 'DAMSPBase/DAMAdministrationUpdateShowBase'
 	public static AdministrativeFormalitiesCAFieldDAM = 'CASPBase/CAFieldDAMGetDropdownBase'
 
 	// Notification
@@ -293,6 +294,7 @@ export class Api {
 
 	public static StatisticRecommendationByUnit = 'Statistic/STT_RecommendationByUnit'
 	public static StatisticRecommendationByField = 'Statistic/STT_RecommendationByField'
+	public static StatisticRecommendationByGroupWord = 'Statistic/STT_RecommendationByGroupWord'
 
 	// import
 	public static BusinessImportFile = 'BusinessIndividual/ImportDataBusiness?folder=BusinessIndividual'

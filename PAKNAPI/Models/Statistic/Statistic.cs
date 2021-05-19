@@ -90,4 +90,33 @@ namespace PAKNAPI.Models.Statistic
 			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationByFieldGetAllOnPage>("[TK_ListRecommendationByField]", DP)).ToList();
 		}
 	}
+
+	public class StatisticRecommendationByGroupWordGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public StatisticRecommendationByGroupWordGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public StatisticRecommendationByGroupWordGetAllOnPage()
+		{
+		}
+		public int GroupWordId { get; set; }
+		public string GroupWordName { get; set; }
+
+		public double? Total { get; set; }
+
+		public async Task<List<StatisticRecommendationByGroupWordGetAllOnPage>> StatisticRecommendationByGroupWordGetAllOnPageDAO(string LtsUnitId, int? Year, int? Timeline, DateTime? FromDate, DateTime? ToDate)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("LtsUnitId", LtsUnitId);
+			DP.Add("Year", Year);
+			DP.Add("Timeline", Timeline);
+			DP.Add("FromDate", FromDate);
+			DP.Add("ToDate", ToDate);
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationByGroupWordGetAllOnPage>("[TK_ListRecommendationByGroupWord]", DP)).ToList();
+		}
+	}
 }
