@@ -31,22 +31,22 @@ export class BusinessIndividualService {
 		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.InvididualRegister)
 	}
 
-	individualById(request: any): Observable<any> {
-		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.InvididualGetByID)
-	}
-
-	invididualUpdate_Old(data: any): Observable<any> {
+	invididualUpdate(data: any): Observable<any> {
 		let form = new FormData()
-
+		console.log('data', data)
 		for (let item in data) {
 			form.append(item, data[item])
 		}
 		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.InvididualUpdate)
 	}
 
-	invididualUpdate(request: any): Observable<any> {
-		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.InvididualUpdate)
+	individualById(request: any): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.InvididualGetByID)
 	}
+
+	// invididualUpdate_Old(data: any): Observable<any> {
+	// 	return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.InvididualUpdate)
+	// }
 
 	invididualImportFile(data: any): Observable<any> {
 		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.ImportDataInvididual)

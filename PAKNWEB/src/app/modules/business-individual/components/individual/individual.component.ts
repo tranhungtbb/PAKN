@@ -282,7 +282,7 @@ export class IndividualComponent implements OnInit {
 
 	preCreate() {
 		this.model = new IndividualObject()
-		this.rebuilForm()
+		// this.rebuilForm()
 		this.model.nation = 'Việt Nam'
 		this.model.provinceId = 37 // Tỉnh Khánh Hòa
 		this.model.gender = true // Giới tính Nam
@@ -301,7 +301,9 @@ export class IndividualComponent implements OnInit {
 		this.form = this._fb.group({
 			fullName: [this.model.fullName, [Validators.required, Validators.maxLength(100)]],
 			gender: [this.model.gender, [Validators.required]],
-			dob: [this.model._birthDay, [Validators.required]],
+			// dob: [this.model._birthDay, [Validators.required]],
+			// dob: [this.model.birthDate, [Validators.required]],
+			birthDate: [this.model.birthDate, [Validators.required]],
 			nation: [this.model.nation, [Validators.required]],
 			province: [this.model.provinceId, [Validators.required]],
 			district: [this.model.districtId, [Validators.required]],
@@ -314,6 +316,7 @@ export class IndividualComponent implements OnInit {
 			placeIssue: [this.model.issuedPlace, []],
 			// dateIssue: [this.model._dateOfIssue, []],
 			dateIssue: [this.model.dateOfIssue, []],
+			// dateIssue: [this.model.dateOfIssue, []],
 			status: [this.model.status],
 		})
 	}
@@ -324,10 +327,13 @@ export class IndividualComponent implements OnInit {
 		let fDob: any = document.querySelector('#_dob')
 		let fDateIssue: any = document.querySelector('#_dateIssue')
 		this.model._birthDay = fDob.value
+		this.model._dateOfIssue = fDateIssue.value
 		// this.model.birthDay = fDob.value
-		console.log('fDob.value', fDob.value)
-		// this.model._dateOfIssue = fDateIssue.value
+
+		this.model.birthDate = fDob.value
 		this.model.dateOfIssue = fDateIssue.value
+		// console.log('birthDate', this.model.birthDate)
+		// console.log('dateOfIssue', this.model.dateOfIssue)
 		this.model.userId = this.userLoginId
 		if (!this.model.email) this.model.email = ''
 
@@ -345,7 +351,7 @@ export class IndividualComponent implements OnInit {
 		// let dateIssue = new Date(this.model._dateOfIssue)
 		// let dateOfBirth = new Date(this.model._birthDay)
 		let dateIssue = new Date(this.model.dateOfIssue)
-		let dateOfBirth = new Date(this.model.birthDay)
+		let dateOfBirth = new Date(this.model.birthDate)
 
 		console.log('dateIssue', dateIssue)
 		console.log('dateOfBirth', dateOfBirth)
@@ -419,9 +425,8 @@ export class IndividualComponent implements OnInit {
 				console.log('InvididualGetByID', response.result.InvididualGetByID[0])
 				this.model = response.result.InvididualGetByID[0]
 				this.model.iDCard = response.result.InvididualGetByID[0].idCard
-				this.model._dateOfIssue = response.result.InvididualGetByID[0].dateOfIssue
-				this.model._birthDay = response.result.InvididualGetByID[0].birthDay
 				this.model.birthDate = new Date(response.result.InvididualGetByID[0].birthDay)
+				this.model.dateOfIssue = new Date(response.result.InvididualGetByID[0].dateOfIssue)
 				console.log('this.model', this.model)
 
 				$('#modal').modal('show')
