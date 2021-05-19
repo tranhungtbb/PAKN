@@ -307,14 +307,14 @@
 								<label class="mb-1">Ngày, tháng, năm, sinh <span class="cl-red">(*)</span></label>
 								<div class="input-group">
 									<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dob" [(ngModel)]="model.birthDate"
-										formControlName="dob" appBsDatepickerInvalid
+										formControlName="birthDate" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" [maxDate]="dateNow" />
 									<div class="input-group-addon">
 										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 									</div>
 								</div>
-								<div *ngIf="(submitted && f.dob.invalid)||(f.dob.invalid && (f.dob.dirty || f.dob.touched))" class="has-error m-b-12">
-									<div *ngIf="f.dob.errors.required">
+								<div *ngIf="(submitted && f.birthDate.invalid)||(f.birthDate.invalid && (f.birthDate.dirty || f.birthDate.touched))" class="has-error m-b-12">
+									<div *ngIf="f.birthDate.errors.required">
 										<span class="help-block">Trường dữ liệu này không được để trống</span>
 									</div>
 								</div>

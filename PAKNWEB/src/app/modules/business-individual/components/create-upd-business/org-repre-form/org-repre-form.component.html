@@ -114,7 +114,13 @@
 		</div>
 	</div>
 	<div class="w-100"></div>
-	<div class="form-group mb-0 col">
+	<div class="col form-group">
+		<label class="mb-1">SĐT người đại diện <span class="cl-red">(*)</span> </label>
+		<div class="input-group">
+			<input class="form-control" [(ngModel)]="phone" maxlength="11" placeholder="Nhập ..." />
+		</div>
+	</div>
+	<div class="col col-lg-8 form-group">
 		<label class="mr-3">Giới tính:</label>
 		<label *ngFor="let gen of listGender" class="radio-inline mr-3">
 			<input [(ngModel)]="model.RepresentativeGender" formControlName="Gender" [value]="gen.value" type="radio"> <span class="text-uppercase"> {{gen.text}}</span>
