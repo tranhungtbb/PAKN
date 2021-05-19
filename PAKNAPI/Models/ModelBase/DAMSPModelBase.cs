@@ -61,6 +61,11 @@ namespace PAKNAPI.ModelBase
 	{
 		public int? Id { get; set; }
 	}
+	public class DAMAdministrationUpdateShow
+    {
+		public int? Id { get; set; }
+		public bool IsShow { get; set; }
+    }
 
 	public class DAMAdministrationDeleteAll
 	{
