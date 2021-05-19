@@ -2,7 +2,9 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
-				<li class="breadcrumb-item active"><a class="font-weight-bold">QUẢN LÝ DOANH NGHIỆP</a></li>
+				<!-- <li class="breadcrumb-item active"><a class="font-weight-bold">QUẢN LÝ DOANH NGHIỆP</a></li> -->
+				<li class="breadcrumb-item"><a>Cá nhân, Doanh nghiệp</a></li>
+				<li class="breadcrumb-item active"><a class="font-weight-bold">Danh sách doanh nghiệp</a></li>
 			</ol>
 			<div class="btn-group group-button-table" role="group">
 				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onChangeFileExcel()">
@@ -27,6 +29,7 @@
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 					</svg>
+					Thêm mới
 				</button>
 			</div>
 		</div>
@@ -48,43 +51,45 @@
 								</th>
 								<th style="width: 250px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Doanh nhân</strong>
-										<span class="caret-tb"></span>
+										<strong>Doanh nghiệp</strong>
+										<span class="caret-tb" (click)="onSortBusiness('RepresentativeName')"></span>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="representativeName" maxlength="100" (keydown.enter)="dataStateChange()"
-										placeholder="" />
+										placeholder="Nhập ..." />
 								</th>
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Địa chỉ trụ sở</strong>
-										<span class="caret-tb" (click)="onSortUser('Address')"></span>
+										<span class="caret-tb" (click)="onSortBusiness('Address')"></span>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.address" maxlength="100" (keydown.enter)="dataStateChange()" />
+									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.address" maxlength="100" (keydown.enter)="dataStateChange()"
+										placeholder="Nhập ..." />
 								</th>
 								<th style="width: 150px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Số điện thoại</strong>
-										<span class="caret-tb" (click)="onSortUser('Phone')"></span>
+										<span class="caret-tb" (click)="onSortBusiness('Phone')"></span>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.phone" maxlength="11" (keydown.enter)="dataStateChange()" />
+									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.phone" maxlength="11" (keydown.enter)="dataStateChange()"
+										placeholder="Nhập ..." />
 								</th>
 								<th style="width: 250px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Email</strong>
-										<span class="caret-tb" (click)="onSortUser('Email')"></span>
+										<span class="caret-tb" (click)="onSortBusiness('Email')"></span>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.email" maxlength="256" (keydown.enter)="dataStateChange()" />
+									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.email" maxlength="256" (keydown.enter)="dataStateChange()"
+										placeholder="Nhập ..." />
 								</th>
 								<th style="width: 160px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Trạng thái</strong>
-										<span class="caret-tb"></span>
+										<span class="caret-tb" (click)="onSortBusiness('Status')"></span>
 									</p>
 									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="isActived"
+										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
 											[closeOnSelect]="true" (change)="dataStateChange()">
 										</ng-select>
-										<input hidden [(ngModel)]="dataSearch.status">
 									</div>
 								</th>
 								<th class="text-right" style="width: 100px;">
@@ -104,17 +109,14 @@
 								<td>{{item.phone}}</td>
 								<td>{{item.email}}</td>
 								<td>
-									<span type="button" *ngIf="item.isActived == true" (click)="onOpenConfirmModal(item.id,'isActived')" class="badge rounded-pill bg-success">Hiệu
-										lực</span>
-									<span type="button" *ngIf="item.isActived == false" (click)="onOpenConfirmModal(item.id,'isActived')" class="badge rounded-pill badge-light">Hết
-										hiệu
-										lực</span>
+									<span *ngIf="item.status == 0" class="badge rounded-pill badge-light" (click)="onOpenConfirmModal(item.id,'Status')">Hết hiệu lực</span>
+									<span *ngIf="item.status == 1" class="badge rounded-pill bg-success" (click)="onOpenConfirmModal(item.id,'Status')">Hiệu lực</span>
 								</td>
 								<td style="max-width: 100px;">
 									<div class="d-flex justify-content-end">
 										<a type="button" [routerLink]="['/quan-tri/ca-nhan-doanh-nghiep/them-moi/', item.id]" class="btn-icon grd-brown text-brown mr-2"><i
 												class="bi bi-pencil-square"></i></a>
-										<a type="button" (click)="onOpenConfirmModal(item.id,'individual')" class="btn-icon grd-red text-white" data-toggle="modal"
+										<a type="button" (click)="onOpenConfirmModal(item.id,'Individual')" class="btn-icon grd-red text-white" data-toggle="modal"
 											data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
 									</div>
 								</td>

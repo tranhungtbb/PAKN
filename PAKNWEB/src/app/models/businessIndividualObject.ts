@@ -13,6 +13,7 @@ export class IndividualObject {
 		this.address = ''
 		this.IsDeleted = false
 		this.userId = null
+		this.status = 1
 	}
 	phone: string
 	fullName: string // fullName
@@ -35,6 +36,9 @@ export class IndividualObject {
 	isActived: boolean
 	IsDeleted: boolean
 	userId: number
+	status: number
+	id: number
+	imagePath: string
 }
 
 export class BusinessionObject {
@@ -105,7 +109,7 @@ export class OrganizationObject {
 		this.OrgPhone = ''
 		this.Tax = ''
 
-		this.Status = 1
+		this.Status = null
 		this.isActived = true
 		this.IsDeleted = false
 		this.userId = null
@@ -156,7 +160,7 @@ export class IndividualExportObject {
 		this.address = ''
 		this.phone = ''
 		this.email = ''
-		this.status = 0
+		this.status = null
 	}
 	fullName: string
 	address: string
@@ -171,7 +175,7 @@ export class BusinessExportObject {
 		this.address = ''
 		this.phone = ''
 		this.email = ''
-		this.status = 0
+		this.status = null
 	}
 	representativeName: string
 	address: string

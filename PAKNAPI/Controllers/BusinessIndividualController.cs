@@ -204,12 +204,12 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize]
-		[Route("BI_IndividualGetAllOnPage")]
-		public async Task<ActionResult<object>> BI_IndividualGetAllOnPage(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
+		[Route("IndividualGetAllOnPage")]
+		public async Task<ActionResult<object>> IndividualGetAllOnPage(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, int? Status, string SortDir, string SortField)
 		{
 			try
 			{
-                List<BI_IndividualGetAllOnPage> rsIndividualGetAllOnPageBase = await new BI_IndividualGetAllOnPage(_appSetting).BI_IndividualGetAllOnPageDAO(PageSize, PageIndex, FullName, Address, Phone, Email, IsActived, SortDir, SortField);
+                List<BI_IndividualGetAllOnPage> rsIndividualGetAllOnPageBase = await new BI_IndividualGetAllOnPage(_appSetting).BI_IndividualGetAllOnPageDAO(PageSize, PageIndex, FullName, Address, Phone, Email, Status, SortDir, SortField);
                 IDictionary<string, object> json = new Dictionary<string, object>
                         {
                             {"IndividualGetAllOnPage", rsIndividualGetAllOnPageBase},
@@ -230,8 +230,8 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Authorize]
-		[Route("BI_IndivialDelete")]
-		public async Task<ActionResult<object>> BI_IndivialDelete(BI_IndivialDeleteIN _bi_IndivialDeleteIN)
+		[Route("IndivialDelete")]
+		public async Task<ActionResult<object>> IndivialDelete(BI_IndivialDeleteIN _bi_IndivialDeleteIN)
 		{
 			try
 			{
@@ -250,8 +250,8 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Authorize]
-		[Route("BI_IndivialChangeStatus")]
-		public async Task<ActionResult<object>> BI_IndivialChangeStatus(BI_IndivialChageStatusIN _bI_IndivialChageStatusIN)
+		[Route("IndivialChangeStatus")]
+		public async Task<ActionResult<object>> IndivialChangeStatus(BI_IndivialChageStatusIN _bI_IndivialChageStatusIN)
 		{
 			try
 			{
@@ -309,13 +309,13 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("InvididualUpdate")]
-		public async Task<ActionResult<object>> InvididualUpdate(InvididualUpdateIN _invididualUpdateIN)
+		public async Task<ActionResult<object>> InvididualUpdate(BI_InvididualUpdateIN _bI_InvididualUpdateIN)
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new InvididualUpdate(_appSetting).InvididualUpdateDAO(_invididualUpdateIN) };
+				return new ResultApi { Success = ResultCode.OK, Result = await new BI_InvididualUpdate(_appSetting).BI_InvididualUpdateDAO(_bI_InvididualUpdateIN) };
 			}
 			catch (Exception ex)
 			{
@@ -333,7 +333,7 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				List<InvididualGetByID> rsInvididualGetByID = await new InvididualGetByID(_appSetting).InvididualGetByIDDAO(Id);
+				List<BI_InvididualGetByID> rsInvididualGetByID = await new BI_InvididualGetByID(_appSetting).BI_InvididualGetByIDDAO(Id);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"InvididualGetByID", rsInvididualGetByID},
@@ -350,12 +350,12 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("BusinessGetAllOnPageBase")]
-		public async Task<ActionResult<object>> BusinessGetAllOnPageBase(int? PageSize, int? PageIndex, string RepresentativeName, string Address, string Phone, string Email, bool? IsActived, string SortDir, string SortField)
+		[Route("BusinessGetAllOnPage")]
+		public async Task<ActionResult<object>> BusinessGetAllOnPage(int? PageSize, int? PageIndex, string RepresentativeName, string Address, string Phone, string Email, byte? Status, string SortDir, string SortField)
 		{
 			try
 			{
-				List<BusinessGetAllOnPage> rsBusinessGetAllOnPageBase = await new BusinessGetAllOnPage(_appSetting).BusinessGetAllOnPageDAO(PageSize, PageIndex, RepresentativeName, Address, Phone, Email, IsActived, SortDir, SortField);
+				List<BI_BusinessGetAllOnPage> rsBusinessGetAllOnPageBase = await new BI_BusinessGetAllOnPage(_appSetting).BI_BusinessGetAllOnPageDAO(PageSize, PageIndex, RepresentativeName, Address, Phone, Email, Status, SortDir, SortField);
 				IDictionary<string, object> json = new Dictionary<string, object>
 						{
 							{"BusinessGetAllOnPageBase", rsBusinessGetAllOnPageBase},
@@ -377,13 +377,13 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("BusinessDelete")]
-		public async Task<ActionResult<object>> BusinessDelete(BusinessDeleteIN _businessDeleteIN)
+		public async Task<ActionResult<object>> BusinessDelete(BI_BusinessDeleteIN _bI_BusinessDeleteIN)
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new BusinessDelete(_appSetting).BusinessDeleteDAO(_businessDeleteIN) };
+				return new ResultApi { Success = ResultCode.OK, Result = await new BI_BusinessDelete(_appSetting).BusinessDeleteDAO(_bI_BusinessDeleteIN) };
 			}
 			catch (Exception ex)
 			{
@@ -397,13 +397,13 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("BusinessChageStatus")]
-		public async Task<ActionResult<object>> BusinessChageStatus(BusinessChageStatusIN _businessChageStatusIN)
+		public async Task<ActionResult<object>> BusinessChageStatus(BI_BusinessChageStatusIN _bI_BusinessChageStatusIN)
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new BusinessChageStatus(_appSetting).BusinessChageStatusDAO(_businessChageStatusIN) };
+				return new ResultApi { Success = ResultCode.OK, Result = await new BI_BusinessChageStatus(_appSetting).BI_BusinessChageStatusDAO(_bI_BusinessChageStatusIN) };
 			}
 			catch (Exception ex)
 			{
@@ -417,7 +417,7 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("BusinessRegister")]
-		public async Task<object> BusinessRegister([FromForm] BusinessInsertIN model,
+		public async Task<object> BusinessRegister([FromForm] BI_BusinessInsertIN model,
 			[FromForm] string _RepresentativeBirthDay,
 			[FromForm] string _DateOfIssue)
 		{
@@ -459,7 +459,7 @@ namespace PAKNAPI.Controllers
 				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("DecisionOfEstablishing", model.DecisionOfEstablishing, 0);
 				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số quyết định thành lập đã tồn tại" };
 
-				var rs2 = await new BusinessInsert(_appSetting).BusinessInsertDAO(model);
+				var rs2 = await new BI_BusinessInsert(_appSetting).BusinessInsertDAO(model);
 
 			}
 			catch (Exception ex)
@@ -478,7 +478,7 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				List<BusinessGetById> rsBusinessGetById = await new BusinessGetById(_appSetting).BusinessGetByIdDAO(Id);
+				List<BI_BusinessGetById> rsBusinessGetById = await new BI_BusinessGetById(_appSetting).BusinessGetByIdDAO(Id);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"BusinessGetById", rsBusinessGetById},
@@ -496,13 +496,13 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("BusinessUpdate")]
-		public async Task<ActionResult<object>> BusinessUpdate([FromForm] BusinessUpdateInfoIN businessModel)
+		public async Task<ActionResult<object>> BusinessUpdate([FromForm] BI_BusinessUpdateInfoIN businessModel)
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new BusinessUpdateInfo(_appSetting).BusinessUpdateInfoDAO(businessModel) };
+				return new ResultApi { Success = ResultCode.OK, Result = await new BI_BusinessUpdateInfo(_appSetting).BI_BusinessUpdateInfoDAO(businessModel) };
 			}
 			catch (Exception ex)
 			{

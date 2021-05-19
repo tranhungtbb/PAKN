@@ -24,6 +24,7 @@ const routes: Routes = [
 			{ path: 'bao-cao', loadChildren: './report/report.module#ReportModule' },
 			{ path: 'thiet-lap-chung', loadChildren: './setting/setting.module#SettingModule' },
 			{ path: 'ho-tro', loadChildren: './support/support.module#SupportModule' },
+			{ path: 'huong-dan-su-dung', loadChildren: './support-management/support-management.module#SupportManagementModule' },
 			{ path: 'thu-tuc-hanh-chinh', loadChildren: './administrative-formalities/administrative-formalities.module#AdministrativeFormalitiesModule' },
 			{ path: 'thong-bao', component: NotificationComponent },
 			{ path: 'xuat-file', component: ReportViewerComponent },
