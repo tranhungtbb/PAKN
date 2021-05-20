@@ -1,0 +1,123 @@
+<div class="content-body">
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+					<!-- <li class="breadcrumb-item"><a>Thư mời</a></li> -->
+					<li class="breadcrumb-item"><a class="font-weight-bold uppercase"> Báo cáo phản ánh kiến nghị theo lĩnh vực</a></li>
+				</ol>
+				<!-- <div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách lĩnh vực</div> -->
+				<div class="btn-group group-button-table" role="group">
+					<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
+							<path
+								d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
+							<path
+								d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+						</svg>
+						Xuất báo cáo
+					</button>
+					<!-- <button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="redirectCreate()">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+						</svg>
+						Thêm mới
+					</button> -->
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-serach">
+				<div class="col-md-4">
+					<p-multiSelect [options]="listUnit" [(ngModel)]="listUnitSelected" optionLabel="unitName" [virtualScroll]="true" optionValue="unitId"
+						(onChange)="dataStateChange()">
+						<ng-template let-userSelected pTemplate="selectedItems">
+							<ng-container *ngIf="userSelected && userSelected.length <= 2">
+								<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">
+									<span>{{val.unitName}}</span>
+								</div>
+							</ng-container>
+
+							<span *ngIf="!userSelected || userSelected.length === 0" class="ui-multiselected-empty-token  ui-corner-all">Chọn đơn vị...</span>
+							<span *ngIf="userSelected && userSelected.length > 2" class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
+								đơn vị đã được chọn</span>
+						</ng-template>
+						<ng-template let-user pTemplate="item">
+							<div style="font-size:14px">{{user.label}}</div>
+						</ng-template>
+					</p-multiSelect>
+				</div>
+				<div class="col-md-4">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="dropdown bootstrap-select form-control form-control-sm">
+								<ng-select [items]="listYear" placeholder="Năm ..." bindLabel="text" bindValue="value" [(ngModel)]="year" [clearable]="false"
+									(change)="dataStateChange()">
+								</ng-select>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<div class="dropdown bootstrap-select form-control form-control-sm">
+								<ng-select [items]="lstTimeline" placeholder="Chọn mốc thời gian ..." bindLabel="text" bindValue="value" [(ngModel)]="timeline"
+									(change)="dataStateChange()">
+								</ng-select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="row">
+						<div class="col-md-6">
+							<input class="form-control form-control-sm" placeholder="Từ ngày..." bsDatepicker #n="bsDatepicker" maxlength="10" id="fromDate2" appBsDatepickerInvalid
+								(bsValueChange)="fromDateChange($event)" [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+							<div class="input-group-addon">
+								<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<input class="form-control form-control-sm" placeholder="Đến ngày..." bsDatepicker #n="bsDatepicker" maxlength="10" id="toDate2" appBsDatepickerInvalid
+								(bsValueChange)="toDateChange($event)" [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+							<div class="input-group-addon">
+								<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-12">
+				<div class="card mb-0 shadow-none">
+					<div class="table-responsive">
+						<p-table [columns]="scrollableCols" [frozenColumns]="frozenCols" [value]="lstData" [scrollable]="true" scrollHeight="400px" frozenWidth="401px"
+							[responsive]="true">
+							<ng-template pTemplate="frozencolgroup" let-columns>
+								<colgroup>
+									<col style="width:250px" class="text-left">
+								</colgroup>
+							</ng-template>
+							<ng-template pTemplate="colgroup" let-columns>
+								<colgroup>
+									<col *ngFor="let col of columns" style="width:100px">
+								</colgroup>
+							</ng-template>
+							<ng-template pTemplate="header" let-columns>
+								<tr>
+									<th class="text-center content-td" *ngFor="let col of columns" title="{{col.codeHeader}}" style="width:100px">
+										{{col.header}}
+									</th>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="body" let-rowData let-columns="columns">
+								<tr style="height: 27px">
+									<td *ngFor="let col of columns" style="width:100px" class="content-td pointer {{col.cssClass}}" title="{{rowData[col.field]}}"
+										(click)="viewDetail(rowData.value,col.field)">
+										{{rowData[col.field]}}
+									</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

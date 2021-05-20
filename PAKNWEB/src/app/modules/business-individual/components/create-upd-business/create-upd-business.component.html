@@ -17,19 +17,19 @@
 	</div>
 </div>
 <div class="tab-pane fade show active pt-5" id="dk-doanhnghiep">
-	<div class="row mx-0 border border-brown rounded-xl">
-		<div class="col-12 p-4 border-brown">
+	<div class="row mx-0 border rounded-xl">
+		<div class="col-12 p-4">
 			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin người đại diện</span></h4>
 			<app-org-repre-form></app-org-repre-form>
 		</div>
 
 		<!-- Thông tin doanh nghiệp -->
-		<div class="col col-lg-3 border-right border-top p-4 border-brown">
+		<div class="col col-lg-3 border-right border-top p-4">
 			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin doanh nghiệp</span></h4>
 			<form class="px-3" [formGroup]="formOrgInfo">
 				<div class="form-group">
 					<label class="mb-1">Tên tổ chức, doanh nghiệp <span class="cl-red">(*)</span></label>
-					<input [svTrim] [(ngModel)]="model.Business" formControlName="Business" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.Business" formControlName="Business" type="text" placeholder="Nhập..." class="form-control">
 					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.Business.invalid)||(fOrgInfo.Business.invalid && (fOrgInfo.Business.dirty || fOrgInfo.Business.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fOrgInfo.Business.errors.required">
@@ -42,7 +42,7 @@
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Số chứng nhận ĐKKD </label>
-					<input [svTrim] [(ngModel)]="model.BusinessRegistration" formControlName="RegistrationNum" type="text" placeholder="Nhập..." class="form-control border-brown"
+					<input [svTrim] [(ngModel)]="model.BusinessRegistration" formControlName="RegistrationNum" type="text" placeholder="Nhập..." class="form-control"
 						(change)="onCheckExist('BusinessRegistration',$event.target.value)">
 					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.RegistrationNum.invalid)||(fOrgInfo.RegistrationNum.invalid && (fOrgInfo.RegistrationNum.dirty || fOrgInfo.RegistrationNum.touched))"
 						class="has-error m-b-12">
@@ -61,8 +61,8 @@
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Số quyết định thành lập </label>
-					<input [svTrim] [(ngModel)]="model.DecisionOfEstablishing" formControlName="DecisionFoundation" type="text" placeholder="Nhập..."
-						class="form-control border-brown" (change)="onCheckExist('DecisionOfEstablishing',$event.target.value)">
+					<input [svTrim] [(ngModel)]="model.DecisionOfEstablishing" formControlName="DecisionFoundation" type="text" placeholder="Nhập..." class="form-control"
+						(change)="onCheckExist('DecisionOfEstablishing',$event.target.value)">
 					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.DecisionFoundation.invalid)||(fOrgInfo.DecisionFoundation.invalid && (fOrgInfo.DecisionFoundation.dirty || fOrgInfo.DecisionFoundation.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fOrgInfo.DecisionFoundation.errors.required">
@@ -95,11 +95,17 @@
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Mã số thuế <span class="cl-red">(*)</span></label>
-					<input [svTrim] numbersOnly maxlength="13" [(ngModel)]="model.Tax" formControlName="Tax" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] numbersOnly maxlength="13" [(ngModel)]="model.Tax" formControlName="Tax" type="text" placeholder="Nhập..." class="form-control">
 					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.Tax.invalid)||(fOrgInfo.Tax.invalid && (fOrgInfo.Tax.dirty || fOrgInfo.Tax.touched))" class="has-error m-b-12">
 
 						<div *ngIf="fOrgInfo.Tax.errors.maxlength">
 							<span class="help-block">Chỉ nhập tối đa 13 ký tự</span>
+						</div>
+					</div>
+
+					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.Tax.invalid)||(fOrgInfo.Tax.invalid && (fOrgInfo.Tax.dirty || fOrgInfo.Tax.touched))" class="has-error m-b-12">
+						<div *ngIf="fOrgInfo.Tax.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
 					</div>
 				</div>
@@ -108,7 +114,7 @@
 		</div>
 
 		<!-- địa chỉ trụ sở / văn phòng đại diện -->
-		<div class="col col-lg-9 border-right border-top p-4 border-brown">
+		<div class="col col-lg-9 border-right border-top p-4">
 			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Địa chỉ trụ sở / văn phòng đại diện</span></h4>
 			<app-org-form-address></app-org-form-address>
 

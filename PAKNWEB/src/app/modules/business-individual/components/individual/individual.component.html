@@ -199,7 +199,7 @@
 							<!-- row 2 -->
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">CMND/CCCD <span class="cl-red">(*)</span></label>
-								<input svDisabledSpaceKey stopLength="12" [(ngModel)]="model.iDCard" formControlName="iDCard" type="text" placeholder="Nhập..."
+								<input svDisabledSpaceKey maxlength="12" [(ngModel)]="model.iDCard" formControlName="iDCard" type="text" placeholder="Nhập..."
 									class="form-control border-brown" pattern="^([0-9]){9,12}$" (change)="onCheckExist('IDCard',$event.target.value)">
 								<div *ngIf="(submitted && f.iDCard.invalid)||(f.iDCard.invalid && (f.iDCard.dirty || f.iDCard.touched))" class="has-error m-b-12">
 									<div *ngIf="f.iDCard.errors.required">
@@ -222,7 +222,7 @@
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Ngày cấp</label>
 								<div class="input-group">
-									<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dateIssue" [(ngModel)]="model._dateOfIssue"
+									<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dateIssue" [(ngModel)]="model.dateOfIssue"
 										formControlName="dateIssue" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" [maxDate]="dateNow" />
 									<div class="input-group-addon">
@@ -288,7 +288,8 @@
 							</div>
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></label>
-								<input [svTrim] [(ngModel)]="model.address" formControlName="address" type="text" placeholder="Nhập..." class="form-control border-brown">
+								<input [svTrim] [(ngModel)]="model.address" maxlength="255" formControlName="address" type="text" placeholder="Nhập..."
+									class="form-control border-brown">
 								<div *ngIf="(submitted && f.address.invalid)||(f.address.invalid && (f.address.dirty || f.address.touched))" class="has-error m-b-12">
 									<div *ngIf="f.address.errors.required">
 										<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -305,15 +306,15 @@
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Ngày, tháng, năm, sinh <span class="cl-red">(*)</span></label>
 								<div class="input-group">
-									<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dob" [(ngModel)]="model._birthDay"
-										formControlName="dob" appBsDatepickerInvalid
+									<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dob" [(ngModel)]="model.birthDate"
+										formControlName="birthDate" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" [maxDate]="dateNow" />
 									<div class="input-group-addon">
 										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 									</div>
 								</div>
-								<div *ngIf="(submitted && f.dob.invalid)||(f.dob.invalid && (f.dob.dirty || f.dob.touched))" class="has-error m-b-12">
-									<div *ngIf="f.dob.errors.required">
+								<div *ngIf="(submitted && f.birthDate.invalid)||(f.birthDate.invalid && (f.birthDate.dirty || f.birthDate.touched))" class="has-error m-b-12">
+									<div *ngIf="f.birthDate.errors.required">
 										<span class="help-block">Trường dữ liệu này không được để trống</span>
 									</div>
 								</div>

@@ -825,6 +825,7 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("lstid", _mRRecommendationGroupWordInsertByListIN.lstid);
 			DP.Add("RecommendationId", _mRRecommendationGroupWordInsertByListIN.RecommendationId);
+			DP.Add("UnitId", _mRRecommendationGroupWordInsertByListIN.UnitId);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_GroupWord_InsertByList", DP));
 		}
@@ -834,6 +835,7 @@ namespace PAKNAPI.ModelBase
 	{
 		public string lstid { get; set; }
 		public int? RecommendationId { get; set; }
+		public int? UnitId { get; set; }
 	}
 
 	public class MRRecommendationHashtagDeleteByRecommendationId

@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core'
-import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { DiadanhService } from 'src/app/services/diadanh.service'
 import { RegisterService } from 'src/app/services/register.service'
-
-// import { OrganizationComponent } from '../organization.component'
-import { OrganizationObject } from 'src/app/models/RegisterObject'
-import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { OrganizationObject } from 'src/app/models/businessIndividualObject'
+import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 
 @Component({
 	selector: 'app-org-form-address',
@@ -48,11 +46,11 @@ export class OrgFormAddressComponent implements OnInit {
 		} else {
 		}
 	}
-	onClickProvince() {
-		if (this.listProvince == null || this.listProvince.length == 0) {
-			this.onChangeNation()
-		}
-	}
+	// onClickProvince() {
+	// 	if (this.listProvince == null || this.listProvince.length == 0) {
+	// 		this.onChangeNation()
+	// 	}
+	// }
 	onChangeProvince() {
 		this.listDistrict = []
 		this.listVillage = []
@@ -84,10 +82,11 @@ export class OrgFormAddressComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.onChangeNation()
 		this.formOrgAddress = this.formBuilder.group({
 			OrgProvince: [this.model.OrgProvinceId, []], //int
-			OrgDistrict: [this.model.OrgDistrictId, []], //int
-			OrgVillage: [this.model.OrgWardsId, []], //int
+			OrgDistrict: [this.model.OrgDistrictId, [Validators.required]], //int
+			OrgVillage: [this.model.OrgWardsId, [Validators.required]], //int
 			OrgAddress: [this.model.OrgAddress, [Validators.required]],
 			OrgPhone: [this.model.OrgPhone, [Validators.required]], //, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)
 			OrgEmail: [this.model.OrgEmail, [Validators.email]],
