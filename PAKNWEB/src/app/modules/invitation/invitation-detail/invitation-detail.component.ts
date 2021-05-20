@@ -43,8 +43,6 @@ export class InvitationDetailComponent implements OnInit {
 	statusCurent: any = 2
 	@ViewChild('file', { static: false }) public file: ElementRef
 	constructor(
-		private _toastr: ToastrService,
-		private formBuilder: FormBuilder,
 		private router: Router,
 		private invitationService: InvitationService,
 		private userService: UserService,

@@ -209,6 +209,70 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("GetOrderByUnit")]
+		public async Task<ActionResult<object>> SYUserGetAllOrderByUnit()
+		{
+			try
+			{
+				List <SYUserDropList> result = new List<SYUserDropList>();
+				// lst đơn vị
+				List<SYUnitGetDropdown> lstUnit = await new SYUnitGetDropdown(_appSetting).SYUnitGetDropdownDAO();
+				// lst người dùng theo đơn vị từng đơn vị
+				SYUserDropList tinh = new SYUserDropList();
+				foreach (var province in lstUnit.Where(x=>x.UnitLevel == 1).ToList()) {
+					tinh = new SYUserDropList(province.Text,province.Value, new List<SYUserDropList>());
+					List<SYUserGetByUnitId> usersProvice = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(province.Value);
+					foreach (var userProvice in usersProvice) {
+						tinh.children.Add(new SYUserDropList(userProvice.FullName, userProvice.Id));
+					}
+					// list chilldren của chil
+					SYUserDropList huyen = new SYUserDropList();
+					foreach (var district in lstUnit.Where(x => x.ParentId == province.Value && x.UnitLevel == 2).ToList()) {
+						huyen = new SYUserDropList(district.Text, district.Value, new List<SYUserDropList>());
+						List<SYUserGetByUnitId> usersDistrict = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(district.Value);
+						foreach (var userDistrict in usersDistrict)
+						{
+							huyen.children.Add(new SYUserDropList(userDistrict.FullName, userDistrict.Id));
+						}
+						// list children của child1
+						SYUserDropList xa = new SYUserDropList();
+						foreach (var commune in lstUnit.Where(x => x.ParentId == district.Value && x.UnitLevel == 3).ToList())
+						{
+							xa = new SYUserDropList(commune.Text,commune.Value, new List<SYUserDropList>());
+							List<SYUserGetByUnitId> usersCommune = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(commune.Value);
+							foreach (var userCommune in usersCommune)
+							{
+								xa.children.Add(new SYUserDropList(userCommune.FullName, userCommune.Id));
+							}
+							if (xa.children.Count > 0)
+							{
+								huyen.children.Add(xa);
+							}
+						}
+						if (huyen.children.Count > 0) {
+							tinh.children.Add(huyen);
+						}
+						
+					}
+					if (tinh.children.Count > 0) { result.Add(tinh); }
+					
+				}
+				
+
+				return new ResultApi { Success = ResultCode.OK, Result = result };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 
 
 		#region nguoi dan, doanh nghiep

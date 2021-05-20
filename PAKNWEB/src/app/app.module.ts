@@ -27,6 +27,7 @@ import { PdfJsViewerModule } from 'ng2-pdfjs-viewer'
 import { ImageViewerModule } from 'ng2-image-viewer'
 import { UnitFilterPipe } from './pipes/unit-filter.pipe'
 import { DxReportViewerModule } from 'devexpress-reporting-angular'
+import { TreeviewModule } from 'ngx-treeview'
 
 @NgModule({
 	declarations: [AppComponent, SvFocusDirective, ConfirmDialogComponent, ViewFileDialogComponent],
@@ -61,6 +62,7 @@ import { DxReportViewerModule } from 'devexpress-reporting-angular'
 		ImageViewerModule,
 		TreeModule,
 		DxReportViewerModule,
+		TreeviewModule.forRoot(),
 	],
 	providers: [
 		{
