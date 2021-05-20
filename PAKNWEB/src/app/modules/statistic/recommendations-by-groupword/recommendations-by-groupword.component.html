@@ -87,28 +87,19 @@
 			<div class="col-lg-12">
 				<div class="card mb-0 shadow-none">
 					<div class="table-responsive">
-						<p-table [columns]="scrollableCols" [frozenColumns]="frozenCols" [value]="lstData" [scrollable]="true" scrollHeight="400px" frozenWidth="401px"
-							[responsive]="true">
-							<ng-template pTemplate="frozencolgroup" let-columns>
-								<colgroup>
-									<col style="width:250px" class="text-left">
-								</colgroup>
-							</ng-template>
-							<ng-template pTemplate="colgroup" let-columns>
-								<colgroup>
-									<col *ngFor="let col of columns" style="width:100px">
-								</colgroup>
-							</ng-template>
+						<p-table [columns]="scrollableCols" [frozenColumns]="frozenCols" [value]="lstData" [scrollable]="true" scrollHeight="400px" frozenWidth="400px"
+							[responsive]="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+
 							<ng-template pTemplate="header" let-columns>
 								<tr>
-									<th class="text-center content-td" *ngFor="let col of columns" title="{{col.codeHeader}}" style="width:100px">
+									<th class="text-center content-td" *ngFor="let col of columns" title="{{col.codeHeader}}" style="width:200px">
 										{{col.header}}
 									</th>
 								</tr>
 							</ng-template>
 							<ng-template pTemplate="body" let-rowData let-columns="columns">
-								<tr style="height: 27px">
-									<td *ngFor="let col of columns" style="width:100px" class="content-td pointer {{col.cssClass}}" title="{{rowData[col.field]}}"
+								<tr style="height: 34px">
+									<td *ngFor="let col of columns" style="width:200px" class="content-td pointer {{col.cssClass}}" title="{{rowData[col.field]}}"
 										(click)="viewDetail(rowData.value,col.field)">
 										{{rowData[col.field]}}
 									</td>

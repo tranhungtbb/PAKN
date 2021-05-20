@@ -99,6 +99,32 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize]
+		[Route("STT_RecommendationByGroupWordDetail")]
+		public async Task<ActionResult<object>> RecommendationByGroupWordDetail(string Code, string SendName, string Title, string Content, int? UnitId, int? GroupWordId, int? PageSize, int? PageIndex)
+		{
+			try
+			{
+				List<StatisticRecommendationByGroupWordDetail> rsStatisticRecommendationByGroupWordDetail = await new StatisticRecommendationByGroupWordDetail(_appSetting).StatisticRecommendationByGroupWordDetailDAO(Code, SendName, Title, Content, UnitId, GroupWordId, PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"ListData", rsStatisticRecommendationByGroupWordDetail},
+						{"TotalCount", rsStatisticRecommendationByGroupWordDetail != null && rsStatisticRecommendationByGroupWordDetail.Count > 0 ? rsStatisticRecommendationByGroupWordDetail[0].RowNumber : 0},
+						{"PageIndex", rsStatisticRecommendationByGroupWordDetail != null && rsStatisticRecommendationByGroupWordDetail.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsStatisticRecommendationByGroupWordDetail != null && rsStatisticRecommendationByGroupWordDetail.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
 		[Route("STT_RecommendationByField")]
 		public async Task<ActionResult<object>> STT_RecommendationByFieldGetAllOnPageBase(string LtsUnitId, int? Year, int? Timeline, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{

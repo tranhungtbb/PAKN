@@ -155,3 +155,20 @@ export class RecommnendationCommentObject {
 	recommendationId: number
 	fullName: string
 }
+
+export class RecommendationSearchStatisticObject {
+	constructor() {
+		this.code = ''
+		this.sendName = ''
+		this.title = ''
+		this.content = ''
+		this.unitId = null
+		this.groupWordId = null
+	}
+	code: string
+	sendName: string
+	title: string
+	content: string
+	unitId: number
+	groupWordId: number
+}
