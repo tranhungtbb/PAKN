@@ -18,10 +18,7 @@ using System.Security.Claims;
 using System.Globalization;
 using PAKNAPI.Models;
 using PAKNAPI.Models.User;
-<<<<<<< HEAD
 using System.IO;
-=======
->>>>>>> 9e7dcc20465d390574c774d9547d43290c556707
 
 namespace PAKNAPI.Controllers
 {
