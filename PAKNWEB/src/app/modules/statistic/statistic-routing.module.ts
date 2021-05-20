@@ -11,7 +11,7 @@ const routes: Routes = [
 	{ path: 'phan-anh-kien-nghi-theo-don-vi', component: RecommendationsByUnitComponent },
 	{ path: 'phan-anh-kien-nghi-theo-linh-vuc', component: RecommendationsByFieldComponent },
 	{ path: 'phan-anh-kien-nghi-theo-nhom-tu-ngu', component: RecommendationsByGroupwordComponent },
-	{ path: 'phan-anh-kien-nghi-theo-nhom-tu-ngu-chi-tiet/:unitId/:groupWordId', component: RecommendationsByGroupwordDetailComponent },
+	{ path: 'phan-anh-kien-nghi-theo-nhom-tu-ngu-chi-tiet/:unitId/:groupWordId/:fromDate/:toDate', component: RecommendationsByGroupwordDetailComponent },
 ]
 
 @NgModule({

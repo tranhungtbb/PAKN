@@ -8,6 +8,7 @@ import { MESSAGE_COMMON, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { ActivatedRoute, Router } from '@angular/router'
 import { StatisticService } from 'src/app/services/statistic.service'
+import { CatalogService } from 'src/app/services/catalog.service'
 
 declare var $: any
 @Component({
@@ -23,6 +24,7 @@ export class RecommendationsByGroupwordDetailComponent implements OnInit {
 		private _toastr: ToastrService,
 		private _shareData: DataService,
 		private activatedRoute: ActivatedRoute,
+		private _serviceCatalog: CatalogService,
 		private _router: Router
 	) {}
 	userLoginId: number = this.storeageService.getUserId()
@@ -32,9 +34,12 @@ export class RecommendationsByGroupwordDetailComponent implements OnInit {
 	dataSearch: RecommendationSearchStatisticObject = new RecommendationSearchStatisticObject()
 	submitted: boolean = false
 	isActived: boolean
+	fromDate: string
+	toDate: string
 	pageIndex: number = 1
 	pageSize: number = 20
 	lstHistories: any = []
+	lstDictionariesWord: any = []
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
@@ -43,6 +48,8 @@ export class RecommendationsByGroupwordDetailComponent implements OnInit {
 		this.activatedRoute.params.subscribe((params) => {
 			this.dataSearch.groupWordId = +params['groupWordId']
 			this.dataSearch.unitId = +params['unitId']
+			this.fromDate = params['fromDate']
+			this.toDate = params['toDate']
 			this.getList()
 		})
 	}
@@ -66,6 +73,18 @@ export class RecommendationsByGroupwordDetailComponent implements OnInit {
 				console.log(error)
 				alert(error)
 			}
+		this._serviceCatalog.wordGetListSuggest({}).subscribe(
+			(response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					this.lstDictionariesWord = response.result.CAWordGetListSuggest
+				} else {
+					this._toastr.error(response.message)
+				}
+			},
+			(error) => {
+				console.log(error)
+			}
+		)
 	}
 
 	getList() {
@@ -79,6 +98,8 @@ export class RecommendationsByGroupwordDetailComponent implements OnInit {
 			Content: this.dataSearch.content,
 			UnitId: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
 			GroupWordId: this.dataSearch.groupWordId != null ? this.dataSearch.groupWordId : '',
+			FromDate: this.fromDate == null ? '' : this.fromDate,
+			ToDate: this.toDate == null ? '' : this.toDate,
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
@@ -89,6 +110,7 @@ export class RecommendationsByGroupwordDetailComponent implements OnInit {
 					this.listData = []
 					this.listData = response.result.ListData
 					this.totalRecords = response.result.TotalCount
+					this.hightLightText()
 				}
 			} else {
 				this._toastr.error(response.message)
@@ -98,6 +120,18 @@ export class RecommendationsByGroupwordDetailComponent implements OnInit {
 				console.log(error)
 				alert(error)
 			}
+	}
+	hightLightText() {
+		for (let i = 0; i < this.listData.length; i++) {
+			var content = this.listData[i].content.replace(/\\n/g, String.fromCharCode(13, 10))
+			for (let index = 0; index < this.lstDictionariesWord.length; index++) {
+				var nameWord = new RegExp(this.lstDictionariesWord[index].name, 'i')
+				this.listData[i].content = this.listData[i].content.replace(
+					nameWord,
+					'<span class="txthighlight" title="' + this.lstDictionariesWord[index].description + '">' + this.lstDictionariesWord[index].name + '</span>'
+				)
+			}
+		}
 	}
 
 	onPageChange(event: any) {
@@ -153,13 +187,11 @@ export class RecommendationsByGroupwordDetailComponent implements OnInit {
 	onExport() {
 		let passingObj: any = {}
 		passingObj = this.dataSearch
-		if (this.listData.length > 0) {
-			passingObj.UnitProcessId = this.storeageService.getUnitId()
-			passingObj.UserProcessId = this.storeageService.getUserId()
-		}
-		passingObj.TitleReport = 'DANH SÁCH TỪ CHỐI GIẢI QUYẾT'
+		passingObj.GroupWordId = this.dataSearch.groupWordId != null ? this.dataSearch.groupWordId : ''
+		passingObj.FromDate = this.fromDate == null ? '' : this.fromDate
+		passingObj.ToDate = this.toDate == null ? '' : this.toDate
 		this._shareData.setobjectsearch(passingObj)
-		this._shareData.sendReportUrl = 'Recommendation_ListGeneral?' + JSON.stringify(passingObj)
+		this._shareData.sendReportUrl = 'Statistic_Recommendation_ByGroupWord?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])
 	}
 }

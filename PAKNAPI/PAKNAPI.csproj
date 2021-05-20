@@ -65,6 +65,7 @@
     <None Remove="ExportGrid\BI_Individual_List.repx" />
     <None Remove="ExportGrid\HIS_SystemLog.repx" />
     <None Remove="ExportGrid\Recommendation_ListGeneral.repx" />
+    <None Remove="ExportGrid\Statistic_Recommendation_ByGroupWordDetail.repx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Upload\News\01042021103900-2.jpg" />
@@ -90,6 +91,7 @@
     <EmbeddedResource Include="ExportGrid\HIS_SystemLog.repx" />
     <EmbeddedResource Include="ExportGrid\BI_Individual_List.repx" />
     <EmbeddedResource Include="ExportGrid\BI_Business_List.repx" />
+    <EmbeddedResource Include="ExportGrid\Statistic_Recommendation_ByGroupWordDetail.repx" />
     <EmbeddedResource Include="ExportGrid\Recommendation_ListGeneral.repx" />
   </ItemGroup>
   <ItemGroup>
@@ -135,17 +137,17 @@
     <Compile Update="ExportGrid\HIS_SystemLog.Designer.cs">
       <DependentUpon>HIS_SystemLog.repx</DependentUpon>
     </Compile>
-    <Compile Update="ExportGrid\Recommendation_ListGeneral - Copy.cs">
-      <DependentUpon>Recommendation_ListGeneral.repx</DependentUpon>
-    </Compile>
-    <Compile Update="ExportGrid\Recommendation_ListGeneral - Copy.Designer.cs">
-      <DependentUpon>Recommendation_ListGeneral.repx</DependentUpon>
-    </Compile>
     <Compile Update="ExportGrid\Recommendation_ListGeneral.cs">
       <DependentUpon>Recommendation_ListGeneral.repx</DependentUpon>
     </Compile>
     <Compile Update="ExportGrid\Recommendation_ListGeneral.Designer.cs">
       <DependentUpon>Recommendation_ListGeneral.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\Statistic_Recommendation_ByGroupWordDetail.cs">
+      <DependentUpon>Statistic_Recommendation_ByGroupWordDetail.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\Statistic_Recommendation_ByGroupWordDetail.Designer.cs">
+      <DependentUpon>Statistic_Recommendation_ByGroupWordDetail.repx</DependentUpon>
     </Compile>
   </ItemGroup>
   <Target Name="CreateAppDataFolder" AfterTargets="AfterPublish">

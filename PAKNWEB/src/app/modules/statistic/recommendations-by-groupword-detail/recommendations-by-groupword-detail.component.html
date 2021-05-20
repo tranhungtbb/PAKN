@@ -3,8 +3,8 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
-					<li class="breadcrumb-item"><a>Phản ánh, Kiến nghị</a></li>
-					<li class="breadcrumb-item active"><a class="font-weight-bold"> Từ chối giải quyết</a></li>
+					<li class="breadcrumb-item"><a>Báo cáo, Thống kê</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold"> Phản ánh kiến nghị theo nhóm từ phản động</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
 					<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()">
@@ -14,7 +14,7 @@
 							<path
 								d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
 						</svg>
-						Xuất excel
+						Xuất báo cáo
 					</button>
 					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" [routerLink]="['/quan-tri/kien-nghi/them-moi/0']">
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
@@ -82,7 +82,7 @@
 										<p class="text-2line mb-0">{{item.title}}</p>
 									</td>
 									<td>
-										<p class="text-2line mb-0">{{item.content}}</p>
+										<p class="text-2line mb-0" [innerHTML]="item.content"></p>
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
