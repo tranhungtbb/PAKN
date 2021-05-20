@@ -353,9 +353,6 @@ export class IndividualComponent implements OnInit {
 		let dateIssue = new Date(this.model.dateOfIssue)
 		let dateOfBirth = new Date(this.model.birthDate)
 
-		console.log('dateIssue', dateIssue)
-		console.log('dateOfBirth', dateOfBirth)
-
 		if (dateIssue < dateOfBirth) {
 			this._toastr.error('Ngày cấp phải lớn hơn ngày sinh')
 			return
@@ -422,7 +419,6 @@ export class IndividualComponent implements OnInit {
 				// this.rebuilForm()
 				// this.model = new IndividualObject()
 				this.title = 'Chỉnh sửa cá nhân'
-				console.log('InvididualGetByID', response.result.InvididualGetByID[0])
 				this.model = response.result.InvididualGetByID[0]
 				this.model.iDCard = response.result.InvididualGetByID[0].idCard
 				this.model.birthDate = new Date(response.result.InvididualGetByID[0].birthDay)

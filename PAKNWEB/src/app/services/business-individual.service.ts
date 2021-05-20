@@ -57,7 +57,7 @@ export class BusinessIndividualService {
 	}
 
 	businessChangeStatus(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BusinessChageStatus)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BusinessChangeStatus)
 	}
 
 	businessDelete(data: any): Observable<any> {
@@ -66,7 +66,7 @@ export class BusinessIndividualService {
 
 	businessRegister(data: any): Observable<any> {
 		let form = new FormData()
-
+		console.log('data', data)
 		for (let item in data) {
 			form.append(item, data[item])
 		}

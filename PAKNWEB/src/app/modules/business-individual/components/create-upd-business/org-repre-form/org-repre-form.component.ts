@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core'
-import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms'
-
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { DiadanhService } from 'src/app/services/diadanh.service'
 import { RegisterService } from 'src/app/services/register.service'
-
-import { OrganizationObject } from 'src/app/models/RegisterObject'
-import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { OrganizationObject } from 'src/app/models/businessIndividualObject'
+import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 
 declare var $: any
-
 @Component({
 	selector: 'app-org-repre-form',
 	templateUrl: './org-repre-form.component.html',
@@ -106,6 +103,7 @@ export class OrgRepreFormComponent implements OnInit {
 			District: [this.model.DistrictId, []], // int
 			Village: [this.model.WardsId, []], // int
 			Address: [this.model.Address, []],
+			phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/)]],
 		})
 
 		this.onChangeNation()

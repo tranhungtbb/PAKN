@@ -19,7 +19,7 @@
 							</tr>
 							<tr>
 								<th scope="row">Đơn vị tiếp nhận</th>
-								<td>{{model.unitReceive}}</td>
+								<td>{{model.unitReceiveName}}</td>
 							</tr>
 							<tr>
 								<th scope="row">Lĩnh vực</th>
@@ -94,15 +94,16 @@
 							<tr>
 								<th scope="row">Thành phần hồ sơ</th>
 								<td>
-									<div class="tphs mb-3" *ngFor="let item of lstCompositionProfile">
+									<div class="tphs mb-3" *ngFor="let item of lstCompositionProfile; index as i">
 										<p>
-											{{item.nameExhibit}}<br>
+											<strong>{{i+1}}.</strong>{{item.nameExhibit}}<br>
 											- SL bản chính: {{item.originalForm}}<br>
 											- SL bản sao: {{item.copyForm}}
 										</p>
 										<div class="media ">
 											<div class="media-body">
-												<small>Mẫu đơn, tờ khai</small>
+												<strong>Mẫu đơn, tờ khai</strong>
+												<span *ngIf="!item.name" class="mt-2 text-dark">: Không có</span>
 												<div class="attach-file row">
 													<div class="col-auto mb-4" *ngIf="item.fileType == 1">
 														<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
@@ -153,30 +154,20 @@
 							<tr>
 								<th scope="row">Trình tự thực hiện</th>
 								<td>
-									<p>
-										1. Công việc: Tiếp nhận hồ sơ<br>
-										- Cơ quan thực hiện: Cục Y tế dự phòng - Bộ Y tế<br>
-										- Thời gian: 3 ngày làm việc
-										- kết quả: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget mattis blandit vestibulum.
-									</p>
-									<p class="mb-0">
-										2. Công việc: Tiếp nhận hồ sơ<br>
-										- Cơ quan thực hiện: Cục Y tế dự phòng - Bộ Y tế<br>
-										- Thời gian: 3 ngày làm việc
-										- kết quả: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget mattis blandit vestibulum.
+									<p *ngFor="let item of lstImplementationProcess; index as i">
+										<strong>{{i+1}}.</strong> Công việc: {{item.name}}<br>
+										- Cơ quan thực hiện: {{item.unit}}<br>
+										- Thời gian: {{item.time}}<br>
+										- Kết quả: {{item.result}}
 									</p>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">Phí, Lệ phí</th>
 								<td>
-									<p>
-										1. Mức phí: 50.000 đồng/hồ sơ<br>
-										Mô tả: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget mattis blandit.
-									</p>
-									<p class="mb-0">
-										2. Mức phí: 100.000 đồng/hồ sơ<br>
-										Mô tả: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget mattis blandit.
+									<p *ngFor="let item of lstCharges; index as i">
+										<strong>{{i+1}}.</strong> Mức phí: {{item.charges}} đồng/hồ sơ<br>
+										Mô tả: {{item.description}}
 									</p>
 								</td>
 							</tr>

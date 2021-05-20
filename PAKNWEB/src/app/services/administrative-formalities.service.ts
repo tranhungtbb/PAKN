@@ -52,12 +52,8 @@ export class AdministrativeFormalitiesService {
 		}
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.AdministrativeFormalitiesGetById, headers)
 	}
-	getUnit(request: any): Observable<any> {
-		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.GETINFO),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
-		}
-		return this.serviceInvoker.getwithHeaders(request, 'https://nguoidungkhapi.azurewebsites.net/api/v1/phongbans/GetCoQuanTiepNhan', headers)
+	getUnitReceive(): Observable<any> {
+		return this.serviceInvoker.getUrl({}, 'https://nguoidungkhapi.azurewebsites.net/api/v1/phongbans/GetCoQuanTiepNhan')
 	}
 	getByIdView(request: any): Observable<any> {
 		let headers = {

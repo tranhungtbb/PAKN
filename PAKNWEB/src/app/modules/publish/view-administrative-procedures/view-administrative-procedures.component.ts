@@ -31,6 +31,7 @@ export class ViewAdministrativeProceduresComponent implements OnInit {
 	files: any[] = []
 	lstXoaFile: any[] = []
 	lstXoaFileForm: any[] = []
+	lstUnitReceive: any[] = []
 	submitted: boolean = false
 	lstTypeSend: any[] = [
 		{ value: null, text: '-- Chọn mức độ trực tuyến --' },

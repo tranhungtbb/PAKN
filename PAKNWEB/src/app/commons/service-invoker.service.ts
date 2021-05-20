@@ -36,7 +36,13 @@ export class ServiceInvokerService {
 
 		return this.http.get(url, httpPackage).pipe(catchError(this.handleError<any>()))
 	}
+	getUrl(element: any, url): Observable<any> {
+		const httpPackage = {
+			params: element,
+		}
 
+		return this.http.get(url, httpPackage).pipe(catchError(this.handleError<any>()))
+	}
 	/* Get array */
 	getwithHeaders(element: any, url, headers: any): Observable<any> {
 		let tempheaders = new HttpHeaders({
@@ -85,7 +91,7 @@ export class ServiceInvokerService {
 	/* Put */
 	put<T>(element: T, successMessage: string, errorMessage: string): Observable<any> {
 		return this.http.put(AppSettings.API_ADDRESS, element, httpOptions).pipe(
-			tap((_) => this.log(successMessage)),
+			tap(_ => this.log(successMessage)),
 			catchError(this.handleError<any>(errorMessage))
 		)
 	}
