@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using PAKNAPI.Common;
 using System;
 using System.Collections.Generic;
@@ -60,5 +61,24 @@ namespace PAKNAPI.Models.User
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPageList>("[SY_UserGetAllOnPageList]", DP)).ToList();
 		}
 	}
+	public class SYUserDropList {
+		public string text { get; set; }
+		public long value { get; set; }
+		public List<SYUserDropList> children { get; set; }
 
+		public SYUserDropList() { }
+		public SYUserDropList(string text, long value) {
+			this.text = text;
+			this.value = value;
+			this.children = null;
+		}
+
+		public SYUserDropList(string text, long value, IList<SYUserDropList> chil) {
+			this.text = text;
+			this.value = value;
+			this.children = (List<SYUserDropList>)chil;
+		}
+	}
+
+	
 }

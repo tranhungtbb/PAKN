@@ -117,6 +117,7 @@ export class Api {
 	public static SystemGetUserDropDown = 'SYSPBase/SYUsersGetDropdownBase'
 	public static UserGetIsSystem = 'SYUserSPBase/SYUserGetIsSystemBase'
 	public static UserGetIsSystem2 = 'SYUserSPBase/SYUserGetIsSystem2Base'
+	public static getIsSystemOrderByUnit = 'User/GetOrderByUnit'
 	public static DeleteUserRole = 'SYUserSPBase/SYUserRoleMapDeleteBase'
 	public static InsertMultiUserRole = 'UserMapRole/SYUserRoleMapListInsert'
 

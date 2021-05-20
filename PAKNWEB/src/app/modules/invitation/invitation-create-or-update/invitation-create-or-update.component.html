@@ -195,42 +195,11 @@
 								<div class="" style="display: flex;">
 									<div class="input-serach" style="width: 60%;">
 
-
-										<!-- <ng-select class="form-control" placeholder="Nhập..." [closeOnSelect]="true" formControlName="userId" [(ngModel)]="userId">
-											<ng-option *ngFor="let nt of listUserIsSystem" [value]="nt.id">
-												{{nt.userName}}
-											</ng-option>
-										</ng-select> -->
-
-										<!-- <p-multiSelect class="multiselect-custom" [options]="listUserIsSystem" defaultLabel="Chọn thành phần..." optionLabel="userName"
-											optionValue="userName" (onChange)="haha($event)">
-
-										</p-multiSelect> -->
-
-										<p-multiSelect [options]="listUserIsSystem" formControlName="listUserSelected" [(ngModel)]="listUserSelected" optionLabel="fullName"
-											[virtualScroll]="true" optionValue="id">
-											<ng-template let-userSelected pTemplate="selectedItems">
-												<ng-container *ngIf="userSelected && userSelected.length <= 4">
-													<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">
-														<span>{{val.fullName}}</span>
-													</div>
-												</ng-container>
-
-												<span *ngIf="!userSelected || userSelected.length === 0" class="ui-multiselected-empty-token ui-corner-all">Chọn thành phần tham
-													dự...</span>
-												<span *ngIf="userSelected && userSelected.length > 4" class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
-													thành phần được chọn</span>
-											</ng-template>
-											<ng-template let-user pTemplate="item">
-												<div style="font-size:14px">{{user.label}}</div>
-											</ng-template>
-										</p-multiSelect>
-
-										<!-- <angular2-multiselect [data]="listUserIsSystem" [(ngModel)]="listUserSelected" [settings]="settings" (onSelect)="onItemSelect($event)"
-											(onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)">
-										</angular2-multiselect> -->
-
-
+										<div class="form-group" style="margin-bottom: 0px;">
+											<ngx-dropdown-treeview [config]="config" [items]="items" buttonClass="btn btn-outline-primary"
+												(selectedChange)="onSelectedChange($event)" (filterChange)="onFilterChange($event)">
+											</ngx-dropdown-treeview>
+										</div>
 
 									</div>
 									<div style="width: 35%; display: flex;" class="center">
