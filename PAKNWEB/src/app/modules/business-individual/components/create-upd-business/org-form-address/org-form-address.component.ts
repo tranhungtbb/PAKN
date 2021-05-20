@@ -91,6 +91,10 @@ export class OrgFormAddressComponent implements OnInit {
 			OrgPhone: [this.model.OrgPhone, [Validators.required]], //, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)
 			OrgEmail: [this.model.OrgEmail, [Validators.email]],
 		})
+		this.listVillage = []
+		// listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
+		this.listVillage = [{ id: this.model.OrgWardsId, name: 'Test' }]
+		this.listDistrict = [{ id: this.model.OrgDistrictId, name: 'Test' }]
 	}
 
 	// orgPhone_exists = false

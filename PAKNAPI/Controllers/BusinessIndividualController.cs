@@ -305,11 +305,16 @@ namespace PAKNAPI.Controllers
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 				}
 
-
 				if (string.IsNullOrEmpty(_DateOfIssue)) model.DateOfIssue = null;
 				else model.DateOfIssue = dateOfIssue;
 				if (string.IsNullOrEmpty(_BirthDay)) model.BirthDay = null;
 				else model.BirthDay = birthDay;
+				model.CreatedDate = DateTime.Now;
+				model.CreatedBy = 0;
+				model.UpdatedBy = 0;
+				model.UpdatedDate = DateTime.Now;
+				model.Status = 1;
+				model.IsDeleted = false;
 
 				var rs2 = await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(model);
 
@@ -513,6 +518,16 @@ namespace PAKNAPI.Controllers
 				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Tax", model.Tax, 0);
 				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế đã tồn tại" };
 
+				if (string.IsNullOrEmpty(_DateOfIssue)) model.DateOfIssue = null;
+				else model.DateOfIssue = dateOfIssue;
+				if (string.IsNullOrEmpty(_RepresentativeBirthDay)) model.RepresentativeBirthDay = null;
+				else model.RepresentativeBirthDay = birdDay;
+				model.CreatedDate = DateTime.Now;
+				model.CreatedBy = 0;
+				model.UpdatedBy = 0;
+				model.UpdatedDate = DateTime.Now;
+				model.Status = 1;
+				model.IsDeleted = false;
 				var rs2 = await new BI_BusinessInsert(_appSetting).BusinessInsertDAO(model);
 
 			}

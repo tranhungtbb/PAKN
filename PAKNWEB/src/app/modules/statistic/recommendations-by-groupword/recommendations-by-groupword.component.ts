@@ -21,10 +21,8 @@ defineLocale('vi', viLocale)
 	styleUrls: ['./recommendations-by-groupword.component.css'],
 })
 export class RecommendationsByGroupwordComponent implements OnInit {
-	@ViewChild('table', { static: false }) table: any
-
 	totalRecords: Number
-	frozenCols: any = [{ field: 'text', header: 'Đơn vị', cssClass: '' }]
+	frozenCols: any = [{ field: 'text', header: 'Đơn vị', cssClass: 'text-left' }]
 	scrollableCols: any = []
 	lstData: any = []
 	fromDate: any
@@ -79,18 +77,8 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 	}
 
 	getList() {
-		if (this.listUnitSelected != null && this.listUnitSelected.length > 0) {
-			this.ltsUnitId = this.listUnitSelected.reduce((x, y) => {
-				return (x += y.unitId + ',')
-			}, '')
-			this.totalRecords = this.listUnitSelected.length
-		} else {
-			this.ltsUnitId = this.ltsUnitIdAll
-			this.totalRecords = this.listUnit.length
-		}
 		let obj = {
-			//LtsUnitId: this.ltsUnitId,
-			LtsUnitId: '50',
+			LtsUnitId: this.listUnitSelected.join(','),
 			Year: this.year,
 			Timeline: this.timeline == null ? '' : this.timeline,
 			FromDate: this.fromDate == null ? '' : (this.fromDate = JSON.stringify(new Date(this.fromDate)).slice(1, 11)),
@@ -126,7 +114,6 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 	}
 
 	dataStateChange() {
-		this.table.first = 0
 		this.getList()
 	}
 
@@ -146,5 +133,8 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 			this.toDate = null
 		}
 		this.getList()
+	}
+	viewDetail(unitId, groupWordId) {
+		return this.router.navigate(['/quan-tri/bao-cao/phan-anh-kien-nghi-theo-nhom-tu-ngu-chi-tiet', unitId, groupWordId])
 	}
 }

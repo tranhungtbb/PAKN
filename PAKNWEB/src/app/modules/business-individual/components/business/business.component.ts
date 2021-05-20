@@ -270,14 +270,6 @@ export class BusinessComponent implements OnInit {
 			email: this.model.email,
 			isActived: this.model.isActived,
 		})
-
-		// this.submitted = false
-		// this.model = new BusinessionObject()
-		// this.model._birthDay = ''
-		// this.model._dateOfIssue = ''
-		// this.model.fullName = ''
-		// this.model.email = ''
-		// this.model.gender = true
 	}
 
 	dataStateChange() {
