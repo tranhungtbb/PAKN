@@ -10,10 +10,12 @@ import { MultiSelectModule } from 'primeng/multiselect'
 import { StatisticRoutingModule } from './statistic-routing.module'
 import { StatisticComponent } from './statistic.component'
 import { RecommendationsByUnitComponent } from './recommendations-by-unit/recommendations-by-unit.component'
-import { RecommendationsByFieldComponent } from 'src/app/modules/statistic/recommendations-by-field/recommendations-by-field.component'
+import { RecommendationsByFieldComponent } from 'src/app/modules/statistic/recommendations-by-field/recommendations-by-field.component';
+import { RecommendationsByGroupwordComponent } from './recommendations-by-groupword/recommendations-by-groupword.component';
+import { RecommendationsByGroupwordDetailComponent } from './recommendations-by-groupword-detail/recommendations-by-groupword-detail.component'
 
 @NgModule({
-	declarations: [StatisticComponent, RecommendationsByUnitComponent, RecommendationsByFieldComponent],
+	declarations: [StatisticComponent, RecommendationsByUnitComponent, RecommendationsByFieldComponent, RecommendationsByGroupwordComponent, RecommendationsByGroupwordDetailComponent],
 	imports: [CommonModule, StatisticRoutingModule, FormsModule, MultiSelectModule, ReactiveFormsModule, SharedModule, TableModule, BsDatepickerModule.forRoot(), NgSelectModule],
 })
 export class StatisticModule {}

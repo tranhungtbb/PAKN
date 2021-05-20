@@ -269,6 +269,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
+		[Authorize]
 		[Route("InvididualRegister")]
 		public async Task<object> InvididualRegister(
 			[FromForm] Models.BusinessIndividual.BIIndividualInsertIN model,
@@ -294,7 +295,28 @@ namespace PAKNAPI.Controllers
                 if (checkExists[0].Exists.Value)
                     return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 
-                var rs2 = await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(model);
+				DateTime birthDay, dateOfIssue;
+				if (!DateTime.TryParseExact(_BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birthDay))
+				{
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+				}
+				if (!DateTime.TryParseExact(_DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
+				{
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+				}
+
+				if (string.IsNullOrEmpty(_DateOfIssue)) model.DateOfIssue = null;
+				else model.DateOfIssue = dateOfIssue;
+				if (string.IsNullOrEmpty(_BirthDay)) model.BirthDay = null;
+				else model.BirthDay = birthDay;
+				model.CreatedDate = DateTime.Now;
+				model.CreatedBy = 0;
+				model.UpdatedBy = 0;
+				model.UpdatedDate = DateTime.Now;
+				model.Status = 1;
+				model.IsDeleted = false;
+
+				var rs2 = await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(model);
 
 			}
 			catch (Exception ex)
@@ -307,13 +329,48 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("InvididualUpdate")]
-		public async Task<ActionResult<object>> InvididualUpdate(BI_InvididualUpdateIN _bI_InvididualUpdateIN)
+		public async Task<ActionResult<object>> InvididualUpdate(
+			[FromForm] Models.BusinessIndividual.BI_InvididualUpdateIN _bI_InvididualUpdateIN,
+			[FromForm] string _BirthDay,
+			[FromForm] string _DateOfIssue)
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(_bI_InvididualUpdateIN.Phone);
+				if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+
+				// check exist:Phone,Email,IDCard
+				var checkExists = await new Models.BusinessIndividual.BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", _bI_InvididualUpdateIN.Phone, 0);
+				if (checkExists[0].Exists.Value)
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+				if (!string.IsNullOrEmpty(_bI_InvididualUpdateIN.Email))
+				{
+					checkExists = await new Models.BusinessIndividual.BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", _bI_InvididualUpdateIN.Email, 0);
+					if (checkExists[0].Exists.Value)
+						return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
+				}
+				checkExists = await new Models.BusinessIndividual.BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", _bI_InvididualUpdateIN.IDCard, 0);
+				if (checkExists[0].Exists.Value)
+					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
+
+				DateTime birthDay, dateOfIssue;
+				if (!DateTime.TryParseExact(_BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birthDay))
+				{
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+				}
+				if (!DateTime.TryParseExact(_DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
+				{
+					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+				}
+
+				if (string.IsNullOrEmpty(_DateOfIssue)) _bI_InvididualUpdateIN.DateOfIssue = null;
+				else _bI_InvididualUpdateIN.DateOfIssue = dateOfIssue;
+				if (string.IsNullOrEmpty(_BirthDay)) _bI_InvididualUpdateIN.BirthDay = null;
+				else _bI_InvididualUpdateIN.BirthDay = birthDay;
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new BI_InvididualUpdate(_appSetting).BI_InvididualUpdateDAO(_bI_InvididualUpdateIN) };
 			}
@@ -396,7 +453,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Authorize("ThePolicy")]
-		[Route("BusinessChageStatus")]
+		[Route("BusinessChangeStatus")]
 		public async Task<ActionResult<object>> BusinessChageStatus(BI_BusinessChageStatusIN _bI_BusinessChageStatusIN)
 		{
 			try
@@ -439,13 +496,13 @@ namespace PAKNAPI.Controllers
 				///Phone,Email,IDCard
 				///check ton tai
 				var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone", model.Phone, 0);
-				//if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
-				//if (!string.IsNullOrEmpty(model.Email))
-				//{
-				//	checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Email", model.Email, 0);
-				//	if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện đã tồn tại" };
-				//}
-				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("IDCard", model.IDCard, 0);
+                if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+                if (!string.IsNullOrEmpty(model.Email))
+                {
+                    checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Email", model.Email, 0);
+                    if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện đã tồn tại" };
+                }
+                checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("IDCard", model.IDCard, 0);
 				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgPhone", model.OrgPhone, 0);
 				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại doanh nghiệp đã tồn tại" };
@@ -457,8 +514,20 @@ namespace PAKNAPI.Controllers
 				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("BusinessRegistration", model.BusinessRegistration, 0);
 				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số đăng ký kinh doanh đã tồn tại" };
 				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("DecisionOfEstablishing", model.DecisionOfEstablishing, 0);
-				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số quyết định thành lập đã tồn tại" };
+                if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số quyết định thành lập đã tồn tại" };
+				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Tax", model.Tax, 0);
+				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế đã tồn tại" };
 
+				if (string.IsNullOrEmpty(_DateOfIssue)) model.DateOfIssue = null;
+				else model.DateOfIssue = dateOfIssue;
+				if (string.IsNullOrEmpty(_RepresentativeBirthDay)) model.RepresentativeBirthDay = null;
+				else model.RepresentativeBirthDay = birdDay;
+				model.CreatedDate = DateTime.Now;
+				model.CreatedBy = 0;
+				model.UpdatedBy = 0;
+				model.UpdatedDate = DateTime.Now;
+				model.Status = 1;
+				model.IsDeleted = false;
 				var rs2 = await new BI_BusinessInsert(_appSetting).BusinessInsertDAO(model);
 
 			}

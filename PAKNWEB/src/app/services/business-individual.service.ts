@@ -31,13 +31,22 @@ export class BusinessIndividualService {
 		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.InvididualRegister)
 	}
 
+	invididualUpdate(data: any): Observable<any> {
+		let form = new FormData()
+		console.log('data', data)
+		for (let item in data) {
+			form.append(item, data[item])
+		}
+		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.InvididualUpdate)
+	}
+
 	individualById(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.InvididualGetByID)
 	}
 
-	invididualUpdate(request: any): Observable<any> {
-		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.InvididualUpdate)
-	}
+	// invididualUpdate_Old(data: any): Observable<any> {
+	// 	return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.InvididualUpdate)
+	// }
 
 	invididualImportFile(data: any): Observable<any> {
 		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.ImportDataInvididual)
@@ -48,7 +57,7 @@ export class BusinessIndividualService {
 	}
 
 	businessChangeStatus(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BusinessChageStatus)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BusinessChangeStatus)
 	}
 
 	businessDelete(data: any): Observable<any> {
@@ -57,7 +66,7 @@ export class BusinessIndividualService {
 
 	businessRegister(data: any): Observable<any> {
 		let form = new FormData()
-
+		console.log('data', data)
 		for (let item in data) {
 			form.append(item, data[item])
 		}

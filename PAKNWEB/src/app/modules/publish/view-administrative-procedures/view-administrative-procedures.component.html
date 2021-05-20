@@ -11,131 +11,141 @@
 						<tbody>
 							<tr>
 								<th scope="row">Tên thủ tục</th>
-								<td class="h4">Cấp Giấy chứng nhận đủ điều kiện an toàn thực phẩm đối với cơ sở sản xuất, kinh doanh thực phẩm do Sở Công Thương thực hiện</td>
+								<td class="h4">{{model.name}}</td>
 							</tr>
 							<tr>
 								<th scope="row">Cấp tiếp nhận</th>
-								<td>Cơ quan chuyên môn</td>
+								<td>{{model.rankReceive}}</td>
 							</tr>
 							<tr>
 								<th scope="row">Đơn vị tiếp nhận</th>
-								<td>Cơ quan chuyên môn</td>
+								<td>{{model.unitReceiveName}}</td>
 							</tr>
 							<tr>
 								<th scope="row">Lĩnh vực</th>
-								<td>An toàn thực phẩm</td>
+								<td>{{model.fieldName}}</td>
 							</tr>
 							<tr>
 								<th scope="row">Mức độ trực tuyến</th>
-								<td>Nộp trực tiếp</td>
+								<td><input disabled value="{{model.typeSend}}" type="checkbox" [checked]="model.typeSend"></td>
 							</tr>
 							<tr>
 								<th scope="row">Số bộ hồ sơ</th>
-								<td>10</td>
+								<td>{{model.fileNum}}</td>
 							</tr>
 							<tr>
 								<th scope="row">Tổng thời gian giải quyết</th>
-								<td>20 ngày làm việc</td>
+								<td>{{model.amountTime}} ngày kể từ khi nhận đủ hồ sơ hợp lệ</td>
 							</tr>
 							<tr>
 								<th scope="row">Cơ quan thực hiện</th>
-								<td>Sở Công Thương</td>
+								<td>{{model.organization}}</td>
 							</tr>
 							<tr>
 								<th scope="row">Cơ quan có thẩm quyền quyết định</th>
-								<td>N/A</td>
+								<td>{{model.organizationDecision}}</td>
 							</tr>
 							<tr>
 								<th scope="row">Cơ quan được uỷ quyền</th>
-								<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
+								<td>{{model.organizationAuthor}}</td>
 							</tr>
 							<tr>
 								<th scope="row">Cách thức thực hiện</th>
-								<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
+								<td>{{model.proceed}}</td>
 							</tr>
 							<tr>
 								<th scope="row">Đối tượng thực hiện</th>
-								<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
+								<td>{{model.object}}</td>
 							</tr>
 							<tr>
 								<th scope="row">Cơ quan phối hợp</th>
-								<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
+								<td>{{model.organizationCombine}}</td>
 							</tr>
 							<tr>
 								<th scope="row">Địa chỉ tiếp nhận hồ sơ</th>
-								<td>Sở Công Thương Khánh Hòa - Khu liên cơ II - Số 04 Phan Chu Trinh - Nha Trang - Khánh Hòa</td>
+								<td>{{model.address}}</td>
 							</tr>
 							<tr>
 								<th scope="row">Kết quả thực hiện</th>
-								<td>Giấy chứng nhận cơ sở đủ điều kiện an toàn thực phẩm. - Văn bản thông báo (nếu có)</td>
+								<td>{{model.result}}</td>
 							</tr>
 							<tr>
 								<th scope="row">Căn cứ pháp lý</th>
 								<td>
-									<p>1. Luật An toàn thực phẩm số 55/2010/QH12 ngày 17/6/2010;</p>
-
-									<p>2. Nghị định số 15/2018/NĐ-CP ngày 02/02/2018 của Chính phủ quy định chi tiết thi hành một số điều của Luật an toàn thực phẩm;</p>
-
-									<p class="mb-0">3. Nghị định số 17/2020/NĐ-CP ngày 05/02/2020 của Chính phủ sửa đổi, bổ sung một số điều của các Nghị định liên quan đến điều
-										kiện đầu tư kinh doanh thuộc lĩnh vực quản lý nhà nước của Bộ Công Thương;</p>
+									{{model.legalGrounds | htmlToPlaintext}}
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">Yêu cầu hoặc điều kiện để thực hiện TTHC</th>
 								<td>
-									<p>
-										1. Điều kiện chung: <br>
-										Cơ sở sản xuất, kinh doanh thực phẩm thuộc trách nhiệm quản lý của Bộ Công Thương bao gồm: cơ sở sản xuất, kinh doanh các loại rượu, bia,
-										nước giải khát, sữa chế biến, dầu thực vật, bột, tinh bột, bánh, mứt, kẹo.
-									</p>
-
-									<p class="mb-0">
-										2. Điều kiện riêng: <br>
-										Cơ sở sản xuất các sản phẩm thực phẩm có công suất thiết kế
-									</p>
+									{{model.request | htmlToPlaintext}}
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">Đánh giá tác động TTHC</th>
 								<td>
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sagittis gravida non volutpat interdum eget commodo nisi. Pharetra enim nibh mauris
-									lorem sollicitudin ut feugiat vitae. Adipiscing venenatis quis sapien, in elementum nibh varius lectus. Purus sed tincidunt at pulvinar egestas
-									eu. Vestibulum, semper in odio arcu ut maecenas nisl consectetur.
+									{{model.request | htmlToPlaintext}}
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">Ghi chú</th>
-								<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sagittis gravida non volutpat interdum eget commodo nisi. Pharetra enim nibh mauris
-									lorem sollicitudin ut feugiat vitae.</td>
+								<td>{{model.request | htmlToPlaintext}}</td>
 							</tr>
 							<tr>
 								<th scope="row">Thành phần hồ sơ</th>
 								<td>
-									<div class="tphs mb-3">
+									<div class="tphs mb-3" *ngFor="let item of lstCompositionProfile; index as i">
 										<p>
-											1. Giấy khai sinh (Bắt buộc)<br>
-											- SL bản chính: 1<br>
-											- SL bản sao: 10
+											<strong>{{i+1}}.</strong>{{item.nameExhibit}}<br>
+											- SL bản chính: {{item.originalForm}}<br>
+											- SL bản sao: {{item.copyForm}}
 										</p>
 										<div class="media ">
-											<img src="images/file-word.svg" class="mr-3 align-self-center" alt="...">
 											<div class="media-body">
-												<small>Mẫu đơn, tờ khai</small>
-												<p class="mb-0">Giấy khai sinh.doc</p>
-											</div>
-										</div>
-									</div>
-									<div class="tphs">
-										<p>
-											2. Giấy khai sinh (Bắt buộc)<br>
-											- SL bản chính: 1<br>
-											- SL bản sao: 10
-										</p>
-										<div class="media ">
-											<img src="images/file-word.svg" class="mr-3 align-self-center" alt="...">
-											<div class="media-body">
-												<small>Mẫu đơn, tờ khai</small>
-												<p class="mb-0">Giấy khai sinh.doc</p>
+												<strong>Mẫu đơn, tờ khai</strong>
+												<span *ngIf="!item.name" class="mt-2 text-dark">: Không có</span>
+												<div class="attach-file row">
+													<div class="col-auto mb-4" *ngIf="item.fileType == 1">
+														<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
+															<a href="#" class="d-block text-center box-fileinput">
+																<img src="../../../../assets/dist/images/file-word.svg" class="pull-left" alt="">
+																<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
+															</a>
+														</div>
+													</div>
+													<div class="col-auto mb-4" *ngIf="item.fileType == 2">
+														<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
+															<a href="#" class="d-block text-center box-fileinput">
+																<img src="../../../../assets/dist/images/file-excel.svg" class="pull-left" alt="">
+																<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
+															</a>
+														</div>
+													</div>
+													<div class="col-auto mb-4" *ngIf="item.fileType == 4">
+														<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
+															<a href="#" class="d-block text-center box-fileinput">
+																<img src="../../../../assets/dist/images/file-image.svg" class="pull-left" alt="">
+																<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
+															</a>
+														</div>
+													</div>
+													<div class="col-auto mb-4" *ngIf="item.fileType == 3">
+														<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
+															<a href="#" class="d-block text-center box-fileinput">
+																<img src="../../../../assets/dist/images/file-pdf.svg" class="pull-left" alt="">
+																<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
+															</a>
+														</div>
+													</div>
+													<div class="col-auto mb-4" *ngIf="item.fileType == 6">
+														<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
+															<a href="#" class="d-block text-center box-fileinput">
+																<img src="../../../../assets/dist/images/file-powerpoint.svg" class="pull-left" alt="">
+																<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
+															</a>
+														</div>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -144,30 +154,20 @@
 							<tr>
 								<th scope="row">Trình tự thực hiện</th>
 								<td>
-									<p>
-										1. Công việc: Tiếp nhận hồ sơ<br>
-										- Cơ quan thực hiện: Cục Y tế dự phòng - Bộ Y tế<br>
-										- Thời gian: 3 ngày làm việc
-										- kết quả: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget mattis blandit vestibulum.
-									</p>
-									<p class="mb-0">
-										2. Công việc: Tiếp nhận hồ sơ<br>
-										- Cơ quan thực hiện: Cục Y tế dự phòng - Bộ Y tế<br>
-										- Thời gian: 3 ngày làm việc
-										- kết quả: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget mattis blandit vestibulum.
+									<p *ngFor="let item of lstImplementationProcess; index as i">
+										<strong>{{i+1}}.</strong> Công việc: {{item.name}}<br>
+										- Cơ quan thực hiện: {{item.unit}}<br>
+										- Thời gian: {{item.time}}<br>
+										- Kết quả: {{item.result}}
 									</p>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">Phí, Lệ phí</th>
 								<td>
-									<p>
-										1. Mức phí: 50.000 đồng/hồ sơ<br>
-										Mô tả: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget mattis blandit.
-									</p>
-									<p class="mb-0">
-										2. Mức phí: 100.000 đồng/hồ sơ<br>
-										Mô tả: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget mattis blandit.
+									<p *ngFor="let item of lstCharges; index as i">
+										<strong>{{i+1}}.</strong> Mức phí: {{item.charges}} đồng/hồ sơ<br>
+										Mô tả: {{item.description}}
 									</p>
 								</td>
 							</tr>

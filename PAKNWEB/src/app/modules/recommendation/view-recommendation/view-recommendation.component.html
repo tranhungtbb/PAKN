@@ -500,7 +500,7 @@
 					<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord" id="basic_checkbox_1">
 					<label class="custom-control-label" for="basic_checkbox_1">Chứa từ ngữ bị cấm</label>
 				</div>
-				<ng-select *ngIf="modelProcess.reactionaryWord && recommendationStatusProcess == 2" placeholder="Chọn nhóm từ ngữ" class="form-control" [items]="lstGroupWord"
+				<ng-select *ngIf="modelProcess.reactionaryWord && recommendationStatusProcess == 3" placeholder="Chọn nhóm từ ngữ" class="form-control" [items]="lstGroupWord"
 					bindLabel="text" bindValue="value" [(ngModel)]="lstGroupWordSelected" [closeOnSelect]="false" [multiple]="true">
 				</ng-select>
 			</div>
@@ -533,7 +533,7 @@
 							</th>
 							<th>
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-									<strong>Tên CN/ DN</strong>
+									<strong>Tên Cá nhân, Doanh nghiệp</strong>
 								</p>
 							</th>
 							<th style="width: 350px">

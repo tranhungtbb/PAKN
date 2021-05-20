@@ -54,14 +54,14 @@ namespace PAKNAPI.ControllerBase
 		}
 		[HttpPost]
 		[Authorize("ThePolicy")]
-		[Route("DAMAdministrationUpdateShow")]
-		public async Task<ActionResult<object>> DAMAdministrationUpdateShow(DAMAdministrationUpdateShow _dAMAdministrationUpdateShowIN)
+		[Route("DAMAdministrationUpdateShowBase")]
+		public async Task<ActionResult<object>> DAMAdministrationUpdateShow(DAMAdministrationUpdateShowIN _dAMAdministrationUpdateShowIN)
         {
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = null };
+				return new ResultApi { Success = ResultCode.OK, Result = await new DAMAdministrationUpdateShow(_appSetting).DAMAdministrationUpdateShowDAO(_dAMAdministrationUpdateShowIN) };
 			}
 			catch (Exception ex)
 			{

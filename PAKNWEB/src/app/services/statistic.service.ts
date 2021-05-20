@@ -17,4 +17,12 @@ export class StatisticService {
 	getStatisticRecommendationByField(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationByField)
 	}
+
+	getStatisticRecommendationByGroupWord(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationByGroupWord)
+	}
+
+	getStatisticRecommendationByGroupWordDetail(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationByGroupWordDetail)
+	}
 }

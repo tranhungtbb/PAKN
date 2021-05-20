@@ -6,309 +6,65 @@
 					<div class="tt-v1 mb-3">
 						<h4 class="text-uppercase">Danh sách thủ tục hành chính</h4>
 					</div>
-					<form>
-						<div class="form-row mx-0 p-3 rounded-xl border" style="background: #F9F9F9;">
-							<div class="col form-group">
-								<label class="mb-1">Lĩnh vực</label>
-								<select class="form-control border-brown">
-									<option>option 1</option>
-									<option>option 2</option>
-									<option>option 3</option>
-									<option>option 4</option>
-								</select>
-							</div>
-							<div class="col form-group">
-								<label class="mb-1">Cơ quan thực hiện</label>
-								<input type="text" class="form-control" placeholder="Nhập...">
-							</div>
-							<div class="col form-group">
-								<label class="mb-1">Cấp thực hiện</label>
-								<input type="text" class="form-control" placeholder="Nhập...">
-							</div>
-							<div class="w-100"></div>
-							<div class="col col-lg-4 form-group">
-								<label class="mb-1">Đối tượng thực hiện</label>
-								<select class="form-control border-brown">
-									<option>option 1</option>
-									<option>option 2</option>
-									<option>option 3</option>
-									<option>option 4</option>
-								</select>
-							</div>
-							<div class="col form-group">
-								<label class="mb-1">Tên thủ tục</label>
-								<div class="d-flex">
-									<input class="form-control pr-5" type="search" placeholder="Nhập..." aria-label="Search">
-									<button type="button" class="btn px-3 grd-red" style="margin-left: -20px">
-										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-											<path
-												d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z"
-												fill="#fff"></path>
-										</svg>
-									</button>
-								</div>
+					<div class="form-row mx-0 p-3 rounded-xl border" style="background: #F9F9F9;">
+						<div class="col form-group">
+							<label class="mb-1">Lĩnh vực</label>
+							<ng-select placeholder="Chọn..." class="form-control border-brown" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field"
+								[closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
+							</ng-select>
+						</div>
+						<div class="col form-group">
+							<label class="mb-1">Cơ quan thực hiện</label>
+							<input placeholder="Nhập..." class="form-control form-control" [(ngModel)]="dataSearch.organization" maxlength="100"
+								(keydown.enter)="dataStateChange()" />
+						</div>
+						<div class="col form-group">
+							<label class="mb-1">Mã số</label>
+							<input placeholder="Nhập..." class="form-control form-control" [(ngModel)]="dataSearch.code" maxlength="100" (keydown.enter)="dataStateChange()" />
+						</div>
+						<div class="w-100"></div>
+						<div class="col col-lg-4 form-group">
+							<label class="mb-1">Đối tượng thực hiện</label>
+							<input placeholder="Nhập..." class="form-control form-control" [(ngModel)]="dataSearch.object" maxlength="100" (keydown.enter)="dataStateChange()" />
+						</div>
+						<div class="col form-group">
+							<label class="mb-1">Tên thủ tục</label>
+							<div class="d-flex">
+								<input placeholder="Nhập..." class="form-control form-control" [(ngModel)]="dataSearch.name" maxlength="100" (keydown.enter)="dataStateChange()" />
+								<button (click)="dataStateChange()" type="button" class="btn px-3 grd-red" style="margin-left: -20px">
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path
+											d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z"
+											fill="#fff"></path>
+									</svg>
+								</button>
 							</div>
 						</div>
-					</form>
+					</div>
 				</div>
-				<div class="box">
+				<div class="box" *ngFor="let item of listData">
 					<div class="card border">
 						<div class="card-body py-4">
 							<p class="card-text">
-								<a class="h4" href="#">
-									Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ trương đầu tư (Thuộc thẩm quyền giải quyết của Ban Quản lý Khu
-									kinh tế Vân Phong)
+								<a class="h4" [routerLink]="['/cong-bo/chi-tiet/',item.id]" title="Xem chi tiết">
+									{{item.name}}
 								</a>
 							</p>
 						</div>
 						<div class="card-footer py-0 d-flex align-items-center">
 							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong></p>
+								<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">{{item.code}}</strong></p>
 							</div>
 							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Đối tượng thực hiện: <strong class="ml-2">Tổ chức, cá nhân</strong></p>
+								<p class="card-text text-dark d-inline">Đối tượng thực hiện: <strong class="ml-2">{{item.object}}</strong></p>
 							</div>
 						</div>
 						<div class="card-footer py-0 d-flex align-items-center">
 							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt nam</strong></p>
+								<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">{{item.fieldName}}</strong></p>
 							</div>
 							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Cơ quan thực hiện: <strong class="ml-2">BQL Khu Kinh tế Vân Phong</strong></p>
-							</div>
-						</div>
-					</div>
-					<div class="card border">
-						<div class="card-body py-4">
-							<p class="card-text">
-								<a class="h4" href="#">
-									Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ trương đầu tư (Thuộc thẩm quyền giải quyết của Ban Quản lý Khu
-									kinh tế Vân Phong)
-								</a>
-							</p>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Đối tượng thực hiện: <strong class="ml-2">Tổ chức, cá nhân</strong></p>
-							</div>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt nam</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Cơ quan thực hiện: <strong class="ml-2">BQL Khu Kinh tế Vân Phong</strong></p>
-							</div>
-						</div>
-					</div>
-					<div class="card border">
-						<div class="card-body py-4">
-							<p class="card-text">
-								<a class="h4" href="#">
-									Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ trương đầu tư (Thuộc thẩm quyền giải quyết của Ban Quản lý Khu
-									kinh tế Vân Phong)
-								</a>
-							</p>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Đối tượng thực hiện: <strong class="ml-2">Tổ chức, cá nhân</strong></p>
-							</div>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt nam</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Cơ quan thực hiện: <strong class="ml-2">BQL Khu Kinh tế Vân Phong</strong></p>
-							</div>
-						</div>
-					</div>
-					<div class="card border">
-						<div class="card-body py-4">
-							<p class="card-text">
-								<a class="h4" href="#">
-									Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ trương đầu tư (Thuộc thẩm quyền giải quyết của Ban Quản lý Khu
-									kinh tế Vân Phong)
-								</a>
-							</p>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Đối tượng thực hiện: <strong class="ml-2">Tổ chức, cá nhân</strong></p>
-							</div>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt nam</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Cơ quan thực hiện: <strong class="ml-2">BQL Khu Kinh tế Vân Phong</strong></p>
-							</div>
-						</div>
-					</div>
-					<div class="card border">
-						<div class="card-body py-4">
-							<p class="card-text">
-								<a class="h4" href="#">
-									Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ trương đầu tư (Thuộc thẩm quyền giải quyết của Ban Quản lý Khu
-									kinh tế Vân Phong)
-								</a>
-							</p>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Đối tượng thực hiện: <strong class="ml-2">Tổ chức, cá nhân</strong></p>
-							</div>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt nam</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Cơ quan thực hiện: <strong class="ml-2">BQL Khu Kinh tế Vân Phong</strong></p>
-							</div>
-						</div>
-					</div>
-					<div class="card border">
-						<div class="card-body py-4">
-							<p class="card-text">
-								<a class="h4" href="#">
-									Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ trương đầu tư (Thuộc thẩm quyền giải quyết của Ban Quản lý Khu
-									kinh tế Vân Phong)
-								</a>
-							</p>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Đối tượng thực hiện: <strong class="ml-2">Tổ chức, cá nhân</strong></p>
-							</div>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt nam</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Cơ quan thực hiện: <strong class="ml-2">BQL Khu Kinh tế Vân Phong</strong></p>
-							</div>
-						</div>
-					</div>
-					<div class="card border">
-						<div class="card-body py-4">
-							<p class="card-text">
-								<a class="h4" href="#">
-									Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ trương đầu tư (Thuộc thẩm quyền giải quyết của Ban Quản lý Khu
-									kinh tế Vân Phong)
-								</a>
-							</p>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Đối tượng thực hiện: <strong class="ml-2">Tổ chức, cá nhân</strong></p>
-							</div>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt nam</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Cơ quan thực hiện: <strong class="ml-2">BQL Khu Kinh tế Vân Phong</strong></p>
-							</div>
-						</div>
-					</div>
-					<div class="card border">
-						<div class="card-body py-4">
-							<p class="card-text">
-								<a class="h4" href="#">
-									Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ trương đầu tư (Thuộc thẩm quyền giải quyết của Ban Quản lý Khu
-									kinh tế Vân Phong)
-								</a>
-							</p>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Đối tượng thực hiện: <strong class="ml-2">Tổ chức, cá nhân</strong></p>
-							</div>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt nam</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Cơ quan thực hiện: <strong class="ml-2">BQL Khu Kinh tế Vân Phong</strong></p>
-							</div>
-						</div>
-					</div>
-					<div class="card border">
-						<div class="card-body py-4">
-							<p class="card-text">
-								<a class="h4" href="#">
-									Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ trương đầu tư (Thuộc thẩm quyền giải quyết của Ban Quản lý Khu
-									kinh tế Vân Phong)
-								</a>
-							</p>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Đối tượng thực hiện: <strong class="ml-2">Tổ chức, cá nhân</strong></p>
-							</div>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt nam</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Cơ quan thực hiện: <strong class="ml-2">BQL Khu Kinh tế Vân Phong</strong></p>
-							</div>
-						</div>
-					</div>
-					<div class="card border">
-						<div class="card-body py-4">
-							<p class="card-text">
-								<a class="h4" href="#">
-									Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ trương đầu tư (Thuộc thẩm quyền giải quyết của Ban Quản lý Khu
-									kinh tế Vân Phong)
-								</a>
-							</p>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Đối tượng thực hiện: <strong class="ml-2">Tổ chức, cá nhân</strong></p>
-							</div>
-						</div>
-						<div class="card-footer py-0 d-flex align-items-center">
-							<div class="card-footer-link mb-0 border-right py-2" style="width: 30%">
-								<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt nam</strong></p>
-							</div>
-							<div class="card-footer-link mb-0 pl-4 py-2">
-								<p class="card-text text-dark d-inline">Cơ quan thực hiện: <strong class="ml-2">BQL Khu Kinh tế Vân Phong</strong></p>
+								<p class="card-text text-dark d-inline">Cơ quan thực hiện: <strong class="ml-2">{{item.organization}}</strong></p>
 							</div>
 						</div>
 					</div>

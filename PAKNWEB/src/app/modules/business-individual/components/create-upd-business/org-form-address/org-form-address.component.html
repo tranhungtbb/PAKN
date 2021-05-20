@@ -1,8 +1,8 @@
 <form class="form-row px-3" [formGroup]="formOrgAddress">
 	<div class="col-12 form-group">
-		<label class="mb-1">Tỉnh / Thành Phố </label>
-		<ng-select [disabled]="nation_enable_type" [(ngModel)]="model.OrgProvinceId" formControlName="OrgProvince" class="form-control" id="_OrgDistrictId" placeholder="Chọn..."
-			[closeOnSelect]="true" (change)="onChangeProvince()" (click)="onClickProvince()">
+		<label class="mb-1">Tỉnh / Thành Phố <span class="cl-red">(*)</span> </label>
+		<ng-select [disabled]="!nation_enable_type" [(ngModel)]="model.OrgProvinceId" formControlName="OrgProvince" class="form-control" id="_OrgDistrictId" [closeOnSelect]="true"
+			placeholder="Chọn..." (change)="onChangeProvince()">
 			<ng-option *ngFor="let lItem of listProvince" [value]="lItem.id">{{lItem.name}}</ng-option>
 		</ng-select>
 		<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgProvince.invalid)||(fOrgAdr.OrgProvince.invalid && (fOrgAdr.OrgProvince.dirty || fOrgAdr.OrgProvince.touched))"
@@ -13,7 +13,7 @@
 		</div>
 	</div>
 	<div class="col-12 form-group">
-		<label class="mb-1">Huyện / Quận / thị xã / Thành phố thuộc tỉnh </label>
+		<label class="mb-1">Huyện / Quận / thị xã / Thành phố thuộc tỉnh <span class="cl-red">(*)</span> </label>
 		<ng-select [disabled]="nation_enable_type" [(ngModel)]="model.OrgDistrictId" formControlName="OrgDistrict" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
 			(change)="onChangeDistrict()">
 			<ng-option *ngFor="let lItem of listDistrict" [value]="lItem.id">{{lItem.name}}</ng-option>
@@ -26,8 +26,8 @@
 		</div>
 	</div>
 	<div class="col-12 form-group">
-		<label class="mb-1">Xã / Phường / Thị trấn </label>
-		<ng-select [disabled]="nation_enable_type" [(ngModel)]="model.OrgWardsId" formControlName="OrgVillage" class="form-control" placeholder="Chọn..." [closeOnSelect]="true">
+		<label class="mb-1">Xã / Phường / Thị trấn <span class="cl-red">(*)</span> </label>
+		<ng-select ng-init="somethingHere" [disabled]="nation_enable_type" [(ngModel)]="model.OrgWardsId" formControlName="OrgVillage" class="form-control" placeholder="Chọn...">
 			<ng-option *ngFor="let vill of listVillage" [value]="vill.id">{{vill.name}}</ng-option>
 		</ng-select>
 		<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgVillage.invalid)||(fOrgAdr.OrgVillage.invalid && (fOrgAdr.OrgVillage.dirty || fOrgAdr.OrgVillage.touched))"
@@ -39,7 +39,7 @@
 	</div>
 	<div class="col-12 form-group">
 		<label class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></label>
-		<input [svTrim] [(ngModel)]="model.OrgAddress" formControlName="OrgAddress" type="text" placeholder="Nhập..." class="form-control border-brown">
+		<input [svTrim] [(ngModel)]="model.OrgAddress" formControlName="OrgAddress" type="text" placeholder="Nhập..." class="form-control">
 		<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgAddress.invalid)||(fOrgAdr.OrgAddress.invalid && (fOrgAdr.OrgAddress.dirty || fOrgAdr.OrgAddress.touched))"
 			class="has-error m-b-12">
 			<div *ngIf="fOrgAdr.OrgAddress.errors.required">
@@ -48,9 +48,9 @@
 		</div>
 	</div>
 	<div class="col form-group">
-		<label class="mb-1">Địện thoại <span class="cl-red">(*)</span></label>
+		<label class="mb-1">Địện thoại<span class="cl-red">(*)</span></label>
 		<input numbersOnly maxlength="10" [(ngModel)]="model.OrgPhone" pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$" formControlName="OrgPhone" type="text" placeholder="Nhập..."
-			class="form-control border-brown" (change)="onCheckExist('OrgPhone',$event.target.value)">
+			class="form-control" (change)="onCheckExist('OrgPhone',$event.target.value)">
 		<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgPhone.invalid)||(fOrgAdr.OrgPhone.invalid && (fOrgAdr.OrgPhone.dirty || fOrgAdr.OrgPhone.touched))"
 			class="has-error m-b-12">
 			<div *ngIf="fOrgAdr.OrgPhone.errors.required">
@@ -67,8 +67,8 @@
 		</div>
 	</div>
 	<div class="col form-group">
-		<label class="mb-1">Email </label>
-		<input [svTrim] [(ngModel)]="model.OrgEmail" formControlName="OrgEmail" type="text" placeholder="Nhập..." class="form-control border-brown"
+		<label class="mb-1">Email</label>
+		<input [svTrim] [(ngModel)]="model.OrgEmail" formControlName="OrgEmail" type="text" placeholder="Nhập..." class="form-control"
 			(change)="onCheckExist('OrgEmail',$event.target.value)">
 		<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgEmail.invalid)||(fOrgAdr.OrgEmail.invalid && (fOrgAdr.OrgEmail.dirty || fOrgAdr.OrgEmail.touched))"
 			class="has-error m-b-12">
