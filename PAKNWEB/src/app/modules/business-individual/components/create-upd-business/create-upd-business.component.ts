@@ -109,7 +109,6 @@ export class CreateUpdBusinessComponent implements OnInit {
 		this.model._RepresentativeBirthDay = fDob.value
 		this.model._DateOfIssue = fIsDate.value
 		this.model.userId = this.userLoginId
-		console.log('this.model', this.model)
 
 		if (
 			this.checkExists['Phone'] ||
@@ -125,9 +124,6 @@ export class CreateUpdBusinessComponent implements OnInit {
 			return
 		}
 
-		console.log('this.formOrgInfo', this.formOrgInfo)
-		console.log('this.child_OrgRepreForm.formInfo', this.child_OrgRepreForm.formInfo)
-		console.log('this.child_OrgAddressForm.formOrgAddress', this.child_OrgAddressForm.formOrgAddress)
 		if (this.formOrgInfo.invalid || this.child_OrgRepreForm.formInfo.invalid || this.child_OrgAddressForm.formOrgAddress.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return
@@ -188,6 +184,7 @@ export class CreateUpdBusinessComponent implements OnInit {
 		Phone: false,
 		BusinessRegistration: false,
 		DecisionOfEstablishing: false,
+		Tax: false,
 	}
 	onCheckExist(field: string, value: string) {
 		if (value == null || value == '') {

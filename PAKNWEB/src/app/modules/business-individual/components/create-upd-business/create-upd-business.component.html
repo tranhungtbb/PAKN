@@ -95,7 +95,8 @@
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Mã số thuế <span class="cl-red">(*)</span></label>
-					<input [svTrim] numbersOnly maxlength="13" [(ngModel)]="model.Tax" formControlName="Tax" type="text" placeholder="Nhập..." class="form-control">
+					<input [svTrim] numbersOnly maxlength="13" [(ngModel)]="model.Tax" formControlName="Tax" type="text" placeholder="Nhập..." class="form-control"
+						(change)="onCheckExist('Tax',$event.target.value)">
 					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.Tax.invalid)||(fOrgInfo.Tax.invalid && (fOrgInfo.Tax.dirty || fOrgInfo.Tax.touched))" class="has-error m-b-12">
 
 						<div *ngIf="fOrgInfo.Tax.errors.maxlength">
@@ -107,6 +108,12 @@
 						<div *ngIf="fOrgInfo.Tax.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
+					</div>
+				</div>
+
+				<div *ngIf="checkExists['Tax'] && fOrgInfo.Tax.valid" class="has-error m-b-12">
+					<div *ngIf="checkExists['Tax']">
+						<span class="help-block">Mã số thuế đã tồn tại</span>
 					</div>
 				</div>
 
