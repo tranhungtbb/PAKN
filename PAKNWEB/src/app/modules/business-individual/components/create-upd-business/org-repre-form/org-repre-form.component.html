@@ -1,6 +1,6 @@
 <form class="form-row px-3" [formGroup]="formInfo">
 	<div class="col form-group">
-		<label class="mb-1">Người đại diện <span class="cl-red">(*)</span></label>
+		<label class="mb-1">Người đại diện<span class="cl-red">(*)</span></label>
 		<input [svTrim] maxlength="100" [(ngModel)]="model.RepresentativeName" formControlName="RepresentativeName" type="text" placeholder="Nhập..." class="form-control">
 		<div *ngIf="(fInfoSubmitted && fInfo.RepresentativeName.invalid)||(fInfo.RepresentativeName.invalid && (fInfo.RepresentativeName.dirty || fInfo.RepresentativeName.touched))"
 			class="has-error m-b-12">
@@ -13,7 +13,7 @@
 		</div>
 	</div>
 	<div class="col form-group">
-		<label class="mb-1">Quốc tịch <span class="cl-red">(*)</span></label>
+		<label class="mb-1">Quốc tịch<span class="cl-red">(*)</span></label>
 		<ng-select *ngIf="!nation_enable_type" [(ngModel)]="model.Nation" formControlName="Nation" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
 			(change)="onChangeNation()">
 			<ng-option *ngFor="let vill of listNation" [value]="vill.id">{{vill.name}}</ng-option>
@@ -45,7 +45,7 @@
 	</div>
 	<div class="w-100"></div>
 	<div class="col form-group">
-		<label class="mb-1">Email </label>
+		<label class="mb-1">Email</label>
 		<input [svTrim] [(ngModel)]="model.Email" formControlName="Email" type="text" placeholder="Nhập..." class="form-control"
 			(change)="onCheckExist('Email',$event.target.value)">
 		<div *ngIf="(fInfoSubmitted && fInfo.Email.invalid)||(fInfo.Email.invalid && (fInfo.Email.dirty || fInfo.Email.touched))" class="has-error m-b-12">
@@ -87,7 +87,7 @@
 	</div>
 	<div class="w-100"></div>
 	<div class="col form-group">
-		<label class="mb-1">Ngày tháng năm sinh </label>
+		<label class="mb-1">Ngày tháng năm sinh</label>
 		<div class="input-group">
 			<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dob" [(ngModel)]="model._RepresentativeBirthDay"
 				formControlName="DOB" appBsDatepickerInvalid [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}"

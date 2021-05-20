@@ -27,7 +27,7 @@
 	</div>
 	<div class="col-12 form-group">
 		<label class="mb-1">Xã / Phường / Thị trấn <span class="cl-red">(*)</span> </label>
-		<ng-select [disabled]="nation_enable_type" [(ngModel)]="model.OrgWardsId" formControlName="OrgVillage" class="form-control" placeholder="Chọn..." [closeOnSelect]="true">
+		<ng-select ng-init="somethingHere" [disabled]="nation_enable_type" [(ngModel)]="model.OrgWardsId" formControlName="OrgVillage" class="form-control" placeholder="Chọn...">
 			<ng-option *ngFor="let vill of listVillage" [value]="vill.id">{{vill.name}}</ng-option>
 		</ng-select>
 		<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgVillage.invalid)||(fOrgAdr.OrgVillage.invalid && (fOrgAdr.OrgVillage.dirty || fOrgAdr.OrgVillage.touched))"
@@ -48,7 +48,7 @@
 		</div>
 	</div>
 	<div class="col form-group">
-		<label class="mb-1">Địện thoại <span class="cl-red">(*)</span></label>
+		<label class="mb-1">Địện thoại<span class="cl-red">(*)</span></label>
 		<input numbersOnly maxlength="10" [(ngModel)]="model.OrgPhone" pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$" formControlName="OrgPhone" type="text" placeholder="Nhập..."
 			class="form-control" (change)="onCheckExist('OrgPhone',$event.target.value)">
 		<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgPhone.invalid)||(fOrgAdr.OrgPhone.invalid && (fOrgAdr.OrgPhone.dirty || fOrgAdr.OrgPhone.touched))"
@@ -67,7 +67,7 @@
 		</div>
 	</div>
 	<div class="col form-group">
-		<label class="mb-1">Email </label>
+		<label class="mb-1">Email</label>
 		<input [svTrim] [(ngModel)]="model.OrgEmail" formControlName="OrgEmail" type="text" placeholder="Nhập..." class="form-control"
 			(change)="onCheckExist('OrgEmail',$event.target.value)">
 		<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgEmail.invalid)||(fOrgAdr.OrgEmail.invalid && (fOrgAdr.OrgEmail.dirty || fOrgAdr.OrgEmail.touched))"
