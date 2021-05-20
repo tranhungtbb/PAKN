@@ -113,7 +113,7 @@ export class OrganizationObject {
 		this.OrgPhone = ''
 		this.Tax = ''
 
-		this.Status = null
+		this.Status = 1
 		this.isActived = true
 		this.IsDeleted = false
 		this.userId = null
