@@ -44,7 +44,8 @@ namespace PAKNAPI.Models
 
     public class ExportHisUser
     {
-        public string TitleReport { get; set; }
+        public int PageSize { get; set; }
+        public int PageIndex { get; set; }
         public int UserId { get; set; }
 
         //public string? Action { get; set; }
@@ -56,7 +57,7 @@ namespace PAKNAPI.Models
         //public string? Description { get; set; }
 
 
-       
+
 
     }
 }

@@ -102,6 +102,9 @@
 			<div *ngIf="fInfo.DOB.errors.required">
 				<span class="help-block">Trường dữ liệu này không được để trống</span>
 			</div>
+			<div *ngIf="fInfo.DOB.errors && ! fInfo.DOB.errors.required">
+				<span class="help-block">Định dạng ngày không đúng</span>
+			</div>
 		</div>
 	</div>
 	<div class="col col-lg-8 form-group">

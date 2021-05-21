@@ -27,7 +27,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	isHasToken: boolean = this.storageService.getIsHaveToken()
 	typeUserLoginPublish: number = this.storageService.getTypeObject()
 	currentFullnName: string = this.storageService.getFullName()
-
+	numberNotifications: any = 5
 	notifications: any[]
 	ViewedCount: number = 0
 	index: number = 0
@@ -51,7 +51,7 @@ export class PublishComponent implements OnInit, OnChanges {
 		this.loadScript('assets/dist/js/owl.carousel.min.js')
 		this.loadScript('assets/dist/js/sd-js.js')
 
-		this.getListNotification()
+		this.getListNotification(this.numberNotifications)
 	}
 
 	botname: string = 'Bot'
@@ -64,8 +64,8 @@ export class PublishComponent implements OnInit, OnChanges {
 		},
 	]
 
-	getListNotification() {
-		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: 5, PageIndex: 1 }).subscribe((res) => {
+	getListNotification(PageSize: any) {
+		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: PageSize, PageIndex: 1 }).subscribe((res) => {
 			if ((res.success = RESPONSE_STATUS.success)) {
 				this.notifications = res.result.syNotifications
 				this.notifications.forEach((item) => {
@@ -83,7 +83,7 @@ export class PublishComponent implements OnInit, OnChanges {
 			this.notificationService.updateIsViewedNotification({}).subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
 					this.index = this.index + 1
-					this.getListNotification()
+					this.getListNotification(this.numberNotifications)
 				}
 				return
 			})
@@ -128,6 +128,12 @@ export class PublishComponent implements OnInit, OnChanges {
 			} else {
 				this._router.navigate(['/cong-bo/chi-tiet-kien-nghi/' + id])
 			}
+		}
+	}
+	onScroll(event: any) {
+		if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 50) {
+			this.numberNotifications = this.numberNotifications + 5
+			this.getListNotification(this.numberNotifications)
 		}
 	}
 	checkDeny(status: any) {

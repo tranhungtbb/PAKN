@@ -53,6 +53,26 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpPost]
+		[Authorize]
+		[Route("NENewsDeleteBase")]
+		public async Task<ActionResult<object>> NENewsDeleteBase(NENewsDeleteIN _nENewsDeleteIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsDelete(_appSetting).NENewsDeleteDAO(_nENewsDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("NENewsGetAllRelatesBase")]

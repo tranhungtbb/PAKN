@@ -377,7 +377,6 @@ export class UserComponent implements OnInit {
 		if (this.listHisData.length > 0) {
 			passingObj.UserId = this.hisUserId
 		}
-		passingObj.TitleReport = 'LỊCH SỬ NGƯỜI DÙNG'
 
 		this._shareData.setobjectsearch(passingObj)
 		this._shareData.sendReportUrl = 'HistoryUser?' + JSON.stringify(passingObj)

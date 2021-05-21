@@ -23,7 +23,8 @@
 							</a>
 						</li>
 						<li class="nav-item dropdown notification_dropdown">
-							<a class="nav-link  ai-icon bg-transparent" (click)="updateNotifications()" href="#" role="button" data-toggle="dropdown">
+							<a class="nav-link  ai-icon bg-transparent" style="position: relative;" (click)="updateNotifications()" href="#" role="button" data-toggle="dropdown">
+								<span *ngIf="ViewedCount > 0" class="count-notification">{{ViewedCount}}</span>
 								<i class="bi bi-bell"></i>
 								<div class="pulse-css"></div>
 							</a>
@@ -37,8 +38,8 @@
 									</div>
 
 								</div>
-								<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:auto;">
-									<ul class="timeline" *ngIf="notifications">
+								<div id="DZ_W_Notification2" (scroll)="onScroll($event)" class="widget-media dz-scroll p-3" style="height: 550px;">
+									<ul class="timeline" id="notificationScroll" *ngIf="notifications">
 										<li *ngFor="let item of notifications" class="item-notification">
 											<a href="javascript:void(0)" (click)="onClickNotification(item.dataId,item.type, item.typeSend)" class="timeline-panel">
 												<div class="media mr-2 grd-brown">

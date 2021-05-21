@@ -72,6 +72,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 					this.listUserSelected.push(check)
 				}
 			}
+			console.log(this.listUserSelected)
 			return
 		}
 	}
@@ -132,7 +133,6 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 							this.statusCurent = this.model.status
 							for (const iterator of res.result.invitationUserMap) {
 								let item = this.listUserIsSystem.find((x) => x.id == iterator.userId)
-								this.listUserSelected.push(item)
 								var obj = new InvitationUserMapObject()
 								obj.userId = iterator.userId
 								obj.sendEmail = iterator.sendEmail
@@ -148,6 +148,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 								// obj.avatar = item.avatar
 								this.listItemUserSelected.push(obj)
 							}
+							console.log(this.listItemUserSelected)
 							if (this.statusCurent == 2) {
 								this.title = 'Chi tiết thư mời'
 							} else {
@@ -184,7 +185,6 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 				for (const iterator of res.result) {
 					this.items.push(new TreeviewItem({ ...iterator }))
 				}
-				this.getInvitatonModelById()
 			} else {
 				this.items = []
 			}
@@ -251,7 +251,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 			userMap: this.userMap,
 			lstFileDelete: this.lstFileDelete,
 		}
-
+		debugger
 		if (this.model.id == 0 || this.model.id == null) {
 			this.invitationService.invitationInsert(obj).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
@@ -313,24 +313,21 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		if (this.listUserSelected != undefined && this.listUserSelected.length > 0) {
 			this.listItemUserSelected = []
 			for (const iterator of this.listUserSelected) {
-				let check = this.listUserIsSystem.find((x) => x.id == iterator.id)
-				if (check != undefined) {
-					var obj = new InvitationUserMapObject()
-					obj.userId = iterator.id
-					obj.sendEmail = this.sendEmail
-					obj.sendSMS = this.sendSMS
-					obj.unitName = iterator.unitName
-					obj.fullName = iterator.fullName
-					obj.positionName = iterator.positionName
-					if (iterator.avatar == null || iterator.avatar == '') {
-						obj.avatar = ''
-					} else {
-						obj.avatar = AppSettings.API_DOWNLOADFILES + '/' + iterator.avatar
-					}
-
-					this.listItemUserSelected.push(obj)
-					i++
+				var obj = new InvitationUserMapObject()
+				obj.userId = iterator.id
+				obj.sendEmail = this.sendEmail
+				obj.sendSMS = this.sendSMS
+				obj.unitName = iterator.unitName
+				obj.fullName = iterator.fullName
+				obj.positionName = iterator.positionName
+				if (iterator.avatar == null || iterator.avatar == '') {
+					obj.avatar = ''
+				} else {
+					obj.avatar = AppSettings.API_DOWNLOADFILES + '/' + iterator.avatar
 				}
+
+				this.listItemUserSelected.push(obj)
+				i++
 			}
 			if (i == 0) {
 				this._toastr.error('Bạn đã chọn những người tham dự này')

@@ -153,13 +153,14 @@ namespace PAKNAPI
                     var paraHisUser = JsonConvert.DeserializeObject<ExportHisUser>(objectReport, jss);
                     resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.HIS_SystemLog.repx");
                     result = XtraReport.FromStream(resource);
-                    result.Parameters["TitleReport"].Value = paraHisUser.TitleReport;
+                    result.Parameters["TitleReport"].Value = "LỊCH SỬ NGƯỜI DÙNG";
                     result.Parameters["UserId"].Value = paraHisUser.UserId;
 
                     result.SaveLayoutToXml(ms);
                     if (ms != null)
                     {
-                        return ms.ToArray();
+                        var re = ms.ToArray();
+                        return re;
                     }
                     break;
             }

@@ -260,6 +260,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			.subscribe((res) => {
 				if (res.success != 'OK') return
 				this.listUserPaged = res.result.SYUserGetAllOnPage
+				debugger
 				if (res.result.TotalCount > 0) this.totalCount_User = res.result.TotalCount
 				this.userPageCount = Math.ceil(this.totalCount_User / this.query.pageSize)
 			})
@@ -351,11 +352,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	unitFormSubmitted = false
 	onSaveUnit() {
 		this.unitFormSubmitted = true
-
 		this.modelUnit.name = this.modelUnit.name.trim()
 		this.modelUnit.email = this.modelUnit.email.trim()
-		this.modelUnit.address = this.modelUnit.address.trim()
-		this.modelUnit.description = this.modelUnit.description.trim()
+		this.modelUnit.address == null ? (this.modelUnit.address = '') : (this.modelUnit.address = this.modelUnit.address.trim())
+		this.modelUnit.description == null ? (this.modelUnit.description = '') : (this.modelUnit.description = this.modelUnit.description.trim())
 
 		if (this.createUnitFrom.invalid) {
 			this._toastr.error('Dữ liệu không hợp lệ')
@@ -388,11 +388,16 @@ export class UnitComponent implements OnInit, AfterViewInit {
 					let errorMsg = res.message
 					this._toastr.error(errorMsg)
 					return
+				} else {
+					if (res.result > 0) {
+						this._toastr.success(COMMONS.ADD_SUCCESS)
+						this.getAllUnitShortInfo(this.unitObject)
+						this.modelUnit = new UnitObject()
+						$('#modal-create-or-update').modal('hide')
+					} else {
+						this._toastr.error('Tên đơn vị đã tồn tại')
+					}
 				}
-				this._toastr.success(COMMONS.ADD_SUCCESS)
-				this.getAllUnitShortInfo(this.unitObject)
-				this.modelUnit = new UnitObject()
-				$('#modal-create-or-update').modal('hide')
 			})
 		}
 	}

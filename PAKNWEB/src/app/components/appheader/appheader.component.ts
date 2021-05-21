@@ -85,17 +85,15 @@ export class AppheaderComponent implements OnInit {
 		private authenService: AuthenticationService,
 		private _router: Router,
 		private _fb: FormBuilder,
-		private toastr: ToastrService,
+		private _toastr: ToastrService,
 		private sharedataService: DataService,
 		private notificationService: NotificationService
 	) {}
 
-	user: ChangePasswordUserObject = {
-		OldPassword: '',
-		NewPassword: '',
-		ConfirmPassword: '',
-		LoginId: '',
-	}
+	formChangePassword: FormGroup
+	newPassword: string
+	rePassword: string
+	samePass = false
 
 	@Input('title') _title: string
 
@@ -106,11 +104,7 @@ export class AppheaderComponent implements OnInit {
 			fromDate: [this.dataSearch.toDate],
 		})
 		this.userName = this.storageService.getFullName()
-		this.userForm = new FormGroup({
-			oldpassword: new FormControl(this.user.OldPassword, [Validators.required]),
-			newpassword: new FormControl(this.user.NewPassword, [Validators.required]),
-			confirmpassword: new FormControl(this.user.ConfirmPassword, [Validators.required]),
-		})
+
 		this.sharedataService.getnotificationDropdown.subscribe((data) => {
 			if (data) {
 				var result: any = data
@@ -120,6 +114,10 @@ export class AppheaderComponent implements OnInit {
 			}
 		})
 		this.getNotifications(this.numberNotifications)
+		this.formChangePassword = this._fb.group({
+			newPassword: [this.newPassword, Validators.required],
+			rePassword: [this.rePassword, Validators.required],
+		})
 	}
 
 	getNotifications(PageSize: Number) {
@@ -147,114 +145,96 @@ export class AppheaderComponent implements OnInit {
 		return false
 	}
 
+	get fChangePass() {
+		return this.formChangePassword.controls
+	}
+	rebuilForm() {
+		this.formChangePassword.reset({
+			newPassword: this.newPassword,
+			rePassword: this.rePassword,
+		})
+	}
+
+	close() {
+		this.clearChangePasswordModel()
+	}
+
+	clearChangePasswordModel() {
+		this.newPassword = ''
+		this.rePassword = ''
+	}
+	preChangePassword() {
+		this.submitted = false
+		this.clearChangePasswordModel()
+		this.rebuilForm()
+		$('#modalChangePasswordByMe').modal('show')
+	}
+
+	onChangePassword() {
+		this.submitted = true
+		this.newPassword = this.newPassword.trim()
+		this.rePassword = this.rePassword.trim()
+
+		this.rebuilForm()
+		if (this.formChangePassword.invalid) {
+			return
+		}
+		if (this.newPassword != this.rePassword) {
+			this.samePass = true
+			return
+		} else {
+			this.samePass = false
+		}
+		let obj = {
+			UserId: this.storageService.getUserId(),
+			NewPassword: this.newPassword,
+			RePassword: this.rePassword,
+		}
+		this.userService.changePasswordInManage(obj).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				$('#modalChangePasswordByMe').modal('hide')
+				this._toastr.success('Đổi mật khẩu thành công.')
+			} else {
+				this._toastr.error(res.message)
+			}
+		}),
+			(error) => {
+				console.error(error)
+				alert(error)
+			}
+	}
+
 	redirectListNotification() {
 		this.router.navigate(['/quan-tri/thong-bao'])
 	}
 
-	// buildForm() {
-	// 	this.updateForm = this._fb.group({
-	// 		hoTen: ['', [Validators.required]],
-	// 		tenDangNhap: [''],
-	// 		dienThoai: [''],
-	// 		gioiTinh: [true, Validators.required],
-	// 		homThu: ['', [Validators.required, Validators.email]],
-	// 		diaChi: [''],
-	// 		isHaveToken: [''],
-	// 		maChucVu: [this.model.maChucVu, [Validators.required]],
-	// 		listPhongBan: ['', [Validators.required]],
-	// 	})
-	// }
-
-	// reBuildForm() {
-	// 	this.submitted = false
-	// 	this.updateForm = this._fb.group({
-	// 		hoTen: [this.model.hoTen, Validators.required],
-	// 		tenDangNhap: [this.model.tenDangNhap, Validators.required],
-	// 		dienThoai: this.model.dienThoai,
-	// 		gioiTinh: [this.model.gioiTinh, Validators.required],
-	// 		homThu: [this.model.homThu, Validators.required],
-	// 		diaChi: this.model.diaChi,
-	// 		isHaveToken: this.model.isHaveToken,
-	// 		maChucVu: [this.model.maChucVu, Validators.required],
-	// 		listPhongBan: [this.model.listPhongBan, Validators.required],
-	// 	})
-	// }
-
-	Show() {
-		this.submitted = false
-		this.userForm = new FormGroup({
-			oldpassword: new FormControl(this.user.OldPassword, [Validators.required]),
-			newpassword: new FormControl(this.user.NewPassword, [Validators.required]),
-			confirmpassword: new FormControl(this.user.ConfirmPassword, [Validators.required]),
-		})
-	}
-
-	Save() {
-		this.submitted = true
-		if (this.userForm.controls.oldpassword.status == 'INVALID') {
-			$('#oldpassword').focus()
-		} else if (this.userForm.controls.newpassword.status == 'INVALID') {
-			$('#newpassword').focus()
+	onClickNotification(dataId: any, type: any, typeSend: any) {
+		if (this.storageService.getTypeObject() == 1) {
+			// can bo quan ly
+			if (type == 1) {
+				this.router.navigate(['/quan-tri/tin-tuc/chinh-sua/' + dataId])
+			} else if (type == 2) {
+				this.router.navigate(['/quan-tri/kien-nghi/chi-tiet/' + dataId])
+			}
+			return
 		} else {
-			$('#confirmpassword').focus()
-		}
-		if (this.userForm.invalid) {
+			if (type == 1) {
+				this.router.navigate(['/cong-bo/tin-tuc-su-kien/' + dataId])
+			} else if (type == 2) {
+				this.router.navigate(['/cong-bo/chi-tiet-kien-nghi/' + dataId])
+			}
 			return
 		}
-		var data = this.userForm.value
-		this.user = data
-		this.authenService.chagepassword(this.user).subscribe((data) => {
-			if (data.status === 1) {
-				$('#myModal').modal('hide')
-				this.toastr.success('Thay đổi mật khẩu thành công')
-			} else {
-				this.toastr.error(data.message)
-			}
-		}),
-			(err) => {
-				console.error(err)
-			}
 	}
 
 	preUpdate() {
 		this.GetListChucVuAndListPhongBan()
-		let request = {}
-		// this.userService.getUserById(request).subscribe(
-		// 	(response) => {
-		// 		if (response.status == 1) {
-		// 			//this.buildForm();
-		// 			this.reBuildForm()
-		// 			this.submitted = false
-		// 			this.model = response.user
-		// 			if (this.model.anhDaiDien) {
-		// 				this.loadImage(this.model.anhDaiDien)
-		// 			}
-		// 			$('#modalUpdate').modal('show')
-		// 		} else {
-		// 			this.toastr.error(response.message)
-		// 		}
-		// 	},
-		// 	(error) => {
-		// 		console.error(error)
-		// 		alert(error)
-		// 	}
-		// )
 	}
 
 	loadImage(path: string) {
 		let request = {
 			filePath: path,
 		}
-		// this.userService.LoadImage(request).subscribe((response) => {
-		// 	if (response != undefined && response != null) {
-		// 		var blob = new Blob([response], { type: response.type })
-		// 		var url = URL.createObjectURL(blob)
-		// 		if (url != null) {
-		// 			var avatar = document.getElementById('anhDaiDien')
-		// 			avatar.setAttribute('src', url)
-		// 		}
-		// 	}
-		// })
 	}
 
 	selectImage(event: any) {
@@ -270,36 +250,7 @@ export class AppheaderComponent implements OnInit {
 		}
 	}
 
-	onUpdate() {
-		// this.submitted = true
-		// this.model.hoTen = this.model.hoTen.trim()
-		// this.model.diaChi = this.model.diaChi.trim()
-		// this.updateForm.controls.hoTen.setValue(this.updateForm.controls.hoTen.value.trim())
-		// if (this.updateForm.invalid && this.updateForm.controls['tenDangNhap'].valid != false) {
-		// 	return
-		// }
-		// if (this.model.gioiTinh == null) {
-		// 	this.toastr.error('Giới tính không để trống')
-		// 	return
-		// }
-		// let fullName = this.model.hoTen
-		// var request = {
-		// 	User: this.model,
-		// }
-		// this.userService.updateUserLogin(request, this.files).subscribe((success) => {
-		// 	if (success.status == 1) {
-		// 		$('#modalUpdate').modal('hide')
-		// 		this.storageService.setIsHaveToken(this.model.isHaveToken)
-		// 		this.storageService.setFullName(fullName)
-		// 		this.toastr.success('Cập nhật thành công')
-		// 		this.userName = fullName
-		// 	} else if (success.status == 3) {
-		// 		this.toastr.error('Email đã tồn tại')
-		// 	} else {
-		// 		this.toastr.error(success.message)
-		// 	}
-		// })
-	}
+	onUpdate() {}
 
 	signOut(): void {
 		this.authenService.logOut({}).subscribe((success) => {
@@ -386,21 +337,7 @@ export class AppheaderComponent implements OnInit {
 		}
 	}
 
-	GetListChucVuAndListPhongBan() {
-		// this.userService.GetListChucVuAndListPhongBan({}).subscribe((res) => {
-		// 	if (res.status == 1) {
-		// 		this.lstChucVu = []
-		// 		this.lstPhongBan = []
-		// 		this.lstChucVu = res.lstChucVu
-		// 		this.lstPhongBan = res.lstPhongBan
-		// 	} else {
-		// 		this.toastr.error(res.message)
-		// 	}
-		// }),
-		// 	(err) => {
-		// 		console.error(err)
-		// 	}
-	}
+	GetListChucVuAndListPhongBan() {}
 
 	isInvalidNam(event) {
 		let test = event

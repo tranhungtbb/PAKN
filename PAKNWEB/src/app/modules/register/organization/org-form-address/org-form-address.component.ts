@@ -38,7 +38,7 @@ export class OrgFormAddressComponent implements OnInit {
 		this.listDistrict = []
 		this.listVillage = []
 
-		this.model.OrgProvinceId = ''
+		this.model.OrgProvinceId = null
 		if (this.model.Nation == 'Việt Nam') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
@@ -57,8 +57,8 @@ export class OrgFormAddressComponent implements OnInit {
 		this.listDistrict = []
 		this.listVillage = []
 
-		this.model.OrgDistrictId = ''
-		this.model.OrgWardsId = ''
+		this.model.OrgDistrictId = null
+		this.model.OrgWardsId = null
 		if (this.model.OrgProvinceId != null && this.model.OrgProvinceId != '') {
 			this.diadanhService.getAllDistrict(this.model.OrgProvinceId).subscribe((res) => {
 				if (res.success == 'OK') {
@@ -72,7 +72,7 @@ export class OrgFormAddressComponent implements OnInit {
 	onChangeDistrict() {
 		this.listVillage = []
 
-		this.model.OrgWardsId = ''
+		this.model.OrgWardsId = null
 		if (this.model.OrgDistrictId != null && this.model.OrgDistrictId != '') {
 			this.diadanhService.getAllVillage(this.model.OrgProvinceId, this.model.OrgDistrictId).subscribe((res) => {
 				if (res.success == 'OK') {

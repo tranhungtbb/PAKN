@@ -72,7 +72,7 @@
 					<ng-select [(ngModel)]="model.nation" *ngIf="!nation_enable_type" formControlName="nation" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
 						(change)="onChangeNation()">
 						<ng-option *ngFor="let nation of listNation" [value]="nation.id">{{nation.name}}</ng-option>
-						<ng-option value="#">Khác</ng-option>
+						<!-- <ng-option value="#">Khác</ng-option> -->
 					</ng-select>
 					<input [svTrim] *ngIf="nation_enable_type" [(ngModel)]="model.nation" formControlName="nation" type="text" placeholder="Nhập..."
 						class="form-control border-brown">
@@ -114,6 +114,9 @@
 					<div *ngIf="(fLoginSubmitted && fInfo.dob.invalid)||(fInfo.dob.invalid && (fInfo.dob.dirty || fInfo.dob.touched))" class="has-error m-b-12">
 						<div *ngIf="fInfo.dob.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+						<div *ngIf="fInfo.dob.errors && ! fInfo.dob.errors.required">
+							<span class="help-block">Định dạng ngày không đúng</span>
 						</div>
 					</div>
 				</div>

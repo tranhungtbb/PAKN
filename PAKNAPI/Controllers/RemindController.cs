@@ -141,9 +141,9 @@ namespace PAKNAPI.Controllers
                         List<RMFileAttachModel> files = await new RMFileAttach(_appSetting).RMFileAttachGetByRemindID(item.Id);
                         item.Files = files;
                     }
-                    //return new ResultApi { Success = ResultCode.OK, Result = result };
+                    return new ResultApi { Success = ResultCode.OK, Result = result };
                 }
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
                 return new ResultApi { Success = ResultCode.OK, Result = null };
             }
             catch (Exception ex) {

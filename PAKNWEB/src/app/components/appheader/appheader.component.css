@@ -54,3 +54,18 @@
 	border-radius: 0.75rem;
 	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
+.count-notification {
+	color: #ffff;
+	position: absolute;
+	font-size: 12px;
+	top: 4px;
+	left: 23px;
+	width: 17px;
+	height: 16px;
+	background: red;
+	border-radius: 100%;
+	text-align: center;
+	padding-top: 2px;
+	z-index: 1000;
+}

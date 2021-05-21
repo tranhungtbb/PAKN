@@ -204,7 +204,6 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 			model: this.model,
 			IndividualBusinessInfo: this.individualBusinessInfo,
 		}
-
 		if (this.model.id == 0 || this.model.id == null) {
 			this.smsService.Insert(obj).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
