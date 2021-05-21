@@ -223,8 +223,16 @@ namespace PAKNAPI.Controllers
                         await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
 
                         break;
-                    //case STATUS_RECOMMENDATION.PROCESSING: //7 Đang giải quyết
-                    //    break;
+                    case STATUS_RECOMMENDATION.PROCESSING: //7 Đang giải quyết
+                        lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
+                        unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
+                        unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
+
+                        notification.Title = "PAKN ĐANG GIẢI QUYẾT";
+                        notification.Content = "PAKN của bạn đã được gửi cho " + unitReceive.Name + " giải quyết";
+                        notification.ReceiveId = sender.Id;
+                        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
+                        break;
                     case STATUS_RECOMMENDATION.APPROVE_WAIT: //8 Chờ phê duyệt
                         // bạn có 1 PAKN chờ phê duyệt
                         lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();

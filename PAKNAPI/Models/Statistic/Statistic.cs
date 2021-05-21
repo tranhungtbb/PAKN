@@ -108,12 +108,10 @@ namespace PAKNAPI.Models.Statistic
 		public int? UnitId { get; set; }
 		public double? Total { get; set; }
 
-		public async Task<List<StatisticRecommendationByGroupWordGetAllOnPage>> StatisticRecommendationByGroupWordGetAllOnPageDAO(string LtsUnitId, int? Year, int? Timeline, DateTime? FromDate, DateTime? ToDate)
+		public async Task<List<StatisticRecommendationByGroupWordGetAllOnPage>> StatisticRecommendationByGroupWordGetAllOnPageDAO(string LtsUnitId, DateTime? FromDate, DateTime? ToDate)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("LtsUnitId", LtsUnitId);
-			DP.Add("Year", Year);
-			DP.Add("Timeline", Timeline);
 			DP.Add("FromDate", FromDate);
 			DP.Add("ToDate", ToDate);
 			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationByGroupWordGetAllOnPage>("[TK_ListRecommendationByGroupWord]", DP)).ToList();
@@ -140,7 +138,7 @@ namespace PAKNAPI.Models.Statistic
 		public string Title { get; set; }
 		public string Content { get; set; }
 
-		public async Task<List<StatisticRecommendationByGroupWordDetail>> StatisticRecommendationByGroupWordDetailDAO(string Code, string SendName, string Title, string Content, int? UnitId, int? GroupWordId, int? PageSize, int? PageIndex)
+		public async Task<List<StatisticRecommendationByGroupWordDetail>> StatisticRecommendationByGroupWordDetailDAO(string Code, string SendName, string Title, string Content, int? UnitId, int? GroupWordId, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Code", Code);
@@ -149,6 +147,8 @@ namespace PAKNAPI.Models.Statistic
 			DP.Add("Content", Content);
 			DP.Add("UnitId", UnitId);
 			DP.Add("GroupWordId", GroupWordId);
+			DP.Add("FromDate", FromDate);
+			DP.Add("ToDate", ToDate);
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
 

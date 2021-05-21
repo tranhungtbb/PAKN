@@ -62,9 +62,9 @@ export class OrganizationObject {
 		this.Business = ''
 		this.BusinessRegistration = ''
 		this.DecisionOfEstablishing = ''
-		this.OrgProvinceId = ''
-		this.OrgDistrictId = ''
-		this.OrgWardsId = ''
+		this.OrgProvinceId = null
+		this.OrgDistrictId = null
+		this.OrgWardsId = null
 		this.OrgEmail = ''
 		this.OrgAddress = ''
 		this.OrgPhone = ''

@@ -22,6 +22,10 @@ using System.IO;
 using DevExpress.AspNetCore.Reporting;
 using DevExpress.AspNetCore;
 using PAKNAPI;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http.Features;
+using System.Globalization;
+using System.Collections.Generic;
 
 namespace PAKNAPI
 {
@@ -37,6 +41,18 @@ namespace PAKNAPI
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.Configure<FormOptions>(x =>
+			{
+				x.ValueLengthLimit = int.MaxValue;
+				x.MultipartBodyLengthLimit = int.MaxValue;
+				x.MemoryBufferThreshold = int.MaxValue;
+			});
+
+			services.Configure<RequestLocalizationOptions>(options =>
+			{
+				options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-GB");
+				options.SupportedCultures = new List<CultureInfo> { new CultureInfo("en-GB"), new CultureInfo("en-GB") };
+			});
 			services.AddCors();
 			services.AddMvc().AddDefaultReportingControllers();
 
@@ -56,7 +72,14 @@ namespace PAKNAPI
 				options.Filters.Add(new AuthorizeFilter("ThePolicy"));
 			});
 
-			services.AddControllers().AddNewtonsoftJson(); ;
+			services.AddMvc().AddNewtonsoftJson(); ;
+
+			services.AddMvc().AddNewtonsoftJson(options =>
+			{
+				options.SerializerSettings.DateFormatHandling = DateFormatHandling.IsoDateFormat;
+				options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
+				options.SerializerSettings.DateParseHandling = DateParseHandling.DateTimeOffset;
+			});
 			services.AddTransient<CustomMiddleware>();
 			services.AddHttpContextAccessor();
 			services.AddTransient<IAppSetting, AppSetting>();

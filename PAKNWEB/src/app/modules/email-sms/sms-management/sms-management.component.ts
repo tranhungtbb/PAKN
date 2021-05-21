@@ -226,6 +226,7 @@ export class SMSManagementComponent implements OnInit {
 			UserName: this.hisUserCreate == null ? '' : this.hisUserCreate,
 			Status: this.hisStatus == null ? '' : this.hisStatus,
 		}
+		debugger
 		this.smsService.GetListHisOnPage(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.HISSMSGetBySMSIdOnPage.length > 0) {

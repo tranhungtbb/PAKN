@@ -25,8 +25,8 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 	frozenCols: any = [{ field: 'text', header: 'Đơn vị', cssClass: 'text-left' }]
 	scrollableCols: any = []
 	lstData: any = []
-	fromDate: any
-	toDate: any
+	fromDate: Date
+	toDate: Date
 	year: any
 	timeline: any
 
@@ -60,9 +60,23 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 		this.year = new Date().getFullYear()
 		this.listUnitSelected = []
 	}
-
+	minusDays(date: Date, days: number): Date {
+		date.setDate(date.getDate() - days)
+		return date
+	}
+	getFormattedDate(date) {
+		var year = date.getFullYear()
+		var month = (1 + date.getMonth()).toString()
+		month = month.length > 1 ? month : '0' + month
+		var day = date.getDate().toString()
+		day = day.length > 1 ? day : '0' + day
+		return month + '-' + day + '-' + year
+	}
 	ngOnInit() {
 		this.BsLocaleService.use('vi')
+		this.fromDate = new Date(this.year, 0, 1)
+		let tmp_date = new Date(this.year + 1, 0, 1)
+		this.toDate = this.minusDays(tmp_date, 1)
 		this.unitService.getChildrenDropdown().subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.listUnit = res.result
@@ -75,14 +89,50 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 			}
 		})
 	}
+	changeYear() {
+		if (this.year != null) {
+			this.fromDate = new Date(this.year, 0, 1)
+			let tmp_date = new Date(this.year + 1, 0, 1)
+			this.toDate = this.minusDays(tmp_date, 1)
+			this.dataStateChange()
+		}
+	}
+	changeTimeLine() {
+		if (this.year != null) {
+			if (this.timeline == 1) {
+				this.fromDate = new Date(this.year, 0, 1)
+				let tmp_date = new Date(this.year, 3, 1)
+				this.toDate = this.minusDays(tmp_date, 1)
+			} else if (this.timeline == 2) {
+				this.fromDate = new Date(this.year, 3, 1)
+				let tmp_date = new Date(this.year, 6, 1)
+				this.toDate = this.minusDays(tmp_date, 1)
+			} else if (this.timeline == 3) {
+				this.fromDate = new Date(this.year, 6, 1)
+				let tmp_date = new Date(this.year, 9, 1)
+				this.toDate = this.minusDays(tmp_date, 1)
+			} else if (this.timeline == 4) {
+				this.fromDate = new Date(this.year, 9, 1)
+				let tmp_date = new Date(this.year + 1, 0, 1)
+				this.toDate = this.minusDays(tmp_date, 1)
+			} else if (this.timeline == 5) {
+				this.fromDate = new Date(this.year, 0, 1)
+				let tmp_date = new Date(this.year, 6, 1)
+				this.toDate = this.minusDays(tmp_date, 1)
+			} else if (this.timeline == 6) {
+				this.fromDate = new Date(this.year, 6, 1)
+				let tmp_date = new Date(this.year + 1, 0, 1)
+				this.toDate = this.minusDays(tmp_date, 1)
+			}
+			this.dataStateChange()
+		}
+	}
 
 	getList() {
 		let obj = {
 			LtsUnitId: this.listUnitSelected.join(','),
-			Year: this.year,
-			Timeline: this.timeline == null ? '' : this.timeline,
-			FromDate: this.fromDate == null ? '' : (this.fromDate = JSON.stringify(new Date(this.fromDate)).slice(1, 11)),
-			ToDate: this.toDate == null ? '' : (this.toDate = JSON.stringify(new Date(this.toDate)).slice(1, 11)),
+			FromDate: this.fromDate == null ? '' : this.getFormattedDate(this.fromDate),
+			ToDate: this.toDate == null ? '' : this.getFormattedDate(this.toDate),
 		}
 		this._service.getStatisticRecommendationByGroupWord(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
@@ -118,23 +168,18 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 	}
 
 	fromDateChange(data) {
-		if (data != null) {
-			this.fromDate = JSON.stringify(new Date(data)).slice(1, 11)
-		} else {
-			this.fromDate = null
-		}
 		this.getList()
 	}
 	toDateChange(data) {
-		if (data != null) {
-			this.toDate = JSON.stringify(new Date(data)).slice(1, 11)
-			// this.getList()
-		} else {
-			this.toDate = null
-		}
 		this.getList()
 	}
 	viewDetail(unitId, groupWordId) {
-		return this.router.navigate(['/quan-tri/bao-cao/phan-anh-kien-nghi-theo-nhom-tu-ngu-chi-tiet', unitId, groupWordId])
+		return this.router.navigate([
+			'/quan-tri/bao-cao/phan-anh-kien-nghi-theo-nhom-tu-ngu-chi-tiet',
+			unitId,
+			groupWordId,
+			this.getFormattedDate(this.fromDate),
+			this.getFormattedDate(this.toDate),
+		])
 	}
 }

@@ -27,7 +27,7 @@
 								<tr>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Bài viết</strong>
+											<strong>Tiêu đề</strong>
 											<span class="caret-tb"></span>
 										</p>
 										<input [(ngModel)]="query.title" (change)="filterChange()" type="text" class="form-control form-control-sm" placeholder="Nhập ...">
@@ -72,7 +72,7 @@
 										<img class="avatar-size rounded-3" [src]="item.imagePath">
 
 										<strong class="news-title col-sm-10 highlight">
-											<a [routerLink]="['./chinh-sua', item.id]">
+											<a [routerLink]="['./chinh-sua', item.id]" title="Chi tiết tin tức sự kiện">
 												{{item.title}}</a>
 										</strong>
 									</td>

@@ -153,8 +153,28 @@ namespace PAKNAPI
                     var paraHisUser = JsonConvert.DeserializeObject<ExportHisUser>(objectReport, jss);
                     resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.HIS_SystemLog.repx");
                     result = XtraReport.FromStream(resource);
-                    result.Parameters["TitleReport"].Value = paraHisUser.TitleReport;
+                    result.Parameters["TitleReport"].Value = "LỊCH SỬ NGƯỜI DÙNG";
                     result.Parameters["UserId"].Value = paraHisUser.UserId;
+
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        var re = ms.ToArray();
+                        return re;
+                    }
+                    break;
+                case "Statistic_Recommendation_ByGroupWord":
+                    var paraStatisticByGroupWord = JsonConvert.DeserializeObject<Statistic_Recommendation_ByGroupWord>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.Statistic_Recommendation_ByGroupWordDetail.repx");
+                    result = XtraReport.FromStream(resource);
+                    result.Parameters["Code"].Value = paraStatisticByGroupWord.Code;
+                    result.Parameters["SendName"].Value = paraStatisticByGroupWord.SendName;
+                    result.Parameters["Titles"].Value = paraStatisticByGroupWord.Title;
+                    result.Parameters["Content"].Value = paraStatisticByGroupWord.Content;
+                    result.Parameters["UnitId"].Value = paraStatisticByGroupWord.UnitId;
+                    result.Parameters["GroupWordId"].Value = paraStatisticByGroupWord.GroupWordId;
+                    result.Parameters["FromDate"].Value = paraStatisticByGroupWord.FromDate;
+                    result.Parameters["ToDate"].Value = paraStatisticByGroupWord.ToDate;
 
                     result.SaveLayoutToXml(ms);
                     if (ms != null)
