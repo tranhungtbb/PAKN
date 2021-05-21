@@ -287,6 +287,12 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<DAMAdministrationGetList>("DAM_Administration_GetList", DP)).ToList();
 		}
+		public async Task<List<DAMAdministrationGetList>> DAMAdministrationGetListTopDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<DAMAdministrationGetList>("DAM_Administration_GetListTop", DP)).ToList();
+		}
 	}
 
 	public class DAMAdministrationInsert

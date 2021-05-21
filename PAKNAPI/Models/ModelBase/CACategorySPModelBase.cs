@@ -135,6 +135,13 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_DepartmentGroupDelete", DP));
 		}
+		public async Task<int> CAWordDeleteDAO(CADepartmentGroupDeleteIN _cADepartmentGroupDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cADepartmentGroupDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_WordDelete", DP));
+		}
 	}
 
 	public class CADepartmentGroupDeleteIN
