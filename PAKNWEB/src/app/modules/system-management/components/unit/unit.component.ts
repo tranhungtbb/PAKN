@@ -280,12 +280,15 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 
 	onDelUser(id: number) {
-		let userObj = this.listUserPaged.find((c) => c.id == id)
-
-		this.userService.delete(userObj).subscribe((res) => {
+		this.userService.delete({ Id: id }).subscribe((res) => {
 			if (res.success != 'OK') {
-				this._toastr.error('Dữ liệu đang được sử dụng, không được phép xoá!')
-				return
+				if (isNaN(res.result)) {
+					this._toastr.error(res.message)
+					return
+				} else {
+					this._toastr.error('Dữ liệu đang được sử dụng, không được phép xoá!')
+					return
+				}
 			}
 			this._toastr.success(COMMONS.DELETE_SUCCESS)
 			this.getUserPagedList()

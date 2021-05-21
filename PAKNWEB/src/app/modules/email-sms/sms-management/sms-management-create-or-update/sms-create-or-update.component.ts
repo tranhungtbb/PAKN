@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
+import { TreeviewItem, TreeviewConfig } from 'ngx-treeview'
+import { TreeviewI18n } from 'ngx-treeview'
 
 import { Router, ActivatedRoute } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
@@ -8,9 +10,7 @@ import { STATUS_HIS_SMS } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
 import { SMSManagementService } from 'src/app/services/sms-management'
 import { smsManagementObject, smsManagementMapObject } from 'src/app/models/smsManagementObject'
-import { from } from 'rxjs'
-import { iterator } from 'rxjs/internal-compatibility'
-import { TreeModule } from 'primeng/tree'
+import { SMSTreeviewI18n } from 'src/app/shared/sms-treeview-i18n'
 
 declare var $: any
 
@@ -18,6 +18,7 @@ declare var $: any
 	selector: 'sms-create-or-update',
 	templateUrl: './sms-create-or-update.component.html',
 	styleUrls: ['./sms-create-or-update.component.css'],
+	providers: [{ provide: TreeviewI18n, useClass: SMSTreeviewI18n }],
 })
 export class SMSCreateOrUpdateComponent implements OnInit {
 	model: smsManagementObject = new smsManagementObject()
@@ -30,7 +31,6 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 		{ value: 1, text: 'Đang soạn thảo' },
 		{ value: 2, text: 'Đã gửi' },
 	]
-	AdministrativeUnits: any[]
 	listItemUserSelected: Array<smsManagementMapObject>
 	administrativeUnitId: any
 	listIndividualAndBusinessGetByAdmintrativeId: any[]
@@ -50,11 +50,72 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 		this.individualBusinessInfo = []
 	}
 
+	// treeview
+
+	administrativeUnits: TreeviewItem[]
+	ltsAdministrativeUnitId: number[]
+	config = TreeviewConfig.create({
+		hasAllCheckBox: true,
+		hasFilter: true,
+		hasCollapseExpand: true,
+		decoupleChildFromParent: false,
+		maxHeight: 400,
+	})
+
 	ngOnInit() {
-		this.getAdministrativeUnits()
+		// this.getAdministrativeUnits()
 		this.buildForm()
-		// this.getInvitatonModelById()
+		this.administrativeUnits = [
+			new TreeviewItem({
+				text: 'Khánh Hòa',
+				value: 9,
+				children: [
+					{ text: 'Khánh Hòa 2', value: 91 },
+					{
+						text: 'Huyện 1',
+						value: 91,
+						children: [
+							{
+								text: 'Huyện 1',
+								value: 9111,
+							},
+							{ text: 'Xã 1', value: 9111 },
+							{ text: 'Xã 2', value: 9112 },
+							{ text: 'Xã 3', value: 9112 },
+						],
+					},
+					{
+						text: 'Huyện 2',
+						value: 91,
+						children: [
+							{
+								text: 'Huyện 3',
+								value: 9111,
+							},
+							{ text: 'Xã 1', value: 9111 },
+							{ text: 'Xã 2', value: 9112 },
+							{ text: 'Xã 3', value: 9112 },
+						],
+					},
+					{
+						text: 'Huyện 3',
+						value: 91,
+						children: [
+							{
+								text: 'Huyện 3',
+								value: 9111,
+							},
+							{ text: 'Xã 1', value: 9111 },
+							{ text: 'Xã 2', value: 9112 },
+							{ text: 'Xã 3', value: 9112 },
+						],
+					},
+				],
+			}),
+		]
 	}
+
+	onSelectedChange(values: []) {}
 
 	buildForm() {
 		this.form = this.formBuilder.group({
@@ -96,10 +157,10 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	getAdministrativeUnits() {
 		this.smsService.GetListAdmintrative({ id: 37 }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				this.AdministrativeUnits = res.result.CAAdministrativeUnitsGetDropDown
+				// this.administrativeUnits = res.result.CAAdministrativeUnitsGetDropDown
 				this.getSMSModelById()
 			} else {
-				this.AdministrativeUnits = []
+				this.administrativeUnits = []
 			}
 		})
 	}

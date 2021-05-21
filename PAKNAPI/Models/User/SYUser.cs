@@ -61,22 +61,22 @@ namespace PAKNAPI.Models.User
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPageList>("[SY_UserGetAllOnPageList]", DP)).ToList();
 		}
 	}
-	public class SYUserDropList {
+	public class DropListTreeView {
 		public string text { get; set; }
 		public long value { get; set; }
-		public List<SYUserDropList> children { get; set; }
+		public List<DropListTreeView> children { get; set; }
 
-		public SYUserDropList() { }
-		public SYUserDropList(string text, long value) {
+		public DropListTreeView() { }
+		public DropListTreeView(string text, long value) {
 			this.text = text;
 			this.value = value;
 			this.children = null;
 		}
 
-		public SYUserDropList(string text, long value, IList<SYUserDropList> chil) {
+		public DropListTreeView(string text, long value, IList<DropListTreeView> chil) {
 			this.text = text;
 			this.value = value;
-			this.children = (List<SYUserDropList>)chil;
+			this.children = (List<DropListTreeView>)chil;
 		}
 	}
 

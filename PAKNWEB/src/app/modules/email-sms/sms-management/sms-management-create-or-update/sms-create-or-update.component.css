@@ -83,3 +83,7 @@
 	text-transform: uppercase;
 	color: #1b1b3e;
 }
+
+:host ::ng-deep .dropdown-menu {
+	width: 190% !important;
+}

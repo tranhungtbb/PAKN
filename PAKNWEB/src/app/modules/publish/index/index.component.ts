@@ -86,11 +86,11 @@ export class IndexComponent implements OnInit {
 	ngAfterViewInit() {
 		setTimeout(function () {
 			$('#owl-news').owlCarousel({
-				loop: false,
+				loop: true,
 				margin: 30,
-				nav: false,
+				nav: true,
 				autoplay: true,
-				autoplayTimeout: 5000,
+				autoplayTimeout: 10000,
 				autoplayHoverPause: true,
 				responsive: {
 					0: {

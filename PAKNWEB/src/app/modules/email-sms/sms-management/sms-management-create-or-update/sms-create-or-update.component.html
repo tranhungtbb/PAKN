@@ -63,12 +63,17 @@
 								<div class="department">Đơn vị</div>
 								<div class="" style="display: flex;">
 									<div class="input-serach" style="width: 45%;">
-										<ng-select class="form-control" placeholder="Chọn..." [closeOnSelect]="true" formControlName="administrativeUnitId"
+										<!-- <ng-select class="form-control" placeholder="Chọn..." [closeOnSelect]="true" formControlName="administrativeUnitId"
 											[(ngModel)]="administrativeUnitId" (change)="onLoadListIndividualAndBusiness()">
 											<ng-option *ngFor="let nt of AdministrativeUnits" [value]="nt.id">
 												{{nt.name}}
 											</ng-option>
-										</ng-select>
+										</ng-select> -->
+										<div class="form-group" style="margin-bottom: 0px;">
+											<ngx-dropdown-treeview [config]="config" [items]="administrativeUnits" buttonClass="btn btn-outline-primary"
+												(selectedChange)="onSelectedChange($event)">
+											</ngx-dropdown-treeview>
+										</div>
 									</div>
 									<div class="info-individual" style="width: 50%; position: relative; padding-left: 15px;">
 										<div class="individual" style="display: flex; position: absolute;top: -40px;">

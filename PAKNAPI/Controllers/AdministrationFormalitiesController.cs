@@ -17,6 +17,7 @@ using PAKNAPI.Models.AdministrationFormalities;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using PAKNAPI.Models.User;
 
 namespace PAKNAPI.Controller
 {
@@ -41,6 +42,72 @@ namespace PAKNAPI.Controller
             try
             {
                 return new ResultApi { Success = ResultCode.OK, Result = await new AdministrationFormalitiesDAO(_appSetting).AdministrationFormalitiesGetByID(Id) };
+            }
+            catch (Exception ex)
+            {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("AdministrativeUnitsGetDropDown")]
+        public async Task<ActionResult<object>> AdministrativeUnitsGetDropDown(int? Id)
+        {
+            try
+            {
+                List<DropListTreeView> result = new List<DropListTreeView>();
+                // lst đơn vị
+                List<SYUnitGetDropdown> lstUnit = await new SYUnitGetDropdown(_appSetting).SYUnitGetDropdownDAO();
+                // lst người dùng theo đơn vị từng đơn vị
+                DropListTreeView tinh = new DropListTreeView();
+                foreach (var province in lstUnit.Where(x => x.UnitLevel == 1).ToList())
+                {
+                    tinh = new DropListTreeView(province.Text, province.Value, new List<DropListTreeView>());
+                    List<SYUserGetByUnitId> usersProvice = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(province.Value);
+                    foreach (var userProvice in usersProvice)
+                    {
+                        tinh.children.Add(new DropListTreeView(userProvice.FullName, userProvice.Id));
+                    }
+                    // list chilldren của chil
+                    DropListTreeView huyen = new DropListTreeView();
+                    foreach (var district in lstUnit.Where(x => x.ParentId == province.Value && x.UnitLevel == 2).ToList())
+                    {
+                        huyen = new DropListTreeView(district.Text, district.Value, new List<DropListTreeView>());
+                        List<SYUserGetByUnitId> usersDistrict = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(district.Value);
+                        foreach (var userDistrict in usersDistrict)
+                        {
+                            huyen.children.Add(new DropListTreeView(userDistrict.FullName, userDistrict.Id));
+                        }
+                        // list children của child1
+                        DropListTreeView xa = new DropListTreeView();
+                        foreach (var commune in lstUnit.Where(x => x.ParentId == district.Value && x.UnitLevel == 3).ToList())
+                        {
+                            xa = new DropListTreeView(commune.Text, commune.Value, new List<DropListTreeView>());
+                            List<SYUserGetByUnitId> usersCommune = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(commune.Value);
+                            foreach (var userCommune in usersCommune)
+                            {
+                                xa.children.Add(new DropListTreeView(userCommune.FullName, userCommune.Id));
+                            }
+                            if (xa.children.Count > 0)
+                            {
+                                huyen.children.Add(xa);
+                            }
+                        }
+                        if (huyen.children.Count > 0)
+                        {
+                            tinh.children.Add(huyen);
+                        }
+
+                    }
+                    if (tinh.children.Count > 0) { result.Add(tinh); }
+
+                }
+
+
+                return new ResultApi { Success = ResultCode.OK, Result = result };
             }
             catch (Exception ex)
             {
