@@ -74,11 +74,11 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Authorize]
 		[Route("STT_RecommendationByGroupWord")]
-		public async Task<ActionResult<object>> STT_RecommendationByGroupWordGetAllOnPageBase(string LtsUnitId, int? Year, int? Timeline, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		public async Task<ActionResult<object>> STT_RecommendationByGroupWordGetAllOnPageBase(string LtsUnitId, DateTime? FromDate, DateTime? ToDate)
 		{
 			try
 			{
-				List<StatisticRecommendationByGroupWordGetAllOnPage> mrrRecommendationByGroupWord = await new StatisticRecommendationByGroupWordGetAllOnPage(_appSetting).StatisticRecommendationByGroupWordGetAllOnPageDAO(LtsUnitId, Year, Timeline, FromDate, ToDate);
+				List<StatisticRecommendationByGroupWordGetAllOnPage> mrrRecommendationByGroupWord = await new StatisticRecommendationByGroupWordGetAllOnPage(_appSetting).StatisticRecommendationByGroupWordGetAllOnPageDAO(LtsUnitId, FromDate, ToDate);
 				List<SYUnitGetDropdownByListId> rsSYUnitGetDropdownByListId= await new SYUnitGetDropdownByListId(_appSetting).SYUnitGetDropdownByListIdDAO(LtsUnitId);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
@@ -100,11 +100,11 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Authorize]
 		[Route("STT_RecommendationByGroupWordDetail")]
-		public async Task<ActionResult<object>> RecommendationByGroupWordDetail(string Code, string SendName, string Title, string Content, int? UnitId, int? GroupWordId, int? PageSize, int? PageIndex)
+		public async Task<ActionResult<object>> RecommendationByGroupWordDetail(string Code, string SendName, string Title, string Content, int? UnitId, int? GroupWordId, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			try
 			{
-				List<StatisticRecommendationByGroupWordDetail> rsStatisticRecommendationByGroupWordDetail = await new StatisticRecommendationByGroupWordDetail(_appSetting).StatisticRecommendationByGroupWordDetailDAO(Code, SendName, Title, Content, UnitId, GroupWordId, PageSize, PageIndex);
+				List<StatisticRecommendationByGroupWordDetail> rsStatisticRecommendationByGroupWordDetail = await new StatisticRecommendationByGroupWordDetail(_appSetting).StatisticRecommendationByGroupWordDetailDAO(Code, SendName, Title, Content, UnitId, GroupWordId, FromDate, ToDate, PageSize, PageIndex);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"ListData", rsStatisticRecommendationByGroupWordDetail},

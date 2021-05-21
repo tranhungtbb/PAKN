@@ -21,6 +21,7 @@ import { CreateRecommendationComponent } from './user-create-recommendation/user
 import { MyRecommendationComponent } from './my-recommendation/my-recommendation.component'
 import { from } from 'rxjs'
 import { EditorModule } from 'primeng/editor'
+import { TableModule } from 'primeng/table'
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
 import { ViewNewsComponent } from './view-news/view-news.component'
 import { ViewAdministrativeProceduresComponent } from './view-administrative-procedures/view-administrative-procedures.component'
@@ -50,6 +51,7 @@ import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-righ
 		ReactiveFormsModule,
 		FormsModule,
 		SharedModule,
+		TableModule,
 		PaginatorModule,
 		BsDatepickerModule.forRoot(),
 		TooltipModule,

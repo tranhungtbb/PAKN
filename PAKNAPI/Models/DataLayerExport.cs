@@ -42,6 +42,19 @@ namespace PAKNAPI.Models
 
     }
 
+    public class Statistic_Recommendation_ByGroupWord
+    {
+        public string Code { get; set; }
+        public string SendName { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+        public int? UnitId { get; set; }
+        public int? GroupWordId { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
+
+    }
+
     public class ExportHisUser
     {
         public int PageSize { get; set; }
