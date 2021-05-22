@@ -44,7 +44,7 @@ export class OrgRepreFormComponent implements OnInit {
 		this.listDistrict = []
 		this.listVillage = []
 
-		this.model.ProvinceId = ''
+		this.model.ProvinceId = null
 		if (this.model.Nation == 'Việt Nam') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
@@ -66,8 +66,8 @@ export class OrgRepreFormComponent implements OnInit {
 		this.listDistrict = []
 		this.listVillage = []
 
-		this.model.DistrictId = ''
-		this.model.WardsId = ''
+		this.model.DistrictId = null
+		this.model.WardsId = null
 		if (this.model.ProvinceId != null && this.model.ProvinceId != '') {
 			this.diadanhService.getAllDistrict(this.model.ProvinceId).subscribe((res) => {
 				if (res.success == 'OK') {
@@ -81,7 +81,7 @@ export class OrgRepreFormComponent implements OnInit {
 	onChangeDistrict() {
 		this.listVillage = []
 
-		this.model.WardsId = ''
+		this.model.WardsId = null
 		if (this.model.DistrictId != null && this.model.DistrictId != '') {
 			this.diadanhService.getAllVillage(this.model.ProvinceId, this.model.DistrictId).subscribe((res) => {
 				if (res.success == 'OK') {
