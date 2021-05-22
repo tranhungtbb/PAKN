@@ -41,28 +41,32 @@
 											<strong>Mã số</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
 									</th>
 									<th style="width: 250px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tên thủ tục</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
 									</th>
 									<th style="width: 150px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Đối tượng</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.object" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.object" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
 									</th>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Cơ quan thực hiện</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.organization" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.organization" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
 									</th>
 									<th style="width: 200px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -70,8 +74,8 @@
 											<span class="caret-tb"></span>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field" [closeOnSelect]="true"
-												(change)="dataStateChange()" [virtualScroll]="true">
+											<ng-select placeholder="Chọn..." class="" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field"
+												[closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
 											</ng-select>
 										</div>
 									</th>

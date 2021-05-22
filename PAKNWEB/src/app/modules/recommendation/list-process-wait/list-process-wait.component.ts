@@ -52,6 +52,8 @@ export class ListProcessWaitComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
+	lstGroupWord: any = []
+	lstGroupWordSelected: any = []
 	ngOnInit() {
 		this.dataSearch.status = RECOMMENDATION_STATUS.PROCESS_WAIT
 		this.getDataForCreate()
@@ -146,17 +148,42 @@ export class ListProcessWaitComponent implements OnInit {
 		}
 	}
 	modelProcess: RecommendationProcessObject = new RecommendationProcessObject()
-	preProcess(recommendationId, idProcess, status) {
+	isForwardProcess: boolean = false
+	contentForward: string = ''
+	preProcess(recommendationId, idProcess, status, isForwardProcess) {
 		this.modelProcess.status = status
 		this.modelProcess.id = idProcess
 		this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
 		this.modelProcess.recommendationId = recommendationId
 		this.modelProcess.reactionaryWord = false
 		this.modelProcess.reasonDeny = ''
+		this.isForwardProcess = isForwardProcess
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
-			$('#modalReject').modal('show')
-		} else {
+			if (this.isForwardProcess) {
+				this._service.recommendationGetDataForProcess({}).subscribe((response) => {
+					if (response.success == RESPONSE_STATUS.success) {
+						if (response.result != null) {
+							this.modelProcess.reactionaryWord = false
+							this.lstGroupWord = response.result.lstGroupWord
+							this.lstGroupWordSelected = []
+							$('#modalReject').modal('show')
+						}
+					} else {
+						this._toastr.error(response.message)
+					}
+				}),
+					(error) => {
+						console.log(error)
+						alert(error)
+					}
+			} else {
+				$('#modalReject').modal('show')
+			}
+		} else if (status == PROCESS_STATUS_RECOMMENDATION.APPROVED) {
 			$('#modalAccept').modal('show')
+		} else if (status == PROCESS_STATUS_RECOMMENDATION.FORWARD) {
+			this.contentForward = ''
+			$('#modalForward').modal('show')
 		}
 	}
 	onProcessAccept() {
@@ -188,6 +215,8 @@ export class ListProcessWaitComponent implements OnInit {
 			var request = {
 				_mRRecommendationForwardProcessIN: this.modelProcess,
 				RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_DENY,
+				ReactionaryWord: this.modelProcess.reactionaryWord,
+				ListGroupWordSelected: this.lstGroupWordSelected.join(','),
 				IsList: true,
 			}
 			this._service.recommendationProcess(request).subscribe((response) => {
@@ -204,6 +233,30 @@ export class ListProcessWaitComponent implements OnInit {
 					console.error(err)
 				}
 		}
+	}
+
+	onProcessForward() {
+		this.modelProcess.reasonDeny = this.contentForward
+		var request = {
+			_mRRecommendationForwardProcessIN: this.modelProcess,
+			RecommendationStatus: RECOMMENDATION_STATUS.RECEIVE_WAIT,
+			ReactionaryWord: this.modelProcess.reactionaryWord,
+			IsList: true,
+			IsForwardProcess: this.isForwardProcess,
+		}
+		this._service.recommendationProcess(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				$('#modalForward').modal('hide')
+				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
+				this._toastr.success(COMMONS.FORWARD_SUCCESS)
+				this.getList()
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(err) => {
+				console.error(err)
+			}
 	}
 
 	getHistories(id: number) {

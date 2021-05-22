@@ -1083,6 +1083,7 @@ namespace PAKNAPI.ModelBase
 		public long? UserSendId { get; set; }
 		public long? ReceiveId { get; set; }
 		public int? UnitReceiveId { get; set; }
+		public bool? IsForwardProcess { get; set; }
 
 		public async Task<List<MRRecommendationGetAllWithProcess>> MRRecommendationGetAllWithProcessDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId, int? PageSize, int? PageIndex)
 		{

@@ -82,7 +82,7 @@ export class DepartmentGroupComponent implements OnInit {
 				if (response.result != null) {
 					this.listData = []
 					this.listData = response.result.CADepartmentGroupGetAllOnPage
-					this.totalRecords = response.result.TotalCount
+					this.totalRecords = response.result.CADepartmentGroupGetAllOnPage[0] ? response.result.CADepartmentGroupGetAllOnPage[0].rowNumber : 0
 				}
 			} else {
 				this._toastr.error(response.message)
