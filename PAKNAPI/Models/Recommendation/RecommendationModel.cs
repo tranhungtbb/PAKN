@@ -78,6 +78,7 @@ namespace PAKNAPI.Models.Recommendation
         public bool? ReactionaryWord { get; set; }
         public string ListGroupWordSelected { get; set; }
         public bool IsList { get; set; }
+        public bool? IsForwardProcess { get; set; }
     }
     public class RecommendationOnProcessConclusionProcess
     {

@@ -258,12 +258,14 @@ export class ListGeneralComponent implements OnInit {
 	}
 	modelProcess: RecommendationProcessObject = new RecommendationProcessObject()
 	recommendationStatusProcess: number = 0
-
+	isForwardProcess: boolean = false
+	contentForward: string = ''
 	preProcess(model: any, status: number) {
 		this.modelProcess.status = status
 		this.modelProcess.id = model.idProcess
 		this.modelProcess.step = model.stepProcess
 		this.modelProcess.recommendationId = model.id
+		this.isForwardProcess = model.isForwardProcess
 		this.modelProcess.reactionaryWord = false
 		this.modelProcess.reasonDeny = ''
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
@@ -282,16 +284,32 @@ export class ListGeneralComponent implements OnInit {
 				}),
 					(error) => {
 						console.log(error)
-						alert(error)
 					}
 			} else if (model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESS_DENY
-				$('#modalReject').modal('show')
+				if (this.isForwardProcess) {
+					this._service.recommendationGetDataForProcess({}).subscribe((response) => {
+						if (response.success == RESPONSE_STATUS.success) {
+							if (response.result != null) {
+								this.lstGroupWord = response.result.lstGroupWord
+								this.lstGroupWordSelected = []
+								$('#modalReject').modal('show')
+							}
+						} else {
+							this._toastr.error(response.message)
+						}
+					}),
+						(error) => {
+							console.log(error)
+						}
+				} else {
+					$('#modalReject').modal('show')
+				}
 			} else if (model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.APPROVE_DENY
 				$('#modalReject').modal('show')
 			}
-		} else {
+		} else if (status == PROCESS_STATUS_RECOMMENDATION.APPROVED) {
 			if (model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_APPROVED
 			} else if (model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
@@ -300,6 +318,11 @@ export class ListGeneralComponent implements OnInit {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.FINISED
 			}
 			$('#modalAccept').modal('show')
+		} else if (status == PROCESS_STATUS_RECOMMENDATION.FORWARD) {
+			this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
+			this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
+			this.contentForward = ''
+			$('#modalForward').modal('show')
 		}
 	}
 	onProcessAccept() {
@@ -322,6 +345,31 @@ export class ListGeneralComponent implements OnInit {
 				console.error(err)
 			}
 	}
+
+	onProcessForward() {
+		this.modelProcess.reasonDeny = this.contentForward
+		var request = {
+			_mRRecommendationForwardProcessIN: this.modelProcess,
+			RecommendationStatus: RECOMMENDATION_STATUS.RECEIVE_WAIT,
+			ReactionaryWord: this.modelProcess.reactionaryWord,
+			IsList: true,
+			IsForwardProcess: this.isForwardProcess,
+		}
+		this._service.recommendationProcess(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				$('#modalForward').modal('hide')
+				//this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
+				this._toastr.success(COMMONS.FORWARD_SUCCESS)
+				this.getList()
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(err) => {
+				console.error(err)
+			}
+	}
+
 	onProcessDeny() {
 		if (this.modelProcess.reasonDeny == '' || this.modelProcess.reasonDeny.trim() == '') {
 			this._toastr.error('Vui lòng nhập lý do')
