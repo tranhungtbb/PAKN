@@ -120,7 +120,7 @@ export class DepartmentComponent implements OnInit {
 					this.listData = []
 					this.listData = response.result.CADepartmentGetAllOnPage
 					console.log(this.listData)
-					this.totalRecords = response.result.TotalCount
+					this.totalRecords = response.result.CADepartmentGetAllOnPage[0]?response.result.CADepartmentGetAllOnPage[0].rowNumber: 0
 				}
 			} else {
 				this._toastr.error(response.message)
