@@ -64,7 +64,7 @@
 		</div>
 	</div>
 	<div class="col form-group">
-		<label class="mb-1">Huyện / Quận / thị xã...</label>
+		<label class="mb-1">Huyện / Quận / Thị xã...</label>
 		<ng-select [disabled]="nation_enable_type" [(ngModel)]="model.DistrictId" formControlName="District" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
 			(change)="onChangeDistrict()">
 			<ng-option *ngFor="let vill of listDistrict" [value]="vill.id">{{vill.name}}</ng-option>

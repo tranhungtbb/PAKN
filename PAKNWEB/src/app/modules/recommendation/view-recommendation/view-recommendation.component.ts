@@ -495,6 +495,7 @@ export class ViewRecommendationComponent implements OnInit {
 				this.toastr.error('Xảy ra lỗi trong quá trình xử lý')
 				return
 			}
+			this.toastr.success('Thêm bình luận thành công')
 			this.commentModel = new RecommnendationCommentObject()
 			this.getCommentPaged()
 		})

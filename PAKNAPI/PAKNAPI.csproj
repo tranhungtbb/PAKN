@@ -66,6 +66,7 @@
     <None Remove="ExportGrid\HIS_SystemLog.repx" />
     <None Remove="ExportGrid\Recommendation_ListGeneral.repx" />
     <None Remove="ExportGrid\Statistic_Recommendation_ByGroupWordDetail.repx" />
+    <None Remove="ExportGrid\SY_UserByUnit.repx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Upload\News\01042021103900-2.jpg" />
@@ -88,6 +89,7 @@
     <Content Include="Upload\Recommendation\5\4.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ExportGrid\SY_UserByUnit.repx" />
     <EmbeddedResource Include="ExportGrid\HIS_SystemLog.repx" />
     <EmbeddedResource Include="ExportGrid\BI_Individual_List.repx" />
     <EmbeddedResource Include="ExportGrid\BI_Business_List.repx" />
@@ -148,6 +150,12 @@
     </Compile>
     <Compile Update="ExportGrid\Statistic_Recommendation_ByGroupWordDetail.Designer.cs">
       <DependentUpon>Statistic_Recommendation_ByGroupWordDetail.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\SY_UserByUnit.cs">
+      <DependentUpon>SY_UserByUnit.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\SY_UserByUnit.Designer.cs">
+      <DependentUpon>SY_UserByUnit.repx</DependentUpon>
     </Compile>
   </ItemGroup>
   <Target Name="CreateAppDataFolder" AfterTargets="AfterPublish">

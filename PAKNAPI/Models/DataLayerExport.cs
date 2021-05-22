@@ -57,20 +57,15 @@ namespace PAKNAPI.Models
 
     public class ExportHisUser
     {
-        public int PageSize { get; set; }
-        public int PageIndex { get; set; }
         public int UserId { get; set; }
 
-        //public string? Action { get; set; }
+    }
+    public class ExportUserByUnit
+    {
+        public string UnitName { get; set; }
+        public int UnitId { get; set; }
 
-        //public string? CreateDate { get; set; }
-        //public string? IPAddress { get; set; }
-
-        //public int? Status { get; set; }
-        //public string? Description { get; set; }
-
-
-
+        
 
     }
 }

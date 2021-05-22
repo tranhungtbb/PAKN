@@ -163,6 +163,20 @@ namespace PAKNAPI
                         return re;
                     }
                     break;
+                case "ListUserByUnitId":
+                    var paraUser = JsonConvert.DeserializeObject<ExportUserByUnit>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.SY_UserByUnit.repx");
+                    result = XtraReport.FromStream(resource);
+                    result.Parameters["TitleReport"].Value = "Danh sách người dùng theo đơn vị " + paraUser.UnitName;
+                    result.Parameters["UnitId"].Value = paraUser.UnitId;
+
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        var re = ms.ToArray();
+                        return re;
+                    }
+                    break;
                 case "Statistic_Recommendation_ByGroupWord":
                     var paraStatisticByGroupWord = JsonConvert.DeserializeObject<Statistic_Recommendation_ByGroupWord>(objectReport, jss);
                     resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.Statistic_Recommendation_ByGroupWordDetail.repx");

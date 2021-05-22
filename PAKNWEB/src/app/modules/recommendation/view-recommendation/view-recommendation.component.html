@@ -309,8 +309,8 @@
 						</div>
 						<div *ngFor="let item of listCommentsPaged" class="border-bottom mb-3">
 							<header class="clearfix">
-								<div class="cmt-avatar pull-left mr-2">
-									<img src="" alt="" class="">
+								<div class="cmt-avatar pull-left avatar-circle mr-2" style="background: #EBF2FF; color: #5D90F1">
+									{{getShortName(item.fullName)}}
 								</div>
 								<div class="col-md-9">
 									<p class="h5">{{item.fullName}}</p>
