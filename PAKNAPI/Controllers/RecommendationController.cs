@@ -495,6 +495,8 @@ namespace PAKNAPI.Controller
         {
             try
             {
+                await new MRRecommendationDeleteByStep(_appSetting).MRRecommendationDeleteByStepDAO(request._mRRecommendationForwardInsertIN.RecommendationId, request._mRRecommendationForwardInsertIN.Step);
+
                 request._mRRecommendationForwardInsertIN.UserSendId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
                 request._mRRecommendationForwardInsertIN.UnitSendId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
                 request._mRRecommendationForwardInsertIN.SendDate = DateTime.Now;
@@ -681,6 +683,7 @@ namespace PAKNAPI.Controller
                     }
                 }
 
+                await new MRRecommendationDeleteByStep(_appSetting).MRRecommendationDeleteByStepDAO(request.DataConclusion.RecommendationId, STEP_RECOMMENDATION.APPROVE);
                 MRRecommendationForwardInsertIN dataForward = new MRRecommendationForwardInsertIN();
                 dataForward.RecommendationId = request.DataConclusion.RecommendationId;
                 dataForward.UserSendId = UserId;

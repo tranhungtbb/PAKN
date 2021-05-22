@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
-import { RecommendationObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
+import { RecommendationForwardObject, RecommendationObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
-import { MESSAGE_COMMON, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { Router } from '@angular/router'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { COMMONS } from 'src/app/commons/commons'
 
 declare var $: any
 
@@ -21,6 +23,7 @@ export class ListProcessDenyComponent implements OnInit {
 		private storeageService: UserInfoStorageService,
 		private _toastr: ToastrService,
 		private _shareData: DataService,
+		private _fb: FormBuilder,
 		private _router: Router
 	) {}
 	userLoginId: number = this.storeageService.getUserId()
@@ -47,6 +50,7 @@ export class ListProcessDenyComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
+	unitLoginId: number = this.storeageService.getUnitId()
 	ngOnInit() {
 		this.dataSearch.status = RECOMMENDATION_STATUS.PROCESS_DENY
 		this.getDataForCreate()
@@ -139,6 +143,74 @@ export class ListProcessDenyComponent implements OnInit {
 			this.pageSize = 20
 			this.getList()
 		}
+	}
+	formForward: FormGroup
+	lstUnitNotMain: any = []
+	get f() {
+		return this.formForward.controls
+	}
+
+	buildForm() {
+		this.formForward = this._fb.group({
+			unitReceiveId: [this.modelForward.unitReceiveId, Validators.required],
+			expiredDate: [this.modelForward.expiredDate],
+			content: [this.modelForward.content],
+		})
+	}
+
+	rebuilForm() {
+		this.formForward.reset({
+			unitReceiveId: this.modelForward.unitReceiveId,
+			expiredDate: this.modelForward.expiredDate,
+			content: this.modelForward.content,
+		})
+	}
+	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
+	preForward(id: number) {
+		this.modelForward = new RecommendationForwardObject()
+		this.modelForward.recommendationId = id
+		this.submitted = false
+		this.rebuilForm()
+		this._service.recommendationGetDataForForward({}).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if (response.result != null) {
+					this.lstUnitNotMain = response.result.lstUnitNotMain
+					$('#modal-tc-pakn').modal('show')
+				}
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(error) => {
+				console.log(error)
+			}
+	}
+
+	onForward() {
+		this.modelForward.content = this.modelForward.content.trim()
+		this.submitted = true
+		if (this.formForward.invalid) {
+			return
+		}
+		this.modelForward.step = STEP_RECOMMENDATION.PROCESS
+		this.modelForward.status = PROCESS_STATUS_RECOMMENDATION.WAIT
+		var request = {
+			_mRRecommendationForwardInsertIN: this.modelForward,
+			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
+			IsList: true,
+		}
+		this._service.recommendationForward(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				$('#modal-tc-pakn').modal('hide')
+				this.getList()
+				this._toastr.success(COMMONS.FORWARD_SUCCESS)
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(err) => {
+				console.error(err)
+			}
 	}
 
 	getHistories(id: number) {
