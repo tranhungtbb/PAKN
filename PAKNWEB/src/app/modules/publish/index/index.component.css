@@ -28,3 +28,46 @@
 .owl-item .card {
 	width: 350px;
 }
+
+:host ::ng-deep #owl-news .owl-nav button.owl-prev,
+:host ::ng-deep #owl-news .owl-nav button.owl-next {
+	outline: none;
+	border-radius: 20px;
+	position: absolute;
+	background: linear-gradient(180deg, #42a4ff 0%, #2a5494 100%);
+	border-radius: 4px;
+	transform: translateY(-50%);
+	width: 24px;
+	height: 24px;
+	bottom: -15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+:host ::ng-deep #owl-news .owl-nav button.owl-prev {
+	right: 18%;
+}
+:host ::ng-deep #owl-news .owl-nav button.owl-next {
+	right: 0px;
+}
+
+/* :host ::ng-deep #owl-news .owl-nav button.owl-next span {
+	margin-top: -9px;
+	margin-right: 1px;
+	font-size: 28px;
+	color: #fff;
+	font-weight: 100;
+} */
+:host ::ng-deep #owl-news .owl-nav button.owl-next span,
+:host ::ng-deep #owl-news .owl-nav button.owl-prev span {
+	margin-top: -9px;
+	margin-right: 1px;
+	font-size: 28px;
+	font-weight: 100;
+	color: #fff;
+}
+
+:host ::ng-deep .owl-theme .owl-dots {
+	margin-right: 45px;
+	text-align: right !important;
+}

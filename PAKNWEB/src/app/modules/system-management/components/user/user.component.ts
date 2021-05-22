@@ -270,8 +270,12 @@ export class UserComponent implements OnInit {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				this.getList()
 			} else {
-				// this.getList()
+				if (isNaN(response.result)) {
+					this._toastr.error(response.message)
+					return
+				}
 				this._toastr.error('Không thể xóa người dùng đã nằm trong 1 qui trình')
+				return
 			}
 		}),
 			(error) => {

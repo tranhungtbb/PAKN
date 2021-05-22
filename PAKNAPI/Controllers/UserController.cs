@@ -19,6 +19,7 @@ using System.Globalization;
 using PAKNAPI.Models;
 using PAKNAPI.Models.User;
 using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace PAKNAPI.Controllers
 {
@@ -30,15 +31,17 @@ namespace PAKNAPI.Controllers
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;
 		private readonly IHttpContextAccessor _httpContextAccessor;
+		private readonly IWebHostEnvironment _hostingEnvironment;
 		private Microsoft.Extensions.Configuration.IConfiguration _config;
 		public UserController(IFileService fileService, IAppSetting appSetting, IClient bugsnag,
-			IHttpContextAccessor httpContextAccessor, Microsoft.Extensions.Configuration.IConfiguration config)
+			IHttpContextAccessor httpContextAccessor, Microsoft.Extensions.Configuration.IConfiguration config, IWebHostEnvironment IWebHostEnvironment)
 		{
 			_fileService = fileService;
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
 			_httpContextAccessor = httpContextAccessor;
 			_config = config;
+			_hostingEnvironment = IWebHostEnvironment;
 		}
 
 		[HttpPost, DisableRequestSizeLimit]
@@ -149,14 +152,20 @@ namespace PAKNAPI.Controllers
 				if (result > 0)
 				{
 					// xóa avatar cũ
-					if (modelOld != null && string.IsNullOrEmpty(modelOld.Avatar))
+					if (modelOld != null && modelOld.Avatar != null)
 					{
-						await _fileService.Remove(modelOld.Avatar);
+						string _imageToBeDeleted = Path.Combine(_hostingEnvironment.WebRootPath, modelOld.Avatar);
+						//string _imageToBeDeleted = Path.Combine(_hostingEnvironment.WebRootPath, "Invitation\\", fname);
+						if ((System.IO.File.Exists(_imageToBeDeleted)))
+						{
+							System.IO.File.Delete(_imageToBeDeleted);
+						}
 					}
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 					return new Models.Results.ResultApi { Success = ResultCode.OK, Result = result };
 				}
 				else {
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Result = result };
 				}
 				
@@ -218,35 +227,35 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				List <SYUserDropList> result = new List<SYUserDropList>();
+				List <DropListTreeView> result = new List<DropListTreeView>();
 				// lst đơn vị
 				List<SYUnitGetDropdown> lstUnit = await new SYUnitGetDropdown(_appSetting).SYUnitGetDropdownDAO();
 				// lst người dùng theo đơn vị từng đơn vị
-				SYUserDropList tinh = new SYUserDropList();
+				DropListTreeView tinh = new DropListTreeView();
 				foreach (var province in lstUnit.Where(x=>x.UnitLevel == 1).ToList()) {
-					tinh = new SYUserDropList(province.Text,province.Value, new List<SYUserDropList>());
+					tinh = new DropListTreeView(province.Text,province.Value, new List<DropListTreeView>());
 					List<SYUserGetByUnitId> usersProvice = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(province.Value);
 					foreach (var userProvice in usersProvice) {
-						tinh.children.Add(new SYUserDropList(userProvice.FullName, userProvice.Id));
+						tinh.children.Add(new DropListTreeView(userProvice.FullName, userProvice.Id));
 					}
 					// list chilldren của chil
-					SYUserDropList huyen = new SYUserDropList();
+					DropListTreeView huyen = new DropListTreeView();
 					foreach (var district in lstUnit.Where(x => x.ParentId == province.Value && x.UnitLevel == 2).ToList()) {
-						huyen = new SYUserDropList(district.Text, district.Value, new List<SYUserDropList>());
+						huyen = new DropListTreeView(district.Text, district.Value, new List<DropListTreeView>());
 						List<SYUserGetByUnitId> usersDistrict = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(district.Value);
 						foreach (var userDistrict in usersDistrict)
 						{
-							huyen.children.Add(new SYUserDropList(userDistrict.FullName, userDistrict.Id));
+							huyen.children.Add(new DropListTreeView(userDistrict.FullName, userDistrict.Id));
 						}
 						// list children của child1
-						SYUserDropList xa = new SYUserDropList();
+						DropListTreeView xa = new DropListTreeView();
 						foreach (var commune in lstUnit.Where(x => x.ParentId == district.Value && x.UnitLevel == 3).ToList())
 						{
-							xa = new SYUserDropList(commune.Text,commune.Value, new List<SYUserDropList>());
+							xa = new DropListTreeView(commune.Text,commune.Value, new List<DropListTreeView>());
 							List<SYUserGetByUnitId> usersCommune = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(commune.Value);
 							foreach (var userCommune in usersCommune)
 							{
-								xa.children.Add(new SYUserDropList(userCommune.FullName, userCommune.Id));
+								xa.children.Add(new DropListTreeView(userCommune.FullName, userCommune.Id));
 							}
 							if (xa.children.Count > 0)
 							{

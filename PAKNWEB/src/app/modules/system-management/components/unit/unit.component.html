@@ -12,12 +12,16 @@
 					<i class="pi pi-plus"></i>
 				</button>
 			</p>
-			<p-tree id="tree-unit" [value]="treeUnit" [filter]="true">
 
+			<p-tree id="tree-unit" [value]="treeUnit" [filter]="true">
 				<ng-template let-node pTemplate="default" style="width:100%; overflow: hidden;">
+
 					<a (click)="treeViewActive(node.id, node.unitLevel)" class="cursor-hand" [ngClass]="{'text-color-blue':(unitObject.id && unitObject.id == node.id)}">
 						<strong>{{node.name}}</strong>
 					</a>
+				</ng-template>
+				<ng-template pTemplate="emptymessage">
+					<strong>Không có đơn vị nào</strong>
 				</ng-template>
 			</p-tree>
 		</div>
@@ -56,7 +60,7 @@
 				<div class="accordion__item">
 					<div class="accordion__header collapsed">
 						<div class="d-flex justify-content-between align-items-center pr-5">
-							<span class="accordion__header--text text-uppercase h4" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne"
+							<span class="accordion__header--text text-uppercase h4" id="title-user-in-unit" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne"
 								(click)="onCollapsed('item01')">Người dùng trong đơn
 								vị</span>
 							<div class="btn-group" role="group" [hidden]="!collapsed_checked['item01']">
@@ -152,6 +156,11 @@
 														class="bi bi-trash"></i></a>
 											</div>
 										</td>
+									</tr>
+								</ng-template>
+								<ng-template pTemplate="emptymessage">
+									<tr>
+										<td class="text-center" colspan="6">Không có dữ liệu</td>
 									</tr>
 								</ng-template>
 							</p-table>

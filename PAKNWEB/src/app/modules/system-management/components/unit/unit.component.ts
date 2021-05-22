@@ -131,6 +131,9 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			this.modelUnit = new UnitObject()
 			this.createUnitFrom.reset()
 		})
+		setTimeout(() => {
+			$('#title-user-in-unit').click()
+		}, 500)
 	}
 
 	collapsed_checked: any = {
@@ -193,6 +196,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 
 		this.getUnitInfo(id)
 		//this.getUnitPagedList()
+	}
+
+	onFilter(data) {
+		console.log(data)
 	}
 
 	getUnitInfo(id) {
@@ -258,11 +265,23 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				sortField: this.usSortField,
 			})
 			.subscribe((res) => {
-				if (res.success != 'OK') return
-				this.listUserPaged = res.result.SYUserGetAllOnPage
-				debugger
-				if (res.result.TotalCount > 0) this.totalCount_User = res.result.TotalCount
-				this.userPageCount = Math.ceil(this.totalCount_User / this.query.pageSize)
+				if (res.success != 'OK') {
+					this.listUserPaged = []
+					this.userPageCount = 0
+					this.queryUser.pageIndex = 1
+					this.queryUser.pageSize = 20
+				} else {
+					if (res.result.SYUserGetAllOnPage.length == 0) {
+						this.listUserPaged = []
+						this.userPageCount = 0
+						this.queryUser.pageIndex = 1
+						this.queryUser.pageSize = 20
+					} else {
+						this.listUserPaged = res.result.SYUserGetAllOnPage
+						if (res.result.TotalCount > 0) this.totalCount_User = res.result.TotalCount
+						this.userPageCount = Math.ceil(this.totalCount_User / this.query.pageSize)
+					}
+				}
 			})
 	}
 	onUserFilterChange() {
@@ -280,12 +299,15 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 
 	onDelUser(id: number) {
-		let userObj = this.listUserPaged.find((c) => c.id == id)
-
-		this.userService.delete(userObj).subscribe((res) => {
+		this.userService.delete({ Id: id }).subscribe((res) => {
 			if (res.success != 'OK') {
-				this._toastr.error('Dữ liệu đang được sử dụng, không được phép xoá!')
-				return
+				if (isNaN(res.result)) {
+					this._toastr.error(res.message)
+					return
+				} else {
+					this._toastr.error('Dữ liệu đang được sử dụng, không được phép xoá!')
+					return
+				}
 			}
 			this._toastr.success(COMMONS.DELETE_SUCCESS)
 			this.getUserPagedList()

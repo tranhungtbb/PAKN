@@ -304,7 +304,7 @@
 							<p class="h3 text-uppercase mt-4" style="font-weight: normal;">Bình luận ({{total_Comments}})</p>
 						</div>
 						<div class="p-4 rounded-xl mb-4" style="background-color: #ededed;">
-							<textarea class="form-control rounded mb-2" rows="4" maxlength="400" placeholder="Nhập bình luận..." [(ngModel)]="commentModel.contents"></textarea>
+							<textarea class="form-control rounded mb-2" rows="4" maxlength="500" placeholder="Nhập bình luận..." [(ngModel)]="commentModel.contents"></textarea>
 							<button class="btn btn-sm grd-blue border-0 pl-4 pr-4 text-white" (click)="onSendComment()"> Gửi </button>
 						</div>
 						<div *ngFor="let item of listCommentsPaged" class="border-bottom mb-3">
