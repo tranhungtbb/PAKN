@@ -28,6 +28,7 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	title: string = 'Soạn thảo SMS'
 	checkFirst: number
 	ltsUnitFirst: any[]
+	statusCurent: any = 1
 	listStatus: any = [
 		{ value: 1, text: 'Đang soạn thảo' },
 		{ value: 2, text: 'Đã gửi' },
