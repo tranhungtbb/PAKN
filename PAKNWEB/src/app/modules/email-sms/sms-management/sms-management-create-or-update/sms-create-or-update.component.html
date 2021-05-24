@@ -90,20 +90,29 @@
 												</label>
 											</div>
 										</div>
-										<div *ngIf="listIndividualAndBusinessGetByAdmintrativeId.length > 0">
-											<ng-select class="form-control" placeholder="Nhập..." [closeOnSelect]="true" formControlName="userId" [(ngModel)]="userId">
-												<ng-option *ngFor="let nt of listIndividualAndBusinessGetByAdmintrativeId" [value]="nt.id">
-													{{nt.name}}
-												</ng-option>
-											</ng-select>
-										</div>
-										<div *ngIf="listIndividualAndBusinessGetByAdmintrativeId.length == 0">
-											<ng-select class="form-control" placeholder="Nhập..." [closeOnSelect]="true" formControlName="userId" [(ngModel)]="userId">
-												<ng-option *ngFor="let nt of listIndividualAndBusinessGetByAdmintrativeId" [value]="nt.id">
-													{{nt.name}}
-												</ng-option>
-											</ng-select>
-										</div>
+
+										<p-multiSelect [options]="listIndividualAndBusinessGetByAdmintrativeId" formControlName="userId" [(ngModel)]="userId" optionLabel="name"
+											[virtualScroll]="true" optionValue="id">
+											<ng-template let-userSelected pTemplate="selectedItems">
+												<ng-container *ngIf="userSelected && userSelected.length <= 2">
+													<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">
+														<span>{{val.name}}</span>
+													</div>
+												</ng-container>
+
+												<span *ngIf="!userSelected || userSelected.length === 0" class="ui-multiselected-empty-token  ui-corner-all">Chọn cá nhân, doanh
+													nghiệp...</span>
+												<span *ngIf="userSelected && userSelected.length > 2" class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
+													cá nhân, doanh nghiệp đã chọn</span>
+											</ng-template>
+											<!-- <ng-template let-userItem pTemplate="item">
+												<ng-container *ngIf="!userItem || userItem.length == 0">
+													<div>Không có người dùng nào</div>
+												</ng-container>
+												<div style="font-size:14px">{{userItem.name}}</div>
+											</ng-template> -->
+										</p-multiSelect>
+
 									</div>
 									<div class="action padding-item center">
 										<button type="button" style="width: 40px; height: 40px;" class="btn grd-blue btn-block border-0 px-3 text-white center"

@@ -104,11 +104,11 @@ export class LoginComponent implements OnInit {
 		this.user.Password = this.user.Password.trim()
 		if (this.loginForm.invalid) {
 			if (this.loginForm.controls.name.status == 'INVALID') {
-				$('#name').focus()
+				$("input[id='username']").focus()
 				return
 			}
 			if (this.loginForm.controls.pass.status == 'INVALID') {
-				$('#pass').focus()
+				$("input[id='userpass']").focus()
 				return
 			}
 
@@ -185,14 +185,14 @@ export class LoginComponent implements OnInit {
 		this.userProduct.UserName = this.userProduct.UserName.trim()
 		this.userProduct.Password = this.userProduct.Password.trim()
 		if (this.loginFormProduct.invalid) {
-			// if (this.loginFormProduct.controls.name.status == 'INVALID') {
-			// 	$('#name').focus()
-			// 	return
-			// }
-			// if (this.loginFormProduct.controls.pass.status == 'INVALID') {
-			// 	$('#pass').focus()
-			// 	return
-			// }
+			if (this.loginFormProduct.controls.name.status == 'INVALID') {
+				$("input[id='productname']").focus()
+				return
+			}
+			if (this.loginFormProduct.controls.pass.status == 'INVALID') {
+				$("input[id='productpass']").focus()
+				return
+			}
 			return
 		} else {
 			var constdata = {

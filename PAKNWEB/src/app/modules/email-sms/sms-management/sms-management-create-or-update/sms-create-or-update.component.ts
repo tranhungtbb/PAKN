@@ -33,8 +33,9 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	]
 	listItemUserSelected: Array<smsManagementMapObject>
 	administrativeUnitId: any
+	administrativeUnitsBase: any[]
 	listIndividualAndBusinessGetByAdmintrativeId: any[]
-	userId: any
+	userId: any[] = []
 	individual: boolean = true
 	business: boolean = true
 	individualBusinessInfo: any[]
@@ -48,12 +49,13 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 		this.listItemUserSelected = []
 		this.listIndividualAndBusinessGetByAdmintrativeId = []
 		this.individualBusinessInfo = []
+		this.userId = []
 	}
 
 	// treeview
 
 	administrativeUnits: TreeviewItem[]
-	ltsAdministrativeUnitId: number[]
+	ltsAdministrativeUnitId: string
 	config = TreeviewConfig.create({
 		hasAllCheckBox: true,
 		hasFilter: true,
@@ -63,59 +65,58 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	})
 
 	ngOnInit() {
-		// this.getAdministrativeUnits()
+		this.getAdministrativeUnits()
 		this.buildForm()
-		this.administrativeUnits = [
-			new TreeviewItem({
-				text: 'Khánh Hòa',
-				value: 9,
-				children: [
-					{ text: 'Khánh Hòa 2', value: 91 },
-					{
-						text: 'Huyện 1',
-						value: 91,
-						children: [
-							{
-								text: 'Huyện 1',
-								value: 9111,
-							},
-							{ text: 'Xã 1', value: 9111 },
-							{ text: 'Xã 2', value: 9112 },
-							{ text: 'Xã 3', value: 9112 },
-						],
-					},
-					{
-						text: 'Huyện 2',
-						value: 91,
-						children: [
-							{
-								text: 'Huyện 3',
-								value: 9111,
-							},
-							{ text: 'Xã 1', value: 9111 },
-							{ text: 'Xã 2', value: 9112 },
-							{ text: 'Xã 3', value: 9112 },
-						],
-					},
-					{
-						text: 'Huyện 3',
-						value: 91,
-						children: [
-							{
-								text: 'Huyện 3',
-								value: 9111,
-							},
-							{ text: 'Xã 1', value: 9111 },
-							{ text: 'Xã 2', value: 9112 },
-							{ text: 'Xã 3', value: 9112 },
-						],
-					},
-				],
-			}),
-		]
+		this.administrativeUnits = []
 	}
 
-	onSelectedChange(values: []) {}
+	getAdministrativeUnits() {
+		this.smsService.GetListAdmintrative({ id: 37 }).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.administrativeUnitsBase = res.result.CAAdministrativeUnitsGetDropDown
+				if (this.administrativeUnitsBase.length > 0) {
+					var itemFirst = new TreeViewDrop()
+					itemFirst.text = this.administrativeUnitsBase[0].name
+					itemFirst.value = this.administrativeUnitsBase[0].id
+					itemFirst.children = []
+					itemFirst.checked = false
+					itemFirst.children.push({ text: this.administrativeUnitsBase[0].name, value: this.administrativeUnitsBase[0].id, checked: false })
+
+					for (const iterator of this.administrativeUnitsBase.filter((x) => x.parentId == itemFirst.value)) {
+						var item = new TreeViewDrop()
+						item.value = iterator.id
+						item.text = iterator.name
+						item.children = []
+						item.checked = false
+						item.children.push({ value: iterator.id, text: iterator.name, checked: false })
+
+						for (const iterator1 of this.administrativeUnitsBase.filter((x) => x.parentId == iterator.id)) {
+							let item2 = new TreeViewDrop()
+							item2.value = iterator1.id
+							item2.text = iterator1.name
+							item2.checked = false
+							item.children.push(item2)
+						}
+						itemFirst.children.push(item)
+					}
+					this.administrativeUnits = [new TreeviewItem({ ...itemFirst })]
+				}
+				this.getSMSModelById()
+			} else {
+				this.administrativeUnits = []
+			}
+		})
+	}
+
+	onSelectedChange(values: []) {
+		this.ltsAdministrativeUnitId = null
+		if (values.length > 0) {
+			this.ltsAdministrativeUnitId = values.reduce((x, y) => {
+				return (x += ',' + y)
+			}, '')
+		}
+		this.onLoadListIndividualAndBusiness()
+	}
 
 	buildForm() {
 		this.form = this.formBuilder.group({
@@ -154,17 +155,6 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 		this.action = this.model.id == 0 ? 'Lưu' : 'Lưu'
 	}
 
-	getAdministrativeUnits() {
-		this.smsService.GetListAdmintrative({ id: 37 }).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				// this.administrativeUnits = res.result.CAAdministrativeUnitsGetDropDown
-				this.getSMSModelById()
-			} else {
-				this.administrativeUnits = []
-			}
-		})
-	}
-
 	get f() {
 		return this.form.controls
 	}
@@ -191,9 +181,9 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	}
 
 	onLoadListIndividualAndBusiness() {
-		this.userId = null
-		if (this.administrativeUnitId == undefined) {
+		if (this.ltsAdministrativeUnitId == undefined || this.ltsAdministrativeUnitId == null || this.ltsAdministrativeUnitId == '') {
 			this._toastr.error('Vui lòng chọn đơn vị')
+			this.listIndividualAndBusinessGetByAdmintrativeId = []
 			return
 		}
 		let type: number = 0
@@ -210,23 +200,21 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 				return
 			}
 		}
-
-		this.smsService
-			.GetListIndividualAndBusinessByAdmintrativeUnitId({
-				id: this.administrativeUnitId,
-				type: type,
-			})
-			.subscribe((res) => {
-				if (res.success == RESPONSE_STATUS.success) {
-					if (res.result.BIIndividualOrBusinessGetDropListByProviceId.length > 0) {
-						this.listIndividualAndBusinessGetByAdmintrativeId = res.result.BIIndividualOrBusinessGetDropListByProviceId
-					} else {
-						this.listIndividualAndBusinessGetByAdmintrativeId = []
-					}
+		let obj = {
+			LtsAdministrativeId: this.ltsAdministrativeUnitId,
+			type: type,
+		}
+		this.smsService.GetListIndividualAndBusinessByAdmintrativeUnitId(obj).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				if (res.result.BIIndividualOrBusinessGetDropListByProviceId.length > 0) {
+					this.listIndividualAndBusinessGetByAdmintrativeId = res.result.BIIndividualOrBusinessGetDropListByProviceId
 				} else {
 					this.listIndividualAndBusinessGetByAdmintrativeId = []
 				}
-			})
+			} else {
+				this.listIndividualAndBusinessGetByAdmintrativeId = []
+			}
+		})
 	}
 
 	onSave(isSend: boolean) {
@@ -356,50 +344,37 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 	}
 
 	onCreateUser() {
-		if (this.statusCurent == 2) {
-			this._toastr.error('Không thể thêm người dân, doanh nghiệp nhận SMS')
-			return
-		}
-		if (this.administrativeUnitId == undefined) {
+		if (this.ltsAdministrativeUnitId == undefined) {
 			this._toastr.error('Vui lòng chọn đơn vị')
 			return
 		}
-		if (this.userId != undefined) {
-			if (this.listItemUserSelected.length == 0) {
-				let item = this.listIndividualAndBusinessGetByAdmintrativeId.find((x) => x.id == this.userId)
+		this.listItemUserSelected = []
+		if (this.userId != undefined || this.userId.length > 0 || this.userId != null) {
+			this.listItemUserSelected = []
+			for (const iterator of this.userId) {
 				var obj = new smsManagementMapObject()
-				obj.id = this.userId
-				obj.category = item.category
-				obj.name = item.name
-				obj.administrativeUnitName = item.administrativeUnitName
-				obj.administrativeUnitId = item.administrativeUnitId
-				this.listItemUserSelected.push(obj)
-			} else {
-				let check = this.listItemUserSelected.find((x) => x.id == this.userId)
-				if (check != undefined) {
-					this._toastr.error('Bạn đã chọn người này')
-					return
-				}
-				let item = this.listIndividualAndBusinessGetByAdmintrativeId.find((x) => x.id == this.userId)
-				var obj = new smsManagementMapObject()
-				obj.id = this.userId
-				obj.category = item.category
-				obj.name = item.name
-				obj.administrativeUnitName = item.administrativeUnitName
-				obj.administrativeUnitId = item.administrativeUnitId
+				obj.id = iterator.id
+				obj.category = iterator.category
+				obj.name = iterator.name
+				obj.administrativeUnitName = iterator.administrativeUnitName
+				obj.administrativeUnitId = iterator.administrativeUnitId
 				this.listItemUserSelected.push(obj)
 			}
+			this._toastr.success('Thêm mới thành công ' + this.userId.length + ' người dùng!')
 		} else {
 			this._toastr.error('Vui lòng chọn cá nhân, doanh nghiệp')
 			return
 		}
 	}
 	onRemoveUser(item: any) {
-		if (this.statusCurent == 2) {
-			this._toastr.error('Không thể xóa người dân, doanh nghiệp nhận SMS')
-			return
-		}
 		this.listItemUserSelected = this.listItemUserSelected.filter((x) => x.id != item.id)
 		return
 	}
+}
+
+class TreeViewDrop {
+	text: string
+	value: number
+	children: any[]
+	checked: boolean
 }

@@ -152,6 +152,7 @@ export const FILETYPE = [
 	{ text: 'application/vnd.ms-powerpoint.presentation.macroEnabled.12', value: 6 },
 	{ text: 'application/vnd.ms-powerpoint.template.macroEnabled.12', value: 6 },
 	{ text: 'application/vnd.ms-powerpoint.slideshow.macroEnabled.12', value: 6 },
+	{ text: 'video/mp4', value: 7 },
 ]
 
 export class REGEX {
