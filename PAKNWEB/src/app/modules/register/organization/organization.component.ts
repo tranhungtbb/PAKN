@@ -76,7 +76,6 @@ export class OrganizationComponent implements OnInit {
 		this.child_OrgRepreForm.fInfoSubmitted = true
 		this.fOrgInfoSubmitted = true
 		this.child_OrgAddressForm.fOrgAddressSubmitted = true
-		console.log(this.model)
 		let fDob: any = document.querySelector('#_dob')
 		let fIsDate: any = document.querySelector('#_IsDate')
 		this.model._RepresentativeBirthDay = fDob.value

@@ -359,7 +359,6 @@ export class AppheaderComponent implements OnInit {
 			PageSize: this.pageSize,
 			UserId: localStorage.getItem('userId'),
 		}
-		console.log(req)
 		this.userService.getSystemLogin(req).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {

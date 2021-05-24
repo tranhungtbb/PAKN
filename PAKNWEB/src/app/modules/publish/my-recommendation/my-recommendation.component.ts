@@ -215,7 +215,6 @@ export class MyRecommendationComponent implements OnInit {
 		for (let i = 0; i < Math.ceil(this.totalRecords / this.pageSize); i++) {
 			this.pagination.push({ index: i + 1 })
 		}
-		console.log(this.pagination)
 	}
 
 	changePagination(index: any) {

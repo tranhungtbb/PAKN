@@ -283,7 +283,6 @@ export class BusinessComponent implements OnInit {
 		passingObj = this.dataSearch
 		passingObj.TitleReport = 'DANH SÁCH DOANH NGHIỆP'
 		this._shareData.setobjectsearch(passingObj)
-		console.log('passingObj', passingObj)
 		this._shareData.sendReportUrl = 'BI_Business_List?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])
 	}

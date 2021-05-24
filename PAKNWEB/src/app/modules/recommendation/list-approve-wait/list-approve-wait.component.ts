@@ -194,7 +194,6 @@ export class ListApproveWaitComponent implements OnInit {
 			this._service.recommendationProcess(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
-					debugger
 					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
 
 					this._toastr.success(COMMONS.DENY_SUCCESS)

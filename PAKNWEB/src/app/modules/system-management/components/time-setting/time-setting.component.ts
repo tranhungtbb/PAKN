@@ -47,7 +47,7 @@ export class TimeSettingComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		$('#modal').on('keypress', function(e) {
+		$('#modal').on('keypress', function (e) {
 			if (e.which == 13) e.preventDefault()
 		})
 	}
@@ -65,7 +65,7 @@ export class TimeSettingComponent implements OnInit {
 		})
 	}
 	getListDate() {
-		this._service.getSystemTimeDateActive().subscribe(response => {
+		this._service.getSystemTimeDateActive().subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.listDate = response.result.SYTimeGetDateActive
 				this.lstDate = this.listDate.map(({ time }) => new Date(time).setHours(0, 0, 0, 0))
@@ -73,14 +73,14 @@ export class TimeSettingComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 				alert(error)
 			}
 	}
 	getMarkedDays(date) {
 		var i = new Date(date.month + 1 + '/' + date.day + '/' + date.year).getTime()
-		return this.lstDate.find(item => {
+		return this.lstDate.find((item) => {
 			return item === i
 		})
 	}
@@ -104,20 +104,20 @@ export class TimeSettingComponent implements OnInit {
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
-		
-		this._service.getSystemTime(request).subscribe(response => {
+
+		this._service.getSystemTime(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
 					this.listData = response.result.SYTimeGetAllOnPage
-					console.log(response)
+
 					this.totalRecords = response.result.SYTimeGetAllOnPage.length != 0 ? response.result.SYTimeGetAllOnPage[0].rowNumber : 0
 				}
 			} else {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 				alert(error)
 			}
@@ -136,7 +136,7 @@ export class TimeSettingComponent implements OnInit {
 	dataStateChange() {
 		this.pageIndex = 1
 		this.table.first = 0
-		$(document).ready(function() {
+		$(document).ready(function () {
 			if ($('#TimeSearch').val() == 'Invalid date') {
 				$('#TimeSearch').val('')
 			}
@@ -182,8 +182,7 @@ export class TimeSettingComponent implements OnInit {
 		if (this.model.id == 0 || this.model.id == null) {
 			let timeStr = this.model.time.toLocaleDateString()
 			this.model.time = new Date(timeStr)
-			this._service.insertSystemTime(this.model).subscribe(response => {
-				console.log(response)
+			this._service.insertSystemTime(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -198,12 +197,12 @@ export class TimeSettingComponent implements OnInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				error => {
+				(error) => {
 					console.error(error)
 					alert(error)
 				}
 		} else {
-			this._service.updateSystemTime(this.model).subscribe(response => {
+			this._service.updateSystemTime(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -218,7 +217,7 @@ export class TimeSettingComponent implements OnInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				error => {
+				(error) => {
 					console.error(error)
 					alert(error)
 				}
@@ -230,7 +229,7 @@ export class TimeSettingComponent implements OnInit {
 		let request = {
 			Id: data.id,
 		}
-		this._service.getSystemTimeById(request).subscribe(response => {
+		this._service.getSystemTimeById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.rebuilForm()
 				this.title = 'Chỉnh sửa ngày nghỉ'
@@ -241,7 +240,7 @@ export class TimeSettingComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 				alert(error)
 			}
@@ -255,8 +254,7 @@ export class TimeSettingComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.deleteSystemTime(request).subscribe(response => {
-			console.log(response)
+		this._service.deleteSystemTime(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result > 0) {
 					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
@@ -270,14 +268,14 @@ export class TimeSettingComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 			}
 	}
 
 	onUpdateStatus(data) {
 		data.isActived = !data.isActived
-		this._service.updateSystemTime(data).subscribe(res => {
+		this._service.updateSystemTime(data).subscribe((res) => {
 			$('#modalConfirmUpdateStatus').modal('hide')
 			if (res.success == 'OK') {
 				if (data.isActived == true) {
@@ -289,7 +287,7 @@ export class TimeSettingComponent implements OnInit {
 				this._toastr.error(res.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 			}
 	}

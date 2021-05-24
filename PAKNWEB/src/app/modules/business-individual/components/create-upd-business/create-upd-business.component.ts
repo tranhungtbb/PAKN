@@ -128,9 +128,7 @@ export class CreateUpdBusinessComponent implements OnInit {
 		}
 		this.businessIndividualService.businessGetByID(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				console.log('response 2', response)
 				this.model = response.result.BusinessGetById[0]
-				console.log('this.model', this.model)
 
 				// Thông tin người đại diện
 				this.child_OrgRepreForm.model.RepresentativeName = response.result.BusinessGetById[0].representativeName
@@ -143,7 +141,6 @@ export class CreateUpdBusinessComponent implements OnInit {
 				// this.child_OrgRepreForm.model._RepresentativeBirthDay = response.result.BusinessGetById[0].representativeBirthDay
 				this.child_OrgRepreForm.model.Address = response.result.BusinessGetById[0].address
 				// DOB: [this.model._RepresentativeBirthDay, []],
-				console.log('this.child_OrgRepreForm.model', this.child_OrgRepreForm.model)
 				let fDob: any = document.querySelector('#_dob')
 				let fIsDate: any = document.querySelector('#_IsDate')
 				fDob.value = new Date(response.result.BusinessGetById[0].representativeBirthDay)

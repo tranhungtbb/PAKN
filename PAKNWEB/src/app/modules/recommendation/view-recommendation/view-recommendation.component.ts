@@ -100,7 +100,6 @@ export class ViewRecommendationComponent implements OnInit {
 				if (this.model.status > RECOMMENDATION_STATUS.PROCESSING) {
 					this.modelConclusion = response.result.modelConclusion
 					this.files = response.result.filesConclusion
-					console.log(this.files)
 				} else {
 					this.modelConclusion = new RecommendationConclusionObject()
 				}

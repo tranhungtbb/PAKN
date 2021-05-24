@@ -70,7 +70,6 @@ export class EmailSettingComponent implements OnInit {
 	onCancel() {
 		this.buildForm()
 		this._service.getSystemEmail().subscribe((response) => {
-			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result.SYEmailGetFirst.length != 0) {
 					this.model = response.result.SYEmailGetFirst[0]
@@ -131,7 +130,6 @@ export class EmailSettingComponent implements OnInit {
 			Port: this.model.port,
 		}
 		this._service.updateSystemEmail(req).subscribe((response) => {
-			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success('Cập nhật cấu hình Email thành công')
 			} else {

@@ -189,11 +189,9 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	}
 
 	onChangeAvatar() {
-		debugger
 		$('#' + this.modalId + ' .seclect-avatar').click()
 	}
 	changeSelectAvatar(event: any) {
-		debugger
 		var file = event.target.files[0]
 		if (!['image/jpeg', 'image/png'].includes(file.type)) {
 			this.toast.error('Chỉ chọn tệp tin ảnh')
@@ -234,7 +232,6 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		if (this.isOrganizational == true) {
 			if (!this.editByMyself) this.modelUser.unitId = unitId
 		}
-		debugger
 		if (userId > 0) {
 			this.modalTitle = 'Chỉnh sửa người dùng'
 			this.modal_btn_save = 'Cập nhật'

@@ -67,7 +67,7 @@ export class SystemLogComponent implements OnInit {
 	constructor(private userService: UserService, private _toastr: ToastrService) {}
 
 	ngOnInit() {
-		this.userService.getUserDropdown().subscribe(response => {
+		this.userService.getUserDropdown().subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listUser = []
@@ -77,7 +77,7 @@ export class SystemLogComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 			}
 	}
@@ -88,7 +88,7 @@ export class SystemLogComponent implements OnInit {
 	}
 	dataStateChange() {
 		this.pageIndex = 1
-		$(document).ready(function() {
+		$(document).ready(function () {
 			if ($('#createDate').val() == 'Invalid date') {
 				$('#createDate').val('')
 			}
@@ -103,7 +103,7 @@ export class SystemLogComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this.userService.sysLogDelete(request).subscribe(response => {
+		this.userService.sysLogDelete(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				$('#modalConfirmDelete').modal('hide')
@@ -112,7 +112,7 @@ export class SystemLogComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 			}
 	}
@@ -126,8 +126,7 @@ export class SystemLogComponent implements OnInit {
 			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
 			UserId: this.dataSearch.userId != null ? this.dataSearch.userId : '',
 		}
-		this.userService.getSystemLoginAdmin(req).subscribe(response => {
-			console.log(response)
+		this.userService.getSystemLoginAdmin(req).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
