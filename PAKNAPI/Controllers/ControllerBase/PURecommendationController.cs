@@ -58,6 +58,33 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Route("MyRecommendationAllOnPage")]
+		public async Task<ActionResult<object>> MyRecommendationAllOnPage(int? userId ,string LtsStatus, int PageSize, int PageIndex)
+		{
+			try
+			{
+				var rsMyRecommendationOnPage = await new PURecommendation(_appSetting).MyRecommendationAllOnPage(userId, LtsStatus, PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MyRecommendation", rsMyRecommendationOnPage},
+						{"TotalCount", rsMyRecommendationOnPage != null && rsMyRecommendationOnPage.Count > 0 ? rsMyRecommendationOnPage[0].RowNumber : 0},
+						{"PageIndex", rsMyRecommendationOnPage != null && rsMyRecommendationOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsMyRecommendationOnPage != null && rsMyRecommendationOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		
+
 		#endregion PURecommendationAllOnPage
 
 

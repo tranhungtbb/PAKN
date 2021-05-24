@@ -53,6 +53,29 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendationGetDenyContentsBase")]
+		public async Task<ActionResult<object>> MRRecommendationGetDenyContentsBase(int? Id)
+		{
+			try
+			{
+				List<MRRecommendationGetDenyContentsBase> rsHISRecommendationGetByObjectId = await new MRRecommendationGetDenyContentsBase(_appSetting).MRRecommendationGetDenyContentsBaseDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"MRRecommendationGetDenyContentsBase", rsHISRecommendationGetByObjectId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("HISRecommendationInsertBase")]

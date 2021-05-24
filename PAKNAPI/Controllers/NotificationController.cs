@@ -316,6 +316,7 @@ namespace PAKNAPI.Controllers
                     DateParseHandling = DateParseHandling.DateTimeOffset,
                 };
                 var model = JsonConvert.DeserializeObject<SYNotificationGetList>(Request.Form["model"].ToString(), jss);
+                var s = (int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
                 var syNotifications = await new SYNotificationGetListOnPageByReceiveId(_appSetting).SYNotificationGetListOnPageByReceiveIdDAO((int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext), model.PageSize, model.PageIndex, model.Title , model.Content , model.Type , model.SendDate);
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {

@@ -407,6 +407,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 						this.modelUnit = new UnitObject()
 						$('#modal-create-or-update').modal('hide')
 					} else {
+						$("[id='unitId']").focus()
 						this._toastr.error('Tên đơn vị đã tồn tại.')
 					}
 				}
@@ -424,6 +425,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 						this.modelUnit = new UnitObject()
 						$('#modal-create-or-update').modal('hide')
 					} else {
+						$("[id='unitId']").focus()
 						this._toastr.error('Tên đơn vị đã tồn tại')
 					}
 				}

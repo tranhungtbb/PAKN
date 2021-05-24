@@ -33,17 +33,16 @@ export class ViewRightComponent implements OnInit {
 				}
 			}
 		})
-		if (this.isLogin) {
-			this._service.recommendationStatisticsGetByUserId({}).subscribe((res) => {
-				if (res.success == RESPONSE_STATUS.success && res.result != null) {
-					this.recommendationStatistics = res.result.PURecommendationStatisticsGetByUserId[0]
-					for (const iterator in this.recommendationStatistics) {
-						this.totalRecommentdation += this.recommendationStatistics[iterator]
-					}
+		debugger
+		this._service.recommendationStatisticsGetByUserId({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success && res.result != null) {
+				this.recommendationStatistics = res.result.PURecommendationStatisticsGetByUserId[0]
+				for (const iterator in this.recommendationStatistics) {
+					this.totalRecommentdation += this.recommendationStatistics[iterator]
 				}
-				return
-			})
-		}
+			}
+			return
+		})
 	}
 
 	redirectDetailRecommendaton(id: any) {

@@ -312,7 +312,7 @@
 					<div class="form-row">
 						<div class="col-12 col-lg-8 form-group" [ngClass]="{'col-lg-4':modelUnit.unitLevel > 1,'col-lg-8':modelUnit.unitLevel == 1}">
 							<label class="mb-1">Tên đơn vị <span class="cl-red">(*)</span></label>
-							<input svTrim formControlName="name" [(ngModel)]="modelUnit.name" type="text" class="form-control" placeholder="Nhập...">
+							<input svTrim formControlName="name" [(ngModel)]="modelUnit.name" type="text" class="form-control" placeholder="Nhập..." id="unitId">
 							<div *ngIf="(unitFormSubmitted && fUnit.name.invalid)||(fUnit.name.invalid && (fUnit.name.dirty || fUnit.name.touched))" class="has-error m-b-12">
 								<div *ngIf="fUnit.name.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>

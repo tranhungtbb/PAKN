@@ -51,6 +51,7 @@ export class Api {
 
 	public static PuRecommendationGetAllOnPage = 'PURecommendation/PURecommendationAllOnPage'
 	public static PuRecomentdationGetListOrderByCountClick = 'PURecommendation/PURecommendationGetListOrderByCountClick'
+	public static MyRecommendationGetAllOnPage = 'PURecommendation/MyRecommendationAllOnPage'
 	public static PuRecommendationGetById = 'PURecommendation/PURecommendationGetById'
 	public static PuChangeSatisfaction = 'PURecommendation/ChangeSatisfaction'
 	public static PuRecommendationCountClick = 'PURecommendation/PURecommendationCountClick'

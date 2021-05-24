@@ -22,39 +22,39 @@
 </ul>
 <div class="sb-tk-pakn mb-4">
 	<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between">
-		<h4 class="text-uppercase">Thống kê Phản ánh, kiến nghị của tôi</h4>
-		<h4 class="counter">{{totalPANK}}</h4>
+		<h4 class="text-uppercase pointer">Thống kê PAKN của tôi</h4>
+		<h4 class="counter">{{totalRecommentdation}}</h4>
 	</div>
 	<div class="card-body p-0">
-		<p class="mb-1">Chờ xử lý
-			<span class="pull-right font-weight-bold cl-yellow counter">{{graphData['stt_2']?.count}}</span>
+		<p class="mb-1 pointer">Chờ xử lý
+			<span class="pull-right font-weight-bold cl-yellow counter">{{recommendationStatistics.receiveWait}}</span>
 		</p>
-		<div class="progress ">
-			<div class="progress-bar grd-yellow1 progress-animated" style="height:6px;" role="progressbar" [style.width.%]="graphData['stt_2']?.per_100">
+		<div class="progress pointer">
+			<div class="progress-bar grd-yellow1 progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.receiveWait)" role="progressbar">
 			</div>
 		</div>
 
-		<p class="mb-1 mt-4">Đã tiếp nhận
-			<span class="pull-right font-weight-bold cl-blue2 counter">{{graphData['stt_4578']?.count}}</span>
+		<p class="mb-1 mt-4 pointer">Đã tiếp nhận
+			<span class="pull-right font-weight-bold cl-blue2 counter">{{recommendationStatistics.receiveApproved}}</span>
 		</p>
-		<div class="progress ">
-			<div class="progress-bar grd-xanhngoc progress-animated" style="height:6px;" role="progressbar" [style.width.%]="graphData['stt_4578']?.per_100">
+		<div class="progress pointer">
+			<div class="progress-bar grd-xanhngoc progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.receiveApproved)" role="progressbar">
 			</div>
 		</div>
 
-		<p class="mb-1 mt-4">Đã trả lời
-			<span class="pull-right font-weight-bold cl-blue counter">{{graphData['stt_10']?.count}}</span>
+		<p class="mb-1 mt-4 pointer">Đã trả lời
+			<span class="pull-right font-weight-bold cl-blue counter">{{recommendationStatistics.finised}}</span>
 		</p>
-		<div class="progress ">
-			<div class="progress-bar grd-blue progress-animated" style="height:6px;" role="progressbar" [style.width.%]="graphData['stt_10']?.per_100">
+		<div class="progress pointer">
+			<div class="progress-bar grd-blue progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.finised)" role="progressbar">
 			</div>
 		</div>
 
-		<p class="mb-1 mt-4">Bị từ chối
-			<span class="pull-right font-weight-bold cl-red counter">{{graphData['stt_369']?.count}}</span>
+		<p class="mb-1 mt-4 pointer">Bị từ chối
+			<span class="pull-right font-weight-bold cl-red counter">{{recommendationStatistics.approve}}</span>
 		</p>
-		<div class="progress ">
-			<div class="progress-bar grd-red progress-animated" style="height:6px;" role="progressbar" [style.width.%]="graphData['stt_369']?.per_100">
+		<div class="progress pointer">
+			<div class="progress-bar grd-red progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.approve)" role="progressbar">
 			</div>
 		</div>
 

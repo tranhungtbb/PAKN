@@ -120,10 +120,10 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 	getMrDenyContent(mrId: number) {
 		this.recommendationService
 			.getDenyContent({
-				RecommendationId: mrId,
+				Id: mrId,
 			})
 			.subscribe((res) => {
-				this.mrDenyContent = res.result.MRRecommendationGetDenyContents[0]
+				this.mrDenyContent = res.result.MRRecommendationGetDenyContentsBase[res.result.MRRecommendationGetDenyContentsBase.length - 1]
 			})
 	}
 

@@ -8,7 +8,20 @@ using System.Threading.Tasks;
 
 namespace PAKNAPI.Models.ModelBase
 {
-    public class PURecommendation
+    public class MyRecommendation
+    {
+
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+        public DateTime CreatedDate { get; set; }
+
+        public int RowNumber { get; set; }
+
+        public int Status { get; set; }
+    }
+        public class PURecommendation
     {
 
         private SQLCon _sQLCon;
@@ -46,6 +59,18 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("PageIndex", PageIndex);
 
             return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetAllOnPage", DP)).ToList();
+        }
+
+        public async Task<List<MyRecommendation>> MyRecommendationAllOnPage(int?CreateBy, string LtsStatus, int PageSize, int PageIndex)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("CreateBy", CreateBy);
+            DP.Add("ltsStatus", LtsStatus);
+
+            DP.Add("PageSize", PageSize);
+            DP.Add("PageIndex", PageIndex);
+
+            return (await _sQLCon.ExecuteListDapperAsync<MyRecommendation>("My_RecommendationAllOnPage", DP)).ToList();
         }
 
         public async Task<List<PURecommendation>> PURecommendationGetListOrderByCountClick(int? Status)

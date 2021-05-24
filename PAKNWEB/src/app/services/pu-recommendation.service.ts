@@ -14,6 +14,10 @@ export class PuRecommendationService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PuRecommendationGetAllOnPage)
 	}
 
+	getMyRecommentdation(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.MyRecommendationGetAllOnPage)
+	}
+
 	getListOrderByCountClick(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PuRecomentdationGetListOrderByCountClick)
 	}

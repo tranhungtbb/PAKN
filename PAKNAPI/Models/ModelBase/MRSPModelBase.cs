@@ -42,6 +42,36 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class MRRecommendationGetDenyContentsBase
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationGetDenyContentsBase(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationGetDenyContentsBase()
+		{
+		}
+
+		public int Id { get; set; }
+		public int RecommendationId { get; set; }
+		
+		public string? ReasonDeny { get; set; }
+		public string Content { get; set; }
+		public int? Status { get; set; }
+		public DateTime? SendDate { get; set; }
+
+		public async Task<List<MRRecommendationGetDenyContentsBase>> MRRecommendationGetDenyContentsBaseDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationId", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetDenyContentsBase>("[MR_Recommendation_GetDenyContents]", DP)).ToList();
+		}
+	}
+
 	public class HISRecommendationInsert
 	{
 		private SQLCon _sQLCon;

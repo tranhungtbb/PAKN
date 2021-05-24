@@ -95,6 +95,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 
 	getUserInfo() {
 		this.accountService.getUserInfo().subscribe((res) => {
+			debugger
 			if (res.success != 'OK') {
 				this.toast.error(res.message)
 				return

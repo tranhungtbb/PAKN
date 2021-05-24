@@ -15,7 +15,6 @@ import { Api } from 'src/app/constants/api'
 import { CaptchaService } from 'src/app/services/captcha-service'
 import { UserService } from 'src/app/services/user.service'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
-
 declare var $: any
 @Component({
 	selector: 'app-my-recommendation',
@@ -31,7 +30,6 @@ export class MyRecommendationComponent implements OnInit {
 	pagination = []
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
-	listDataNotChange = new Array<RecommendationObject>()
 	listData = new Array<RecommendationObject>()
 
 	recommendationStatistics: any = new RecommendationStatistics()
@@ -78,26 +76,18 @@ export class MyRecommendationComponent implements OnInit {
 		})
 	}
 
-	getList() {
+	getList(Status: any = null) {
 		let request = {
-			Code: '',
-			SendName: '',
-			Content: '',
-			UnitId: '',
-			Field: '',
-			Status: '',
-			UnitProcessId: '',
-			UserProcessId: this.storageService.getUserId(),
+			userId: this.storageService.getUserId(),
+			LtsStatus: Status == null ? '' : Status,
 			pageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
-
-		this.recommendationService.recommendationGetListProcess(request).subscribe((res) => {
+		debugger
+		this.puRecommendationService.getMyRecommentdation(request).subscribe((res) => {
 			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
-				if (res.result.MRRecommendationGetAllWithProcess.length > 0) {
-					this.listDataNotChange = res.result.MRRecommendationGetAllWithProcess
-					this.listData = res.result.MRRecommendationGetAllWithProcess
-					//this.pageIndex = res.result.pageIndex
+				if (res.result.MyRecommendation.length > 0) {
+					this.listData = res.result.MyRecommendation
 					this.totalRecords = res.result.TotalCount
 					this.padi()
 				} else {
@@ -118,43 +108,32 @@ export class MyRecommendationComponent implements OnInit {
 	}
 
 	filterMyRecommendation(status: any) {
+		debugger
+		this.pageIndex = 1
+		this.pageSize = 20
 		switch (status) {
 			case 1:
 				// chờ xl
-				this.listData = this.listDataNotChange.filter((item) => {
-					if (item.status == 2) return item
-				})
+				this.getList(',2')
 				break
 			case 2:
 				// đã tiếp nhận
 
-				this.listData = this.listDataNotChange.filter((item) => {
-					if (item.status == 4 || item.status == 5 || item.status == 7 || item.status == 8) return item
-				})
+				this.getList(',4,5,7,8')
 				break
 			case 3:
 				// đã trả lời
-				this.listData = this.listDataNotChange.filter((item) => {
-					if (item.status == 10) return item
-				})
+				this.getList(',10')
 
 				break
 			case 4:
 				// bị từ chối
-				this.listData = this.listDataNotChange.filter((item) => {
-					if (item.status == 3 || item.status == 6 || item.status == 9) return item
-				})
+				this.getList(',3,6,9')
 				break
 			default:
-				this.listData = this.listDataNotChange
+				this.getList()
 				break
 		}
-	}
-
-	dataStateChange() {
-		this.pageIndex = 1
-		// this.table.first = 0
-		this.getList()
 	}
 
 	sendRecommandation() {
@@ -215,7 +194,6 @@ export class MyRecommendationComponent implements OnInit {
 		for (let i = 0; i < Math.ceil(this.totalRecords / this.pageSize); i++) {
 			this.pagination.push({ index: i + 1 })
 		}
-		console.log(this.pagination)
 	}
 
 	changePagination(index: any) {

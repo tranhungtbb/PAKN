@@ -40,7 +40,7 @@ namespace PAKNAPI.Models
             ProvinceId= entity.ProvinceId;
             Status= entity.Status;
             RepresentativeGender = entity.RepresentativeGender;
-            DateOfIssue= entity.DateOfIssue.Value.ToString("dd/MM/yyyy");
+            DateOfIssue= entity.DateOfIssue == null ? "": entity.DateOfIssue.Value.ToString("dd/MM/yyyy");
             Address= entity.Address;
             Email= entity.Email;
             Phone= entity.Phone;
