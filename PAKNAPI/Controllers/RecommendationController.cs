@@ -271,7 +271,7 @@ namespace PAKNAPI.Controller
                         await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
                     }
                 }
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
                 return new ResultApi { Success = ResultCode.OK, Result = Id };
             }
             catch (Exception ex)
