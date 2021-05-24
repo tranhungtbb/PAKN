@@ -28,7 +28,7 @@ export class RecommendationsByGroupwordDetailComponent implements OnInit {
 		private _router: Router
 	) {}
 	userLoginId: number = this.storeageService.getUserId()
-	isMain: number = this.storeageService.getIsMain()
+	isMain: boolean = this.storeageService.getIsMain()
 	listData = new Array<RecommendationObject>()
 	lstUnit: any = []
 	lstField: any = []
