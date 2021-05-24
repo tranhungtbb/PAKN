@@ -100,6 +100,59 @@ namespace PAKNAPI.ModelBase
 		public string Port { get; set; }
 	}
 
+	public class SYPermissionGetByFunction
+	{
+		private SQLCon _sQLCon;
+
+		public SYPermissionGetByFunction(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYPermissionGetByFunction()
+		{
+		}
+
+		public short Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public short FunctionId { get; set; }
+		public short? ParentId { get; set; }
+
+		public async Task<List<SYPermissionGetByFunction>> SYPermissionGetByFunctionDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYPermissionGetByFunction>("SY_Permission_GetByFunction", DP)).ToList();
+		}
+	}
+
+	public class SYPermissionCategoryGet
+	{
+		private SQLCon _sQLCon;
+
+		public SYPermissionCategoryGet(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYPermissionCategoryGet()
+		{
+		}
+
+		public short Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+
+		public async Task<List<SYPermissionCategoryGet>> SYPermissionCategoryGetDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYPermissionCategoryGet>("SY_PermissionCategory_Get", DP)).ToList();
+		}
+	}
+
 	public class SYPermissionCheckByUserId
 	{
 		private SQLCon _sQLCon;
@@ -123,6 +176,62 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYPermissionCheckByUserId>("SY_PermissionCheckByUserId", DP)).ToList();
 		}
+	}
+
+	public class SYPermissionFunctionGetByCategory
+	{
+		private SQLCon _sQLCon;
+
+		public SYPermissionFunctionGetByCategory(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYPermissionFunctionGetByCategory()
+		{
+		}
+
+		public short Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public short CategoryId { get; set; }
+
+		public async Task<List<SYPermissionFunctionGetByCategory>> SYPermissionFunctionGetByCategoryDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYPermissionFunctionGetByCategory>("SY_PermissionFunction_GetByCategory", DP)).ToList();
+		}
+	}
+
+	public class SYPermissionGroupUserInsertByList
+	{
+		private SQLCon _sQLCon;
+
+		public SYPermissionGroupUserInsertByList(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYPermissionGroupUserInsertByList()
+		{
+		}
+
+		public async Task<int> SYPermissionGroupUserInsertByListDAO(SYPermissionGroupUserInsertByListIN _sYPermissionGroupUserInsertByListIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("lstid", _sYPermissionGroupUserInsertByListIN.lstid);
+			DP.Add("GroupUserId", _sYPermissionGroupUserInsertByListIN.GroupUserId);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_PermissionGroupUser_InsertByList", DP));
+		}
+	}
+
+	public class SYPermissionGroupUserInsertByListIN
+	{
+		public string lstid { get; set; }
+		public int? GroupUserId { get; set; }
 	}
 
 	public class SYRoleDelete

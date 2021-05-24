@@ -18,9 +18,12 @@ export class LOG_ACTION {
 	public static login = 'Đăng nhập'
 	public static logOut = 'Đăng xuất'
 	public static GETLIST = 'Trả về danh sách'
+	public static GETDATACREATE = 'Trả về dữ liệu danh mục'
 	public static GETINFO = 'Trả về thông tin'
 	public static INSERT = 'Thêm mới'
 	public static UPDATE = 'Cập nhật'
+	public static FORWARD = 'Chuyển tiếp'
+	public static PROCESSED = 'Xử lý'
 	public static UPDATESTATUS = 'Cập nhật trạng thái'
 	public static DELETE = 'Xóa'
 	public static EXPORT = 'Xuất danh sách'
@@ -51,6 +54,9 @@ export class LOG_OBJECT {
 	public static SY_USER_GET_BY_ROLE = 'Người dùng theo vai trò'
 
 	public static HIS_USER = 'Lịch sử người dùng hệ thống'
+
+	public static MR_RECOMMENDATION = 'Phản ánh / Kiến nghị'
+	public static MR_HISTORIES = 'Lịch sử phản ánh / Kiến nghị'
 
 	public static RM_REMIND = 'Danh sách nhắc nhở'
 
