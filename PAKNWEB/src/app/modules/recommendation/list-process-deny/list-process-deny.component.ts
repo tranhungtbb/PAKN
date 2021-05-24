@@ -27,6 +27,7 @@ export class ListProcessDenyComponent implements OnInit {
 		private _router: Router
 	) {}
 	userLoginId: number = this.storeageService.getUserId()
+	isMain: boolean = this.storeageService.getIsMain()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
 		{ value: 2, text: 'Chờ xử lý' },

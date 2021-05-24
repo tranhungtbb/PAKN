@@ -11,7 +11,7 @@ export class UserInfoStorageService {
 	unitName: string
 	role: number
 
-	constructor() { }
+	constructor() {}
 	setKeyRemember(key: string): void {
 		localStorage.setItem('KeyRework', key)
 	}
@@ -91,7 +91,7 @@ export class UserInfoStorageService {
 	}
 
 	getIsMain(): boolean {
-		return localStorage.getItem('isMain') as any
+		return localStorage.getItem('isMain') === 'true'
 	}
 
 	getReturnUrl(): string {

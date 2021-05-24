@@ -22,24 +22,24 @@ export class RecommendationService {
 
 	recommendationGetDataForCreate(request: any): Observable<any> {
 		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logAction: encodeURIComponent(LOG_ACTION.GETDATACREATE),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		}
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetDataForCreate, headers)
 	}
 
 	recommendationGetDataForForward(request: any): Observable<any> {
 		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logAction: encodeURIComponent(LOG_ACTION.GETDATACREATE),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		}
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetDataForForward, headers)
 	}
 
 	recommendationGetDataForProcess(request: any): Observable<any> {
 		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logAction: encodeURIComponent(LOG_ACTION.GETDATACREATE),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		}
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetDataForProcess, headers)
 	}
@@ -47,7 +47,7 @@ export class RecommendationService {
 	recommendationGetList(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		}
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetList, headers)
 	}
@@ -55,7 +55,7 @@ export class RecommendationService {
 	recommendationGetListProcess(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		}
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetListProcess, headers)
 	}
@@ -63,7 +63,7 @@ export class RecommendationService {
 	recommendationGetListReactionaryWord(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		}
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetListReactionaryWord, headers)
 	}
@@ -71,7 +71,7 @@ export class RecommendationService {
 	recommendationGetById(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETINFO),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		}
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetById, headers)
 	}
@@ -79,7 +79,7 @@ export class RecommendationService {
 	recommendationGetByIdView(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETINFO),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		}
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetByIdView, headers)
 	}
@@ -87,7 +87,7 @@ export class RecommendationService {
 	recommendationGetHistories(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETINFO),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_HISTORIES),
 		}
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetHistories, headers)
 	}
@@ -97,7 +97,7 @@ export class RecommendationService {
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		})
 		const form = new FormData()
 		form.append('Data', JSON.stringify(request.Data))
@@ -115,7 +115,7 @@ export class RecommendationService {
 		return this.http.post(AppSettings.API_ADDRESS + Api.RecommendationInsert, form, httpPackage)
 		// let headers = {
 		// 	logAction: encodeURIComponent(LOG_ACTION.INSERT),
-		// 	logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		// 	logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		// }
 		// return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationInsert, headers)
 	}
@@ -125,7 +125,7 @@ export class RecommendationService {
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		})
 		const form = new FormData()
 		form.append('Data', JSON.stringify(request.Data))
@@ -144,31 +144,31 @@ export class RecommendationService {
 		return this.http.post(AppSettings.API_ADDRESS + Api.RecommendationUpdate, form, httpPackage)
 		// let headers = {
 		// 	logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-		// 	logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+		// 	logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		// }
 		// return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationUpdate, headers)
 	}
 
 	recommendationForward(request: any): Observable<any> {
 		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logAction: encodeURIComponent(LOG_ACTION.FORWARD),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationForward, headers)
 	}
 
 	recommendationProcess(request: any): Observable<any> {
 		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logAction: encodeURIComponent(LOG_ACTION.PROCESSED),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationProcess, headers)
 	}
 
 	recommendationUpdateStatus(request: any): Observable<any> {
 		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationUpdateStatus, headers)
 	}
@@ -177,8 +177,8 @@ export class RecommendationService {
 		let tempheaders = new HttpHeaders({
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
-			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logAction: encodeURIComponent(LOG_ACTION.PROCESSED),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		})
 		const form = new FormData()
 		form.append('DataConclusion', JSON.stringify(request.DataConclusion))
@@ -200,7 +200,7 @@ export class RecommendationService {
 	recommendationDelete(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationDelete, headers)
 	}
@@ -208,7 +208,7 @@ export class RecommendationService {
 	recommendationGetSuggestCreate(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		}
 		return this.serviceInvoker.getNotLoading(request, AppSettings.API_ADDRESS + Api.RecommendationGetSuggestCreate, headers)
 	}
@@ -216,7 +216,7 @@ export class RecommendationService {
 	recommendationGetSuggestReply(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		}
 		return this.serviceInvoker.getNotLoading(request, AppSettings.API_ADDRESS + Api.RecommendationGetSuggestReply, headers)
 	}
@@ -224,7 +224,7 @@ export class RecommendationService {
 	recommendationExportExcel(request): Observable<any> {
 		let headers = new HttpHeaders({
 			logAction: encodeURIComponent(LOG_ACTION.EXPORT),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		})
 
 		return this.serviceInvoker.getFilewithHeaders(request, AppSettings.API_ADDRESS + Api.FieldExport, headers)
@@ -233,7 +233,7 @@ export class RecommendationService {
 	getDataGraph(request): Observable<any> {
 		let headers = new HttpHeaders({
 			logAction: encodeURIComponent(LOG_ACTION.EXPORT),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		})
 
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationGetDataGraph)
@@ -242,7 +242,7 @@ export class RecommendationService {
 	getSendUserDataGraph(request): Observable<any> {
 		let headers = new HttpHeaders({
 			logAction: encodeURIComponent(LOG_ACTION.EXPORT),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		})
 
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationGetSendUserDataGraph)

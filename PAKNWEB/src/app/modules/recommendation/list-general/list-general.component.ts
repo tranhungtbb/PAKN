@@ -28,6 +28,7 @@ export class ListGeneralComponent implements OnInit {
 	) {}
 	userLoginId: number = this.storeageService.getUserId()
 	unitLoginId: number = this.storeageService.getUnitId()
+	isMain: boolean = this.storeageService.getIsMain()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
 		{ value: 2, text: 'Chờ xử lý' },
