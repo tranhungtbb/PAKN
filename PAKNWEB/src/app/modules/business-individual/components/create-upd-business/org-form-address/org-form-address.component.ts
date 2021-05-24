@@ -81,6 +81,46 @@ export class OrgFormAddressComponent implements OnInit {
 		}
 	}
 
+	//event
+	// listProvince: any[] = []
+	getProvince() {
+		this.diadanhService.getAllProvince().subscribe((res) => {
+			if (res.success == 'OK') {
+				this.listProvince = res.result.CAProvinceGetAll
+				// this.model.provinceId = 37
+			}
+		})
+	}
+
+	// listDistrict: any[] = []
+	getDistrict(provinceId) {
+		console.log('this.listDistrict id', this.listDistrict)
+		this.listDistrict = []
+		console.log('this.listDistrict id', this.model.OrgDistrictId)
+		if (provinceId != null && provinceId != '') {
+			this.diadanhService.getAllDistrict(provinceId).subscribe((res) => {
+				if (res.success == 'OK') {
+					this.listDistrict = res.result.CADistrictGetAll
+					console.log('this.listDistrict 1', this.listDistrict)
+					this.listDistrict.findIndex((x) => x.id == this.model.OrgDistrictId)
+					console.log('this.listDistrict id', this.listDistrict)
+				}
+			})
+		} else {
+		}
+	}
+
+	// listVillage: any[] = []
+	getVillage(provinceId, districtId) {
+		if (districtId != null && districtId != '') {
+			this.diadanhService.getAllVillage(provinceId, districtId).subscribe((res) => {
+				if (res.success == 'OK') {
+					this.listVillage = res.result.CAVillageGetAll
+				}
+			})
+		}
+	}
+
 	ngOnInit() {
 		this.onChangeNation()
 		this.formOrgAddress = this.formBuilder.group({
@@ -93,8 +133,11 @@ export class OrgFormAddressComponent implements OnInit {
 		})
 		this.listVillage = []
 		// listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
-		this.listVillage = [{ id: this.model.OrgWardsId, name: 'Test' }]
-		this.listDistrict = [{ id: this.model.OrgDistrictId, name: 'Test' }]
+		// this.listVillage = [{ id: this.model.OrgWardsId, name: 'Test' }]
+		// this.listDistrict = [{ id: this.model.OrgDistrictId, name: 'Test' }]
+		this.getProvince()
+		this.getDistrict('Việt Nam')
+		this.getProvince()
 	}
 
 	// orgPhone_exists = false
