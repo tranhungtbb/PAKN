@@ -17,12 +17,12 @@
 						</svg>
 						Xuất excel
 					</button> -->
-					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" [routerLink]="['/quan-tri/thu-tuc-hanh-chinh/them-moi']">
+					<!-- <button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" [routerLink]="['/quan-tri/thu-tuc-hanh-chinh/them-moi']">
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 						</svg>
 						Thêm mới
-					</button>
+					</button> -->
 				</div>
 			</div>
 		</div>
@@ -41,28 +41,32 @@
 											<strong>Mã số</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
 									</th>
 									<th style="width: 250px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tên thủ tục</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
 									</th>
 									<th style="width: 150px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Đối tượng</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.object" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.object" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
 									</th>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Cơ quan thực hiện</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.organization" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.organization" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
 									</th>
 									<th style="width: 200px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -70,8 +74,8 @@
 											<span class="caret-tb"></span>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field" [closeOnSelect]="true"
-												(change)="dataStateChange()" [virtualScroll]="true">
+											<ng-select placeholder="Chọn..." class="" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field"
+												[closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
 											</ng-select>
 										</div>
 									</th>
@@ -109,8 +113,8 @@
 									<td>
 										<span *ngIf="item.status == 1" class="badge rounded-pill badge-outline-light bg-white">Đang soạn
 											thảo</span>
-										<span *ngIf="item.status == 2" class="badge rounded-pill bg-success">Đã công bố</span>
-										<span *ngIf="item.status == 3" class="badge rounded-pill bg-xam text-dark">Đã thu hồi</span>
+										<span *ngIf="item.status == 3" class="badge rounded-pill bg-success">Đã công bố</span>
+										<span *ngIf="item.status == 2" class="badge rounded-pill bg-xam text-dark">Đã thu hồi</span>
 									</td>
 									<!-- <td>
 										<div class="d-flex justify-content-end">

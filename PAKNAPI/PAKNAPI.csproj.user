@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Controller_SelectedScaffolderID>ApiControllerEmptyScaffolder</Controller_SelectedScaffolderID>
     <Controller_SelectedScaffolderCategoryPath>root/Common/Api</Controller_SelectedScaffolderCategoryPath>
-    <NameOfLastUsedPublishProfile>FolderProfile</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>E:\SV_2021\PhanAnhKienNghi\Source\pakn\PAKNAPI\Properties\PublishProfiles\FolderProfile.pubxml</NameOfLastUsedPublishProfile>
     <ShowAllFiles>true</ShowAllFiles>
   </PropertyGroup>
   <ItemGroup>
@@ -11,6 +11,15 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Update="ExportGrid\BI_Individual_List.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="ExportGrid\HIS_SystemLog.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="ExportGrid\Statistic_Recommendation_ByGroupWordDetail.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="ExportGrid\SY_UserByUnit.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>

@@ -12,9 +12,12 @@
 					<i class="pi pi-plus"></i>
 				</button>
 			</p>
-			<p-tree id="tree-unit" [value]="treeUnit" [filter]="true">
-
+			<div class="center">
+				<input class="form-control form-control-sm" style="width: 90%;" (keydown.enter)="onFilterTree($event.target.value)" placeholder="Nhập...">
+			</div>
+			<p-tree id="tree-unit" [value]="treeUnit" [filter]="false" emptyMessage="Không tìm thấy đơn vị nào.">
 				<ng-template let-node pTemplate="default" style="width:100%; overflow: hidden;">
+
 					<a (click)="treeViewActive(node.id, node.unitLevel)" class="cursor-hand" [ngClass]="{'text-color-blue':(unitObject.id && unitObject.id == node.id)}">
 						<strong>{{node.name}}</strong>
 					</a>
@@ -56,11 +59,11 @@
 				<div class="accordion__item">
 					<div class="accordion__header collapsed">
 						<div class="d-flex justify-content-between align-items-center pr-5">
-							<span class="accordion__header--text text-uppercase h4" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne"
+							<span class="accordion__header--text text-uppercase h4" id="title-user-in-unit" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne"
 								(click)="onCollapsed('item01')">Người dùng trong đơn
 								vị</span>
 							<div class="btn-group" role="group" [hidden]="!collapsed_checked['item01']">
-								<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
+								<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()">
 									<i class="pi pi-file-excel"></i>
 									Xuất excel
 								</button>
@@ -152,6 +155,11 @@
 														class="bi bi-trash"></i></a>
 											</div>
 										</td>
+									</tr>
+								</ng-template>
+								<ng-template pTemplate="emptymessage">
+									<tr>
+										<td class="text-center" colspan="6">Không có dữ liệu</td>
 									</tr>
 								</ng-template>
 							</p-table>
@@ -327,8 +335,8 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" [items]="listStatus" placeholder="Chọn..." bindLabel="text" bindValue="value" formControlName="isActived"
-								[(ngModel)]="modelUnit.isActived" [closeOnSelect]="true" [searchable]="false">
+							<ng-select class="form-control" style="font-weight: bold;" [items]="listStatus" placeholder="Chọn..." bindLabel="text" bindValue="value"
+								formControlName="isActived" [(ngModel)]="modelUnit.isActived" [closeOnSelect]="true" [searchable]="false">
 							</ng-select>
 						</div>
 						<div class="col-12 col-lg-8 form-group">

@@ -13,6 +13,9 @@ export class IndividualObject {
 		this.address = ''
 		this.IsDeleted = false
 		this.userId = null
+		this.status = 1
+		this.birthDate = null
+		this.dateOfIssue = null
 	}
 	phone: string
 	fullName: string // fullName
@@ -35,6 +38,12 @@ export class IndividualObject {
 	isActived: boolean
 	IsDeleted: boolean
 	userId: number
+	status: number
+	id: number
+	imagePath: string
+	birthDay: string
+	birthDate: Date
+	dateOfIssue: Date
 }
 
 export class BusinessionObject {
@@ -79,8 +88,6 @@ export class BusinessionObject {
 export class OrganizationObject {
 	constructor() {
 		this.id = 0
-		this.phone = null
-		this.password = null
 		this.RepresentativeGender = true
 
 		//
@@ -112,8 +119,6 @@ export class OrganizationObject {
 	}
 	//----thông tin tài khoản đăng nhập
 	phone: string
-	password: string
-	rePassword: string
 
 	//----thông tin người đại diện
 	RepresentativeName: string // RepresentativeName tên người đại diện
@@ -156,7 +161,7 @@ export class IndividualExportObject {
 		this.address = ''
 		this.phone = ''
 		this.email = ''
-		this.status = 0
+		this.status = null
 	}
 	fullName: string
 	address: string
@@ -171,7 +176,7 @@ export class BusinessExportObject {
 		this.address = ''
 		this.phone = ''
 		this.email = ''
-		this.status = 0
+		this.status = null
 	}
 	representativeName: string
 	address: string

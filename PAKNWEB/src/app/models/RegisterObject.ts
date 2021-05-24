@@ -10,9 +10,9 @@ export class IndividualObject {
 		this.iDCard = ''
 		//
 		this.nation = 'Việt Nam'
-		this.provinceId = ''
-		this.districtId = ''
-		this.wardsId = ''
+		this.provinceId = null
+		this.districtId = null
+		this.wardsId = null
 		this.isActived = true
 		this.address = ''
 	}
@@ -55,16 +55,16 @@ export class OrganizationObject {
 
 		this.Address = ''
 		this.Nation = 'Việt Nam'
-		this.ProvinceId = ''
-		this.DistrictId = ''
-		this.WardsId = ''
+		this.ProvinceId = null
+		this.DistrictId = null
+		this.WardsId = null
 
 		this.Business = ''
 		this.BusinessRegistration = ''
 		this.DecisionOfEstablishing = ''
-		this.OrgProvinceId = ''
-		this.OrgDistrictId = ''
-		this.OrgWardsId = ''
+		this.OrgProvinceId = null
+		this.OrgDistrictId = null
+		this.OrgWardsId = null
 		this.OrgEmail = ''
 		this.OrgAddress = ''
 		this.OrgPhone = ''

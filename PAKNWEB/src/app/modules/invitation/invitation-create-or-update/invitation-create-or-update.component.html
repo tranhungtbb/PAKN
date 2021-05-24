@@ -22,8 +22,7 @@
 					<div class="row form-group">
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Tiêu đề<span class="text-danger">(*)</span></label>
-							<input class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" formControlName="title" [(ngModel)]="model.title" maxlength="100"
-								placeholder="Nhập..." />
+							<input class="form-control" formControlName="title" [(ngModel)]="model.title" maxlength="100" placeholder="Nhập..." />
 							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
 								<div *ngIf="f.title.errors.required">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -34,24 +33,29 @@
 						<div class="col-sm-6 padding-col">
 							<label class="control-label department">Thời gian bắt đầu<span class="text-danger">(*)</span></label>
 							<div class="input-group">
-								<input class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10"
-									formControlName="startDate" [(ngModel)]="model.startDate" appBsDatepickerInvalid
-									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+								<input class="form-control" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="startDate"
+									[(ngModel)]="model.startDate" appBsDatepickerInvalid [bsConfig]="{ containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon">
 									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 								</div>
 							</div>
 							<div *ngIf="(submitted && f.startDate.invalid) || (f.startDate.invalid && (f.startDate.dirty || f.startDate.touched))" class="has-error">
+								<!-- <ng-container> -->
 								<div *ngIf="f.startDate.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
 								</div>
+								<div *ngIf="f.startDate.errors && !f.startDate.errors.required">
+									<span class="help-block">Định dạng ngày không đúng</span>
+								</div>
+
 							</div>
+
 						</div>
 						<div class="col-sm-6 padding-col">
 							<label class="control-label department">Thời gian kết thúc<span class="text-danger">(*)</span></label>
 							<div class="input-group">
-								<input class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10"
-									formControlName="endDate" [(ngModel)]="model.endDate" appBsDatepickerInvalid [minDate]="model.startDate"
+								<input class="form-control" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="endDate"
+									[(ngModel)]="model.endDate" appBsDatepickerInvalid [minDate]="model.startDate"
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon">
 									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
@@ -61,11 +65,14 @@
 								<div *ngIf="f.endDate.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
 								</div>
+								<div *ngIf="f.startDate.errors && !f.startDate.errors.required">
+									<span class="help-block">Định dạng ngày không đúng</span>
+								</div>
 							</div>
 						</div>
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Địa điểm <span class="text-danger">(*)</span></label>
-							<input class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" [(ngModel)]="model.place" formControlName="place" placeholder="Nhập..." />
+							<input class="form-control" [(ngModel)]="model.place" formControlName="place" placeholder="Nhập..." />
 							<div *ngIf="(submitted && f.place.invalid) || (f.place.invalid && (f.place.dirty || f.place.touched))" class="has-error m-b-12">
 								<div *ngIf="f.place.errors">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -74,13 +81,12 @@
 						</div>
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Ghi chú</label>
-							<input class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" [(ngModel)]="model.note" formControlName="note" placeholder="Nhập..." />
+							<input class="form-control" [(ngModel)]="model.note" formControlName="note" placeholder="Nhập..." />
 
 						</div>
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Nội dung <span class="text-danger">(*)</span></label>
-							<textarea class="form-control" [attr.disabled]="statusCurent == 2 ? '': null" [(ngModel)]="model.content" formControlName="content" rows="6"
-								placeholder="Nhập..."></textarea>
+							<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" rows="6" placeholder="Nhập..."></textarea>
 							<div *ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error m-b-12">
 								<div *ngIf="f.content.errors">
 									<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -114,61 +120,61 @@
 								</div>
 								<ng-container *ngFor="let item of files">
 
-									<div class="col-2 mb-2" *ngIf="item.fileType == 1">
-										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
+									<div class="col-2 m-2 border-1" *ngIf="item.fileType == 1">
+										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90" style="margin-bottom: 0.3rem;">
 											<button *ngIf="statusCurent != 2" type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert"
 												aria-label="Close"><span><i class="mdi mdi-close"></i></span>
 											</button>
 											<a href="#" class="d-block text-center">
 												<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
-												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+												<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
 											</a>
 										</div>
 									</div>
 
-									<div class="col-2 mb-2" *ngIf="item.fileType == 3">
-										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
+									<div class="col-2 m-2 border-1" *ngIf="item.fileType == 3">
+										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90" style="margin-bottom: 0.3rem;">
 											<button type="button" *ngIf="statusCurent != 2" (click)="onRemoveFile(item)" class="close" data-dismiss="alert"
 												aria-label="Close"><span><i class="mdi mdi-close"></i></span>
 											</button>
 											<a href="#" class="d-block text-center">
 												<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 45px" alt="">
-												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+												<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
 											</a>
 										</div>
 									</div>
 
-									<div class="col-2 mb-2" *ngIf="item.fileType == 4">
-										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
+									<div class="col-2 m-2 border-1" *ngIf="item.fileType == 4">
+										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90" style="margin-bottom: 0.3rem;">
 											<button type="button" *ngIf="statusCurent != 2" (click)="onRemoveFile(item)" class="close" (click)="onRemoveFile(item)"><span><i
 														class="mdi mdi-close"></i></span>
 											</button>
 											<a href="#" class="d-block text-center box-fileinput">
 												<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="">
-												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+												<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
 											</a>
 										</div>
 									</div>
 
-									<div class="col-2 mb-2" *ngIf="item.fileType == 2">
-										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
+									<div class="col-2 m-2 border-1" *ngIf="item.fileType == 2">
+										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90" style="margin-bottom: 0.3rem;">
 											<button type="button" *ngIf="statusCurent != 2" (click)="onRemoveFile(item)" class="close" data-dismiss="alert"
 												aria-label="Close"><span><i class="mdi mdi-close"></i></span>
 											</button>
 											<a href="#" class="d-block text-center">
 												<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
-												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+												<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
 											</a>
 										</div>
 									</div>
-									<div class="col-2 mb-2" *ngIf="item.fileType == 6">
-										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
+									<div class="col-2 m-2 border-1" *ngIf="item.fileType == 6">
+										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90" style="margin-bottom: 0.3rem;">
 											<button type="button" *ngIf="statusCurent != 2" (click)="onRemoveFile(item)" class="close" data-dismiss="alert"
 												aria-label="Close"><span><i class="mdi mdi-close"></i></span>
 											</button>
 											<a href="#" class="d-block text-center">
 												<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
-												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+												<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
 											</a>
 										</div>
 									</div>
@@ -189,38 +195,11 @@
 								<div class="" style="display: flex;">
 									<div class="input-serach" style="width: 60%;">
 
-
-										<!-- <ng-select class="form-control" placeholder="Nhập..." [closeOnSelect]="true" formControlName="userId" [(ngModel)]="userId">
-											<ng-option *ngFor="let nt of listUserIsSystem" [value]="nt.id">
-												{{nt.userName}}
-											</ng-option>
-										</ng-select> -->
-
-										<!-- <p-multiSelect class="multiselect-custom" [options]="listUserIsSystem" defaultLabel="Chọn thành phần..." optionLabel="userName"
-											optionValue="userName" (onChange)="haha($event)">
-
-										</p-multiSelect> -->
-
-										<p-multiSelect [options]="listUserIsSystem" formControlName="listUserSelected" [(ngModel)]="listUserSelected" optionLabel="fullName"
-											[virtualScroll]="true" optionValue="id">
-											<ng-template let-userSelected pTemplate="selectedItems">
-												<ng-container *ngIf="userSelected && userSelected.length <= 4">
-													<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">
-														<span>{{val.fullName}}</span>
-													</div>
-												</ng-container>
-
-												<span *ngIf="!userSelected || userSelected.length === 0" class="ui-multiselected-empty-token ui-corner-all">Chọn thành phần tham
-													dự...</span>
-												<span *ngIf="userSelected && userSelected.length > 4" class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
-													thành phần được chọn</span>
-											</ng-template>
-											<ng-template let-user pTemplate="item">
-												<div style="font-size:14px">{{user.label}}</div>
-											</ng-template>
-										</p-multiSelect>
-
-
+										<div class="form-group" style="margin-bottom: 0px;">
+											<ngx-dropdown-treeview [config]="config" [items]="items" buttonClass="btn btn-outline-primary"
+												(selectedChange)="onSelectedChange($event)" (filterChange)="onFilterChange($event)">
+											</ngx-dropdown-treeview>
+										</div>
 
 									</div>
 									<div style="width: 35%; display: flex;" class="center">
@@ -273,15 +252,13 @@
 								</div>
 								<div class="type-send border-right padding-item">
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" [checked]="item.sendSMS == true" [attr.disabled]="statusCurent == 2 ? '': null"
-											(click)="onUpdateUser(item.userId, true)">
+										<input class="form-check-input" type="checkbox" [checked]="item.sendSMS == true" (click)="onUpdateUser(item.userId, true)">
 										<label class="form-check-label">
 											Gửi SMS
 										</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" [checked]="item.sendEmail == true" [attr.disabled]="statusCurent == 2 ? '': null"
-											(click)="onUpdateUser(item.userId, false)">
+										<input class="form-check-input" type="checkbox" [checked]="item.sendEmail == true" (click)="onUpdateUser(item.userId, false)">
 										<label class="form-check-label">
 											Gửi mail
 										</label>

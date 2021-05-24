@@ -62,9 +62,9 @@ export class IndividualComponent implements OnInit {
 		this.listDistrict = []
 		this.listVillage = []
 
-		this.model.provinceId = ''
-		this.model.districtId = ''
-		this.model.wardsId = ''
+		this.model.provinceId = null
+		this.model.districtId = null
+		this.model.wardsId = null
 
 		if (this.model.nation == 'Việt Nam') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
@@ -88,8 +88,8 @@ export class IndividualComponent implements OnInit {
 	onChangeProvince() {
 		this.listDistrict = []
 		this.listVillage = []
-		this.model.districtId = ''
-		this.model.wardsId = ''
+		this.model.districtId = null
+		this.model.wardsId = null
 		if (this.model.provinceId != null && this.model.provinceId != '') {
 			this.diadanhService.getAllDistrict(this.model.provinceId).subscribe((res) => {
 				if (res.success == 'OK') {
@@ -102,7 +102,7 @@ export class IndividualComponent implements OnInit {
 
 	onChangeDistrict() {
 		this.listVillage = []
-		this.model.wardsId = ''
+		this.model.wardsId = null
 		if (this.model.districtId != null && this.model.districtId != '') {
 			this.diadanhService.getAllVillage(this.model.provinceId, this.model.districtId).subscribe((res) => {
 				if (res.success == 'OK') {
@@ -199,9 +199,9 @@ export class IndividualComponent implements OnInit {
 			gender: [this.model.gender, [Validators.required]],
 			dob: [this.model._birthDay, [Validators.required]],
 			nation: [this.model.nation, [Validators.required]],
-			province: [this.model.provinceId, []],
-			district: [this.model.districtId, []],
-			village: [this.model.wardsId, []],
+			province: [this.model.provinceId, [Validators.required]],
+			district: [this.model.districtId, [Validators.required]],
+			village: [this.model.wardsId, [Validators.required]],
 
 			email: [this.model.email, [Validators.email]],
 			address: [this.model.address, [Validators.required]],

@@ -329,6 +329,10 @@ namespace PAKNAPI.ModelBase
 		public async Task<decimal?> MRRecommendationConclusionInsertDAO(MRRecommendationConclusionInsertIN _mRRecommendationConclusionInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRRecommendationConclusionInsertIN.RecommendationId);
+			await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_ConclusionDelete", DP);
+
+			DP = new DynamicParameters();
 			DP.Add("RecommendationId", _mRRecommendationConclusionInsertIN.RecommendationId);
 			DP.Add("UserCreatedId", _mRRecommendationConclusionInsertIN.UserCreatedId);
 			DP.Add("UnitCreatedId", _mRRecommendationConclusionInsertIN.UnitCreatedId);
@@ -506,6 +510,28 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsViewed", _mRRecommendationForwardInsertIN.IsViewed);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_ForwardInsert", DP));
+		}
+	}
+
+	public class MRRecommendationDeleteByStep
+	{
+		private SQLCon _sQLCon;
+
+		public MRRecommendationDeleteByStep(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationDeleteByStep()
+		{
+		}
+
+		public async Task<int> MRRecommendationDeleteByStepDAO(int? RecommendationId, byte? Step)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationId", RecommendationId);
+			DP.Add("Step", Step);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_DeleteByStep", DP));
 		}
 	}
 
@@ -825,6 +851,7 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("lstid", _mRRecommendationGroupWordInsertByListIN.lstid);
 			DP.Add("RecommendationId", _mRRecommendationGroupWordInsertByListIN.RecommendationId);
+			DP.Add("UnitId", _mRRecommendationGroupWordInsertByListIN.UnitId);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_GroupWord_InsertByList", DP));
 		}
@@ -834,6 +861,7 @@ namespace PAKNAPI.ModelBase
 	{
 		public string lstid { get; set; }
 		public int? RecommendationId { get; set; }
+		public int? UnitId { get; set; }
 	}
 
 	public class MRRecommendationHashtagDeleteByRecommendationId
@@ -1081,6 +1109,7 @@ namespace PAKNAPI.ModelBase
 		public long? UserSendId { get; set; }
 		public long? ReceiveId { get; set; }
 		public int? UnitReceiveId { get; set; }
+		public bool? IsForwardProcess { get; set; }
 
 		public async Task<List<MRRecommendationGetAllWithProcess>> MRRecommendationGetAllWithProcessDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId, int? PageSize, int? PageIndex)
 		{

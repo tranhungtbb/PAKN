@@ -46,28 +46,23 @@ export class IndividualComponent implements OnInit {
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<IndividualObject>()
 	listStatus: any = [
-		{ value: '', text: 'Chọn trạng thái' },
-		{ value: true, text: 'Hiệu lực' },
-		{ value: false, text: 'Hết hiệu lực' },
+		{ value: 0, text: 'Hết hiệu lực' },
+		{ value: 1, text: 'Hiệu lực' },
 	]
 
 	listGender: any[] = [
 		{ value: true, text: 'Nam' },
 		{ value: false, text: 'Nữ' },
 	]
+
 	fileAccept = '.xls, .xlsx'
-	files: any[] = []
+	// files: any[] = []
 	listInvPaged: any[] = []
 
 	form: FormGroup
-	model: any = new IndividualObject()
+	model: IndividualObject = new IndividualObject()
 	submitted: boolean = false
-	isActived: boolean = false
 	title: string = ''
-	fullName: string = ''
-	address: string = ''
-	phone: string = ''
-	email: string = ''
 	pageIndex: number = 1
 	pageSize: number = 20
 	@ViewChild('table', { static: false }) table: any
@@ -75,9 +70,6 @@ export class IndividualComponent implements OnInit {
 	dataSearch: IndividualExportObject = new IndividualExportObject()
 
 	//sort
-	individualSortDir = 'DESC'
-	individualSortField = 'ID'
-
 	inSortDir = 'DESC'
 	inSortField = 'ID'
 
@@ -142,17 +134,6 @@ export class IndividualComponent implements OnInit {
 		}
 	}
 
-	onReset() {
-		this.form.reset()
-		this.submitted = false
-		this.model = new IndividualObject()
-
-		this.model._birthDay = ''
-		this.model._dateOfIssue = ''
-		this.model.fullName = ''
-		this.model.gender = true
-	}
-
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
 	}
@@ -163,7 +144,8 @@ export class IndividualComponent implements OnInit {
 			address: [this.model.address, Validators.required],
 			phone: [this.model.phone, Validators.required],
 			email: [this.model.email, Validators.required],
-			isActived: [this.model.isActived, Validators.required],
+			gender: [this.model.gender, Validators.required],
+			status: this.model.status,
 		})
 	}
 
@@ -173,20 +155,22 @@ export class IndividualComponent implements OnInit {
 			address: this.model.address,
 			phone: this.model.phone,
 			email: this.model.email,
-			isActived: this.model.isActived,
+			// gender: this.model.gender,
+			// status: this.model.status,
 		})
 
-		this.submitted = false
-		this.model = new IndividualObject()
-		this.model._birthDay = ''
-		this.model._dateOfIssue = ''
-		this.model.fullName = ''
-		this.model.email = ''
-		this.model.gender = true
+		// this.submitted = false
+		// this.model = new IndividualObject()
+		// this.model._birthDay = ''
+		// this.model._dateOfIssue = ''
+		// this.model.fullName = ''
+		// this.model.email = ''
+		// this.model.gender = true
+		// this.model.status = 1
 	}
-	onSortUser(fieldName: string) {
-		this.inSortDir = fieldName
-		this.inSortField = this.inSortField == 'DESC' ? 'ASC' : 'DESC'
+	onSortIndividual(fieldName: string) {
+		this.inSortDir = this.inSortDir == 'DESC' ? 'ASC' : 'DESC'
+		this.inSortField = fieldName
 		this.getList()
 	}
 
@@ -201,7 +185,7 @@ export class IndividualComponent implements OnInit {
 			Address: this.dataSearch.address,
 			Phone: this.dataSearch.phone,
 			Email: this.dataSearch.email,
-			isActived: this.isActived != null ? this.isActived : true,
+			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 			sortDir: this.inSortDir,
@@ -226,17 +210,17 @@ export class IndividualComponent implements OnInit {
 	}
 
 	/*start - chức năng xác nhận hành động xóa*/
-	modalConfirm_type = 'isActived'
+	modalConfirm_type = 'Status'
 	modelConfirm_itemId: number = 0
-	onOpenConfirmModal(id: any, type = 'isActived') {
+	onOpenConfirmModal(id: any, type = 'Status') {
 		$('#modal-confirm').modal('show')
 		this.modalConfirm_type = type
 		this.modelConfirm_itemId = id
 	}
 	acceptConfirm() {
-		if (this.modalConfirm_type == 'isActived') {
+		if (this.modalConfirm_type == 'Status') {
 			this.onChangeIndividualStatus(this.modelConfirm_itemId)
-		} else if (this.modalConfirm_type == 'individual') {
+		} else if (this.modalConfirm_type == 'Individual') {
 			this.onDeleteIndividual(this.modelConfirm_itemId)
 		}
 
@@ -244,11 +228,11 @@ export class IndividualComponent implements OnInit {
 	}
 	onChangeIndividualStatus(id: number) {
 		let item = this.listInvPaged.find((c) => c.id == id)
-		item.isActived = !item.isActived
+		item.status = item.status ? 0 : 1
 		this._service.individualChangeStatus(item).subscribe((res) => {
 			if (res.success != 'OK') {
 				this._toastr.error(COMMONS.UPDATE_FAILED)
-				item.isActived = !item.isActived
+				item.status = item.status ? 0 : 1
 				return
 			}
 			this._toastr.success(COMMONS.UPDATE_SUCCESS)
@@ -271,10 +255,7 @@ export class IndividualComponent implements OnInit {
 				return
 			}
 			this._toastr.success(COMMONS.DELETE_SUCCESS)
-
-			if (this.model.id == id) {
-				this.getList()
-			}
+			this.getList()
 		})
 	}
 	/*end - chức năng xác nhận hành động xóa*/
@@ -301,7 +282,11 @@ export class IndividualComponent implements OnInit {
 
 	preCreate() {
 		this.model = new IndividualObject()
-		this.rebuilForm()
+		// this.rebuilForm()
+		this.model.nation = 'Việt Nam'
+		this.model.provinceId = 37 // Tỉnh Khánh Hòa
+		this.model.gender = true // Giới tính Nam
+		this.model.status = 1 // Hiệu lực
 		this.submitted = false
 		this.title = 'Thêm mới cá nhân'
 		$('#modal').modal('show')
@@ -316,19 +301,23 @@ export class IndividualComponent implements OnInit {
 		this.form = this._fb.group({
 			fullName: [this.model.fullName, [Validators.required, Validators.maxLength(100)]],
 			gender: [this.model.gender, [Validators.required]],
-			dob: [this.model._birthDay, [Validators.required]],
+			// dob: [this.model._birthDay, [Validators.required]],
+			// dob: [this.model.birthDate, [Validators.required]],
+			birthDate: [this.model.birthDate, [Validators.required]],
 			nation: [this.model.nation, [Validators.required]],
-			province: [this.model.provinceId, []],
-			district: [this.model.districtId, []],
-			village: [this.model.wardsId, []],
+			province: [this.model.provinceId, [Validators.required]],
+			district: [this.model.districtId, [Validators.required]],
+			village: [this.model.wardsId, [Validators.required]],
 			phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
 
 			email: [this.model.email, [Validators.email]],
 			address: [this.model.address, [Validators.required]],
 			iDCard: [this.model.iDCard, [Validators.required]], //, Validators.pattern(/^([0-9]){8,12}$/g)
-			issuedPlace: [this.model.issuedPlace, []],
-			dateIssue: [this.model._dateOfIssue, []],
-			isActived: [this.model.isActived],
+			placeIssue: [this.model.issuedPlace, []],
+			// dateIssue: [this.model._dateOfIssue, []],
+			dateIssue: [this.model.dateOfIssue, []],
+			// dateIssue: [this.model.dateOfIssue, []],
+			status: [this.model.status],
 		})
 	}
 
@@ -339,6 +328,12 @@ export class IndividualComponent implements OnInit {
 		let fDateIssue: any = document.querySelector('#_dateIssue')
 		this.model._birthDay = fDob.value
 		this.model._dateOfIssue = fDateIssue.value
+		// this.model.birthDay = fDob.value
+
+		this.model.birthDate = fDob.value
+		this.model.dateOfIssue = fDateIssue.value
+		// console.log('birthDate', this.model.birthDate)
+		// console.log('dateOfIssue', this.model.dateOfIssue)
 		this.model.userId = this.userLoginId
 		if (!this.model.email) this.model.email = ''
 
@@ -347,16 +342,16 @@ export class IndividualComponent implements OnInit {
 			return
 		}
 
-		// console.log('form', this.form.invalid)
-		// if (this.form.invalid) {
-		// 	console.log('invalid 1')
-		// 	this._toastr.error('Dữ liệu không hợp lệ')
-		// 	return
-		// }
+		if (this.form.invalid) {
+			this._toastr.error('Dữ liệu không hợp lệ')
+			return
+		}
 
 		//check ngày cấp < ngày sinh
-		let dateIssue = new Date(this.model._dateOfIssue)
-		let dateOfBirth = new Date(this.model._birthDay)
+		// let dateIssue = new Date(this.model._dateOfIssue)
+		// let dateOfBirth = new Date(this.model._birthDay)
+		let dateIssue = new Date(this.model.dateOfIssue)
+		let dateOfBirth = new Date(this.model.birthDate)
 
 		if (dateIssue < dateOfBirth) {
 			this._toastr.error('Ngày cấp phải lớn hơn ngày sinh')
@@ -364,6 +359,7 @@ export class IndividualComponent implements OnInit {
 		}
 
 		if (this.model.id != null && this.model.id > 0) {
+			console.log('this.model', this.model)
 			this._service.invididualUpdate(this.model).subscribe((res) => {
 				if (res.success != 'OK') {
 					let errorMsg = res.message
@@ -420,9 +416,15 @@ export class IndividualComponent implements OnInit {
 		}
 		this._service.individualById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this.rebuilForm()
+				// this.rebuilForm()
+				// this.model = new IndividualObject()
 				this.title = 'Chỉnh sửa cá nhân'
 				this.model = response.result.InvididualGetByID[0]
+				this.model.iDCard = response.result.InvididualGetByID[0].idCard
+				this.model.birthDate = new Date(response.result.InvididualGetByID[0].birthDay)
+				this.model.dateOfIssue = new Date(response.result.InvididualGetByID[0].dateOfIssue)
+				console.log('this.model', this.model)
+
 				$('#modal').modal('show')
 			} else {
 				this._toastr.error(response.message)

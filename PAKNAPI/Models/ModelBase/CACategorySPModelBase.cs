@@ -135,6 +135,13 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_DepartmentGroupDelete", DP));
 		}
+		public async Task<int> CAWordDeleteDAO(CADepartmentGroupDeleteIN _cADepartmentGroupDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _cADepartmentGroupDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_WordDelete", DP));
+		}
 	}
 
 	public class CADepartmentGroupDeleteIN
@@ -1655,5 +1662,28 @@ namespace PAKNAPI.ModelBase
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
+	}
+	public class CA_WordGetListSuggest
+	{
+		private SQLCon _sQLCon;
+
+		public CA_WordGetListSuggest(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CA_WordGetListSuggest()
+		{
+		}
+
+		public string Name { get; set; }
+		public string Description { get; set; }
+
+		public async Task<List<CA_WordGetListSuggest>> CA_WordGetListSuggestDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<CA_WordGetListSuggest>("CA_WordGetListSuggest", DP)).ToList();
+		}
 	}
 }

@@ -495,12 +495,15 @@ export class ViewRecommendationComponent implements OnInit {
 				this.toastr.error('Xảy ra lỗi trong quá trình xử lý')
 				return
 			}
+			this.toastr.success('Thêm bình luận thành công')
+			this.commentModel = new RecommnendationCommentObject()
 			this.getCommentPaged()
 		})
 	}
 
 	getCommentPaged(pageindex = 1) {
 		this.commentQuery.pageIndex = pageindex
+		this.listCommentsPaged = []
 		this.commentService.getAllOnPage(this.commentQuery).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.listCommentsPaged = this.listCommentsPaged.concat(res.result.MRCommnentGetAllOnPage)

@@ -14,14 +14,15 @@ export class Api {
 	public static getImageCaptcha = 'Captcha/GetCaptchaImage'
 
 	// FileUpload/Download
-	public static DownloadApp = 'UploadFiles/DownloadApp'
-	public static GetEncryptedPath = 'UploadFiles/GetEncryptedPath'
+	public static DownloadApp = 'Files/DownloadApp'
+	public static GetEncryptedPath = 'Files/GetEncryptedPath'
 	public static download = 'Files/DownloadFile'
-	public static DownloadFilebyId = 'UploadFiles/DownloadFilebyId'
-	public static downloadFileSupport = 'UploadFiles/DownloadFileSupport'
-	public static GetFile = 'UploadFiles/GetFile'
-	public static uploadfiles = 'UploadFiles/Uploadfiles'
-	public static getFileImage = 'UploadFiles/GetFile'
+	public static DownloadFilebyId = 'Files/DownloadFilebyId'
+	public static downloadFileSupport = 'Files/DownloadFileSupport'
+	public static GetFile = 'Files/GetFile'
+	public static uploadfiles = 'Files/Uploadfiles'
+	public static getFileImage = 'Files/GetFile'
+	public static getFileSupport = 'Files/GetFileSupport'
 
 	//Recommendation
 	public static RecommendationGetDataForCreate = 'Recommendation/RecommendationGetDataForCreate'
@@ -60,6 +61,7 @@ export class Api {
 
 	//Field
 	public static FieldGetList = 'CACategorySPBase/CAFieldGetAllOnPageBase'
+	public static FieldGetDropDown = 'CASPBase/CAFieldGetDropdownBase'
 	public static FieldGetById = 'CACategorySPBase/CAFieldGetByIDBase'
 	public static FieldInsert = 'CACategorySPBase/CAFieldInsertBase'
 	public static FieldUpdate = 'CACategorySPBase/CAFieldUpdateBase'
@@ -115,6 +117,7 @@ export class Api {
 	public static SystemGetUserDropDown = 'SYSPBase/SYUsersGetDropdownBase'
 	public static UserGetIsSystem = 'SYUserSPBase/SYUserGetIsSystemBase'
 	public static UserGetIsSystem2 = 'SYUserSPBase/SYUserGetIsSystem2Base'
+	public static getIsSystemOrderByUnit = 'User/GetOrderByUnit'
 	public static DeleteUserRole = 'SYUserSPBase/SYUserRoleMapDeleteBase'
 	public static InsertMultiUserRole = 'UserMapRole/SYUserRoleMapListInsert'
 
@@ -238,6 +241,7 @@ export class Api {
 	public static AdministrativeFormalitiesInsert = 'AdministrationFormalities/AdministrationFormalitiesInsert'
 	public static AdministrativeFormalitiesUpdate = 'AdministrationFormalities/AdministrationFormalitiesUpdate'
 	public static AdministrativeFormalitiesDelete = 'DAMSPBase/DAMAdministrationDeleteBase'
+	public static AdministrativeFormalitiesUpdateShow = 'DAMSPBase/DAMAdministrationUpdateShowBase'
 	public static AdministrativeFormalitiesCAFieldDAM = 'CASPBase/CAFieldDAMGetDropdownBase'
 
 	// Notification
@@ -270,25 +274,29 @@ export class Api {
 	public static TimeConfigGetDateActive = 'SYSPBase/SYTimeGetDateActiveBase'
 
 	//Individual
-	public static BI_IndividualGetAllOnPage = 'BusinessIndividual/BI_IndividualGetAllOnPage'
-	public static BI_IndivialChangeStatus = 'BusinessIndividual/BI_IndivialChangeStatus'
-	public static BI_IndivialDelete = 'BusinessIndividual/BI_IndivialDelete'
+	public static IndividualGetAllOnPage = 'BusinessIndividual/IndividualGetAllOnPage'
+	public static IndivialChangeStatus = 'BusinessIndividual/IndivialChangeStatus'
+	public static IndivialDelete = 'BusinessIndividual/IndivialDelete'
 	public static InvididualRegister = 'BusinessIndividual/InvididualRegister'
 	public static InvididualGetByID = 'BusinessIndividual/InvididualGetByID'
 	public static InvididualUpdate = 'BusinessIndividual/InvididualUpdate'
-	public static InvididualImportFile = 'BusinessIndividual/ImportDataInvididual?folder=BusinessIndividual'
+	public static ImportDataInvididual = 'BusinessIndividual/ImportDataInvididual?folder=BusinessIndividual'
 
 	//Business
-	public static BusinessGetAllOnPageBase = 'BusinessIndividual/BusinessGetAllOnPageBase'
-	public static BusinessChageStatus = 'BusinessIndividual/BusinessChageStatus'
+	public static BusinessGetAllOnPage = 'BusinessIndividual/BusinessGetAllOnPage'
+	public static BusinessChangeStatus = 'BusinessIndividual/BusinessChangeStatus'
 	public static BusinessDelete = 'BusinessIndividual/BusinessDelete'
 	public static BusinessRegister = 'BusinessIndividual/BusinessRegister'
 	public static BusinessGetByID = 'BusinessIndividual/BusinessGetByID'
 	public static BusinessUpdate = 'BusinessIndividual/BusinessUpdate'
+	public static ImportDataBusiness = 'BusinessIndividual/ImportDataBusiness?folder=BusinessIndividual'
 
 	//Statistic
 
 	public static StatisticRecommendationByUnit = 'Statistic/STT_RecommendationByUnit'
+	public static StatisticRecommendationByField = 'Statistic/STT_RecommendationByField'
+	public static StatisticRecommendationByGroupWord = 'Statistic/STT_RecommendationByGroupWord'
+	public static StatisticRecommendationByGroupWordDetail = 'Statistic/STT_RecommendationByGroupWordDetail'
 
 	// import
 	public static BusinessImportFile = 'BusinessIndividual/ImportDataBusiness?folder=BusinessIndividual'

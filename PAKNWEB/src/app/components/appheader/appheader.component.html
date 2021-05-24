@@ -319,7 +319,8 @@
 						</a>
 					</li>
 					<li class="nav-item dropdown notification_dropdown">
-						<a class="nav-link text-dark ai-icon bg-transparent" href="#" role="button" data-toggle="dropdown">
+						<a class="nav-link text-dark ai-icon bg-transparent" style="position: relative;" href="#" role="button" data-toggle="dropdown">
+							<span *ngIf="ViewedCount > 0" class="count-notification">{{ViewedCount}}</span>
 							<i class="bi bi-bell"></i>
 							<div class="pulse-css"></div>
 						</a>
@@ -368,7 +369,7 @@
 								<i class="bi bi-person-square"></i>
 								<span class="ml-2">Thông tin cá nhân </span>
 							</a>
-							<a href="#" class="dropdown-item ai-icon">
+							<a href="javascript:void(0)" class="dropdown-item ai-icon" (click)="preChangePassword()">
 								<i class="bi bi-key"></i>
 								<span class="ml-2">Đổi mật khẩu </span>
 							</a>
@@ -488,3 +489,53 @@
 <!--**********************************
           Header end ti-comment-alt
       ***********************************-->
+<div class="modal fade" id="modalChangePasswordByMe" (close)="close()">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal" [formGroup]="formChangePassword" #formDir="ngForm">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">Đổi mật khẩu</p>
+					</div>
+					<div class="modal-body no-padding-bottom" style="border: none;">
+						<div class="row form-group">
+							<div class="col-sm-12">
+								<label class="control-label">Mật khẩu mới <span class="text-danger">(*)</span></label>
+								<input class="form-control" type="password" formControlName="newPassword" [(ngModel)]="newPassword" maxlength="50" placeholder="Nhập..." />
+								<div *ngIf="(submitted && fChangePass.newPassword.invalid) || (fChangePass.newPassword.invalid && (fChangePass.newPassword.dirty || fChangePass.newPassword.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="fChangePass.newPassword.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<label class="control-label">Xác nhận mật khẩu <span class="text-danger">(*)</span></label>
+								<input class="form-control" type="password" formControlName="rePassword" [(ngModel)]="rePassword" maxlength="50" placeholder="Nhập..." />
+								<div *ngIf="(submitted && fChangePass.rePassword.invalid) || (fChangePass.rePassword.invalid && (fChangePass.rePassword.dirty || fChangePass.rePassword.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="fChangePass.rePassword.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+								<div *ngIf="samePass == true" class="has-error m-b-12">
+									<div>
+										<span class="help-block">Mật khẩu mới không trùng khớp</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer" style="border: none; justify-content: center;">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onChangePassword()">Xác
+							nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

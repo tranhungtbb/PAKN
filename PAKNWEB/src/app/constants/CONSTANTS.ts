@@ -5,6 +5,9 @@ export class CONSTANTS {
 	public static PAGE_INDEX = 1
 }
 
+export const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
+export const EXCEL_EXTENSION = '.xlsx'
+
 export class RESPONSE_STATUS {
 	public static success = 'OK'
 	public static orror = 'ORROR'
@@ -15,20 +18,50 @@ export class LOG_ACTION {
 	public static login = 'Đăng nhập'
 	public static logOut = 'Đăng xuất'
 	public static GETLIST = 'Trả về danh sách'
+	public static GETDATACREATE = 'Trả về dữ liệu danh mục'
 	public static GETINFO = 'Trả về thông tin'
 	public static INSERT = 'Thêm mới'
 	public static UPDATE = 'Cập nhật'
+	public static FORWARD = 'Chuyển tiếp'
+	public static PROCESSED = 'Xử lý'
 	public static UPDATESTATUS = 'Cập nhật trạng thái'
 	public static DELETE = 'Xóa'
 	public static EXPORT = 'Xuất danh sách'
+	public static CHANGEPASSWORD = 'Đổi mật khẩu'
 }
 
 export class LOG_OBJECT {
 	public static NO_CONTENT = ''
 	public static login = 'Đăng nhập'
+
 	public static CA_FIELD = 'Danh mục lĩnh vực'
 	public static CA_WORD = 'Danh mục thư viện từ ngữ'
 	public static CA_GROUPWORD = 'Danh mục nhóm thư viện từ ngữ'
+	public static CA_DEPARTMENT = 'Danh mục sở ngành'
+	public static CA_DEPARTMENT_GROUP = 'Danh mục nhóm sở ngành'
+	public static CA_HASHTAG = 'Danh mục Hashtag'
+	public static CA_POSITION = 'Danh mục chức vụ'
+	public static CA_NEWS_TYPE = 'Danh mục loại tin tức'
+
+	public static SMS_EMAIL = 'Danh sách sms'
+	public static HIS_EMAIL = 'Lịch sử sms'
+	public static SY_INVITATION = 'Danh sách thư mời'
+	public static HIS_INVITATION = 'Lịch sử thư mời'
+
+	public static SY_ROLE = 'Vai trò hệ thống'
+
+	public static SY_USER = 'Người dùng hệ thống'
+	public static SY_USER_GET_BY_ROLE = 'Người dùng theo vai trò'
+
+	public static HIS_USER = 'Lịch sử người dùng hệ thống'
+
+	public static MR_RECOMMENDATION = 'Phản ánh / Kiến nghị'
+	public static MR_HISTORIES = 'Lịch sử phản ánh / Kiến nghị'
+
+	public static RM_REMIND = 'Danh sách nhắc nhở'
+
+	public static MR_BY_HASHTAG = 'Danh sách PAKN theo hashtag'
+
 	public static SY_SYSTEM = 'Lịch sử hệ thống'
 }
 
@@ -125,6 +158,7 @@ export const FILETYPE = [
 	{ text: 'application/vnd.ms-powerpoint.presentation.macroEnabled.12', value: 6 },
 	{ text: 'application/vnd.ms-powerpoint.template.macroEnabled.12', value: 6 },
 	{ text: 'application/vnd.ms-powerpoint.slideshow.macroEnabled.12', value: 6 },
+	{ text: 'video/mp4', value: 7 },
 ]
 
 export class REGEX {

@@ -254,11 +254,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize]
 		[Route("BIIndividualOrBusinessGetDropListByProviceIdBase")]
-		public async Task<ActionResult<object>> BIIndividualOrBusinessGetDropListByProviceIdBase(int? Id, int? Type)
+		public async Task<ActionResult<object>> BIIndividualOrBusinessGetDropListByProviceIdBase(string LtsAdministrativeId, int? Type)
 		{
 			try
 			{
-				List<BIIndividualOrBusinessGetDropListByProviceId> rsBIIndividualOrBusinessGetDropListByProviceId = await new BIIndividualOrBusinessGetDropListByProviceId(_appSetting).BIIndividualOrBusinessGetDropListByProviceIdDAO(Id, Type);
+				List<BIIndividualOrBusinessGetDropListByProviceId> rsBIIndividualOrBusinessGetDropListByProviceId = await new BIIndividualOrBusinessGetDropListByProviceId(_appSetting).BIIndividualOrBusinessGetDropListByProviceIdDAO(LtsAdministrativeId, Type);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"BIIndividualOrBusinessGetDropListByProviceId", rsBIIndividualOrBusinessGetDropListByProviceId},

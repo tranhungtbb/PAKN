@@ -20,8 +20,9 @@
 					</svg>
 					quay lại
 				</button>
-				<button class="btn btn-sm grd-green rounded text-white border-0 mr-3" (click)="onSave(2)">Công bố</button>
-				<a class="btn btn-sm rounded text-dark border-0 grd-brown" [routerLink]="['../../cap-nhat',model.id]">Sửa</a>
+				<button *ngIf="model.status != 3" class="btn btn-sm grd-green rounded text-white border-0 mr-3" (click)="onSave(3)">Công bố</button>
+				<button *ngIf="model.status == 3" class="btn btn-sm grd-green rounded text-white border-0 mr-3" (click)="onSave(2)">Thu hồi</button>
+				<!-- <a class="btn btn-sm rounded text-dark border-0 grd-brown" [routerLink]="['../../cap-nhat',model.id]">Sửa</a> -->
 
 			</div>
 		</div>
@@ -31,86 +32,86 @@
 		<div class="row">
 			<div class="col-md-9 col-lg-9">
 				<div class="table-reponsive p-4">
-					<table class="table">
+					<table class="table table-striped">
 						<tbody>
 							<tr>
-								<td style="width: 20%;">Tên thủ tục</td>
+								<td style="width: 20%;" class="font-weight-bold">Tên thủ tục</td>
 								<td>{{model.name}}</td>
 							</tr>
 							<tr>
-								<td>Cấp tiếp nhận </td>
+								<td class="font-weight-bold">Cấp tiếp nhận </td>
 								<td>{{model.rankReceive}}</td>
 							</tr>
 							<tr>
-								<td>Đơn vị tiếp nhận </td>
-								<td>{{model.unitReceive}}</td>
+								<td class="font-weight-bold">Đơn vị tiếp nhận </td>
+								<td>{{model.unitReceiveName}}</td>
 							</tr>
 							<tr>
-								<td>Lĩnh vực</td>
+								<td class="font-weight-bold">Lĩnh vực</td>
 								<td>{{model.fieldName}}</td>
 							</tr>
 							<tr>
-								<td>Mức độ trực tuyến</td>
+								<td class="font-weight-bold">Mức độ trực tuyến</td>
 								<td><input disabled value="{{model.typeSend}}" type="checkbox" [checked]="model.typeSend"></td>
 							</tr>
 							<tr>
-								<td>Số bộ hồ sơ</td>
+								<td class="font-weight-bold">Số bộ hồ sơ</td>
 								<td>{{model.fileNum}}</td>
 							</tr>
 							<tr>
-								<td>Thời gian giải quyết</td>
+								<td class="font-weight-bold">Thời gian giải quyết</td>
 								<td>{{model.amountTime}} ngày kể từ khi nhận đủ hồ sơ hợp lệ</td>
 							</tr>
 							<tr>
-								<td>Cơ quan thực hiện </td>
+								<td class="font-weight-bold">Cơ quan thực hiện </td>
 								<td>{{model.organization}}</td>
 							</tr>
 							<tr>
-								<td>Cơ quan có thẩm quyền quyêt định</td>
+								<td class="font-weight-bold">Cơ quan có thẩm quyền quyêt định</td>
 								<td>{{model.organizationDecision}}</td>
 							</tr>
 							<tr>
-								<td>Cơ quan được ủy quyền </td>
+								<td class="font-weight-bold">Cơ quan được ủy quyền </td>
 								<td>{{model.organizationAuthor}}</td>
 							</tr>
 							<tr>
-								<td>Cách thức thực hiện</td>
+								<td class="font-weight-bold">Cách thức thực hiện</td>
 								<td>{{model.proceed}}</td>
 							</tr>
 							<tr>
-								<td>Đối tượng thực hiện </td>
+								<td class="font-weight-bold">Đối tượng thực hiện </td>
 								<td>{{model.object}}</td>
 							</tr>
 							<tr>
-								<td>Cơ quan phối hợp</td>
+								<td class="font-weight-bold">Cơ quan phối hợp</td>
 								<td>{{model.organizationCombine}}</td>
 							</tr>
 							<tr>
-								<td>Địa chỉ tiếp nhận hồ sơ</td>
+								<td class="font-weight-bold">Địa chỉ tiếp nhận hồ sơ</td>
 								<td>{{model.address}}</td>
 							</tr>
 							<tr>
-								<td>Kết quả thực hiện</td>
+								<td class="font-weight-bold">Kết quả thực hiện</td>
 								<td>{{model.result}}</td>
 							</tr>
 							<tr>
-								<td>Căn cứ pháp lý</td>
+								<td class="font-weight-bold">Căn cứ pháp lý</td>
 								<td>{{model.legalGrounds | htmlToPlaintext}}</td>
 							</tr>
 							<tr>
-								<td>Yêu cầu, điều kiện</td>
+								<td class="font-weight-bold">Yêu cầu, điều kiện</td>
 								<td>{{model.request | htmlToPlaintext}}</td>
 							</tr>
 							<tr>
-								<td>Đánh giá tác động TTHC</td>
+								<td class="font-weight-bold">Đánh giá tác động TTHC</td>
 								<td>{{model.request | htmlToPlaintext}}</td>
 							</tr>
 							<tr>
-								<td>Ghi chú </td>
+								<td class="font-weight-bold">Ghi chú </td>
 								<td>{{model.request | htmlToPlaintext}}</td>
 							</tr>
 							<tr>
-								<td>Tài liệu đính kèm</td>
+								<td class="font-weight-bold">Tài liệu đính kèm</td>
 								<td class="text-left">
 									<ng-container *ngFor="let item of files">
 										<a *ngIf="item.fileType == 1" href="javascript:void(0);" class="text-center box-fileinput">
@@ -149,37 +150,31 @@
 										<th style="width: 50px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>STT</strong>
-												<span class="caret-tb"></span>
 											</p>
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Tên giấy tờ</strong>
-												<span class="caret-tb"></span>
 											</p>
 										</th>
 										<th style="width: 120px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>bản chính</strong>
-												<span class="caret-tb"></span>
 											</p>
 										</th>
 										<th style="width: 100px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>bản sao</strong>
-												<span class="caret-tb"></span>
 											</p>
 										</th>
 										<th style="width: 200px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Mẫu đơn tờ khai</strong>
-												<span class="caret-tb"></span>
 											</p>
 										</th>
 										<th style="width: 100px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Bắt buộc</strong>
-												<span class="caret-tb"></span>
 											</p>
 										</th>
 									</tr>
@@ -200,48 +195,46 @@
 										</td>
 										<td>
 											<div class="attach-file row">
-												<ng-container *ngFor="let item of files">
-													<div class="col-auto mb-4" *ngIf="item.fileType == 1">
-														<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
-															<a href="#" class="d-block text-center box-fileinput">
-																<img src="../../../../assets/dist/images/file-word.svg" class="pull-left" alt="">
-																<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
-															</a>
-														</div>
+												<div class="col-auto mb-4" *ngIf="item.fileType == 1">
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
+														<a href="#" class="d-block text-center box-fileinput">
+															<img src="../../../../assets/dist/images/file-word.svg" class="pull-left" alt="">
+															<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
+														</a>
 													</div>
-													<div class="col-auto mb-4" *ngIf="item.fileType == 2">
-														<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
-															<a href="#" class="d-block text-center box-fileinput">
-																<img src="../../../../assets/dist/images/file-excel.svg" class="pull-left" alt="">
-																<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
-															</a>
-														</div>
+												</div>
+												<div class="col-auto mb-4" *ngIf="item.fileType == 2">
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
+														<a href="#" class="d-block text-center box-fileinput">
+															<img src="../../../../assets/dist/images/file-excel.svg" class="pull-left" alt="">
+															<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
+														</a>
 													</div>
-													<div class="col-auto mb-4" *ngIf="item.fileType == 4">
-														<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
-															<a href="#" class="d-block text-center box-fileinput">
-																<img src="../../../../assets/dist/images/file-image.svg" class="pull-left" alt="">
-																<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
-															</a>
-														</div>
+												</div>
+												<div class="col-auto mb-4" *ngIf="item.fileType == 4">
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
+														<a href="#" class="d-block text-center box-fileinput">
+															<img src="../../../../assets/dist/images/file-image.svg" class="pull-left" alt="">
+															<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
+														</a>
 													</div>
-													<div class="col-auto mb-4" *ngIf="item.fileType == 3">
-														<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
-															<a href="#" class="d-block text-center box-fileinput">
-																<img src="../../../../assets/dist/images/file-pdf.svg" class="pull-left" alt="">
-																<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
-															</a>
-														</div>
+												</div>
+												<div class="col-auto mb-4" *ngIf="item.fileType == 3">
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
+														<a href="#" class="d-block text-center box-fileinput">
+															<img src="../../../../assets/dist/images/file-pdf.svg" class="pull-left" alt="">
+															<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
+														</a>
 													</div>
-													<div class="col-auto mb-4" *ngIf="item.fileType == 6">
-														<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
-															<a href="#" class="d-block text-center box-fileinput">
-																<img src="../../../../assets/dist/images/file-powerpoint.svg" class="pull-left" alt="">
-																<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
-															</a>
-														</div>
+												</div>
+												<div class="col-auto mb-4" *ngIf="item.fileType == 6">
+													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
+														<a href="#" class="d-block text-center box-fileinput">
+															<img src="../../../../assets/dist/images/file-powerpoint.svg" class="pull-left" alt="">
+															<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
+														</a>
 													</div>
-												</ng-container>
+												</div>
 											</div>
 										</td>
 										<td>
@@ -274,31 +267,26 @@
 										<th style="width: 80px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>STT</strong>
-												<span class="caret-tb"></span>
 											</p>
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Công việc</strong>
-												<span class="caret-tb"></span>
 											</p>
 										</th>
 										<th style="width: 250px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Cơ quan thực hiện</strong>
-												<span class="caret-tb"></span>
 											</p>
 										</th>
 										<th style="width: 150px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Thời gian</strong>
-												<span class="caret-tb"></span>
 											</p>
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Kết quả</strong>
-												<span class="caret-tb"></span>
 											</p>
 										</th>
 									</tr>
@@ -346,19 +334,16 @@
 										<th style="width: 80px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>STT</strong>
-												<span class="caret-tb"></span>
 											</p>
 										</th>
 										<th style="width: 250px">
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Mức phí</strong>
-												<span class="caret-tb"></span>
 											</p>
 										</th>
 										<th>
 											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 												<strong>Mô tả</strong>
-												<span class="caret-tb"></span>
 											</p>
 										</th>
 									</tr>
@@ -389,19 +374,19 @@
 			<div class="col-md-3 col-lg-3 border-left pl-0">
 				<div class="">
 					<p class="p-3 m-0 border-bottom">
-						<span>Mã thủ tục: </span><span class="pull-right">{{model.code}}</span>
+						<span class="font-weight-bold">Mã thủ tục: </span><span class="pull-right">{{model.code}}</span>
 					</p>
 					<p class="p-3 m-0 border-bottom">
-						<span>Mã quản lý quốc gia: </span><br><span class="pull-right">{{model.countryCode}}</span>
+						<span class="font-weight-bold">Mã quản lý quốc gia: </span><br><span class="pull-right">{{model.countryCode}}</span>
 					</p>
 					<p class="p-3 m-0 border-bottom">
-						<span>Ngày tạo: </span><span class="pull-right">{{model.createdDate | date : 'dd/MM/yyyy'}}</span>
+						<span class="font-weight-bold">Ngày tạo: </span><span class="pull-right">{{model.createdDate | date : 'dd/MM/yyyy'}}</span>
 					</p>
 					<!-- <p class="p-3 m-0 border-bottom">
 						<span>Người tạo: </span><span class="pull-right">{{model.createdBy}}</span>
 					</p> -->
 					<p class="p-3 m-0 border-bottom">
-						<span>Ngày công bố: </span><span class="pull-right">{{model.createdDate | date : 'dd/MM/yyyy' }}</span>
+						<span class="font-weight-bold">Ngày công bố: </span><span class="pull-right">{{model.createdDate | date : 'dd/MM/yyyy' }}</span>
 					</p>
 				</div>
 				<!-- <div class="">

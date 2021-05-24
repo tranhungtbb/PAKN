@@ -10,6 +10,7 @@ import { TableModule } from 'primeng/table'
 import { ContextMenuModule } from 'primeng/contextmenu'
 import { MatCheckboxModule } from '@angular/material'
 import { TreeTableModule } from 'primeng/treetable'
+import { MultiSelectModule } from 'primeng/multiselect'
 
 import { EmailSmsRoutingModule } from './email-sms-routing.module'
 import { EmailSmsComponent } from './email-sms.component'
@@ -31,6 +32,7 @@ import { SMSSentComponent } from './sms-sent/sms-sent.component'
 		TreeModule,
 		TreeTableModule,
 		TableModule,
+		MultiSelectModule,
 		NgSelectModule,
 		ContextMenuModule,
 	],

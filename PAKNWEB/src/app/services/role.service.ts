@@ -5,7 +5,7 @@ import { Observable } from 'rxjs'
 import { AppSettings } from '../constants/app-setting'
 import { Api } from '../constants/api'
 // import { retry } from 'rxjs/operators';
-// import { request } from 'http';
+import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 import { UserInfoStorageService } from '../commons/user-info-storage.service'
 
 @Injectable({
@@ -18,19 +18,35 @@ export class RoleService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.RoleGetAll)
 	}
 	getAllPagedList(query: any): Observable<any> {
-		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.RoleGetAllOnPage)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_ROLE),
+		}
+		return this.serviceInvoker.getwithHeaders(query, AppSettings.API_ADDRESS + Api.RoleGetAllOnPage, headers)
 	}
 
 	getRoleById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.RoleGetById)
 	}
 	insert(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.RoleInsert)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_ROLE),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.RoleInsert, headers)
 	}
 	update(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.RoleUpdate)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_ROLE),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.RoleUpdate, headers)
 	}
 	delete(data: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_ROLE),
+		}
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.RoleDelete)
 	}
 

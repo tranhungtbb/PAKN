@@ -56,11 +56,36 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("DAM_Administration_Delete", DP));
 		}
 	}
+	public class DAMAdministrationUpdateShow
+	{
+		private SQLCon _sQLCon;
 
+		public DAMAdministrationUpdateShow(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public DAMAdministrationUpdateShow()
+		{
+		}
+
+		public async Task<int> DAMAdministrationUpdateShowDAO(DAMAdministrationUpdateShowIN _dAMAdministrationUpdateShowIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _dAMAdministrationUpdateShowIN.Id);
+			DP.Add("Status", _dAMAdministrationUpdateShowIN.Status);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("DAM_Administration_UpdateShow", DP));
+		}
+	}
 	public class DAMAdministrationDeleteIN
 	{
 		public int? Id { get; set; }
 	}
+	public class DAMAdministrationUpdateShowIN
+    {
+		public int? Id { get; set; }
+		public int Status { get; set; }
+    }
 
 	public class DAMAdministrationDeleteAll
 	{
@@ -187,6 +212,7 @@ namespace PAKNAPI.ModelBase
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string FieldName { get; set; }
+		public string UnitReceiveName { get; set; }
 		public string Code { get; set; }
 		public string CountryCode { get; set; }
 		public int UnitReceive { get; set; }
@@ -260,6 +286,12 @@ namespace PAKNAPI.ModelBase
 			DP.Add("TotalRecords", TotalRecords);
 
 			return (await _sQLCon.ExecuteListDapperAsync<DAMAdministrationGetList>("DAM_Administration_GetList", DP)).ToList();
+		}
+		public async Task<List<DAMAdministrationGetList>> DAMAdministrationGetListTopDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<DAMAdministrationGetList>("DAM_Administration_GetListTop", DP)).ToList();
 		}
 	}
 

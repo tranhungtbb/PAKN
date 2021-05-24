@@ -1,6 +1,3 @@
-$(document).ready(function() {
-    $('.select2').select2();
-});
 
 $.fn.extend({
     treed: function (o) {

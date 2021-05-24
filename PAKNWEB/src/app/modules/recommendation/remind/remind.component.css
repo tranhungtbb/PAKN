@@ -93,3 +93,7 @@ p.content-remind {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+
+.inputfile-4 + label {
+	padding: 0px;
+}

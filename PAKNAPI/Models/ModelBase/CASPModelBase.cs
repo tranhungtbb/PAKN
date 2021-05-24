@@ -28,12 +28,40 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 		public byte? Levels { get; set; }
 
+		public int? ParentId { get; set; }
+
 		public async Task<List<CAAdministrativeUnitsGetDropDown>> CAAdministrativeUnitsGetDropDownDAO(int? Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAAdministrativeUnitsGetDropDown>("CA_AdministrativeUnitsGetDropDown", DP)).ToList();
+		}
+	}
+
+	public class AdministrativeUnitGetAllById
+	{
+		private SQLCon _sQLCon;
+
+		public AdministrativeUnitGetAllById(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public AdministrativeUnitGetAllById()
+		{
+		}
+
+		public long Id { get; set; }
+		public string Name { get; set; }
+		public byte? Levels { get; set; }
+
+		public async Task<List<AdministrativeUnitGetAllById>> AdministrativeUnitsGetDropDownDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<AdministrativeUnitGetAllById>("[CA_AdministrativeUnitGetAllById]", DP)).ToList();
 		}
 	}
 

@@ -56,7 +56,7 @@ export class CreateRecommendationComponent implements OnInit {
 	ngOnInit() {
 		this.model = new RecommendationObject()
 		this.getDropdown()
-		this.activatedRoute.params.subscribe(params => {
+		this.activatedRoute.params.subscribe((params) => {
 			this.model.id = +params['id']
 			if (this.model.id != 0) {
 				this.getData()
@@ -67,7 +67,7 @@ export class CreateRecommendationComponent implements OnInit {
 			}
 			this.builForm()
 		})
-		this.recommendationService.recommendationGetDataForCreate({}).subscribe(response => {
+		this.recommendationService.recommendationGetDataForCreate({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.lstUnit = response.result.lstUnit
@@ -75,7 +75,7 @@ export class CreateRecommendationComponent implements OnInit {
 			} else {
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 			}
 	}
@@ -92,13 +92,13 @@ export class CreateRecommendationComponent implements OnInit {
 			if (isExist == false) {
 				this.modelHashTagAdd = new HashtagObject()
 				this.modelHashTagAdd.name = e.target.value
-				this._serviceCatalog.hashtagInsert(this.modelHashTagAdd).subscribe(response => {
+				this._serviceCatalog.hashtagInsert(this.modelHashTagAdd).subscribe((response) => {
 					if (response.success == RESPONSE_STATUS.success) {
 						this.hashtagId = response.result
 						this.getDropdown()
 					}
 				}),
-					error => {
+					(error) => {
 						console.error(error)
 					}
 			}
@@ -135,7 +135,7 @@ export class CreateRecommendationComponent implements OnInit {
 		let request = {
 			Id: this.model.id,
 		}
-		this.recommendationService.recommendationGetById(request).subscribe(response => {
+		this.recommendationService.recommendationGetById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.model
 				this.lstHashtagSelected = response.result.lstHashtag
@@ -148,13 +148,13 @@ export class CreateRecommendationComponent implements OnInit {
 				this.toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 			}
 	}
 	getDropdown() {
 		let request = {}
-		this.recommendationService.recommendationGetDataForCreate(request).subscribe(response => {
+		this.recommendationService.recommendationGetDataForCreate(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.lstUnit = response.result.lstUnit
@@ -169,7 +169,7 @@ export class CreateRecommendationComponent implements OnInit {
 				this.toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 			}
 	}
@@ -218,7 +218,7 @@ export class CreateRecommendationComponent implements OnInit {
 		const check = this.fileService.checkFileWasExitsted(event, this.files)
 		if (check === 1) {
 			for (let item of event.target.files) {
-				FILETYPE.forEach(fileType => {
+				FILETYPE.forEach((fileType) => {
 					if (item.type == fileType.text) {
 						item.fileType = fileType.value
 						this.files.push(item)
@@ -246,7 +246,7 @@ export class CreateRecommendationComponent implements OnInit {
 	onSave() {
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
-
+		this.builForm()
 		this.submitted = true
 		if (this.form.invalid) {
 			return
@@ -259,22 +259,22 @@ export class CreateRecommendationComponent implements OnInit {
 			LstXoaFile: this.lstXoaFile,
 		}
 		if (this.model.id == 0) {
-			this.recommendationService.recommendationInsert(request).subscribe(response => {
+			this.recommendationService.recommendationInsert(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.toastr.success(COMMONS.ADD_SUCCESS)
 
-					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: response.result }).subscribe(res => {})
+					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: response.result }).subscribe((res) => {})
 
 					return this.router.navigate(['/quan-tri/kien-nghi/danh-sach-tong-hop'])
 				} else {
 					this.toastr.error(response.message)
 				}
 			}),
-				err => {
+				(err) => {
 					console.error(err)
 				}
 		} else {
-			this.recommendationService.recommendationUpdate(request).subscribe(response => {
+			this.recommendationService.recommendationUpdate(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.toastr.success(COMMONS.UPDATE_SUCCESS)
 					return this.router.navigate(['/quan-tri/kien-nghi/danh-sach-tong-hop'])
@@ -282,7 +282,7 @@ export class CreateRecommendationComponent implements OnInit {
 					this.toastr.error(response.message)
 				}
 			}),
-				err => {
+				(err) => {
 					console.error(err)
 				}
 		}

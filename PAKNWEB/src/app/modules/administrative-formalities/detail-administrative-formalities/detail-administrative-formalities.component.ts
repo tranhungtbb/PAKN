@@ -215,58 +215,12 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 	onSave(status) {
 		this.submitted = true
 		this.model.status = status
-		this.model.name = this.model.name.trim()
-		this.model.rankReceive = this.model.rankReceive.trim()
-		this.model.fileNum = this.model.fileNum.trim()
-		this.model.amountTime = this.model.amountTime.trim()
-		this.model.proceed = this.model.proceed.trim()
-		this.model.object = this.model.object.trim()
-		this.model.organization = this.model.organization.trim()
-		if (
-			this.model.name == null ||
-			this.model.name == '' ||
-			this.model.rankReceive == null ||
-			this.model.rankReceive == '' ||
-			this.model.fileNum == null ||
-			this.model.fileNum == '' ||
-			this.model.amountTime == null ||
-			this.model.amountTime == '' ||
-			this.model.proceed == null ||
-			this.model.proceed == '' ||
-			this.model.object == null ||
-			this.model.object == '' ||
-			this.model.organization == null ||
-			this.model.organization == ''
-		) {
-			return
-		}
-		if (this.form.invalid) {
-			return
-		}
 		const request = {
-			Data: this.model,
-			Files: this.files,
-			LstXoaFile: this.lstXoaFile,
-			LstXoaFileForm: this.lstXoaFileForm,
-			LstCompositionProfile: this.lstCompositionProfile,
-			LstCharges: this.lstCharges,
-			LstImplementationProcess: this.lstImplementationProcess,
-			LstDelete: this.lstDelete,
+			Id: this.model.id,
+			Status: this.model.status,
 		}
-		if (this.model.id == 0) {
-			this.afService.insert(request).subscribe(response => {
-				if (response.success == RESPONSE_STATUS.success) {
-					this.toastr.success(COMMONS.ADD_SUCCESS)
-					return this.router.navigate(['/quan-tri/thu-tuc-hanh-chinh'])
-				} else {
-					this.toastr.error(response.message)
-				}
-			}),
-				err => {
-					console.error(err)
-				}
-		} else {
-			this.afService.update(request).subscribe(response => {
+		if (this.model.id != 0) {
+			this.afService.updateShow(request).subscribe(response => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.toastr.success(COMMONS.UPDATE_SUCCESS)
 					return this.router.navigate(['/quan-tri/thu-tuc-hanh-chinh'])

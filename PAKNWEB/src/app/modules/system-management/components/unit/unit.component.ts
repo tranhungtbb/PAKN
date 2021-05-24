@@ -1,17 +1,18 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core'
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
-import { MatDialog, MatDialogModule } from '@angular/material'
 import { TreeNode } from 'primeng/api'
-import { REGEX } from 'src/app/constants/CONSTANTS'
+import { Router } from '@angular/router'
 
+import { DataService } from 'src/app/services/sharedata.service'
+import { REGEX } from 'src/app/constants/CONSTANTS'
 import { UnitService } from '../../../../services/unit.service'
 import { UserService } from '../../../../services/user.service'
 import { PositionService } from '../../../../services/position.service'
 import { RoleService } from '../../../../services/role.service'
 
 import { UserCreateOrUpdateComponent } from '../user/user-create-or-update/user-create-or-update.component'
-import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
 import { UnitObject } from 'src/app/models/unitObject'
 
@@ -89,7 +90,8 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		private positionService: PositionService,
 		private formBuilder: FormBuilder,
 		private _toastr: ToastrService,
-		private dialog: MatDialog,
+		private _shareData: DataService,
+		private _router: Router,
 		private roleService: RoleService
 	) {}
 
@@ -131,6 +133,9 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			this.modelUnit = new UnitObject()
 			this.createUnitFrom.reset()
 		})
+		setTimeout(() => {
+			$('#title-user-in-unit').click()
+		}, 1000)
 	}
 
 	collapsed_checked: any = {
@@ -146,34 +151,34 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.unitSortDir = this.unitSortDir == 'DESC' ? 'ASC' : 'DESC'
 		//this.getUnitPagedList()
 	}
-	getUnitPagedList(): void {
-		this.query.name = this.query.name.trim()
-		this.query.email = this.query.email.trim()
-		this.query.phone = this.query.phone.trim()
-		this.query.address = this.query.address.trim()
-		this.unitService
-			.getAllPagedList({
-				parentId: this.query.parentId,
-				pageSize: this.query.pageSize,
-				pageIndex: this.query.pageIndex,
-				name: this.query.name.trim(),
-				email: this.query.email.trim(),
-				phone: this.query.phone.trim(),
-				address: this.query.address.trim(),
-				isActived: this.query.isActived == null ? '' : this.query.isActived,
-				sortDir: this.unitSortDir,
-				sortField: this.unitSortField,
-			})
-			.subscribe(
-				(res) => {
-					if (res.success != 'OK') return
-					this.listUnitPaged = res.result.CAUnitGetAllOnPage
-					if (this.totalCount_Unit <= 0) this.totalCount_Unit = res.result.TotalCount
-					this.unitPageCount = Math.ceil(this.totalCount_Unit / this.query.pageSize)
-				},
-				(err) => {}
-			)
-	}
+	// getUnitPagedList(): void {
+	// 	this.query.name = this.query.name.trim()
+	// 	this.query.email = this.query.email.trim()
+	// 	this.query.phone = this.query.phone.trim()
+	// 	this.query.address = this.query.address.trim()
+	// 	this.unitService
+	// 		.getAllPagedList({
+	// 			parentId: this.query.parentId,
+	// 			pageSize: this.query.pageSize,
+	// 			pageIndex: this.query.pageIndex,
+	// 			name: this.query.name.trim(),
+	// 			email: this.query.email.trim(),
+	// 			phone: this.query.phone.trim(),
+	// 			address: this.query.address.trim(),
+	// 			isActived: this.query.isActived == null ? '' : this.query.isActived,
+	// 			sortDir: this.unitSortDir,
+	// 			sortField: this.unitSortField,
+	// 		})
+	// 		.subscribe(
+	// 			(res) => {
+	// 				if (res.success != 'OK') return
+	// 				this.listUnitPaged = res.result.CAUnitGetAllOnPage
+	// 				if (this.totalCount_Unit <= 0) this.totalCount_Unit = res.result.TotalCount
+	// 				this.unitPageCount = Math.ceil(this.totalCount_Unit / this.query.pageSize)
+	// 			},
+	// 			(err) => {}
+	// 		)
+	// }
 	unitFilterChange(): void {
 		//this.getUnitPagedList()
 	}
@@ -195,6 +200,11 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		//this.getUnitPagedList()
 	}
 
+	onFilterTree(data) {
+		console.log(data)
+		this.getAllUnitShortInfo(null, data)
+	}
+
 	getUnitInfo(id) {
 		this.unitService.getById({ id }).subscribe((res) => {
 			if (res.success != 'OK') return
@@ -203,22 +213,25 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		})
 	}
 
-	getAllUnitShortInfo(activeTreeNode: any = null) {
+	getAllUnitShortInfo(activeTreeNode: any = null, title: any = '') {
 		this.unitService.getAll({}).subscribe(
 			(res) => {
 				if (res.success != 'OK') return
-				let listUnit = res.result.CAUnitGetAll.map((e) => {
-					let item = {
-						id: e.id,
-						name: e.name,
-						parentId: e.parentId == null ? 0 : e.parentId,
-						unitLevel: e.unitLevel,
-						children: [],
-						label: e.name,
+				let listUnit = res.result.CAUnitGetAll.filter((e) => {
+					if (e.name.includes(title)) {
+						let item = {
+							id: e.id,
+							name: e.name,
+							parentId: e.parentId == null ? 0 : e.parentId,
+							unitLevel: e.unitLevel,
+							children: [],
+							label: e.name,
+						}
+						return item
 					}
-
-					return item
+					return
 				})
+				debugger
 				this.unitFlatlist = listUnit
 				this.treeUnit = this.unflatten(listUnit)
 
@@ -258,10 +271,23 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				sortField: this.usSortField,
 			})
 			.subscribe((res) => {
-				if (res.success != 'OK') return
-				this.listUserPaged = res.result.SYUserGetAllOnPage
-				if (res.result.TotalCount > 0) this.totalCount_User = res.result.TotalCount
-				this.userPageCount = Math.ceil(this.totalCount_User / this.query.pageSize)
+				if (res.success != 'OK') {
+					this.listUserPaged = []
+					this.userPageCount = 0
+					this.queryUser.pageIndex = 1
+					this.queryUser.pageSize = 20
+				} else {
+					if (res.result.SYUserGetAllOnPage.length == 0) {
+						this.listUserPaged = []
+						this.userPageCount = 0
+						this.queryUser.pageIndex = 1
+						this.queryUser.pageSize = 20
+					} else {
+						this.listUserPaged = res.result.SYUserGetAllOnPage
+						if (res.result.TotalCount > 0) this.totalCount_User = res.result.TotalCount
+						this.userPageCount = Math.ceil(this.totalCount_User / this.query.pageSize)
+					}
+				}
 			})
 	}
 	onUserFilterChange() {
@@ -279,12 +305,15 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 
 	onDelUser(id: number) {
-		let userObj = this.listUserPaged.find((c) => c.id == id)
-
-		this.userService.delete(userObj).subscribe((res) => {
+		this.userService.delete({ Id: id }).subscribe((res) => {
 			if (res.success != 'OK') {
-				this._toastr.error('Dữ liệu đang được sử dụng, không được phép xoá!')
-				return
+				if (isNaN(res.result)) {
+					this._toastr.error(res.message)
+					return
+				} else {
+					this._toastr.error('Dữ liệu đang được sử dụng, không được phép xoá!')
+					return
+				}
 			}
 			this._toastr.success(COMMONS.DELETE_SUCCESS)
 			this.getUserPagedList()
@@ -351,11 +380,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	unitFormSubmitted = false
 	onSaveUnit() {
 		this.unitFormSubmitted = true
-
 		this.modelUnit.name = this.modelUnit.name.trim()
 		this.modelUnit.email = this.modelUnit.email.trim()
-		this.modelUnit.address = this.modelUnit.address.trim()
-		this.modelUnit.description = this.modelUnit.description.trim()
+		this.modelUnit.address == null ? (this.modelUnit.address = '') : (this.modelUnit.address = this.modelUnit.address.trim())
+		this.modelUnit.description == null ? (this.modelUnit.description = '') : (this.modelUnit.description = this.modelUnit.description.trim())
 
 		if (this.createUnitFrom.invalid) {
 			this._toastr.error('Dữ liệu không hợp lệ')
@@ -366,21 +394,22 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		if (this.modelUnit.id != null && this.modelUnit.id > 0) {
 			this.unitService.update(this.modelUnit).subscribe((res) => {
 				if (res.success != 'OK') {
-					let errorMsg = res.message
 					this._toastr.error(res.message)
 					return
+				} else {
+					if (res.result > 0) {
+						this._toastr.success(COMMONS.UPDATE_SUCCESS)
+						this.treeViewActive(this.unitObject.id, this.unitObject.unitLevel)
+
+						// cập nhật tên ptree khi đã sửa thành công
+						let current_edit = this.searchTree(this.treeUnit, this.modelUnit.id)
+						current_edit.name = this.modelUnit.name
+						this.modelUnit = new UnitObject()
+						$('#modal-create-or-update').modal('hide')
+					} else {
+						this._toastr.error('Tên đơn vị đã tồn tại.')
+					}
 				}
-				this._toastr.success(COMMONS.UPDATE_SUCCESS)
-				// this.getAllUnitShortInfo()
-				////this.getUnitPagedList()
-				this.treeViewActive(this.unitObject.id, this.unitObject.unitLevel)
-
-				// cập nhật tên ptree khi đã sửa thành công
-				let current_edit = this.searchTree(this.treeUnit, this.modelUnit.id)
-				current_edit.name = this.modelUnit.name
-
-				this.modelUnit = new UnitObject()
-				$('#modal-create-or-update').modal('hide')
 			})
 		} else {
 			this.unitService.create(this.modelUnit).subscribe((res) => {
@@ -388,11 +417,16 @@ export class UnitComponent implements OnInit, AfterViewInit {
 					let errorMsg = res.message
 					this._toastr.error(errorMsg)
 					return
+				} else {
+					if (res.result > 0) {
+						this._toastr.success(COMMONS.ADD_SUCCESS)
+						this.getAllUnitShortInfo(this.unitObject)
+						this.modelUnit = new UnitObject()
+						$('#modal-create-or-update').modal('hide')
+					} else {
+						this._toastr.error('Tên đơn vị đã tồn tại')
+					}
 				}
-				this._toastr.success(COMMONS.ADD_SUCCESS)
-				this.getAllUnitShortInfo(this.unitObject)
-				this.modelUnit = new UnitObject()
-				$('#modal-create-or-update').modal('hide')
 			})
 		}
 	}
@@ -511,6 +545,18 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		})
 	}
 	/*end - chức năng xác nhận hành động xóa*/
+
+	// xuất excel
+
+	onExport() {
+		let passingObj: any = {}
+		passingObj.UnitId = this.query.parentId
+		passingObj.UnitName = this.unitObject.name
+
+		this._shareData.setobjectsearch(passingObj)
+		this._shareData.sendReportUrl = 'ListUserByUnitId?' + JSON.stringify(passingObj)
+		this._router.navigate(['quan-tri/xuat-file'])
+	}
 
 	modalCreateOrUpdateUser(id: number) {
 		let unitId = this.unitObject.id

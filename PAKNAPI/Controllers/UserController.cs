@@ -18,6 +18,8 @@ using System.Security.Claims;
 using System.Globalization;
 using PAKNAPI.Models;
 using PAKNAPI.Models.User;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace PAKNAPI.Controllers
 {
@@ -29,15 +31,17 @@ namespace PAKNAPI.Controllers
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;
 		private readonly IHttpContextAccessor _httpContextAccessor;
+		private readonly IWebHostEnvironment _hostingEnvironment;
 		private Microsoft.Extensions.Configuration.IConfiguration _config;
 		public UserController(IFileService fileService, IAppSetting appSetting, IClient bugsnag,
-			IHttpContextAccessor httpContextAccessor, Microsoft.Extensions.Configuration.IConfiguration config)
+			IHttpContextAccessor httpContextAccessor, Microsoft.Extensions.Configuration.IConfiguration config, IWebHostEnvironment IWebHostEnvironment)
 		{
 			_fileService = fileService;
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
 			_httpContextAccessor = httpContextAccessor;
 			_config = config;
+			_hostingEnvironment = IWebHostEnvironment;
 		}
 
 		[HttpPost, DisableRequestSizeLimit]
@@ -87,7 +91,7 @@ namespace PAKNAPI.Controllers
 					await _fileService.Remove(filePath);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
-
+			new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 			return new Models.Results.ResultApi { Success = ResultCode.OK };
 		}
 
@@ -116,25 +120,21 @@ namespace PAKNAPI.Controllers
 				}
 
 
-
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-				
-				
 				model.Password = modelOld[0].Password;
 				model.Salt = modelOld[0].Salt;
-
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				var result = await new SYUserUpdate(_appSetting).SYUserUpdateDAO(model);
 
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 				//xóa file đã tải
 				await _fileService.Remove(filePath);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
-
+			new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 			return new Models.Results.ResultApi { Success = ResultCode.OK };
 		}
 
@@ -152,13 +152,20 @@ namespace PAKNAPI.Controllers
 				if (result > 0)
 				{
 					// xóa avatar cũ
-					if (modelOld != null && string.IsNullOrEmpty(modelOld.Avatar))
+					if (modelOld != null && modelOld.Avatar != null)
 					{
-						await _fileService.Remove(modelOld.Avatar);
+						string _imageToBeDeleted = Path.Combine(_hostingEnvironment.WebRootPath, modelOld.Avatar);
+						//string _imageToBeDeleted = Path.Combine(_hostingEnvironment.WebRootPath, "Invitation\\", fname);
+						if ((System.IO.File.Exists(_imageToBeDeleted)))
+						{
+							System.IO.File.Delete(_imageToBeDeleted);
+						}
 					}
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 					return new Models.Results.ResultApi { Success = ResultCode.OK, Result = result };
 				}
 				else {
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Result = result };
 				}
 				
@@ -170,7 +177,7 @@ namespace PAKNAPI.Controllers
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
-
+			new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 			return new Models.Results.ResultApi { Success = ResultCode.OK };
 		}
 
@@ -202,6 +209,70 @@ namespace PAKNAPI.Controllers
 						{"PageSize", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+		
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("GetOrderByUnit")]
+		public async Task<ActionResult<object>> SYUserGetAllOrderByUnit()
+		{
+			try
+			{
+				List <DropListTreeView> result = new List<DropListTreeView>();
+				// lst đơn vị
+				List<SYUnitGetDropdown> lstUnit = await new SYUnitGetDropdown(_appSetting).SYUnitGetDropdownDAO();
+				// lst người dùng theo đơn vị từng đơn vị
+				DropListTreeView tinh = new DropListTreeView();
+				foreach (var province in lstUnit.Where(x=>x.UnitLevel == 1).ToList()) {
+					tinh = new DropListTreeView(province.Text,province.Value, new List<DropListTreeView>());
+					List<SYUserGetByUnitId> usersProvice = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(province.Value);
+					foreach (var userProvice in usersProvice) {
+						tinh.children.Add(new DropListTreeView(userProvice.FullName, userProvice.Id));
+					}
+					// list chilldren của chil
+					DropListTreeView huyen = new DropListTreeView();
+					foreach (var district in lstUnit.Where(x => x.ParentId == province.Value && x.UnitLevel == 2).ToList()) {
+						huyen = new DropListTreeView(district.Text, district.Value, new List<DropListTreeView>());
+						List<SYUserGetByUnitId> usersDistrict = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(district.Value);
+						foreach (var userDistrict in usersDistrict)
+						{
+							huyen.children.Add(new DropListTreeView(userDistrict.FullName, userDistrict.Id));
+						}
+						// list children của child1
+						DropListTreeView xa = new DropListTreeView();
+						foreach (var commune in lstUnit.Where(x => x.ParentId == district.Value && x.UnitLevel == 3).ToList())
+						{
+							xa = new DropListTreeView(commune.Text,commune.Value, new List<DropListTreeView>());
+							List<SYUserGetByUnitId> usersCommune = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(commune.Value);
+							foreach (var userCommune in usersCommune)
+							{
+								xa.children.Add(new DropListTreeView(userCommune.FullName, userCommune.Id));
+							}
+							if (xa.children.Count > 0)
+							{
+								huyen.children.Add(xa);
+							}
+						}
+						if (huyen.children.Count > 0) {
+							tinh.children.Add(huyen);
+						}
+						
+					}
+					if (tinh.children.Count > 0) { result.Add(tinh); }
+					
+				}
+				
+
+				return new ResultApi { Success = ResultCode.OK, Result = result };
 			}
 			catch (Exception ex)
 			{
@@ -435,12 +506,19 @@ namespace PAKNAPI.Controllers
 		[Route("SendDemo")]
 		public string SendDemo()
         {
-			string contentSMSOPT = "(Trung tam tiep nhan PAKN tinh Khanh Hoa) Xin chao: Trần Thanh Quyền. Mat khau dang nhap he thong la: abcAbc123123. Xin cam on!";
-			SV.MailSMS.Model.SMTPSettings settings = new SV.MailSMS.Model.SMTPSettings();
-			settings.COM = _config["SmsCOM"].ToString();
-			SV.MailSMS.Control.SMSs sMSs = new SV.MailSMS.Control.SMSs(settings);
-			sMSs.SendOTPSMS("0984881580", contentSMSOPT);
-			return "ok";
+            try
+			{
+				string contentSMSOPT = "(Trung tam tiep nhan PAKN tinh Khanh Hoa) Xin chao: Trần Thanh Quyền. Mat khau dang nhap he thong la: abcAbc123123. Xin cam on!";
+				SV.MailSMS.Model.SMTPSettings settings = new SV.MailSMS.Model.SMTPSettings();
+				settings.COM = _config["SmsCOM"].ToString();
+				SV.MailSMS.Control.SMSs sMSs = new SV.MailSMS.Control.SMSs(settings);
+				string MessageResult = sMSs.SendOTPSMS("0984881580", contentSMSOPT);
+				return "ok";
+			}
+            catch (Exception ex)
+			{
+				return ex.Message;
+			}
 		}
 
 		[HttpGet]
@@ -574,7 +652,7 @@ namespace PAKNAPI.Controllers
 				_model.Id = accInfo[0].Id;
 
 				var rs = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_model);
-
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new Models.Results.ResultApi { Success = ResultCode.OK};
 			}
 			catch(Exception ex)
@@ -617,7 +695,7 @@ namespace PAKNAPI.Controllers
 				_model.Id = accInfo[0].Id;
 
 				var rs = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_model);
-
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new Models.Results.ResultApi { Success = ResultCode.OK };
 			}
 			catch (Exception ex)
@@ -770,7 +848,7 @@ namespace PAKNAPI.Controllers
 					FullName= accInfo[0].FullName,
 					Address = accInfo[0].Address,
 				});
-
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new Models.Results.ResultApi { Success = ResultCode.OK};
 			}
             catch (Exception ex)
@@ -781,13 +859,48 @@ namespace PAKNAPI.Controllers
 			}
         }
 
+    //    public async Task<IActionResult> ExportExcelHisUser(int ? id)
+    //    {
+    //        using (var workbook = new XLWorkbook())
+    //        {
+				//List<SYSystemLogGetAllOnPage> data  = await new SYSystemLogGetAllOnPage(_appSetting).SYSystemLogGetAllOnPageDAO(id, 1000, 1, null, null);
+				//var worksheet = workbook.Worksheets.Add("Users");
+    //            var currentRow = 1;
+    //            worksheet.Cell(currentRow, 1).Value = "Id";
+    //            worksheet.Cell(currentRow, 2).Value = "Username";
+				//worksheet.Cell(currentRow, 3).Value = "Id";
+				//worksheet.Cell(currentRow, 4).Value = "Username";
+				//worksheet.Cell(currentRow, 5).Value = "Id";
+				//foreach (var item in data)
+    //            {
+    //                currentRow++;
+    //                worksheet.Cell(currentRow, 1).Value = item.Id;
+				//	worksheet.Cell(currentRow, 2).Value = item.CreatedDate;
+				//	worksheet.Cell(currentRow, 3).Value = item.Action;
+				//	worksheet.Cell(currentRow, 4).Value = item.Description;
+				//	worksheet.Cell(currentRow, 5).Value = item.Status;
+				//}
 
-		#endregion
+    //            using (var stream = new MemoryStream())
+    //            {
+    //                workbook.SaveAs(stream);
+    //                var content = stream.ToArray();
+
+    //                return File(
+    //                    content,
+    //                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    //                    "users.xlsx");
+    //            }
+    //        }
+    //    }
 
 
-		#region private
+        #endregion
 
-		private Dictionary<string,string> generatePassword(string pwd)
+
+        #region private
+
+        private Dictionary<string,string> generatePassword(string pwd)
         {
 			byte[] salt = new byte[128 / 8];
 			using (var rng = RandomNumberGenerator.Create())

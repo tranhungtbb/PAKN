@@ -22,7 +22,7 @@
 						</div>
 						<div class="text-center">
 							<input type="file" [hidden]="true" class="seclect-avatar" (change)="changeSelectAvatar($event)">
-							<a class="color-brow" href="javascript:void(0);" (click)="onChangeAvatar()">
+							<a class="color-brow" style="cursor: pointer;" (click)="onChangeAvatar()">
 								<i class="pi bi-image"></i>&nbsp;
 								Tải lên ảnh đại diện
 							</a>
@@ -118,6 +118,8 @@
 							<ng-select class="form-control" [items]="rolesList" placeholder="Chọn..." bindLabel="name" bindValue="id" [(ngModel)]="selectedRoles"
 								formControlName="roleId" [closeOnSelect]="true" [multiple]="true">
 							</ng-select>
+
+
 							<div *ngIf="(userFormSubmitted && fUser.roleId.invalid)||(fUser.roleId.invalid && (fUser.roleId.dirty || fUser.roleId.touched))"
 								class="has-error m-b-12">
 								<div *ngIf="fUser.roleId.errors.required">

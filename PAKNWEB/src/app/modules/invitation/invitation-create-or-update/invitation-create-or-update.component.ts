@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 import { defineLocale } from 'ngx-bootstrap/chronos'
 import { viLocale } from 'ngx-bootstrap/locale'
 import { BsLocaleService } from 'ngx-bootstrap/datepicker'
+import { TreeviewItem, TreeviewConfig } from 'ngx-treeview'
+import { TreeviewI18n } from 'ngx-treeview'
 
 import { Router, ActivatedRoute } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
@@ -14,6 +16,7 @@ import { InvitationService } from 'src/app/services/invitation.service'
 import { InvitationObject, InvitationUserMapObject } from 'src/app/models/invitationObject'
 import { UserService } from 'src/app/services/user.service'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
+import { DefaultTreeviewI18n } from 'src/app/shared/default-treeview-i18n'
 
 declare var $: any
 defineLocale('vi', viLocale)
@@ -22,6 +25,8 @@ defineLocale('vi', viLocale)
 	selector: 'app-invitation-create-or-update',
 	templateUrl: './invitation-create-or-update.component.html',
 	styleUrls: ['./invitation-create-or-update.component.css'],
+	// providers: [BookService],
+	providers: [{ provide: TreeviewI18n, useClass: DefaultTreeviewI18n }],
 })
 export class InvitationCreateOrUpdateComponent implements OnInit {
 	model: InvitationObject = new InvitationObject()
@@ -32,19 +37,46 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 	action: any
 	files: any[]
 	lstFileDelete: any[]
-	title: string
+	title: string = 'Thêm mới thư mời'
 	listStatus: any = [
 		{ value: 1, text: 'Đang soạn thảo' },
 		{ value: 2, text: 'Đã gửi' },
 	]
 	listUserIsSystem: Array<UserIsSystem>
-	listItemUserSelected: Array<InvitationUserMapObject>
+	listItemUserSelected: Array<InvitationUserMapObject> = []
 	userMap: any[]
 	key: any = ''
 	fileAccept = CONSTANTS.FILEACCEPT
 	listUserSelected: Array<UserIsSystem>
 	statusCurent: any = 1
 	@ViewChild('file', { static: false }) public file: ElementRef
+
+	// treeview
+
+	items: TreeviewItem[]
+	values: number[]
+	config = TreeviewConfig.create({
+		hasAllCheckBox: true,
+		hasFilter: true,
+		hasCollapseExpand: true,
+		decoupleChildFromParent: false,
+		maxHeight: 400,
+	})
+	onFilterChange(value: string): void {}
+	onSelectedChange(values: []) {
+		this.listUserSelected = []
+		if (values.length > 0) {
+			for (const iterator of values) {
+				let check = this.listUserIsSystem.find((x) => x.id == iterator)
+				if (check != null || check != undefined) {
+					this.listUserSelected.push(check)
+				}
+			}
+			console.log(this.listUserSelected)
+			return
+		}
+	}
+
 	constructor(
 		private _toastr: ToastrService,
 		private formBuilder: FormBuilder,
@@ -68,15 +100,17 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		this.getUsersIsSystem()
 		this.buildForm()
 		// this.getInvitatonModelById()
+
+		this.items = []
 	}
 
 	buildForm() {
 		this.form = this.formBuilder.group({
-			title: [this.model.title, Validators.required],
-			startDate: [this.model.startDate, Validators.required],
-			endDate: [this.model.endDate, Validators.required],
-			content: [this.model.content, Validators.required],
-			place: [this.model.place, Validators.required],
+			title: [this.model.title, [Validators.required]],
+			startDate: [this.model.startDate, [Validators.required]],
+			endDate: [this.model.endDate, [Validators.required]],
+			content: [this.model.content, [Validators.required]],
+			place: [this.model.place, [Validators.required]],
 			note: [this.model.note],
 			listUserSelected: [this.listUserSelected],
 			sendEmail: [this.sendEmail],
@@ -99,7 +133,6 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 							this.statusCurent = this.model.status
 							for (const iterator of res.result.invitationUserMap) {
 								let item = this.listUserIsSystem.find((x) => x.id == iterator.userId)
-								this.listUserSelected.push(item)
 								var obj = new InvitationUserMapObject()
 								obj.userId = iterator.userId
 								obj.sendEmail = iterator.sendEmail
@@ -115,6 +148,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 								// obj.avatar = item.avatar
 								this.listItemUserSelected.push(obj)
 							}
+							console.log(this.listItemUserSelected)
 							if (this.statusCurent == 2) {
 								this.title = 'Chi tiết thư mời'
 							} else {
@@ -128,10 +162,37 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 	}
 
 	getUsersIsSystem() {
+		// get drop list
+		this.userService.getIsSystemOrderByUnit({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				for (const iterator of res.result) {
+					if (iterator.children == null || iterator.children.length == 0) {
+						delete iterator.children
+					} else {
+						for (const iterator2 of iterator.children) {
+							if (iterator2.children == null || iterator2.children.length == 0) {
+								delete iterator2.children
+							} else {
+								for (const iterator3 of iterator2.children) {
+									if (iterator3.children == null || iterator3.children.length == 0) {
+										delete iterator3.children
+									}
+								}
+							}
+						}
+					}
+				}
+				for (const iterator of res.result) {
+					this.items.push(new TreeviewItem({ ...iterator }))
+				}
+			} else {
+				this.items = []
+			}
+		})
+
 		this.userService.getIsSystem2({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.listUserIsSystem = res.result.SYUserGetIsSystem2
-				debugger
 				this.getInvitatonModelById()
 			} else {
 				this.listUserIsSystem = []
@@ -190,7 +251,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 			userMap: this.userMap,
 			lstFileDelete: this.lstFileDelete,
 		}
-
+		debugger
 		if (this.model.id == 0 || this.model.id == null) {
 			this.invitationService.invitationInsert(obj).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
@@ -250,28 +311,26 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		}
 		let i = 0
 		if (this.listUserSelected != undefined && this.listUserSelected.length > 0) {
+			this.listItemUserSelected = []
 			for (const iterator of this.listUserSelected) {
-				let check = this.listItemUserSelected.find((x) => x.userId == iterator.id)
-				if (check == undefined) {
-					var obj = new InvitationUserMapObject()
-					obj.userId = iterator.id
-					obj.sendEmail = this.sendEmail
-					obj.sendSMS = this.sendSMS
-					obj.unitName = iterator.unitName
-					obj.fullName = iterator.fullName
-					obj.positionName = iterator.positionName
-					if (iterator.avatar == null || iterator.avatar == '') {
-						obj.avatar = ''
-					} else {
-						obj.avatar = AppSettings.API_DOWNLOADFILES + '/' + iterator.avatar
-					}
-
-					this.listItemUserSelected.push(obj)
-					i++
+				var obj = new InvitationUserMapObject()
+				obj.userId = iterator.id
+				obj.sendEmail = this.sendEmail
+				obj.sendSMS = this.sendSMS
+				obj.unitName = iterator.unitName
+				obj.fullName = iterator.fullName
+				obj.positionName = iterator.positionName
+				if (iterator.avatar == null || iterator.avatar == '') {
+					obj.avatar = ''
+				} else {
+					obj.avatar = AppSettings.API_DOWNLOADFILES + '/' + iterator.avatar
 				}
+
+				this.listItemUserSelected.push(obj)
+				i++
 			}
 			if (i == 0) {
-				this._toastr.error('Vui lòng chọn người tham dự')
+				this._toastr.error('Bạn đã chọn những người tham dự này')
 				return
 			}
 			this._toastr.success('Thêm mới thành công ' + i + ' người tham dự')

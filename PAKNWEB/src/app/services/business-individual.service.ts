@@ -11,15 +11,15 @@ import { UserInfoStorageService } from '../commons/user-info-storage.service'
 export class BusinessIndividualService {
 	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
 	individualGetList(request: any): Observable<any> {
-		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.BI_IndividualGetAllOnPage)
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.IndividualGetAllOnPage)
 	}
 
 	individualChangeStatus(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BI_IndivialChangeStatus)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialChangeStatus)
 	}
 
 	individualDelete(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BI_IndivialDelete)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialDelete)
 	}
 
 	individualRegister(data: any): Observable<any> {
@@ -31,24 +31,33 @@ export class BusinessIndividualService {
 		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.InvididualRegister)
 	}
 
+	invididualUpdate(data: any): Observable<any> {
+		let form = new FormData()
+		console.log('data', data)
+		for (let item in data) {
+			form.append(item, data[item])
+		}
+		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.InvididualUpdate)
+	}
+
 	individualById(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.InvididualGetByID)
 	}
 
-	invididualUpdate(request: any): Observable<any> {
-		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.InvididualUpdate)
-	}
+	// invididualUpdate_Old(data: any): Observable<any> {
+	// 	return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.InvididualUpdate)
+	// }
 
 	invididualImportFile(data: any): Observable<any> {
-		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.InvididualImportFile)
+		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.ImportDataInvididual)
 	}
 
 	businessGetList(request: any): Observable<any> {
-		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.BusinessGetAllOnPageBase)
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.BusinessGetAllOnPage)
 	}
 
 	businessChangeStatus(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BusinessChageStatus)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BusinessChangeStatus)
 	}
 
 	businessDelete(data: any): Observable<any> {
@@ -57,7 +66,7 @@ export class BusinessIndividualService {
 
 	businessRegister(data: any): Observable<any> {
 		let form = new FormData()
-
+		console.log('data', data)
 		for (let item in data) {
 			form.append(item, data[item])
 		}
@@ -74,6 +83,6 @@ export class BusinessIndividualService {
 	}
 
 	businessImportFile(data: any): Observable<any> {
-		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.BusinessImportFile)
+		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.ImportDataBusiness)
 	}
 }

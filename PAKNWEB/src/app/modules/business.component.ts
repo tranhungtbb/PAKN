@@ -88,7 +88,7 @@ export class BusinessComponent implements OnInit, AfterViewInit {
 			this.child_UserViewInfoComponent.openModal()
 		})
 		this.child_UserViewInfoComponent.parent_BusinessComponent = this
-		// this.child_UserCreateOrUpdateComponent.parent_BusinessComponent = this
+		this.child_UserCreateOrUpdateComponent.parent_BusinessComponent = this
 
 		this.currentRouter = this._router.url
 	}

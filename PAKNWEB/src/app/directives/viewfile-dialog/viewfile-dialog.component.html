@@ -1,8 +1,8 @@
 <div class="panel panel-warning" style="margin:0!important; width: 95vw !important; height: 95vh; overflow: hidden">
 	<div class="panel-heading" style="padding: 5px 15px; min-height: 35px;">
 		<span class="title-ct uppercase no-margin hidden-xs">Xem tệp đính kèm</span>
-		<button mat-dialog-close class="btn btn-default btn-xs pull-right" style="min-height: 24px;margin-left:5px"><i class="fa fa-times"></i> Hủy</button>
-		<button class="btn btn-success btn-xs pull-right" (click)="DownloadFile()" style="min-height: 24px;margin-left:15px"><i class="far fa-download"></i> Tải về</button>
+		<button mat-dialog-close class="btn btn-xs rounded bg-white text-dark border pull-right ml-2"> <i class="bi bi-x mr-1"></i> Đóng </button>
+		<button class="btn btn-success btn-xs pull-right ml-2" (click)="DownloadFile()"><i class="bi bi-download mr-1"></i> Tải về</button>
 	</div>
 	<div class="modal-body" style="width:100%;height:96%">
 		<iframe *ngIf="!IsPDF && !IsIMG" id="viewfile" class="no-border" style="width:100%;height:100%;text-align:center" src=""></iframe>

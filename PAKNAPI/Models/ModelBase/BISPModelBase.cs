@@ -551,10 +551,10 @@ namespace PAKNAPI.ModelBase
 		public string AdministrativeUnitName { get; set; }
 		public short? AdministrativeUnitId { get; set; }
 
-		public async Task<List<BIIndividualOrBusinessGetDropListByProviceId>> BIIndividualOrBusinessGetDropListByProviceIdDAO(int? Id, int? Type)
+		public async Task<List<BIIndividualOrBusinessGetDropListByProviceId>> BIIndividualOrBusinessGetDropListByProviceIdDAO(string? LtsAdministrativeId, int? Type)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
+			DP.Add("ltsAdministrativeId", LtsAdministrativeId);
 			DP.Add("Type", Type);
 
 			return (await _sQLCon.ExecuteListDapperAsync<BIIndividualOrBusinessGetDropListByProviceId>("BI_IndividualOrBusinessGetDropListByProviceId", DP)).ToList();

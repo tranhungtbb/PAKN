@@ -19,7 +19,7 @@
 									<span class="text-uppercase">Loại tin tức</span>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
 										<!-- [items]="listNewsCategories" bindLabel="name" bindValue="id" [closeOnSelect]="true" -->
-										<ng-select class="" [(ngModel)]="query.newsType" (change)="filterChange()" style="width:120px;">
+										<ng-select class="" [(ngModel)]="query.newsType" (change)="filterChange()" style="width:120px;" placeholder="Chọn...">
 											<ng-option *ngFor="let nt of listNewsCategories" [value]="nt.id">
 												{{nt.name}}
 											</ng-option>

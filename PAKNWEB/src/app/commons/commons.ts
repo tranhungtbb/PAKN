@@ -1,5 +1,5 @@
 export class COMMONS {
-	constructor() { }
+	constructor() {}
 
 	public static LIST_EMAIL = [
 		{ text: 'Gmail', value: 1 },

@@ -60,6 +60,7 @@ export class RemindComponent implements OnInit {
 			RecommendationId: this.viewRecommendation.model.id,
 			SendOrgId: this.viewRecommendation.model.unitId,
 		}
+		debugger
 		this.remindService.remindGetList(obj).subscribe((res) => {
 			if ((res.success = RESPONSE_STATUS.success)) {
 				if (res.result != null) {

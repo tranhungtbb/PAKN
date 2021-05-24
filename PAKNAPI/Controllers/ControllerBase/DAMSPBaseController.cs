@@ -52,7 +52,25 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("DAMAdministrationUpdateShowBase")]
+		public async Task<ActionResult<object>> DAMAdministrationUpdateShow(DAMAdministrationUpdateShowIN _dAMAdministrationUpdateShowIN)
+        {
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
+				return new ResultApi { Success = ResultCode.OK, Result = await new DAMAdministrationUpdateShow(_appSetting).DAMAdministrationUpdateShowDAO(_dAMAdministrationUpdateShowIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("DAMAdministrationDeleteBase")]
@@ -201,7 +219,28 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("DAMAdministrationGetListTopBase")]
+		public async Task<ActionResult<object>> DAMAdministrationGetListTopBase()
+		{
+			try
+			{
+				List<DAMAdministrationGetList> rsDAMAdministrationGetListTop = await new DAMAdministrationGetList(_appSetting).DAMAdministrationGetListTopDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"DAMAdministrationGetListTop", rsDAMAdministrationGetListTop},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("DAMAdministrationInsertBase")]

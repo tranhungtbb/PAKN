@@ -18,6 +18,7 @@ export class AdministrativeFormalitiesObject {
 	proceed: string = ''
 	object: string = ''
 	organization: string = ''
+	unitReceiveName: string = ''
 	organizationDecision: string = ''
 	address: string = ''
 	organizationAuthor: string = ''

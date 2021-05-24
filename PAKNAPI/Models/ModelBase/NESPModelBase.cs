@@ -11,6 +11,32 @@ using PAKNAPI.Models.Results;
 
 namespace PAKNAPI.ModelBase
 {
+	public class NENewsDelete
+	{
+		private SQLCon _sQLCon;
+
+		public NENewsDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public NENewsDelete()
+		{
+		}
+
+		public async Task<int> NENewsDeleteDAO(NENewsDeleteIN _nENewsDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _nENewsDeleteIN.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("NE_NewsDelete", DP));
+		}
+	}
+
+	public class NENewsDeleteIN
+	{
+		public int? Id { get; set; }
+	}
 	public class NENewsGetAllOnPage
 	{
 		private SQLCon _sQLCon;

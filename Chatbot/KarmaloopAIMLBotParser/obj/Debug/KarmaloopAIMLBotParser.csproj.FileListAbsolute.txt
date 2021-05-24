@@ -10,3 +10,8 @@ D:\TLI\Chatbot_tli\KarmaloopAIMLBotParser\obj\Debug\KarmaloopAIMLBotParser.cspro
 D:\TLI\Chatbot_tli\KarmaloopAIMLBotParser\obj\Debug\KarmaloopAIMLBotParser.csproj.CoreCompileInputs.cache
 D:\TLI\Chatbot_tli\KarmaloopAIMLBotParser\obj\Debug\KarmaloopAIMLBotParser.dll
 D:\TLI\Chatbot_tli\KarmaloopAIMLBotParser\obj\Debug\KarmaloopAIMLBotParser.pdb
+D:\TL.inc\PAKN_\pakn\Chatbot\KarmaloopAIMLBotParser\bin\Debug\KarmaloopAIMLBotParser.dll
+D:\TL.inc\PAKN_\pakn\Chatbot\KarmaloopAIMLBotParser\bin\Debug\KarmaloopAIMLBotParser.pdb
+D:\TL.inc\PAKN_\pakn\Chatbot\KarmaloopAIMLBotParser\obj\Debug\KarmaloopAIMLBotParser.csproj.CoreCompileInputs.cache
+D:\TL.inc\PAKN_\pakn\Chatbot\KarmaloopAIMLBotParser\obj\Debug\KarmaloopAIMLBotParser.dll
+D:\TL.inc\PAKN_\pakn\Chatbot\KarmaloopAIMLBotParser\obj\Debug\KarmaloopAIMLBotParser.pdb

@@ -42,7 +42,7 @@ export class NewsTypeComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		$('#modal').on('keypress', function (e) {
+		$('#modal').on('keypress', function(e) {
 			if (e.which == 13) e.preventDefault()
 		})
 	}
@@ -77,18 +77,18 @@ export class NewsTypeComponent implements OnInit {
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
-		this._service.newsTypeGetList(request).subscribe((response) => {
+		this._service.newsTypeGetList(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
 					this.listData = response.result.CANewsTypeGetAllOnPage
-					this.totalRecords = response.result.TotalCount
+					this.totalRecords = response.result.CANewsTypeGetAllOnPage[0] ? response.result.CANewsTypeGetAllOnPage[0].rowNumber : 0
 				}
 			} else {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.log(error)
 				alert(error)
 			}
@@ -141,7 +141,7 @@ export class NewsTypeComponent implements OnInit {
 			return
 		}
 		if (this.model.id == 0 || this.model.id == null) {
-			this._service.newsTypeInsert(this.model).subscribe((response) => {
+			this._service.newsTypeInsert(this.model).subscribe(response => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -156,12 +156,12 @@ export class NewsTypeComponent implements OnInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				(error) => {
+				error => {
 					console.error(error)
 					alert(error)
 				}
 		} else {
-			this._service.newsTypeUpdate(this.model).subscribe((response) => {
+			this._service.newsTypeUpdate(this.model).subscribe(response => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -176,7 +176,7 @@ export class NewsTypeComponent implements OnInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				(error) => {
+				error => {
 					console.error(error)
 					alert(error)
 				}
@@ -188,7 +188,7 @@ export class NewsTypeComponent implements OnInit {
 			Id: data.id,
 			Type: 1,
 		}
-		this._service.newsTypeGetById(request).subscribe((response) => {
+		this._service.newsTypeGetById(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.rebuilForm()
 				this.title = 'Chỉnh sửa loại tin tức'
@@ -198,7 +198,7 @@ export class NewsTypeComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.error(error)
 				alert(error)
 			}
@@ -212,16 +212,20 @@ export class NewsTypeComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.newsTypeDelete(request).subscribe((response) => {
+		this._service.newsTypeDelete(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
+				if (response.result > 0) {
+					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
+				} else {
+					this._toastr.error('Loại tin tức đã nằm trong quy trình!')
+				}
 				$('#modalConfirmDelete').modal('hide')
 				this.getList()
 			} else {
 				this._toastr.error(response.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.error(error)
 			}
 	}
@@ -237,7 +241,7 @@ export class NewsTypeComponent implements OnInit {
 			Id: data.id,
 		}
 		data.isActived = !data.isActived
-		this._service.newsTypeUpdateStatus(data).subscribe((res) => {
+		this._service.newsTypeUpdateStatus(data).subscribe(res => {
 			$('#modalConfirmUpdateStatus').modal('hide')
 			if (res.success == 'OK') {
 				if (data.isActived == true) {
@@ -249,7 +253,7 @@ export class NewsTypeComponent implements OnInit {
 				this._toastr.error(res.message)
 			}
 		}),
-			(error) => {
+			error => {
 				console.error(error)
 			}
 	}
@@ -264,7 +268,7 @@ export class NewsTypeComponent implements OnInit {
 			IsActived: this.isActived,
 		}
 
-		this._service.fieldExportExcel(request).subscribe((response) => {
+		this._service.fieldExportExcel(request).subscribe(response => {
 			var today = new Date()
 			var dd = String(today.getDate()).padStart(2, '0')
 			var mm = String(today.getMonth() + 1).padStart(2, '0')

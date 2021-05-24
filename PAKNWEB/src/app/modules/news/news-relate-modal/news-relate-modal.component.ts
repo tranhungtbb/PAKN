@@ -23,7 +23,7 @@ export class NewsRelateModalComponent implements OnInit {
 		pageSize: 20,
 		pageIndex: 1,
 		title: '',
-		newsType: '',
+		newsType: null,
 	}
 	modalTitle: string = ''
 	totalCount: number = 0
@@ -57,7 +57,7 @@ export class NewsRelateModalComponent implements OnInit {
 		$('#modal-news-relate').modal('hide')
 	}
 	getListPaged() {
-		this.query.newsType == null ? '' : this.query.newsType
+		// this.query.newsType == null ? '' : this.query.newsType
 		this.newsService
 			.getAllPagedList({
 				pageSize: this.query.pageSize,

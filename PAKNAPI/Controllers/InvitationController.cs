@@ -59,6 +59,7 @@ namespace PAKNAPI.Controllers
 				model.InvitationId = _iNVInvitationDeleteIN.Id;
 				await new INVFileAttachDeleteByInvitationId(_appSetting).INVFileAttachDeleteByInvitationIdDAO(model);
 
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = await new INVInvitationDelete(_appSetting).INVInvitationDeleteDAO(_iNVInvitationDeleteIN) };
 			}
 			catch (Exception ex)
@@ -154,12 +155,12 @@ namespace PAKNAPI.Controllers
 				invInvitation.INVFileAttach
 					 = await new INVFileAttachGetAllByInvitationId(_appSetting).INVFileAttachGetAllByInvitationIdDAO(id);
 
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK , Result = invInvitation };
 			}
 			catch (Exception ex)
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -246,20 +247,22 @@ namespace PAKNAPI.Controllers
 					// delete map
 					INVInvitationUserMapDeleteByInvitationIdIN deleteMap = new INVInvitationUserMapDeleteByInvitationIdIN();
 					deleteMap.InvitationId = invInvitation.Model.Id;
-					await new INVInvitationUserMapDeleteByInvitationId(_appSetting).INVInvitationUserMapDeleteByInvitationIdDAO(deleteMap);
+					int s = await new INVInvitationUserMapDeleteByInvitationId(_appSetting).INVInvitationUserMapDeleteByInvitationIdDAO(deleteMap);
 
 					// insert map user
-
-					foreach (var item in invInvitation.InvitationUserMap)
-					{
-						INVInvitationUserMapInsertIN ins = new INVInvitationUserMapInsertIN();
-						ins.InvitationId = invInvitation.Model.Id;
-						ins.SendSMS = item.SendSMS;
-						ins.SendEmail = item.SendEmail;
-						ins.UserId = item.UserId;
-						ins.Watched = item.Watched;
-						await new INVInvitationUserMapInsert(_appSetting).INVInvitationUserMapInsertDAO(ins);
+					if (s > 0) {
+						foreach (var item in invInvitation.InvitationUserMap)
+						{
+							INVInvitationUserMapInsertIN ins = new INVInvitationUserMapInsertIN();
+							ins.InvitationId = invInvitation.Model.Id;
+							ins.SendSMS = item.SendSMS;
+							ins.SendEmail = item.SendEmail;
+							ins.UserId = item.UserId;
+							ins.Watched = item.Watched;
+							await new INVInvitationUserMapInsert(_appSetting).INVInvitationUserMapInsertDAO(ins);
+						}
 					}
+					
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 					return new ResultApi { Success = ResultCode.OK };
 

@@ -16,6 +16,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel'
 import { VirtualScrollerModule } from 'primeng/virtualscroller'
 import { DxDropDownBoxModule, DxTreeViewModule, DxDataGridModule } from 'devextreme-angular'
 import { DxReportViewerModule } from 'devexpress-reporting-angular'
+import { TreeviewModule } from 'ngx-treeview'
 
 import { DashboardComponent } from './dash-board/dash-board.component'
 import { NotificationComponent } from './notification/notification.component'
@@ -41,6 +42,7 @@ import { UserCreateOrUpdateComponent } from './system-management/components/user
 		DxDropDownBoxModule,
 		DxDataGridModule,
 		DxReportViewerModule,
+		TreeviewModule.forRoot(),
 	],
 	declarations: [
 		BusinessComponent,

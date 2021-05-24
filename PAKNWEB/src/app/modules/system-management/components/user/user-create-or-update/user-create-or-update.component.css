@@ -51,3 +51,7 @@
 .notscroll::-webkit-scrollbar {
 	width: 0px;
 }
+
+:host ::ng-deep span.ng-clear-wrapper {
+	z-index: 100000 !important;
+}

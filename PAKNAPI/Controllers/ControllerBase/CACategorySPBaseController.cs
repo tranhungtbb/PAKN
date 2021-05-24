@@ -115,7 +115,25 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		[HttpPost]
+		[Authorize]
+		[Route("CAWordDeleteBase")]
+		public async Task<ActionResult<object>> CAWordDeleteBase(CADepartmentGroupDeleteIN _cADepartmentGroupDeleteIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
+				return new ResultApi { Success = ResultCode.OK, Result = await new CADepartmentGroupDelete(_appSetting).CAWordDeleteDAO(_cADepartmentGroupDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 		[HttpGet]
 		[Authorize]
 		[Route("CADepartmentGroupGetAllOnPageBase")]
@@ -1118,6 +1136,25 @@ namespace PAKNAPI.ControllerBase
 				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+		[HttpGet]
+		[Authorize]
+		[Route("CAWordGetListSuggestBase")]
+		public async Task<ActionResult<object>> CA_WordGetListSuggestBase()
+		{
+			try
+			{
+				List<CA_WordGetListSuggest> rsCA_WordGetListSuggest = await new CA_WordGetListSuggest(_appSetting).CA_WordGetListSuggestDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAWordGetListSuggest", rsCA_WordGetListSuggest},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}

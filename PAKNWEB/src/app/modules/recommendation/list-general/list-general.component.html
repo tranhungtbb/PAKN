@@ -16,7 +16,7 @@
 						</svg>
 						Xuất excel
 					</button>
-					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" [routerLink]="['/quan-tri/kien-nghi/them-moi/0']">
+					<button type="button" *ngIf="isMain" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" [routerLink]="['/quan-tri/kien-nghi/them-moi/0']">
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 						</svg>
@@ -43,9 +43,9 @@
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
 									</th>
-									<th>
+									<th style="width: 150px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Tên CN/ DN</strong>
+											<strong>Tên CN/DN</strong>
 											<span class="caret-tb"></span>
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100"
@@ -123,14 +123,18 @@
 										<div class="d-flex justify-content-end">
 											<a [routerLink]="['/quan-tri/kien-nghi/them-moi/', item.id]" *ngIf="item.status == 4 && item.createdBy == userLoginId"
 												class="btn-icon grd-brown text-brown mr-2" title="Cập nhật"><i class="bi bi-pencil-square"></i></a>
+											<a class="btn-icon grd-brown2 text-white mr-2" *ngIf="item.unitReceiveId == unitLoginId && item.isForwardProcess && item.status == 5"
+												(click)="preProcess(item,4)" title="Gửi lại trung tâm tiếp nhận">
+												<i class="bi bi-arrow-left-square"></i>
+											</a>
 											<a *ngIf="(item.status == 2 || item.status == 5 || item.status == 8) && (item.unitReceiveId == unitLoginId)"
 												(click)="preProcess(item, 2)" class="btn-icon grd-xanhngoc text-white mr-2" title="Tiếp nhận xử lý"><i
 													class="bi bi-file-earmark-check"></i></a>
 											<a *ngIf="(item.status == 2 || item.status == 5 || item.status == 8) && (item.unitReceiveId == unitLoginId)"
 												(click)="preProcess(item, 3)" class="btn-icon grd-red text-white mr-2" title="Từ chối tiếp nhận"><i
 													class="bi bi-file-earmark-break"></i></a>
-											<a *ngIf="item.status == 4 && (item.unitReceiveId == unitLoginId)" (click)="preForward(item.id)"
-												class="btn-icon grd-blue text-white mr-2" title="Chuyển giải quyết">
+											<a *ngIf="(item.status == 4 && item.unitReceiveId == unitLoginId) || (item.status == 6 && item.unitSendId == unitLoginId)"
+												(click)="preForward(item.id)" class="btn-icon grd-blue text-white mr-2" title="Chuyển giải quyết">
 												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
 													<path
 														d="M13.5938 0.125927L0.468823 7.69624C-0.205005 8.08589 -0.137622 9.07905 0.580151 9.37495L4.68757 11.0742V14.0625C4.68757 14.9472 5.795 15.331 6.34871 14.6572L8.12703 12.4951L11.8302 14.0244C12.3897 14.2558 13.0225 13.9013 13.1134 13.3007L14.9884 1.081C15.1085 0.298778 14.2677 -0.263722 13.5938 0.125927ZM5.62507 14.0625V11.4609L7.22175 12.1201L5.62507 14.0625ZM12.1876 13.1572L6.14656 10.6611L11.9913 3.75288C12.1319 3.58882 11.9063 3.36616 11.7423 3.50679L4.26277 9.88179L0.937573 8.51069L14.0626 0.93745L12.1876 13.1572Z"
@@ -307,6 +311,31 @@
 	</div>
 </div>
 
+<div class="modal fade" id="modalForward">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">Xác nhận</p>
+					</div>
+					<div class="modal-body no-padding-bottom">
+						<p class="h4 text-center mb-3">Bạn có chắc chắn chuyển <strong>Phản ánh, kiến nghị</strong> này về trung tâm tiếp nhận?</p>
+						<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="contentForward" maxlength="500"></textarea>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onProcessForward()">Xác nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 <div class="modal fade" id="modalReject">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content rounded">
@@ -315,15 +344,17 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<p class="h4 text-center mb-3">Bạn có chắc chắn từ chối <strong>Phản ánh, kiến nghị</strong> này ko?</p>
+				<p class="h4 text-center mb-3">Bạn có chắc chắn từ chối <strong>Phản ánh, kiến nghị</strong> này?</p>
 				<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="modelProcess.reasonDeny" maxlength="500"></textarea>
-				<div class="custom-control custom-checkbox checkbox-danger mt-3" *ngIf="recommendationStatusProcess == 2">
-					<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord" id="basic_checkbox_1">
-					<label class="custom-control-label" for="basic_checkbox_1">Chứa từ ngữ bị cấm</label>
-				</div>
-				<ng-select *ngIf="modelProcess.reactionaryWord && recommendationStatusProcess == 2" placeholder="Chọn nhóm từ ngữ" class="form-control" [items]="lstGroupWord"
-					bindLabel="text" bindValue="value" [(ngModel)]="lstGroupWordSelected" [closeOnSelect]="false" [multiple]="true">
-				</ng-select>
+				<ng-container *ngIf="recommendationStatusProcess == 3 || isForwardProcess == true">
+					<div class="custom-control custom-checkbox checkbox-danger mt-3 mb-3">
+						<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord" id="basic_checkbox_1">
+						<label class="custom-control-label" for="basic_checkbox_1">Chứa từ ngữ bị cấm</label>
+					</div>
+					<ng-select *ngIf="modelProcess.reactionaryWord" placeholder="Chọn nhóm từ ngữ" class="form-control" [items]="lstGroupWord" bindLabel="text" bindValue="value"
+						[(ngModel)]="lstGroupWordSelected" [closeOnSelect]="false" [multiple]="true">
+					</ng-select>
+				</ng-container>
 			</div>
 			<div class="modal-footer justify-content-center border-top-0">
 				<button type="button" class="btn btn-outline-secondary border" data-dismiss="modal">Hủy</button>
