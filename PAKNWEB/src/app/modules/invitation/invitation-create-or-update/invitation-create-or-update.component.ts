@@ -251,7 +251,6 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 			userMap: this.userMap,
 			lstFileDelete: this.lstFileDelete,
 		}
-		debugger
 		if (this.model.id == 0 || this.model.id == null) {
 			this.invitationService.invitationInsert(obj).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {

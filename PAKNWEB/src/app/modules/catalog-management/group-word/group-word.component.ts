@@ -85,7 +85,6 @@ export class GroupWordComponent implements OnInit {
 					this.listData = []
 					this.listData = response.result.CAGroupWordGetAllOnPage
 					this.totalRecords = response.result.TotalCount
-					console.log(this.totalRecords)
 				}
 			} else {
 				this._toastr.error(response.message)

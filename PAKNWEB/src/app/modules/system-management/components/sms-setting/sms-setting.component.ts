@@ -36,10 +36,9 @@ export class SmsSettingComponent implements OnInit {
 	ngOnInit() {
 		this.onCancel()
 	}
-	onCancel(){
+	onCancel() {
 		this.buildForm()
-		this._service.getSystemSMS().subscribe(response => {
-			console.log(response)
+		this._service.getSystemSMS().subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result.SYSMSGetFirst.length != 0) {
 					this.model = response.result.SYSMSGetFirst[0]
@@ -48,7 +47,7 @@ export class SmsSettingComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 				alert(error)
 			}
@@ -84,15 +83,14 @@ export class SmsSettingComponent implements OnInit {
 			CommandCode: this.model.commandCode,
 			ContenType: this.model.contenType,
 		}
-		this._service.updateSystemSMS(req).subscribe(response => {
-			console.log(response)
+		this._service.updateSystemSMS(req).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success('Cập nhật cấu hình SMS thành công')
 			} else {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 				alert(error)
 			}

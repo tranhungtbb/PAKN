@@ -42,7 +42,7 @@ export class DetailRecommendationComponent implements OnInit {
 		private router: Router,
 		private _fb: FormBuilder,
 		private activatedRoute: ActivatedRoute
-	) { }
+	) {}
 
 	ngOnInit() {
 		this.getDropdown()
@@ -62,7 +62,6 @@ export class DetailRecommendationComponent implements OnInit {
 			Id: this.model.id,
 		}
 		this.recommendationService.recommendationGetByIdView(request).subscribe((response) => {
-			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
 				this.modelData = response.result.MRRecommendationKNCTGetById[0]
 				let req = {
@@ -86,9 +85,7 @@ export class DetailRecommendationComponent implements OnInit {
 				console.log(error)
 			}
 	}
-	getDropdown() {
-
-	}
+	getDropdown() {}
 
 	getShortName(string) {
 		var names = string.split(' '),
@@ -118,4 +115,3 @@ export class RequestData {
 	status: number
 	term: string
 }
-

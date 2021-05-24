@@ -26,11 +26,18 @@ th, td{
 	color: #222;
 }
 
+small{
+	font-weight: 400!important;
+}
+
 a{
 	color: #222;
 }
 a:hover{
 	color: #25A7D0;
+}
+.fw600{
+	font-weight: 600;
 }
 .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
 	background-color: #337ab7;
@@ -82,7 +89,7 @@ a:hover{
 	background: #743F15;
 }
 .border-brown{
-	border-color: #F4DEC0 !important;
+	border-color: rgba(214, 214, 214, 0.8) !important;
 }
 .cl-green{
 	color: #41C948;
@@ -133,8 +140,11 @@ a:hover{
 	background: linear-gradient(180deg, #EE5454 0%, #A61515 100%);
 	color: #fff !important;
 }
+.btn-blue{
+	background: linear-gradient(180deg, #42A4FF 0%, #2A5494 100%);
+	color: #fff !important;
+}
 .bg-login{
-	background: url('../images/td-login.png') no-repeat top left #FEF6EC;
 	min-height: 100vh;
 }
 .bg-yellow{
@@ -150,6 +160,7 @@ a:hover{
 	top: -33px;
 	width: 90%;
 	left: 5%;
+	border: 1px solid rgba(214, 214, 214, 0.8);
 }
 .nav-tabs-register{
 	background: #FFFBF8;
@@ -216,6 +227,7 @@ a:hover{
     display: flex;
     align-items: center;
     cursor: pointer;
+    line-height: 24px;
 }
 .navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus{
 	color: #F2DF2F;

@@ -49,7 +49,7 @@ export class DepartmentComponent implements OnInit {
 			PageIndex: this.pageIndex,
 			PageSize: 1000,
 		}
-		this._service.departmentGroupGetList(request).subscribe(response => {
+		this._service.departmentGroupGetList(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listDepartmentGroup = []
@@ -62,7 +62,7 @@ export class DepartmentComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		$('#modal').on('keypress', function(e) {
+		$('#modal').on('keypress', function (e) {
 			if (e.which == 13) e.preventDefault()
 		})
 	}
@@ -114,19 +114,19 @@ export class DepartmentComponent implements OnInit {
 			PageSize: this.pageSize,
 		}
 		console.log(request)
-		this._service.departmentGetList(request).subscribe(response => {
+		this._service.departmentGetList(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
 					this.listData = response.result.CADepartmentGetAllOnPage
 					console.log(this.listData)
-					this.totalRecords = response.result.CADepartmentGetAllOnPage[0]?response.result.CADepartmentGetAllOnPage[0].rowNumber: 0
+					this.totalRecords = response.result.CADepartmentGetAllOnPage[0] ? response.result.CADepartmentGetAllOnPage[0].rowNumber : 0
 				}
 			} else {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 				alert(error)
 			}
@@ -179,8 +179,7 @@ export class DepartmentComponent implements OnInit {
 			return
 		}
 		if (this.model.id == 0 || this.model.id == null) {
-			this._service.departmentInsert(this.model).subscribe(response => {
-				console.log(response)
+			this._service.departmentInsert(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -195,12 +194,12 @@ export class DepartmentComponent implements OnInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				error => {
+				(error) => {
 					console.error(error)
 					alert(error)
 				}
 		} else {
-			this._service.departmentUpdate(this.model).subscribe(response => {
+			this._service.departmentUpdate(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -215,7 +214,7 @@ export class DepartmentComponent implements OnInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				error => {
+				(error) => {
 					console.error(error)
 					alert(error)
 				}
@@ -227,7 +226,7 @@ export class DepartmentComponent implements OnInit {
 			Id: data.id,
 			Type: 1,
 		}
-		this._service.departmentGetById(request).subscribe(response => {
+		this._service.departmentGetById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.rebuilForm()
 				this.title = 'Chỉnh sửa sở ngành'
@@ -237,7 +236,7 @@ export class DepartmentComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 				alert(error)
 			}
@@ -254,7 +253,7 @@ export class DepartmentComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.departmentDelete(request).subscribe(response => {
+		this._service.departmentDelete(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result > 0) {
 					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
@@ -267,7 +266,7 @@ export class DepartmentComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 			}
 	}
@@ -279,7 +278,7 @@ export class DepartmentComponent implements OnInit {
 			Id: data.id,
 		}
 		data.isActived = !data.isActived
-		this._service.departmentUpdateStatus(data).subscribe(res => {
+		this._service.departmentUpdateStatus(data).subscribe((res) => {
 			console.log(res)
 			$('#modalConfirmUpdateStatus').modal('hide')
 			if (res.success == 'OK') {
@@ -294,7 +293,7 @@ export class DepartmentComponent implements OnInit {
 				this._toastr.error(res.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 			}
 	}
@@ -309,7 +308,7 @@ export class DepartmentComponent implements OnInit {
 			IsActived: this.isActived,
 		}
 
-		this._service.fieldExportExcel(request).subscribe(response => {
+		this._service.fieldExportExcel(request).subscribe((response) => {
 			var today = new Date()
 			var dd = String(today.getDate()).padStart(2, '0')
 			var mm = String(today.getMonth() + 1).padStart(2, '0')

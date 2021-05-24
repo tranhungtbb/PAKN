@@ -201,7 +201,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 
 	onFilterTree(data) {
-		console.log(data)
 		this.getAllUnitShortInfo(null, data)
 	}
 
@@ -231,7 +230,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 					}
 					return
 				})
-				debugger
 				this.unitFlatlist = listUnit
 				this.treeUnit = this.unflatten(listUnit)
 

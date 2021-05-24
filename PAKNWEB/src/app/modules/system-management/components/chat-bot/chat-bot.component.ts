@@ -86,7 +86,7 @@ export class ChatBotComponent implements OnInit {
 				if (response.result != null) {
 					this.listData = []
 					this.listData = response.result.ChatbotGetAllOnPage
-					console.log(response)
+
 					this.totalRecords = response.result.ChatbotGetAllOnPage.length != 0 ? response.result.ChatbotGetAllOnPage[0].rowNumber : 0
 				}
 			} else {
@@ -153,7 +153,6 @@ export class ChatBotComponent implements OnInit {
 		}
 		if (this.model.id == 0 || this.model.id == null) {
 			this._service.chatbotInsertQuestion(this.model).subscribe((response) => {
-				console.log(response)
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -227,7 +226,6 @@ export class ChatBotComponent implements OnInit {
 			CategoryId: categoryIdDelete,
 		}
 		this._service.chatbotDelete(request).subscribe((response) => {
-			console.log(response)
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				$('#modalConfirmDelete').modal('hide')

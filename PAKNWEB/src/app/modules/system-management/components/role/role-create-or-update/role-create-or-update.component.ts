@@ -84,7 +84,6 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 	getUsersByRoleId(roleId: any) {
 		this.userService.getByRoleId({ RoleId: roleId }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				debugger
 				res.result.SYUserGetAllByRoleId.forEach((element) => {
 					var obj = {
 						value: element.id,

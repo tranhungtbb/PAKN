@@ -29,7 +29,7 @@
 															nghiệp.</p>
 														<form [formGroup]="loginFormProduct" #formDir="ngForm" (ngSubmit)="loginProduct()">
 															<div class="form-group mb-4">
-																<input class="form-control px-4 border-brown" style="font-size: 20px" placeholder="Nhập số điện thoại..."
+																<input class="form-control rounded-xl px-4 border-brown" style="font-size: 20px" placeholder="Nhập số điện thoại..."
 																	id="productname" type="text" formControlName="name" [(ngModel)]="userProduct.UserName"
 																	(change)="userProduct.UserName=userProduct.UserName.trim()" required>
 																<div *ngIf="floginFormProduct.name.invalid && (floginFormProduct.name.dirty || floginFormProduct.name.touched || submitted)"
@@ -40,7 +40,7 @@
 																</div>
 															</div>
 															<div class="form-group">
-																<input class="form-control px-4 border-brown" type="password" id="productpass"
+																<input class="form-control rounded-xl px-4 border-brown" type="password" id="productpass"
 																	(change)="userProduct.Password=userProduct.Password.trim()" style="font-size: 20px" placeholder="Mật khẩu..."
 																	formControlName="pass" [(ngModel)]="userProduct.Password" required>
 																<div *ngIf="floginFormProduct.pass.invalid && (floginFormProduct.pass.dirty || floginFormProduct.pass.touched || submitted)"
@@ -78,7 +78,8 @@
 																</div>
 															</div>
 															<div class="text-center">
-																<button type="submit" class="btn btn-red text-white text-uppercase font-weight-normal btn-block border-0 rounded-xl"
+																<button type="submit"
+																	class="btn btn-blue text-white text-uppercase font-weight-normal btn-block border-0 rounded-xl"
 																	style="font-size: 20px">Đăng nhập</button>
 															</div>
 														</form>
@@ -98,8 +99,8 @@
 														<p class="text-center cl-brown">Đăng nhập và sử dụng hệ thống dành cho cán bộ, người có thẩm quyền.</p>
 														<form [formGroup]="loginForm" #formDir="ngForm" (ngSubmit)="login()">
 															<div class="form-group mb-4">
-																<input class="form-control px-4 border-brown" (change)="user.UserName=user.UserName.trim()" style="font-size: 20px"
-																	placeholder="Nhập tài khoản, email..." type="text" id="username" formControlName="name"
+																<input class="form-control rounded-xl px-4 border-brown" (change)="user.UserName=user.UserName.trim()"
+																	style="font-size: 20px" placeholder="Nhập tài khoản, email..." type="text" id="username" formControlName="name"
 																	[(ngModel)]="user.UserName" required>
 																<div *ngIf="name.invalid && (name.dirty || name.touched || submitted)" class="has-error m-b-12">
 																	<div *ngIf="name.errors.required">
@@ -108,7 +109,7 @@
 																</div>
 															</div>
 															<div class="form-group">
-																<input class="form-control px-4 border-brown" type="password" style="font-size: 20px" id="userpass"
+																<input class="form-control rounded-xl px-4 border-brown" type="password" style="font-size: 20px" id="userpass"
 																	(change)="user.Password=user.Password.trim()" placeholder="Mật khẩu..." formControlName="pass"
 																	[(ngModel)]="user.Password" required>
 																<div *ngIf="pass.invalid && (pass.dirty || pass.touched || submitted)" class="has-error m-b-12">
@@ -144,7 +145,8 @@
 																</div>
 															</div>
 															<div class="text-center">
-																<button type="submit" class="btn btn-red text-white text-uppercase font-weight-normal btn-block border-0 rounded-xl"
+																<button type="submit"
+																	class="btn btn-blue text-white text-uppercase font-weight-normal btn-block border-0 rounded-xl"
 																	style="font-size: 20px">Đăng nhập</button>
 															</div>
 														</form>

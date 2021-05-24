@@ -66,8 +66,7 @@ export class AdministrativeProceduresComponent implements OnInit {
 	}
 
 	getDataForCreate() {
-		this.afService.getCAFieldDAM({}).subscribe(response => {
-			console.log(response)
+		this.afService.getCAFieldDAM({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.lstField = response.result.CAFieldDAMGetDropdown
@@ -76,7 +75,7 @@ export class AdministrativeProceduresComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 			}
 	}
@@ -86,7 +85,6 @@ export class AdministrativeProceduresComponent implements OnInit {
 	}
 
 	getList() {
-		console.log(this.dataSearch.field)
 		this.dataSearch.code = this.dataSearch.code.trim()
 		this.dataSearch.name = this.dataSearch.name.trim()
 		this.dataSearch.object = this.dataSearch.object.trim()
@@ -102,21 +100,18 @@ export class AdministrativeProceduresComponent implements OnInit {
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
-		console.log(request)
-		this.afService.getList(request).subscribe(response => {
-			console.log(response)
+		this.afService.getList(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
 					this.listData = response.result.DAMAdministrationGetList
-					console.log(response.result.DAMAdministrationGetList)
 					this.totalRecords = response.result.DAMAdministrationGetList[0] ? response.result.DAMAdministrationGetList[0].rowNumber : 0
 				}
 			} else {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 				alert(error)
 			}
@@ -163,7 +158,7 @@ export class AdministrativeProceduresComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this.afService.delete(request).subscribe(response => {
+		this.afService.delete(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				$('#modalConfirmDelete').modal('hide')
@@ -172,7 +167,7 @@ export class AdministrativeProceduresComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 			}
 	}

@@ -314,24 +314,22 @@
 <div class="modal fade" id="modalForward">
 	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
 		<div class="modal-content rounded">
-			<form class="form-horizontal">
-				<div class="panel panel-default no-margin">
-					<div class="modal-header">
-						<button class="close btn-close-modal" data-dismiss="modal">
-							×
-						</button>
-						<p class="modal-title h3">Xác nhận</p>
-					</div>
-					<div class="modal-body no-padding-bottom">
-						<p class="h4 text-center mb-3">Bạn có chắc chắn chuyển <strong>Phản ánh, kiến nghị</strong> này về trung tâm tiếp nhận?</p>
-						<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="contentForward" maxlength="500"></textarea>
-					</div>
-					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onProcessForward()">Xác nhận</button>
-					</div>
+			<div class="panel panel-default no-margin">
+				<div class="modal-header">
+					<button class="close btn-close-modal" data-dismiss="modal">
+						×
+					</button>
+					<p class="modal-title h3">Xác nhận</p>
 				</div>
-			</form>
+				<div class="modal-body no-padding-bottom form-horizontal">
+					<p class="h4 text-center mb-3">Bạn có chắc chắn chuyển <strong>Phản ánh, kiến nghị</strong> này về trung tâm tiếp nhận?</p>
+					<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="contentForward" maxlength="500"></textarea>
+				</div>
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+					<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onProcessForward()">Xác nhận</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

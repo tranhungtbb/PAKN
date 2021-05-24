@@ -64,7 +64,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 	ngOnInit() {
 		this.model = new AdministrativeFormalitiesObject()
 		this.getDropdown()
-		this.activatedRoute.params.subscribe(params => {
+		this.activatedRoute.params.subscribe((params) => {
 			this.model.id = params['id']
 			if (this.model.id != 0) {
 				this.getData()
@@ -77,8 +77,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		let request = {
 			Id: this.model.id,
 		}
-		this.afService.getById(request).subscribe(response => {
-			console.log(response)
+		this.afService.getById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.data
 				this.files = response.result.files
@@ -89,13 +88,13 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 				this.toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 			}
 	}
 	getDropdown() {
 		let request = {}
-		this.recommendationService.recommendationGetDataForCreate(request).subscribe(response => {
+		this.recommendationService.recommendationGetDataForCreate(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.lstUnit = response.result.lstUnit
 				this.lstField = response.result.lstField
@@ -113,7 +112,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 				this.toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 			}
 	}
@@ -155,7 +154,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		const check = this.fileService.checkFileWasExitsted(event, this.files)
 		if (check === 1) {
 			for (let item of event.target.files) {
-				FILETYPE.forEach(fileType => {
+				FILETYPE.forEach((fileType) => {
 					if (item.type == fileType.text) {
 						item.fileType = fileType.value
 						this.files.push(item)
@@ -187,7 +186,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		const check = this.fileService.checkFileWasExitsted(event, it.files)
 		if (check === 1) {
 			for (let item of event.target.files) {
-				FILETYPE.forEach(fileType => {
+				FILETYPE.forEach((fileType) => {
 					if (item.type == fileType.text) {
 						item.fileType = fileType.value
 						it.files.push(item)
@@ -220,7 +219,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 			Status: this.model.status,
 		}
 		if (this.model.id != 0) {
-			this.afService.updateShow(request).subscribe(response => {
+			this.afService.updateShow(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.toastr.success(COMMONS.UPDATE_SUCCESS)
 					return this.router.navigate(['/quan-tri/thu-tuc-hanh-chinh'])
@@ -228,7 +227,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 					this.toastr.error(response.message)
 				}
 			}),
-				err => {
+				(err) => {
 					console.error(err)
 				}
 		}
@@ -315,7 +314,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 	}
 
 	public getFileBin(path: string) {
-		this.fileService.downloadFile({ path }).subscribe(res => {
+		this.fileService.downloadFile({ path }).subscribe((res) => {
 			console.log(res)
 		})
 	}
