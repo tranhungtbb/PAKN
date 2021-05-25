@@ -30,8 +30,7 @@ export class IndividualComponent implements OnInit {
 		private _router: Router,
 		private _shareData: DataService,
 		private localeService: BsLocaleService,
-		private diadanhService: DiadanhService,
-		private registerService: RegisterService
+		private diadanhService: DiadanhService // private registerService: RegisterService
 	) {
 		defineLocale('vi', viLocale)
 	}
@@ -288,11 +287,11 @@ export class IndividualComponent implements OnInit {
 
 		let fDob: any = document.querySelector('#_dob')
 		let fDateIssue: any = document.querySelector('#_dateIssue')
-		this.model._birthDay = fDob.value
-		this.model._dateOfIssue = fDateIssue.value
 
 		this.model.birthDate = fDob.value
 		this.model.dateOfIssue = fDateIssue.value
+		this.model._birthDay = fDob.value
+		this.model._dateOfIssue = fDateIssue.value
 		this.model.userId = this.userLoginId
 		if (!this.model.email) this.model.email = ''
 
@@ -350,16 +349,18 @@ export class IndividualComponent implements OnInit {
 	email_exists: boolean = false
 	idCard_exists: boolean = false
 	onCheckExist(field: string, value: string) {
-		this.registerService
+		let id = this.model.id != null || undefined ? this.model.id : 0
+		this._service
 			.individualCheckExists({
 				field,
 				value,
+				id,
 			})
 			.subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
-					if (field == 'Phone') this.phone_exists = res.result.BIIndividualCheckExists[0].exists
-					else if (field == 'Email') this.email_exists = res.result.BIIndividualCheckExists[0].exists
-					else if (field == 'IDCard') this.idCard_exists = res.result.BIIndividualCheckExists[0].exists
+					if (field == 'Phone') this.phone_exists = res.result.BIInvididualCheckExists[0].exists
+					else if (field == 'Email') this.email_exists = res.result.BIInvididualCheckExists[0].exists
+					else if (field == 'IDCard') this.idCard_exists = res.result.BIInvididualCheckExists[0].exists
 				}
 			})
 	}
@@ -374,8 +375,9 @@ export class IndividualComponent implements OnInit {
 				this.title = 'Chỉnh sửa cá nhân'
 				this.model = response.result.InvididualGetByID[0]
 				this.model.iDCard = response.result.InvididualGetByID[0].idCard
-				this.model.birthDate = new Date(response.result.InvididualGetByID[0].birthDay)
+				this.model.birthDate = new Date(response.result.InvididualGetByID[0].birthDate)
 				this.model.dateOfIssue = new Date(response.result.InvididualGetByID[0].dateOfIssue)
+				console.log('this.model', this.model)
 				this.getProvince()
 				this.getDistrict(response.result.InvididualGetByID[0].provinceId)
 				this.getVillage(response.result.InvididualGetByID[0].provinceId, response.result.InvididualGetByID[0].districtId)

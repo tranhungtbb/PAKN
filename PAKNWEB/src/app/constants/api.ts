@@ -282,6 +282,7 @@ export class Api {
 	public static InvididualGetByID = 'BusinessIndividual/InvididualGetByID'
 	public static InvididualUpdate = 'BusinessIndividual/InvididualUpdate'
 	public static ImportDataInvididual = 'BusinessIndividual/ImportDataInvididual?folder=BusinessIndividual'
+	public static InvididualCheckExists = 'BusinessIndividual/BIInvididualCheckExistsBase'
 
 	//Business
 	public static BusinessGetAllOnPage = 'BusinessIndividual/BusinessGetAllOnPage'
