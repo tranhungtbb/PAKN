@@ -65,6 +65,7 @@ namespace PAKNAPI.Common
                 { "application/vnd.ms-powerpoint.presentation.macroEnabled.12", 6 },
                 { "application/vnd.ms-powerpoint.template.macroEnabled.12", 6 },
                 { "application/vnd.ms-powerpoint.slideshow.macroEnabled.12", 6 },
+                { "video/mp4", 7 },
             };
         }
         public static Dictionary<string, int> FileExtension()

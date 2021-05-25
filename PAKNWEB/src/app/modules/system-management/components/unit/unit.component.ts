@@ -101,7 +101,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.createUnitFrom = this.formBuilder.group({
 			name: [this.modelUnit.name, Validators.required],
 			unitLevel: [this.modelUnit.unitLevel, [Validators.required]],
-			isActived: [this.modelUnit.isActived],
+			isActived: [this.modelUnit.isActived, [Validators.required]],
 			parentId: [this.modelUnit.parentId, Validators.required],
 			description: [this.modelUnit.description],
 			email: [this.modelUnit.email, [Validators.required, Validators.email]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
@@ -325,7 +325,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.createUnitFrom = this.formBuilder.group({
 			name: [this.modelUnit.name, Validators.required],
 			unitLevel: [this.modelUnit.unitLevel, [Validators.required]],
-			isActived: [this.modelUnit.isActived],
+			isActived: [this.modelUnit.isActived, [Validators.required]],
 			parentId: [this.modelUnit.parentId, Validators.required],
 			description: [this.modelUnit.description],
 			email: [this.modelUnit.email, [Validators.required, Validators.email]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')

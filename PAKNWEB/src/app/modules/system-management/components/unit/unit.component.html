@@ -338,6 +338,12 @@
 							<ng-select class="form-control" style="font-weight: bold;" [items]="listStatus" placeholder="Chọn..." bindLabel="text" bindValue="value"
 								formControlName="isActived" [(ngModel)]="modelUnit.isActived" [closeOnSelect]="true" [searchable]="false">
 							</ng-select>
+							<div *ngIf="(unitFormSubmitted && fUnit.isActived.invalid)||(fUnit.isActived.invalid && (fUnit.isActived.dirty || fUnit.isActived.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="fUnit.isActived.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div>
 						</div>
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">Email <span class="cl-red">(*)</span></label>

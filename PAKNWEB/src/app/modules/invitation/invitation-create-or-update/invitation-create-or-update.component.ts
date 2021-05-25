@@ -166,14 +166,17 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		this.userService.getIsSystemOrderByUnit({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				for (const iterator of res.result) {
+					iterator.checked = false
 					if (iterator.children == null || iterator.children.length == 0) {
 						delete iterator.children
 					} else {
 						for (const iterator2 of iterator.children) {
+							iterator2.checked = false
 							if (iterator2.children == null || iterator2.children.length == 0) {
 								delete iterator2.children
 							} else {
 								for (const iterator3 of iterator2.children) {
+									iterator3.checked = false
 									if (iterator3.children == null || iterator3.children.length == 0) {
 										delete iterator3.children
 									}

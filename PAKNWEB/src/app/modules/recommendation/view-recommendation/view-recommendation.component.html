@@ -117,6 +117,10 @@
 												<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;" alt="">
 												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
 											</a>
+											<a *ngIf="file.fileType == 7" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+												<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;" alt="">
+												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+											</a>
 											<span *ngIf="file.fileType < 6" class="pointer" appViewFile [linkfile]="file.filePath" [namefile]="file.name" title="Xem file">
 												<i class="bi bi-eye"></i>
 											</span>

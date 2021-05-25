@@ -780,14 +780,14 @@ namespace PAKNAPI.Controllers
 					///
 					var info = await new BIBusinessGetByUserId(_appSetting).BIBusinessGetByUserIdDAO(accInfo[0].Id);
 					var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone", businessModel.Phone, info[0].Id);
-					if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+					if (checkExists[0].Exists.Value && businessModel.Phone != null) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
 					if (!string.IsNullOrEmpty(model.Email))
 					{
 						checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Email", businessModel.Email, info[0].Id);
 						if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện đã tồn tại" };
 					}
 					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("IDCard", businessModel.IDCard, info[0].Id);
-					if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
+					if (checkExists[0].Exists.Value && businessModel.IDCard != null) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgPhone", businessModel.OrgPhone, info[0].Id);
 					if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại doanh nghiệp đã tồn tại" };
 					if (!string.IsNullOrEmpty(businessModel.OrgEmail))
@@ -825,7 +825,7 @@ namespace PAKNAPI.Controllers
 						WardsId = model.WardsId,
 						Address = model.Address,
 						IdCard = model.IdCard,
-						IssuedDate = dateOfIssue,
+						IssuedDate = null,
 						Gender = model.Gender,
 						BusinessRegistration = businessModel.BusinessRegistration,
 						DecisionOfEstablishing = businessModel.DecisionOfEstablishing,
@@ -838,6 +838,10 @@ namespace PAKNAPI.Controllers
 						OrgEmail = businessModel.OrgEmail,
 						Business = businessModel.Business
 					};
+					if (model.IssuedDate != null) {
+						_model.IssuedDate = DateTime.ParseExact(model.IssuedDate, "dd/MM/yyyy",
+									   System.Globalization.CultureInfo.InvariantCulture);
+					}
 					var rs = await new BIBusinessUpdateInfo(_appSetting).BIBusinessUpdateInfoDAO(_model);
 				}
 
