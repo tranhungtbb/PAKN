@@ -288,7 +288,6 @@ export class BusinessComponent implements OnInit {
 	}
 
 	onExcelfileChange(event: any) {
-		let obj: any = {}
 		var file = event.target.files[0]
 		if (!this.allowExcelExtend.includes(file.type)) {
 			this._toastr.error('Chỉ chọn tệp excel')

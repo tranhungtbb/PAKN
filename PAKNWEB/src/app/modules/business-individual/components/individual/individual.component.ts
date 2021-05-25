@@ -75,7 +75,7 @@ export class IndividualComponent implements OnInit {
 	nation_enable_type = false
 
 	ngOnInit() {
-		this.buildForm()
+		// this.buildForm()
 		this.getList()
 		this.localeService.use('vi')
 		this.loadFormBuilder()
@@ -116,7 +116,6 @@ export class IndividualComponent implements OnInit {
 					this.listDistrict = res.result.CADistrictGetAll
 				}
 			})
-		} else {
 		}
 	}
 
@@ -129,7 +128,6 @@ export class IndividualComponent implements OnInit {
 					this.listVillage = res.result.CAVillageGetAll
 				}
 			})
-		} else {
 		}
 	}
 
@@ -137,27 +135,6 @@ export class IndividualComponent implements OnInit {
 		this._shareData.seteventnotificationDropdown()
 	}
 
-	buildForm() {
-		this.form = this._fb.group({
-			fullName: [this.model.fullName, Validators.required],
-			address: [this.model.address, Validators.required],
-			phone: [this.model.phone, Validators.required],
-			email: [this.model.email, Validators.required],
-			gender: [this.model.gender, Validators.required],
-			status: this.model.status,
-		})
-	}
-
-	rebuilForm() {
-		this.form.reset({
-			fullName: this.model.fullName,
-			address: this.model.address,
-			phone: this.model.phone,
-			email: this.model.email,
-			// gender: this.model.gender,
-			// status: this.model.status,
-		})
-	}
 	onSortIndividual(fieldName: string) {
 		this.inSortDir = this.inSortDir == 'DESC' ? 'ASC' : 'DESC'
 		this.inSortField = fieldName
@@ -272,7 +249,6 @@ export class IndividualComponent implements OnInit {
 
 	preCreate() {
 		this.model = new IndividualObject()
-		// this.rebuilForm()
 		this.model.nation = 'Việt Nam'
 		this.model.provinceId = 37 // Tỉnh Khánh Hòa
 		this.model.gender = true // Giới tính Nam
@@ -291,8 +267,6 @@ export class IndividualComponent implements OnInit {
 		this.form = this._fb.group({
 			fullName: [this.model.fullName, [Validators.required, Validators.maxLength(100)]],
 			gender: [this.model.gender, [Validators.required]],
-			// dob: [this.model._birthDay, [Validators.required]],
-			// dob: [this.model.birthDate, [Validators.required]],
 			birthDate: [this.model.birthDate, [Validators.required]],
 			nation: [this.model.nation, [Validators.required]],
 			province: [this.model.provinceId, [Validators.required]],
@@ -304,9 +278,7 @@ export class IndividualComponent implements OnInit {
 			address: [this.model.address, [Validators.required]],
 			iDCard: [this.model.iDCard, [Validators.required]], //, Validators.pattern(/^([0-9]){8,12}$/g)
 			placeIssue: [this.model.issuedPlace, []],
-			// dateIssue: [this.model._dateOfIssue, []],
 			dateIssue: [this.model.dateOfIssue, []],
-			// dateIssue: [this.model.dateOfIssue, []],
 			status: [this.model.status],
 		})
 	}
@@ -335,8 +307,6 @@ export class IndividualComponent implements OnInit {
 		}
 
 		//check ngày cấp < ngày sinh
-		// let dateIssue = new Date(this.model._dateOfIssue)
-		// let dateOfBirth = new Date(this.model._birthDay)
 		let dateIssue = new Date(this.model.dateOfIssue)
 		let dateOfBirth = new Date(this.model.birthDate)
 
@@ -348,7 +318,6 @@ export class IndividualComponent implements OnInit {
 		if (this.model.id != null && this.model.id > 0) {
 			this._service.invididualUpdate(this.model).subscribe((res) => {
 				if (res.success != 'OK') {
-					let errorMsg = res.message
 					this._toastr.error(res.message)
 					return
 				}
@@ -402,16 +371,14 @@ export class IndividualComponent implements OnInit {
 		}
 		this._service.individualById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				// this.rebuilForm()
 				this.title = 'Chỉnh sửa cá nhân'
 				this.model = response.result.InvididualGetByID[0]
 				this.model.iDCard = response.result.InvididualGetByID[0].idCard
 				this.model.birthDate = new Date(response.result.InvididualGetByID[0].birthDay)
 				this.model.dateOfIssue = new Date(response.result.InvididualGetByID[0].dateOfIssue)
-				console.log('response', response)
 				this.getProvince()
-				this.getDistrict('Việt Nam')
-				this.getVillage('Việt Nam', response.result.InvididualGetByID[0].districtId)
+				this.getDistrict(response.result.InvididualGetByID[0].provinceId)
+				this.getVillage(response.result.InvididualGetByID[0].provinceId, response.result.InvididualGetByID[0].districtId)
 
 				$('#modal').modal('show')
 			} else {
@@ -437,7 +404,6 @@ export class IndividualComponent implements OnInit {
 			this.diadanhService.getAllDistrict(provinceId).subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listDistrict = res.result.CADistrictGetAll
-					console.log('this.listDistrict', this.listDistrict)
 				}
 			})
 		}
