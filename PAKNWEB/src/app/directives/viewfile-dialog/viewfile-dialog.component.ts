@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core'
+import { Component, OnInit, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core'
 import { MAT_DIALOG_DATA } from '@angular/material'
 import { Inject } from '@angular/core'
 import { UploadFileService } from '../../services/uploadfiles.service'
@@ -25,6 +25,7 @@ export class ViewFileDialogComponent implements OnInit {
 	filename: string = ''
 	IsPDF: boolean = false
 	IsIMG: boolean = false
+	IsVideo: boolean = false
 	IsShowCreateVersion = false
 	files: any
 	typeFile: any
@@ -36,6 +37,7 @@ export class ViewFileDialogComponent implements OnInit {
 		if (this.data.link != null) {
 			this.IsPDF = false
 			this.IsIMG = false
+			this.IsVideo = false
 			this.cdRef.detectChanges()
 			// Check nếu là file ảnh thì mở trực tiếp
 			let listsplit = this.data.name
@@ -50,6 +52,7 @@ export class ViewFileDialogComponent implements OnInit {
 				// linkfile = linkfile.replace(AppSettings.API_DOWNLOADFILES, "");
 				this.IsPDF = true
 				this.IsIMG = false
+				this.IsVideo = false
 				this.cdRef.detectChanges()
 				this.LoadView(linkfile)
 			} else if (extenfile == 'doc' || extenfile == 'docx' || extenfile == 'xls' || extenfile == 'xlsx') {
@@ -57,6 +60,12 @@ export class ViewFileDialogComponent implements OnInit {
 				linkfile = linkfile
 				// linkfile = linkfile.replace(AppSettings.API_DOWNLOADFILES, "");
 				$('#viewfile').attr('src', AppSettings.VIEW_FILE + btoa(linkfile))
+			} else if (extenfile == 'mp4' || extenfile == 'wmv') {
+				this.IsPDF = false
+				this.IsIMG = false
+				this.IsVideo = true
+				this.cdRef.detectChanges()
+				this.loadvideo(this.data.link, this.data.name)
 			} else {
 				$('#viewfile').attr('src', this.data.link)
 			}
@@ -156,6 +165,32 @@ export class ViewFileDialogComponent implements OnInit {
 					that.listImg.push(b64)
 				}
 				reader.readAsDataURL(blob)
+			},
+			(error) => {
+				this.toastr.error('Không tìm thấy file trên hệ thống')
+			}
+		)
+	}
+	// Video
+	VideoSource: any = ''
+
+	@ViewChild('videodemo', null) public video: ElementRef
+
+	loadvideo(link, name) {
+		var request = {
+			Path: link,
+			Name: name,
+		}
+
+		this.filesService.downloadFile(request).subscribe(
+			(response) => {
+				var blob = new Blob([response], { type: response.type })
+				var srcvideo = window.URL.createObjectURL(blob)
+				this.VideoSource = srcvideo
+				this.video.nativeElement.crossOrigin = 'anonymous'
+				this.video.nativeElement.src = srcvideo
+				this.video.nativeElement.load()
+				this.video.nativeElement.play()
 			},
 			(error) => {
 				this.toastr.error('Không tìm thấy file trên hệ thống')
