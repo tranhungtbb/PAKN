@@ -56,7 +56,6 @@ export class IndividualComponent implements OnInit {
 	]
 
 	fileAccept = '.xls, .xlsx'
-	// files: any[] = []
 	listInvPaged: any[] = []
 
 	form: FormGroup
@@ -158,15 +157,6 @@ export class IndividualComponent implements OnInit {
 			// gender: this.model.gender,
 			// status: this.model.status,
 		})
-
-		// this.submitted = false
-		// this.model = new IndividualObject()
-		// this.model._birthDay = ''
-		// this.model._dateOfIssue = ''
-		// this.model.fullName = ''
-		// this.model.email = ''
-		// this.model.gender = true
-		// this.model.status = 1
 	}
 	onSortIndividual(fieldName: string) {
 		this.inSortDir = this.inSortDir == 'DESC' ? 'ASC' : 'DESC'
@@ -328,12 +318,9 @@ export class IndividualComponent implements OnInit {
 		let fDateIssue: any = document.querySelector('#_dateIssue')
 		this.model._birthDay = fDob.value
 		this.model._dateOfIssue = fDateIssue.value
-		// this.model.birthDay = fDob.value
 
 		this.model.birthDate = fDob.value
 		this.model.dateOfIssue = fDateIssue.value
-		// console.log('birthDate', this.model.birthDate)
-		// console.log('dateOfIssue', this.model.dateOfIssue)
 		this.model.userId = this.userLoginId
 		if (!this.model.email) this.model.email = ''
 
@@ -359,7 +346,6 @@ export class IndividualComponent implements OnInit {
 		}
 
 		if (this.model.id != null && this.model.id > 0) {
-			console.log('this.model', this.model)
 			this._service.invididualUpdate(this.model).subscribe((res) => {
 				if (res.success != 'OK') {
 					let errorMsg = res.message
@@ -417,13 +403,15 @@ export class IndividualComponent implements OnInit {
 		this._service.individualById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				// this.rebuilForm()
-				// this.model = new IndividualObject()
 				this.title = 'Chỉnh sửa cá nhân'
 				this.model = response.result.InvididualGetByID[0]
 				this.model.iDCard = response.result.InvididualGetByID[0].idCard
 				this.model.birthDate = new Date(response.result.InvididualGetByID[0].birthDay)
 				this.model.dateOfIssue = new Date(response.result.InvididualGetByID[0].dateOfIssue)
-				console.log('this.model', this.model)
+				console.log('response', response)
+				this.getProvince()
+				this.getDistrict('Việt Nam')
+				this.getVillage('Việt Nam', response.result.InvididualGetByID[0].districtId)
 
 				$('#modal').modal('show')
 			} else {
@@ -434,6 +422,35 @@ export class IndividualComponent implements OnInit {
 				console.error(error)
 				alert(error)
 			}
+	}
+
+	getProvince() {
+		this.diadanhService.getAllProvince().subscribe((res) => {
+			if (res.success == 'OK') {
+				this.listProvince = res.result.CAProvinceGetAll
+			}
+		})
+	}
+
+	getDistrict(provinceId) {
+		if (provinceId != null && provinceId != '') {
+			this.diadanhService.getAllDistrict(provinceId).subscribe((res) => {
+				if (res.success == 'OK') {
+					this.listDistrict = res.result.CADistrictGetAll
+					console.log('this.listDistrict', this.listDistrict)
+				}
+			})
+		}
+	}
+
+	getVillage(provinceId, districtId) {
+		if (districtId != null && districtId != '') {
+			this.diadanhService.getAllVillage(provinceId, districtId).subscribe((res) => {
+				if (res.success == 'OK') {
+					this.listVillage = res.result.CAVillageGetAll
+				}
+			})
+		}
 	}
 
 	onExport() {

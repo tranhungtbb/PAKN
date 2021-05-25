@@ -16,7 +16,7 @@
 		<label class="mb-1">Quốc tịch<span class="cl-red">(*)</span></label>
 		<ng-select *ngIf="!nation_enable_type" [(ngModel)]="model.Nation" formControlName="Nation" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
 			(change)="onChangeNation()">
-			<ng-option *ngFor="let vill of listNation" [value]="vill.id">{{vill.name}}</ng-option>
+			<ng-option *ngFor="let vill of listNation" [value]="vill.id" ng-init="model.Nation">{{vill.name}}</ng-option>
 			<ng-option value="#">Khác</ng-option>
 		</ng-select>
 		<!-- type input -->
@@ -35,7 +35,7 @@
 		<label class="mb-1">Tỉnh / Thành phố</label>
 		<ng-select [disabled]="nation_enable_type" [(ngModel)]="model.ProvinceId" formControlName="Province" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
 			(change)="onChangeProvince()">
-			<ng-option *ngFor="let vill of listProvince" [value]="vill.id">{{vill.name}}</ng-option>
+			<ng-option *ngFor="let vill of listProvince" [value]="vill.id" ng-init="model.ProvinceId">{{vill.name}}</ng-option>
 		</ng-select>
 		<div *ngIf="(fInfoSubmitted && fInfo.Province.invalid)||(fInfo.Province.invalid && (fInfo.Province.dirty || fInfo.Province.touched))" class="has-error m-b-12">
 			<div *ngIf="fInfo.Province.errors.required">
