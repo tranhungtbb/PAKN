@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using PAKNAPI.Common;
+using PAKNAPI.Models.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +61,37 @@ namespace PAKNAPI.Models.User
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPageList>("[SY_UserGetAllOnPageList]", DP)).ToList();
 		}
+		public async Task<UsersGetDataForCreateResponse> UsersGetDataForCreate()
+		{
+			UsersGetDataForCreateResponse data = new UsersGetDataForCreateResponse();
+			DynamicParameters DP = new DynamicParameters();
+			data.lstUnit = (await _sQLCon.ExecuteListDapperAsync<DropdownTree>("SY_UnitGetDropdownLevel", DP)).ToList();
+			data.lstPossition = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("CA_PositionGetDropdown", DP)).ToList();
+			data.lstRoles = (await _sQLCon.ExecuteListDapperAsync<DropdownPermissionObject>("SY_RoleGetDropdown", DP)).ToList();
+            foreach (var role in data.lstRoles)
+			{
+				DP = new DynamicParameters();
+				DP.Add("GroupUserId", role.Value);
+				role.permissionIds = (await _sQLCon.ExecuteListDapperAsync<int>("SY_PermissionGroupUser_GetByGroupId", DP)).ToList();
+			}
+			DP = new DynamicParameters();
+			data.lstPermissionCategories = (await _sQLCon.ExecuteListDapperAsync<PermissionCategoryObject>("SY_PermissionCategory_Get", DP)).ToList();
+			foreach (var cat in data.lstPermissionCategories)
+			{
+				DP = new DynamicParameters();
+				DP.Add("Id", cat.Id);
+				cat.Function = (await _sQLCon.ExecuteListDapperAsync<FunctionObject>("SY_PermissionFunction_GetByCategory", DP)).ToList();
+				foreach (var per in cat.Function)
+				{
+					DP = new DynamicParameters();
+					DP.Add("Id", per.Id);
+					per.Permission = (await _sQLCon.ExecuteListDapperAsync<PermissionObject>("SY_Permission_GetByFunction", DP)).ToList();
+				}
+			}
+			return data;
+		}
 	}
+
 	public class DropListTreeView {
 		public string text { get; set; }
 		public long value { get; set; }
@@ -79,6 +110,19 @@ namespace PAKNAPI.Models.User
 			this.children = (List<DropListTreeView>)chil;
 		}
 	}
+	public class UsersGetDataForCreateResponse
+	{
+		public List<DropdownTree> lstUnit { get; set; }
+		public List<DropdownObject> lstPossition { get; set; }
+		public List<DropdownPermissionObject> lstRoles { get; set; }
+		public List<PermissionCategoryObject> lstPermissionCategories { get; set; }
+	}
+	public class DropdownPermissionObject
+	{
+		public int Value { get; set; }
+		public string Text { get; set; }
+		public List<int> permissionIds { get; set; }
+	}
 
-	
+
 }

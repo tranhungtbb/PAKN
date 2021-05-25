@@ -140,7 +140,14 @@ export class CreateRecommendationComponent implements OnInit {
 				this.model = response.result.model
 				this.lstHashtagSelected = response.result.lstHashtag
 				this.files = response.result.lstFiles
-
+				if (this.model.typeObject == 1) {
+					this.titleObject = 'Cá nhân'
+					this.lstObject = this.lstIndividual
+				} else {
+					this.titleObject = 'Doanh nghiệp'
+					this.lstObject = this.lstBusiness
+				}
+				this.changeObject()
 				if (this.model.sendDate) {
 					this.model.sendDate = new Date(this.model.sendDate)
 				}
@@ -189,8 +196,10 @@ export class CreateRecommendationComponent implements OnInit {
 		this.model.name = ''
 		if (this.model.sendId != null) {
 			for (let index = 0; index < this.lstObject.length; index++) {
-				if (this.model.sendId == this.lstObject[index].value) this.model.name = this.lstObject[index].text
-				break
+				if (this.model.sendId == this.lstObject[index].value) {
+					this.model.name = this.lstObject[index].text
+					break
+				}
 			}
 		}
 	}
@@ -251,6 +260,7 @@ export class CreateRecommendationComponent implements OnInit {
 		if (this.form.invalid) {
 			return
 		}
+		this.changeObject()
 		this.model.status = RECOMMENDATION_STATUS.RECEIVE_APPROVED
 		const request = {
 			Data: this.model,

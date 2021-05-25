@@ -9,7 +9,7 @@ import { PositionService } from '../../../../../services/position.service'
 import { RoleService } from '../../../../../services/role.service'
 import { AppSettings } from 'src/app/constants/app-setting'
 
-import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { CONSTANTS, MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
 import { UserObject2 } from 'src/app/models/UserObject'
 
@@ -67,6 +67,9 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		{ value: true, text: 'Nam' },
 		{ value: false, text: 'Nữ' },
 	]
+	fileAccept = CONSTANTS.FILEACCEPTAVATAR
+	listPermissionCategories: any[]
+	listPermissionUserSelected: any[] = []
 
 	ngOnInit() {
 		this.createUserForm = this.formBuilder.group({
@@ -81,23 +84,13 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			isActived: ['', [Validators.required]],
 			address: [''],
 		})
-
-		this.positionService
-			.positionGetList({
-				pageIndex: 1,
-				pageSize: 1000,
-			})
-			.subscribe((res) => {
-				if (res.success != 'OK') return
-				this.positionsList = res.result.CAPositionGetAllOnPage
-			})
-		this.roleService.getAll({}).subscribe((res) => {
-			if (res.success != 'OK') return
-			this.rolesList = res.result.SYRoleGetAll
-		})
-		this.unitService.getAll({}).subscribe((res) => {
-			if (res.success != 'OK') return
-			this.unitsList = res.result.CAUnitGetAll
+		this.userService.getDataForCreate({}).subscribe((res) => {
+			if (res.success == 'OK') {
+				this.positionsList = res.result.lstPossition
+				this.unitsList = res.result.lstUnit
+				this.rolesList = res.result.lstRoles
+				this.listPermissionCategories = res.result.lstPermissionCategories
+			}
 		})
 	}
 
@@ -137,6 +130,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		let files = $('#' + this.modalId + ' .seclect-avatar')[0].files
 
 		this.modelUser.roleIds = this.selectedRoles.toString()
+		this.modelUser.permissionIds = this.listPermissionUserSelected.join(',')
 		this.modelUser.userName = this.modelUser.email
 		// this.modelUser.avatar = ''
 		this.modelUser.countLock = 0
@@ -214,6 +208,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 
 	modal_btn_save = 'Tạo mới'
 	openModal(unitId = 0, userId = 0, editByMyself = false): void {
+		this.listPermissionUserSelected = []
 		this.createUserForm = this.formBuilder.group({
 			//userName: ['', [Validators.required]],
 			email: [this.modelUser.email, [Validators.required, Validators.email]],
@@ -235,10 +230,9 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		if (userId > 0) {
 			this.modalTitle = 'Chỉnh sửa người dùng'
 			this.modal_btn_save = 'Cập nhật'
-			this.userService.getById({ id: userId }).subscribe((res) => {
+			this.userService.getByIdUpdate({ id: userId }).subscribe((res) => {
 				if (res.success != 'OK') return
 				this.modelUser = res.result.SYUserGetByID[0]
-				//if (this.modelUser.avatar != null && this.modelUser.avatar != '') this.getUserAvatar(this.modelUser.id)
 				if (this.modelUser.avatar == '' || this.modelUser.avatar == null) {
 					this.userAvatar = null
 				} else {
@@ -246,9 +240,10 @@ export class UserCreateOrUpdateComponent implements OnInit {
 					let output: any = $('#' + this.modalId + ' .user-avatar-view')
 					output.attr('src', this.userAvatar)
 				}
-
+				this.listPermissionUserSelected = res.result.lstPermissionUserSelected
 				if (this.modelUser.roleIds) this.selectedRoles = this.modelUser.roleIds.split(',').map((c) => parseInt(c))
 				else this.selectedRoles = []
+				this.onGroupUserChange()
 			})
 		} else {
 			this.modalTitle = 'Tạo mới người dùng'
@@ -258,6 +253,8 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			this.modelUser.gender = true
 			this.modelUser.positionId = null
 			this.modelUser.isActived = true
+			this.selectedRoles = []
+			this.onGroupUserChange()
 		}
 
 		// $('#' + this.modalId + ' .user-avatar-view').attr('src', '')
@@ -274,5 +271,145 @@ export class UserCreateOrUpdateComponent implements OnInit {
 				this.userAvatar = this.sanitizer.bypassSecurityTrustUrl(objectURL)
 			}
 		})
+	}
+
+	onGroupUserChange(): void {
+		this.clearPermisison()
+		let listGroup: any[] = []
+		for (var i = 0; i < this.selectedRoles.length; i++) {
+			for (let j = 0; j < this.rolesList.length; j++) {
+				if (this.selectedRoles[i] == this.rolesList[i].value) {
+					listGroup.push(this.rolesList[i])
+					break
+				}
+			}
+		}
+
+		for (var i = 0; i < this.listPermissionUserSelected.length; i++) {
+			this.checkPermission(this.listPermissionUserSelected[i], true)
+		}
+
+		for (var j = 0; j < listGroup.length; j++) {
+			for (var i = 0; i < listGroup[j].permissionIds.length; i++) {
+				this.checkPermission(listGroup[j].permissionIds[i], false)
+			}
+		}
+	}
+
+	onCategoryChange(ev, permisionCategory): void {
+		for (var i = 0; i < permisionCategory.function.length; i++) {
+			permisionCategory.function[i].selected = ev.checked
+			for (var j = 0; j < permisionCategory.function[i].permission.length; j++) {
+				permisionCategory.function[i].permission[j].selected = ev.checked
+				var permissionId = permisionCategory.function[i].permission[j].id
+				if (ev.checked) {
+					this.listPermissionUserSelected.push(permissionId)
+				} else {
+					var index = this.listPermissionUserSelected.indexOf(permissionId, 0)
+					if (index > -1) {
+						this.listPermissionUserSelected.splice(index, 1)
+					}
+				}
+			}
+		}
+	}
+
+	onFunctionChange(ev, funct, permisionCategory): void {
+		for (var j = 0; j < funct.permission.length; j++) {
+			funct.permission[j].selected = ev.checked
+			var permissionId = funct.permission[j].id
+			if (ev.checked) {
+				this.listPermissionUserSelected.push(permissionId)
+			} else {
+				var index = this.listPermissionUserSelected.indexOf(permissionId, 0)
+				if (index > -1) {
+					this.listPermissionUserSelected.splice(index, 1)
+				}
+			}
+		}
+		if (ev.checked) {
+			permisionCategory.selected = ev.checked
+		} else {
+			this.checkCategorySelected(permisionCategory)
+		}
+	}
+
+	onPermissionChange(event, permission, funct, permisionCategory): void {
+		this.checkFunctionSelected(permisionCategory, funct)
+		if (event.checked) {
+			this.listPermissionUserSelected.push(permission.id)
+		} else {
+			var index = this.listPermissionUserSelected.indexOf(permission.id, 0)
+			if (index > -1) {
+				this.listPermissionUserSelected.splice(index, 1)
+			}
+		}
+	}
+
+	private checkCategorySelected(permisionCategory: any) {
+		var hasSelectedChild = false
+		for (var j = 0; j < permisionCategory.function.length; j++) {
+			if (permisionCategory.function[j].selected) {
+				hasSelectedChild = true
+				break
+			}
+		}
+		permisionCategory.selected = hasSelectedChild
+	}
+
+	private checkFunctionSelected(permisionCategory, funct) {
+		var hasSelectedChild = false
+		for (var j = 0; j < funct.permission.length; j++) {
+			if (funct.permission[j].selected) {
+				hasSelectedChild = true
+				break
+			}
+		}
+		funct.selected = hasSelectedChild
+		this.checkCategorySelected(permisionCategory)
+	}
+
+	private clearPermisison() {
+		for (var i = 0; i < this.listPermissionCategories.length; i++) {
+			var permissioncategory = this.listPermissionCategories[i]
+			permissioncategory.selected = false
+			permissioncategory.disabled = false
+			for (var j = 0; j < permissioncategory.function.length; j++) {
+				var funct = permissioncategory.function[j]
+				funct.selected = false
+				funct.disabled = false
+				for (var k = 0; k < funct.permission.length; k++) {
+					funct.permission[k].selected = false
+					funct.permission[k].disabled = false
+				}
+			}
+		}
+	}
+
+	private checkPermission(permissionId, isUserSelected) {
+		for (var i = 0; i < this.listPermissionCategories.length; i++) {
+			var permissioncategory = this.listPermissionCategories[i]
+			var isCategorySelected = this.listPermissionCategories[i].selected
+			var isCategoryDisabled = this.listPermissionCategories[i].disabled
+			for (var j = 0; j < permissioncategory.function.length; j++) {
+				var funct = permissioncategory.function[j]
+				var isFunctSelected = permissioncategory.function[j].selected
+				var isFunctDisabled = permissioncategory.function[j].disabled
+				for (var k = 0; k < funct.permission.length; k++) {
+					if (funct.permission[k].id == permissionId) {
+						funct.permission[k].selected = true
+						funct.permission[k].disabled = isUserSelected ? false : true
+						isCategorySelected = true
+						isFunctSelected = true
+						isCategoryDisabled = isUserSelected ? isCategoryDisabled : true
+						isFunctDisabled = isUserSelected ? isFunctDisabled : true
+					}
+				}
+				funct.selected = isFunctSelected
+				funct.disabled = isFunctDisabled
+			}
+			permissioncategory.selected = isCategorySelected
+			permissioncategory.disabled = isCategoryDisabled
+		}
 	}
 }
