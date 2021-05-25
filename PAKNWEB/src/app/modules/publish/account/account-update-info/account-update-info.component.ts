@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { AccountService } from 'src/app/services/account.service'
+import { UserService } from 'src/app/services/user.service'
 
 import { viLocale } from 'ngx-bootstrap/locale'
 import { defineLocale } from 'ngx-bootstrap/chronos'
@@ -14,6 +15,7 @@ import { UserInfoObject } from 'src/app/models/UserObject'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { resultMemoize } from '@ngrx/store'
 import { COMMONS } from 'src/app/commons/commons'
+import { from } from 'rxjs'
 
 @Component({
 	selector: 'app-account-update-info',
@@ -28,7 +30,8 @@ export class AccountUpdateInfoComponent implements OnInit {
 		private accountService: AccountService,
 		private router: Router,
 		private diadanhService: DiadanhService,
-		private userLocal: UserInfoStorageService
+		private userLocal: UserInfoStorageService,
+		private userService: UserService
 	) {
 		defineLocale('vi', viLocale)
 		this.localeService.use('vi')
@@ -55,7 +58,9 @@ export class AccountUpdateInfoComponent implements OnInit {
 			this.listDistrict = []
 			this.listVillage = []
 
-			this.model.provinceId = ''
+			this.model.provinceId = null
+			this.model.districtId = null
+			this.model.wardsId = null
 		}
 		if (this.model.nation == 'Việt Nam') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
@@ -73,8 +78,8 @@ export class AccountUpdateInfoComponent implements OnInit {
 			this.listDistrict = []
 			this.listVillage = []
 
-			this.model.districtId = ''
-			this.model.wardsId = ''
+			this.model.districtId = null
+			this.model.wardsId = null
 		}
 		if (this.model.provinceId != null && this.model.provinceId != '') {
 			this.diadanhService.getAllDistrict(this.model.provinceId).subscribe((res) => {
@@ -91,7 +96,7 @@ export class AccountUpdateInfoComponent implements OnInit {
 	onChangeDistrict(clearable = false) {
 		if (clearable) {
 			this.listVillage = []
-			this.model.wardsId = ''
+			this.model.wardsId = null
 		}
 		if (this.model.districtId != null && this.model.districtId != '') {
 			this.diadanhService.getAllVillage(this.model.provinceId, this.model.districtId).subscribe((res) => {
@@ -120,8 +125,8 @@ export class AccountUpdateInfoComponent implements OnInit {
 			wardsId: [this.model.wardsId, []],
 			address: [this.model.address, [Validators.required]],
 			idCard: [this.model.idCard, [Validators.required]],
-			issuedPlace: [this.model.issuedPlace, [Validators.required]],
-			issuedDate: [this.model.issuedDate, [Validators.required]],
+			issuedPlace: [this.model.issuedPlace],
+			issuedDate: [this.model.issuedDate],
 			gender: [this.model.gender, [Validators.required]],
 		})
 	}
@@ -150,9 +155,9 @@ export class AccountUpdateInfoComponent implements OnInit {
 		this.model.dateOfBirth = fDob.value
 		this.model.issuedDate = fDateIssue.value
 
-		if (!this.model.districtId) this.model.districtId = ''
-		if (!this.model.provinceId) this.model.provinceId = ''
-		if (!this.model.wardsId) this.model.wardsId = ''
+		if (!this.model.districtId) this.model.districtId = null
+		if (!this.model.provinceId) this.model.provinceId = null
+		if (!this.model.wardsId) this.model.wardsId = null
 
 		if (this.formData.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
