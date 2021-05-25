@@ -148,11 +148,12 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 							// 	this.ltsAdministrativeUnitId += ',' + iterator.administrativeUnitId
 							// 	// this.ltsUnitFirst.push(iterator.administrativeUnitId)
 							// }
-							this.getAdministrativeUnits()
+							// this.getAdministrativeUnits()
 						}
 					}
 				})
 			}
+			this.getAdministrativeUnits()
 		})
 		this.action = this.model.id == 0 ? 'Lưu' : 'Lưu'
 	}

@@ -238,7 +238,7 @@ export class IndividualComponent implements OnInit {
 			})
 	}
 	backToHome() {
-		window.open('/cong-bo/trang-chu', '_self')
+		this.router.navigate(['/dang-nhap'])
 	}
 }
 function MustMatch(controlName: string, matchingControlName: string) {

@@ -116,15 +116,16 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		this.model.dateOfBirth = fDob.value
 		this.model.dateOfIssue = fDateIssue.value
 		this.model.fullName = this.model.representativeName
-
+		this.model.idCard == null ? (this.model.idCard = '') : (this.model.idCard = this.model.idCard)
+		this.model.businessRegistration == null ? (this.model.businessRegistration = '') : (this.model.businessRegistration = this.model.businessRegistration)
+		this.model.decisionOfEstablishing == null ? (this.model.decisionOfEstablishing = '') : (this.model.decisionOfEstablishing = this.model.decisionOfEstablishing)
+		this.model.nativePlace == null ? (this.model.nativePlace = '') : (this.model.nativePlace = this.model.nativePlace)
 		if (!this.model.wardsId) this.model.wardsId = ''
 		if (!this.model.provinceId) this.model.provinceId = ''
 		if (!this.model.districtId) this.model.districtId = ''
 		if (!this.model.orgProvinceId) this.model.orgProvinceId = ''
 		if (!this.model.orgDistrictId) this.model.orgDistrictId = ''
 		if (!this.model.orgWardsId) this.model.orgWardsId = ''
-
-		console.log(this.model)
 
 		if (this.formUpdateAccountInfo.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
@@ -155,8 +156,9 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			this.listOrgDistrict = []
 			this.listOrgVillage = []
 
-			this.model.provinceId = ''
-			this.model.orgProvinceId = ''
+			this.model.provinceId = null
+			this.model.orgProvinceId = null
+			this.model.wardsId = null
 		}
 		if (this.model.nation == 'Việt Nam') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
@@ -183,8 +185,8 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			this.listDistrict = []
 			this.listVillage = []
 
-			this.model.districtId = ''
-			this.model.wardsId = ''
+			this.model.districtId = null
+			this.model.wardsId = null
 		}
 		if (this.model.provinceId != null && this.model.provinceId != '') {
 			this.diadanhService.getAllDistrict(this.model.provinceId).subscribe((res) => {
@@ -201,7 +203,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 	onChangeDistrict(clearable = false) {
 		if (clearable) {
 			this.listVillage = []
-			this.model.wardsId = ''
+			this.model.wardsId = null
 		}
 		if (this.model.districtId != null && this.model.districtId != '') {
 			this.diadanhService.getAllVillage(this.model.provinceId, this.model.districtId).subscribe((res) => {
@@ -218,8 +220,8 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			this.listOrgDistrict = []
 			this.listOrgVillage = []
 
-			this.model.orgProvinceId = ''
-			this.model.orgWardsId = ''
+			this.model.orgProvinceId = null
+			this.model.orgWardsId = null
 		}
 		if (this.model.orgProvinceId != null && this.model.orgProvinceId != '') {
 			this.diadanhService.getAllDistrict(this.model.orgProvinceId).subscribe((res) => {
@@ -236,7 +238,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 	onChangeOrgDistrict(clearable = false) {
 		if (clearable) {
 			this.listOrgVillage = []
-			this.model.orgWardsId = ''
+			this.model.orgWardsId = null
 		}
 		if (this.model.orgDistrictId != null && this.model.orgDistrictId != '') {
 			this.diadanhService.getAllVillage(this.model.orgProvinceId, this.model.orgDistrictId).subscribe((res) => {

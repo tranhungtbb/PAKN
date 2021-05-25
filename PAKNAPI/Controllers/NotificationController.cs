@@ -97,7 +97,7 @@ namespace PAKNAPI.Controllers
                 var recommendation = new RecommendationDAO(_appSetting).RecommendationGetByID(recommendationId).Result.Model;
 
                 //thông tin người gửi PAKN
-                SYUser sender = await new SYUser(_appSetting).SYUserGetByID(recommendation.SendId);
+                SYUser sender = await new SYUser(_appSetting).SYUserGetByID(recommendation.CreatedBy);
 
                 // danh sách người thuộc đơn vị mà PAKN gửi đến
                 List<SYUserGetByUnitId> lstUser = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO((int)recommendation.UnitId);
@@ -194,12 +194,32 @@ namespace PAKNAPI.Controllers
                         break;
                     case STATUS_RECOMMENDATION.PROCESS_WAIT: //5 Chờ giải quyết
 
-                        notification.Title = "PAKN ĐANG CHỜ GIẢI QUYẾT";
-                        notification.Content = "PAKN " + recommendation.Code + " từ đơn vị " + unit.Name + " được gửi tới yêu cầu giải quyết";
-
                         lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
+
+                        var check = lstRMForward.Where(x => x.Step == 1).FirstOrDefault();
+                        if (check == null)
+                        {
+                            // người dân doanh nghiệp gửi luôn PAKN cho đơn vị đã xác định thì phải tạo thông báo của status trước đó
+                            // status 4
+                            notification.Title = "PAKN ĐÃ TIẾP NHẬN";
+                            notification.Content = "PAKN " + recommendation.Code + " đã được tiếp nhận giải quyết: đơn vị được yêu cầu giải quyết đã tiếp nhận PAKN";
+                            foreach (var item in lstUser)
+                            {
+                                notification.ReceiveId = item.Id;
+                                notification.ReceiveOrgId = item.UnitId;
+                                // insert notification
+                                await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
+                            }
+
+                            // người gửi PAKN
+                            notification.ReceiveId = sender.Id;
+                            await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
+                        }
+
                         unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
                         listUserReceiveResolve = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(unitReceiveId);
+                        notification.Title = "PAKN ĐANG CHỜ GIẢI QUYẾT";
+                        notification.Content = "PAKN " + recommendation.Code + " từ đơn vị " + unit.Name + " được gửi tới yêu cầu giải quyết";
 
                         foreach (var item in listUserReceiveResolve)
                         {
@@ -215,11 +235,22 @@ namespace PAKNAPI.Controllers
                         lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
                         unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
                         unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
+                        // gửi cho đơn vị tiếp nhận ban đầu
+                        notification.Title = "PAKN BỊ TỪ CHỐI GIẢI QUYẾT";
+                        notification.Content = "PAKN số " + recommendation.Code +" đã bị " + unitReceive.Name + " từ chối giải quyết";
+                        foreach (var item in lstUser)
+                        {
+                            notification.ReceiveId = item.Id;
+                            notification.ReceiveOrgId = item.UnitId;
+                            // insert notification
+                            await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
+                        }
 
                         // người gửi PAKN
-                        notification.Title = "PAKN BỊ TỪ CHỐI GIẢI QUYẾT";
+                        
                         notification.Content = "PAKN của bạn đã bị " + unitReceive.Name + " từ chối giải quyết";
                         notification.ReceiveId = sender.Id;
+                        notification.ReceiveOrgId = null;
                         await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
 
                         break;
@@ -261,9 +292,15 @@ namespace PAKNAPI.Controllers
                             // insert notification
                             await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
                         }
+                        // gửi cho người tiếp nhận PAKN -chưa chắc là người giải quyết nhá
+
+                        notification.ReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).ReceiveId;
+                        notification.ReceiveOrgId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
+                        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
 
                         //người gửi PAKN
                         notification.ReceiveId = sender.Id;
+                        notification.ReceiveOrgId = null;
                         notification.Content = "Lãnh đạo đơn vị " + unitReceive.Name + " đã từ chối phê duyệt PAKN số " + recommendation.Code + " của bạn";
                         await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
 
@@ -284,8 +321,16 @@ namespace PAKNAPI.Controllers
                             await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
                         }
 
+                        // gửi cho người tiếp nhận PAKN -chưa chắc là người giải quyết nhá
+
+                        notification.ReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).ReceiveId;
+                        notification.ReceiveOrgId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
+                        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
+
+
                         // người gửi PAKN
                         notification.ReceiveId = sender.Id;
+                        notification.ReceiveOrgId = null;
                         await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
                         break;
                 }

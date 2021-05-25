@@ -37,7 +37,7 @@
 			</div>
 		</div>
 		<div class="col-12 col-lg-4 form-group">
-			<label class="mb-1">Tỉnh / Thành phố </label>
+			<label class="mb-1">Tỉnh / Thành phố <span class="cl-red">(*)</span> </label>
 			<ng-select [(ngModel)]="model.provinceId" formControlName="provinceId" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
 				(change)="onChangeProvince(true)">
 				<ng-option *ngFor="let prov of listProvince" [value]="prov.id">{{prov.name}}</ng-option>
@@ -49,7 +49,7 @@
 			</div>
 		</div>
 		<div class="col-12 col-lg-4 form-group">
-			<label class="mb-1">Huyện / Quận / thị xã...</label>
+			<label class="mb-1">Huyện / Quận / Thị xã... <span class="cl-red">(*)</span></label>
 			<ng-select [(ngModel)]="model.districtId" formControlName="districtId" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
 				(change)="onChangeDistrict(true)">
 				<ng-option *ngFor="let dis of listDistrict" [value]="dis.id">{{dis.name}}</ng-option>
@@ -63,7 +63,7 @@
 		</div>
 		<!-- row 3 -->
 		<div class="col-12 col-lg-4 form-group">
-			<label class="mb-1">Xã / Phường / Thị trấn</label>
+			<label class="mb-1">Xã / Phường / Thị trấn <span class="cl-red">(*)</span></label>
 			<ng-select [(ngModel)]="model.wardsId" formControlName="wardsId" class="form-control" placeholder="Chọn..." [closeOnSelect]="true">
 
 				<ng-option *ngFor="let vill of listVillage" [value]="vill.id">{{vill.name}}</ng-option>
