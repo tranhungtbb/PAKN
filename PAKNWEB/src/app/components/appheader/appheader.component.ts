@@ -121,6 +121,7 @@ export class AppheaderComponent implements OnInit {
 	}
 
 	getNotifications(PageSize: Number) {
+		this.ViewedCount = 0
 		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: PageSize, PageIndex: 1 }).subscribe((res) => {
 			if ((res.success = RESPONSE_STATUS.success)) {
 				this.Notifications = res.result.syNotifications

@@ -38,6 +38,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 
 	treeUnit: any[]
 	listUnitPaged: any[] = []
+	ltsUnitIdNonActive: any[] = []
 	unitObject: any = {}
 	listUserPaged: any[] = []
 	unitFlatlist: any[] = []
@@ -217,6 +218,9 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			(res) => {
 				if (res.success != 'OK') return
 				let listUnit = res.result.CAUnitGetAll.filter((e) => {
+					if (title == '' && e.isActived == false) {
+						this.ltsUnitIdNonActive.push(e.id)
+					}
 					if (e.name.includes(title)) {
 						let item = {
 							id: e.id,
@@ -232,7 +236,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				})
 				this.unitFlatlist = listUnit
 				this.treeUnit = this.unflatten(listUnit)
-
 				//active first
 				if (activeTreeNode == null) this.treeViewActive(this.treeUnit[0].id, this.treeUnit[0].unitLevel)
 				else {
@@ -332,6 +335,21 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			phone: [this.modelUnit.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
 			address: [this.modelUnit.address],
 		})
+
+		// this.createUnitFrom.reset({
+		// 	name: this.modelUnit.name,
+		// 	unitLevel: this.modelUnit.unitLevel,
+		// 	isActived: this.modelUnit.isActived,
+		// 	parentId: this.modelUnit.parentId,
+		// 	description: this.modelUnit.description,
+		// 	email: this.modelUnit.email,
+		// 	phone: this.modelUnit.phone,
+		// 	address: this.modelUnit.address,
+		// })
+		this.checkExists = {
+			Phone: false,
+			Email: false,
+		}
 
 		this.unitFormSubmitted = false
 		if (id == 0) {
