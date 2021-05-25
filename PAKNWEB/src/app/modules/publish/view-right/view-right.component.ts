@@ -49,6 +49,10 @@ export class ViewRightComponent implements OnInit {
 		this._router.navigate(['/cong-bo/phan-anh-kien-nghi/' + id])
 	}
 
+	redirectMyRecommendaton(status: any) {
+		this._router.navigate(['/cong-bo/phan-anh-kien-nghi-cua-toi/' + status])
+	}
+
 	Percent(value: any) {
 		var result = Math.ceil((value / this.totalRecommentdation) * 100)
 		return result

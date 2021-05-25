@@ -118,6 +118,9 @@ export class AccountSideLeftComponent implements OnInit {
 			}
 		})
 	}
+	redirectMyRecommendaton(status: any) {
+		this.router.navigate(['/cong-bo/phan-anh-kien-nghi-cua-toi/' + status])
+	}
 }
 
 class RecommendationStatistics {

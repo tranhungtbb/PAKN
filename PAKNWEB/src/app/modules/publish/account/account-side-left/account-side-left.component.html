@@ -21,39 +21,39 @@
 	</li>
 </ul>
 <div class="sb-tk-pakn mb-4">
-	<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between">
+	<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between" (click)="redirectMyRecommendaton(0)">
 		<h4 class="text-uppercase pointer">Thống kê PAKN của tôi</h4>
 		<h4 class="counter">{{totalRecommentdation}}</h4>
 	</div>
 	<div class="card-body p-0">
-		<p class="mb-1 pointer">Chờ xử lý
+		<p class="mb-1 pointer" (click)="redirectMyRecommendaton(1)">Chờ xử lý
 			<span class="pull-right font-weight-bold cl-yellow counter">{{recommendationStatistics.receiveWait}}</span>
 		</p>
-		<div class="progress pointer">
+		<div class="progress pointer" (click)="redirectMyRecommendaton(1)">
 			<div class="progress-bar grd-yellow1 progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.receiveWait)" role="progressbar">
 			</div>
 		</div>
 
-		<p class="mb-1 mt-4 pointer">Đã tiếp nhận
+		<p class="mb-1 mt-4 pointer" (click)="redirectMyRecommendaton(2)">Đã tiếp nhận
 			<span class="pull-right font-weight-bold cl-blue2 counter">{{recommendationStatistics.receiveApproved}}</span>
 		</p>
-		<div class="progress pointer">
+		<div class="progress pointer" (click)="redirectMyRecommendaton(2)">
 			<div class="progress-bar grd-xanhngoc progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.receiveApproved)" role="progressbar">
 			</div>
 		</div>
 
-		<p class="mb-1 mt-4 pointer">Đã trả lời
+		<p class="mb-1 mt-4 pointer" (click)="redirectMyRecommendaton(3)">Đã trả lời
 			<span class="pull-right font-weight-bold cl-blue counter">{{recommendationStatistics.finised}}</span>
 		</p>
-		<div class="progress pointer">
+		<div class="progress pointer" (click)="redirectMyRecommendaton(3)">
 			<div class="progress-bar grd-blue progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.finised)" role="progressbar">
 			</div>
 		</div>
 
-		<p class="mb-1 mt-4 pointer">Bị từ chối
+		<p class="mb-1 mt-4 pointer" (click)="redirectMyRecommendaton(4)">Bị từ chối
 			<span class="pull-right font-weight-bold cl-red counter">{{recommendationStatistics.approve}}</span>
 		</p>
-		<div class="progress pointer">
+		<div class="progress pointer" (click)="redirectMyRecommendaton(4)">
 			<div class="progress-bar grd-red progress-animated" style="height:6px;" [style.width.%]="Percent(recommendationStatistics.approve)" role="progressbar">
 			</div>
 		</div>
