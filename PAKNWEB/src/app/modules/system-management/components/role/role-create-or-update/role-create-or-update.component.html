@@ -81,19 +81,17 @@
 			</form>
 		</div>
 		<div class="col-md-8">
-			<p class="h5 text-uppercase mb-3">Phân quyền vai trò</p>
+			<p class="h4 text-uppercase mt-3">Phân quyền vai trò</p>
 			<div class="row no-margin">
-				<div class="col-md-12 panel-body" *ngFor="let permisionCategory of listPermissionCategories;let i = index">
-					<button type="button" class="btn-collapse btn btn-box-tool" data-toggle="collapse" [attr.data-target]="'#groupUS'+ i"></button>
+				<div class="col-md-12 panel-body mt-3" *ngFor="let permisionCategory of listPermissionCategories;let i = index">
 					<mat-checkbox [(ngModel)]="permisionCategory.selected" [ngModelOptions]="{standalone: true}" [labelPosition]="before"
 						(change)="onCategoryChange($event, permisionCategory)" [color]="primary" [disabled]="permisionCategory.disabled">{{ permisionCategory.name }}</mat-checkbox>
-					<hr />
-					<div class="row no-margin collapse show in" [attr.id]="'groupUS'+ i">
+					<hr class="mb-2 mt-1" />
+					<div class="row no-margin" [attr.id]="'groupUS'+ i">
 						<div *ngFor="let function of permisionCategory.function" class="col-md-6 permission-select-layout">
-							<button type="button" class="btn-collapse btn btn-box-tool" data-toggle="collapse" [attr.data-target]="'#functionUS'+ function.id"></button>
 							<mat-checkbox [(ngModel)]="function.selected" [ngModelOptions]="{standalone: true}" [labelPosition]="before"
 								(change)="onFunctionChange($event, function, permisionCategory)" [color]="primary" [disabled]="function.disabled">{{ function.name }}</mat-checkbox>
-							<div class="panel-body no-padding-bottom collapse show in ml-3" [attr.id]="'functionUS'+ function.id">
+							<div class="panel-body no-padding-bottom ml-3" [attr.id]="'functionUS'+ function.id">
 								<div class="permission-select-area" *ngFor="let permission of function.permission">
 									<mat-checkbox [(ngModel)]="permission.selected" [ngModelOptions]="{standalone: true}" [labelPosition]="before"
 										(change)="onPermissionChange($event, permission, function, permisionCategory)" [color]="primary" [disabled]="permission.disabled">

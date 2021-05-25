@@ -101,12 +101,14 @@ export class Api {
 	// user
 	public static UserGetPagedList = 'SYUserSPBase/SYUserGetAllOnPageBase'
 	public static UserGetAllOnPagedList = 'User/SYUserGetAllOnPageList'
+	public static UsersGetDataForCreate = 'User/UsersGetDataForCreate'
 	public static UserGetById = 'SYUserSPBase/SYUserGetByIDBase'
 	public static UserGetByRoleIdOnPage = 'SYUserSPBase/SYUserGetByRoleIdAllOnPageBase'
 	public static UserGetByRoleId = 'SYUserSPBase/SYUserGetAllByRoleIdBase'
 	public static UserInsert = 'User/Create' //'SYUserSPBase/SYUserInsertBase'
 	public static UserUpdate = 'User/Update' //'SYUserSPBase/SYUserUpdateBase'
 	public static UserDelete = 'User/Delete' //'SYUserSPBase/SYUserDeleteBase'GetAvatar
+	public static UserGetByIdUpdate = 'User/UserGetByID'
 	public static UserGetAvatar = 'User/GetAvatar' //'SYUserSPBase/SYUserDeleteBase'
 	public static UserChangeStatus = 'SYUserSPBase/SYUserChangeStatusBase'
 	public static UserChangePwdInManage = 'User/UserChangePwdInManage'

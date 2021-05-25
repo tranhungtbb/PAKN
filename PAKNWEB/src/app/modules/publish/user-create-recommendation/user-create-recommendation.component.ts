@@ -306,7 +306,7 @@ export class CreateRecommendationComponent implements OnInit {
 		this.model.status = status
 		this.model.sendId = this.storageService.getUserId()
 		this.model.sendDate = new Date()
-		this.model.typeObject = this.storageService.getTypeObject()
+		this.model.typeObject = this.storageService.getTypeObject() == 2 ? 1 : 2
 		this.model.name = this.storageService.getFullName()
 		const request = {
 			Data: this.model,

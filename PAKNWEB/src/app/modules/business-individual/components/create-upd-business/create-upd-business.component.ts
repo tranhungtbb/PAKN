@@ -71,36 +71,57 @@ export class CreateUpdBusinessComponent implements OnInit {
 		this.loadFormBuilder()
 	}
 
-	//event
-	listProvince: any[] = []
-	getProvince() {
+	getProvinceOrgRepre() {
 		this.diadanhService.getAllProvince().subscribe((res) => {
 			if (res.success == 'OK') {
-				this.listProvince = res.result.CAProvinceGetAll
-				// this.model.provinceId = 37
+				this.child_OrgRepreForm.listProvince = res.result.CAProvinceGetAll
 			}
 		})
 	}
 
-	listDistrict: any[] = []
-	getDistrict(provinceId) {
-		this.listDistrict = []
+	getProvinceOrgAddress() {
+		this.diadanhService.getAllProvince().subscribe((res) => {
+			if (res.success == 'OK') {
+				this.child_OrgAddressForm.listProvince = res.result.CAProvinceGetAll
+			}
+		})
+	}
+
+	getDistrictOrgRepre(provinceId) {
 		if (provinceId != null && provinceId != '') {
 			this.diadanhService.getAllDistrict(provinceId).subscribe((res) => {
 				if (res.success == 'OK') {
-					this.listDistrict = res.result.CADistrictGetAll
+					this.child_OrgRepreForm.listDistrict = res.result.CADistrictGetAll
 				}
 			})
-		} else {
 		}
 	}
 
-	listVillage: any[] = []
-	getVillage(provinceId, districtId) {
+	getDistrictOrgAddress(provinceId) {
+		if (provinceId != null && provinceId != '') {
+			this.diadanhService.getAllDistrict(provinceId).subscribe((res) => {
+				if (res.success == 'OK') {
+					this.child_OrgAddressForm.listDistrict = res.result.CADistrictGetAll
+				}
+			})
+		}
+	}
+
+	getVillageOrgRepre(provinceId, districtId) {
 		if (districtId != null && districtId != '') {
 			this.diadanhService.getAllVillage(provinceId, districtId).subscribe((res) => {
 				if (res.success == 'OK') {
-					this.listVillage = res.result.CAVillageGetAll
+					this.child_OrgRepreForm.listVillage = res.result.CAVillageGetAll
+				}
+			})
+		}
+	}
+
+	getVillageOrgAddress(provinceId, districtId) {
+		if (districtId != null && districtId != '') {
+			this.diadanhService.getAllVillage(provinceId, districtId).subscribe((res) => {
+				if (res.success == 'OK') {
+					this.child_OrgAddressForm.listVillage = res.result.CAVillageGetAll
 				}
 			})
 		}
@@ -129,7 +150,7 @@ export class CreateUpdBusinessComponent implements OnInit {
 		this.businessIndividualService.businessGetByID(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.BusinessGetById[0]
-
+				console.log('response', response)
 				// Thông tin người đại diện
 				this.child_OrgRepreForm.model.RepresentativeName = response.result.BusinessGetById[0].representativeName
 				this.child_OrgRepreForm.model.Email = response.result.BusinessGetById[0].email
@@ -138,13 +159,26 @@ export class CreateUpdBusinessComponent implements OnInit {
 				this.child_OrgRepreForm.model.DistrictId = response.result.BusinessGetById[0].districtId
 				this.child_OrgRepreForm.model.WardsId = response.result.BusinessGetById[0].wardsId
 				this.child_OrgRepreForm.model.phone = response.result.BusinessGetById[0].phone
-				// this.child_OrgRepreForm.model._RepresentativeBirthDay = response.result.BusinessGetById[0].representativeBirthDay
+				this.getProvinceOrgRepre()
+				this.getDistrictOrgRepre(response.result.BusinessGetById[0].provinceId)
+				this.getVillageOrgRepre(response.result.BusinessGetById[0].provinceId, response.result.BusinessGetById[0].districtId)
 				this.child_OrgRepreForm.model.Address = response.result.BusinessGetById[0].address
-				// DOB: [this.model._RepresentativeBirthDay, []],
-				let fDob: any = document.querySelector('#_dob')
-				let fIsDate: any = document.querySelector('#_IsDate')
-				fDob.value = new Date(response.result.BusinessGetById[0].representativeBirthDay)
-				// this.model._RepresentativeBirthDay = fDob.value
+
+				if (response.result.BusinessGetById[0].representativeBirthDay != null) {
+					let fDob: any = document.querySelector('#_dob')
+					let yearDob = response.result.BusinessGetById[0].representativeBirthDay.substring(0, 4)
+					let monthDob = response.result.BusinessGetById[0].representativeBirthDay.substring(5, 7)
+					let dayDob = response.result.BusinessGetById[0].representativeBirthDay.substring(8, 10)
+					fDob.value = dayDob + '/' + monthDob + '/' + yearDob
+				}
+
+				if (response.result.BusinessGetById[0].dateOfIssue != null) {
+					let fIsDate: any = document.querySelector('#_IsDate')
+					let yearIsDate = response.result.BusinessGetById[0].dateOfIssue.substring(0, 4)
+					let monthIsDate = response.result.BusinessGetById[0].dateOfIssue.substring(5, 7)
+					let dayIsDate = response.result.BusinessGetById[0].dateOfIssue.substring(8, 10)
+					fIsDate.value = dayIsDate + '/' + monthIsDate + '/' + yearIsDate
+				}
 
 				// Thông tin doanh nghiệp
 				this.model.Business = response.result.BusinessGetById[0].business
@@ -160,6 +194,9 @@ export class CreateUpdBusinessComponent implements OnInit {
 				this.child_OrgAddressForm.model.OrgAddress = response.result.BusinessGetById[0].orgAddress
 				this.child_OrgAddressForm.model.OrgPhone = response.result.BusinessGetById[0].orgPhone
 				this.child_OrgAddressForm.model.OrgEmail = response.result.BusinessGetById[0].orgEmail
+				this.getProvinceOrgAddress()
+				this.getDistrictOrgAddress(response.result.BusinessGetById[0].orgProvinceId)
+				this.getVillageOrgAddress(response.result.BusinessGetById[0].orgProvinceId, response.result.BusinessGetById[0].orgDistrictId)
 			} else {
 				this.toast.error(response.message)
 			}

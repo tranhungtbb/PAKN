@@ -44,6 +44,23 @@ namespace PAKNAPI.Controllers
 			_hostingEnvironment = IWebHostEnvironment;
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("UsersGetDataForCreate")]
+		public async Task<ActionResult<object>> UsersGetDataForCreate()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserGetAllOnPageList(_appSetting).UsersGetDataForCreate() };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("Create")]
 		[Authorize]
@@ -51,8 +68,6 @@ namespace PAKNAPI.Controllers
 		{
 			// tải file
 			string filePath = "";
-			
-
 			try
 			{
 				if (files != null && files.Any())
@@ -218,7 +233,32 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-		
+
+		[HttpGet]
+		[Authorize]
+		[Route("UserGetByID")]
+		public async Task<ActionResult<object>> UserGetByID(long? Id)
+		{
+			try
+			{
+				List<SYUserGetByID> rsSYUserGetByID = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(Id);
+				List<int> lstPermissionUserSelected = await new SYPermissionUserGetByID(_appSetting).SYPermissionUserGetByIDDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserGetByID", rsSYUserGetByID},
+						{"lstPermissionUserSelected", lstPermissionUserSelected},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
