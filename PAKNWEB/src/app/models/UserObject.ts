@@ -65,6 +65,7 @@ export class UserObject2 {
 		this.typeId = 1
 		this.isActived = true
 		this.address = ''
+		this.permissionIds = null
 	}
 
 	id: number
@@ -89,6 +90,7 @@ export class UserObject2 {
 	positionId: number
 	positionName: string
 	roleIds: string
+	permissionIds: string
 }
 
 export class UserInfoObject {

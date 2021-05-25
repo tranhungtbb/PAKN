@@ -282,6 +282,27 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYPermissionUserGetByID
+	{
+		private SQLCon _sQLCon;
+
+		public SYPermissionUserGetByID(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYPermissionUserGetByID()
+		{
+		}
+
+		public async Task<List<int>> SYPermissionUserGetByIDDAO(long? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+			return (await _sQLCon.ExecuteListDapperAsync<int>("SY_PermissionUserGetByID", DP)).ToList();
+		}
+	}
+
 	public class SYUserGetByRoleIdAllOnPage
 	{
 		private SQLCon _sQLCon;
@@ -431,6 +452,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Address", _sYUserInsertIN.Address);
 			DP.Add("PositionId", _sYUserInsertIN.PositionId);
 			DP.Add("RoleIds", _sYUserInsertIN.RoleIds);
+			DP.Add("PermissionIds", _sYUserInsertIN.PermissionIds);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserInsert", DP));
 		}
@@ -457,6 +479,7 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public int? PositionId { get; set; }
 		public string RoleIds { get; set; }
+		public string PermissionIds { get; set; }
 	}
 
 	public class SYUserRoleMapDelete
@@ -524,6 +547,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Address", _sYUserUpdateIN.Address);
 			DP.Add("PositionId", _sYUserUpdateIN.PositionId);
 			DP.Add("RoleIds", _sYUserUpdateIN.RoleIds);
+			DP.Add("PermissionIds", _sYUserUpdateIN.PermissionIds);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserUpdate", DP));
 		}
@@ -551,6 +575,7 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public int? PositionId { get; set; }
 		public string RoleIds { get; set; }
+		public string PermissionIds { get; set; }
 	}
 
 	public class SYUserUpdateInfo

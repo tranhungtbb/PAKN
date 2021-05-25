@@ -18,7 +18,8 @@
 			<p-tree id="tree-unit" [value]="treeUnit" [filter]="false" emptyMessage="Không tìm thấy đơn vị nào.">
 				<ng-template let-node pTemplate="default" style="width:100%; overflow: hidden;">
 
-					<a (click)="treeViewActive(node.id, node.unitLevel)" class="cursor-hand" [ngClass]="{'text-color-blue':(unitObject.id && unitObject.id == node.id)}">
+					<a (click)="treeViewActive(node.id, node.unitLevel)" class="cursor-hand"
+						[ngClass]="{'text-color-gray': ltsUnitIdNonActive.includes(node.id) == true,'text-color-blue':(unitObject.id && unitObject.id == node.id)}">
 						<strong>{{node.name}}</strong>
 					</a>
 				</ng-template>

@@ -39,10 +39,35 @@ export class TimeSettingComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
+
+	vi: any
 	ngOnInit() {
 		this.buildForm()
 		this.getList()
 		this.getListDate()
+		this.vi = {
+			firstDayOfWeek: 1,
+			dayNames: ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'],
+			dayNamesShort: ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'],
+			dayNamesMin: ['CN', 'Hai', 'Ba', 'Tư', 'Năm', 'Sáu', 'Bảy'],
+			monthNames: [
+				'Tháng Một',
+				'Tháng Hai',
+				'Tháng Ba',
+				'Tháng Tư',
+				'Tháng Năm',
+				'Tháng Sáu',
+				'Tháng Bảy',
+				'Tháng Tám',
+				'Tháng Chín',
+				'Tháng Mười',
+				'Tháng Mười Một',
+				'Tháng Mười Hai',
+			],
+			monthNamesShort: ['Thg 1', 'Thg 2', 'Thg 3', 'Thg 4', 'Thg 5', 'Thg 6', 'Thg 7', 'Thg 8', 'Thg 9', 'Thg 10', 'Thg 11', 'Thg 12'],
+			today: 'Hôm nay',
+			clear: 'Nhập lại',
+		}
 	}
 
 	ngAfterViewInit() {

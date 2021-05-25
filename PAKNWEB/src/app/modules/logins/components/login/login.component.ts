@@ -246,7 +246,7 @@ export class LoginComponent implements OnInit {
 						}
 					)
 				} else {
-					this.toastr.warning('Vui lòng nhập lại mã captcha')
+					this.toastr.error('Vui lòng nhập lại mã captcha')
 					this.reloadImage()
 
 					this.captchaCodeProduct = ''
@@ -280,6 +280,9 @@ export class LoginComponent implements OnInit {
 		return this.loginFormProduct.get('captcha')
 	}
 
+	forgetPassWordUser(): void {
+		this._router.navigate(['/quen-mat-khau-quan-tri'])
+	}
 	forgetPassWord(): void {
 		this._router.navigate(['/quen-mat-khau'])
 	}

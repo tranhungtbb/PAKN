@@ -87,6 +87,8 @@ namespace PAKNAPI.Common
                 { ".pptx" , 6 },
                 { ".pps" , 6 },
                 { ".ppsx" , 6 },
+                {".wmv", 7},
+                {".mp4", 7},
             };
         }
     }

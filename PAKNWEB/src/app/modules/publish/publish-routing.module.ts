@@ -78,6 +78,10 @@ const routes: Routes = [
 				component: SupportComponent,
 			},
 			{
+				path: 'phan-anh-kien-nghi-cua-toi/:id',
+				component: MyRecommendationComponent,
+			},
+			{
 				path: 'phan-anh-kien-nghi-cua-toi',
 				component: MyRecommendationComponent,
 			},

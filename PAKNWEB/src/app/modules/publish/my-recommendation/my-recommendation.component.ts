@@ -28,6 +28,7 @@ export class MyRecommendationComponent implements OnInit {
 	pageIndex: number = 1
 	pageSize: number = 20
 	pagination = []
+	status: any
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	listData = new Array<RecommendationObject>()
@@ -44,13 +45,13 @@ export class MyRecommendationComponent implements OnInit {
 		private router: Router,
 		private captchaService: CaptchaService,
 		private userService: UserService,
-		private puRecommendationService: PuRecommendationService
+		private puRecommendationService: PuRecommendationService,
+		private activatedRoute: ActivatedRoute
 	) {}
 
 	ngOnInit() {
 		this.userName = this.storageService.getFullName()
 		this.getSoDienThoai()
-		this.getList()
 
 		this.puRecommendationService.recommendationStatisticsGetByUserId({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success && res.result != null) {
@@ -61,6 +62,12 @@ export class MyRecommendationComponent implements OnInit {
 			}
 			return
 		})
+
+		this.activatedRoute.params.subscribe((params) => {
+			let id = +params['id']
+			this.status = Number.isNaN(id) == true ? 0 : id
+		})
+		this.filterMyRecommendation(this.status)
 	}
 	Percent(value: any) {
 		var result = Math.ceil((value / this.totalRecommentdation) * 100)
@@ -108,7 +115,6 @@ export class MyRecommendationComponent implements OnInit {
 	}
 
 	filterMyRecommendation(status: any) {
-		debugger
 		this.pageIndex = 1
 		this.pageSize = 20
 		switch (status) {
