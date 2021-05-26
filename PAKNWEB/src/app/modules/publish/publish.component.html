@@ -26,7 +26,7 @@
 							<a class="nav-link  ai-icon bg-transparent" style="position: relative;" (click)="updateNotifications()" href="#" role="button" data-toggle="dropdown">
 								<span *ngIf="ViewedCount > 0" class="count-notification">{{ViewedCount}}</span>
 								<i class="bi bi-bell"></i>
-								<div class="pulse-css"></div>
+								<!-- <div class="pulse-css"></div> -->
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">
 								<div class="header-notification">
@@ -81,6 +81,7 @@
 									<i class="bi bi-key"></i>
 									<span class="ml-2">Đổi mật khẩu </span>
 								</a>
+
 								<a (click)="signOut()" class="dropdown-item ai-icon">
 									<i class="bi bi-box-arrow-right"></i>
 									<span class="ml-2">Đăng xuất </span>
@@ -91,10 +92,16 @@
 					<ul *ngIf="!isHasToken" class="navbar-nav header-right align-items-center">
 						<li class="nav-item dropdown header-profile">
 							<div class="header-info">
-								<a class="nav-link bg-transparent px-0" title="Đăng nhập" routerLink="/dang-nhap">
+								<!-- <a class="nav-link bg-transparent px-0" title="Đăng nhập" routerLink="/dang-nhap">
 									<div class="avatar-circle">
 										<i class="bi bi-box-arrow-in-right cl-brown" style="margin-left: -5px;font-size: 24px"></i>
 									</div>
+								</a> -->
+								<a class="btn btn-login" title="Đăng nhập" routerLink="/dang-nhap" type="button">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+										<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+									</svg>
+									<span class="ml-2" style="text-transform: none;">Đăng nhập</span>
 								</a>
 							</div>
 						</li>
@@ -120,22 +127,22 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" routerLinkActive="active" [routerLink]="['./gioi-thieu']">giới thiệu</a>
+							<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./gioi-thieu']">giới thiệu</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" routerLinkActive="active" [routerLink]="['./thu-tuc-hanh-chinh']">Thủ tục hành chính</a>
+							<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./thu-tuc-hanh-chinh']">Thủ tục hành chính</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" routerLinkActive="active" [routerLink]="['./tin-tuc-su-kien']">Tin tức sự kiện</a>
+							<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./tin-tuc-su-kien']">Tin tức sự kiện</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" routerLinkActive="active" [routerLink]="['./phan-anh-kien-nghi']">phản ánh - kiến nghị</a>
+							<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./phan-anh-kien-nghi']">phản ánh - kiến nghị</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" routerLinkActive="active" [routerLink]="['./ho-tro']">hỗ trợ</a>
+							<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./ho-tro']">hỗ trợ</a>
 						</li>
 					</ul>
-					<div class="header-left">
+					<!-- <div class="header-left">
 						<div class="search_bar dropdown show">
 							<div class="dropdown-menu p-0 m-0 show">
 								<form>
@@ -150,7 +157,7 @@
 								</svg>
 							</span>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</nav>
 		</div>

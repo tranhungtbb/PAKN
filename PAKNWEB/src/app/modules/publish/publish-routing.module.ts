@@ -53,6 +53,10 @@ const routes: Routes = [
 				component: ViewNewsComponent,
 			},
 			{
+				path: 'tin-tuc-su-kien/:id',
+				component: ViewNewsComponent,
+			},
+			{
 				path: 'them-moi-kien-nghi',
 				component: CreateRecommendationComponent,
 			},

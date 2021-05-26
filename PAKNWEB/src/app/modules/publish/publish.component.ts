@@ -31,6 +31,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	notifications: any[]
 	ViewedCount: number = 0
 	index: number = 0
+	routerHome = 'trang-chu'
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
@@ -85,9 +86,14 @@ export class PublishComponent implements OnInit, OnChanges {
 	}
 
 	ngOnChanges() {
+		debugger
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
-			this.activeUrl = splitRouter[2]
+			if (splitRouter[2] != this.routerHome) {
+				this.activeUrl = splitRouter[2]
+			} else {
+				this.activeUrl = 'n'
+			}
 		} else {
 			this.activeUrl = ''
 		}
