@@ -388,7 +388,8 @@
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Mô tả</label>
-							<textarea [(ngModel)]="modelUnit.description" formControlName="description" class="form-control" rows="4" placeholder="Nhập..."></textarea>
+							<textarea maxlength="255" [(ngModel)]="modelUnit.description" formControlName="description" class="form-control" rows="4"
+								placeholder="Nhập..."></textarea>
 						</div>
 					</div>
 				</form>
