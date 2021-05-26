@@ -89,7 +89,7 @@
 					</div>
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">ảnh đại diện</span></label>
-						<input type="file" [hidden]="true" id="avatar-image" (change)="onAvatarChange($event)">
+						<input type="file" [hidden]="true" id="avatar-image" accept=".png, .jpg, .jpeg" (change)="onAvatarChange($event)">
 						<div class="news-avatar" (click)="onChangeAvatar()">
 							<img [src]="avatarUrl" alt="">
 						</div>

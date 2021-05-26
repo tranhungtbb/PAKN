@@ -11,7 +11,7 @@
 					</a>
 				</div>
 				<div class="">
-					<h1 style="line-height: 1.5;">
+					<h1 style="line-height: 1.5; font-weight: 500;font-size: 28px;line-height: 34px;">
 						<span *ngIf="viewDemo" style="color: red;">(Xem trước) </span>
 						{{model.title}}
 					</h1>
@@ -32,6 +32,7 @@
 					<div class="mb-4">
 						<h5 class="pb-2 border-bottom text-uppercase" style="font-size: 14pt;">Bài viết liên quan khác</h5>
 					</div>
+					<div *ngIf="newsRelates && newsRelates.length == 0">Chưa có bài viết liên quan nào</div>
 					<div *ngFor="let item of newsRelates; index as i" class="pb-2 mb-2 clearfix" [ngClass]="{'border-bottom':i < newsRelates.length-1}">
 						<img style="width:130px; min-height: 65px;" [src]="item.imagePath" class="rounded pull-left border">
 						<div class="col-md-9 pull-left">

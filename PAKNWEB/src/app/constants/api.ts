@@ -20,7 +20,7 @@ export class Api {
 	public static DownloadFilebyId = 'Files/DownloadFilebyId'
 	public static downloadFileSupport = 'Files/DownloadFileSupport'
 	public static GetFile = 'Files/GetFile'
-	public static uploadfiles = 'Files/Uploadfiles'
+	public static UploadImageNews = 'Files/UploadImageNews'
 	public static getFileImage = 'Files/GetFile'
 	public static getFileSupport = 'Files/GetFileSupport'
 

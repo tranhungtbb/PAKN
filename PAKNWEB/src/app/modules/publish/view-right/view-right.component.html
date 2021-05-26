@@ -1,4 +1,4 @@
-<div class="sb-tk-pakn mb-4">
+<div class="sb-tk-pakn mb-4" *ngIf="isLogin">
 	<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between" (click)="redirectMyRecommendaton(0)">
 		<h4 class="text-uppercase">Thống kê PAKN của tôi</h4>
 		<h4 class="counter">{{totalRecommentdation}}</h4>

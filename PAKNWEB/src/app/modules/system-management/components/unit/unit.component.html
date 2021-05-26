@@ -299,13 +299,15 @@
 			<div class="modal-body pb-0">
 				<div class="align-items-center form-group mb-4 border-bottom pb-3">
 					<strong class="h4 mr-5">Cấp đơn vị:</strong>
-					<label class="radio-inline mr-5"><input (click)="changeLevel(1)" [checked]="modelUnit.unitLevel == 1" class="radio-danger" type="radio" name="optradio" checked>
+					<label class="radio-inline mr-5"><input (click)="changeLevel($event,1)" [checked]="modelUnit.unitLevel == 1" class="radio-danger" type="radio" name="optradio"
+							checked>
 						<span class="text-uppercase"> Cấp tỉnh</span>
 					</label>
-					<label class="radio-inline mr-5"><input (click)="changeLevel(2)" [checked]="modelUnit.unitLevel == 2" type="radio" name="optradio">
+					<label class="radio-inline mr-5"><input (click)="changeLevel($event,2)" [checked]="modelUnit.unitLevel == 2" type="radio" name="optradio">
 						<span class="text-uppercase"> Cấp huyện</span>
 					</label>
-					<label class="radio-inline"><input (click)="changeLevel(3)" [checked]="modelUnit.unitLevel == 3" type="radio" name="optradio"> <span class="text-uppercase"> Cấp
+					<label class="radio-inline"><input (click)="changeLevel($event,3)" [checked]="modelUnit.unitLevel == 3" type="radio" name="optradio"> <span
+							class="text-uppercase"> Cấp
 							xã</span></label>
 				</div>
 				<form id="createUnitFrom" [formGroup]="createUnitFrom" (ngSubmit)="onSaveUnit()">

@@ -379,3 +379,14 @@ div.bubble.reply {
 	padding-top: 2px;
 	z-index: 1000;
 }
+
+.btn-login {
+	border: 1px solid #cde2ff;
+	background-color: white;
+	box-sizing: border-box;
+	border-radius: 10px;
+}
+
+.avatar-circle {
+	background-color: #fff;
+}

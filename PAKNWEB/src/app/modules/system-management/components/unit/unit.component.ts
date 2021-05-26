@@ -505,11 +505,17 @@ export class UnitComponent implements OnInit, AfterViewInit {
 
 	//////end expand node
 
-	changeLevel(level: number) {
-		this.modelUnit.unitLevel = level
-		if (this.modelUnit.unitLevel > 1) this.modelUnit.parentId = null
-		else {
-			this.modelUnit.parentId = 0
+	changeLevel(e, level: number) {
+		if (this.modelUnit.id > 0) {
+			this._toastr.error('Chỉnh sửa đơn vị không được phép thay đổi cấp đơn vị')
+			e.preventDefault()
+			return
+		} else {
+			this.modelUnit.unitLevel = level
+			if (this.modelUnit.unitLevel > 1) this.modelUnit.parentId = null
+			else {
+				this.modelUnit.parentId = 0
+			}
 		}
 	}
 	get getUnitParent(): any[] {
