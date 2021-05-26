@@ -238,7 +238,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 			DynamicParameters DP = new DynamicParameters();
 			//DP.Add("Id", _bI_InvididualUpdateIN.Id);
 			DP.Add("FullName", _bI_InvididualUpdateIN.FullName);
-			DP.Add("DateOfBirth", _bI_InvididualUpdateIN.BirthDay);
+			DP.Add("DateOfBirth", _bI_InvididualUpdateIN.BirthDate);
 			DP.Add("Email", _bI_InvididualUpdateIN.Email);
 			DP.Add("Nation", _bI_InvididualUpdateIN.Nation);
 			DP.Add("ProvinceId", _bI_InvididualUpdateIN.ProvinceId);
@@ -277,7 +277,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public string NativePlace { get; set; }
 		public string PermanentPlace { get; set; }
 		public string Nation { get; set; }
-		public DateTime? BirthDay { get; set; }
+		public DateTime? BirthDate { get; set; }
 		public bool? Gender { get; set; }
 		public long? UserId { get; set; }
 	}
@@ -307,7 +307,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public DateTime? DateOfIssue { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public DateTime? UpdatedDate { get; set; }
-		public DateTime? BirthDay { get; set; }
+		public DateTime? BirthDate { get; set; }
 		public int? CreatedBy { get; set; }
 		public int? UpdatedBy { get; set; }
 		public int? Status { get; set; }
@@ -332,5 +332,32 @@ namespace PAKNAPI.Models.BusinessIndividual
 		}
 	}
 	#endregion
+
+	public class BIInvididualCheckExists
+	{
+		private SQLCon _sQLCon;
+
+		public BIInvididualCheckExists(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public BIInvididualCheckExists()
+		{
+		}
+
+		public bool? Exists { get; set; }
+		public string Value { get; set; }
+
+		public async Task<List<BIInvididualCheckExists>> BIInvididualCheckExistsDAO(string Field, string Value, long? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Field", Field);
+			DP.Add("Value", Value);
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<BIInvididualCheckExists>("BI_Individual_CheckExists", DP)).ToList();
+		}
+	}
 
 }

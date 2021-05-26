@@ -297,7 +297,7 @@ export class BusinessComponent implements OnInit {
 		let formData = new FormData()
 		formData.append('file', file, file.name)
 
-		this._service.invididualImportFile(formData).subscribe((res) => {
+		this._service.businessImportFile(formData).subscribe((res) => {
 			if (res.success != 'OK') {
 				this._toastr.error('Xảy ra lỗi trong quá trình xử lý')
 				return

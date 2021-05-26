@@ -41,7 +41,7 @@ export class IndividualObject {
 	status: number
 	id: number
 	imagePath: string
-	birthDay: string
+	// birthDay: string
 	birthDate: Date
 	dateOfIssue: Date
 }

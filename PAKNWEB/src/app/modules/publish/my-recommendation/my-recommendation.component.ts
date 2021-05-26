@@ -90,7 +90,6 @@ export class MyRecommendationComponent implements OnInit {
 			pageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
-		debugger
 		this.puRecommendationService.getMyRecommentdation(request).subscribe((res) => {
 			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 				if (res.result.MyRecommendation.length > 0) {

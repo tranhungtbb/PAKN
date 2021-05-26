@@ -2,3 +2,7 @@
 .contents .image img {
 	max-width: 100% !important;
 }
+
+.clearfix {
+	margin: 20px 0px;
+}

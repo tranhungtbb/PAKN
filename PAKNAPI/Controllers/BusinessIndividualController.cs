@@ -369,8 +369,8 @@ namespace PAKNAPI.Controllers
 
 				if (string.IsNullOrEmpty(_DateOfIssue)) _bI_InvididualUpdateIN.DateOfIssue = null;
 				else _bI_InvididualUpdateIN.DateOfIssue = dateOfIssue;
-				if (string.IsNullOrEmpty(_BirthDay)) _bI_InvididualUpdateIN.BirthDay = null;
-				else _bI_InvididualUpdateIN.BirthDay = birthDay;
+				if (string.IsNullOrEmpty(_BirthDay)) _bI_InvididualUpdateIN.BirthDate = null;
+				else _bI_InvididualUpdateIN.BirthDate = birthDay;
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new BI_InvididualUpdate(_appSetting).BI_InvididualUpdateDAO(_bI_InvididualUpdateIN) };
 			}
@@ -402,6 +402,29 @@ namespace PAKNAPI.Controllers
 				_bugsnag.Notify(ex);
 
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("BIInvididualCheckExistsBase")]
+		public async Task<ActionResult<object>> BIInvididualCheckExistsBase(string Field, string Value, long? Id)
+		{
+			try
+			{
+				List<BIInvididualCheckExists> rsInvididualCheckExists = await new BIInvididualCheckExists(_appSetting).BIInvididualCheckExistsDAO(Field, Value, Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"BIInvididualCheckExists", rsInvididualCheckExists},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
 

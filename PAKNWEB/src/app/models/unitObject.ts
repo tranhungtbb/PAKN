@@ -20,6 +20,7 @@ export class UnitObject {
 		this.isMain = false
 		this.parentId = 0
 		this.isActived = true
+		this.id = 0
 	}
 	id: number
 	name: string

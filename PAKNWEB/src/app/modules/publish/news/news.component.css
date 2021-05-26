@@ -1,0 +1,13 @@
+.media-body a {
+	color: #3c3c3c;
+}
+
+.media-body small {
+	font-size: 17px;
+	line-height: 28px;
+}
+
+.createDate {
+	padding-left: 10px;
+	font-weight: bold;
+}
