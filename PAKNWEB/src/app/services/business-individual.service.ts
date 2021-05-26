@@ -51,6 +51,10 @@ export class BusinessIndividualService {
 		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.ImportDataInvididual)
 	}
 
+	individualCheckExists(params: any): Observable<any> {
+		return this.serviceInvoker.get(params, AppSettings.API_ADDRESS + Api.InvididualCheckExists)
+	}
+
 	businessGetList(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.BusinessGetAllOnPage)
 	}

@@ -6,6 +6,7 @@
 				<li class="breadcrumb-item active"><a class="font-weight-bold">Danh sách doanh nghiệp</a></li>
 			</ol>
 			<div class="btn-group group-button-table" role="group">
+				<input type="file" [hidden]="true" id="excel-file" (change)="onExcelfileChange($event)">
 				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onChangeFileExcel()">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
 						<path

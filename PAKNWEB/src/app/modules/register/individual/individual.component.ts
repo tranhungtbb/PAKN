@@ -131,6 +131,8 @@ export class IndividualComponent implements OnInit {
 		this.fInfoSubmitted = true
 		let fDob: any = document.querySelector('#_dob')
 		let fDateIssue: any = document.querySelector('#_dateIssue')
+		console.log('fDob.value', fDob.value)
+		console.log('fDateIssue.value', fDateIssue.value)
 		this.model._birthDay = fDob.value
 		this.model._dateOfIssue = fDateIssue.value
 
