@@ -89,7 +89,7 @@
 						<div class="media-body">
 							<p class="h4 font-italic font-weight-bold">{{model.processUnitName}}:</p>
 							<ng-container *ngIf="[3,6,9].includes(model.status)">
-								<p>{{mrDenyContent.reasonDeny}}</p>
+								<p>{{model.reasonDeny}}</p>
 							</ng-container>
 							<ng-container *ngIf="model.status == 10">
 								<p>{{modelConclusion.content}}</p>

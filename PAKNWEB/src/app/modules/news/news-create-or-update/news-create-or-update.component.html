@@ -57,12 +57,7 @@
     						text-align: left;">
 									&nbsp;<strong>{{relateItem.title}}</strong>
 								</span>
-								<span class="mt-1 mr-1 relate-del-btn" (click)="removeRelate(relateItem.id)">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-										<path
-											d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-									</svg>
-								</span>
+								<span class="mt-1 mr-1 relate-del-btn" (click)="removeRelate(relateItem.id)"><i class="bi bi-x"></i></span>
 							</div>
 						</div>
 					</div>
@@ -81,7 +76,6 @@
 						<label class="mb-1 dis-block"><span class="text-uppercase">kiểu bài</span></label>
 						<div class="checkbox dis-inline mr-3" *ngFor="let pType of postTypes">
 							<label>
-								<!-- formControlName="postType" [(ngModel)]="postTypeSelected" [value]="pType.value" -->
 								<input type="checkbox" [checked]="postTypeSelected.indexOf(pType.value) != -1" (change)="onChangePostType(pType.value,$event.target.checked)">
 								<span class="text-uppercase"> {{pType.text}}</span>
 							</label>
@@ -94,19 +88,6 @@
 							<img [src]="avatarUrl" alt="">
 						</div>
 					</div>
-					<!-- <div class="col-12 col-lg-12 form-group mb-6">
-						<label class="mb-1">
-							<span class="text-uppercase">upload media</span>
-							<button class="btn btn-sm grd-xanhngoc border-0 text-white btn-inline pull-right"><i class="bi bi-upload"></i> Thêm mới</button>
-						</label>
-						<input type="file" [hidden]="true">
-						<div class="col-sm-12 col-md-12 pl-0 pr-0">
-							<div class="btn btn-sm-btn-default border p-2">
-								<img src="" alt="" width="50" height="50">&nbsp;
-								<span>File 01</span>
-							</div>
-						</div>
-					</div> -->
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">thông báo</span></label>
 						<div class="checkbox">

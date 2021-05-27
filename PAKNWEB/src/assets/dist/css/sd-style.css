@@ -1542,6 +1542,9 @@ body .ui-editor-container .ui-editor-content {
 .body .ui-editor-container .ui-editor-content .ql-editor{
 	background-color: transparent!important;
 }
+.contents img{
+	max-width: 100%;
+}
 .card a{	
 	color: #222;
 }
@@ -1567,4 +1570,7 @@ body .ui-editor-container .ui-editor-content {
 .txthighlight{
 	color: #1673D8;
 	text-decoration: underline;
+}
+.ck-reset_all{
+	display: none;
 }

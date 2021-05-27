@@ -22,7 +22,6 @@ import { NewsModel, HISNewsModel } from '../../../models/NewsObject'
 import { from } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
 import { Api } from 'src/app/constants/api'
-import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter'
 import { UploadAdapter } from 'src/app/services/uploadAdapter'
 import { HttpClient } from '@angular/common/http'
 

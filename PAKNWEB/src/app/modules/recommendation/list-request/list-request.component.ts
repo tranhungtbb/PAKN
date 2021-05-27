@@ -250,27 +250,32 @@ export class ListRequestComponent implements OnInit {
 
 	preProcess(model: any, status: number) {
 		this.modelProcess.status = status
-		this.modelProcess.id = model.idProcess
-		this.modelProcess.step = model.stepProcess
+		this.modelProcess.id = model.processId
 		this.modelProcess.recommendationId = model.id
 		this.modelProcess.reactionaryWord = false
 		this.modelProcess.reasonDeny = ''
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
 			if (model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
+				this.modelProcess.step = STEP_RECOMMENDATION.RECEIVE
 			} else if (model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESS_DENY
+				this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
 			} else if (model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.APPROVE_DENY
+				this.modelProcess.step = STEP_RECOMMENDATION.APPROVE
 			}
 			$('#modalReject').modal('show')
 		} else {
 			if (model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_APPROVED
+				this.modelProcess.step = STEP_RECOMMENDATION.RECEIVE
 			} else if (model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
+				this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
 			} else if (model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.FINISED
+				this.modelProcess.step = STEP_RECOMMENDATION.APPROVE
 			}
 			$('#modalAccept').modal('show')
 		}

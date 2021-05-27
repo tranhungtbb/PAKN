@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { ServiceInvokerService } from '../commons/service-invoker.service'
 import { Observable, of } from 'rxjs'
 import { AppSettings } from '../constants/app-setting'
@@ -15,66 +15,22 @@ import { MatSnackBar } from '@angular/material'
 export class UploadFileService {
 	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStorage: UserInfoStorageService, public snackBar: MatSnackBar) {}
 
-	uploadFiles(files: any, docId: number, historyId: number, module: string) {
-		var unitId = 1
-		var accountId = 1
-		if (files) {
-			if (files.length > 0) {
-				var request = {
-					DocId: docId,
-					HistoryId: historyId,
-					UnitId: unitId,
-					file: files,
-					AccountId: accountId,
-					ModuleName: module,
-				}
-				const uploadData = new FormData()
-
-				for (var i = 0; i < request.file.length; i++) {
-					uploadData.append('myFile' + i, request.file[i], request.file[i].name)
-				}
-				uploadData.append('DocId', request.DocId.toString())
-				if (historyId !== null) {
-					uploadData.append('HistoryId', request.HistoryId.toString())
-				}
-				uploadData.append('UnitId', request.UnitId.toString())
-				uploadData.append('AccountId', request.AccountId.toString())
-				uploadData.append('ModuleName', request.ModuleName)
-
-				this.http.post(AppSettings.API_ADDRESS + Api.uploadfiles, uploadData).subscribe((data) => {})
-			}
+	uploadImageNews(request: any): Observable<any> {
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.localStorage.getIpAddress() && this.localStorage.getIpAddress() != 'null' ? this.localStorage.getIpAddress() : '',
+			macAddress: '',
+		})
+		const form = new FormData()
+		if (request.Files) {
+			request.Files.forEach((item) => {
+				form.append('Files', item)
+			})
 		}
-	}
-
-	uploadFiles2(files: any, docId: number, historyId: number, module: string): Observable<any> {
-		var unitId = 1
-		var accountId = 1
-		if (files) {
-			if (files.length > 0) {
-				var request = {
-					DocId: docId,
-					HistoryId: historyId,
-					UnitId: unitId,
-					file: files,
-					AccountId: accountId,
-					ModuleName: module,
-				}
-				const uploadData = new FormData()
-
-				for (var i = 0; i < request.file.length; i++) {
-					uploadData.append('myFile' + i, request.file[i], request.file[i].name)
-				}
-				uploadData.append('DocId', request.DocId.toString())
-				if (historyId !== null) {
-					uploadData.append('HistoryId', request.HistoryId.toString())
-				}
-				uploadData.append('UnitId', request.UnitId.toString())
-				uploadData.append('AccountId', request.AccountId.toString())
-				uploadData.append('ModuleName', request.ModuleName)
-
-				return this.http.post(AppSettings.API_ADDRESS + Api.uploadfiles, uploadData)
-			}
+		const httpPackage = {
+			headers: tempheaders,
+			reportProgress: true,
 		}
+		return this.http.post(AppSettings.API_ADDRESS + Api.UploadImageNews, form, httpPackage)
 	}
 
 	getEncryptedPath(data: any): Observable<any> {
