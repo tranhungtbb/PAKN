@@ -1,0 +1,54 @@
+<div class="container-fluid p-0">
+	<div class="row">
+		<div class="col-lg-12">
+			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+				<li class="breadcrumb-item"><a>Hệ thống</a></li>
+				<li class="breadcrumb-item active"><a class="font-weight-bold">Cấu hình trang giới thiệu</a></li>
+			</ol>
+			<div class="btn-group group-button-table" role="group">
+				<a class="btn btn-sm btn-default rounded mr-3" style="border: 1px solid gray;" (click)="redirectList()">
+					<i class="bi bi-arrow-left"></i>&nbsp;
+					Quay lại
+				</a>
+				<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave()">Công bố</button>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12" style="padding: 60px;">
+			<form class="form-horizontal" [formGroup]="form">
+				<div class="row form-group">
+					<div class="col-sm-12 padding-col">
+						<label class="control-label department">Tiêu đề<span class="text-danger">(*)</span></label>
+						<input class="form-control" formControlName="title" [(ngModel)]="model.Title" maxlength="100" placeholder="Nhập..." />
+						<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
+							<div *ngIf="f.title.errors.required">
+								<span class="help-block">Trường dữ liệu này không để trống</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-12 padding-col">
+						<label class="control-label department">Thông tin tóm tắt<span class="text-danger">(*)</span></label>
+						<input class="form-control" [(ngModel)]="model.Summary" formControlName="summary" placeholder="Nhập..." />
+						<div *ngIf="(submitted && f.summary.invalid) || (f.summary.invalid && (f.summary.dirty || f.summary.touched))" class="has-error m-b-12">
+							<div *ngIf="f.summary.errors">
+								<span class="help-block">Trường dữ liệu này không để trống</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12 padding-col">
+						<label class="control-label department">Mô tả cơ cấu tổ chức<span class="text-danger">(*)</span></label>
+						<textarea class="form-control" [(ngModel)]="model.DescriptionUnit" formControlName="descriptionUnit" rows="6" placeholder="Nhập..."></textarea>
+						<div *ngIf="(submitted && f.descriptionUnit.invalid) || (f.descriptionUnit.invalid && (f.descriptionUnit.dirty || f.descriptionUnit.touched))"
+							class="has-error m-b-12">
+							<div *ngIf="f.descriptionUnit.errors">
+								<span class="help-block">Trường dữ liệu này không để trống</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

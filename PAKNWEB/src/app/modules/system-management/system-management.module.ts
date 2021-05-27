@@ -31,7 +31,8 @@ import { ChatBotComponent } from './components/chat-bot/chat-bot.component'
 // import { RoleComponent } from './components/role/role.component'
 import { HistoryChatBotComponent } from './components/history-chat-bot/history-chat-bot.component'
 import { UserViewInfoComponent } from './components/user/user-view-info/user-view-info.component'
-import { BusinessModule } from '../business.module'
+import { BusinessModule } from '../business.module';
+import { IntroduceComponent } from './components/introduce/introduce.component'
 
 @NgModule({
 	imports: [
@@ -69,6 +70,7 @@ import { BusinessModule } from '../business.module'
 		UnitFilterPipe,
 		ChatBotComponent,
 		HistoryChatBotComponent,
+		IntroduceComponent,
 		// UserViewInfoComponent,
 	],
 	entryComponents: [UserCreateOrUpdateComponent, UserViewInfoComponent],

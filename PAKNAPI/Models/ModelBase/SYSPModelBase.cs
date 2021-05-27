@@ -67,6 +67,169 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYIntroduce
+	{
+		private SQLCon _sQLCon;
+
+		public SYIntroduce(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYIntroduce()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Summary { get; set; }
+		public string DescriptionUnit { get; set; }
+		public string DescriptionFunction { get; set; }
+		public string BannerUrl { get; set; }
+
+		public async Task<List<SYIntroduce>> SYIntroduceGetInfoDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYIntroduce>("[SY_IntroduceGetInfo]", DP)).ToList();
+		}
+
+		public async Task<int?> SYIntroduceUpdateDAO(SYIntroduce syIntroduce)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", syIntroduce.Id);
+			DP.Add("Title", syIntroduce.Title);
+			DP.Add("Summary", syIntroduce.Summary);
+			DP.Add("IsActived", syIntroduce.DescriptionUnit);
+			DP.Add("IsDeleted", syIntroduce.DescriptionFunction);
+			DP.Add("Description", syIntroduce.BannerUrl);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_IntroduceUpdate", DP);
+		}
+
+
+	}
+
+
+	public class SYIntroduceUnit
+	{
+		private SQLCon _sQLCon;
+
+		public SYIntroduceUnit(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYIntroduceUnit()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Description { get; set; }
+		public string Infomation { get; set; }
+		public int Index { get; set; }
+
+		public int RowNumber { get; set; }
+
+		public int IntroduceId { get; set; }
+
+		public async Task<List<SYIntroduceUnit>> SYIntroduceUnitGetOnPageByIntroduceId(int? IntroduceId, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("IntroduceId", IntroduceId);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYIntroduceUnit>("[SY_IntroduceUnitGetOnPageByIntroduceId]", DP)).ToList();
+		}
+
+		public async Task<int?> SYIntroduceUnitInsertDAO(SYIntroduceUnit syIntroduceUnit)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Title", syIntroduceUnit.Title);
+			DP.Add("Description", syIntroduceUnit.Description);
+			DP.Add("Infomation", syIntroduceUnit.Infomation);
+			DP.Add("Index", syIntroduceUnit.Index);
+			DP.Add("IntroduceId", syIntroduceUnit.IntroduceId);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_IntroduceUnitUpdate", DP);
+		}
+
+		public async Task<int?> SYIntroduceUnitUpdateDAO(SYIntroduceUnit syIntroduceUnit)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", syIntroduceUnit.Id);
+			DP.Add("Title", syIntroduceUnit.Title);
+			DP.Add("Description", syIntroduceUnit.Description);
+			DP.Add("Infomation", syIntroduceUnit.Infomation);
+			DP.Add("Index", syIntroduceUnit.Index);
+			DP.Add("IntroduceId", syIntroduceUnit.IntroduceId);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_IntroduceUnitUpdate", DP);
+		}
+
+		public async Task<int> SYIntroduceUnitDeleteDAO(SYIntroduceUnitDelete syIntroduceUnitDelete)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", syIntroduceUnitDelete.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_IntroduceUnitDelete", DP));
+		}
+
+	}
+
+	public class SYIntroduceUnitDelete {
+		public int Id { get; set; }
+	}
+
+
+	public class SYIntroduceFunction
+	{
+		private SQLCon _sQLCon;
+
+		public SYIntroduceFunction(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYIntroduceFunction()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Content { get; set; }
+		public string Icon { get; set; }
+		public string IntroduceId { get; set; }
+
+		public async Task<List<SYIntroduceFunction>> SYIntroduceFunctionGetByIntroductId(int? syIntroduceId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("IntroduceId", syIntroduceId);
+			
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYIntroduceFunction>("SY_IntroduceFunctionGetByIntroduceId", DP)).ToList();
+		}
+
+		public async Task<int?> SYIntroduceFunctionUpdateDAO(SYIntroduceFunction syIntroduceF)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", syIntroduceF.Id);
+			DP.Add("Title", syIntroduceF.Title);
+			DP.Add("Content", syIntroduceF.Content);
+			DP.Add("Icon", syIntroduceF.Icon);
+			DP.Add("IntroduceId", syIntroduceF.IntroduceId);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_IntroduceFunctionUpdate", DP);
+		}
+
+
+	}
+
+
+
+
 	public class SYEmailInsert
 	{
 		private SQLCon _sQLCon;

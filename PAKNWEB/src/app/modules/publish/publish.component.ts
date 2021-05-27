@@ -32,6 +32,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	ViewedCount: number = 0
 	index: number = 0
 	routerHome = 'trang-chu'
+	isLogin: boolean = this.storageService.getIsHaveToken()
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
@@ -45,8 +46,9 @@ export class PublishComponent implements OnInit, OnChanges {
 		this.loadScript('assets/dist/js/dashboard/dashboard-1.js')
 		this.loadScript('assets/dist/js/owl.carousel.min.js')
 		this.loadScript('assets/dist/js/sd-js.js')
-
-		this.getListNotification(this.numberNotifications)
+		if (this.isLogin) {
+			this.getListNotification(this.numberNotifications)
+		}
 	}
 
 	botname: string = 'Bot'

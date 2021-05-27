@@ -13,6 +13,7 @@ import { UserCreateOrUpdateComponent } from './components/user/user-create-or-up
 import { ChatBotComponent } from './components/chat-bot/chat-bot.component'
 import { HistoryChatBotComponent } from './components/history-chat-bot/history-chat-bot.component'
 import { UserViewInfoComponent } from './components/user/user-view-info/user-view-info.component'
+import { IntroduceComponent } from './components/introduce/introduce.component'
 const routes: Routes = [
 	{
 		path: '',
@@ -21,7 +22,7 @@ const routes: Routes = [
 			{ path: 'cau-hinh-time', component: TimeSettingComponent },
 			{ path: 'cau-hinh-email', component: EmailSettingComponent },
 			{ path: 'cau-hinh-sms', component: SmsSettingComponent },
-			// { path: 'vai-tro', component: GroupUserComponent },
+			{ path: 'cau-hinh-trang-gioi-thieu', component: IntroduceComponent },
 			{ path: 'nguoi-dung', component: UserComponent },
 			{ path: 'lich-su-he-thong', component: SystemLogComponent },
 			{ path: 'co-cau-to-chuc', component: UnitComponent },

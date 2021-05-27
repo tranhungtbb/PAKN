@@ -31,7 +31,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
+		//[Authorize]
 		[Route("NENewsGetAllOnPageBase")]
 		public async Task<ActionResult<object>> NENewsGetAllOnPageBase(string NewsIds, int? PageSize, int? PageIndex, string Title, int? NewsType, int? Status)
 		{

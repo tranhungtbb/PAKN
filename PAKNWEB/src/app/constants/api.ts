@@ -212,6 +212,15 @@ export class Api {
 	public static GetListIndividualAndBusinessByAdmintrativeUnitId = 'BISPBase/BIIndividualOrBusinessGetDropListByProviceIdBase'
 	public static HISSMSInsert = 'EmailSMS/HISSMSInsert'
 
+	// SYIntroduce
+
+	public static SYIntroduceGetInfo = 'SYIntroduce/IntroduceGetInfo'
+	public static SYIntroduceUpdate = 'SYIntroduce/IntroduceUpdate'
+	public static SYIntroduceUnitGetOnPage = 'SYIntroduce/IntroduceUnitGetOnPage'
+	public static SYIntroduceUnitInsert = 'SYIntroduce/IntroduceUnitInsert'
+	public static SYIntroduceUnitUpdate = 'SYIntroduce/IntroduceUnitUpdate'
+	public static SYIntroduceUnitDetete = 'SYIntroduce/IntroduceUnitDetete'
+
 	//RequestRecommendation
 	public static RecommendationRequestGetListProcess = 'MRSPBase/MRRecommendationKNCTGetAllWithProcessBase'
 	public static RecommendationRequestGetDataForCreate = 'CACategorySPBase/CAFieldKNCTGetDropdownBase'

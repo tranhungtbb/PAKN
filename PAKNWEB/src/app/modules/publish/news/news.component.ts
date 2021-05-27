@@ -58,6 +58,7 @@ export class NewsComponent implements OnInit {
 							item.imagePath = `${AppSettings.API_DOWNLOADFILES}/${item.imagePath}`
 							return item
 						})
+						debugger
 						this.query.pageIndex = res.result.PageIndex
 						this.query.pageSize = res.result.PageSize
 						this.totalRecords = res.result.TotalCount
