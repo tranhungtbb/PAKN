@@ -53,6 +53,7 @@ export class ListProcessDenyComponent implements OnInit {
 	idDelete: number = 0
 	unitLoginId: number = this.storeageService.getUnitId()
 	ngOnInit() {
+		this.buildForm()
 		this.dataSearch.status = RECOMMENDATION_STATUS.PROCESS_DENY
 		this.getDataForCreate()
 		this.getList()

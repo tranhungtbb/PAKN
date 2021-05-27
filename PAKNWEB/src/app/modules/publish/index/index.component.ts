@@ -67,7 +67,6 @@ export class IndexComponent implements OnInit {
 			}
 			if (res.result) {
 				this.news = res.result
-				this.getNewsAvatars()
 				this.firstNews = this.news[0]
 			}
 			return
@@ -122,18 +121,6 @@ export class IndexComponent implements OnInit {
 
 	redirectReflectionsRecommendations() {
 		this._router.navigate(['/cong-bo/phan-anh-kien-nghi'])
-	}
-	getNewsAvatars() {
-		let ids = this.news.map((c) => c.id)
-		this._newsService.getAvatars(ids).subscribe((res) => {
-			if (res) {
-				res.forEach((e) => {
-					let item = this.news.find((c) => c.id == e.id)
-					let objectURL = 'data:image/jpeg;base64,' + e.byteImage
-					item.imageBin = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-				})
-			}
-		})
 	}
 
 	redirectDetailNews(id: any) {

@@ -41,9 +41,9 @@ export class PublishComponent implements OnInit, OnChanges {
 
 		//this.loadScript('assets/dist/vendor/bootstrap/is/bootstrap.min.js')
 		//this.loadScript('assets/dist/vendor/chart.js/Chart.bundle.min.js')
-		this.loadScript('assets/dist/vendor/apexchart/apexchart.js')
+		//this.loadScript('assets/dist/vendor/apexchart/apexchart.js')
 		// this.loadScript('assets/dist/vendor/peity/jquery.peity.min.js')
-		this.loadScript('assets/dist/js/dashboard/dashboard-1.js')
+		//this.loadScript('assets/dist/js/dashboard/dashboard-1.js')
 		this.loadScript('assets/dist/js/owl.carousel.min.js')
 		this.loadScript('assets/dist/js/sd-js.js')
 		if (this.isLogin) {

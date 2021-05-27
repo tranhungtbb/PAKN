@@ -27,6 +27,7 @@ namespace PAKNAPI.Models.ModelBase
 		public bool IsPublished { get; set; }
 		public int Status { get; set; }
 		public string Summary { get; set; }
+		public string ImagePath { get; set; }
 
 
 		public DateTime CreatedDate { get; set; }

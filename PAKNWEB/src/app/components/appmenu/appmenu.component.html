@@ -18,9 +18,9 @@
 				<ul routerLinkActive="mm-show" aria-expanded="false">
 					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/danh-sach-tong-hop">Danh sách tổng hợp</a>
 					</li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/cho-xu-ly">Chờ xử lý</a></li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tiep-nhan-xu-ly">Tiếp nhận xử lý</a></li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tu-choi-tiep-nhan">Từ chối tiếp nhận</a></li>
+					<li *ngIf="isMainMenu"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/cho-xu-ly">Chờ xử lý</a></li>
+					<li *ngIf="isMainMenu"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tiep-nhan-xu-ly">Tiếp nhận xử lý</a></li>
+					<li *ngIf="isMainMenu"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tu-choi-tiep-nhan">Từ chối tiếp nhận</a></li>
 					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/cho-giai-quyet">Chờ giải quyết</a></li>
 					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/dang-giai-quyet">Đang giải quyết</a></li>
 					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tu-choi-giai-quyet">Từ chối giải quyết</a>
