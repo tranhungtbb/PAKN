@@ -1571,6 +1571,10 @@ body .ui-editor-container .ui-editor-content {
 	color: #1673D8;
 	text-decoration: underline;
 }
+.form-control:disabled, .form-control[readonly] {
+	background-color: #e9ecef!important;
+	opacity: 1;
+}
 .ck-reset_all{
 	display: none;
 }

@@ -16,10 +16,9 @@ namespace PAKNAPI.Models.ModelBase
         public string Title { get; set; }
         public string Content { get; set; }
         public DateTime CreatedDate { get; set; }
-
         public int RowNumber { get; set; }
-
         public int Status { get; set; }
+        public bool? IsForwardProcess { get; set; }
     }
         public class PURecommendation
     {

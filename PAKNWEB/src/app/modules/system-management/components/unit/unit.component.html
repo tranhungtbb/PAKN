@@ -61,7 +61,7 @@
 					<div class="accordion__header collapsed">
 						<div class="d-flex justify-content-between align-items-center pr-5">
 							<span class="accordion__header--text text-uppercase h4" id="title-user-in-unit" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne"
-								(click)="onCollapsed('item01')">Người dùng trong đơn
+								aria-expanded="true" (click)="onCollapsed('item01')">Người dùng trong đơn
 								vị</span>
 							<div class="btn-group" role="group" [hidden]="!collapsed_checked['item01']">
 								<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()">
@@ -74,10 +74,10 @@
 								</button>
 							</div>
 						</div>
-						<span class="accordion__header--indicator style_two" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne"
+						<span class="accordion__header--indicator style_two" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne" aria-expanded="true"
 							[ngClass]="{'collapse-icon-up':collapsed_checked['item01']}" (click)="onCollapsed('item01')"></span>
 					</div>
-					<div id="bordered_no-gutter_collapseOne" class="collapse accordion__body show">
+					<div id="bordered_no-gutter_collapseOne" class="accordion__body collapse show">
 						<div class="table-responsive">
 							<p-table #table [value]="listUserPaged" [rows]="queryUser.pageSize" [totalRecords]="totalCount_User"
 								currentPageReportTemplate="Tổng số {{totalCount_User}}" (onLazyLoad)="onUserPageChange($event)" [lazy]="true" [responsive]="true" [paginator]="true"
@@ -202,7 +202,7 @@
 					<div class="form-row">
 						<div class="col-12 col-lg-8 form-group" [ngClass]="{'col-lg-4':modelUnit.unitLevel > 1,'col-lg-8':modelUnit.unitLevel == 1}">
 							<label class="mb-1">Tên đơn vị <span class="cl-red">(*)</span></label>
-							<input svTrim formControlName="name" [(ngModel)]="modelUnit.name" type="text" class="form-control" placeholder="Nhập..." id="unitId">
+							<input svTrim formControlName="name" [(ngModel)]="modelUnit.name" type="text" class="form-control" placeholder="Nhập..." id="unitId" maxlength="500">
 							<div *ngIf="(unitFormSubmitted && fUnit.name.invalid)||(fUnit.name.invalid && (fUnit.name.dirty || fUnit.name.touched))" class="has-error m-b-12">
 								<div *ngIf="fUnit.name.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -238,7 +238,7 @@
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">Email <span class="cl-red">(*)</span></label>
 							<input formControlName="email" [(ngModel)]="modelUnit.email" type="mail" class="form-control" placeholder="Nhập..."
-								(change)="onCheckExist('Email',$event.target.value)">
+								(change)="onCheckExist('Email',$event.target.value)" maxlength="256">
 							<div *ngIf="(unitFormSubmitted && fUnit.email.invalid)||(fUnit.email.invalid && (fUnit.email.dirty || fUnit.email.touched))" class="has-error m-b-12">
 								<div *ngIf="fUnit.email.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -273,12 +273,12 @@
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Địa chỉ</label>
-							<input formControlName="address" [(ngModel)]="modelUnit.address" type="text" class="form-control" placeholder="Nhập...">
+							<input formControlName="address" [(ngModel)]="modelUnit.address" type="text" class="form-control" placeholder="Nhập..." maxlength="500">
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Mô tả</label>
-							<textarea maxlength="255" [(ngModel)]="modelUnit.description" formControlName="description" class="form-control" rows="4"
-								placeholder="Nhập..."></textarea>
+							<textarea [(ngModel)]="modelUnit.description" formControlName="description" class="form-control" rows="4" placeholder="Nhập..."
+								maxlength="500"></textarea>
 						</div>
 					</div>
 				</form>

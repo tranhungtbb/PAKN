@@ -140,8 +140,8 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 
 	collapsed_checked: any = {
-		item01: false,
-		item02: false,
+		item01: true,
+		item02: true,
 	}
 	onCollapsed(item: string) {
 		this.collapsed_checked[item] = !this.collapsed_checked[item]

@@ -73,13 +73,6 @@ export class NewsRelateModalComponent implements OnInit {
 				})
 				if (this.totalCount <= 0) this.totalCount = res.result.TotalCount
 				this.totalCount = Math.ceil(this.totalCount / this.query.pageSize)
-
-				//get avatars
-				//this.getNewsAvatars()
-
-				// lấy ds tin tức từ id
-				// if (this.newsIds != null && this.newsIds.length > 0)
-				// 	this.newsSelected=this.listDataPaged.filter(c=>this.newsIds.some(d=>d==c.id))
 			})
 	}
 	changePage(page: any) {
@@ -114,19 +107,5 @@ export class NewsRelateModalComponent implements OnInit {
 		}
 
 		$('#modal-news-relate').modal('show')
-	}
-
-	getNewsAvatars() {
-		let ids = this.listDataPaged.map((c) => c.id)
-
-		this.newsService.getAvatars(ids).subscribe((res) => {
-			if (res) {
-				res.forEach((e) => {
-					let item = this.listDataPaged.find((c) => c.id == e.id)
-					let objectURL = 'data:image/jpeg;base64,' + e.byteImage
-					item.imageBin = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-				})
-			}
-		})
 	}
 }

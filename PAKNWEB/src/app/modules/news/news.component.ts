@@ -148,22 +148,4 @@ export class NewsComponent implements OnInit {
 		this.query.pageIndex = event.first / event.rows + 1
 		this.getListPaged()
 	}
-
-	// getCateName(id): string {
-	// 	return this.listNewCategories.find((c) => c.id == id).name
-	// }
-
-	getNewsAvatars() {
-		let ids = this.listDataPaged.map((c) => c.id)
-
-		this.newsService.getAvatars(ids).subscribe((res) => {
-			if (res) {
-				res.forEach((e) => {
-					let item = this.listDataPaged.find((c) => c.id == e.id)
-					let objectURL = 'data:image/jpeg;base64,' + e.byteImage
-					item.imageBin = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-				})
-			}
-		})
-	}
 }

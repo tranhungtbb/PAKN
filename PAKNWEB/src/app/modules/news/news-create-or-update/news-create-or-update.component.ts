@@ -152,9 +152,6 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 						e.imagePath = `${AppSettings.API_DOWNLOADFILES}/${e.imagePath}`
 						return e
 					})
-
-					//get avatar
-					//this.getNewsRelateAvatar()
 				})
 		}
 	}
@@ -274,9 +271,6 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				.subscribe((res) => {
 					if (res.success != 'OK') return
 					if (res.result.NENewsGetAllOnPage) this.newsRelatesSelected = res.result.NENewsGetAllOnPage
-
-					//get avatar
-					//this.getNewsRelateAvatar()
 				})
 		} else {
 			this.newsRelatesSelected = []
@@ -313,18 +307,6 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			}
 			this.model.imagePath = res.result.path
 			this.avatarUrl = `${AppSettings.API_DOWNLOADFILES}/${this.model.imagePath}`
-		})
-	}
-
-	getNewsRelateAvatar() {
-		this.newsService.getAvatars(this.newsRelatesSelected.map((c) => c.id)).subscribe((res) => {
-			if (res) {
-				for (let img of res) {
-					let item = this.newsRelatesSelected.find((c) => c.id == img.id)
-					let objectURL = 'data:image/jpeg;base64,' + img.byteImage
-					item.imageBin = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-				}
-			}
 		})
 	}
 

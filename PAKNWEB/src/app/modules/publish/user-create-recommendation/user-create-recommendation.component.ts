@@ -348,6 +348,7 @@ export class CreateRecommendationComponent implements OnInit {
 				}
 			} else {
 				this.toastr.error('Mã xác thực không chính xác!')
+				this.captchaCode = ''
 				this.reloadImage()
 			}
 		})

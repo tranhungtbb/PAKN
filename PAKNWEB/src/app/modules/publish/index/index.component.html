@@ -10,7 +10,7 @@
 					<div class="card mb-lg-0 bg-transparent shadow rounded-xl position-relative">
 						<a href="javascript:void(0)" (click)="redirectDetailNews(firstNews.id)" class="image-box ratio-4-3 rounded">
 							<span class="image">
-								<img style="width: 100%; height: 100%; object-fit: cover;" [src]="firstNews.imageBin">
+								<img style="width: 100%; height: 100%; object-fit: cover;" [src]="firstNews.imagePath">
 							</span>
 						</a>
 
@@ -29,7 +29,7 @@
 							<div class="card mb-lg-0">
 								<a href="javascript:void(0)" (click)="redirectDetailNews(item.id)" class="image-box ratio-16-9 rounded">
 									<span class="image">
-										<img [src]="item.imageBin">
+										<img [src]="item.imagePath">
 									</span>
 								</a>
 								<p class="card-text text-dark px-4 pt-3 py-0 mb-0">{{item.createdDate | date: 'dd/MM/yyyy'}}</p>
