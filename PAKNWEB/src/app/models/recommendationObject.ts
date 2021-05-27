@@ -101,6 +101,7 @@ export class RecommendationViewObject {
 	updatedDate: Date
 	unitActive: number
 	userActive: number
+	processId: number
 	idProcess: number
 	stepProcess: number
 	receiveName: string

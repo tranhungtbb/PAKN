@@ -77,7 +77,7 @@
 						<span class="accordion__header--indicator style_two" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne"
 							[ngClass]="{'collapse-icon-up':collapsed_checked['item01']}" (click)="onCollapsed('item01')"></span>
 					</div>
-					<div id="bordered_no-gutter_collapseOne" class="collapse accordion__body">
+					<div id="bordered_no-gutter_collapseOne" class="collapse accordion__body show">
 						<div class="table-responsive">
 							<p-table #table [value]="listUserPaged" [rows]="queryUser.pageSize" [totalRecords]="totalCount_User"
 								currentPageReportTemplate="Tổng số {{totalCount_User}}" (onLazyLoad)="onUserPageChange($event)" [lazy]="true" [responsive]="true" [paginator]="true"
@@ -167,119 +167,6 @@
 						</div>
 					</div>
 				</div>
-				<!-- <div class="accordion__item">
-					<div class="accordion__header collapsed">
-						<div class="d-flex justify-content-between align-items-center pr-5">
-							<span class="accordion__header--text text-uppercase h4" data-toggle="collapse" data-target="#bordered_no-gutter_collapseTwo"
-								(click)="onCollapsed('item02')">Danh sách đơn vị cấp
-								dưới</span>
-							<div class="btn-group" role="group" [hidden]="!collapsed_checked['item02']">
-								<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
-									<i class="pi pi-file-excel"></i>
-									Xuất excel
-								</button>
-								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalCreateOrUpdate(0,unitObject.unitLevel+1,unitObject.id)">
-									<i class="pi pi-plus"></i>
-									Thêm mới
-								</button>
-							</div>
-						</div>
-						<span class="accordion__header--indicator style_two" data-toggle="collapse" data-target="#bordered_no-gutter_collapseTwo"
-							[ngClass]="{'collapse-icon-up':collapsed_checked['item02']}" (click)="onCollapsed('item02')">
-						</span>
-					</div>
-					<div id="bordered_no-gutter_collapseTwo" class="collapse accordion__body">
-						<div class="table-responsive">
-							<p-table #table [value]="listUnitPaged" [rows]="query.pageSize" [totalRecords]="totalCount_Unit" currentPageReportTemplate="Tổng số {{totalCount_Unit}}"
-								(onLazyLoad)="onUserPageChange($event)" [lazy]="true" [responsive]="true" [paginator]="true" [showCurrentPageReport]="true" autoLayout="true"
-								tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
-								<ng-template pTemplate="header" class="bg-thead">
-									<tr>
-										<th style="width: 50px">
-											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong>#</strong>
-											</p>
-										</th>
-										<th>
-											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong class="no-wrap">Tên đơn vị</strong>
-												<span class="caret-tb" (click)="onSortUnit('Name')"></span>
-											</p>
-											<input type="text" [(ngModel)]="query.name" (change)="unitFilterChange()" placeholder="Nhập ..." class="form-control form-control-sm">
-										</th>
-										<th>
-											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong class="no-wrap">Số điện thoại</strong>
-												<span class="caret-tb" (click)="onSortUnit('Phone')"></span>
-											</p>
-											<input type="text" [(ngModel)]="query.phone" (change)="unitFilterChange()" placeholder="Nhập ..." class="form-control form-control-sm">
-										</th>
-										<th>
-											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong class="no-wrap">Email</strong>
-												<span class="caret-tb" (click)="onSortUnit('Email')"></span>
-											</p>
-											<input type="text" [(ngModel)]="query.email" (change)="unitFilterChange()" placeholder="Nhập ..." class="form-control form-control-sm">
-										</th>
-										<th>
-											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong class="no-wrap">Địa chỉ</strong>
-												<span class="caret-tb" (click)="onSortUnit('Address')"></span>
-											</p>
-											<input type="text" [(ngModel)]="query.address" (change)="unitFilterChange()" placeholder="Nhập ..."
-												class="form-control form-control-sm">
-										</th>
-										<th style="width: 160px">
-											<p class="mb-1 d-flex justify-content-between align-items-center label-thead text-uppercase">
-												<strong class="no-wrap">Trạng thái</strong>
-												<span class="caret-tb" (click)="onSortUnit('IsActive')"></span>
-											</p>
-											<div class="dropdown bootstrap-select form-control form-control-sm">
-												<ng-select style="width:130px;" [closeOnSelect]="true" [searchable]="false" [(ngModel)]="query.isActived"
-													(change)="unitFilterChange()">
-													<ng-option *ngFor="let item of listStatus" [value]="item.value">
-														{{item.text}}
-													</ng-option>
-												</ng-select>
-											</div>
-
-										</th>
-										<th class="text-right text-uppercase"><strong>Thao tác</strong></th>
-									</tr>
-								</ng-template>
-								<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
-									<tr>
-										<td>
-											<strong>{{rowIndex+1}}</strong>
-										</td>
-										<td><strong>{{item.name}}</strong></td>
-										<td>{{item.phone}}</td>
-										<td>{{item.email}}</td>
-										<td>
-											{{item.address}}
-										</td>
-										<td>
-											<span class="badge rounded-pill badge-success cursor-hand" *ngIf="item.isActived"
-												(click)="onOpenConfirmModal(item.id,'unit_status')">Hiệu
-												lực</span>
-											<span class="badge rounded-pill badge-light cursor-hand" *ngIf="!item.isActived" (click)="onOpenConfirmModal(item.id,'unit_status')">Hết
-												hiệu
-												lực</span>
-										</td>
-										<td>
-											<div class="d-flex justify-content-end">
-												<a href="javascript:void(0);" class="btn-icon grd-brown text-brown mr-2" (click)="modalCreateOrUpdate(item.id,item.unitLevel)"><i
-														class="bi bi-pencil-square"></i></a>
-												<a href="javascript:void(0);" class="btn-icon grd-red text-white" (click)="onOpenConfirmModal(item.id)"><i
-														class="bi bi-trash"></i></a>
-											</div>
-										</td>
-									</tr>
-								</ng-template>
-							</p-table>
-						</div>
-					</div>
-				</div> -->
 			</div>
 		</div>
 	</div>
@@ -390,7 +277,8 @@
 						</div>
 						<div class="col-12 form-group">
 							<label class="mb-1">Mô tả</label>
-							<textarea [(ngModel)]="modelUnit.description" formControlName="description" class="form-control" rows="4" placeholder="Nhập..."></textarea>
+							<textarea maxlength="255" [(ngModel)]="modelUnit.description" formControlName="description" class="form-control" rows="4"
+								placeholder="Nhập..."></textarea>
 						</div>
 					</div>
 				</form>

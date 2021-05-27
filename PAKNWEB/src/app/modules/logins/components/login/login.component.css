@@ -21,3 +21,6 @@ a.hight-light:hover {
 	max-height: 100vh;
 	object-fit: cover;
 }
+.custom-tab-1 {
+	padding-top: calc((100vh - 610px) / 2);
+}

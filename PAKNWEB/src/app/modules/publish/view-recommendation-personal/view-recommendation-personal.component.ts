@@ -33,7 +33,6 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 	fileAccept = CONSTANTS.FILEACCEPT
 	userLoginId: number = this.storeageService.getUserId()
 	unitLoginId: number = this.storeageService.getUnitId()
-	mrDenyContent: any = {}
 	@ViewChild('file', { static: false }) public file: ElementRef
 	constructor(
 		private toastr: ToastrService,
@@ -79,9 +78,6 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 				if (this.model.sendDate) {
 					this.model.sendDate = new Date(this.model.sendDate)
 				}
-				if ([3, 6, 9].includes(this.model.status)) {
-					this.getMrDenyContent(this.model.id)
-				}
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -116,15 +112,6 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 			initials += names[names.length - 1].substring(0, 1).toUpperCase()
 		}
 		return initials
-	}
-	getMrDenyContent(mrId: number) {
-		this.recommendationService
-			.getDenyContent({
-				Id: mrId,
-			})
-			.subscribe((res) => {
-				this.mrDenyContent = res.result.MRRecommendationGetDenyContentsBase[res.result.MRRecommendationGetDenyContentsBase.length - 1]
-			})
 	}
 
 	onCreateHashtag(e) {
@@ -311,7 +298,7 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 	recommendationStatusProcess: number = 0
 	preProcess(status: number) {
 		this.modelProcess.status = status
-		this.modelProcess.id = this.model.idProcess
+		this.modelProcess.id = this.model.processId
 		this.modelProcess.step = this.model.stepProcess
 		this.modelProcess.recommendationId = this.model.id
 		this.modelProcess.reactionaryWord = false
@@ -319,19 +306,25 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
 			if (this.model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
+				this.modelProcess.step = STEP_RECOMMENDATION.RECEIVE
 			} else if (this.model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESS_DENY
+				this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
 			} else if (this.model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.APPROVE_DENY
+				this.modelProcess.step = STEP_RECOMMENDATION.APPROVE
 			}
 			$('#modalReject').modal('show')
 		} else {
 			if (this.model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_APPROVED
+				this.modelProcess.step = STEP_RECOMMENDATION.RECEIVE
 			} else if (this.model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
+				this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
 			} else if (this.model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.FINISED
+				this.modelProcess.step = STEP_RECOMMENDATION.APPROVE
 			}
 			$('#modalAccept').modal('show')
 		}

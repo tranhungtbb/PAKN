@@ -43,6 +43,9 @@ export class OrgFormAddressComponent implements OnInit {
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listProvince = res.result.CAProvinceGetAll
+					this.model.ProvinceId = 37
+					this.model.OrgProvinceId = 37
+					this.onChangeProvince()
 				}
 			})
 		} else {
@@ -92,6 +95,7 @@ export class OrgFormAddressComponent implements OnInit {
 			OrgPhone: [this.model.OrgPhone, [Validators.required]], //, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)
 			OrgEmail: [this.model.OrgEmail, [Validators.email]],
 		})
+		this.onChangeNation()
 	}
 
 	// orgPhone_exists = false

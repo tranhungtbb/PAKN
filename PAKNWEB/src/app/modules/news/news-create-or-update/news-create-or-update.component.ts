@@ -21,6 +21,9 @@ import { AppSettings } from '../../../constants/app-setting'
 import { NewsModel, HISNewsModel } from '../../../models/NewsObject'
 import { from } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
+import { Api } from 'src/app/constants/api'
+import { UploadAdapter } from 'src/app/services/uploadAdapter'
+import { HttpClient } from '@angular/common/http'
 
 declare var $: any
 
@@ -56,12 +59,15 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private sanitizer: DomSanitizer,
+		private http: HttpClient,
 		private notificationService: NotificationService
 	) {}
 	allowImageExtend = ['image/jpeg', 'image/png']
 	public Editor = ClassicEditor
 	public ckConfig = {
-		placeholder: 'Nhập...',
+		simpleUpload: {
+			uploadUrl: AppSettings.API_ADDRESS + Api.UploadImageNews,
+		},
 	}
 
 	model: NewsModel = new NewsModel()
@@ -324,6 +330,9 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 
 	public onReady(editor) {
 		editor.ui.getEditableElement().parentElement.insertBefore(editor.ui.view.toolbar.element, editor.ui.getEditableElement())
+		editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+			return new UploadAdapter(loader, this.http)
+		}
 	}
 
 	insertNotification(isCreate: boolean) {

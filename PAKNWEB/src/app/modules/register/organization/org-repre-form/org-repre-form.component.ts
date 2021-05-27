@@ -52,7 +52,7 @@ export class OrgRepreFormComponent implements OnInit {
 
 					this.model.ProvinceId = 37
 					this.model.OrgProvinceId = 37
-					$('#_OrgDistrictId').click()
+					this.onChangeProvince()
 				}
 			})
 		} else {
