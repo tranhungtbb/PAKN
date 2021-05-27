@@ -1,38 +1,38 @@
 export class IntroduceObjet {
-	Id: number
-	Title: string
-	Summary: string
-	DescriptionUnit: string
-	DescriptionFunction: string
-	BannerUrl: string
+	id: number
+	title: string
+	summary: string
+	descriptionUnit: string
+	descriptionFunction: string
+	bannerUrl: string
 
 	constructor() {
-		this.Id = 0
+		this.id = 0
 	}
 }
 
 export class IntroduceUnit {
-	Id: number
-	Title: string
-	Description: string
-	Infomation: string
-	Index: number
-	IntroduceId: number
+	id: number
+	title: string
+	description: string
+	infomation: string
+	index: number
+	introduceId: number
 
 	constructor() {
-		this.Id = 0
-		this.Title = null
-		this.Description = null
-		this.Infomation = null
-		this.Index = 0
-		this.IntroduceId = 0
+		this.id = 0
+		this.title = ''
+		this.description = ''
+		this.infomation = ''
+		this.index = 0
+		this.introduceId = 0
 	}
 }
 
 export class IntroduceFunction {
-	Id: number
-	Title: string
-	Content: string
-	Icon: string
-	IntroduceId: number
+	id: number
+	title: string
+	content: string
+	icon: string
+	introduceId: number
 }

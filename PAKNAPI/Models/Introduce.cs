@@ -1,4 +1,5 @@
-﻿using PAKNAPI.ModelBase;
+﻿using Microsoft.AspNetCore.Http;
+using PAKNAPI.ModelBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace PAKNAPI.Models
         public List<SYIntroduceFunction> lstIntroduceFunction { get; set; }
 
         //public List<SYIntroduceUnit> lstIntroduceUnit { get; set; }
+        public IFormFileCollection Files { get; set; }
     }
 }

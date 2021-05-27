@@ -215,6 +215,7 @@ export class Api {
 	// SYIntroduce
 
 	public static SYIntroduceGetInfo = 'SYIntroduce/IntroduceGetInfo'
+	public static SYIntroduceUnitGetInfo = 'SYIntroduce/IntroduceUnitGetById'
 	public static SYIntroduceUpdate = 'SYIntroduce/IntroduceUpdate'
 	public static SYIntroduceUnitGetOnPage = 'SYIntroduce/IntroduceUnitGetOnPage'
 	public static SYIntroduceUnitInsert = 'SYIntroduce/IntroduceUnitInsert'

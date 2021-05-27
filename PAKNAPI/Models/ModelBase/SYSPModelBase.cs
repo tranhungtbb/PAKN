@@ -100,9 +100,9 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Id", syIntroduce.Id);
 			DP.Add("Title", syIntroduce.Title);
 			DP.Add("Summary", syIntroduce.Summary);
-			DP.Add("IsActived", syIntroduce.DescriptionUnit);
-			DP.Add("IsDeleted", syIntroduce.DescriptionFunction);
-			DP.Add("Description", syIntroduce.BannerUrl);
+			DP.Add("DescriptionUnit", syIntroduce.DescriptionUnit);
+			DP.Add("DescriptionFunction", syIntroduce.DescriptionFunction);
+			DP.Add("BannerUrl", syIntroduce.BannerUrl);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_IntroduceUpdate", DP);
 		}
@@ -128,7 +128,7 @@ namespace PAKNAPI.ModelBase
 		public string Title { get; set; }
 		public string Description { get; set; }
 		public string Infomation { get; set; }
-		public int Index { get; set; }
+		public int? Index { get; set; }
 
 		public int RowNumber { get; set; }
 
@@ -144,6 +144,13 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<SYIntroduceUnit>("[SY_IntroduceUnitGetOnPageByIntroduceId]", DP)).ToList();
 		}
 
+		public async Task<int?> SYIntroduceUnitGetById(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("[SY_IntroduceUnitGetById]", DP);
+		}
+
 		public async Task<int?> SYIntroduceUnitInsertDAO(SYIntroduceUnit syIntroduceUnit)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -153,7 +160,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Index", syIntroduceUnit.Index);
 			DP.Add("IntroduceId", syIntroduceUnit.IntroduceId);
 
-			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_IntroduceUnitUpdate", DP);
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_IntroduceUnitInsert", DP);
 		}
 
 		public async Task<int?> SYIntroduceUnitUpdateDAO(SYIntroduceUnit syIntroduceUnit)

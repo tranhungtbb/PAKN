@@ -72,9 +72,33 @@ namespace PAKNAPI.Controllers
         [HttpPost]
         [Authorize]
         [Route("IntroduceUpdate")]
-        public async Task<object> SYIntroduceUpdate(IntroduceModel model) {
+        public async Task<object> SYIntroduceUpdate() {
             try
             {
+                var model = new IntroduceModel();
+                model.model = JsonConvert.DeserializeObject<SYIntroduce>(Request.Form["model"].ToString());
+                model.lstIntroduceFunction = JsonConvert.DeserializeObject<List<SYIntroduceFunction>>(Request.Form["lstIntroduceFunction"].ToString());
+                model.Files = Request.Form.Files;
+
+                if (model.Files != null && model.Files.Count > 0)
+                {
+                    string folder = "Upload\\BannerIntroduce\\";
+                    string folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+                    
+                    var nameImg = Path.GetFileName(model.Files[0].FileName).Replace("+", "");
+                    model.model.BannerUrl = Path.Combine(folder, nameImg);
+                    string filePath = Path.Combine(folderPath, nameImg);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        model.Files[0].CopyTo(stream);
+                    }
+
+                }
+
                 await new SYIntroduce(_appSetting).SYIntroduceUpdateDAO(model.model);
                 foreach (var item in model.lstIntroduceFunction) {
                     // insert file nữa này
@@ -118,6 +142,24 @@ namespace PAKNAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize]
+        [Route("IntroduceUnitGetById")]
+        public async Task<object> SYIntroduceUnitGetById(int? Id)
+        {
+            try
+            {
+                var syIntroduceUnit = await new SYIntroduceUnit(_appSetting).SYIntroduceUnitGetById(Id);
+                
+                return new ResultApi { Success = ResultCode.OK, Result = syIntroduceUnit };
+            }
+            catch (Exception ex)
+            {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
 
         [HttpPost]
         [Authorize]
@@ -126,6 +168,7 @@ namespace PAKNAPI.Controllers
         {
             try
             {
+                if (model.Index == null) { model.Index = 0; };
                 var result  = (int)await new SYIntroduceUnit(_appSetting).SYIntroduceUnitInsertDAO(model);
 
                 if (result > 0)
@@ -152,6 +195,7 @@ namespace PAKNAPI.Controllers
         {
             try
             {
+                if (model.Index == null) { model.Index = 0; };
                 var result = (int)await new SYIntroduceUnit(_appSetting).SYIntroduceUnitUpdateDAO(model);
 
                 if (result > 0)
