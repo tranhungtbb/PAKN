@@ -14,6 +14,7 @@ import { ChatBotComponent } from './components/chat-bot/chat-bot.component'
 import { HistoryChatBotComponent } from './components/history-chat-bot/history-chat-bot.component'
 import { UserViewInfoComponent } from './components/user/user-view-info/user-view-info.component'
 import { IntroduceComponent } from './components/introduce/introduce.component'
+import { IndexSettingComponent } from './components/index-setting/index-setting.component'
 const routes: Routes = [
 	{
 		path: '',
@@ -23,6 +24,7 @@ const routes: Routes = [
 			{ path: 'cau-hinh-email', component: EmailSettingComponent },
 			{ path: 'cau-hinh-sms', component: SmsSettingComponent },
 			{ path: 'cau-hinh-trang-gioi-thieu', component: IntroduceComponent },
+			{ path: 'cau-hinh-trang-chu', component: IndexSettingComponent },
 			{ path: 'nguoi-dung', component: UserComponent },
 			{ path: 'lich-su-he-thong', component: SystemLogComponent },
 			{ path: 'co-cau-to-chuc', component: UnitComponent },

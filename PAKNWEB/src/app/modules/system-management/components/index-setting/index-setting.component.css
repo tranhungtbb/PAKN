@@ -1,0 +1,73 @@
+label {
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 19px;
+	color: #1b1b3e;
+	margin: 10px 0px;
+}
+
+.flex {
+	display: flex !important;
+	margin: 20px 0px;
+}
+.font-bold {
+	font-weight: bold !important;
+}
+
+.btn-change-banner {
+	border: 1px solid gray;
+	width: 150px;
+	color: #1673d8 !important;
+	position: absolute;
+	top: 80px;
+	right: 30px;
+	z-index: 1;
+}
+
+.description {
+	display: flex;
+	margin-bottom: 20px;
+}
+.img-quoc-huy {
+	width: 70px;
+	height: 70px;
+}
+
+.description h3,
+.description h1 {
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.description h3 {
+	font-weight: 400;
+}
+
+.info-left {
+	display: flex;
+	margin: 7px 0px;
+}
+.icon-info {
+	width: 10%;
+}
+
+.icon-info i {
+	margin-right: 30px;
+}
+
+.center {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+input,
+textarea {
+	border: 1px solid rgba(214, 214, 214, 0.8);
+	border-radius: 10px;
+}
+
+input {
+	height: 32px;
+}
