@@ -246,7 +246,7 @@
 							<div class="title-action">
 								<input class="form-control font-bold" formControlName="titleFunc3" [(ngModel)]="lstIntroduceFunction[3].title" maxlength="100"
 									placeholder="Nhập..." />
-								<div *ngIf="(submitted && f.titleFunc3.invalid) || (f.title.titleFunc3 && (f.titleFunc3.dirty || f.titleFunc3.touched))" class="has-error m-b-12">
+								<div *ngIf="(submitted && f.titleFunc3.invalid) || (f.titleFunc3.invalid && (f.titleFunc3.dirty || f.titleFunc3.touched))" class="has-error m-b-12">
 									<div *ngIf="f.titleFunc3.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
 									</div>
@@ -410,7 +410,7 @@
 					</div>
 					<div class="modal-footer" style="border: none; justify-content: center;">
 						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete()">Xác
 							nhận</button>
 					</div>
 				</div>
