@@ -32,9 +32,9 @@ export class IntroduceComponent implements OnInit {
 				this.lstIntroduceFunction = res.result.lstIntroduceFunction
 				this.ltsIntroductUnit = res.result.lstIntroduceUnit
 
-				console.log(this.model)
-				console.log(this.lstIntroduceFunction)
-				console.log(this.ltsIntroductUnit)
+				// console.log(this.model)
+				// console.log(this.lstIntroduceFunction)
+				// console.log(this.ltsIntroductUnit)
 			}
 		}),
 			(error) => {

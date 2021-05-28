@@ -148,10 +148,11 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					if (res.success != 'OK') {
 						return
 					}
-					this.newsRelatesSelected = res.result.NENewsGetAllOnPage.map((e) => {
-						e.imagePath = `${AppSettings.API_DOWNLOADFILES}/${e.imagePath}`
-						return e
-					})
+					this.newsRelatesSelected = res.result.NENewsGetAllOnPage
+					// .map((e) => {
+					// 	e.imagePath = `${AppSettings.API_DOWNLOADFILES}/${e.imagePath}`
+					// 	return e
+					// })
 				})
 		}
 	}
