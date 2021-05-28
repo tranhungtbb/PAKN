@@ -31,7 +31,7 @@
 							<span class="ml-2" style="text-transform: none;">Thay banner</span>
 						</a>
 						<div style="max-height:400px;width: auto;height:400px;">
-							<img [src]="model.urlBanner" id="bannerIntroduce" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+							<img [src]="bannerUrl" id="bannerIntroduce" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
 						</div>
 
 
@@ -50,7 +50,7 @@
 
 					<div class="col-sm-12 padding-col">
 						<label class="control-label department">Thông tin tóm tắt<span class="text-danger">(*)</span></label>
-						<input class="form-control" [(ngModel)]="model.summary" formControlName="summary" placeholder="Nhập..." />
+						<textarea class="form-control" [(ngModel)]="model.summary" formControlName="summary" placeholder="Nhập..." rows="5" maxlength="500"></textarea>
 						<div *ngIf="(submitted && f.summary.invalid) || (f.summary.invalid && (f.summary.dirty || f.summary.touched))" class="has-error m-b-12">
 							<div *ngIf="f.summary.errors">
 								<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -59,7 +59,8 @@
 					</div>
 					<div class="col-sm-12 padding-col">
 						<label class="control-label department">Mô tả cơ cấu tổ chức<span class="text-danger">(*)</span></label>
-						<textarea class="form-control" [(ngModel)]="model.descriptionUnit" formControlName="descriptionUnit" rows="6" placeholder="Nhập..."></textarea>
+						<textarea class="form-control" [(ngModel)]="model.descriptionUnit" formControlName="descriptionUnit" rows="6" maxlength="700"
+							placeholder="Nhập..."></textarea>
 						<div *ngIf="(submitted && f.descriptionUnit.invalid) || (f.descriptionUnit.invalid && (f.descriptionUnit.dirty || f.descriptionUnit.touched))"
 							class="has-error m-b-12">
 							<div *ngIf="f.descriptionUnit.errors">
@@ -85,13 +86,13 @@
 													<strong>STT</strong>
 												</p>
 											</th>
-											<th style="max-width: 180px;">
+											<th style="min-width: 180px;">
 												<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 													<strong>Tên đơn vị</strong>
 													<span class="caret-tb"></span>
 												</p>
 											</th>
-											<th>
+											<th style="min-width: 280px;">
 												<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 													<strong>Mô tả</strong>
 													<span class="caret-tb"></span>
@@ -104,7 +105,7 @@
 													<span class="caret-tb"></span>
 												</p>
 											</th>
-											<th style="width: 100px;" class="text-right"><strong>THAO TÁC</strong></th>
+											<th style="min-width: 100px;" class="text-right"><strong>THAO TÁC</strong></th>
 										</tr>
 									</ng-template>
 									<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -112,8 +113,13 @@
 											<td class="text-center">{{rowIndex + 1}}</td>
 
 											<td>{{item.title}}</td>
-											<td>{{item.description}}</td>
-											<td>{{item.infomation}}</td>
+											<td>
+												<p class="text-2line mb-0"> {{item.description}}</p>
+
+											</td>
+											<td>
+												<p class="text-2line mb-0">{{item.infomation}}</p>
+											</td>
 
 											<td style="text-align: center;">
 												<div class="hover-active d-flex justify-content-end">
@@ -164,7 +170,7 @@
 									</div>
 								</div>
 							</div>
-							<textarea class="form-control" [(ngModel)]="lstIntroduceFunction[0].content" formControlName="contentFunc0" maxlength="500" rows="4"
+							<textarea class="form-control" [(ngModel)]="lstIntroduceFunction[0].content" formControlName="contentFunc0" maxlength="700" rows="4"
 								placeholder="Nhập..."></textarea>
 							<div *ngIf="(submitted && f.contentFunc0.invalid) || (f.contentFunc0.invalid && (f.contentFunc0.dirty || f.contentFunc0.touched))"
 								class="has-error m-b-12">

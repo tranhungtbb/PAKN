@@ -87,6 +87,8 @@ namespace PAKNAPI.ModelBase
 		public string DescriptionFunction { get; set; }
 		public string BannerUrl { get; set; }
 
+		public DateTime? UpdateDate { get; set; }
+
 		public async Task<List<SYIntroduce>> SYIntroduceGetInfoDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -103,6 +105,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("DescriptionUnit", syIntroduce.DescriptionUnit);
 			DP.Add("DescriptionFunction", syIntroduce.DescriptionFunction);
 			DP.Add("BannerUrl", syIntroduce.BannerUrl);
+			DP.Add("UpdateDate", syIntroduce.UpdateDate);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_IntroduceUpdate", DP);
 		}
@@ -133,6 +136,14 @@ namespace PAKNAPI.ModelBase
 		public int RowNumber { get; set; }
 
 		public int IntroduceId { get; set; }
+
+		public async Task<List<SYIntroduceUnit>> SYIntroduceUnitGetByIntroduceId(int? IntroduceId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("IntroduceId", IntroduceId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYIntroduceUnit>("[SY_IntroduceUnitGetByIntroduceId]", DP)).ToList();
+		}
 
 		public async Task<List<SYIntroduceUnit>> SYIntroduceUnitGetOnPageByIntroduceId(int? IntroduceId, int? PageSize, int? PageIndex)
 		{

@@ -65,9 +65,10 @@ export class IndexComponent implements OnInit {
 			if (res.success != RESPONSE_STATUS.success) {
 				return
 			}
-			if (res.result) {
+			if (res.result.length > 0) {
+				this.firstNews = res.result[0]
+				res.result.shift()
 				this.news = res.result
-				this.firstNews = this.news[0]
 			}
 			return
 		})
@@ -87,7 +88,7 @@ export class IndexComponent implements OnInit {
 			$('#owl-news').owlCarousel({
 				loop: true,
 				margin: 30,
-				nav: true,
+				nav: false,
 				autoplay: true,
 				autoplayTimeout: 10000,
 				autoplayHoverPause: true,

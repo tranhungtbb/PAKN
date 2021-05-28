@@ -13,7 +13,7 @@ namespace PAKNAPI.Models
 
         public List<SYIntroduceFunction> lstIntroduceFunction { get; set; }
 
-        //public List<SYIntroduceUnit> lstIntroduceUnit { get; set; }
+        public List<SYIntroduceUnit> lstIntroduceUnit { get; set; }
         public IFormFileCollection Files { get; set; }
     }
 }

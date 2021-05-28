@@ -18,9 +18,8 @@ export class IntroduceService {
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.RM_REMIND),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_INTRODUCE),
 		})
-		debugger
 		const form = new FormData()
 		form.append('model', JSON.stringify(request.model))
 		form.append('lstIntroduceFunction', JSON.stringify(request.lstIntroduceFunction))
@@ -47,7 +46,7 @@ export class IntroduceService {
 	IntroduceUnitInsert(query: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_INTRODUCE),
 		}
 		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.SYIntroduceUnitInsert, headers)
 	}
@@ -55,7 +54,7 @@ export class IntroduceService {
 	IntroduceUnitUpdate(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_INTRODUCE),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.SYIntroduceUnitUpdate, headers)
 	}
@@ -63,7 +62,7 @@ export class IntroduceService {
 	IntroduceUnitDelete(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_INTRODUCE),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.SYIntroduceUnitDetete, headers)
 	}

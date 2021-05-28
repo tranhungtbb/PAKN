@@ -40,7 +40,7 @@ namespace PAKNAPI.Controllers
 
         //'SYIntroduce/IntroduceGetInfo'
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         [Route("IntroduceGetInfo")]
         public async Task<object> SYIntroduceGetInfo() {
             try {
@@ -51,7 +51,7 @@ namespace PAKNAPI.Controllers
                 if (lstIntroduce.Count > 0) {
                     result.model = lstIntroduce.FirstOrDefault();
                     result.lstIntroduceFunction = await new SYIntroduceFunction(_appSetting).SYIntroduceFunctionGetByIntroductId(result.model.Id);
-                    //result.lstIntroduceUnit = await new SYIntroduceUnit(_appSetting).SYIntroduceUnitGetByIntroduceId(result.model.Id);
+                    result.lstIntroduceUnit = await new SYIntroduceUnit(_appSetting).SYIntroduceUnitGetByIntroduceId(result.model.Id);
 
                     new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
                     return new ResultApi { Success = ResultCode.OK, Result = result, Message = "Success" };
@@ -88,7 +88,15 @@ namespace PAKNAPI.Controllers
                     {
                         Directory.CreateDirectory(folderPath);
                     }
+                    // xóa hết
+                    string[] files = Directory.GetFiles(folder);
+                    foreach (string file in files)
+                    {
+                        System.IO.File.Delete(file);
+                    }
+
                     
+
                     var nameImg = Path.GetFileName(model.Files[0].FileName).Replace("+", "");
                     model.model.BannerUrl = Path.Combine(folder, nameImg);
                     string filePath = Path.Combine(folderPath, nameImg);
@@ -98,7 +106,7 @@ namespace PAKNAPI.Controllers
                     }
 
                 }
-
+                model.model.UpdateDate = DateTime.Now;
                 await new SYIntroduce(_appSetting).SYIntroduceUpdateDAO(model.model);
                 foreach (var item in model.lstIntroduceFunction) {
                     // insert file nữa này

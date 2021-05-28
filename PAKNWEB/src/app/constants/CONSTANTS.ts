@@ -55,14 +55,11 @@ export class LOG_OBJECT {
 	public static SY_USER_GET_BY_ROLE = 'Người dùng theo vai trò'
 
 	public static HIS_USER = 'Lịch sử người dùng hệ thống'
-
 	public static MR_RECOMMENDATION = 'Phản ánh / Kiến nghị'
 	public static MR_HISTORIES = 'Lịch sử phản ánh / Kiến nghị'
-
 	public static RM_REMIND = 'Danh sách nhắc nhở'
-
 	public static MR_BY_HASHTAG = 'Danh sách PAKN theo hashtag'
-
+	public static SY_INTRODUCE = 'Cấu hình trang giới thiệu'
 	public static SY_SYSTEM = 'Lịch sử hệ thống'
 }
 

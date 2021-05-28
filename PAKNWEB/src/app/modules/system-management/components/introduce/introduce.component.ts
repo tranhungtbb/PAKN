@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 import { Router } from '@angular/router'
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { AppSettings } from 'src/app/constants/app-setting'
 
 import { IntroduceService } from 'src/app/services/introduce.service'
 import { IntroduceObjet, IntroduceFunction, IntroduceUnit } from 'src/app/models/IntroductObject'
@@ -37,6 +38,7 @@ export class IntroduceComponent implements OnInit {
 	// file
 
 	BannerImg: any
+	bannerUrl: any
 
 	// form
 	form: FormGroup
@@ -52,6 +54,7 @@ export class IntroduceComponent implements OnInit {
 		this._service.GetInfo({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.model = res.result.model
+				this.bannerUrl = AppSettings.API_DOWNLOADFILES + '/' + this.model.bannerUrl
 				this.lstIntroduceFunction = res.result.lstIntroduceFunction
 				this.getListUnit()
 			}
@@ -188,7 +191,7 @@ export class IntroduceComponent implements OnInit {
 		this._service.Update(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
-				window.history.back()
+				// window.history.back()
 			} else {
 				this._toastr.error(res.message)
 			}

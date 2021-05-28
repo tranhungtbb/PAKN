@@ -54,11 +54,7 @@ export class NewsComponent implements OnInit {
 						this.query.pageIndex = 1
 						this.query.pageSize = 10
 					} else {
-						this.listData = res.result.NENewsGetAllOnPage.map((item) => {
-							item.imagePath = `${AppSettings.API_DOWNLOADFILES}/${item.imagePath}`
-							return item
-						})
-						debugger
+						this.listData = res.result.NENewsGetAllOnPage
 						this.query.pageIndex = res.result.PageIndex
 						this.query.pageSize = res.result.PageSize
 						this.totalRecords = res.result.TotalCount

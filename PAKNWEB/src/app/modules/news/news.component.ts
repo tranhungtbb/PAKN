@@ -67,7 +67,7 @@ export class NewsComponent implements OnInit {
 			.subscribe((res) => {
 				if (res.success != 'OK') return
 				this.listDataPaged = res.result.NENewsGetAllOnPage.map((item) => {
-					item.imagePath = `${AppSettings.API_DOWNLOADFILES}/${item.imagePath}`
+					// item.imagePath = `${AppSettings.API_DOWNLOADFILES}/${item.imagePath}`
 					return item
 				})
 

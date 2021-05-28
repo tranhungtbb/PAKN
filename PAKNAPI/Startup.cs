@@ -194,6 +194,11 @@ namespace PAKNAPI
 			});
 			app.UseStaticFiles(new StaticFileOptions()
 			{
+				FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Upload/BannerIntroduce")),
+				RequestPath = new PathString("/Upload/BannerIntroduce")
+			});
+			app.UseStaticFiles(new StaticFileOptions()
+			{
 				FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Upload/News")),
 				RequestPath = new PathString("/Upload/News")
 			});
