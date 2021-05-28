@@ -148,10 +148,11 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					if (res.success != 'OK') {
 						return
 					}
-					this.newsRelatesSelected = res.result.NENewsGetAllOnPage.map((e) => {
-						e.imagePath = `${AppSettings.API_DOWNLOADFILES}/${e.imagePath}`
-						return e
-					})
+					this.newsRelatesSelected = res.result.NENewsGetAllOnPage
+					// .map((e) => {
+					// 	e.imagePath = `${AppSettings.API_DOWNLOADFILES}/${e.imagePath}`
+					// 	return e
+					// })
 				})
 		}
 	}
@@ -306,7 +307,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				return
 			}
 			this.model.imagePath = res.result.path
-			this.avatarUrl = `${AppSettings.API_DOWNLOADFILES}/${this.model.imagePath}`
+			this.avatarUrl = this.model.imagePath //`${AppSettings.API_DOWNLOADFILES}/${this.model.imagePath}`
 		})
 	}
 
