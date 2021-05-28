@@ -93,4 +93,12 @@ namespace PAKNAPI.Models.Recommendation
         public int? id { get; set; }
         public byte? status { get; set; }
     }
+    public class GopYKienNghi
+    {
+        public string Questioner { get; set; }
+        public string Question { get; set; }
+        public string QuestionContent { get; set; }
+        public string Reply { get; set; }
+        public string CreatedDate { get; set; }
+    }
 }

@@ -94,5 +94,20 @@ namespace PAKNAPI.Models.Recommendation
 			}
 			return data;
 		}
+		public void SyncKhanhHoa(List<GopYKienNghi> lstData)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			_sQLCon.ExecuteNonQueryDapper("MR_RecommendationSync_DeleteAll", DP);
+            foreach (var item in lstData)
+			{
+				DP = new DynamicParameters();
+				DP.Add("Questioner", item.Questioner);
+				DP.Add("Question", item.Question);
+				DP.Add("QuestionContent", item.QuestionContent);
+				DP.Add("Reply", item.Reply);
+				DP.Add("CreatedDate", item.CreatedDate);
+				_sQLCon.ExecuteNonQueryDapper("MR_RecommendationSync_Insert", DP);
+			}
+		}
 	}
 }

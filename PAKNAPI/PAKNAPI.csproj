@@ -31,6 +31,7 @@
     <PackageReference Include="DocumentFormat.OpenXml" Version="2.12.3" />
     <PackageReference Include="EPocalipse.IFilter" Version="1.0.0" />
     <PackageReference Include="EPPlus" Version="4.5.3.3" />
+    <PackageReference Include="Fizzler.Systems.HtmlAgilityPack" Version="1.2.1" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
