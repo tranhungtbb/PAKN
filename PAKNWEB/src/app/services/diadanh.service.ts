@@ -26,4 +26,9 @@ export class DiadanhService {
 		let url = AppSettings.API_ADDRESS + Api.VillageGetAll
 		return this.serviceInvoker.get({ provinceId, districtId }, url)
 	}
+
+	getAllByProvinceId(provinceId: any) {
+		let url = AppSettings.API_ADDRESS + Api.GetAllByProvinceId
+		return this.serviceInvoker.get({ provinceId }, url)
+	}
 }

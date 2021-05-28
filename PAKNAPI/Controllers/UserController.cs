@@ -593,7 +593,7 @@ namespace PAKNAPI.Controllers
 						UserName = accInfo[0].UserName,
 						FullName = info[0].FullName,
 						Gender = info[0].Gender.Value,
-						DateOfBirth = info[0].BirthDay.Value.ToString("dd/MM/yyyy"),
+						DateOfBirth = info[0].BirthDay?.ToString("dd/MM/yyyy"),
 						Email = info[0].Email,
 						Phone = info[0].Phone,
 						Nation = info[0].Nation,
@@ -603,7 +603,7 @@ namespace PAKNAPI.Controllers
 						Address = info[0].Address,
 						IdCard = info[0].IDCard,
 						IssuedPlace = info[0].IssuedPlace,
-						IssuedDate = info[0].DateOfIssue.Value.ToString("dd/MM/yyyy"),
+						IssuedDate = info[0].DateOfIssue?.ToString("dd/MM/yyyy"),
 					};
                     if (!model.ProvinceId.HasValue)
                     {
@@ -762,14 +762,14 @@ namespace PAKNAPI.Controllers
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Tài khoản không tồn tại" };
 				}
 
-				DateTime birdDay, dateOfIssue;
-				if (!DateTime.TryParseExact(model.DateOfBirth, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
+				DateTime? birdDay =null, dateOfIssue = null;
+				if (DateTime.TryParseExact(model.DateOfBirth, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime _birdDay))
 				{
-					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+					birdDay = _birdDay;
 				}
-				if (!DateTime.TryParseExact(model.IssuedDate, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
+				if (DateTime.TryParseExact(model.IssuedDate, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime _dateOfIssue))
 				{
-					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+					dateOfIssue = _dateOfIssue;
 				}
 
 				if (accInfo[0].TypeId == 2)
@@ -840,13 +840,13 @@ namespace PAKNAPI.Controllers
 
 
 					accInfo[0].FullName = businessModel.RepresentativeName;
-					if (!DateTime.TryParseExact(businessModel.RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
+					if (DateTime.TryParseExact(businessModel.RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime outTime0))
 					{
-						//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
+						birdDay = outTime0;
 					}
-					if (!DateTime.TryParseExact(businessModel.DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
+					if (DateTime.TryParseExact(businessModel.DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime outTime1))
 					{
-						//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
+						dateOfIssue = outTime1;
 					}
 
 					

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
 using PAKNAPI.Models.BusinessIndividual;
+using PAKNAPI.Models.ModelBase;
 using PAKNAPI.Models.Results;
 using System;
 using System.Collections.Generic;
@@ -272,12 +273,11 @@ namespace PAKNAPI.Controllers
 		[Authorize]
 		[Route("InvididualRegister")]
 		public async Task<object> InvididualRegister(
-			[FromForm] Models.BusinessIndividual.BIIndividualInsertIN model,
-			[FromForm] string _BirthDay,
-			[FromForm] string _DateOfIssue)
+			[FromBody] Models.BusinessIndividual.BIIndividualInsertIN_Cus model)
 		{
 			try
 			{
+
                 var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
                 if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
 
@@ -296,18 +296,43 @@ namespace PAKNAPI.Controllers
                     return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 
 				DateTime birthDay, dateOfIssue;
-				if (!DateTime.TryParseExact(_BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birthDay))
+				if (!DateTime.TryParseExact(model._BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birthDay))
 				{
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
 				}
-				if (!DateTime.TryParseExact(_DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
+				if (!DateTime.TryParseExact(model._DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
 				{
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 				}
 
-				if (string.IsNullOrEmpty(_DateOfIssue)) model.DateOfIssue = null;
+				//add login info
+				string defaultPwd = "abc123";
+				var pwd = GeneratePwdModelBase.generatePassword(defaultPwd);
+				var account = new SYUserInsertIN
+				{
+					Password = pwd.Password,
+					Salt = pwd.Salt,
+					Phone = model.Phone,
+					Email = model.Email,
+					UserName = model.Phone,
+					FullName = model.FullName,
+					Gender = model.Gender,
+					Address = model.Address,//
+					TypeId = 2,
+					Type = 2,
+					IsActived = true,
+					IsDeleted = false,
+					CountLock = 0,
+					LockEndOut = DateTime.Now,
+					IsSuperAdmin = false,
+
+				};
+				var rs1 = await new SYUserInsert(_appSetting).SYUserInsertDAO(account);
+				var accRs = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(account.UserName);
+
+				if (string.IsNullOrEmpty(model._DateOfIssue)) model.DateOfIssue = null;
 				else model.DateOfIssue = dateOfIssue;
-				if (string.IsNullOrEmpty(_BirthDay)) model.BirthDay = null;
+				if (string.IsNullOrEmpty(model._BirthDay)) model.BirthDay = null;
 				else model.BirthDay = birthDay;
 				model.CreatedDate = DateTime.Now;
 				model.CreatedBy = 0;
@@ -315,7 +340,7 @@ namespace PAKNAPI.Controllers
 				model.UpdatedDate = DateTime.Now;
 				model.Status = 1;
 				model.IsDeleted = false;
-
+				model.UserId = accRs[0].Id;
 				var rs2 = await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(model);
 
 			}
@@ -497,9 +522,7 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("BusinessRegister")]
-		public async Task<object> BusinessRegister([FromForm] BI_BusinessInsertIN model,
-			[FromForm] string _RepresentativeBirthDay,
-			[FromForm] string _DateOfIssue)
+		public async Task<object> BusinessRegister([FromBody] BI_BusinessInsertIN_Cus model)
 		{
 			try
 			{
@@ -507,11 +530,11 @@ namespace PAKNAPI.Controllers
 				if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tài khoản đăng nhập đã tồn tại" };
 
 				DateTime birdDay, dateOfIssue;
-				if (!DateTime.TryParseExact(_RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
+				if (!DateTime.TryParseExact(model._RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
 				{
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
 				}
-				if (!DateTime.TryParseExact(_DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
+				if (!DateTime.TryParseExact(model._DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
 				{
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 				}
@@ -541,9 +564,34 @@ namespace PAKNAPI.Controllers
 				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Tax", model.Tax, 0);
 				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế đã tồn tại" };
 
-				if (string.IsNullOrEmpty(_DateOfIssue)) model.DateOfIssue = null;
+				//add login info
+				string defaultPwd = "abc123";
+				var pwd = GeneratePwdModelBase.generatePassword(defaultPwd);
+				var account = new SYUserInsertIN
+				{
+					Password = pwd.Password,
+					Salt = pwd.Salt,
+					Phone = model.Phone,
+					Email = model.Email,
+					UserName = model.Phone,
+					FullName = model.Representative,
+					Gender = model.RepresentativeGender,
+					Address = model.Address,//
+					TypeId = 3,
+					Type = 3,
+					IsActived = true,
+					IsDeleted = false,
+					CountLock = 0,
+					LockEndOut = DateTime.Now,
+					IsSuperAdmin = false,
+
+				};
+				var rs1 = await new SYUserInsert(_appSetting).SYUserInsertDAO(account);
+				var accRs = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(account.UserName);
+
+				if (string.IsNullOrEmpty(model._DateOfIssue)) model.DateOfIssue = null;
 				else model.DateOfIssue = dateOfIssue;
-				if (string.IsNullOrEmpty(_RepresentativeBirthDay)) model.RepresentativeBirthDay = null;
+				if (string.IsNullOrEmpty(model._RepresentativeBirthDay)) model.RepresentativeBirthDay = null;
 				else model.RepresentativeBirthDay = birdDay;
 				model.CreatedDate = DateTime.Now;
 				model.CreatedBy = 0;
@@ -551,8 +599,8 @@ namespace PAKNAPI.Controllers
 				model.UpdatedDate = DateTime.Now;
 				model.Status = 1;
 				model.IsDeleted = false;
+				model.UserId = accRs[0].Id;
 				var rs2 = await new BI_BusinessInsert(_appSetting).BusinessInsertDAO(model);
-
 			}
 			catch (Exception ex)
 			{
