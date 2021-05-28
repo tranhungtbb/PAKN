@@ -306,7 +306,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				return
 			}
 			this.model.imagePath = res.result.path
-			this.avatarUrl = `${AppSettings.API_DOWNLOADFILES}/${this.model.imagePath}`
+			this.avatarUrl = this.model.imagePath //`${AppSettings.API_DOWNLOADFILES}/${this.model.imagePath}`
 		})
 	}
 

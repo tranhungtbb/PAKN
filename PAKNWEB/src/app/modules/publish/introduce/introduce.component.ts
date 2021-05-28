@@ -28,7 +28,7 @@ export class IntroduceComponent implements OnInit {
 		this._service.GetInfo({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.model = res.result.model
-				this.model.bannerUrl = AppSettings.API_DOWNLOADFILES + '/' + this.model.bannerUrl
+				this.model.bannerUrl = this.model.bannerUrl
 				this.lstIntroduceFunction = res.result.lstIntroduceFunction
 				this.ltsIntroductUnit = res.result.lstIntroduceUnit
 
