@@ -245,7 +245,149 @@ namespace PAKNAPI.ModelBase
 
 	}
 
+	public class SYIndexSetting
+	{
+		private SQLCon _sQLCon;
 
+		public SYIndexSetting(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYIndexSetting()
+		{
+		}
+
+		public int Id { get; set; }
+		public string BannerUrl { get; set; }
+		public string Phone { get; set; }
+		public string Email { get; set; }
+		public string Address { get; set; }
+		public string Description { get; set; }
+
+		public string License { get; set; }
+
+		public async Task<List<SYIndexSetting>> SYIndexSettingGetInfoDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYIndexSetting>("[SY_IndexSettingGetInfo]", DP)).ToList();
+		}
+
+		public async Task<int?> SYIndexSettingUpdateDAO(SYIndexSetting sy)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", sy.Id);
+			DP.Add("BannerUrl", sy.BannerUrl);
+			DP.Add("Phone", sy.Phone);
+			DP.Add("Email", sy.Email);
+			DP.Add("Address", sy.Address);
+			DP.Add("Description", sy.Description);
+			DP.Add("License", sy.License);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_IndexSettingUpdate", DP);
+		}
+
+
+	}
+
+
+
+	public class SYIndexSettingBanner
+	{
+		private SQLCon _sQLCon;
+
+		public SYIndexSettingBanner(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYIndexSettingBanner()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public string FileAttach { get; set; }
+		public int FileType { get; set; }
+		public int IndexSystemId { get; set; }
+
+		public async Task<List<SYIndexSettingBanner>> SYIndexSettingBannerGetByIndexSettingId(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+			return await _sQLCon.ExecuteScalarDapperAsync<List<SYIndexSettingBanner>>("[SY_IndexBannerGetByIndexSettingId]", DP);
+		}
+
+		public async Task<int?> SYIndexSettingInsertDAO(SYIndexSettingBanner sy)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", sy.Name);
+			DP.Add("FileAttach", sy.FileAttach);
+			DP.Add("FileType", sy.FileType);
+			DP.Add("IndexSystemId", sy.IndexSystemId);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_IndexBannerInsert", DP);
+		}
+
+		
+
+		public async Task<int> SYIndexSettingDeleteDAO(SYIntroduceUnitDelete sy)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", sy.Id);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_IndexBannerDelete", DP));
+		}
+
+	}
+
+
+	public class SYIndexWebsite
+	{
+		private SQLCon _sQLCon;
+
+		public SYIndexWebsite(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYIndexWebsite()
+		{
+		}
+
+		public int Id { get; set; }
+		public string NameWebsite { get; set; }
+		public string UrlWebsite { get; set; }
+		public int IndexSystemId { get; set; }
+
+		public async Task<List<SYIndexWebsite>> SY_IndexWebsiteGetByIndexSettingId(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+			return await _sQLCon.ExecuteScalarDapperAsync<List<SYIndexWebsite>>("SY_IndexWebsiteGetByIndexSettingId", DP);
+		}
+
+		public async Task<int?> SY_IndexWebsiteInsertDAO(SYIndexWebsite sy)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("NameWebsite", sy.NameWebsite);
+			DP.Add("UrlWebsite", sy.UrlWebsite);
+			DP.Add("IndexSystemId", sy.IndexSystemId);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_IndexWebsiteInsert", DP);
+		}
+
+
+
+		public async Task<int> SY_IndexWebsiteDeleteAllDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_IndexWebsiteDeleteAll", DP));
+		}
+
+	}
 
 
 	public class SYEmailInsert

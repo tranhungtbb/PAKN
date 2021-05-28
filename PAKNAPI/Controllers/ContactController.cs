@@ -122,7 +122,8 @@ namespace PAKNAPI.Controllers
 		{
 			var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
 			var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
+			if (userInfo.UnitId == null) { userInfo.UnitId = 0; };
+			if (userInfo.Email == null) { userInfo.Email = ""; };
 			var claims = new[] {
 				new Claim("UserName", userInfo.UserName),
 				new Claim("FullName", userInfo.FullName),
