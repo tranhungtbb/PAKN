@@ -327,38 +327,37 @@ namespace PAKNAPI.Controllers
 		#region nguoi dan, doanh nghiep
 		[HttpPost]
 		[Route("OrganizationRegister")]
-		public async Task<object> OrganizationRegister([FromForm] RegisterModel loginInfo, [FromForm] BIBusinessInsertIN model,
-			[FromForm] string _RepresentativeBirthDay,
-			[FromForm] string _DateOfIssue)
+		public async Task<object> OrganizationRegister(
+			[FromBody] BusinessRegisterModel model)
         {
 			try
 			{
-				if (loginInfo.Password != loginInfo.RePassword)
+				if (model.Password != model.RePassword)
 				{
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu không khớp" };
 				}
-				//var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(loginInfo.Phone);
+				//var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
 				//if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tài khoản đăng nhập đã tồn tại" };
 
 
-				var accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Phone", loginInfo.Phone, 0);
+				var accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Phone", model.Phone, 0);
 				if (accCheckExist[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
 				accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Email", model.Email, 0);
 				if (accCheckExist[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
 
 				DateTime birdDay, dateOfIssue;
-				if (!DateTime.TryParseExact(_RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
+				if (!DateTime.TryParseExact(model._RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
 				{
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
 				}
-				if (!DateTime.TryParseExact(_DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
+				if (!DateTime.TryParseExact(model._DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
 				{
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 				}
 
 				///Phone,Email,IDCard
 				///check ton tai
-				var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone",loginInfo.Phone,0);
+				var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone",model.Phone,0);
 				if(checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
                 if (!string.IsNullOrEmpty(model.Email))
                 {
@@ -382,14 +381,14 @@ namespace PAKNAPI.Controllers
 
 				///mod loginInfo
 				///
-				var pwd = generatePassword(loginInfo.Password);
+				var pwd = generatePassword(model.Password);
 				var account = new SYUserInsertIN
 				{
 					Password = pwd["Password"],
 					Salt = pwd["Salt"],
-					Phone = loginInfo.Phone,
+					Phone = model.Phone,
 					Email = model.Email,
-					UserName = loginInfo.Phone,
+					UserName = model.Phone,
 					FullName = model.RepresentativeName,
 					Gender = model.RepresentativeGender,
 					Address = model.Address,
@@ -409,9 +408,9 @@ namespace PAKNAPI.Controllers
 
 				///mod model
 				///
-				if (string.IsNullOrEmpty(_DateOfIssue)) model.DateOfIssue = null;
+				if (string.IsNullOrEmpty(model._DateOfIssue)) model.DateOfIssue = null;
 				else model.DateOfIssue = dateOfIssue;
-				if (string.IsNullOrEmpty(_RepresentativeBirthDay)) model.RepresentativeBirthDay = null;
+				if (string.IsNullOrEmpty(model._RepresentativeBirthDay)) model.RepresentativeBirthDay = null;
 				else model.RepresentativeBirthDay = birdDay;
 				model.CreatedDate = DateTime.Now;
 				model.CreatedBy = 0;
@@ -434,19 +433,17 @@ namespace PAKNAPI.Controllers
 			return new Models.Results.ResultApi { Success = ResultCode.OK };
 		}
 
+		
 		[HttpPost]
 		[Route("InvididualRegister")]
-		public async Task<object> InvididualRegister(
-			[FromForm] RegisterModel loginInfo, 
-			[FromForm] BIIndividualInsertIN model,
-			[FromForm] string _BirthDay,
-			[FromForm] string _DateOfIssue)
+		public async Task<object> InvididualRegister_Body(
+			[FromBody] IndivialRegisterModel model)
 		{
 
 
-            try
-            {
-				if (loginInfo.Password != loginInfo.RePassword)
+			try
+			{
+				if (model.Password != model.RePassword)
 				{
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu không khớp" };
 				}
@@ -454,28 +451,28 @@ namespace PAKNAPI.Controllers
 				//var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(loginInfo.Phone);
 				//if(hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
 
-				var accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Phone", loginInfo.Phone,0);
+				var accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Phone", model.Phone, 0);
 				if (accCheckExist[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
 				accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Email", model.Email, 0);
 				if (accCheckExist[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
 
 				DateTime birdDay, dateOfIssue;
-				if (!DateTime.TryParseExact(_BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
+				if (!DateTime.TryParseExact(model._BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
 				{
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
 				}
-				if (!DateTime.TryParseExact(_DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
+				if (!DateTime.TryParseExact(model._DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
 				{
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 				}
 
 				///Phone,Email,IDCard
 				///check ton tai
-				var checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", loginInfo.Phone, 0);
-				if(checkExists[0].Exists.Value)
+				var checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", model.Phone, 0);
+				if (checkExists[0].Exists.Value)
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
-                if (!string.IsNullOrEmpty(model.Email))
-                {
+				if (!string.IsNullOrEmpty(model.Email))
+				{
 					checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", model.Email, 0);
 					if (checkExists[0].Exists.Value)
 						return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
@@ -487,14 +484,14 @@ namespace PAKNAPI.Controllers
 
 				///mod loginInfo
 				///
-				var pwd = generatePassword(loginInfo.Password);
-				var account = new SYUserInsertIN 
+				var pwd = generatePassword(model.Password);
+				var account = new SYUserInsertIN
 				{
 					Password = pwd["Password"],
 					Salt = pwd["Salt"],
-					Phone = loginInfo.Phone,
+					Phone = model.Phone,
 					Email = model.Email,
-					UserName = loginInfo.Phone,
+					UserName = model.Phone,
 					FullName = model.FullName,
 					Gender = model.Gender,
 					Address = model.Address,
@@ -502,20 +499,20 @@ namespace PAKNAPI.Controllers
 					TypeId = 2,
 					Type = 2,
 					IsActived = true,
-					IsDeleted= false,
+					IsDeleted = false,
 					CountLock = 0,
 					LockEndOut = DateTime.Now,
-					IsSuperAdmin=false,
-					
+					IsSuperAdmin = false,
+
 				};
-					var rs1 = await new SYUserInsert(_appSetting).SYUserInsertDAO(account);
+				var rs1 = await new SYUserInsert(_appSetting).SYUserInsertDAO(account);
 
 				var accRs = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(account.UserName);
 				///mod model
 				///
-				if (string.IsNullOrEmpty(_DateOfIssue)) model.DateOfIssue = null;
+				if (string.IsNullOrEmpty(model._DateOfIssue)) model.DateOfIssue = null;
 				else model.DateOfIssue = dateOfIssue;
-				if (string.IsNullOrEmpty(_BirthDay)) model.BirthDay = null;
+				if (string.IsNullOrEmpty(model._BirthDay)) model.BirthDay = null;
 				else model.BirthDay = birdDay;
 				model.CreatedDate = DateTime.Now;
 				model.CreatedBy = 0;
@@ -533,14 +530,15 @@ namespace PAKNAPI.Controllers
 
 			}
 			catch (Exception ex)
-            {
+			{
 				_bugsnag.Notify(ex);
 				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message};
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 
 			return new Models.Results.ResultApi { Success = ResultCode.OK };
 		}
+
 
 		[HttpGet]
 		[Route("SendDemo")]
