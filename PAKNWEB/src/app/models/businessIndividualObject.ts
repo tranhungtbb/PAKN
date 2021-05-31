@@ -23,6 +23,9 @@ export class IndividualObject {
 	provinceId: any
 	districtId: any
 	wardsId: any
+	proviceName: any
+	wardsName: any
+	districtName: any
 	gender: boolean
 	_birthDay: string
 

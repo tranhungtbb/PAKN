@@ -60,6 +60,7 @@ export class OrganizationComponent implements OnInit {
 		this.formLogin.reset()
 		this.formOrgInfo.reset()
 		this.child_OrgRepreForm.formInfo.reset()
+		this.child_OrgRepreForm.resetObject()
 		this.child_OrgAddressForm.formOrgAddress.reset()
 
 		this.fLoginSubmitted = false

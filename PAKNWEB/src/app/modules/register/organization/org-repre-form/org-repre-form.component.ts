@@ -110,6 +110,26 @@ export class OrgRepreFormComponent implements OnInit {
 		this.onChangeNation()
 	}
 
+	resetObject() {
+		this.model = new OrganizationObject()
+		this.fInfoSubmitted = false
+		this.rebuidForm()
+	}
+
+	rebuidForm() {
+		this.formInfo.reset({
+			RepresentativeName: this.model.RepresentativeName,
+			Email: this.model.Email,
+			Gender: this.model.RepresentativeGender,
+			DOB: this.model._RepresentativeBirthDay,
+			Nation: this.model.Nation,
+			Province: this.model.ProvinceId,
+			District: this.model.DistrictId,
+			Village: this.model.WardsId,
+			Address: this.model.Address,
+		})
+	}
+
 	checkExists = {
 		Email: false,
 		IDCard: false,

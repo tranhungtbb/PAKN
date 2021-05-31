@@ -122,6 +122,12 @@ export class LoginComponent implements OnInit {
 					this.authenService.login(this.user).subscribe(
 						(data) => {
 							if (data.success === RESPONSE_STATUS.success) {
+								if (data.isActive == false) {
+									this.reloadImage()
+									this.captchaCodeProduct = ''
+									this.toastr.error('Tài khoản của bạn đang hết hiệu lực')
+									return
+								}
 								localStorage.clear()
 								this.shareData.setIsLogin(true)
 								this.storeageService.setAccessToken(data.accessToken)
@@ -203,6 +209,12 @@ export class LoginComponent implements OnInit {
 					this.authenService.login(this.userProduct).subscribe(
 						(data) => {
 							if (data.success === RESPONSE_STATUS.success) {
+								if (data.isActive == false) {
+									this.reloadImage()
+									this.captchaCodeProduct = ''
+									this.toastr.error('Tài khoản của bạn đang hết hiệu lực')
+									return
+								}
 								localStorage.clear()
 								this.shareData.setIsLogin(true)
 								this.storeageService.setAccessToken(data.accessToken)

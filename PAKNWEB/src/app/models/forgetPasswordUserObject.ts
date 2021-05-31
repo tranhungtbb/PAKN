@@ -1,3 +1,7 @@
 export class ForgetPasswordUserObject {
-  Email: string;
+	Email: string
+}
+
+export class ForgetPasswordObject {
+	phone: string
 }

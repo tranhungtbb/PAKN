@@ -136,6 +136,15 @@ export class AppheaderComponent implements OnInit {
 		})
 	}
 
+	updateNotifications() {
+		this.notificationService.updateIsViewedNotification({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.getNotifications(this.numberNotifications)
+			}
+			return
+		})
+	}
+
 	get f() {
 		return this.updateForm.controls
 	}

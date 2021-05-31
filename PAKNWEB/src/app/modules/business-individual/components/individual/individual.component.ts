@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, DebugElement, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { BusinessIndividualService } from 'src/app/services/business-individual.service'
 import { DataService } from 'src/app/services/sharedata.service'
@@ -61,6 +61,7 @@ export class IndividualComponent implements OnInit {
 
 	form: FormGroup
 	model: IndividualObject = new IndividualObject()
+	modelDetail: IndividualObject = new IndividualObject()
 	submitted: boolean = false
 	title: string = ''
 	pageIndex: number = 1
@@ -270,6 +271,7 @@ export class IndividualComponent implements OnInit {
 		this.model.gender = true // Giới tính Nam
 		this.model.status = 1 // Hiệu lực
 		this.submitted = false
+		this.rebuidForm()
 		this.title = 'Thêm mới cá nhân'
 		$('#modal').modal('show')
 	}
@@ -296,6 +298,25 @@ export class IndividualComponent implements OnInit {
 			placeIssue: [this.model.issuedPlace, []],
 			dateIssue: [this.model.dateOfIssue, []],
 			status: [this.model.status],
+		})
+	}
+
+	rebuidForm() {
+		this.form.reset({
+			fullName: this.model.fullName,
+			gender: this.model.gender,
+			birthDate: this.model.birthDate,
+			nation: this.model.nation,
+			province: this.model.provinceId,
+			district: this.model.districtId,
+			village: this.model.wardsId,
+			phone: this.model.phone,
+			email: this.model.email,
+			address: this.model.address,
+			iDCard: this.model.iDCard,
+			placeIssue: this.model.issuedPlace,
+			dateIssue: this.model.dateOfIssue,
+			status: this.model.status,
 		})
 	}
 
@@ -330,7 +351,6 @@ export class IndividualComponent implements OnInit {
 			this._toastr.error('Ngày cấp phải lớn hơn ngày sinh')
 			return
 		}
-
 		if (this.model.id != null && this.model.id > 0) {
 			this._service.invididualUpdate(this.model).subscribe((res) => {
 				if (res.success != 'OK') {
@@ -339,6 +359,7 @@ export class IndividualComponent implements OnInit {
 				}
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
 				this.model = new IndividualObject()
+				this.rebuidForm()
 				$('#modal').modal('hide')
 				this.getList()
 			})
@@ -382,23 +403,36 @@ export class IndividualComponent implements OnInit {
 			})
 	}
 
+	preView(id: any) {
+		this._service.individualById({ Id: id }).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				if (res.result.InvididualGetByID.length > 0) {
+					this.modelDetail = res.result.InvididualGetByID[0]
+					console.log(res.result.InvididualGetByID[0])
+					$('#modalDetail').modal('show')
+				}
+			}
+		})
+	}
+
 	preUpdate(data) {
 		let request = {
 			Id: data.id,
 			Type: 1,
 		}
+		this.submitted = false
+
 		this._service.individualById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
+				this.rebuidForm()
 				this.title = 'Chỉnh sửa cá nhân'
 				this.model = response.result.InvididualGetByID[0]
 				this.model.iDCard = response.result.InvididualGetByID[0].idCard
 				this.model.birthDate = new Date(response.result.InvididualGetByID[0].birthDate)
 				this.model.dateOfIssue = new Date(response.result.InvididualGetByID[0].dateOfIssue)
-				console.log('this.model', this.model)
 				this.getProvince()
 				this.getDistrict(response.result.InvididualGetByID[0].provinceId)
 				this.getVillage(response.result.InvididualGetByID[0].provinceId, response.result.InvididualGetByID[0].districtId)
-
 				$('#modal').modal('show')
 			} else {
 				this._toastr.error(response.message)
