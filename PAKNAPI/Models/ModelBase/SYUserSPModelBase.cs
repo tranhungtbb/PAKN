@@ -667,6 +667,8 @@ namespace PAKNAPI.ModelBase
 		public bool? IsMain { get; set; }
 		public int TypeObject { get; set; }
 
+		public bool? IsActived { get; set; }
+
 		public async Task<List<SYUSRLogin>> SYUSRLoginDAO(string UserName)
 		{
 			DynamicParameters DP = new DynamicParameters();
