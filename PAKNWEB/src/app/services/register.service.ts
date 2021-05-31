@@ -23,7 +23,7 @@ export class RegisterService {
 		for (let item in data) {
 			form.append(item, data[item])
 		}
-		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.RegisterIndividual)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.RegisterIndividual)
 	}
 	registerOrganization(data: any): Observable<any> {
 		let form = new FormData()
@@ -32,7 +32,7 @@ export class RegisterService {
 			form.append(item, data[item])
 		}
 
-		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.RegisterOrganization)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.RegisterOrganization)
 	}
 	individualCheckExists(params: any): Observable<any> {
 		return this.serviceInvoker.get(params, AppSettings.API_ADDRESS + Api.IndividualCheckExists)

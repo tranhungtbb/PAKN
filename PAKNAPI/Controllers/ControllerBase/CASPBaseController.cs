@@ -233,5 +233,27 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		[HttpGet]
+		[Route("GetAllByProvinceId")]
+		public async Task<ActionResult<object>> GetAllByProvinceId(short? ProvinceId)
+		{
+			try
+			{
+				List<CAGetAllByProvinceId> rsList = await new CAGetAllByProvinceId(_appSetting).GetAll(ProvinceId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"ListData", rsList},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 	}
 }

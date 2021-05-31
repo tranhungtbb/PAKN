@@ -237,6 +237,7 @@ export class Api {
 	public static ProvinceGetAll = 'CASPBase/CAProvinceGetAllBase'
 	public static DistrictGetAll = 'CASPBase/CADistrictGetAllBase'
 	public static VillageGetAll = 'CASPBase/CAVillageGetAllBase'
+	public static GetAllByProvinceId = 'caspbase/GetAllByProvinceId'
 
 	//register
 	public static RegisterIndividual = 'User/InvididualRegister'

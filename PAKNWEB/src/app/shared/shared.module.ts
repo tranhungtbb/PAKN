@@ -19,6 +19,7 @@ import { DisabledSpaceKeyDirective } from 'src/app/directives/sv-disabled-space-
 import { SvTextAreaTrimDirective } from '../directives/sv-textarea-trim.directive'
 import { HtmlToPlaintextPipe } from '../pipes/html-filter.pipe'
 import { UserCreateOrUpdateComponent } from '../modules/system-management/components/user/user-create-or-update/user-create-or-update.component'
+import { DiaDanhFilterPipe } from '../pipes/dia-danh-filter.pipi'
 
 @NgModule({
 	declarations: [
@@ -41,6 +42,7 @@ import { UserCreateOrUpdateComponent } from '../modules/system-management/compon
 		ChangePipe,
 		SvTextAreaTrimDirective,
 		HtmlToPlaintextPipe,
+		DiaDanhFilterPipe,
 	],
 	exports: [
 		ConfirmClickDirective,
@@ -62,6 +64,7 @@ import { UserCreateOrUpdateComponent } from '../modules/system-management/compon
 		ChangePipe,
 		SvTextAreaTrimDirective,
 		HtmlToPlaintextPipe,
+		DiaDanhFilterPipe,
 	],
 })
 export class SharedModule {}

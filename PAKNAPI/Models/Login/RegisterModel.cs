@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PAKNAPI.ModelBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,27 @@ namespace PAKNAPI.Models.Login
         public string Password { get; set; }
         public string RePassword { get; set; }
     }
+
+    public class IndivialRegisterModel : BIIndividualInsertIN
+    {
+        //public string Phone { get; set; }
+        public string Password { get; set; }
+        public string RePassword { get; set; }
+        //
+        public string _BirthDay { get; set; }
+        public string _DateOfIssue { get; set; }
+    }
+
+    public class BusinessRegisterModel : BIBusinessInsertIN
+    {
+        //public string Phone { get; set; }
+        public string Password { get; set; }
+        public string RePassword { get; set; }
+        //
+        public string _RepresentativeBirthDay { get; set; }
+        public string _DateOfIssue { get; set; }
+    }
+
 
     public class ChangePwdModel
     {
