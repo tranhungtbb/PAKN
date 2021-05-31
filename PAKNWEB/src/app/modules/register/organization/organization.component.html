@@ -131,7 +131,9 @@
 					<label class="mb-1">Mã số thuế <span class="cl-red">(*)</span></label>
 					<input [svTrim] numbersOnly maxlength="13" [(ngModel)]="model.Tax" formControlName="Tax" type="text" placeholder="Nhập..." class="form-control border-brown">
 					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.Tax.invalid)||(fOrgInfo.Tax.invalid && (fOrgInfo.Tax.dirty || fOrgInfo.Tax.touched))" class="has-error m-b-12">
-
+						<div *ngIf="fOrgInfo.Tax.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
 						<div *ngIf="fOrgInfo.Tax.errors.maxlength">
 							<span class="help-block">Chỉ nhập tối đa 13 ký tự</span>
 						</div>

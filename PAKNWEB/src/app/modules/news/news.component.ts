@@ -70,8 +70,7 @@ export class NewsComponent implements OnInit {
 					// item.imagePath = `${AppSettings.API_DOWNLOADFILES}/${item.imagePath}`
 					return item
 				})
-
-				if (this.totalCount == null || this.totalCount == 0) this.totalCount = res.result.TotalCount
+				if (res.result.TotalCount) this.totalCount = res.result.TotalCount
 				// load image
 				//this.getNewsAvatars()
 			})

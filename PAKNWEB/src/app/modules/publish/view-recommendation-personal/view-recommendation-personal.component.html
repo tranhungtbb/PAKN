@@ -44,7 +44,7 @@
 						</div>
 						<div class="media-body">
 							<p class="h4 font-italic font-weight-bold">Nội dung kiến nghị:</p>
-							<p>{{model.content}}</p>
+							<p style="text-align: justify;">{{model.content}}</p>
 							<p class="btn-group">
 								<button type="button" class="btn border text-dark p-2 rounded-lg mr-3" *ngFor="let item of filesModel" style="max-width:230px;">
 									<span class=" mr-2" *ngIf="item.fileType == 1">
@@ -89,10 +89,10 @@
 						<div class="media-body">
 							<p class="h4 font-italic font-weight-bold">{{model.processUnitName}}:</p>
 							<ng-container *ngIf="[3,6,9].includes(model.status)">
-								<p>{{model.reasonDeny}}</p>
+								<p style="text-align: justify;">{{model.reasonDeny}}</p>
 							</ng-container>
 							<ng-container *ngIf="model.status == 10">
-								<p>{{modelConclusion.content}}</p>
+								<p style="text-align: justify;">{{modelConclusion.content}}</p>
 								<ng-container *ngFor="let item of filesModel">
 									<div class="col-auto mb-4" *ngIf="item.fileType == 1">
 										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">

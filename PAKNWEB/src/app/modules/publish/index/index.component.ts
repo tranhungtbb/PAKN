@@ -38,15 +38,17 @@ export class IndexComponent implements OnInit {
 	indexSettingObj = new IndexSettingObjet()
 	ngOnInit() {
 		this.getData()
-		this.indexSettingService.GetInfo({}).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				this.indexSettingObj = res.result.model
-			}
-		}),
+		this.indexSettingService.GetInfo({}).subscribe(
+			(res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.indexSettingObj = res.result.model
+				}
+			},
 			(error) => {
 				console.log(error)
 				alert(error)
 			}
+		)
 	}
 	async getData() {
 		// list recommendation order by count click

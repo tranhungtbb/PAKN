@@ -1,9 +1,9 @@
 export class NewsModel {
 	constructor() {
-		this.postType = '0'
+		this.postType = ''
 		this.isPublished = false
 		this.status = 2 // 0: đã thu hồi | 1: đã công bố | 2: đang soạn thảo
-		this.imagePath = ' '
+		this.imagePath = ''
 		this.newsRelateIds = ''
 		this.newsType = null
 	}

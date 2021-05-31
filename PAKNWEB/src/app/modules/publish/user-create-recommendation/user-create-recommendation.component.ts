@@ -86,7 +86,13 @@ export class CreateRecommendationComponent implements OnInit {
 		$('#_unitId .ng-input input').val(item.name)
 		this.model.unitId = item.id
 	}
-
+	changeSelectUnit(event: any) {
+		if (!event) {
+			$('#_unitId .ng-input input').val('')
+			this.unitSelected = {}
+			this.model.unitId = null
+		}
+	}
 	searchRecommendation() {
 		this.resultsRecommendation = []
 		if (this.model.title != '' && this.model.title.trim() != '') {
@@ -317,6 +323,7 @@ export class CreateRecommendationComponent implements OnInit {
 		var constdata = {
 			CaptchaCode: this.captchaCode,
 		}
+
 		this.captchaService.send(constdata).subscribe((result) => {
 			if (result.success === RESPONSE_STATUS.success) {
 				if (this.model.id == 0) {
