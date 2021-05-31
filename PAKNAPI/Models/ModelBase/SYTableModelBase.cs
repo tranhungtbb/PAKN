@@ -1276,6 +1276,16 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<SYUser>("SY_UserGetByID", DP)).ToList().FirstOrDefault();
 		}
 
+		public async Task<SYUser> SYUserGetByUserName(string? UserName)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserName", UserName);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUser>("[SY_UserGetByName]", DP)).ToList().FirstOrDefault();
+		}
+
+		// [SY_UserGetByName]
+
 		public async Task<List<SYUser>> SYUserGetAll()
 		{
 			DynamicParameters DP = new DynamicParameters();

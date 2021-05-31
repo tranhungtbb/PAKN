@@ -5,6 +5,10 @@ import { PuRecommendationService } from 'src/app/services/pu-recommendation.serv
 import { RESPONSE_STATUS, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
 import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 import { ViewChild } from '@angular/core'
+import { RecommendationCommentService } from 'src/app/services/recommendation-comment.service'
+import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { RecommnendationCommentObject } from 'src/app/models/recommendationObject'
+
 declare var require: any
 const FileSaver = require('file-saver')
 
@@ -14,7 +18,7 @@ const FileSaver = require('file-saver')
 	styleUrls: ['./view-reflections-recommendation.component.css'],
 })
 export class ViewReflectionsRecommendationComponent implements OnInit {
-	public id
+	public id: any = 0
 	public model: any
 	public lstFiles: any
 	public lstConclusion: any
@@ -22,13 +26,25 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	public satisfactions: Array<satisfaction>
 	satisfactionCurrent: boolean
 	checkSatisfaction: boolean
-	constructor(private service: PuRecommendationService, private activatedRoute: ActivatedRoute, public router: Router, private _toastr: ToastrService) {
+	pageSizeComment: any = 20
+	IsAllComment: boolean = false
+	isLogin: boolean = this.storeageService.getIsHaveToken()
+	constructor(
+		private service: PuRecommendationService,
+		private activatedRoute: ActivatedRoute,
+		public router: Router,
+		private _toastr: ToastrService,
+		private commentService: RecommendationCommentService,
+		private storeageService: UserInfoStorageService
+	) {
 		this.checkSatisfaction = false
+		this.listCommentsPaged = []
 	}
 	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	ngOnInit() {
 		this.getRecommendationById()
 		this.setSatisfaction()
+		this.getCommentPaged()
 	}
 
 	getRecommendationById() {
@@ -120,6 +136,70 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 			this._toastr.error('Bạn đã đánh giá Phản ánh, kiến nghị này!')
 			return
 		}
+	}
+
+	//comment
+	commentModel: RecommnendationCommentObject = new RecommnendationCommentObject()
+	commentQuery: any = {
+		pageSize: this.pageSizeComment,
+		pageIndex: 1,
+		recommendationId: 0,
+		isPublish: true,
+	}
+	listCommentsPaged: any[] = []
+	commentFirst = new RecommnendationCommentObject()
+	total_Comments = 0
+
+	onSendComment() {
+		if (this.isLogin == false) {
+			this._toastr.error('Vui lòng đăng nhập để gửi bình luận')
+			return
+		}
+		this.commentModel.userId = this.storeageService.getUserId()
+		this.commentModel.fullName = this.storeageService.getFullName()
+		this.commentModel.recommendationId = this.model.id
+		this.commentModel.contents = this.commentModel.contents.trim()
+		this.commentModel.isPublish = true
+		if (this.commentModel.contents == null || this.commentModel.contents == '') {
+			this._toastr.error('Không bỏ trống nội dung bình luận')
+			return
+		}
+
+		this.commentService.insert(this.commentModel).subscribe((res) => {
+			if (res.success != RESPONSE_STATUS.success) {
+				this._toastr.error('Xảy ra lỗi trong quá trình xử lý')
+				return
+			}
+			this._toastr.success('Thêm bình luận thành công')
+			this.commentModel = new RecommnendationCommentObject()
+			this.getCommentPaged()
+		})
+	}
+
+	getCommentPaged() {
+		this.commentQuery.pageSize = this.pageSizeComment
+		this.commentQuery.recommendationId = this.id
+		this.commentService.getAllOnPage(this.commentQuery).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				if (res.result.MRCommnentGetAllOnPage.length > 0) {
+					this.commentFirst = res.result.MRCommnentGetAllOnPage.shift()
+
+					if (this.listCommentsPaged.length != 0 && this.listCommentsPaged.length == res.result.MRCommnentGetAllOnPage.length) {
+						this.IsAllComment = true
+					} else {
+						this.listCommentsPaged = res.result.MRCommnentGetAllOnPage
+						this.total_Comments = res.result.TotalCount
+					}
+				} else {
+					this.listCommentsPaged = []
+					this.commentFirst = null
+				}
+			}
+		})
+	}
+	loadComment() {
+		this.pageSizeComment += 20
+		this.getCommentPaged()
 	}
 }
 

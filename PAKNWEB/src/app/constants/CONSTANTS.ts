@@ -61,6 +61,8 @@ export class LOG_OBJECT {
 	public static MR_BY_HASHTAG = 'Danh sách PAKN theo hashtag'
 	public static SY_INTRODUCE = 'Cấu hình trang giới thiệu'
 	public static SY_INDEXSETTING = 'Cấu hình trang chủ'
+	public static MR_COMMENT = 'Bình luận Phản ánh kiến nghị'
+
 	public static SY_SYSTEM = 'Lịch sử hệ thống'
 }
 

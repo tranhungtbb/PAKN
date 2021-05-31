@@ -139,11 +139,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("MRCommnentGetAllOnPageBase")]
-		public async Task<ActionResult<object>> MRCommnentGetAllOnPageBase(int? PageSize, int? PageIndex, long? RecommendationId, bool isPublish)
+		public async Task<ActionResult<object>> MRCommnentGetAllOnPageBase(int? PageSize, int? PageIndex, long? RecommendationId, bool IsPublish)
 		{
 			try
 			{
-				List<MRCommnentGetAllOnPage> rsMRCommnentGetAllOnPage = await new MRCommnentGetAllOnPage(_appSetting).MRCommnentGetAllOnPageDAO(PageSize, PageIndex, RecommendationId, isPublish);
+				List<MRCommnentGetAllOnPage> rsMRCommnentGetAllOnPage = await new MRCommnentGetAllOnPage(_appSetting).MRCommnentGetAllOnPageDAO(PageSize, PageIndex, RecommendationId, IsPublish);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"MRCommnentGetAllOnPage", rsMRCommnentGetAllOnPage},

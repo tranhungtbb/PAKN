@@ -64,7 +64,8 @@ namespace PAKNAPI.Controllers
 							{ "AccessToken", tokenString},
 							{ "Permissions", rsSYUSRGetPermissionByUserId},
 						};
-						//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+
 
 						BaseRequest baseRequest = new LogHelper(_appSetting).ReadBodyFromRequest(HttpContext.Request);
 						
@@ -80,6 +81,8 @@ namespace PAKNAPI.Controllers
 							Status = 1,
 							Exception = null
 						};
+
+						if (user[0].IsActived == false) { sYSystemLogInsertIN.Status = 0; };
 						await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
 
 
@@ -90,6 +93,7 @@ namespace PAKNAPI.Controllers
 							UserName = user[0].UserName,
 							FullName = user[0].FullName,
 							Email = user[0].Email,
+							IsActive = user[0].IsActived,
 							Phone = user[0].UserName,
 							UnitId = user[0].UnitId,
 							UnitName = user[0].UnitName,
@@ -102,12 +106,29 @@ namespace PAKNAPI.Controllers
 					}
 					else
 					{
+						BaseRequest baseRequest = new LogHelper(_appSetting).ReadBodyFromRequest(HttpContext.Request);
+
+						SYLOGInsertIN sYSystemLogInsertIN = new SYLOGInsertIN
+						{
+							UserId = user[0].Id,
+							FullName = user[0].FullName,
+							Action = "Login",
+							IPAddress = baseRequest.ipAddress,
+							MACAddress = baseRequest.macAddress,
+							Description = baseRequest.logAction,
+							CreatedDate = DateTime.Now,
+							Status = 0,
+							Exception = null
+						};
+						await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
+						//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception(), loginIN.UserName);
 						return new ResultApi { Success = ResultCode.INCORRECT, Message = "User/Pass not found", };
 					}
 				}
 				else
 				{
-					return new ResultApi { Success = ResultCode.INCORRECT, Message = "User/Pass not found", };
+                    //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception(), loginIN.UserName);
+                    return new ResultApi { Success = ResultCode.INCORRECT, Message = "User/Pass not found", };
 				}
 			}
 			catch (Exception ex)
