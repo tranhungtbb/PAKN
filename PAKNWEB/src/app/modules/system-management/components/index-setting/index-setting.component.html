@@ -15,12 +15,11 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-9" style="padding: 60px;padding-top: 20px;">
+		<div class="col-md-9" style="padding-left: 60px;padding-top: 20px;">
 			<form class="form-horizontal" [formGroup]="form">
 				<div class="row form-group">
-
 					<div class="col-sm-12 padding-col" style="position: relative; padding-bottom: 20px;">
-						<label class="control-label department">Banner lớn<span class="text-danger">(*)</span></label>
+						<label class="control-label department">Banner lớn</label>
 						<input class="form-control" (change)="ChangeBanner($event)" id="bannerImg" hidden type="file" />
 						<a class="btn btn-sm btn-default rounded mr-3 btn-change-banner" title="Thay banner" type="button" (click)="ChooseBanner()">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
@@ -36,8 +35,6 @@
 
 
 					</div>
-
-
 					<div class="col-sm-12 padding-col">
 						<label class="control-label department">Chân trang<span class="text-danger">(*)</span></label>
 						<div class="row" style="background: #EDF5FF; padding: 30px 20px;">
@@ -52,9 +49,11 @@
 									</div>
 								</div>
 
-								<textarea class="form-control" formControlName="title" [(ngModel)]="model.title" maxlength="600" rows="3" placeholder="Nhập..."></textarea>
-								<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
-									<div *ngIf="f.title.errors.required">
+								<textarea class="form-control" formControlName="description" [(ngModel)]="model.description" maxlength="600" rows="3"
+									placeholder="Nhập..."></textarea>
+								<div *ngIf="(submitted && f.description.invalid) || (f.description.invalid && (f.description.dirty || f.description.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="f.description.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
 									</div>
 								</div>
@@ -66,10 +65,13 @@
 											<i class="bi bi-telephone-fill"></i>
 										</div>
 										<div style="width: 90%;">
-											<input class="form-control" formControlName="title" [(ngModel)]="model.title" maxlength="100" placeholder="Nhập..." />
-											<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
-												<div *ngIf="f.title.errors.required">
+											<input class="form-control" formControlName="phone" [(ngModel)]="model.phone" maxlength="100" placeholder="Nhập..." />
+											<div *ngIf="(submitted && f.phone.invalid) || (f.phone.invalid && (f.phone.dirty || f.phone.touched))" class="has-error m-b-12">
+												<div *ngIf="f.phone.errors.required">
 													<span class="help-block">Trường dữ liệu này không để trống</span>
+												</div>
+												<div *ngIf="f.phone.errors.pattern">
+													<span class="help-block">Định dạng sđt không đúng</span>
 												</div>
 											</div>
 										</div>
@@ -80,10 +82,13 @@
 											<i class="bi bi-envelope-open-fill"></i>
 										</div>
 										<div style="width: 90%;">
-											<input class="form-control" formControlName="title" [(ngModel)]="model.title" maxlength="100" placeholder="Nhập..." />
-											<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
-												<div *ngIf="f.title.errors.required">
+											<input class="form-control" formControlName="email" [(ngModel)]="model.email" maxlength="100" placeholder="Nhập..." />
+											<div *ngIf="(submitted && f.email.invalid) || (f.email.invalid && (f.email.dirty || f.email.touched))" class="has-error m-b-12">
+												<div *ngIf="f.email.errors.required">
 													<span class="help-block">Trường dữ liệu này không để trống</span>
+												</div>
+												<div *ngIf="f.email.errors.email">
+													<span class="help-block">Định dạng email không đúng</span>
 												</div>
 											</div>
 										</div>
@@ -93,10 +98,10 @@
 											<i class="bi bi-geo-alt-fill"></i>
 										</div>
 										<div style="width: 90%;">
-											<textarea class="form-control" formControlName="title" [(ngModel)]="model.title" maxlength="250" rows="3"
+											<textarea class="form-control" formControlName="address" [(ngModel)]="model.address" maxlength="250" rows="3"
 												placeholder="Nhập..."></textarea>
-											<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
-												<div *ngIf="f.title.errors.required">
+											<div *ngIf="(submitted && f.address.invalid) || (f.address.invalid && (f.address.dirty || f.address.touched))" class="has-error m-b-12">
+												<div *ngIf="f.address.errors.required">
 													<span class="help-block">Trường dữ liệu này không để trống</span>
 												</div>
 											</div>
@@ -107,10 +112,11 @@
 						</div>
 					</div>
 
-					<div class="col-sm-12 padding-col">
-						<input class="form-control" formControlName="title" [(ngModel)]="model.title" maxlength="100" placeholder="Nhập..." />
-						<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
-							<div *ngIf="f.title.errors.required">
+					<div class="col-sm-12 padding-col" style="background: #E9F2FD;">
+						<input class="form-control" formControlName="license" [(ngModel)]="model.license" maxlength="500" placeholder="Nhập..."
+							style="width: 96%;margin: 15px 15px;" />
+						<div *ngIf="(submitted && f.license.invalid) || (f.license.invalid && (f.license.dirty || f.license.touched))" class="has-error m-b-12">
+							<div *ngIf="f.license.errors.required">
 								<span class="help-block">Trường dữ liệu này không để trống</span>
 							</div>
 						</div>
@@ -118,6 +124,73 @@
 				</div>
 			</form>
 		</div>
-		<div class="col-md-3" style="padding: 60px;padding-top: 20px;"></div>
+		<div class="col-md-3" style="padding-top: 20px; border: 1px solid #E5E5E5;">
+			<div class="col-sm-12 no-padding">
+				<div style="display: flex;">
+					<label class="control-label department">Banner Slidebar</label>
+					<a class="btn btn-sm grd-xanhngoc text-white rounded border-0 ml-3" (click)="preInsertBanner()">
+						<i class="bi bi-upload"></i>&nbsp;
+						Tải lên
+					</a>
+				</div>
+
+				<input hidden type="file" id="insertBanner" (change)="onInsertBanner($event)">
+
+				<div class="lstBanner">
+					<div class="item-banner shadow" *ngFor="let item of lstIndexSettingBanner">
+						<img style="width: 100%;height: 100%; object-fit: cover;" [src]="item.fileAttach">
+						<div class="remove-banner center" (click)="onDeleteBanner(item)"><i class="bi bi-x"></i></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-12 no-padding" style="text-align: center;">
+				<label class="control-label department">Liên kết website</label>
+				<form [formGroup]="formWebsite">
+					<input class="form-control" formControlName="nameWebsite" [(ngModel)]="modelWebsite.nameWebsite" maxlength="100" placeholder="Tên website..."
+						style="margin-top: 10px;" />
+					<div *ngIf="(submittedWebsite && fWebsite.nameWebsite.invalid) || (fWebsite.nameWebsite.invalid && (fWebsite.nameWebsite.dirty || fWebsite.nameWebsite.touched))"
+						class="has-error m-b-12">
+						<div *ngIf="fWebsite.nameWebsite.errors.required">
+							<span class="help-block">Trường dữ liệu này không để trống</span>
+						</div>
+					</div>
+
+					<input class="form-control" formControlName="urlWebsite" [(ngModel)]="modelWebsite.urlWebsite" maxlength="100" placeholder="Đường dẫn website..."
+						style="margin-top: 10px;" />
+					<div *ngIf="(submittedWebsite && fWebsite.urlWebsite.invalid) || (fWebsite.urlWebsite.invalid && (fWebsite.urlWebsite.dirty || fWebsite.urlWebsite.touched))"
+						class="has-error m-b-12">
+						<div *ngIf="fWebsite.urlWebsite.errors.required">
+							<span class="help-block">Trường dữ liệu này không để trống</span>
+						</div>
+						<div *ngIf="fWebsite.urlWebsite.errors.pattern">
+							<span class="help-block">Định dạng đường dẫn không đúng</span>
+						</div>
+					</div>
+					<a class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSaveWebsite()" style="width: 100%;margin-top: 10px;padding-left: 33%;">
+						Thêm liên kết
+					</a>
+
+
+				</form>
+
+
+				<div class="lstWebsite" style="margin-bottom: 20px;">
+					<div *ngIf="!ltsIndexSettingWebsite || ltsIndexSettingWebsite.length == 0">Chưa có liên kết website nào</div>
+					<div class="item-website" *ngFor="let item of ltsIndexSettingWebsite">
+						<div class="title-website" style="text-align: left;">{{item.nameWebsite}}</div>
+						<div style="display: flex;">
+							<i class="bi bi-paperclip"></i>
+							<a src="" class="text-1line">{{item.urlWebsite}}</a>
+						</div>
+						<div class="remove-banner center" style="z-index: 100;" (click)="onDeleteWebsite(item.nameWebsite)"><i class="bi bi-x"></i></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
 	</div>
+
 </div>

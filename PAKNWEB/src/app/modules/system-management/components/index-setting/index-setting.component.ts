@@ -2,12 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 import { Router } from '@angular/router'
+import { SafeUrl, DomSanitizer } from '@angular/platform-browser'
+
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { AppSettings } from 'src/app/constants/app-setting'
 
-import { IntroduceService } from 'src/app/services/introduce.service'
-import { IntroduceObjet, IntroduceFunction, IntroduceUnit } from 'src/app/models/IntroductObject'
-import { error } from 'jquery'
+import { IndexSettingService } from 'src/app/services/index-setting.service'
+import { IndexSettingObjet, IndexBanner, IndexWebsite } from 'src/app/models/indexSettingObject'
 import { COMMONS } from 'src/app/commons/commons'
 declare var $: any
 @Component({
@@ -16,21 +17,22 @@ declare var $: any
 	styleUrls: ['./index-setting.component.css'],
 })
 export class IndexSettingComponent implements OnInit {
-	constructor(private _service: IntroduceService, private _toastr: ToastrService, private _fb: FormBuilder, private _router: Router) {
-		this.lstIntroduceFunction = []
+	constructor(private _service: IndexSettingService, private _toastr: ToastrService, private _fb: FormBuilder, private _router: Router, private sanitizer: DomSanitizer) {
+		this.ltsIndexSettingWebsite = []
+		this.lstIndexSettingBanner = []
+		this.lstRemoveBanner = []
+		this.lstInsertBanner = []
 	}
 
-	model: any = new IntroduceObjet()
-	PageSize: number = 10
-	PageIndex: number = 1
-	totalRecords: number = 0
-	modelUnit: any = new IntroduceUnit()
-	ltsIntroductUnit: Array<IntroduceUnit>
-	lstIntroduceFunction: Array<IntroduceFunction>
+	model: any = new IndexSettingObjet()
+
+	modelWebsite: any = new IndexWebsite()
+	ltsIndexSettingWebsite: Array<IndexWebsite>
+	lstIndexSettingBanner: Array<IndexBanner>
+	lstInsertBanner: any[]
+	lstRemoveBanner: Array<IndexBanner>
 	submitted: boolean = false
-	submittedUnit: boolean = false
-	title: string = 'Thêm mới đơn vị'
-	idDeleteUnit: number
+	submittedWebsite: boolean = false
 
 	// file
 
@@ -39,21 +41,19 @@ export class IndexSettingComponent implements OnInit {
 
 	// form
 	form: FormGroup
-	formUnit: FormGroup
-	// chid
-	@ViewChild('table', { static: false }) table: any
+	formWebsite: FormGroup
 
 	ngOnInit() {
 		// get model
 		this.buildForm()
-		this.buildFormUnit()
+		this.buildFormWebsite()
 
 		this._service.GetInfo({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.model = res.result.model
-				this.bannerUrl = AppSettings.API_DOWNLOADFILES + '/' + this.model.bannerUrl
-				this.lstIntroduceFunction = res.result.lstIntroduceFunction
-				this.getListUnit()
+				this.bannerUrl = this.model.bannerUrl
+				this.lstIndexSettingBanner = res.result.lstIndexSettingBanner == null ? [] : res.result.lstIndexSettingBanner
+				this.ltsIndexSettingWebsite = res.result.lstSYIndexWebsite == null ? [] : res.result.lstSYIndexWebsite
 			}
 		}),
 			(error) => {
@@ -70,82 +70,54 @@ export class IndexSettingComponent implements OnInit {
 
 	buildForm() {
 		this.form = this._fb.group({
-			title: [this.model.title, Validators.required],
-			summary: [this.model.summary, Validators.required],
-			descriptionUnit: [this.model.descriptionUnit, Validators.required],
-			descriptionFunction: [this.model.descriptionFunction, Validators.required],
+			phone: [this.model.phone, [Validators.required, Validators.pattern('[- +()0-9]+')]],
+			email: [this.model.email, [Validators.required, Validators.email]],
+			address: [this.model.address, Validators.required],
+			description: [this.model.description, Validators.required],
+			license: [this.model.license, Validators.required],
 		})
 	}
 
-	get fUnit() {
-		return this.formUnit.controls
+	get fWebsite() {
+		return this.formWebsite.controls
 	}
 
-	buildFormUnit() {
-		this.formUnit = this._fb.group({
-			title: [this.modelUnit.title, Validators.required],
-			description: [this.modelUnit.description, Validators.required],
-			infomation: [this.modelUnit.infomation, Validators.required],
-			index: [this.modelUnit.index],
+	buildFormWebsite() {
+		this.formWebsite = this._fb.group({
+			nameWebsite: [this.modelWebsite.nameWebsite, Validators.required],
+			urlWebsite: [this.modelWebsite.urlWebsite, [Validators.required, Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')]],
 		})
 	}
 
-	rebuilFormUnit() {
-		this.formUnit.reset({
-			title: this.modelUnit.Title,
-			description: this.modelUnit.Description,
-			infomation: this.modelUnit.Infomation,
-			index: this.modelUnit.Index,
+	rebuilFormWebsite() {
+		this.formWebsite.reset({
+			nameWebsite: this.modelWebsite.nameWebsite,
+			urlWebsite: this.modelWebsite.urlWebsite,
 		})
 	}
 
-	onPageChange(event: any) {
-		this.PageSize = event.rows
-		this.PageIndex = event.first / event.rows + 1
-		this.getListUnit()
-	}
-
-	getListUnit() {
-		let obj = {
-			IntroduceId: this.model.id,
-			PageSize: this.PageSize,
-			PageIndex: this.PageIndex,
-		}
-		this._service.IntroduceUnitGetListOnPage(obj).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				if (res.result.SYIntroduceUnitGetOnPage.length > 0) {
-					this.ltsIntroductUnit = res.result.SYIntroduceUnitGetOnPage
-					this.PageIndex = res.result.PageIndex
-					this.PageSize = res.result.PageSize
-					this.totalRecords = res.result.TotalCount
-				} else {
-					this.ltsIntroductUnit = []
-					this.PageIndex = 1
-					this.PageSize = 10
-					this.totalRecords = 0
-					return
-				}
-			} else {
-				this.ltsIntroductUnit = []
-				this.PageIndex = 1
-				this.PageSize = 10
-				this.totalRecords = 0
-				return
-			}
-		}),
-			(error) => {
-				console.log(error)
-				alert(error)
-			}
-	}
 	redirect() {
 		window.history.back()
 	}
+
 	onSave() {
+		this.submitted = true
+		this.model.phone = this.model.phone.trim()
+		this.model.email = this.model.email.trim()
+		this.model.address = this.model.address.trim()
+		this.model.description = this.model.description.trim()
+		this.model.license = this.model.license.trim()
+
+		if (this.form.invalid) {
+			return
+		}
+
 		let obj = {
 			model: this.model,
 			fileBanner: this.BannerImg,
-			lstIntroduceFunction: this.lstIntroduceFunction,
+			ltsIndexWebsite: this.ltsIndexSettingWebsite,
+			lstInsertBanner: this.lstInsertBanner,
+			lstRemoveBanner: this.lstRemoveBanner,
 		}
 		this._service.Update(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
@@ -160,98 +132,48 @@ export class IndexSettingComponent implements OnInit {
 			}
 	}
 
-	onSaveUnit() {
-		this.submittedUnit = true
-		this.modelUnit.title = this.modelUnit.title.trim()
-		this.modelUnit.description = this.modelUnit.description.trim()
-		this.modelUnit.infomation = this.modelUnit.infomation.trim()
+	onSaveWebsite() {
+		this.submittedWebsite = true
+		this.modelWebsite.nameWebsite = this.modelWebsite.nameWebsite.trim()
+		this.modelWebsite.urlWebsite = this.modelWebsite.urlWebsite.trim()
+		this.modelWebsite.indexSystemId = this.model.id
 
-		if (this.formUnit.invalid) {
+		if (this.formWebsite.invalid) {
 			return
 		}
-		if (this.modelUnit.id == 0 || this.modelUnit.id == null) {
-			this.modelUnit.introduceId = this.model.id
-			this._service.IntroduceUnitInsert(this.modelUnit).subscribe((response) => {
-				if (response.success == RESPONSE_STATUS.success) {
-					$('#modal-create-update-introduce-unit').modal('hide')
-					this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
-					this.getListUnit()
-				} else {
-					let res = isNaN(response.result) == true ? 0 : response.result
-					if (res == -1) {
-						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
-						return
-					} else {
-						this._toastr.error(response.message)
-						return
-					}
+		if (this.ltsIndexSettingWebsite.length > 0) {
+			var check = 0
+			this.ltsIndexSettingWebsite.map((item) => {
+				if (item.nameWebsite == this.modelWebsite.nameWebsite) {
+					check += 1
+					return
 				}
-			}),
-				(error) => {
-					console.error(error)
-					alert(error)
-				}
-		} else {
-			this._service.IntroduceUnitUpdate(this.modelUnit).subscribe((response) => {
-				if (response.success == RESPONSE_STATUS.success) {
-					$('#modal-create-update-introduce-unit').modal('hide')
-					this._toastr.success(MESSAGE_COMMON.UPDATE_SUCCESS)
-					this.getListUnit()
-				} else {
-					let res = isNaN(response.result) == true ? 0 : response.result
-					if (res == -1) {
-						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
-						return
-					} else {
-						this._toastr.error(response.message)
-						return
-					}
-				}
-			}),
-				(error) => {
-					console.error(error)
-					alert(error)
-				}
-		}
-	}
-
-	preCreate() {
-		this.title = 'Thêm mới đơn vị'
-		this.modelUnit = new IntroduceUnit()
-		$('#modal-create-update-introduce-unit').modal('show')
-	}
-
-	preUpdate(model: any) {
-		this.title = 'Chỉnh sửa đơn vị'
-		this.modelUnit = { ...model }
-		$('#modal-create-update-introduce-unit').modal('show')
-	}
-
-	preDelete(id: number) {
-		this.idDeleteUnit = id
-		$('#modalConfirmDelete').modal('show')
-	}
-
-	onDelete() {
-		let request = {
-			Id: this.idDeleteUnit,
-		}
-		this._service.IntroduceUnitDelete(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				if (response.result > 0) {
-					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
-				} else {
-					this._toastr.error(MESSAGE_COMMON.DELETE_FAILED)
-				}
-				$('#modalConfirmDelete').modal('hide')
-				this.getListUnit()
+			})
+			if (check > 0) {
+				this._toastr.error('Tên website đã bị trùng')
+				return
 			} else {
-				this._toastr.error(response.message)
+				this.ltsIndexSettingWebsite.push(this.modelWebsite)
+				this.submittedWebsite = false
+				this.modelWebsite = new IndexWebsite()
+				this.rebuilFormWebsite()
+				this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
+				return
 			}
-		}),
-			(error) => {
-				console.error(error)
-			}
+		} else {
+			this.ltsIndexSettingWebsite.push(this.modelWebsite)
+			this.submittedWebsite = false
+			this.modelWebsite = new IndexWebsite()
+			this.rebuilFormWebsite()
+			this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
+		}
+	}
+
+	onDeleteWebsite(nameWebsite: any) {
+		if (nameWebsite == undefined) return
+		if (this.ltsIndexSettingWebsite.length > 0) {
+			this.ltsIndexSettingWebsite = this.ltsIndexSettingWebsite.filter((x) => x.nameWebsite != nameWebsite)
+		}
 	}
 
 	ChooseBanner() {
@@ -272,5 +194,41 @@ export class IndexSettingComponent implements OnInit {
 		}
 
 		this.BannerImg = event.target.files[0]
+	}
+
+	// lts banner
+
+	preInsertBanner() {
+		$('#insertBanner').click()
+	}
+	onInsertBanner(event: any) {
+		var file = event.target.files[0]
+		if (!['image/jpeg', 'image/png'].includes(file.type)) {
+			this._toastr.error('Chỉ chọn tệp tin ảnh')
+			event.target.value = null
+			return
+		}
+
+		for (let item of this.lstIndexSettingBanner) {
+			if (item.name === file.name) {
+				this._toastr.error('Không phép đẩy cùng 1 file lên hệ thống')
+				return
+			}
+		}
+
+		let banner = new IndexBanner()
+
+		banner.fileAttach = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(event.target.files[0]))
+
+		this.lstIndexSettingBanner.push(banner)
+
+		this.lstInsertBanner.push(file)
+	}
+
+	onDeleteBanner(args) {
+		const index = this.lstIndexSettingBanner.indexOf(args)
+		const file = this.lstIndexSettingBanner[index]
+		this.lstRemoveBanner.push(file)
+		this.lstIndexSettingBanner.splice(index, 1)
 	}
 }

@@ -174,22 +174,20 @@
 	<!--**********************************
             Footer start
         ***********************************-->
+
 	<div class="footer px-0">
 		<div class="ct-footer pt-5 pb-4" style="background: #f6faff">
 			<div class="container">
 				<div class="row justify-content-between">
 					<div class="col-12 col-lg-5 pr-lg-5">
 						<a href="#"><img class="img-fluid" src="../../../assets/dist/images/logo-ft.png" alt=""></a>
-						<p class="mb-0 mt-3 h6">Lorem Ipsum is simply dummy text of the printing and typesetting
-							industry. Lorem ipsum dolor, sit amet consectetur adipisicing elit doloribus fugiat
-							accusantium illo.</p>
+						<p class="mb-0 mt-3 h6">{{indexSettingObj.description}}</p>
 					</div>
 					<div class="col-auto pl-3 pl-lg-0 mt-3 mt-lg-0" style="width: 320px">
 						<ul class="list-group list-group-flush">
-							<li class="list-group-item pb-2 pt-0 px-0 border-0"><i class="bi bi-telephone-fill mr-2"></i>0258.3563.531</li>
-							<li class="list-group-item py-2 px-0 border-0"><i class="bi bi-envelope-open-fill mr-2"></i>stttt@khanhhoa.gov.vn</li>
-							<li class="list-group-item py-2 px-0"><i class="bi bi-geo-alt-fill mr-2"></i>Nhà A1 Khu Liên
-								cơ số 01 đường Trần Phú, thành phố Nha Trang, tỉnh Khánh Hòa</li>
+							<li class="list-group-item pb-2 pt-0 px-0 border-0"><i class="bi bi-telephone-fill mr-2"></i>{{indexSettingObj.phone}}</li>
+							<li class="list-group-item py-2 px-0 border-0"><i class="bi bi-envelope-open-fill mr-2"></i>{{indexSettingObj.email}}</li>
+							<li class="list-group-item py-2 px-0"><i class="bi bi-geo-alt-fill mr-2"></i>{{indexSettingObj.address}}</li>
 						</ul>
 					</div>
 				</div>
@@ -199,8 +197,7 @@
 		<div class="copyright py-2" style="background: #E9F2FD">
 			<div class="container">
 				<p class="text-left">
-					<small class="fw600">Giấy phép số: 39/GP-TTĐT do Cục Quản lý Phát thanh, Truyền hình và Thông tin điện tử - Bộ
-						Thông tin và Truyền thông cấp ngày 28/4/2016</small>
+					<small class="fw600">{{indexSettingObj.license}}</small>
 				</p>
 			</div>
 		</div>

@@ -315,11 +315,11 @@ namespace PAKNAPI.ModelBase
 		public async Task<List<SYIndexSettingBanner>> SYIndexSettingBannerGetByIndexSettingId(int? Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-			return await _sQLCon.ExecuteScalarDapperAsync<List<SYIndexSettingBanner>>("[SY_IndexBannerGetByIndexSettingId]", DP);
+			DP.Add("IndexSettingId", Id);
+			return (await _sQLCon.ExecuteListDapperAsync<SYIndexSettingBanner>("[SY_IndexBannerGetByIndexSettingId]", DP)).ToList();
 		}
 
-		public async Task<int?> SYIndexSettingInsertDAO(SYIndexSettingBanner sy)
+		public async Task<int?> SYIndexBannerInsertDAO(SYIndexSettingBanner sy)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", sy.Name);
@@ -332,7 +332,7 @@ namespace PAKNAPI.ModelBase
 
 		
 
-		public async Task<int> SYIndexSettingDeleteDAO(SYIntroduceUnitDelete sy)
+		public async Task<int> SYIndexBannerDeleteDAO(SYIntroduceUnitDelete sy)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", sy.Id);
@@ -364,8 +364,8 @@ namespace PAKNAPI.ModelBase
 		public async Task<List<SYIndexWebsite>> SY_IndexWebsiteGetByIndexSettingId(int? Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-			return await _sQLCon.ExecuteScalarDapperAsync<List<SYIndexWebsite>>("SY_IndexWebsiteGetByIndexSettingId", DP);
+			DP.Add("IndexSettingId", Id);
+			return (await _sQLCon.ExecuteListDapperAsync<SYIndexWebsite>("SY_IndexWebsiteGetByIndexSettingId", DP)).ToList();
 		}
 
 		public async Task<int?> SY_IndexWebsiteInsertDAO(SYIndexWebsite sy)
@@ -383,10 +383,13 @@ namespace PAKNAPI.ModelBase
 		public async Task<int> SY_IndexWebsiteDeleteAllDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_IndexWebsiteDeleteAll", DP));
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("[SY_IndexWebsiteDelete]", DP));
 		}
 
+	}
+
+	public class SY_IndexWebsiteDelete {
+		public int? Id { get; set; }
 	}
 
 

@@ -7,6 +7,8 @@ import { DataService } from 'src/app/services/sharedata.service'
 import { NotificationService } from 'src/app/services/notification.service'
 import { stat } from 'fs'
 import { ChatbotService } from 'src/app/services/chatbot.service'
+import { IndexSettingService } from 'src/app/services/index-setting.service'
+import { IndexSettingObjet, IndexBanner, IndexWebsite } from 'src/app/models/indexSettingObject'
 
 @Component({
 	selector: 'app-publish',
@@ -20,7 +22,8 @@ export class PublishComponent implements OnInit, OnChanges {
 		private authenService: AuthenticationService,
 		private sharedataService: DataService,
 		private notificationService: NotificationService,
-		private chatBotService: ChatbotService
+		private chatBotService: ChatbotService,
+		private indexSettingService: IndexSettingService
 	) {}
 
 	activeUrl: string = ''
@@ -33,6 +36,8 @@ export class PublishComponent implements OnInit, OnChanges {
 	index: number = 0
 	routerHome = 'trang-chu'
 	isLogin: boolean = this.storageService.getIsHaveToken()
+	indexSettingObj: any = new IndexSettingObjet()
+
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
@@ -49,6 +54,17 @@ export class PublishComponent implements OnInit, OnChanges {
 		if (this.isLogin) {
 			this.getListNotification(this.numberNotifications)
 		}
+		this.indexSettingService.GetInfo({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.indexSettingObj = res.result.model
+				// this.lstIndexSettingBanner = res.result.lstIndexSettingBanner == null ? [] : res.result.lstIndexSettingBanner
+				// this.ltsIndexSettingWebsite = res.result.lstSYIndexWebsite == null ? [] : res.result.lstSYIndexWebsite
+			}
+		}),
+			(error) => {
+				console.log(error)
+				alert(error)
+			}
 	}
 
 	botname: string = 'Bot'
@@ -88,7 +104,6 @@ export class PublishComponent implements OnInit, OnChanges {
 	}
 
 	ngOnChanges() {
-		debugger
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
 			if (splitRouter[2] != this.routerHome) {

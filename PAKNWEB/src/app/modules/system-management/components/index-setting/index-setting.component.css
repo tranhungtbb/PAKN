@@ -16,11 +16,11 @@ label {
 
 .btn-change-banner {
 	border: 1px solid gray;
-	width: 150px;
+	width: 140px;
 	color: #1673d8 !important;
 	position: absolute;
-	top: 80px;
-	right: 30px;
+	top: 60px;
+	right: 20px;
 	z-index: 1;
 }
 
@@ -70,4 +70,54 @@ textarea {
 
 input {
 	height: 32px;
+}
+
+.no-padding {
+	padding-left: 0px;
+}
+
+.item-banner {
+	width: 100%;
+	position: relative;
+	margin: 15px 0px;
+	height: 130px;
+	/* border-radius: 10px; */
+}
+
+.item-banner img {
+	border-radius: 5px;
+}
+
+.remove-banner {
+	cursor: pointer;
+	position: absolute;
+	top: 7px;
+	right: 10px;
+	height: 20px;
+	width: 20px;
+	border-radius: 50%;
+	background-color: #fff;
+	color: #111;
+}
+.title-website {
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 20px;
+	/* identical to box height, or 125% */
+
+	/* Dark */
+
+	color: #333333;
+}
+.item-website {
+	border: 1px solid rgba(214, 214, 214, 0.8);
+	border-radius: 10px;
+	min-height: 50px;
+	padding: 5px 10px 10px 10px;
+	margin: 5px 0px;
+	position: relative;
+}
+
+.lstWebsite {
+	padding-top: 10px;
 }

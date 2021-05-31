@@ -130,12 +130,13 @@ namespace PAKNAPI.ModelBase
 		public long? RecommendationId { get; set; }
 		public DateTime? CreatedDate { get; set; }
 
-		public async Task<List<MRCommnentGetAllOnPage>> MRCommnentGetAllOnPageDAO(int? PageSize, int? PageIndex, long? RecommendationId)
+		public async Task<List<MRCommnentGetAllOnPage>> MRCommnentGetAllOnPageDAO(int? PageSize, int? PageIndex, long? RecommendationId, bool isPublish)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
 			DP.Add("RecommendationId", RecommendationId);
+			DP.Add("IsPublish", isPublish);
 
 			return (await _sQLCon.ExecuteListDapperAsync<MRCommnentGetAllOnPage>("MR_Commnent_GetAllOnPage", DP)).ToList();
 		}
@@ -161,6 +162,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UserId", _mRCommnentInsertIN.UserId);
 			DP.Add("RecommendationId", _mRCommnentInsertIN.RecommendationId);
 			DP.Add("FullName", _mRCommnentInsertIN.FullName);
+			DP.Add("IsPublish", _mRCommnentInsertIN.IsPublish);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Commnent_Insert", DP));
 		}
@@ -172,6 +174,7 @@ namespace PAKNAPI.ModelBase
 		public long? UserId { get; set; }
 		public long? RecommendationId { get; set; }
 		public string FullName { get; set; }
+		public bool IsPublish { get; set; }
 	}
 
 	public class MRRecommendationCheckExistedCode

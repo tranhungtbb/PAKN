@@ -222,6 +222,13 @@ export class Api {
 	public static SYIntroduceUnitUpdate = 'SYIntroduce/IntroduceUnitUpdate'
 	public static SYIntroduceUnitDetete = 'SYIntroduce/IntroduceUnitDetete'
 
+	// SYIndexSetting
+
+	public static SYIndexSettingGetInfo = 'SYIndexSetting/IndexSettingGetInfo'
+	public static SYIndexSettingUpdate = 'SYIndexSetting/IndexSettingUpdate'
+	public static SYIndexWebsiteInsert = 'SYIndexSetting/IndexWebsiteInsert'
+	public static SYIndexWebsiteGetAll = 'SYIndexSetting/IndexWebsiteGetAll'
+
 	//RequestRecommendation
 	public static RecommendationRequestGetListProcess = 'MRSPBase/MRRecommendationKNCTGetAllWithProcessBase'
 	public static RecommendationRequestGetDataForCreate = 'CACategorySPBase/CAFieldKNCTGetDropdownBase'

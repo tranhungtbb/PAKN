@@ -8,6 +8,8 @@ import { NewsService } from 'src/app/services/news.service'
 import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
 import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { IndexSettingService } from 'src/app/services/index-setting.service'
+import { IndexSettingObjet } from 'src/app/models/indexSettingObject'
 
 declare var $: any
 
@@ -22,7 +24,8 @@ export class IndexComponent implements OnInit {
 		private _router: Router,
 		private _newsService: NewsService,
 		private _serviceAdministrative: AdministrativeFormalitiesService,
-		private sanitizer: DomSanitizer
+		private sanitizer: DomSanitizer,
+		private indexSettingService: IndexSettingService
 	) {}
 	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 
@@ -31,8 +34,19 @@ export class IndexComponent implements OnInit {
 	news: any[]
 	firstNews: any
 	Administrations: any[]
+
+	indexSettingObj = new IndexSettingObjet()
 	ngOnInit() {
 		this.getData()
+		this.indexSettingService.GetInfo({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.indexSettingObj = res.result.model
+			}
+		}),
+			(error) => {
+				console.log(error)
+				alert(error)
+			}
 	}
 	async getData() {
 		// list recommendation order by count click

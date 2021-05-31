@@ -135,7 +135,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			this.createUnitFrom.reset()
 		})
 		setTimeout(() => {
-			$('#title-user-in-unit').click()
+			this.onCollapsed('item01')
 		}, 1000)
 	}
 

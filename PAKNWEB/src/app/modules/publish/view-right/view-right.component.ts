@@ -6,6 +6,8 @@ import { PuRecommendation } from 'src/app/models/recommendationObject'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { IndexSettingService } from 'src/app/services/index-setting.service'
+import { IndexBanner, IndexWebsite } from 'src/app/models/indexSettingObject'
 
 declare var $: any
 
@@ -15,14 +17,33 @@ declare var $: any
 	styleUrls: ['./view-right.component.css'],
 })
 export class ViewRightComponent implements OnInit {
-	constructor(private _service: PuRecommendationService, private _router: Router, private sanitizer: DomSanitizer, private storageService: UserInfoStorageService) {}
+	constructor(private _service: PuRecommendationService, private _router: Router, private storageService: UserInfoStorageService, private indexSettingService: IndexSettingService) {
+		this.ltsIndexSettingWebsite = []
+		this.lstIndexSettingBanner = []
+	}
 
 	RecommendationsOrderByCountClick: Array<PuRecommendation>
 	recommendationStatistics: any = new RecommendationStatistics()
 	totalRecommentdation: number = 0
 	isLogin: boolean = this.storageService.getIsHaveToken()
+	lstIndexSettingBanner: Array<IndexBanner>
+	bannerFinal: any = new IndexBanner()
+	ltsIndexSettingWebsite: Array<IndexWebsite>
+
 	ngOnInit() {
 		this.getData()
+
+		this.indexSettingService.GetInfo({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.ltsIndexSettingWebsite = res.result.lstSYIndexWebsite == null ? [] : res.result.lstSYIndexWebsite
+				this.bannerFinal = res.result.lstIndexSettingBanner.pop()
+				this.lstIndexSettingBanner = res.result.lstIndexSettingBanner == null ? [] : res.result.lstIndexSettingBanner
+			}
+		}),
+			(error) => {
+				console.log(error)
+				alert(error)
+			}
 	}
 	async getData() {
 		// list recommendation order by count click
