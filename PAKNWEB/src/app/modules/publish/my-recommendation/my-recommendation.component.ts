@@ -83,10 +83,13 @@ export class MyRecommendationComponent implements OnInit {
 		})
 	}
 
+	LtsStatus = ''
 	getList(Status: any = null) {
+		if (Status) this.LtsStatus = Status
 		let request = {
 			userId: this.storageService.getUserId(),
-			LtsStatus: Status == null ? '' : Status,
+			//LtsStatus: Status == null ? '' : Status,
+			LtsStatus: this.LtsStatus,
 			pageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}

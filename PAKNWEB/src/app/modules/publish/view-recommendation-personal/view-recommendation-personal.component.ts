@@ -78,6 +78,7 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 				if (this.model.sendDate) {
 					this.model.sendDate = new Date(this.model.sendDate)
 				}
+				console.log(response)
 			} else {
 				this.toastr.error(response.message)
 			}

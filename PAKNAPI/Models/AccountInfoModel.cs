@@ -36,11 +36,11 @@ namespace PAKNAPI.Models
             IsDeleted= entity.IsDeleted;
             Id= entity.Id;
 
-            RepresentativeBirthDay = entity.RepresentativeBirthDay.Value.ToString("dd/MM/yyyy");
+            RepresentativeBirthDay = entity.RepresentativeBirthDay?.ToString("dd/MM/yyyy");
             ProvinceId= entity.ProvinceId;
             Status= entity.Status;
             RepresentativeGender = entity.RepresentativeGender;
-            DateOfIssue= entity.DateOfIssue == null ? "": entity.DateOfIssue.Value.ToString("dd/MM/yyyy");
+            DateOfIssue= entity.DateOfIssue == null ? "": entity.DateOfIssue?.ToString("dd/MM/yyyy");
             Address= entity.Address;
             Email= entity.Email;
             Phone= entity.Phone;

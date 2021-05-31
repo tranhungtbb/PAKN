@@ -117,7 +117,7 @@ export class AccountUpdateInfoComponent implements OnInit {
 			//userName: [this.model.userName, [Validators.required]],
 			fullName: [this.model.fullName, [Validators.required]],
 			dateOfBirth: [this.model.dateOfBirth, [Validators.required]],
-			email: [this.model.email, [Validators.required, Validators.email]],
+			email: [this.model.email, [Validators.email]],
 			//phone: [this.model.phone, [Validators.required,Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
 			nation: [this.model.nation, [Validators.required]],
 			provinceId: [this.model.provinceId, []],
@@ -155,6 +155,7 @@ export class AccountUpdateInfoComponent implements OnInit {
 		this.model.dateOfBirth = fDob.value
 		this.model.issuedDate = fDateIssue.value
 
+		if (!this.model.email) this.model.email = ''
 		if (!this.model.districtId) this.model.districtId = null
 		if (!this.model.provinceId) this.model.provinceId = null
 		if (!this.model.wardsId) this.model.wardsId = null

@@ -92,8 +92,9 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			title: [this.model.title, [Validators.required, Validators.maxLength(500)]],
 			summary: [this.model.summary],
 			contents: [this.model.contents],
-			newsType: [this.model.newsType],
-			postType: [this.model.postType],
+			newsType: [this.model.newsType, [Validators.required]],
+			postType: [this.model.postType, [Validators.required]],
+			imagePath: [this.model.imagePath, [Validators.required]],
 			pushNotify: [''],
 		})
 
@@ -253,6 +254,8 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		} else {
 			this.postTypeSelected.splice(this.postTypeSelected.indexOf(id), 1)
 		}
+		this.model.postType = this.postTypeSelected.toString()
+		this.newsForm.controls.postType.setValue(this.model.postType)
 	}
 
 	onModalNewsRelate() {
@@ -290,11 +293,13 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		$('#avatar-image').click()
 	}
 	onAvatarChange(event: any) {
-		console.log(event)
 		var file = event.target.files[0]
-
+		if (file.size > 3000000) {
+			this.toast.error('Chỉ chọn tệp có dụng lượng nhỏ hơn 3MB')
+			return
+		}
 		if (!this.allowImageExtend.includes(file.type)) {
-			this.toast.error('Chỉ chọn tệp tin ảnh')
+			this.toast.error('Chỉ chọn tệp tin hình ảnh')
 			return
 		}
 
@@ -307,7 +312,8 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				return
 			}
 			this.model.imagePath = res.result.path
-			this.avatarUrl = this.model.imagePath //`${AppSettings.API_DOWNLOADFILES}/${this.model.imagePath}`
+			this.newsForm.controls.imagePath.setValue(this.model.imagePath)
+			this.avatarUrl = `${AppSettings.API_DOWNLOADFILES}/${this.model.imagePath}`
 		})
 	}
 

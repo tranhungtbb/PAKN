@@ -71,6 +71,11 @@
 						<ng-select formControlName="newsType" [(ngModel)]="model.newsType" class="form-control" placeholder="Chọn...">
 							<ng-option *ngFor="let cate of listNewsTypes" [value]="cate.id">{{cate.name}}</ng-option>
 						</ng-select>
+						<div *ngIf="(submitted && f.newsType.invalid)||(f.newsType.invalid && (f.newsType.dirty || f.newsType.touched))" class="has-error m-b-12">
+							<div *ngIf="f.newsType.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1 dis-block"><span class="text-uppercase">kiểu bài</span></label>
@@ -80,12 +85,22 @@
 								<span class="text-uppercase"> {{pType.text}}</span>
 							</label>
 						</div>
+						<div *ngIf="(submitted && f.postType.invalid)||(f.postType.invalid && (f.postType.dirty || f.postType.touched))" class="has-error m-b-12">
+							<div *ngIf="f.postType.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">ảnh đại diện</span></label>
 						<input type="file" [hidden]="true" id="avatar-image" accept=".png, .jpg, .jpeg" (change)="onAvatarChange($event)">
-						<div class="news-avatar" (click)="onChangeAvatar()">
+						<div class="news-avatar border" (click)="onChangeAvatar()">
 							<img [src]="avatarUrl" alt="">
+						</div>
+						<div *ngIf="(submitted && f.imagePath.invalid)||(f.imagePath.invalid && (f.imagePath.dirty || f.imagePath.touched))" class="has-error m-b-12">
+							<div *ngIf="f.imagePath.errors.required">
+								<span class="help-block">Chọn ảnh đại diện</span>
+							</div>
 						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">

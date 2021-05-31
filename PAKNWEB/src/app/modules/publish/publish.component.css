@@ -78,11 +78,15 @@
 	padding: 0;
 }
 /*-------------------- Messages --------------------*/
+.avenue-messenger {
+	background: rgba(255, 255, 255, 1);
+}
 .messages {
 	flex: 1 1 auto;
 	overflow: hidden;
 	position: relative;
 	width: 100%;
+	background-color: white;
 }
 .messages .messages-content {
 	position: absolute;
@@ -90,6 +94,10 @@
 	left: 0;
 	height: 101%;
 	width: 100%;
+	padding-left: 16px;
+	padding-right: 16px;
+	padding-bottom: 10px;
+	overflow-y: scroll;
 }
 .messages .message {
 	clear: both;
