@@ -475,6 +475,7 @@ export class ViewRecommendationComponent implements OnInit {
 		pageSize: 20,
 		pageIndex: 1,
 		recommendationId: 0,
+		isPublish: false,
 	}
 	listCommentsPaged: any[] = []
 	total_Comments = 0
@@ -484,6 +485,7 @@ export class ViewRecommendationComponent implements OnInit {
 		this.commentModel.fullName = this.storeageService.getFullName()
 		this.commentModel.recommendationId = this.model.id
 		this.commentModel.contents = this.commentModel.contents.trim()
+		this.commentModel.isPublish = false
 		if (this.commentModel.contents == null || this.commentModel.contents == '') {
 			this.toastr.error('Không bỏ trống nội dung bình luận')
 			return

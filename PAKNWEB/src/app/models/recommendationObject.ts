@@ -155,6 +155,7 @@ export class RecommnendationCommentObject {
 	userId: number
 	recommendationId: number
 	fullName: string
+	isPublish: boolean
 }
 
 export class RecommendationSearchStatisticObject {

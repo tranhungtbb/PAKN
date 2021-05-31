@@ -19,7 +19,11 @@ export class RecommendationCommentService {
 		for (var item in body) {
 			form.append(item, body[item])
 		}
-		return this.serviceInvoker.post(body, AppSettings.API_ADDRESS + Api.MRRecommendationCommentInsert)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_COMMENT),
+		}
+		return this.serviceInvoker.postwithHeaders(body, AppSettings.API_ADDRESS + Api.MRRecommendationCommentInsert, headers)
 	}
 
 	public getAllOnPage(req: any): Observable<any> {

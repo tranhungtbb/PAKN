@@ -151,8 +151,7 @@
 													<td>{{item.description}}</td>
 													<td>
 														<span *ngIf="item.status == 1" class="badge rounded-pill badge-success">Thành công</span>
-														<span *ngIf="item.status == 2" class="badge rounded-pill badge-outline-blue">Đang giải quyết</span>
-														<span *ngIf="item.status == 3" class="badge rounded-pill badge-success">Đã giải quyết</span>
+														<span *ngIf="item.status == 0" class="badge rounded-pill bg-red text-white">Thất bại</span>
 													</td>
 												</tr>
 											</ng-template>

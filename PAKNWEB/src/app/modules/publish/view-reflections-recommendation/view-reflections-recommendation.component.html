@@ -107,69 +107,46 @@
 				</div>
 				<div class="box mb-4">
 					<h3 class="mb-3 text-uppercase">
-						Bình luận <span>(103)</span>
+						Bình luận <span>({{total_Comments}})</span>
 					</h3>
 					<div class="py-3 px-4 rounded-xl mb-4 border" style="background: #FEFEFE">
-						<p>Hãy <a class="cl-blue2" href="#">đăng nhập</a> hoặc <a class="cl-blue" href="#">tạo tài khoản</a> để gửi bình luận</p>
+						<p>Hãy <a class="cl-blue2" routerLink="/dang-nhap">đăng nhập</a> hoặc <a class="cl-blue" routerLink="/dang-ky/ca-nhan">tạo tài khoản</a> để gửi bình luận
+						</p>
 						<div class="form-group mb-0">
-							<textarea class="form-control px-4 py-3" rows="3" placeholder="Nhập bình luận..." id="comment"></textarea>
-							<button type="button" class="btn text-white grd-xanhngoc border-0 px-5 mt-3">Gửi</button>
+							<textarea class="form-control px-4 py-3" [(ngModel)]="commentModel.contents" rows="3" placeholder="Nhập bình luận..." id="comment"
+								maxlength="500"></textarea>
+							<button type="button" class="btn text-white grd-xanhngoc border-0 px-5 mt-3" (click)="onSendComment()">Gửi</button>
 						</div>
 					</div>
-					<div class="media">
-						<div class="avatar-circle mr-2" style="background: #DAEAD0; color: #6BAF40">
-							LB
-						</div>
-						<div class="media-body">
-							<p class="mb-0 h5">Nguyễn Trần Lê Bình</p>
-							<p class="small mb-1">11:00 | 16/06/2020</p>
-							<p class="mb-0">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. At lectus donec posuere cursus vitae lorem interdum. Dui vitae est malesuada ultricies
-								netus lacus ut. Non sit leo egestas eleifend nunc. Tellus nibh sagittis convallis sit eleifend est. Massa hendrerit ac proin.
-							</p>
-						</div>
-					</div>
-					<div class="media mt-3 border-top pt-3">
+					<div class="media" *ngIf="commentFirst">
 						<div class="avatar-circle mr-2" style="background: #eae5ff; color: #4527a0">
-							NL
+							{{getShortName(commentFirst.fullName)}}
 						</div>
 						<div class="media-body">
-							<p class="mb-0 h5">Nguyễn Ngọc Lan</p>
-							<p class="small mb-1">11:00 | 16/06/2020</p>
+							<p class="mb-0 h5">{{commentFirst.fullName}}</p>
+							<p class="small mb-1">{{commentFirst.createdDate | date:'HH:mm - dd/MM/yyyy'}}</p>
 							<p class="mb-0">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. At lectus donec posuere cursus vitae lorem interdum. Dui vitae est malesuada ultricies
-								netus lacus ut. Non sit leo egestas eleifend nunc. Tellus nibh sagittis convallis sit eleifend est. Massa hendrerit ac proin.
+								{{commentFirst.contents}}
 							</p>
 						</div>
 					</div>
-					<div class="media mt-3 border-top pt-3">
-						<div class="avatar-circle mr-2" style="background: #DAEAD0; color: #6BAF40">
-							LB
+					<ng-container *ngFor="let item of listCommentsPaged; let i = index">
+						<div class="media mt-3 border-top pt-3">
+							<div class="avatar-circle mr-2" style="background: #eae5ff; color: #4527a0">
+								{{getShortName(item.fullName)}}
+							</div>
+							<div class="media-body">
+								<p class="mb-0 h5">{{item.fullName}}</p>
+								<p class="small mb-1">{{item.createdDate | date:'HH:mm - dd/MM/yyyy'}}</p>
+								<p class="mb-0">
+									{{item.contents}}
+								</p>
+							</div>
 						</div>
-						<div class="media-body">
-							<p class="mb-0 h5">Nguyễn Trần Lê Bình</p>
-							<p class="small mb-1">11:00 | 16/06/2020</p>
-							<p class="mb-0">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. At lectus donec posuere cursus vitae lorem interdum. Dui vitae est malesuada ultricies
-								netus lacus ut. Non sit leo egestas eleifend nunc. Tellus nibh sagittis convallis sit eleifend est. Massa hendrerit ac proin.
-							</p>
-						</div>
-					</div>
-					<div class="media mt-3 border-top pt-3">
-						<div class="avatar-circle mr-2" style="background: #eae5ff; color: #4527a0">
-							NL
-						</div>
-						<div class="media-body">
-							<p class="mb-0 h5">Nguyễn Ngọc Lan</p>
-							<p class="small mb-1">11:00 | 16/06/2020</p>
-							<p class="mb-0">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. At lectus donec posuere cursus vitae lorem interdum. Dui vitae est malesuada ultricies
-								netus lacus ut. Non sit leo egestas eleifend nunc. Tellus nibh sagittis convallis sit eleifend est. Massa hendrerit ac proin.
-							</p>
-						</div>
-					</div>
-					<p class="border-top pt-3 mt-3">
-						<a href="#">Xem thêm 100 bình luận khác
+					</ng-container>
+
+					<p class="border-top pt-3 mt-3" *ngIf="IsAllComment == false">
+						<a href="javascript:void(0)" (click)="loadComment()">Xem thêm 20 bình luận khác
 							<span class="ml-2">
 								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
 									<path fill-rule="evenodd"

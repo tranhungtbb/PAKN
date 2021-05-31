@@ -133,10 +133,10 @@ export class IntroduceComponent implements OnInit {
 
 	rebuilFormUnit() {
 		this.formUnit.reset({
-			title: this.modelUnit.Title,
-			description: this.modelUnit.Description,
-			infomation: this.modelUnit.Infomation,
-			index: this.modelUnit.Index,
+			title: this.modelUnit.title,
+			description: this.modelUnit.description,
+			infomation: this.modelUnit.infomation,
+			index: this.modelUnit.index,
 		})
 	}
 
@@ -259,12 +259,17 @@ export class IntroduceComponent implements OnInit {
 	preCreate() {
 		this.title = 'Thêm mới đơn vị'
 		this.modelUnit = new IntroduceUnit()
+		this.submittedUnit = false
+		this.rebuilFormUnit()
 		$('#modal-create-update-introduce-unit').modal('show')
 	}
 
 	preUpdate(model: any) {
+		debugger
 		this.title = 'Chỉnh sửa đơn vị'
 		this.modelUnit = { ...model }
+		this.rebuilFormUnit()
+		this.submittedUnit = false
 		$('#modal-create-update-introduce-unit').modal('show')
 	}
 
