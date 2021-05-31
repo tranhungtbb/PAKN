@@ -272,4 +272,32 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<CAVillageGetAll>("CA_VillageGetAll", DP)).ToList();
 		}
 	}
+
+	public class CAGetAllByProvinceId
+	{
+		private SQLCon _sQLCon;
+
+		public CAGetAllByProvinceId(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAGetAllByProvinceId()
+		{
+		}
+
+		public short Id { get; set; }
+		public string Name { get; set; }
+		public string Code { get; set; }
+		public int DistrictId { get; set; }
+		public int Level { get; set; }
+
+		public async Task<List<CAGetAllByProvinceId>> GetAll(short? ProvinceId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ProvinceId", ProvinceId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAGetAllByProvinceId>("CA_AdministrativeUnits_GetAllByProvinceId", DP)).ToList();
+		}
+	}
 }

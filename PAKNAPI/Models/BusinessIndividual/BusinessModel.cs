@@ -29,6 +29,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public string Email { get; set; }
 		public int? Status { get; set; }
 		public bool IsDeleted { get; set; }
+		public string Business { get; set; }
 
 		public async Task<List<BI_BusinessGetAllOnPage>> BI_BusinessGetAllOnPageDAO(int? PageSize, int? PageIndex, string RepresentativeName, string Address, string Phone, string Email, byte? Status, string SortDir, string SortField)
 		{
@@ -206,7 +207,12 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public string Business { get; set; }
 		public long? UserId { get; set; }
 	}
+	public class BI_BusinessInsertIN_Cus : BI_BusinessInsertIN
+	{
+		public string _RepresentativeBirthDay { get; set; }
+		public string _DateOfIssue { get; set; }
 
+	}
 	#endregion
 
 	#region BI_BusinessGetById

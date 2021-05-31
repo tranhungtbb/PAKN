@@ -82,6 +82,7 @@ export class OrganizationObject {
 	RepresentativeName: string // RepresentativeName tên người đại diện
 	RepresentativeGender: boolean
 	_RepresentativeBirthDay: string
+	//RepresentativePhone:string
 	Email: string
 	Nation: any
 	ProvinceId: any //int

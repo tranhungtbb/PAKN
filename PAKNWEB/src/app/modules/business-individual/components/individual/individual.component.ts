@@ -42,6 +42,8 @@ export class IndividualComponent implements OnInit {
 	listDistrict: any[] = []
 	listVillage: any[] = []
 
+	listAllDiaDanh: any[] = []
+
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<IndividualObject>()
 	listStatus: any = [
@@ -94,6 +96,7 @@ export class IndividualComponent implements OnInit {
 				if (res.success == 'OK') {
 					this.listProvince = res.result.CAProvinceGetAll
 					this.model.provinceId = 37
+					this.onChangeProvince()
 				}
 			})
 		} else {
@@ -104,12 +107,26 @@ export class IndividualComponent implements OnInit {
 		}
 	}
 
-	onChangeProvince() {
+	onChangeCapTinh() {
 		this.listDistrict = []
 		this.listVillage = []
 		this.model.districtId = ''
 		this.model.wardsId = ''
 		if (this.model.provinceId != null && this.model.provinceId != '') {
+			this.diadanhService.getAllByProvinceId(this.model.provinceId).subscribe((res) => {
+				if (res.success == 'OK') {
+					this.listAllDiaDanh = res.result.ListData
+				}
+			})
+		}
+	}
+
+	onChangeProvince(tryLoad = false) {
+		this.listDistrict = []
+		this.listVillage = []
+		this.model.districtId = ''
+		this.model.wardsId = ''
+		if (tryLoad || (this.model.provinceId != null && this.model.provinceId != '')) {
 			this.diadanhService.getAllDistrict(this.model.provinceId).subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listDistrict = res.result.CADistrictGetAll
@@ -118,10 +135,10 @@ export class IndividualComponent implements OnInit {
 		}
 	}
 
-	onChangeDistrict() {
+	onChangeDistrict(tryLoad = false) {
 		this.listVillage = []
 		this.model.wardsId = ''
-		if (this.model.districtId != null && this.model.districtId != '') {
+		if (tryLoad || (this.model.districtId != null && this.model.districtId != '')) {
 			this.diadanhService.getAllVillage(this.model.provinceId, this.model.districtId).subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listVillage = res.result.CAVillageGetAll
