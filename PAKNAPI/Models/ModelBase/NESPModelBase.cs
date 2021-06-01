@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using PAKNAPI.Common;
 using PAKNAPI.Models.Results;
+using Microsoft.AspNetCore.Http;
 
 namespace PAKNAPI.ModelBase
 {
@@ -331,6 +332,7 @@ namespace PAKNAPI.ModelBase
 		public DateTime? WithdrawDate { get; set; }
 		public string NewsRelateIds { get; set; }
 		public bool? IsNotification { get; set; }
+		
 	}
 
 	public class NENewsViewDetail

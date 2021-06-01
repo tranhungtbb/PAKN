@@ -33,19 +33,30 @@ export class NewsService {
 	getById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NewsGetById)
 	}
-	create(data: any): Observable<any> {
+	create(data: any, file: any): Observable<any> {
 		const httpPackage = {
 			headers: this.tempheaders,
 			reportProgress: true,
 		}
-		return this.http.post(AppSettings.API_ADDRESS + Api.NewsInsert, data, httpPackage)
+		let formData = new FormData()
+		formData.append('data', JSON.stringify(data))
+		if (file) formData.append('files', file, file.name)
+		return this.http.post(AppSettings.API_ADDRESS + Api.NewsInsert, formData, httpPackage)
 	}
-	update(data: any): Observable<any> {
+	update(data: any, file: any): Observable<any> {
 		const httpPackage = {
 			headers: this.tempheaders,
 			reportProgress: true,
 		}
-		return this.http.post(AppSettings.API_ADDRESS + Api.NewsUpdate, data, httpPackage)
+
+		let formData = new FormData()
+		// for (let k in data) {
+		// 	formData.append(k, data[k])
+		// }
+		formData.append('data', JSON.stringify(data))
+		if (file) formData.append('files', file, file.name)
+
+		return this.http.post(AppSettings.API_ADDRESS + Api.NewsUpdate, formData, httpPackage)
 	}
 	delete(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.NewsDelete)

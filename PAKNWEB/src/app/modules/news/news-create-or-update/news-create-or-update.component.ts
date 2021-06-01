@@ -121,6 +121,16 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					// 		}
 					// 	})
 					// }
+
+					// if (this.model.imagePath != null && this.model.imagePath.trim() != '') {
+					// 	this.newsService.getAvatars([this.model.id]).subscribe((res) => {
+					// 		if (res) {
+					// 			if (!res[0].byteImage) return
+					// 			let objectURL = 'data:image/jpeg;base64,' + res[0].byteImage
+					// 			this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+					// 		}
+					// 	})
+					// }
 				})
 			}
 		})
@@ -175,19 +185,23 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		return this.newsForm.controls
 	}
 
+	filePost: any = null
 	submitted = false
 	onSave(event, published = false, viewDemo = false) {
 		this.submitted = true
+
+		if (this.postTypeSelected.length > 0) this.model.postType = this.postTypeSelected.toString()
+		//this.newsForm.controls.postType.setValue(this.model.postType)
+
 		if (this.newsForm.invalid) {
 			return
 		}
-		if (this.postTypeSelected.length > 0) this.model.postType = this.postTypeSelected.toString()
 		//return
 		this.model.isPublished = published
 		if (published) this.model.status = 1
 		else this.model.status = 2
 		if (this.model.id && this.model.id > 0) {
-			this.newsService.update(this.model).subscribe((res) => {
+			this.newsService.update(this.model, this.filePost).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error(COMMONS.UPDATE_FAILED)
 					return
@@ -226,7 +240,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				this.router.navigate(['/quan-tri/tin-tuc'])
 			})
 		} else {
-			this.newsService.create(this.model).subscribe((res) => {
+			this.newsService.create(this.model, this.filePost).subscribe((res) => {
 				if (res.success != 'OK') {
 					let errorMsg = COMMONS.ADD_FAILED
 					this.toast.error(errorMsg)
@@ -307,6 +321,9 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	}
 	onAvatarChange(event: any) {
 		var file = event.target.files[0]
+		if (!file) {
+			return
+		}
 		if (file.size > 3000000) {
 			this.toast.error('Chỉ chọn tệp có dụng lượng nhỏ hơn 3MB')
 			return
@@ -316,6 +333,10 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			return
 		}
 
+		//preview image
+		this.filePost = file
+		this.avatarUrl = URL.createObjectURL(file)
+		if (!this.model.imagePath) this.model.imagePath = 'hasImage'
 		let formData = new FormData()
 		formData.append('file', file, file.name)
 

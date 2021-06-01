@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using Bugsnag;
+using PAKNAPI.Services.FileUpload;
+using Microsoft.AspNetCore.Http;
 
 namespace PAKNAPI.ControllerBase
 {
@@ -23,11 +25,13 @@ namespace PAKNAPI.ControllerBase
 	{
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;
+		private readonly IFileService _fileService;
 
-		public NESPBaseController(IAppSetting appSetting, IClient bugsnag)
+		public NESPBaseController(IAppSetting appSetting, IClient bugsnag, IFileService fileService)
 		{
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
+			_fileService = fileService;
 		}
 
 		[HttpGet]
@@ -147,12 +151,34 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("NENewsInsertBase")]
-		public async Task<ActionResult<object>> NENewsInsertBase(NENewsInsertIN _nENewsInsertIN)
+		[Route("NENewsInsertBase"),DisableRequestSizeLimit]
+		public async Task<ActionResult<object>> NENewsInsertBase(/*NENewsInsertIN _nENewsInsertIN*/)
 		{
 			try
 			{
+				var jss = new JsonSerializerSettings
+				{
+					DateFormatHandling = DateFormatHandling.IsoDateFormat,
+					DateTimeZoneHandling = DateTimeZoneHandling.Local,
+					DateParseHandling = DateParseHandling.DateTimeOffset,
+				};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				var files = Request.Form.Files;
+				NENewsInsertIN _nENewsInsertIN = JsonConvert.DeserializeObject<NENewsInsertIN>(Request.Form["data"].ToString(), jss);
+
+				string avatarFilePath = null;
+				if (files != null && files.Any())
+				{
+					var listFile = await _fileService.Save(files, $"News");
+					avatarFilePath = listFile[0]?.Path;
+
+				}
+
+				if (!string.IsNullOrEmpty(avatarFilePath))
+				{
+					_nENewsInsertIN.ImagePath = avatarFilePath;
+				}
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsInsert(_appSetting).NENewsInsertDAO(_nENewsInsertIN) };
 			}
@@ -165,14 +191,58 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		//[HttpPost]
+		//[Authorize]
+		//[Route("NENewsUpdateBase")]
+		//public async Task<ActionResult<object>> NENewsUpdateBase(NENewsUpdateIN _nENewsUpdateIN)
+		//{
+		//	try
+		//	{
+		//		new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+		//		return new ResultApi { Success = ResultCode.OK, Result = await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN) };
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		_bugsnag.Notify(ex);
+		//		new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+		//		return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+		//	}
+		//}
 		[HttpPost]
 		[Authorize]
-		[Route("NENewsUpdateBase")]
-		public async Task<ActionResult<object>> NENewsUpdateBase(NENewsUpdateIN _nENewsUpdateIN)
+		[Route("NENewsUpdateBase"),DisableRequestSizeLimit]
+		public async Task<ActionResult<object>> NENewsUpdateBase(
+			//[FromForm] NENewsUpdateIN _nENewsUpdateIN
+		)
 		{
 			try
 			{
+				var jss = new JsonSerializerSettings
+				{
+					DateFormatHandling = DateFormatHandling.IsoDateFormat,
+					DateTimeZoneHandling = DateTimeZoneHandling.Local,
+					DateParseHandling = DateParseHandling.DateTimeOffset,
+				};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				var files = Request.Form.Files;
+				NENewsUpdateIN _nENewsUpdateIN = JsonConvert.DeserializeObject<NENewsUpdateIN>(Request.Form["data"].ToString(), jss);
+
+				string avatarFilePath = null;
+				if (files != null && files.Any())
+				{
+					var listFile = await _fileService.Save(files, $"News/{_nENewsUpdateIN.Id}");
+					avatarFilePath = listFile[0]?.Path;
+
+				}
+
+				if (!string.IsNullOrEmpty(avatarFilePath))
+                {
+					var rs = await _fileService.Remove(_nENewsUpdateIN.ImagePath);
+					_nENewsUpdateIN.ImagePath = avatarFilePath;
+				}
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN) };
 			}

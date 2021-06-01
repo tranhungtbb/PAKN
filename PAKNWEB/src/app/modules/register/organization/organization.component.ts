@@ -62,6 +62,7 @@ export class OrganizationComponent implements OnInit {
 		this.child_OrgRepreForm.formInfo.reset()
 		this.child_OrgRepreForm.resetObject()
 		this.child_OrgAddressForm.formOrgAddress.reset()
+		this.child_OrgRepreForm.formInfo.get('Gender').setValue(true)
 
 		this.fLoginSubmitted = false
 		this.child_OrgRepreForm.fInfoSubmitted = false
