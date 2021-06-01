@@ -31,6 +31,7 @@ export class BusinessComponent implements OnInit {
 		private diadanhService: DiadanhService
 	) {
 		defineLocale('vi', viLocale)
+		this.modelDetail = {}
 	}
 
 	dateNow: Date = new Date()
@@ -57,6 +58,7 @@ export class BusinessComponent implements OnInit {
 
 	form: FormGroup
 	model: any = new BusinessionObject()
+	modelDetail: any
 	submitted: boolean = false
 	isActived: boolean
 	title: string = ''
@@ -243,6 +245,16 @@ export class BusinessComponent implements OnInit {
 			this.model = new BusinessionObject()
 		})
 	}
+
+	preView(id: any) {
+		this._service.businessGetByID({ Id: id }).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				this.modelDetail = response.result.BusinessGetById[0]
+				$('#modalDetail').modal('show')
+			}
+		})
+	}
+
 	/*start - chức năng xác nhận hành động xóa*/
 	onDeleteBusiness(id) {
 		let item = this.listInvPaged.find((c) => c.id == id)
