@@ -6,6 +6,15 @@ export class NewsModel {
 		this.imagePath = ''
 		this.newsRelateIds = ''
 		this.newsType = null
+		this.createdAt = ''
+		this.createdBy = 0
+		this.updatedAt = ''
+		this.isNotification = false
+		this.publishedBy = 0
+		this.publishedDate = ''
+		this.viewCount = 0
+		this.withdrawDate = ''
+		this.withdrawDate = ''
 	}
 	id: number
 	title: string
@@ -24,6 +33,11 @@ export class NewsModel {
 	createdBy: number
 	updatedAt: string
 	updatedBy: number
+	publishedBy: number
+	publishedDate: any
+	viewCount: any
+	withdrawBy: any
+	withdrawDate: any
 	isNotification: boolean
 }
 

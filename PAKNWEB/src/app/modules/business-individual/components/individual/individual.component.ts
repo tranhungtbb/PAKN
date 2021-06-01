@@ -73,7 +73,7 @@ export class IndividualComponent implements OnInit {
 	inSortDir = 'DESC'
 	inSortField = 'ID'
 
-	nation_enable_type = false
+	isOtherNation = false
 
 	ngOnInit() {
 		// this.buildForm()
@@ -92,6 +92,7 @@ export class IndividualComponent implements OnInit {
 		this.model.provinceId = ''
 
 		if (this.model.nation == 'Việt Nam') {
+			this.isOtherNation = false
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listProvince = res.result.CAProvinceGetAll
@@ -101,7 +102,7 @@ export class IndividualComponent implements OnInit {
 			})
 		} else {
 			if (this.model.nation == '#') {
-				this.nation_enable_type = true
+				this.isOtherNation = true
 				this.model.nation = ''
 			}
 		}

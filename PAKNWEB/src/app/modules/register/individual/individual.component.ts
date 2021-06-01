@@ -124,6 +124,7 @@ export class IndividualComponent implements OnInit {
 		this.model._dateOfIssue = ''
 		this.model.fullName = ''
 		this.model.gender = true
+		this.formInfo.get('gender').setValue(this.model.gender)
 	}
 
 	onSave() {

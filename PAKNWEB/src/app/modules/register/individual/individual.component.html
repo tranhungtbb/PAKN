@@ -226,10 +226,15 @@
 				</div>
 				<div class="w-100"></div>
 				<div class="form-group mb-0 col">
-					<label class="mr-3">Giới tính:</label>
+					<label class="mr-3">Giới tính <span class="cl-red">(*)</span>:</label>
 					<label *ngFor="let gen of listGender" class="radio-inline mr-3">
 						<input [(ngModel)]="model.gender" formControlName="gender" [value]="gen.value" type="radio"> <span class="text-uppercase"> {{gen.text}}</span>
 					</label>
+					<div *ngIf="(fLoginSubmitted && fInfo.gender.invalid)||(fInfo.gender.invalid && (fInfo.gender.dirty || fInfo.gender.touched))" class="has-error m-b-12">
+						<div *ngIf="fInfo.gender.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						</div>
+					</div>
 				</div>
 			</form>
 		</div>
