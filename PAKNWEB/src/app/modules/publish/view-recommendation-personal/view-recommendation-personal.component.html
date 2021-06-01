@@ -45,32 +45,40 @@
 						<div class="media-body">
 							<p class="h4 font-italic font-weight-bold">Nội dung kiến nghị:</p>
 							<p style="text-align: justify;">{{model.content}}</p>
-							<p class="btn-group">
-								<button type="button" class="btn border text-dark p-2 rounded-lg mr-3" *ngFor="let item of filesModel" style="max-width:230px;">
-									<span class=" mr-2" *ngIf="item.fileType == 1">
-										<img src="../../../../assets/dist/images/file-word.svg" style="width: 40px" alt="">
-									</span>
-									<span class=" mr-2" *ngIf="item.fileType == 2">
-										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 40px" alt="">
-									</span>
-									<span class=" mr-2" *ngIf="item.fileType == 4">
-										<img src="../../../../assets/dist/images/file-image.svg" style="width: 40px" alt="">
-									</span>
-									<span class=" mr-2" *ngIf="item.fileType == 3">
-										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 40px" alt="">
-									</span>
-									<span class=" mr-2" *ngIf="item.fileType == 6">
-										<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 40px" alt="">
-									</span>
-									<span class=" mr-2" *ngIf="item.fileType == 7">
-										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 40px" alt="">
-									</span>
 
-									<span class="text-left text-truncate" title="{{item.name}}">
-										<span class="mr-3 attach-hover">{{item.name}}</span>
+							<span class="text-left">
+								<small class="small">Tài liệu đính kèm</small><br>
+								<div *ngFor="let file of filesModel" class="file-att">
+									<a *ngIf="file.fileType == 1" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 2" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 3" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 4" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 6" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 7" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile [linkfile]="file.filePath" [namefile]="file.name"
+										title="Xem file">
+										<i class="bi bi-eye"></i>
 									</span>
-								</button>
-							</p>
+								</div>
+							</span>
 						</div>
 					</div>
 					<div class="media pb-4" *ngIf="[3,6,9,10].includes(model.status)">

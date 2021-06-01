@@ -137,7 +137,7 @@ export class RemindComponent implements OnInit {
 
 	showComponent() {
 		this.submitted = false
-		if (this.viewRecommendation.model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
+		if (this.viewRecommendation.model.status >= RECOMMENDATION_STATUS.PROCESS_WAIT) {
 			$('#modal2').modal('show')
 		}
 		return

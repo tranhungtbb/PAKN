@@ -91,8 +91,8 @@ export class IndexComponent implements OnInit {
 		// list thủ tục hành chính
 		this._serviceAdministrative.getListHomePage({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				if (res.result.DAMAdministrationGetList) {
-					this.Administrations = res.result.DAMAdministrationGetList
+				if (res.result.DAMAdministrationGetListTop) {
+					this.Administrations = res.result.DAMAdministrationGetListTop
 				}
 			}
 			return

@@ -96,7 +96,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _indivialChageStatusIN.Id);
-			DP.Add("Status", _indivialChageStatusIN.Status);;
+			DP.Add("Status", _indivialChageStatusIN.Status);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_IndividualChageStatus", DP));
 		}

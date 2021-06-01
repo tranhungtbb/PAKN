@@ -97,6 +97,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			imagePath: [this.model.imagePath, [Validators.required]],
 			pushNotify: [''],
 		})
+		this.model.imagePath = 'assets/dist/images/no.jpg'
 
 		this.activatedRoute.params.subscribe((params) => {
 			if (params['id']) {
@@ -107,18 +108,19 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					this.model = res.result.NENewsGetByID[0]
 					this.hisPublic = this.model.isPublished
 					this.postTypeSelected = this.model.postType.trim().split(',')
+					this.rebuidForm()
 					//lay danh sach bai viet lien quan
 					this.getNewsRelatesInfo()
 
 					//get current avatar
-					if (this.model.imagePath != null && this.model.imagePath.trim() != '') {
-						this.newsService.getAvatars([this.model.id]).subscribe((res) => {
-							if (res) {
-								let objectURL = 'data:image/jpeg;base64,' + res[0].byteImage
-								this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-							}
-						})
-					}
+					// if (this.model.imagePath != null && this.model.imagePath.trim() != '') {
+					// 	this.newsService.getAvatars([this.model.id]).subscribe((res) => {
+					// 		if (res) {
+					// 			let objectURL = 'data:image/jpeg;base64,' + res[0].byteImage
+					// 			this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+					// 		}
+					// 	})
+					// }
 				})
 			}
 		})
@@ -135,6 +137,17 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				}
 				this.listNewsTypes = res.result.CANewsTypeGetAllOnPage
 			})
+	}
+
+	rebuidForm() {
+		this.newsForm.reset({
+			title: this.model.title,
+			summary: this.model.summary,
+			contents: this.model.contents,
+			newsType: this.model.newsType,
+			postType: this.model.postType,
+			imagePath: this.model.imagePath,
+		})
 	}
 
 	getNewsRelatesInfo() {
@@ -313,7 +326,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			}
 			this.model.imagePath = res.result.path
 			this.newsForm.controls.imagePath.setValue(this.model.imagePath)
-			this.avatarUrl = `${AppSettings.API_DOWNLOADFILES}/${this.model.imagePath}`
+			// this.avatarUrl = `${AppSettings.API_DOWNLOADFILES}/${this.model.imagePath}`
 		})
 	}
 

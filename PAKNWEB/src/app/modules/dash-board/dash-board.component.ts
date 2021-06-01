@@ -46,6 +46,7 @@ export class DashboardComponent implements OnInit {
 			UserProcessId: this.userStorage.getUserId(),
 		}
 		this.recommenService.getDataGraph(req).subscribe((res) => {
+			debugger
 			if (res.success == RESPONSE_STATUS.success) {
 				this.totalCount = res.result.MRRecommendationGetDataGraph.reduce((acc, item, index) => {
 					acc += item.count

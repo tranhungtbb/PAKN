@@ -1547,6 +1547,8 @@ namespace PAKNAPI.ModelBase
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
 		public string GroupName { get; set; }
+
+		public int GroupId { get; set; }
 		public string Description { get; set; }
 
 		public async Task<List<CAWordGetAllOnPage>> CAWordGetAllOnPageDAO(int? PageSize, int? PageIndex, int? GroupId, string Name, string Description, bool? IsActived)

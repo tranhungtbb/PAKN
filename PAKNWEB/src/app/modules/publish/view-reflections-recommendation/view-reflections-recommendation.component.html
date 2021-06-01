@@ -22,6 +22,13 @@
 								<p class="my-0 h5">{{model.name}}</p>
 							</div>
 						</div>
+						<span>
+							<p class="my-0 h5">Đơn vị tiếp nhận :</p> {{model.unitName}}
+						</span>
+						<span>
+							<p class="my-0 h5">Lĩnh vực :</p> {{model.fieldName}}
+						</span>
+						<!-- <span>{{model.createdDate | date:'HH:mm dd/MM/yyyy'}}</span> -->
 						<span>{{model.createdDate | date:'HH:mm'}} ngày {{model.createdDate | date: 'dd/MM/yyyy'}}</span>
 					</div>
 					<div class="media pb-4 border-bottom mb-4">
@@ -37,20 +44,41 @@
 							<p class="h4 font-italic font-weight-bold">Nội dung kiến nghị:</p>
 							<p innerHTML="{{model.content | Change}}">
 							</p>
-							<p *ngFor="let item of lstFiles; let i = index">
-								<button type="button" class="btn border btn-block text-dark p-0">
-									<span class="rounded grd-xanhngoc text-white p-3 mr-3">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
-											<path
-												d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z" />
-										</svg>
+
+							<span class="text-left">
+								<small class="small">Tài liệu đính kèm</small><br>
+								<div *ngFor="let file of lstFiles" class="file-att">
+									<a *ngIf="file.fileType == 1" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 2" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 3" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 4" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 6" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 7" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile [linkfile]="file.filePath" [namefile]="file.name"
+										title="Xem file">
+										<i class="bi bi-eye"></i>
 									</span>
-									<span class="text-left text-truncate">
-										<small class="small">Tài liệu đính kèm {{i + 1}}</small><br>
-										{{item.name}}
-									</span>
-								</button>
-							</p>
+								</div>
+							</span>
+
 						</div>
 					</div>
 					<div class="media pb-4 border-bottom mb-4">

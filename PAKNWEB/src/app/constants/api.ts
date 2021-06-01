@@ -256,7 +256,7 @@ export class Api {
 	//Administrative Formalities
 	public static AdministrativeFormalitiesGetDropdown = 'AdministrativeFormalities/AdministrativeFormalitiesGetDropdown'
 	public static AdministrativeFormalitiesGetList = 'DAMSPBase/DAMAdministrationGetListBase'
-	public static AdministrativeFormalitiesGetListHomePage = 'DAMAdministration/DAMAdministrationGetListHomePage'
+	public static AdministrativeFormalitiesGetListHomePage = 'DAMSPBase/DAMAdministrationGetListTopBase'
 	public static AdministrativeFormalitiesGetById = 'AdministrationFormalities/AdministrationFormalitiesGetByID'
 	public static AdministrativeFormalitiesGetByIdView = 'AdministrativeFormalities/RecommendationGetByIdView'
 	public static AdministrativeFormalitiesInsert = 'AdministrationFormalities/AdministrationFormalitiesInsert'

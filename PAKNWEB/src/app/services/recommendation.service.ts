@@ -240,11 +240,6 @@ export class RecommendationService {
 	}
 
 	getSendUserDataGraph(request): Observable<any> {
-		let headers = new HttpHeaders({
-			logAction: encodeURIComponent(LOG_ACTION.EXPORT),
-			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
-		})
-
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationGetSendUserDataGraph)
 	}
 

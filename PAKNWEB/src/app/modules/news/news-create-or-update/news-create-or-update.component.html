@@ -95,7 +95,7 @@
 						<label class="mb-1"><span class="text-uppercase">ảnh đại diện</span></label>
 						<input type="file" [hidden]="true" id="avatar-image" accept=".png, .jpg, .jpeg" (change)="onAvatarChange($event)">
 						<div class="news-avatar border" (click)="onChangeAvatar()">
-							<img [src]="avatarUrl" alt="">
+							<img [src]="model.imagePath" alt="">
 						</div>
 						<div *ngIf="(submitted && f.imagePath.invalid)||(f.imagePath.invalid && (f.imagePath.dirty || f.imagePath.touched))" class="has-error m-b-12">
 							<div *ngIf="f.imagePath.errors.required">

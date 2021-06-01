@@ -38,11 +38,7 @@ export class AdministrativeFormalitiesService {
 	}
 
 	getListHomePage(request: any): Observable<any> {
-		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
-		}
-		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.AdministrativeFormalitiesGetListHomePage, headers)
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.AdministrativeFormalitiesGetListHomePage)
 	}
 
 	getById(request: any): Observable<any> {
@@ -81,7 +77,7 @@ export class AdministrativeFormalitiesService {
 		form.append('LstDelete', JSON.stringify(request.LstDelete))
 
 		if (request.Files) {
-			request.Files.forEach(item => {
+			request.Files.forEach((item) => {
 				form.append('File', item)
 			})
 		}
@@ -89,7 +85,7 @@ export class AdministrativeFormalitiesService {
 		if (request.LstCompositionProfile) {
 			for (let index = 0; index < request.LstCompositionProfile.length; index++) {
 				const element = request.LstCompositionProfile[index]
-				element.files.forEach(item => {
+				element.files.forEach((item) => {
 					form.append('Profile' + index, item)
 				})
 			}
@@ -119,7 +115,7 @@ export class AdministrativeFormalitiesService {
 		form.append('LstDelete', JSON.stringify(request.LstDelete))
 
 		if (request.Files) {
-			request.Files.forEach(item => {
+			request.Files.forEach((item) => {
 				form.append('File', item)
 			})
 		}
@@ -127,7 +123,7 @@ export class AdministrativeFormalitiesService {
 		if (request.LstCompositionProfile) {
 			for (let index = 0; index < request.LstCompositionProfile.length; index++) {
 				const element = request.LstCompositionProfile[index]
-				element.files.forEach(item => {
+				element.files.forEach((item) => {
 					form.append('Profile' + index, item)
 				})
 			}

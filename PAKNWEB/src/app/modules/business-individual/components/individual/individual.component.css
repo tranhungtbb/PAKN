@@ -110,3 +110,11 @@ body .ui-tree .ui-tree-container .ui-treenode .ui-treenode-content .ui-tree-togg
 .accordion__header.collapsed .accordion__header--indicator.collapse-icon-up::before {
 	content: '\e648';
 }
+
+a.highlight:hover {
+	color: #42a4ff !important;
+	cursor: pointer;
+}
+a.highlight {
+	cursor: pointer;
+}

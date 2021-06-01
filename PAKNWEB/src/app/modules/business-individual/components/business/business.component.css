@@ -5,3 +5,11 @@
 .control-label {
 	color: #555;
 }
+
+a.highlight:hover {
+	color: #42a4ff !important;
+	cursor: pointer;
+}
+a.highlight {
+	cursor: pointer;
+}

@@ -462,7 +462,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				return
 			}
 			this._toastr.success(COMMONS.UPDATE_SUCCESS)
-			//this.getAllUnitShortInfo(this.unitObject)
+			this.getAllUnitShortInfo(this.unitObject)
 			//this.getUnitPagedList()
 			this.modelUnit = new UnitObject()
 			$('#modal-create-or-update').modal('hide')
