@@ -33,7 +33,7 @@ export class AuthenticationService {
 		return this.serviceInvoker.post(user, AppSettings.API_ADDRESS + Api.REGISTER)
 	}
 
-	forgetpassword(user: ForgetPasswordUserObject): Observable<any> {
+	forgetpassword(user: any): Observable<any> {
 		return this.serviceInvoker.post(user, AppSettings.API_ADDRESS + Api.FORGETPASSWORD)
 	}
 

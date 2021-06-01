@@ -240,7 +240,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public async Task<int> BI_InvididualUpdateDAO(BI_InvididualUpdateIN _bI_InvididualUpdateIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			//DP.Add("Id", _bI_InvididualUpdateIN.Id);
+			DP.Add("Id", _bI_InvididualUpdateIN.Id);
 			DP.Add("FullName", _bI_InvididualUpdateIN.FullName);
 			DP.Add("DateOfBirth", _bI_InvididualUpdateIN.BirthDate);
 			DP.Add("Email", _bI_InvididualUpdateIN.Email);
@@ -260,6 +260,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 
 	public class BI_InvididualUpdateIN
 	{
+		public long Id { get; set; }
 		public string FullName { get; set; }
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
@@ -306,8 +307,11 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public int? ProvinceId { get; set; }
+		public string? ProviceName { get; set; }
 		public int? WardsId { get; set; }
+		public string? WardsName { get; set; }
 		public int? DistrictId { get; set; }
+		public string? DistrictName { get; set; }
 		public DateTime? DateOfIssue { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public DateTime? UpdatedDate { get; set; }

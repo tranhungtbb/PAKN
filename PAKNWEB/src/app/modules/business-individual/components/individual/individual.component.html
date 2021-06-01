@@ -104,7 +104,7 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									<strong><a (click)="preView(item)" class="ellipsis text-dark" type="button">{{item.fullName}}</a></strong>
+									<strong><a (click)="preView(item.id)" class="ellipsis text-dark" type="button">{{item.fullName}}</a></strong>
 								</td>
 								<td>{{item.address}}</td>
 								<td>{{item.phone}}</td>
@@ -222,8 +222,8 @@
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Ngày cấp</label>
 								<div class="input-group">
-									<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dateIssue" [(ngModel)]="model.dateOfIssue"
-										formControlName="dateIssue" appBsDatepickerInvalid
+									<input class="form-control" autocomplete="off" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dateIssue"
+										[(ngModel)]="model.dateOfIssue" formControlName="dateIssue" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" [maxDate]="dateNow" />
 									<div class="input-group-addon">
 										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
@@ -315,8 +315,8 @@
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Ngày, tháng, năm, sinh <span class="cl-red">(*)</span></label>
 								<div class="input-group">
-									<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dob" [(ngModel)]="model.birthDate"
-										formControlName="birthDate" appBsDatepickerInvalid
+									<input class="form-control" placeholder="Nhập..." autocomplete="off" bsDatepicker #n="bsDatepicker" maxlength="10" id="_dob"
+										[(ngModel)]="model.birthDate" formControlName="birthDate" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" [maxDate]="dateNow" />
 									<div class="input-group-addon">
 										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
@@ -346,6 +346,96 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="modalDetail">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 60%" role="document">
+		<div class="modal-content rounded">
+			<!-- <form class="form-horizontal"> -->
+			<div class="panel panel-default no-margin">
+				<div class="modal-header">
+					<button class="close btn-close-modal" data-dismiss="modal">
+						×
+					</button>
+					<p class="modal-title h3">Thông tin chi tiết</p>
+				</div>
+				<div class="modal-body no-padding-bottom">
+					<div class="row">
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Tên cá nhân</strong>
+							<p>{{modelDetail.fullName}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Email</strong>
+							<p>{{modelDetail.email}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Điện thoại</strong>
+							<p>{{modelDetail.phone}}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<strong class="control-label lb600">CMND</strong>
+							<p>{{modelDetail.iDCard}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Nơi cấp</strong>
+							<p>{{modelDetail.issuedPlace}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Ngày cấp</strong>
+							<p>{{modelDetail.dateOfIssue | date: 'dd/MM/yyyy'}}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Quốc tịch</strong>
+							<p>{{modelDetail.nation}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Tỉnh thành phố</strong>
+							<p>{{modelDetail.proviceName}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Huyện/Thị xã</strong>
+							<p>{{modelDetail.districtName}}</p>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Phường/Thị trấn</strong>
+							<p>{{modelDetail.wardsName}}</p>
+						</div>
+						<div class="col-sm-8">
+							<strong class="control-label lb600">Địa chỉ cụ thể</strong>
+							<p>{{modelDetail.address}}</p>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Giới tính</strong>
+							<p *ngIf="model.gender == true">Nữ</p>
+							<p *ngIf="model.gender == false">Nam</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Ngày sinh</strong>
+							<p>{{modelDetail.birthDate | date: 'dd/MM/yyyy'}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Trạng thái</strong>
+							<p *ngIf="model.isActived == true">Hiệu lực</p>
+							<p *ngIf="model.isActived == false">Hết hiệu lực</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- </form> -->
+		</div>
+	</div>
+</div>
+
 
 <!-- confirm modal -->
 <div class="modal fade" id="modal-confirm">

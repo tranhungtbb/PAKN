@@ -214,6 +214,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 
 	getAllUnitShortInfo(activeTreeNode: any = null, title: any = '') {
+		this.ltsUnitIdNonActive = []
 		this.unitService.getAll({}).subscribe(
 			(res) => {
 				if (res.success != 'OK') return
@@ -415,6 +416,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				} else {
 					if (res.result > 0) {
 						this._toastr.success(COMMONS.UPDATE_SUCCESS)
+						this.getAllUnitShortInfo()
 						this.treeViewActive(this.unitObject.id, this.unitObject.unitLevel)
 
 						// cập nhật tên ptree khi đã sửa thành công

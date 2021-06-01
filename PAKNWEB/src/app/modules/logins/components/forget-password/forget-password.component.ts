@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { AuthenticationService } from '../../../../services/authentication.service'
-import { ForgetPasswordUserObject } from '../../../../models/forgetPasswordUserObject'
+import { ForgetPasswordObject } from '../../../../models/forgetPasswordUserObject'
 import { ToastrService } from 'ngx-toastr'
-
+declare var $: any
 @Component({
 	selector: 'app-forget-password',
 	templateUrl: './forget-password.component.html',
@@ -12,9 +12,10 @@ import { ToastrService } from 'ngx-toastr'
 })
 export class ForgetPasswordComponent implements OnInit {
 	submitted: boolean = false
-	user: ForgetPasswordUserObject = {
-		Email: '',
+	user: ForgetPasswordObject = {
+		phone: '',
 	}
+	phoneHide: any = ''
 	forgetPasswordForm: FormGroup
 	constructor(
 		private authenService: AuthenticationService,
@@ -26,7 +27,7 @@ export class ForgetPasswordComponent implements OnInit {
 
 	ngOnInit() {
 		this.forgetPasswordForm = this.formBuilder.group({
-			email: new FormControl(this.user.Email, [Validators.required]),
+			phone: new FormControl(this.user.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]),
 		})
 	}
 
@@ -53,5 +54,23 @@ export class ForgetPasswordComponent implements OnInit {
 	//get email() { return this.forgetPasswordForm.get('email'); }
 	get f() {
 		return this.forgetPasswordForm.controls
+	}
+
+	preShowOPT() {
+		this.user.phone = this.user.phone.trim()
+		if (this.forgetPasswordForm.invalid) {
+			this.toastr.error('Dữ liệu không hợp lệ')
+			return
+		}
+		this.phoneHide = this.user.phone
+			.split('')
+			.map((item, index) => {
+				if (index > 3 && index < 7) {
+					return '*'
+				}
+				return item
+			})
+			.join('')
+		$('#modal-otp').modal('show')
 	}
 }

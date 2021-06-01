@@ -6,9 +6,9 @@ export class IndividualObject {
 		this.email = ''
 		//
 		this.nation = 'Việt Nam'
-		this.provinceId = ''
-		this.districtId = ''
-		this.wardsId = ''
+		this.provinceId = null
+		this.districtId = null
+		this.wardsId = null
 		this.isActived = true
 		this.address = ''
 		this.IsDeleted = false
@@ -23,6 +23,9 @@ export class IndividualObject {
 	provinceId: any
 	districtId: any
 	wardsId: any
+	proviceName: any
+	wardsName: any
+	districtName: any
 	gender: boolean
 	_birthDay: string
 
@@ -54,9 +57,9 @@ export class BusinessionObject {
 		this.email = ''
 		//
 		this.nation = 'Việt Nam'
-		this.provinceId = ''
-		this.districtId = ''
-		this.wardsId = ''
+		this.provinceId = null
+		this.districtId = null
+		this.wardsId = null
 		this.isActived = true
 		this.address = ''
 		this.IsDeleted = false
@@ -97,16 +100,16 @@ export class OrganizationObject {
 
 		this.Address = ''
 		this.Nation = 'Việt Nam'
-		this.ProvinceId = ''
-		this.DistrictId = ''
-		this.WardsId = ''
+		this.ProvinceId = null
+		this.DistrictId = null
+		this.WardsId = null
 
 		this.Business = ''
 		this.BusinessRegistration = ''
 		this.DecisionOfEstablishing = ''
-		this.OrgProvinceId = ''
-		this.OrgDistrictId = ''
-		this.OrgWardsId = ''
+		this.OrgProvinceId = null
+		this.OrgDistrictId = null
+		this.OrgWardsId = null
 		this.OrgEmail = ''
 		this.OrgAddress = ''
 		this.OrgPhone = ''

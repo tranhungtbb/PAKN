@@ -150,7 +150,6 @@ export class CreateUpdBusinessComponent implements OnInit {
 		this.businessIndividualService.businessGetByID(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.BusinessGetById[0]
-				console.log('response', response)
 				// Thông tin người đại diện
 				this.child_OrgRepreForm.model.RepresentativeName = response.result.BusinessGetById[0].representativeName
 				this.child_OrgRepreForm.model.Email = response.result.BusinessGetById[0].email
