@@ -90,11 +90,13 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 						item.text = iterator.name
 						item.children = []
 						item.checked = false
+						item.collapsed = true
 						for (const iterator1 of this.administrativeUnitsBase.filter((x) => x.parentId == iterator.id)) {
 							let item2 = new TreeViewDrop()
 							item2.value = iterator1.id
 							item2.text = iterator1.name
 							item2.checked = false
+							item2.collapsed = false
 							// if (this.ltsUnitFirst.includes(iterator1.value)) {
 							// 	item2.checked = true
 							// }
@@ -381,4 +383,5 @@ class TreeViewDrop {
 	value: number
 	children: any[]
 	checked: boolean
+	collapsed: boolean
 }

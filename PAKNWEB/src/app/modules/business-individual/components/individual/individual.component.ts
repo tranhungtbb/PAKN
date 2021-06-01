@@ -90,7 +90,7 @@ export class IndividualComponent implements OnInit {
 		this.listDistrict = []
 		this.listVillage = []
 
-		this.model.provinceId = ''
+		this.model.provinceId = null
 
 		if (this.model.nation == 'Việt Nam') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
@@ -111,8 +111,8 @@ export class IndividualComponent implements OnInit {
 	onChangeCapTinh() {
 		this.listDistrict = []
 		this.listVillage = []
-		this.model.districtId = ''
-		this.model.wardsId = ''
+		this.model.districtId = null
+		this.model.wardsId = null
 		if (this.model.provinceId != null && this.model.provinceId != '') {
 			this.diadanhService.getAllByProvinceId(this.model.provinceId).subscribe((res) => {
 				if (res.success == 'OK') {
@@ -125,8 +125,8 @@ export class IndividualComponent implements OnInit {
 	onChangeProvince(tryLoad = false) {
 		this.listDistrict = []
 		this.listVillage = []
-		this.model.districtId = ''
-		this.model.wardsId = ''
+		this.model.districtId = null
+		this.model.wardsId = null
 		if (tryLoad || (this.model.provinceId != null && this.model.provinceId != '')) {
 			this.diadanhService.getAllDistrict(this.model.provinceId).subscribe((res) => {
 				if (res.success == 'OK') {
@@ -138,7 +138,7 @@ export class IndividualComponent implements OnInit {
 
 	onChangeDistrict(tryLoad = false) {
 		this.listVillage = []
-		this.model.wardsId = ''
+		this.model.wardsId = null
 		if (tryLoad || (this.model.districtId != null && this.model.districtId != '')) {
 			this.diadanhService.getAllVillage(this.model.provinceId, this.model.districtId).subscribe((res) => {
 				if (res.success == 'OK') {
@@ -226,20 +226,24 @@ export class IndividualComponent implements OnInit {
 	}
 	/*end - chức năng xác nhận hành động xóa*/
 	onDeleteIndividual(id) {
-		let item = this.listInvPaged.find((c) => c.id == id)
-		if (!item) item = this.model
-		this._service.individualDelete(item).subscribe((res) => {
-			if (res.success != 'OK') {
+		this._service.individualDelete({ Id: id }).subscribe((res) => {
+			if (res.success != RESPONSE_STATUS.success) {
 				if (res.message.includes(`REFERENCE constraint "PK_BI_Individual"`)) {
-					this._toastr.error(COMMONS.DELETE_FAILED + ', Người dùng đã được xóa')
+					this._toastr.error(COMMONS.DELETE_FAILED)
 					return
 				}
 				this.getList()
 				this._toastr.error(res.message)
 				return
+			} else {
+				if (res.result > 0) {
+					this._toastr.success(COMMONS.DELETE_SUCCESS)
+					this.getList()
+				} else {
+					this._toastr.error('Không thể xóa cá nhân đã trong 1 quy trình')
+					// this.getList()
+				}
 			}
-			this._toastr.success(COMMONS.DELETE_SUCCESS)
-			this.getList()
 		})
 	}
 	/*end - chức năng xác nhận hành động xóa*/

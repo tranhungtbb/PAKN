@@ -222,8 +222,8 @@
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Ngày cấp</label>
 								<div class="input-group">
-									<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dateIssue" [(ngModel)]="model.dateOfIssue"
-										formControlName="dateIssue" appBsDatepickerInvalid
+									<input class="form-control" autocomplete="off" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dateIssue"
+										[(ngModel)]="model.dateOfIssue" formControlName="dateIssue" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" [maxDate]="dateNow" />
 									<div class="input-group-addon">
 										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
@@ -306,8 +306,8 @@
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Ngày, tháng, năm, sinh <span class="cl-red">(*)</span></label>
 								<div class="input-group">
-									<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dob" [(ngModel)]="model.birthDate"
-										formControlName="birthDate" appBsDatepickerInvalid
+									<input class="form-control" placeholder="Nhập..." autocomplete="off" bsDatepicker #n="bsDatepicker" maxlength="10" id="_dob"
+										[(ngModel)]="model.birthDate" formControlName="birthDate" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" [maxDate]="dateNow" />
 									<div class="input-group-addon">
 										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>

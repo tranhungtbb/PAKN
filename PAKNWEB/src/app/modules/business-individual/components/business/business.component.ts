@@ -268,8 +268,13 @@ export class BusinessComponent implements OnInit {
 				this._toastr.error(res.message)
 				return
 			}
-			this._toastr.success(COMMONS.DELETE_SUCCESS)
-			this.getList()
+			if (res.result > 0) {
+				this._toastr.success(COMMONS.DELETE_SUCCESS)
+				this.getList()
+			} else {
+				this._toastr.error('Không thể xóa doanh nghiệp đã trong 1 quy trình')
+				// this.getList()
+			}
 		})
 	}
 	/*end - chức năng xác nhận hành động xóa*/

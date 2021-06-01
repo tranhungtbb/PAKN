@@ -23,12 +23,12 @@ export class BusinessIndividualService {
 	}
 
 	individualRegister(data: any): Observable<any> {
-		let form = new FormData()
+		// let form = new FormData()
 
-		for (let item in data) {
-			form.append(item, data[item])
-		}
-		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.InvididualRegister)
+		// for (let item in data) {
+		// 	form.append(item, data[item])
+		// }
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.InvididualRegister)
 	}
 
 	invididualUpdate(data: any): Observable<any> {

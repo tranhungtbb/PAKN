@@ -73,6 +73,7 @@ export class EmailSettingComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result.SYEmailGetFirst.length != 0) {
 					this.model = response.result.SYEmailGetFirst[0]
+					console.log(this.model)
 				}
 			} else {
 				this._toastr.error(response.message)
@@ -92,7 +93,7 @@ export class EmailSettingComponent implements OnInit {
 			password: [this.model.password, Validators.required],
 			server: [this.model.server, Validators.required],
 			port: [this.model.port, Validators.required],
-			email: ['', [Validators.required, Validators.pattern(this.resd)]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
+			email: [this.model.email, [Validators.required, Validators.pattern(this.resd)]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
 		})
 	}
 	rebuilForm() {
