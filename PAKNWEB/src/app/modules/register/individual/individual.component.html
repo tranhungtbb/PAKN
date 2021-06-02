@@ -180,7 +180,7 @@
 					<label class="mb-1">Số CMND / CCCD / Hộ chiếu <span class="cl-red">(*)</span></label>
 					<input svDisabledSpaceKey maxlength="12" [(ngModel)]="model.iDCard" formControlName="iDCard" type="text" placeholder="Nhập..." class="form-control border-brown"
 						pattern="^(\w{1}[0-9]{7}|[0-9]{8}|[0-9]{9}|[0-9]{12})$" (change)="onCheckExist('IDCard',$event.target.value)">
-					<!--  -->
+
 					<div *ngIf="(fLoginSubmitted && fInfo.iDCard.invalid)||(fInfo.iDCard.invalid && (fInfo.iDCard.dirty || fInfo.iDCard.touched))" class="has-error m-b-12">
 						<div *ngIf="fInfo.iDCard.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>

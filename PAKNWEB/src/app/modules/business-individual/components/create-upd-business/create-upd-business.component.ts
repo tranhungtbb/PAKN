@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { viLocale } from 'ngx-bootstrap/locale'
@@ -21,11 +21,11 @@ declare var $: any
 	templateUrl: './create-upd-business.component.html',
 	styleUrls: ['./create-upd-business.component.css'],
 })
-export class CreateUpdBusinessComponent implements OnInit {
+export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 	@ViewChild(OrgRepreFormComponent, { static: true })
-	private child_OrgRepreForm: OrgRepreFormComponent
+	public child_OrgRepreForm: OrgRepreFormComponent
 	@ViewChild(OrgFormAddressComponent, { static: true })
-	private child_OrgAddressForm: OrgFormAddressComponent
+	child_OrgAddressForm: OrgFormAddressComponent
 
 	constructor(
 		private localeService: BsLocaleService,
@@ -56,6 +56,8 @@ export class CreateUpdBusinessComponent implements OnInit {
 
 		// set
 		this.activatedRoute.params.subscribe((params) => {
+			// this.child_OrgAddressForm.model = this.model
+			// this.child_OrgRepreForm.model = this.model
 			this.model.id = +params['id']
 			if (this.model.id != 0) {
 				this.getData()
@@ -63,13 +65,14 @@ export class CreateUpdBusinessComponent implements OnInit {
 			} else {
 				this.title = 'Tạo mới doanh nghiệp'
 				//
-				this.child_OrgAddressForm.model = this.model
-				this.child_OrgRepreForm.model = this.model
 			}
 		})
 
 		this.loadFormBuilder()
+		this.child_OrgRepreForm.parent = this
+		this.child_OrgAddressForm.parent = this
 	}
+	ngAfterViewInit() {}
 
 	getProvinceOrgRepre() {
 		this.diadanhService.getAllProvince().subscribe((res) => {
@@ -149,20 +152,28 @@ export class CreateUpdBusinessComponent implements OnInit {
 		}
 		this.businessIndividualService.businessGetByID(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this.model = response.result.BusinessGetById[0]
-				// Thông tin người đại diện
-				this.child_OrgRepreForm.model.RepresentativeName = response.result.BusinessGetById[0].representativeName
-				this.child_OrgRepreForm.model.Email = response.result.BusinessGetById[0].email
-				this.child_OrgRepreForm.model.Nation = response.result.BusinessGetById[0].nation
-				this.child_OrgRepreForm.model.ProvinceId = response.result.BusinessGetById[0].provinceId
-				this.child_OrgRepreForm.model.DistrictId = response.result.BusinessGetById[0].districtId
-				this.child_OrgRepreForm.model.WardsId = response.result.BusinessGetById[0].wardsId
-				this.child_OrgRepreForm.model.phone = response.result.BusinessGetById[0].phone
-				this.getProvinceOrgRepre()
-				this.getDistrictOrgRepre(response.result.BusinessGetById[0].provinceId)
-				this.getVillageOrgRepre(response.result.BusinessGetById[0].provinceId, response.result.BusinessGetById[0].districtId)
-				this.child_OrgRepreForm.model.Address = response.result.BusinessGetById[0].address
+				//this.model = response.result.BusinessGetById[0]
+				// this.child_OrgAddressForm.model = this.model
+				// this.child_OrgRepreForm.model = this.model
 
+				// // Thông tin người đại diện
+				// this.child_OrgRepreForm.model.RepresentativeName = response.result.BusinessGetById[0].representativeName
+				// this.child_OrgRepreForm.model.Email = response.result.BusinessGetById[0].email
+				// this.child_OrgRepreForm.model.Nation = response.result.BusinessGetById[0].nation
+				// this.child_OrgRepreForm.model.ProvinceId = response.result.BusinessGetById[0].provinceId
+				// this.child_OrgRepreForm.model.DistrictId = response.result.BusinessGetById[0].districtId
+				// this.child_OrgRepreForm.model.WardsId = response.result.BusinessGetById[0].wardsId
+				// this.child_OrgRepreForm.model.phone = response.result.BusinessGetById[0].phone
+				// this.child_OrgRepreForm.model.Address = response.result.BusinessGetById[0].address
+
+				this.model.RepresentativeName = response.result.BusinessGetById[0].representativeName
+				this.model.Email = response.result.BusinessGetById[0].email
+				this.model.Nation = response.result.BusinessGetById[0].nation
+				this.model.ProvinceId = response.result.BusinessGetById[0].provinceId
+				this.model.DistrictId = response.result.BusinessGetById[0].districtId
+				this.model.WardsId = response.result.BusinessGetById[0].wardsId
+				this.model.phone = response.result.BusinessGetById[0].phone
+				this.model.Address = response.result.BusinessGetById[0].address
 				if (response.result.BusinessGetById[0].representativeBirthDay != null) {
 					let fDob: any = document.querySelector('#_dob')
 					let yearDob = response.result.BusinessGetById[0].representativeBirthDay.substring(0, 4)
@@ -179,7 +190,7 @@ export class CreateUpdBusinessComponent implements OnInit {
 					fIsDate.value = dayIsDate + '/' + monthIsDate + '/' + yearIsDate
 				}
 
-				// Thông tin doanh nghiệp
+				// //Thông tin doanh nghiệp
 				this.model.Business = response.result.BusinessGetById[0].business
 				this.model.BusinessRegistration = response.result.BusinessGetById[0].businessRegistration
 				this.model.DecisionOfEstablishing = response.result.BusinessGetById[0].decisionOfEstablishing
@@ -187,15 +198,33 @@ export class CreateUpdBusinessComponent implements OnInit {
 				this.model.Tax = response.result.BusinessGetById[0].tax
 
 				// Địa chỉ trụ sở / Văn phòng đại diện
-				this.child_OrgAddressForm.model.OrgProvinceId = response.result.BusinessGetById[0].orgProvinceId
-				this.child_OrgAddressForm.model.OrgDistrictId = response.result.BusinessGetById[0].orgDistrictId
-				this.child_OrgAddressForm.model.OrgWardsId = response.result.BusinessGetById[0].orgWardsId
-				this.child_OrgAddressForm.model.OrgAddress = response.result.BusinessGetById[0].orgAddress
-				this.child_OrgAddressForm.model.OrgPhone = response.result.BusinessGetById[0].orgPhone
-				this.child_OrgAddressForm.model.OrgEmail = response.result.BusinessGetById[0].orgEmail
+				this.model.OrgProvinceId = response.result.BusinessGetById[0].orgProvinceId
+				this.model.OrgDistrictId = response.result.BusinessGetById[0].orgDistrictId
+				this.model.OrgWardsId = response.result.BusinessGetById[0].orgWardsId
+				this.model.OrgAddress = response.result.BusinessGetById[0].orgAddress
+				this.model.OrgPhone = response.result.BusinessGetById[0].orgPhone
+				this.model.OrgEmail = response.result.BusinessGetById[0].orgEmail
+
+				this.getProvinceOrgRepre()
+				this.getDistrictOrgRepre(this.model.ProvinceId)
+				this.getVillageOrgRepre(this.model.ProvinceId, this.model.DistrictId)
+
 				this.getProvinceOrgAddress()
 				this.getDistrictOrgAddress(response.result.BusinessGetById[0].orgProvinceId)
 				this.getVillageOrgAddress(response.result.BusinessGetById[0].orgProvinceId, response.result.BusinessGetById[0].orgDistrictId)
+
+				if (this.model.Nation != this.listNation[0].id) {
+					this.nation_enable_type = true
+					this.child_OrgAddressForm.nation_enable_type = true
+					this.child_OrgRepreForm.nation_enable_type = true
+
+					this.model.ProvinceId = 0
+					this.model.DistrictId = 0
+					this.model.WardsId = 0
+					this.model.OrgProvinceId = 0
+					this.model.OrgDistrictId = 0
+					this.model.OrgWardsId = 0
+				}
 			} else {
 				this.toast.error(response.message)
 			}
@@ -214,6 +243,16 @@ export class CreateUpdBusinessComponent implements OnInit {
 		this.model._RepresentativeBirthDay = fDob.value
 		this.model._DateOfIssue = fIsDate.value
 		this.model.userId = this.userLoginId
+
+		//set model
+		if (this.nation_enable_type) {
+			this.model.ProvinceId = 0
+			this.model.DistrictId = 0
+			this.model.WardsId = 0
+			this.model.OrgProvinceId = 0
+			this.model.OrgDistrictId = 0
+			this.model.OrgWardsId = 0
+		}
 
 		if (
 			this.checkExists['Phone'] ||
@@ -234,11 +273,21 @@ export class CreateUpdBusinessComponent implements OnInit {
 			return
 		}
 
+		// if (this.nation_enable_type) {
+		// 	this.model.ProvinceId = ''
+		// 	this.model.DistrictId = ''
+		// 	this.model.WardsId = ''
+		// 	this.model.OrgProvinceId = ''
+		// 	this.model.OrgDistrictId = ''
+		// 	this.model.OrgWardsId = ''
+		// }
+
 		if (this.model.id != null && this.model.id > 0) {
 			this.businessIndividualService.businessUpdate(this.model).subscribe((res) => {
 				if (res.success != 'OK') {
 					let errorMsg = res.message
 					this.toast.error(res.message)
+
 					return
 				}
 				this.toast.success(COMMONS.UPDATE_SUCCESS)
