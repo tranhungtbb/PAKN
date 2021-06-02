@@ -151,7 +151,7 @@
 							<!-- row 1 -->
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Họ và tên <span class="cl-red">(*)</span></label>
-								<input type="file" [hidden]="true" [(ngModel)]="model.id">
+								<!-- <input type="text" [hidden]="true" [(ngModel)]="model.id"> -->
 								<input svTrim maxlength="100" [(ngModel)]="model.fullName" formControlName="fullName" type="text" placeholder="Nhập..."
 									class="form-control border-brown">
 								<div *ngIf="(submitted && f.fullName.invalid)||(f.fullName.invalid && (f.fullName.dirty || f.fullName.touched))" class="has-error m-b-12">
@@ -200,7 +200,7 @@
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">CMND/CCCD <span class="cl-red">(*)</span></label>
 								<input svDisabledSpaceKey maxlength="12" [(ngModel)]="model.iDCard" formControlName="iDCard" type="text" placeholder="Nhập..."
-									class="form-control border-brown" pattern="^([0-9]{8}|[0-9]{9}|[0-9]{12})$" (change)="onCheckExist('IDCard',$event.target.value)">
+									class="form-control border-brown" pattern="^(\w{8}|\w{9}|\w{12})$" (change)="onCheckExist('IDCard',$event.target.value)">
 								<div *ngIf="(submitted && f.iDCard.invalid)||(f.iDCard.invalid && (f.iDCard.dirty || f.iDCard.touched))" class="has-error m-b-12">
 									<div *ngIf="f.iDCard.errors.required">
 										<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -240,7 +240,7 @@
 								</ng-select>
 								<input [svTrim] *ngIf="isOtherNation" [(ngModel)]="model.nation" formControlName="nation" type="text" placeholder="Nhập..."
 									class="form-control border-brown">
-								<span *ngIf="isOtherNation" class="select-caret-icon" (click)="isOtherNation = false; model.nation=''">
+								<span *ngIf="isOtherNation" class="select-caret-icon" (click)="backToSelectBox()">
 									<i class="bi bi-caret-down-fill"></i>
 								</span>
 								<div *ngIf="(submitted && f.nation.invalid)||(f.nation.invalid && (f.nation.dirty || f.nation.touched))" class="has-error m-b-12">
@@ -251,11 +251,12 @@
 							</div>
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Tỉnh/thành phố <span class="cl-red">(*)</span></label>
-								<select *ngIf="isOtherNation" class="form-control" disabled>
-									<option value="">Chon...</option>
+								<select *ngIf="isOtherNation" class="form-control" disabled [(ngModel)]="model.provinceId" formControlName="province">
+									<option value="0">Chon...</option>
 								</select>
 								<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.provinceId" formControlName="province" class="form-control" placeholder="Chọn..."
 									[closeOnSelect]="true" (change)="onChangeProvince()">
+
 									<ng-option *ngFor="let prov of listProvince" [value]="prov.id">{{prov.name}}</ng-option>
 								</ng-select>
 								<div *ngIf="(submitted && f.province.invalid)||(f.province.invalid && (f.province.dirty || f.province.touched))" class="has-error m-b-12">
@@ -266,11 +267,12 @@
 							</div>
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Huyện/Quận/Thị xã <span class="cl-red">(*)</span></label>
-								<select *ngIf="isOtherNation" class="form-control" disabled>
-									<option value="">Chon...</option>
+								<select *ngIf="isOtherNation" class="form-control" disabled [(ngModel)]="model.districtId" formControlName="district">
+									<option value="0">Chon...</option>
 								</select>
 								<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.districtId" formControlName="district" class="form-control" placeholder="Chọn..."
 									[closeOnSelect]="true" (change)="onChangeDistrict()">
+
 									<ng-option *ngFor="let dis of listDistrict" [value]="dis.id">{{dis.name}}</ng-option>
 								</ng-select>
 								<div *ngIf="(submitted && f.district.invalid)||(f.district.invalid && (f.district.dirty || f.district.touched))" class="has-error m-b-12">
@@ -282,11 +284,12 @@
 							<!-- row 4 -->
 							<div class="col-12 col-lg-8 form-group">
 								<label class="mb-1">Xã/Phường/Thị trấn <span class="cl-red">(*)</span></label>
-								<select *ngIf="isOtherNation" class="form-control" disabled>
-									<option value="">Chon...</option>
+								<select *ngIf="isOtherNation" class="form-control" disabled [(ngModel)]="model.wardsId" formControlName="village">
+									<option value="0">Chon...</option>
 								</select>
 								<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.wardsId" formControlName="village" class="form-control" placeholder="Chọn..."
 									[closeOnSelect]="true">
+
 									<ng-option *ngFor="let vill of listVillage" [value]="vill.id">{{vill.name}}</ng-option>
 								</ng-select>
 								<div *ngIf="(submitted && f.village.invalid)||(f.village.invalid && (f.village.dirty || f.village.touched))" class="has-error m-b-12">

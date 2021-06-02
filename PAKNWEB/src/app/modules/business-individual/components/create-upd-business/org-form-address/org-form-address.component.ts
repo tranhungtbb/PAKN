@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, AfterViewInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { DiadanhService } from 'src/app/services/diadanh.service'
 import { RegisterService } from 'src/app/services/register.service'
 import { OrganizationObject } from 'src/app/models/businessIndividualObject'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { CreateUpdBusinessComponent } from '../create-upd-business.component'
 
 @Component({
 	selector: 'app-org-form-address',
 	templateUrl: './org-form-address.component.html',
 	styleUrls: ['./org-form-address.component.css'],
 })
-export class OrgFormAddressComponent implements OnInit {
+export class OrgFormAddressComponent implements OnInit, AfterViewInit {
 	constructor(private formBuilder: FormBuilder, private diadanhService: DiadanhService, private registerService: RegisterService) {}
 	formOrgAddress: FormGroup
 	fOrgAddressSubmitted = false
+	public parent: CreateUpdBusinessComponent
 	public model: OrganizationObject = new OrganizationObject()
 
 	get fOrgAdr() {
@@ -87,6 +89,9 @@ export class OrgFormAddressComponent implements OnInit {
 			OrgPhone: [this.model.OrgPhone, [Validators.required]], //, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)
 			OrgEmail: [this.model.OrgEmail, [Validators.email]],
 		})
+	}
+	ngAfterViewInit() {
+		this.model = this.parent.model
 	}
 
 	// orgPhone_exists = false

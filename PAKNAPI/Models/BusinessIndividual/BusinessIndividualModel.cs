@@ -286,6 +286,12 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public bool? Gender { get; set; }
 		public long? UserId { get; set; }
 	}
+	public class BI_InvididualUpdateIN_body : BI_InvididualUpdateIN
+	{
+		public string _BirthDay { get; set; }
+		public string _DateOfIssue { get; set; }
+
+	}
 
 	#endregion
 

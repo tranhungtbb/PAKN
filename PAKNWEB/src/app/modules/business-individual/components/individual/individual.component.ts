@@ -85,12 +85,19 @@ export class IndividualComponent implements OnInit {
 	}
 
 	//event
+	backToSelectBox() {
+		this.isOtherNation = false
+		this.model.nation = 'Việt Nam'
+		this.onChangeNation()
+
+		this.model.provinceId = null
+		this.model.districtId = null
+		this.model.wardsId = null
+	}
 	onChangeNation() {
 		this.listProvince = []
 		this.listDistrict = []
 		this.listVillage = []
-
-		this.model.provinceId = null
 
 		if (this.model.nation == 'Việt Nam') {
 			this.isOtherNation = false
@@ -105,6 +112,10 @@ export class IndividualComponent implements OnInit {
 			if (this.model.nation == '#') {
 				this.isOtherNation = true
 				this.model.nation = ''
+
+				this.model.provinceId = 0
+				this.model.districtId = 0
+				this.model.wardsId = 0
 			}
 		}
 	}
@@ -330,6 +341,11 @@ export class IndividualComponent implements OnInit {
 
 		let fDob: any = document.querySelector('#_dob')
 		let fDateIssue: any = document.querySelector('#_dateIssue')
+		if (this.isOtherNation) {
+			this.model.provinceId = 0
+			this.model.districtId = 0
+			this.model.wardsId = 0
+		}
 
 		this.model.birthDate = fDob.value
 		this.model.dateOfIssue = fDateIssue.value
@@ -356,10 +372,18 @@ export class IndividualComponent implements OnInit {
 			this._toastr.error('Ngày cấp phải lớn hơn ngày sinh')
 			return
 		}
+
+		// if (this.isOtherNation) {
+		// 	this.model.provinceId = ''
+		// 	this.model.districtId = ''
+		// 	this.model.wardsId = ''
+		// }
+
 		if (this.model.id != null && this.model.id > 0) {
 			this._service.invididualUpdate(this.model).subscribe((res) => {
 				if (res.success != 'OK') {
 					this._toastr.error(res.message)
+
 					return
 				}
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
@@ -377,6 +401,7 @@ export class IndividualComponent implements OnInit {
 						this._toastr.error('Email đã tồn tại')
 					}
 					this._toastr.error(msg)
+
 					return
 				}
 				this._toastr.success(COMMONS.ADD_SUCCESS)
@@ -432,6 +457,14 @@ export class IndividualComponent implements OnInit {
 				this.rebuidForm()
 				this.title = 'Chỉnh sửa cá nhân'
 				this.model = response.result.InvididualGetByID[0]
+
+				if (this.model.nation != this.listNation[0].id) {
+					this.isOtherNation = true
+					this.model.provinceId = 0
+					this.model.districtId = 0
+					this.model.wardsId = 0
+				}
+
 				this.model.iDCard = response.result.InvididualGetByID[0].idCard
 				this.model.birthDate = new Date(response.result.InvididualGetByID[0].birthDate)
 				this.model.dateOfIssue = new Date(response.result.InvididualGetByID[0].dateOfIssue)

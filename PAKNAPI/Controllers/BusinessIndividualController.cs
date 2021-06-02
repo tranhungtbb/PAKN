@@ -305,6 +305,13 @@ namespace PAKNAPI.Controllers
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 				}
 
+				if(model.ProvinceId == 0)
+                {
+					model.ProvinceId = null;
+					model.DistrictId = null;
+					model.WardsId = null;
+                }
+
 				//add login info
 				string defaultPwd = "abc123";
 				var pwd = GeneratePwdModelBase.generatePassword(defaultPwd);
@@ -357,9 +364,10 @@ namespace PAKNAPI.Controllers
 		[Authorize]
 		[Route("InvididualUpdate")]
 		public async Task<ActionResult<object>> InvididualUpdate(
-			[FromForm] Models.BusinessIndividual.BI_InvididualUpdateIN _bI_InvididualUpdateIN,
-			[FromForm] string _BirthDay,
-			[FromForm] string _DateOfIssue)
+			[FromBody] Models.BusinessIndividual.BI_InvididualUpdateIN_body _bI_InvididualUpdateIN
+			//[FromForm] string _BirthDay,
+			//[FromForm] string _DateOfIssue
+			)
 		{
 			try
 			{
@@ -385,21 +393,31 @@ namespace PAKNAPI.Controllers
 				if (checkExists[0].Exists.Value)
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 
-				DateTime birthDay, dateOfIssue;
-				if (!DateTime.TryParseExact(_BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birthDay))
+				DateTime? birthDay =null, dateOfIssue=null;
+				if (DateTime.TryParseExact(_bI_InvididualUpdateIN._BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime _birthDay))
 				{
+					birthDay = _birthDay;
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
 				}
-				if (!DateTime.TryParseExact(_DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
+				if (!DateTime.TryParseExact(_bI_InvididualUpdateIN._DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime _dateOfIssue))
 				{
+					dateOfIssue = _dateOfIssue;
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 				}
 
-				if (string.IsNullOrEmpty(_DateOfIssue)) _bI_InvididualUpdateIN.DateOfIssue = null;
-				else _bI_InvididualUpdateIN.DateOfIssue = dateOfIssue;
-				if (string.IsNullOrEmpty(_BirthDay)) _bI_InvididualUpdateIN.BirthDate = null;
-				else _bI_InvididualUpdateIN.BirthDate = birthDay;
+				if (_bI_InvididualUpdateIN.ProvinceId == 0)
+				{
+					_bI_InvididualUpdateIN.ProvinceId = null;
+					_bI_InvididualUpdateIN.DistrictId = null;
+					_bI_InvididualUpdateIN.WardsId = null;
+				}
 
+                //if (string.IsNullOrEmpty(_DateOfIssue)) _bI_InvididualUpdateIN.DateOfIssue = null;
+                //else _bI_InvididualUpdateIN.DateOfIssue = dateOfIssue;
+                //if (string.IsNullOrEmpty(_BirthDay)) _bI_InvididualUpdateIN.BirthDate = null;
+                //else _bI_InvididualUpdateIN.BirthDate = birthDay;
+				_bI_InvididualUpdateIN.DateOfIssue = dateOfIssue;
+				_bI_InvididualUpdateIN.BirthDate = birthDay;
 				return new ResultApi { Success = ResultCode.OK, Result = await new BI_InvididualUpdate(_appSetting).BI_InvididualUpdateDAO(_bI_InvididualUpdateIN) };
 			}
 			catch (Exception ex)
@@ -567,6 +585,16 @@ namespace PAKNAPI.Controllers
 				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Tax", model.Tax, 0);
 				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế đã tồn tại" };
 
+                if (model.DistrictId == 0)
+                {
+					model.DistrictId = null;
+					model.ProvinceId = null;
+					model.WardsId = null;
+					model.OrgDistrictId = null;
+					model.OrgProvinceId = null;
+					model.OrgWardsId = null;
+                }
+
 				//add login info
 				string defaultPwd = "abc123";
 				var pwd = GeneratePwdModelBase.generatePassword(defaultPwd);
@@ -577,7 +605,7 @@ namespace PAKNAPI.Controllers
 					Phone = model.Phone,
 					Email = model.Email,
 					UserName = model.Phone,
-					FullName = model.Representative,
+					FullName = model.RepresentativeName,
 					Gender = model.RepresentativeGender,
 					Address = model.Address,//
 					TypeId = 3,
@@ -639,13 +667,57 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("BusinessUpdate")]
-		public async Task<ActionResult<object>> BusinessUpdate([FromForm] BI_BusinessUpdateInfoIN businessModel)
+		public async Task<ActionResult<object>> BusinessUpdate([FromBody] BI_BusinessUpdateInfoIN_body model)
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new BI_BusinessUpdateInfo(_appSetting).BI_BusinessUpdateInfoDAO(businessModel) };
+				///check ton tai
+				var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone", model.Phone, model.Id);
+				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+				if (!string.IsNullOrEmpty(model.Email))
+				{
+					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Email", model.Email, model.Id);
+					if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện đã tồn tại" };
+				}
+				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("IDCard", model.IDCard, model.Id);
+				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
+				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgPhone", model.OrgPhone, model.Id);
+				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại doanh nghiệp đã tồn tại" };
+				if (!string.IsNullOrEmpty(model.OrgEmail))
+				{
+					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgEmail", model.OrgEmail, model.Id);
+					if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email doanh nghiệp đã tồn tại" };
+				}
+				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("BusinessRegistration", model.BusinessRegistration, model.Id);
+				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số đăng ký kinh doanh đã tồn tại" };
+				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("DecisionOfEstablishing", model.DecisionOfEstablishing, model.Id);
+				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số quyết định thành lập đã tồn tại" };
+				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Tax", model.Tax, model.Id);
+				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế đã tồn tại" };
+
+				//DateTime? birdDay=null, dateOfIssue=null;
+				if (DateTime.TryParseExact(model._RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime _birdDay))
+				{
+					model.RepresentativeBirthDay = _birdDay;
+				}
+				if (DateTime.TryParseExact(model._DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime _dateOfIssue))
+				{
+					model.DateOfIssue = _dateOfIssue;
+				}
+
+
+				if (model.DistrictId == 0)
+				{
+					model.DistrictId = null;
+					model.ProvinceId = null;
+					model.WardsId = null;
+					model.OrgDistrictId = null;
+					model.OrgProvinceId = null;
+					model.OrgWardsId = null;
+				}
+				return new ResultApi { Success = ResultCode.OK, Result = await new BI_BusinessUpdateInfo(_appSetting).BI_BusinessUpdateInfoDAO(model) };
 			}
 			catch (Exception ex)
 			{

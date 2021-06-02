@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PAKNAPI.ModelBase;
 
 namespace PAKNAPI.Models.BusinessIndividual
 {
@@ -297,61 +298,94 @@ namespace PAKNAPI.Models.BusinessIndividual
 		{
 		}
 
-		public async Task<int> BI_BusinessUpdateInfoDAO(BI_BusinessUpdateInfoIN _businessUpdateInfoIN)
+		public async Task<int> BI_BusinessUpdateInfoDAO(BI_BusinessUpdateInfoIN_body _businessUpdateInfoIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _businessUpdateInfoIN.Id);
-			DP.Add("FullName", _businessUpdateInfoIN.FullName);
-			DP.Add("DateOfBirth", _businessUpdateInfoIN.DateOfBirth);
-			DP.Add("Email", _businessUpdateInfoIN.Email);
-			DP.Add("Nation", _businessUpdateInfoIN.Nation);
-			DP.Add("ProvinceId", _businessUpdateInfoIN.ProvinceId);
-			DP.Add("DistrictId", _businessUpdateInfoIN.DistrictId);
 			DP.Add("WardsId", _businessUpdateInfoIN.WardsId);
-			DP.Add("Address", _businessUpdateInfoIN.Address);
-			DP.Add("IdCard", _businessUpdateInfoIN.IdCard);
-			DP.Add("IssuedPlace", _businessUpdateInfoIN.IssuedPlace);
-			DP.Add("IssuedDate", _businessUpdateInfoIN.IssuedDate);
-			DP.Add("Gender", _businessUpdateInfoIN.Gender);
+			DP.Add("DistrictId", _businessUpdateInfoIN.DistrictId);
+			DP.Add("RepresentativeName", _businessUpdateInfoIN.RepresentativeName);
+			DP.Add("Code", _businessUpdateInfoIN.Code);
+			DP.Add("IsActived", _businessUpdateInfoIN.IsActived);
+			DP.Add("IsDeleted", _businessUpdateInfoIN.IsDeleted);
+			DP.Add("OrgPhone", _businessUpdateInfoIN.OrgPhone);
+			DP.Add("OrgEmail", _businessUpdateInfoIN.OrgEmail);
+			DP.Add("RepresentativeBirthDay", _businessUpdateInfoIN.RepresentativeBirthDay);
+			DP.Add("ProvinceId", _businessUpdateInfoIN.ProvinceId);
+			DP.Add("CreatedDate", _businessUpdateInfoIN.CreatedDate);
+			DP.Add("UpdatedDate", _businessUpdateInfoIN.UpdatedDate);
+			DP.Add("CreatedBy", _businessUpdateInfoIN.CreatedBy);
+			DP.Add("UpdatedBy", _businessUpdateInfoIN.UpdatedBy);
+			DP.Add("Status", _businessUpdateInfoIN.Status);
+			DP.Add("RepresentativeGender", _businessUpdateInfoIN.RepresentativeGender);
 			DP.Add("BusinessRegistration", _businessUpdateInfoIN.BusinessRegistration);
 			DP.Add("DecisionOfEstablishing", _businessUpdateInfoIN.DecisionOfEstablishing);
+			DP.Add("DateOfIssue", _businessUpdateInfoIN.DateOfIssue);
 			DP.Add("Tax", _businessUpdateInfoIN.Tax);
 			DP.Add("OrgProvinceId", _businessUpdateInfoIN.OrgProvinceId);
 			DP.Add("OrgDistrictId", _businessUpdateInfoIN.OrgDistrictId);
 			DP.Add("OrgWardsId", _businessUpdateInfoIN.OrgWardsId);
 			DP.Add("OrgAddress", _businessUpdateInfoIN.OrgAddress);
-			DP.Add("OrgPhone", _businessUpdateInfoIN.OrgPhone);
-			DP.Add("OrgEmail", _businessUpdateInfoIN.OrgEmail);
+			DP.Add("Address", _businessUpdateInfoIN.Address);
+			DP.Add("Email", _businessUpdateInfoIN.Email);
+			DP.Add("Phone", _businessUpdateInfoIN.Phone);
+			DP.Add("Representative", _businessUpdateInfoIN.Representative);
+			DP.Add("IDCard", _businessUpdateInfoIN.IDCard);
+			DP.Add("Place", _businessUpdateInfoIN.Place);
+			DP.Add("NativePlace", _businessUpdateInfoIN.NativePlace);
+			DP.Add("PermanentPlace", _businessUpdateInfoIN.PermanentPlace);
+			DP.Add("Nation", _businessUpdateInfoIN.Nation);
 			DP.Add("Business", _businessUpdateInfoIN.Business);
+			DP.Add("UserId", _businessUpdateInfoIN.UserId);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("BusinessUpdateInfo", DP));
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("BI_BusinessUpdate", DP));
 		}
+	}
+
+	public class BI_BusinessUpdateInfoIN_body : BI_BusinessUpdateInfoIN
+	{
+		public string _RepresentativeBirthDay { get; set; }
+		public string _DateOfIssue { get; set; }
+
 	}
 
 	public class BI_BusinessUpdateInfoIN
 	{
 		public long? Id { get; set; }
-		public string FullName { get; set; }
-		public DateTime? DateOfBirth { get; set; }
-		public string Email { get; set; }
-		public string Nation { get; set; }
-		public int? ProvinceId { get; set; }
-		public int? DistrictId { get; set; }
 		public int? WardsId { get; set; }
-		public string Address { get; set; }
-		public string IdCard { get; set; }
-		public string IssuedPlace { get; set; }
-		public DateTime? IssuedDate { get; set; }
-		public bool? Gender { get; set; }
+		public int? DistrictId { get; set; }
+		public string RepresentativeName { get; set; }
+		public string Code { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public string OrgPhone { get; set; }
+		public string OrgEmail { get; set; }
+		public DateTime? RepresentativeBirthDay { get; set; }
+		public int? ProvinceId { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? CreatedBy { get; set; }
+		public int? UpdatedBy { get; set; }
+		public int? Status { get; set; }
+		public bool? RepresentativeGender { get; set; }
 		public string BusinessRegistration { get; set; }
 		public string DecisionOfEstablishing { get; set; }
+		public DateTime? DateOfIssue { get; set; }
 		public string Tax { get; set; }
 		public int? OrgProvinceId { get; set; }
 		public int? OrgDistrictId { get; set; }
 		public int? OrgWardsId { get; set; }
 		public string OrgAddress { get; set; }
-		public string OrgPhone { get; set; }
-		public string OrgEmail { get; set; }
+		public string Address { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Representative { get; set; }
+		public string IDCard { get; set; }
+		public string Place { get; set; }
+		public string NativePlace { get; set; }
+		public string PermanentPlace { get; set; }
+		public string Nation { get; set; }
 		public string Business { get; set; }
+		public long? UserId { get; set; }
 	}
 }

@@ -36,7 +36,7 @@ export class BusinessIndividualService {
 		for (let item in data) {
 			form.append(item, data[item])
 		}
-		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.InvididualUpdate)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.InvididualUpdate)
 	}
 
 	individualById(request: any): Observable<any> {
@@ -73,7 +73,7 @@ export class BusinessIndividualService {
 			form.append(item, data[item])
 		}
 
-		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.BusinessRegister)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BusinessRegister)
 	}
 
 	businessGetByID(request: any): Observable<any> {
