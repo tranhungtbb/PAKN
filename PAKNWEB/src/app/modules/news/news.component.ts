@@ -124,7 +124,7 @@ export class NewsComponent implements OnInit {
 			item.isPublished = !item.isPublished
 			if (item.isPublished) item.status = 1
 			else item.status = 0
-			this.newsService.update(item).subscribe((res) => {
+			this.newsService.changeStatus(item).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error('Xảy ra lỗi trong quá trình xử lý')
 					return

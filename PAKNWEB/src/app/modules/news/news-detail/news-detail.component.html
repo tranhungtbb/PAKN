@@ -1,0 +1,91 @@
+<div class="content-body">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="breadcrumb title-module px-0 bg-transparent" style="font-size: 18px;font-weight: 600;">
+				<p class="mb-0 h4">Trang chủ / Tin tức / <strong>Chi tiết tin tức</strong> </p>
+			</div>
+			<div class="btn-group group-button-table" role="group">
+				<a class="btn btn-sm btn-default rounded mr-3" style="border: 1px solid gray;" [routerLink]="['/quan-tri','tin-tuc']">
+					<i class="bi bi-arrow-left"></i>&nbsp;
+					Quay lại
+				</a>
+			</div>
+		</div>
+	</div>
+	<form [formGroup]="newsForm">
+		<div class="container mr-0 ml-0">
+			<div class="row">
+				<div class="col-md-9 col-lg-9 col-xl-9 col-xxl-8">
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">tiêu đề </span> <span class="cl-red">(*)</span></label>
+						<input formControlName="title" [(ngModel)]="model.title" type="text" class="form-control input-sm" placeholder="Nhập..." readonly>
+
+					</div>
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">tóm tắt</span></label>
+						<textarea class="form-control text-area-height" cols="10" formControlName="summary" [(ngModel)]="model.summary" placeholder="Nhập..." readonly></textarea>
+
+					</div>
+					<div class="col-12 col-lg-12 form-group mb-6">
+						<div class="clearfix mb-2">
+							<label class="mb-1"><span class="text-uppercase">bài viết liên quan</span></label>
+
+						</div>
+						<div class="col-md-12 pr-0 pl-0">
+							<div class="btn btn-default p-2 border mb-2" style="position: relative; overflow-x: hidden;" *ngFor="let relateItem of newsRelatesSelected">
+								<img class="rounded border" style="min-height: 52px;" width="80" [src]="relateItem.imagePath" />
+								<span class="col-md-10" style="white-space: nowrap;
+								display: inline-block;
+								overflow: hidden;
+    						text-align: left;">
+									&nbsp;<strong>{{relateItem.title}}</strong>
+								</span>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-12 form-group">
+						<ckeditor id="editor" [disabled]="true" [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents" (ready)="onReady($event)"
+							[config]="ckConfig">
+						</ckeditor>
+					</div>
+				</div>
+				<div class="col-md-3 col-lg-3 col-xl-3 col-xxl-4">
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">Loại tin tức</span></label>
+						<input class="form-control" formControlName="newsType" [(ngModel)]="model.newsType" disabled>
+					</div>
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1 dis-block"><span class="text-uppercase">kiểu bài</span></label>
+						<input hidden formControlName="postType" [(ngModel)]="model.postType" />
+						<div class="checkbox dis-inline mr-3" *ngFor="let pType of postTypes">
+							<label>
+								<input type="checkbox" disabled [checked]="postTypeSelected.indexOf(pType.value) != -1"
+									(change)="onChangePostType(pType.value,$event.target.checked)">
+								<span class="text-uppercase"> {{pType.text}}</span>
+							</label>
+						</div>
+
+					</div>
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">ảnh đại diện</span></label>
+						<input type="file" [hidden]="true" id="avatar-image" accept=".png, .jpg, .jpeg">
+						<div class="news-avatar border">
+							<img [src]="model.imagePath" alt="">
+
+						</div>
+
+					</div>
+					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">thông báo</span></label>
+						<div class="checkbox">
+							<label><input disabled [(ngModel)]="model.isNotification" type="checkbox" formControlName="pushNotify" checked> Gửi thông báo đến người dân, doanh
+								nghiệp</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<app-news-relate-modal></app-news-relate-modal>

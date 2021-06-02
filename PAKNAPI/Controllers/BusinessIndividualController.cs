@@ -341,12 +341,14 @@ namespace PAKNAPI.Controllers
 				model.Status = 1;
 				model.IsDeleted = false;
 				model.UserId = accRs[0].Id;
-				var rs2 = await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(model);
+				await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(model);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 			}
 			catch (Exception ex)
 			{
-				//_bugsnag.Notify(ex);
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 
@@ -363,13 +365,6 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				//var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(_bI_InvididualUpdateIN.Phone);
-				//if (hasOne != null) {
-				//	if(hasOne.FirstOrDefault().Id != )
-				//	return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
-				//} 
 
 				// check exist:Phone,Email,IDCard
 				var checkExists = await new Models.BusinessIndividual.BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", _bI_InvididualUpdateIN.Phone, _bI_InvididualUpdateIN.Id);
@@ -399,12 +394,12 @@ namespace PAKNAPI.Controllers
 				else _bI_InvididualUpdateIN.DateOfIssue = dateOfIssue;
 				if (string.IsNullOrEmpty(_BirthDay)) _bI_InvididualUpdateIN.BirthDate = null;
 				else _bI_InvididualUpdateIN.BirthDate = birthDay;
-
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = await new BI_InvididualUpdate(_appSetting).BI_InvididualUpdateDAO(_bI_InvididualUpdateIN) };
 			}
 			catch (Exception ex)
 			{
-				_bugsnag.Notify(ex);
+				//_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };

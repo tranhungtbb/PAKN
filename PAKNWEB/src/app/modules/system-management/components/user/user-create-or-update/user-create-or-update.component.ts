@@ -236,7 +236,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 				if (this.modelUser.avatar == '' || this.modelUser.avatar == null) {
 					this.userAvatar = null
 				} else {
-					this.userAvatar = AppSettings.API_DOWNLOADFILES + '/' + this.modelUser.avatar
+					this.userAvatar = this.modelUser.avatar
 					let output: any = $('#' + this.modalId + ' .user-avatar-view')
 					output.attr('src', this.userAvatar)
 				}

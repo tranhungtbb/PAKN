@@ -135,7 +135,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			this.createUnitFrom.reset()
 		})
 		setTimeout(() => {
-			this.onCollapsed('item01')
+			this.onCollapsed('item02')
 		}, 1000)
 	}
 

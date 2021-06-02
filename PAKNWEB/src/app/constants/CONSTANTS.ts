@@ -29,6 +29,8 @@ export class LOG_ACTION {
 	public static DELETE = 'Xóa'
 	public static EXPORT = 'Xuất danh sách'
 	public static CHANGEPASSWORD = 'Đổi mật khẩu'
+	public static PUBLIC = 'Công bố'
+	public static WITHDRAW = 'Hủy công bố'
 }
 
 export class LOG_OBJECT {
@@ -49,6 +51,8 @@ export class LOG_OBJECT {
 	public static SY_INVITATION = 'Danh sách thư mời'
 	public static HIS_INVITATION = 'Lịch sử thư mời'
 
+	public static NE_NEWS = 'tin tức'
+
 	public static SY_ROLE = 'Vai trò hệ thống'
 
 	public static SY_USER = 'Người dùng hệ thống'
@@ -62,6 +66,8 @@ export class LOG_OBJECT {
 	public static SY_INTRODUCE = 'Cấu hình trang giới thiệu'
 	public static SY_INDEXSETTING = 'Cấu hình trang chủ'
 	public static MR_COMMENT = 'Bình luận Phản ánh kiến nghị'
+	public static BI_INDIVIDUAL = 'Cá nhân'
+	public static BI_BUSINESS = 'Doanh nghiệp'
 
 	public static SY_SYSTEM = 'Lịch sử hệ thống'
 }

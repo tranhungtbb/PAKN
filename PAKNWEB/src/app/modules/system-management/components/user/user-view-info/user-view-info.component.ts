@@ -88,7 +88,7 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 					if (this.model.avatar == '' || this.model.avatar == null) {
 						this.userAvatar = ''
 					} else {
-						this.userAvatar = AppSettings.API_DOWNLOADFILES + '/' + this.model.avatar
+						this.userAvatar = this.model.avatar
 					}
 
 					this.model.positionName = this.unitsList.find((c) => c.id == this.model.unitId).name
@@ -111,7 +111,7 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 					if (this.model.avatar == '' || this.model.avatar == null) {
 						this.userAvatar = ''
 					} else {
-						this.userAvatar = AppSettings.API_DOWNLOADFILES + '/' + this.model.avatar
+						this.userAvatar = this.model.avatar
 					}
 
 					this.model.positionName = this.unitsList.find((c) => c.id == this.model.unitId).name

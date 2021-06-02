@@ -242,6 +242,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _bI_InvididualUpdateIN.Id);
 			DP.Add("FullName", _bI_InvididualUpdateIN.FullName);
+			DP.Add("Phone", _bI_InvididualUpdateIN.Phone);
 			DP.Add("DateOfBirth", _bI_InvididualUpdateIN.BirthDate);
 			DP.Add("Email", _bI_InvididualUpdateIN.Email);
 			DP.Add("Nation", _bI_InvididualUpdateIN.Nation);

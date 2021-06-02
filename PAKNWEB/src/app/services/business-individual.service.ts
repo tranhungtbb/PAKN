@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs'
 import { AppSettings } from '../constants/app-setting'
 import { Api } from '../constants/api'
 import { UserInfoStorageService } from '../commons/user-info-storage.service'
+import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 @Injectable({
 	providedIn: 'root',
 })
@@ -19,7 +20,11 @@ export class BusinessIndividualService {
 	}
 
 	individualDelete(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialDelete)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.BI_INDIVIDUAL),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.IndivialDelete, headers)
 	}
 
 	individualRegister(data: any): Observable<any> {
@@ -28,15 +33,23 @@ export class BusinessIndividualService {
 		// for (let item in data) {
 		// 	form.append(item, data[item])
 		// }
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.InvididualRegister)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.BI_INDIVIDUAL),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.InvididualRegister, headers)
 	}
 
 	invididualUpdate(data: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.BI_INDIVIDUAL),
+		}
 		let form = new FormData()
 		for (let item in data) {
 			form.append(item, data[item])
 		}
-		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.InvididualUpdate)
+		return this.serviceInvoker.postwithHeaders(form, AppSettings.API_ADDRESS + Api.InvididualUpdate, headers)
 	}
 
 	individualById(request: any): Observable<any> {
@@ -64,16 +77,24 @@ export class BusinessIndividualService {
 	}
 
 	businessDelete(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BusinessDelete)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.BI_BUSINESS),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.BusinessDelete, headers)
 	}
 
 	businessRegister(data: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.BI_BUSINESS),
+		}
 		let form = new FormData()
 		for (let item in data) {
 			form.append(item, data[item])
 		}
 
-		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.BusinessRegister)
+		return this.serviceInvoker.postwithHeaders(form, AppSettings.API_ADDRESS + Api.BusinessRegister, headers)
 	}
 
 	businessGetByID(request: any): Observable<any> {
@@ -81,7 +102,11 @@ export class BusinessIndividualService {
 	}
 
 	businessUpdate(request: any): Observable<any> {
-		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.BusinessUpdate)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.BI_BUSINESS),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.BusinessUpdate, headers)
 	}
 
 	businessImportFile(data: any): Observable<any> {

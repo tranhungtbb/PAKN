@@ -137,7 +137,7 @@ export class AccountInfoComponent implements OnInit {
 			this.listDistrict = []
 			this.listVillage = []
 
-			this.model.provinceId = ''
+			this.model.provinceId = null
 		}
 		if (this.model.nation == 'Việt Nam') {
 			this.diadanhService.getAllProvince().subscribe((res) => {
@@ -155,8 +155,8 @@ export class AccountInfoComponent implements OnInit {
 			this.listDistrict = []
 			this.listVillage = []
 
-			this.model.districtId = ''
-			this.model.wardsId = ''
+			this.model.districtId = null
+			this.model.wardsId = null
 		}
 		if (this.model.provinceId != null && this.model.provinceId != '') {
 			this.diadanhService.getAllDistrict(this.model.provinceId).subscribe((res) => {
@@ -173,7 +173,7 @@ export class AccountInfoComponent implements OnInit {
 	onChangeDistrict(clearable = false) {
 		if (clearable) {
 			this.listVillage = []
-			this.model.wardsId = ''
+			this.model.wardsId = null
 		}
 		if (this.model.districtId != null && this.model.districtId != '') {
 			this.diadanhService.getAllVillage(this.model.provinceId, this.model.districtId).subscribe((res) => {

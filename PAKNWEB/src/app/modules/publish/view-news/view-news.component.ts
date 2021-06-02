@@ -44,10 +44,11 @@ export class ViewNewsComponent implements OnInit {
 	getNewsRelates(id) {
 		this.newsService.getAllRelates({ id }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				this.newsRelates = res.result.NENewsGetAllRelates.map((e) => {
-					e.imagePath = `${AppSettings.API_DOWNLOADFILES}/${e.imagePath}`
-					return e
-				})
+				this.newsRelates = res.result.NENewsGetAllRelates
+				// .map((e) => {
+				// 	e.imagePath = `${AppSettings.API_DOWNLOADFILES}/${e.imagePath}`
+				// 	return e
+				// })
 			} else {
 				this.newsRelates = []
 			}

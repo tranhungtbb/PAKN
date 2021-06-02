@@ -89,11 +89,7 @@ export class CatalogService {
 	}
 	//newstype
 	newsTypeGetList(request: any): Observable<any> {
-		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
-		}
-		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.NewsTypeGetList, headers)
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.NewsTypeGetList)
 	}
 
 	newsTypeGetById(request: any): Observable<any> {

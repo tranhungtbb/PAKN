@@ -54,7 +54,7 @@ namespace PAKNAPI.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -162,7 +162,7 @@ namespace PAKNAPI.ControllerBase
 					DateTimeZoneHandling = DateTimeZoneHandling.Local,
 					DateParseHandling = DateParseHandling.DateTimeOffset,
 				};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				var files = Request.Form.Files;
 				NENewsInsertIN _nENewsInsertIN = JsonConvert.DeserializeObject<NENewsInsertIN>(Request.Form["data"].ToString(), jss);
@@ -179,7 +179,7 @@ namespace PAKNAPI.ControllerBase
 				{
 					_nENewsInsertIN.ImagePath = avatarFilePath;
 				}
-
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsInsert(_appSetting).NENewsInsertDAO(_nENewsInsertIN) };
 			}
 			catch (Exception ex)
@@ -225,7 +225,6 @@ namespace PAKNAPI.ControllerBase
 					DateTimeZoneHandling = DateTimeZoneHandling.Local,
 					DateParseHandling = DateParseHandling.DateTimeOffset,
 				};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				var files = Request.Form.Files;
 				NENewsUpdateIN _nENewsUpdateIN = JsonConvert.DeserializeObject<NENewsUpdateIN>(Request.Form["data"].ToString(), jss);
@@ -243,7 +242,7 @@ namespace PAKNAPI.ControllerBase
 					var rs = await _fileService.Remove(_nENewsUpdateIN.ImagePath);
 					_nENewsUpdateIN.ImagePath = avatarFilePath;
 				}
-
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN) };
 			}
 			catch (Exception ex)
