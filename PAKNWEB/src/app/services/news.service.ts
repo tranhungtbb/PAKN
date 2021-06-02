@@ -33,7 +33,7 @@ export class NewsService {
 	getById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NewsGetById)
 	}
-	create(data: any, file: any): Observable<any> {
+	create(data: any, file: any = null): Observable<any> {
 		const httpPackage = {
 			headers: this.tempheaders,
 			reportProgress: true,
@@ -43,7 +43,7 @@ export class NewsService {
 		if (file) formData.append('files', file, file.name)
 		return this.http.post(AppSettings.API_ADDRESS + Api.NewsInsert, formData, httpPackage)
 	}
-	update(data: any, file: any): Observable<any> {
+	update(data: any, file: any = null): Observable<any> {
 		const httpPackage = {
 			headers: this.tempheaders,
 			reportProgress: true,
