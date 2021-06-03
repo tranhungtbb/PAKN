@@ -96,8 +96,8 @@
 						<label class="mb-1"><span class="text-uppercase">ảnh đại diện</span></label>
 						<input type="file" [hidden]="true" id="avatar-image" accept=".png, .jpg, .jpeg" (change)="onAvatarChange($event)">
 						<div class="news-avatar border" (click)="onChangeAvatar()">
-							<img [src]="model.imagePath" alt="">
-
+							<img *ngIf="avatarLocalChange" [src]="model.imagePath | sanitizerUrl" alt="">
+							<img *ngIf="!avatarLocalChange" [src]="model.imagePath" alt="">
 							<!-- <div class="news-avatar border" (click)="onChangeAvatar()" style="cursor: pointer;">
 							<img [src]="avatarUrl | sanitizerUrl" alt="">
 							<input hidden formControlName="imagePath" [(ngModel)]="model.imagePath" /> -->

@@ -319,6 +319,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	onChangeAvatar() {
 		$('#avatar-image').click()
 	}
+	avatarLocalChange = false
 	onAvatarChange(event: any) {
 		var file = event.target.files[0]
 		if (!file) {
@@ -335,20 +336,22 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 
 		//preview image
 		this.filePost = file
-		this.avatarUrl = URL.createObjectURL(file)
-		if (!this.model.imagePath) this.model.imagePath = 'hasImage'
-		let formData = new FormData()
-		formData.append('file', file, file.name)
+		this.model.imagePath = URL.createObjectURL(file)
+		this.avatarLocalChange = true
+		////////
+		//if (!this.model.imagePath) this.model.imagePath = 'hasImage'
+		// let formData = new FormData()
+		// formData.append('file', file, file.name)
 
-		this.newsService.uploadFile(formData).subscribe((res) => {
-			if (res.success != 'OK') {
-				this.toast.error('Xảy ra lỗi trong quá trình xử lý')
-				return
-			}
-			this.model.imagePath = res.result.path
-			this.newsForm.controls.imagePath.setValue(this.model.imagePath)
-			// this.avatarUrl = `${AppSettings.API_DOWNLOADFILES}/${this.model.imagePath}`
-		})
+		// this.newsService.uploadFile(formData).subscribe((res) => {
+		// 	if (res.success != 'OK') {
+		// 		this.toast.error('Xảy ra lỗi trong quá trình xử lý')
+		// 		return
+		// 	}
+		// 	this.model.imagePath = res.result.path
+		// 	this.newsForm.controls.imagePath.setValue(this.model.imagePath)
+		// 	// this.avatarUrl = `${AppSettings.API_DOWNLOADFILES}/${this.model.imagePath}`
+		// })
 	}
 
 	public onReady(editor) {
