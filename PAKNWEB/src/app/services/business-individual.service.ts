@@ -73,7 +73,11 @@ export class BusinessIndividualService {
 	}
 
 	businessChangeStatus(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.BusinessChangeStatus)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
+			logObject: encodeURIComponent(LOG_OBJECT.BI_BUSINESS),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.BusinessChangeStatus, headers)
 	}
 
 	businessDelete(data: any): Observable<any> {

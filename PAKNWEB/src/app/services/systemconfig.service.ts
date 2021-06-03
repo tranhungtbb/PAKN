@@ -16,13 +16,21 @@ export class SystemconfigService {
 		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.EmailGetFirstBase)
 	}
 	updateSystemEmail(query: any): Observable<any> {
-		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.EmailConfigSystemUpdate)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_EMAIL),
+		}
+		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.EmailConfigSystemUpdate, headers)
 	}
 	getSystemSMS(): Observable<any> {
 		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.SMSGetFirstBase)
 	}
 	updateSystemSMS(query: any): Observable<any> {
-		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.SMSConfigSystemUpdate)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_SMS),
+		}
+		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.SMSConfigSystemUpdate, headers)
 	}
 	getSystemTime(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.TimeConfigGetAllOnPage)

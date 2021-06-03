@@ -70,6 +70,8 @@ export class LOG_OBJECT {
 	public static BI_INDIVIDUAL = 'Cá nhân'
 	public static BI_BUSINESS = 'Doanh nghiệp'
 	public static SY_TIME = 'Cấu hình thời gian làm việc'
+	public static SY_EMAIL = 'Cấu hình email hệ thống'
+	public static SY_SMS = 'Cấu hình SMS thương hiệu'
 	public static SY_UNIT = 'Đơn vị'
 	public static SY_CHATBOX = 'Chat box'
 

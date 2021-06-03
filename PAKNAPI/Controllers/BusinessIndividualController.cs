@@ -520,7 +520,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BusinessChangeStatus")]
 		public async Task<ActionResult<object>> BusinessChageStatus(BI_BusinessChageStatusIN _bI_BusinessChageStatusIN)
 		{
@@ -540,7 +540,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BusinessRegister")]
 		public async Task<object> BusinessRegister([FromBody] BI_BusinessInsertIN_Cus model)
 		{
@@ -666,7 +666,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BusinessUpdate")]
 		public async Task<ActionResult<object>> BusinessUpdate([FromBody] BI_BusinessUpdateInfoIN_body model)
 		{
