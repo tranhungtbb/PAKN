@@ -5,6 +5,7 @@ import { Observable } from 'rxjs'
 import { AppSettings } from '../constants/app-setting'
 import { Api } from '../constants/api'
 import { UserInfoStorageService } from '../commons/user-info-storage.service'
+import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 
 @Injectable({
 	providedIn: 'root',
@@ -27,13 +28,25 @@ export class SystemconfigService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.TimeConfigGetAllOnPage)
 	}
 	updateSystemTime(query: any): Observable<any> {
-		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.TimeConfigUpdate)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_TIME),
+		}
+		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.TimeConfigUpdate, headers)
 	}
 	insertSystemTime(query: any): Observable<any> {
-		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.TimeConfigInsert)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_TIME),
+		}
+		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.TimeConfigInsert, headers)
 	}
 	deleteSystemTime(query: any): Observable<any> {
-		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.TimeConfigDelete)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_TIME),
+		}
+		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.TimeConfigDelete, headers)
 	}
 	getSystemTimeById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.TimeConfigGetById)

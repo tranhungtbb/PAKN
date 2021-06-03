@@ -46,7 +46,7 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				// delete file
 				List <INVFileAttachGetAllByInvitationId> rsINVFileAttachGetAllByInvitationId = await new INVFileAttachGetAllByInvitationId(_appSetting).INVFileAttachGetAllByInvitationIdDAO(_iNVInvitationDeleteIN.Id);
 
@@ -269,6 +269,7 @@ namespace PAKNAPI.Controllers
 				}
 				else
 				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
 					return new ResultApi { Success = ResultCode.ORROR, Result = id, Message = "title already exists" };
 				}
 			}

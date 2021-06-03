@@ -22,16 +22,28 @@ export class ChatbotService {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.ChatbotGetList)
 	}
 	chatbotDelete(request: any): Observable<any> {
-		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.ChatbotDelete)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_CHATBOX),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.ChatbotDelete, headers)
 	}
 	chatbotGetById(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.ChatbotGetById)
 	}
 	chatbotUpdateStatus(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.ChatbotUpdate)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_CHATBOX),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.ChatbotUpdate, headers)
 	}
 	chatbotInsertQuestion(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.ChatbotInsertQuestion)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_CHATBOX),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.ChatbotInsertQuestion, headers)
 	}
 	getNewUserId() {
 		return this.http.get(urlChatbot + '/Conversation/new')

@@ -47,7 +47,7 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				SMSDoanhNghiepDeleteBySMSIdIN dn = new SMSDoanhNghiepDeleteBySMSIdIN();
 				dn.SMSId = _sMSQuanLyTinNhanDeleteIN.Id;
 				await new SMSDoanhNghiepDeleteBySMSId(_appSetting).SMSDoanhNghiepDeleteBySMSIdDAO(dn);
@@ -133,6 +133,7 @@ namespace PAKNAPI.Controllers
 				}
 				else
 				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
 					return new ResultApi { Success = ResultCode.ORROR, Result = id, Message = "title already exists" };
 				}
 			}
@@ -155,12 +156,12 @@ namespace PAKNAPI.Controllers
 				sms.model = (await new SMSQuanLyTinNhanGetById(_appSetting).SMSQuanLyTinNhanGetByIdDAO(id)).FirstOrDefault();
 				sms.IndividualBusinessInfo = await new SMSGetListIndividualBusinessBySMSId(_appSetting).SMSGetListIndividualBusinessBySMSIdDAO(id);
 
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK , Result = sms };
 			}
 			catch (Exception ex)
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -326,14 +327,14 @@ namespace PAKNAPI.Controllers
 						break;
 				}
 
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new HISSMSInsert(_appSetting).HISSMSInsertDAO(_hISSMS) };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}

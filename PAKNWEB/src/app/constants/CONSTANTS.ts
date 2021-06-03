@@ -31,6 +31,7 @@ export class LOG_ACTION {
 	public static CHANGEPASSWORD = 'Đổi mật khẩu'
 	public static PUBLIC = 'Công bố'
 	public static WITHDRAW = 'Hủy công bố'
+	public static SEND = 'Gửi'
 }
 
 export class LOG_OBJECT {
@@ -38,17 +39,17 @@ export class LOG_OBJECT {
 	public static login = 'Đăng nhập'
 
 	public static CA_FIELD = 'Danh mục lĩnh vực'
-	public static CA_WORD = 'Danh mục thư viện từ ngữ'
-	public static CA_GROUPWORD = 'Danh mục nhóm thư viện từ ngữ'
-	public static CA_DEPARTMENT = 'Danh mục sở ngành'
-	public static CA_DEPARTMENT_GROUP = 'Danh mục nhóm sở ngành'
-	public static CA_HASHTAG = 'Danh mục Hashtag'
-	public static CA_POSITION = 'Danh mục chức vụ'
-	public static CA_NEWS_TYPE = 'Danh mục loại tin tức'
+	public static CA_WORD = 'Thư viện từ ngữ'
+	public static CA_GROUPWORD = 'Nhóm thư viện từ ngữ'
+	public static CA_DEPARTMENT = 'Sở ngành'
+	public static CA_DEPARTMENT_GROUP = 'Nhóm sở ngành'
+	public static CA_HASHTAG = 'Hashtag'
+	public static CA_POSITION = 'Chức vụ'
+	public static CA_NEWS_TYPE = 'Loại tin tức'
 
-	public static SMS_EMAIL = 'Danh sách sms'
+	public static SMS_EMAIL = 'Tin nhắn sms'
 	public static HIS_EMAIL = 'Lịch sử sms'
-	public static SY_INVITATION = 'Danh sách thư mời'
+	public static SY_INVITATION = 'Thư mời'
 	public static HIS_INVITATION = 'Lịch sử thư mời'
 
 	public static NE_NEWS = 'tin tức'
@@ -68,6 +69,9 @@ export class LOG_OBJECT {
 	public static MR_COMMENT = 'Bình luận Phản ánh kiến nghị'
 	public static BI_INDIVIDUAL = 'Cá nhân'
 	public static BI_BUSINESS = 'Doanh nghiệp'
+	public static SY_TIME = 'Cấu hình thời gian làm việc'
+	public static SY_UNIT = 'Đơn vị'
+	public static SY_CHATBOX = 'Chat box'
 
 	public static SY_SYSTEM = 'Lịch sử hệ thống'
 }

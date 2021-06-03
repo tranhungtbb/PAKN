@@ -39,7 +39,7 @@ export class HashtagService {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
 			logObject: encodeURIComponent(LOG_OBJECT.CA_HASHTAG),
 		}
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.HashtagInsert)
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.HashtagInsert, headers)
 	}
 
 	update(data: any): Observable<any> {
@@ -49,6 +49,14 @@ export class HashtagService {
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.HashtagUpdate, headers)
 	}
+	changeStatus(data: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_HASHTAG),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.HashtagUpdate, headers)
+	}
+
 	delete(data: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),

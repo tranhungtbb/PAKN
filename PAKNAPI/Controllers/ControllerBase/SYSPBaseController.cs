@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using Bugsnag;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace PAKNAPI.ControllerBase
 {
@@ -51,7 +53,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUnitChageStatusBase")]
 		public async Task<ActionResult<object>> SYUnitChageStatusBase(SYUnitChageStatusIN _sYUnitChageStatusIN)
 		{

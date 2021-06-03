@@ -631,10 +631,12 @@ namespace PAKNAPI.Controllers
 				model.IsDeleted = false;
 				model.UserId = accRs[0].Id;
 				var rs2 = await new BI_BusinessInsert(_appSetting).BusinessInsertDAO(model);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 
@@ -670,8 +672,6 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				///check ton tai
 				var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone", model.Phone, model.Id);
 				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
@@ -716,6 +716,7 @@ namespace PAKNAPI.Controllers
 					model.OrgProvinceId = null;
 					model.OrgWardsId = null;
 				}
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = await new BI_BusinessUpdateInfo(_appSetting).BI_BusinessUpdateInfoDAO(model) };
 			}
 			catch (Exception ex)

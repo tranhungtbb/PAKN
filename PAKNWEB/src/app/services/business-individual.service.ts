@@ -45,11 +45,11 @@ export class BusinessIndividualService {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
 			logObject: encodeURIComponent(LOG_OBJECT.BI_INDIVIDUAL),
 		}
-		let form = new FormData()
-		for (let item in data) {
-			form.append(item, data[item])
-		}
-		return this.serviceInvoker.postwithHeaders(form, AppSettings.API_ADDRESS + Api.InvididualUpdate, headers)
+		// let form = new FormData()
+		// for (let item in data) {
+		// 	form.append(item, data[item])
+		// }
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.InvididualUpdate, headers)
 	}
 
 	individualById(request: any): Observable<any> {
@@ -89,12 +89,12 @@ export class BusinessIndividualService {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
 			logObject: encodeURIComponent(LOG_OBJECT.BI_BUSINESS),
 		}
-		let form = new FormData()
-		for (let item in data) {
-			form.append(item, data[item])
-		}
+		// let form = new FormData()
+		// for (let item in data) {
+		// 	form.append(item, data[item])
+		// }
 
-		return this.serviceInvoker.postwithHeaders(form, AppSettings.API_ADDRESS + Api.BusinessRegister, headers)
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.BusinessRegister, headers)
 	}
 
 	businessGetByID(request: any): Observable<any> {
@@ -103,7 +103,7 @@ export class BusinessIndividualService {
 
 	businessUpdate(request: any): Observable<any> {
 		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
 			logObject: encodeURIComponent(LOG_OBJECT.BI_BUSINESS),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.BusinessUpdate, headers)
