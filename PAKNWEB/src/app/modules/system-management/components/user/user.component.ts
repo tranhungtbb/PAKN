@@ -62,6 +62,7 @@ export class UserComponent implements OnInit {
 
 	// view child
 	@ViewChild('table', { static: false }) table: any
+	@ViewChild('table2', { static: false }) table2: any
 	@ViewChild(UserCreateOrUpdateComponent, { static: false }) childCreateOrUpdateUser: UserCreateOrUpdateComponent
 	@ViewChild(UserViewInfoComponent, { static: false }) childDetailUser: UserViewInfoComponent
 
@@ -334,17 +335,17 @@ export class UserComponent implements OnInit {
 
 	dataHisStateChange() {
 		this.hisPageIndex = 1
-		this.table.first = 0
+		this.table2.first = 0
 		this.getHistory(this.hisUserId, this.emailUser)
 	}
 
-	getHistory(id: any, email: any) {
+	getHistory(id: any, email: any, status = null) {
 		if (id == undefined) return
-		if (id != this.hisUserId) {
+		if (id != this.hisUserId || status == true) {
 			this.cleaseHisModel()
+			this.table2.reset()
 		}
-		// this.hisPageSize = 20
-		// this.hisPageIndex = 1
+
 		this.hisUserId = id
 		this.listHisData = []
 		this.emailUser = email

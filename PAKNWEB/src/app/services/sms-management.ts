@@ -31,7 +31,7 @@ export class SMSManagementService {
 
 	UpdateStatusSend(request: any): Observable<any> {
 		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logAction: encodeURIComponent(LOG_ACTION.SEND),
 			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL),
 		}
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.SMSManagementUpdateStatusSend, headers)
@@ -39,7 +39,7 @@ export class SMSManagementService {
 
 	Update(request: any): Observable<any> {
 		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logAction: request.status == 1 ? encodeURIComponent(LOG_ACTION.UPDATE) : encodeURIComponent(LOG_ACTION.SEND),
 			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.SMSManagementUpdate, headers)

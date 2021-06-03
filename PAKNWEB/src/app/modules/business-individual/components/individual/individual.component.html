@@ -198,9 +198,10 @@
 							</div>
 							<!-- row 2 -->
 							<div class="col-12 col-lg-4 form-group">
-								<label class="mb-1">CMND/CCCD <span class="cl-red">(*)</span></label>
+								<label class="mb-1">CMND/CCCD/Hộ chiếu <span class="cl-red">(*)</span></label>
 								<input svDisabledSpaceKey maxlength="12" [(ngModel)]="model.iDCard" formControlName="iDCard" type="text" placeholder="Nhập..."
-									class="form-control border-brown" pattern="^(\w{8}|\w{9}|\w{12})$" (change)="onCheckExist('IDCard',$event.target.value)">
+									class="form-control border-brown" pattern="^(\w{1}[0-9]{7}|[0-9]{8}|[0-9]{9}|[0-9]{12})$" (change)="onCheckExist('IDCard',$event.target.value)">
+
 								<div *ngIf="(submitted && f.iDCard.invalid)||(f.iDCard.invalid && (f.iDCard.dirty || f.iDCard.touched))" class="has-error m-b-12">
 									<div *ngIf="f.iDCard.errors.required">
 										<span class="help-block">Trường dữ liệu này không được để trống</span>

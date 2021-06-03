@@ -64,14 +64,12 @@ namespace PAKNAPI.Controllers.ControllerBase
 						break;
 				}
 
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new HISNews(_appSetting).HISNewsInsert(_hISNews) };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -90,7 +88,6 @@ namespace PAKNAPI.Controllers.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}

@@ -15,13 +15,6 @@ import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 export class NewsService {
 	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStronageService: UserInfoStorageService) {}
 
-	tempheaders = new HttpHeaders({
-		ipAddress: this.localStronageService.getIpAddress() && this.localStronageService.getIpAddress() != 'null' ? this.localStronageService.getIpAddress() : '',
-		macAddress: '',
-		logAction: encodeURIComponent(LOG_ACTION.INSERT),
-		logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
-	})
-
 	getAllPagedList(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NewsGetAllOnPage)
 	}
@@ -34,8 +27,14 @@ export class NewsService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NewsGetById)
 	}
 	create(data: any, file: any = null): Observable<any> {
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.localStronageService.getIpAddress() && this.localStronageService.getIpAddress() != 'null' ? this.localStronageService.getIpAddress() : '',
+			macAddress: '',
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.NE_NEWS),
+		})
 		const httpPackage = {
-			headers: this.tempheaders,
+			headers: tempheaders,
 			reportProgress: true,
 		}
 		let formData = new FormData()
@@ -44,22 +43,49 @@ export class NewsService {
 		return this.http.post(AppSettings.API_ADDRESS + Api.NewsInsert, formData, httpPackage)
 	}
 	update(data: any, file: any = null): Observable<any> {
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.localStronageService.getIpAddress() && this.localStronageService.getIpAddress() != 'null' ? this.localStronageService.getIpAddress() : '',
+			macAddress: '',
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.NE_NEWS),
+		})
 		const httpPackage = {
-			headers: this.tempheaders,
+			headers: tempheaders,
 			reportProgress: true,
 		}
 
 		let formData = new FormData()
-		// for (let k in data) {
-		// 	formData.append(k, data[k])
-		// }
 		formData.append('data', JSON.stringify(data))
 		if (file) formData.append('files', file, file.name)
 
 		return this.http.post(AppSettings.API_ADDRESS + Api.NewsUpdate, formData, httpPackage)
 	}
+
+	changeStatus(data: any, file: any = null): Observable<any> {
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.localStronageService.getIpAddress() && this.localStronageService.getIpAddress() != 'null' ? this.localStronageService.getIpAddress() : '',
+			macAddress: '',
+			logAction: data.status == 1 ? encodeURIComponent(LOG_ACTION.PUBLIC) : encodeURIComponent(LOG_ACTION.WITHDRAW),
+			logObject: encodeURIComponent(LOG_OBJECT.NE_NEWS),
+		})
+		const httpPackage = {
+			headers: tempheaders,
+			reportProgress: true,
+		}
+
+		let formData = new FormData()
+		formData.append('data', JSON.stringify(data))
+		if (file) formData.append('files', file, file.name)
+
+		return this.http.post(AppSettings.API_ADDRESS + Api.NewsUpdate, formData, httpPackage)
+	}
+
 	delete(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.NewsDelete)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.NE_NEWS),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.NewsDelete, headers)
 	}
 	getAllNewsRelates(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.NewsRelatesGetAll)
@@ -68,27 +94,15 @@ export class NewsService {
 		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.NewsUploadFile)
 	}
 	getAvatar(data: string): Observable<any> {
-		const httpPackage = {
-			headers: this.tempheaders,
-			reportProgress: true,
-		}
-		return this.http.get(AppSettings.API_ADDRESS + Api.NewsGetAvatar + '/' + data, httpPackage)
+		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.NewsGetAvatar + '/' + data)
 	}
 
 	getAvatars(data: number[]): Observable<any> {
-		const httpPackage = {
-			headers: this.tempheaders,
-			reportProgress: true,
-		}
-		return this.http.post(AppSettings.API_ADDRESS + Api.NewsGetAvatars, data, httpPackage)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.NewsGetAvatars)
 	}
 
 	hisNewsCreate(data: any): Observable<any> {
-		const httpPackage = {
-			headers: this.tempheaders,
-			reportProgress: true,
-		}
-		return this.http.post(AppSettings.API_ADDRESS + Api.HisNewsInsert, data, httpPackage)
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.HisNewsInsert)
 	}
 
 	getListHisNewsByNewsId(query: any): Observable<any> {

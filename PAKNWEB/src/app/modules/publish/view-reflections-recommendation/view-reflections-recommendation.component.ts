@@ -8,6 +8,7 @@ import { ViewChild } from '@angular/core'
 import { RecommendationCommentService } from 'src/app/services/recommendation-comment.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { RecommnendationCommentObject } from 'src/app/models/recommendationObject'
+import { AppSettings } from 'src/app/constants/app-setting'
 
 declare var require: any
 const FileSaver = require('file-saver')
@@ -29,6 +30,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	pageSizeComment: any = 20
 	IsAllComment: boolean = false
 	isLogin: boolean = this.storeageService.getIsHaveToken()
+	APIADDRESS: any
 	constructor(
 		private service: PuRecommendationService,
 		private activatedRoute: ActivatedRoute,
@@ -39,6 +41,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	) {
 		this.checkSatisfaction = false
 		this.listCommentsPaged = []
+		this.APIADDRESS = AppSettings.API_ADDRESS.replace('api/', '')
 	}
 	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	ngOnInit() {

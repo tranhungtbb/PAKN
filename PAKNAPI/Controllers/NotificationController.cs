@@ -62,7 +62,7 @@ namespace PAKNAPI.Controllers
                         model.Title = isCreateNews == true ? senderName + " vừa đăng một bài viết mới" : senderName + " vừa cập nhập một bài viết";
                         model.Content = Title;
                         model.IsViewed = true;
-                        model.IsReaded = false;
+                        model.IsReaded = true;
                         // insert vào db-
                         var count = await new SYNotification(_appSetting).SYNotificationInsertDAO(model);
                     }
@@ -74,7 +74,7 @@ namespace PAKNAPI.Controllers
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -131,7 +131,7 @@ namespace PAKNAPI.Controllers
                 notification.Type = TYPENOTIFICATION.RECOMMENDATION;
                 notification.TypeSend = recommendation.Status;
                 notification.IsViewed = true;
-                notification.IsReaded = false;
+                notification.IsReaded = true;
 
 
                 switch (recommendation.Status)

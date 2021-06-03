@@ -123,7 +123,8 @@
 									<div class="hover-active d-flex justify-content-end">
 										<a (click)="modalUserCreateOrUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
 										<a (click)="preChangePassword(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i class="bi bi-key"></i></a>
-										<a class="btn-icon mr-2 cursor" (click)="getHistory(item.id, item.userName)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
+										<a class="btn-icon mr-2 cursor" (click)="getHistory(item.id, item.userName, true)" title="Xem lịch sử"><i
+												class="bi bi-clock-history"></i></a>
 										<a (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
 												class="bi bi-trash"></i></a>
 

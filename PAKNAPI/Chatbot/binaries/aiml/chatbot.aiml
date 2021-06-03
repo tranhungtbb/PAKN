@@ -9,4 +9,12 @@
       </random>
     </template>
   </category>
+  <category id="1">
+    <pattern>Xin chào</pattern>
+    <template>Xin chào bạn! Bạn đang có vấn đề gì cần được giải đáp hãy nhập câu hỏi?</template>
+  </category>
+  <category id="5">
+    <pattern>sdf</pattern>
+    <template>sdf</template>
+  </category>
 </aiml>

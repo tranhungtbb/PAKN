@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using Bugsnag;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace PAKNAPI.ControllerBase
 {
@@ -51,7 +53,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYUnitChageStatusBase")]
 		public async Task<ActionResult<object>> SYUnitChageStatusBase(SYUnitChageStatusIN _sYUnitChageStatusIN)
 		{
@@ -94,7 +96,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYEmailInsertBase")]
 		public async Task<ActionResult<object>> SYEmailInsertBase(SYEmailInsertIN _sYEmailInsertIN)
 		{
@@ -421,7 +423,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYSMSInsertBase")]
 		public async Task<ActionResult<object>> SYSMSInsertBase(SYSMSInsertIN _sYSMSInsertIN)
 		{
@@ -507,7 +509,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYTimeDeleteBase")]
 		public async Task<ActionResult<object>> SYTimeDeleteBase(SYTimeDeleteIN _sYTimeDeleteIN)
 		{
@@ -596,7 +598,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYTimeInsertBase")]
 		public async Task<ActionResult<object>> SYTimeInsertBase(SYTimeInsertIN _sYTimeInsertIN)
 		{
@@ -616,7 +618,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("SYTimeUpdateBase")]
 		public async Task<ActionResult<object>> SYTimeUpdateBase(SYTimeUpdateIN _sYTimeUpdateIN)
 		{

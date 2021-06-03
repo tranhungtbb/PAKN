@@ -41,7 +41,7 @@ export class DepartmentGroupComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		$('#modal').on('keypress', function(e) {
+		$('#modal').on('keypress', function (e) {
 			if (e.which == 13) e.preventDefault()
 		})
 	}
@@ -77,7 +77,7 @@ export class DepartmentGroupComponent implements OnInit {
 			PageSize: this.pageSize,
 		}
 		console.log(request)
-		this._service.departmentGroupGetList(request).subscribe(response => {
+		this._service.departmentGroupGetList(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
@@ -88,7 +88,7 @@ export class DepartmentGroupComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 				alert(error)
 			}
@@ -140,8 +140,9 @@ export class DepartmentGroupComponent implements OnInit {
 		if (this.form.invalid) {
 			return
 		}
+		debugger
 		if (this.model.id == 0 || this.model.id == null) {
-			this._service.departmentGroupInsert(this.model).subscribe(response => {
+			this._service.departmentGroupInsert(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -156,12 +157,12 @@ export class DepartmentGroupComponent implements OnInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				error => {
+				(error) => {
 					console.error(error)
 					alert(error)
 				}
 		} else {
-			this._service.departmentGroupUpdate(this.model).subscribe(response => {
+			this._service.departmentGroupUpdate(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -176,7 +177,7 @@ export class DepartmentGroupComponent implements OnInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				error => {
+				(error) => {
 					console.error(error)
 					alert(error)
 				}
@@ -188,7 +189,7 @@ export class DepartmentGroupComponent implements OnInit {
 			Id: data.id,
 			Type: 1,
 		}
-		this._service.departmentGroupGetById(request).subscribe(response => {
+		this._service.departmentGroupGetById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.rebuilForm()
 				this.title = 'Chỉnh sửa nhóm sở ngành'
@@ -198,7 +199,7 @@ export class DepartmentGroupComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 				alert(error)
 			}
@@ -212,7 +213,7 @@ export class DepartmentGroupComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.departmentGroupDelete(request).subscribe(response => {
+		this._service.departmentGroupDelete(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result == 0) {
 					this._toastr.error('Nhóm sở ngành này đang được sử dụng')
@@ -225,7 +226,7 @@ export class DepartmentGroupComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 			}
 	}
@@ -241,7 +242,7 @@ export class DepartmentGroupComponent implements OnInit {
 			Id: data.id,
 		}
 		data.isActived = !data.isActived
-		this._service.departmentGroupUpdateStatus(data).subscribe(res => {
+		this._service.departmentGroupUpdateStatus(data).subscribe((res) => {
 			$('#modalConfirmUpdateStatus').modal('hide')
 			if (res.success == 'OK') {
 				if (data.isActived == true) {
@@ -253,7 +254,7 @@ export class DepartmentGroupComponent implements OnInit {
 				this._toastr.error(res.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 			}
 	}
@@ -268,7 +269,7 @@ export class DepartmentGroupComponent implements OnInit {
 			IsActived: this.isActived,
 		}
 
-		this._service.fieldExportExcel(request).subscribe(response => {
+		this._service.fieldExportExcel(request).subscribe((response) => {
 			var today = new Date()
 			var dd = String(today.getDate()).padStart(2, '0')
 			var mm = String(today.getMonth() + 1).padStart(2, '0')

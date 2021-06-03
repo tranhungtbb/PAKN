@@ -20,7 +20,7 @@ export class NewsModel {
 	title: string
 	summary: string
 	contents: string
-	newsType: number
+	newsType: any
 	postType: string
 	imagePath: string
 	isPublished: boolean

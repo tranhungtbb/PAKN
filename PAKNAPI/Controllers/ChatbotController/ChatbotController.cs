@@ -26,23 +26,25 @@ namespace PAKNAPI.Controllers.ChatbotController
         }
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize]
         [Route("ChatbotDeleteBase")]
         public async Task<ActionResult<object>> ChatbotDeleteBase(ChatbotDeleteIN _ChatbotDeleteIN)
         {
             try
             {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
                 return new Models.Results.ResultApi { Success = ResultCode.OK, Result = await new ChatbotDelete(_webHostEnvironment, _appSetting).ChatbotDeleteDAO(_ChatbotDeleteIN) };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
                 return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
 
         [HttpGet]
-        [Authorize("ThePolicy")]
+        [Authorize]
         [Route("ChatbotGetAllOnPageBase")]
         public async Task<ActionResult<object>> ChatbotGetAllOnPageBase(int? PageSize, int? PageIndex, string Question, string Answer, bool? IsActived)
         {
@@ -112,48 +114,55 @@ namespace PAKNAPI.Controllers.ChatbotController
         }
 
         [HttpPost]
+        [Authorize]
         [Route("ChatbotInsertQuestion")]
         public async Task<object> ChatbotInsertQuestion(ChatbotInsertIN _chatbotInsertIN)
         {
             try
             {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
                 return new Models.Results.ResultApi { Success = ResultCode.OK, Result = await new ChatbotInsert(_webHostEnvironment,_appSetting).ChatbotInsertDAO(_chatbotInsertIN) };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
                 return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
 
         [HttpPost]
-        [Authorize("ThePolicy")]
+        [Authorize]
         [Route("ChatbotUpdateBase")]
         public async Task<ActionResult<object>> ChatbotUpdateBase(ChatbotUpdateIN ChatbotUpdateIN)
         {
             try
             {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
                 return new Models.Results.ResultApi { Success = ResultCode.OK, Result = await new ChatbotUpdate(_webHostEnvironment, _appSetting).ChatbotUpdateDAO(ChatbotUpdateIN) };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
                 return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
 
         [HttpPost]
+        [Authorize]
         [Route("ChatbotInsertData")]
         public async Task<object> ChatbotInsertData(ChatbotDataInsertIN _chatbotDataInsertIN)
         {
             try
             {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
                 return new Models.Results.ResultApi { Success = ResultCode.OK, Result = await new ChatbotInsertData(_appSetting).InsertDataChatbotDAO(_chatbotDataInsertIN) };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
                 return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }

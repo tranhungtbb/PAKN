@@ -699,7 +699,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<decimal?> CAGroupWordInsertDAO(CAGroupWordInsertIN _cAGroupWordInsertIN)
+		public async Task<int?> CAGroupWordInsertDAO(CAGroupWordInsertIN _cAGroupWordInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _cAGroupWordInsertIN.Name);
@@ -707,7 +707,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cAGroupWordInsertIN.IsDeleted);
 			DP.Add("Description", _cAGroupWordInsertIN.Description);
 
-			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("CA_GroupWordInsert", DP);
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_GroupWordInsert", DP);
 		}
 	}
 

@@ -156,6 +156,7 @@ export class AccountUpdateInfoComponent implements OnInit {
 		this.model.issuedDate = fDateIssue.value
 
 		if (!this.model.email) this.model.email = ''
+		if (!this.model.issuedPlace) this.model.issuedPlace = ''
 		if (!this.model.districtId) this.model.districtId = null
 		if (!this.model.provinceId) this.model.provinceId = null
 		if (!this.model.wardsId) this.model.wardsId = null

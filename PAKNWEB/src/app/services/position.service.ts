@@ -11,32 +11,39 @@ import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 import { UserInfoStorageService } from '../commons/user-info-storage.service'
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class PositionService {
-  constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStronageService: UserInfoStorageService) { }
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private localStronageService: UserInfoStorageService) {}
 
-
-  CreatePosition(request: any): Observable<any> {
-    let headers = {
-      logAction: encodeURIComponent(LOG_ACTION.INSERT),
-      logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
-    }
-    return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.PositionInsert, headers)
-  }
-  UpdatePosition(data: any): Observable<any> {
-    return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.PositionUpdate);
-  }
-  positionGetList(request: any): Observable<any> {
-    return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.PositionGetList)
-  }
-  positionDelete(request: any): Observable<any> {
-    return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.PositionDelete)
-  }
-  positionGetById(request: any): Observable<any> {
-    return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.PositionGetById)
-  }
-  positionUpdateStatus(data: any): Observable<any> {
-    return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.PositionUpdate);
-  }
+	CreatePosition(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_POSITION),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.PositionInsert, headers)
+	}
+	UpdatePosition(data: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_POSITION),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.PositionUpdate, headers)
+	}
+	positionGetList(request: any): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.PositionGetList)
+	}
+	positionDelete(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_POSITION),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.PositionDelete, headers)
+	}
+	positionGetById(request: any): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.PositionGetById)
+	}
+	positionUpdateStatus(data: any): Observable<any> {
+		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.PositionUpdate)
+	}
 }

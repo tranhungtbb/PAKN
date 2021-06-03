@@ -7,6 +7,7 @@ import { Api } from '../constants/api'
 // import { retry } from 'rxjs/operators';
 // import { request } from 'http';
 import { UserInfoStorageService } from '../commons/user-info-storage.service'
+import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 
 @Injectable({
 	providedIn: 'root',
@@ -28,19 +29,35 @@ export class UnitService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UnitGetById)
 	}
 	create(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UnitInsert)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_UNIT),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.UnitInsert, headers)
 	}
 	// create(data: any): Observable<any> {
 	// 	return this.http.post(AppSettings.API_ADDRESS + Api.UnitInsert, data)
 	// }
 	update(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UnitUpdate)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_UNIT),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.UnitUpdate, headers)
 	}
 	delete(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UnitDelete)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_UNIT),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.UnitDelete, headers)
 	}
 	changeStatus(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.UnitChangeStatus)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_UNIT),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.UnitChangeStatus, headers)
 	}
 	checkExists(req: any): Observable<any> {
 		let url = AppSettings.API_ADDRESS + Api.UnitCheckExists

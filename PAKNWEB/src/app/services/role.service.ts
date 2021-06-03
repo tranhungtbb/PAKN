@@ -47,7 +47,7 @@ export class RoleService {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
 			logObject: encodeURIComponent(LOG_OBJECT.SY_ROLE),
 		}
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.RoleDelete)
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.RoleDelete, headers)
 	}
 
 	getDataForCreate(query: any): Observable<any> {

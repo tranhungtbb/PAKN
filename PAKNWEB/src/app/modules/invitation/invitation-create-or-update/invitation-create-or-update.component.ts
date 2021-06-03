@@ -281,7 +281,12 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 					if (response.result == -1) {
 						this._toastr.error('Tiêu đề thư mời đã tồn tại')
 					} else {
-						this._toastr.success(COMMONS.UPDATE_SUCCESS)
+						if (isSend == true) {
+							this._toastr.success('Gửi thư mời thành công')
+						} else {
+							this._toastr.success(COMMONS.UPDATE_SUCCESS)
+						}
+
 						this.redirectList()
 						return
 					}
