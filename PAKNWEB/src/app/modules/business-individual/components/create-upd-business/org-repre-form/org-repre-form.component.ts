@@ -71,7 +71,7 @@ export class OrgRepreFormComponent implements OnInit, AfterViewInit {
 		} else {
 			if (this.model.Nation == '#') {
 				this.nation_enable_type = true
-				this.model.Nation = ''
+				this.model.Nation = 'Nhập...'
 
 				this.model.ProvinceId = 0
 				this.model.DistrictId = 0
@@ -131,6 +131,14 @@ export class OrgRepreFormComponent implements OnInit, AfterViewInit {
 			phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/)]],
 		})
 	}
+
+	onResetValue(event: any) {
+		console.log(event)
+		if (event.target.value == 'Nhập...') {
+			event.target.value = ''
+		}
+	}
+
 	ngAfterViewInit() {
 		this.model = this.parent.model
 		if (!this.model.id) {
