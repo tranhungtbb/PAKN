@@ -11,6 +11,9 @@ import { MatCheckboxModule, MatRadioModule } from '@angular/material'
 import { SharedModule } from '../../shared/shared.module'
 import { NgSelectModule } from '@ng-select/ng-select'
 import { CalendarModule } from 'primeng/calendar'
+import { TreeModule } from 'primeng/tree'
+import { SupportListDocumentComponent } from './support-list-document/support-list-document.component'
+import { SupportListVideoComponent } from './support-list-video/support-list-video.component'
 
 @NgModule({
 	imports: [
@@ -24,7 +27,8 @@ import { CalendarModule } from 'primeng/calendar'
 		MatCheckboxModule,
 		SharedModule,
 		CalendarModule,
+		TreeModule,
 	],
-	declarations: [SupportListComponent, SupportManagementComponent],
+	declarations: [SupportListComponent, SupportManagementComponent, SupportListDocumentComponent, SupportListVideoComponent],
 })
 export class SupportManagementModule {}

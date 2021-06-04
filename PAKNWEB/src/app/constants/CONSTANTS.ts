@@ -74,7 +74,7 @@ export class LOG_OBJECT {
 	public static SY_SMS = 'Cấu hình SMS thương hiệu'
 	public static SY_UNIT = 'Đơn vị'
 	public static SY_CHATBOX = 'Chat box'
-
+	public static SY_SUPPORT = 'Tài liệu hướng dẫn'
 	public static SY_SYSTEM = 'Lịch sử hệ thống'
 }
 
@@ -139,6 +139,10 @@ export class STATUS_HIS_SMS {
 	public static CREATE = 0 //khoi tao
 	public static UPDATE = 1 //2 cap nhap
 	public static SEND = 2 //3 cong bo
+}
+export class CATEGORY_SUPPORT {
+	public static DOCUMENT = 0 //khoi tao
+	public static VIDEO = 1 //2 cap nhap
 }
 
 export const FILETYPE = [

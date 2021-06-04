@@ -25,10 +25,10 @@ export class SupportListComponent implements OnInit {
 			if (data) {
 				if (data.length > 0) {
 					this.urlSupperAdmin = data
-					$('#cv').attr('src', AppSettings.API_DOWNLOADFILES + encodeURI(data[0]))
-					$('#ldcb').attr('src', AppSettings.API_DOWNLOADFILES + encodeURI(data[1]))
-					$('#qtht').attr('src', AppSettings.API_DOWNLOADFILES + encodeURI(data[2]))
-					$('#db').attr('src', AppSettings.API_DOWNLOADFILES + encodeURI(data[3]))
+					$('#cv').attr('src', encodeURI(data[0]))
+					$('#ldcb').attr('src', encodeURI(data[1]))
+					$('#qtht').attr('src', encodeURI(data[2]))
+					$('#db').attr('src', encodeURI(data[3]))
 				}
 			}
 		})

@@ -96,6 +96,87 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYSupportMenu
+	{
+		private SQLCon _sQLCon;
+
+		public SYSupportMenu(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYSupportMenu()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public int Level { get; set; }
+		public int ParentId { get; set; }
+		public int Category { get; set; }
+		public int Type { get; set; }
+
+		public string Content { get; set; }
+		public string? FilePath { get; set; }
+		public int? FileType { get; set; }
+
+		public string FileName { get; set; }
+		public async Task<List<SYSupportMenu>> SYSupportMenuGetByCategoryDAO(int? Category)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Category", Category);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYSupportMenu>("[SY_SupportMenuGetAllByCategory]", DP)).ToList();
+		}
+
+		public async Task<int?> SYSupportMenuUpdateDAO(SYSupportMenu model)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", model.Id);
+			DP.Add("Title", model.Title);
+			DP.Add("Level", model.Level);
+			DP.Add("ParentId", model.ParentId);
+			DP.Add("Category", model.Category);
+			DP.Add("Type", model.Type);
+			DP.Add("Content", model.Content);
+			DP.Add("FilePath", model.FilePath);
+			DP.Add("FileType", model.FileType);
+			DP.Add("FileName", model.FileName);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("[SY_SupportMenuUpdate]", DP);
+		}
+		public async Task<int?> SYSupportMenuInsertDAO(SYSupportMenu model)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Title", model.Title);
+			DP.Add("Level", model.Level);
+			DP.Add("ParentId", model.ParentId);
+			DP.Add("Category", model.Category);
+			DP.Add("Type", model.Type);
+			DP.Add("Content", model.Content);
+			DP.Add("FilePath", model.FilePath);
+			DP.Add("FileType", model.FileType);
+			DP.Add("FileName", model.FileName);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("[SY_SupportMenuInsert]", DP);
+		}
+
+		public async Task<int?> SYSupportMenuDeleteDAO(SYSupportMenuDelete model)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", model.Id);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("[SY_SupportMenuDelete]", DP);
+		}
+
+
+	}
+
+	public class SYSupportMenuDelete {
+		public int Id { get; set; }
+	}
+
+
 	public class SYIntroduce
 	{
 		private SQLCon _sQLCon;
