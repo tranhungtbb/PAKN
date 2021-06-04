@@ -100,10 +100,10 @@
 							<img *ngIf="avatarLocalChange" [src]="model.imagePath | sanitizerUrl" alt="">
 							<img *ngIf="!avatarLocalChange" [src]="model.imagePath" alt="">
 							<!-- <div class="news-avatar border" (click)="onChangeAvatar()" style="cursor: pointer;">
-							<img [src]="avatarUrl | sanitizerUrl" alt="">
-							<input hidden formControlName="imagePath" [(ngModel)]="model.imagePath" /> -->
+							<img [src]="avatarUrl | sanitizerUrl" alt=""> -->
+							<input hidden formControlName="imagePath" [(ngModel)]="model.imagePath" />
 						</div>
-						<div *ngIf="(submitted && f.imagePath.invalid)||(f.imagePath.invalid && (f.imagePath.dirty || f.imagePath.touched))" class="has-error m-b-12">
+						<div *ngIf="(submitted)" class="has-error m-b-12">
 							<div *ngIf="f.imagePath.errors.required">
 								<span class="help-block">Chọn ảnh đại diện</span>
 							</div>

@@ -111,26 +111,6 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					this.rebuidForm()
 					//lay danh sach bai viet lien quan
 					this.getNewsRelatesInfo()
-
-					//get current avatar
-					// if (this.model.imagePath != null && this.model.imagePath.trim() != '') {
-					// 	this.newsService.getAvatars([this.model.id]).subscribe((res) => {
-					// 		if (res) {
-					// 			let objectURL = 'data:image/jpeg;base64,' + res[0].byteImage
-					// 			this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-					// 		}
-					// 	})
-					// }
-
-					// if (this.model.imagePath != null && this.model.imagePath.trim() != '') {
-					// 	this.newsService.getAvatars([this.model.id]).subscribe((res) => {
-					// 		if (res) {
-					// 			if (!res[0].byteImage) return
-					// 			let objectURL = 'data:image/jpeg;base64,' + res[0].byteImage
-					// 			this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-					// 		}
-					// 	})
-					// }
 				})
 			}
 		})

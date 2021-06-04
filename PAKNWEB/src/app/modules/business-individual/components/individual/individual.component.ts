@@ -387,7 +387,7 @@ export class IndividualComponent implements OnInit {
 					return
 				}
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
-				this.model = new IndividualObject()
+				// this.model = new IndividualObject()
 				this.rebuidForm()
 				$('#modal').modal('hide')
 				this.getList()
@@ -451,10 +451,8 @@ export class IndividualComponent implements OnInit {
 			Type: 1,
 		}
 		this.submitted = false
-
 		this._service.individualById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this.rebuidForm()
 				this.title = 'Chỉnh sửa cá nhân'
 				this.model = response.result.InvididualGetByID[0]
 

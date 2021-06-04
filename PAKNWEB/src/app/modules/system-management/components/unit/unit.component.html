@@ -235,7 +235,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-12 col-lg-8 form-group">
+						<div class="col-12 col-lg-5 form-group">
 							<label class="mb-1">Email <span class="cl-red">(*)</span></label>
 							<input formControlName="email" [(ngModel)]="modelUnit.email" type="mail" class="form-control" placeholder="Nhập..."
 								(change)="onCheckExist('Email',$event.target.value)" maxlength="256">
@@ -252,6 +252,10 @@
 									<span class="help-block">Email đã tồn tại</span>
 								</div>
 							</div>
+						</div>
+						<div class="col-12 col-lg-3 form-group">
+							<label class="mb-1">Thứ tự hiển thị</label>
+							<input formControlName="index" [(ngModel)]="modelUnit.index" type="number" class="form-control" placeholder="Nhập...">
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
