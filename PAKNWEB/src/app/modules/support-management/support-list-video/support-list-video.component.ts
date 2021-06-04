@@ -31,7 +31,7 @@ export class SupportListVideoComponent implements OnInit {
 	lstSupport: any = []
 	objSupport: any
 	treeSp: any = []
-	submited: boolean = false
+	submitted: boolean = false
 	ltsUpdateMenu: any[]
 	ltsDeleteMenu: any[]
 	form: FormGroup
@@ -122,7 +122,7 @@ export class SupportListVideoComponent implements OnInit {
 	}
 
 	preCreate() {
-		this.submited = false
+		this.submitted = false
 		this.model.title = this.model.content = ''
 		this.model.id = 0
 		this.files = []
@@ -131,7 +131,7 @@ export class SupportListVideoComponent implements OnInit {
 	}
 
 	preUpdate(id: any) {
-		this.submited = false
+		this.submitted = false
 		this.files = []
 		this.model = this.lstSupport.find((x) => x.id == id)
 		this.files.push({
@@ -149,7 +149,7 @@ export class SupportListVideoComponent implements OnInit {
 		if (this.form.invalid) {
 			return
 		}
-		this.submited = true
+		this.submitted = true
 		let obj = {
 			model: this.model,
 			files: this.files,
