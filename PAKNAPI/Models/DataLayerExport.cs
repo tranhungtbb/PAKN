@@ -68,4 +68,29 @@ namespace PAKNAPI.Models
         
 
     }
+
+    public class ExportRecomdationByUnit
+    {
+        private string _TitleReport = "BÁO CÁO PHẢN ÁNH KIẾN NGHỊ THEO ĐƠN VỊ";
+        public string TitleReport { get { return _TitleReport; } set { _TitleReport = value; } }
+        public int? pageIndex { get; set; }
+        public int? pageSize { get; set; }
+        public string ltsUnitId { get; set; }
+        public int? year { get; set; }
+        public string Timeline { get; set; }
+        public string fromDate { get; set; }
+        public string toDate { get; set; }
+    }
+    public class ExportRecomdationByFields
+    {
+        private string _TitleReport = "BÁO CÁO PHẢN ÁNH KIẾN NGHỊ THEO LĨNH VỰC";
+        public string TitleReport { get { return _TitleReport; } set { _TitleReport = value; } }
+        public int? pageIndex { get; set; }
+        public int? pageSize { get; set; }
+        public string ltsUnitId { get; set; }
+        public int? year { get; set; }
+        public string Timeline { get; set; }
+        public string fromDate { get; set; }
+        public string toDate { get; set; }
+    }
 }

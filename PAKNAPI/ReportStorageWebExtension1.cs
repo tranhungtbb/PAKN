@@ -196,6 +196,50 @@ namespace PAKNAPI
                         return ms.ToArray();
                     }
                     break;
+                case "recommendation_by_unit":
+                    var paraExportRecomdationByUnit = JsonConvert.DeserializeObject<ExportRecomdationByUnit>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.recommendation_by_unit.repx");
+                    result = XtraReport.FromStream(resource);
+                    result.Parameters["TitleReport"].Value = paraExportRecomdationByUnit.TitleReport;
+                    result.Parameters["NgayThang"].Value = Dates;
+                    result.Parameters["HoTen"].Value = "";
+
+                    result.Parameters["PageIndex"].Value = paraExportRecomdationByUnit.pageIndex;
+                    result.Parameters["pageSize"].Value = paraExportRecomdationByUnit.pageSize;
+                    result.Parameters["LtsUnitId"].Value = paraExportRecomdationByUnit.ltsUnitId;
+                    result.Parameters["Year"].Value = paraExportRecomdationByUnit.year;
+                    result.Parameters["Timeline"].Value = paraExportRecomdationByUnit.Timeline;
+                    result.Parameters["FromDate"].Value = paraExportRecomdationByUnit.fromDate;
+                    result.Parameters["ToDate"].Value = paraExportRecomdationByUnit.toDate;
+
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        return ms.ToArray();
+                    }
+                    break;
+                case "recommendation_by_fields":
+                    var paraExportRecomdationByFields = JsonConvert.DeserializeObject<ExportRecomdationByFields>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.recommendation_by_fields.repx");
+                    result = XtraReport.FromStream(resource);
+                    result.Parameters["TitleReport"].Value = paraExportRecomdationByFields.TitleReport;
+                    result.Parameters["NgayThang"].Value = Dates;
+                    result.Parameters["HoTen"].Value = "";
+
+                    result.Parameters["PageIndex"].Value = paraExportRecomdationByFields.pageIndex;
+                    result.Parameters["pageSize"].Value = paraExportRecomdationByFields.pageSize;
+                    result.Parameters["LtsUnitId"].Value = paraExportRecomdationByFields.ltsUnitId;
+                    result.Parameters["Year"].Value = paraExportRecomdationByFields.year;
+                    result.Parameters["Timeline"].Value = paraExportRecomdationByFields.Timeline;
+                    result.Parameters["FromDate"].Value = paraExportRecomdationByFields.fromDate;
+                    result.Parameters["ToDate"].Value = paraExportRecomdationByFields.toDate;
+
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        return ms.ToArray();
+                    }
+                    break;
             }
             ReportDetails details = null;
             if (Reports.TryGetValue(url, out details))

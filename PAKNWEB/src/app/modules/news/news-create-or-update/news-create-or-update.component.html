@@ -33,7 +33,7 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
-						<label class="mb-1"><span class="text-uppercase">tóm tắt</span></label>
+						<label class="mb-1"><span class="text-uppercase">tóm tắt</span> <span class="cl-red">(*)</span></label>
 						<textarea class="form-control text-area-height" cols="10" formControlName="summary" [(ngModel)]="model.summary" placeholder="Nhập..."></textarea>
 						<!-- <div *ngIf="(submitted && f.summary.invalid)||(f.summary.invalid && (f.summary.dirty || f.summary.touched))" class="has-error m-b-12">
 							<div *ngIf="f.summary.errors.required">
@@ -62,12 +62,13 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">Nội dung bài viết </span> <span class="cl-red">(*)</span></label>
 						<ckeditor id="editor" [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents" (ready)="onReady($event)" [config]="ckConfig"></ckeditor>
 					</div>
 				</div>
 				<div class="col-md-3 col-lg-3 col-xl-3 col-xxl-4">
 					<div class="col-12 col-lg-12 form-group">
-						<label class="mb-1"><span class="text-uppercase">Loại tin tức</span></label>
+						<label class="mb-1"><span class="text-uppercase">Loại tin tức </span> <span class="cl-red">(*)</span></label>
 						<ng-select formControlName="newsType" [(ngModel)]="model.newsType" class="form-control" placeholder="Chọn...">
 							<ng-option *ngFor="let cate of listNewsTypes" [value]="cate.id">{{cate.name}}</ng-option>
 						</ng-select>
@@ -78,7 +79,7 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
-						<label class="mb-1 dis-block"><span class="text-uppercase">kiểu bài</span></label>
+						<label class="mb-1 dis-block"><span class="text-uppercase">kiểu bài </span> <span class="cl-red">(*)</span></label>
 						<input hidden formControlName="postType" [(ngModel)]="model.postType" />
 						<div class="checkbox dis-inline mr-3" *ngFor="let pType of postTypes">
 							<label>
@@ -93,7 +94,7 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
-						<label class="mb-1"><span class="text-uppercase">ảnh đại diện</span></label>
+						<label class="mb-1"><span class="text-uppercase">ảnh đại diện </span> <span class="cl-red">(*)</span></label>
 						<input type="file" [hidden]="true" id="avatar-image" accept=".png, .jpg, .jpeg" (change)="onAvatarChange($event)">
 						<div class="news-avatar border" (click)="onChangeAvatar()">
 							<img *ngIf="avatarLocalChange" [src]="model.imagePath | sanitizerUrl" alt="">
