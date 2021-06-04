@@ -77,7 +77,7 @@ namespace PAKNAPI.Models
         public int? pageSize { get; set; }
         public string ltsUnitId { get; set; }
         public int? year { get; set; }
-        public string Timeline { get; set; }
+        public int? Timeline { get; set; }
         public string fromDate { get; set; }
         public string toDate { get; set; }
     }
@@ -89,7 +89,7 @@ namespace PAKNAPI.Models
         public int? pageSize { get; set; }
         public string ltsUnitId { get; set; }
         public int? year { get; set; }
-        public string Timeline { get; set; }
+        public int? Timeline { get; set; }
         public string fromDate { get; set; }
         public string toDate { get; set; }
     }
