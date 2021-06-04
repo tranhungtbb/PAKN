@@ -77,6 +77,10 @@ const routes: Routes = [
 				path: 'phan-anh-kien-nghi/:id',
 				component: ViewReflectionsRecommendationComponent,
 			},
+			// {
+			// 	path: 'ho-tro/:type',
+			// 	component: SupportComponent,
+			// },
 			{
 				path: 'ho-tro',
 				component: SupportComponent,
