@@ -50,6 +50,7 @@
     <Folder Include="BusinessLogic\" />
     <Folder Include="Chatbot\" />
     <Folder Include="Upload\BusinessIndividual\" />
+    <Folder Include="Upload\Suppport\" />
     <Folder Include="Upload\User\" />
     <Folder Include="Upload\Remind\" />
   </ItemGroup>

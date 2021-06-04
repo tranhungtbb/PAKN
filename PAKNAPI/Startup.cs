@@ -1,4 +1,4 @@
-using PAKNAPI.Common;
+﻿using PAKNAPI.Common;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -187,6 +187,12 @@ namespace PAKNAPI
 			app.UseHttpsRedirection();
 			//// note
 			app.UseStaticFiles();
+			// xóa đi trên local em test
+			//app.UseStaticFiles(new StaticFileOptions()
+			//{
+			//	FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Upload/Suppport")),
+			//	RequestPath = new PathString("/Upload/Suppport")
+			//});
 
 			// Dev
 			DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension.RegisterExtensionGlobal(new ReportStorageWebExtension1());
