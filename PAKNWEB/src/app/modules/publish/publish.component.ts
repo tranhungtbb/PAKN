@@ -185,19 +185,17 @@ export class PublishComponent implements OnInit, OnChanges {
 
 		// not exist userid
 		if (!kluid) {
-			this.chatBotService.getNewUserId().subscribe(
-				(data) => {
-					let newUs = null
-					newUs = data
-					if (newUs.UserID) {
-						localStorage.setItem('kluid', newUs.UserID)
-						this.sendToServer()
-					}
-				},
+			this.chatBotService.getNewUserId().subscribe((data) => {
+				let newUs = null
+				newUs = data
+				if (newUs.UserID) {
+					localStorage.setItem('kluid', newUs.UserID)
+					this.sendToServer()
+				}
+			}),
 				(error) => {
 					console.log(error)
 				}
-			)
 		} else {
 			this.sendToServer()
 		}
@@ -241,6 +239,7 @@ export class PublishComponent implements OnInit, OnChanges {
 				}, 500)
 			},
 			(error) => {
+				console.log('hi')
 				console.log(error)
 			}
 		)

@@ -187,15 +187,15 @@ namespace PAKNAPI
 			app.UseHttpsRedirection();
 			//// note
 			app.UseStaticFiles();
-			// xóa đi trên local em test
-			//app.UseStaticFiles(new StaticFileOptions()
-			//{
-			//	FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Upload/Suppport")),
-			//	RequestPath = new PathString("/Upload/Suppport")
-			//});
+            // xóa đi trên local em test
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Upload/BusinessIndividual")),
+                RequestPath = new PathString("/Upload/BusinessIndividual")
+            });
 
-			// Dev
-			DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension.RegisterExtensionGlobal(new ReportStorageWebExtension1());
+            // Dev
+            DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension.RegisterExtensionGlobal(new ReportStorageWebExtension1());
 			DevExpress.XtraReports.Configuration.Settings.Default.UserDesignerOptions.DataBindingMode = DevExpress.XtraReports.UI.DataBindingMode.Bindings;
 			app.UseDevExpressControls();
 			app.UseStaticFiles();

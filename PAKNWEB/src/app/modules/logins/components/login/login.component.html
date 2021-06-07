@@ -28,12 +28,16 @@
 														<form [formGroup]="loginFormProduct" #formDir="ngForm" (ngSubmit)="loginProduct()">
 															<div class="form-group mb-4">
 																<input class="form-control rounded-xl px-4 border-brown" style="font-size: 20px" placeholder="Nhập số điện thoại..."
-																	maxlength="10" id="productname" type="text" formControlName="name" [(ngModel)]="userProduct.UserName"
-																	(change)="userProduct.UserName=userProduct.UserName.trim()" required numbersOnly>
+																	maxlength="10" id="productname" type="text" formControlName="name" [(ngModel)]="userProduct.UserName" required
+																	onlyNumber="true" pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$"
+																	(change)="userProduct.UserName=userProduct.UserName.trim()">
 																<div *ngIf="floginFormProduct.name.invalid && (floginFormProduct.name.dirty || floginFormProduct.name.touched || submitted)"
 																	class="has-error m-b-12">
 																	<div *ngIf="floginFormProduct.name.errors.required">
 																		<span class="help-block">Trường này không được để trống</span>
+																	</div>
+																	<div *ngIf="floginFormProduct.name.errors.pattern">
+																		<span class="help-block">Định dạng không đúng</span>
 																	</div>
 																</div>
 															</div>

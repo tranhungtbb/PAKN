@@ -10,6 +10,7 @@ using PAKNAPI.Models.Results;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -75,40 +76,118 @@ namespace PAKNAPI.Controllers
 				List<Models.BusinessIndividual.BIIndividualInsertIN> individualList = new List<Models.BusinessIndividual.BIIndividualInsertIN>();
 
 				// loop through the worksheet rows and columns
-				for (int i = 1; i <= rows; i++)
+
+				for (int i = 3; i <= rows; i++)
 				{
-					if (i == 1)
-                    {
-						continue;
-                    }						
 					Models.BusinessIndividual.BIIndividualInsertIN ind = new Models.BusinessIndividual.BIIndividualInsertIN();
 					ind.FullName = worksheet.Cells[i, 1].Value.ToString();
 					ind.Email = worksheet.Cells[i, 2].Value.ToString();
 					ind.Phone = worksheet.Cells[i, 3].Value.ToString();
-					ind.IDCard = worksheet.Cells[i, 4].Value.ToString();
-					ind.IssuedPlace = worksheet.Cells[i, 5].Value.ToString();
-					ind.Nation = worksheet.Cells[i, 6].Value.ToString();
-					ind.ProvinceId = Convert.ToInt32(worksheet.Cells[i, 7].Value.ToString());
-					ind.DistrictId = Convert.ToInt32(worksheet.Cells[i, 8].Value.ToString());
-					ind.WardsId = Convert.ToInt32(worksheet.Cells[i, 9].Value.ToString());
-					ind.PermanentPlace = worksheet.Cells[i, 10].Value.ToString();
+					ind.IDCard = worksheet.Cells[i, 5].Value.ToString();
+
+					var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(ind.Phone);
+					if (hasOne != null && hasOne.Any()) continue;
+
+					// check exist:Phone,Email,IDCard
+					var checkExists = await new BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", ind.Phone, 0);
+					if (checkExists[0].Exists.Value)
+						continue;
+					if (!string.IsNullOrEmpty(ind.Email))
+					{
+						checkExists = await new BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", ind.Email, 0);
+						if (checkExists[0].Exists.Value)
+							continue;
+					}
+					checkExists = await new BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", ind.IDCard, 0);
+					if (checkExists[0].Exists.Value)
+						continue;
+
+					ind.DistrictId = null;
+					ind.WardsId = null;
+					//var sc = worksheet.Cells[i, 8].Value;
+					if (worksheet.Cells[i, 8].Value == "" || worksheet.Cells[i, 8].Value == null)
+					{
+						ind.ProvinceId = null;
+					}
+					else {
+						List<CAAdministrativeUnitGetByNameLevel> ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 8].Value.ToString(), 1, null);
+						if (ltsAdmintrative.Count> 0) { 
+							ind.ProvinceId = ltsAdmintrative.FirstOrDefault().Id;
+							if (!string.IsNullOrEmpty(worksheet.Cells[i, 9].Value.ToString()))
+							{
+								ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 9].Value.ToString(), 2, ind.ProvinceId);
+								if (ltsAdmintrative.Count > 0) { ind.DistrictId = ltsAdmintrative.FirstOrDefault().Id;
+									if (!string.IsNullOrEmpty(worksheet.Cells[i, 10].Value.ToString()))
+									{
+										ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 10].Value.ToString(), 3, ind.DistrictId);
+										if (ltsAdmintrative.Count > 0) { ind.WardsId = ltsAdmintrative.FirstOrDefault().Id; }
+									}
+								}
+								
+							}
+						}
+					}
+					ind.Gender = Convert.ToBoolean(worksheet.Cells[i, 4].Value.ToString()) == true ? true : false;
+					ind.IssuedPlace = worksheet.Cells[i, 6].Value.ToString();
+					ind.Nation = worksheet.Cells[i, 7].Value.ToString();
 					ind.Address = worksheet.Cells[i, 11].Value.ToString();
-					ind.BirthDay = DateTime.Now;
-					ind.Status = Convert.ToInt32(worksheet.Cells[i, 12].Value.ToString());
+					ind.BirthDay = Convert.ToDateTime(worksheet.Cells[i, 12].Value.ToString());
+					ind.Status = Convert.ToBoolean(worksheet.Cells[i, 13].Value.ToString()) == true ? 1 : 0;
 					ind.IsActived = true;
 					ind.IsDeleted = false;
-					ind.UserId = Convert.ToInt64(worksheet.Cells[i, 13].Value.ToString());
-
 					individualList.Add(ind);
 				}
-
-				foreach (Models.BusinessIndividual.BIIndividualInsertIN ins in individualList)
+				int count = 0, errcount = 0;
+				foreach (var item in individualList)
                 {
-					await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(ins);
+					string defaultPwd = "abc123";
+					var pwd = GeneratePwdModelBase.generatePassword(defaultPwd);
+					var account = new SYUserInsertIN
+					{
+						Password = pwd.Password,
+						Salt = pwd.Salt,
+						Phone = item.Phone,
+						Email = item.Email,
+						UserName = item.Phone,
+						FullName = item.FullName,
+						Gender = item.Gender,
+						Address = item.Address,//
+						TypeId = 2,
+						Type = 2,
+						IsActived = true,
+						IsDeleted = false,
+						CountLock = 0,
+						LockEndOut = DateTime.Now,
+						IsSuperAdmin = false,
+					};
+					await new SYUserInsert(_appSetting).SYUserInsertDAO(account);
+					var accRs = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(account.UserName);
+					item.CreatedDate = DateTime.Now;
+					item.CreatedBy =Convert.ToInt32(new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext));
+					item.UpdatedBy = 0;
+					item.UpdatedDate = null;
+					item.Status = 1;
+					item.IsDeleted = false;
+					item.UserId = accRs[0].Id;
+					var s = await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(item);
+					if (s > 0)
+					{
+						count++;
+					}
+					else {
+						errcount++;
+					}
 				}
 
-
-				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = fileInfo };
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount = errcount + rows - 2 - individualList.Count}
+					};
+				// delete file luôn
+				// 
+				System.IO.File.Delete(fileNamePath);
+				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception e)
 			{
@@ -159,43 +238,48 @@ namespace PAKNAPI.Controllers
 				int columns = worksheet.Dimension.Columns; // 7
 
 				//create a list to hold all the values
-				List<Models.BusinessIndividual.BIIndividualInsertIN> individualList = new List<Models.BusinessIndividual.BIIndividualInsertIN>();
+				List<Models.BusinessIndividual.BIIndividualInsertIN> businessList = new List<Models.BusinessIndividual.BIIndividualInsertIN>();
 
 				// loop through the worksheet rows and columns
-				for (int i = 1; i <= rows; i++)
+				for (int i = 3; i <= rows; i++)
 				{
-					if (i == 1)
-					{
-						continue;
-					}
 					Models.BusinessIndividual.BIIndividualInsertIN ind = new Models.BusinessIndividual.BIIndividualInsertIN();
 					ind.FullName = worksheet.Cells[i, 1].Value.ToString();
 					ind.Email = worksheet.Cells[i, 2].Value.ToString();
 					ind.Phone = worksheet.Cells[i, 3].Value.ToString();
-					ind.IDCard = worksheet.Cells[i, 4].Value.ToString();
-					ind.IssuedPlace = worksheet.Cells[i, 5].Value.ToString();
-					ind.Nation = worksheet.Cells[i, 6].Value.ToString();
-					ind.ProvinceId = Convert.ToInt32(worksheet.Cells[i, 7].Value.ToString());
-					ind.DistrictId = Convert.ToInt32(worksheet.Cells[i, 8].Value.ToString());
-					ind.WardsId = Convert.ToInt32(worksheet.Cells[i, 9].Value.ToString());
-					ind.PermanentPlace = worksheet.Cells[i, 10].Value.ToString();
+					ind.Gender = Convert.ToBoolean(worksheet.Cells[i, 4].Value.ToString()) == true ? true : false;
+					ind.IDCard = worksheet.Cells[i, 5].Value.ToString();
+					ind.IssuedPlace = worksheet.Cells[i, 6].Value.ToString();
+					ind.Nation = worksheet.Cells[i, 7].Value.ToString();
+					ind.ProvinceId = Convert.ToInt32(worksheet.Cells[i, 8].Value.ToString());
+					ind.DistrictId = Convert.ToInt32(worksheet.Cells[i, 9].Value.ToString());
+					ind.WardsId = Convert.ToInt32(worksheet.Cells[i, 10].Value.ToString());
 					ind.Address = worksheet.Cells[i, 11].Value.ToString();
-					ind.BirthDay = DateTime.Now;
-					ind.Status = Convert.ToInt32(worksheet.Cells[i, 12].Value.ToString());
+					ind.BirthDay = Convert.ToDateTime(worksheet.Cells[i, 12].Value.ToString());
+					ind.Status = Convert.ToBoolean(worksheet.Cells[i, 13].Value.ToString()) == true ? 1 : 0;
 					ind.IsActived = true;
 					ind.IsDeleted = false;
-					ind.UserId = Convert.ToInt64(worksheet.Cells[i, 13].Value.ToString());
 
-					individualList.Add(ind);
+					businessList.Add(ind);
 				}
 
-				foreach (Models.BusinessIndividual.BIIndividualInsertIN ins in individualList)
+				int count = 0, errcount = 0;
+
+				foreach (Models.BusinessIndividual.BIIndividualInsertIN ins in businessList)
 				{
 					await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(ins);
 				}
 
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", errcount = errcount + rows - 2 - businessList.Count}
+					};
+				// delete file luôn
+				// 
+				System.IO.File.Delete(fileNamePath);
+				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
 
-				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = fileInfo };
 			}
 			catch (Exception e)
 			{
@@ -272,8 +356,7 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Authorize]
 		[Route("InvididualRegister")]
-		public async Task<object> InvididualRegister(
-			[FromBody] Models.BusinessIndividual.BIIndividualInsertIN_Cus model)
+		public async Task<object> InvididualRegister([FromBody] Models.BusinessIndividual.BIIndividualInsertIN_Cus model)
 		{
 			try
 			{
@@ -342,7 +425,7 @@ namespace PAKNAPI.Controllers
 				if (string.IsNullOrEmpty(model._BirthDay)) model.BirthDay = null;
 				else model.BirthDay = birthDay;
 				model.CreatedDate = DateTime.Now;
-				model.CreatedBy = 0;
+				model.CreatedBy = Convert.ToInt32(new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext));
 				model.UpdatedBy = 0;
 				model.UpdatedDate = DateTime.Now;
 				model.Status = 1;
@@ -366,10 +449,7 @@ namespace PAKNAPI.Controllers
 		[Authorize]
 		[Route("InvididualUpdate")]
 		public async Task<ActionResult<object>> InvididualUpdate(
-			[FromBody] Models.BusinessIndividual.BI_InvididualUpdateIN_body _bI_InvididualUpdateIN
-			//[FromForm] string _BirthDay,
-			//[FromForm] string _DateOfIssue
-			)
+			[FromBody] Models.BusinessIndividual.BI_InvididualUpdateIN_body _bI_InvididualUpdateIN)
 		{
 			try
 			{
@@ -550,15 +630,6 @@ namespace PAKNAPI.Controllers
 				if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tài khoản đăng nhập đã tồn tại" };
 
 				DateTime birdDay, dateOfIssue;
-				if (!DateTime.TryParseExact(model._RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
-				{
-					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
-				}
-				if (!DateTime.TryParseExact(model._DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
-				{
-					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
-				}
-
 				///Phone,Email,IDCard
 				///check ton tai
 				var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone", model.Phone, 0);
@@ -619,10 +690,10 @@ namespace PAKNAPI.Controllers
 				var rs1 = await new SYUserInsert(_appSetting).SYUserInsertDAO(account);
 				var accRs = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(account.UserName);
 
-				if (string.IsNullOrEmpty(model._DateOfIssue)) model.DateOfIssue = null;
-				else model.DateOfIssue = dateOfIssue;
-				if (string.IsNullOrEmpty(model._RepresentativeBirthDay)) model.RepresentativeBirthDay = null;
-				else model.RepresentativeBirthDay = birdDay;
+				//if (string.IsNullOrEmpty(model._DateOfIssue)) model.DateOfIssue = null;
+				//else model.DateOfIssue = dateOfIssue;
+				//if (string.IsNullOrEmpty(model._RepresentativeBirthDay)) model.RepresentativeBirthDay = null;
+				//else model.RepresentativeBirthDay = birdDay;
 				model.CreatedDate = DateTime.Now;
 				model.CreatedBy = 0;
 				model.UpdatedBy = 0;

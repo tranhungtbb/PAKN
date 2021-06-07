@@ -90,14 +90,14 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	ngOnInit() {
 		this.newsForm = this.formBuilder.group({
 			title: [this.model.title, [Validators.required, Validators.maxLength(500)]],
-			summary: [this.model.summary],
-			contents: [this.model.contents],
+			summary: [this.model.summary, [Validators.required]],
+			contents: [this.model.contents, [Validators.required]],
 			newsType: [this.model.newsType, [Validators.required]],
 			postType: [this.model.postType, [Validators.required]],
 			imagePath: [this.model.imagePath, [Validators.required]],
 			pushNotify: [''],
 		})
-		this.model.imagePath = 'assets/dist/images/no.jpg'
+		// this.model.imagePath = 'assets/dist/images/no.jpg'
 
 		this.activatedRoute.params.subscribe((params) => {
 			if (params['id']) {
@@ -174,6 +174,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		//this.newsForm.controls.postType.setValue(this.model.postType)
 
 		if (this.newsForm.invalid) {
+			this.toast.error('Vui lòng nhập dữ liệu những trường bắt buộc')
 			return
 		}
 		//return

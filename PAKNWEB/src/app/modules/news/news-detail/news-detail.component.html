@@ -45,6 +45,7 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
+						<label class="mb-1"><span class="text-uppercase">Nội dung bài viết </span></label>
 						<ckeditor id="editor" [disabled]="true" [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents" (ready)="onReady($event)"
 							[config]="ckConfig">
 						</ckeditor>

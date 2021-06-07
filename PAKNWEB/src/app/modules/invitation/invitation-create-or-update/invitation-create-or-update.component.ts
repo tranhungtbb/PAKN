@@ -9,7 +9,6 @@ import { TreeviewI18n } from 'ngx-treeview'
 
 import { Router, ActivatedRoute } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { AppSettings } from 'src/app/constants/app-setting'
 import { CONSTANTS, STATUS_HISNEWS, FILETYPE } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
 import { InvitationService } from 'src/app/services/invitation.service'
@@ -143,7 +142,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 								if (item.avatar == null || item.avatar == '') {
 									obj.avatar = ''
 								} else {
-									obj.avatar = AppSettings.API_DOWNLOADFILES + '/' + item.avatar
+									obj.avatar = item.avatar
 								}
 								// obj.avatar = item.avatar
 								this.listItemUserSelected.push(obj)
@@ -330,7 +329,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 				if (iterator.avatar == null || iterator.avatar == '') {
 					obj.avatar = ''
 				} else {
-					obj.avatar = AppSettings.API_DOWNLOADFILES + '/' + iterator.avatar
+					obj.avatar = iterator.avatar
 				}
 
 				this.listItemUserSelected.push(obj)

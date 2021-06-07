@@ -35,11 +35,11 @@
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">tóm tắt</span> <span class="cl-red">(*)</span></label>
 						<textarea class="form-control text-area-height" cols="10" formControlName="summary" [(ngModel)]="model.summary" placeholder="Nhập..."></textarea>
-						<!-- <div *ngIf="(submitted && f.summary.invalid)||(f.summary.invalid && (f.summary.dirty || f.summary.touched))" class="has-error m-b-12">
+						<div *ngIf="(submitted && f.summary.invalid)||(f.summary.invalid && (f.summary.dirty || f.summary.touched))" class="has-error m-b-12">
 							<div *ngIf="f.summary.errors.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>
 							</div>
-						</div> -->
+						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group mb-6">
 						<div class="clearfix mb-2">
@@ -97,8 +97,8 @@
 						<label class="mb-1"><span class="text-uppercase">ảnh đại diện </span> <span class="cl-red">(*)</span></label>
 						<input type="file" [hidden]="true" id="avatar-image" accept=".png, .jpg, .jpeg" (change)="onAvatarChange($event)">
 						<div class="news-avatar border" (click)="onChangeAvatar()">
-							<img *ngIf="avatarLocalChange" [src]="model.imagePath | sanitizerUrl" alt="">
-							<img *ngIf="!avatarLocalChange" [src]="model.imagePath" alt="">
+							<img *ngIf="model.imagePath" [src]="model.imagePath | sanitizerUrl" alt="">
+							<img *ngIf="!model.imagePath" [src]="avatarUrl" alt="">
 							<!-- <div class="news-avatar border" (click)="onChangeAvatar()" style="cursor: pointer;">
 							<img [src]="avatarUrl | sanitizerUrl" alt=""> -->
 							<input hidden formControlName="imagePath" [(ngModel)]="model.imagePath" />

@@ -66,6 +66,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 							this.lstFiles = res.result.lstFiles
 							this.lstConclusion = res.result.lstConclusion
 							this.lstConclusionFiles = res.result.lstConclusionFiles
+							console.log(this.lstConclusionFiles)
 						}
 					}
 				})

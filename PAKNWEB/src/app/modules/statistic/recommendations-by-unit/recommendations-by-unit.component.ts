@@ -65,7 +65,11 @@ export class RecommendationsByUnitComponent implements OnInit {
 		this.year = new Date().getFullYear()
 		this.listUnitSelected = []
 	}
-
+	ngAfterViewInit() {
+		// .table-sd thead {
+		// 	background-color: #11458e !important;
+		// }
+	}
 	ngOnInit() {
 		this.BsLocaleService.use('vi')
 		this.unitService.getChildrenDropdown().subscribe((res) => {
