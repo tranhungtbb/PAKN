@@ -111,12 +111,20 @@ export class IndividualComponent implements OnInit {
 		} else {
 			if (this.model.nation == '#') {
 				this.isOtherNation = true
-				this.model.nation = ''
+				this.model.nation = 'Nhập...'
 
 				this.model.provinceId = 0
 				this.model.districtId = 0
 				this.model.wardsId = 0
+
+				this.form.get('nation').setErrors(null)
 			}
+		}
+	}
+	onResetValue(event: any) {
+		console.log(event)
+		if (event.target.value == 'Nhập...') {
+			event.target.value = ''
 		}
 	}
 
@@ -288,6 +296,12 @@ export class IndividualComponent implements OnInit {
 		this.model.status = 1 // Hiệu lực
 		this.submitted = false
 		this.rebuidForm()
+
+		if (this.isOtherNation) {
+			this.onChangeNation()
+			this.isOtherNation = false
+		}
+
 		this.title = 'Thêm mới cá nhân'
 		$('#modal').modal('show')
 	}
@@ -355,12 +369,12 @@ export class IndividualComponent implements OnInit {
 		if (!this.model.email) this.model.email = ''
 
 		if (this.email_exists || this.phone_exists || this.idCard_exists) {
-			this._toastr.error('Dữ liệu không hợp lệ')
+			//this._toastr.error('Dữ liệu không hợp lệ')
 			return
 		}
 
 		if (this.form.invalid) {
-			this._toastr.error('Dữ liệu không hợp lệ')
+			//this._toastr.error('Dữ liệu không hợp lệ')
 			return
 		}
 

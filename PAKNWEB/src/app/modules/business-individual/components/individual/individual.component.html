@@ -239,8 +239,8 @@
 									<ng-option *ngFor="let nation of listNation" [value]="nation.id">{{nation.name}}</ng-option>
 									<ng-option value="#">Khác</ng-option>
 								</ng-select>
-								<input [svTrim] *ngIf="isOtherNation" [(ngModel)]="model.nation" formControlName="nation" type="text" placeholder="Nhập..."
-									class="form-control border-brown">
+								<input #nation [svTrim] *ngIf="isOtherNation" [(ngModel)]="model.nation" formControlName="nation" type="text" placeholder="Nhập..."
+									class="form-control border-brown" (click)="onResetValue($event)">
 								<span *ngIf="isOtherNation" class="select-caret-icon" (click)="backToSelectBox()">
 									<i class="bi bi-caret-down-fill"></i>
 								</span>
