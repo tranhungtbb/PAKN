@@ -75,29 +75,28 @@ namespace PAKNAPI.Controllers
 				List<Models.BusinessIndividual.BIIndividualInsertIN> individualList = new List<Models.BusinessIndividual.BIIndividualInsertIN>();
 
 				// loop through the worksheet rows and columns
-				for (int i = 1; i <= rows; i++)
+				for (int i = 1; i < rows; i++)
 				{
 					if (i == 1)
                     {
 						continue;
-                    }						
+                    }
 					Models.BusinessIndividual.BIIndividualInsertIN ind = new Models.BusinessIndividual.BIIndividualInsertIN();
 					ind.FullName = worksheet.Cells[i, 1].Value.ToString();
 					ind.Email = worksheet.Cells[i, 2].Value.ToString();
 					ind.Phone = worksheet.Cells[i, 3].Value.ToString();
-					ind.IDCard = worksheet.Cells[i, 4].Value.ToString();
-					ind.IssuedPlace = worksheet.Cells[i, 5].Value.ToString();
-					ind.Nation = worksheet.Cells[i, 6].Value.ToString();
-					ind.ProvinceId = Convert.ToInt32(worksheet.Cells[i, 7].Value.ToString());
-					ind.DistrictId = Convert.ToInt32(worksheet.Cells[i, 8].Value.ToString());
-					ind.WardsId = Convert.ToInt32(worksheet.Cells[i, 9].Value.ToString());
-					ind.PermanentPlace = worksheet.Cells[i, 10].Value.ToString();
+					ind.Gender = Convert.ToBoolean(worksheet.Cells[i, 4].Value.ToString()) == true ? true : false;
+					ind.IDCard = worksheet.Cells[i, 5].Value.ToString();
+					ind.IssuedPlace = worksheet.Cells[i, 6].Value.ToString();
+					ind.Nation = worksheet.Cells[i, 7].Value.ToString();
+					ind.ProvinceId = Convert.ToInt32(worksheet.Cells[i, 8].Value.ToString());
+					ind.DistrictId = Convert.ToInt32(worksheet.Cells[i, 9].Value.ToString());
+					ind.WardsId = Convert.ToInt32(worksheet.Cells[i, 10].Value.ToString());
 					ind.Address = worksheet.Cells[i, 11].Value.ToString();
-					ind.BirthDay = DateTime.Now;
-					ind.Status = Convert.ToInt32(worksheet.Cells[i, 12].Value.ToString());
+					ind.BirthDay = Convert.ToDateTime(worksheet.Cells[i, 12].Value.ToString());
+					ind.Status = Convert.ToBoolean(worksheet.Cells[i, 13].Value.ToString()) == true ? 1 : 0;
 					ind.IsActived = true;
 					ind.IsDeleted = false;
-					ind.UserId = Convert.ToInt64(worksheet.Cells[i, 13].Value.ToString());
 
 					individualList.Add(ind);
 				}
@@ -172,19 +171,18 @@ namespace PAKNAPI.Controllers
 					ind.FullName = worksheet.Cells[i, 1].Value.ToString();
 					ind.Email = worksheet.Cells[i, 2].Value.ToString();
 					ind.Phone = worksheet.Cells[i, 3].Value.ToString();
-					ind.IDCard = worksheet.Cells[i, 4].Value.ToString();
-					ind.IssuedPlace = worksheet.Cells[i, 5].Value.ToString();
-					ind.Nation = worksheet.Cells[i, 6].Value.ToString();
-					ind.ProvinceId = Convert.ToInt32(worksheet.Cells[i, 7].Value.ToString());
-					ind.DistrictId = Convert.ToInt32(worksheet.Cells[i, 8].Value.ToString());
-					ind.WardsId = Convert.ToInt32(worksheet.Cells[i, 9].Value.ToString());
-					ind.PermanentPlace = worksheet.Cells[i, 10].Value.ToString();
+					ind.Gender = Convert.ToBoolean(worksheet.Cells[i, 4].Value.ToString()) == true ? true : false;
+					ind.IDCard = worksheet.Cells[i, 5].Value.ToString();
+					ind.IssuedPlace = worksheet.Cells[i, 6].Value.ToString();
+					ind.Nation = worksheet.Cells[i, 7].Value.ToString();
+					ind.ProvinceId = Convert.ToInt32(worksheet.Cells[i, 8].Value.ToString());
+					ind.DistrictId = Convert.ToInt32(worksheet.Cells[i, 9].Value.ToString());
+					ind.WardsId = Convert.ToInt32(worksheet.Cells[i, 10].Value.ToString());
 					ind.Address = worksheet.Cells[i, 11].Value.ToString();
-					ind.BirthDay = DateTime.Now;
-					ind.Status = Convert.ToInt32(worksheet.Cells[i, 12].Value.ToString());
+					ind.BirthDay = Convert.ToDateTime(worksheet.Cells[i, 12].Value.ToString());
+					ind.Status = Convert.ToBoolean(worksheet.Cells[i, 13].Value.ToString()) == true ? 1 : 0;
 					ind.IsActived = true;
 					ind.IsDeleted = false;
-					ind.UserId = Convert.ToInt64(worksheet.Cells[i, 13].Value.ToString());
 
 					individualList.Add(ind);
 				}

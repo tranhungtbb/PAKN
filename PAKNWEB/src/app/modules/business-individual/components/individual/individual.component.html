@@ -283,7 +283,7 @@
 								</div>
 							</div>
 							<!-- row 4 -->
-							<div class="col-12 col-lg-8 form-group">
+							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Xã/Phường/Thị trấn <span class="cl-red">(*)</span></label>
 								<select *ngIf="isOtherNation" class="form-control" disabled [(ngModel)]="model.wardsId" formControlName="village">
 									<option value="0">Chon...</option>
@@ -299,7 +299,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-12 col-lg-4 form-group">
+							<div class="col-12 col-lg-8 form-group">
 								<label class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></label>
 								<input [svTrim] [(ngModel)]="model.address" maxlength="255" formControlName="address" type="text" placeholder="Nhập..."
 									class="form-control border-brown">
