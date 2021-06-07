@@ -1,5 +1,8 @@
-import { Component, DebugElement, OnInit, ViewChild } from '@angular/core'
+import { Component, DebugElement, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
+import { saveAs as importedSaveAs } from 'file-saver'
+
+import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { BusinessIndividualService } from 'src/app/services/business-individual.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { RESPONSE_STATUS, FILETYPE, CONSTANTS } from 'src/app/constants/CONSTANTS'
@@ -12,7 +15,7 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker'
 import { viLocale } from 'ngx-bootstrap/locale'
 import { defineLocale } from 'ngx-bootstrap/chronos'
 import { DiadanhService } from 'src/app/services/diadanh.service'
-import { RegisterService } from 'src/app/services/register.service'
+import { PathSampleFiles } from 'src/app/constants/CONSTANTS'
 
 declare var $: any
 @Component({
@@ -30,10 +33,13 @@ export class IndividualComponent implements OnInit {
 		private _router: Router,
 		private _shareData: DataService,
 		private localeService: BsLocaleService,
+		private _filesService: UploadFileService,
 		private diadanhService: DiadanhService // private registerService: RegisterService
 	) {
 		defineLocale('vi', viLocale)
 	}
+
+	@ViewChild('file', { static: false }) public file: ElementRef
 	allowExcelExtend = ['xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
 	dateNow: Date = new Date()
 
@@ -543,14 +549,28 @@ export class IndividualComponent implements OnInit {
 		formData.append('file', file, file.name)
 
 		this._service.invididualImportFile(formData).subscribe((res) => {
-			if (res.success != 'OK') {
+			if (res.success != RESPONSE_STATUS.success) {
 				this._toastr.error('Xảy ra lỗi trong quá trình xử lý')
 				return
+			} else {
+				if (res.result.CountSuccess > 0) {
+					this._toastr.success('Thêm thành công ' + res.result.CountSuccess + ' người dùng')
+				}
+
+				if (res.result.CountError > 0) {
+					setTimeout(() => {
+						this._toastr.error('Thêm không thành công ' + res.result.CountError + ' người dùng')
+					}, 1000)
+				}
+				this.getList()
 			}
-			this.model.imagePath = res.result.path
+			this.file.nativeElement.value = ''
 		})
 	}
 	onChangeFileExcel() {
 		$('#excel-file').click()
+	}
+	onDownFileExcel() {
+		$('#sampleFilesIndividual').attr('src', PathSampleFiles.PathSampleFilesIndividual)
 	}
 }

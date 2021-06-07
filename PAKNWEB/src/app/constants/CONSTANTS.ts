@@ -181,3 +181,8 @@ export const FILETYPE = [
 export class REGEX {
 	public static PHONE_VN = '^(84|0[3|5|7|8|9])+([0-9]{8})$'
 }
+
+export class PathSampleFiles {
+	public static PathSampleFilesIndividual = '/Upload/BusinessIndividual/SampleFilesIndividual.xlsx'
+	public static PathSampleFilesBusiness = '/Upload/BusinessIndividual/SampleFilesBusiness.xlsx'
+}

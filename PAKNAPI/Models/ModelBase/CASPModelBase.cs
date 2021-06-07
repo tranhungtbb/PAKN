@@ -39,6 +39,34 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class CAAdministrativeUnitGetByNameLevel
+	{
+		private SQLCon _sQLCon;
+
+		public CAAdministrativeUnitGetByNameLevel(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAAdministrativeUnitGetByNameLevel()
+		{
+		}
+
+		public int? Id { get; set; }
+		public string Name { get; set; }
+		public int? Level { get; set; }
+
+		public async Task<List<CAAdministrativeUnitGetByNameLevel>> CAAdministrativeUnitsGetByNameDAO(string? Name, int Level, int? ParentId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", Name);
+			DP.Add("Level", Level);
+			DP.Add("ParentId", ParentId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAAdministrativeUnitGetByNameLevel>("[CA_AdministrativeUnitGetByName-Level]", DP)).ToList();
+		}
+	}
+
 	public class AdministrativeUnitGetAllById
 	{
 		private SQLCon _sQLCon;

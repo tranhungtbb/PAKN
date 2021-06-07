@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { BusinessIndividualService } from 'src/app/services/business-individual.service'
 import { DataService } from 'src/app/services/sharedata.service'
@@ -12,6 +12,7 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker'
 import { viLocale } from 'ngx-bootstrap/locale'
 import { defineLocale } from 'ngx-bootstrap/chronos'
 import { DiadanhService } from 'src/app/services/diadanh.service'
+import { PathSampleFiles } from 'src/app/constants/CONSTANTS'
 
 declare var $: any
 @Component({
@@ -35,6 +36,7 @@ export class BusinessComponent implements OnInit {
 	}
 
 	dateNow: Date = new Date()
+	@ViewChild('file', { static: false }) public file: ElementRef
 
 	listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
 	listProvince: any[] = []
@@ -315,14 +317,28 @@ export class BusinessComponent implements OnInit {
 		formData.append('file', file, file.name)
 
 		this._service.businessImportFile(formData).subscribe((res) => {
-			if (res.success != 'OK') {
+			if (res.success != RESPONSE_STATUS.success) {
 				this._toastr.error('Xảy ra lỗi trong quá trình xử lý')
 				return
+			} else {
+				if (res.result.CountSuccess > 0) {
+					this._toastr.success('Thêm thành công ' + res.result.CountSuccess + ' doanh nghiệp')
+				}
+
+				if (res.result.CountError > 0) {
+					setTimeout(() => {
+						this._toastr.error('Thêm không thành công ' + res.result.CountError + ' doanh nghiệp')
+					}, 1000)
+				}
+				this.getList()
 			}
-			this.model.imagePath = res.result.path
+			this.file.nativeElement.value = ''
 		})
 	}
 	onChangeFileExcel() {
 		$('#excel-file').click()
+	}
+	onDownFileExcel() {
+		$('#sampleFilesBusiness').attr('src', PathSampleFiles.PathSampleFilesIndividual)
 	}
 }
