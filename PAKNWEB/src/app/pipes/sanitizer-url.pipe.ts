@@ -11,3 +11,14 @@ export class SanitizerUrlPipe implements PipeTransform {
 		return this.sanitize.bypassSecurityTrustUrl(value)
 	}
 }
+
+@Pipe({
+	name: 'safeUrl',
+})
+export class SafeUrlPipe implements PipeTransform {
+	constructor(private sanitize: DomSanitizer) {}
+
+	transform(value: string): SafeUrl {
+		return this.sanitize.bypassSecurityTrustResourceUrl(value)
+	}
+}

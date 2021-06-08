@@ -15,14 +15,15 @@
 	</div>
 	<div class="col form-group">
 		<label class="mb-1">Quốc tịch <span class="cl-red">(*)</span></label>
-		<ng-select *ngIf="!nation_enable_type" [(ngModel)]="model.Nation" formControlName="Nation" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
+		<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.Nation" formControlName="Nation" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
 			(change)="onChangeNation()">
 			<ng-option *ngFor="let vill of listNation" [value]="vill.id">{{vill.name}}</ng-option>
 			<ng-option value="#">Khác</ng-option>
 		</ng-select>
 		<!-- type input -->
-		<input [svTrim] *ngIf="nation_enable_type" [(ngModel)]="model.Nation" formControlName="Nation" type="text" placeholder="Nhập..." class="form-control border-brown">
-		<span *ngIf="nation_enable_type" class="select-caret-icon" (click)="nation_enable_type = false; model.Nation=''">
+		<input [svTrim] *ngIf="isOtherNation" [(ngModel)]="model.Nation" formControlName="Nation" type="text" placeholder="Nhập..." class="form-control border-brown"
+			(click)="model.Nation=''">
+		<span *ngIf="isOtherNation" class="select-caret-icon" (click)="backToVal()">
 			<i class="bi bi-caret-down-fill"></i>
 		</span>
 
@@ -34,7 +35,11 @@
 	</div>
 	<div class="col form-group">
 		<label class="mb-1">Tỉnh / Thành phố <span class="cl-red">(*)</span></label>
-		<ng-select *ngIf="!nation_enable_type" [(ngModel)]="model.ProvinceId" formControlName="Province" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
+		<select *ngIf="isOtherNation" disabled [(ngModel)]="model.ProvinceId" formControlName="Province" class="form-control" placeholder="Chọn...">
+			<option [value]="0">Chọn...</option>
+		</select>
+		<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.ProvinceId" formControlName="Province" class="form-control" placeholder="Chọn..." [closeOnSelect]="true">>>>>>>
+			9de489ef1ba116cb441d324dfcc8b71cbe8a7994
 			(change)="onChangeProvince()">
 			<ng-option *ngFor="let vill of listProvince" [value]="vill.id">{{vill.name}}</ng-option>
 		</ng-select>
@@ -68,7 +73,11 @@
 	</div>
 	<div class="col form-group">
 		<label class="mb-1">Huyện / Quận / Thị xã...<span class="cl-red">(*)</span></label>
-		<ng-select *ngIf="!nation_enable_type" [(ngModel)]="model.DistrictId" formControlName="District" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
+
+		<select *ngIf="isOtherNation" disabled [(ngModel)]="model.DistrictId" formControlName="District" class="form-control" placeholder="Chọn...">
+			<option [value]="0">Chọn...</option>
+		</select>
+		<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.DistrictId" formControlName="District" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
 			(change)="onChangeDistrict()">
 			<ng-option *ngFor="let vill of listDistrict" [value]="vill.id">{{vill.name}}</ng-option>
 		</ng-select>
@@ -84,7 +93,12 @@
 	</div>
 	<div class="col form-group">
 		<label class="mb-1">Xã / Phường / Thị trấn<span class="cl-red">(*)</span></label>
-		<ng-select *ngIf="!nation_enable_type" [(ngModel)]="model.WardsId" formControlName="Village" class="form-control" placeholder="Chọn..." [closeOnSelect]="true">
+
+		<select *ngIf="isOtherNation" disabled [(ngModel)]="model.WardsId" formControlName="Village" class="form-control" placeholder="Chọn...">
+			<option [value]="0">Chọn...</option>
+		</select>
+		<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.WardsId" formControlName="Village" class="form-control" placeholder="Chọn..." [closeOnSelect]="true">
+
 			<ng-option *ngFor="let vill of listVillage" [value]="vill.id">{{vill.name}}</ng-option>
 		</ng-select>
 		<select *ngIf="nation_enable_type" class="form-control" disabled [(ngModel)]="model.WardsId" formControlName="Village">

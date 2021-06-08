@@ -1,6 +1,6 @@
 <div class="content-nd">
 	<div class="container">
-		<div class="row justify-content-between pt-5 mb-5" style="max-height:600px;">
+		<div class="row justify-content-between pt-5 mb-5" style="min-height:600px;">
 			<div class="col main-ct pr-3 pr-lg-5 col-lg-9">
 				<div class="border-bottom mb-3 mt-2 pb-2">
 					<label class="radio-inline text-uppercase mr-4" [ngClass]="{'d-active':contentType==0}">
@@ -25,13 +25,13 @@
 					</div>
 					<!-- <div class="contents" [innerHTML]="model.contents" style="text-align: justify;" *ngIf="contentType == 0"></div> -->
 					<div class="contents" *ngIf="contentType == 0">
-						<!-- <iframe id="docView" #docView width="100%" height="600px"></iframe> -->
-						<embed [src]="safe(model.src)" id="docView" type="application/pdf" width="100%" height="600px" #docView>
+						<!-- <iframe [src]="safe(model.src)" id="docView" #docView width="100%" height="600px"></iframe> -->
+						<embed [src]="model.src | safeUrl" id="docView" type="application/pdf" width="100%" height="600px" #docView>
 					</div>
 					<div class="contents" *ngIf="contentType == 1">
 						<p style="text-align: justify;">{{model.content}}</p>
 						<div>
-							<video [src]="safe(model.src)" controls width="100%" height="550px"></video>
+							<video [src]="model.src | safeUrl" controls width="100%" height="550px"></video>
 						</div>
 					</div>
 				</div>

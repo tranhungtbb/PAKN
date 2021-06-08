@@ -45,7 +45,7 @@ export class OrganizationComponent implements OnInit {
 	formOrgInfo: FormGroup
 	listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
 	model: OrganizationObject = new OrganizationObject()
-	nation_enable_type = false
+	isOtherNation = false
 	ngOnInit() {
 		this.localeService.use('vi')
 
@@ -92,12 +92,12 @@ export class OrganizationComponent implements OnInit {
 			this.child_OrgRepreForm.checkExists['Email'] ||
 			this.child_OrgRepreForm.checkExists['IDCard']
 		) {
-			this.toast.error('Dữ liệu không hợp lệ')
+			//this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
 
 		if (this.formLogin.invalid || this.formOrgInfo.invalid || this.child_OrgRepreForm.formInfo.invalid || this.child_OrgAddressForm.formOrgAddress.invalid) {
-			this.toast.error('Dữ liệu không hợp lệ')
+			//this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
 

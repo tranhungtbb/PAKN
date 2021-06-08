@@ -76,9 +76,9 @@ export class OrgRepreFormComponent implements OnInit, AfterViewInit {
 				this.model.ProvinceId = 0
 				this.model.DistrictId = 0
 				this.model.WardsId = 0
-				this.model.OrgProvinceId = 0
-				this.model.OrgDistrictId = 0
-				this.model.OrgWardsId = 0
+				// this.model.OrgProvinceId = 0
+				// this.model.OrgDistrictId = 0
+				// this.model.OrgWardsId = 0
 			}
 		}
 		//update state for child

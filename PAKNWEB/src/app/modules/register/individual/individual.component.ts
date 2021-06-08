@@ -46,7 +46,7 @@ export class IndividualComponent implements OnInit {
 		{ value: false, text: 'Nữ' },
 	]
 
-	nation_enable_type = false
+	isOtherNation = false
 
 	ngOnInit() {
 		this.localeService.use('vi')
@@ -57,6 +57,16 @@ export class IndividualComponent implements OnInit {
 	//get req
 
 	//event
+	backDefaultValue() {
+		this.isOtherNation = false
+		this.model.nation = null
+		this.model.provinceId = null
+		this.model.districtId = null
+		this.model.wardsId = null
+		this.formInfo.controls['province'].setValue(null)
+		this.formInfo.controls['district'].setValue(null)
+		this.formInfo.controls['village'].setValue(null)
+	}
 	onChangeNation() {
 		this.listProvince = []
 		this.listDistrict = []
@@ -76,11 +86,25 @@ export class IndividualComponent implements OnInit {
 			})
 		} else {
 			if (this.model.nation == '#') {
+<<<<<<< HEAD
 				this.nation_enable_type = true
+=======
+				this.isOtherNation = true
+>>>>>>> 9de489ef1ba116cb441d324dfcc8b71cbe8a7994
 				this.model.nation = 'Nhập...'
 				this.model.provinceId = 0
 				this.model.districtId = 0
 				this.model.wardsId = 0
+<<<<<<< HEAD
+=======
+				this.formInfo.controls['province'].setValue(0)
+				this.formInfo.controls['district'].setValue(0)
+				this.formInfo.controls['village'].setValue(0)
+				//
+				// this.formInfo.controls.province.disable()
+				// this.formInfo.controls.district.disable()
+				// this.formInfo.controls.village.disable()
+>>>>>>> 9de489ef1ba116cb441d324dfcc8b71cbe8a7994
 			}
 		}
 	}
@@ -137,12 +161,12 @@ export class IndividualComponent implements OnInit {
 		if (!this.model.email) this.model.email = ''
 
 		if (this.checkExists['Phone'] || this.checkExists['Email'] || this.checkExists['IDCard']) {
-			this.toast.error('Dữ liệu không hợp lệ')
+			//this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
 
 		if (this.formLogin.invalid || this.formInfo.invalid) {
-			this.toast.error('Dữ liệu không hợp lệ')
+			//this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
 
