@@ -78,29 +78,27 @@ export class PublishComponent implements OnInit, OnChanges {
 	]
 
 	getListNotification(PageSize: any) {
+		this.ViewedCount = 0
 		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: PageSize, PageIndex: 1 }).subscribe((res) => {
 			if ((res.success = RESPONSE_STATUS.success)) {
-				this.notifications = res.result.syNotifications
-				this.notifications.forEach((item) => {
-					if (item.isViewed == true) {
-						this.ViewedCount += 1
-					}
-				})
+				if (res.result.syNotifications.length > 0) {
+					this.ViewedCount = res.result.syNotifications[0].viewedCount
+					this.notifications = res.result.syNotifications
+				} else {
+					this.notifications = []
+				}
 			}
 			return
 		})
 	}
 
 	updateNotifications() {
-		if (this.index == 0) {
-			this.notificationService.updateIsViewedNotification({}).subscribe((res) => {
-				if (res.success == RESPONSE_STATUS.success) {
-					this.index = this.index + 1
-					this.getListNotification(this.numberNotifications)
-				}
-				return
-			})
-		}
+		this.notificationService.updateIsViewedNotification({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.getListNotification(this.numberNotifications)
+			}
+			return
+		})
 	}
 
 	ngOnChanges() {
@@ -132,21 +130,29 @@ export class PublishComponent implements OnInit, OnChanges {
 				this.storageService.setReturnUrl('')
 				this.storageService.clearStoreage()
 				this._router.navigate(['/dang-nhap'])
-				//location.href = "/dang-nhap";
 			}
 		})
 	}
 	onClickNotification(id: number, type: number, typeSend: number) {
 		if (type == TYPE_NOTIFICATION.NEWS) {
+			this.updateIsReadNotification(id)
 			this._router.navigate(['/tin-tuc-su-kien/' + id])
 		} else {
 			if (typeSend == RECOMMENDATION_STATUS.FINISED) {
+				this.updateIsReadNotification(id)
 				this._router.navigate(['/cong-bo/phan-anh-kien-nghi/' + id])
 			} else {
+				this.updateIsReadNotification(id)
 				this._router.navigate(['/cong-bo/chi-tiet-kien-nghi/' + id])
 			}
 		}
 	}
+
+	updateIsReadNotification(dataId: any) {
+		this.notificationService.updateIsReadedNotification({ ObjectId: dataId }).subscribe()
+		this.getListNotification(this.numberNotifications)
+	}
+
 	onScroll(event: any) {
 		if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 50) {
 			this.numberNotifications = this.numberNotifications + 5

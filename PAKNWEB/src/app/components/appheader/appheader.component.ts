@@ -13,6 +13,7 @@ import { RESPONSE_STATUS, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTA
 import { NotificationService } from 'src/app/services/notification.service'
 import { from } from 'rxjs'
 import { UserViewInfoComponent } from '../../modules/system-management/components/user/user-view-info/user-view-info.component'
+import { create } from 'domain'
 
 declare var $: any
 @HostListener('window:scroll', ['$event'])
@@ -125,13 +126,12 @@ export class AppheaderComponent implements OnInit {
 		this.ViewedCount = 0
 		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: PageSize, PageIndex: 1 }).subscribe((res) => {
 			if ((res.success = RESPONSE_STATUS.success)) {
-				this.Notifications = res.result.syNotifications
-				this.ViewedCount = 0
-				this.Notifications.forEach((item) => {
-					if (item.isViewed == true) {
-						this.ViewedCount += 1
-					}
-				})
+				if (res.result.syNotifications.length > 0) {
+					this.Notifications = res.result.syNotifications
+					this.ViewedCount = res.result.syNotifications[0].viewedCount
+				} else {
+					this.Notifications = []
+				}
 			}
 			return
 		})
@@ -220,22 +220,18 @@ export class AppheaderComponent implements OnInit {
 	}
 
 	onClickNotification(dataId: any, type: any, typeSend: any) {
-		if (this.storageService.getTypeObject() == 1) {
-			// can bo quan ly
-			if (type == 1) {
-				this.router.navigate(['/quan-tri/tin-tuc/chinh-sua/' + dataId])
-			} else if (type == 2) {
-				this.router.navigate(['/quan-tri/kien-nghi/chi-tiet/' + dataId])
-			}
-			return
-		} else {
-			if (type == 1) {
-				this.router.navigate(['/cong-bo/tin-tuc-su-kien/' + dataId])
-			} else if (type == 2) {
-				this.router.navigate(['/cong-bo/chi-tiet-kien-nghi/' + dataId])
-			}
-			return
+		if (type == 1) {
+			this.updateIsReadNotification(dataId)
+			this.router.navigate(['/quan-tri/tin-tuc/chinh-sua/' + dataId])
+		} else if (type == 2) {
+			this.updateIsReadNotification(dataId)
+			this.router.navigate(['/quan-tri/kien-nghi/chi-tiet/' + dataId])
 		}
+	}
+
+	updateIsReadNotification(dataId: any) {
+		this.notificationService.updateIsReadedNotification({ ObjectId: dataId }).subscribe()
+		this.getNotifications(this.pageSize)
 	}
 
 	preUpdate() {

@@ -278,6 +278,7 @@ export class Api {
 	public static NotificationGetList = 'SYNotification/SYNotificationGetListOnPage'
 	public static NotificationDelete = 'SYNotification/SYNotificationDelete'
 	public static NotificationUpdateIsViewed = 'SYNotification/SYNotificationUpdateIsViewed'
+	public static NotificationUpdateIsReaded = 'SYNotification/SYNotificationUpdateIsReaded'
 
 	//Chatbot
 	public static ChatbotGetList = 'Chatbot/ChatbotGetAllOnPageBase'

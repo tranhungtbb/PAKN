@@ -100,6 +100,10 @@ export class BusinessUpdateInfoComponent implements OnInit {
 				return
 			}
 			this.model = res.result
+			if (this.model.national == 'Việt Nam') {
+				this.nation_enable_type = true
+			} else {
+			}
 			this.onChangeNation()
 			this.onChangeOrgProvince()
 			this.child_SideLeft.model = this.model

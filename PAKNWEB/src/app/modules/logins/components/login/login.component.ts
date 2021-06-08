@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
 		Password: '',
 	}
 	isAbleCaptcha: any = ''
-	isSaveLogin: boolean = false
+	isSaveLogin: boolean = true
 	loginForm: FormGroup
 	loginFormProduct: FormGroup
 	lang: any = 'vi'

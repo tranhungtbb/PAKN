@@ -69,3 +69,13 @@
 	padding-top: 2px;
 	z-index: 1000;
 }
+
+.title-black {
+	color: #222222;
+}
+.title-gray {
+	color: gray;
+}
+.height-auto {
+	height: auto !important;
+}

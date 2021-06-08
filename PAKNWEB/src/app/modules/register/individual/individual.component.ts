@@ -86,11 +86,6 @@ export class IndividualComponent implements OnInit {
 			})
 		} else {
 			if (this.model.nation == '#') {
-				this.isOtherNation = true
-				this.model.nation = 'Nhập...'
-				this.model.provinceId = 0
-				this.model.districtId = 0
-				this.model.wardsId = 0
 				this.formInfo.controls['province'].setValue(0)
 				this.formInfo.controls['district'].setValue(0)
 				this.formInfo.controls['village'].setValue(0)
@@ -148,8 +143,6 @@ export class IndividualComponent implements OnInit {
 		this.fInfoSubmitted = true
 		let fDob: any = document.querySelector('#_dob')
 		let fDateIssue: any = document.querySelector('#_dateIssue')
-		console.log('fDob.value', fDob.value)
-		console.log('fDateIssue.value', fDateIssue.value)
 		this.model._birthDay = fDob.value
 		this.model._dateOfIssue = fDateIssue.value
 
