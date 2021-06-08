@@ -92,12 +92,12 @@ export class OrganizationComponent implements OnInit {
 			this.child_OrgRepreForm.checkExists['Email'] ||
 			this.child_OrgRepreForm.checkExists['IDCard']
 		) {
-			this.toast.error('Dữ liệu không hợp lệ')
+			//this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
 
 		if (this.formLogin.invalid || this.formOrgInfo.invalid || this.child_OrgRepreForm.formInfo.invalid || this.child_OrgAddressForm.formOrgAddress.invalid) {
-			this.toast.error('Dữ liệu không hợp lệ')
+			//this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
 

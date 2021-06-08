@@ -140,12 +140,12 @@ export class IndividualComponent implements OnInit {
 		if (!this.model.email) this.model.email = ''
 
 		if (this.checkExists['Phone'] || this.checkExists['Email'] || this.checkExists['IDCard']) {
-			this.toast.error('Dữ liệu không hợp lệ')
+			//this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
 
 		if (this.formLogin.invalid || this.formInfo.invalid) {
-			this.toast.error('Dữ liệu không hợp lệ')
+			//this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
 
