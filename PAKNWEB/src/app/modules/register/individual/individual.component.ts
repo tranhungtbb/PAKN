@@ -86,17 +86,6 @@ export class IndividualComponent implements OnInit {
 			})
 		} else {
 			if (this.model.nation == '#') {
-<<<<<<< HEAD
-				this.nation_enable_type = true
-=======
-				this.isOtherNation = true
->>>>>>> 9de489ef1ba116cb441d324dfcc8b71cbe8a7994
-				this.model.nation = 'Nhập...'
-				this.model.provinceId = 0
-				this.model.districtId = 0
-				this.model.wardsId = 0
-<<<<<<< HEAD
-=======
 				this.formInfo.controls['province'].setValue(0)
 				this.formInfo.controls['district'].setValue(0)
 				this.formInfo.controls['village'].setValue(0)
@@ -104,7 +93,6 @@ export class IndividualComponent implements OnInit {
 				// this.formInfo.controls.province.disable()
 				// this.formInfo.controls.district.disable()
 				// this.formInfo.controls.village.disable()
->>>>>>> 9de489ef1ba116cb441d324dfcc8b71cbe8a7994
 			}
 		}
 	}
