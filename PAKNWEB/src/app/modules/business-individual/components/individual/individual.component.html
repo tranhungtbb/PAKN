@@ -263,7 +263,7 @@
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Tỉnh/thành phố <span class="cl-red">(*)</span></label>
 								<select *ngIf="isOtherNation" class="form-control" disabled [(ngModel)]="model.provinceId" formControlName="province">
-									<option value="0">Chon...</option>
+									<option value="0">Chọn...</option>
 								</select>
 								<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.provinceId" formControlName="province" class="form-control" placeholder="Chọn..."
 									[closeOnSelect]="true" (change)="onChangeProvince()">
@@ -279,7 +279,7 @@
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Huyện/Quận/Thị xã <span class="cl-red">(*)</span></label>
 								<select *ngIf="isOtherNation" class="form-control" disabled [(ngModel)]="model.districtId" formControlName="district">
-									<option value="0">Chon...</option>
+									<option value="0">Chọn...</option>
 								</select>
 								<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.districtId" formControlName="district" class="form-control" placeholder="Chọn..."
 									[closeOnSelect]="true" (change)="onChangeDistrict()">
@@ -296,7 +296,7 @@
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Xã/Phường/Thị trấn <span class="cl-red">(*)</span></label>
 								<select *ngIf="isOtherNation" class="form-control" disabled [(ngModel)]="model.wardsId" formControlName="village">
-									<option value="0">Chon...</option>
+									<option value="0">Chọn...</option>
 								</select>
 								<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.wardsId" formControlName="village" class="form-control" placeholder="Chọn..."
 									[closeOnSelect]="true">

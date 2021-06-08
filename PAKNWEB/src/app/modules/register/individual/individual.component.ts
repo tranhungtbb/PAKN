@@ -77,11 +77,10 @@ export class IndividualComponent implements OnInit {
 		} else {
 			if (this.model.nation == '#') {
 				this.nation_enable_type = true
-				this.model.nation = ''
-				//
-				// this.formInfo.controls.province.disable()
-				// this.formInfo.controls.district.disable()
-				// this.formInfo.controls.village.disable()
+				this.model.nation = 'Nhập...'
+				this.model.provinceId = 0
+				this.model.districtId = 0
+				this.model.wardsId = 0
 			}
 		}
 	}
@@ -132,8 +131,6 @@ export class IndividualComponent implements OnInit {
 		this.fInfoSubmitted = true
 		let fDob: any = document.querySelector('#_dob')
 		let fDateIssue: any = document.querySelector('#_dateIssue')
-		console.log('fDob.value', fDob.value)
-		console.log('fDateIssue.value', fDateIssue.value)
 		this.model._birthDay = fDob.value
 		this.model._dateOfIssue = fDateIssue.value
 

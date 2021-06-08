@@ -398,3 +398,13 @@ div.bubble.reply {
 .avatar-circle {
 	background-color: #fff;
 }
+
+.title-black {
+	color: #222222;
+}
+.title-gray {
+	color: gray;
+}
+.height-auto {
+	height: auto !important;
+}

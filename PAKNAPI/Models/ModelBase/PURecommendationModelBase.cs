@@ -20,7 +20,7 @@ namespace PAKNAPI.Models.ModelBase
         public int Status { get; set; }
         public bool? IsForwardProcess { get; set; }
     }
-        public class PURecommendation
+    public class PURecommendation
     {
 
         private SQLCon _sQLCon;
@@ -38,6 +38,10 @@ namespace PAKNAPI.Models.ModelBase
         public int RowNumber { get; set; }
 
         public string ProcessUnitName { get; set; }
+
+        public string UnitName { get; set; }
+
+        public string FieldName { get; set; }
 
         public PURecommendation(IAppSetting appSetting)
         {

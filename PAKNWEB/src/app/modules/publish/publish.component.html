@@ -38,7 +38,8 @@
 									</div>
 
 								</div>
-								<div id="DZ_W_Notification2" (scroll)="onScroll($event)" class="widget-media dz-scroll p-3" style="height: 550px;">
+								<div id="DZ_W_Notification2" (scroll)="onScroll($event)" class="widget-media dz-scroll p-3" style="height: 550px;"
+									[ngClass]="{ 'height-auto': notifications && notifications.length < 4}">
 									<ul class="timeline" id="notificationScroll" *ngIf="notifications">
 										<li *ngFor="let item of notifications" class="item-notification">
 											<a href="javascript:void(0)" (click)="onClickNotification(item.dataId,item.type, item.typeSend)" class="timeline-panel">
@@ -48,12 +49,13 @@
 												<div class="media-body">
 													<small class="d-block" style="color: #222222;">{{item.sendDate | date : 'HH:mm dd/MM/yyyy'}}</small>
 													<p class="mb-0 text-uppercase" [ngClass]="{ 'red-title': checkDeny(item.typeSend) == true }">{{item.title}}</p>
-													<p class="mb-1 h4" style="color: #222222;">{{item.content}}</p>
+													<p class="mb-1 h4" [ngClass]="{ 'title-black': item.isReaded == true, 'title-gray': item.isReaded == false }">{{item.content}}
+													</p>
 												</div>
 											</a>
 										</li>
 									</ul>
-									<div *ngIf="!notifications" style="display: flex;
+									<div *ngIf="notifications && notifications.length == 0" style="display: flex;
 									flex-direction: row;
 									justify-content: center;
 									align-items: center;">

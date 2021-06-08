@@ -47,7 +47,7 @@
 							<p style="text-align: justify;">{{model.content}}</p>
 
 							<span class="text-left">
-								<small class="small">Tài liệu đính kèm</small><br>
+								<small class="small" *ngIf="filesModel && filesModel.length > 0">Tài liệu đính kèm</small><br>
 								<div *ngFor="let file of filesModel" class="file-att">
 									<a *ngIf="file.fileType == 1" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
 										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
