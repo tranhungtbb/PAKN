@@ -101,7 +101,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			}
 			this.model = res.result
 			this.onChangeNation()
-
+			this.onChangeOrgProvince()
 			this.child_SideLeft.model = this.model
 		})
 	}
@@ -152,11 +152,11 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			this.listDistrict = []
 			this.listVillage = []
 
-			this.listOrgDistrict = []
-			this.listOrgVillage = []
+			// this.listOrgDistrict = []
+			// this.listOrgVillage = []
 
 			this.model.provinceId = null
-			this.model.orgProvinceId = null
+			//this.model.orgProvinceId = null
 			this.model.wardsId = null
 		}
 		if (this.model.nation == 'Việt Nam') {
