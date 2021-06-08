@@ -30,6 +30,10 @@ export class UserInfoStorageService {
 		localStorage.setItem('isSaveLogin', String(isSavelogin))
 	}
 
+	setIsSession(isSession: boolean): void {
+		localStorage.setItem('isSession', String(isSession))
+	}
+
 	setPermissions(permissions: string): void {
 		localStorage.setItem('permissions', permissions)
 	}
@@ -104,6 +108,9 @@ export class UserInfoStorageService {
 
 	getSaveLogin(): boolean {
 		return localStorage.getItem('isSaveLogin') === 'true'
+	}
+	getIsSession(): boolean {
+		return localStorage.getItem('isSession') === 'true'
 	}
 
 	getPermissions(): string {

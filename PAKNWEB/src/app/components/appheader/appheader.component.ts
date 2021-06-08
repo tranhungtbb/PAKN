@@ -76,6 +76,7 @@ export class AppheaderComponent implements OnInit {
 	Notifications: any[]
 	numberNotifications: any = 5
 	ViewedCount: number = 0
+	@ViewChild('table', { static: false }) table: any
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -363,8 +364,8 @@ export class AppheaderComponent implements OnInit {
 	}
 	getList() {
 		let req = {
-			FromDate: this.dataSearch.fromDate != null ? this.dataSearch.fromDate.toLocaleDateString() : '',
-			ToDate: this.dataSearch.toDate != null ? this.dataSearch.toDate.toLocaleDateString() : '',
+			FromDate: this.dataSearch.fromDate == null ? '' : JSON.stringify(new Date(this.dataSearch.fromDate)).slice(1, 11),
+			ToDate: this.dataSearch.toDate == null ? '' : JSON.stringify(new Date(this.dataSearch.toDate)).slice(1, 11),
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 			UserId: localStorage.getItem('userId'),
@@ -399,6 +400,12 @@ export class AppheaderComponent implements OnInit {
 	}
 	showModalDetail(): void {
 		$('#modalDetailLog').modal('show')
+		this.pageIndex = 1
+		this.pageSize = 20
+		this.totalRecords = 0
+		this.dataSearch.fromDate = this.dataSearch.toDate = null
+		this.listData = []
+		this.table.reset()
 		this.getUserDetail()
 		this.getList()
 	}

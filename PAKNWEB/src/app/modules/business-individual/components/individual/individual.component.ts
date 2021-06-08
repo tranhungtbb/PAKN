@@ -458,7 +458,8 @@ export class IndividualComponent implements OnInit {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.InvididualGetByID.length > 0) {
 					this.modelDetail = res.result.InvididualGetByID[0]
-					console.log(res.result.InvididualGetByID[0])
+					this.modelDetail.iDCard = res.result.InvididualGetByID[0].idCard
+					// console.log(res.result.InvididualGetByID[0])
 					$('#modalDetail').modal('show')
 				}
 			}

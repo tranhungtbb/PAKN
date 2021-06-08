@@ -20,7 +20,7 @@
 					<ng-template let-node pTemplate="default" style="width:100%; overflow: hidden;">
 						<a class="cursor-hand" [ngClass]="{'text-color-blue':(objSupport.id && objSupport.id == node.id)}">
 							<strong (click)="treeViewActive(node.id)">{{node.name}}</strong>
-							<i class="bi bi-arrow-down-up margin-icon" *ngIf="ltsUpdateMenu.includes(node.id)" (click)="preUpdate(node.id)"></i>
+							<i class="bi bi-arrow-repeat margin-icon" *ngIf="ltsUpdateMenu.includes(node.id)" (click)="preUpdate(node.id)"></i>
 							<i class="bi bi-x-circle margin-icon" *ngIf="ltsDeleteMenu.includes(node.id)" (click)="preDelete(node.id)"></i>
 						</a>
 					</ng-template>

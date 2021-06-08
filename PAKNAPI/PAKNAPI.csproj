@@ -98,6 +98,7 @@
     <EmbeddedResource Include="ExportGrid\Recommendation_ListGeneral.repx" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Upload\BusinessIndividual\SampleFilesBusiness.xlsx" />
     <None Include="Upload\BusinessIndividual\SampleFilesIndividual.xlsx" />
     <None Include="Upload\Invitation\23\Danh sach su dung tong dai voip 12.2020 chuan.xlsx" />
     <None Include="Upload\Invitation\23\Note-cho-Hùng.docx" />

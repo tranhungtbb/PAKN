@@ -80,19 +80,23 @@ export class SupportListDocumentComponent implements OnInit {
 				this.treeSp = this.unflatten(listSP)
 
 				//active first
-				let active = 0
-				if (this.ltsDeleteMenu.length > 0) {
-					active = this.ltsDeleteMenu[0]
+				if (activeTreeNode == null) {
+					let active = 0
+					if (this.ltsDeleteMenu.length > 0) {
+						active = this.ltsDeleteMenu[0]
+					} else {
+						let filter = this.lstSupport.filter((x) => {
+							if (x.type == 2 && x.level == 1) {
+								return x
+							}
+							return
+						})
+						active = filter[0].id
+					}
+					this.treeViewActive(active)
 				} else {
-					let filter = this.lstSupport.filter((x) => {
-						if (x.type == 2 && x.level == 1) {
-							return x
-						}
-						return
-					})
-					active = filter[0].id
+					this.treeViewActive(activeTreeNode)
 				}
-				this.treeViewActive(active)
 			},
 			(err) => {
 				console.log(err)
@@ -156,7 +160,7 @@ export class SupportListDocumentComponent implements OnInit {
 				if (res.success == RESPONSE_STATUS.success) {
 					$('#modal').modal('hide')
 					this.files = []
-					this.getAllUnitShortInfo()
+					this.getAllUnitShortInfo(this.objSupport.id)
 				} else {
 					let result = isNaN(res.result) == true ? 0 : res.result
 					if (result == -1) {
@@ -176,7 +180,7 @@ export class SupportListDocumentComponent implements OnInit {
 				if (res.success == RESPONSE_STATUS.success) {
 					$('#modal').modal('hide')
 					this.files = []
-					this.getAllUnitShortInfo()
+					this.getAllUnitShortInfo(this.objSupport.id)
 				} else {
 					let result = isNaN(res.result) == true ? 0 : res.result
 					if (result == -1) {

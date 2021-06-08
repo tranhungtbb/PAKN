@@ -252,6 +252,7 @@ export class BusinessComponent implements OnInit {
 		this._service.businessGetByID({ Id: id }).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.modelDetail = response.result.BusinessGetById[0]
+				// console.log(this.modelDetail)
 				$('#modalDetail').modal('show')
 			}
 		})
@@ -339,6 +340,6 @@ export class BusinessComponent implements OnInit {
 		$('#excel-file').click()
 	}
 	onDownFileExcel() {
-		$('#sampleFilesBusiness').attr('src', PathSampleFiles.PathSampleFilesIndividual)
+		$('#sampleFilesBusiness').attr('src', PathSampleFiles.PathSampleFilesBusiness)
 	}
 }

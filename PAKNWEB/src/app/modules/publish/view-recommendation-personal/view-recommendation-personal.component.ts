@@ -11,7 +11,6 @@ import { CatalogService } from 'src/app/services/catalog.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
-
 declare var $: any
 
 @Component({
@@ -78,6 +77,7 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 				if (this.model.sendDate) {
 					this.model.sendDate = new Date(this.model.sendDate)
 				}
+
 				console.log(response)
 			} else {
 				this.toastr.error(response.message)

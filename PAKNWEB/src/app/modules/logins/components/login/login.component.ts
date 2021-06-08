@@ -139,6 +139,7 @@ export class LoginComponent implements OnInit {
 								this.storeageService.setUnitName(data.unitName)
 								this.storeageService.setIsMain(data.isMain)
 								this.storeageService.setSaveLogin(this.isSaveLogin)
+								this.storeageService.setIsSession(true)
 								this.storeageService.setIsHaveToken(data.isHaveToken)
 								this.storeageService.setRole(data.role)
 								this.storeageService.setFullName(data.fullName)
@@ -226,6 +227,7 @@ export class LoginComponent implements OnInit {
 								this.storeageService.setSaveLogin(this.isSaveLogin)
 								this.storeageService.setIsHaveToken(data.isHaveToken)
 								this.storeageService.setRole(data.role)
+								this.storeageService.setIsSession(true)
 								this.storeageService.setFullName(data.fullName)
 								this.storeageService.setTypeObject(data.typeObject)
 								this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((dataIP) => {
