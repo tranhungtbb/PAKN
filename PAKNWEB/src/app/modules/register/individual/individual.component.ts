@@ -46,7 +46,7 @@ export class IndividualComponent implements OnInit {
 		{ value: false, text: 'Nữ' },
 	]
 
-	nation_enable_type = false
+	isOtherNation = false
 
 	ngOnInit() {
 		this.localeService.use('vi')
@@ -57,6 +57,16 @@ export class IndividualComponent implements OnInit {
 	//get req
 
 	//event
+	backDefaultValue() {
+		this.isOtherNation = false
+		this.model.nation = null
+		this.model.provinceId = null
+		this.model.districtId = null
+		this.model.wardsId = null
+		this.formInfo.controls['province'].setValue(null)
+		this.formInfo.controls['district'].setValue(null)
+		this.formInfo.controls['village'].setValue(null)
+	}
 	onChangeNation() {
 		this.listProvince = []
 		this.listDistrict = []
@@ -76,8 +86,14 @@ export class IndividualComponent implements OnInit {
 			})
 		} else {
 			if (this.model.nation == '#') {
-				this.nation_enable_type = true
-				this.model.nation = ''
+				this.isOtherNation = true
+				this.model.nation = 'Nhập...'
+				this.model.provinceId = 0
+				this.model.districtId = 0
+				this.model.wardsId = 0
+				this.formInfo.controls['province'].setValue(0)
+				this.formInfo.controls['district'].setValue(0)
+				this.formInfo.controls['village'].setValue(0)
 				//
 				// this.formInfo.controls.province.disable()
 				// this.formInfo.controls.district.disable()

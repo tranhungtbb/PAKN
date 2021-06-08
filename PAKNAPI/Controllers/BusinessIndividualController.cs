@@ -862,9 +862,9 @@ namespace PAKNAPI.Controllers
 					model.DistrictId = null;
 					model.ProvinceId = null;
 					model.WardsId = null;
-					model.OrgDistrictId = null;
-					model.OrgProvinceId = null;
-					model.OrgWardsId = null;
+					//model.OrgDistrictId = null;
+					//model.OrgProvinceId = null;
+					//model.OrgWardsId = null;
                 }
 
 				//add login info
@@ -985,9 +985,9 @@ namespace PAKNAPI.Controllers
 					model.DistrictId = null;
 					model.ProvinceId = null;
 					model.WardsId = null;
-					model.OrgDistrictId = null;
-					model.OrgProvinceId = null;
-					model.OrgWardsId = null;
+					//model.OrgDistrictId = null;
+					//model.OrgProvinceId = null;
+					//model.OrgWardsId = null;
 				}
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = await new BI_BusinessUpdateInfo(_appSetting).BI_BusinessUpdateInfoDAO(model) };

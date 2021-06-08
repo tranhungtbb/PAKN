@@ -45,7 +45,7 @@ export class OrganizationComponent implements OnInit {
 	formOrgInfo: FormGroup
 	listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
 	model: OrganizationObject = new OrganizationObject()
-	nation_enable_type = false
+	isOtherNation = false
 	ngOnInit() {
 		this.localeService.use('vi')
 

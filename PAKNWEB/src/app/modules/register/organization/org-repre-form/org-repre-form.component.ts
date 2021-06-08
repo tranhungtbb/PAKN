@@ -36,9 +36,16 @@ export class OrgRepreFormComponent implements OnInit {
 		{ value: false, text: 'Nữ' },
 	]
 
-	nation_enable_type = false
+	isOtherNation = false
 	//event
 	//event
+	backToVal() {
+		this.isOtherNation = false
+		this.model.Nation = null
+		this.formInfo.controls['Province'].setValue(null)
+		this.formInfo.controls['District'].setValue(null)
+		this.formInfo.controls['Village'].setValue(null)
+	}
 	onChangeNation() {
 		this.listProvince = []
 		this.listDistrict = []
@@ -57,8 +64,11 @@ export class OrgRepreFormComponent implements OnInit {
 			})
 		} else {
 			if (this.model.Nation == '#') {
-				this.nation_enable_type = true
-				this.model.Nation = ''
+				this.isOtherNation = true
+				this.model.Nation = 'Nhập...'
+				this.formInfo.controls['Province'].setValue(0)
+				this.formInfo.controls['District'].setValue(0)
+				this.formInfo.controls['Village'].setValue(0)
 			}
 		}
 	}
