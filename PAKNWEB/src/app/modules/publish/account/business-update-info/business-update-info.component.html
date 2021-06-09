@@ -63,8 +63,8 @@
 										<ng-option value="#">Khác</ng-option>
 									</ng-select>
 									<input [svTrim] *ngIf="nation_enable_type" [(ngModel)]="model.nation" formControlName="nation" type="text" placeholder="Nhập..."
-										class="form-control border-brown">
-									<span *ngIf="nation_enable_type" class="select-caret-icon" (click)="nation_enable_type = false; model.nation=''">
+										class="form-control border-brown" (click)="resetNationField($event)">
+									<span *ngIf="nation_enable_type" class="select-caret-icon" (click)="backToDfVal()">
 										<i class="bi bi-caret-down-fill"></i>
 									</span>
 									<!--  -->
@@ -84,7 +84,7 @@
 										[clearable]="false" [closeOnSelect]="true" (change)="onChangeProvince(true)">
 										<ng-option *ngFor="let prov of listProvince" [value]="prov.id">{{prov.name}}</ng-option>
 									</ng-select>
-									<select *ngIf="nation_enable_type" class="form-control" disabled [(ngModel)]="model.provinceId" formControlName="provinceId">
+									<select *ngIf="nation_enable_type" class="form-control border-brown" disabled [(ngModel)]="model.provinceId" formControlName="provinceId">
 										<option value="0">Chọn...</option>
 									</select>
 								</div>
@@ -98,7 +98,7 @@
 										[clearable]="false" [closeOnSelect]="true" (change)="onChangeDistrict(true)">
 										<ng-option *ngFor="let dis of listDistrict" [value]="dis.id">{{dis.name}}</ng-option>
 									</ng-select>
-									<select *ngIf="nation_enable_type" class="form-control" disabled [(ngModel)]="model.districtId" formControlName="districtId">
+									<select *ngIf="nation_enable_type" class="form-control border-brown" disabled [(ngModel)]="model.districtId" formControlName="districtId">
 										<option value="0">Chọn...</option>
 									</select>
 								</div>
@@ -112,7 +112,7 @@
 										[clearable]="false" [closeOnSelect]="true">
 										<ng-option *ngFor="let vill of listVillage" [value]="vill.id">{{vill.name}}</ng-option>
 									</ng-select>
-									<select *ngIf="nation_enable_type" class="form-control" disabled [(ngModel)]="model.wardsId" formControlName="wardsId">
+									<select *ngIf="nation_enable_type" class="form-control border-brown" disabled [(ngModel)]="model.wardsId" formControlName="wardsId">
 										<option value="0">Chọn...</option>
 									</select>
 								</div>
@@ -272,7 +272,7 @@
 								<div class="form-group" *ngIf="editable">
 									<input type="text" class="form-control" [(ngModel)]="model.orgEmail" formControlName="orgEmail">
 									<div *ngIf="(submitted && f.orgEmail.invalid)||(f.orgEmail.invalid && (f.orgEmail.dirty || f.orgEmail.touched))" class="has-error m-b-12">
-										<div *ngIf="f.orgEmail.errors.required">
+										<div *ngIf="f.orgEmail.errors.email">
 											<span class="help-block">Định dạng email không đúng</span>
 										</div>
 									</div>

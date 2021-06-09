@@ -22,7 +22,7 @@
 		</ng-select>
 		<!-- type input -->
 		<input [svTrim] *ngIf="isOtherNation" [(ngModel)]="model.Nation" formControlName="Nation" type="text" placeholder="Nhập..." class="form-control border-brown"
-			(click)="model.Nation=''">
+			(click)="onResetNationValue($event)">
 		<span *ngIf="isOtherNation" class="select-caret-icon" (click)="backToVal()">
 			<i class="bi bi-caret-down-fill"></i>
 		</span>

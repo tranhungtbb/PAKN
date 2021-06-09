@@ -50,6 +50,9 @@ export class OrgRepreFormComponent implements OnInit, AfterViewInit {
 		this.model.OrgDistrictId = null
 		this.model.OrgWardsId = null
 	}
+	resetNationField() {
+		if (this.model.Nation == 'Nhập...') this.model.Nation = ''
+	}
 	onChangeNation() {
 		this.listProvince = []
 		this.listDistrict = []
@@ -132,8 +135,7 @@ export class OrgRepreFormComponent implements OnInit, AfterViewInit {
 		})
 	}
 
-	onResetValue(event: any) {
-		console.log(event)
+	onResetNationValue(event: any) {
 		if (event.target.value == 'Nhập...') {
 			event.target.value = ''
 		}

@@ -100,22 +100,27 @@ export class BusinessUpdateInfoComponent implements OnInit {
 				return
 			}
 			this.model = res.result
-			if (this.model.national == 'Việt Nam') {
-				this.nation_enable_type = true
+			if (this.model.nation == 'Việt Nam') {
+				this.nation_enable_type = false
 			} else {
+				this.nation_enable_type = true
 			}
 			this.onChangeNation()
-			this.onChangeOrgProvince()
+			this.getAllProvice()
 			this.child_SideLeft.model = this.model
 		})
 	}
-
+	resetNationField(event: any) {
+		if (event.target.value == 'Nhập...') event.target.value = ''
+	}
 	submitted = false
 	onSave() {
 		this.submitted = true
 		let fDob: any = document.querySelector('#_dateOfBirth')
 		let fDateIssue: any = document.querySelector('#_dateOfIssue')
-
+		if (this.model.nation == 'Nhập...') {
+			this.model.nation = ''
+		}
 		this.model.dateOfBirth = fDob.value
 		this.model.dateOfIssue = fDateIssue.value
 		this.model.fullName = this.model.representativeName
@@ -123,15 +128,17 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		this.model.businessRegistration == null ? (this.model.businessRegistration = '') : (this.model.businessRegistration = this.model.businessRegistration)
 		this.model.decisionOfEstablishing == null ? (this.model.decisionOfEstablishing = '') : (this.model.decisionOfEstablishing = this.model.decisionOfEstablishing)
 		this.model.nativePlace == null ? (this.model.nativePlace = '') : (this.model.nativePlace = this.model.nativePlace)
-		if (!this.model.wardsId) this.model.wardsId = ''
-		if (!this.model.provinceId) this.model.provinceId = ''
-		if (!this.model.districtId) this.model.districtId = ''
-		if (!this.model.orgProvinceId) this.model.orgProvinceId = ''
-		if (!this.model.orgDistrictId) this.model.orgDistrictId = ''
-		if (!this.model.orgWardsId) this.model.orgWardsId = ''
+		if (!this.model.orgEmail) this.model.orgEmail = ''
+		if (!this.model.wardsId) this.model.wardsId = 0
+		if (!this.model.provinceId) this.model.provinceId = 0
+		if (!this.model.districtId) this.model.districtId = 0
+		// if (!this.model.orgProvinceId) this.model.orgProvinceId = 0
+		// if (!this.model.orgDistrictId) this.model.orgDistrictId =0
+		// if (!this.model.orgWardsId) this.model.orgWardsId = 0
 
 		if (this.formUpdateAccountInfo.invalid) {
-			this.toast.error('Dữ liệu không hợp lệ')
+			//this.toast.error('Dữ liệu không hợp lệ')
+			console.log(this.formUpdateAccountInfo)
 			return
 		}
 
@@ -150,6 +157,22 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		this.getUserInfo()
 	}
 
+	getAllProvice() {
+		this.diadanhService.getAllProvince().subscribe((res) => {
+			if (res.success == 'OK') {
+				this.listProvince = res.result.CAProvinceGetAll
+				this.onChangeOrgProvince()
+			}
+		})
+	}
+
+	backToDfVal() {
+		this.nation_enable_type = false
+		this.model.nation = ''
+		this.formUpdateAccountInfo.controls['provinceId'].setValue(null)
+		this.formUpdateAccountInfo.controls['districtId'].setValue(null)
+		this.formUpdateAccountInfo.controls['wardsId'].setValue(null)
+	}
 	onChangeNation(clearable = false) {
 		if (clearable) {
 			this.listProvince = []
@@ -175,7 +198,10 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		} else {
 			if (this.model.nation == '#') {
 				this.nation_enable_type = true
-				this.model.nation = ''
+				this.model.nation = 'Nhập...'
+				this.formUpdateAccountInfo.controls['provinceId'].setValue(0)
+				this.formUpdateAccountInfo.controls['districtId'].setValue(0)
+				this.formUpdateAccountInfo.controls['wardsId'].setValue(0)
 				//
 				// this.formInfo.controls.province.disable()
 				// this.formInfo.controls.district.disable()
@@ -183,6 +209,13 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			}
 		}
 	}
+
+	getAllDiaDanhOfProvince(id: any) {
+		this.diadanhService.getAllByProvinceId(id).subscribe((res) => {
+			console.log(res)
+		})
+	}
+
 	onChangeProvince(clearable = false) {
 		if (clearable) {
 			this.listDistrict = []
