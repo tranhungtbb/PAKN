@@ -29,6 +29,7 @@ const routes: Routes = [
 			{ path: 'thong-bao', component: NotificationComponent },
 			{ path: 'xuat-file', component: ReportViewerComponent },
 			{ path: 'bao-cao', loadChildren: './statistic/statistic.module#StatisticModule' },
+			{ path: 'cuoc-goi', loadChildren: () => import('src/app/modules/call-history/call-history.module').then((c) => c.CallHistoryModule) },
 		],
 	},
 ]
