@@ -13,6 +13,7 @@ import { RESPONSE_STATUS, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTA
 import { NotificationService } from 'src/app/services/notification.service'
 import { from } from 'rxjs'
 import { UserViewInfoComponent } from '../../modules/system-management/components/user/user-view-info/user-view-info.component'
+import { create } from 'domain'
 
 declare var $: any
 @HostListener('window:scroll', ['$event'])
@@ -76,6 +77,7 @@ export class AppheaderComponent implements OnInit {
 	Notifications: any[]
 	numberNotifications: any = 5
 	ViewedCount: number = 0
+	@ViewChild('table', { static: false }) table: any
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -124,13 +126,12 @@ export class AppheaderComponent implements OnInit {
 		this.ViewedCount = 0
 		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: PageSize, PageIndex: 1 }).subscribe((res) => {
 			if ((res.success = RESPONSE_STATUS.success)) {
-				this.Notifications = res.result.syNotifications
-				this.ViewedCount = 0
-				this.Notifications.forEach((item) => {
-					if (item.isViewed == true) {
-						this.ViewedCount += 1
-					}
-				})
+				if (res.result.syNotifications.length > 0) {
+					this.Notifications = res.result.syNotifications
+					this.ViewedCount = res.result.syNotifications[0].viewedCount
+				} else {
+					this.Notifications = []
+				}
 			}
 			return
 		})
@@ -219,22 +220,18 @@ export class AppheaderComponent implements OnInit {
 	}
 
 	onClickNotification(dataId: any, type: any, typeSend: any) {
-		if (this.storageService.getTypeObject() == 1) {
-			// can bo quan ly
-			if (type == 1) {
-				this.router.navigate(['/quan-tri/tin-tuc/chinh-sua/' + dataId])
-			} else if (type == 2) {
-				this.router.navigate(['/quan-tri/kien-nghi/chi-tiet/' + dataId])
-			}
-			return
-		} else {
-			if (type == 1) {
-				this.router.navigate(['/cong-bo/tin-tuc-su-kien/' + dataId])
-			} else if (type == 2) {
-				this.router.navigate(['/cong-bo/chi-tiet-kien-nghi/' + dataId])
-			}
-			return
+		if (type == 1) {
+			this.updateIsReadNotification(dataId)
+			this.router.navigate(['/quan-tri/tin-tuc/chinh-sua/' + dataId])
+		} else if (type == 2) {
+			this.updateIsReadNotification(dataId)
+			this.router.navigate(['/quan-tri/kien-nghi/chi-tiet/' + dataId])
 		}
+	}
+
+	updateIsReadNotification(dataId: any) {
+		this.notificationService.updateIsReadedNotification({ ObjectId: dataId }).subscribe()
+		this.getNotifications(this.pageSize)
 	}
 
 	preUpdate() {
@@ -363,8 +360,8 @@ export class AppheaderComponent implements OnInit {
 	}
 	getList() {
 		let req = {
-			FromDate: this.dataSearch.fromDate != null ? this.dataSearch.fromDate.toLocaleDateString() : '',
-			ToDate: this.dataSearch.toDate != null ? this.dataSearch.toDate.toLocaleDateString() : '',
+			FromDate: this.dataSearch.fromDate == null ? '' : JSON.stringify(new Date(this.dataSearch.fromDate)).slice(1, 11),
+			ToDate: this.dataSearch.toDate == null ? '' : JSON.stringify(new Date(this.dataSearch.toDate)).slice(1, 11),
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 			UserId: localStorage.getItem('userId'),
@@ -399,8 +396,23 @@ export class AppheaderComponent implements OnInit {
 	}
 	showModalDetail(): void {
 		$('#modalDetailLog').modal('show')
+		this.pageIndex = 1
+		this.pageSize = 20
+		this.totalRecords = 0
+		this.dataSearch.fromDate = this.dataSearch.toDate = null
+		this.listData = []
+		this.table.reset()
 		this.getUserDetail()
 		this.getList()
+	}
+	onExport() {
+		$('#modalDetailLog').modal('hide')
+		let passingObj: any = {}
+		passingObj.UserId = this.storageService.getUserId()
+
+		this.sharedataService.setobjectsearch(passingObj)
+		this.sharedataService.sendReportUrl = 'HistoryUser?' + JSON.stringify(passingObj)
+		this._router.navigate(['quan-tri/xuat-file'])
 	}
 }
 export class SearchHistoryUser {

@@ -16,6 +16,12 @@
     <Compile Update="ExportGrid\HIS_SystemLog.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="ExportGrid\recommendation_by_fields.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="ExportGrid\recommendation_by_unit.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="ExportGrid\Statistic_Recommendation_ByGroupWordDetail.cs">
       <SubType>Component</SubType>
     </Compile>

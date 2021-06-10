@@ -47,7 +47,7 @@
 							<p style="text-align: justify;">{{model.content}}</p>
 
 							<span class="text-left">
-								<small class="small">Tài liệu đính kèm</small><br>
+								<small class="small" *ngIf="filesModel && filesModel.length > 0">Tài liệu đính kèm</small><br>
 								<div *ngFor="let file of filesModel" class="file-att">
 									<a *ngIf="file.fileType == 1" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
 										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
@@ -95,9 +95,11 @@
 							</svg>
 						</div>
 						<div class="media-body">
-							<p class="h4 font-italic font-weight-bold">{{model.processUnitName}}:</p>
+							<p *ngIf="!model.processUnitName" class="h4 font-italic font-weight-bold">{{model.unitName}}:</p>
+							<p *ngIf="model.processUnitName" class="h4 font-italic font-weight-bold">{{model.processUnitName}}:</p>
 							<ng-container *ngIf="[3,6,9].includes(model.status)">
-								<p style="text-align: justify;">{{model.reasonDeny}}</p>
+								<!-- <p style="text-align: justify;">{{model.reasonDeny}}</p> -->
+								<p style="text-align: justify;">{{denyContent.reasonDeny}}</p>
 							</ng-container>
 							<ng-container *ngIf="model.status == 10">
 								<p style="text-align: justify;">{{modelConclusion.content}}</p>

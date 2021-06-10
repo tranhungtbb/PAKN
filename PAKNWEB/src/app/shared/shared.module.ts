@@ -20,7 +20,7 @@ import { SvTextAreaTrimDirective } from '../directives/sv-textarea-trim.directiv
 import { HtmlToPlaintextPipe } from '../pipes/html-filter.pipe'
 import { UserCreateOrUpdateComponent } from '../modules/system-management/components/user/user-create-or-update/user-create-or-update.component'
 import { DiaDanhFilterPipe } from '../pipes/dia-danh-filter.pipi'
-import { SanitizerUrlPipe } from '../pipes/sanitizer-url.pipe'
+import { SanitizerUrlPipe, SafeUrlPipe } from '../pipes/sanitizer-url.pipe'
 
 @NgModule({
 	declarations: [
@@ -45,6 +45,7 @@ import { SanitizerUrlPipe } from '../pipes/sanitizer-url.pipe'
 		HtmlToPlaintextPipe,
 		DiaDanhFilterPipe,
 		SanitizerUrlPipe,
+		SafeUrlPipe,
 	],
 	exports: [
 		ConfirmClickDirective,
@@ -68,6 +69,7 @@ import { SanitizerUrlPipe } from '../pipes/sanitizer-url.pipe'
 		HtmlToPlaintextPipe,
 		DiaDanhFilterPipe,
 		SanitizerUrlPipe,
+		SafeUrlPipe,
 	],
 })
 export class SharedModule {}

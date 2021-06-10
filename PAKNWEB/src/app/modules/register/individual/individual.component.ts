@@ -46,7 +46,7 @@ export class IndividualComponent implements OnInit {
 		{ value: false, text: 'Nữ' },
 	]
 
-	nation_enable_type = false
+	isOtherNation = false
 
 	ngOnInit() {
 		this.localeService.use('vi')
@@ -57,6 +57,23 @@ export class IndividualComponent implements OnInit {
 	//get req
 
 	//event
+	onResetNationValue(event: any) {
+		console.log(event)
+		if (event.target.value == 'Nhập...') {
+			event.target.value = ''
+		}
+	}
+	backDefaultValue() {
+		this.isOtherNation = false
+		this.model.nation = null
+		this.model.provinceId = null
+		this.model.districtId = null
+		this.model.wardsId = null
+		this.formInfo.controls['province'].setValue(null)
+		this.formInfo.controls['district'].setValue(null)
+		this.formInfo.controls['village'].setValue(null)
+		this.formInfo.controls['nation'].setValue(null)
+	}
 	onChangeNation() {
 		this.listProvince = []
 		this.listDistrict = []
@@ -76,8 +93,10 @@ export class IndividualComponent implements OnInit {
 			})
 		} else {
 			if (this.model.nation == '#') {
-				this.nation_enable_type = true
-				this.model.nation = ''
+				this.isOtherNation = true
+				this.formInfo.controls['province'].setValue(0)
+				this.formInfo.controls['district'].setValue(0)
+				this.formInfo.controls['village'].setValue(0)
 				//
 				// this.formInfo.controls.province.disable()
 				// this.formInfo.controls.district.disable()
@@ -132,20 +151,15 @@ export class IndividualComponent implements OnInit {
 		this.fInfoSubmitted = true
 		let fDob: any = document.querySelector('#_dob')
 		let fDateIssue: any = document.querySelector('#_dateIssue')
-		console.log('fDob.value', fDob.value)
-		console.log('fDateIssue.value', fDateIssue.value)
 		this.model._birthDay = fDob.value
 		this.model._dateOfIssue = fDateIssue.value
 
 		if (!this.model.email) this.model.email = ''
-
+		if (this.model.nation == 'Nhập...') this.model.nation = ''
 		if (this.checkExists['Phone'] || this.checkExists['Email'] || this.checkExists['IDCard']) {
-			this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
-
 		if (this.formLogin.invalid || this.formInfo.invalid) {
-			this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
 

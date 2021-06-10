@@ -61,6 +61,8 @@ namespace PAKNAPI.Models.Recommendation
         public List<MRRecommendationHashtagGetByRecommendationId> lstHashtag { get; set; }
         public List<MRRecommendationFilesGetByRecommendationId> lstFiles { get; set; }
         public List<MRRecommendationConclusionFilesGetByConclusionId> filesConclusion { get; set; }
+
+        public List<MRRecommendationGetDenyContentsBase> denyContent { get; set; }
     }
 
     public class RecommendationForwardRequest

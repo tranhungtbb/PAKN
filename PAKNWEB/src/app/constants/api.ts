@@ -222,6 +222,13 @@ export class Api {
 	public static SYIntroduceUnitUpdate = 'SYIntroduce/IntroduceUnitUpdate'
 	public static SYIntroduceUnitDetete = 'SYIntroduce/IntroduceUnitDetete'
 
+	// support
+
+	public static SYSupportGetAllByCategory = 'SYSupport/SYSupportGetByCategory'
+	public static SYSupportInsert = 'SYSupport/SYSupportInsert'
+	public static SYSupportUpdate = 'SYSupport/SYSupportUpdate'
+	public static SYSupportDelete = 'SYSupport/SYSupportDetete'
+
 	// SYIndexSetting
 
 	public static SYIndexSettingGetInfo = 'SYIndexSetting/IndexSettingGetInfo'
@@ -271,6 +278,7 @@ export class Api {
 	public static NotificationGetList = 'SYNotification/SYNotificationGetListOnPage'
 	public static NotificationDelete = 'SYNotification/SYNotificationDelete'
 	public static NotificationUpdateIsViewed = 'SYNotification/SYNotificationUpdateIsViewed'
+	public static NotificationUpdateIsReaded = 'SYNotification/SYNotificationUpdateIsReaded'
 
 	//Chatbot
 	public static ChatbotGetList = 'Chatbot/ChatbotGetAllOnPageBase'
@@ -322,4 +330,5 @@ export class Api {
 
 	// import
 	public static BusinessImportFile = 'BusinessIndividual/ImportDataBusiness?folder=BusinessIndividual'
+	public static PU_Support = 'PUSPBase/PUSupportDocument'
 }

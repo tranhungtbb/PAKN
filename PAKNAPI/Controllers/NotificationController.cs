@@ -338,7 +338,7 @@ namespace PAKNAPI.Controllers
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -403,6 +403,29 @@ namespace PAKNAPI.Controllers
             }
         }
         #endregion
+
+        [HttpGet]
+        [Authorize]
+        [Route("SYNotificationUpdateIsReaded")]
+        public async Task<object> SYNotificationUpdateReaded(int? ObjectId)
+        {
+            try
+            {
+                var count = await new SYNotificationGetListOnPageByReceiveId(_appSetting).SYNotificatioUpdateIsReadedDAO(ObjectId,(int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext));
+                if (count > 0)
+                {
+                    return new ResultApi { Success = ResultCode.OK, Result = count };
+                }
+                else
+                {
+                    return new ResultApi { Success = ResultCode.ORROR };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
 
         [HttpPost]
         [Authorize]

@@ -46,7 +46,7 @@
 							</p>
 
 							<span class="text-left">
-								<small class="small">Tài liệu đính kèm</small><br>
+								<small class="small" *ngIf="lstFiles && lstFiles.length > 0">Tài liệu đính kèm</small><br>
 								<div *ngFor="let file of lstFiles" class="file-att">
 									<a *ngIf="file.fileType == 1" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
 										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
@@ -92,8 +92,38 @@
 							<p class="h4 font-italic font-weight-bold">{{model.processUnitName}}:</p>
 							<p *ngIf="lstConclusion" innerHTML="{{lstConclusion.content | Change}}">
 							</p>
-							<p class="mb-4" *ngFor="let item of lstConclusionFiles; let i = index">
-								<button type="button" class="btn border btn-block text-dark p-0">
+
+
+							<p class="mb-4" *ngFor="let file of lstConclusionFiles; let i = index">
+								<a *ngIf="file.fileType == 1" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+									<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
+									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 2" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+									<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;" alt="">
+									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 3" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+									<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
+									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 4" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+									<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;" alt="">
+									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 6" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+									<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;" alt="">
+									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+								</a>
+								<a *ngIf="file.fileType == 7" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+									<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;" alt="">
+									<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+								</a>
+								<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile [linkfile]="file.filePath" [namefile]="file.name"
+									title="Xem file">
+									<i class="bi bi-eye"></i>
+								</span>
+								<!-- <button type="button" class="btn border btn-block text-dark p-0">
 									<span class="rounded text-white p-3 bg-success mr-3">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-paperclip" viewBox="0 0 16 16">
 											<path
@@ -104,7 +134,7 @@
 										<small class="small">Tài liệu đính kèm {{i + 1}}</small><br>
 										{{item.name}}
 									</span>
-								</button>
+								</button> -->
 							</p>
 							<p class="d-flex justify-content-end">
 								<button type="button" class="btn btn-outline-success mr-3" (click)="changeSatisfaction(true)" [ngClass]="{ 'like': satisfactionCurrent == true }">

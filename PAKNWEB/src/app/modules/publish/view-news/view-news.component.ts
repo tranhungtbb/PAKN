@@ -12,11 +12,15 @@ import { AppSettings } from 'src/app/constants/app-setting'
 	styleUrls: ['./view-news.component.css'],
 })
 export class ViewNewsComponent implements OnInit {
-	constructor(private newsService: NewsService, private router: Router, private activatedRoute: ActivatedRoute, private userStorage: UserInfoStorageService) {}
+	constructor(private newsService: NewsService, private router: Router, private activatedRoute: ActivatedRoute, private userStorage: UserInfoStorageService) {
+		this.newsHightlight = []
+	}
 
 	model: any = {}
 	newsRelates: any[] = []
 	viewDemo = false
+	newsHightlight: any
+	title: string = ''
 
 	ngOnInit() {
 		let url: string = this.router.url
@@ -31,8 +35,24 @@ export class ViewNewsComponent implements OnInit {
 				this.getNewsRelates(params['id'])
 			}
 		})
+		this.newsService.getListHomePage({}).subscribe((res) => {
+			if (res.success != RESPONSE_STATUS.success) {
+				return
+			}
+			if (res.result.length > 0) {
+				this.newsHightlight = res.result
+			}
+			return
+		})
 	}
-
+	changeKeySearch(event) {
+		this.title = event.target.value
+	}
+	redirectNews() {
+		if (this.title == null || this.title == '') return
+		this.router.navigateByUrl('/cong-bo/tin-tuc-su-kien?title=' + this.title)
+		// window.location.href = '/cong-bo/tin-tuc-su-kien?title=' + this.title
+	}
 	getData(id) {
 		this.newsService.getViewDetail({ id }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {

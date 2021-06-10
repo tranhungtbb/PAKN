@@ -49,7 +49,8 @@
     <Folder Include="Models\Results\" />
     <Folder Include="BusinessLogic\" />
     <Folder Include="Chatbot\" />
-    <Folder Include="Upload\BusinessIndividual\" />
+    <Folder Include="Upload\Introduce\BannerIntroduce\" />
+    <Folder Include="Upload\Suppport\" />
     <Folder Include="Upload\User\" />
     <Folder Include="Upload\Remind\" />
   </ItemGroup>
@@ -65,6 +66,8 @@
     <None Remove="ExportGrid\BI_Business_List.repx" />
     <None Remove="ExportGrid\BI_Individual_List.repx" />
     <None Remove="ExportGrid\HIS_SystemLog.repx" />
+    <None Remove="ExportGrid\recommendation_by_fields.repx" />
+    <None Remove="ExportGrid\recommendation_by_unit.repx" />
     <None Remove="ExportGrid\Recommendation_ListGeneral.repx" />
     <None Remove="ExportGrid\Statistic_Recommendation_ByGroupWordDetail.repx" />
     <None Remove="ExportGrid\SY_UserByUnit.repx" />
@@ -90,6 +93,8 @@
     <Content Include="Upload\Recommendation\5\4.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ExportGrid\recommendation_by_fields.repx" />
+    <EmbeddedResource Include="ExportGrid\recommendation_by_unit.repx" />
     <EmbeddedResource Include="ExportGrid\SY_UserByUnit.repx" />
     <EmbeddedResource Include="ExportGrid\HIS_SystemLog.repx" />
     <EmbeddedResource Include="ExportGrid\BI_Individual_List.repx" />
@@ -98,6 +103,10 @@
     <EmbeddedResource Include="ExportGrid\Recommendation_ListGeneral.repx" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Upload\BusinessIndividual\SampleFilesBusiness.xlsx" />
+    <None Include="Upload\BusinessIndividual\SampleFilesIndividual.xlsx" />
+    <None Include="Upload\Introduce\IconIntroduce\align-bottom.svg" />
+    <None Include="Upload\Introduce\IconIntroduce\person-fill.svg" />
     <None Include="Upload\Invitation\23\Danh sach su dung tong dai voip 12.2020 chuan.xlsx" />
     <None Include="Upload\Invitation\23\Note-cho-Hùng.docx" />
     <None Include="Upload\Recommendation\2156\Danh mục lĩnh vực.docx" />
@@ -139,6 +148,18 @@
     </Compile>
     <Compile Update="ExportGrid\HIS_SystemLog.Designer.cs">
       <DependentUpon>HIS_SystemLog.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\recommendation_by_fields.cs">
+      <DependentUpon>recommendation_by_fields.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\recommendation_by_fields.Designer.cs">
+      <DependentUpon>recommendation_by_fields.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\recommendation_by_unit.cs">
+      <DependentUpon>recommendation_by_unit.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\recommendation_by_unit.Designer.cs">
+      <DependentUpon>recommendation_by_unit.repx</DependentUpon>
     </Compile>
     <Compile Update="ExportGrid\Recommendation_ListGeneral.cs">
       <DependentUpon>Recommendation_ListGeneral.repx</DependentUpon>

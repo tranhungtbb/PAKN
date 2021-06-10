@@ -122,6 +122,7 @@ namespace PAKNAPI.Controllers
         public async Task<object> RMRemindGetAll(int? RecommendationId) {
             try
             {
+                Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
                 var recommentdation = await new RecommendationDAO(_appSetting).RecommendationGetByID(RecommendationId);
                 List<RecommendationForward> lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(RecommendationId)).ToList();
                 var UnitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
@@ -139,6 +140,9 @@ namespace PAKNAPI.Controllers
                 if (result.Count > 0) {
                     foreach (var item in result) {
                         List<RMFileAttachModel> files = await new RMFileAttach(_appSetting).RMFileAttachGetByRemindID(item.Id);
+                        foreach (var file in files) {
+                            file.FileAttach = decrypt.EncryptData(file.FileAttach);
+                        }
                         item.Files = files;
                     }
                     return new ResultApi { Success = ResultCode.OK, Result = result };

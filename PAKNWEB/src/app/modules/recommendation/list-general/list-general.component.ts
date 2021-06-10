@@ -9,7 +9,7 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { COMMONS } from 'src/app/commons/commons'
 import { Router } from '@angular/router'
-
+import { NotificationService } from 'src/app/services/notification.service'
 declare var $: any
 
 @Component({
@@ -24,7 +24,8 @@ export class ListGeneralComponent implements OnInit {
 		private _fb: FormBuilder,
 		private _toastr: ToastrService,
 		private _router: Router,
-		private _shareData: DataService
+		private _shareData: DataService,
+		private notificationService: NotificationService
 	) {}
 	userLoginId: number = this.storeageService.getUserId()
 	unitLoginId: number = this.storeageService.getUnitId()
@@ -340,6 +341,7 @@ export class ListGeneralComponent implements OnInit {
 		this._service.recommendationProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
+				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
 				this._toastr.success(COMMONS.ACCEPT_SUCCESS)
 				this.getList()
 			} else {
@@ -363,7 +365,7 @@ export class ListGeneralComponent implements OnInit {
 		this._service.recommendationProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalForward').modal('hide')
-				//this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
+				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
 				this._toastr.success(COMMONS.FORWARD_SUCCESS)
 				this.getList()
 			} else {
@@ -389,6 +391,7 @@ export class ListGeneralComponent implements OnInit {
 			}
 			this._service.recommendationProcess(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
+					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
 					$('#modalReject').modal('hide')
 					this._toastr.success(COMMONS.DENY_SUCCESS)
 					this.getList()

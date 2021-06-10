@@ -4,8 +4,8 @@
     <pattern>*</pattern>
     <template>
       <random>
-        <li>Bạn vui lòng hỏi câu khác...</li>
-        <li>Bạn vui lòng hỏi câu hỏi có trong thư viện.</li>
+        <li>Chúng tôi đã tiếp nhận thông tin và phản hồi lại sau!</li>
+        <li>Chúng tôi đã tiếp nhận thông tin và phản hồi lại sau!</li>
       </random>
     </template>
   </category>

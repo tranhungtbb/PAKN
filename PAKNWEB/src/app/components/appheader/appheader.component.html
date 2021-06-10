@@ -43,7 +43,8 @@
 								</div>
 								<div class="notifications"><a href="javascript:void(0)" (click)="redirectListNotification()">Xem tất cả<i class="ti-arrow-right"></i></a></div>
 							</div>
-							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" (scroll)="onScroll($event)" style="height: 550px;">
+							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" (scroll)="onScroll($event)" style="height: 550px;"
+								[ngClass]="{ 'height-auto': Notifications && Notifications.length < 4}">
 								<ul class="timeline" id="notificationScroll" *ngIf="Notifications">
 									<li *ngFor="let item of Notifications" class="item-notification">
 										<a href="javascript:void(0)" (click)="onClickNotification(item.dataId,item.type, item.typeSend)" class="timeline-panel">
@@ -53,12 +54,12 @@
 											<div class="media-body">
 												<small class="d-block" style="color: #222222;">{{item.sendDate | date : 'HH:mm dd/MM/yyyy'}}</small>
 												<p class="mb-0 text-uppercase" [ngClass]="{ 'red-title': checkDeny(item.typeSend) == true }">{{item.title}}</p>
-												<p class="mb-1 h4" style="color: #222222;">{{item.content}}</p>
+												<p class="mb-1 h4" [ngClass]="{ 'title-black': item.isReaded == true, 'title-gray': item.isReaded == false }">{{item.content}}</p>
 											</div>
 										</a>
 									</li>
 								</ul>
-								<div *ngIf="!Notifications" style="display: flex;
+								<div *ngIf="Notifications && Notifications.length == 0" style="display: flex;
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;">
@@ -131,9 +132,9 @@
 								</div>
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1"></label>
-									<button (click)="dataStateChange()" style="text-transform: none;" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" type="button">Tìm
+									<!-- <button (click)="dataStateChange()" style="text-transform: none;" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" type="button">Tìm
 										kiếm
-									</button>
+									</button> -->
 								</div>
 							</div>
 						</div>
@@ -163,7 +164,8 @@
 											</ng-template>
 										</p-table>
 										<div style="display: flex; float: right;">
-											<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark"><i class="bi bi-file-earmark-excel mr-1"></i>Xuất
+											<button type="button" (click)="onExport()" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark"><i
+													class="bi bi-file-earmark-excel mr-1"></i>Xuất
 												excel</button>
 											<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" data-dismiss="modal">
 												Đóng

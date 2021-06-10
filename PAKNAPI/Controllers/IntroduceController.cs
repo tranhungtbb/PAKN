@@ -53,7 +53,7 @@ namespace PAKNAPI.Controllers
                     result.lstIntroduceFunction = await new SYIntroduceFunction(_appSetting).SYIntroduceFunctionGetByIntroductId(result.model.Id);
                     result.lstIntroduceUnit = await new SYIntroduceUnit(_appSetting).SYIntroduceUnitGetByIntroduceId(result.model.Id);
 
-                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                    //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
                     return new ResultApi { Success = ResultCode.OK, Result = result, Message = "Success" };
 
                 }
@@ -63,7 +63,7 @@ namespace PAKNAPI.Controllers
             }
             catch(Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -82,29 +82,53 @@ namespace PAKNAPI.Controllers
 
                 if (model.Files != null && model.Files.Count > 0)
                 {
-                    string folder = "Upload\\BannerIntroduce\\";
+                    // banner
+                    string folder = "Upload\\Introduce\\BannerIntroduce\\";
                     string folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
                     if (!Directory.Exists(folderPath))
                     {
                         Directory.CreateDirectory(folderPath);
                     }
-                    // xóa hết
-                    string[] files = Directory.GetFiles(folder);
-                    foreach (string file in files)
-                    {
-                        System.IO.File.Delete(file);
+                    var banner = model.Files.Where(x => x.Name == "BannerImg").FirstOrDefault();
+                    if (banner != null) {
+                        // xóa hết
+                        string[] files = Directory.GetFiles(folder);
+                        foreach (string file in files)
+                        {
+                            System.IO.File.Delete(file);
+                        }
+
+                        var nameImg = Path.GetFileName(banner.FileName).Replace("+", "");
+                        model.model.BannerUrl = Path.Combine(folder, nameImg);
+                        string filePath = Path.Combine(folderPath, nameImg);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                           banner.CopyTo(stream);
+                        }
                     }
 
-                    
-
-                    var nameImg = Path.GetFileName(model.Files[0].FileName).Replace("+", "");
-                    model.model.BannerUrl = Path.Combine(folder, nameImg);
-                    string filePath = Path.Combine(folderPath, nameImg);
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        model.Files[0].CopyTo(stream);
+                    var ltsIcon = model.Files.Where(x => x.Name == "ltsIcon").ToList();
+                    if (ltsIcon.Count > 0) {
+                        folder = "Upload\\Introduce\\IconIntroduce\\";
+                        folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
+                        if (!Directory.Exists(folderPath))
+                        {
+                            Directory.CreateDirectory(folderPath);
+                        }
+                        foreach (var icon in ltsIcon) {
+                            foreach (var item in model.lstIntroduceFunction) {
+                                if (item.IconNew != null && icon.FileName.Contains(item.IconNew)) {
+                                    var nameImg = Path.GetFileName(icon.FileName).Replace("+", "");
+                                    item.Icon = Path.Combine(folder, nameImg);
+                                    string filePath = Path.Combine(folderPath, nameImg);
+                                    using (var stream = new FileStream(filePath, FileMode.Create))
+                                    {
+                                        icon.CopyTo(stream);
+                                    }
+                                }
+                            }
+                        }
                     }
-
                 }
                 model.model.UpdateDate = DateTime.Now;
                 await new SYIntroduce(_appSetting).SYIntroduceUpdateDAO(model.model);

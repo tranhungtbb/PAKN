@@ -70,4 +70,30 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<PURecommendationGetAllOnPage>("PU_RecommendationGetAllOnPage", DP)).ToList();
 		}
 	}
+	public class PUSupportModelBase
+	{
+		private SQLCon _sQLCon;
+
+		public PUSupportModelBase(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public PUSupportModelBase()
+		{
+		}
+		public string Title {get;set;}
+		public int? Category {get;set;}
+		public string Content { get; set; }
+		public string FilePath { get; set; }
+		public int? FileType { get; set; }
+		public DateTime? Date { get; set; }
+
+		public async Task<List<PUSupportModelBase>> PUSupportModelBaseDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<PUSupportModelBase>("SY_SupportMenu_GetPublishContent", DP)).ToList();
+		}
+	}
 }

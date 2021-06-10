@@ -14,10 +14,10 @@ import { NewsCreateOrUpdateComponent } from './news-create-or-update/news-create
 import { NewsRelateModalComponent } from './news-relate-modal/news-relate-modal.component'
 import { NewsDetailComponent } from './news-detail/news-detail.component'
 import { GetCatePipe } from './get-cate.pipe'
-import { from } from 'rxjs'
+import { NewsPuslishComponent } from './news-puslish/news-puslish.component'
 
 @NgModule({
-	declarations: [NewsComponent, NewsCreateOrUpdateComponent, NewsRelateModalComponent, GetCatePipe, NewsDetailComponent],
+	declarations: [NewsComponent, NewsCreateOrUpdateComponent, NewsRelateModalComponent, GetCatePipe, NewsDetailComponent, NewsPuslishComponent],
 	imports: [CommonModule, NewsRoutingModule, ReactiveFormsModule, FormsModule, SharedModule, BsDatepickerModule, NgSelectModule, CKEditorModule, MatDialogModule, TableModule],
 })
 export class NewsModule {}

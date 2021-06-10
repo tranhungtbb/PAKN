@@ -21,6 +21,7 @@ export class UnitObject {
 		this.parentId = 0
 		this.isActived = true
 		this.id = 0
+		this.index = 0
 	}
 	id: number
 	name: string
@@ -33,4 +34,5 @@ export class UnitObject {
 	phone: string
 	address: string
 	isMain: boolean
+	index: number
 }

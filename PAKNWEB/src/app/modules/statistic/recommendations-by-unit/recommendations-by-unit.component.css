@@ -1,10 +1,6 @@
 .uppercase {
 	text-transform: uppercase;
 }
-/* .table-sd thead,
-body .ui-table .ui-table-thead > tr > th {
-	background-color: red !important;
-} */
 
 :host ::ng-deep li.ui-multiselect-item {
 	display: flex !important;

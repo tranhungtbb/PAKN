@@ -63,9 +63,11 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result.model != null) {
 							this.model = { ...res.result.model, shortName: this.getShortName(res.result.model.name) }
+							console.log(this.model)
 							this.lstFiles = res.result.lstFiles
 							this.lstConclusion = res.result.lstConclusion
 							this.lstConclusionFiles = res.result.lstConclusionFiles
+							console.log(this.lstConclusionFiles)
 						}
 					}
 				})
@@ -186,8 +188,8 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.MRCommnentGetAllOnPage.length > 0) {
 					this.commentFirst = res.result.MRCommnentGetAllOnPage.shift()
-
-					if (this.listCommentsPaged.length != 0 && this.listCommentsPaged.length == res.result.MRCommnentGetAllOnPage.length) {
+					debugger
+					if (this.listCommentsPaged.length != 0 && this.listCommentsPaged.length == res.result.MRCommnentGetAllOnPage.length && res.result.TotalCount > 20) {
 						this.IsAllComment = true
 					} else {
 						this.listCommentsPaged = res.result.MRCommnentGetAllOnPage

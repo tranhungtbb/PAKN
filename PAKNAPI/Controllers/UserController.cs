@@ -381,6 +381,12 @@ namespace PAKNAPI.Controllers
 					if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số quyết định thành lập đã tồn tại" };
 				}
 
+				//if(model.ProvinceId == 0)
+    //            {
+				//	model.ProvinceId = null;
+				//	model.DistrictId = null;
+				//	model.WardsId = null;
+    //            }
 				
 
 
@@ -486,6 +492,12 @@ namespace PAKNAPI.Controllers
 				if (checkExists[0].Exists.Value)
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 
+				//if (model.ProvinceId == 0)
+				//{
+				//	model.ProvinceId = null;
+				//	model.DistrictId = null;
+				//	model.WardsId = null;
+				//}
 
 				///mod loginInfo
 				///
@@ -798,6 +810,14 @@ namespace PAKNAPI.Controllers
 					if (checkExists[0].Exists.Value)
 						return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 
+
+					//if(model.ProvinceId == 0)
+     //               {
+					//	model.ProvinceId = null;
+					//	model.DistrictId = null;
+					//	model.WardsId = null;
+     //               }
+
 					var _model = new BIInvididualUpdateInfoIN
 					{
 						Id = info[0].Id,
@@ -854,8 +874,14 @@ namespace PAKNAPI.Controllers
 						dateOfIssue = outTime1;
 					}
 
-					
-					
+					//if (model.ProvinceId == 0)
+					//{
+					//	model.ProvinceId = null;
+					//	model.DistrictId = null;
+					//	model.WardsId = null;
+					//}
+
+
 					var _model = new BIBusinessUpdateInfoIN
 					{
 						Id = info[0].Id,

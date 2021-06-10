@@ -6,7 +6,17 @@
 				<li class="breadcrumb-item active"><a class="font-weight-bold">Danh sách cá nhân</a></li>
 			</ol>
 			<div class="btn-group group-button-table" role="group">
-				<input type="file" [hidden]="true" id="excel-file" (change)="onExcelfileChange($event)">
+				<iframe src="" id="sampleFilesIndividual" hidden></iframe>
+				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onDownFileExcel()">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
+						<path
+							d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
+						<path
+							d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+					</svg>
+					File mẫu
+				</button>
+				<input type="file" #file [hidden]="true" id="excel-file" (change)="onExcelfileChange($event)">
 				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onChangeFileExcel()">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
 						<path
@@ -239,8 +249,8 @@
 									<ng-option *ngFor="let nation of listNation" [value]="nation.id">{{nation.name}}</ng-option>
 									<ng-option value="#">Khác</ng-option>
 								</ng-select>
-								<input [svTrim] *ngIf="isOtherNation" [(ngModel)]="model.nation" formControlName="nation" type="text" placeholder="Nhập..."
-									class="form-control border-brown">
+								<input #nation [svTrim] *ngIf="isOtherNation" [(ngModel)]="model.nation" formControlName="nation" type="text" placeholder="Nhập..."
+									class="form-control border-brown" (click)="onResetNationValue($event)">
 								<span *ngIf="isOtherNation" class="select-caret-icon" (click)="backToSelectBox()">
 									<i class="bi bi-caret-down-fill"></i>
 								</span>
@@ -253,7 +263,7 @@
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Tỉnh/thành phố <span class="cl-red">(*)</span></label>
 								<select *ngIf="isOtherNation" class="form-control" disabled [(ngModel)]="model.provinceId" formControlName="province">
-									<option value="0">Chon...</option>
+									<option value="0">Chọn...</option>
 								</select>
 								<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.provinceId" formControlName="province" class="form-control" placeholder="Chọn..."
 									[closeOnSelect]="true" (change)="onChangeProvince()">
@@ -269,7 +279,7 @@
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Huyện/Quận/Thị xã <span class="cl-red">(*)</span></label>
 								<select *ngIf="isOtherNation" class="form-control" disabled [(ngModel)]="model.districtId" formControlName="district">
-									<option value="0">Chon...</option>
+									<option value="0">Chọn...</option>
 								</select>
 								<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.districtId" formControlName="district" class="form-control" placeholder="Chọn..."
 									[closeOnSelect]="true" (change)="onChangeDistrict()">
@@ -283,10 +293,10 @@
 								</div>
 							</div>
 							<!-- row 4 -->
-							<div class="col-12 col-lg-8 form-group">
+							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Xã/Phường/Thị trấn <span class="cl-red">(*)</span></label>
 								<select *ngIf="isOtherNation" class="form-control" disabled [(ngModel)]="model.wardsId" formControlName="village">
-									<option value="0">Chon...</option>
+									<option value="0">Chọn...</option>
 								</select>
 								<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.wardsId" formControlName="village" class="form-control" placeholder="Chọn..."
 									[closeOnSelect]="true">
@@ -299,7 +309,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-12 col-lg-4 form-group">
+							<div class="col-12 col-lg-8 form-group">
 								<label class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></label>
 								<input [svTrim] [(ngModel)]="model.address" maxlength="255" formControlName="address" type="text" placeholder="Nhập..."
 									class="form-control border-brown">

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core'
+import { Component, OnInit, AfterViewChecked, ChangeDetectorRef, HostListener } from '@angular/core'
 import { UserInfoStorageService } from './commons/user-info-storage.service'
 import { Router, RouterStateSnapshot } from '@angular/router'
 import { environment } from '../environments/environment'
@@ -12,6 +12,29 @@ declare var $: any
 	styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, AfterViewChecked {
+	// @HostListener('window:unload', ['$event'])
+	// unloadHandler(event) {
+	// 	const s = this.storeageService.getSaveLogin()
+	// 	if (s == false && this.first == 1) {
+	// 		localStorage.clear()
+	// 	}
+	// 	this.first++
+	// }
+
+	@HostListener('window:beforeunload', ['$event'])
+	beforeUnloadHander(event) {
+		const s = this.storeageService.getIsSession()
+		if (s == undefined) {
+			this.storeageService.setIsSession(true)
+		} else {
+			if (this.storeageService.getSaveLogin() == false && s == false) {
+				localStorage.clear()
+			} else {
+				this.storeageService.setIsSession(false)
+			}
+		}
+	}
+	first: number = 0
 	env = environment
 	showLoader: boolean
 	isLogin: boolean

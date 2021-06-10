@@ -10,6 +10,7 @@ using PAKNAPI.Models.Results;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,7 +29,7 @@ namespace PAKNAPI.Controllers
 			_hostingEnvironment = hostingEnvironment;
 		}
 
-		[HttpPost, DisableRequestSizeLimit]
+		[HttpPost]
 		[Route("ImportDataInvididual")]
 		[Authorize]
 		public async Task<ActionResult<object>> ImportDataInvididual(string folder = null)
@@ -64,54 +65,180 @@ namespace PAKNAPI.Controllers
 
 				System.IO.FileInfo fileInfo = new System.IO.FileInfo(fileNamePath);
 
-                OfficeOpenXml.ExcelPackage package = new OfficeOpenXml.ExcelPackage(fileInfo);
-                OfficeOpenXml.ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
+				OfficeOpenXml.ExcelPackage package = new OfficeOpenXml.ExcelPackage(fileInfo);
+				OfficeOpenXml.ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
 
 				// get number of rows and columns in the sheet
 				int rows = worksheet.Dimension.Rows; // 20
 				int columns = worksheet.Dimension.Columns; // 7
 
 				//create a list to hold all the values
-				List<Models.BusinessIndividual.BIIndividualInsertIN> individualList = new List<Models.BusinessIndividual.BIIndividualInsertIN>();
-
+				//List<Models.BusinessIndividual.BIIndividualInsertIN> individualList = new List<Models.BusinessIndividual.BIIndividualInsertIN>();
+				int count = 0;
 				// loop through the worksheet rows and columns
-				for (int i = 1; i <= rows; i++)
+
+				for (int i = 3; i <= rows; i++)
 				{
-					if (i == 1)
-                    {
-						continue;
-                    }						
 					Models.BusinessIndividual.BIIndividualInsertIN ind = new Models.BusinessIndividual.BIIndividualInsertIN();
-					ind.FullName = worksheet.Cells[i, 1].Value.ToString();
-					ind.Email = worksheet.Cells[i, 2].Value.ToString();
-					ind.Phone = worksheet.Cells[i, 3].Value.ToString();
-					ind.IDCard = worksheet.Cells[i, 4].Value.ToString();
-					ind.IssuedPlace = worksheet.Cells[i, 5].Value.ToString();
-					ind.Nation = worksheet.Cells[i, 6].Value.ToString();
-					ind.ProvinceId = Convert.ToInt32(worksheet.Cells[i, 7].Value.ToString());
-					ind.DistrictId = Convert.ToInt32(worksheet.Cells[i, 8].Value.ToString());
-					ind.WardsId = Convert.ToInt32(worksheet.Cells[i, 9].Value.ToString());
-					ind.PermanentPlace = worksheet.Cells[i, 10].Value.ToString();
-					ind.Address = worksheet.Cells[i, 11].Value.ToString();
-					ind.BirthDay = DateTime.Now;
-					ind.Status = Convert.ToInt32(worksheet.Cells[i, 12].Value.ToString());
+					ind.FullName = worksheet.Cells[i, 1].Value == null ? null : worksheet.Cells[i, 1].Value.ToString();
+					if (string.IsNullOrEmpty(ind.FullName)) { continue; }
+					ind.Email = worksheet.Cells[i, 2].Value == null ? null : worksheet.Cells[i, 2].Value.ToString();
+					//if (string.IsNullOrEmpty(ind.Email)) { continue; }
+					ind.Phone = worksheet.Cells[i, 3].Value == null ? null : worksheet.Cells[i, 3].Value.ToString();
+					if (string.IsNullOrEmpty(ind.Phone)) { continue; }
+					if (worksheet.Cells[i, 4].Value != null)
+					{
+						ind.Gender = Convert.ToBoolean(worksheet.Cells[i, 4].Value.ToString()) == true ? true : false;
+					}
+					else { continue; }
+					ind.IDCard = worksheet.Cells[i, 5].Value == null ? null : worksheet.Cells[i, 5].Value.ToString();
+					if (string.IsNullOrEmpty(ind.IDCard)) { continue; }
+					if (worksheet.Cells[i, 6].Value != null) {
+						ind.DateOfIssue = Convert.ToDateTime(worksheet.Cells[i, 6].Value.ToString());
+					}
+
+					ind.IssuedPlace = worksheet.Cells[i, 7].Value == null ? null : worksheet.Cells[i, 7].Value.ToString();
+					ind.Nation = worksheet.Cells[i, 8].Value == null ? null : worksheet.Cells[i, 8].Value.ToString();
+
+
+					var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(ind.Phone);
+					if (hasOne != null && hasOne.Any()) continue;
+
+					// check exist:Phone,Email,IDCard
+					var checkExists = await new BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", ind.Phone, 0);
+					if (checkExists[0].Exists.Value)
+						continue;
+					if (!string.IsNullOrEmpty(ind.Email))
+					{
+						checkExists = await new BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", ind.Email, 0);
+						if (checkExists[0].Exists.Value)
+							continue;
+					}
+					checkExists = await new BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", ind.IDCard, 0);
+					if (checkExists[0].Exists.Value)
+						continue;
+					ind.ProvinceId = null;
+					ind.DistrictId = null;
+					ind.WardsId = null;
+					//var sc = worksheet.Cells[i, 8].Value;
+					if (worksheet.Cells[i, 9].Value == "" || worksheet.Cells[i, 9].Value == null)
+					{
+						ind.ProvinceId = null;
+					}
+					else
+					{
+						List<CAAdministrativeUnitGetByNameLevel> ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 9].Value.ToString(), 1, null);
+						if (ltsAdmintrative.Count > 0)
+						{
+							ind.ProvinceId = ltsAdmintrative.FirstOrDefault().Id;
+							if (worksheet.Cells[i, 10].Value != null)
+							{
+								ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 10].Value.ToString(), 2, ind.ProvinceId);
+								if (ltsAdmintrative.Count > 0)
+								{
+									ind.DistrictId = ltsAdmintrative.FirstOrDefault().Id;
+									if (worksheet.Cells[i, 11].Value != null)
+									{
+										ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 11].Value.ToString(), 3, ind.DistrictId);
+										if (ltsAdmintrative.Count > 0) { ind.WardsId = ltsAdmintrative.FirstOrDefault().Id; }
+									}
+								}
+
+							}
+						}
+					}
+					
+					ind.Address = worksheet.Cells[i, 12].Value == null ? null : worksheet.Cells[i, 12].Value.ToString();
+					if (string.IsNullOrEmpty(ind.Address)) { continue; }
+					if (worksheet.Cells[i, 13].Value != null) {
+						ind.BirthDay = Convert.ToDateTime(worksheet.Cells[i, 13].Value.ToString());
+					} else { continue; }
+					if (worksheet.Cells[i, 14].Value != null) { 
+						ind.Status = Convert.ToBoolean(worksheet.Cells[i, 14].Value.ToString()) == true ? 1 : 0; 
+					} else { continue; }
+					
 					ind.IsActived = true;
 					ind.IsDeleted = false;
-					ind.UserId = Convert.ToInt64(worksheet.Cells[i, 13].Value.ToString());
 
-					individualList.Add(ind);
+					string defaultPwd = "abc123";
+					var pwd = GeneratePwdModelBase.generatePassword(defaultPwd);
+					var account = new SYUserInsertIN
+					{
+						Password = pwd.Password,
+						Salt = pwd.Salt,
+						Phone = ind.Phone,
+						Email = ind.Email,
+						UserName = ind.Phone,
+						FullName = ind.FullName,
+						Gender = ind.Gender,
+						Address = ind.Address,//
+						TypeId = 2,
+						Type = 2,
+						IsActived = true,
+						IsDeleted = false,
+						CountLock = 0,
+						LockEndOut = DateTime.Now,
+						IsSuperAdmin = false,
+					};
+					await new SYUserInsert(_appSetting).SYUserInsertDAO(account);
+					var accRs = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(account.UserName);
+					ind.CreatedDate = DateTime.Now;
+					ind.CreatedBy = Convert.ToInt32(new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext));
+					ind.UpdatedBy = 0;
+					ind.UpdatedDate = null;
+					ind.Status = 1;
+					ind.IsDeleted = false;
+					ind.UserId = accRs[0].Id;
+					var s = await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(ind);
+					if (s > 0)
+					{
+						count++;
+					}
 				}
 
-				foreach (Models.BusinessIndividual.BIIndividualInsertIN ins in individualList)
-                {
-					await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(ins);
-				}
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", rows -2 - count }
+					};
+				// delete file luôn
+				// 
+				System.IO.File.Delete(fileNamePath);
 
+				// lưu log
 
-				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = fileInfo };
+				SYLOGInsertIN sYSystemLogInsertIN = new SYLOGInsertIN
+				{
+					UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext),
+					FullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext),
+					Action = "",
+					IPAddress = "",
+					MACAddress = "",
+					Description = "Import file Người dân",
+					CreatedDate = DateTime.Now,
+					Status = 1,
+					Exception = null
+				};
+				if (count == 0) { sYSystemLogInsertIN.Status = 0; }
+				await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
+
+				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception e)
 			{
+				SYLOGInsertIN sYSystemLogInsertIN = new SYLOGInsertIN
+				{
+					UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext),
+					FullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext),
+					Action = "Import file",
+					IPAddress = "",
+					MACAddress = "",
+					Description = "Import file Người dân",
+					CreatedDate = DateTime.Now,
+					Status = 0,
+					Exception = e.Message.ToString()
+				};
+				await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = e.Message };
 			}
 		}
@@ -156,49 +283,211 @@ namespace PAKNAPI.Controllers
 
 				// get number of rows and columns in the sheet
 				int rows = worksheet.Dimension.Rows; // 20
-				int columns = worksheet.Dimension.Columns; // 7
 
 				//create a list to hold all the values
-				List<Models.BusinessIndividual.BIIndividualInsertIN> individualList = new List<Models.BusinessIndividual.BIIndividualInsertIN>();
-
+				//List<BI_BusinessInsertIN> businessList = new List<BI_BusinessInsertIN>();
+				int count = 0;
 				// loop through the worksheet rows and columns
-				for (int i = 1; i <= rows; i++)
+				for (int i = 3; i <= rows; i++)
 				{
-					if (i == 1)
+					BI_BusinessInsertIN model = new BI_BusinessInsertIN();
+
+					model.RepresentativeName = worksheet.Cells[i, 1].Value == null ? null : worksheet.Cells[i, 1].Value.ToString();
+					if (String.IsNullOrEmpty(model.RepresentativeName)) { continue; }
+					model.Email = worksheet.Cells[i, 2].Value == null ? null : worksheet.Cells[i, 2].Value.ToString();
+					model.Phone = worksheet.Cells[i, 3].Value == null ? null : worksheet.Cells[i, 3].Value.ToString();
+					// check phone table user và business, email
+
+					var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
+					if (hasOne != null && hasOne.Count > 0) continue;
+
+					var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone", model.Phone, 0);
+					if (checkExists[0].Exists.Value) continue;
+					if (!string.IsNullOrEmpty(model.Email))
 					{
-						continue;
+						checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Email", model.Email, 0);
+						if (checkExists[0].Exists.Value) continue;
 					}
-					Models.BusinessIndividual.BIIndividualInsertIN ind = new Models.BusinessIndividual.BIIndividualInsertIN();
-					ind.FullName = worksheet.Cells[i, 1].Value.ToString();
-					ind.Email = worksheet.Cells[i, 2].Value.ToString();
-					ind.Phone = worksheet.Cells[i, 3].Value.ToString();
-					ind.IDCard = worksheet.Cells[i, 4].Value.ToString();
-					ind.IssuedPlace = worksheet.Cells[i, 5].Value.ToString();
-					ind.Nation = worksheet.Cells[i, 6].Value.ToString();
-					ind.ProvinceId = Convert.ToInt32(worksheet.Cells[i, 7].Value.ToString());
-					ind.DistrictId = Convert.ToInt32(worksheet.Cells[i, 8].Value.ToString());
-					ind.WardsId = Convert.ToInt32(worksheet.Cells[i, 9].Value.ToString());
-					ind.PermanentPlace = worksheet.Cells[i, 10].Value.ToString();
-					ind.Address = worksheet.Cells[i, 11].Value.ToString();
-					ind.BirthDay = DateTime.Now;
-					ind.Status = Convert.ToInt32(worksheet.Cells[i, 12].Value.ToString());
-					ind.IsActived = true;
-					ind.IsDeleted = false;
-					ind.UserId = Convert.ToInt64(worksheet.Cells[i, 13].Value.ToString());
 
-					individualList.Add(ind);
+					model.RepresentativeGender = Convert.ToBoolean(worksheet.Cells[i, 4].Value.ToString()) == true ? true : false;
+					if (worksheet.Cells[i, 5].Value != null) {
+						model.RepresentativeBirthDay = Convert.ToDateTime(worksheet.Cells[i, 5].Value.ToString());
+					}
+					model.Address = worksheet.Cells[i, 6].Value == null ? null : worksheet.Cells[i, 6].Value.ToString();
+					model.Nation = worksheet.Cells[i, 7].Value == null ? null : worksheet.Cells[i, 7].Value.ToString();
+					model.ProvinceId = null;
+					model.DistrictId = null;
+					model.WardsId = null;
+					var s = worksheet.Cells[i, 8].Value;
+					if (worksheet.Cells[i, 8].Value == "" || worksheet.Cells[i, 8].Value == null)
+					{
+						model.ProvinceId = null;
+					}
+					else {
+						List<CAAdministrativeUnitGetByNameLevel> ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 8].Value.ToString(), 1, null);
+						if (ltsAdmintrative.Count > 0)
+						{
+							model.ProvinceId = ltsAdmintrative.FirstOrDefault().Id;
+							if (worksheet.Cells[i, 9].Value != null)
+							{
+								ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 9].Value.ToString(), 2, model.ProvinceId);
+								if (ltsAdmintrative.Count > 0)
+								{
+									model.DistrictId = ltsAdmintrative.FirstOrDefault().Id;
+									if (worksheet.Cells[i, 10].Value != null)
+									{
+										ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 10].Value.ToString(), 3, model.DistrictId);
+										if (ltsAdmintrative.Count > 0) { model.WardsId = ltsAdmintrative.FirstOrDefault().Id; }
+									}
+								}
+
+							}
+						}
+					}
+
+					model.Business = worksheet.Cells[i, 11].Value == null ? null : worksheet.Cells[i, 11].Value.ToString();
+					if (string.IsNullOrEmpty(model.Business)) { continue; }
+					model.BusinessRegistration = worksheet.Cells[i, 12].Value == null ? null : worksheet.Cells[i, 12].Value.ToString();
+					model.DecisionOfEstablishing = worksheet.Cells[i, 13].Value == null ? null : worksheet.Cells[i, 13].Value.ToString();
+					if (worksheet.Cells[i, 14].Value != null) {
+						model.DateOfIssue = Convert.ToDateTime(worksheet.Cells[i, 14].Value.ToString());
+					}
+					
+					model.Tax = worksheet.Cells[i, 15].Value == null ? null : worksheet.Cells[i, 15].Value.ToString();
+
+					// check OrgPhone, OrgEmail, BusinessRegistration, DecisionOfEstablishing, Tax
+					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("BusinessRegistration", model.BusinessRegistration, 0);
+					if (checkExists[0].Exists.Value) continue;
+					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("DecisionOfEstablishing", model.DecisionOfEstablishing, 0);
+					if (checkExists[0].Exists.Value) continue;
+					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Tax", model.Tax, 0);
+					if (checkExists[0].Exists.Value) continue;
+
+					model.OrgProvinceId = null;
+					model.OrgDistrictId = null;
+					model.OrgWardsId = null;
+					if (worksheet.Cells[i, 16].Value == "" || worksheet.Cells[i, 16].Value == null)
+					{
+						model.OrgProvinceId = null;
+					}
+					else
+					{
+						List<CAAdministrativeUnitGetByNameLevel> ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 16].Value.ToString(), 1, null);
+						if (ltsAdmintrative.Count > 0)
+						{
+							model.OrgProvinceId = ltsAdmintrative.FirstOrDefault().Id;
+							if (worksheet.Cells[i, 17].Value != null)
+							{
+								ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 17].Value.ToString(), 2, model.OrgProvinceId);
+								if (ltsAdmintrative.Count > 0)
+								{
+									model.OrgDistrictId = ltsAdmintrative.FirstOrDefault().Id;
+									if (worksheet.Cells[i, 18].Value != null)
+									{
+										ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 18].Value.ToString(), 3, model.OrgDistrictId);
+										if (ltsAdmintrative.Count > 0) { model.OrgWardsId = ltsAdmintrative.FirstOrDefault().Id; }
+									}
+								}
+
+							}
+						}
+					}
+
+					model.OrgAddress = worksheet.Cells[i, 19].Value == null ? null : worksheet.Cells[i, 19].Value.ToString();
+					if (string.IsNullOrEmpty(model.OrgAddress)) { continue; }
+					model.OrgPhone = worksheet.Cells[i, 20].Value == null ? null : worksheet.Cells[i, 20].Value.ToString();
+					if (string.IsNullOrEmpty(model.OrgPhone)) { continue; }
+					model.OrgEmail = worksheet.Cells[i, 21].Value == null ? null : worksheet.Cells[i, 21].Value.ToString();
+					if (string.IsNullOrEmpty(model.OrgEmail)) { continue; }
+					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgPhone", model.OrgPhone, 0);
+					if (checkExists[0].Exists.Value) continue;
+					if (!string.IsNullOrEmpty(model.OrgEmail))
+					{
+						checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgEmail", model.OrgEmail, 0);
+						if (checkExists[0].Exists.Value) continue;
+					}
+
+					string defaultPwd = "abc123";
+					var pwd = GeneratePwdModelBase.generatePassword(defaultPwd);
+					var account = new SYUserInsertIN
+					{
+						Password = pwd.Password,
+						Salt = pwd.Salt,
+						Phone = model.Phone,
+						Email = model.Email,
+						UserName = model.Phone,
+						FullName = model.RepresentativeName,
+						Gender = model.RepresentativeGender,
+						Address = model.Address,//
+						TypeId = 3,
+						Type = 3,
+						IsActived = true,
+						IsDeleted = false,
+						CountLock = 0,
+						LockEndOut = DateTime.Now,
+						IsSuperAdmin = false,
+
+					};
+					var rs1 = await new SYUserInsert(_appSetting).SYUserInsertDAO(account);
+					var accRs = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(account.UserName);
+					model.CreatedDate = DateTime.Now;
+					model.CreatedBy = 0;
+					model.UpdatedBy = 0;
+					model.UpdatedDate = null;
+					model.Status = 1;
+					model.IsDeleted = false;
+					model.UserId = accRs[0].Id;
+					model.IsActived = true;
+					model.IsDeleted = false;
+					var rs2 = await new BI_BusinessInsert(_appSetting).BusinessInsertDAO(model);
+					if (rs2 > 0)
+					{
+						count++;
+					}
 				}
 
-				foreach (Models.BusinessIndividual.BIIndividualInsertIN ins in individualList)
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CountSuccess", count},
+						{"CountError", rows - 2 - count}
+					};
+				System.IO.File.Delete(fileNamePath);
+				// lưu log
+
+
+				SYLOGInsertIN sYSystemLogInsertIN = new SYLOGInsertIN
 				{
-					await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(ins);
-				}
+					UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext),
+					FullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext),
+					Action = "Import file",
+					IPAddress = "",
+					MACAddress = "",
+					Description = "Import file Doanh nghiệp",
+					CreatedDate = DateTime.Now,
+					Status = 1,
+					Exception = null
+				};
+				if (count == 0) { sYSystemLogInsertIN.Status = 0; }
+				await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
 
+				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
 
-				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = fileInfo };
 			}
 			catch (Exception e)
 			{
+				SYLOGInsertIN sYSystemLogInsertIN = new SYLOGInsertIN
+				{
+					UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext),
+					FullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext),
+					Action = "Import file",
+					IPAddress = "",
+					MACAddress = "",
+					Description = "Import file Doanh nghiệp",
+					CreatedDate = DateTime.Now,
+					Status = 0,
+					Exception = e.Message.ToString()
+				};
+				await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = e.Message };
 			}
 		}
@@ -272,8 +561,7 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Authorize]
 		[Route("InvididualRegister")]
-		public async Task<object> InvididualRegister(
-			[FromBody] Models.BusinessIndividual.BIIndividualInsertIN_Cus model)
+		public async Task<object> InvididualRegister([FromBody] Models.BusinessIndividual.BIIndividualInsertIN_Cus model)
 		{
 			try
 			{
@@ -305,12 +593,12 @@ namespace PAKNAPI.Controllers
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 				}
 
-				if(model.ProvinceId == 0)
-                {
-					model.ProvinceId = null;
-					model.DistrictId = null;
-					model.WardsId = null;
-                }
+				//if(model.ProvinceId == 0)
+    //            {
+				//	model.ProvinceId = null;
+				//	model.DistrictId = null;
+				//	model.WardsId = null;
+    //            }
 
 				//add login info
 				string defaultPwd = "abc123";
@@ -342,7 +630,7 @@ namespace PAKNAPI.Controllers
 				if (string.IsNullOrEmpty(model._BirthDay)) model.BirthDay = null;
 				else model.BirthDay = birthDay;
 				model.CreatedDate = DateTime.Now;
-				model.CreatedBy = 0;
+				model.CreatedBy = Convert.ToInt32(new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext));
 				model.UpdatedBy = 0;
 				model.UpdatedDate = DateTime.Now;
 				model.Status = 1;
@@ -366,10 +654,7 @@ namespace PAKNAPI.Controllers
 		[Authorize]
 		[Route("InvididualUpdate")]
 		public async Task<ActionResult<object>> InvididualUpdate(
-			[FromBody] Models.BusinessIndividual.BI_InvididualUpdateIN_body _bI_InvididualUpdateIN
-			//[FromForm] string _BirthDay,
-			//[FromForm] string _DateOfIssue
-			)
+			[FromBody] Models.BusinessIndividual.BI_InvididualUpdateIN_body _bI_InvididualUpdateIN)
 		{
 			try
 			{
@@ -394,7 +679,7 @@ namespace PAKNAPI.Controllers
 					birthDay = _birthDay;
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
 				}
-				if (!DateTime.TryParseExact(_bI_InvididualUpdateIN._DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime _dateOfIssue))
+				if (DateTime.TryParseExact(_bI_InvididualUpdateIN._DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime _dateOfIssue))
 				{
 					dateOfIssue = _dateOfIssue;
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
@@ -403,12 +688,12 @@ namespace PAKNAPI.Controllers
 				//else _bI_InvididualUpdateIN.DateOfIssue = dateOfIssue;
 				//if (string.IsNullOrEmpty(_BirthDay)) _bI_InvididualUpdateIN.BirthDate = null;
 				//else _bI_InvididualUpdateIN.BirthDate = birthDay;
-				if (_bI_InvididualUpdateIN.ProvinceId == 0)
-				{
-					_bI_InvididualUpdateIN.ProvinceId = null;
-					_bI_InvididualUpdateIN.DistrictId = null;
-					_bI_InvididualUpdateIN.WardsId = null;
-				}
+				//if (_bI_InvididualUpdateIN.ProvinceId == 0)
+				//{
+				//	_bI_InvididualUpdateIN.ProvinceId = null;
+				//	_bI_InvididualUpdateIN.DistrictId = null;
+				//	_bI_InvididualUpdateIN.WardsId = null;
+				//}
 
                 //if (string.IsNullOrEmpty(_DateOfIssue)) _bI_InvididualUpdateIN.DateOfIssue = null;
                 //else _bI_InvididualUpdateIN.DateOfIssue = dateOfIssue;
@@ -500,7 +785,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BusinessDelete")]
 		public async Task<ActionResult<object>> BusinessDelete(BI_BusinessDeleteIN _bI_BusinessDeleteIN)
 		{
@@ -549,18 +834,6 @@ namespace PAKNAPI.Controllers
 				var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
 				if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tài khoản đăng nhập đã tồn tại" };
 
-				DateTime birdDay, dateOfIssue;
-				if (!DateTime.TryParseExact(model._RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birdDay))
-				{
-					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
-				}
-				if (!DateTime.TryParseExact(model._DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
-				{
-					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
-				}
-
-				///Phone,Email,IDCard
-				///check ton tai
 				var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone", model.Phone, 0);
                 if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
                 if (!string.IsNullOrEmpty(model.Email))
@@ -568,8 +841,8 @@ namespace PAKNAPI.Controllers
                     checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Email", model.Email, 0);
                     if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện đã tồn tại" };
                 }
-                checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("IDCard", model.IDCard, 0);
-				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
+    //            checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("IDCard", model.IDCard, 0);
+				//if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgPhone", model.OrgPhone, 0);
 				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại doanh nghiệp đã tồn tại" };
 				if (!string.IsNullOrEmpty(model.OrgEmail))
@@ -584,15 +857,15 @@ namespace PAKNAPI.Controllers
 				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Tax", model.Tax, 0);
 				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế đã tồn tại" };
 
-                if (model.DistrictId == 0)
-                {
-					model.DistrictId = null;
-					model.ProvinceId = null;
-					model.WardsId = null;
-					model.OrgDistrictId = null;
-					model.OrgProvinceId = null;
-					model.OrgWardsId = null;
-                }
+     //           if (model.DistrictId == 0)
+     //           {
+					//model.DistrictId = null;
+					//model.ProvinceId = null;
+					//model.WardsId = null;
+					////model.OrgDistrictId = null;
+					////model.OrgProvinceId = null;
+					////model.OrgWardsId = null;
+     //           }
 
 				//add login info
 				string defaultPwd = "abc123";
@@ -619,10 +892,10 @@ namespace PAKNAPI.Controllers
 				var rs1 = await new SYUserInsert(_appSetting).SYUserInsertDAO(account);
 				var accRs = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(account.UserName);
 
-				if (string.IsNullOrEmpty(model._DateOfIssue)) model.DateOfIssue = null;
-				else model.DateOfIssue = dateOfIssue;
-				if (string.IsNullOrEmpty(model._RepresentativeBirthDay)) model.RepresentativeBirthDay = null;
-				else model.RepresentativeBirthDay = birdDay;
+				//if (string.IsNullOrEmpty(model._DateOfIssue)) model.DateOfIssue = null;
+				//else model.DateOfIssue = dateOfIssue;
+				//if (string.IsNullOrEmpty(model._RepresentativeBirthDay)) model.RepresentativeBirthDay = null;
+				//else model.RepresentativeBirthDay = birdDay;
 				model.CreatedDate = DateTime.Now;
 				model.CreatedBy = 0;
 				model.UpdatedBy = 0;
@@ -707,15 +980,15 @@ namespace PAKNAPI.Controllers
 				}
 
 
-				if (model.DistrictId == 0)
-				{
-					model.DistrictId = null;
-					model.ProvinceId = null;
-					model.WardsId = null;
-					model.OrgDistrictId = null;
-					model.OrgProvinceId = null;
-					model.OrgWardsId = null;
-				}
+				//if (model.DistrictId == 0)
+				//{
+				//	model.DistrictId = null;
+				//	model.ProvinceId = null;
+				//	model.WardsId = null;
+				//	//model.OrgDistrictId = null;
+				//	//model.OrgProvinceId = null;
+				//	//model.OrgWardsId = null;
+				//}
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = await new BI_BusinessUpdateInfo(_appSetting).BI_BusinessUpdateInfoDAO(model) };
 			}

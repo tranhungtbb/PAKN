@@ -1,5 +1,8 @@
-import { Component, DebugElement, OnInit, ViewChild } from '@angular/core'
+import { Component, DebugElement, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
+import { saveAs as importedSaveAs } from 'file-saver'
+
+import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { BusinessIndividualService } from 'src/app/services/business-individual.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { RESPONSE_STATUS, FILETYPE, CONSTANTS } from 'src/app/constants/CONSTANTS'
@@ -12,7 +15,7 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker'
 import { viLocale } from 'ngx-bootstrap/locale'
 import { defineLocale } from 'ngx-bootstrap/chronos'
 import { DiadanhService } from 'src/app/services/diadanh.service'
-import { RegisterService } from 'src/app/services/register.service'
+import { PathSampleFiles } from 'src/app/constants/CONSTANTS'
 
 declare var $: any
 @Component({
@@ -30,10 +33,13 @@ export class IndividualComponent implements OnInit {
 		private _router: Router,
 		private _shareData: DataService,
 		private localeService: BsLocaleService,
+		private _filesService: UploadFileService,
 		private diadanhService: DiadanhService // private registerService: RegisterService
 	) {
 		defineLocale('vi', viLocale)
 	}
+
+	@ViewChild('file', { static: false }) public file: ElementRef
 	allowExcelExtend = ['xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
 	dateNow: Date = new Date()
 
@@ -111,12 +117,20 @@ export class IndividualComponent implements OnInit {
 		} else {
 			if (this.model.nation == '#') {
 				this.isOtherNation = true
-				this.model.nation = ''
+				this.model.nation = 'Nhập...'
 
 				this.model.provinceId = 0
 				this.model.districtId = 0
 				this.model.wardsId = 0
+
+				this.form.get('nation').setErrors(null)
 			}
+		}
+	}
+	onResetNationValue(event: any) {
+		console.log(event)
+		if (event.target.value == 'Nhập...') {
+			event.target.value = ''
 		}
 	}
 
@@ -288,6 +302,12 @@ export class IndividualComponent implements OnInit {
 		this.model.status = 1 // Hiệu lực
 		this.submitted = false
 		this.rebuidForm()
+
+		if (this.isOtherNation) {
+			this.onChangeNation()
+			this.isOtherNation = false
+		}
+
 		this.title = 'Thêm mới cá nhân'
 		$('#modal').modal('show')
 	}
@@ -341,11 +361,14 @@ export class IndividualComponent implements OnInit {
 
 		let fDob: any = document.querySelector('#_dob')
 		let fDateIssue: any = document.querySelector('#_dateIssue')
-		if (this.isOtherNation) {
-			this.model.provinceId = 0
-			this.model.districtId = 0
-			this.model.wardsId = 0
+		if (this.model.nation == 'Nhập...') {
+			this.model.nation = ''
 		}
+		// if (this.isOtherNation) {
+		// 	this.model.provinceId = 0
+		// 	this.model.districtId = 0
+		// 	this.model.wardsId = 0
+		// }
 
 		this.model.birthDate = fDob.value
 		this.model.dateOfIssue = fDateIssue.value
@@ -355,12 +378,12 @@ export class IndividualComponent implements OnInit {
 		if (!this.model.email) this.model.email = ''
 
 		if (this.email_exists || this.phone_exists || this.idCard_exists) {
-			this._toastr.error('Dữ liệu không hợp lệ')
+			//this._toastr.error('Dữ liệu không hợp lệ')
 			return
 		}
 
 		if (this.form.invalid) {
-			this._toastr.error('Dữ liệu không hợp lệ')
+			//this._toastr.error('Dữ liệu không hợp lệ')
 			return
 		}
 
@@ -387,7 +410,7 @@ export class IndividualComponent implements OnInit {
 					return
 				}
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
-				this.model = new IndividualObject()
+				// this.model = new IndividualObject()
 				this.rebuidForm()
 				$('#modal').modal('hide')
 				this.getList()
@@ -438,7 +461,8 @@ export class IndividualComponent implements OnInit {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.InvididualGetByID.length > 0) {
 					this.modelDetail = res.result.InvididualGetByID[0]
-					console.log(res.result.InvididualGetByID[0])
+					this.modelDetail.iDCard = res.result.InvididualGetByID[0].idCard
+					// console.log(res.result.InvididualGetByID[0])
 					$('#modalDetail').modal('show')
 				}
 			}
@@ -450,14 +474,15 @@ export class IndividualComponent implements OnInit {
 			Id: data.id,
 			Type: 1,
 		}
+		// this.phone_exists = false
+		// this.email_exists = false
+		// this.idCard_exists = false
 		this.submitted = false
-
+		this.isOtherNation = false
 		this._service.individualById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this.rebuidForm()
 				this.title = 'Chỉnh sửa cá nhân'
 				this.model = response.result.InvididualGetByID[0]
-
 				if (this.model.nation != this.listNation[0].id) {
 					this.isOtherNation = true
 					this.model.provinceId = 0
@@ -467,10 +492,13 @@ export class IndividualComponent implements OnInit {
 
 				this.model.iDCard = response.result.InvididualGetByID[0].idCard
 				this.model.birthDate = new Date(response.result.InvididualGetByID[0].birthDate)
-				this.model.dateOfIssue = new Date(response.result.InvididualGetByID[0].dateOfIssue)
+				if (this.model.dateOfIssue != null) {
+					this.model.dateOfIssue = new Date(response.result.InvididualGetByID[0].dateOfIssue)
+				}
 				this.getProvince()
 				this.getDistrict(response.result.InvididualGetByID[0].provinceId)
 				this.getVillage(response.result.InvididualGetByID[0].provinceId, response.result.InvididualGetByID[0].districtId)
+				this.rebuidForm()
 				$('#modal').modal('show')
 			} else {
 				this._toastr.error(response.message)
@@ -531,14 +559,28 @@ export class IndividualComponent implements OnInit {
 		formData.append('file', file, file.name)
 
 		this._service.invididualImportFile(formData).subscribe((res) => {
-			if (res.success != 'OK') {
+			if (res.success != RESPONSE_STATUS.success) {
 				this._toastr.error('Xảy ra lỗi trong quá trình xử lý')
 				return
+			} else {
+				if (res.result.CountSuccess > 0) {
+					this._toastr.success('Thêm thành công ' + res.result.CountSuccess + ' người dùng')
+				}
+
+				if (res.result.CountError > 0) {
+					setTimeout(() => {
+						this._toastr.error('Thêm không thành công ' + res.result.CountError + ' người dùng')
+					}, 1000)
+				}
+				this.getList()
 			}
-			this.model.imagePath = res.result.path
+			this.file.nativeElement.value = ''
 		})
 	}
 	onChangeFileExcel() {
 		$('#excel-file').click()
+	}
+	onDownFileExcel() {
+		$('#sampleFilesIndividual').attr('src', PathSampleFiles.PathSampleFilesIndividual)
 	}
 }

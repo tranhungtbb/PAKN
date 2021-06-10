@@ -50,6 +50,9 @@ export class OrgRepreFormComponent implements OnInit, AfterViewInit {
 		this.model.OrgDistrictId = null
 		this.model.OrgWardsId = null
 	}
+	resetNationField() {
+		if (this.model.Nation == 'Nhập...') this.model.Nation = ''
+	}
 	onChangeNation() {
 		this.listProvince = []
 		this.listDistrict = []
@@ -71,14 +74,14 @@ export class OrgRepreFormComponent implements OnInit, AfterViewInit {
 		} else {
 			if (this.model.Nation == '#') {
 				this.nation_enable_type = true
-				this.model.Nation = ''
+				this.model.Nation = 'Nhập...'
 
 				this.model.ProvinceId = 0
 				this.model.DistrictId = 0
 				this.model.WardsId = 0
-				this.model.OrgProvinceId = 0
-				this.model.OrgDistrictId = 0
-				this.model.OrgWardsId = 0
+				// this.model.OrgProvinceId = 0
+				// this.model.OrgDistrictId = 0
+				// this.model.OrgWardsId = 0
 			}
 		}
 		//update state for child
@@ -131,6 +134,13 @@ export class OrgRepreFormComponent implements OnInit, AfterViewInit {
 			phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/)]],
 		})
 	}
+
+	onResetNationValue(event: any) {
+		if (event.target.value == 'Nhập...') {
+			event.target.value = ''
+		}
+	}
+
 	ngAfterViewInit() {
 		this.model = this.parent.model
 		if (!this.model.id) {

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { Router } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router'
 
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { AppSettings } from 'src/app/constants/app-setting'
@@ -14,6 +14,7 @@ import { NewsService } from 'src/app/services/news.service'
 export class NewsComponent implements OnInit {
 	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	listData: any[] = []
+	newsHightlight: any
 	query: any = {
 		pageSize: 10,
 		pageIndex: 1,
@@ -25,10 +26,34 @@ export class NewsComponent implements OnInit {
 	Status: number = 1 // trạng thái đã công bố
 	totalRecords: number = 0
 
-	constructor(private newsService: NewsService, private _router: Router) {}
+	constructor(private newsService: NewsService, private _router: Router, private activatedRoute: ActivatedRoute) {
+		this.newsHightlight = []
+	}
 
 	ngOnInit() {
+		// this.activatedRoute.queryParams.subscribe((params) => {
+		// 	let title = +params['title']
+		// 	if (title) {
+		// 		this.query.title = title
+		// 	}
+		// })
+		this.activatedRoute.queryParams.subscribe((params) => {
+			let suggest = params['title']
+			if (suggest) {
+				this.query.title = suggest
+			}
+		})
 		this.getListPaged()
+
+		this.newsService.getListHomePage({}).subscribe((res) => {
+			if (res.success != RESPONSE_STATUS.success) {
+				return
+			}
+			if (res.result.length > 0) {
+				this.newsHightlight = res.result
+			}
+			return
+		})
 	}
 
 	getListPaged() {
@@ -36,7 +61,7 @@ export class NewsComponent implements OnInit {
 			.getAllPagedList({
 				pageIndex: this.query.pageIndex,
 				pageSize: this.query.pageSize,
-				title: '',
+				title: this.query.title,
 				newsType: '',
 				status: this.Status,
 			})
@@ -62,6 +87,9 @@ export class NewsComponent implements OnInit {
 					}
 				}
 			})
+	}
+	changeKeySearch(event) {
+		this.query.title = event.target.value
 	}
 	redirectDetail(id: any) {
 		this._router.navigate(['/cong-bo/tin-tuc-su-kien/' + id])

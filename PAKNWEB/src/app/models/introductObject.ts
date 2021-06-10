@@ -34,5 +34,6 @@ export class IntroduceFunction {
 	title: string
 	content: string
 	icon: string
+	iconNew: string
 	introduceId: number
 }

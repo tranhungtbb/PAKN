@@ -90,14 +90,14 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	ngOnInit() {
 		this.newsForm = this.formBuilder.group({
 			title: [this.model.title, [Validators.required, Validators.maxLength(500)]],
-			summary: [this.model.summary],
-			contents: [this.model.contents],
+			summary: [this.model.summary, [Validators.required]],
+			contents: [this.model.contents, [Validators.required]],
 			newsType: [this.model.newsType, [Validators.required]],
 			postType: [this.model.postType, [Validators.required]],
 			imagePath: [this.model.imagePath, [Validators.required]],
 			pushNotify: [''],
 		})
-		this.model.imagePath = 'assets/dist/images/no.jpg'
+		// this.model.imagePath = 'assets/dist/images/no.jpg'
 
 		this.activatedRoute.params.subscribe((params) => {
 			if (params['id']) {
@@ -111,26 +111,6 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					this.rebuidForm()
 					//lay danh sach bai viet lien quan
 					this.getNewsRelatesInfo()
-
-					//get current avatar
-					// if (this.model.imagePath != null && this.model.imagePath.trim() != '') {
-					// 	this.newsService.getAvatars([this.model.id]).subscribe((res) => {
-					// 		if (res) {
-					// 			let objectURL = 'data:image/jpeg;base64,' + res[0].byteImage
-					// 			this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-					// 		}
-					// 	})
-					// }
-
-					// if (this.model.imagePath != null && this.model.imagePath.trim() != '') {
-					// 	this.newsService.getAvatars([this.model.id]).subscribe((res) => {
-					// 		if (res) {
-					// 			if (!res[0].byteImage) return
-					// 			let objectURL = 'data:image/jpeg;base64,' + res[0].byteImage
-					// 			this.avatarUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-					// 		}
-					// 	})
-					// }
 				})
 			}
 		})
@@ -194,6 +174,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		//this.newsForm.controls.postType.setValue(this.model.postType)
 
 		if (this.newsForm.invalid) {
+			this.toast.error('Vui lòng nhập dữ liệu những trường bắt buộc')
 			return
 		}
 		//return
@@ -224,7 +205,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 						return
 					})
 					this.toast.success(COMMONS.UPDATE_SUCCESS)
-					this.router.navigate(['/quan-tri/tin-tuc'])
+					this.router.navigate(['/quan-tri/tin-tuc/danh-sach-tong-hop'])
 				})
 			} else {
 				this.newsService.update(this.model, this.filePost).subscribe((res) => {
@@ -251,7 +232,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 						return
 					})
 					this.toast.success(COMMONS.UPDATE_SUCCESS)
-					this.router.navigate(['/quan-tri/tin-tuc'])
+					this.router.navigate(['/quan-tri/tin-tuc/danh-sach-tong-hop'])
 				})
 			}
 		} else {
@@ -286,7 +267,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				// soạn thảo
 
 				this.toast.success(COMMONS.ADD_SUCCESS)
-				this.router.navigate(['/quan-tri/tin-tuc'])
+				this.router.navigate(['/quan-tri/tin-tuc/danh-sach-tong-hop'])
 			})
 		}
 	}
@@ -393,5 +374,8 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			return
 		}
 		return
+	}
+	back() {
+		window.history.back()
 	}
 }

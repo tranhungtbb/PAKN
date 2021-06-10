@@ -45,10 +45,6 @@ const routes: Routes = [
 				component: NewsComponent,
 			},
 			{
-				path: 'tin-tuc-su-kien/:id',
-				component: ViewNewsComponent,
-			},
-			{
 				path: 'tin-tuc-su-kien/xem-truoc/:id',
 				component: ViewNewsComponent,
 			},
@@ -77,6 +73,10 @@ const routes: Routes = [
 				path: 'phan-anh-kien-nghi/:id',
 				component: ViewReflectionsRecommendationComponent,
 			},
+			// {
+			// 	path: 'ho-tro/:type',
+			// 	component: SupportComponent,
+			// },
 			{
 				path: 'ho-tro',
 				component: SupportComponent,

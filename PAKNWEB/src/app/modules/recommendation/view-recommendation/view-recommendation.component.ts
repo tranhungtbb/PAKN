@@ -457,6 +457,7 @@ export class ViewRecommendationComponent implements OnInit {
 			this.recommendationService.recommendationProcess(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
+					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
 					this.toastr.success(COMMONS.DENY_SUCCESS)
 					this.getData()
 				} else {

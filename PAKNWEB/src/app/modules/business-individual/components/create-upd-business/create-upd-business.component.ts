@@ -218,12 +218,12 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 					this.child_OrgAddressForm.nation_enable_type = true
 					this.child_OrgRepreForm.nation_enable_type = true
 
-					this.model.ProvinceId = 0
-					this.model.DistrictId = 0
-					this.model.WardsId = 0
-					this.model.OrgProvinceId = 0
-					this.model.OrgDistrictId = 0
-					this.model.OrgWardsId = 0
+					// this.model.ProvinceId = 0
+					// this.model.DistrictId = 0
+					// this.model.WardsId = 0
+					// this.model.OrgProvinceId = 0
+					// this.model.OrgDistrictId = 0
+					// this.model.OrgWardsId = 0
 				}
 			} else {
 				this.toast.error(response.message)
@@ -233,7 +233,9 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 				console.log(error)
 			}
 	}
-
+	resetNationField() {
+		if (this.model.Nation == 'Nhập...') this.model.Nation = ''
+	}
 	onSave() {
 		this.child_OrgRepreForm.fInfoSubmitted = true
 		this.fOrgInfoSubmitted = true
@@ -243,15 +245,17 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 		this.model._RepresentativeBirthDay = fDob.value
 		this.model._DateOfIssue = fIsDate.value
 		this.model.userId = this.userLoginId
-
+		if (this.model.Nation == 'Nhập...') {
+			this.model.Nation = ''
+		}
 		//set model
 		if (this.nation_enable_type) {
 			this.model.ProvinceId = 0
 			this.model.DistrictId = 0
 			this.model.WardsId = 0
-			this.model.OrgProvinceId = 0
-			this.model.OrgDistrictId = 0
-			this.model.OrgWardsId = 0
+			// this.model.OrgProvinceId = 0
+			// this.model.OrgDistrictId = 0
+			// this.model.OrgWardsId = 0
 		}
 
 		if (
@@ -264,12 +268,12 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 			this.child_OrgRepreForm.checkExists['Email'] ||
 			this.child_OrgRepreForm.checkExists['IDCard']
 		) {
-			this.toast.error('Dữ liệu không hợp lệ')
+			//this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
 
 		if (this.formOrgInfo.invalid || this.child_OrgRepreForm.formInfo.invalid || this.child_OrgAddressForm.formOrgAddress.invalid) {
-			this.toast.error('Dữ liệu không hợp lệ')
+			//this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
 

@@ -12,6 +12,7 @@ import { CONSTANTS, STATUS_HISNEWS, FILETYPE } from 'src/app/constants/CONSTANTS
 import { COMMONS } from 'src/app/commons/commons'
 import { StatisticService } from 'src/app/services/statistic.service'
 import { UnitService } from 'src/app/services/unit.service'
+import { DataService } from 'src/app/services/sharedata.service'
 
 declare var $: any
 defineLocale('vi', viLocale)
@@ -58,12 +59,17 @@ export class RecommendationsByUnitComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private BsLocaleService: BsLocaleService,
 		private _service: StatisticService,
-		private unitService: UnitService
+		private unitService: UnitService,
+		private _shareData: DataService
 	) {
 		this.year = new Date().getFullYear()
 		this.listUnitSelected = []
 	}
-
+	ngAfterViewInit() {
+		// .table-sd thead {
+		// 	background-color: #11458e !important;
+		// }
+	}
 	ngOnInit() {
 		this.BsLocaleService.use('vi')
 		this.unitService.getChildrenDropdown().subscribe((res) => {
@@ -145,5 +151,22 @@ export class RecommendationsByUnitComponent implements OnInit {
 			this.toDate = null
 		}
 		this.getList()
+	}
+
+	onExport() {
+		let passingObj: any = {}
+		// passingObj.UnitId = this.query.parentId
+		// passingObj.UnitName = this.unitObject.name
+
+		passingObj.PageIndex = this.pageIndex == null ? 1 : this.pageIndex
+		passingObj.PageSize = this.pageSize == null ? 20 : this.pageSize
+		passingObj.LtsUnitId = this.ltsUnitId
+		passingObj.Year = this.year
+		passingObj.Timeline = this.timeline == null ? '' : this.timeline
+		passingObj.FromDate = this.fromDate == null ? '' : (this.fromDate = JSON.stringify(new Date(this.fromDate)).slice(1, 11))
+		passingObj.ToDate = this.toDate == null ? '' : (this.toDate = JSON.stringify(new Date(this.toDate)).slice(1, 11))
+		this._shareData.setobjectsearch(passingObj)
+		this._shareData.sendReportUrl = 'recommendation_by_unit?' + JSON.stringify(passingObj)
+		this.router.navigate(['quan-tri/xuat-file'])
 	}
 }
