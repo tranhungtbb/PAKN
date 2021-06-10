@@ -24,6 +24,13 @@ import { RecommnendationGetListComponent } from './dash-board/recommnendation-ge
 import { ReportViewerComponent } from './report-view/report-viewcomponent'
 import { UserViewInfoComponent } from './system-management/components/user/user-view-info/user-view-info.component'
 import { UserCreateOrUpdateComponent } from './system-management/components/user/user-create-or-update/user-create-or-update.component'
+import { LoginChatBoxComponent } from './chatbox/user/login/login.component'
+import { DashboardChatBoxComponent } from './chatbox/dashboard/dashboard.component'
+import { UserModule } from './chatbox/user/user.module'
+import { DialogsComponent } from './chatbox/dashboard/dialogs/dialogs.component'
+import { MessageComponent } from './chatbox/dashboard/messages/message.component'
+import { CreateDialogComponent } from './chatbox/dashboard/create-dialog/create-dialog.component'
+import { EditDialogComponent } from './chatbox/dashboard/edit-dialog/edit-dialog.component'
 @NgModule({
 	imports: [
 		CommonModule,
@@ -43,6 +50,7 @@ import { UserCreateOrUpdateComponent } from './system-management/components/user
 		DxDataGridModule,
 		DxReportViewerModule,
 		TreeviewModule.forRoot(),
+		UserModule,
 	],
 	declarations: [
 		BusinessComponent,
@@ -55,6 +63,12 @@ import { UserCreateOrUpdateComponent } from './system-management/components/user
 		ReportViewerComponent,
 		UserViewInfoComponent,
 		UserCreateOrUpdateComponent,
+		LoginChatBoxComponent,
+		DashboardChatBoxComponent,
+		DialogsComponent,
+		MessageComponent,
+		CreateDialogComponent,
+		EditDialogComponent,
 	],
 	exports: [UserCreateOrUpdateComponent, UserViewInfoComponent],
 })

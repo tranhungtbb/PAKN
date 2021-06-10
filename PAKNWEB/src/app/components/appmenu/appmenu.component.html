@@ -165,6 +165,15 @@
 					<li><a>Video hướng dẫn sử dụng</a></li>
 				</ul>
 			</li>
+			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-life-preserver"></i>
+					<span class="nav-text">Tin Nhắn</span>
+				</a>
+					<ul routerLinkActive="mm-show" aria-expanded="false">
+						<li><a routerLink="/quan-tri/tin-nhan">Chatbox</a></li>
+					</ul>
+			</li>
 		</ul>
 	</div>
 </div>
