@@ -45,10 +45,6 @@ const routes: Routes = [
 				component: NewsComponent,
 			},
 			{
-				path: 'tin-tuc-su-kien/:id',
-				component: ViewNewsComponent,
-			},
-			{
 				path: 'tin-tuc-su-kien/xem-truoc/:id',
 				component: ViewNewsComponent,
 			},

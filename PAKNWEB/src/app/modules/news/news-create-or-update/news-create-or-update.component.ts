@@ -375,4 +375,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		}
 		return
 	}
+	back() {
+		window.history.back()
+	}
 }

@@ -83,7 +83,7 @@ namespace PAKNAPI.Models.Recommendation
 			{
 				DynamicParameters  DPdeny = new DynamicParameters();
 				DPdeny.Add("RecommendationId", Id);
-				data.denyContent =(await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetDenyContentsBase>("[MR_Recommendation_GetDenyContents]", DPdeny)).Where(x=>x.Status == Id).ToList();
+				data.denyContent =(await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetDenyContentsBase>("[MR_Recommendation_GetDenyContents]", DPdeny)).OrderByDescending(x=>x.Status).Take(1).ToList();
 			}
 
 			if (data.Model.Status > STATUS_RECOMMENDATION.PROCESSING)

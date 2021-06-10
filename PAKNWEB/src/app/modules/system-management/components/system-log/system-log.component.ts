@@ -117,8 +117,9 @@ export class SystemLogComponent implements OnInit {
 			}
 	}
 	getList() {
+		debugger
 		let req = {
-			CreateDate: this.dataSearch.createDate == null ? '' : JSON.stringify(new Date(this.dataSearch.createDate)).slice(1, 11),
+			CreateDate: this.dataSearch.createDate == null ? '' : this.dataSearch.createDate.toDateString(),
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 			//UserId: localStorage.getItem('userId'),

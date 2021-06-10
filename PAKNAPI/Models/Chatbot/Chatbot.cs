@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Microsoft.AspNetCore.Hosting;
 using PAKNAPI.Common;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -126,7 +127,9 @@ namespace PAKNAPI.Models.Chatbot
 		public string Question { get; set; }
 		public string Answer { get; set; }
 
-		public async Task<List<HistoryChatbotGetAllOnPage>> HistoryChatbotGetAllOnPageDAO(int? PageSize, int? PageIndex, string FullName, string Question, string Answer)
+		public DateTime CreatedDate { get; set; }
+
+		public async Task<List<HistoryChatbotGetAllOnPage>> HistoryChatbotGetAllOnPageDAO(int? PageSize, int? PageIndex, string FullName, string Question, string Answer, DateTime? CreatedDate)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
@@ -134,6 +137,7 @@ namespace PAKNAPI.Models.Chatbot
 			DP.Add("FullName", FullName);
 			DP.Add("Question", Question);
 			DP.Add("Answer", Answer);
+			DP.Add("CreateDate", CreatedDate);
 
 			return (await _sQLCon.ExecuteListDapperAsync<HistoryChatbotGetAllOnPage>("HistoryChatbotGetAllOnPage", DP)).ToList();
 		}

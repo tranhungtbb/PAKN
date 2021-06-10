@@ -64,12 +64,12 @@ namespace PAKNAPI.Models.ModelBase
             return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetAllOnPage", DP)).ToList();
         }
 
-        public async Task<List<MyRecommendation>> MyRecommendationAllOnPage(int?CreateBy, string LtsStatus, int PageSize, int PageIndex)
+        public async Task<List<MyRecommendation>> MyRecommendationAllOnPage(int?CreateBy, string LtsStatus, string Title,int PageSize, int PageIndex)
         {
             DynamicParameters DP = new DynamicParameters();
             DP.Add("CreateBy", CreateBy);
             DP.Add("ltsStatus", LtsStatus);
-
+            DP.Add("Title", Title);
             DP.Add("PageSize", PageSize);
             DP.Add("PageIndex", PageIndex);
 

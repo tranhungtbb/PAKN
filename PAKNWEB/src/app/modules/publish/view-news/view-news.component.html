@@ -47,6 +47,44 @@
 				</div>
 			</div>
 			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+				<div class="sb-tk-pakn mb-4">
+					<div class="d-flex search-ct" style="width: 100%; padding-bottom: 20px;">
+						<input (keyup)="changeKeySearch($event)" (keydown.enter)="redirectNews()" class="form-control" style="border-radius: 10px; height: 45px;" type="text"
+							placeholder="Nhập từ khóa..." aria-label="Search">
+						<button type="button" class="btn px-3 grd-blue" style="margin-left: -20px; width: 45px; height: 45px;" (click)="redirectNews()">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path
+									d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z"
+									fill="#fff"></path>
+							</svg>
+						</button>
+					</div>
+					<div class="h3" style="text-transform: uppercase;font-weight: 500;
+					font-size: 20px;
+					line-height: 30px;">
+						Tin tức nổi bật
+					</div>
+					<hr width="70%" style="margin: 0px; color: black;">
+					<ul class="list-group list-group-flush">
+						<ng-container *ngFor="let item of newsHightlight;let i = index">
+							<li class="list-group-item px-0" *ngIf="i < 5">
+								<div class="media">
+									<a href="javascript:void(0)" (click)="redirectDetail(item.id)" class="image-box ratio-4-3 rounded mr-3" style="width: 6rem">
+										<img class="image" style="object-fit: cover; width: 100%; height: 100%;" [src]="item.imagePath">
+									</a>
+									<div class="media-body">
+										<small><span class="createDate" style="font-weight: 300; font-size: 13px; padding-left: 0px;">{{item.createdDate | date : 'HH:mm'}} ngày
+												{{item.createdDate | date : 'dd/MM/yy'}}</span></small>
+										<p class="h5 mb-0">
+											<a class="text-2line" style="font-size: 15px; color: #3c3c3c;" href="javascript:void(0)"
+												(click)="redirectDetail(item.id)">{{item.title}}</a>
+										</p>
+									</div>
+								</div>
+							</li>
+						</ng-container>
+					</ul>
+				</div>
 				<app-view-right></app-view-right>
 			</div>
 		</div>

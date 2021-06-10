@@ -235,8 +235,8 @@ export class PublishComponent implements OnInit, OnChanges {
 					question: this.message,
 					answer: res.ResponseText.toString(),
 				}
-
 				this.insertDataChatBot(dataChatbot)
+
 				this.message = ''
 
 				document.getElementById('messages-content').style.overflow = 'scroll'

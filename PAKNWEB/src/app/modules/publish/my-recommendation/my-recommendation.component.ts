@@ -24,6 +24,7 @@ declare var $: any
 export class MyRecommendationComponent implements OnInit {
 	userName: string = ''
 	phone: string = ''
+	title: string = ''
 	recommandationId: number = 0
 	pageIndex: number = 1
 	pageSize: number = 20
@@ -89,7 +90,7 @@ export class MyRecommendationComponent implements OnInit {
 		let request = {
 			userId: this.storageService.getUserId(),
 			LtsStatus: Status == null ? '' : Status,
-			// LtsStatus: this.LtsStatus,
+			Title: this.title == null ? '' : this.title,
 			pageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
@@ -142,6 +143,10 @@ export class MyRecommendationComponent implements OnInit {
 				this.getList()
 				break
 		}
+	}
+
+	changeKeySearch(event) {
+		this.title = event.target.value
 	}
 
 	sendRecommandation() {

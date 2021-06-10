@@ -5,7 +5,7 @@
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
 					<li class="breadcrumb-item"><a>Tin tức sự kiện</a></li>
-					<li class="breadcrumb-item active"><a class="font-weight-bold">Danh sách tổng hợp</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold">Danh sách đã công bố</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
 
@@ -52,15 +52,15 @@
 											<strong>Trạng thái</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<!-- [items]="listStatus" bindLabel="text" bindValue="value" -->
-											<ng-select class="" placeholder="Trạng thái" [closeOnSelect]="true" [(ngModel)]="query.status" (change)="filterChange()"
-												[searchable]="false" style="width: 170px;">
-												<ng-option *ngFor="let stt of listStatus" [value]="stt.value">
-													{{stt.text}}
-												</ng-option>
-											</ng-select>
-										</div>
+										<!-- <div class="dropdown bootstrap-select form-control form-control-sm">
+											[items]="listStatus" bindLabel="text" bindValue="value"
+										<ng-select class="" placeholder="Trạng thái" [closeOnSelect]="true" [(ngModel)]="query.status" (change)="filterChange()"
+											[searchable]="false" style="width: 170px;">
+											<ng-option *ngFor="let stt of listStatus" [value]="stt.value">
+												{{stt.text}}
+											</ng-option>
+										</ng-select>
+					</div> -->
 
 									</th>
 									<th class="text-center text-uppercase" style=width:130px;><strong>Thao tác</strong></th>

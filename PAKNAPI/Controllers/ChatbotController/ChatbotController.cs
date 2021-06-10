@@ -70,11 +70,11 @@ namespace PAKNAPI.Controllers.ChatbotController
         [HttpGet]
         [Authorize("ThePolicy")]
         [Route("HistoryChatbotGetAllOnPage")]
-        public async Task<ActionResult<object>> HistoryChatbotGetAllOnPage(int? PageSize, int? PageIndex, string FullName, string Question, string Answer)
+        public async Task<ActionResult<object>> HistoryChatbotGetAllOnPage(int? PageSize, int? PageIndex, string FullName, string Question, string Answer, DateTime? CreatedDate)
         {
             try
             {
-                List<HistoryChatbotGetAllOnPage> rsHistoryChatbotGetAllOnPage = await new HistoryChatbotGetAllOnPage(_appSetting).HistoryChatbotGetAllOnPageDAO(PageSize, PageIndex, FullName, Question, Answer);
+                List<HistoryChatbotGetAllOnPage> rsHistoryChatbotGetAllOnPage = await new HistoryChatbotGetAllOnPage(_appSetting).HistoryChatbotGetAllOnPageDAO(PageSize, PageIndex, FullName, Question, Answer, CreatedDate);
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"HistoryChatbotGetAllOnPage", rsHistoryChatbotGetAllOnPage},
@@ -156,13 +156,13 @@ namespace PAKNAPI.Controllers.ChatbotController
         {
             try
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
                 return new Models.Results.ResultApi { Success = ResultCode.OK, Result = await new ChatbotInsertData(_appSetting).InsertDataChatbotDAO(_chatbotDataInsertIN) };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
                 return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }

@@ -32,6 +32,7 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 	fileAccept = CONSTANTS.FILEACCEPT
 	userLoginId: number = this.storeageService.getUserId()
 	unitLoginId: number = this.storeageService.getUnitId()
+	denyContent: any
 	@ViewChild('file', { static: false }) public file: ElementRef
 	constructor(
 		private toastr: ToastrService,
@@ -70,6 +71,9 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 					this.files = response.result.filesConclusion
 				} else {
 					this.modelConclusion = new RecommendationConclusionObject()
+				}
+				if ([3, 6, 9].includes(this.model.status)) {
+					this.denyContent = response.result.denyContent[0]
 				}
 				this.lstHashtagSelected = response.result.lstHashtag
 				this.filesModel = response.result.lstFiles
