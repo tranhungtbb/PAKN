@@ -130,25 +130,23 @@
 
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Huyện / Quận / Thị xã...<span class="cl-red">(*)</span></label>
-					<<<<<<< HEAD=======>>>>>>> 66a73ab26470122174dc22a073c4ebdecfdac3f1
-						<select *ngIf="isOtherNation" disabled [(ngModel)]="model.districtId" formControlName="district" class="form-control" placeholder="Chọn...">
-							<option [value]="0">Chọn...</option>
-						</select>
-						<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.districtId" formControlName="district" class="form-control" placeholder="Chọn..."
-							[closeOnSelect]="true" (change)="onChangeDistrict()">
-							<ng-option *ngFor="let dis of listDistrict" [value]="dis.id">{{dis.name}}</ng-option>
-						</ng-select>
+					<select *ngIf="isOtherNation" disabled [(ngModel)]="model.districtId" formControlName="district" class="form-control" placeholder="Chọn...">
+						<option [value]="0">Chọn...</option>
+					</select>
+					<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.districtId" formControlName="district" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
+						(change)="onChangeDistrict()">
+						<ng-option *ngFor="let dis of listDistrict" [value]="dis.id">{{dis.name}}</ng-option>
+					</ng-select>
 
-						<!-- <select *ngIf="nation_enable_type" class="form-control" disabled [(ngModel)]="model.districtId" formControlName="district">
+					<!-- <select *ngIf="nation_enable_type" class="form-control" disabled [(ngModel)]="model.districtId" formControlName="district">
 						<option value="0">Chọn...</option>
 					</select> -->
-						<!--  -->
-						<div *ngIf="(fLoginSubmitted && fInfo.district.invalid)||(fInfo.district.invalid && (fInfo.district.dirty || fInfo.district.touched))"
-							class="has-error m-b-12">
-							<div *ngIf="fInfo.district.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
-							</div>
+					<!--  -->
+					<div *ngIf="(fLoginSubmitted && fInfo.district.invalid)||(fInfo.district.invalid && (fInfo.district.dirty || fInfo.district.touched))" class="has-error m-b-12">
+						<div *ngIf="fInfo.district.errors.required">
+							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
+					</div>
 				</div>
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Xã / Phường / Thị trấn<span class="cl-red">(*)</span></label>
