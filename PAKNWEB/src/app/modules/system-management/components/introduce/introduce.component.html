@@ -156,8 +156,9 @@
 
 					<div class="col-12 col-sm-6 flex">
 						<div class="item-introduce">
-							<div class="icon">
-								<i class="bi bi-person-plus"></i>
+							<div class="icon" (click)="ChooseIcon(lstIntroduceFunction[0].id)">
+								<img [id]="'img_icon_' + lstIntroduceFunction[0].id" src="{{lstIntroduceFunction[0].icon}}">
+								<input type="file" hidden [id]="lstIntroduceFunction[0].id" (change)="ChangeIcon($event)">
 							</div>
 						</div>
 						<div class="content-intro-x">
@@ -183,8 +184,9 @@
 
 					<div class="col-12 col-sm-6 flex">
 						<div class="item-introduce">
-							<div class="icon">
-								<i class="bi bi-chat-right-dots"></i>
+							<div class="icon" (click)="ChooseIcon(lstIntroduceFunction[1].id)">
+								<img [id]="'img_icon_' + lstIntroduceFunction[1].id" src="{{lstIntroduceFunction[1].icon}}">
+								<input type="file" hidden [id]="lstIntroduceFunction[1].id" (change)="ChangeIcon($event)">
 							</div>
 						</div>
 						<div class="content-intro-x">
@@ -211,8 +213,9 @@
 
 					<div class="col-12 col-sm-6 flex">
 						<div class="item-introduce">
-							<div class="icon">
-								<i class="bi bi-search"></i>
+							<div class="icon" (click)="ChooseIcon(lstIntroduceFunction[2].id)">
+								<img [id]="'img_icon_' + lstIntroduceFunction[2].id" src="{{lstIntroduceFunction[2].icon}}">
+								<input type="file" hidden [id]="lstIntroduceFunction[2].id" (change)="ChangeIcon($event)">
 							</div>
 						</div>
 						<div class="content-intro-x">
@@ -238,8 +241,9 @@
 
 					<div class="col-12 col-sm-6 flex">
 						<div class="item-introduce">
-							<div class="icon">
-								<i class="bi bi-file-earmark-arrow-up"></i>
+							<div class="icon" (click)="ChooseIcon(lstIntroduceFunction[3].id)">
+								<img [id]="'img_icon_' + lstIntroduceFunction[3].id" src="{{lstIntroduceFunction[3].icon}}">
+								<input type="file" hidden [id]="lstIntroduceFunction[3].id" (change)="ChangeIcon($event)">
 							</div>
 						</div>
 						<div class="content-intro-x">
@@ -266,8 +270,9 @@
 
 					<div class="col-12 col-sm-6 flex">
 						<div class="item-introduce">
-							<div class="icon">
-								<i class="bi bi-newspaper"></i>
+							<div class="icon" (click)="ChooseIcon(lstIntroduceFunction[4].id)">
+								<img [id]="'img_icon_' + lstIntroduceFunction[4].id" src="{{lstIntroduceFunction[4].icon}}">
+								<input type="file" hidden [id]="lstIntroduceFunction[4].id" (change)="ChangeIcon($event)">
 							</div>
 						</div>
 						<div class="content-intro-x">
@@ -293,8 +298,9 @@
 
 					<div class="col-12 col-sm-6 flex">
 						<div class="item-introduce">
-							<div class="icon">
-								<i class="bi bi-file-earmark-text"></i>
+							<div class="icon" (click)="ChooseIcon(lstIntroduceFunction[5].id)">
+								<img [id]="'img_icon_' + lstIntroduceFunction[5].id" src="{{lstIntroduceFunction[5].icon}}">
+								<input type="file" hidden [id]="lstIntroduceFunction[5].id" (change)="ChangeIcon($event)">
 							</div>
 						</div>
 						<div class="content-intro-x">

@@ -30,10 +30,12 @@ export class IntroduceComponent implements OnInit {
 	modelUnit: any = new IntroduceUnit()
 	ltsIntroductUnit: Array<IntroduceUnit>
 	lstIntroduceFunction: Array<IntroduceFunction>
+	ltsIcon: any[] = []
 	submitted: boolean = false
 	submittedUnit: boolean = false
 	title: string = 'Thêm mới đơn vị'
 	idDeleteUnit: number
+	idIcon: any
 
 	// file
 
@@ -56,6 +58,7 @@ export class IntroduceComponent implements OnInit {
 				this.model = res.result.model
 				this.bannerUrl = this.model.bannerUrl
 				this.lstIntroduceFunction = res.result.lstIntroduceFunction
+
 				this.getListUnit()
 			}
 		}),
@@ -92,30 +95,6 @@ export class IntroduceComponent implements OnInit {
 			contentFunc5: [this.lstIntroduceFunction[5].content, Validators.required],
 		})
 	}
-
-	// rebuilForm() {
-	// 	this.form.reset({
-	// 		title: this.model.title,
-	// 		summary: this.model.summary,
-	// 		descriptionUnit: this.model.descriptionUnit,
-	// 		descriptionFunction: this.model.descriptionFunction,
-	// 		// form hơi dài, aem thông cảm ko nghĩ ra giải pháp, có 6 x 2 cái thôi mà
-
-	// 		titleFunc0: this.lstIntroduceFunction[0].title,
-	// 		contentFunc0: this.lstIntroduceFunction[0].content,
-	// 		titleFunc1: this.lstIntroduceFunction[1].title,
-	// 		contentFunc1: this.lstIntroduceFunction[1].content,
-	// 		titleFunc2: this.lstIntroduceFunction[2].title,
-	// 		contentFunc2: this.lstIntroduceFunction[2].content,
-	// 		titleFunc3: this.lstIntroduceFunction[3].title,
-	// 		contentFunc3: this.lstIntroduceFunction[3].content,
-	// 		titleFunc4: this.lstIntroduceFunction[4].title,
-	// 		contentFunc4: this.lstIntroduceFunction[4].content,
-	// 		titleFunc5: this.lstIntroduceFunction[5].title,
-	// 		contentFunc5: this.lstIntroduceFunction[5].content,
-	// 	})
-	// }
-
 	// validate introduce Unit
 
 	get fUnit() {
@@ -187,7 +166,9 @@ export class IntroduceComponent implements OnInit {
 			model: this.model,
 			fileBanner: this.BannerImg,
 			lstIntroduceFunction: this.lstIntroduceFunction,
+			ltsIcon: this.ltsIcon,
 		}
+		debugger
 		this._service.Update(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
@@ -318,5 +299,48 @@ export class IntroduceComponent implements OnInit {
 		}
 
 		this.BannerImg = event.target.files[0]
+	}
+	ChooseIcon(id: any) {
+		this.idIcon = id
+		$("[id='" + id + "']").click()
+	}
+	ChangeIcon(event: any) {
+		if (!event.target.files) return
+		var file = event.target.files[0]
+		if (!['image/jpeg', 'image/png', 'image/svg+xml'].includes(file.type)) {
+			this._toastr.error('Chỉ chọn tệp tin ảnh')
+			event.target.value = null
+			return
+		}
+		let check = false
+		for (var j = 0; j < this.ltsIcon.length; j++) {
+			if (this.ltsIcon[j].name === event.target.files[0].name) {
+				check = true
+				break
+			}
+		}
+		for (var j = 0; j < this.lstIntroduceFunction.length; j++) {
+			if (this.lstIntroduceFunction[j].icon != null && this.lstIntroduceFunction[j].icon.includes(event.target.files[0].name)) {
+				check = true
+				break
+			}
+		}
+		if (check == true) {
+			event.target.value = null
+			this._toastr.error('Không được chọn trùng icon')
+			return
+		}
+		file['Id'] = this.idIcon
+		this.ltsIcon.push(file)
+		let item = this.lstIntroduceFunction.find((x) => x.id == this.idIcon)
+		let index = this.lstIntroduceFunction.indexOf(item)
+		item.iconNew = event.target.files[0].name
+		this.lstIntroduceFunction[index] = { ...item }
+
+		let output: any = $('#img_icon_' + this.idIcon)
+		output.attr('src', URL.createObjectURL(file))
+		output.onload = function () {
+			URL.revokeObjectURL(output.src) // free memory
+		}
 	}
 }

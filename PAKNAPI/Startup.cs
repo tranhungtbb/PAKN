@@ -188,11 +188,11 @@ namespace PAKNAPI
 			//// note
 			app.UseStaticFiles();
             // xóa đi trên local em test
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Upload/BusinessIndividual")),
-                RequestPath = new PathString("/Upload/BusinessIndividual")
-            });
+            //app.UseStaticFiles(new StaticFileOptions()
+            //{
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Upload/Introduce/IconIntroduce")),
+            //    RequestPath = new PathString("/Upload/Introduce/IconIntroduce")
+            //});
 
             // Dev
             DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension.RegisterExtensionGlobal(new ReportStorageWebExtension1());

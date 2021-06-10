@@ -62,94 +62,18 @@
 
 						</div>
 						<div class="row">
-							<div class="col-12 col-sm-6 flex">
+							<div class="col-12 col-sm-6 flex" *ngFor="let item of lstIntroduceFunction">
 								<div class="item-introduce">
 									<div class="icon">
-										<i class="bi bi-person-plus"></i>
+										<img *ngIf="item.icon" style="width: 35px; height: 35px;" [src]="item.icon">
 									</div>
 								</div>
 								<div class="content-intro-x">
 									<div class="title-action">
-										{{lstIntroduceFunction[0].title}}
+										{{item.title}}
 									</div>
 									<p>
-										{{lstIntroduceFunction[0].content}}
-									</p>
-								</div>
-							</div>
-							<div class="col-12 col-sm-6 flex">
-								<div class="item-introduce">
-									<div class="icon">
-										<i class="bi bi-chat-right-dots"></i>
-									</div>
-								</div>
-								<div class="content-intro-x">
-									<div class="title-action">
-										{{lstIntroduceFunction[1].title}}
-									</div>
-									<p>
-										{{lstIntroduceFunction[1].content}}
-									</p>
-								</div>
-							</div>
-							<div class="col-12 col-sm-6 flex">
-								<div class="item-introduce">
-									<div class="icon">
-										<i class="bi bi-search"></i>
-									</div>
-								</div>
-								<div class="content-intro-x">
-									<div class="title-action">
-										{{lstIntroduceFunction[2].title}}
-									</div>
-									<p>
-										{{lstIntroduceFunction[2].content}}
-									</p>
-								</div>
-							</div>
-							<div class="col-12 col-sm-6 flex">
-								<div class="item-introduce">
-									<div class="icon">
-										<i class="bi bi-file-earmark-arrow-up"></i>
-
-									</div>
-								</div>
-								<div class="content-intro-x">
-									<div class="title-action">
-										{{lstIntroduceFunction[3].title}}
-									</div>
-									<p>
-										{{lstIntroduceFunction[3].content}}
-									</p>
-								</div>
-							</div>
-							<div class="col-12 col-sm-6 flex">
-								<div class="item-introduce">
-									<div class="icon">
-										<i class="bi bi-newspaper"></i></div>
-								</div>
-								<div class="content-intro-x">
-									<div class="title-action">
-										{{lstIntroduceFunction[4].title}}
-									</div>
-									<p>
-										{{lstIntroduceFunction[4].content}}
-									</p>
-								</div>
-							</div>
-							<div class="col-12 col-sm-6 flex">
-								<div class="item-introduce">
-									<div class="icon">
-										<i class="bi bi-file-earmark-text"></i>
-									</div>
-
-								</div>
-								<div class="content-intro-x">
-									<div class="title-action">
-										{{lstIntroduceFunction[5].title}}
-									</div>
-									<p>
-										{{lstIntroduceFunction[5].content}}
+										{{item.content}}
 									</p>
 								</div>
 							</div>

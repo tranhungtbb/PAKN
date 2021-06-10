@@ -329,6 +329,7 @@ namespace PAKNAPI.ModelBase
 		public string Title { get; set; }
 		public string Content { get; set; }
 		public string Icon { get; set; }
+		public string IconNew { get; set; }
 		public string IntroduceId { get; set; }
 
 		public async Task<List<SYIntroduceFunction>> SYIntroduceFunctionGetByIntroductId(int? syIntroduceId)

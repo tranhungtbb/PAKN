@@ -474,12 +474,15 @@ export class IndividualComponent implements OnInit {
 			Id: data.id,
 			Type: 1,
 		}
+		// this.phone_exists = false
+		// this.email_exists = false
+		// this.idCard_exists = false
 		this.submitted = false
+		this.isOtherNation = false
 		this._service.individualById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.title = 'Chỉnh sửa cá nhân'
 				this.model = response.result.InvididualGetByID[0]
-
 				if (this.model.nation != this.listNation[0].id) {
 					this.isOtherNation = true
 					this.model.provinceId = 0
@@ -489,10 +492,13 @@ export class IndividualComponent implements OnInit {
 
 				this.model.iDCard = response.result.InvididualGetByID[0].idCard
 				this.model.birthDate = new Date(response.result.InvididualGetByID[0].birthDate)
-				this.model.dateOfIssue = new Date(response.result.InvididualGetByID[0].dateOfIssue)
+				if (this.model.dateOfIssue != null) {
+					this.model.dateOfIssue = new Date(response.result.InvididualGetByID[0].dateOfIssue)
+				}
 				this.getProvince()
 				this.getDistrict(response.result.InvididualGetByID[0].provinceId)
 				this.getVillage(response.result.InvididualGetByID[0].provinceId, response.result.InvididualGetByID[0].districtId)
+				this.rebuidForm()
 				$('#modal').modal('show')
 			} else {
 				this._toastr.error(response.message)

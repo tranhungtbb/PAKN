@@ -19,9 +19,6 @@ export class IntroduceComponent implements OnInit {
 	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	constructor(private _service: IntroduceService) {
 		this.lstIntroduceFunction = []
-		for (var i = 0; i < 6; i++) {
-			this.lstIntroduceFunction.push(new IntroduceFunction())
-		}
 	}
 
 	ngOnInit() {
@@ -31,10 +28,6 @@ export class IntroduceComponent implements OnInit {
 				this.model.bannerUrl = this.model.bannerUrl
 				this.lstIntroduceFunction = res.result.lstIntroduceFunction
 				this.ltsIntroductUnit = res.result.lstIntroduceUnit
-
-				// console.log(this.model)
-				// console.log(this.lstIntroduceFunction)
-				// console.log(this.ltsIntroductUnit)
 			}
 		}),
 			(error) => {
