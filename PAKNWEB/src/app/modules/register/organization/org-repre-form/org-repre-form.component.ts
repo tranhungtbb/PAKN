@@ -39,6 +39,11 @@ export class OrgRepreFormComponent implements OnInit {
 	isOtherNation = false
 	//event
 	//event
+	onResetNationValue(event: any) {
+		if (event.target.value == 'Nhập...') {
+			event.target.value = ''
+		}
+	}
 	backToVal() {
 		this.isOtherNation = false
 		this.model.Nation = null

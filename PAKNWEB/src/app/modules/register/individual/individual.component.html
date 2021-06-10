@@ -75,7 +75,7 @@
 						<ng-option value="#">Khác</ng-option>
 					</ng-select>
 					<input [svTrim] *ngIf="isOtherNation" [(ngModel)]="model.nation" formControlName="nation" type="text" placeholder="Nhập..." class="form-control border-brown"
-						(click)="model.nation=''">
+						(click)="onResetNationValue($event)">
 					<span *ngIf="isOtherNation" class="select-caret-icon" (click)="backDefaultValue()">
 						<i class="bi bi-caret-down-fill"></i>
 					</span>
@@ -130,23 +130,25 @@
 
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Huyện / Quận / Thị xã...<span class="cl-red">(*)</span></label>
-					<select *ngIf="isOtherNation" disabled [(ngModel)]="model.districtId" formControlName="district" class="form-control" placeholder="Chọn...">
-						<option [value]="0">Chọn...</option>
-					</select>
-					<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.districtId" formControlName="district" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
-						(change)="onChangeDistrict()">
-						<ng-option *ngFor="let dis of listDistrict" [value]="dis.id">{{dis.name}}</ng-option>
-					</ng-select>
+					<<<<<<< HEAD=======>>>>>>> 66a73ab26470122174dc22a073c4ebdecfdac3f1
+						<select *ngIf="isOtherNation" disabled [(ngModel)]="model.districtId" formControlName="district" class="form-control" placeholder="Chọn...">
+							<option [value]="0">Chọn...</option>
+						</select>
+						<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.districtId" formControlName="district" class="form-control" placeholder="Chọn..."
+							[closeOnSelect]="true" (change)="onChangeDistrict()">
+							<ng-option *ngFor="let dis of listDistrict" [value]="dis.id">{{dis.name}}</ng-option>
+						</ng-select>
 
-					<!-- <select *ngIf="nation_enable_type" class="form-control" disabled [(ngModel)]="model.districtId" formControlName="district">
+						<!-- <select *ngIf="nation_enable_type" class="form-control" disabled [(ngModel)]="model.districtId" formControlName="district">
 						<option value="0">Chọn...</option>
 					</select> -->
-					<!--  -->
-					<div *ngIf="(fLoginSubmitted && fInfo.district.invalid)||(fInfo.district.invalid && (fInfo.district.dirty || fInfo.district.touched))" class="has-error m-b-12">
-						<div *ngIf="fInfo.district.errors.required">
-							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						<!--  -->
+						<div *ngIf="(fLoginSubmitted && fInfo.district.invalid)||(fInfo.district.invalid && (fInfo.district.dirty || fInfo.district.touched))"
+							class="has-error m-b-12">
+							<div *ngIf="fInfo.district.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
 						</div>
-					</div>
 				</div>
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Xã / Phường / Thị trấn<span class="cl-red">(*)</span></label>
@@ -199,7 +201,7 @@
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Số CMND / CCCD / Hộ chiếu <span class="cl-red">(*)</span></label>
 					<input svDisabledSpaceKey maxlength="12" [(ngModel)]="model.iDCard" formControlName="iDCard" type="text" placeholder="Nhập..." class="form-control border-brown"
-						pattern="^(\w{1}[0-9]{7}|[0-9]{8}|[0-9]{9}|[0-9]{12})$" (change)="onCheckExist('IDCard',$event.target.value)">
+						pattern="^(\w{7}|\w{8}|\w{9}|\w{12})$" (change)="onCheckExist('IDCard',$event.target.value)">
 
 					<div *ngIf="(fLoginSubmitted && fInfo.iDCard.invalid)||(fInfo.iDCard.invalid && (fInfo.iDCard.dirty || fInfo.iDCard.touched))" class="has-error m-b-12">
 						<div *ngIf="fInfo.iDCard.errors.required">

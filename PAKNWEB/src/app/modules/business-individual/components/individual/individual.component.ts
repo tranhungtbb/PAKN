@@ -127,7 +127,7 @@ export class IndividualComponent implements OnInit {
 			}
 		}
 	}
-	onResetValue(event: any) {
+	onResetNationValue(event: any) {
 		console.log(event)
 		if (event.target.value == 'Nhập...') {
 			event.target.value = ''
@@ -361,11 +361,14 @@ export class IndividualComponent implements OnInit {
 
 		let fDob: any = document.querySelector('#_dob')
 		let fDateIssue: any = document.querySelector('#_dateIssue')
-		if (this.isOtherNation) {
-			this.model.provinceId = 0
-			this.model.districtId = 0
-			this.model.wardsId = 0
+		if (this.model.nation == 'Nhập...') {
+			this.model.nation = ''
 		}
+		// if (this.isOtherNation) {
+		// 	this.model.provinceId = 0
+		// 	this.model.districtId = 0
+		// 	this.model.wardsId = 0
+		// }
 
 		this.model.birthDate = fDob.value
 		this.model.dateOfIssue = fDateIssue.value

@@ -41,7 +41,10 @@ export class AccountUpdateInfoComponent implements OnInit {
 	model: UserInfoObject = new UserInfoObject()
 	modeCopy: UserInfoObject
 
-	listNation: any[] = [{ id: 'Việt Nam', name: 'Việt Nam' }]
+	listNation: any[] = [
+		{ id: 'Việt Nam', name: 'Việt Nam' },
+		{ id: '#', name: 'Khác' },
+	]
 	listProvince: any[] = []
 	listDistrict: any[] = []
 	listVillage: any[] = []
@@ -50,8 +53,21 @@ export class AccountUpdateInfoComponent implements OnInit {
 		{ value: true, text: 'Nam' },
 		{ value: false, text: 'Nữ' },
 	]
-
+	nation_enable_type = false
 	//event
+	backToVal() {
+		this.nation_enable_type = false
+		this.model.nation = ''
+		this.model.provinceId = ''
+		this.model.districtId = ''
+		this.model.wardsId = ''
+		this.formData.controls['provinceId'].setValue('')
+		this.formData.controls['districtId'].setValue('')
+		this.formData.controls['wardsId'].setValue('')
+	}
+	resetNationField() {
+		if (this.model.nation == 'Nhập...') this.model.nation = ''
+	}
 	onChangeNation(clearable = false) {
 		if (clearable) {
 			this.listProvince = []
@@ -71,6 +87,17 @@ export class AccountUpdateInfoComponent implements OnInit {
 				}
 			})
 		} else {
+			if (this.model.nation == '#') {
+				this.nation_enable_type = true
+				this.model.nation = 'Nhập...'
+				this.model.provinceId = 0
+				this.model.districtId = 0
+				this.model.wardsId = 0
+				//this.formData.controls['nation'].setErrors(null)
+				this.formData.controls['provinceId'].setValue(0)
+				this.formData.controls['districtId'].setValue(0)
+				this.formData.controls['wardsId'].setValue(0)
+			}
 		}
 	}
 	onChangeProvince(clearable = false) {
@@ -138,6 +165,12 @@ export class AccountUpdateInfoComponent implements OnInit {
 				return
 			}
 			this.model = res.result
+			if (this.model.nation == 'Việt Nam') {
+				this.nation_enable_type = false
+			} else {
+				this.nation_enable_type = true
+			}
+
 			this.onChangeNation()
 		})
 	}
@@ -154,12 +187,14 @@ export class AccountUpdateInfoComponent implements OnInit {
 
 		this.model.dateOfBirth = fDob.value
 		this.model.issuedDate = fDateIssue.value
-
+		if (this.model.nation == 'Nhập...') {
+			this.model.nation = ''
+		}
 		if (!this.model.email) this.model.email = ''
 		if (!this.model.issuedPlace) this.model.issuedPlace = ''
-		if (!this.model.districtId) this.model.districtId = null
-		if (!this.model.provinceId) this.model.provinceId = null
-		if (!this.model.wardsId) this.model.wardsId = null
+		if (!this.model.districtId) this.model.districtId = 0
+		if (!this.model.provinceId) this.model.provinceId = 0
+		if (!this.model.wardsId) this.model.wardsId = 0
 
 		if (this.formData.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')

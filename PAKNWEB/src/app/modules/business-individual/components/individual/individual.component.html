@@ -250,7 +250,7 @@
 									<ng-option value="#">Khác</ng-option>
 								</ng-select>
 								<input #nation [svTrim] *ngIf="isOtherNation" [(ngModel)]="model.nation" formControlName="nation" type="text" placeholder="Nhập..."
-									class="form-control border-brown" (click)="onResetValue($event)">
+									class="form-control border-brown" (click)="onResetNationValue($event)">
 								<span *ngIf="isOtherNation" class="select-caret-icon" (click)="backToSelectBox()">
 									<i class="bi bi-caret-down-fill"></i>
 								</span>

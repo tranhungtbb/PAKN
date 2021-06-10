@@ -593,12 +593,12 @@ namespace PAKNAPI.Controllers
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 				}
 
-				if(model.ProvinceId == 0)
-                {
-					model.ProvinceId = null;
-					model.DistrictId = null;
-					model.WardsId = null;
-                }
+				//if(model.ProvinceId == 0)
+    //            {
+				//	model.ProvinceId = null;
+				//	model.DistrictId = null;
+				//	model.WardsId = null;
+    //            }
 
 				//add login info
 				string defaultPwd = "abc123";
@@ -679,7 +679,7 @@ namespace PAKNAPI.Controllers
 					birthDay = _birthDay;
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
 				}
-				if (!DateTime.TryParseExact(_bI_InvididualUpdateIN._DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime _dateOfIssue))
+				if (DateTime.TryParseExact(_bI_InvididualUpdateIN._DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime _dateOfIssue))
 				{
 					dateOfIssue = _dateOfIssue;
 					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
@@ -688,12 +688,12 @@ namespace PAKNAPI.Controllers
 				//else _bI_InvididualUpdateIN.DateOfIssue = dateOfIssue;
 				//if (string.IsNullOrEmpty(_BirthDay)) _bI_InvididualUpdateIN.BirthDate = null;
 				//else _bI_InvididualUpdateIN.BirthDate = birthDay;
-				if (_bI_InvididualUpdateIN.ProvinceId == 0)
-				{
-					_bI_InvididualUpdateIN.ProvinceId = null;
-					_bI_InvididualUpdateIN.DistrictId = null;
-					_bI_InvididualUpdateIN.WardsId = null;
-				}
+				//if (_bI_InvididualUpdateIN.ProvinceId == 0)
+				//{
+				//	_bI_InvididualUpdateIN.ProvinceId = null;
+				//	_bI_InvididualUpdateIN.DistrictId = null;
+				//	_bI_InvididualUpdateIN.WardsId = null;
+				//}
 
                 //if (string.IsNullOrEmpty(_DateOfIssue)) _bI_InvididualUpdateIN.DateOfIssue = null;
                 //else _bI_InvididualUpdateIN.DateOfIssue = dateOfIssue;
@@ -857,15 +857,15 @@ namespace PAKNAPI.Controllers
 				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Tax", model.Tax, 0);
 				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế đã tồn tại" };
 
-                if (model.DistrictId == 0)
-                {
-					model.DistrictId = null;
-					model.ProvinceId = null;
-					model.WardsId = null;
-					//model.OrgDistrictId = null;
-					//model.OrgProvinceId = null;
-					//model.OrgWardsId = null;
-                }
+     //           if (model.DistrictId == 0)
+     //           {
+					//model.DistrictId = null;
+					//model.ProvinceId = null;
+					//model.WardsId = null;
+					////model.OrgDistrictId = null;
+					////model.OrgProvinceId = null;
+					////model.OrgWardsId = null;
+     //           }
 
 				//add login info
 				string defaultPwd = "abc123";
@@ -980,15 +980,15 @@ namespace PAKNAPI.Controllers
 				}
 
 
-				if (model.DistrictId == 0)
-				{
-					model.DistrictId = null;
-					model.ProvinceId = null;
-					model.WardsId = null;
-					//model.OrgDistrictId = null;
-					//model.OrgProvinceId = null;
-					//model.OrgWardsId = null;
-				}
+				//if (model.DistrictId == 0)
+				//{
+				//	model.DistrictId = null;
+				//	model.ProvinceId = null;
+				//	model.WardsId = null;
+				//	//model.OrgDistrictId = null;
+				//	//model.OrgProvinceId = null;
+				//	//model.OrgWardsId = null;
+				//}
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = await new BI_BusinessUpdateInfo(_appSetting).BI_BusinessUpdateInfoDAO(model) };
 			}
