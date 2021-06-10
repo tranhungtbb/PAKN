@@ -233,7 +233,14 @@ namespace PAKNAPI.Controllers
                     case STATUS_RECOMMENDATION.PROCESS_DENY: //6 Từ chối giải quyết
 
                         lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
-                        unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
+
+                        if (lstRMForward.FirstOrDefault(x => x.Step == 2) == null) {
+                            unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 1).UnitReceiveId;
+                        }
+                        else {
+                            unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
+                        }
+                        //unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
                         unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
                         // gửi cho đơn vị tiếp nhận ban đầu
                         notification.Title = "PAKN BỊ TỪ CHỐI GIẢI QUYẾT";
