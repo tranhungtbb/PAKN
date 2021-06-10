@@ -135,10 +135,10 @@ export class CreateDialogComponent implements OnInit {
 							self.messageService.addMessageToDatesIds(newMessage)
 							self.messageService.messagesEvent.emit(self.messageService.datesIds)
 						}
-						resolve()
+						resolve('')
 					})
 				}
-				resolve()
+				resolve('')
 			}).then(() => {
 				const userIds = dialog.occupants_ids.filter((userId) => {
 					return userId !== self.userService.user.id
@@ -154,10 +154,10 @@ export class CreateDialogComponent implements OnInit {
 				this.dialogService.currentDialog = dialog
 				this.dialogService.currentDialogEvent.emit(dialog)
 				this.dashboardService.showComponent({
-					'createGroupClicked': false,
-          'updateDialog': false,
-          'welcomeChat': false,
-          'onChatClick': true
+					createGroupClicked: false,
+					updateDialog: false,
+					welcomeChat: false,
+					onChatClick: true,
 				})
 			})
 		})
