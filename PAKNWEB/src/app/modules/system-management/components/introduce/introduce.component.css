@@ -51,3 +51,13 @@ label {
 	right: 30px;
 	z-index: 1;
 }
+.icon {
+	width: 100px;
+	height: 100px;
+}
+
+.icon img {
+	object-fit: cover;
+	width: 40%;
+	height: 40%;
+}

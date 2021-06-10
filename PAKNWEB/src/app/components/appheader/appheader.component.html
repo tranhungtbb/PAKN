@@ -132,9 +132,9 @@
 								</div>
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1"></label>
-									<button (click)="dataStateChange()" style="text-transform: none;" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" type="button">Tìm
+									<!-- <button (click)="dataStateChange()" style="text-transform: none;" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" type="button">Tìm
 										kiếm
-									</button>
+									</button> -->
 								</div>
 							</div>
 						</div>
@@ -164,7 +164,8 @@
 											</ng-template>
 										</p-table>
 										<div style="display: flex; float: right;">
-											<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark"><i class="bi bi-file-earmark-excel mr-1"></i>Xuất
+											<button type="button" (click)="onExport()" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark"><i
+													class="bi bi-file-earmark-excel mr-1"></i>Xuất
 												excel</button>
 											<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" data-dismiss="modal">
 												Đóng

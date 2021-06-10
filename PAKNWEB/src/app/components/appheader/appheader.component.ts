@@ -405,6 +405,15 @@ export class AppheaderComponent implements OnInit {
 		this.getUserDetail()
 		this.getList()
 	}
+	onExport() {
+		$('#modalDetailLog').modal('hide')
+		let passingObj: any = {}
+		passingObj.UserId = this.storageService.getUserId()
+
+		this.sharedataService.setobjectsearch(passingObj)
+		this.sharedataService.sendReportUrl = 'HistoryUser?' + JSON.stringify(passingObj)
+		this._router.navigate(['quan-tri/xuat-file'])
+	}
 }
 export class SearchHistoryUser {
 	constructor() {

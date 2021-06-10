@@ -27,6 +27,11 @@ export class IntroduceService {
 		if (request.fileBanner) {
 			form.append('BannerImg', request.fileBanner)
 		}
+		if (request.ltsIcon) {
+			request.ltsIcon.forEach((item) => {
+				form.append('ltsIcon', item)
+			})
+		}
 		tempheaders.append('Content-Type', 'application/json')
 		const httpPackage = {
 			headers: tempheaders,

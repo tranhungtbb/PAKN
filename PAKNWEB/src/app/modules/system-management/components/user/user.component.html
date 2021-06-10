@@ -218,25 +218,27 @@
 						<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 5px 0px;">
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1 text-uppercase"><strong>Từ ngày</strong></label>
-								<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="dataSearch2.fromDate" bsDatepicker #n="bsDatepicker" maxlength="10"
-									id="fromDate2" appBsDatepickerInvalid [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+								<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="dataSearch2.fromDate" (keydown.enter)="dataHisStateChange()"
+									bsDatepicker #n="bsDatepicker" maxlength="10" id="fromDate2" appBsDatepickerInvalid
+									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon">
 									<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
 								</div>
 							</div>
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1 text-uppercase"><strong>Đến ngày</strong></label>
-								<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="dataSearch2.toDate" bsDatepicker #n="bsDatepicker" maxlength="10"
-									id="toDate2" appBsDatepickerInvalid [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+								<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="dataSearch2.toDate" (keydown.enter)="dataHisStateChange()"
+									bsDatepicker #n="bsDatepicker" maxlength="10" id="toDate2" appBsDatepickerInvalid
+									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon">
 									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 								</div>
 							</div>
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1"></label>
-								<button (click)="dataHisStateChange()" style="text-transform: none;" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" type="button">Tìm
+								<!-- <button (click)="dataHisStateChange()" style="text-transform: none;" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" type="button">Tìm
 									kiếm
-								</button>
+								</button> -->
 							</div>
 						</div>
 					</div>

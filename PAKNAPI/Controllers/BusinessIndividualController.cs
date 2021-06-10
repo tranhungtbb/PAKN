@@ -785,7 +785,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("BusinessDelete")]
 		public async Task<ActionResult<object>> BusinessDelete(BI_BusinessDeleteIN _bI_BusinessDeleteIN)
 		{

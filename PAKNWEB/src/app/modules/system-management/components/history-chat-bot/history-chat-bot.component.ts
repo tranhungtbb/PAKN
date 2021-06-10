@@ -28,6 +28,7 @@ export class HistoryChatBotComponent implements OnInit {
 	userId: number = 0
 	fullName: string = ''
 	question: string = ''
+	createdDate: Date
 	answer: string = ''
 	pageIndex: number = 1
 	pageSize: number = 20
@@ -51,6 +52,7 @@ export class HistoryChatBotComponent implements OnInit {
 			Answer: this.answer.trim(),
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
+			CreatedDate: this.createdDate == null ? '' : this.createdDate.toDateString(),
 		}
 		this._service.chatbotGetListHistory(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {

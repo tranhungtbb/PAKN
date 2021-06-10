@@ -28,7 +28,7 @@
 									[(ngModel)]="dataSearch.createDate" (keydown.enter)="dataStateChange()" appBsDatepickerInvalid
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon">
-									<i class="far fa-calendar-alt" (click)="dataStateChange()" [attr.aria-expanded]="n.isOpen"></i>
+									<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
 								</div>
 							</th>
 							<th style="min-width: 350px">

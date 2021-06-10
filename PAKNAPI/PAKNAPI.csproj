@@ -49,6 +49,7 @@
     <Folder Include="Models\Results\" />
     <Folder Include="BusinessLogic\" />
     <Folder Include="Chatbot\" />
+    <Folder Include="Upload\Introduce\BannerIntroduce\" />
     <Folder Include="Upload\Suppport\" />
     <Folder Include="Upload\User\" />
     <Folder Include="Upload\Remind\" />
@@ -104,6 +105,8 @@
   <ItemGroup>
     <None Include="Upload\BusinessIndividual\SampleFilesBusiness.xlsx" />
     <None Include="Upload\BusinessIndividual\SampleFilesIndividual.xlsx" />
+    <None Include="Upload\Introduce\IconIntroduce\align-bottom.svg" />
+    <None Include="Upload\Introduce\IconIntroduce\person-fill.svg" />
     <None Include="Upload\Invitation\23\Danh sach su dung tong dai voip 12.2020 chuan.xlsx" />
     <None Include="Upload\Invitation\23\Note-cho-Hùng.docx" />
     <None Include="Upload\Recommendation\2156\Danh mục lĩnh vực.docx" />

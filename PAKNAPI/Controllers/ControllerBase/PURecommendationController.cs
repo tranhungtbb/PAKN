@@ -60,11 +60,11 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Route("MyRecommendationAllOnPage")]
-		public async Task<ActionResult<object>> MyRecommendationAllOnPage(int? userId ,string LtsStatus, int PageSize, int PageIndex)
+		public async Task<ActionResult<object>> MyRecommendationAllOnPage(int? userId ,string LtsStatus, string Title , int PageSize, int PageIndex)
 		{
 			try
 			{
-				var rsMyRecommendationOnPage = await new PURecommendation(_appSetting).MyRecommendationAllOnPage(userId, LtsStatus, PageSize, PageIndex);
+				var rsMyRecommendationOnPage = await new PURecommendation(_appSetting).MyRecommendationAllOnPage(userId, LtsStatus, Title, PageSize, PageIndex);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"MyRecommendation", rsMyRecommendationOnPage},

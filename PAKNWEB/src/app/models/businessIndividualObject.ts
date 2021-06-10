@@ -1,7 +1,7 @@
 export class IndividualObject {
 	constructor() {
 		this.fullName = ''
-		this.phone = null
+		this.phone = ''
 		this.gender = true
 		this.email = ''
 		//

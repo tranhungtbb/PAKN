@@ -67,12 +67,24 @@
 			</div>
 			<div class="col-9 main-ct pl-3 pl-lg-4">
 				<div class="row mb-3">
-					<div class="col-md-6 col-lg">
-						<div class="tt-v1 pt-3 mb-3">
-							<h4 class="text-uppercase">Phản ánh kiến nghị của tôi</h4>
+					<div class="col-md-8 col-lg-8">
+						<div class="tt-v1 mb-3 center">
+							<h4 class="text-uppercase" style="width: 40%;">Phản ánh kiến nghị của tôi</h4>
+							<div class="d-flex search-ct" style="width: 60%; padding-bottom: 20px;">
+								<input (keyup)="changeKeySearch($event)" (keydown.enter)="getList()" class="form-control" style="border-radius: 10px;" type="text"
+									placeholder="Nhập từ khóa..." aria-label="Tìm kiếm...">
+								<button type="button" class="btn px-3 grd-blue" style="margin-left: -20px;padding: 0px;" (click)="getList()">
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path
+											d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z"
+											fill="#fff"></path>
+									</svg>
+								</button>
+							</div>
 						</div>
+
 					</div>
-					<div class="col-md-6 col-lg">
+					<div class="col-md-4 col-lg-4">
 						<div class="text-right">
 							<button type="button" class="btn text-white border-0 grd-xanhngoc" (click)="sendRecommandation()">
 								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
@@ -113,10 +125,8 @@
 								<a *ngIf="item.status == 1" class="btn-icon grd-red text-white mr-2 .pointer" (click)="preDelete(item.id)" title="Xóa"><i
 										class="bi bi-trash"></i></a>
 								<span *ngIf="item.status == 2 || (item.status == 5 && item.isForwardProcess)" class="badge rounded-pill badge-outline-dark">Chờ xử lý</span>
-								<span
-									*ngIf="item.status == 4 || (item.status == 5 && !item.isForwardProcess) || (item.status == 6 && !item.isForwardProcess) || item.status == 7 || item.status == 8"
-									class="badge rounded-pill bg-blue-light">Đã tiếp nhận</span>
-								<span *ngIf="item.status == 3 || (item.status == 6 && item.isForwardProcess) || item.status == 9" class="badge rounded-pill bg-red">Bị từ
+								<span *ngIf="item.status == 4 || (item.status == 5 && !item.isForwardProcess)" class="badge rounded-pill bg-blue-light">Đã tiếp nhận</span>
+								<span *ngIf="item.status == 3 || item.status == 6 || item.status == 9" class="badge rounded-pill bg-red">Bị từ
 									chối</span>
 								<span *ngIf="item.status == 10" class="badge rounded-pill" style="background-color:forestgreen ;">Đã trả lời</span>
 

@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
 import { BusinessComponent } from './business.component'
+import { LoginChatBoxComponent } from './chatbox/user/login/login.component'
 import { DashboardComponent } from './dash-board/dash-board.component'
 import { NotificationComponent } from './notification/notification.component'
 import { ReportViewerComponent } from './report-view/report-viewcomponent'
+import { DashboardChatBoxComponent } from './chatbox/dashboard/dashboard.component'
 
 const routes: Routes = [
 	{
@@ -29,7 +31,11 @@ const routes: Routes = [
 			{ path: 'thong-bao', component: NotificationComponent },
 			{ path: 'xuat-file', component: ReportViewerComponent },
 			{ path: 'bao-cao', loadChildren: './statistic/statistic.module#StatisticModule' },
+
 			{ path: 'cuoc-goi', loadChildren: () => import('src/app/modules/call-history/call-history.module').then((c) => c.CallHistoryModule) },
+
+			{ path: 'tin-nhan', component: LoginChatBoxComponent },
+			{ path: 'chatbox', component: DashboardChatBoxComponent },
 		],
 	},
 ]

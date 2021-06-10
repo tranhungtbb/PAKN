@@ -205,7 +205,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 						return
 					})
 					this.toast.success(COMMONS.UPDATE_SUCCESS)
-					this.router.navigate(['/quan-tri/tin-tuc'])
+					this.router.navigate(['/quan-tri/tin-tuc/danh-sach-tong-hop'])
 				})
 			} else {
 				this.newsService.update(this.model, this.filePost).subscribe((res) => {
@@ -232,7 +232,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 						return
 					})
 					this.toast.success(COMMONS.UPDATE_SUCCESS)
-					this.router.navigate(['/quan-tri/tin-tuc'])
+					this.router.navigate(['/quan-tri/tin-tuc/danh-sach-tong-hop'])
 				})
 			}
 		} else {
@@ -267,7 +267,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				// soạn thảo
 
 				this.toast.success(COMMONS.ADD_SUCCESS)
-				this.router.navigate(['/quan-tri/tin-tuc'])
+				this.router.navigate(['/quan-tri/tin-tuc/danh-sach-tong-hop'])
 			})
 		}
 	}
@@ -374,5 +374,8 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			return
 		}
 		return
+	}
+	back() {
+		window.history.back()
 	}
 }

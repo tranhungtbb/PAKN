@@ -24,6 +24,8 @@ declare var $: any
 export class MyRecommendationComponent implements OnInit {
 	userName: string = ''
 	phone: string = ''
+	title: string = ''
+	isFilter: boolean = false
 	recommandationId: number = 0
 	pageIndex: number = 1
 	pageSize: number = 20
@@ -89,7 +91,8 @@ export class MyRecommendationComponent implements OnInit {
 		let request = {
 			userId: this.storageService.getUserId(),
 			LtsStatus: Status == null ? '' : Status,
-			// LtsStatus: this.LtsStatus,
+			Title: this.title == null ? '' : this.title,
+			IsFilter: this.isFilter,
 			pageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
@@ -122,26 +125,33 @@ export class MyRecommendationComponent implements OnInit {
 		switch (status) {
 			case 1:
 				// chờ xl
+				this.isFilter = true
 				this.getList(',2,5')
 				break
 			case 2:
 				// đã tiếp nhận
-
+				this.isFilter = true
 				this.getList(',4,5,7,8')
 				break
 			case 3:
 				// đã trả lời
+				this.isFilter = true
 				this.getList(',10')
-
 				break
 			case 4:
 				// bị từ chối
+				this.isFilter = true
 				this.getList(',3,6,9')
 				break
 			default:
+				this.isFilter = false
 				this.getList()
 				break
 		}
+	}
+
+	changeKeySearch(event) {
+		this.title = event.target.value
 	}
 
 	sendRecommandation() {
