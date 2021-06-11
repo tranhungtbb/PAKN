@@ -168,13 +168,26 @@
 			</li>
 			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-phone"></i>
+					<span class="nav-text">Cuộc gọi</span>
+				</a>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<!-- <li><a routerLink="/quan-tri/huong-dan-su-dung">Tài liệu hướng dẫn sử dụng</a></li> -->
+					<li><a routerLink="/quan-tri/cuoc-goi/danh-sach-cuoc-goi">Danh sách cuộc gọi</a></li>
+				</ul>
+
+			</li>
+			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-life-preserver"></i>
 					<span class="nav-text">Tin Nhắn</span>
 				</a>
-					<ul routerLinkActive="mm-show" aria-expanded="false">
-						<li><a routerLink="/quan-tri/tin-nhan">Chatbox</a></li>
-					</ul>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<li><a routerLink="/quan-tri/tin-nhan">Chatbox</a></li>
+				</ul>
+
 			</li>
+
 		</ul>
 	</div>
 </div>

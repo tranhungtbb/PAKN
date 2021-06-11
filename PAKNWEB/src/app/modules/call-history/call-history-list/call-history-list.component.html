@@ -1,0 +1,77 @@
+<div class="content-body">
+	<!-- row -->
+	<div class="container-fluid p-0">
+		<div class="row">
+			<div class="col-lg-12">
+				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+					<li class="breadcrumb-item"><a>Cuộc gọi</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold">Danh sách cuộc gọi</a></li>
+				</ol>
+				<!-- <div class="btn-group group-button-table" role="group">
+
+					<a [routerLink]="['./them-moi']" class="btn grd-xanhngoc btn-sm rounded border-0 text-white">
+						<i class="bi bi-plus"></i>&nbsp;
+						Thêm mới
+					</a>
+				</div> -->
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card mb-0 shadow-none">
+					<div class="table-responsive">
+						<p-table #table [value]="listData" [rows]="query.pageSize" [totalRecords]="totalCount" currentPageReportTemplate="Tổng số {{totalCount}}"
+							(onLazyLoad)="onPageChange($event)" [lazy]="true" [responsive]="true" [paginator]="true" [showCurrentPageReport]="true" autoLayout="true"
+							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+							<ng-template pTemplate="header" class="bg-thead">
+								<tr>
+									<th style="width: 50px">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>STT</strong>
+										</p>
+										<!-- <input [(ngModel)]="query.title" (change)="filterChange()" type="text" class="form-control form-control-sm" placeholder="Nhập ..."> -->
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Số điện thoại</strong>
+										</p>
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead no-wrap">
+											<strong>Loại</strong>
+											<!-- <span class="caret-tb"></span> -->
+										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<!-- [items]="listStatus" bindLabel="text" bindValue="value" -->
+											<ng-select class="" placeholder="Loại cuộc gọi" [items]="callTypes" bindLabel="text" bindValue="value" [closeOnSelect]="true"
+												[(ngModel)]="query.type" (change)="filterChange()" [searchable]="false" style="width: 170px;">
+											</ng-select>
+										</div>
+
+									</th>
+									<!-- <th class="text-center text-uppercase" style=width:130px;><strong>Thao tác</strong></th> -->
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+								<tr>
+									<td>
+										{{rowIndex + 1}}
+									</td>
+									<td>
+										{{item.phone}}
+									</td>
+									<td>
+										<span *ngIf="item.type == callTypes[0].value" class="badge rounded-pill badge-outline-light bg-white">{{callTypes[0].text}}</span>
+										<span *ngIf="item.type == callTypes[1].value" class="badge rounded-pill bg-xam text-dark">{{callTypes[1].text}}</span>
+										<span *ngIf="item.type == callTypes[2].value" class="badge rounded-pill bg-xanhla">{{callTypes[2].text}}</span>
+									</td>
+
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

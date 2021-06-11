@@ -20,7 +20,7 @@ export class SupportComponent implements OnInit, AfterViewInit {
 
 	listDoc: any[] = []
 
-	model = {
+	model: any = {
 		src: '',
 		date: new Date(),
 	}
@@ -50,10 +50,13 @@ export class SupportComponent implements OnInit, AfterViewInit {
 	changeDoc() {
 		this.loadDocView(this.contentType, this.title)
 	}
+	currentFileName: string = ''
 	loadDocView(contentType: number, title: string) {
 		let item = this.listDoc.find((c) => c.category == contentType && c.title.toLowerCase() == title.toLowerCase())
 		this.model = { ...item }
-		this.model.src = `${item.filePath}#toolbar=0`
+		this.model.src = `http://14.177.236.88:6160/${item.filePath}`
+		let splString = item.filePath.split('/')
+		this.currentFileName = splString[splString.length - 1]
 	}
 	safe(url: string) {
 		return this.sanitizer.bypassSecurityTrustResourceUrl(url)

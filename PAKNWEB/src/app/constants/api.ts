@@ -331,4 +331,7 @@ export class Api {
 	// import
 	public static BusinessImportFile = 'BusinessIndividual/ImportDataBusiness?folder=BusinessIndividual'
 	public static PU_Support = 'PUSPBase/PUSupportDocument'
+
+	//call history
+	public static CallHistoryGetPagedList = 'SYCallHistory/SYCallHistoryGetPagedList'
 }

@@ -326,7 +326,7 @@ export class IndividualComponent implements OnInit {
 			province: [this.model.provinceId, [Validators.required]],
 			district: [this.model.districtId, [Validators.required]],
 			village: [this.model.wardsId, [Validators.required]],
-			phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
+			phone: [this.model.phone, [Validators.required]],
 
 			email: [this.model.email, [Validators.email]],
 			address: [this.model.address, [Validators.required]],
