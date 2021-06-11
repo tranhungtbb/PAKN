@@ -25,6 +25,7 @@ namespace PAKNAPI.Models.ModelBase
         public SYCallHistoryPagedList()
         {
         }
+        public long? RowNumber { get; set; }
         public short Id { get; set; }
         public string Phone { get; set; }
         public int Type { get; set; }
@@ -38,7 +39,7 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("Phone",phone);
             DP.Add("PageIndex", pageIndex);
             DP.Add("PageSize", pageSize);
-            return (await _sQLCon.ExecuteListDapperAsync<SYCallHistoryPagedList>("SY_PermissionCategory_Get", DP)).ToList();
+            return (await _sQLCon.ExecuteListDapperAsync<SYCallHistoryPagedList>("[SY_CallHistory_GetPageList]", DP)).ToList();
         }
     }
 }
