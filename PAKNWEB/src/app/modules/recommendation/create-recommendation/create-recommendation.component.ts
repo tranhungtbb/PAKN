@@ -191,6 +191,14 @@ export class CreateRecommendationComponent implements OnInit {
 			this.lstObject = this.lstBusiness
 		}
 	}
+	redirectToCreateIndividualBusiness() {
+		if (this.model.typeObject == 1) {
+			this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/ca-nhan'])
+		} else if (this.model.typeObject == 2) {
+			this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/doanh-nghiep'])
+		}
+		return
+	}
 
 	changeObject() {
 		this.model.name = ''

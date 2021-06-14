@@ -70,6 +70,7 @@
     <None Remove="ExportGrid\recommendation_by_unit.repx" />
     <None Remove="ExportGrid\Recommendation_ListGeneral.repx" />
     <None Remove="ExportGrid\Statistic_Recommendation_ByGroupWordDetail.repx" />
+    <None Remove="ExportGrid\Statistic_Recommendation_ByUnitDetail.repx" />
     <None Remove="ExportGrid\SY_UserByUnit.repx" />
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +96,7 @@
   <ItemGroup>
     <EmbeddedResource Include="ExportGrid\recommendation_by_fields.repx" />
     <EmbeddedResource Include="ExportGrid\recommendation_by_unit.repx" />
+    <EmbeddedResource Include="ExportGrid\Statistic_Recommendation_ByUnitDetail.repx" />
     <EmbeddedResource Include="ExportGrid\SY_UserByUnit.repx" />
     <EmbeddedResource Include="ExportGrid\HIS_SystemLog.repx" />
     <EmbeddedResource Include="ExportGrid\BI_Individual_List.repx" />
@@ -172,6 +174,12 @@
     </Compile>
     <Compile Update="ExportGrid\Statistic_Recommendation_ByGroupWordDetail.Designer.cs">
       <DependentUpon>Statistic_Recommendation_ByGroupWordDetail.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\Statistic_Recommendation_ByUnitDetail.cs">
+      <DependentUpon>Statistic_Recommendation_ByUnitDetail.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\Statistic_Recommendation_ByUnitDetail.Designer.cs">
+      <DependentUpon>Statistic_Recommendation_ByUnitDetail.repx</DependentUpon>
     </Compile>
     <Compile Update="ExportGrid\SY_UserByUnit.cs">
       <DependentUpon>SY_UserByUnit.repx</DependentUpon>

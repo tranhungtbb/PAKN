@@ -88,13 +88,17 @@ export class SystemLogComponent implements OnInit {
 	}
 	dataStateChange() {
 		this.pageIndex = 1
-		$(document).ready(function () {
-			if ($('#createDate').val() == 'Invalid date') {
-				$('#createDate').val('')
-			}
-		})
+		if ($("[id='createDate']").val() == 'Invalid date') {
+			$("[id='createDate']").val('')
+			this.dataSearch.createDate = null
+		}
+		if ($("[id='createDate']").val() == '') {
+			$("[id='createDate']").val('')
+			this.dataSearch.createDate = null
+		}
 		this.getList()
 	}
+
 	preDelete(id: number) {
 		this.idDelete = id
 		$('#modalConfirmDelete').modal('show')
@@ -117,7 +121,6 @@ export class SystemLogComponent implements OnInit {
 			}
 	}
 	getList() {
-		debugger
 		let req = {
 			CreateDate: this.dataSearch.createDate == null ? '' : this.dataSearch.createDate.toDateString(),
 			PageIndex: this.pageIndex,

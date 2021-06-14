@@ -139,7 +139,7 @@ export class SupportListDocumentComponent implements OnInit {
 			fileType: this.model.fileType,
 			name: this.model.fileName,
 		})
-		this.rebuidForm()
+		// this.rebuidForm()
 		$('#modal').modal('show')
 	}
 	onSave() {
@@ -161,6 +161,7 @@ export class SupportListDocumentComponent implements OnInit {
 					$('#modal').modal('hide')
 					this.files = []
 					this.getAllUnitShortInfo(this.objSupport.id)
+					this.toastr.success(COMMONS.ADD_SUCCESS)
 				} else {
 					let result = isNaN(res.result) == true ? 0 : res.result
 					if (result == -1) {
@@ -181,6 +182,7 @@ export class SupportListDocumentComponent implements OnInit {
 					$('#modal').modal('hide')
 					this.files = []
 					this.getAllUnitShortInfo(this.objSupport.id)
+					this.toastr.success(COMMONS.UPDATE_SUCCESS)
 				} else {
 					let result = isNaN(res.result) == true ? 0 : res.result
 					if (result == -1) {

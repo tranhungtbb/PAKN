@@ -13,9 +13,11 @@ import { RecommendationsByUnitComponent } from './recommendations-by-unit/recomm
 import { RecommendationsByFieldComponent } from 'src/app/modules/statistic/recommendations-by-field/recommendations-by-field.component';
 import { RecommendationsByGroupwordComponent } from './recommendations-by-groupword/recommendations-by-groupword.component';
 import { RecommendationsByGroupwordDetailComponent } from './recommendations-by-groupword-detail/recommendations-by-groupword-detail.component'
+import {RecommendationsByUnitDetailComponent} from './recommendations-by-unit-detail/recommendations-by-unit-detail.component'
+import {RecommendationsByFieldDetailComponent} from './recommendations-by-field-detail/recommendations-by-field-detail.component'
 
 @NgModule({
-	declarations: [StatisticComponent, RecommendationsByUnitComponent, RecommendationsByFieldComponent, RecommendationsByGroupwordComponent, RecommendationsByGroupwordDetailComponent],
+	declarations: [StatisticComponent, RecommendationsByUnitComponent,RecommendationsByUnitDetailComponent, RecommendationsByFieldComponent,RecommendationsByFieldDetailComponent, RecommendationsByGroupwordComponent, RecommendationsByGroupwordDetailComponent],
 	imports: [CommonModule, StatisticRoutingModule, FormsModule, MultiSelectModule, ReactiveFormsModule, SharedModule, TableModule, BsDatepickerModule.forRoot(), NgSelectModule],
 })
 export class StatisticModule {}

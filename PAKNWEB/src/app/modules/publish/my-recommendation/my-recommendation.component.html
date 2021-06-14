@@ -71,7 +71,7 @@
 						<div class="tt-v1 mb-3 center">
 							<h4 class="text-uppercase" style="width: 40%;">Phản ánh kiến nghị của tôi</h4>
 							<div class="d-flex search-ct" style="width: 60%; padding-bottom: 20px;">
-								<input (keyup)="changeKeySearch($event)" (keydown.enter)="getList()" class="form-control" style="border-radius: 10px;" type="text"
+								<input (keyup)="changeKeySearch($event)" [(ngModel)]="title" (keydown.enter)="getList()" class="form-control" style="border-radius: 10px;" type="text"
 									placeholder="Nhập từ khóa..." aria-label="Tìm kiếm...">
 								<button type="button" class="btn px-3 grd-blue" style="margin-left: -20px;padding: 0px;" (click)="getList()">
 									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

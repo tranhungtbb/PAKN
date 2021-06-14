@@ -52,14 +52,14 @@
 						<div class="col-md-4">
 							<div class="dropdown bootstrap-select form-control form-control-sm">
 								<ng-select [items]="listYear" placeholder="Năm ..." bindLabel="text" bindValue="value" [(ngModel)]="year" [clearable]="false"
-									(change)="dataStateChange()">
+									(change)="changeYear()">
 								</ng-select>
 							</div>
 						</div>
 						<div class="col-md-8">
 							<div class="dropdown bootstrap-select form-control form-control-sm">
 								<ng-select [items]="lstTimeline" placeholder="Chọn mốc thời gian ..." bindLabel="text" bindValue="value" [(ngModel)]="timeline"
-									(change)="dataStateChange()">
+									(change)="changeTimeLine()">
 								</ng-select>
 							</div>
 						</div>
@@ -69,14 +69,16 @@
 					<div class="row">
 						<div class="col-md-6">
 							<input class="form-control form-control-sm" placeholder="Từ ngày..." bsDatepicker #n="bsDatepicker" maxlength="10" id="fromDate2" appBsDatepickerInvalid
-								(bsValueChange)="fromDateChange($event)" [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+								[(ngModel)]="fromDate" (bsValueChange)="fromDateChange($event)"
+								[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 							<div class="input-group-addon">
 								<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<input class="form-control form-control-sm" placeholder="Đến ngày..." bsDatepicker #n="bsDatepicker" maxlength="10" id="toDate2" appBsDatepickerInvalid
-								(bsValueChange)="toDateChange($event)" [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+								[(ngModel)]="toDate" (bsValueChange)="toDateChange($event)"
+								[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 							<div class="input-group-addon">
 								<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
 							</div>
@@ -154,7 +156,7 @@
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
 									<td>
-										<strong>{{item.unitName}}</strong>
+										<strong class="highlight"	(click)="viewDetail(item.unitId)">{{item.unitName}}</strong>
 									</td>
 									<td>
 										<strong>{{item.total}}</strong>
