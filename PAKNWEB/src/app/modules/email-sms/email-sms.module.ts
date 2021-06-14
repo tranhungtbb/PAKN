@@ -15,10 +15,12 @@ import { MultiSelectModule } from 'primeng/multiselect'
 import { EmailSmsRoutingModule } from './email-sms-routing.module'
 import { EmailSmsComponent } from './email-sms.component'
 import { SMSCreateOrUpdateComponent } from './sms-management/sms-management-create-or-update/sms-create-or-update.component'
-import { SMSSentComponent } from './sms-sent/sms-sent.component'
+import { SMSSentComponent } from './sms-sent/sms-sent.component';
+import { EmailManagementComponent } from './email-management/email-management.component';
+import { EmailSendComponent } from './email-send/email-send.component'
 
 @NgModule({
-	declarations: [EmailSmsComponent, SMSSentComponent],
+	declarations: [EmailSmsComponent, SMSSentComponent, EmailManagementComponent, EmailSendComponent],
 	imports: [
 		CommonModule,
 		EmailSmsRoutingModule,

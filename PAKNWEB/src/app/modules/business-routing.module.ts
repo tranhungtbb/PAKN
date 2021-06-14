@@ -31,8 +31,11 @@ const routes: Routes = [
 			{ path: 'thong-bao', component: NotificationComponent },
 			{ path: 'xuat-file', component: ReportViewerComponent },
 			{ path: 'bao-cao', loadChildren: './statistic/statistic.module#StatisticModule' },
+
+			{ path: 'cuoc-goi', loadChildren: 'src/app/modules/call-history/call-history.module#CallHistoryModule' },
+
 			{ path: 'tin-nhan', component: LoginChatBoxComponent },
-			{ path: 'chatbox', component: DashboardChatBoxComponent},
+			{ path: 'chatbox', component: DashboardChatBoxComponent },
 		],
 	},
 ]

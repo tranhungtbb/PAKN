@@ -191,7 +191,7 @@
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Điện thoại <span class="cl-red">(*)</span></label>
 								<input numbersOnly stopLength="10" [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." autocomplete="off"
-									class="form-control border-brown" (change)="onCheckExist('Phone',$event.target.value)">
+									class="form-control border-brown" (change)="onCheckExist('Phone',$event.target.value)" pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$">
 								<div *ngIf="(submitted && f.phone.invalid)||(f.phone.invalid && (f.phone.dirty || f.phone.touched))" class="has-error m-b-12">
 									<div *ngIf="f.phone.errors.required">
 										<span class="help-block">Trường dữ liệu này không được để trống</span>

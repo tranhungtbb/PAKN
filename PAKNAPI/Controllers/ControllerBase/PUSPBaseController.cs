@@ -97,5 +97,26 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		[HttpGet]
+		[Route("PuDowloadFile")]
+		public async Task<ActionResult<object>> PuDowloadFile(string filePath)
+		{
+			try
+			{
+				List<PUSupportModelBase> rsData = await new PUSupportModelBase(_appSetting).PUSupportModelBaseDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"ListData", rsData},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 	}
 }
