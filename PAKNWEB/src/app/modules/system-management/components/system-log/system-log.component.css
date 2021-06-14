@@ -1,0 +1,3 @@
+:host ::ng-deep .ng-option:hover{
+  color: #42a4ff !important;
+}

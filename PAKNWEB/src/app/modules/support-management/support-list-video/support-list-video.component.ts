@@ -50,7 +50,7 @@ export class SupportListVideoComponent implements OnInit {
 		this.getAllUnitShortInfo()
 		this.form = this._fb.group({
 			title: [this.model.title, [Validators.required]],
-			content: [this.model.content, [Validators.required]],
+			content: [this.model.content],
 		})
 	}
 
@@ -137,12 +137,12 @@ export class SupportListVideoComponent implements OnInit {
 	preUpdate(id: any) {
 		this.submitted = false
 		this.files = []
-		this.model = this.lstSupport.find((x) => x.id == id)
+		this.model = {...this.lstSupport.find((x) => x.id == id)}
 		this.files.push({
 			fileType: this.model.fileType,
 			name: this.model.fileName,
 		})
-		this.rebuidForm()
+		// this.rebuidForm()
 		$('#modal').modal('show')
 	}
 	onSave() {
@@ -164,6 +164,7 @@ export class SupportListVideoComponent implements OnInit {
 					$('#modal').modal('hide')
 					this.files = []
 					this.getAllUnitShortInfo(this.objSupport.id)
+					this.toastr.success(COMMONS.ADD_SUCCESS)
 				} else {
 					let result = isNaN(res.result) == true ? 0 : res.result
 					if (result == -1) {
@@ -184,6 +185,7 @@ export class SupportListVideoComponent implements OnInit {
 					$('#modal').modal('hide')
 					this.files = []
 					this.getAllUnitShortInfo(this.objSupport.id)
+					this.toastr.success(COMMONS.UPDATE_SUCCESS)
 				} else {
 					let result = isNaN(res.result) == true ? 0 : res.result
 					if (result == -1) {

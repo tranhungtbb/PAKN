@@ -87,6 +87,7 @@ export class MyRecommendationComponent implements OnInit {
 
 	LtsStatus = ''
 	getList(Status: any = null) {
+		this.title = this.title.trim()
 		if (Status) this.LtsStatus = Status
 		let request = {
 			userId: this.storageService.getUserId(),

@@ -53,7 +53,7 @@ namespace PAKNAPI.Controllers
                     result.lstSYIndexWebsite = await new SYIndexWebsite(_appSetting).SY_IndexWebsiteGetByIndexSettingId(result.model.Id);
                     result.lstIndexSettingBanner = await new SYIndexSettingBanner(_appSetting).SYIndexSettingBannerGetByIndexSettingId(result.model.Id);
 
-                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                    //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
                     return new ResultApi { Success = ResultCode.OK, Result = result, Message = "Success" };
 
                 }
@@ -63,7 +63,7 @@ namespace PAKNAPI.Controllers
             }
             catch(Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }

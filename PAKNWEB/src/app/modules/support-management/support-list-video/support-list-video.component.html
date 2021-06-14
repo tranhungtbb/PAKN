@@ -65,11 +65,6 @@
 									<label> Mô tả tóm tắt video</label>
 									<textarea class="form-control" style="border: 2px solid #E5E5E5; border-radius: 10px;" type="text" rows="4" maxlength="700"
 										formControlName="content" [(ngModel)]="model.content" placeholder="Nhập ..."></textarea>
-									<div *ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error m-b-12">
-										<div *ngIf="f.content.errors.required">
-											<span class="help-block">Trường dữ liệu này không để trống</span>
-										</div>
-									</div>
 								</div>
 								<div class="col-12 attach-ct mt-3">
 									<p class="h5 text-uppercase mb-3">
