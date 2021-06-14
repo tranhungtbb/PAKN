@@ -334,4 +334,9 @@ export class Api {
 
 	//call history
 	public static CallHistoryGetPagedList = 'SYCallHistory/SYCallHistoryGetPagedList'
+
+	//dự thảo email
+	public static EmailManagementUpdate = 'EmailManagement/Update'
+	public static EmailManagementGetById = 'EmailManagement/GetById'
+	public static EmailManagementGetPagedList = 'EmailManagement/GetPagedList'
 }

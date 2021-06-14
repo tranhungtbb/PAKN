@@ -85,7 +85,7 @@ namespace PAKNAPI.Services.FileUpload
                         await file.CopyToAsync(memoryStream);
                     }
                     list.Add(new FileInfoModel {
-                        Name = file.Name, 
+                        Name = file.FileName, 
                         Path = Path.Combine(rootFolder, folder, fileName), 
                         Type = file.ContentType
                     });
