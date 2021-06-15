@@ -331,8 +331,8 @@ export class IndividualComponent implements OnInit {
 			email: [this.model.email, [Validators.email]],
 			address: [this.model.address, [Validators.required]],
 			iDCard: [this.model.iDCard, [Validators.required]], //, Validators.pattern(/^([0-9]){8,12}$/g)
-			placeIssue: [this.model.issuedPlace, []],
-			dateIssue: [this.model.dateOfIssue, []],
+			placeIssue: [this.model.issuedPlace],
+			dateIssue: [this.model.dateOfIssue],
 			status: [this.model.status],
 		})
 	}
@@ -375,6 +375,7 @@ export class IndividualComponent implements OnInit {
 		this.model._birthDay = fDob.value
 		this.model._dateOfIssue = fDateIssue.value
 		this.model.userId = this.userLoginId
+		this.model.issuedPlace = this.model.issuedPlace.trim()
 		if (!this.model.email) this.model.email = ''
 
 		if (this.email_exists || this.phone_exists || this.idCard_exists) {
@@ -401,6 +402,7 @@ export class IndividualComponent implements OnInit {
 		// 	this.model.districtId = ''
 		// 	this.model.wardsId = ''
 		// }
+		
 
 		if (this.model.id != null && this.model.id > 0) {
 			this._service.invididualUpdate(this.model).subscribe((res) => {
@@ -411,7 +413,7 @@ export class IndividualComponent implements OnInit {
 				}
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
 				// this.model = new IndividualObject()
-				this.rebuidForm()
+				// this.rebuidForm()
 				$('#modal').modal('hide')
 				this.getList()
 			})
@@ -428,7 +430,7 @@ export class IndividualComponent implements OnInit {
 					return
 				}
 				this._toastr.success(COMMONS.ADD_SUCCESS)
-				this.model = new IndividualObject()
+				// this.model = new IndividualObject()
 				$('#modal').modal('hide')
 				this.getList()
 			})

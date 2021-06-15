@@ -197,7 +197,16 @@ export class RecommendationsByUnitComponent implements OnInit {
 			this.getList()
 		}
 	}
-	viewDetail(unitId) {
+	viewDetail(unitId : any , status : any = null) {
+		if(status){
+			return this.router.navigate([
+				'/quan-tri/bao-cao/phan-anh-kien-nghi-theo-don-vi-chi-tiet',
+				unitId,
+				this.getFormattedDate(this.fromDate),
+				this.getFormattedDate(this.toDate),
+				status
+			])
+		}
 		return this.router.navigate([
 			'/quan-tri/bao-cao/phan-anh-kien-nghi-theo-don-vi-chi-tiet',
 			unitId,

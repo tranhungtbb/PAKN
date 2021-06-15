@@ -156,28 +156,28 @@
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
 									<td>
-										<strong class="hightlight" (click)="viewDetail(item.fieldId)">{{item.fieldName}}</strong>
+										<strong style="cursor: pointer;"><a (click)="viewDetail(item.fieldId)" class="ellipsis" title="Xem chi tiết">{{item.fieldName}}</a></strong>
 									</td>
 									<td>
-										<strong>{{item.total}}</strong>
+										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId)">{{item.total}}</strong>
 									</td>
 									<td>
-										<strong>{{item.receiveWait}}</strong>
+										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 2)">{{item.receiveWait}}</strong>
 									</td>
 									<td>
-										<strong>{{item.receiveApproved}}</strong>
+										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 4)">{{item.receiveApproved}}</strong>
 									</td>
 									<td>
-										<strong>{{item.receiveDeny}}</strong>
+										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 3)">{{item.receiveDeny}}</strong>
 									</td>
 									<td>
-										<strong>{{item.processWait}}</strong>
+										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 5)">{{item.processWait}}</strong>
 									</td>
 									<td>
-										<strong>{{item.processing}}</strong>
+										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 7)">{{item.processing}}</strong>
 									</td>
 									<td>
-										<strong>{{item.finised}}</strong>
+										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 10)">{{item.finised}}</strong>
 									</td>
 								</tr>
 							</ng-template>

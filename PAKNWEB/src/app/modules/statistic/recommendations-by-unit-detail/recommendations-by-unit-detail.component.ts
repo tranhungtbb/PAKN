@@ -58,6 +58,10 @@ export class RecommendationsByUnitDetailComponent implements OnInit {
 			this.unitId = +params['unitId']
 			this.fromDate = params['fromDate']
 			this.toDate = params['toDate']
+			let status = params['status']
+			if(!isNaN(status)){
+				this.dataSearch.status = Number(status)
+			}
 			this.getList()
 		})
 		this._serviceRecommendation.recommendationGetDataForCreate({}).subscribe((response) => {

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PAKNAPI.Controllers.ControllerBase
 {
-    public class EmailManagementController : Controller
+    public class EmailManagementController : BaseApiController
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
     }
 }

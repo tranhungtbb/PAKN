@@ -5,7 +5,7 @@
 			<form [formGroup]="formLogin" class="px-3" autocomplete="off">
 				<div class="form-group">
 					<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
-					<input numbersOnly maxlength="10" [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." autocomplete="off"
+					<input onlyNumber="true" maxlength="10" [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." autocomplete="off"
 						class="form-control border-brown" (change)="onCheckExist('Phone',$event.target.value)">
 					<div *ngIf="(fLoginSubmitted && fLogin.phone.invalid)||(fLogin.phone.invalid && (fLogin.phone.dirty || fLogin.phone.touched))" class="has-error m-b-12">
 						<div *ngIf="fLogin.phone.errors.required">

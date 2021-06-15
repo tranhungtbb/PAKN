@@ -45,6 +45,7 @@ export class HistoryChatBotComponent implements OnInit {
 	getList() {
 		this.question = this.question.trim()
 		this.answer = this.answer.trim()
+		this.fullName = this.fullName.trim()
 
 		let request = {
 			FullName: this.fullName,
@@ -78,6 +79,14 @@ export class HistoryChatBotComponent implements OnInit {
 	}
 
 	dataStateChange() {
+		if ($("[id='createDate']").val() == 'Invalid date') {
+			$("[id='createDate']").val('')
+			this.createdDate = null
+		}
+		if ($("[id='createDate']").val() == '') {
+			$("[id='createDate']").val('')
+			this.createdDate = null
+		}
 		this.pageIndex = 1
 		this.table.first = 0
 		this.getList()

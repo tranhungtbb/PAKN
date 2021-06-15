@@ -16,6 +16,7 @@ export class IndividualObject {
 		this.status = 1
 		this.birthDate = null
 		this.dateOfIssue = null
+		this.issuedPlace = ""
 	}
 	phone: string
 	fullName: string // fullName

@@ -199,7 +199,17 @@ export class RecommendationsByFieldComponent implements OnInit {
 			this.getList()
 		}
 	}
-	viewDetail(fieldId) {
+	viewDetail(fieldId : any , status : any = null) {
+		if(status){
+			return this.router.navigate([
+				'/quan-tri/bao-cao/phan-anh-kien-nghi-theo-linh-vuc-chi-tiet',
+				fieldId,
+				this.ltsUnitId,
+				this.getFormattedDate(this.fromDate),
+				this.getFormattedDate(this.toDate),
+				status
+			])
+		}
 		return this.router.navigate([
 			'/quan-tri/bao-cao/phan-anh-kien-nghi-theo-linh-vuc-chi-tiet',
 			fieldId,

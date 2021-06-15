@@ -5,7 +5,7 @@
 			<form class="px-3" [formGroup]="formLogin">
 				<div class="form-group">
 					<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
-					<input numbersOnly maxlength="10" [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." autocomplete="off"
+					<input onlyNumber="true" maxlength="10" [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." autocomplete="off"
 						class="form-control border-brown" (change)="onCheckExist('Phone',$event.target.value)">
 					<div *ngIf="(fLoginSubmitted && fLogin.phone.invalid)||(fLogin.phone.invalid && (fLogin.phone.dirty || fLogin.phone.touched))" class="has-error m-b-12">
 						<div *ngIf="fLogin.phone.errors.required">
@@ -129,7 +129,7 @@
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Mã số thuế <span class="cl-red">(*)</span></label>
-					<input [svTrim] numbersOnly maxlength="13" [(ngModel)]="model.Tax" formControlName="Tax" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] onlyNumber="true" maxlength="13" [(ngModel)]="model.Tax" formControlName="Tax" type="text" placeholder="Nhập..." class="form-control border-brown">
 					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.Tax.invalid)||(fOrgInfo.Tax.invalid && (fOrgInfo.Tax.dirty || fOrgInfo.Tax.touched))" class="has-error m-b-12">
 						<div *ngIf="fOrgInfo.Tax.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
