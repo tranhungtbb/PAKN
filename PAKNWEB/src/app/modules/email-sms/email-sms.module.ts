@@ -11,16 +11,18 @@ import { ContextMenuModule } from 'primeng/contextmenu'
 import { MatCheckboxModule } from '@angular/material'
 import { TreeTableModule } from 'primeng/treetable'
 import { MultiSelectModule } from 'primeng/multiselect'
+import { TreeviewModule } from 'ngx-treeview'
 
 import { EmailSmsRoutingModule } from './email-sms-routing.module'
 import { EmailSmsComponent } from './email-sms.component'
 import { SMSCreateOrUpdateComponent } from './sms-management/sms-management-create-or-update/sms-create-or-update.component'
-import { SMSSentComponent } from './sms-sent/sms-sent.component';
-import { EmailManagementComponent } from './email-management/email-management.component';
+import { SMSSentComponent } from './sms-sent/sms-sent.component'
+import { EmailManagementComponent } from './email-management/email-management.component'
 import { EmailSendComponent } from './email-send/email-send.component'
+import { EmailCreateComponent } from './email-create/email-create.component'
 
 @NgModule({
-	declarations: [EmailSmsComponent, SMSSentComponent, EmailManagementComponent, EmailSendComponent],
+	declarations: [EmailSmsComponent, SMSSentComponent, EmailManagementComponent, EmailSendComponent, EmailCreateComponent],
 	imports: [
 		CommonModule,
 		EmailSmsRoutingModule,
@@ -37,6 +39,7 @@ import { EmailSendComponent } from './email-send/email-send.component'
 		MultiSelectModule,
 		NgSelectModule,
 		ContextMenuModule,
+		TreeviewModule.forRoot(),
 	],
 })
 export class EmailSmsModule {}
