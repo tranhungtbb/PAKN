@@ -1,29 +1,22 @@
-import { Component, OnInit, Pipe, Directive } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
-import { UserObject } from '../../../../models/UserObject'
 import { SystemconfigService } from '../../../../services/systemconfig.service'
 import { ToastrService } from 'ngx-toastr'
 import {ActivatedRoute} from '@angular/router'
 import { RESPONSE_STATUS, TYPECONFIG } from 'src/app/constants/CONSTANTS'
-import {SystemtConfig,ConfigSMS } from 'src/app/models/systemtConfigObject'
+import {SystemtConfig, ConfigSwitchboard} from 'src/app/models/systemtConfigObject'
 import { COMMONS } from 'src/app/commons/commons'
-
 @Component({
-	selector: 'app-sms-setting',
-	templateUrl: './sms-setting.component.html',
-	styleUrls: ['./sms-setting.component.css'],
+	selector: 'app-switchboard-setting',
+	templateUrl: './switchboard-setting.component.html',
+	styleUrls: ['./switchboard-setting.component.css'],
 })
-export class SmsSettingComponent implements OnInit {
+export class SwitchboardSettingComponent implements OnInit {
 	model: SystemtConfig = new SystemtConfig()
-	configSMS : ConfigSMS = new ConfigSMS()
 	submitted: boolean = false
+	configSwitchboard : ConfigSwitchboard = new ConfigSwitchboard()
+	
 	form: FormGroup
-
-	listStatus: any = [
-		{ value: true, text: 'Tin nhắn nội dung có dấu' },
-		{ value: false, text: 'Tin nhắn nội dung không dấu' },
-	]
-
 	constructor(private _service: SystemconfigService, private _toastr: ToastrService, private _fb: FormBuilder, private activatedRoute : ActivatedRoute) {}
 
 	ngOnInit() {
@@ -40,8 +33,8 @@ export class SmsSettingComponent implements OnInit {
 		this._service.syConfigGetById({Id : this.model.id}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result.SYConfigGetByID.length > 0) {
-					this.model = response.result.SYConfigGetByID[0]
-					this.configSMS = JSON.parse(this.model.content)
+					this.model = {...response.result.SYConfigGetByID[0]}
+					this.configSwitchboard = JSON.parse(this.model.content)
 				}
 			} else {
 				this._toastr.error(response.message)
@@ -58,38 +51,29 @@ export class SmsSettingComponent implements OnInit {
 	resd = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 	buildForm() {
 		this.form = this._fb.group({
-			title : [this.model.title, Validators.required],
-			description : [this.model.description, Validators.required],
-			linkwebservice: [this.configSMS.linkwebservice, Validators.required],
-			password: [this.configSMS.password, Validators.required],
-			user: [this.configSMS.user, Validators.required],
-			code: [this.configSMS.code, Validators.required],
-			serviceID: [this.configSMS.serviceID, Validators.required],
-			commandCode: [this.configSMS.commandCode, Validators.required],
-			contentType: [this.configSMS.contentType, Validators.required],
+			title : [this.model.title , Validators.required],
+			description : [this.model.description , Validators.required],
+			link: [this.configSwitchboard.link, Validators.required],
+			config: [this.configSwitchboard.config, Validators.required],
+			// port: [this.configEmail.port, Validators.required],
+			// email: [this.configEmail.email, [Validators.required, Validators.pattern(this.resd)]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
 		})
 	}
 	rebuilForm() {
 		this.form.reset({
 			title : this.model.title,
 			description : this.model.description,
-			linkwebservice: this.configSMS.linkwebservice,
-			password: this.configSMS.password,
-			user: this.configSMS.user,
-			code: this.configSMS.code,
-			serviceID: this.configSMS.serviceID,
-			commandCode: this.configSMS.commandCode,
-			contentType: this.configSMS.contentType
+			link: this.configSwitchboard.link,
+			config: this.configSwitchboard.config
 		})
 	}
 	onSave() {
-		this.model.type = TYPECONFIG.CONFIG_SMS
+		this.model.type = TYPECONFIG.CONFIG_SWITCHBOARD
 		this.submitted = true
 		if (this.form.invalid) {
 			return
 		}
-		this.model.content = JSON.stringify(this.configSMS)
-		
+		this.model.content = JSON.stringify(this.configSwitchboard)
 		this._service.syConfigUpdate(this.model).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
@@ -106,4 +90,3 @@ export class SmsSettingComponent implements OnInit {
 		window.history.back()
 	}
 }
-

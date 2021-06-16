@@ -1,6 +1,6 @@
 <div class="sb-tk-pakn mb-4" *ngIf="isLogin">
 	<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between" (click)="redirectMyRecommendaton(0)">
-		<h4 class="text-uppercase">Phản ánh, kiến nghị của tôi</h4>
+		<h4 class="text-uppercase">Phản ánh kiến nghị của tôi</h4>
 		<h4 class="counter">{{totalRecommentdation}}</h4>
 	</div>
 	<div class="card-body p-0">
@@ -41,7 +41,7 @@
 
 <div class="sb-pakn-dqt mb-4">
 	<div class="tt-v1 pt-3 pb-3">
-		<h4 class="text-uppercase">PA-KN được quan tâm nhiều</h4>
+		<h4 class="text-uppercase">Phản ánh kiến nghị tiêu biểu</h4>
 	</div>
 	<div class="bootstrap-media" *ngFor="let item of RecommendationsOrderByCountClick; let i = index">
 		<div class="media" *ngIf="i ==0">

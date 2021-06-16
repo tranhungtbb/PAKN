@@ -223,8 +223,63 @@ namespace PAKNAPI.ModelBase
 
 	}
 
+	public class SYConfig
+	{
+		private SQLCon _sQLCon;
 
-	public class SYIntroduceUnit
+		public SYConfig(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYConfig()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Description { get; set; }
+		public string Content { get; set; }
+		public int? Type { get; set; }
+
+		public int RowNumber { get; set; }
+
+		public async Task<List<SYConfig>> SYConfigGetByIdDAO(int? IntroduceId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", IntroduceId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYConfig>("SY_ConfigGetById", DP)).ToList();
+		}
+
+		public async Task<List<SYConfig>> SYConfigGetAllOnPageDAO(string Title,string Description, int? Type, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Title", Title);
+			DP.Add("Description", Description);
+			DP.Add("Type", Type);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYConfig>("[SY_ConfigGetAllOnPage]", DP)).ToList();
+		}
+
+
+		public async Task<int?> SYConfigUpdateDAO(SYConfig syConfig)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", syConfig.Id);
+			DP.Add("Title", syConfig.Title);
+			DP.Add("Description", syConfig.Description);
+			DP.Add("Type", syConfig.Type);
+			DP.Add("Content", syConfig.Content);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_ConfigUpdate", DP);
+		}
+	}
+
+
+		public class SYIntroduceUnit
 	{
 		private SQLCon _sQLCon;
 
