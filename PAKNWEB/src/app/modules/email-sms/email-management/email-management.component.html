@@ -3,8 +3,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
-					<li class="breadcrumb-item"><a>Email</a></li>
-					<li class="breadcrumb-item active"><a class="font-weight-bold">Danh sách email</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-500 font-size-22 text-uppercase">Danh sách email</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
 				
@@ -112,7 +111,7 @@
 											</a>
 											<a *ngIf="item.status == 1" [routerLink]="['/quan-tri/email-sms/email/edit',item.id]" class="btn-icon grd-brown text-brown mr-2 cursor"><i
 													class="bi bi-pencil-square"></i></a>
-											<a (click)="confirm(item.id)" class="btn-icon grd-red text-white cursor mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
+											<a (click)="confirm(item.id)" style="cursor: pointer;" class="btn-icon grd-red text-white cursor mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
 													class="bi bi-trash"></i></a>
 											<a class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
