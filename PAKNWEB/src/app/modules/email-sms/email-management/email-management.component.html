@@ -23,7 +23,7 @@
 					<div class="table-responsive">
 
 						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="query.pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
@@ -37,7 +37,7 @@
 											<strong>Tiêu đề</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="title" maxlength="100" (keydown.enter)="dataStateChange()"
+										<input class="form-control form-control-sm" [(ngModel)]="query.title" maxlength="100" (keydown.enter)="dataStateChange()"
 											placeholder="Nhập tên..." />
 									</th>
 
@@ -47,9 +47,9 @@
 											<span class="caret-tb"></span>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select placeholder="Chọn đơn vị ..." [(ngModel)]="query.unit" [closeOnSelect]="true" style="width: 200px !important;"
+											<ng-select placeholder="Chọn đơn vị ..." [(ngModel)]="query.unitName" [closeOnSelect]="true" style="width: 200px !important;"
 												(change)="dataStateChange()">
-												<ng-option *ngFor="let nt of AdministrativeUnits" [value]="nt.id">
+												<ng-option *ngFor="let nt of AdministrativeUnits" [value]="nt.name">
 													{{nt.name}}
 												</ng-option>
 											</ng-select>
@@ -87,7 +87,9 @@
 									<td>
 										<strong class="highlight"><a class="ellipsis" (click)=" getSMSModelById(item.id)" title="Cập nhập">{{item.title}}</a></strong>
 									</td>
-									<td>{{item.unitName}}</td>
+									<td>
+										<p class="mb-0 text-2line" title="{{item.unitName}}">{{item.unitName}}</p>
+									</td>
 									<td>{{item.objectName}}</td>
 									<td>
 										<span type="button" *ngIf="item.status == 1" class="badge rounded-pill badge-outline-light bg-white">Đang soạn thảo</span>
@@ -143,7 +145,7 @@
 					</div>
 					<div class="modal-body no-padding-bottom" style="border: none;">
 						<div style="text-align: center;">
-							<strong class="change-status-title">Bạn có chắc chắn thực hiện hành động này?</strong>
+							<strong class="change-status-title">Bạn có chắc chắn xóa dự thảo email này?</strong>
 						</div>
 					</div>
 					<div class="modal-footer" style="border: none; justify-content: center;">
@@ -170,7 +172,7 @@
 					</div>
 					<div class="modal-body no-padding-bottom" style="border: none;">
 						<div style="text-align: center;">
-							<strong class="change-status-title">Bạn có mmuốn gửi SMS này?</strong>
+							<strong class="change-status-title">Bạn có mmuốn gửi email này?</strong>
 						</div>
 					</div>
 					<div class="modal-footer" style="border: none; justify-content: center;">

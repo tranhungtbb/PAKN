@@ -341,4 +341,7 @@ export class Api {
 	public static EmailManagementUpdate = 'EmailManagement/Update'
 	public static EmailManagementGetById = 'EmailManagement/GetById'
 	public static EmailManagementGetPagedList = 'EmailManagement/GetPagedList'
+	public static EmailManagementDelete = 'EmailManagement/delete'
+	public static EmailManagementSendEmail = 'EmailManagement/SendEmail'
+	public static EmailManagementHisPagedList = 'EmailManagement/GetHisPagedList'
 }

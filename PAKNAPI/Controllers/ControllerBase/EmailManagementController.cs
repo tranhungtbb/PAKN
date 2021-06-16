@@ -39,6 +39,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			try
 			{
 				var users = _httpContextAccessor.HttpContext.User.Identities.FirstOrDefault().Claims; //FindFirst(ClaimTypes.NameIdentifier);
+				var userId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext) +"";
 				//var userId = users.FirstOrDefault(c => c.Type.Equals("Id", StringComparison.OrdinalIgnoreCase)).Value;
 				var jss = new JsonSerializerSettings
 				{
@@ -58,14 +59,19 @@ namespace PAKNAPI.Controllers.ControllerBase
 				var listBusinessNew = JsonConvert.DeserializeObject<IEnumerable<EmailManagementBusinessModel>>(form["ListBusinessNew"].ToString(), jss);
 				var files = form.Files;
 				///
+				EmailManagementHisModel hisModel = new EmailManagementHisModel { CreatedBy = int.Parse(userId) };
 				EmailManagementModelBase model = null;
-				//data.UserUpdateId = int.Parse(userId);
+				data.UserUpdateId = int.Parse(userId);
 				if (data.Id.HasValue && data.Id > 0)
+                {
 					model = await new EmailMangementADO(_appSetting).Update(data);
+					hisModel.Status = STATUS_HIS_SMS.UPDATE;
+				}
 				else
                 {
-					//data.UserCreatedId = int.Parse(userId);
+					data.UserCreatedId = int.Parse(userId);
 					model = await new EmailMangementADO(_appSetting).Insert(data);
+					hisModel.Status = STATUS_HIS_SMS.CREATE;
 				}					
 
 				///attachments
@@ -132,6 +138,12 @@ namespace PAKNAPI.Controllers.ControllerBase
 					{"Data", model},
 				};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				///insert his
+				///
+				hisModel.ObjectId = model.Id;
+				await insertHis(hisModel);
+
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
@@ -167,7 +179,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 					{"ListIndividual", listIndividual},
 					{"ListBusiness", listBusiness},
 				};
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch(Exception ex)
@@ -187,14 +199,15 @@ namespace PAKNAPI.Controllers.ControllerBase
 			int? unit,
 			int? objectId,
 			short? status,
+			string unitName,
 			int pageIndex = 1,
 			int pageSize = 20)
 		{
 			try
 			{
+				
 
-
-				var listPaged = await new EmailMangementADO(_appSetting).GetPagedList(title,unit,objectId,status,pageIndex,pageSize);
+				var listPaged = await new EmailMangementADO(_appSetting).GetPagedList(title,unit,objectId,status, unitName, pageIndex,pageSize);
 
 				IDictionary<string, object> json = new Dictionary<string, object>
 				{
@@ -211,8 +224,113 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("Delete")]
+		public async Task<ActionResult<object>> Delete(long id)
+		{
+			try
+			{
+				var listPaged = await new EmailMangementADO(_appSetting).Delete(id);
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+				{
+					{"Data", null}
+				};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SendEmail")]
+		public async Task<ActionResult<object>> SendEmail(long id)
+		{
+			try
+			{
+				var userId = int.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
+
+				///TODO
+				var rs = await new EmailMangementADO(_appSetting).UpdateSendStatus(id, userId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+				{
+					{"Data", null}
+				};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				///insert his
+				///
+				var hisModel = new EmailManagementHisModel
+				{
+					CreatedBy = userId,
+					Status = STATUS_HIS_SMS.SEND,
+					ObjectId = id
+				};
+				await insertHis(hisModel);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("GetHisPagedList")]
+		public async Task<ActionResult<object>> GetHisPagedList(long id)
+		{
+			try
+			{
+				var userId = int.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
+
+				///TODO
+				var rs = await new EmailMangementADO(_appSetting).UpdateSendStatus(id, userId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+				{
+					{"Data", null}
+				};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 
 
+		private async Task<int> insertHis(EmailManagementHisModel model)
+        {
+			model.CreatedBy = (int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+			string userFullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
+
+			switch (model.Status)
+			{
+				case STATUS_HIS_SMS.CREATE:
+					model.Content = userFullName + " đã khởi tạo SMS";
+					break;
+				case STATUS_HIS_SMS.UPDATE:
+					model.Content = userFullName + " đã cập nhập SMS";
+					break;
+				case STATUS_HIS_SMS.SEND:
+					model.Content = userFullName + " đã gửi SMS";
+					break;
+			}
+			return await new EmailManagemnetHisADO(_appSetting).Insert(model);
+		}
 		private void sendEmail()
         {
 
