@@ -1,4 +1,4 @@
-<!-- <div class="content-body">
+<div class="content-body">
 	<div class="container-fluid p-0">
 		<div class="row">
 			<div class="col-lg-12">
@@ -8,7 +8,7 @@
 				</ol>
 				<div class="btn-group group-button-table" role="group">
 				
-					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="redirectCreate()">
+					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" routerLink="/quan-tri/email-sms/email/create">
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 						</svg>
@@ -47,7 +47,7 @@
 											<span class="caret-tb"></span>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select placeholder="Chọn đơn vị ..." [(ngModel)]="unitId" [closeOnSelect]="true" style="width: 200px !important;"
+											<ng-select placeholder="Chọn đơn vị ..." [(ngModel)]="query.unit" [closeOnSelect]="true" style="width: 200px !important;"
 												(change)="dataStateChange()">
 												<ng-option *ngFor="let nt of AdministrativeUnits" [value]="nt.id">
 													{{nt.name}}
@@ -62,7 +62,7 @@
 											<span class="caret-tb"></span>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm" style="max-width: 180px;">
-											<ng-select class="" [items]="listCategory" placeholder="Đối tượng" bindLabel="text" bindValue="value" [(ngModel)]="type"
+											<ng-select class="" [items]="listCategory" placeholder="Đối tượng" bindLabel="text" bindValue="value" [(ngModel)]="query.objectId"
 												(change)="dataStateChange()">
 											</ng-select>
 										</div>
@@ -73,7 +73,7 @@
 											<span class="caret-tb"></span>
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm" style="max-width: 180px;">
-											<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="status"
+											<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="query.status"
 												(change)="dataStateChange()">
 											</ng-select>
 										</div>
@@ -86,17 +86,16 @@
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
 										<strong class="highlight"><a class="ellipsis" (click)=" getSMSModelById(item.id)" title="Cập nhập">{{item.title}}</a></strong>
-										<span class="content-sms">{{item.content}}</span>
 									</td>
 									<td>{{item.unitName}}</td>
-									<td>{{item.type}}</td>
+									<td>{{item.objectName}}</td>
 									<td>
 										<span type="button" *ngIf="item.status == 1" class="badge rounded-pill badge-outline-light bg-white">Đang soạn thảo</span>
 										<span type="button" *ngIf="item.status == 2" class="badge rounded-pill blue-3">Đã gửi</span>
 									</td>
 									<td style="text-align: center;">
 										<div class="d-flex justify-content-end">
-											<a *ngIf="item.status == 1 && item.unitName != null" class="btn-icon grd-blue text-white mr-2 cursor" (click)="onSend(item.id)">
+											<a *ngIf="item.status == 1" class="btn-icon grd-blue text-white mr-2 cursor" style="cursor: pointer;" (click)="onSend(item.id)">
 												<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
 													<path d="M13.5938 0.125927L0.468823 7.69624C-0.205005 8.08589
 													 -0.137622 9.07905 0.580151 9.37495L4.68757 11.0742V14.0625C4.68757 
@@ -109,7 +108,7 @@
 													</path>
 												</svg>
 											</a>
-											<a *ngIf="item.status == 1" (click)=" redirectUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i
+											<a *ngIf="item.status == 1" [routerLink]="['/quan-tri/email-sms/email/edit',item.id]" class="btn-icon grd-brown text-brown mr-2 cursor"><i
 													class="bi bi-pencil-square"></i></a>
 											<a (click)="confirm(item.id)" class="btn-icon grd-red text-white cursor mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
 													class="bi bi-trash"></i></a>
@@ -186,7 +185,7 @@
 </div>
 
 
-<div class="modal fade" id="modalHisSMS" (close)="close()">
+<!-- <div class="modal fade" id="modalHisSMS" (close)="close()">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="min-width: 90%;">
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0">
@@ -282,10 +281,10 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 
 
-<div class="modal fade" id="modalDetail">
+<!-- <div class="modal fade" id="modalDetail">
 	<div class="modal-dialog modal-dialog-centered" style="max-width: 70%" role="document">
 		<div class="modal-content rounded">
 			<form class="form-horizontal">

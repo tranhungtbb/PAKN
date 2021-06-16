@@ -20,11 +20,15 @@ namespace PAKNAPI.Models.ModelBase
         public DateTime? SendDate { get; set; }
         public int? UserSend { get; set; }
         public int? Unit { get; set; }
+        public int? Status { get; set; }
     }
 
     public class EmailManagementPagedListModel : EmailManagementModelBase
     {
         public long? RowNumber { get; set; }
+        public int? ObjectId { get; set; }
+        public string ObjectName { get; set; }
+        public string UnitName { get; set; }
     }
     public class EmailManagementAttachmentModel
     {
@@ -40,6 +44,7 @@ namespace PAKNAPI.Models.ModelBase
         public long? EmailId { get; set; }
         public int? IndividualId { get; set; }
         public string IndividualFullName { get; set; }
+        public string UnitName { get; set; }
     }
     public class EmailManagementBusinessModel
     {
@@ -48,6 +53,7 @@ namespace PAKNAPI.Models.ModelBase
         public int? BusinessId { get; set; }
         public string RepreFullName { get; set; }
         public string BusinessName { get; set; }
+        public string UnitName { get; set; }
     }
 
     public class EmailMangementADO
@@ -121,7 +127,7 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("Status", status);
             DP.Add("PageIndex", pageIndex);
             DP.Add("PageSize", pageSize);
-            var rs = await _sQLCon.ExecuteListDapperAsync<EmailManagementPagedListModel>("Email_QuanLyTinNhanInsert", DP);
+            var rs = await _sQLCon.ExecuteListDapperAsync<EmailManagementPagedListModel>("[Email_QuanLyTinNhan_GetPagedList]", DP);
             return rs;
         }
     }
@@ -190,6 +196,7 @@ namespace PAKNAPI.Models.ModelBase
                 DP = new DynamicParameters();
                 DP.Add("EmailId", model.EmailId);
                 DP.Add("IndividualId", model.IndividualId);
+                DP.Add("UnitName", model.UnitName);
                 return await _sQLCon.ExecuteNonQueryDapperAsync("[Email_quanlytinnhan_IndividualInsert]", DP);
             }
             
@@ -236,6 +243,7 @@ namespace PAKNAPI.Models.ModelBase
                 DP = new DynamicParameters();
                 DP.Add("EmailId", model.EmailId);
                 DP.Add("BusinessId", model.BusinessId);
+                DP.Add("UnitName", model.UnitName);
                 return await _sQLCon.ExecuteNonQueryDapperAsync("[Email_quanlytinnhan_BusinessInsert]", DP);
             }
 

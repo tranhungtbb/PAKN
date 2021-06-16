@@ -19,9 +19,11 @@ export class EmailIndividualObject {
 	id: number
 	emailId: number
 	individualId: number
+	unitName:string
 }
 export class EmailBusinessObject {
 	id: number
 	emailId: number
 	businessId: number
+	unitName:string
 }

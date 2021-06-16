@@ -74,6 +74,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 				{
 					var ids = string.Join(",", listAttachemntDel.Select(c => c.Id));
 					var delFileRs = await new EmailManagementAttachmentADO(_appSetting).Delete(ids);
+					await _fileService.Remove(listAttachemntDel.Select(c=>c.FileAttach).ToArray());
 				}
 				if (files != null && files.Any())
                 {
@@ -211,5 +212,10 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+
+		private void sendEmail()
+        {
+
+        }
 	}
 }
