@@ -96,7 +96,7 @@ export class AdministrativeProceduresComponent implements OnInit {
 			Organization: this.dataSearch.organization,
 			UnitId: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
-			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
+			Status: 3, // đã công bố
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
