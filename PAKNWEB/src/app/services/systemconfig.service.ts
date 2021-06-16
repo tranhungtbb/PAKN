@@ -62,4 +62,25 @@ export class SystemconfigService {
 	getSystemTimeDateActive(): Observable<any> {
 		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.TimeConfigGetDateActive)
 	}
+	/// chính thức
+	
+	getAllOnPage(query : any) : Observable<any>{
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.SYConfigSystemGetAllOnPage)
+
+	}
+
+	syConfigUpdate(query : any) : Observable<any>{
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_TIME),
+		}
+		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.SYConfigSystemUpdate,headers)
+
+	}
+	syConfigGetById(query : any) : Observable<any>{
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.SYConfigSystemGetById)
+
+	}
+
+
 }

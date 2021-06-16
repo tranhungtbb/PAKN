@@ -295,6 +295,10 @@ export class Api {
 	public static SMSGetFirstBase = 'SYSPBase/SYSMSGetFirstBase'
 	public static SMSConfigSystemUpdate = 'SYSPBase/SYSMSInsertBase'
 
+	public static SYConfigSystemGetAllOnPage = 'SYSPBase/SYConfigGetAllOnPageBase'
+	public static SYConfigSystemGetById = 'SYSPBase/SYConfigGetByIDBase'
+	public static SYConfigSystemUpdate = 'SYSPBase/SYConfigUpdateBase'
+
 	public static TimeConfigInsert = 'SYSPBase/SYTimeInsertBase'
 	public static TimeConfigUpdate = 'SYSPBase/SYTimeUpdateBase'
 	public static TimeConfigGetAllOnPage = 'SYSPBase/SYTimeGetAllOnPageBase'
