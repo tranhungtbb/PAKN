@@ -20,11 +20,15 @@ namespace PAKNAPI.Models.ModelBase
         public DateTime? SendDate { get; set; }
         public int? UserSend { get; set; }
         public int? Unit { get; set; }
+        public int? Status { get; set; }
     }
 
     public class EmailManagementPagedListModel : EmailManagementModelBase
     {
         public long? RowNumber { get; set; }
+        public int? ObjectId { get; set; }
+        public string ObjectName { get; set; }
+        public string UnitName { get; set; }
     }
     public class EmailManagementAttachmentModel
     {
@@ -40,6 +44,7 @@ namespace PAKNAPI.Models.ModelBase
         public long? EmailId { get; set; }
         public int? IndividualId { get; set; }
         public string IndividualFullName { get; set; }
+        public string UnitName { get; set; }
     }
     public class EmailManagementBusinessModel
     {
@@ -48,6 +53,21 @@ namespace PAKNAPI.Models.ModelBase
         public int? BusinessId { get; set; }
         public string RepreFullName { get; set; }
         public string BusinessName { get; set; }
+        public string UnitName { get; set; }
+    }
+    public class EmailManagementHisModel
+    {
+        public int? Id { get; set; }
+        public long? ObjectId { get; set; }
+        public int? Type { get; set; }
+        public string Content { get; set; }
+        public int? Status { get; set; }
+        public long? CreatedBy { get; set; }
+    }
+    public class EmailManagementHisPagedListModel : EmailManagementHisModel
+    {
+        public int? RowNumber { get; set; }
+        public string FullName { get; set; }
     }
 
     public class EmailMangementADO
@@ -111,6 +131,7 @@ namespace PAKNAPI.Models.ModelBase
             int? unit,
             int? objectId,
             short? status,
+            string unitName,
             int pageIndex = 1,
             int pageSize = 20)
         {
@@ -119,9 +140,26 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("Unit", unit);
             DP.Add("ObjectId", objectId);
             DP.Add("Status", status);
+            DP.Add("UnitName", unitName);
             DP.Add("PageIndex", pageIndex);
             DP.Add("PageSize", pageSize);
-            var rs = await _sQLCon.ExecuteListDapperAsync<EmailManagementPagedListModel>("Email_QuanLyTinNhanInsert", DP);
+            var rs = await _sQLCon.ExecuteListDapperAsync<EmailManagementPagedListModel>("[Email_QuanLyTinNhan_GetPagedList]", DP);
+            return rs;
+        }
+        
+        public async Task<int> Delete(long id)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("Id", id);
+            var rs = await _sQLCon.ExecuteNonQueryDapperAsync("[Email_QuanLyTinNhan_Delete]", DP);
+            return rs;
+        }
+        public async Task<int> UpdateSendStatus(long id, int userSend = 0)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("Id", id);
+            DP.Add("UserSend", userSend);
+            var rs = await _sQLCon.ExecuteNonQueryDapperAsync("[Email_QuanLyTinNhan_UpdateSendStatus]", DP);
             return rs;
         }
     }
@@ -190,6 +228,7 @@ namespace PAKNAPI.Models.ModelBase
                 DP = new DynamicParameters();
                 DP.Add("EmailId", model.EmailId);
                 DP.Add("IndividualId", model.IndividualId);
+                DP.Add("UnitName", model.UnitName);
                 return await _sQLCon.ExecuteNonQueryDapperAsync("[Email_quanlytinnhan_IndividualInsert]", DP);
             }
             
@@ -236,6 +275,7 @@ namespace PAKNAPI.Models.ModelBase
                 DP = new DynamicParameters();
                 DP.Add("EmailId", model.EmailId);
                 DP.Add("BusinessId", model.BusinessId);
+                DP.Add("UnitName", model.UnitName);
                 return await _sQLCon.ExecuteNonQueryDapperAsync("[Email_quanlytinnhan_BusinessInsert]", DP);
             }
 
@@ -252,6 +292,51 @@ namespace PAKNAPI.Models.ModelBase
             DynamicParameters DP = new DynamicParameters();
             DP.Add("EmailId", emailId);
             return await _sQLCon.ExecuteListDapperAsync<EmailManagementBusinessModel>("Email_Business_GetByEmailId", DP);
+        }
+    }
+    public class EmailManagemnetHisADO
+    {
+        private SQLCon _sQLCon;
+
+        public EmailManagemnetHisADO(IAppSetting appSetting)
+        {
+            _sQLCon = new SQLCon(appSetting.GetConnectstring());
+        }
+
+        public EmailManagemnetHisADO()
+        {
+        }
+
+        public async Task<int> Insert(EmailManagementHisModel model)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP = new DynamicParameters();
+            DP.Add("ObjectId", model.ObjectId);
+            DP.Add("Type", model.Type);
+            DP.Add("Content", model.Content);
+            DP.Add("Status", model.Status);
+            DP.Add("CreatedBy", model.CreatedBy);
+
+            return await _sQLCon.ExecuteNonQueryDapperAsync("[HIS_Email_Insert]", DP);
+        }
+        public async Task<IEnumerable<EmailManagementHisPagedListModel>> GetPagedList(
+            string content,
+            string createdBy,
+            string createdDate,
+            int? status,
+            int pageIndex =1,
+            int pageSize = 20)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP = new DynamicParameters();
+            DP.Add("content", content);
+            DP.Add("createdBy", createdBy);
+            DP.Add("createdDate", createdDate);
+            DP.Add("Status", status);
+            DP.Add("pageIndex", pageIndex);
+            DP.Add("pageSize", pageSize);
+
+            return await _sQLCon.ExecuteListDapperAsync<EmailManagementHisPagedListModel>("[HIS_Email_GetPagedList]", DP);
         }
     }
 }

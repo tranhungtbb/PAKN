@@ -1,12 +1,40 @@
 import { Component, OnInit } from '@angular/core'
 
+import { Router, ActivatedRoute } from '@angular/router'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { TreeviewItem, TreeviewConfig } from 'ngx-treeview'
+import { TreeviewI18n } from 'ngx-treeview'
+import { ToastrService } from 'ngx-toastr'
+import { RESPONSE_STATUS, FILETYPE } from 'src/app/constants/CONSTANTS'
+import { STATUS_HIS_SMS } from 'src/app/constants/CONSTANTS'
+import { COMMONS } from 'src/app/commons/commons'
+import { EmailManagementService } from 'src/app/services/email-management.service'
+import { SMSManagementService } from 'src/app/services/sms-management'
+import { smsManagementObject, smsManagementMapObject } from 'src/app/models/smsManagementObject'
+import { SMSTreeviewI18n } from 'src/app/shared/sms-treeview-i18n'
+import { EmailAttachmentObject, EmailBusinessObject, EmailIndividualObject, EmailObject } from 'src/app/models/emailManagementObject'
+import { first } from 'rxjs/operators'
+import { UploadFileService } from 'src/app/services/uploadfiles.service'
+import { data } from 'jquery'
+
+declare var $:any
+declare var jquery:any
+
 @Component({
 	selector: 'app-email-management',
 	templateUrl: './email-management.component.html',
 	styleUrls: ['./email-management.component.css'],
 })
 export class EmailManagementComponent implements OnInit {
-	constructor() {}
+	constructor(
+		private _toastr: ToastrService,
+		private formBuilder: FormBuilder,
+		private router: Router,
+		private emailService: EmailManagementService,
+		private activatedRoute: ActivatedRoute,
+		private smsService: SMSManagementService,
+		private fileService: UploadFileService
+	) {}
 
 	listStatus: any = [
 		{ value: 1, text: 'Đang soạn thảo' },
@@ -29,10 +57,94 @@ export class EmailManagementComponent implements OnInit {
 		pageIndex: 1,
 		pageSize: 20,
 		title: '',
-		unitId: '',
-		objectType: '',
+		unit: '',
+		objectId: '',
 		status: '',
+		unitName:''
+	}
+	totalRecords = 0
+
+	ngOnInit() {
+		this.getPagedList();
+		this.getAdministrativeUnits();
+	}
+	dataStateChange(){
+		this.getPagedList();
+	}
+	onPageChange(event: any) {
+		this.query.pageSize = event.rows
+		this.query.pageIndex = event.first / event.rows + 1
+		this.getPagedList()
+	}
+	
+	//
+	getPagedList(){
+
+		let query = {...this.query}
+		if(!query.unit)query.unit='';
+		if(!query.objectId)query.objectId=''
+		if(!query.status)query.status=''
+		if(query.unitName){
+			query.unitName = query.unitName.replace('-','').trim()
+		}else query.unitName = ''
+
+		this.emailService.getPagedList(query).subscribe(res=>{
+			console.log(res);
+			this.listData = res.result.Data;
+			if(this.listData[0] && this.listData[0]!.rowNumber > 0){
+				this.totalRecords = this.listData[0].rowNumber
+			}
+		});
 	}
 
-	ngOnInit() {}
+	emailId = 0
+	confirm(id:number) {
+		this.emailId = id
+		$('#modalConfirm').modal('show')
+	}
+
+	onDelete() {
+		$('#modalConfirm').modal('hide')
+		this.emailService.Delete(this.emailId).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				if (res.result > 0) {
+					this._toastr.success(COMMONS.DELETE_SUCCESS)
+					this.getPagedList()
+				} else {
+					this._toastr.error(COMMONS.DELETE_FAILED)
+				}
+			} else {
+				this._toastr.error(COMMONS.DELETE_FAILED)
+				this.getPagedList()
+			}
+		})
+	}
+	onSend(id: number) {
+		$('#modalConfirmChangeStatus').modal('show')
+		this.emailId = id
+	}
+
+	onUpdateStatusTypeSend() {
+		$('#modalConfirmChangeStatus').modal('hide')
+		this.emailService.SendEmail(this.emailId).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+
+				this.getPagedList();
+			} else {
+
+			}
+		})
+	}
+	AdministrativeUnits:any[]=[]
+	getAdministrativeUnits() {
+		this.smsService.GetListAdmintrative({ id: 37 }).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.AdministrativeUnits = res.result.CAAdministrativeUnitsGetDropDown
+				// this.getSMSModelById()
+			} else {
+				this.AdministrativeUnits = []
+			}
+		})
+	}
+
 }

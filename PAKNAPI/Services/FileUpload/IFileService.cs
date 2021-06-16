@@ -12,5 +12,6 @@ namespace PAKNAPI.Services.FileUpload
         Task<IList<FileInfoModel>> Save(IFormFileCollection files, string folderPath);
         Task<byte[]> GetBinary(string filePath);
         Task<bool> Remove(string filePath);
+        Task<bool> Remove(string[] filePaths);
     }
 }

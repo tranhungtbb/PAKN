@@ -1579,3 +1579,11 @@ body .ui-editor-container .ui-editor-content {
 .ck-reset_all{
 	display: none;
 }
+body p-multiselect .ui-multiselect{
+  border-radius: .25rem!important;
+  height: 56px;
+	width: 100%;
+}
+ngx-dropdown-treeview button.dropdown-toggle{
+	border-radius: .25rem!important;
+}

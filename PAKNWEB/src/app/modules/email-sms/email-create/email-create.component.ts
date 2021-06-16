@@ -33,6 +33,10 @@ export class EmailCreateComponent implements OnInit {
 		private fileService: UploadFileService
 	) {}
 
+
+	fileAccept = ''
+	redirectList:any
+	statusCurent:any
 	///data model
 	model: EmailObject = new EmailObject()
 	form: FormGroup
@@ -46,7 +50,7 @@ export class EmailCreateComponent implements OnInit {
 	listBusinessDel: any[] = []
 	listIndividualNew: any[] = []
 	listBusinessNew: any[] = []
-
+	
 	///data display
 	listDiadanh: any[] = []
 	listDiadanhTree: TreeviewItem[] = []
@@ -81,6 +85,9 @@ export class EmailCreateComponent implements OnInit {
 						this.listAttachment = res.result.ListAttachment
 						this.listIndividual = res.result.ListIndividual
 						this.listBusiness = res.result.ListBusiness
+
+						console.log([].concat(this.listBusinessNew,this.listIndividualNew,this.listBusiness,this.listIndividual));
+						
 					}
 				})
 			}
@@ -124,7 +131,9 @@ export class EmailCreateComponent implements OnInit {
 	get f() {
 		return this.form.controls
 	}
+	submitted = false
 	onSave(sendNow = false) {
+		this.submitted = true
 		if (this.form.invalid) {
 			return
 		}
@@ -139,10 +148,73 @@ export class EmailCreateComponent implements OnInit {
 		}
 
 		this.emailService.createOrUpdate(model, this.listFileNew).subscribe((res) => {
-			console.log(res)
+			if(res && res.success){
+				this.router.navigate(['/quan-tri/email-sms/email']);
+			}
 		})
 	}
-	onCreateUser() {}
+
+	userId:any[] = []
+	onCreateUser() {
+		
+		if (this.ltsAdministrativeUnitId == undefined || this.ltsAdministrativeUnitId == '') {
+			this._toastr.error('Vui lòng chọn đơn vị')
+			return
+		}
+		if (this.userId != undefined && this.userId.length > 0 && this.userId != null) {
+			//this. = []
+			let arr = [].concat(this.listIndividualNew,this.listIndividual).map(c=>c.individualId)
+			let arr2 = [].concat(this.listBusiness, this.listBusinessNew).map(c=>c.businessId)
+			for (const iterator of this.userId) {
+				if(iterator.category == 1){
+					let item:any = new EmailIndividualObject();
+					item.individualId = iterator.id
+					item.individualFullName = iterator.name
+					item.unitName = iterator.administrativeUnitName
+					if(!arr.includes(item.individualId))
+						this.listIndividualNew.push(item);
+				}else if (iterator.category == 2){
+					let item:any = new EmailBusinessObject();
+					item.businessId = iterator.id
+					item.businessName = iterator.name
+					item.unitName = iterator.administrativeUnitName
+					if(!arr2.includes(item.businessId))
+						this.listBusinessNew.push(item);
+				}
+			}
+			this._toastr.success('Thêm mới thành công ' + this.userId.length + ' người dùng!')
+			this.userId = []
+		} else {
+			this._toastr.error('Vui lòng chọn cá nhân, doanh nghiệp')
+			return
+		}
+	}
+	onRemoveUser(item:any){
+		if(item.individualId){
+			let index = this.listIndividual.indexOf(item);
+			
+			if(index === -1)
+			{
+				index = this.listIndividualNew.indexOf(item);
+				this.listIndividualNew.splice(index,1)
+			}else{
+				this.listIndividualDel.push(item);
+				this.listIndividual.splice(index,1);
+			}
+		}
+		if(item.businessId){
+			let index = this.listBusinessNew.indexOf(item);
+			
+			if(index === -1)
+			{
+				this.listBusinessDel.push(item);
+				index = this.listBusiness.indexOf(item);
+				this.listBusiness.splice(index,1)
+			}else{
+				this.listBusinessNew.splice(index,1);
+			}
+		}
+	}
 
 	onUpload(event) {
 		if (event.target.files.length == 0) {
@@ -183,7 +255,23 @@ export class EmailCreateComponent implements OnInit {
 		this.listFileNew.splice(index, 1)
 	}
 
-	onChange(category: number) {
+	objectType=3
+	onChange(event:any,category: number) {
+		if(event.target.checked){
+			this.objectType += category
+		}else{
+			this.objectType -= category
+		}
+		console.log(this.objectType);
+		this.onLoadListIndividualAndBusiness()
+	}
+	onSelectedChange(values: any[]) {
+		this.ltsAdministrativeUnitId = ''
+		if (values.length > 0) {
+			this.ltsAdministrativeUnitId = values.reduce((x, y) => {
+				return (x += ',' + y)
+			}, '')
+		}
 		this.onLoadListIndividualAndBusiness()
 	}
 
@@ -191,7 +279,7 @@ export class EmailCreateComponent implements OnInit {
 	onLoadListIndividualAndBusiness() {
 		let obj = {
 			LtsAdministrativeId: this.ltsAdministrativeUnitId,
-			type: 1,
+			type: this.objectType,
 		}
 		this.smsService.GetListIndividualAndBusinessByAdmintrativeUnitId(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {

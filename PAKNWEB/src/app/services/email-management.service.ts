@@ -46,4 +46,10 @@ export class EmailManagementService {
 	public getPagedList(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, `${AppSettings.API_ADDRESS}/${Api.EmailManagementGetPagedList}`)
 	}
+	public Delete(id:number): Observable<any> {
+		return this.serviceInvoker.get({id}, `${AppSettings.API_ADDRESS}/${Api.EmailManagementDelete}`)
+	}
+	public SendEmail(id:number): Observable<any> {
+		return this.serviceInvoker.get({id}, `${AppSettings.API_ADDRESS}/${Api.EmailManagementSendEmail}`)
+	}
 }
