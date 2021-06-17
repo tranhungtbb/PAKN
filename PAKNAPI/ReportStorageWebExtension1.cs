@@ -271,6 +271,21 @@ namespace PAKNAPI
                         return ms.ToArray();
                     }
                     break;
+                case "phan-anh-kien-nghi-theo-nhom-tu-ngu":
+                    var queryParams = JsonConvert.DeserializeObject<ExportRecomdationByFieldDetail>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.recommendation_by_GroupWord.repx");
+                    result = XtraReport.FromStream(resource);
+                    result.Parameters["TitleReport"].Value = queryParams.TitleReport;
+                    result.Parameters["LtsUnitId"].Value = queryParams.LstUnitId;
+                    result.Parameters["FromDate"].Value = queryParams.FromDate;
+                    result.Parameters["ToDate"].Value = queryParams.ToDate;
+
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        return ms.ToArray();
+                    }
+                    break;
             }
             ReportDetails details = null;
             if (Reports.TryGetValue(url, out details))
