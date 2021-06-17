@@ -110,4 +110,9 @@ namespace PAKNAPI.Models
         public string FromDate { get; set; }
         public string ToDate { get; set; }
     }
+    public class ExportUserReadedInvitationGetList
+    {
+        public string InvitationId { get; set; }
+        public string TitleReport { get; set; }
+    }
 }

@@ -34,5 +34,8 @@
     <Compile Update="ExportGrid\SY_UserByUnit.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="ExportGrid\UserReadedInvitation_ByInvitationId.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

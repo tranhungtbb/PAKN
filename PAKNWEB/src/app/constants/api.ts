@@ -199,6 +199,7 @@ export class Api {
 	public static InnvitationUpdate = 'INVInvitation/INVInvitationUpdate'
 	public static InvitationDelete = 'INVInvitation/INVInvitationDelete'
 	public static InvitationGetList = 'INVSPBase/INVInvitationGetAllOnPageBase'
+	public static UserReadedInvitationGetList = 'INVSPBase/SYUserReadedInvitationGetAllOnPage'
 
 	//sms
 	public static SMSManagementGetOnPage = 'SMSSPBase/SMSQuanLyTinNhanGetAllOnPageBase'

@@ -40,6 +40,7 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.8.2" />
+    <PackageReference Include="Quartz" Version="3.3.2" />
     <PackageReference Include="SimpleImpersonation" Version="3.0.0" />
     <PackageReference Include="Spire.PDF" Version="5.12.15" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
@@ -73,6 +74,7 @@
     <None Remove="ExportGrid\Statistic_Recommendation_ByGroupWordDetail.repx" />
     <None Remove="ExportGrid\Statistic_Recommendation_ByUnitDetail.repx" />
     <None Remove="ExportGrid\SY_UserByUnit.repx" />
+    <None Remove="ExportGrid\UserReadedInvitation_ByInvitationId.repx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Upload\News\01042021103900-2.jpg" />
@@ -99,6 +101,7 @@
     <EmbeddedResource Include="ExportGrid\recommendation_by_unit.repx" />
     <EmbeddedResource Include="ExportGrid\Statistic_Recommendation_ByFieldDetail.repx" />
     <EmbeddedResource Include="ExportGrid\Statistic_Recommendation_ByUnitDetail.repx" />
+    <EmbeddedResource Include="ExportGrid\UserReadedInvitation_ByInvitationId.repx" />
     <EmbeddedResource Include="ExportGrid\SY_UserByUnit.repx" />
     <EmbeddedResource Include="ExportGrid\HIS_SystemLog.repx" />
     <EmbeddedResource Include="ExportGrid\BI_Individual_List.repx" />
@@ -194,6 +197,12 @@
     </Compile>
     <Compile Update="ExportGrid\SY_UserByUnit.Designer.cs">
       <DependentUpon>SY_UserByUnit.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\UserReadedInvitation_ByInvitationId.cs">
+      <DependentUpon>UserReadedInvitation_ByInvitationId.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\UserReadedInvitation_ByInvitationId.Designer.cs">
+      <DependentUpon>UserReadedInvitation_ByInvitationId.repx</DependentUpon>
     </Compile>
   </ItemGroup>
   <Target Name="CreateAppDataFolder" AfterTargets="AfterPublish">

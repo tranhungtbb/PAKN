@@ -271,6 +271,19 @@ namespace PAKNAPI
                         return ms.ToArray();
                     }
                     break;
+                case "UserReadedInvitationByInvitationId":
+                    var paraExportuserReadedInvitationGetList = JsonConvert.DeserializeObject<ExportUserReadedInvitationGetList>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.UserReadedInvitation_ByInvitationId.repx");
+                    result = XtraReport.FromStream(resource);
+                    result.Parameters["TitleReport"].Value = paraExportuserReadedInvitationGetList.TitleReport;
+                    result.Parameters["InvitationId"].Value = paraExportuserReadedInvitationGetList.InvitationId;
+
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        return ms.ToArray();
+                    }
+                    break;
             }
             ReportDetails details = null;
             if (Reports.TryGetValue(url, out details))

@@ -127,7 +127,7 @@ export class PublishComponent implements OnInit, OnChanges {
 		if (type == TYPE_NOTIFICATION.NEWS) {
 			this.updateIsReadNotification(id)
 			this._router.navigate(['/tin-tuc-su-kien/' + id])
-		} else {
+		} else if(type == TYPE_NOTIFICATION.RECOMMENDATION){
 			if (typeSend == RECOMMENDATION_STATUS.FINISED) {
 				this.updateIsReadNotification(id)
 				this._router.navigate(['/cong-bo/phan-anh-kien-nghi/' + id])
@@ -135,6 +135,9 @@ export class PublishComponent implements OnInit, OnChanges {
 				this.updateIsReadNotification(id)
 				this._router.navigate(['/cong-bo/chi-tiet-kien-nghi/' + id])
 			}
+		}else if (type == TYPE_NOTIFICATION.INVITATION) { // Thư mời
+			this.updateIsReadNotification(id)
+			this._router.navigate(['/quan-tri/thu-moi/chi-tiet/' + id])
 		}
 	}
 
