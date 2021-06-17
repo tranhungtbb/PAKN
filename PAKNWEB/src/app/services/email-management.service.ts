@@ -14,13 +14,14 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 export class EmailManagementService {
 	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private userStorage: UserInfoStorageService) {}
 
+	currentUserId = this.userStorage.getUserId()
 	public createOrUpdate(body: any, files: Array<any>): Observable<any> {
 		var form = new FormData()
 		form.append(
 			'ListAttachmentNew',
 			JSON.stringify(
 				files.map((c) => {
-					return { fileName: c.name, fileType: c.fileType }
+					return { name: c.name, fileType: c.fileType }
 				})
 			)
 		)
@@ -37,19 +38,23 @@ export class EmailManagementService {
 			}
 		}
 
-		return this.serviceInvoker.post(form, `${AppSettings.API_ADDRESS}/${Api.EmailManagementUpdate}`)
+		return this.serviceInvoker.post(form, `${AppSettings.API_ADDRESS}/${Api.EmailManagementUpdate}?userId=${this.currentUserId}`)
 	}
 
 	public getById(id: number): Observable<any> {
-		return this.serviceInvoker.get({ id }, `${AppSettings.API_ADDRESS}/${Api.EmailManagementGetById}`)
+		return this.serviceInvoker.get({ id }, `${AppSettings.API_ADDRESS}/${Api.EmailManagementGetById}?userId=${this.currentUserId}`)
 	}
 	public getPagedList(query: any): Observable<any> {
-		return this.serviceInvoker.get(query, `${AppSettings.API_ADDRESS}/${Api.EmailManagementGetPagedList}`)
+		return this.serviceInvoker.get(query, `${AppSettings.API_ADDRESS}/${Api.EmailManagementGetPagedList}?userId=${this.currentUserId}`)
 	}
 	public Delete(id:number): Observable<any> {
-		return this.serviceInvoker.get({id}, `${AppSettings.API_ADDRESS}/${Api.EmailManagementDelete}`)
+		return this.serviceInvoker.get({id}, `${AppSettings.API_ADDRESS}/${Api.EmailManagementDelete}?userId=${this.currentUserId}`)
 	}
 	public SendEmail(id:number): Observable<any> {
-		return this.serviceInvoker.get({id}, `${AppSettings.API_ADDRESS}/${Api.EmailManagementSendEmail}`)
+		return this.serviceInvoker.get({id}, `${AppSettings.API_ADDRESS}/${Api.EmailManagementSendEmail}?userId=${this.currentUserId}`)
 	}
+	public getHisPagedList(query:any): Observable<any> {
+		return this.serviceInvoker.get(query, `${AppSettings.API_ADDRESS}/${Api.EmailManagementHisPagedList}?userId=${this.currentUserId}`)
+	}
+	
 }

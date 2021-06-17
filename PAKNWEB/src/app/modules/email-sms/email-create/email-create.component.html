@@ -4,7 +4,7 @@
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
 					<!-- <li class="breadcrumb-item"><a>Vai trò</a></li> -->
-					<li class="breadcrumb-item active"><a class="font-weight-bold text-uppercase">Soạn thảo email</a></li>
+					<li class="breadcrumb-item active"><a class="page-title">Soạn thảo email</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
 					<a class="btn btn-sm btn-default rounded mr-3" style="border: 1px solid gray;" [routerLink]="['/quan-tri/email-sms/email']">
@@ -81,7 +81,7 @@
 										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
 											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 											</button>
-											<a href="#" class="d-block text-center box-fileinput">
+											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
 												<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
 												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
 											</a>
@@ -91,7 +91,7 @@
 										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
 											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 											</button>
-											<a href="#" class="d-block text-center box-fileinput">
+											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
 												<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
 												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
 											</a>
@@ -101,7 +101,7 @@
 										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
 											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 											</button>
-											<a href="#" class="d-block text-center box-fileinput">
+											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
 												<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
 												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
 											</a>
@@ -111,7 +111,7 @@
 										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
 											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 											</button>
-											<a href="#" class="d-block text-center box-fileinput">
+											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
 												<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="">
 												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
 											</a>
@@ -121,7 +121,7 @@
 										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
 											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 											</button>
-											<a href="#" class="d-block text-center box-fileinput">
+											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
 												<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 40px" alt="">
 												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
 											</a>
@@ -131,8 +131,8 @@
 										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
 											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 											</button>
-											<a href="#" class="d-block text-center box-fileinput">
-												<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
+											<a class="d-block text-center box-fileinput">
+												<img (click)="previewFile(item)" src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
 												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
 											</a>
 										</div>
@@ -141,7 +141,7 @@
 										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
 											<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 											</button>
-											<a href="#" class="d-block text-center box-fileinput">
+											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
 												<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 45px" alt="">
 												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
 											</a>
@@ -207,13 +207,18 @@
 										</button>
 									</div>
 								</div>
+								<div *ngIf="submitted" class="has-error m-b-12">
+									<div *ngIf="[].concat(listBusinessNew,listIndividualNew,listBusiness,listIndividual).length ==0">
+										<span class="help-block">Chọn cá nhân doanh nghiệp nhận email</span>
+									</div>
+								</div>
 							</div>
-
+							
 						</div>
 
 
 						<div class="list-user">
-							<!-- <div class="title-user-map center" style="text-transform: none;" *ngIf="listItemUserSelected.length ==0">Chưa có cá nhân, doanh nghiệp</div> -->
+							<div class="title-user-map center" style="text-transform: none;" *ngIf="[].concat(listBusinessNew,listIndividualNew,listBusiness,listIndividual).length ==0">Chưa có cá nhân, doanh nghiệp</div>
 							<div class="border col-sm-12 item-user ng-star-inserted p-3 rounded mt-3" style="display: flex;" *ngFor="let item of [].concat(listBusinessNew,listIndividualNew,listBusiness,listIndividual)">
 								<div class="info-user border-right padding-item" style="padding-left: 0px; flex: 1 1;">
 									<div class="title" *ngIf="item.individualId">Cá nhân</div>
@@ -234,6 +239,49 @@
 						</div>
 					</div>
 				<!-- </form> -->
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalConfirmChangeStatus">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+					</div>
+					<div class="modal-body no-padding-bottom" style="border: none;">
+						<div style="text-align: center;">
+							<strong class="change-status-title">Anh/ chị có xác nhận gửi email này?</strong>
+						</div>
+					</div>
+					<div class="modal-footer" style="border: none; justify-content: center;">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="pressSendButton()">Xác
+							nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="previewFile">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="min-width: 70%;">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4"></p>
+				<button type="button" class="close" data-dismiss="modal" (click)="clearModelHis()"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pt-3 pb-3">
+				<iframe *ngIf="previewType == 3" [src]='previewFilePath' style="width: 100%; height: 350px;"></iframe>
+				<img *ngIf="previewType == 4" [src]="previewFilePath" style="width: 100%;">
 			</div>
 		</div>
 	</div>

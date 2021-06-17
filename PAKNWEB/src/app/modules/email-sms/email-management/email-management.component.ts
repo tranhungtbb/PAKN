@@ -89,7 +89,7 @@ export class EmailManagementComponent implements OnInit {
 		}else query.unitName = ''
 
 		this.emailService.getPagedList(query).subscribe(res=>{
-			console.log(res);
+			
 			this.listData = res.result.Data;
 			if(this.listData[0] && this.listData[0]!.rowNumber > 0){
 				this.totalRecords = this.listData[0].rowNumber
@@ -107,12 +107,9 @@ export class EmailManagementComponent implements OnInit {
 		$('#modalConfirm').modal('hide')
 		this.emailService.Delete(this.emailId).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				if (res.result > 0) {
-					this._toastr.success(COMMONS.DELETE_SUCCESS)
-					this.getPagedList()
-				} else {
-					this._toastr.error(COMMONS.DELETE_FAILED)
-				}
+				this._toastr.success(COMMONS.DELETE_SUCCESS)
+				this.getPagedList()
+				
 			} else {
 				this._toastr.error(COMMONS.DELETE_FAILED)
 				this.getPagedList()
@@ -146,5 +143,59 @@ export class EmailManagementComponent implements OnInit {
 			}
 		})
 	}
+
+	///history list
+	objectId = 0
+	hisPagedList:any[] = []
+	hisQuery:any ={
+		objectId:0,
+		content:'',
+		createdBy:'',
+		createdDate:'',
+		status:'',
+		pageIndex:1,
+		pageSize:20
+	}
+	hisTotalRecords=0
+	
+	getHistory(id: number) {
+		if (!id) return
+		this.objectId = id;
+		this.hisQuery.content = ''
+		this.hisQuery.createdBy=''
+		this.hisQuery.createdDate=''
+		this.hisQuery.status=''
+		this.hisQuery.pageIndex = 1;
+		this.hisQuery.pageSize = 20;
+		this.getHisData(id)
+		$('#modalHisSMS').modal('show')
+	}
+
+	getHisData(id: Number){
+		
+		let query = {...this.hisQuery}
+		query.objectId = id;
+		if(!query.status) query.status = ''
+
+		let date:any = document.querySelector('#fieldHisCratedDate')
+		if(date)
+			query.createdDate = date.value
+		this.emailService.getHisPagedList(query).subscribe(res=>{
+			this.hisPagedList =  res.result.Data;
+			if(this.hisPagedList[0] && this.hisPagedList[0]!.rowNumber > 0){
+				this.hisTotalRecords = this.hisPagedList[0].rowNumber
+			}
+		})
+	}
+	clearModelHis(){}
+	dataStateChange2(){
+		this.getHisData(this.objectId)
+	}
+	onPageChangeHis(event:any){
+		this.hisQuery.pageSize = event.rows
+		this.hisQuery.pageIndex = event.first / event.rows + 1
+		this.getHisData(this.objectId)
+	}
+	
 
 }

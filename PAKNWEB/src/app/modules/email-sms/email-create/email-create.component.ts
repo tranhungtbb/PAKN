@@ -17,6 +17,9 @@ import { first } from 'rxjs/operators'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { data } from 'jquery'
 
+
+declare var $:any
+
 @Component({
 	selector: 'app-email-create',
 	templateUrl: './email-create.component.html',
@@ -69,7 +72,7 @@ export class EmailCreateComponent implements OnInit {
 		this.form = this.formBuilder.group({
 			title: [this.model.title, [Validators.required]],
 			content: [this.model.content, [Validators.required]],
-			signature: [this.model.signature, [Validators.required]],
+			signature: [this.model.signature, [Validators.required]]
 		})
 		this.getAdministrativeUnits()
 		this.getData()
@@ -132,11 +135,20 @@ export class EmailCreateComponent implements OnInit {
 		return this.form.controls
 	}
 	submitted = false
-	onSave(sendNow = false) {
+	onSave(sendNow = false, cb:any=null) {
 		this.submitted = true
 		if (this.form.invalid) {
 			return
 		}
+		if([].concat(this.listBusinessNew,this.listIndividualNew,this.listBusiness,this.listIndividual).length ==0){
+			return
+		}
+
+		if(sendNow){
+			$('#modalConfirmChangeStatus').modal('show')
+			return;
+		}
+
 
 		let model = {
 			Data: this.model,
@@ -149,9 +161,25 @@ export class EmailCreateComponent implements OnInit {
 
 		this.emailService.createOrUpdate(model, this.listFileNew).subscribe((res) => {
 			if(res && res.success){
+				if(cb)cb(res.result.Data);
 				this.router.navigate(['/quan-tri/email-sms/email']);
 			}
 		})
+	}
+
+	///
+	pressSendButton() {
+		this.onSave(false,(item)=>{
+			this.emailService.SendEmail(item.id).subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					
+				} else {
+	
+				}
+			})
+			console.log(item)
+		});
+		$('#modalConfirmChangeStatus').modal('hide')
 	}
 
 	userId:any[] = []
@@ -292,6 +320,28 @@ export class EmailCreateComponent implements OnInit {
 				this.listIndividualAndBusinessGetByAdmintrativeId = []
 			}
 		})
+	}
+
+	//preview file
+	previewFilePath=''
+	previewType=0
+	previewFile(item:any){
+		if(![3,4].includes(item.fileType)){
+			//TODO
+			//create download link
+			let a = document.createElement('a');
+			a.href = item.fileAttach;
+			a.download = item.name;
+			$('body').append(a);
+			a.click();
+			setTimeout(() => {
+				$(a).remove();
+			}, 200);
+			return
+		}
+		this.previewFilePath = `${item.fileAttach}`;
+		this.previewType = item.fileType;
+		$('#previewFile').modal('show')
 	}
 
 	private unflatten(arr): any[] {

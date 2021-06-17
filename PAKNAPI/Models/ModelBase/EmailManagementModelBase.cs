@@ -2,6 +2,7 @@
 using PAKNAPI.Common;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -68,6 +69,7 @@ namespace PAKNAPI.Models.ModelBase
     {
         public int? RowNumber { get; set; }
         public string FullName { get; set; }
+        public DateTime? CreatedDate { get; set; }
     }
 
     public class EmailMangementADO
@@ -97,8 +99,8 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("UserSend", model.UserSend);
             DP.Add("Unit", model.Unit);
             //DP.Add("IdOut", model.Id, null, System.Data.ParameterDirection.Output);
-            var rs = await _sQLCon.ExecuteNonQueryDapperAsync("Email_QuanLyTinNhanInsert", DP);
-            model.Id = rs;
+            var rs = await _sQLCon.ExecuteListDapperAsync<int>("Email_QuanLyTinNhanInsert", DP);
+            model.Id = rs.FirstOrDefault();
             return model;
         }
         public async Task<EmailManagementModelBase> Update(EmailManagementModelBase model)
@@ -320,6 +322,7 @@ namespace PAKNAPI.Models.ModelBase
             return await _sQLCon.ExecuteNonQueryDapperAsync("[HIS_Email_Insert]", DP);
         }
         public async Task<IEnumerable<EmailManagementHisPagedListModel>> GetPagedList(
+            int objectId,
             string content,
             string createdBy,
             string createdDate,
@@ -328,10 +331,18 @@ namespace PAKNAPI.Models.ModelBase
             int pageSize = 20)
         {
             DynamicParameters DP = new DynamicParameters();
+
+            DateTime? searchCreatedDate = null;
+            if (DateTime.TryParseExact(createdDate, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime date))
+            {
+                searchCreatedDate = date;
+            }
+
             DP = new DynamicParameters();
+            DP.Add("objectId", objectId);
             DP.Add("content", content);
             DP.Add("createdBy", createdBy);
-            DP.Add("createdDate", createdDate);
+            DP.Add("createdDate", searchCreatedDate);
             DP.Add("Status", status);
             DP.Add("pageIndex", pageIndex);
             DP.Add("pageSize", pageSize);

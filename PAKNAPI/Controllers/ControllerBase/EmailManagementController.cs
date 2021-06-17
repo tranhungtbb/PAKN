@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PAKNAPI.Common;
+using PAKNAPI.ModelBase;
 using PAKNAPI.Models.ModelBase;
 using PAKNAPI.Models.Results;
 using PAKNAPI.Services.FileUpload;
@@ -34,12 +35,13 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("Update"), DisableRequestSizeLimit]
-		public async Task<ActionResult<object>> Update()
+		public async Task<ActionResult<object>> Update([FromQuery] string userId)
 		{
 			try
 			{
+				var req = Request.Query;
 				var users = _httpContextAccessor.HttpContext.User.Identities.FirstOrDefault().Claims; //FindFirst(ClaimTypes.NameIdentifier);
-				var userId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext) +"";
+				//var userId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext) +"";
 				//var userId = users.FirstOrDefault(c => c.Type.Equals("Id", StringComparison.OrdinalIgnoreCase)).Value;
 				var jss = new JsonSerializerSettings
 				{
@@ -142,7 +144,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 				///insert his
 				///
 				hisModel.ObjectId = model.Id;
-				await insertHis(hisModel);
+				await insertHis(hisModel,userId);
 
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -252,14 +254,14 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("SendEmail")]
-		public async Task<ActionResult<object>> SendEmail(long id)
+		public async Task<ActionResult<object>> SendEmail(long id, [FromQuery] string userId)
 		{
 			try
 			{
-				var userId = int.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
+				//var userId = int.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
 
 				///TODO
-				var rs = await new EmailMangementADO(_appSetting).UpdateSendStatus(id, userId);
+				var rs = await new EmailMangementADO(_appSetting).UpdateSendStatus(id, int.Parse(userId));
 				IDictionary<string, object> json = new Dictionary<string, object>
 				{
 					{"Data", null}
@@ -269,11 +271,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				///
 				var hisModel = new EmailManagementHisModel
 				{
-					CreatedBy = userId,
+					CreatedBy = int.Parse(userId),
 					Status = STATUS_HIS_SMS.SEND,
 					ObjectId = id
 				};
-				await insertHis(hisModel);
+				await insertHis(hisModel,userId);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
@@ -287,17 +289,21 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("GetHisPagedList")]
-		public async Task<ActionResult<object>> GetHisPagedList(long id)
+		public async Task<ActionResult<object>> GetHisPagedList(
+			int objectId,
+			string content,
+			string createdBy,
+			string createdDate,
+			int? status,
+			int pageIndex = 1,
+			int pageSize = 20)
 		{
 			try
 			{
-				var userId = int.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
-
-				///TODO
-				var rs = await new EmailMangementADO(_appSetting).UpdateSendStatus(id, userId);
+				var rs = await new EmailManagemnetHisADO(_appSetting).GetPagedList(objectId, content,createdBy,createdDate,status,pageIndex,pageSize);
 				IDictionary<string, object> json = new Dictionary<string, object>
 				{
-					{"Data", null}
+					{"Data", rs}
 				};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
@@ -312,21 +318,23 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 
-		private async Task<int> insertHis(EmailManagementHisModel model)
+		private async Task<int> insertHis(EmailManagementHisModel model,string userId)
         {
-			model.CreatedBy = (int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
-			string userFullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
+			var currentUser = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(long.Parse(userId));
+
+			model.CreatedBy = currentUser[0].Id;
+			string userFullName = currentUser[0].FullName;
 
 			switch (model.Status)
 			{
 				case STATUS_HIS_SMS.CREATE:
-					model.Content = userFullName + " đã khởi tạo SMS";
+					model.Content = userFullName + " đã khởi tạo Email";
 					break;
 				case STATUS_HIS_SMS.UPDATE:
-					model.Content = userFullName + " đã cập nhập SMS";
+					model.Content = userFullName + " đã cập nhập Email";
 					break;
 				case STATUS_HIS_SMS.SEND:
-					model.Content = userFullName + " đã gửi SMS";
+					model.Content = userFullName + " đã gửi Email";
 					break;
 			}
 			return await new EmailManagemnetHisADO(_appSetting).Insert(model);
