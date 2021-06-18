@@ -121,11 +121,12 @@ namespace PAKNAPI.Models.ModelBase
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_NotificationUpdateIsViewedByReceiveId", DP));
 		}
 
-		public async Task<int> SYNotificatioUpdateIsReadedDAO(int? ObjectId ,int? ReceiveId)
+		public async Task<int> SYNotificatioUpdateIsReadedDAO(int? ObjectId ,int? ReceiveId, DateTime WatchedDate)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("ObjectId", ObjectId);
 			DP.Add("ReceiveId", ReceiveId);
+			DP.Add("WatchedDate", WatchedDate);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_NotificationUpdateIsReaded", DP));
 		}

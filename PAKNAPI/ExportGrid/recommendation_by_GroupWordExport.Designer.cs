@@ -10,9 +10,9 @@
 
 namespace PAKNAPI.ExportGrid {
     
-    public partial class recommendation_by_GroupWord : DevExpress.XtraReports.UI.XtraReport {
+    public partial class recommendation_by_GroupWordExport : DevExpress.XtraReports.UI.XtraReport {
         private void InitializeComponent() {
-            DevExpress.XtraReports.ReportInitializer reportInitializer = new DevExpress.XtraReports.ReportInitializer(this, "PAKNAPI.ExportGrid.recommendation_by_GroupWord.repx");
+            DevExpress.XtraReports.ReportInitializer reportInitializer = new DevExpress.XtraReports.ReportInitializer(this, "PAKNAPI.ExportGrid.recommendation_by_GroupWordExport.repx");
 
             // Controls
             this.topMarginBand1 = reportInitializer.GetControl<DevExpress.XtraReports.UI.TopMarginBand>("topMarginBand1");
@@ -34,21 +34,17 @@ namespace PAKNAPI.ExportGrid {
             this.tableRow2 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableRow>("tableRow2");
             this.tableCell16 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell16");
             this.tableCell8 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell8");
+            this.tableCell9 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell9");
+            this.tableCell18 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell18");
+            this.tableCell7 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell7");
             this.label4 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRLabel>("label4");
             this.label5 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRLabel>("label5");
-            this.tableCell7 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell7");
-            this.tableCell18 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell18");
-            this.tableCell9 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell9");
 
             // Parameters
             this.TitleReport = reportInitializer.GetParameter("TitleReport");
             this.NgayThang = reportInitializer.GetParameter("NgayThang");
             this.HoTen = reportInitializer.GetParameter("HoTen");
-            this.PageIndex = reportInitializer.GetParameter("PageIndex");
-            this.pageSize = reportInitializer.GetParameter("pageSize");
-            this.Year = reportInitializer.GetParameter("Year");
             this.LtsUnitId = reportInitializer.GetParameter("LtsUnitId");
-            this.Timeline = reportInitializer.GetParameter("Timeline");
             this.FromDate = reportInitializer.GetParameter("FromDate");
             this.ToDate = reportInitializer.GetParameter("ToDate");
 
@@ -82,6 +78,9 @@ namespace PAKNAPI.ExportGrid {
         private DevExpress.XtraReports.UI.XRTableRow tableRow2;
         private DevExpress.XtraReports.UI.XRTableCell tableCell16;
         private DevExpress.XtraReports.UI.XRTableCell tableCell8;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell9;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell18;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell7;
         private DevExpress.XtraReports.UI.XRLabel label4;
         private DevExpress.XtraReports.UI.XRLabel label5;
         private DevExpress.DataAccess.Sql.SqlDataSource sqlDataSource2;
@@ -94,15 +93,8 @@ namespace PAKNAPI.ExportGrid {
         private DevExpress.XtraReports.Parameters.Parameter TitleReport;
         private DevExpress.XtraReports.Parameters.Parameter NgayThang;
         private DevExpress.XtraReports.Parameters.Parameter HoTen;
-        private DevExpress.XtraReports.Parameters.Parameter PageIndex;
-        private DevExpress.XtraReports.Parameters.Parameter pageSize;
-        private DevExpress.XtraReports.Parameters.Parameter Year;
         private DevExpress.XtraReports.Parameters.Parameter LtsUnitId;
-        private DevExpress.XtraReports.Parameters.Parameter Timeline;
         private DevExpress.XtraReports.Parameters.Parameter FromDate;
         private DevExpress.XtraReports.Parameters.Parameter ToDate;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell7;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell18;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell9;
     }
 }

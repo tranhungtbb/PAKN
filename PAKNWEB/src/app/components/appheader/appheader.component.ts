@@ -9,7 +9,7 @@ import { UserObject } from '../../models/UserObject'
 import { UserService } from '../../services/user.service'
 import { DataService } from '../../services/sharedata.service'
 
-import { RESPONSE_STATUS, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS, RECOMMENDATION_STATUS, TYPE_NOTIFICATION } from 'src/app/constants/CONSTANTS'
 import { NotificationService } from 'src/app/services/notification.service'
 import { from } from 'rxjs'
 import { UserViewInfoComponent } from '../../modules/system-management/components/user/user-view-info/user-view-info.component'
@@ -220,12 +220,16 @@ export class AppheaderComponent implements OnInit {
 	}
 
 	onClickNotification(dataId: any, type: any, typeSend: any) {
-		if (type == 1) {
+		if (type == TYPE_NOTIFICATION.NEWS) { // tin tức
 			this.updateIsReadNotification(dataId)
 			this.router.navigate(['/quan-tri/tin-tuc/chinh-sua/' + dataId])
-		} else if (type == 2) {
+		} else if (type == TYPE_NOTIFICATION.RECOMMENDATION) { // PAKN
 			this.updateIsReadNotification(dataId)
 			this.router.navigate(['/quan-tri/kien-nghi/chi-tiet/' + dataId])
+		}
+		else if (type == TYPE_NOTIFICATION.INVITATION) { // Thư mời
+			this.updateIsReadNotification(dataId)
+			this.router.navigate(['/quan-tri/thu-moi/chi-tiet/' + dataId])
 		}
 	}
 

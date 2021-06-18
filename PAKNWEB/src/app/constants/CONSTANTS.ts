@@ -118,6 +118,7 @@ export class STEP_RECOMMENDATION {
 export class TYPE_NOTIFICATION {
 	public static NEWS = 1 // thông báo tin tức
 	public static RECOMMENDATION = 2 // thông báo PAKN
+	public static INVITATION = 3 // thông báo có thư mời
 }
 
 export class PROCESS_STATUS_RECOMMENDATION {

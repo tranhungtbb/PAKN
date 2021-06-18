@@ -67,11 +67,11 @@ export class InvitationService {
 	}
 
 	invitationGetList(query: any): Observable<any> {
-		// let headers = {
-		// 	logAction: encodeURIComponent(LOG_ACTION.GETLIST),
-		// 	logObject: encodeURIComponent(LOG_OBJECT.SY_INVITATION),
-		// }
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.InvitationGetList)
+	}
+
+	userReadedInvitationGetList(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserReadedInvitationGetList)
 	}
 
 	delete(query: any): Observable<any> {

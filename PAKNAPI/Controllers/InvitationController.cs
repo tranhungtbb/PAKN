@@ -121,9 +121,29 @@ namespace PAKNAPI.Controllers
 					}
 
 					// insert map user
-					foreach(var item in invInvitation.InvitationUserMap) {
+					string senderName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
+					foreach (var item in invInvitation.InvitationUserMap) {
 						item.InvitationId = id;
 						await new INVInvitationUserMapInsert(_appSetting).INVInvitationUserMapInsertDAO(item);
+
+						// tạo thông báo
+						if (invInvitation.Model.Status == 2) { // gửi
+							var model = new SYNotificationModel();
+							model.SenderId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+							model.SendOrgId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+							model.ReceiveId = (int)item.UserId;
+							//model.ReceiveOrgId = user.UnitId;
+							model.DataId = id;
+							model.SendDate = DateTime.Now;
+							model.Type = TYPENOTIFICATION.INVITATION;
+							model.Title = "Bạn vừa nhận được một thư mời từ " + senderName;
+							model.Content = invInvitation.Model.Title;
+							model.IsViewed = true;
+							model.IsReaded = true;
+							// insert vào db-
+							await new SYNotification(_appSetting).SYNotificationInsertDAO(model);
+						}
+						// send email nếu có
 					}
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 					return new ResultApi { Success = ResultCode.OK};
@@ -215,14 +235,6 @@ namespace PAKNAPI.Controllers
 					if (invInvitation.Files != null && invInvitation.Files.Count > 0)
 					{
 						string folder = "Upload\\Invitation\\" + invInvitation.Model.Id;
-						// delete file 
-						//deletefile(folder);
-						// delete in db
-						//INVFileAttachDeleteByInvitationIdIN deleteFile = new INVFileAttachDeleteByInvitationIdIN();
-						//deleteFile.InvitationId = invInvitation.Model.Id;
-						//await new INVFileAttachDeleteByInvitationId(_appSetting).INVFileAttachDeleteByInvitationIdDAO(deleteFile);
-
-
 						string folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
 						if (!Directory.Exists(folderPath))
 						{
@@ -251,6 +263,7 @@ namespace PAKNAPI.Controllers
 
 					// insert map user
 					if (s > 0) {
+						string senderName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
 						foreach (var item in invInvitation.InvitationUserMap)
 						{
 							INVInvitationUserMapInsertIN ins = new INVInvitationUserMapInsertIN();
@@ -260,6 +273,26 @@ namespace PAKNAPI.Controllers
 							ins.UserId = item.UserId;
 							ins.Watched = item.Watched;
 							await new INVInvitationUserMapInsert(_appSetting).INVInvitationUserMapInsertDAO(ins);
+
+							// tạo thông báo
+							if (invInvitation.Model.Status == 2)
+							{ // gửi
+								var model = new SYNotificationModel();
+								model.SenderId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+								model.SendOrgId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+								model.ReceiveId = (int)item.UserId;
+								//model.ReceiveOrgId = user.UnitId;
+								model.DataId = id;
+								model.SendDate = DateTime.Now;
+								model.Type = TYPENOTIFICATION.INVITATION;
+								model.Title = "Bạn vừa nhận được một thư mời từ " + senderName;
+								model.Content = invInvitation.Model.Title;
+								model.IsViewed = true;
+								model.IsReaded = true;
+								// insert vào db-
+								await new SYNotification(_appSetting).SYNotificationInsertDAO(model);
+							}
+							// send email nếu có
 						}
 					}
 					
