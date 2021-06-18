@@ -223,7 +223,13 @@ namespace PAKNAPI
                     resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.Statistic_Recommendation_ByUnitDetail.repx");
                     result = XtraReport.FromStream(resource);
                     result.Parameters["TitleReport"].Value = paraExportRecomdationByUnitDetail.TitleReport;
+                    result.Parameters["Code"].Value = paraExportRecomdationByUnitDetail.Code;
+                    result.Parameters["SendName"].Value = paraExportRecomdationByUnitDetail.SendName;
+                    result.Parameters["TitleMR"].Value = paraExportRecomdationByUnitDetail.Title;
+                    result.Parameters["Status"].Value = paraExportRecomdationByUnitDetail.Status;
                     result.Parameters["UnitId"].Value = paraExportRecomdationByUnitDetail.UnitId;
+                    result.Parameters["UnitProcessId"].Value = paraExportRecomdationByUnitDetail.UnitProcessId;
+                    result.Parameters["UserProcessId"].Value = paraExportRecomdationByUnitDetail.UserProcessId;
                     result.Parameters["FromDate"].Value = paraExportRecomdationByUnitDetail.FromDate;
                     result.Parameters["ToDate"].Value = paraExportRecomdationByUnitDetail.ToDate;
 
@@ -260,7 +266,13 @@ namespace PAKNAPI
                     resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.Statistic_Recommendation_ByFieldDetail.repx");
                     result = XtraReport.FromStream(resource);
                     result.Parameters["TitleReport"].Value = paraExportRecomdationByFieldDetail.TitleReport;
+                    result.Parameters["Code"].Value = paraExportRecomdationByFieldDetail.Code;
+                    result.Parameters["CreateName"].Value = paraExportRecomdationByFieldDetail.SendName;
+                    result.Parameters["TitleMR"].Value = paraExportRecomdationByFieldDetail.Title;
+                    result.Parameters["Status"].Value = paraExportRecomdationByFieldDetail.Status;
                     result.Parameters["LstUnitId"].Value = paraExportRecomdationByFieldDetail.LstUnitId;
+                    result.Parameters["UnitProcessId"].Value = paraExportRecomdationByFieldDetail.UnitProcessId;
+                    result.Parameters["UserProcessId"].Value = paraExportRecomdationByFieldDetail.UserProcessId;
                     result.Parameters["Field"].Value = paraExportRecomdationByFieldDetail.Field;
                     result.Parameters["FromDate"].Value = paraExportRecomdationByFieldDetail.FromDate;
                     result.Parameters["ToDate"].Value = paraExportRecomdationByFieldDetail.ToDate;

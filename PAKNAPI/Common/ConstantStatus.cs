@@ -38,6 +38,13 @@
 		public const int INVITATION = 3;
 	}
 
+	public static class TYPECONFIG
+	{
+		public const int CONFIG_EMAIL = 1;
+		public const int CONFIG_SMS = 2;
+		public const int CONFIG_SWITCHBOARD = 3;
+	}
+
 	public class STATUS_HISNEWS
 	{
 		public const int CREATE = 0; //khoi tao

@@ -384,8 +384,8 @@ namespace PAKNAPI.ModelBase
 	public class INVInvitationInsertIN
 	{
 		public string Title { get; set; }
-		public DateTime? StartDate { get; set; }
-		public DateTime? EndDate { get; set; }
+		public DateTime StartDate { get; set; }
+		public DateTime EndDate { get; set; }
 		public string Content { get; set; }
 		public string Place { get; set; }
 		public string Note { get; set; }

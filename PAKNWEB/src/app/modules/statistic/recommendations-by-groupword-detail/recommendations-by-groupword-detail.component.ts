@@ -91,6 +91,7 @@ export class RecommendationsByGroupwordDetailComponent implements OnInit {
 	getList() {
 		this.dataSearch.code = this.dataSearch.code.trim()
 		this.dataSearch.sendName = this.dataSearch.sendName.trim()
+		this.dataSearch.title = this.dataSearch.title.trim()
 		this.dataSearch.content = this.dataSearch.content.trim()
 		let request = {
 			Code: this.dataSearch.code,

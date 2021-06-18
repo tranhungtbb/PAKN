@@ -85,7 +85,14 @@ namespace PAKNAPI.Models
     public class ExportRecomdationByUnitDetail
     {
         public string TitleReport { get; set; }
+
+        public string Code { get; set; }
+        public string SendName { get; set; }
+        public string Title { get; set; }
+        public int? Status { get; set; }
         public string UnitId { get; set; }
+        public string UnitProcessId { get; set; }
+        public string UserProcessId { get; set; }
         public string FromDate { get; set; }
         public string ToDate { get; set; }
     }
@@ -104,8 +111,14 @@ namespace PAKNAPI.Models
     }
     public class ExportRecomdationByFieldDetail
     {
-        public string LstUnitId { get; set; }
         public string TitleReport { get; set; }
+        public string Code { get; set; }
+        public string SendName { get; set; }
+        public string Title { get; set; }
+        public int? Status { get; set; }
+        public string UnitProcessId { get; set; }
+        public string UserProcessId { get; set; }
+        public string LstUnitId { get; set; }
         public int Field { get; set; }
         public string FromDate { get; set; }
         public string ToDate { get; set; }
