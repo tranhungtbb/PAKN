@@ -24,7 +24,12 @@
       </app-message>
     </ng-container>
   </div>
-  <form (ngSubmit)="onSubmit()" autocomplete="off" class="send_message" name="send_message">
+  <form (ngSubmit)="onSubmit()" autocomplete="off" class="send_message" name="send_message" style="
+  display: flex;">
+    <label class="attach_btn" for="attach_btn">      
+      <i _ngcontent-qsk-c12="" class="bi bi-plus-circle-fill m-2" title="Đính kèm"></i>      
+      <input accept="image/*,.zip" class="attach_input" id="attach_btn" (change)="prepareToUpload($event)" name="attach_file" type="file"/>
+    </label>
     <textarea #field autocapitalize="off" (keydown)="onKeydown($event)"
               (keyup.shift)="shiftDown = false"
               autocomplete="off" autocorrect="off" autofocus
@@ -37,11 +42,12 @@
           </div>
         </ng-container>
       </div>
-      <label class="attach_btn" for="attach_btn">
-        <i class="material-icons">attachment</i>
-        <input accept="image/*" class="attach_input" id="attach_btn" (change)="prepareToUpload($event)" name="attach_file" type="file"/>
-      </label>
-      <button class="send_btn">send</button>
+      
+      <!-- <button class="send_btn">send</button> -->
+
+      <button _ngcontent-qsk-c12="" class="btn-icon mr-2 grd-blue text-white border-0" >
+        <i _ngcontent-qsk-c12="" class="bi bi-cursor-fill" title="Gửi"></i>
+      </button>
     </div>
   </form>
 </div>

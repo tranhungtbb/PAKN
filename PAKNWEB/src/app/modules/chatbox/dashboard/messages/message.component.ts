@@ -27,6 +27,13 @@ export class MessageComponent implements AfterViewInit {
 			this.messageService.intersectionObserver.observe(this.el.nativeElement)
 		}
 	}
+	checkTypeFile(name: string) {
+		let File = name
+		let count = File.indexOf('.zip')
+		if (count > 0) {
+			return true
+		} else return false
+	}
 
 	visibility(e) {
 		this.dialogService.dialogs[e.detail.dialogId].unread_messages_count--

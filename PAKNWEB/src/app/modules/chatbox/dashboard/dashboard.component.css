@@ -41,6 +41,7 @@
 	flex: 0 0 80px;
 	box-sizing: border-box;
 	padding: 21px 19px 18px;
+	background: rgba(211, 230, 255);
 }
 
 .dashboardCB__logo {
@@ -240,8 +241,9 @@ app-dialogs {
 	line-height: 18px;
 	color: #4a4a4a;
 	border-bottom: 1px solid #dadfe1;
-	flex: 0 0 58px;
+	flex: 0 0 109px;
 	box-sizing: border-box;
+	background: rgba(193, 216, 246);
 }
 
 .content__inner {
@@ -739,6 +741,7 @@ app-dialogs {
 	flex: 1 1 100%;
 	overflow-y: auto;
 	text-align: left;
+	background: rgba(211, 230, 255);
 }
 
 .sidebar__dilog_list.loading:after {
@@ -759,6 +762,7 @@ app-dialogs {
 .sidebar__dilog_list .dialog__item.selected,
 .sidebar__dilog_list .dialog__item:hover {
 	background: rgba(42, 100, 150, 0.1);
+	border-radius: 15px;
 }
 
 .dialog__item_link {
@@ -973,8 +977,8 @@ app-dialogs {
 
 .dialog_unread_counter {
 	min-width: 23px;
-	background-color: #17d04b;
-	border-radius: 4px;
+	background-color: red;
+	border-radius: 20px;
 	font-size: 13px;
 	font-weight: 500;
 	line-height: 19px;
@@ -1030,14 +1034,16 @@ html {
 ::-webkit-scrollbar {
 	width: 5px;
 }
-
+/* 
 ::-webkit-scrollbar-track {
 	background-color: #ccc;
 	border-left: 1px solid #ccc;
-}
+} */
 
 ::-webkit-scrollbar-thumb {
-	background-color: #1fbcd2;
+	background: #80808070;
+	border-radius: 15px;
+	height: 60px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -1125,10 +1131,15 @@ html {
 	border: none;
 	text-transform: uppercase;
 	cursor: pointer;
-	padding: 12px 16px;
+	padding: 5px 10px;
 }
 
 .btn:disabled {
 	background-color: #80e491;
 	cursor: no-drop;
 }
+
+/* li:active,
+:hover {
+	border-radius: 15px;
+} */
