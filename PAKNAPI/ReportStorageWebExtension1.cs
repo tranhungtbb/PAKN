@@ -283,6 +283,24 @@ namespace PAKNAPI
                         return ms.ToArray();
                     }
                     break;
+
+                case "phan-anh-kien-nghi-theo-nhom-tu-ngu":
+                    var queryParams = JsonConvert.DeserializeObject<ExportRecomdationByFieldDetail>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.recommendation_by_GroupWordExport.repx");
+                    result = XtraReport.FromStream(resource);
+                    result.Parameters["TitleReport"].Value = queryParams.TitleReport;
+                    result.Parameters["NgayThang"].Value = Dates;
+                    result.Parameters["HoTen"].Value = "";
+
+                    result.Parameters["LtsUnitId"].Value = queryParams.LstUnitId;
+                    result.Parameters["FromDate"].Value = queryParams.FromDate;
+                    result.Parameters["ToDate"].Value = queryParams.ToDate;
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        return ms.ToArray();
+                    }
+                    break;
                 case "UserReadedInvitationByInvitationId":
                     var paraExportuserReadedInvitationGetList = JsonConvert.DeserializeObject<ExportUserReadedInvitationGetList>(objectReport, jss);
                     resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.UserReadedInvitation_ByInvitationId.repx");
