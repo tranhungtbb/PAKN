@@ -44,6 +44,7 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 	}
 
 	getList() {
+		this.KeySearch = this.KeySearch.trim()
 		var obj = {
 			KeySearch: this.KeySearch,
 			Status: RECOMMENDATION_STATUS.FINISED, //FINISED

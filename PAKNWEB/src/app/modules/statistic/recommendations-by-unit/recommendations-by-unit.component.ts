@@ -65,13 +65,12 @@ export class RecommendationsByUnitComponent implements OnInit {
 		this.year = new Date().getFullYear()
 		this.listUnitSelected = []
 	}
-	ngAfterViewInit() {
-		// .table-sd thead {
-		// 	background-color: #11458e !important;
-		// }
-	}
+	ngAfterViewInit() {}
 	ngOnInit() {
 		this.BsLocaleService.use('vi')
+		this.fromDate = new Date(this.year, 0, 1)
+		let tmp_date = new Date(this.year + 1, 0, 1)
+		this.toDate = this.minusDays(tmp_date, 1)
 		this.unitService.getChildrenDropdown().subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.listUnit = res.result
@@ -84,16 +83,68 @@ export class RecommendationsByUnitComponent implements OnInit {
 			}
 		})
 	}
+	minusDays(date: Date, days: number): Date {
+		date.setDate(date.getDate() - days)
+		return date
+	}
+	getFormattedDate(date) {
+		var year = date.getFullYear()
+		var month = (1 + date.getMonth()).toString()
+		month = month.length > 1 ? month : '0' + month
+		var day = date.getDate().toString()
+		day = day.length > 1 ? day : '0' + day
+		return month + '-' + day + '-' + year
+	}
+
+	changeYear() {
+		if (this.year != null) {
+			this.fromDate = new Date(this.year, 0, 1)
+			let tmp_date = new Date(this.year + 1, 0, 1)
+			this.toDate = this.minusDays(tmp_date, 1)
+			this.dataStateChange()
+		}
+	}
+	changeTimeLine() {
+		if (this.year != null) {
+			if (this.timeline == 1) {
+				this.fromDate = new Date(this.year, 0, 1)
+				let tmp_date = new Date(this.year, 3, 1)
+				this.toDate = this.minusDays(tmp_date, 1)
+			} else if (this.timeline == 2) {
+				this.fromDate = new Date(this.year, 3, 1)
+				let tmp_date = new Date(this.year, 6, 1)
+				this.toDate = this.minusDays(tmp_date, 1)
+			} else if (this.timeline == 3) {
+				this.fromDate = new Date(this.year, 6, 1)
+				let tmp_date = new Date(this.year, 9, 1)
+				this.toDate = this.minusDays(tmp_date, 1)
+			} else if (this.timeline == 4) {
+				this.fromDate = new Date(this.year, 9, 1)
+				let tmp_date = new Date(this.year + 1, 0, 1)
+				this.toDate = this.minusDays(tmp_date, 1)
+			} else if (this.timeline == 5) {
+				this.fromDate = new Date(this.year, 0, 1)
+				let tmp_date = new Date(this.year, 6, 1)
+				this.toDate = this.minusDays(tmp_date, 1)
+			} else if (this.timeline == 6) {
+				this.fromDate = new Date(this.year, 6, 1)
+				let tmp_date = new Date(this.year + 1, 0, 1)
+				this.toDate = this.minusDays(tmp_date, 1)
+			}
+			this.dataStateChange()
+		}
+	}
 
 	getList() {
 		if (this.listUnitSelected != null && this.listUnitSelected.length > 0) {
 			this.ltsUnitId = this.listUnitSelected.reduce((x, y) => {
 				return (x += y.unitId + ',')
 			}, '')
-			this.totalRecords = this.listUnitSelected.length
 		} else {
+			if(!this.ltsUnitIdAll){
+				return
+			}
 			this.ltsUnitId = this.ltsUnitIdAll
-			this.totalRecords = this.listUnit.length
 		}
 		let obj = {
 			PageIndex: this.pageIndex == null ? 1 : this.pageIndex,
@@ -101,8 +152,8 @@ export class RecommendationsByUnitComponent implements OnInit {
 			LtsUnitId: this.ltsUnitId,
 			Year: this.year,
 			Timeline: this.timeline == null ? '' : this.timeline,
-			FromDate: this.fromDate == null ? '' : (this.fromDate = JSON.stringify(new Date(this.fromDate)).slice(1, 11)),
-			ToDate: this.toDate == null ? '' : (this.toDate = JSON.stringify(new Date(this.toDate)).slice(1, 11)),
+			FromDate: this.fromDate == null ? '' : this.getFormattedDate(this.fromDate),
+			ToDate: this.toDate == null ? '' : this.getFormattedDate(this.toDate),
 		}
 		this._service.getStatisticRecommendationByUnit(obj).subscribe((res) => {
 			if (res.success != RESPONSE_STATUS.success) {
@@ -114,6 +165,7 @@ export class RecommendationsByUnitComponent implements OnInit {
 			} else {
 				if (res.result.StatisticRecommendationByUnitGetAllOnPage.length > 0) {
 					this.listData = res.result.StatisticRecommendationByUnitGetAllOnPage
+					this.totalRecords = res.result.TotalCount
 				} else {
 					this.listData = []
 					this.pageIndex = 1
@@ -136,21 +188,31 @@ export class RecommendationsByUnitComponent implements OnInit {
 	}
 
 	fromDateChange(data) {
-		if (data != null) {
-			this.fromDate = JSON.stringify(new Date(data)).slice(1, 11)
-		} else {
-			this.fromDate = null
+		if(data){
+			this.getList()
 		}
-		this.getList()
 	}
 	toDateChange(data) {
-		if (data != null) {
-			this.toDate = JSON.stringify(new Date(data)).slice(1, 11)
-			// this.getList()
-		} else {
-			this.toDate = null
+		if(data){
+			this.getList()
 		}
-		this.getList()
+	}
+	viewDetail(unitId : any , status : any = null) {
+		if(status){
+			return this.router.navigate([
+				'/quan-tri/bao-cao/phan-anh-kien-nghi-theo-don-vi-chi-tiet',
+				unitId,
+				this.getFormattedDate(this.fromDate),
+				this.getFormattedDate(this.toDate),
+				status
+			])
+		}
+		return this.router.navigate([
+			'/quan-tri/bao-cao/phan-anh-kien-nghi-theo-don-vi-chi-tiet',
+			unitId,
+			this.getFormattedDate(this.fromDate),
+			this.getFormattedDate(this.toDate),
+		])
 	}
 
 	onExport() {

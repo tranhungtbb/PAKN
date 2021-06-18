@@ -51,3 +51,10 @@
 .is-parent {
 	padding-left: 1.857em !important;
 }
+strong.highlight:hover {
+	color: #42a4ff;
+	cursor: pointer;
+}
+strong.highlight {
+	cursor: pointer;
+}

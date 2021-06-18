@@ -280,6 +280,38 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYUserReadedInvitationGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserReadedInvitationGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserReadedInvitationGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public string FullName { get; set; }
+		public string Email { get; set; }
+		public string Avatar { get; set; }
+		public DateTime? WatchedDate { get; set; }
+
+		public async Task<List<SYUserReadedInvitationGetAllOnPage>> INVInvitationGetAllOnPageDAO(int InvitationId , string UserName, DateTime? WatchedDate, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("InvitationId", InvitationId);
+			DP.Add("UserName", UserName);
+			DP.Add("WatchedDate", WatchedDate);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserReadedInvitationGetAllOnPage>("SY_UserReadedInvitationGetAllOnPage", DP)).ToList();
+		}
+	}
+
 	public class INVInvitationGetById
 	{
 		private SQLCon _sQLCon;

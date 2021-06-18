@@ -67,16 +67,6 @@ export class PublishComponent implements OnInit, OnChanges {
 			}
 	}
 
-	botname: string = 'Bot'
-	message: string = ''
-	messages: any = [
-		{
-			who: this.botname,
-			isReply: true,
-			message: 'Vui lòng nhập câu hỏi...',
-		},
-	]
-
 	getListNotification(PageSize: any) {
 		this.ViewedCount = 0
 		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: PageSize, PageIndex: 1 }).subscribe((res) => {
@@ -137,7 +127,7 @@ export class PublishComponent implements OnInit, OnChanges {
 		if (type == TYPE_NOTIFICATION.NEWS) {
 			this.updateIsReadNotification(id)
 			this._router.navigate(['/tin-tuc-su-kien/' + id])
-		} else {
+		} else if(type == TYPE_NOTIFICATION.RECOMMENDATION){
 			if (typeSend == RECOMMENDATION_STATUS.FINISED) {
 				this.updateIsReadNotification(id)
 				this._router.navigate(['/cong-bo/phan-anh-kien-nghi/' + id])
@@ -145,6 +135,9 @@ export class PublishComponent implements OnInit, OnChanges {
 				this.updateIsReadNotification(id)
 				this._router.navigate(['/cong-bo/chi-tiet-kien-nghi/' + id])
 			}
+		}else if (type == TYPE_NOTIFICATION.INVITATION) { // Thư mời
+			this.updateIsReadNotification(id)
+			this._router.navigate(['/quan-tri/thu-moi/chi-tiet/' + id])
 		}
 	}
 
@@ -165,101 +158,4 @@ export class PublishComponent implements OnInit, OnChanges {
 		}
 		return false
 	}
-
-	/*================ CHAT BOT ===============*/
-	toggleChatForm() {
-		let formChat = document.getElementById('form-chat')
-		formChat.classList.toggle('togger-show-chatbot')
-
-		let btnChat = document.getElementById('btn-chat')
-		btnChat.classList.toggle('togger-show-chatbot')
-	}
-	// Send question to server chatbot
-	send() {
-		if (this.message.trim() === '') {
-			return
-		}
-
-		this.messages.push({
-			who: 'Tôi',
-			isReply: false,
-			message: this.message,
-		})
-
-		// get userID
-		let kluid = localStorage.getItem('kluid')
-
-		// not exist userid
-		if (!kluid) {
-			this.chatBotService.getNewUserId().subscribe((data) => {
-				let newUs = null
-				newUs = data
-				if (newUs.UserID) {
-					localStorage.setItem('kluid', newUs.UserID)
-					this.sendToServer()
-				}
-			}),
-				(error) => {
-					console.log(error)
-				}
-		} else {
-			this.sendToServer()
-		}
-	}
-
-	async sendToServer() {
-		let kluid = localStorage.getItem('kluid')
-
-		const data = {
-			Sentence: this.message,
-		}
-
-		this.chatBotService.sendToServer(kluid, data).subscribe(
-			(response) => {
-				let res = null
-				res = response
-				this.messages.push({
-					who: this.botname,
-					isReply: true,
-					message: res.ResponseText.toString(),
-				})
-
-				let userId = localStorage.getItem('userId')
-				userId = userId === '' || userId === null ? null : userId
-				let fullName = this.currentFullnName === '' || this.currentFullnName === null ? '' : this.currentFullnName
-
-				const dataChatbot = {
-					kluid: kluid,
-					userId: userId,
-					fullName: fullName,
-					question: this.message,
-					answer: res.ResponseText.toString(),
-				}
-				this.insertDataChatBot(dataChatbot)
-
-				this.message = ''
-
-				document.getElementById('messages-content').style.overflow = 'scroll'
-				setTimeout(function () {
-					document.getElementById('messages-content').scrollTo(0, 1000)
-				}, 500)
-			},
-			(error) => {
-				console.log('hi')
-				console.log(error)
-			}
-		)
-	}
-	insertDataChatBot(obj: any) {
-		this.chatBotService.chatbotInsertData(obj).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				if (response.result == -1) {
-					return
-				} else {
-				}
-			} else {
-			}
-		})
-	}
-	/*================ CHAT BOT ===============*/
 }

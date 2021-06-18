@@ -34,6 +34,8 @@ import { UserViewInfoComponent } from './components/user/user-view-info/user-vie
 import { BusinessModule } from '../business.module'
 import { IntroduceComponent } from './components/introduce/introduce.component'
 import { IndexSettingComponent } from './components/index-setting/index-setting.component'
+import {SystemConfigComponent} from './components/system-config/system-config.component'
+import {SwitchboardSettingComponent} from './components/switchboard-setting/switchboard-setting.component'
 
 @NgModule({
 	imports: [
@@ -67,12 +69,13 @@ import { IndexSettingComponent } from './components/index-setting/index-setting.
 		GroupUserComponent,
 		UserComponent,
 		UnitComponent,
-		//UserCreateOrUpdateComponent,
+		SystemConfigComponent,
 		UnitFilterPipe,
 		ChatBotComponent,
 		HistoryChatBotComponent,
 		IntroduceComponent,
 		IndexSettingComponent,
+		SwitchboardSettingComponent
 	],
 	entryComponents: [UserCreateOrUpdateComponent, UserViewInfoComponent],
 })

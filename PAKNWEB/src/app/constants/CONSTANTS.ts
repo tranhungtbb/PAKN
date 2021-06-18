@@ -118,6 +118,7 @@ export class STEP_RECOMMENDATION {
 export class TYPE_NOTIFICATION {
 	public static NEWS = 1 // thông báo tin tức
 	public static RECOMMENDATION = 2 // thông báo PAKN
+	public static INVITATION = 3 // thông báo có thư mời
 }
 
 export class PROCESS_STATUS_RECOMMENDATION {
@@ -177,6 +178,18 @@ export const FILETYPE = [
 	{ text: 'application/vnd.ms-powerpoint.slideshow.macroEnabled.12', value: 6 },
 	{ text: 'video/mp4', value: 7 },
 ]
+
+export const TYPE_CONFIG = [
+	{ text : 'Cấu hình email', value : 1 }, //Email hệ thống
+	{ text : 'Cấu hình sms', value : 2 }, //SMS hệ thống
+	{ text : 'Cấu hình tổng đài', value : 3 } //Config tổng đài
+]
+
+export class TYPECONFIG {
+	public static CONFIG_EMAIL = 1
+	public static CONFIG_SMS = 2
+	public static CONFIG_SWITCHBOARD = 3
+}
 
 export class REGEX {
 	public static PHONE_VN = '^(84|0[3|5|7|8|9])+([0-9]{8})$'

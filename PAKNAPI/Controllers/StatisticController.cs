@@ -56,20 +56,51 @@ namespace PAKNAPI.Controllers
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"StatisticRecommendationByUnitGetAllOnPage", mrrRecommendationByUnit},
+						{"TotalCount", mrrRecommendationByUnit != null && mrrRecommendationByUnit.Count > 0 ? mrrRecommendationByUnit[0].RowNumber : 0},
 						{"PageIndex", mrrRecommendationByUnit != null && mrrRecommendationByUnit.Count > 0 ? PageIndex : 0},
 						{"PageSize", mrrRecommendationByUnit != null && mrrRecommendationByUnit.Count > 0 ? PageSize : 0},
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+
+		[HttpGet]
+		[Authorize]
+		[Route("STT_RecommendationsByUnitDetail")]
+		public async Task<ActionResult<object>> RecommendationsByUnitDetailGetAllOnPageBase(int UnitId,string Code,string CreateName, string Title, int? Field, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		{
+			try
+			{
+				List<StatisticRecommendationByUnitDetailGetAllOnPage> mrrRecommendationByUnit = await new StatisticRecommendationByUnitDetailGetAllOnPage(_appSetting).StatisticRecommendationByUnitDetailGetAllOnPageDAO(UnitId, Code, CreateName, Title, Field, Status, FromDate,ToDate, PageSize,PageIndex);
+				
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"RecommendationsByUnitDetailGetAllOnPage", mrrRecommendationByUnit},
+						{"TotalCount", mrrRecommendationByUnit != null && mrrRecommendationByUnit.Count > 0 ? mrrRecommendationByUnit[0].RowNumber : 0},
+						{"PageIndex", mrrRecommendationByUnit != null && mrrRecommendationByUnit.Count > 0 ? PageIndex : 0},
+						{"PageSize", mrrRecommendationByUnit != null && mrrRecommendationByUnit.Count > 0 ? PageSize : 0},
+					};
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				//_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 
 		[HttpGet]
 		[Authorize]
@@ -85,13 +116,13 @@ namespace PAKNAPI.Controllers
 						{"ListData", mrrRecommendationByGroupWord},
 						{"ListUnits", rsSYUnitGetDropdownByListId},
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -116,8 +147,8 @@ namespace PAKNAPI.Controllers
 			}
 			catch (Exception ex)
 			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -142,13 +173,41 @@ namespace PAKNAPI.Controllers
 						{"PageIndex", mrrRecommendationByField != null && mrrRecommendationByField.Count > 0 ? PageIndex : 0},
 						{"PageSize", mrrRecommendationByField != null && mrrRecommendationByField.Count > 0 ? PageSize : 0},
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("STT_RecommendationsByFieldDetail")]
+		public async Task<ActionResult<object>> RecommendationsByFieldDetailGetAllOnPageBase(int FiledId, string Code, string CreateName, string Title, string? LstUnitId, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		{
+			try
+			{
+				List<StatisticRecommendationByFiledDetailGetAllOnPage> mrrRecommendationByField = await new StatisticRecommendationByFiledDetailGetAllOnPage(_appSetting).StatisticRecommendationByFieldDetailGetAllOnPageDAO(FiledId, Code, CreateName, Title, LstUnitId, Status, FromDate, ToDate, PageSize, PageIndex);
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"RecommendationsByFieldDetailGetAllOnPage", mrrRecommendationByField},
+						{"TotalCount", mrrRecommendationByField != null && mrrRecommendationByField.Count > 0 ? mrrRecommendationByField[0].RowNumber : 0},
+						{"PageIndex", mrrRecommendationByField != null && mrrRecommendationByField.Count > 0 ? PageIndex : 0},
+						{"PageSize", mrrRecommendationByField != null && mrrRecommendationByField.Count > 0 ? PageSize : 0},
+					};
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				//_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}

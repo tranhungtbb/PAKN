@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { ToastrService } from 'ngx-toastr'
+import {Router} from '@angular/router'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 declare var $: any
@@ -11,7 +12,7 @@ declare var $: any
 	styleUrls: ['./recommnendation-get-list.component.css'],
 })
 export class RecommnendationGetListComponent implements OnInit {
-	constructor(private _service: RecommendationService, private _toast: ToastrService, private storeageService: UserInfoStorageService) {}
+	constructor(private _service: RecommendationService, private _toast: ToastrService, private storeageService: UserInfoStorageService, private router : Router) {}
 
 	listData: any[]
 	dataSearch: any = {}
@@ -45,5 +46,16 @@ export class RecommnendationGetListComponent implements OnInit {
 				console.log(error)
 				alert(error)
 			}
+	}
+	getShortName(string) {
+		var names = string.split(' '),
+			initials = names[0].substring(0, 1).toUpperCase()
+		if (names.length > 1) {
+			initials += names[names.length - 1].substring(0, 1).toUpperCase()
+		}
+		return initials
+	}
+	redirectList(){
+		this.router.navigate(['/quan-tri/kien-nghi/cho-giai-quyet'])
 	}
 }

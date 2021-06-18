@@ -22,10 +22,19 @@
     <Compile Update="ExportGrid\recommendation_by_unit.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="ExportGrid\Statistic_Recommendation_ByFieldDetail.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="ExportGrid\Statistic_Recommendation_ByGroupWordDetail.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="ExportGrid\Statistic_Recommendation_ByUnitDetail.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="ExportGrid\SY_UserByUnit.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="ExportGrid\UserReadedInvitation_ByInvitationId.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>

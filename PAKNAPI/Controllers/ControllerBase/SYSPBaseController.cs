@@ -379,6 +379,75 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("SYConfigGetAllOnPageBase")]
+		public async Task<ActionResult<object>> SYConfigGetAllOnPageBase(string Title, string Description, int? Type , int? PageSize, int? PageIndex)
+		{
+			try
+			{
+				List<SYConfig> rsSYConfigGetAllOnPage = await new SYConfig(_appSetting).SYConfigGetAllOnPageDAO(Title, Description, Type , PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYConfigGetAllOnPageBase", rsSYConfigGetAllOnPage},
+						{"TotalCount", rsSYConfigGetAllOnPage != null && rsSYConfigGetAllOnPage.Count > 0 ? rsSYConfigGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsSYConfigGetAllOnPage != null && rsSYConfigGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsSYConfigGetAllOnPage != null && rsSYConfigGetAllOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("SYConfigGetByIDBase")]
+		public async Task<ActionResult<object>> SYConfigGetByIDBase(int? Id)
+		{
+			try
+			{
+				List<SYConfig> rsSYConfigGetByID = await new SYConfig(_appSetting).SYConfigGetByIdDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYConfigGetByID", rsSYConfigGetByID},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("SYConfigUpdateBase")]
+		public async Task<ActionResult<object>> SYConfigUpdateBase(SYConfig _sYConfigUpdateIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYConfig(_appSetting).SYConfigUpdateDAO(_sYConfigUpdateIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("SYRoleUpdateBase")]

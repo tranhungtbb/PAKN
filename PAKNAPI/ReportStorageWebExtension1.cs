@@ -218,6 +218,21 @@ namespace PAKNAPI
                         return ms.ToArray();
                     }
                     break;
+                case "Statistic_Recommendation_ByUnitDetail":
+                    var paraExportRecomdationByUnitDetail = JsonConvert.DeserializeObject<ExportRecomdationByUnitDetail>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.Statistic_Recommendation_ByUnitDetail.repx");
+                    result = XtraReport.FromStream(resource);
+                    result.Parameters["TitleReport"].Value = paraExportRecomdationByUnitDetail.TitleReport;
+                    result.Parameters["UnitId"].Value = paraExportRecomdationByUnitDetail.UnitId;
+                    result.Parameters["FromDate"].Value = paraExportRecomdationByUnitDetail.FromDate;
+                    result.Parameters["ToDate"].Value = paraExportRecomdationByUnitDetail.ToDate;
+
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        return ms.ToArray();
+                    }
+                    break;
                 case "recommendation_by_fields":
                     var paraExportRecomdationByFields = JsonConvert.DeserializeObject<ExportRecomdationByFields>(objectReport, jss);
                     resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.recommendation_by_fields.repx");
@@ -233,6 +248,35 @@ namespace PAKNAPI
                     result.Parameters["Timeline"].Value = paraExportRecomdationByFields.Timeline;
                     result.Parameters["FromDate"].Value = paraExportRecomdationByFields.fromDate;
                     result.Parameters["ToDate"].Value = paraExportRecomdationByFields.toDate;
+
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        return ms.ToArray();
+                    }
+                    break;
+                case "Statistic_Recommendation_ByFieldDetail":
+                    var paraExportRecomdationByFieldDetail = JsonConvert.DeserializeObject<ExportRecomdationByFieldDetail>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.Statistic_Recommendation_ByFieldDetail.repx");
+                    result = XtraReport.FromStream(resource);
+                    result.Parameters["TitleReport"].Value = paraExportRecomdationByFieldDetail.TitleReport;
+                    result.Parameters["LstUnitId"].Value = paraExportRecomdationByFieldDetail.LstUnitId;
+                    result.Parameters["Field"].Value = paraExportRecomdationByFieldDetail.Field;
+                    result.Parameters["FromDate"].Value = paraExportRecomdationByFieldDetail.FromDate;
+                    result.Parameters["ToDate"].Value = paraExportRecomdationByFieldDetail.ToDate;
+
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        return ms.ToArray();
+                    }
+                    break;
+                case "UserReadedInvitationByInvitationId":
+                    var paraExportuserReadedInvitationGetList = JsonConvert.DeserializeObject<ExportUserReadedInvitationGetList>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.UserReadedInvitation_ByInvitationId.repx");
+                    result = XtraReport.FromStream(resource);
+                    result.Parameters["TitleReport"].Value = paraExportuserReadedInvitationGetList.TitleReport;
+                    result.Parameters["InvitationId"].Value = paraExportuserReadedInvitationGetList.InvitationId;
 
                     result.SaveLayoutToXml(ms);
                     if (ms != null)

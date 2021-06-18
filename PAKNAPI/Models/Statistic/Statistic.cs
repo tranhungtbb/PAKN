@@ -49,6 +49,45 @@ namespace PAKNAPI.Models.Statistic
 		}
 	}
 
+
+	public class StatisticRecommendationByUnitDetailGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Name { get; set; }
+		public string Title { get; set; }
+		public string FieldName { get; set; }
+		public int Status { get; set; }
+		public int? RowNumber { get; set; }
+
+		public StatisticRecommendationByUnitDetailGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public StatisticRecommendationByUnitDetailGetAllOnPage()
+		{
+		}
+
+		public async Task<List<StatisticRecommendationByUnitDetailGetAllOnPage>> StatisticRecommendationByUnitDetailGetAllOnPageDAO(int UnitId, string Code, string CreateName, string Title, int? Field, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UnitId", UnitId);
+			DP.Add("Code", Code);
+			DP.Add("CreateName", CreateName);
+			DP.Add("Title", Title);
+			DP.Add("Field", Field);
+			DP.Add("Status", Status);
+			DP.Add("FromDate", FromDate);
+			DP.Add("ToDate", ToDate);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationByUnitDetailGetAllOnPage>("TK_ListRecommendationByUnit_Detail", DP)).ToList();
+		}
+	}
+
 	public class StatisticRecommendationByFieldGetAllOnPage
 	{
 		private SQLCon _sQLCon;
@@ -88,6 +127,44 @@ namespace PAKNAPI.Models.Statistic
 			DP.Add("PageIndex", PageIndex);
 
 			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationByFieldGetAllOnPage>("[TK_ListRecommendationByField]", DP)).ToList();
+		}
+	}
+
+	public class StatisticRecommendationByFiledDetailGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+		public int Id { get; set; }
+		public string Code { get; set; }
+		public string Name { get; set; }
+		public string Title { get; set; }
+		public string UnitName { get; set; }
+		public int Status { get; set; }
+		public int? RowNumber { get; set; }
+
+		public StatisticRecommendationByFiledDetailGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public StatisticRecommendationByFiledDetailGetAllOnPage()
+		{
+		}
+
+		public async Task<List<StatisticRecommendationByFiledDetailGetAllOnPage>> StatisticRecommendationByFieldDetailGetAllOnPageDAO(int FiledId, string Code, string CreateName, string Title, string? LstUnitId, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("LstUnitId", LstUnitId);
+			DP.Add("Code", Code);
+			DP.Add("CreateName", CreateName);
+			DP.Add("Title", Title);
+			DP.Add("Field", FiledId);
+			DP.Add("Status", Status);
+			DP.Add("FromDate", FromDate);
+			DP.Add("ToDate", ToDate);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationByFiledDetailGetAllOnPage>("TK_ListRecommendationByField_Detail", DP)).ToList();
 		}
 	}
 

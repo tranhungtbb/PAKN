@@ -5,8 +5,8 @@ import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { defineLocale } from 'ngx-bootstrap/chronos'
 import { viLocale } from 'ngx-bootstrap/locale'
-import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker'
-
+import { BsLocaleService } from 'ngx-bootstrap/datepicker'
+import { DataService } from 'src/app/services/sharedata.service'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { InvitationObject, InvitationUserMapObject } from 'src/app/models/invitationObject'
 import { UserService } from 'src/app/services/user.service'
@@ -25,11 +25,13 @@ export class InvitationComponent implements OnInit {
 		private toast: ToastrService,
 		private routes: Router,
 		private userService: UserService,
-		private BsLocaleService: BsLocaleService
+		private BsLocaleService: BsLocaleService,
+		private _shareData: DataService,
 	) {
 		this.listItemUserSelected = []
 	}
 	@ViewChild('table', { static: false }) table: any
+	// @ViewChild('tableLstUser', { static: false }) tableLstUser: any
 
 	listStatus: any = [
 		{ value: 1, text: 'Đang soạn thảo' },
@@ -48,24 +50,20 @@ export class InvitationComponent implements OnInit {
 	listItemUserSelected: any[]
 	listFile: any[]
 	listUserIsSystem: any[]
-
 	InvitationId: any
+
+	// lts user
+	lstUser : any = []
+	pagination : any = []
+	totalRecordsUser : number
+	watchedDate : Date
+	queryLstUser : queryLstUser = new queryLstUser()
+
 
 	ngOnInit() {
 		this.getListPaged()
 		this.BsLocaleService.use('vi')
-		// this.getUsersIsSystem()
 	}
-
-	// getUsersIsSystem() {
-	// 	this.userService.getIsSystem2({}).subscribe((res) => {
-	// 		if (res.success == RESPONSE_STATUS.success) {
-	// 			this.listUserIsSystem = res.result.SYUserGetIsSystem2
-	// 		} else {
-	// 			this.listUserIsSystem = []
-	// 		}
-	// 	})
-	// }
 
 	getListPaged() {
 		this.title = this.title.trim()
@@ -138,30 +136,40 @@ export class InvitationComponent implements OnInit {
 		return
 	}
 
-	// getInvitationModelById(id: any) {
-	// 	this.invitationService.invitationGetById({ id: id }).subscribe((res) => {
-	// 		if (res.success == RESPONSE_STATUS.success) {
-	// 			debugger
-	// 			if (res.result) {
-	// 				this.model = { ...res.result.model }
-	// 				this.listFile = { ...res.result.invFileAttach }
-	// 				for (const iterator of res.result.invitationUserMap) {
-	// 					let item = this.listUserIsSystem.find((x) => x.id == iterator.userId)
-	// 					var obj = new InvitationUserMapObject()
-	// 					obj.userId = iterator.userId
-	// 					obj.sendEmail = iterator.sendEmail
-	// 					obj.sendSMS = iterator.sendSMS
-	// 					obj.fullName = item.fullName
-	// 					obj.unitName = item.unitName
-	// 					obj.positionName = item.positionName
-	// 					obj.avatar = item.avatar
-	// 					this.listItemUserSelected.push(obj)
-	// 				}
-	// 				$('#modalDetail').modal('show')
-	// 			}
-	// 		}
-	// 	})
-	// }
+	preUserWatched(id : number){
+		if(this.queryLstUser.InvitationId != 0 && this.queryLstUser.InvitationId != id){
+			this.queryLstUser = new queryLstUser()
+		}
+		this.queryLstUser.InvitationId = id
+		this.queryLstUser.UserName = this.queryLstUser.UserName.trim()
+		this.watchedDate == null ? this.queryLstUser.WatchedDate ='' : this.queryLstUser.WatchedDate = this.watchedDate.toDateString()
+		$('#modalLstUser').modal('show')
+		this.invitationService.userReadedInvitationGetList(this.queryLstUser).subscribe(res =>{
+			if(res.success == RESPONSE_STATUS.success){
+				if(res.result.SYUserReadedInvitationGetAllOnPage.length > 0){
+					this.lstUser = res.result.SYUserReadedInvitationGetAllOnPage
+					this.totalRecordsUser = res.result.TotalCount
+				}else{
+					this.lstUser = []
+					this.totalRecordsUser = 0
+					this.queryLstUser.PageIndex = 1
+					this.queryLstUser.PageSize = 20
+				}
+				this.padi()
+			}
+			else{
+				this.lstUser = []
+				this.totalRecordsUser = 0
+				this.queryLstUser.PageIndex = 1
+				this.queryLstUser.PageSize = 20
+				this.padi()
+			}
+		}), 
+		(error) => {
+			console.log(error)
+			alert(error)
+		}
+	}
 
 	sendDateChange(data) {
 		if (data != null) {
@@ -183,5 +191,53 @@ export class InvitationComponent implements OnInit {
 
 	getHistory(id: any) {
 		return
+	}
+	padi() {
+		this.pagination = []
+		for (let i = 0; i < Math.ceil(this.totalRecordsUser / this.queryLstUser.PageSize); i++) {
+			this.pagination.push({ index: i + 1 })
+		}
+	}
+
+	changePagination(index: any) {
+		if (this.queryLstUser.PageIndex > index) {
+			if (index > 0) {
+				this.queryLstUser.PageIndex = index
+				this.preUserWatched(this.queryLstUser.InvitationId)
+			}
+			return
+		} else if (this.queryLstUser.PageIndex < index) {
+			if (this.pagination.length >= index) {
+				this.queryLstUser.PageIndex = index
+				this.preUserWatched(this.queryLstUser.InvitationId)
+			}
+			return
+		}
+		return
+	}
+	onExport() {
+		let passingObj: any = {}
+		$('#modalLstUser').modal('hide')
+		let invitation = this.listData.find(x=>x.id == this.queryLstUser.InvitationId)
+		passingObj.TitleReport = "THỐNG KÊ NGƯỜI XEM THƯ MỜI : " + invitation.title.toUpperCase()
+		passingObj.InvitationId = this.queryLstUser.InvitationId
+		this._shareData.setobjectsearch(passingObj)
+		this._shareData.sendReportUrl = 'UserReadedInvitationByInvitationId?' + JSON.stringify(passingObj)
+		this.routes.navigate(['quan-tri/xuat-file'])
+	}
+}
+
+class queryLstUser{
+	InvitationId : number
+	UserName : string
+	WatchedDate : string
+	PageSize : number
+	PageIndex : number
+	constructor(){
+		this.InvitationId = 0
+		this.UserName = ''
+		this.WatchedDate = ''
+		this.PageSize = 20
+		this.PageIndex = 1
 	}
 }

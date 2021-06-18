@@ -99,7 +99,7 @@ namespace PAKNAPI.Controllers
 						}
 						else {
 							int check = AdmintrativeUnitIds.Where(x => x == item.AdmintrativeUnitId).FirstOrDefault();
-							if (check == null) { AdmintrativeUnitIds.Add(item.AdmintrativeUnitId); }
+							if (check == 0) { AdmintrativeUnitIds.Add(item.AdmintrativeUnitId); }
 						}
 						
 
@@ -212,7 +212,7 @@ namespace PAKNAPI.Controllers
 						else
 						{
 							int check = AdmintrativeUnitIds.Where(x => x == item.AdmintrativeUnitId).FirstOrDefault();
-							if (check == null) { AdmintrativeUnitIds.Add(item.AdmintrativeUnitId); }
+							if (check == 0) { AdmintrativeUnitIds.Add(item.AdmintrativeUnitId); }
 						}
 
 

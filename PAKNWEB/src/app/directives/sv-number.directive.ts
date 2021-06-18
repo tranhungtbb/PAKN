@@ -16,7 +16,7 @@ export class NumberOnlyDirective {
 	//}
 	@HostListener('keydown', ['$event'])
 	keyDownEvent(event: KeyboardEvent) {
-		if (event.key.length === 1 && (event.shiftKey || event.which < 48 || event.which > 57) && (event.which < 95 || event.which > 106)) {
+		if (event.key && event.key.length === 1 && (event.shiftKey || event.which < 48 || event.which > 57) && (event.which < 95 || event.which > 106)) {
 			event.preventDefault()
 		}
 	}

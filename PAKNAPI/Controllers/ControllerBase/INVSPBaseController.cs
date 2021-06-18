@@ -224,6 +224,32 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize]
+		[Route("SYUserReadedInvitationGetAllOnPage")]
+		public async Task<ActionResult<object>> SYUserReadedInvitationGetAllOnPage(int InvitationId, string UserName, DateTime? WatchedDate, int? PageSize, int? PageIndex)
+		{
+			try
+			{
+				List<SYUserReadedInvitationGetAllOnPage> syUserReadedInvitationGetAllOnPage = await new SYUserReadedInvitationGetAllOnPage(_appSetting).INVInvitationGetAllOnPageDAO(InvitationId,UserName, WatchedDate, PageSize,PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserReadedInvitationGetAllOnPage", syUserReadedInvitationGetAllOnPage},
+						{"TotalCount", syUserReadedInvitationGetAllOnPage != null && syUserReadedInvitationGetAllOnPage.Count > 0 ? syUserReadedInvitationGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", syUserReadedInvitationGetAllOnPage != null && syUserReadedInvitationGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", syUserReadedInvitationGetAllOnPage != null && syUserReadedInvitationGetAllOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
 		[Route("INVInvitationGetByIdBase")]
 		public async Task<ActionResult<object>> INVInvitationGetByIdBase(int? id)
 		{

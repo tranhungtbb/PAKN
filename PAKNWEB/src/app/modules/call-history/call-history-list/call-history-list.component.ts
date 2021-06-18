@@ -10,7 +10,7 @@ export class CallHistoryListComponent implements OnInit {
 	constructor(private _CallHistoryService: CallHistoryService) {}
 
 	callTypes = [
-		{ value: '', Text: 'Tất cả' },
+		{ value: null, text: 'Tất cả cuộc gọi' },
 		{ value: 0, text: 'Cuộc gọi đến' },
 		{ value: 1, text: 'Cuộc gọi đi' },
 		{ value: 2, text: 'Cuộc gọi nhỡ' },
@@ -19,7 +19,7 @@ export class CallHistoryListComponent implements OnInit {
 	listData: any[] = []
 
 	query = {
-		type: '',
+		type: null,
 		phone: '',
 		pageIndex: 1,
 		pageSize: 20,
@@ -31,17 +31,19 @@ export class CallHistoryListComponent implements OnInit {
 
 	private getDataPageList() {
 		let query = { ...this.query }
+		this.query.type = query.type == null ? '' : query.type
 
-		this._CallHistoryService.getPagedList(query).subscribe((res) => {
+		this._CallHistoryService.getPagedList(this.query).subscribe((res) => {
 			if (res) {
-				this.listData = res.Result.listData
+				this.listData = res.result.ListData
 				if (this.listData[0].rowNumber) {
 					this.totalCount = this.listData[0].rowNumber
 				}
 			}
 		})
 	}
-	filterChange() {
+	filterChange(event: any, key: string) {
+		this.query[key] = event.value
 		this.getDataPageList()
 	}
 	onPageChange(event: any): void {

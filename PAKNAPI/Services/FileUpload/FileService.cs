@@ -59,6 +59,30 @@ namespace PAKNAPI.Services.FileUpload
             }
         }
 
+        public async Task<bool> Remove(string[] filePaths)
+        {
+            string contentRootPath = _webHostEnvironment.ContentRootPath;
+            string fullPath = "";
+
+            try
+            {
+                foreach(var path in filePaths)
+                {
+                    fullPath = Path.Combine(contentRootPath, path);
+                    if (File.Exists(fullPath))
+                    {
+                        File.Delete(fullPath);
+                    }
+                }
+                
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public async Task<IList<FileInfoModel>> Save(IFormFileCollection files, string folder)
         {
             try
@@ -85,7 +109,7 @@ namespace PAKNAPI.Services.FileUpload
                         await file.CopyToAsync(memoryStream);
                     }
                     list.Add(new FileInfoModel {
-                        Name = file.Name, 
+                        Name = file.FileName, 
                         Path = Path.Combine(rootFolder, folder, fileName), 
                         Type = file.ContentType
                     });

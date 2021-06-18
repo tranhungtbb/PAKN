@@ -3,45 +3,45 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { UserObject } from '../../../../models/UserObject'
 import { SystemconfigService } from '../../../../services/systemconfig.service'
 import { ToastrService } from 'ngx-toastr'
+import {ActivatedRoute} from '@angular/router'
+import { RESPONSE_STATUS, TYPECONFIG } from 'src/app/constants/CONSTANTS'
+import {SystemtConfig,ConfigSMS } from 'src/app/models/systemtConfigObject'
+import { COMMONS } from 'src/app/commons/commons'
 
-import { RESPONSE_STATUS, MESSAGE_COMMON } from 'src/app/constants/CONSTANTS'
-import { NullTemplateVisitor } from '@angular/compiler'
-declare var $: any
 @Component({
 	selector: 'app-sms-setting',
 	templateUrl: './sms-setting.component.html',
 	styleUrls: ['./sms-setting.component.css'],
 })
 export class SmsSettingComponent implements OnInit {
-	model: any = new SystemSMS()
+	model: SystemtConfig = new SystemtConfig()
+	configSMS : ConfigSMS = new ConfigSMS()
 	submitted: boolean = false
 	form: FormGroup
-	linkwebservice: string = ''
-	password: string = ''
-	user: string = ''
-	code: string = ''
-	serviceID: string = ''
-	commandCode: string = ''
-	contenType: boolean
+
 	listStatus: any = [
 		{ value: true, text: 'Tin nhắn nội dung có dấu' },
 		{ value: false, text: 'Tin nhắn nội dung không dấu' },
 	]
 
-	Notifications: any[]
-	numberNotifications: any = 5
-	ViewedCount: number = 0
-	constructor(private _service: SystemconfigService, private _toastr: ToastrService, private _fb: FormBuilder) {}
+	constructor(private _service: SystemconfigService, private _toastr: ToastrService, private _fb: FormBuilder, private activatedRoute : ActivatedRoute) {}
 
 	ngOnInit() {
-		this.onCancel()
+		this.activatedRoute.params.subscribe((params) => {
+			let id = +params['id']
+			if(!isNaN(id)){
+				this.model.id = Number(id)
+				this.onCancel()
+			}
+		})
 	}
 	onCancel() {
 		this.buildForm()
-		this._service.getSystemSMS().subscribe((response) => {
+		this._service.syConfigGetById({Id : this.model.id}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				if (response.result.SYSMSGetFirst.length != 0) {
-					this.model = response.result.SYSMSGetFirst[0]
+				if (response.result.SYConfigGetByID.length > 0) {
+					this.model = response.result.SYConfigGetByID[0]
+					this.configSMS = JSON.parse(this.model.content)
 				}
 			} else {
 				this._toastr.error(response.message)
@@ -58,34 +58,41 @@ export class SmsSettingComponent implements OnInit {
 	resd = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 	buildForm() {
 		this.form = this._fb.group({
-			linkwebservice: [this.model.linkwebservice, Validators.required],
-			password: [this.model.password, Validators.required],
-			user: [this.model.user, Validators.required],
-			code: [this.model.code, Validators.required],
-			serviceID: [this.model.serviceID, Validators.required],
-			commandCode: [this.model.commandCode, Validators.required],
-			contenType: [this.model.contenType, Validators.required],
+			title : [this.model.title, Validators.required],
+			description : [this.model.description, Validators.required],
+			linkwebservice: [this.configSMS.linkwebservice, Validators.required],
+			password: [this.configSMS.password, Validators.required],
+			user: [this.configSMS.user, Validators.required],
+			code: [this.configSMS.code, Validators.required],
+			serviceID: [this.configSMS.serviceID, Validators.required],
+			commandCode: [this.configSMS.commandCode, Validators.required],
+			contentType: [this.configSMS.contentType, Validators.required],
 		})
 	}
-
-	getList() {}
+	rebuilForm() {
+		this.form.reset({
+			title : this.model.title,
+			description : this.model.description,
+			linkwebservice: this.configSMS.linkwebservice,
+			password: this.configSMS.password,
+			user: this.configSMS.user,
+			code: this.configSMS.code,
+			serviceID: this.configSMS.serviceID,
+			commandCode: this.configSMS.commandCode,
+			contentType: this.configSMS.contentType
+		})
+	}
 	onSave() {
+		this.model.type = TYPECONFIG.CONFIG_SMS
 		this.submitted = true
 		if (this.form.invalid) {
 			return
 		}
-		let req = {
-			Linkwebservice: this.model.linkwebservice,
-			Password: this.model.password,
-			User: this.model.user,
-			Code: this.model.code,
-			ServiceID: this.model.serviceID,
-			CommandCode: this.model.commandCode,
-			ContenType: this.model.contenType,
-		}
-		this._service.updateSystemSMS(req).subscribe((response) => {
+		this.model.content = JSON.stringify(this.configSMS)
+		
+		this._service.syConfigUpdate(this.model).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this._toastr.success('Cập nhật cấu hình SMS thành công')
+				this._toastr.success(COMMONS.UPDATE_SUCCESS)
 			} else {
 				this._toastr.error(response.message)
 			}
@@ -95,23 +102,8 @@ export class SmsSettingComponent implements OnInit {
 				alert(error)
 			}
 	}
+	redirectHis(){
+		window.history.back()
+	}
 }
 
-export class SystemSMS {
-	constructor() {
-		this.linkwebservice = ''
-		this.password = ''
-		this.user = ''
-		this.code = ''
-		this.serviceID = ''
-		this.commandCode = ''
-		this.contenType = null
-	}
-	linkwebservice: string = ''
-	password: string = ''
-	user: string = ''
-	code: string = ''
-	serviceID: string = ''
-	commandCode: string = ''
-	contenType: boolean
-}

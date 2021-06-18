@@ -25,7 +25,8 @@ import { TableModule } from 'primeng/table'
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
 import { ViewNewsComponent } from './view-news/view-news.component'
 import { ViewAdministrativeProceduresComponent } from './view-administrative-procedures/view-administrative-procedures.component'
-import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
+import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component';
+import { ChatbotComponent } from './chatbot/chatbot.component'
 
 @NgModule({
 	declarations: [
@@ -43,6 +44,7 @@ import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-righ
 		ViewRecommendationPersonalComponent,
 		ViewAdministrativeProceduresComponent,
 		ViewRightComponent,
+		ChatbotComponent,
 	],
 	imports: [
 		CommonModule,

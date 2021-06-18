@@ -418,7 +418,7 @@ namespace PAKNAPI.Controllers
         {
             try
             {
-                var count = await new SYNotificationGetListOnPageByReceiveId(_appSetting).SYNotificatioUpdateIsReadedDAO(ObjectId,(int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext));
+                var count = await new SYNotificationGetListOnPageByReceiveId(_appSetting).SYNotificatioUpdateIsReadedDAO(ObjectId,(int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext), DateTime.Now);
                 if (count > 0)
                 {
                     return new ResultApi { Success = ResultCode.OK, Result = count };

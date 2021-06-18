@@ -81,6 +81,15 @@ namespace PAKNAPI.Models
         public string fromDate { get; set; }
         public string toDate { get; set; }
     }
+
+    public class ExportRecomdationByUnitDetail
+    {
+        public string TitleReport { get; set; }
+        public string UnitId { get; set; }
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+    }
+
     public class ExportRecomdationByFields
     {
         private string _TitleReport = "BÁO CÁO PHẢN ÁNH KIẾN NGHỊ THEO LĨNH VỰC";
@@ -92,5 +101,18 @@ namespace PAKNAPI.Models
         public int? Timeline { get; set; }
         public string fromDate { get; set; }
         public string toDate { get; set; }
+    }
+    public class ExportRecomdationByFieldDetail
+    {
+        public string LstUnitId { get; set; }
+        public string TitleReport { get; set; }
+        public int Field { get; set; }
+        public string FromDate { get; set; }
+        public string ToDate { get; set; }
+    }
+    public class ExportUserReadedInvitationGetList
+    {
+        public string InvitationId { get; set; }
+        public string TitleReport { get; set; }
     }
 }

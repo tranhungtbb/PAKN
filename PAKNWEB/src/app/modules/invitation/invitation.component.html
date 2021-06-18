@@ -49,7 +49,7 @@
 										<input class="form-control form-control-sm" [(ngModel)]="title" maxlength="100" (keydown.enter)="dataStateChange()"
 											placeholder="Nhập tên..." />
 									</th>
-									<th style="width: 180px;">
+									<th style="width: 220px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Thời gian</strong>
 											<span class="caret-tb"></span>
@@ -62,7 +62,7 @@
 										</div>
 									</th>
 
-									<th>
+									<th style="width: 250px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Địa điểm</strong>
 											<span class="caret-tb"></span>
@@ -100,7 +100,7 @@
 										<span type="button" *ngIf="item.status == 2" class="badge rounded-pill blue-3">Đã gửi</span>
 									</td>
 									<td style="text-align: right;">
-										<strong>{{item.amountWatched}}</strong>
+										<strong style="cursor: pointer;" (click)="preUserWatched(item.id)">{{item.amountWatched}}</strong>
 									</td>
 									<td style="text-align: center;">
 										<div class="d-flex justify-content-end">
@@ -154,39 +154,106 @@
 	</div>
 </div>
 
-<!-- <div class="modal fade" id="modalDetail">
-	<div class="modal-dialog modal-dialog-centered" style="max-width: 70%" role="document">
+
+
+<div class="modal fade" id="modalLstUser">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 40%" role="document">
 		<div class="modal-content rounded">
-			<form class="form-horizontal">
-				<div class="panel panel-default no-margin">
-					<div class="modal-header" style="border: none;">
-						<button class="close btn-close-modal" data-dismiss="modal">
-							×
-						</button>
-						<p class="modal-title h3">{{model.title}}</p>
-					</div>
-					<div class="modal-body no-padding-bottom" style="padding: 1.1rem; padding-top: 0px;">
-						<div class="row" style="padding: 10px 0px;">
-							<div class="col-sm-12" style="border-top: 1px solid #EEEEEE; border-bottom: 1px solid #EEEEEE">
-								<p style="margin: 16px 0px;">{{model.content}}</p>
-							</div>
-							<div class="w-100"></div>
-							<div class="title-user-map">Thành phần tham dự</div>
-							<div class="col-sm-3" style="padding: 5px !important;" *ngFor="let item of listItemUserSelected">
-								<div class="item-user">
-									<div class="info-user" style="padding-left: 0px;">
-										<div class="title">{{item.fullName}}</div>
-
-										<div class="department">{{item.unitName}}</div>
-
-									</div>
+			<!-- <form class="form-horizontal" autocomplete="off"> -->
+			<div class="panel panel-default no-margin">
+				<div class="modal-header" style="border: none;">
+					<button class="close btn-close-modal" data-dismiss="modal">
+						×
+					</button>
+					<p class="modal-title h3">Danh sách người đã xem thư mời</p>
+				</div>
+				<div class="modal-body no-padding-bottom" style="padding: 1.1rem;">
+					<div class="form-horizontal">
+						<div class="row" style="padding: 5px 0px;">
+							<div class="col-12 col-lg-8 form-group">
+								<label class="mb-1 text-uppercase"><strong>Người dùng</strong></label>
+								<input class="form-control form-control-sm" [(ngModel)]="queryLstUser.UserName" maxlength="100" (keydown.enter)="preUserWatched(queryLstUser.InvitationId)"
+											placeholder="Nhập tên..." />
+								<div class="input-group-addon">
+									<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
 								</div>
 							</div>
-							<div class="w-100"></div>
+							<div class="col-12 col-lg-4 form-group">
+								<label class="mb-1 text-uppercase"><strong>Ngày xem</strong></label>
+								<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="watchedDate" (keydown.enter)="preUserWatched(queryLstUser.InvitationId)"
+									bsDatepicker #n="bsDatepicker" maxlength="10" id="toDate2" appBsDatepickerInvalid
+									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+								<div class="input-group-addon">
+									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card mb-0 shadow-none">
+								<div class="table-responsive">
+									<div *ngIf="lstUser.length == 0" style="text-align: center;">
+										<strong>Không tìm thấy dữ liệu</strong>
+									</div>
+									<div class="row item-user-readed" *ngFor="let item of lstUser">
+										<div style="display: flex;" class="col-lg-8">
+											<div class="avatar">
+												<img [src]="item.avatar" style="width: 100%; height: 100%; object-fit: cover;">
+											</div>
+											
+											<div class="content-user">
+												<div style="font-weight: 500;">{{item.fullName}}</div>
+												<p style="padding: 0px;">{{item.email}}</p>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<p>{{item.watchedDate  | date : 'HH:mm - dd/MM/yyyy'}}</p>
+										</div>
+										
+									</div>
+									<div class="mt-1" style="display: flex;">
+											<nav aria-label="navigation" style="width: 65%;">
+												<ul class="pagination pagination-lg justify-content-between align-items-center">
+													<li class="page-item" [ngClass]="{ 'disabled': queryLstUser.PageIndex === 1 }">
+														<a (click)="changePagination(queryLstUser.PageIndex - 1)" class="page-link text-uppercase rounded-pill" href="javascript:void(0)" tabindex="-1"
+															aria-disabled="true"><i class="bi bi-chevron-left mr-2"></i></a>
+													</li>
+													<li class="d-flex justify-content-center align-items-center">
+														<a *ngIf="queryLstUser.PageIndex > 4">...</a>
+														<p class="mb-0 page-item" style="font-size: 1.2rem;" *ngFor="let item of pagination; let i = index" [ngClass]="{ 'active': item.index === queryLstUser.PageIndex }">
+															<a (click)="changePagination(item.index)" *ngIf="i - 3 < queryLstUser.PageIndex && i + 5 > queryLstUser.PageIndex" class="page-link"
+																href="javascript:void(0)">{{item.index}}</a>
+														</p>
+														<a *ngIf="queryLstUser.PageIndex < pagination.length -4">...</a>
+													</li>
+													<li class="page-item" [ngClass]="{ 'disabled': queryLstUser.PageIndex === totalRecordsUser }">
+														<a (click)="changePagination(queryLstUser.PageIndex + 1)" class="page-link text-uppercase rounded-pill" href="javascript:void(0)">
+															<i class="bi bi-chevron-right ml-2"></i></a>
+													</li>
+												</ul>
+											</nav>
+											<div class="mt-1 ml-2" style="display: flex; float: right;">
+												<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" style="height: 35px;" data-dismiss="modal">
+													Đóng
+												</button>
+												<button type="button" class="btn grd-brown3 btn-sm rounded ml-1 border-0 text-dark" style="height: 35px;padding: 0px 10px;" (click)='onExport()'>
+													Xuất excel
+												</button>
+											</div>
+									</div>
+									
+									
+									
+
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-			</form>
+			</div>
+			<!-- </form> -->
 		</div>
 	</div>
-</div> -->
+</div>
+

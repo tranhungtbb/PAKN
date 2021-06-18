@@ -88,7 +88,7 @@ namespace PAKNAPI.Controllers
 					if (string.IsNullOrEmpty(ind.Phone)) { continue; }
 					if (worksheet.Cells[i, 4].Value != null)
 					{
-						ind.Gender = Convert.ToBoolean(worksheet.Cells[i, 4].Value.ToString()) == true ? true : false;
+						ind.Gender = worksheet.Cells[i, 4].Value.ToString() == "Nam" ? true : false;
 					}
 					else { continue; }
 					ind.IDCard = worksheet.Cells[i, 5].Value == null ? null : worksheet.Cells[i, 5].Value.ToString();
@@ -154,10 +154,10 @@ namespace PAKNAPI.Controllers
 						ind.BirthDay = Convert.ToDateTime(worksheet.Cells[i, 13].Value.ToString());
 					} else { continue; }
 					if (worksheet.Cells[i, 14].Value != null) { 
-						ind.Status = Convert.ToBoolean(worksheet.Cells[i, 14].Value.ToString()) == true ? 1 : 0; 
+						ind.Status = worksheet.Cells[i, 14].Value.ToString().ToLower() == "hiệu lực" ? 1 : 0;
 					} else { continue; }
 					
-					ind.IsActived = true;
+					ind.IsActived = ind.Status == 1 ? true : false;
 					ind.IsDeleted = false;
 
 					string defaultPwd = "abc123";
@@ -186,7 +186,7 @@ namespace PAKNAPI.Controllers
 					ind.CreatedBy = Convert.ToInt32(new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext));
 					ind.UpdatedBy = 0;
 					ind.UpdatedDate = null;
-					ind.Status = 1;
+					//ind.Status = 1;
 					ind.IsDeleted = false;
 					ind.UserId = accRs[0].Id;
 					var s = await new Models.BusinessIndividual.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(ind);
@@ -308,8 +308,8 @@ namespace PAKNAPI.Controllers
 						checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Email", model.Email, 0);
 						if (checkExists[0].Exists.Value) continue;
 					}
-
-					model.RepresentativeGender = Convert.ToBoolean(worksheet.Cells[i, 4].Value.ToString()) == true ? true : false;
+					if (worksheet.Cells[i, 4].Value == null) { continue;}
+					model.RepresentativeGender = worksheet.Cells[i, 4].Value.ToString() == "Nam" ? true : false;
 					if (worksheet.Cells[i, 5].Value != null) {
 						model.RepresentativeBirthDay = Convert.ToDateTime(worksheet.Cells[i, 5].Value.ToString());
 					}
@@ -398,7 +398,12 @@ namespace PAKNAPI.Controllers
 					model.OrgPhone = worksheet.Cells[i, 20].Value == null ? null : worksheet.Cells[i, 20].Value.ToString();
 					if (string.IsNullOrEmpty(model.OrgPhone)) { continue; }
 					model.OrgEmail = worksheet.Cells[i, 21].Value == null ? null : worksheet.Cells[i, 21].Value.ToString();
-					if (string.IsNullOrEmpty(model.OrgEmail)) { continue; }
+					if (worksheet.Cells[i, 22].Value != null)
+					{
+						model.Status = worksheet.Cells[i, 22].Value.ToString().ToLower() == "hiệu lực" ? 1 : 0;
+					}
+					else { continue; }
+					//if (string.IsNullOrEmpty(model.OrgEmail)) { continue; }
 					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgPhone", model.OrgPhone, 0);
 					if (checkExists[0].Exists.Value) continue;
 					if (!string.IsNullOrEmpty(model.OrgEmail))
@@ -434,7 +439,6 @@ namespace PAKNAPI.Controllers
 					model.CreatedBy = 0;
 					model.UpdatedBy = 0;
 					model.UpdatedDate = null;
-					model.Status = 1;
 					model.IsDeleted = false;
 					model.UserId = accRs[0].Id;
 					model.IsActived = true;

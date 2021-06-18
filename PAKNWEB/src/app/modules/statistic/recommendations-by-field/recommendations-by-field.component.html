@@ -52,14 +52,14 @@
 						<div class="col-md-4">
 							<div class="dropdown bootstrap-select form-control form-control-sm">
 								<ng-select [items]="listYear" placeholder="Năm ..." bindLabel="text" bindValue="value" [(ngModel)]="year" [clearable]="false"
-									(change)="dataStateChange()">
+									(change)="changeYear()">
 								</ng-select>
 							</div>
 						</div>
 						<div class="col-md-8">
 							<div class="dropdown bootstrap-select form-control form-control-sm">
 								<ng-select [items]="lstTimeline" placeholder="Chọn mốc thời gian ..." bindLabel="text" bindValue="value" [(ngModel)]="timeline"
-									(change)="dataStateChange()">
+									(change)="changeTimeLine()">
 								</ng-select>
 							</div>
 						</div>
@@ -69,14 +69,16 @@
 					<div class="row">
 						<div class="col-md-6">
 							<input class="form-control form-control-sm" placeholder="Từ ngày..." bsDatepicker #n="bsDatepicker" maxlength="10" id="fromDate2" appBsDatepickerInvalid
-								(bsValueChange)="fromDateChange($event)" [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+								[(ngModel)]="fromDate" (bsValueChange)="fromDateChange($event)"
+								[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 							<div class="input-group-addon">
 								<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<input class="form-control form-control-sm" placeholder="Đến ngày..." bsDatepicker #n="bsDatepicker" maxlength="10" id="toDate2" appBsDatepickerInvalid
-								(bsValueChange)="toDateChange($event)" [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+								[(ngModel)]="toDate" (bsValueChange)="toDateChange($event)"
+								[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 							<div class="input-group-addon">
 								<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
 							</div>
@@ -154,28 +156,28 @@
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
 									<td>
-										<strong>{{item.fieldName}}</strong>
+										<strong style="cursor: pointer;"><a (click)="viewDetail(item.fieldId)" class="ellipsis" title="Xem chi tiết">{{item.fieldName}}</a></strong>
 									</td>
 									<td>
-										<strong>{{item.total}}</strong>
+										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId)">{{item.total}}</strong>
 									</td>
 									<td>
-										<strong>{{item.receiveWait}}</strong>
+										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 2)">{{item.receiveWait}}</strong>
 									</td>
 									<td>
-										<strong>{{item.receiveApproved}}</strong>
+										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 4)">{{item.receiveApproved}}</strong>
 									</td>
 									<td>
-										<strong>{{item.receiveDeny}}</strong>
+										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 3)">{{item.receiveDeny}}</strong>
 									</td>
 									<td>
-										<strong>{{item.processWait}}</strong>
+										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 5)">{{item.processWait}}</strong>
 									</td>
 									<td>
-										<strong>{{item.processing}}</strong>
+										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 7)">{{item.processing}}</strong>
 									</td>
 									<td>
-										<strong>{{item.finised}}</strong>
+										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 10)">{{item.finised}}</strong>
 									</td>
 								</tr>
 							</ng-template>

@@ -44,7 +44,7 @@ export class SupportService {
 		let tempheaders = new HttpHeaders({
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
-			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
 			logObject: encodeURIComponent(LOG_OBJECT.SY_SUPPORT),
 		})
 		const form = new FormData()

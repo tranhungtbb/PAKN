@@ -1,79 +1,40 @@
-import { Component, OnInit, Pipe, Directive } from '@angular/core'
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'
-import { UserObject } from '../../../../models/UserObject'
+import { Component, OnInit } from '@angular/core'
+import { FormGroup, FormBuilder, Validators, FormGroupName } from '@angular/forms'
 import { SystemconfigService } from '../../../../services/systemconfig.service'
 import { ToastrService } from 'ngx-toastr'
-
-import { RESPONSE_STATUS, MESSAGE_COMMON } from 'src/app/constants/CONSTANTS'
-import { NullTemplateVisitor } from '@angular/compiler'
-declare var $: any
+import {ActivatedRoute} from '@angular/router'
+import { RESPONSE_STATUS, TYPECONFIG } from 'src/app/constants/CONSTANTS'
+import {SystemtConfig, ConfigEmail} from 'src/app/models/systemtConfigObject'
+import { COMMONS } from 'src/app/commons/commons'
 @Component({
 	selector: 'app-email-setting',
 	templateUrl: './email-setting.component.html',
 	styleUrls: ['./email-setting.component.css'],
 })
 export class EmailSettingComponent implements OnInit {
-	totalThongBao: number = 0
-	myDate: any
-	myHours: any
-	pageindex: number
-	listPageIndex: any[] = []
-	listUser: any[] = []
-	listData: any[] = []
-	totalRecords: number = 0
-	emailUser: string = ''
-
-	pageSizeGrid: number = 10
-	files: any
-	updateForm: FormGroup
-	userForm: FormGroup
-	userName: string
-	errorMessage: any
-	year: Date = new Date()
-	notifications: any[] = []
-	mindateUyQuyen: Date = new Date()
-	exchange: FormGroup
-	lstUserbyDep: Array<any> = []
-	lstTimline: Array<any> = []
-	lstTimlineMore: Array<any> = []
-	model: SystemEmail = new SystemEmail()
+	model: SystemtConfig = new SystemtConfig()
 	submitted: boolean = false
-	fromDate: string = ''
-	toDate: string = ''
+	configEmail : ConfigEmail = new ConfigEmail()
+	
 	form: FormGroup
-	public timeOut: number = 1
-	public exchangedata: any = {}
-	listThongBao: any = []
-	formData = new FormData()
-	showLoader: boolean = true
-	tenDonVi: string = ''
-	remindWork: any = {}
-	minDate: Date = new Date()
-	pageIndex: number = 1
-	pageSize: number = 20
-	lstChucVu: any = []
-	lstPhongBan: any = []
-	idDelete: number
-	listStatus: any = [
-		{ value: 1, text: 'Thành công' },
-		{ value: 0, text: 'Thất bại' },
-	]
-
-	Notifications: any[]
-	numberNotifications: any = 5
-	ViewedCount: number = 0
-	constructor(private _service: SystemconfigService, private _toastr: ToastrService, private _fb: FormBuilder) {}
+	constructor(private _service: SystemconfigService, private _toastr: ToastrService, private _fb: FormBuilder, private activatedRoute : ActivatedRoute) {}
 
 	ngOnInit() {
-		this.onCancel()
+		this.activatedRoute.params.subscribe((params) => {
+			let id = +params['id']
+			if(!isNaN(id)){
+				this.model.id = Number(id)
+				this.onCancel()
+			}
+		})
 	}
 	onCancel() {
 		this.buildForm()
-		this._service.getSystemEmail().subscribe((response) => {
+		this._service.syConfigGetById({Id : this.model.id}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				if (response.result.SYEmailGetFirst.length != 0) {
-					this.model = response.result.SYEmailGetFirst[0]
-					console.log(this.model)
+				if (response.result.SYConfigGetByID.length > 0) {
+					this.model = {...response.result.SYConfigGetByID[0]}
+					this.configEmail = JSON.parse(this.model.content)
 				}
 			} else {
 				this._toastr.error(response.message)
@@ -90,49 +51,35 @@ export class EmailSettingComponent implements OnInit {
 	resd = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 	buildForm() {
 		this.form = this._fb.group({
-			password: [this.model.password, Validators.required],
-			server: [this.model.server, Validators.required],
-			port: [this.model.port, Validators.required],
-			email: [this.model.email, [Validators.required, Validators.pattern(this.resd)]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
+			title : [this.model.title , Validators.required],
+			description : [this.model.description , Validators.required],
+			password: [this.configEmail.password, Validators.required],
+			server: [this.configEmail.server, Validators.required],
+			port: [this.configEmail.port, Validators.required],
+			email: [this.configEmail.email, [Validators.required, Validators.pattern(this.resd)]], //Validators.pattern('^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$')
 		})
 	}
 	rebuilForm() {
 		this.form.reset({
-			email: this.model.email,
-			password: this.model.password,
-			server: this.model.server,
-			port: this.model.port,
+			title : this.model.title,
+			description : this.model.description,
+			email: this.configEmail.email,
+			password: this.configEmail.password,
+			server: this.configEmail.server,
+			port: this.configEmail.port,
 		})
 	}
-	onPageChange(event: any) {
-		this.pageSize = event.rows
-		this.pageIndex = event.first / event.rows + 1
-		this.getList()
-	}
-	dataStateChange() {
-		this.pageIndex = 1
-		this.getList()
-	}
-	preDelete(id: number) {
-		this.idDelete = id
-		$('#modalConfirmDelete').modal('show')
-	}
-	onDelete(id) {}
-	getList() {}
 	onSave() {
+		this.model.type = TYPECONFIG.CONFIG_EMAIL
 		this.submitted = true
 		if (this.form.invalid) {
 			return
 		}
-		let req = {
-			Email: this.model.email,
-			Password: this.model.password,
-			Server: this.model.server,
-			Port: this.model.port,
-		}
-		this._service.updateSystemEmail(req).subscribe((response) => {
+		debugger
+		this.model.content = JSON.stringify(this.configEmail)
+		this._service.syConfigUpdate(this.model).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this._toastr.success('Cập nhật cấu hình Email thành công')
+				this._toastr.success(COMMONS.UPDATE_SUCCESS)
 			} else {
 				this._toastr.error(response.message)
 			}
@@ -142,17 +89,8 @@ export class EmailSettingComponent implements OnInit {
 				alert(error)
 			}
 	}
+	redirectHis(){
+		window.history.back()
+	}
 }
 
-export class SystemEmail {
-	constructor() {
-		this.email = ''
-		this.password = ''
-		this.server = ''
-		this.port = ''
-	}
-	email: string = ''
-	password: string = ''
-	server: string = ''
-	port: string = ''
-}

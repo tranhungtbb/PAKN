@@ -15,14 +15,19 @@ import { HistoryChatBotComponent } from './components/history-chat-bot/history-c
 import { UserViewInfoComponent } from './components/user/user-view-info/user-view-info.component'
 import { IntroduceComponent } from './components/introduce/introduce.component'
 import { IndexSettingComponent } from './components/index-setting/index-setting.component'
+import {SystemConfigComponent} from './components/system-config/system-config.component'
+import {SwitchboardSettingComponent} from './components/switchboard-setting/switchboard-setting.component'
+
 const routes: Routes = [
 	{
 		path: '',
 		component: SystemManagemenetComponent,
 		children: [
 			{ path: 'cau-hinh-time', component: TimeSettingComponent },
-			{ path: 'cau-hinh-email', component: EmailSettingComponent },
-			{ path: 'cau-hinh-sms', component: SmsSettingComponent },
+			{ path: 'cau-hinh-email/:id', component: EmailSettingComponent },
+			{ path: 'cau-hinh-he-thong', component:  SystemConfigComponent},
+			{ path: 'cau-hinh-sms/:id', component: SmsSettingComponent },
+			{ path: 'cau-hinh-switchboard/:id', component: SwitchboardSettingComponent },
 			{ path: 'cau-hinh-trang-gioi-thieu', component: IntroduceComponent },
 			{ path: 'cau-hinh-trang-chu', component: IndexSettingComponent },
 			{ path: 'nguoi-dung', component: UserComponent },

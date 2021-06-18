@@ -12,15 +12,18 @@ using System.Threading.Tasks;
 
 namespace PAKNAPI.Controllers.ControllerBase
 {
-    public class SYCallHistoryController : BaseApiController
+	[Route("api/[controller]")]
+	[ApiController]
+	public class SYCallHistoryController : BaseApiController
     {
 		private readonly IAppSetting _appSetting;
 		private readonly IWebHostEnvironment _hostingEnvironment;
 		private readonly IClient _bugsnag;
-		public SYCallHistoryController(IWebHostEnvironment hostingEnvironment, IAppSetting appSetting)
+		public SYCallHistoryController(IWebHostEnvironment hostingEnvironment, IAppSetting appSetting, IClient bugsnag)
 		{
 			_appSetting = appSetting;
 			_hostingEnvironment = hostingEnvironment;
+			_bugsnag = bugsnag;
 		}
 
 		[HttpGet]
@@ -35,6 +38,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 					{
 						{"ListData", rsData},
 					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)

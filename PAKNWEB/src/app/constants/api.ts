@@ -199,6 +199,7 @@ export class Api {
 	public static InnvitationUpdate = 'INVInvitation/INVInvitationUpdate'
 	public static InvitationDelete = 'INVInvitation/INVInvitationDelete'
 	public static InvitationGetList = 'INVSPBase/INVInvitationGetAllOnPageBase'
+	public static UserReadedInvitationGetList = 'INVSPBase/SYUserReadedInvitationGetAllOnPage'
 
 	//sms
 	public static SMSManagementGetOnPage = 'SMSSPBase/SMSQuanLyTinNhanGetAllOnPageBase'
@@ -295,6 +296,10 @@ export class Api {
 	public static SMSGetFirstBase = 'SYSPBase/SYSMSGetFirstBase'
 	public static SMSConfigSystemUpdate = 'SYSPBase/SYSMSInsertBase'
 
+	public static SYConfigSystemGetAllOnPage = 'SYSPBase/SYConfigGetAllOnPageBase'
+	public static SYConfigSystemGetById = 'SYSPBase/SYConfigGetByIDBase'
+	public static SYConfigSystemUpdate = 'SYSPBase/SYConfigUpdateBase'
+
 	public static TimeConfigInsert = 'SYSPBase/SYTimeInsertBase'
 	public static TimeConfigUpdate = 'SYSPBase/SYTimeUpdateBase'
 	public static TimeConfigGetAllOnPage = 'SYSPBase/SYTimeGetAllOnPageBase'
@@ -324,7 +329,9 @@ export class Api {
 	//Statistic
 
 	public static StatisticRecommendationByUnit = 'Statistic/STT_RecommendationByUnit'
+	public static StatisticRecommendationByUnitDetail = 'Statistic/STT_RecommendationsByUnitDetail'
 	public static StatisticRecommendationByField = 'Statistic/STT_RecommendationByField'
+	public static StatisticRecommendationByFieldDetail = 'Statistic/STT_RecommendationsByFieldDetail'
 	public static StatisticRecommendationByGroupWord = 'Statistic/STT_RecommendationByGroupWord'
 	public static StatisticRecommendationByGroupWordDetail = 'Statistic/STT_RecommendationByGroupWordDetail'
 
@@ -334,4 +341,12 @@ export class Api {
 
 	//call history
 	public static CallHistoryGetPagedList = 'SYCallHistory/SYCallHistoryGetPagedList'
+
+	//dự thảo email
+	public static EmailManagementUpdate = 'EmailManagement/Update'
+	public static EmailManagementGetById = 'EmailManagement/GetById'
+	public static EmailManagementGetPagedList = 'EmailManagement/GetPagedList'
+	public static EmailManagementDelete = 'EmailManagement/delete'
+	public static EmailManagementSendEmail = 'EmailManagement/SendEmail'
+	public static EmailManagementHisPagedList = 'EmailManagement/GetHisPagedList'
 }
