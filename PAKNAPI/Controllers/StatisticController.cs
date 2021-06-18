@@ -80,7 +80,9 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				List<StatisticRecommendationByUnitDetailGetAllOnPage> mrrRecommendationByUnit = await new StatisticRecommendationByUnitDetailGetAllOnPage(_appSetting).StatisticRecommendationByUnitDetailGetAllOnPageDAO(UnitId, Code, CreateName, Title, Field, Status, FromDate,ToDate, PageSize,PageIndex);
+				int UnitProcessId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+				long UserProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+			   List<StatisticRecommendationByUnitDetailGetAllOnPage> mrrRecommendationByUnit = await new StatisticRecommendationByUnitDetailGetAllOnPage(_appSetting).StatisticRecommendationByUnitDetailGetAllOnPageDAO(UnitId,UnitProcessId, UserProcessId, Code, CreateName, Title, Field, Status, FromDate,ToDate, PageSize,PageIndex);
 				
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
@@ -192,7 +194,9 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				List<StatisticRecommendationByFiledDetailGetAllOnPage> mrrRecommendationByField = await new StatisticRecommendationByFiledDetailGetAllOnPage(_appSetting).StatisticRecommendationByFieldDetailGetAllOnPageDAO(FiledId, Code, CreateName, Title, LstUnitId, Status, FromDate, ToDate, PageSize, PageIndex);
+				int UnitProcessId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+				long UserProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				List<StatisticRecommendationByFiledDetailGetAllOnPage> mrrRecommendationByField = await new StatisticRecommendationByFiledDetailGetAllOnPage(_appSetting).StatisticRecommendationByFieldDetailGetAllOnPageDAO(FiledId,UnitProcessId, UserProcessId, Code, CreateName, Title, LstUnitId, Status, FromDate, ToDate, PageSize, PageIndex);
 
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{

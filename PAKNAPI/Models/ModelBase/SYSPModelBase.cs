@@ -252,6 +252,14 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<SYConfig>("SY_ConfigGetById", DP)).ToList();
 		}
 
+		public async Task<List<SYConfig>> SYConfigGetByTypeDAO(int? type)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Type", type);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYConfig>("SY_ConfigGetByType", DP)).ToList();
+		}
+
 		public async Task<List<SYConfig>> SYConfigGetAllOnPageDAO(string Title,string Description, int? Type, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
