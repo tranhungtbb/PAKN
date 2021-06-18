@@ -13,9 +13,19 @@
         *ngIf="message.message && message.message !== CONSTANTS.ATTACHMENT.BODY " [class.m-notification_message]="message.notification_type == 2"
          class="message__text">{{message.message}}</p>
       <div *ngIf="message.attachments && message.attachments.length" class="message__attachments_wtap">
-        <img *ngFor="let attachment of message.attachments" (load)="loadImagesEvent($event)" alt="attachment" class="message_attachment"
-             src="{{attachment.src}}">
+        <!-- <img *ngFor="let attachment of message.attachments" (load)="loadImagesEvent($event)" alt="attachment" class="message_attachment"
+             src="{{attachment.src}}"> -->
+             <div *ngFor="let attachment of message.attachments">
+              <div *ngIf="attachment.name && checkTypeFile(attachment.name) else elseBlock " > 
+                <a class="message_attachment" alt="attachment" download={{attachment.name}} href="{{attachment.src}}">{{attachment.name}}</a>
+              </div>            
+              <ng-template #elseBlock>
+                <img (load)="loadImagesEvent($event)" alt="attachment" class="message_attachment"
+                 src="{{attachment.src}}">
+              </ng-template>  
+            </div>
       </div>
+      
     </div>
     <div class="message__timestamp">
       {{message.date_sent | date:'hh:mm'}}

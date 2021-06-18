@@ -177,7 +177,7 @@ export class DialogsComponent implements OnChanges {
 			.abCreateAndUpload(file)
 			.then((response) => {
 				self.attachments = []
-				const attachments = [{ id: response.uid, type: CONSTANTS.ATTACHMENT.TYPE }]
+				const attachments = [{ id: response.uid, name: response.name, type: CONSTANTS.ATTACHMENT.TYPE }]
 				self.sendMessage(CONSTANTS.ATTACHMENT.BODY, attachments)
 			})
 			.catch((err) => {

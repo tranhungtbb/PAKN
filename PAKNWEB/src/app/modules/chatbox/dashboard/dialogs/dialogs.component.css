@@ -209,6 +209,7 @@
 	border-bottom: 1px solid #dadfe1;
 	flex: 0 0 58px;
 	box-sizing: border-box;
+	background: linear-gradient(180deg, rgba(193, 216, 246, 0.6) 0%, rgba(211, 230, 255, 0.6) 100%);
 }
 
 .content__inner {
@@ -384,7 +385,7 @@
 	width: 100%;
 	max-width: 328px;
 	position: absolute;
-	visibility: hidden;
+	/* visibility: hidden; */
 	display: block;
 	margin: 0 0 5px 0;
 }
@@ -431,9 +432,9 @@
 }
 
 .message__actions {
-	display: flex;
+	/* display: flex; */
 	flex-wrap: nowrap;
-	width: 100%;
+	/* width: 100%; */
 	padding: 15px 25px;
 }
 
@@ -442,7 +443,7 @@
 }
 
 .attach_btn {
-	flex: 0 0 20px;
+	flex: 0 0 30px;
 	overflow: hidden;
 	color: #778594;
 	cursor: pointer;

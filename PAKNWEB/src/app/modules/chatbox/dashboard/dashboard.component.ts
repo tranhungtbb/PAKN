@@ -7,13 +7,23 @@ import { QBHelper } from 'src/app/modules/chatbox/helper/qbHelper'
 import { MessageService } from './messages/message.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
+
+interface Message {
+	name: string,	
+}
 @Component({
 	selector: 'app-dashboard',
 	templateUrl: './dashboard.component.html',
 	styleUrls: ['./dashboard.component.css'],
 })
+
+
 export class DashboardChatBoxComponent implements OnInit {
 	loggedinUser: any
+	tinNhan: Message[];
+
+	SelectedMessage: Message;
+
 
 	public chats: any = []
 
@@ -35,8 +45,13 @@ export class DashboardChatBoxComponent implements OnInit {
 		private qbHelper: QBHelper,
 		private messageService: MessageService,
 		private router: Router,
-	) {
 		
+	) {
+		this.tinNhan = [
+			{name: 'Tin Nhắn Gần Đây'},
+			{name: 'Tin nhắn đến'},
+			{name: 'tin nhắn all'},			
+	];
 		this.dialogService.dialogsEvent.subscribe((chatData: any[]) => {
 			this.chats = Object.values(chatData)
 		})

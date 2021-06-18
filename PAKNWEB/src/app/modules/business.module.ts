@@ -31,6 +31,7 @@ import { DialogsComponent } from './chatbox/dashboard/dialogs/dialogs.component'
 import { MessageComponent } from './chatbox/dashboard/messages/message.component'
 import { CreateDialogComponent } from './chatbox/dashboard/create-dialog/create-dialog.component'
 import { EditDialogComponent } from './chatbox/dashboard/edit-dialog/edit-dialog.component'
+import { DropdownModule } from 'primeng/dropdown'
 @NgModule({
 	imports: [
 		CommonModule,
@@ -51,6 +52,7 @@ import { EditDialogComponent } from './chatbox/dashboard/edit-dialog/edit-dialog
 		DxReportViewerModule,
 		TreeviewModule.forRoot(),
 		UserModule,
+		DropdownModule,
 	],
 	declarations: [
 		BusinessComponent,
