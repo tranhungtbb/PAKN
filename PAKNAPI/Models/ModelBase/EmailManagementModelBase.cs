@@ -46,6 +46,7 @@ namespace PAKNAPI.Models.ModelBase
         public int? IndividualId { get; set; }
         public string IndividualFullName { get; set; }
         public string UnitName { get; set; }
+        public int? AdUnitId { get; set; }
     }
     public class EmailManagementBusinessModel
     {
@@ -55,6 +56,7 @@ namespace PAKNAPI.Models.ModelBase
         public string RepreFullName { get; set; }
         public string BusinessName { get; set; }
         public string UnitName { get; set; }
+        public int? AdUnitId { get; set; }
     }
     public class EmailManagementHisModel
     {
@@ -231,6 +233,7 @@ namespace PAKNAPI.Models.ModelBase
                 DP.Add("EmailId", model.EmailId);
                 DP.Add("IndividualId", model.IndividualId);
                 DP.Add("UnitName", model.UnitName);
+                DP.Add("AdUnitId", model.AdUnitId);
                 return await _sQLCon.ExecuteNonQueryDapperAsync("[Email_quanlytinnhan_IndividualInsert]", DP);
             }
             
@@ -278,6 +281,7 @@ namespace PAKNAPI.Models.ModelBase
                 DP.Add("EmailId", model.EmailId);
                 DP.Add("BusinessId", model.BusinessId);
                 DP.Add("UnitName", model.UnitName);
+                DP.Add("AdUnitId", model.AdUnitId);
                 return await _sQLCon.ExecuteNonQueryDapperAsync("[Email_quanlytinnhan_BusinessInsert]", DP);
             }
 

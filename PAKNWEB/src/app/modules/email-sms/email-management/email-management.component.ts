@@ -36,6 +36,9 @@ export class EmailManagementComponent implements OnInit {
 		private fileService: UploadFileService
 	) {}
 
+	/// kiểu hiển thị: Email đã gửi
+	isSentLst = false;
+
 	listStatus: any = [
 		{ value: 1, text: 'Đang soạn thảo' },
 		{ value: 2, text: 'Đã gửi' },
@@ -57,16 +60,17 @@ export class EmailManagementComponent implements OnInit {
 		pageIndex: 1,
 		pageSize: 20,
 		title: '',
-		unit: '',
-		objectId: '',
-		status: '',
-		unitName:''
+		unit: null,
+		objectId: null,
+		status: null,
+		unitName:null
 	}
 	totalRecords = 0
 
 	ngOnInit() {
 		this.getPagedList();
 		this.getAdministrativeUnits();
+		this.isSentLst = this.router.url.includes('/sent')
 	}
 	dataStateChange(){
 		this.getPagedList();
@@ -79,14 +83,15 @@ export class EmailManagementComponent implements OnInit {
 	
 	//
 	getPagedList(){
+		if(this.isSentLst)
+			this.query.status = 2
+		this.query.title = this.query.title.trim()
 
 		let query = {...this.query}
 		if(!query.unit)query.unit='';
 		if(!query.objectId)query.objectId=''
 		if(!query.status)query.status=''
-		if(query.unitName){
-			query.unitName = query.unitName.replace('-','').trim()
-		}else query.unitName = ''
+		if(!query.unitName)query.unitName = ''
 
 		this.emailService.getPagedList(query).subscribe(res=>{
 			
@@ -197,5 +202,27 @@ export class EmailManagementComponent implements OnInit {
 		this.getHisData(this.objectId)
 	}
 	
+
+	///view detail
+	modelView:any ={
+		ListBusiness:[],
+		ListIndividual:[],
+		ListAttachment:[],
+		Data:{}
+	}
+	getDetail(id:any){
+		this.emailService.getById(id).subscribe(res=>{
+			// this.modelView.data = res.result.Data
+			// this.modelView.listAttachment = res.result.ListAttachment
+			// this.modelView.listBusiness = res.result.ListBusiness
+			// this.modelView.listIndividual = res.result.ListIndividual
+			this.modelView = res.result;
+			console.log(res.result)
+			$('#modalDetail').modal('show')
+		})
+	}
+	previewFile(item:any){
+
+	}
 
 }

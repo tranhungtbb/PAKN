@@ -13,6 +13,7 @@ const routes: Routes = [
 			{ path: 'sms', loadChildren: './sms-management/sms-management.module#SMSModule' },
 			{ path: 'sms-da-gui', component: SMSSentComponent },
 			{ path: 'email', component: EmailManagementComponent },
+			{ path: 'email/sent', component: EmailManagementComponent },
 			{ path: 'email/create', component: EmailCreateComponent },
 			{ path: 'email/edit/:id', component: EmailCreateComponent },
 		],
