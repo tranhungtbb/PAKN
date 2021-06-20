@@ -28,6 +28,8 @@ export class LoginComponent implements OnInit {
 		UserName: '',
 		Password: '',
 	}
+	isShowPassword : boolean = false
+	typeInput : any = 'text'
 	isAbleCaptcha: any = ''
 	isSaveLogin: boolean = true
 	loginForm: FormGroup
@@ -267,6 +269,15 @@ export class LoginComponent implements OnInit {
 					//   this.captchaEl.nativeElement.focus();
 				}
 			})
+		}
+	}
+
+	showPassword(){
+		this.isShowPassword = !this.isShowPassword
+		if(this.isShowPassword== true){
+			this.typeInput = 'password'
+		}else{
+			this.typeInput = 'text'
 		}
 	}
 

@@ -14,28 +14,35 @@ declare var $: any
 export class RecommnendationGetListComponent implements OnInit {
 	constructor(private _service: RecommendationService, private _toast: ToastrService, private storeageService: UserInfoStorageService, private router : Router) {}
 
-	listData: any[]
+	listData: any[] =[]
 	dataSearch: any = {}
 	totalRecords: number = 0
-
+	isMain: boolean = true
+	title : any 
 	ngOnInit() {
+		this.isMain = this.storeageService.getIsMain()
 		this.getList()
+		if(this.isMain == true){
+			this.title = 'Danh sách phản ánh kiến nghị chờ xử lý'
+		}else{
+			this.title =  'Danh sách phản ánh kiến nghị chưa giải quyết'
+		}
 	}
-
+	
 	getList() {
 		let request = {
-			Status: 5,
+			Status: this.isMain == true ? 2 : 5,
 			PageIndex: 1,
 			PageSize: 4,
 			UnitProcessId: this.storeageService.getUnitId(),
 			UserProcessId: this.storeageService.getUserId(),
 		}
-
 		this._service.recommendationGetListProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
 					this.listData = response.result.MRRecommendationGetAllWithProcess
+				
 					this.totalRecords = response.result.TotalCount
 				}
 			} else {

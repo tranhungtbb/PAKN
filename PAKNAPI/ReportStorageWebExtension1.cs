@@ -224,9 +224,10 @@ namespace PAKNAPI
                     result = XtraReport.FromStream(resource);
                     result.Parameters["TitleReport"].Value = paraExportRecomdationByUnitDetail.TitleReport;
                     result.Parameters["Code"].Value = paraExportRecomdationByUnitDetail.Code;
-                    result.Parameters["SendName"].Value = paraExportRecomdationByUnitDetail.SendName;
-                    result.Parameters["TitleMR"].Value = paraExportRecomdationByUnitDetail.Title;
+                    result.Parameters["CreateName"].Value = paraExportRecomdationByUnitDetail.CreateName;
+                    result.Parameters["TitleMR"].Value = paraExportRecomdationByUnitDetail.TitleMR;
                     result.Parameters["Status"].Value = paraExportRecomdationByUnitDetail.Status;
+                    result.Parameters["Field"].Value = paraExportRecomdationByUnitDetail.Field;
                     result.Parameters["UnitId"].Value = paraExportRecomdationByUnitDetail.UnitId;
                     result.Parameters["UnitProcessId"].Value = paraExportRecomdationByUnitDetail.UnitProcessId;
                     result.Parameters["UserProcessId"].Value = paraExportRecomdationByUnitDetail.UserProcessId;
@@ -236,7 +237,8 @@ namespace PAKNAPI
                     result.SaveLayoutToXml(ms);
                     if (ms != null)
                     {
-                        return ms.ToArray();
+                        var re = ms.ToArray();
+                        return re;
                     }
                     break;
                 case "recommendation_by_fields":

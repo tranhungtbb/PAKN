@@ -41,10 +41,11 @@
 																	</div>
 																</div>
 															</div>
-															<div class="form-group">
-																<input class="form-control rounded-xl px-4 border-brown" type="password" id="productpass"
+															<div class="form-group" style="position: relative;">
+																<input class="form-control rounded-xl px-4 border-brown" [type]="isShowPassword ? 'text' : 'password'"  id="productpass"
 																	(change)="userProduct.Password=userProduct.Password.trim()" style="font-size: 20px" placeholder="Mật khẩu..."
 																	formControlName="pass" [(ngModel)]="userProduct.Password" required>
+																	<i class="custom-show-pass" [ngClass]="{ 'bi bi-eye': isShowPassword, 'bi bi-eye-slash': !isShowPassword}" (click)="showPassword()"></i>
 																<div *ngIf="floginFormProduct.pass.invalid && (floginFormProduct.pass.dirty || floginFormProduct.pass.touched || submitted)"
 																	class="has-error m-b-12">
 																	<div *ngIf="floginFormProduct.pass.errors.required">
@@ -111,10 +112,11 @@
 																	</div>
 																</div>
 															</div>
-															<div class="form-group">
-																<input class="form-control rounded-xl px-4 border-brown" type="password" style="font-size: 20px" id="userpass"
+															<div class="form-group" style="position: relative;">
+																<input class="form-control rounded-xl px-4 border-brown"  [type]="isShowPassword ? 'text' : 'password'"  style="font-size: 20px" id="userpass"
 																	(change)="user.Password=user.Password.trim()" placeholder="Mật khẩu..." formControlName="pass"
 																	[(ngModel)]="user.Password" required>
+																	<i class="custom-show-pass" [ngClass]="{ 'bi bi-eye': isShowPassword, 'bi bi-eye-slash': !isShowPassword}" (click)="showPassword()"></i>
 																<div *ngIf="pass.invalid && (pass.dirty || pass.touched || submitted)" class="has-error m-b-12">
 																	<div *ngIf="pass.errors.required">
 																		<span class="help-block">Trường này không được để trống</span>

@@ -150,8 +150,6 @@ export class RecommendationsByUnitComponent implements OnInit {
 			PageIndex: this.pageIndex == null ? 1 : this.pageIndex,
 			PageSize: this.pageSize == null ? 20 : this.pageSize,
 			LtsUnitId: this.ltsUnitId,
-			Year: this.year,
-			Timeline: this.timeline == null ? '' : this.timeline,
 			FromDate: this.fromDate == null ? '' : this.getFormattedDate(this.fromDate),
 			ToDate: this.toDate == null ? '' : this.getFormattedDate(this.toDate),
 		}

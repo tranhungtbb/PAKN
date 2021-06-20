@@ -6,12 +6,12 @@
     <Item3 Ref="6" Visible="false" Name="LstUnitId" />
     <Item4 Ref="7" Visible="false" Description="Tiêu đề" Name="TitleReport" />
     <Item5 Ref="9" Visible="false" Description="Parameter1" ValueInfo="0" Name="Field" Type="#Ref-8" />
-    <Item6 Ref="10" Visible="false" Description="Parameter1" ValueInfo="0" Name="Code" Type="#Ref-8" />
+    <Item6 Ref="10" Visible="false" Description="Parameter1" ValueInfo="0" AllowNull="true" Name="Code" Type="#Ref-8" />
     <Item7 Ref="11" Visible="false" Description="Parameter1" ValueInfo="0" Name="UnitProcessId" Type="#Ref-8" />
     <Item8 Ref="12" Visible="false" Description="Parameter1" ValueInfo="0" Name="UserProcessId" Type="#Ref-8" />
-    <Item9 Ref="13" Visible="false" Description="Parameter1" Name="CreateName" />
-    <Item10 Ref="14" Visible="false" Description="Parameter1" Name="TitleMR" />
-    <Item11 Ref="15" Visible="false" Description="Parameter1" ValueInfo="0" Name="Status" Type="#Ref-8" />
+    <Item9 Ref="13" Visible="false" Description="Parameter1" AllowNull="true" Name="CreateName" />
+    <Item10 Ref="14" Visible="false" Description="Parameter1" AllowNull="true" Name="TitleMR" />
+    <Item11 Ref="15" Visible="false" Description="Parameter1" ValueInfo="0" AllowNull="true" Name="Status" Type="#Ref-8" />
   </Parameters>
   <Bands>
     <Item1 Ref="16" ControlType="TopMarginBand" Name="topMarginBand1" HeightF="39.5833321" />

@@ -152,11 +152,12 @@ export class RecommendationsByUnitDetailComponent implements OnInit {
 	onExport() {
 		let passingObj: any = {}
 		passingObj.TitleReport = "THỐNG KÊ PHẢN ẢNH KIẾN NGHỊ ĐƠN VỊ " + this.unitName.toUpperCase()
-		passingObj.Code = this.dataSearch.code == '' ? null : this.dataSearch.code 
-		passingObj.SendName = this.dataSearch.sendName =='' ? null : this.dataSearch.sendName
-		passingObj.Title = this.dataSearch.title == '' ? null : this.dataSearch.title
+		passingObj.Code = this.dataSearch.code
+		passingObj.CreateName = this.dataSearch.sendName
+		passingObj.TitleMR = this.dataSearch.title
 		passingObj.Status = this.dataSearch.status
 		passingObj.UnitId = this.unitId
+		passingObj.Field = this.dataSearch.fieldId
 		passingObj.UnitProcessId = this.storeageService.getUnitId()
 		passingObj.UserProcessId = this.storeageService.getUserId()
 		passingObj.FromDate = this.fromDate == null ? '' : this.fromDate
@@ -164,6 +165,17 @@ export class RecommendationsByUnitDetailComponent implements OnInit {
 		this._shareData.setobjectsearch(passingObj)
 		this._shareData.sendReportUrl = 'Statistic_Recommendation_ByUnitDetail?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])
+		// let passingObj: any = {}
+		// passingObj = this.dataSearch
+		// passingObj.UnitId = this.unitId
+		// if (this.listData.length > 0) {
+		// 	passingObj.UnitProcessId = this.storeageService.getUnitId()
+		// 	passingObj.UserProcessId = this.storeageService.getUserId()
+		// }
+		// passingObj.TitleReport = "THỐNG KÊ PHẢN ẢNH KIẾN NGHỊ ĐƠN VỊ " + this.unitName.toUpperCase()
+		// this._shareData.setobjectsearch(passingObj)
+		// this._shareData.sendReportUrl = 'Recommendation_ListGeneral?' + JSON.stringify(passingObj)
+		// this._router.navigate(['quan-tri/xuat-file'])
 	}
 	redirectHis(){
 		window.history.back()

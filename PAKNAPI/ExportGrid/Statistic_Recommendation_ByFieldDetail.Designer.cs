@@ -88,6 +88,7 @@ namespace PAKNAPI.ExportGrid {
         private DevExpress.XtraReports.UI.XRTableCell tableCell18;
         private DevExpress.XtraReports.UI.XRTableCell tableCell7;
         private DevExpress.XtraReports.UI.XRTableCell tableCell5;
+        private DevExpress.DataAccess.Sql.SqlDataSource sqlDataSource1;
         private DevExpress.XtraReports.UI.XRControlStyle Title;
         private DevExpress.XtraReports.UI.XRControlStyle DetailCaption3;
         private DevExpress.XtraReports.UI.XRControlStyle DetailData3;
@@ -105,6 +106,5 @@ namespace PAKNAPI.ExportGrid {
         private DevExpress.XtraReports.Parameters.Parameter CreateName;
         private DevExpress.XtraReports.Parameters.Parameter TitleMR;
         private DevExpress.XtraReports.Parameters.Parameter Status;
-        private DevExpress.DataAccess.Sql.SqlDataSource sqlDataSource1;
     }
 }
