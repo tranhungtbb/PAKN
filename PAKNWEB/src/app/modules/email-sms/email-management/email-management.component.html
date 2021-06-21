@@ -299,94 +299,106 @@
 						</button>
 						<p class="modal-title h3">{{modelView.Data.title}}</p>
 					</div>
-					<div class="modal-body no-padding-bottom" style="padding: 1.1rem; padding-top: 0px;">
-						<div class="row" style="padding: 10px 0px;">
-							<div class="col-sm-12" style="border-top: 1px solid #EEEEEE; border-bottom: 1px solid #EEEEEE">
-								<p style="margin: 16px 0px;">{{modelView.Data.content}}</p>
+					<div class="modal-body no-padding-bottom pt-0">
+						<div class="" >
+							<div class="w-100 border-bottom mt-3 mb-3"></div>
+							<div class="">
+								<p style="margin: 16px 0px; font-size: 18px;">{{modelView.Data.content}}</p>
 							</div>
-							<div class="w-100"></div>
-							<div class="title-user-map">Cá nhân doanh nghiệp nhận SMS</div>
-							<div class="col-md-12">
-								<div class="row">
-									<div class="col-sm-3 rounded border p-2 ml-3 mr-3 mt-3" *ngFor="let item of [].concat(modelView.ListIndividual,modelView.ListBusiness)">
-										<div class="item-user">
-											<div class="info-user padding-item" style="padding-left: 0px;">
-												<div class="title" *ngIf="item.individualId">Cá nhân</div>
-												<div class="title" *ngIf="item.businessId">Doanh nghiệp</div>
-												<div class="department">{{item.businessName || item.individualFullName}}</div>
+							<div class="w-100 border-bottom mt-3 mb-3"></div>
+							<div class="">
+								<div class=" title-user-map">
+									<p class="text-uppercase" style="font-size: 18px; font-weight: 500;">Cá nhân doanh nghiệp nhận Email</p>
+								</div>
+									<div class="row">
+										<div class="col-sm-3" *ngFor="let item of [].concat(modelView.ListIndividual,modelView.ListBusiness)">
+											<div class="border item-user p-3 rounded">
+												<div class="info-user padding-item" style="padding-left: 0px;">
+													<div class="title" *ngIf="item.individualId">Cá nhân</div>
+													<div class="title" *ngIf="item.businessId">Doanh nghiệp</div>
+													<div class="department"><strong>{{item.businessName || item.individualFullName}}</strong></div>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
+								
 							</div>
-							<div class="w-100"></div>
-							<div class="attach-file row">
-								<ng-container *ngFor="let item of modelView.ListAttachment">
-									<div class="col-auto mb-4" *ngIf="item.fileType == 0">
-										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
-											
-											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
-												<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
-												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
-											</a>
-										</div>
+							<div class="w-100 border-bottom mt-3 mb-3"></div>
+							<div class="">
+								<div class="mb-2 title-user-map">
+									<p class="text-uppercase" style="font-size: 18px; font-weight: 500;">Tài liệu đính kèm</p>
+								</div>
+								<div class="attach-file" style="display: flex;">
+									<div class="row">
+										<ng-container *ngFor="let item of modelView.ListAttachment">
+											<div class="col-auto mb-4" *ngIf="item.fileType == 0">
+												<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
+													
+													<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
+														<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
+														<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+													</a>
+												</div>
+											</div>
+											<div class="col-auto mb-4" *ngIf="item.fileType == 1">
+												<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
+													
+													<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
+														<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
+														<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+													</a>
+												</div>
+											</div>
+											<div class="col-auto mb-4" *ngIf="item.fileType == 2">
+												<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
+													
+													<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
+														<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
+														<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+													</a>
+												</div>
+											</div>
+											<div class="col-auto mb-4" *ngIf="item.fileType == 4">
+												<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
+													
+													<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
+														<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="">
+														<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+													</a>
+												</div>
+											</div>
+											<div class="col-auto mb-4" *ngIf="item.fileType == 3">
+												<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
+													
+													<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
+														<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 40px" alt="">
+														<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+													</a>
+												</div>
+											</div>
+											<div class="col-auto mb-4" *ngIf="item.fileType == 6">
+												<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
+													
+													<a class="d-block text-center box-fileinput">
+														<img (click)="previewFile(item)" src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
+														<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+													</a>
+												</div>
+											</div>
+											<div class="col-auto mb-4" *ngIf="item.fileType == 7">
+												<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
+													
+													<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
+														<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 45px" alt="">
+														<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+													</a>
+												</div>
+											</div>
+		
+										</ng-container>
 									</div>
-									<div class="col-auto mb-4" *ngIf="item.fileType == 1">
-										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
-											
-											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
-												<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
-												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
-											</a>
-										</div>
-									</div>
-									<div class="col-auto mb-4" *ngIf="item.fileType == 2">
-										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
-											
-											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
-												<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
-												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
-											</a>
-										</div>
-									</div>
-									<div class="col-auto mb-4" *ngIf="item.fileType == 4">
-										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
-											
-											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
-												<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="">
-												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
-											</a>
-										</div>
-									</div>
-									<div class="col-auto mb-4" *ngIf="item.fileType == 3">
-										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
-											
-											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
-												<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 40px" alt="">
-												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
-											</a>
-										</div>
-									</div>
-									<div class="col-auto mb-4" *ngIf="item.fileType == 6">
-										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
-											
-											<a class="d-block text-center box-fileinput">
-												<img (click)="previewFile(item)" src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
-												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
-											</a>
-										</div>
-									</div>
-									<div class="col-auto mb-4" *ngIf="item.fileType == 7">
-										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
-											
-											<a (click)="previewFile(item)" class="d-block text-center box-fileinput">
-												<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 45px" alt="">
-												<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
-											</a>
-										</div>
-									</div>
-
-								</ng-container>
+								</div>
+								
 							</div>
 						</div>
 					</div>
