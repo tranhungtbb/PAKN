@@ -13,13 +13,13 @@
 				</div>
 				<ul class="nav nav-qltknd flex-column">
 					<li class="nav-item border-bottom">
-						<a class="nav-link px-0 h5 active" aria-current="page" href="#">Thông tin tài khoản</a>
+						<a class="nav-link px-0 h5 active" [routerLink]="['/cong-bo/tai-khoan/thong-tin']" aria-current="page">Thông tin tài khoản</a>
 					</li>
 					<li class="nav-item border-bottom">
-						<a class="nav-link px-0 h5" href="#">Đổi mật khẩu</a>
+						<a class="nav-link px-0 h5"[routerLink]="['/cong-bo/tai-khoan/thay-doi-mat-khau']">Đổi mật khẩu</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link px-0 h5" href="#">Đăng xuất</a>
+						<a class="nav-link px-0 h5" (click)="mySignOut()">Đăng xuất</a>
 					</li>
 				</ul>
 				<div class="sb-tk-pakn mb-4">

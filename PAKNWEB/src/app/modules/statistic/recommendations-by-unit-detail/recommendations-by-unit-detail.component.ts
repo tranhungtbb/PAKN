@@ -165,17 +165,6 @@ export class RecommendationsByUnitDetailComponent implements OnInit {
 		this._shareData.setobjectsearch(passingObj)
 		this._shareData.sendReportUrl = 'Statistic_Recommendation_ByUnitDetail?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])
-		// let passingObj: any = {}
-		// passingObj = this.dataSearch
-		// passingObj.UnitId = this.unitId
-		// if (this.listData.length > 0) {
-		// 	passingObj.UnitProcessId = this.storeageService.getUnitId()
-		// 	passingObj.UserProcessId = this.storeageService.getUserId()
-		// }
-		// passingObj.TitleReport = "THỐNG KÊ PHẢN ẢNH KIẾN NGHỊ ĐƠN VỊ " + this.unitName.toUpperCase()
-		// this._shareData.setobjectsearch(passingObj)
-		// this._shareData.sendReportUrl = 'Recommendation_ListGeneral?' + JSON.stringify(passingObj)
-		// this._router.navigate(['quan-tri/xuat-file'])
 	}
 	redirectHis(){
 		window.history.back()
