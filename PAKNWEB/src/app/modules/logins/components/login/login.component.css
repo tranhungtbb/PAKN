@@ -24,3 +24,9 @@ a.hight-light:hover {
 .custom-tab-1 {
 	padding-top: calc((100vh - 610px) / 2);
 }
+.custom-show-pass{
+	position: absolute;
+    top: 15px;
+    right: 17px;
+    font-size: 20px;
+}

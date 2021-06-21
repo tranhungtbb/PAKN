@@ -331,11 +331,14 @@
 						<div class="row form-group">
 							<div class="col-sm-12">
 								<label class="control-label">Mật khẩu mới <span class="text-danger">(*)</span></label>
-								<input class="form-control" type="password" formControlName="newPassword" [(ngModel)]="newPassword" maxlength="50" placeholder="Nhập..." />
+								<input class="form-control" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$" type="password" formControlName="newPassword" [(ngModel)]="newPassword" maxlength="50" placeholder="Nhập..." />
 								<div *ngIf="(submitted && f.newPassword.invalid) || (f.newPassword.invalid && (f.newPassword.dirty || f.newPassword.touched))"
 									class="has-error m-b-12">
 									<div *ngIf="f.newPassword.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+									<div *ngIf="f.newPassword.errors.pattern">
+										<span class="help-block">Mật khẩu phải lớn hơn 6 ký tự và bao gồm cả chữ và số!</span>
 									</div>
 								</div>
 							</div>

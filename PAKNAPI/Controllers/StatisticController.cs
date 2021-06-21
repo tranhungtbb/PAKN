@@ -44,14 +44,15 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Authorize]
 		[Route("STT_RecommendationByUnit")]
-		public async Task<ActionResult<object>> STT_RecommendationByUnitGetAllOnPageBase(string LtsUnitId, int? Year, int? Timeline, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		public async Task<ActionResult<object>> STT_RecommendationByUnitGetAllOnPageBase(string LtsUnitId, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			try
 			{
-				List<StatisticRecommendationByUnitGetAllOnPage> mrrRecommendationByUnit = await new StatisticRecommendationByUnitGetAllOnPage(_appSetting).StatisticRecommendationByUnitGetAllOnPageDAO(LtsUnitId,Year,Timeline,FromDate,ToDate,PageSize,PageIndex);
-				mrrRecommendationByUnit.ForEach((item)=> {
-					item.Total = item.ReceiveWait + item.ReceiveApproved + item.ReceiveDeny + item.ProcessWait + item.Processing + item.Finised;
-				});
+				int UnitProcessId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+				long UserProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				List<StatisticRecommendationByUnitGetAllOnPage> mrrRecommendationByUnit = 
+					await new StatisticRecommendationByUnitGetAllOnPage(_appSetting).StatisticRecommendationByUnitGetAllOnPageDAO(LtsUnitId, UnitProcessId, UserProcessId, FromDate,ToDate,PageSize,PageIndex);
+				
 
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
@@ -159,14 +160,14 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Authorize]
 		[Route("STT_RecommendationByField")]
-		public async Task<ActionResult<object>> STT_RecommendationByFieldGetAllOnPageBase(string LtsUnitId, int? Year, int? Timeline, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		public async Task<ActionResult<object>> STT_RecommendationByFieldGetAllOnPageBase(string LtsUnitId, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			try
 			{
-				List<StatisticRecommendationByFieldGetAllOnPage> mrrRecommendationByField = await new StatisticRecommendationByFieldGetAllOnPage(_appSetting).StatisticRecommendationByFieldGetAllOnPageDAO(LtsUnitId, Year, Timeline, FromDate, ToDate, PageSize, PageIndex);
-				mrrRecommendationByField.ForEach((item) => {
-					item.Total = item.ReceiveWait + item.ReceiveApproved + item.ReceiveDeny + item.ProcessWait + item.Processing + item.Finised;
-				});
+				int UnitProcessId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+				long UserProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				List<StatisticRecommendationByFieldGetAllOnPage> mrrRecommendationByField = await new StatisticRecommendationByFieldGetAllOnPage(_appSetting).StatisticRecommendationByFieldGetAllOnPageDAO(LtsUnitId, UnitProcessId, UserProcessId, FromDate, ToDate, PageSize, PageIndex);
+				
 
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{

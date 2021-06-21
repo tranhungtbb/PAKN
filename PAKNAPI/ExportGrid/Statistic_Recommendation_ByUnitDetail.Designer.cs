@@ -48,7 +48,7 @@ namespace PAKNAPI.ExportGrid {
             this.TitleMR = reportInitializer.GetParameter("TitleMR");
             this.Code = reportInitializer.GetParameter("Code");
             this.Status = reportInitializer.GetParameter("Status");
-            this.SendName = reportInitializer.GetParameter("SendName");
+            this.CreateName = reportInitializer.GetParameter("CreateName");
             this.UnitProcessId = reportInitializer.GetParameter("UnitProcessId");
             this.UserProcessId = reportInitializer.GetParameter("UserProcessId");
             this.Field = reportInitializer.GetParameter("Field");
@@ -101,7 +101,7 @@ namespace PAKNAPI.ExportGrid {
         private DevExpress.XtraReports.Parameters.Parameter TitleMR;
         private DevExpress.XtraReports.Parameters.Parameter Code;
         private DevExpress.XtraReports.Parameters.Parameter Status;
-        private DevExpress.XtraReports.Parameters.Parameter SendName;
+        private DevExpress.XtraReports.Parameters.Parameter CreateName;
         private DevExpress.XtraReports.Parameters.Parameter UnitProcessId;
         private DevExpress.XtraReports.Parameters.Parameter UserProcessId;
         private DevExpress.XtraReports.Parameters.Parameter Field;

@@ -199,12 +199,26 @@
 					<div class="modal-body no-padding-bottom" style="border: none;">
 						<div class="row form-group">
 							<div class="col-sm-12">
+								<label class="control-label">Mật khẩu cũ <span class="text-danger">(*)</span></label>
+								<input class="form-control" type="password" formControlName="oldPassword" [(ngModel)]="oldPassword" maxlength="50" placeholder="Nhập..." />
+								<div *ngIf="(submitted && fChangePass.oldPassword.invalid) || (fChangePass.oldPassword.invalid && (fChangePass.oldPassword.dirty || fChangePass.oldPassword.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="fChangePass.oldPassword.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12">
 								<label class="control-label">Mật khẩu mới <span class="text-danger">(*)</span></label>
-								<input class="form-control" type="password" formControlName="newPassword" [(ngModel)]="newPassword" maxlength="50" placeholder="Nhập..." />
+								<input class="form-control" type="password" formControlName="newPassword" [(ngModel)]="newPassword" maxlength="50" placeholder="Nhập..."
+								pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$" />
 								<div *ngIf="(submitted && fChangePass.newPassword.invalid) || (fChangePass.newPassword.invalid && (fChangePass.newPassword.dirty || fChangePass.newPassword.touched))"
 									class="has-error m-b-12">
 									<div *ngIf="fChangePass.newPassword.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+									<div *ngIf="fChangePass.newPassword.errors.pattern">
+										<span class="help-block">Mật khẩu phải lớn hơn 6 ký tự và bao gồm cả chữ và số!</span>
 									</div>
 								</div>
 							</div>
