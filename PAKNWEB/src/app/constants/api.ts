@@ -349,4 +349,11 @@ export class Api {
 	public static EmailManagementDelete = 'EmailManagement/delete'
 	public static EmailManagementSendEmail = 'EmailManagement/SendEmail'
 	public static EmailManagementHisPagedList = 'EmailManagement/GetHisPagedList'
+
+
+	// đồng bộ
+	public static MrSyncCongThongTinDienTuTinhPagedList = 'RecommandationSync/CongThongTinDienTuTinhPagedList'
+	public static MrSyncCongThongTinDichVuHCCPagedList = 'RecommandationSync/CongThongTinDienTuTinhPagedList'
+	public static MrSyncHeThongPANKChinhPhuPagedList = 'RecommandationSync/CongThongTinDienTuTinhPagedList'
+	public static MrSyncHeThongQuanLyKienNghiCuTriPagedList = 'RecommandationSync/CongThongTinDienTuTinhPagedList'
 }

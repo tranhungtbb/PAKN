@@ -10,6 +10,9 @@ import { ChatbotService } from 'src/app/services/chatbot.service'
 import { IndexSettingService } from 'src/app/services/index-setting.service'
 import { IndexSettingObjet, IndexBanner, IndexWebsite } from 'src/app/models/indexSettingObject'
 
+
+declare var $:any
+
 @Component({
 	selector: 'app-publish',
 	templateUrl: './publish.component.html',
@@ -38,6 +41,8 @@ export class PublishComponent implements OnInit, OnChanges {
 	isLogin: boolean = this.storageService.getIsHaveToken()
 	indexSettingObj: any = new IndexSettingObjet()
 
+	subMenu:any[]=[]
+
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
@@ -65,6 +70,14 @@ export class PublishComponent implements OnInit, OnChanges {
 				console.log(error)
 				alert(error)
 			}
+		
+			this.subMenu = [
+				{path:[''],text:'Phản ánh- kiến nghị đã trả lời'},
+				{path:[''],text:'Tích hợp dữ liệu Cổng thông tin điện tử tỉnh Khánh Hoà'},
+				{path:[''],text:'Tích hợp dữ liệu Cổng thông tin dịch vụ hành chính công trực tuyến tỉnh Khánh Hoà'},
+				{path:[''],text:'Tích hợp dữ liệu Hệ thống quản lý kiến nghị cử tri tỉnh Khánh Hoà'},
+				{path:[''],text:'Tích hợp dữ liệu Hệ thống tiếp nhận, trả lời phản ánh, kiến nghị của người dân của Chính phủ'}
+			]
 	}
 
 	getListNotification(PageSize: any) {
