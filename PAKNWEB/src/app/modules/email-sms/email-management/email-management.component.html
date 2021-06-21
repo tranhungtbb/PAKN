@@ -306,7 +306,7 @@
 							</div>
 							<div class="w-100"></div>
 							<div class="title-user-map">Cá nhân doanh nghiệp nhận SMS</div>
-							<div class="col-md-12 ">
+							<div class="col-md-12">
 								<div class="row">
 									<div class="col-sm-3 rounded border p-2 ml-3 mr-3 mt-3" *ngFor="let item of [].concat(modelView.ListIndividual,modelView.ListBusiness)">
 										<div class="item-user">
@@ -321,7 +321,7 @@
 							</div>
 							<div class="w-100"></div>
 							<div class="attach-file row">
-								<ng-container *ngFor="let item of ListAttachment">
+								<ng-container *ngFor="let item of modelView.ListAttachment">
 									<div class="col-auto mb-4" *ngIf="item.fileType == 0">
 										<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center border" style="width: 170px">
 											
