@@ -13,11 +13,15 @@ export class MessageComponent implements AfterViewInit {
 	@ViewChild('element', { static: false }) el: ElementRef
 	public CONSTANTS = CONSTANTS
 
-	constructor(
-		private messageService: MessageService,
-		 private dialogService: DialogService){
-			 
-		 }
+	User: any
+	statusAcc: boolean = true
+
+	idUser: number
+	constructor(private messageService: MessageService, private dialogService: DialogService) {
+		this.User = JSON.parse(localStorage.loggedinUser)
+		this.idUser = this.User.id
+		//this.classNameMess()
+	}
 
 	ngAfterViewInit() {
 		if (this.message.visibilityEvent) {
@@ -60,5 +64,37 @@ export class MessageComponent implements AfterViewInit {
 		if (imgPos >= 0) {
 			container.scrollTop = scrollHeight + 5
 		}
+	}
+
+	styleClass: string
+	classNameMess() {
+		if (this.idUser === this.message.sender_id && !this.message.notification_type) {
+			return 'bg-primary-light message__content border border-light p-2 rounded'
+		} else if (this.idUser !== this.message.sender_id && !this.message.notification_type) {
+			return 'bg-primary-light message__content m_bg border p-2 rounded'
+		} else {
+			return 'message__content'
+		}
+	}
+
+	classNameMess_Content() {
+		if (this.idUser !== this.message.sender_id) {
+			return 'm_content'
+		} else {
+			return 'message__text'
+		}
+	}
+	styleAT_User() {
+		if (this.idUser !== this.message.sender_id) {
+			return 'm_attachment'
+		} else {
+			return 'message_attachment'
+		}
+	}
+	checkstatusAcc() {
+		if (this.idUser !== this.message.sender_id) {
+			this.statusAcc = false
+		}
+		this.statusAcc = true
 	}
 }

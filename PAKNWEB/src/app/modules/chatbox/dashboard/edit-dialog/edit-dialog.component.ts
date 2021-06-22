@@ -174,9 +174,9 @@ export class EditDialogComponent implements OnInit {
 	}
 
 	public onSubmit() {
-		if (this.dialog.type !== CONSTANTS.DIALOG_TYPES.GROUPCHAT) {
-			return false
-		}
+		// if (this.dialog.type !== CONSTANTS.DIALOG_TYPES.GROUPCHAT) {
+		// 	return false
+		// }
 		const self = this,
 			dialogId = this.dialog._id,
 			newUsers = this.selectedUsers.filter(function (occupantId) {

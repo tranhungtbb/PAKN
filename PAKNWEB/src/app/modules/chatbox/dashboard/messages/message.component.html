@@ -1,35 +1,47 @@
 
-<span *ngIf="!message.notification_type" class="message__avatar">
-    <i class="material-icons">account_circle</i>
+<!-- <span *ngIf="idUser === message.sender_id && !message.notification_type" (change)="checkstatusAcc()"  style="flex: 1 1"></span> -->
+<span *ngIf="idUser === message.sender_id && !message.notification_type"  style="flex: 1 1"></span>
+
+<span *ngIf="idUser !== message.sender_id && statusAcc" class="message__avatar">
+    <!-- <i (change)="checkstatusAcc()" class="material-icons">account_circle</i>     -->
+    <i class="material-icons">account_circle</i>    
 </span>
-<div (visibility)="visibility($event)" class="message__content" #element >
+
+<div (visibility)="visibility($event)" class="{{classNameMess()}}" #element >
   <div *ngIf="!message.notification_type" class="message__sender_and_status">
-    <p class="message__sender_name">{{message.full_name}}</p>
+    <!-- <p class="message__sender_name">{{message.full_name}}</p> -->
     <p class="message__status j-message__status">{{message.status}}</p>
   </div>
   <div class="message__text_and_date">
     <div class="message__text_wrap">
       <p [ngStyle]="{'text-align':message.notification_type ? 'center' : 'left' }"
         *ngIf="message.message && message.message !== CONSTANTS.ATTACHMENT.BODY " [class.m-notification_message]="message.notification_type == 2"
-         class="message__text">{{message.message}}</p>
+         class="{{classNameMess_Content()}}">{{message.message}}</p>
       <div *ngIf="message.attachments && message.attachments.length" class="message__attachments_wtap">
         <!-- <img *ngFor="let attachment of message.attachments" (load)="loadImagesEvent($event)" alt="attachment" class="message_attachment"
              src="{{attachment.src}}"> -->
-             <div *ngFor="let attachment of message.attachments">
-              <div *ngIf="attachment.name && checkTypeFile(attachment.name) else elseBlock " > 
-                <a class="message_attachment" alt="attachment" download={{attachment.name}} href="{{attachment.src}}">{{attachment.name}}</a>
-              </div>            
+             <span *ngFor="let attachment of message.attachments">              
+               <ng-template [ngIf]="attachment.name && checkTypeFile(attachment.name)" [ngIfElse]="elseBlock">
+                
+                <a class="{{styleAT_User()}}" 
+                 alt="attachment" download={{attachment.name}}
+                href="{{attachment.src}}"><i class="bi bi-file-earmark"></i>   {{attachment.name}}
+                </a>
+               </ng-template>
+
               <ng-template #elseBlock>
                 <img (load)="loadImagesEvent($event)" alt="attachment" class="message_attachment"
                  src="{{attachment.src}}">
-              </ng-template>  
-            </div>
-      </div>
+              </ng-template>      
+            </span>        
+          </div>
       
-    </div>
-    <div class="message__timestamp">
-      {{message.date_sent | date:'hh:mm'}}
-    </div>
-  </div>
+    </div>    
+  </div> 
 </div>
+<div class="message__timestamp">
+  {{message.date_sent | date:'hh:mm'}}
+</div>
+
+<span *ngIf="idUser !== message.sender_id && !message.notification_type" style="flex: 1 1" ></span>
 
