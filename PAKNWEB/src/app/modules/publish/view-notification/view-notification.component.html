@@ -45,7 +45,7 @@
 									</a>
 									<div class="media-body">
 										<small><span class="createDate" style="font-weight: 300; font-size: 13px; padding-left: 0px;">{{getTime(item.sendDate)}}</span></small>
-										<p class="mb-0 text-uppercase" [ngClass]="{ 'red-title': checkDeny(item.typeSend) == true }">{{item.title}}</p>
+										<p class="mb-0 text-uppercase" style="cursor: pointer;" (click)="redirectDetail(item.id)" [ngClass]="{ 'red-title': checkDeny(item.typeSend) == true }">{{item.title}}</p>
 										<p class="mb-1 h4" [ngClass]="{ 'title-black': item.isReaded == true, 'title-gray': item.isReaded == false }">{{item.content}}
 										</p>
 									</div>

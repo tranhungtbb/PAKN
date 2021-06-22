@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { InvitationService } from 'src/app/services/invitation.service'
 import { InvitationObject } from 'src/app/models/invitationObject'
+import {NotificationService} from 'src/app/services/notification.service'
 
 declare var $: any
 defineLocale('vi', viLocale)
@@ -29,7 +30,8 @@ export class InvitationDetailComponent implements OnInit {
 	constructor(
 		private invitationService: InvitationService,
 		private activatedRoute: ActivatedRoute,
-		private BsLocaleService: BsLocaleService
+		private BsLocaleService: BsLocaleService,
+		private notificationService : NotificationService
 	) {
 		this.files = []
 	}
@@ -48,6 +50,7 @@ export class InvitationDetailComponent implements OnInit {
 				this.invitationService.invitationDetail({ id: this.model.id }).subscribe((res) => {
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result) {
+							this.updateIsReadNotification(id)
 							this.model = { ...res.result.model }
 							this.files = res.result.invFileAttach
 							this.senderName = res.result.senderName
@@ -71,14 +74,14 @@ export class InvitationDetailComponent implements OnInit {
 		let sendDate = new Date(date)
 		let currentDate = new Date()
 		if(sendDate.getFullYear() != currentDate.getFullYear()){
-			result = Number(currentDate.getFullYear() - sendDate.getFullYear()) + ' năm trước'
+			result = String(sendDate.getMinutes()) +':'+ sendDate.getHours() + ' ' + sendDate.getDate() + '/' + sendDate.getMonth() + '/' + sendDate.getFullYear()
 		}else{
 			if(sendDate.getMonth() != currentDate.getMonth()){
-				result = Number(currentDate.getMonth() - sendDate.getMonth()) + ' tháng trước'
+				result = String(sendDate.getMinutes()) + ':'+ sendDate.getHours() + ' ' + sendDate.getDate() + '/' + sendDate.getMonth() + '/' + sendDate.getFullYear()
 			}
 			else{
 				if(sendDate.getDate() != currentDate.getDate()){
-					result = Number(currentDate.getDate() - sendDate.getDate()) + ' ngày trước'
+					result = String(sendDate.getMinutes()) + ':'+ sendDate.getHours() + ' ' + sendDate.getDate() + '/' + sendDate.getMonth() + '/' + sendDate.getFullYear()
 				}
 				else{
 					if(sendDate.getHours() != currentDate.getHours()){
@@ -97,7 +100,9 @@ export class InvitationDetailComponent implements OnInit {
 		}
 		return result
 	}
-
+	updateIsReadNotification(dataId: any) {
+		this.notificationService.updateIsReadedNotification({ ObjectId: dataId }).subscribe()
+	}
 	
 
 	redirectHis() {

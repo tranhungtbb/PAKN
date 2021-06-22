@@ -25,6 +25,7 @@ export class ViewNotificationComponent implements OnInit {
 				this.notificationService.getListNotificationGetById({Id : suggest}).subscribe(res=>{
 					if(res.success == RESPONSE_STATUS.success){
 						this.notification = res.result.SYNotificationGetByID
+						this.updateIsReadNotification(this.notification.dataId)
 					}
 				}), (error)=>{
 					console.log(error)
@@ -47,7 +48,7 @@ export class ViewNotificationComponent implements OnInit {
 		})
 	}
 	redirectDetail(id: any) {
-		this._router.navigate(['/cong-bo/tin-tuc-su-kien/' + id])
+		this._router.navigate(['/cong-bo/thong-bao/' + id])
 	}
 	getTime(date : any){
 		let result = ''
@@ -85,5 +86,8 @@ export class ViewNotificationComponent implements OnInit {
 			return true
 		}
 		return false
+	}
+	updateIsReadNotification(dataId: any) {
+		this.notificationService.updateIsReadedNotification({ ObjectId: dataId }).subscribe()
 	}
 }

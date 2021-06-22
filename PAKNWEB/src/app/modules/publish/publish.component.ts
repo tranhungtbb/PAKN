@@ -137,6 +137,7 @@ export class PublishComponent implements OnInit, OnChanges {
 		})
 	}
 	onClickNotification(id: number) {
+		this.updateIsReadNotification(id)
 		this._router.navigate(['/cong-bo/thong-bao/' + id])
 		// if (type == TYPE_NOTIFICATION.NEWS) {
 		// 	this.updateIsReadNotification(id)
