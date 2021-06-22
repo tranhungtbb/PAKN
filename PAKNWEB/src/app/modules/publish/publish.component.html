@@ -142,7 +142,7 @@
 							<ul class="bg-white rounded sub-nav">
 								<ng-container *ngFor="let item of subMenu;let i = index">
 									<li class="p-3 rounded sub-item" title="{{item.text}}">
-										<a class="text-1line text-black" [routerLink]="item.path">{{item.text}}</a>
+										<a class="text-1line text-black" [routerLink]="item.path" routerLinkActive="active">{{item.text}}</a>
 									</li>
 									<li class="border-bottom" *ngIf="i+1 < subMenu.length"></li>
 								</ng-container>

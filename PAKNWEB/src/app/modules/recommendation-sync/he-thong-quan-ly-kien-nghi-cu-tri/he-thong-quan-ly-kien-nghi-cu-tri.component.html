@@ -28,27 +28,33 @@
 											<strong>STT</strong>
 										</p>
 									</th>
-									<th style="width: 200px; max-width: 250px;">
-										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Người gửi</strong>
-											<span class="caret-tb"></span>
-										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="query.questioner" maxlength="100" (keydown.enter)="dataStateChange()"
-											placeholder="Nhập..." />
-									</th>
-
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Tiêu đề</strong>
+											<strong>Nội dung</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="query.question" maxlength="100" (keydown.enter)="dataStateChange()"
-											  placeholder="Nhập..." />
+										<!-- <input class="form-control form-control-sm" [(ngModel)]="query.content" maxlength="100" (keydown.enter)="dataStateChange()"
+											placeholder="Nhập..." /> -->
+									</th>
+									<th style="width: 200px; max-width: 250px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Lĩnh vực</strong>
+											<span class="caret-tb"></span>
+										</p>
+										<input class="form-control form-control-sm" [(ngModel)]="query.fields" maxlength="100" (keydown.enter)="dataStateChange()"
+											placeholder="Nhập..." />
 									</th>
 
 									<th style="width: 200px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Ngày tạo</strong>
+											<strong>Trạng thái</strong>
+											<span class="caret-tb"></span>
+										</p>
+									</th>
+
+									<th style="width: 400px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Kết quả</strong>
 											<span class="caret-tb"></span>
 										</p>
 									</th>
@@ -59,12 +65,21 @@
 								<tr>
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
-										<strong class="highlight" style="cursor: pointer;"><a class="ellipsis" (click)="getDetail(item.id)">{{item.questioner}}</a></strong>
+										<p class="text-2line"><a class="ellipsis" (click)="getDetail(item.id)">
+											<strong class="highlight" style="cursor: pointer;">
+												{{item.content}}
+											</strong>
+										</a></p>
 									</td>
 									<td>
-										<p class="mb-0 text-2line" title="{{item.unitName}}">{{item.question}}</p>
+										<p class="mb-0 text-2line" title="{{item.unitName}}">{{item.fields}}</p>
 									</td>
-									<td>{{item.createdDate}}</td>
+									<td>{{item.status}}</td>
+									<td>
+										<p class="text-2line">
+											{{item.result}}
+										</p>
+									</td>
 									
 									<!-- <td style="text-align: center;"></td> -->
 								</tr>
