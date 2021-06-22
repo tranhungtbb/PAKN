@@ -34,7 +34,7 @@ const routes: Routes = [
 			{ path: 'bao-cao', loadChildren: './statistic/statistic.module#StatisticModule' },
 
 			{ path: 'cuoc-goi', loadChildren: 'src/app/modules/call-history/call-history.module#CallHistoryModule' },
-			{ path: 'dong-bo-du-lieu', loadChildren: ()=>import('src/app/modules/recommendation-sync/recommendation-sync.module').then(c=>c.RecommendationSyncModule) },
+			{ path: 'dong-bo-du-lieu', loadChildren: 'src/app/modules/recommendation-sync/recommendation-sync.module#RecommendationSyncModule'},
 
 			{ path: 'tin-nhan', component: LoginChatBoxComponent },
 			{ path: 'chatbox', component: DashboardChatBoxComponent },
