@@ -959,3 +959,35 @@
 	width: 100%;
 	text-align: center;
 }
+
+.m_content {
+	margin: 0 0 10px 0;
+	font-size: 14px;
+	line-height: 20px;
+	color: white;
+	overflow: hidden;
+	white-space: pre-line;
+	word-break: break-all;
+}
+
+.m_bg {
+	background: #1673d8;
+}
+.m_attachment {
+	width: 100%;
+	max-width: 328px;
+	position: absolute;
+	/* visibility: hidden; */
+	display: block;
+	margin: 0 0 5px 0;
+	color: white;
+}
+
+.m__timestamp {
+	opacity: 0.6;
+	font-size: 12px;
+	line-height: 14px;
+	text-align: right;
+	color: #4a4a4a;
+	color: white;
+}
