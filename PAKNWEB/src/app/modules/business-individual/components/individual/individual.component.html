@@ -120,8 +120,8 @@
 								<td>{{item.phone}}</td>
 								<td>{{item.email}}</td>
 								<td>
-									<span *ngIf="item.status == 0" class="badge rounded-pill badge-light" (click)="onOpenConfirmModal(item.id,'Status')">Hết hiệu lực</span>
-									<span *ngIf="item.status == 1" class="badge rounded-pill bg-success" (click)="onOpenConfirmModal(item.id,'Status')">Hiệu lực</span>
+									<span *ngIf="item.status == 0" class="badge rounded-pill badge-light cursor" (click)="onOpenConfirmModal(item.id,'Status')">Hết hiệu lực</span>
+									<span *ngIf="item.status == 1" class="badge rounded-pill bg-success cursor" (click)="onOpenConfirmModal(item.id,'Status')">Hiệu lực</span>
 								</td>
 								<td style=" max-width: 100px;">
 									<div class="d-flex justify-content-end">
@@ -462,12 +462,12 @@
 			</div>
 			<div class="modal-body pb-0">
 				<span>
-					Anh/chị có chắc chắn thực hiện hành động này?
+					{{titleAccess}}
 				</span>
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="acceptConfirm()">Đồng ý</button>
+				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="acceptConfirm()">Xác nhận</button>
 			</div>
 		</div>
 	</div>

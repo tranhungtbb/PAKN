@@ -27,6 +27,7 @@ import { ViewNewsComponent } from './view-news/view-news.component'
 import { ViewAdministrativeProceduresComponent } from './view-administrative-procedures/view-administrative-procedures.component'
 import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component';
 import { ChatbotComponent } from './chatbot/chatbot.component'
+import  {ViewNotificationComponent} from './view-notification/view-notification.component'
 
 @NgModule({
 	declarations: [
@@ -45,6 +46,7 @@ import { ChatbotComponent } from './chatbot/chatbot.component'
 		ViewAdministrativeProceduresComponent,
 		ViewRightComponent,
 		ChatbotComponent,
+		ViewNotificationComponent
 	],
 	imports: [
 		CommonModule,

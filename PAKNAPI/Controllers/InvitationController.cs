@@ -199,8 +199,50 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("INVInvitationDetail")]
+		public async Task<object> INVInvitationDetail(int id)
+		{
+			try
+			{
+				Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
+				INVInvitationDetailModel invInvitation = new INVInvitationDetailModel();
+				invInvitation.Model = (await new INVInvitationDetail(_appSetting).INVInvitationDetailDAO(id)).FirstOrDefault();
+				invInvitation.INVFileAttach
+					 = await new INVFileAttachGetAllByInvitationId(_appSetting).INVFileAttachGetAllByInvitationIdDAO(id);
+				invInvitation.INVFileAttach.ForEach(item => {
+					item.FileAttach = decrypt.EncryptData(item.FileAttach);
+				});
+				var user = new SYUser();
+				if (invInvitation.Model.UserUpdate != null)
+				{
+					user = await new SYUser(_appSetting).SYUserGetByID(invInvitation.Model.UserUpdate);
+					if (user != null) {
+						invInvitation.SenderName = user.FullName;
+					}
+				}
+				else {
+					user = await new SYUser(_appSetting).SYUserGetByID(invInvitation.Model.UserCreateId);
+					if (user != null)
+					{
+						invInvitation.SenderName = user.FullName;
+					}
+				}
+				// 
+				return new ResultApi { Success = ResultCode.OK, Result = invInvitation };
+			}
+			catch (Exception ex)
+			{
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-        [HttpGet]
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
+
+		[HttpGet]
 		[Authorize]
 		[Route("INVInvitationUpdate")]
 		public async Task<object> INVInvitationUpdate(int id)

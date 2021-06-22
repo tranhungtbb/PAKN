@@ -46,7 +46,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	positionsList: any[] = []
 
 	createUnitFrom: FormGroup
-
+	titleConfirm : any = ''
 	modelUnit: UnitObject = new UnitObject()
 
 	/*unit query*/
@@ -533,9 +533,18 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	modalConfirm_type = 'unit'
 	modelConfirm_itemId: number = 0
 	onOpenConfirmModal(id: any, type = 'unit') {
-		$('#modal-confirm').modal('show')
 		this.modalConfirm_type = type
 		this.modelConfirm_itemId = id
+		if (this.modalConfirm_type == 'unit') {
+			this.titleConfirm = 'Bạn có chắc chắn muốn xóa đơn vị này?'
+		} else if (this.modalConfirm_type == 'user') {
+			this.titleConfirm = 'Bạn có chắc chắn muốn xóa người dùng này?'
+		} else if (this.modalConfirm_type == 'unit_status') {
+			this.titleConfirm = 'Bạn có chắc chắn muốn thay đổi trạng thái của đơn vị này?'
+		} else if (this.modalConfirm_type == 'user_status') {
+			this.titleConfirm = 'Bạn có chắc chắn muốn thay đổi trạng thái của người dùng này?'
+		}
+		$('#modal-confirm').modal('show')
 	}
 	acceptConfirm() {
 		if (this.modalConfirm_type == 'unit') {

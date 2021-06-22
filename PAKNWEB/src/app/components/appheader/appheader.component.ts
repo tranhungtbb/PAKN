@@ -75,7 +75,7 @@ export class AppheaderComponent implements OnInit {
 	lstPhongBan: any = []
 
 	Notifications: any[]
-	numberNotifications: any = 5
+	numberNotifications: any = 7
 	ViewedCount: number = 0
 	@ViewChild('table', { static: false }) table: any
 

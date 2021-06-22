@@ -72,49 +72,7 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("SYEmailGetFirstBase")]
-		public async Task<ActionResult<object>> SYEmailGetFirstBase()
-		{
-			try
-			{
-				List<SYEmailGetFirst> rsSYEmailGetFirst = await new SYEmailGetFirst(_appSetting).SYEmailGetFirstDAO();
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"SYEmailGetFirst", rsSYEmailGetFirst},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("SYEmailInsertBase")]
-		public async Task<ActionResult<object>> SYEmailInsertBase(SYEmailInsertIN _sYEmailInsertIN)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new SYEmailInsert(_appSetting).SYEmailInsertDAO(_sYEmailInsertIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
+		
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("SYPermissionGetByFunctionBase")]
@@ -358,6 +316,7 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
 
 		[HttpPost]
 		[Authorize]

@@ -83,6 +83,29 @@ namespace PAKNAPI.Controllers
 
         #endregion SYNotificationInsertTypeNews
 
+        [HttpGet]
+        [Authorize]
+        [Route("NotificationGetById")]
+        public async Task<ActionResult<object>> NotificationGetByIdBase(int? Id)
+        {
+            try
+            {
+                List<SYNotificationGetById> rsSYNotificationGetByID = await new SYNotificationGetById(_appSetting).SYNotificationGetByIdDAO(Id);
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"SYNotificationGetByID", rsSYNotificationGetByID.FirstOrDefault()},
+                    };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
 
         #region SYNotificationInsertTypeRecommendation
 

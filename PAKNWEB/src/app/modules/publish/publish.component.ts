@@ -30,7 +30,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	isHasToken: boolean = this.storageService.getIsHaveToken()
 	typeUserLoginPublish: number = this.storageService.getTypeObject()
 	currentFullnName: string = this.storageService.getFullName()
-	numberNotifications: any = 5
+	numberNotifications: any = 7
 	notifications: any[]
 	ViewedCount: number = 0
 	index: number = 0
@@ -123,22 +123,23 @@ export class PublishComponent implements OnInit, OnChanges {
 			}
 		})
 	}
-	onClickNotification(id: number, type: number, typeSend: number) {
-		if (type == TYPE_NOTIFICATION.NEWS) {
-			this.updateIsReadNotification(id)
-			this._router.navigate(['/tin-tuc-su-kien/' + id])
-		} else if(type == TYPE_NOTIFICATION.RECOMMENDATION){
-			if (typeSend == RECOMMENDATION_STATUS.FINISED) {
-				this.updateIsReadNotification(id)
-				this._router.navigate(['/cong-bo/phan-anh-kien-nghi/' + id])
-			} else {
-				this.updateIsReadNotification(id)
-				this._router.navigate(['/cong-bo/chi-tiet-kien-nghi/' + id])
-			}
-		}else if (type == TYPE_NOTIFICATION.INVITATION) { // Thư mời
-			this.updateIsReadNotification(id)
-			this._router.navigate(['/quan-tri/thu-moi/chi-tiet/' + id])
-		}
+	onClickNotification(id: number) {
+		this._router.navigate(['/cong-bo/thong-bao/' + id])
+		// if (type == TYPE_NOTIFICATION.NEWS) {
+		// 	this.updateIsReadNotification(id)
+		// 	this._router.navigate(['cong-bo/tin-tuc-su-kien/' + id])
+		// } else if(type == TYPE_NOTIFICATION.RECOMMENDATION){
+		// 	if (typeSend == RECOMMENDATION_STATUS.FINISED) {
+		// 		this.updateIsReadNotification(id)
+		// 		this._router.navigate(['/cong-bo/phan-anh-kien-nghi/' + id])
+		// 	} else {
+		// 		this.updateIsReadNotification(id)
+		// 		this._router.navigate(['/cong-bo/chi-tiet-kien-nghi/' + id])
+		// 	}
+		// }else if (type == TYPE_NOTIFICATION.INVITATION) { // Thư mời
+		// 	this.updateIsReadNotification(id)
+		// 	this._router.navigate(['/quan-tri/thu-moi/chi-tiet/' + id])
+		// }
 	}
 
 	updateIsReadNotification(dataId: any) {

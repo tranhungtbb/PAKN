@@ -174,7 +174,7 @@
 					</div>
 					<div class="modal-body no-padding-bottom">
 						<div>
-							<p>Anh/Chị có chắc chắn thực hiện hành động này?</p>
+							<p>Anh/Chị có chắc chắn muốn xóa PAKN này?</p>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -298,7 +298,7 @@
 					</div>
 					<div class="modal-body no-padding-bottom">
 						<div>
-							<p>Anh/Chị có chắc chắn thực hiện hành động này?</p>
+							<p>{{titleAccept}}</p>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -322,7 +322,7 @@
 					<p class="modal-title h3">Xác nhận</p>
 				</div>
 				<div class="modal-body no-padding-bottom form-horizontal">
-					<p class="h4 text-center mb-3">Bạn có chắc chắn chuyển <strong>Phản ánh, kiến nghị</strong> này về trung tâm tiếp nhận?</p>
+					<p class="h4 text-center mb-3">Anh/Chị có chắc chắn chuyển <strong>Phản ánh, kiến nghị</strong> này về trung tâm tiếp nhận?</p>
 					<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="contentForward" maxlength="500"></textarea>
 				</div>
 				<div class="modal-footer">
@@ -342,7 +342,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<p class="h4 text-center mb-3">Bạn có chắc chắn từ chối <strong>Phản ánh, kiến nghị</strong> này?</p>
+				<p class="h4 text-center mb-3">Anh/Chị có chắc chắn từ chối <strong>Phản ánh, kiến nghị</strong> này?</p>
 				<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="modelProcess.reasonDeny" maxlength="500"></textarea>
 				<ng-container *ngIf="recommendationStatusProcess == 3 || isForwardProcess == true">
 					<div class="custom-control custom-checkbox checkbox-danger mt-3 mb-3">

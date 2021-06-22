@@ -47,9 +47,8 @@ export class IndividualComponent implements OnInit {
 	listProvince: any[] = []
 	listDistrict: any[] = []
 	listVillage: any[] = []
-
 	listAllDiaDanh: any[] = []
-
+	titleAccess : any = ''
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<IndividualObject>()
 	listStatus: any = [
@@ -223,9 +222,15 @@ export class IndividualComponent implements OnInit {
 	modalConfirm_type = 'Status'
 	modelConfirm_itemId: number = 0
 	onOpenConfirmModal(id: any, type = 'Status') {
-		$('#modal-confirm').modal('show')
+		if(type == 'Status'){
+			this.titleAccess = 'Anh/Chị có chắc chắn muốn thay đổi trạng thái của người dân này?'
+		}
+		else{
+			this.titleAccess = 'Anh/Chị có chắc chắn muốn xóa người dân này?'
+		}
 		this.modalConfirm_type = type
 		this.modelConfirm_itemId = id
+		$('#modal-confirm').modal('show')
 	}
 	acceptConfirm() {
 		if (this.modalConfirm_type == 'Status') {

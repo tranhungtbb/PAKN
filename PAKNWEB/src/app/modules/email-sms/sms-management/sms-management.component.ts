@@ -131,9 +131,14 @@ export class SMSManagementComponent implements OnInit {
 		this.getListPaged()
 	}
 
-	onSend(id: Number) {
-		$('#modalConfirmChangeStatus').modal('show')
-		this.smsId = id
+	onSend(id: Number, senderNumber : Number) {
+		if(senderNumber <= 0){
+			this.toast.error('Vui lòng chọn Cá nhân, Doanh nghiệp nhận SMS')
+			return
+		}else{
+			$('#modalConfirmChangeStatus').modal('show')
+			this.smsId = id
+		}
 	}
 
 	onUpdateStatusTypeSend() {
