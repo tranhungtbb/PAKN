@@ -72,7 +72,7 @@
 										<img class="avatar-size rounded-3" [src]="item.imagePath">
 
 										<strong class="news-title col-sm-10 highlight">
-											<a [routerLink]="['./chi-tiet', item.id]" title="Chi tiết tin tức sự kiện">
+											<a [routerLink]="['../chi-tiet', item.id]" title="Chi tiết tin tức sự kiện">
 												{{item.title}}</a>
 										</strong>
 									</td>
@@ -123,7 +123,7 @@
 			</div>
 			<div class="modal-footer border-top-0">
 				<button type="button" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 px-5 grd-blue" data-dismiss="modal" (click)="acceptConfirm()">Đồng ý</button>
+				<button type="button" class="btn btn-danger border-0 px-5 grd-blue" data-dismiss="modal" (click)="acceptConfirm()">Xác nhận</button>
 			</div>
 		</div>
 	</div>

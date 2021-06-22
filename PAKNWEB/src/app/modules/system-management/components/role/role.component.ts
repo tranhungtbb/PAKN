@@ -104,9 +104,9 @@ export class RoleComponent implements OnInit {
 		this.model = { ...item, isActived: !item.isActived }
 		this.type = type
 		if (type == 'delete') {
-			this.mess = 'Bạn có chắc chắn thực hiện hành động này?'
+			this.mess = 'Bạn có chắc chắn muốn xóa vai trò này?'
 		} else {
-			this.mess = 'Bạn muốn thay dổi trạng thái của vai trò này?'
+			this.mess = 'Bạn có chắc chắn muốn thay đổi trạng thái của vai trò này?'
 		}
 		$('#modalConfirm').modal('show')
 	}

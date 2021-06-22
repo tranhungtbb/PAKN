@@ -104,7 +104,7 @@
 									</td>
 									<td style="text-align: center;">
 										<div class="d-flex justify-content-end">
-											<a *ngIf="item.status == 1 && item.unitName != null" class="btn-icon grd-blue text-white mr-2 cursor" (click)="onSend(item.id)">
+											<a *ngIf="item.status == 1" class="btn-icon grd-blue text-white mr-2 cursor" (click)="onSend(item.id, item.senderNumber)">
 												<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
 													<path d="M13.5938 0.125927L0.468823 7.69624C-0.205005 8.08589
 													 -0.137622 9.07905 0.580151 9.37495L4.68757 11.0742V14.0625C4.68757 
@@ -152,7 +152,7 @@
 					</div>
 					<div class="modal-body no-padding-bottom" style="border: none;">
 						<div style="text-align: center;">
-							<strong class="change-status-title">Bạn có chắc chắn thực hiện hành động này?</strong>
+							<strong class="change-status-title">Anh/Chị có chắc chắn muốn xóa SMS này?</strong>
 						</div>
 					</div>
 					<div class="modal-footer" style="border: none; justify-content: center;">
@@ -179,7 +179,7 @@
 					</div>
 					<div class="modal-body no-padding-bottom" style="border: none;">
 						<div style="text-align: center;">
-							<strong class="change-status-title">Bạn có mmuốn gửi SMS này?</strong>
+							<strong class="change-status-title">Anh/Chị có chắc chắn muốn gửi SMS này?</strong>
 						</div>
 					</div>
 					<div class="modal-footer" style="border: none; justify-content: center;">

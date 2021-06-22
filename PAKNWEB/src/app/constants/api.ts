@@ -199,6 +199,7 @@ export class Api {
 	public static InnvitationUpdate = 'INVInvitation/INVInvitationUpdate'
 	public static InvitationDelete = 'INVInvitation/INVInvitationDelete'
 	public static InvitationGetList = 'INVSPBase/INVInvitationGetAllOnPageBase'
+	public static InnvitationDetail = 'INVInvitation/INVInvitationDetail'
 	public static UserReadedInvitationGetList = 'INVSPBase/SYUserReadedInvitationGetAllOnPage'
 
 	//sms
@@ -277,6 +278,7 @@ export class Api {
 	public static NotificationInsertTypeNews = 'SYNotification/SYNotificationInsertTypeNews'
 	public static NotificationInsertTypeRecommendation = 'SYNotification/SYNotificationInsertTypeRecommendation'
 	public static NotificationGetList = 'SYNotification/SYNotificationGetListOnPage'
+	public static NotificationGetById = 'SYNotification/NotificationGetById'
 	public static NotificationDelete = 'SYNotification/SYNotificationDelete'
 	public static NotificationUpdateIsViewed = 'SYNotification/SYNotificationUpdateIsViewed'
 	public static NotificationUpdateIsReaded = 'SYNotification/SYNotificationUpdateIsReaded'

@@ -35,7 +35,6 @@ const routes: Routes = [
 
 			{ path: 'cuoc-goi', loadChildren: 'src/app/modules/call-history/call-history.module#CallHistoryModule' },
 			{ path: 'dong-bo-du-lieu', loadChildren: 'src/app/modules/recommendation-sync/recommendation-sync.module#RecommendationSyncModule'},
-
 			{ path: 'tin-nhan', component: LoginChatBoxComponent },
 			{ path: 'chatbox', component: DashboardChatBoxComponent },
 		],

@@ -40,6 +40,10 @@ export class InvitationService {
 	invitationGetById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.InnvitationUpdate)
 	}
+	invitationDetail(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.InnvitationDetail)
+	}
+
 
 	invitationUpdate(request: any): Observable<any> {
 		let tempheaders = new HttpHeaders({
