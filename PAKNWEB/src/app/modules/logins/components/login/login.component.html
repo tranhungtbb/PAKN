@@ -61,12 +61,13 @@
 																			style="font-size: 34px"></i></button>
 																</div>
 																<input type="text" formControlName="captcha" [(ngModel)]="captchaCodeProduct" maxlength="5" style="font-size: 20px"
+																(change)="captchaCodeProduct=captchaCodeProduct.trim()"
 																	placeholder="Nhập mã xác thực..." class="form-control bg-transparent px-4 border-0" value="">
 															</div>
-															<div *ngIf="floginFormProduct.captcha.invalid && (floginFormProduct.captcha.dirty || floginFormProduct.captcha.touched || submitted)"
+															<div *ngIf="(submittedProduct && floginFormProduct.captcha.invalid)||(floginFormProduct.captcha.invalid && (floginFormProduct.captcha.dirty || floginFormProduct.captcha.touched))"
 																class="has-error m-b-12">
 																<div *ngIf="floginFormProduct.captcha.errors.required">
-																	<span class="help-block">Vui lòng nhập mã captcha</span>
+																	<span class="help-block">Vui lòng nhập mã xác thực</span>
 																</div>
 															</div>
 															<div class="form-row d-flex justify-content-between align-items-center mt-4 mb-2 ml-0 mr-0">
@@ -107,6 +108,9 @@
 																	style="font-size: 20px" placeholder="Nhập tài khoản, email..." type="text" id="username" formControlName="name"
 																	[(ngModel)]="user.UserName" required>
 																<div *ngIf="name.invalid && (name.dirty || name.touched || submitted)" class="has-error m-b-12">
+																	<div *ngIf="name.errors.email">
+																		<span class="help-block">Email không hợp lệ</span>
+																	</div>
 																	<div *ngIf="name.errors.required">
 																		<span class="help-block">Trường này không được để trống</span>
 																	</div>
@@ -131,11 +135,12 @@
 																			style="font-size: 34px"></i></button>
 																</div>
 																<input type="text" formControlName="captcha" [(ngModel)]="captchaCode" maxlength="5" style="font-size: 20px"
+																(change)="captchaCode=captchaCode.trim()"
 																	placeholder="Nhập mã xác thực..." class="form-control bg-transparent px-4 border-0" value="">
 															</div>
-															<div *ngIf="captcha.invalid && (captcha.dirty || captcha.touched || submitted)" class="has-error m-b-12">
+															<div *ngIf="(submitted && captcha.invalid)||(captcha.invalid && (captcha.dirty || captcha.touched))" class="has-error m-b-12">
 																<div *ngIf="captcha.errors.required">
-																	<span class="help-block">Vui lòng nhập mã captcha</span>
+																	<span class="help-block">Vui lòng nhập mã xác thực</span>
 																</div>
 															</div>
 															<div class="form-row d-flex justify-content-between align-items-center mt-4 mb-2 ml-0 mr-0">
