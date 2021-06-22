@@ -6,6 +6,7 @@ import { DashboardComponent } from './dash-board/dash-board.component'
 import { NotificationComponent } from './notification/notification.component'
 import { ReportViewerComponent } from './report-view/report-viewcomponent'
 import { DashboardChatBoxComponent } from './chatbox/dashboard/dashboard.component'
+import { from } from 'rxjs'
 
 const routes: Routes = [
 	{
@@ -33,6 +34,7 @@ const routes: Routes = [
 			{ path: 'bao-cao', loadChildren: './statistic/statistic.module#StatisticModule' },
 
 			{ path: 'cuoc-goi', loadChildren: 'src/app/modules/call-history/call-history.module#CallHistoryModule' },
+			{ path: 'dong-bo-du-lieu', loadChildren: ()=>import('src/app/modules/recommendation-sync/recommendation-sync.module').then(c=>c.RecommendationSyncModule) },
 
 			{ path: 'tin-nhan', component: LoginChatBoxComponent },
 			{ path: 'chatbox', component: DashboardChatBoxComponent },
