@@ -79,7 +79,7 @@
 				</a>
 				<ul routerLinkActive="mm-show" aria-expanded="false">
 					<li><a routerLink="/quan-tri/email-sms/email">Dự thảo Email</a></li>
-					<li><a routerLink="/quan-tri/email-sms/email">Email đã gửi</a></li>
+					<li><a routerLink="/quan-tri/email-sms/email/sent">Email đã gửi</a></li>
 					<li><a routerLink="/quan-tri/email-sms/sms">Dự thảo SMS</a></li>
 					<li><a routerLink="/quan-tri/email-sms/sms-da-gui">SMS đã gửi</a></li>
 				</ul>
@@ -184,6 +184,19 @@
 				</a>
 				<ul routerLinkActive="mm-show" aria-expanded="false">
 					<li><a routerLink="/quan-tri/tin-nhan">Chatbox</a></li>
+				</ul>
+
+			</li>
+			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<i class="bi bi-arrow-repeat"></i>
+					<span class="nav-text">Đồng bộ dữ liệu</span>
+				</a>
+				<ul routerLinkActive="mm-show" aria-expanded="false">
+					<li><a routerLink="/quan-tri/dong-bo-du-lieu/cong-thong-tin-dien-tu-tinh">Cổng thông tin điện tử tỉnh</a></li>
+					<li><a routerLink="/quan-tri/dong-bo-du-lieu/cong-thong-tin-dv-hcc">Cổng thông tin DV HCC trực tuyến</a></li>
+					<li><a routerLink="/quan-tri/dong-bo-du-lieu/he-thong-quan-ly-kien-nghi-cu-tri">Hệ thống quản lý kiến nghị cử tri</a></li>
+					<li><a routerLink="/quan-tri/dong-bo-du-lieu/he-thong-pakn-chinh-phu">Hệ thống PAKN của Chính phủ</a></li>
 				</ul>
 
 			</li>

@@ -20,6 +20,8 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using PAKNAPI.Models.Recommendation;
 using PAKNAPI.Models.Invitation;
+using PAKNAPI.Job;
+using System.Threading;
 
 namespace PAKNAPI.Controllers
 {
@@ -95,6 +97,7 @@ namespace PAKNAPI.Controllers
 				if (id > 0)
 				{
 					// insert file và InvitationMap
+					List<string> filesPath = new List<string>();
 					if (invInvitation.Files != null && invInvitation.Files.Count > 0)
 					{
 						string folder = "Upload\\Invitation\\" + id;
@@ -109,6 +112,7 @@ namespace PAKNAPI.Controllers
 							file.InvitationId = id;
 							file.Name = Path.GetFileName(item.FileName).Replace("+", "");
 							string filePath = Path.Combine(folderPath, file.Name);
+							filesPath.Add(filePath);
 							file.FileAttach = Path.Combine(folder, file.Name);
 							file.FileType = GetFileTypes.GetFileTypeInt(item.ContentType);
 							using (var stream = new FileStream(filePath, FileMode.Create))
@@ -121,6 +125,8 @@ namespace PAKNAPI.Controllers
 					}
 
 					// insert map user
+					Dictionary<string, string> lstUserSend = new Dictionary<string, string>();
+																 
 					string senderName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
 					foreach (var item in invInvitation.InvitationUserMap) {
 						item.InvitationId = id;
@@ -142,8 +148,40 @@ namespace PAKNAPI.Controllers
 							model.IsReaded = true;
 							// insert vào db-
 							await new SYNotification(_appSetting).SYNotificationInsertDAO(model);
+
+							if (item.SendEmail == true) {
+								var userSend = await new SYUser(_appSetting).SYUserGetByID(item.UserId);
+								if (userSend != null && userSend.IsActived == true) { lstUserSend.Add(userSend.FullName,userSend.Email); }
+							}
 						}
 						// send email nếu có
+					}
+					// send mail
+					if (lstUserSend.Count() > 0) {
+						Thread t = new Thread(async () => {
+							var config = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(TYPECONFIG.CONFIG_EMAIL)).FirstOrDefault();
+							if (config != null) {
+								var configEmail = JsonConvert.DeserializeObject<ConfigEmail>(config.Content);
+								string content = "<p><span style='font-family:times new roman,times,serif;'><strong>Kính gửi: </strong>&nbsp;{FullName},<br />" +
+										"Thư mời họp <br />" +
+										"<strong> Thời gian bắt đầu </strong > : {StartDate}<br />" +
+										"<strong> Thời gian kết thúc </strong > : {EndDate}<br />" +
+										"<strong> Địa điểm </strong > : {Place}<br />" +
+										"<strong> Nội dung </strong > :<br />" +
+										"{Content}</span></p>";
+								content = content.Replace("{StartDate}", invInvitation.Model.StartDate.ToString("dd/MM/yyyy HH:ss"));
+								content = content.Replace("{EndDate}", invInvitation.Model.EndDate.ToString("dd/MM/yyyy HH:ss"));
+								content = content.Replace("{Place}", invInvitation.Model.Place);
+								content = content.Replace("{Content}", invInvitation.Model.Content);
+								//content = content.Replace("\n", "<br />");
+								foreach (var item in lstUserSend) {
+									string itemContent = content.Replace("{FullName}", item.Key);
+									itemContent = itemContent.Replace("\n", "<br />");
+									MailHelper.SendMail(configEmail, item.Value, invInvitation.Model.Title, itemContent, filesPath);
+								}
+							}
+						});
+						t.Start();
 					}
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 					return new ResultApi { Success = ResultCode.OK};
@@ -160,6 +198,48 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("INVInvitationDetail")]
+		public async Task<object> INVInvitationDetail(int id)
+		{
+			try
+			{
+				Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
+				INVInvitationDetailModel invInvitation = new INVInvitationDetailModel();
+				invInvitation.Model = (await new INVInvitationDetail(_appSetting).INVInvitationDetailDAO(id)).FirstOrDefault();
+				invInvitation.INVFileAttach
+					 = await new INVFileAttachGetAllByInvitationId(_appSetting).INVFileAttachGetAllByInvitationIdDAO(id);
+				invInvitation.INVFileAttach.ForEach(item => {
+					item.FileAttach = decrypt.EncryptData(item.FileAttach);
+				});
+				var user = new SYUser();
+				if (invInvitation.Model.UserUpdate != null)
+				{
+					user = await new SYUser(_appSetting).SYUserGetByID(invInvitation.Model.UserUpdate);
+					if (user != null) {
+						invInvitation.SenderName = user.FullName;
+					}
+				}
+				else {
+					user = await new SYUser(_appSetting).SYUserGetByID(invInvitation.Model.UserCreateId);
+					if (user != null)
+					{
+						invInvitation.SenderName = user.FullName;
+					}
+				}
+				// 
+				return new ResultApi { Success = ResultCode.OK, Result = invInvitation };
+			}
+			catch (Exception ex)
+			{
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 
 
 		[HttpGet]
@@ -219,7 +299,7 @@ namespace PAKNAPI.Controllers
 
 				if (id > 0)
 				{
-					//
+					List<string> filesPath = new List<string>();
 					if (invInvitation.LtsDeleteFile.Count > 0)
 					{
 						foreach (var item in invInvitation.LtsDeleteFile)
@@ -246,6 +326,7 @@ namespace PAKNAPI.Controllers
 							file.InvitationId = id;
 							file.Name = Path.GetFileName(item.FileName).Replace("+", "");
 							string filePath = Path.Combine(folderPath, file.Name);
+							filesPath.Add(filePath);
 							file.FileAttach = Path.Combine(folder, file.Name);
 							file.FileType = GetFileTypes.GetFileTypeInt(item.ContentType);
 							using (var stream = new FileStream(filePath, FileMode.Create))
@@ -260,7 +341,7 @@ namespace PAKNAPI.Controllers
 					INVInvitationUserMapDeleteByInvitationIdIN deleteMap = new INVInvitationUserMapDeleteByInvitationIdIN();
 					deleteMap.InvitationId = invInvitation.Model.Id;
 					int s = await new INVInvitationUserMapDeleteByInvitationId(_appSetting).INVInvitationUserMapDeleteByInvitationIdDAO(deleteMap);
-
+					Dictionary<string, string> lstUserSend = new Dictionary<string, string>();
 					// insert map user
 					if (s > 0) {
 						string senderName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
@@ -291,8 +372,43 @@ namespace PAKNAPI.Controllers
 								model.IsReaded = true;
 								// insert vào db-
 								await new SYNotification(_appSetting).SYNotificationInsertDAO(model);
+
+								if (item.SendEmail == true)
+								{
+									var userSend = await new SYUser(_appSetting).SYUserGetByID(item.UserId);
+									if (userSend != null && userSend.IsActived == true) { lstUserSend.Add(userSend.FullName, userSend.Email); }
+								}
 							}
 							// send email nếu có
+						}
+						// send mail
+						if (lstUserSend.Count() > 0)
+						{
+							Thread t = new Thread(async () => {
+								var config = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(TYPECONFIG.CONFIG_EMAIL)).FirstOrDefault();
+								if (config != null)
+								{
+									var configEmail = JsonConvert.DeserializeObject<ConfigEmail>(config.Content);
+									string content = "<p><span style='font-family:times new roman,times,serif;'><strong>Kính gửi: </strong>&nbsp;{FullName},<br />" +
+											"Thư mời họp <br />" +
+											"<strong> Thời gian bắt đầu </strong > : {StartDate}<br />" +
+											"<strong> Thời gian kết thúc </strong > : {EndDate}<br />" +
+											"<strong> Địa điểm </strong > : {Place}<br />" +
+											"<strong> Nội dung </strong > :<br />" +
+											"{Content}</span></p>";
+									content = content.Replace("{StartDate}", invInvitation.Model.StartDate.ToString("dd/MM/yyyy HH:ss"));
+									content = content.Replace("{EndDate}", invInvitation.Model.EndDate.ToString("dd/MM/yyyy HH:ss"));
+									content = content.Replace("{Place}", invInvitation.Model.Place);
+									content = content.Replace("{Content}", invInvitation.Model.Content);
+									foreach (var item in lstUserSend)
+									{
+										string itemContent = content.Replace("{FullName}", item.Key);
+										itemContent = itemContent.Replace("\n", "<br />");
+										MailHelper.SendMail(configEmail, item.Value, invInvitation.Model.Title, itemContent, null);
+									}
+								}
+							});
+							t.Start();
 						}
 					}
 					

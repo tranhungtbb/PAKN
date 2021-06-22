@@ -199,6 +199,7 @@ export class EmailCreateComponent implements OnInit {
 					item.individualId = iterator.id
 					item.individualFullName = iterator.name
 					item.unitName = iterator.administrativeUnitName
+					item.adUnitId = iterator.administrativeUnitId
 					if(!arr.includes(item.individualId))
 						this.listIndividualNew.push(item);
 				}else if (iterator.category == 2){
@@ -206,6 +207,7 @@ export class EmailCreateComponent implements OnInit {
 					item.businessId = iterator.id
 					item.businessName = iterator.name
 					item.unitName = iterator.administrativeUnitName
+					item.adUnitId = iterator.administrativeUnitId
 					if(!arr2.includes(item.businessId))
 						this.listBusinessNew.push(item);
 				}

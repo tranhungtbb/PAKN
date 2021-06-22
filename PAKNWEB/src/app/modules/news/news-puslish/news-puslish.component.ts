@@ -90,18 +90,18 @@ export class NewsPuslishComponent implements OnInit {
 		$('#modal-history').modal('show')
 	}
 
-	modalConfirm_message = 'Anh/chị có chắc chắn thực hiện hành động này?'
+	modalConfirm_message = 'Anh/Chị có chắc chắn muốn xóa bài viết này?'
 	modalConfirm_type = 'delete'
 	modalConfirm_item_id = 0
 	onOpenModalConfirm(id: number, type: string) {
 		if (type == 'delete') {
-			this.modalConfirm_message = 'Anh/chị có chắc chắn thực hiện hành động này?'
+			this.modalConfirm_message = 'Anh/Chị có chắc chắn muốn xóa bài viết này?'
 		} else {
 			let item = this.listDataPaged.find((c) => c.id == id)
 			if (item.isPublished == false) {
-				this.modalConfirm_message = 'Anh/chị có muốn công bố bài viết này?'
+				this.modalConfirm_message = 'Anh/Chị có muốn công bố bài viết này?'
 			} else {
-				this.modalConfirm_message = 'Anh/chị có muốn hủy công bố bài viết này?'
+				this.modalConfirm_message = 'Anh/Chị có muốn hủy công bố bài viết này?'
 			}
 		}
 		$('#modal-confirm').modal('show')

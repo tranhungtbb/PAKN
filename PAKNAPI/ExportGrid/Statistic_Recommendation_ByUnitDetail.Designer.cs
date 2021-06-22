@@ -45,6 +45,13 @@ namespace PAKNAPI.ExportGrid {
             this.ToDate = reportInitializer.GetParameter("ToDate");
             this.UnitId = reportInitializer.GetParameter("UnitId");
             this.TitleReport = reportInitializer.GetParameter("TitleReport");
+            this.TitleMR = reportInitializer.GetParameter("TitleMR");
+            this.Code = reportInitializer.GetParameter("Code");
+            this.Status = reportInitializer.GetParameter("Status");
+            this.CreateName = reportInitializer.GetParameter("CreateName");
+            this.UnitProcessId = reportInitializer.GetParameter("UnitProcessId");
+            this.UserProcessId = reportInitializer.GetParameter("UserProcessId");
+            this.Field = reportInitializer.GetParameter("Field");
 
             // Data Sources
             this.sqlDataSource1 = reportInitializer.GetDataSource<DevExpress.DataAccess.Sql.SqlDataSource>("sqlDataSource1");
@@ -91,6 +98,13 @@ namespace PAKNAPI.ExportGrid {
         private DevExpress.XtraReports.Parameters.Parameter ToDate;
         private DevExpress.XtraReports.Parameters.Parameter UnitId;
         private DevExpress.XtraReports.Parameters.Parameter TitleReport;
+        private DevExpress.XtraReports.Parameters.Parameter TitleMR;
+        private DevExpress.XtraReports.Parameters.Parameter Code;
+        private DevExpress.XtraReports.Parameters.Parameter Status;
+        private DevExpress.XtraReports.Parameters.Parameter CreateName;
+        private DevExpress.XtraReports.Parameters.Parameter UnitProcessId;
+        private DevExpress.XtraReports.Parameters.Parameter UserProcessId;
+        private DevExpress.XtraReports.Parameters.Parameter Field;
         private DevExpress.DataAccess.Sql.SqlDataSource sqlDataSource1;
     }
 }

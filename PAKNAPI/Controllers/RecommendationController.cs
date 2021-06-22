@@ -219,7 +219,9 @@ namespace PAKNAPI.Controller
                             switch (contentType)
                             {
                                 case ".pdf":
-                                    content = FileUtils.ExtractDataFromPDFFile(filePath);
+                                    // không đọc được từ file scan
+                                    //content = FileUtils.ExtractDataFromPDFFile(filePath);
+                                    content = PdfTextExtractorCustom.ReadPdfFile(filePath);
                                     isHasFullText = true;
                                     break;
 

@@ -14,6 +14,7 @@ import { from, using } from 'rxjs'
 import { MyRecommendationComponent } from './my-recommendation/my-recommendation.component'
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
 import { ViewAdministrativeProceduresComponent } from './view-administrative-procedures/view-administrative-procedures.component'
+import  {ViewNotificationComponent} from './view-notification/view-notification.component'
 
 const routes: Routes = [
 	{
@@ -63,6 +64,10 @@ const routes: Routes = [
 			{
 				path: 'chi-tiet-kien-nghi/:id',
 				component: ViewRecommendationPersonalComponent,
+			},
+			{
+				path: 'thong-bao/:id',
+				component: ViewNotificationComponent,
 			},
 			{
 				path: 'phan-anh-kien-nghi',

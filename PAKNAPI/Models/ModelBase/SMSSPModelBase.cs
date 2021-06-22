@@ -199,6 +199,8 @@ namespace PAKNAPI.ModelBase
 		public byte Status { get; set; }
 		public string Type { get; set; }
 
+		public int SenderNumber { get; set; }
+
 		public async Task<List<SMSQuanLyTinNhanGetAllOnPage>> SMSQuanLyTinNhanGetAllOnPageDAO(int? PageSize, int? PageIndex, string Title, int? UnitId, string Type, byte? Status)
 		{
 			DynamicParameters DP = new DynamicParameters();

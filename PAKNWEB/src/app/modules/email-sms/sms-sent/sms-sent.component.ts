@@ -158,6 +158,10 @@ export class SMSSentComponent implements OnInit {
 			}
 		})
 	}
+	confirm(id: Number) {
+		this.smsId = id
+		$('#modalConfirm').modal('show')
+	}
 
 	redirectCreate() {
 		this.routes.navigate(['quan-tri/email-sms/sms/them-moi'])

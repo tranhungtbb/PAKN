@@ -42,7 +42,7 @@ export class BusinessComponent implements OnInit {
 	listProvince: any[] = []
 	listDistrict: any[] = []
 	listVillage: any[] = []
-
+	titleAccess : any = ''
 	userLoginId: number = this.storeageService.getUserId()
 	unitLoginId: number = this.storeageService.getUnitId()
 	listData = new Array<BusinessionObject>()
@@ -220,6 +220,12 @@ export class BusinessComponent implements OnInit {
 	modalConfirm_type = 'Status'
 	modelConfirm_itemId: number = 0
 	onOpenConfirmModal(id: any, type = 'Status') {
+		if(type == 'Status'){
+			this.titleAccess = 'Anh/Chị có chắc chắn muốn thay đổi trạng thái của doanh nghiệp này?'
+		}
+		else{
+			this.titleAccess = 'Anh/Chị có chắc chắn muốn xóa doanh nghiệp này?'
+		}
 		$('#modal-confirm').modal('show')
 		this.modalConfirm_type = type
 		this.modelConfirm_itemId = id

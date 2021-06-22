@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr'
 import { UserObject } from '../../models/UserObject'
 import { UserService } from '../../services/user.service'
 import { DataService } from '../../services/sharedata.service'
-
+import { AccountService } from 'src/app/services/account.service'
 import { RESPONSE_STATUS, RECOMMENDATION_STATUS, TYPE_NOTIFICATION } from 'src/app/constants/CONSTANTS'
 import { NotificationService } from 'src/app/services/notification.service'
 import { from } from 'rxjs'
@@ -75,7 +75,7 @@ export class AppheaderComponent implements OnInit {
 	lstPhongBan: any = []
 
 	Notifications: any[]
-	numberNotifications: any = 5
+	numberNotifications: any = 7
 	ViewedCount: number = 0
 	@ViewChild('table', { static: false }) table: any
 
@@ -89,10 +89,12 @@ export class AppheaderComponent implements OnInit {
 		private _fb: FormBuilder,
 		private _toastr: ToastrService,
 		private sharedataService: DataService,
-		private notificationService: NotificationService
+		private notificationService: NotificationService,
+		private accountService: AccountService,
 	) {}
 
 	formChangePassword: FormGroup
+	oldPassword: string
 	newPassword: string
 	rePassword: string
 	samePass = false
@@ -117,6 +119,7 @@ export class AppheaderComponent implements OnInit {
 		})
 		this.getNotifications(this.numberNotifications)
 		this.formChangePassword = this._fb.group({
+			oldPassword: [this.oldPassword, Validators.required],
 			newPassword: [this.newPassword, Validators.required],
 			rePassword: [this.rePassword, Validators.required],
 		})
@@ -161,6 +164,7 @@ export class AppheaderComponent implements OnInit {
 	}
 	rebuilForm() {
 		this.formChangePassword.reset({
+			oldPassword : this.oldPassword,
 			newPassword: this.newPassword,
 			rePassword: this.rePassword,
 		})
@@ -173,6 +177,7 @@ export class AppheaderComponent implements OnInit {
 	clearChangePasswordModel() {
 		this.newPassword = ''
 		this.rePassword = ''
+		this.oldPassword = ''
 	}
 	preChangePassword() {
 		this.submitted = false
@@ -183,6 +188,7 @@ export class AppheaderComponent implements OnInit {
 
 	onChangePassword() {
 		this.submitted = true
+		this.oldPassword = this.oldPassword.trim()
 		this.newPassword = this.newPassword.trim()
 		this.rePassword = this.rePassword.trim()
 
@@ -197,22 +203,35 @@ export class AppheaderComponent implements OnInit {
 			this.samePass = false
 		}
 		let obj = {
-			UserId: this.storageService.getUserId(),
+			// UserId: this.storageService.getUserId(),
+			OldPassword : this.oldPassword,
 			NewPassword: this.newPassword,
 			RePassword: this.rePassword,
 		}
-		this.userService.changePasswordInManage(obj).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				$('#modalChangePasswordByMe').modal('hide')
-				this._toastr.success('Đổi mật khẩu thành công.')
-			} else {
+		this.accountService.changePassword(obj).subscribe((res) => {
+			if (res.success != 'OK') {
 				this._toastr.error(res.message)
+				return
 			}
+			this._toastr.success('Đổi mật khẩu thành công')
+			$('#modalChangePasswordByMe').modal('hide')
 		}),
 			(error) => {
 				console.error(error)
 				alert(error)
 			}
+		// this.userService.changePasswordInManage(obj).subscribe((res) => {
+		// 	if (res.success == RESPONSE_STATUS.success) {
+		// 		$('#modalChangePasswordByMe').modal('hide')
+		// 		this._toastr.success('Đổi mật khẩu thành công.')
+		// 	} else {
+		// 		this._toastr.error(res.message)
+		// 	}
+		// }),
+		// 	(error) => {
+		// 		console.error(error)
+		// 		alert(error)
+		// 	}
 	}
 
 	redirectListNotification() {

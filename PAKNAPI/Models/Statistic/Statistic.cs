@@ -34,12 +34,12 @@ namespace PAKNAPI.Models.Statistic
 
 		public int Finised { get; set; }
 
-		public async Task<List<StatisticRecommendationByUnitGetAllOnPage>> StatisticRecommendationByUnitGetAllOnPageDAO(string LtsUnitId, int? Year, int? Timeline, DateTime? FromDate,DateTime? ToDate, int? PageSize, int? PageIndex)
+		public async Task<List<StatisticRecommendationByUnitGetAllOnPage>> StatisticRecommendationByUnitGetAllOnPageDAO(string LtsUnitId, int UnitProcessId, long UserProcessId, DateTime? FromDate,DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("LtsUnitId", LtsUnitId);
-			DP.Add("Year", Year);
-			DP.Add("Timeline", Timeline);
+			DP.Add("UnitProcessId", UnitProcessId);
+			DP.Add("UserProcessId", UserProcessId);
 			DP.Add("FromDate", FromDate);
 			DP.Add("ToDate", ToDate);
 			DP.Add("PageSize", PageSize);
@@ -70,10 +70,12 @@ namespace PAKNAPI.Models.Statistic
 		{
 		}
 
-		public async Task<List<StatisticRecommendationByUnitDetailGetAllOnPage>> StatisticRecommendationByUnitDetailGetAllOnPageDAO(int UnitId, string Code, string CreateName, string Title, int? Field, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		public async Task<List<StatisticRecommendationByUnitDetailGetAllOnPage>> StatisticRecommendationByUnitDetailGetAllOnPageDAO(int UnitId,int UnitProcessId , long UserProcessId, string Code, string CreateName, string Title, int? Field, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("UnitId", UnitId);
+			DP.Add("UnitProcessId", UnitProcessId);
+			DP.Add("UserProcessId", UserProcessId);
 			DP.Add("Code", Code);
 			DP.Add("CreateName", CreateName);
 			DP.Add("Title", Title);
@@ -115,12 +117,12 @@ namespace PAKNAPI.Models.Statistic
 
 		public int Finised { get; set; }
 
-		public async Task<List<StatisticRecommendationByFieldGetAllOnPage>> StatisticRecommendationByFieldGetAllOnPageDAO(string LtsUnitId, int? Year, int? Timeline, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		public async Task<List<StatisticRecommendationByFieldGetAllOnPage>> StatisticRecommendationByFieldGetAllOnPageDAO(string LtsUnitId, int UnitProcessId, long UserProcessId, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("LtsUnitId", LtsUnitId);
-			DP.Add("Year", Year);
-			DP.Add("Timeline", Timeline);
+			DP.Add("UnitProcessId", UnitProcessId);
+			DP.Add("UserProcessId", UserProcessId);
 			DP.Add("FromDate", FromDate);
 			DP.Add("ToDate", ToDate);
 			DP.Add("PageSize", PageSize);
@@ -150,10 +152,12 @@ namespace PAKNAPI.Models.Statistic
 		{
 		}
 
-		public async Task<List<StatisticRecommendationByFiledDetailGetAllOnPage>> StatisticRecommendationByFieldDetailGetAllOnPageDAO(int FiledId, string Code, string CreateName, string Title, string? LstUnitId, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		public async Task<List<StatisticRecommendationByFiledDetailGetAllOnPage>> StatisticRecommendationByFieldDetailGetAllOnPageDAO(int FiledId, int UnitProcessId, long UserProcessId, string Code, string CreateName, string Title, string? LstUnitId, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("LstUnitId", LstUnitId);
+			DP.Add("UnitProcessId", UnitProcessId);
+			DP.Add("UserProcessId", UserProcessId);
 			DP.Add("Code", Code);
 			DP.Add("CreateName", CreateName);
 			DP.Add("Title", Title);

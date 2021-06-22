@@ -408,3 +408,21 @@ div.bubble.reply {
 .height-auto {
 	height: auto !important;
 }
+
+/* //////// sub menu /////// */
+.nav-item:hover > ul.sub-nav{
+	display: block;
+}
+.sub-nav{
+	position: absolute;
+    /* margin: auto; */
+    width: 250px;
+		display: none;
+		margin-top: -0.25rem;
+}
+.sub-item:hover{
+	background-color:white;
+}
+.sub-item:hover a{
+	color:  #1455a0 !important;
+}

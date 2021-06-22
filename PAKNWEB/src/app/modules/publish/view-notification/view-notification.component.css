@@ -1,0 +1,28 @@
+.media-body a {
+	color: #3c3c3c;
+}
+
+.media-body small {
+	font-size: 17px;
+	line-height: 28px;
+}
+
+.createDate {
+	padding-left: 10px;
+	font-weight: bold;
+}
+.red-title {
+	color: #da2222;
+}
+.title-black {
+	color: #222222;
+}
+.title-gray {
+	color: gray;
+}
+.center{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}

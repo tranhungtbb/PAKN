@@ -12,6 +12,7 @@ import { CONSTANTS, STATUS_HISNEWS, FILETYPE } from 'src/app/constants/CONSTANTS
 import { COMMONS } from 'src/app/commons/commons'
 import { StatisticService } from 'src/app/services/statistic.service'
 import { UnitService } from 'src/app/services/unit.service'
+import { DataService } from 'src/app/services/sharedata.service'
 
 declare var $: any
 defineLocale('vi', viLocale)
@@ -55,7 +56,8 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private BsLocaleService: BsLocaleService,
 		private _service: StatisticService,
-		private unitService: UnitService
+		private unitService: UnitService,
+		private _shareData: DataService
 	) {
 		this.year = new Date().getFullYear()
 		this.listUnitSelected = []
@@ -182,4 +184,20 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 			this.getFormattedDate(this.toDate),
 		])
 	}
+
+	onExport() {
+		let passingObj: any = {}
+
+		// passingObj.PageIndex = this.pageIndex == null ? 1 : this.pageIndex
+		// passingObj.PageSize = this.pageSize == null ? 20 : this.pageSize
+		passingObj.TitleReport = 'Thống kê Phản ánh kiến nghị theo nhóm từ phản động'
+		passingObj.LstUnitId = this.listUnitSelected.toString();
+		passingObj.FromDate = this.fromDate == null ? '' : JSON.stringify(new Date(this.fromDate)).slice(1, 11)
+		passingObj.ToDate = this.toDate == null ? '' : JSON.stringify(new Date(this.toDate)).slice(1, 11)
+
+		this._shareData.setobjectsearch(passingObj)
+		this._shareData.sendReportUrl = 'phan-anh-kien-nghi-theo-nhom-tu-ngu?' + JSON.stringify(passingObj)
+		this.router.navigate(['quan-tri/xuat-file'])
+	}
+
 }

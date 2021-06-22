@@ -5,16 +5,15 @@ import { CONSTANTS, FILETYPE, MESSAGE_COMMON, RECOMMENDATION_STATUS, RESPONSE_ST
 import { RecommendationObject, RecommendationProcessObject } from 'src/app/models/recommendationObject'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
-import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { HashtagObject } from 'src/app/models/hashtagObject'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import { AppSettings } from 'src/app/constants/app-setting'
-import { Api } from 'src/app/constants/api'
 import { CaptchaService } from 'src/app/services/captcha-service'
 import { UserService } from 'src/app/services/user.service'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
+import { AuthenticationService } from 'src/app/services/authentication.service'
+import { DataService } from 'src/app/services/sharedata.service'
 declare var $: any
 @Component({
 	selector: 'app-my-recommendation',
@@ -43,12 +42,13 @@ export class MyRecommendationComponent implements OnInit {
 		private fileService: UploadFileService,
 		private recommendationService: RecommendationService,
 		private storageService: UserInfoStorageService,
-		private _serviceCatalog: CatalogService,
 		private router: Router,
 		private captchaService: CaptchaService,
 		private userService: UserService,
 		private puRecommendationService: PuRecommendationService,
-		private activatedRoute: ActivatedRoute
+		private activatedRoute: ActivatedRoute,
+		private authenService: AuthenticationService,
+		private sharedataService: DataService,
 	) {}
 
 	ngOnInit() {
@@ -81,6 +81,17 @@ export class MyRecommendationComponent implements OnInit {
 			var modelUser = res.result.SYUserGetByID[0]
 			if (modelUser && modelUser.phone) {
 				this.phone = modelUser.phone
+			}
+		})
+	}
+
+	mySignOut(): void {
+		this.authenService.logOut({}).subscribe((success) => {
+			if (success.success == RESPONSE_STATUS.success) {
+				this.sharedataService.setIsLogin(false)
+				this.storageService.setReturnUrl('')
+				this.storageService.clearStoreage()
+				this.router.navigate(['/dang-nhap'])
 			}
 		})
 	}

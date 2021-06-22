@@ -24,9 +24,7 @@ export class NotificationService {
 	getListNotificationOnPageByReceiveId(query: any): Observable<any> {
 		let tempheaders = new HttpHeaders({
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
-			macAddress: '',
-			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			macAddress: ''
 		})
 		const form = new FormData()
 		form.append('model', JSON.stringify(query))
@@ -36,6 +34,9 @@ export class NotificationService {
 			reportProgress: true,
 		}
 		return this.http.post(AppSettings.API_ADDRESS + Api.NotificationGetList, form, httpPackage)
+	}
+	getListNotificationGetById(query: any): Observable<any> {
+		return this.serviceInvoker.get(query,AppSettings.API_ADDRESS + Api.NotificationGetById)
 	}
 
 	updateIsViewedNotification(query: any): Observable<any> {

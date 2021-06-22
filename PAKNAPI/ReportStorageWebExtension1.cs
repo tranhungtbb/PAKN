@@ -223,14 +223,22 @@ namespace PAKNAPI
                     resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.Statistic_Recommendation_ByUnitDetail.repx");
                     result = XtraReport.FromStream(resource);
                     result.Parameters["TitleReport"].Value = paraExportRecomdationByUnitDetail.TitleReport;
+                    result.Parameters["Code"].Value = paraExportRecomdationByUnitDetail.Code;
+                    result.Parameters["CreateName"].Value = paraExportRecomdationByUnitDetail.CreateName;
+                    result.Parameters["TitleMR"].Value = paraExportRecomdationByUnitDetail.TitleMR;
+                    result.Parameters["Status"].Value = paraExportRecomdationByUnitDetail.Status;
+                    result.Parameters["Field"].Value = paraExportRecomdationByUnitDetail.Field;
                     result.Parameters["UnitId"].Value = paraExportRecomdationByUnitDetail.UnitId;
+                    result.Parameters["UnitProcessId"].Value = paraExportRecomdationByUnitDetail.UnitProcessId;
+                    result.Parameters["UserProcessId"].Value = paraExportRecomdationByUnitDetail.UserProcessId;
                     result.Parameters["FromDate"].Value = paraExportRecomdationByUnitDetail.FromDate;
                     result.Parameters["ToDate"].Value = paraExportRecomdationByUnitDetail.ToDate;
 
                     result.SaveLayoutToXml(ms);
                     if (ms != null)
                     {
-                        return ms.ToArray();
+                        var re = ms.ToArray();
+                        return re;
                     }
                     break;
                 case "recommendation_by_fields":
@@ -260,11 +268,35 @@ namespace PAKNAPI
                     resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.Statistic_Recommendation_ByFieldDetail.repx");
                     result = XtraReport.FromStream(resource);
                     result.Parameters["TitleReport"].Value = paraExportRecomdationByFieldDetail.TitleReport;
+                    result.Parameters["Code"].Value = paraExportRecomdationByFieldDetail.Code;
+                    result.Parameters["CreateName"].Value = paraExportRecomdationByFieldDetail.SendName;
+                    result.Parameters["TitleMR"].Value = paraExportRecomdationByFieldDetail.Title;
+                    result.Parameters["Status"].Value = paraExportRecomdationByFieldDetail.Status;
                     result.Parameters["LstUnitId"].Value = paraExportRecomdationByFieldDetail.LstUnitId;
+                    result.Parameters["UnitProcessId"].Value = paraExportRecomdationByFieldDetail.UnitProcessId;
+                    result.Parameters["UserProcessId"].Value = paraExportRecomdationByFieldDetail.UserProcessId;
                     result.Parameters["Field"].Value = paraExportRecomdationByFieldDetail.Field;
                     result.Parameters["FromDate"].Value = paraExportRecomdationByFieldDetail.FromDate;
                     result.Parameters["ToDate"].Value = paraExportRecomdationByFieldDetail.ToDate;
 
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        return ms.ToArray();
+                    }
+                    break;
+
+                case "phan-anh-kien-nghi-theo-nhom-tu-ngu":
+                    var queryParams = JsonConvert.DeserializeObject<ExportRecomdationByFieldDetail>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.recommendation_by_GroupWordExport.repx");
+                    result = XtraReport.FromStream(resource);
+                    result.Parameters["TitleReport"].Value = queryParams.TitleReport;
+                    result.Parameters["NgayThang"].Value = Dates;
+                    result.Parameters["HoTen"].Value = "";
+
+                    result.Parameters["LtsUnitId"].Value = queryParams.LstUnitId;
+                    result.Parameters["FromDate"].Value = queryParams.FromDate;
+                    result.Parameters["ToDate"].Value = queryParams.ToDate;
                     result.SaveLayoutToXml(ms);
                     if (ms != null)
                     {

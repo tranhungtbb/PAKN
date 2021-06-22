@@ -46,9 +46,14 @@ namespace PAKNAPI.ExportGrid {
             this.LstUnitId = reportInitializer.GetParameter("LstUnitId");
             this.TitleReport = reportInitializer.GetParameter("TitleReport");
             this.Field = reportInitializer.GetParameter("Field");
+            this.Code = reportInitializer.GetParameter("Code");
+            this.UnitProcessId = reportInitializer.GetParameter("UnitProcessId");
+            this.UserProcessId = reportInitializer.GetParameter("UserProcessId");
+            this.CreateName = reportInitializer.GetParameter("CreateName");
+            this.TitleMR = reportInitializer.GetParameter("TitleMR");
+            this.Status = reportInitializer.GetParameter("Status");
 
             // Data Sources
-            this.sqlDataSource2 = reportInitializer.GetDataSource<DevExpress.DataAccess.Sql.SqlDataSource>("sqlDataSource2");
             this.sqlDataSource1 = reportInitializer.GetDataSource<DevExpress.DataAccess.Sql.SqlDataSource>("sqlDataSource1");
 
             // Styles
@@ -83,7 +88,7 @@ namespace PAKNAPI.ExportGrid {
         private DevExpress.XtraReports.UI.XRTableCell tableCell18;
         private DevExpress.XtraReports.UI.XRTableCell tableCell7;
         private DevExpress.XtraReports.UI.XRTableCell tableCell5;
-        private DevExpress.DataAccess.Sql.SqlDataSource sqlDataSource2;
+        private DevExpress.DataAccess.Sql.SqlDataSource sqlDataSource1;
         private DevExpress.XtraReports.UI.XRControlStyle Title;
         private DevExpress.XtraReports.UI.XRControlStyle DetailCaption3;
         private DevExpress.XtraReports.UI.XRControlStyle DetailData3;
@@ -95,6 +100,11 @@ namespace PAKNAPI.ExportGrid {
         private DevExpress.XtraReports.Parameters.Parameter LstUnitId;
         private DevExpress.XtraReports.Parameters.Parameter TitleReport;
         private DevExpress.XtraReports.Parameters.Parameter Field;
-        private DevExpress.DataAccess.Sql.SqlDataSource sqlDataSource1;
+        private DevExpress.XtraReports.Parameters.Parameter Code;
+        private DevExpress.XtraReports.Parameters.Parameter UnitProcessId;
+        private DevExpress.XtraReports.Parameters.Parameter UserProcessId;
+        private DevExpress.XtraReports.Parameters.Parameter CreateName;
+        private DevExpress.XtraReports.Parameters.Parameter TitleMR;
+        private DevExpress.XtraReports.Parameters.Parameter Status;
     }
 }

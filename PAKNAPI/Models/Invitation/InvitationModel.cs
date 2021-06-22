@@ -31,6 +31,16 @@ namespace PAKNAPI.Models.Invitation
         public List<INVInvitationUserMapGetByInvitationId> InvitationUserMap { get; set; }
     }
 
+    public class INVInvitationDetailModel
+    {
+        public INVInvitationDetail Model { get; set; }
+
+
+        public List<INVFileAttachGetAllByInvitationId> INVFileAttach { get; set; }
+
+        public string SenderName { get; set; }
+    }
+
     public class InvitationFileAttach{
 
         public int Id { get; set; }

@@ -130,8 +130,42 @@ namespace PAKNAPI.Models.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_NotificationUpdateIsReaded", DP));
 		}
+	}
 
+	public class SYNotificationGetById
+	{
+		private SQLCon _sQLCon;
 
+		public SYNotificationGetById(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
 
+		public SYNotificationGetById()
+		{
+		}
+
+		public int Id { get; set; }
+		public int? ReceiveId { get; set; }
+		public int? SenderId { get; set; }
+
+		public string SenderName { get; set; }
+		public int? ReceiveOrgId { get; set; }
+		public int? DataId { get; set; }
+		public DateTime SendDate { get; set; }
+
+		public int Type { get; set; }
+		public int TypeSend { get; set; }
+		public string Title { get; set; }
+		public string Content { get; set; }
+		public DateTime WatchedDate { get; set; }
+
+		public async Task<List<SYNotificationGetById>> SYNotificationGetByIdDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYNotificationGetById>("SY_NotificationGetById", DP)).ToList();
+		}
 	}
 }

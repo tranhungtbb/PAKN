@@ -10,6 +10,9 @@ import { ChatbotService } from 'src/app/services/chatbot.service'
 import { IndexSettingService } from 'src/app/services/index-setting.service'
 import { IndexSettingObjet, IndexBanner, IndexWebsite } from 'src/app/models/indexSettingObject'
 
+
+declare var $:any
+
 @Component({
 	selector: 'app-publish',
 	templateUrl: './publish.component.html',
@@ -30,13 +33,15 @@ export class PublishComponent implements OnInit, OnChanges {
 	isHasToken: boolean = this.storageService.getIsHaveToken()
 	typeUserLoginPublish: number = this.storageService.getTypeObject()
 	currentFullnName: string = this.storageService.getFullName()
-	numberNotifications: any = 5
+	numberNotifications: any = 7
 	notifications: any[]
 	ViewedCount: number = 0
 	index: number = 0
 	routerHome = 'trang-chu'
 	isLogin: boolean = this.storageService.getIsHaveToken()
 	indexSettingObj: any = new IndexSettingObjet()
+
+	subMenu:any[]=[]
 
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
@@ -65,6 +70,14 @@ export class PublishComponent implements OnInit, OnChanges {
 				console.log(error)
 				alert(error)
 			}
+		
+			this.subMenu = [
+				{path:[''],text:'Phản ánh- kiến nghị đã trả lời'},
+				{path:[''],text:'Tích hợp dữ liệu Cổng thông tin điện tử tỉnh Khánh Hoà'},
+				{path:[''],text:'Tích hợp dữ liệu Cổng thông tin dịch vụ hành chính công trực tuyến tỉnh Khánh Hoà'},
+				{path:[''],text:'Tích hợp dữ liệu Hệ thống quản lý kiến nghị cử tri tỉnh Khánh Hoà'},
+				{path:[''],text:'Tích hợp dữ liệu Hệ thống tiếp nhận, trả lời phản ánh, kiến nghị của người dân của Chính phủ'}
+			]
 	}
 
 	getListNotification(PageSize: any) {
@@ -123,22 +136,23 @@ export class PublishComponent implements OnInit, OnChanges {
 			}
 		})
 	}
-	onClickNotification(id: number, type: number, typeSend: number) {
-		if (type == TYPE_NOTIFICATION.NEWS) {
-			this.updateIsReadNotification(id)
-			this._router.navigate(['/tin-tuc-su-kien/' + id])
-		} else if(type == TYPE_NOTIFICATION.RECOMMENDATION){
-			if (typeSend == RECOMMENDATION_STATUS.FINISED) {
-				this.updateIsReadNotification(id)
-				this._router.navigate(['/cong-bo/phan-anh-kien-nghi/' + id])
-			} else {
-				this.updateIsReadNotification(id)
-				this._router.navigate(['/cong-bo/chi-tiet-kien-nghi/' + id])
-			}
-		}else if (type == TYPE_NOTIFICATION.INVITATION) { // Thư mời
-			this.updateIsReadNotification(id)
-			this._router.navigate(['/quan-tri/thu-moi/chi-tiet/' + id])
-		}
+	onClickNotification(id: number) {
+		this._router.navigate(['/cong-bo/thong-bao/' + id])
+		// if (type == TYPE_NOTIFICATION.NEWS) {
+		// 	this.updateIsReadNotification(id)
+		// 	this._router.navigate(['cong-bo/tin-tuc-su-kien/' + id])
+		// } else if(type == TYPE_NOTIFICATION.RECOMMENDATION){
+		// 	if (typeSend == RECOMMENDATION_STATUS.FINISED) {
+		// 		this.updateIsReadNotification(id)
+		// 		this._router.navigate(['/cong-bo/phan-anh-kien-nghi/' + id])
+		// 	} else {
+		// 		this.updateIsReadNotification(id)
+		// 		this._router.navigate(['/cong-bo/chi-tiet-kien-nghi/' + id])
+		// 	}
+		// }else if (type == TYPE_NOTIFICATION.INVITATION) { // Thư mời
+		// 	this.updateIsReadNotification(id)
+		// 	this._router.navigate(['/quan-tri/thu-moi/chi-tiet/' + id])
+		// }
 	}
 
 	updateIsReadNotification(dataId: any) {

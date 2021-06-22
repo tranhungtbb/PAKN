@@ -151,7 +151,13 @@ export class RecommendationsByFieldDetailComponent implements OnInit {
 	onExport() {
 		let passingObj: any = {}
 		passingObj.TitleReport = "THỐNG KÊ PHẢN ẢNH KIẾN NGHỊ LĨNH VỰC " + this.fieldName.toUpperCase()
-		passingObj.LstUnitId = this.dataSearch.lstUnitId
+		passingObj.Code = this.dataSearch.code == '' ? null : this.dataSearch.code 
+		passingObj.SendName = this.dataSearch.sendName =='' ? null : this.dataSearch.sendName
+		passingObj.Title = this.dataSearch.title == '' ? null : this.dataSearch.title
+		passingObj.UnitProcessId = this.storeageService.getUnitId()
+		passingObj.UserProcessId = this.storeageService.getUserId()
+		passingObj.Status = this.dataSearch.status 
+		passingObj.LstUnitId = this.dataSearch.lstUnitId == null ? '' : this.dataSearch.lstUnitId
 		passingObj.Field = this.dataSearch.fieldId
 		passingObj.FromDate = this.fromDate == null ? '' : this.fromDate
 		passingObj.ToDate = this.toDate == null ? '' : this.toDate

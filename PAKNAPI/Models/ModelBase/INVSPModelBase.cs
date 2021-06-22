@@ -334,6 +334,7 @@ namespace PAKNAPI.ModelBase
 		public string Note { get; set; }
 		public DateTime CreateDate { get; set; }
 		public int UserCreateId { get; set; }
+		public int? UserUpdate { get; set; }
 		public DateTime? SendDate { get; set; }
 		public byte Status { get; set; }
 		public long IsView { get; set; }
@@ -345,6 +346,43 @@ namespace PAKNAPI.ModelBase
 			DP.Add("id", id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<INVInvitationGetById>("INV_InvitationGetById", DP)).ToList();
+		}
+	}
+
+	public class INVInvitationDetail
+	{
+		private SQLCon _sQLCon;
+
+		public INVInvitationDetail(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public INVInvitationDetail()
+		{
+		}
+
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public DateTime StartDate { get; set; }
+		public DateTime EndDate { get; set; }
+		public string Content { get; set; }
+		public string Place { get; set; }
+		public string Note { get; set; }
+		public DateTime CreateDate { get; set; }
+		public int UserCreateId { get; set; }
+		public int? UserUpdate { get; set; }
+		public DateTime? SendDate { get; set; }
+		public byte Status { get; set; }
+
+		public string EmailReceive { get; set; }
+
+		public async Task<List<INVInvitationDetail>> INVInvitationDetailDAO(int? id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("id", id);
+
+			return (await _sQLCon.ExecuteListDapperAsync<INVInvitationDetail>("INV_InvitationDetail", DP)).ToList();
 		}
 	}
 
@@ -384,8 +422,8 @@ namespace PAKNAPI.ModelBase
 	public class INVInvitationInsertIN
 	{
 		public string Title { get; set; }
-		public DateTime? StartDate { get; set; }
-		public DateTime? EndDate { get; set; }
+		public DateTime StartDate { get; set; }
+		public DateTime EndDate { get; set; }
 		public string Content { get; set; }
 		public string Place { get; set; }
 		public string Note { get; set; }
