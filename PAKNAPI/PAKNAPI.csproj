@@ -14,13 +14,13 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="bin\Release\netcoreapp3.1\netcoreapp3.1\**" />
+    <Compile Remove="bin\**" />
     <Compile Remove="Upload\**" />
-    <Content Remove="bin\Release\netcoreapp3.1\netcoreapp3.1\**" />
+    <Content Remove="bin\**" />
     <Content Remove="Upload\**" />
-    <EmbeddedResource Remove="bin\Release\netcoreapp3.1\netcoreapp3.1\**" />
+    <EmbeddedResource Remove="bin\**" />
     <EmbeddedResource Remove="Upload\**" />
-    <None Remove="bin\Release\netcoreapp3.1\netcoreapp3.1\**" />
+    <None Remove="bin\**" />
     <None Remove="Upload\**" />
   </ItemGroup>
   <ItemGroup>
@@ -51,8 +51,6 @@
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\Debug\netcoreapp3.1\" />
-    <Folder Include="bin\Release\netcoreapp3.1\" />
     <Folder Include="DataBaseAuto\" />
     <Folder Include="Models\Results\" />
     <Folder Include="BusinessLogic\" />

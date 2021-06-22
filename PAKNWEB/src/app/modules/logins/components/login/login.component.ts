@@ -11,6 +11,7 @@ import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { AppSettings } from 'src/app/constants/app-setting'
 import { Api } from 'src/app/constants/api'
 import { CaptchaService } from 'src/app/services/captcha-service'
+import {Parterms} from 'src/app/constants/parterm'
 
 declare var $: any
 
@@ -60,7 +61,7 @@ export class LoginComponent implements OnInit {
 		private shareData: DataService
 	) {
 		this.loginForm = new FormGroup({
-			name: new FormControl(this.user.UserName, [Validators.required]),
+			name: new FormControl(this.user.UserName, [Validators.email]),
 			pass: new FormControl(this.user.Password, [Validators.required]),
 			captcha: new FormControl(this.captchaCode, [Validators.required]),
 			isRemember: new FormControl(this.isSaveLogin, []),
@@ -93,11 +94,29 @@ export class LoginComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.submitted = false
+		this.submittedProduct = false
 		this.reloadImage()
 	}
 
 	get floginForm() {
 		return this.loginForm.controls
+	}
+
+	rebuildFormProduct(){
+		this.loginFormProduct.reset({
+			name: this.userProduct.UserName,
+			pass: this.userProduct.Password,
+			captcha: this.captchaCodeProduct,
+			isRemember: this.isSaveLogin
+		})
+	}
+	rebuildForm(){
+		this.loginForm.reset({
+			name: this.user.UserName,
+			pass: this.user.Password,
+			captcha: this.captchaCode,
+			isRemember: this.isSaveLogin
+		})
 	}
 
 	login() {
@@ -127,6 +146,8 @@ export class LoginComponent implements OnInit {
 								if (data.isActive == false) {
 									this.reloadImage()
 									this.captchaCodeProduct = ''
+									this.submitted = false
+									this.rebuildForm()
 									this.toastr.error('Tài khoản của bạn đang hết hiệu lực')
 									return
 								}
@@ -168,18 +189,23 @@ export class LoginComponent implements OnInit {
 								this.toastr.error(data.message, 'Tên tài khoản hoặc mật khẩu không chính xác')
 								this.reloadImage()
 								this.captchaCode = ''
+								this.submitted = false
+								this.rebuildForm()
 							}
 						},
 						(error) => {
 							console.error(error)
 							this.reloadImage()
 							this.captchaCode = ''
+							this.submitted = false
+							this.rebuildForm()
 						}
 					)
 				} else {
-					this.toastr.warning('Vui lòng nhập lại mã captcha')
+					this.toastr.error('Vui lòng nhập lại mã xác thực')
 					this.reloadImage()
-
+					this.submitted = false
+					this.rebuildForm()
 					this.captchaCode = ''
 					//   this.captchaEl.nativeElement.focus();
 				}
@@ -212,9 +238,12 @@ export class LoginComponent implements OnInit {
 					this.authenService.login(this.userProduct).subscribe(
 						(data) => {
 							if (data.success === RESPONSE_STATUS.success) {
+								debugger
 								if (data.isActive == false) {
 									this.reloadImage()
 									this.captchaCodeProduct = ''
+									this.submittedProduct = false
+									this.rebuildFormProduct()
 									this.toastr.error('Tài khoản của bạn đang hết hiệu lực')
 									return
 								}
@@ -244,27 +273,36 @@ export class LoginComponent implements OnInit {
 								}
 								//this._router.navigate(['/quan-tri'])
 								if (data.typeObject && data.typeObject == 1) {
+									this.submittedProduct = false
+									this.reloadImage()
+									this.captchaCodeProduct = ''
+									this.rebuildFormProduct()
 									this.toastr.error(data.message, 'Tài khoản cán bộ quản lý không thể đăng nhập hệ thống dành cho cá nhân, doanh nghiệp')
 									localStorage.clear()
+
 								} else {
 									location.href = '/cong-bo'
 								}
 							} else if (data.success === RESPONSE_STATUS.incorrect) {
 								this.reloadImage()
 								this.captchaCodeProduct = ''
+								this.submittedProduct = false
+								this.rebuildFormProduct()
 								this.toastr.error(data.message, 'Tên tài khoản hoặc mật khẩu không chính xác')
 							}
 						},
 						(error) => {
 							console.error(error)
 							this.reloadImage()
+							this.submittedProduct = false
+							this.rebuildFormProduct()
 							this.captchaCodeProduct = ''
 						}
 					)
 				} else {
-					this.toastr.error('Vui lòng nhập lại mã captcha')
+					this.toastr.error('Vui lòng nhập lại mã xác thực')
 					this.reloadImage()
-
+					this.submittedProduct = false
 					this.captchaCodeProduct = ''
 					//   this.captchaEl.nativeElement.focus();
 				}
