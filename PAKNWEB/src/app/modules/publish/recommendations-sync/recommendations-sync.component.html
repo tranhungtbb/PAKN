@@ -71,7 +71,7 @@
 							</p>
 							<a *ngIf="query.pageIndex < pagination.length -4">...</a>
 						</li>
-						<li class="page-item" [ngClass]="{ 'disabled': query.pageIndex === Total }">
+						<li class="page-item" [ngClass]="{ 'disabled': query.pageIndex === total }">
 							<a (click)="changePagination(query.pageIndex + 1)" class="page-link border text-uppercase rounded-pill" href="javascript:void(0)">Sau<i
 									class="bi bi-chevron-right ml-2"></i></a>
 						</li>

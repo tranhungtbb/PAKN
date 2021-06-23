@@ -203,7 +203,8 @@ namespace PAKNAPI.ControllerBase
 		{
 			try
 			{
-				List<INVInvitationGetAllOnPage> rsINVInvitationGetAllOnPage = await new INVInvitationGetAllOnPage(_appSetting).INVInvitationGetAllOnPageDAO(PageSize, PageIndex, Title, StartDate, EndDate, Place, Status);
+				long UserProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				List<INVInvitationGetAllOnPage> rsINVInvitationGetAllOnPage = await new INVInvitationGetAllOnPage(_appSetting).INVInvitationGetAllOnPageDAO(PageSize, PageIndex, Title, StartDate, EndDate, Place, Status, UserProcessId);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"INVInvitationGetAllOnPage", rsINVInvitationGetAllOnPage},
