@@ -131,8 +131,18 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 	}
 
 	getList() {
+		if (this.listUnitSelected != null && this.listUnitSelected.length > 0) {
+			this.ltsUnitId = this.listUnitSelected.reduce((x, y) => {
+				return (x += y.unitId + ',')
+			}, '')
+		} else {
+			if(! this.ltsUnitIdAll){
+				return
+			}
+			this.ltsUnitId = this.ltsUnitIdAll
+		}
 		let obj = {
-			LtsUnitId: this.listUnitSelected.join(','),
+			LtsUnitId: this.ltsUnitId,
 			FromDate: this.fromDate == null ? '' : this.getFormattedDate(this.fromDate),
 			ToDate: this.toDate == null ? '' : this.getFormattedDate(this.toDate),
 		}

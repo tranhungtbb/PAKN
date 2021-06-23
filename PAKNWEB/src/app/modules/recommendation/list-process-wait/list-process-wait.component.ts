@@ -55,6 +55,7 @@ export class ListProcessWaitComponent implements OnInit {
 	idDelete: number = 0
 	lstGroupWord: any = []
 	lstGroupWordSelected: any = []
+	titleAccept : any = ''
 	ngOnInit() {
 		this.dataSearch.status = RECOMMENDATION_STATUS.PROCESS_WAIT
 		this.getDataForCreate()
@@ -181,6 +182,7 @@ export class ListProcessWaitComponent implements OnInit {
 				$('#modalReject').modal('show')
 			}
 		} else if (status == PROCESS_STATUS_RECOMMENDATION.APPROVED) {
+			this.titleAccept = 'Anh/Chị có chắc chắn muốn giải quyết PAKN này?'
 			$('#modalAccept').modal('show')
 		} else if (status == PROCESS_STATUS_RECOMMENDATION.FORWARD) {
 			this.contentForward = ''
