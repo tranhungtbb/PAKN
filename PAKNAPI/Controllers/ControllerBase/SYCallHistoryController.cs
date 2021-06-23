@@ -49,5 +49,26 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		[HttpGet]
+		[Route("Delete")]
+		[Authorize]
+		public async Task<ActionResult<object>> Delete(long id)
+		{
+			try
+			{
+				var a =  await new SYCallHistoryPagedList(_appSetting).Delete(id);
+				
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				return new ResultApi { Success = ResultCode.OK, Result = null };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 	}
 }
