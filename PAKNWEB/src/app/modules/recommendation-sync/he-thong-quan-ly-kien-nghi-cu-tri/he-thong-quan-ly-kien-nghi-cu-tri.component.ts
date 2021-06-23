@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {RecommandationSyncService} from 'src/app/services/recommandation-sync.service'
 
+declare var $:any
 @Component({
   selector: 'app-he-thong-quan-ly-kien-nghi-cu-tri',
   templateUrl: './he-thong-quan-ly-kien-nghi-cu-tri.component.html',
@@ -36,7 +37,6 @@ export class HeThongQuanLyKienNghiCuTriComponent implements OnInit {
   dataStateChange (){
     this.getData();
   }
-  getDetail(item:any){}
 
   reSync(){
     //TODO
@@ -60,6 +60,13 @@ export class HeThongQuanLyKienNghiCuTriComponent implements OnInit {
           this.totalRecords = this.listData[0].rowNumber;
       }
     })
+  }
+
+  ///view detail
+  modelView:any={}
+  getDetail(item:any){
+    this.modelView = item
+    $('#modalDetail').modal('show')
   }
 
 }

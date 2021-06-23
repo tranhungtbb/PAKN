@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {RecommandationSyncService} from 'src/app/services/recommandation-sync.service'
 
+declare var $:any
 @Component({
   selector: 'app-he-thong-pakn-chinh-phu',
   templateUrl: './he-thong-pakn-chinh-phu.component.html',
@@ -36,7 +37,6 @@ export class HeThongPaknChinhPhuComponent implements OnInit {
   dataStateChange (){
     this.getData();
   }
-  getDetail(item:any){}
 
   reSync(){
     //TODO
@@ -63,4 +63,10 @@ export class HeThongPaknChinhPhuComponent implements OnInit {
     })
   }
 
+  ///view detail
+  modelView:any={}
+  getDetail(item:any){
+    this.modelView = item
+    $('#modalDetail').modal('show')
+  }
 }

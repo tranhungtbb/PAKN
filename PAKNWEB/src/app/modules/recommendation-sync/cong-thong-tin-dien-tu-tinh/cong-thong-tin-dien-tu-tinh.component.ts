@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import {RecommandationSyncService} from 'src/app/services/recommandation-sync.service'
 
+declare var $ :any
 @Component({
   selector: 'app-cong-thong-tin-dien-tu-tinh',
   templateUrl: './cong-thong-tin-dien-tu-tinh.component.html',
@@ -37,11 +38,6 @@ export class CongThongTinDienTuTinhComponent implements OnInit {
     this.getData();
   }
 
-  modelView:any={}
-  getDetail(item:any){
-    this.modelView = item
-  }
-
   reSync(){
     //TODO
     this.getData();
@@ -56,6 +52,13 @@ export class CongThongTinDienTuTinhComponent implements OnInit {
         this.totalRecords = this.listData[0].rowNumber;
       }
     })
+  }
+
+  ///view detail
+  modelView:any={}
+  getDetail(item:any){
+    this.modelView = item
+    $('#modalDetail').modal('show')
   }
 
 }

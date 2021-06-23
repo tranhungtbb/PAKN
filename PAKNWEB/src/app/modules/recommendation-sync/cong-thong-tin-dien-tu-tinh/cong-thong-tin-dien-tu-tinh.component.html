@@ -82,7 +82,7 @@
 	</div>
 </div>
 
-<!-- <div class="modal fade" id="modalDetail">
+<div class="modal fade" id="modalDetail">
 	<div class="modal-dialog modal-dialog-centered" style="max-width: 70%" role="document">
 		<div class="modal-content rounded">
 			<form class="form-horizontal">
@@ -91,7 +91,7 @@
 						<button class="close btn-close-modal" data-dismiss="modal">
 							×
 						</button>
-						<p class="modal-title h3">{{modelView}}</p>
+						<p class="modal-title h3">Chi tiết</p>
 					</div>
 					<div class="modal-body no-padding-bottom pt-0">
 						<div class="box" *ngIf="!modelView" style="text-align: center;">
@@ -99,15 +99,15 @@
 						</div>
 						<div class="box" *ngIf="modelView">
 							<p class="card-text h3 mb-3"><span style="font-weight: 300;">Kiến nghị về việc : </span>
-								{{modelView}}
+								{{modelView.question}}
 							</p>
 							<div class="py-2 mb-4 d-flex justify-content-between align-items-center border-bottom border-top">
 								<div class="media align-items-center">
 									<div class="avatar-circle mr-2" style="background: #EBF2FF; color: #5D90F1">
-										{{modelView.shortName}}
+										<!-- {{modelView.shortName}} -->
 									</div>
 									<div class="media-body">
-										<p class="my-0 h5">{{modelView.createdBy}}</p>
+										<p class="my-0 h5">{{modelView.questioner}}</p>
 									</div>
 								</div>
 								
@@ -124,7 +124,7 @@
 								</div>
 								<div class="media-body">
 									<p class="h4 font-italic font-weight-bold">Nội dung kiến nghị:</p>
-									<div innerHTML="{{modelView.content | Change}}" style="text-align: justify;"></div>
+									<div innerHTML="{{modelView.questionContent}}" style="text-align: justify;"></div>
 								</div>
 							</div>
 							<div class="media pb-4 mb-4">
@@ -135,7 +135,7 @@
 									</svg>
 								</div>
 								<div class="media-body">
-									<div innerHTML="{{modelView.reply | Change}}" style="text-align: justify;"></div>
+									<div innerHTML="{{modelView.reply}}" style="text-align: justify;"></div>
 								</div>
 							</div>
 						</div>
@@ -144,4 +144,4 @@
 			</form>
 		</div>
 	</div>
-</div> -->
+</div>
