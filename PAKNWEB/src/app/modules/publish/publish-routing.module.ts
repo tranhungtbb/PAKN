@@ -15,6 +15,8 @@ import { MyRecommendationComponent } from './my-recommendation/my-recommendation
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
 import { ViewAdministrativeProceduresComponent } from './view-administrative-procedures/view-administrative-procedures.component'
 import  {ViewNotificationComponent} from './view-notification/view-notification.component'
+import { RecommendationsSyncComponent } from './recommendations-sync/recommendations-sync.component'
+import { ViewRecommendationsSyncComponent } from './view-recommendations-sync/view-recommendations-sync.component'
 
 const routes: Routes = [
 	{
@@ -77,6 +79,26 @@ const routes: Routes = [
 			{
 				path: 'phan-anh-kien-nghi/:id',
 				component: ViewReflectionsRecommendationComponent,
+			},
+			{
+				path: 'phan-anh-kien-nghi/sync/cong-ttdt-tinh-khanh-hoa',
+				component: RecommendationsSyncComponent,
+			},
+			{
+				path: 'phan-anh-kien-nghi/sync/cong-dv-hcc-tinh-khoanh-hoa',
+				component: RecommendationsSyncComponent,
+			},
+			{
+				path: 'phan-anh-kien-nghi/sync/he-thong-cu-tri-khanh-hoa',
+				component: RecommendationsSyncComponent,
+			},
+			{
+				path: 'phan-anh-kien-nghi/sync/he-thong-pakn-quoc-gia',
+				component: RecommendationsSyncComponent,
+			},
+			{
+				path: 'phan-anh-kien-nghi/sync/:type/:id',
+				component: ViewRecommendationsSyncComponent,
 			},
 			// {
 			// 	path: 'ho-tro/:type',

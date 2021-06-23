@@ -26,6 +26,8 @@ export class CongThongTinDvHccComponent implements OnInit {
 
   totalRecords=0
 
+  modelView:any
+
   //event
   onPageChange(event:any){
     this.query.pageSize = event.rows
@@ -42,8 +44,10 @@ export class CongThongTinDvHccComponent implements OnInit {
     this.getData();
   }
   getData(){
+    this.query.questioner = this.query.questioner.trim();
+    this.query.question = this.query.question.trim();
     let query = {...this.query}
-    this._RecommandationSyncService.getCongThongTinDienTuTinhPagedList(query).subscribe(res=>{
+    this._RecommandationSyncService.getDichVuHCCPagedList(query).subscribe(res=>{
       if(res){
         this.listData = res.result.Data.map(c=>{
           if(c.questioner)

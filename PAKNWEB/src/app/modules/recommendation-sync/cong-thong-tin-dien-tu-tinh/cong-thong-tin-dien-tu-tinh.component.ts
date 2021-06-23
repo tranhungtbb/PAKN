@@ -36,24 +36,24 @@ export class CongThongTinDienTuTinhComponent implements OnInit {
   dataStateChange (){
     this.getData();
   }
-  getDetail(item:any){}
+
+  modelView:any={}
+  getDetail(item:any){
+    this.modelView = item
+  }
 
   reSync(){
     //TODO
     this.getData();
   }
   getData(){
+    this.query.questioner = this.query.questioner.trim();
+    this.query.question = this.query.question.trim();
     let query = {...this.query}
     this._RecommandationSyncService.getCongThongTinDienTuTinhPagedList(query).subscribe(res=>{
       if(res){
-        this.listData = res.result.Data.map(c=>{
-          if(c.questioner)
-            c.questioner = c.questioner.substr(0,c.questioner.length-1)
-          return c;
-        })
-
-        if(this.listData[0])
-          this.totalRecords = this.listData[0].rowNumber;
+        this.listData = res.result.Data;
+        this.totalRecords = this.listData[0].rowNumber;
       }
     })
   }

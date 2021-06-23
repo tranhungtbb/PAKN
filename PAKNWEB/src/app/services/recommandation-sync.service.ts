@@ -13,4 +13,22 @@ export class RecommandationSyncService {
 	getCongThongTinDienTuTinhPagedList(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.MrSyncCongThongTinDienTuTinhPagedList)
 	}
+	getDichVuHCCPagedList(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.MrSyncCongThongTinDichVuHCCPagedList)
+	}
+	getHeThongPANKChinhPhuPagedList(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.MrSyncHeThongPANKChinhPhuPagedList)
+	}
+	getHeThongQuanLyKienNghiCuTriPagedList(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.MrSyncHeThongQuanLyKienNghiCuTriPagedList)
+	}
+
+	getAllPagedList(query:any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PU_RecommandationSyncPagedList)
+	}
+
+	getDetail(query:any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PU_RecommandationSyncGetDetail)
+	}
+	
 }

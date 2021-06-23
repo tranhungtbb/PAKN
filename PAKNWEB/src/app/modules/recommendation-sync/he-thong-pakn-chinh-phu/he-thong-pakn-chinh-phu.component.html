@@ -33,7 +33,7 @@
 											<strong>Người gửi</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="query.questioner" maxlength="100" (keydown.enter)="dataStateChange()"
+										<input class="form-control form-control-sm" [(ngModel)]="query.createdby" maxlength="100" (keydown.enter)="dataStateChange()"
 											placeholder="Nhập..." />
 									</th>
 
@@ -42,8 +42,14 @@
 											<strong>Tiêu đề</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="query.question" maxlength="100" (keydown.enter)="dataStateChange()"
+										<input class="form-control form-control-sm" [(ngModel)]="query.title" maxlength="100" (keydown.enter)="dataStateChange()"
 											  placeholder="Nhập..." />
+									</th>
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Trạng thái</strong>
+											<span class="caret-tb"></span>
+										</p>
 									</th>
 
 									<th style="width: 200px;">
@@ -59,13 +65,13 @@
 								<tr>
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
-										<strong class="highlight" style="cursor: pointer;"><a class="ellipsis" (click)="getDetail(item.id)">{{item.questioner}}</a></strong>
+										<strong class="highlight" style="cursor: pointer;"><a class="ellipsis" (click)="getDetail(item.id)">{{item.createdBy}}</a></strong>
 									</td>
 									<td>
-										<p class="mb-0 text-2line" title="{{item.unitName}}">{{item.question}}</p>
+										<p class="mb-0 text-2line" title="{{item.unitName}}">{{item.title}}</p>
 									</td>
+									<td>{{item.status}}</td>
 									<td>{{item.createdDate}}</td>
-									
 									<!-- <td style="text-align: center;"></td> -->
 								</tr>
 							</ng-template>

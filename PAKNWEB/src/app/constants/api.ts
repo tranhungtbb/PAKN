@@ -356,7 +356,11 @@ export class Api {
 
 	// đồng bộ
 	public static MrSyncCongThongTinDienTuTinhPagedList = 'RecommandationSync/CongThongTinDienTuTinhPagedList'
-	public static MrSyncCongThongTinDichVuHCCPagedList = 'RecommandationSync/CongThongTinDienTuTinhPagedList'
-	public static MrSyncHeThongPANKChinhPhuPagedList = 'RecommandationSync/CongThongTinDienTuTinhPagedList'
-	public static MrSyncHeThongQuanLyKienNghiCuTriPagedList = 'RecommandationSync/CongThongTinDienTuTinhPagedList'
+	public static MrSyncCongThongTinDichVuHCCPagedList = 'RecommandationSync/CongThongTinDichVuHCCPagedList'
+	public static MrSyncHeThongPANKChinhPhuPagedList = 'RecommandationSync/HeThongPANKChinhPhuPagedList'
+	public static MrSyncHeThongQuanLyKienNghiCuTriPagedList = 'RecommandationSync/HeThongQuanLyKienNghiCuTriPagedList'
+	public static PU_RecommandationSyncPagedList = 'RecommandationSync/PUGetPagedList'
+	public static PU_RecommandationSyncGetDetail = 'RecommandationSync/PUGetGetById'
+
+	
 }

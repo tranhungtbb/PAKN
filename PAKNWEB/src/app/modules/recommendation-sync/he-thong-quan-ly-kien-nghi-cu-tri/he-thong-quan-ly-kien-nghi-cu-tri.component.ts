@@ -18,8 +18,9 @@ export class HeThongQuanLyKienNghiCuTriComponent implements OnInit {
   listData:any[] = []
 
   query={
-    questioner:'',
-    question:'',
+    content:'',
+    fields:'',
+    status:'',
     pageIndex:1,
     pageSize:20
   }
@@ -42,8 +43,12 @@ export class HeThongQuanLyKienNghiCuTriComponent implements OnInit {
     this.getData();
   }
   getData(){
+    this.query.content = this.query.content.trim();
+    this.query.fields = this.query.fields.trim();
+    this.query.status = this.query.status.trim();
+
     let query = {...this.query}
-    this._RecommandationSyncService.getCongThongTinDienTuTinhPagedList(query).subscribe(res=>{
+    this._RecommandationSyncService.getHeThongQuanLyKienNghiCuTriPagedList(query).subscribe(res=>{
       if(res){
         this.listData = res.result.Data.map(c=>{
           if(c.questioner)
