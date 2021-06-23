@@ -26,6 +26,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http.Features;
 using System.Globalization;
 using System.Collections.Generic;
+using PAKNAPI.Services.EmailService;
 
 namespace PAKNAPI
 {
@@ -84,8 +85,10 @@ namespace PAKNAPI
 			services.AddHttpContextAccessor();
 			services.AddTransient<IAppSetting, AppSetting>();
 			services.AddTransient<IFileService, FileService>();
-
+			services.AddTransient<IMailService, MailService>();
 			services.AddDevExpressControls();
+
+			//services.Configure<MailSettings>();
 
 			//services.Configure<CsSetting>(Configuration.GetSection("Default"));
 
@@ -213,4 +216,7 @@ namespace PAKNAPI
 			});
 		}
 	}
+
+
+
 }

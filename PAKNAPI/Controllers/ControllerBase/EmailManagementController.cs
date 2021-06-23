@@ -1,5 +1,6 @@
 ﻿using Bugsnag;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -7,6 +8,7 @@ using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
 using PAKNAPI.Models.ModelBase;
 using PAKNAPI.Models.Results;
+using PAKNAPI.Services.EmailService;
 using PAKNAPI.Services.FileUpload;
 using System;
 using System.Collections.Generic;
@@ -23,13 +25,20 @@ namespace PAKNAPI.Controllers.ControllerBase
 		private readonly IClient _bugsnag;
 		private readonly IFileService _fileService;
 		private readonly IHttpContextAccessor _httpContextAccessor;
+		private readonly IWebHostEnvironment _webHostEnvironment;
+		private IMailService _mailService;
 
-		public EmailManagementController(IAppSetting appSetting, IClient bugsnag, IFileService fileService, IHttpContextAccessor httpContextAccessor)
+		private MailSettings mailSetting;
+
+		public EmailManagementController(IAppSetting appSetting, IClient bugsnag, IFileService fileService, IHttpContextAccessor httpContextAccessor,
+			IWebHostEnvironment webHostEnvironment)
 		{
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
 			_fileService = fileService;
 			_httpContextAccessor = httpContextAccessor;
+			_webHostEnvironment = webHostEnvironment;
+			
 		}
 
 		[HttpPost]
@@ -233,6 +242,16 @@ namespace PAKNAPI.Controllers.ControllerBase
 		{
 			try
 			{
+
+				var listAttachment = await new EmailManagementAttachmentADO(_appSetting).GetByEmailId(id);
+				if (listAttachment != null && listAttachment.Any())
+                {
+					foreach (var file in listAttachment)
+					{
+						await _fileService.Remove(listAttachment.Select(c => c.FileAttach).ToArray());
+					}
+				}
+
 				var listPaged = await new EmailMangementADO(_appSetting).Delete(id);
 
 				IDictionary<string, object> json = new Dictionary<string, object>
@@ -260,13 +279,16 @@ namespace PAKNAPI.Controllers.ControllerBase
 			{
 				//var userId = int.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
 
-				///TODO
 				var rs = await new EmailMangementADO(_appSetting).UpdateSendStatus(id, int.Parse(userId));
 				IDictionary<string, object> json = new Dictionary<string, object>
 				{
 					{"Data", null}
 				};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+
+				await sendEmail(id);
+
+
 				///insert his
 				///
 				var hisModel = new EmailManagementHisModel
@@ -276,6 +298,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 					ObjectId = id
 				};
 				await insertHis(hisModel,userId);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
@@ -339,9 +362,43 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 			return await new EmailManagemnetHisADO(_appSetting).Insert(model);
 		}
-		private void sendEmail()
+		private async Task sendEmail(long id)
         {
+			await LoadEmailConfigAsync();
+			_mailService = new MailService(mailSetting, _webHostEnvironment);
 
+			var model = await new EmailMangementADO(_appSetting).GetById(id);
+			var listAttachment = await new EmailManagementAttachmentADO(_appSetting).GetByEmailId(id);
+			var listIndividualEmail = await new EmailManagementIndividualADO(_appSetting).GetAllEmailAddressByEmailId(id);
+			var listBusinessEmail = await new EmailManagementBusinessADO(_appSetting).GetAllEmailAddressByEmailId(id);
+
+			string rootHostPath = _webHostEnvironment.ContentRootPath;
+
+			var content = model.FirstOrDefault();
+			var toEmails = new List<string>();
+			toEmails.AddRange(listIndividualEmail);
+			toEmails.AddRange(listBusinessEmail);
+
+			var attachments = listAttachment.Select(c =>
+			{
+				return $"{rootHostPath}/{c.FileAttach}";
+			});
+
+			var req = new MailRequest
+			{
+				Attachments = attachments,
+				Body = content.Content,
+				Subject = content.Title,
+				ToEmails = toEmails
+			};
+
+			await _mailService.SendEmailAsync(req);
+		}
+
+		private async Task LoadEmailConfigAsync()
+        {
+			var rs = await new SYConfig(_appSetting).SYConfigGetByTypeDAO(1);
+			mailSetting = JsonConvert.DeserializeObject<MailSettings>(rs.FirstOrDefault().Content);
         }
 	}
 }
