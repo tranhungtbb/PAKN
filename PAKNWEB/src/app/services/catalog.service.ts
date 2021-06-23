@@ -188,6 +188,10 @@ export class CatalogService {
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.WordGetList, headers)
 	}
 
+	wordGetListByGroupId(request: any): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.WordGetListByGroupId)
+	}
+
 	wordGetById(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETINFO),

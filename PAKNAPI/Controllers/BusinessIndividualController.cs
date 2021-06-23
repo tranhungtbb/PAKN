@@ -123,7 +123,7 @@ namespace PAKNAPI.Controllers
 					//var sc = worksheet.Cells[i, 8].Value;
 					if (worksheet.Cells[i, 9].Value == "" || worksheet.Cells[i, 9].Value == null)
 					{
-						ind.ProvinceId = null;
+						continue;
 					}
 					else
 					{
@@ -142,9 +142,17 @@ namespace PAKNAPI.Controllers
 										ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 11].Value.ToString(), 3, ind.DistrictId);
 										if (ltsAdmintrative.Count > 0) { ind.WardsId = ltsAdmintrative.FirstOrDefault().Id; }
 									}
+									else
+									{
+										continue;
+									}
 								}
 
-							}
+                            }
+                            else
+                            {
+								continue;
+                            }
 						}
 					}
 
@@ -329,7 +337,7 @@ namespace PAKNAPI.Controllers
 					var s = worksheet.Cells[i, 8].Value;
 					if (worksheet.Cells[i, 8].Value == "" || worksheet.Cells[i, 8].Value == null)
 					{
-						model.ProvinceId = null;
+						continue;
 					}
 					else
 					{
@@ -348,8 +356,15 @@ namespace PAKNAPI.Controllers
 										ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 10].Value.ToString(), 3, model.DistrictId);
 										if (ltsAdmintrative.Count > 0) { model.WardsId = ltsAdmintrative.FirstOrDefault().Id; }
 									}
+									else
+                            {
+								continue;
+                            }
 								}
-
+							}
+							else
+							{
+								continue;
 							}
 						}
 					}
@@ -378,7 +393,7 @@ namespace PAKNAPI.Controllers
 					model.OrgWardsId = null;
 					if (worksheet.Cells[i, 16].Value == "" || worksheet.Cells[i, 16].Value == null)
 					{
-						model.OrgProvinceId = null;
+						continue;
 					}
 					else
 					{
@@ -397,8 +412,15 @@ namespace PAKNAPI.Controllers
 										ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 18].Value.ToString(), 3, model.OrgDistrictId);
 										if (ltsAdmintrative.Count > 0) { model.OrgWardsId = ltsAdmintrative.FirstOrDefault().Id; }
 									}
+									else
+									{
+										continue;
+									}
 								}
-
+							}
+							else
+							{
+								continue;
 							}
 						}
 					}

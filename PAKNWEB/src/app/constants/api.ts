@@ -150,6 +150,7 @@ export class Api {
 	public static DepartmentGroupDelete = 'CACategorySPBase/CADepartmentGroupDeleteBase'
 	//Word
 	public static WordGetList = 'CACategorySPBase/CAWordGetAllOnPageBase'
+	public static WordGetListByGroupId = 'CACategorySPBase/CAWordGetAllOnPageByGroupIdBase'
 	public static WordGetById = 'CACategorySPBase/CAWordGetByIDBase'
 	public static WordInsert = 'CACategorySPBase/CAWordInsertBase'
 	public static WordUpdate = 'CACategorySPBase/CAWordUpdateBase'

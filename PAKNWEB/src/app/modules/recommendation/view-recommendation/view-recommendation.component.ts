@@ -51,6 +51,7 @@ export class ViewRecommendationComponent implements OnInit {
 	dateNow: Date = new Date()
 	lstGroupWord: any = []
 	lstGroupWordSelected: any = []
+	titleAccept : any = ''
 	@ViewChild('table', { static: false }) table: any
 	@ViewChild('file', { static: false }) public file: ElementRef
 	@ViewChild(RemindComponent, { static: true }) remindComponent: RemindComponent
@@ -407,10 +408,13 @@ export class ViewRecommendationComponent implements OnInit {
 			}
 		} else {
 			if (this.model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
+				this.titleAccept = 'Anh/Chị có chắc chắn muốn tiếp nhận PAKN này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_APPROVED
 			} else if (this.model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
+				this.titleAccept = 'Anh/Chị có chắc chắn muốn giải quyết PAKN này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
 			} else if (this.model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
+				this.titleAccept = 'Anh/Chị có chắc chắn muốn phê duyệt PAKN này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.FINISED
 			}
 			$('#modalAccept').modal('show')

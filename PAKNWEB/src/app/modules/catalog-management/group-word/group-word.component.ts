@@ -17,6 +17,7 @@ export class GroupWordComponent implements OnInit {
 	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) {}
 
 	listData = new Array<FieldObject>()
+	listWordByGroupId : any 
 	listStatus: any = [
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
@@ -259,6 +260,20 @@ export class GroupWordComponent implements OnInit {
 	preView(data) {
 		this.model = data
 		$('#modalDetail').modal('show')
+	}
+
+	getListWordLibraryByGroupId(groupId : any){
+		this._service.wordGetListByGroupId({GroupId : groupId}).subscribe(res =>{
+			if(res.success == RESPONSE_STATUS.success){
+				this.listWordByGroupId = res.result.CAWordGetAllOnPageByGroupId
+				$('#modalLstWordByGroupId').modal('show')
+			}
+			else{
+				this.listWordByGroupId = []
+			}
+		}),(error)=>{
+			console.log(error)
+		}
 	}
 	exportExcel() {
 		let request = {

@@ -1570,6 +1570,14 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAWordGetAllOnPage>("CA_WordGetAllOnPage", DP)).ToList();
 		}
+
+		public async Task<List<CAWordGetAllOnPage>> CAWordGetAllOnPageByGroupIdDAO(int GroupId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("GroupId", GroupId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAWordGetAllOnPage>("CA_WordGetAllOnPageByGroupId", DP)).ToList();
+		}
 	}
 
 	public class CAWordGetByID

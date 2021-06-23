@@ -1082,6 +1082,29 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize]
+		[Route("CAWordGetAllOnPageByGroupIdBase")]
+		public async Task<ActionResult<object>> CAWordGetAllOnPageByGroupIdBase(int GroupId)
+		{
+			try
+			{
+				List<CAWordGetAllOnPage> rsCAWordGetAllOnPage = await new CAWordGetAllOnPage(_appSetting).CAWordGetAllOnPageByGroupIdDAO(GroupId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAWordGetAllOnPageByGroupId", rsCAWordGetAllOnPage},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
 		[Route("CAWordGetByIDBase")]
 		public async Task<ActionResult<object>> CAWordGetByIDBase(int? Id)
 		{
