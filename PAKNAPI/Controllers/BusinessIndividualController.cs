@@ -98,9 +98,10 @@ namespace PAKNAPI.Controllers
 					}
 
 					ind.IssuedPlace = worksheet.Cells[i, 7].Value == null ? null : worksheet.Cells[i, 7].Value.ToString();
-					ind.Nation = worksheet.Cells[i, 8].Value == null ? null : worksheet.Cells[i, 8].Value.ToString();
-
-
+					if (worksheet.Cells[i, 8].Value == null) { continue; }
+					else {
+						ind.Nation = worksheet.Cells[i, 8].Value.ToString();
+					}
 					var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(ind.Phone);
 					if (hasOne != null && hasOne.Any()) continue;
 
@@ -330,7 +331,12 @@ namespace PAKNAPI.Controllers
 						model.RepresentativeBirthDay = Convert.ToDateTime(worksheet.Cells[i, 5].Value.ToString());
 					}
 					model.Address = worksheet.Cells[i, 6].Value == null ? null : worksheet.Cells[i, 6].Value.ToString();
-					model.Nation = worksheet.Cells[i, 7].Value == null ? null : worksheet.Cells[i, 7].Value.ToString();
+					if (worksheet.Cells[i, 7].Value == null) { continue; }
+					else
+					{
+						model.Nation = worksheet.Cells[i, 7].Value.ToString();
+					}
+					//model.Nation = worksheet.Cells[i, 7].Value == null ? null : worksheet.Cells[i, 7].Value.ToString();
 					model.ProvinceId = null;
 					model.DistrictId = null;
 					model.WardsId = null;

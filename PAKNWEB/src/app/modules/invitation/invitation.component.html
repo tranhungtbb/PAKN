@@ -98,6 +98,8 @@
 									<td>
 										<span type="button" *ngIf="item.status == 1" class="badge rounded-pill badge-outline-light bg-white">Đang soạn thảo</span>
 										<span type="button" *ngIf="item.status == 2" class="badge rounded-pill blue-3">Đã gửi</span>
+										<span type="button" *ngIf="item.status == 3" class="badge rounded-pill badge-outline-green2">Chưa xem</span>
+										<span type="button" *ngIf="item.status == 4" class="badge rounded-pill badge-success">Đã xem</span>
 									</td>
 									<td style="text-align: right;">
 										<strong style="cursor: pointer;" (click)="preUserWatched(item.id)">{{item.amountWatched}}</strong>
