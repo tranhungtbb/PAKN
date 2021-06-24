@@ -2,7 +2,7 @@
 <!-- <span *ngIf="idUser === message.sender_id && !message.notification_type" (change)="checkstatusAcc()"  style="flex: 1 1"></span> -->
 <span *ngIf="idUser === message.sender_id && !message.notification_type"  style="flex: 1 1"></span>
 
-<span *ngIf="idUser !== message.sender_id && statusAcc" class="message__avatar">
+<span *ngIf="idUser !== message.sender_id && statusAcc && !message.notification_type" class="message__avatar">
     <!-- <i (change)="checkstatusAcc()" class="material-icons">account_circle</i>     -->
     <i class="material-icons">account_circle</i>    
 </span>

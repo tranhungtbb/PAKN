@@ -110,7 +110,7 @@ export class EditDialogComponent implements OnInit {
 
 				toUpdateParams['name'] = params.title
 				updatedMsg.extension['dialog_name'] = params.title
-				updatedMsg.body = self.userService.user.full_name + ' changed the conversation name to "' + params.title + '".'
+				updatedMsg.body = self.userService.user.full_name + ' thay đổi tên nhóm thành : "' + params.title + '".'
 
 				const systemMessage = {
 					extension: {
@@ -203,7 +203,7 @@ export class EditDialogComponent implements OnInit {
 			toUpdateParams['push_all'] = {
 				occupants_ids: newUsers,
 			}
-			updatedMsg.body = self.userService.user.full_name + ' added ' + usernames.join(', ') + '.'
+			updatedMsg.body = self.userService.user.full_name + ' Thêm ' + usernames.join(', ') + '.'
 			updatedMsg.extension['new_occupants_ids'] = newUsers.join(',')
 		}
 

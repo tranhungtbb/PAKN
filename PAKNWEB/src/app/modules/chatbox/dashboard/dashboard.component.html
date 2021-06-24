@@ -59,8 +59,8 @@
 						</li> -->
 					<!-- </ul> -->
 					<ul class="border-0 sidebar__dilog_list j-sidebar__dilog_list">
-						<li (click)="openChat(chat)" *ngFor="let chat of chats" [ngClass]="{'selected': selectedChat === chat._id}" class="dialog__item j-dialog__item p-3">
-							<a class="dialog__item_link rounded border bg-white">
+						<li (click)="openChat(chat)" *ngFor="let chat of chats" [ngClass]="{'selected': selectedChat === chat._id}" class="dialog__item j-dialog__item mb-3">
+							<a class="dialog__item_link rounded-xl border ex1 ">
 								<span class="dialog__avatar">
 									<i class="material-icons">account_circle</i>
 								</span>
@@ -94,7 +94,7 @@
 			<div class="notifications j-notifications hidden"></div>
 			<div class="content__inner j-content__inner">
 				<div class="welcome__message">
-					<p>Please select you opponent to start chatting.</p>
+					<!-- <p>Please select you opponent to start chatting.</p>  -->
 				</div>
 			</div>
 		</div>
