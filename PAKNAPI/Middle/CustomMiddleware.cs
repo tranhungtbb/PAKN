@@ -18,7 +18,6 @@ namespace PAKNAPI.Middle
 			{
 				var body = await reader.ReadToEndAsync();
 				context.Items.Add("body", body);
-
 				context.Request.Body.Position = 0;
 			}
 
