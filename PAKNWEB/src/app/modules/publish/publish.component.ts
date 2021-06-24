@@ -72,11 +72,11 @@ export class PublishComponent implements OnInit, OnChanges {
 			}
 		
 			this.subMenu = [
-				{path:[''],text:'Phản ánh- kiến nghị đã trả lời'},
-				{path:[''],text:'Tích hợp dữ liệu Cổng thông tin điện tử tỉnh Khánh Hoà'},
-				{path:[''],text:'Tích hợp dữ liệu Cổng thông tin dịch vụ hành chính công trực tuyến tỉnh Khánh Hoà'},
-				{path:[''],text:'Tích hợp dữ liệu Hệ thống quản lý kiến nghị cử tri tỉnh Khánh Hoà'},
-				{path:[''],text:'Tích hợp dữ liệu Hệ thống tiếp nhận, trả lời phản ánh, kiến nghị của người dân của Chính phủ'}
+				{path:['phan-anh-kien-nghi/da-tra-loi'],text:'Phản ánh- kiến nghị đã trả lời'},
+				{path:['phan-anh-kien-nghi/sync/cong-ttdt-tinh-khanh-hoa'],text:'Cổng thông tin điện tử tỉnh Khánh Hoà'},
+				{path:['phan-anh-kien-nghi/sync/cong-dv-hcc-tinh-khoanh-hoa'],text:'Cổng thông tin dịch vụ hành chính công trực tuyến tỉnh Khánh Hoà'},
+				{path:['phan-anh-kien-nghi/sync/he-thong-cu-tri-khanh-hoa'],text:'Hệ thống quản lý kiến nghị cử tri tỉnh Khánh Hoà'},
+				{path:['phan-anh-kien-nghi/sync/he-thong-pakn-quoc-gia'],text:'Hệ thống tiếp nhận, trả lời phản ánh, kiến nghị của người dân của Chính phủ'}
 			]
 	}
 

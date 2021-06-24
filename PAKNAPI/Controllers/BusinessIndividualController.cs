@@ -34,40 +34,39 @@ namespace PAKNAPI.Controllers
 		[Authorize]
 		public async Task<ActionResult<object>> ImportDataInvididual(string folder = null)
 		{
+			var file = Request.Form.Files[0];
+
+			if (file.Length <= 0)
+			{
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "File not found!" };
+			}
+
+			string contentRootPath = _hostingEnvironment.ContentRootPath;
+
+			string folderName = string.IsNullOrEmpty(folder) ? "Upload/Orther" : "Upload/" + folder;
+
+			string fileName = $"{DateTime.Now.ToString("ddMMyyyyHHmmss")}-{file.FileName}";
+			string folderPath = System.IO.Path.Combine(contentRootPath, folderName);
+
+			if (!System.IO.Directory.Exists(folderPath))
+			{
+				System.IO.Directory.CreateDirectory(folderPath);
+			}
+
+			string fileNamePath = System.IO.Path.Combine(folderPath, fileName);
+
+			using (var memoryStream = System.IO.File.Create(fileNamePath))
+			{
+				await file.CopyToAsync(memoryStream);
+			}
+
+			System.IO.FileInfo fileInfo = new System.IO.FileInfo(fileNamePath);
+
+			OfficeOpenXml.ExcelPackage package = new OfficeOpenXml.ExcelPackage(fileInfo);
+			OfficeOpenXml.ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
+
 			try
 			{
-
-				var file = Request.Form.Files[0];
-
-				if (file.Length <= 0)
-				{
-					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "File not found!" };
-				}
-
-				string contentRootPath = _hostingEnvironment.ContentRootPath;
-
-				string folderName = string.IsNullOrEmpty(folder) ? "Upload/Orther" : "Upload/" + folder;
-
-				string fileName = $"{DateTime.Now.ToString("ddMMyyyyHHmmss")}-{file.FileName}";
-				string folderPath = System.IO.Path.Combine(contentRootPath, folderName);
-
-				if (!System.IO.Directory.Exists(folderPath))
-				{
-					System.IO.Directory.CreateDirectory(folderPath);
-				}
-
-				string fileNamePath = System.IO.Path.Combine(folderPath, fileName);
-
-				using (var memoryStream = System.IO.File.Create(fileNamePath))
-				{
-					await file.CopyToAsync(memoryStream);
-				}
-
-				System.IO.FileInfo fileInfo = new System.IO.FileInfo(fileNamePath);
-
-				OfficeOpenXml.ExcelPackage package = new OfficeOpenXml.ExcelPackage(fileInfo);
-				OfficeOpenXml.ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
-
 				// get number of rows and columns in the sheet
 				int rows = worksheet.Dimension.Rows; // 20
 				int columns = worksheet.Dimension.Columns; // 7
@@ -93,14 +92,16 @@ namespace PAKNAPI.Controllers
 					else { continue; }
 					ind.IDCard = worksheet.Cells[i, 5].Value == null ? null : worksheet.Cells[i, 5].Value.ToString();
 					if (string.IsNullOrEmpty(ind.IDCard)) { continue; }
-					if (worksheet.Cells[i, 6].Value != null) {
+					if (worksheet.Cells[i, 6].Value != null)
+					{
 						ind.DateOfIssue = Convert.ToDateTime(worksheet.Cells[i, 6].Value.ToString());
 					}
 
 					ind.IssuedPlace = worksheet.Cells[i, 7].Value == null ? null : worksheet.Cells[i, 7].Value.ToString();
-					ind.Nation = worksheet.Cells[i, 8].Value == null ? null : worksheet.Cells[i, 8].Value.ToString();
-
-
+					if (worksheet.Cells[i, 8].Value == null) { continue; }
+					else {
+						ind.Nation = worksheet.Cells[i, 8].Value.ToString();
+					}
 					var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(ind.Phone);
 					if (hasOne != null && hasOne.Any()) continue;
 
@@ -123,7 +124,7 @@ namespace PAKNAPI.Controllers
 					//var sc = worksheet.Cells[i, 8].Value;
 					if (worksheet.Cells[i, 9].Value == "" || worksheet.Cells[i, 9].Value == null)
 					{
-						ind.ProvinceId = null;
+						continue;
 					}
 					else
 					{
@@ -142,21 +143,33 @@ namespace PAKNAPI.Controllers
 										ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 11].Value.ToString(), 3, ind.DistrictId);
 										if (ltsAdmintrative.Count > 0) { ind.WardsId = ltsAdmintrative.FirstOrDefault().Id; }
 									}
+									else
+									{
+										continue;
+									}
 								}
 
-							}
+                            }
+                            else
+                            {
+								continue;
+                            }
 						}
 					}
-					
+
 					ind.Address = worksheet.Cells[i, 12].Value == null ? null : worksheet.Cells[i, 12].Value.ToString();
 					if (string.IsNullOrEmpty(ind.Address)) { continue; }
-					if (worksheet.Cells[i, 13].Value != null) {
+					if (worksheet.Cells[i, 13].Value != null)
+					{
 						ind.BirthDay = Convert.ToDateTime(worksheet.Cells[i, 13].Value.ToString());
-					} else { continue; }
-					if (worksheet.Cells[i, 14].Value != null) { 
+					}
+					else { continue; }
+					if (worksheet.Cells[i, 14].Value != null)
+					{
 						ind.Status = worksheet.Cells[i, 14].Value.ToString().ToLower() == "hiệu lực" ? 1 : 0;
-					} else { continue; }
-					
+					}
+					else { continue; }
+
 					ind.IsActived = ind.Status == 1 ? true : false;
 					ind.IsDeleted = false;
 
@@ -197,13 +210,10 @@ namespace PAKNAPI.Controllers
 				}
 
 				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", rows -2 - count }
-					};
-				// delete file luôn
-				// 
-				System.IO.File.Delete(fileNamePath);
+				{
+					{"CountSuccess", count},
+					{"CountError", rows -2 - count }
+				};
 
 				// lưu log
 
@@ -241,6 +251,12 @@ namespace PAKNAPI.Controllers
 				await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = e.Message };
 			}
+			finally
+			{
+				// delete file luôn
+				// 
+				System.IO.File.Delete(fileNamePath);
+			}			
 		}
 
 		[HttpPost, DisableRequestSizeLimit]
@@ -248,39 +264,39 @@ namespace PAKNAPI.Controllers
 		[Authorize]
 		public async Task<ActionResult<object>> ImportDataBusiness(string folder = null)
 		{
+			var file = Request.Form.Files[0];
+
+			if (file.Length <= 0)
+			{
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "File not found!" };
+			}
+
+			string contentRootPath = _hostingEnvironment.ContentRootPath;
+
+			string folderName = string.IsNullOrEmpty(folder) ? "Upload/Orther" : "Upload/" + folder;
+
+			string fileName = $"{DateTime.Now.ToString("ddMMyyyyHHmmss")}-{file.FileName}";
+			string folderPath = System.IO.Path.Combine(contentRootPath, folderName);
+
+			if (!System.IO.Directory.Exists(folderPath))
+			{
+				System.IO.Directory.CreateDirectory(folderPath);
+			}
+
+			string fileNamePath = System.IO.Path.Combine(folderPath, fileName);
+
+			using (var memoryStream = System.IO.File.Create(fileNamePath))
+			{
+				await file.CopyToAsync(memoryStream);
+			}
+
+			System.IO.FileInfo fileInfo = new System.IO.FileInfo(fileNamePath);
+
+			OfficeOpenXml.ExcelPackage package = new OfficeOpenXml.ExcelPackage(fileInfo);
+			OfficeOpenXml.ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
+
 			try
 			{
-				var file = Request.Form.Files[0];
-
-				if (file.Length <= 0)
-				{
-					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "File not found!" };
-				}
-
-				string contentRootPath = _hostingEnvironment.ContentRootPath;
-
-				string folderName = string.IsNullOrEmpty(folder) ? "Upload/Orther" : "Upload/" + folder;
-
-				string fileName = $"{DateTime.Now.ToString("ddMMyyyyHHmmss")}-{file.FileName}";
-				string folderPath = System.IO.Path.Combine(contentRootPath, folderName);
-
-				if (!System.IO.Directory.Exists(folderPath))
-				{
-					System.IO.Directory.CreateDirectory(folderPath);
-				}
-
-				string fileNamePath = System.IO.Path.Combine(folderPath, fileName);
-
-				using (var memoryStream = System.IO.File.Create(fileNamePath))
-				{
-					await file.CopyToAsync(memoryStream);
-				}
-
-				System.IO.FileInfo fileInfo = new System.IO.FileInfo(fileNamePath);
-
-				OfficeOpenXml.ExcelPackage package = new OfficeOpenXml.ExcelPackage(fileInfo);
-				OfficeOpenXml.ExcelWorksheet worksheet = package.Workbook.Worksheets.FirstOrDefault();
-
 				// get number of rows and columns in the sheet
 				int rows = worksheet.Dimension.Rows; // 20
 
@@ -308,22 +324,29 @@ namespace PAKNAPI.Controllers
 						checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Email", model.Email, 0);
 						if (checkExists[0].Exists.Value) continue;
 					}
-					if (worksheet.Cells[i, 4].Value == null) { continue;}
+					if (worksheet.Cells[i, 4].Value == null) { continue; }
 					model.RepresentativeGender = worksheet.Cells[i, 4].Value.ToString() == "Nam" ? true : false;
-					if (worksheet.Cells[i, 5].Value != null) {
+					if (worksheet.Cells[i, 5].Value != null)
+					{
 						model.RepresentativeBirthDay = Convert.ToDateTime(worksheet.Cells[i, 5].Value.ToString());
 					}
 					model.Address = worksheet.Cells[i, 6].Value == null ? null : worksheet.Cells[i, 6].Value.ToString();
-					model.Nation = worksheet.Cells[i, 7].Value == null ? null : worksheet.Cells[i, 7].Value.ToString();
+					if (worksheet.Cells[i, 7].Value == null) { continue; }
+					else
+					{
+						model.Nation = worksheet.Cells[i, 7].Value.ToString();
+					}
+					//model.Nation = worksheet.Cells[i, 7].Value == null ? null : worksheet.Cells[i, 7].Value.ToString();
 					model.ProvinceId = null;
 					model.DistrictId = null;
 					model.WardsId = null;
 					var s = worksheet.Cells[i, 8].Value;
 					if (worksheet.Cells[i, 8].Value == "" || worksheet.Cells[i, 8].Value == null)
 					{
-						model.ProvinceId = null;
+						continue;
 					}
-					else {
+					else
+					{
 						List<CAAdministrativeUnitGetByNameLevel> ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 8].Value.ToString(), 1, null);
 						if (ltsAdmintrative.Count > 0)
 						{
@@ -339,8 +362,15 @@ namespace PAKNAPI.Controllers
 										ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 10].Value.ToString(), 3, model.DistrictId);
 										if (ltsAdmintrative.Count > 0) { model.WardsId = ltsAdmintrative.FirstOrDefault().Id; }
 									}
+									else
+                            {
+								continue;
+                            }
 								}
-
+							}
+							else
+							{
+								continue;
 							}
 						}
 					}
@@ -349,10 +379,11 @@ namespace PAKNAPI.Controllers
 					if (string.IsNullOrEmpty(model.Business)) { continue; }
 					model.BusinessRegistration = worksheet.Cells[i, 12].Value == null ? null : worksheet.Cells[i, 12].Value.ToString();
 					model.DecisionOfEstablishing = worksheet.Cells[i, 13].Value == null ? null : worksheet.Cells[i, 13].Value.ToString();
-					if (worksheet.Cells[i, 14].Value != null) {
+					if (worksheet.Cells[i, 14].Value != null)
+					{
 						model.DateOfIssue = Convert.ToDateTime(worksheet.Cells[i, 14].Value.ToString());
 					}
-					
+
 					model.Tax = worksheet.Cells[i, 15].Value == null ? null : worksheet.Cells[i, 15].Value.ToString();
 
 					// check OrgPhone, OrgEmail, BusinessRegistration, DecisionOfEstablishing, Tax
@@ -368,7 +399,7 @@ namespace PAKNAPI.Controllers
 					model.OrgWardsId = null;
 					if (worksheet.Cells[i, 16].Value == "" || worksheet.Cells[i, 16].Value == null)
 					{
-						model.OrgProvinceId = null;
+						continue;
 					}
 					else
 					{
@@ -387,8 +418,15 @@ namespace PAKNAPI.Controllers
 										ltsAdmintrative = await new CAAdministrativeUnitGetByNameLevel(_appSetting).CAAdministrativeUnitsGetByNameDAO(worksheet.Cells[i, 18].Value.ToString(), 3, model.OrgDistrictId);
 										if (ltsAdmintrative.Count > 0) { model.OrgWardsId = ltsAdmintrative.FirstOrDefault().Id; }
 									}
+									else
+									{
+										continue;
+									}
 								}
-
+							}
+							else
+							{
+								continue;
 							}
 						}
 					}
@@ -451,11 +489,11 @@ namespace PAKNAPI.Controllers
 				}
 
 				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"CountSuccess", count},
-						{"CountError", rows - 2 - count}
-					};
-				System.IO.File.Delete(fileNamePath);
+				{
+					{"CountSuccess", count},
+					{"CountError", rows - 2 - count}
+				};
+					
 				// lưu log
 
 
@@ -475,7 +513,6 @@ namespace PAKNAPI.Controllers
 				await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
 
 				return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
-
 			}
 			catch (Exception e)
 			{
@@ -493,6 +530,9 @@ namespace PAKNAPI.Controllers
 				};
 				await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
 				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = e.Message };
+			}
+			finally {
+				System.IO.File.Delete(fileNamePath);
 			}
 		}
 

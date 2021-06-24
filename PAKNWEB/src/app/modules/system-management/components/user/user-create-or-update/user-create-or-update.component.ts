@@ -40,8 +40,9 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	) {
 		this.modalId = elm.nativeElement.getAttribute('modalid')
 		this.isOrganizational = elm.nativeElement.getAttribute('isOrganizational') == 'true' ? true : false
+		this.isUser = elm.nativeElement.getAttribute('isUser') == 'true' ? true : false
 	}
-
+	isUser : boolean = false
 	modalId = ''
 	isOrganizational: boolean = false
 	public parentUnit: UnitComponent
@@ -58,7 +59,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	rolesList: any[] = []
 	unitsList: any[] = []
 	selectedRoles: Array<number>
-
+	roleName : any =''
 	listStatus: any = [
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
@@ -155,7 +156,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 					this.parentUser.getList()
 				}
 
-				this.modelUser = new UserObject2()
+				// this.modelUser = new UserObject2()
 				$('#' + this.modalId).modal('hide')
 			})
 		} else {
@@ -176,7 +177,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 				}
 				this.toast.success(COMMONS.ADD_SUCCESS)
 				// this.parentUnit.getUserPagedList()
-				this.modelUser = new UserObject2()
+				// this.modelUser = new UserObject2()
 				$('#' + this.modalId).modal('hide')
 			})
 		}
@@ -240,6 +241,12 @@ export class UserCreateOrUpdateComponent implements OnInit {
 					let output: any = $('#' + this.modalId + ' .user-avatar-view')
 					output.attr('src', this.userAvatar)
 				}
+				debugger
+				this.modelUser.positionName = this.unitsList.find((c) => c.value == this.modelUser.unitId).text
+				this.modelUser.unitName = this.unitsList.find((c) => c.value == this.modelUser.unitId).text
+				let rolesIds = this.modelUser.roleIds.split(',').map((c) => parseInt(c))
+				let rolesNames = this.rolesList.filter((c) => rolesIds.includes(c.value)).map((c) => c.text)
+				this.roleName = rolesNames.join(';')
 				this.listPermissionUserSelected = res.result.lstPermissionUserSelected
 				if (this.modelUser.roleIds) this.selectedRoles = this.modelUser.roleIds.split(',').map((c) => parseInt(c))
 				else this.selectedRoles = []
@@ -411,5 +418,37 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			permissioncategory.selected = isCategorySelected
 			permissioncategory.disabled = isCategoryDisabled
 		}
+	}
+	getActiveName(){
+		if(this.modelUser.isActived == null){
+			return ""
+		}
+		else if(this.modelUser.isActived == true){
+			return 'Hiệu lực'
+		}else{ return 'Hết hiệu lực'}
+		
+	}
+	getRoleName(){
+		if(this.modelUser.roleIds == null){
+			return ""
+		}
+		let rolesNames = this.rolesList.filter((c) => this.selectedRoles.includes(c.id)).map((c) => c.name)
+		return rolesNames.join('; ') 
+	}
+	getUnitName(){
+		if(this.modelUser.unitId == null){
+			return ""
+		}
+		debugger
+		let unit = this.unitsList.find(x=>x.value == this.modelUser.unitId)
+		return unit.text
+	}
+	getPositionName(){
+		debugger
+		if(this.modelUser.positionId == null){
+			return ""
+		}
+		let position = this.positionsList.find(x=>x.value == this.modelUser.positionId)
+		return position.text
 	}
 }

@@ -426,3 +426,6 @@ div.bubble.reply {
 .sub-item:hover a{
 	color:  #1455a0 !important;
 }
+.active{
+	color:  #1455a0 !important;
+}

@@ -36,6 +36,8 @@ export class InvitationComponent implements OnInit {
 	listStatus: any = [
 		{ value: 1, text: 'Đang soạn thảo' },
 		{ value: 2, text: 'Đã gửi' },
+		{ value: 3, text: 'Chưa xem' },
+		{ value: 4, text: 'Đã xem' },
 	]
 	model: any = new InvitationObject()
 	title: string = ''

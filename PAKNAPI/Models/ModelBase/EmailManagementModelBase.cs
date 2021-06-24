@@ -237,7 +237,6 @@ namespace PAKNAPI.Models.ModelBase
                 return await _sQLCon.ExecuteNonQueryDapperAsync("[Email_quanlytinnhan_IndividualInsert]", DP);
             }
             
-            
         }
         public async Task<int> Delete(string Ids)
         {
@@ -250,6 +249,13 @@ namespace PAKNAPI.Models.ModelBase
             DynamicParameters DP = new DynamicParameters();
             DP.Add("EmailId", emailId);
             return await _sQLCon.ExecuteListDapperAsync<EmailManagementIndividualModel>("Email_Individual_GetByEmailId", DP);
+        }
+
+        public async Task<IEnumerable<string>> GetAllEmailAddressByEmailId(long emailId)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("EmailId", emailId);
+            return await _sQLCon.ExecuteListDapperAsync<string>("Email_Individual_GetEmailAddressByEmailID", DP);
         }
     }
     public class EmailManagementBusinessADO
@@ -298,6 +304,12 @@ namespace PAKNAPI.Models.ModelBase
             DynamicParameters DP = new DynamicParameters();
             DP.Add("EmailId", emailId);
             return await _sQLCon.ExecuteListDapperAsync<EmailManagementBusinessModel>("Email_Business_GetByEmailId", DP);
+        }
+        public async Task<IEnumerable<string>> GetAllEmailAddressByEmailId(long emailId)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("EmailId", emailId);
+            return await _sQLCon.ExecuteListDapperAsync<string>("Email_Business_GetEmailAddressByEmailID", DP);
         }
     }
     public class EmailManagemnetHisADO

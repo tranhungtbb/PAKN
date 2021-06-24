@@ -1,5 +1,5 @@
 <div class="modal fade notscroll" id="{{modalId}}">
-	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="min-width: 96vw;">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" [ngClass]="{'width-96vw': isUser == false, 'width-auto': isUser == true}"> 
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0 bg-ligth-gold">
 				<p class="modal-title h3">{{modalTitle}}</p>
@@ -8,7 +8,7 @@
 			</div>
 			<div class="modal-body pb-0 mt-0 pt-0">
 				<div class="row">
-					<div class="col-md-6">
+					<div [ngClass]="{'col-md-6': isUser == false, 'col-md-12': isUser == true}">
 						<form id="createUserForm" [formGroup]="createUserForm" (ngSubmit)="onSaveUser()">
 							<div class="align-items-center mb-4 avatar-bg">
 								<div class="avatar-frame">
@@ -81,7 +81,8 @@
 								</div>
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Chức vụ <span class="cl-red">(*)</span></label>
-									<ng-select class="form-control" [items]="positionsList" placeholder="Chọn..." bindLabel="text" bindValue="value" formControlName="positionId"
+									<input *ngIf="isUser" disabled value="{{modelUser.positionName}}" type="text" class="form-control">
+									<ng-select [ngClass]="{ 'hide': isUser == true }" class="form-control" [items]="positionsList" placeholder="Chọn..." bindLabel="text" bindValue="value" formControlName="positionId"
 										[(ngModel)]="modelUser.positionId" [closeOnSelect]="true">
 									</ng-select>
 									<div *ngIf="(userFormSubmitted && fUser.positionId.invalid)||(fUser.positionId.invalid && (fUser.positionId.dirty || fUser.positionId.touched))"
@@ -93,7 +94,8 @@
 								</div>
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Đơn vị <span class="cl-red">(*)</span></label>
-									<ng-select class="form-control" [items]="unitsList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="modelUser.unitId"
+									<input *ngIf="isUser" disabled value="{{modelUser.unitName}}" type="text" class="form-control">
+									<ng-select [ngClass]="{ 'hide': isUser == true }" class="form-control" [items]="unitsList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="modelUser.unitId"
 										formControlName="unitId" [closeOnSelect]="true">
 									</ng-select>
 									<div *ngIf="(userFormSubmitted && fUser.unitId.invalid)||(fUser.unitId.invalid && (fUser.unitId.dirty || fUser.unitId.touched))"
@@ -118,7 +120,8 @@
 								</div>
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Vai trò <span class="cl-red">(*)</span></label>
-									<ng-select class="form-control" [items]="rolesList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="selectedRoles"
+									<input *ngIf="isUser" disabled type="text" class="form-control" value="{{roleName}}">
+									<ng-select [ngClass]="{ 'hide': isUser == true }" class="form-control" [items]="rolesList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="selectedRoles"
 										formControlName="roleId" [closeOnSelect]="true" [multiple]="true" (change)="onGroupUserChange()">
 									</ng-select>
 									<div *ngIf="(userFormSubmitted && fUser.roleId.invalid)||(fUser.roleId.invalid && (fUser.roleId.dirty || fUser.roleId.touched))"
@@ -130,7 +133,9 @@
 								</div>
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
-									<ng-select class="form-control" style="font-weight: bold;" placeholder="Chọn..." [items]="listStatus" bindLabel="text" bindValue="value"
+									<input *ngIf="isUser && modelUser.isActived" disabled type="text" class="form-control" value="Hiệu lực">
+									<input *ngIf="isUser && !modelUser.isActived" disabled type="text" class="form-control" value="Hết hiệu lực">
+									<ng-select [ngClass]="{ 'hide': isUser == true }" class="form-control" style="font-weight: bold;" placeholder="Chọn..." [items]="listStatus" bindLabel="text" bindValue="value"
 										formControlName="isActived" [(ngModel)]="modelUser.isActived" [closeOnSelect]="true" [searchable]="false">
 									</ng-select>
 									<div *ngIf="(userFormSubmitted && fUser.isActived.invalid)||(fUser.isActived.invalid && (fUser.isActived.dirty || fUser.isActived.touched))"
@@ -148,7 +153,7 @@
 							</div>
 						</form>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-6" *ngIf="isUser == false">
 						<p class="h4 text-uppercase mt-3">Phân quyền vai trò</p>
 						<div class="row no-margin" style="height: 60vh; overflow: auto;">
 							<div class="col-md-12 panel-body mt-3" *ngFor="let permisionCategory of listPermissionCategories;let i = index">

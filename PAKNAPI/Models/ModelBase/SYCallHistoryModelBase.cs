@@ -26,7 +26,7 @@ namespace PAKNAPI.Models.ModelBase
         {
         }
         public long? RowNumber { get; set; }
-        public short Id { get; set; }
+        public long Id { get; set; }
         public string Phone { get; set; }
         public int Type { get; set; }
         public DateTime? StartDate { get; set; }
@@ -40,6 +40,14 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("PageIndex", pageIndex);
             DP.Add("PageSize", pageSize);
             return (await _sQLCon.ExecuteListDapperAsync<SYCallHistoryPagedList>("[SY_CallHistory_GetPageList]", DP)).ToList();
+        }
+
+        public async Task<int> Delete(long id)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("id", id);
+            return await _sQLCon.ExecuteNonQueryDapperAsync("[SY_CallHistory_Delete]", DP);
+            
         }
     }
 }

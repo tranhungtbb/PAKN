@@ -80,7 +80,7 @@
 									<span type="button" (click)="preUpdateStatus(item)" *ngIf="item.isActived == true" class="badge rounded-pill bg-success">Hiệu lực</span>
 									<span type="button" (click)="preUpdateStatus(item)" *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Hết hiệu lực</span>
 								</td>
-								<td class="text-right"><strong>{{item.countWord}}</strong></td>
+								<td class="text-right" style="cursor: pointer;" (click)="getListWordLibraryByGroupId(item.id)"><strong>{{item.countWord}}</strong></td>
 								<td style="text-align: center;">
 									<div class="d-flex justify-content-end">
 										<a type="button" (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
@@ -200,6 +200,35 @@
 							<i class="far fa-times"></i>
 						</button> -->
 					<!-- </div> -->
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalLstWordByGroupId">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 40%" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header" style="border: none;">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">Danh sách từ ngữ thuộc nhóm từ ngữ</p>
+					</div>
+					<div class="modal-body no-padding-bottom" style="padding: 1.1rem;">
+						<div class="row" style="padding: 10px 0px;">
+							<div class="col-sm-12" style="text-align: left;">
+								<ng-container *ngFor="let item of listWordByGroupId">
+									<span *ngIf="item.isActived == true" class="badge rounded-pill bg-success mr-3 mt-2 mb-2 pr-3 pl-3">{{item.name}}</span>
+									<span *ngIf="item.isActived == false" class="badge rounded-pill badge-light mr-3 mt-2 mb-2 pr-3 pl-3">{{item.name}}</span>
+								</ng-container>
+								<p *ngIf="listWordByGroupId && listWordByGroupId.length ==0">Không có từ ngữ nào thuộc nhóm từ này</p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</form>
 		</div>

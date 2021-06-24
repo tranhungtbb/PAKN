@@ -196,6 +196,6 @@ export class REGEX {
 }
 
 export class PathSampleFiles {
-	public static PathSampleFilesIndividual = '/Upload/BusinessIndividual/SampleFilesIndividual.xlsx'
-	public static PathSampleFilesBusiness = '/Upload/BusinessIndividual/SampleFilesBusiness.xlsx'
+	public static PathSampleFilesIndividual = '/Upload/BusinessIndividual/Danh-sach-nguoi-dan.xlsx'
+	public static PathSampleFilesBusiness = '/Upload/BusinessIndividual/Danh-sach-doanh-nghiep.xlsx'
 }

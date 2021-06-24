@@ -83,7 +83,7 @@
                 </Item1>
                 <Item2 Ref="49" ControlType="XRTableCell" Name="tableCell8" Weight="0.76083680967847522" Multiline="true" Text="tableCell8" StyleName="DetailData3" Font="Times New Roman, 10pt" ForeColor="Black" Padding="2,2,0,0,100" Borders="All">
                   <ExpressionBindings>
-                    <Item1 Ref="50" Expression="[UnitName]" PropertyName="Text" EventName="BeforePrint" />
+                    <Item1 Ref="50" Expression="[FieldName]" PropertyName="Text" EventName="BeforePrint" />
                   </ExpressionBindings>
                   <StylePriority Ref="51" UseFont="false" UseForeColor="false" UseBorders="false" />
                 </Item2>

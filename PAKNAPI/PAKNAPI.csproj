@@ -14,13 +14,13 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="bin\Release\netcoreapp3.1\netcoreapp3.1\**" />
+    <Compile Remove="bin\**" />
     <Compile Remove="Upload\**" />
-    <Content Remove="bin\Release\netcoreapp3.1\netcoreapp3.1\**" />
+    <Content Remove="bin\**" />
     <Content Remove="Upload\**" />
-    <EmbeddedResource Remove="bin\Release\netcoreapp3.1\netcoreapp3.1\**" />
+    <EmbeddedResource Remove="bin\**" />
     <EmbeddedResource Remove="Upload\**" />
-    <None Remove="bin\Release\netcoreapp3.1\netcoreapp3.1\**" />
+    <None Remove="bin\**" />
     <None Remove="Upload\**" />
   </ItemGroup>
   <ItemGroup>
@@ -45,14 +45,13 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="2.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.8.2" />
+    <PackageReference Include="Pdfbox" Version="1.1.1" />
     <PackageReference Include="Quartz" Version="3.3.2" />
     <PackageReference Include="SimpleImpersonation" Version="3.0.0" />
     <PackageReference Include="Spire.PDF" Version="5.12.15" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\Debug\netcoreapp3.1\" />
-    <Folder Include="bin\Release\netcoreapp3.1\" />
     <Folder Include="DataBaseAuto\" />
     <Folder Include="Models\Results\" />
     <Folder Include="BusinessLogic\" />

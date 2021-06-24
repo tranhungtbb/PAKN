@@ -150,6 +150,7 @@ export class Api {
 	public static DepartmentGroupDelete = 'CACategorySPBase/CADepartmentGroupDeleteBase'
 	//Word
 	public static WordGetList = 'CACategorySPBase/CAWordGetAllOnPageBase'
+	public static WordGetListByGroupId = 'CACategorySPBase/CAWordGetAllOnPageByGroupIdBase'
 	public static WordGetById = 'CACategorySPBase/CAWordGetByIDBase'
 	public static WordInsert = 'CACategorySPBase/CAWordInsertBase'
 	public static WordUpdate = 'CACategorySPBase/CAWordUpdateBase'
@@ -355,7 +356,11 @@ export class Api {
 
 	// đồng bộ
 	public static MrSyncCongThongTinDienTuTinhPagedList = 'RecommandationSync/CongThongTinDienTuTinhPagedList'
-	public static MrSyncCongThongTinDichVuHCCPagedList = 'RecommandationSync/CongThongTinDienTuTinhPagedList'
-	public static MrSyncHeThongPANKChinhPhuPagedList = 'RecommandationSync/CongThongTinDienTuTinhPagedList'
-	public static MrSyncHeThongQuanLyKienNghiCuTriPagedList = 'RecommandationSync/CongThongTinDienTuTinhPagedList'
+	public static MrSyncCongThongTinDichVuHCCPagedList = 'RecommandationSync/CongThongTinDichVuHCCPagedList'
+	public static MrSyncHeThongPANKChinhPhuPagedList = 'RecommandationSync/HeThongPANKChinhPhuPagedList'
+	public static MrSyncHeThongQuanLyKienNghiCuTriPagedList = 'RecommandationSync/HeThongQuanLyKienNghiCuTriPagedList'
+	public static PU_RecommandationSyncPagedList = 'RecommandationSync/PUGetPagedList'
+	public static PU_RecommandationSyncGetDetail = 'RecommandationSync/PUGetGetById'
+
+	
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {RecommandationSyncService} from 'src/app/services/recommandation-sync.service'
 
+declare var $:any
 @Component({
   selector: 'app-he-thong-pakn-chinh-phu',
   templateUrl: './he-thong-pakn-chinh-phu.component.html',
@@ -18,8 +19,9 @@ export class HeThongPaknChinhPhuComponent implements OnInit {
   listData:any[] = []
 
   query={
-    questioner:'',
-    question:'',
+    title:'',
+    status:'',
+    createdby:'',
     pageIndex:1,
     pageSize:20
   }
@@ -35,15 +37,19 @@ export class HeThongPaknChinhPhuComponent implements OnInit {
   dataStateChange (){
     this.getData();
   }
-  getDetail(item:any){}
 
   reSync(){
     //TODO
     this.getData();
   }
   getData(){
+    this.query.title = this.query.title.trim();
+    this.query.createdby = this.query.createdby.trim();
+    this.query.status = this.query.status.trim();
+
     let query = {...this.query}
-    this._RecommandationSyncService.getCongThongTinDienTuTinhPagedList(query).subscribe(res=>{
+    
+    this._RecommandationSyncService.getHeThongPANKChinhPhuPagedList(query).subscribe(res=>{
       if(res){
         this.listData = res.result.Data.map(c=>{
           if(c.questioner)
@@ -57,4 +63,10 @@ export class HeThongPaknChinhPhuComponent implements OnInit {
     })
   }
 
+  ///view detail
+  modelView:any={}
+  getDetail(item:any){
+    this.modelView = item
+    $('#modalDetail').modal('show')
+  }
 }

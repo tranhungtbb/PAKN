@@ -160,7 +160,6 @@ namespace PAKNAPI.Controllers
 				claims,
 				expires: DateTime.Now.AddDays(20),
 				signingCredentials: credentials);
-
 			return new JwtSecurityTokenHandler().WriteToken(token);
 		}
 
@@ -171,7 +170,8 @@ namespace PAKNAPI.Controllers
 		{
             try
 			{
-				long? UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				//long? UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				//JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK };
 			}

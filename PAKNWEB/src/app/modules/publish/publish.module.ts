@@ -27,7 +27,9 @@ import { ViewNewsComponent } from './view-news/view-news.component'
 import { ViewAdministrativeProceduresComponent } from './view-administrative-procedures/view-administrative-procedures.component'
 import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component';
 import { ChatbotComponent } from './chatbot/chatbot.component'
-import  {ViewNotificationComponent} from './view-notification/view-notification.component'
+import  {ViewNotificationComponent} from './view-notification/view-notification.component';
+import { RecommendationsSyncComponent } from './recommendations-sync/recommendations-sync.component';
+import { ViewRecommendationsSyncComponent } from './view-recommendations-sync/view-recommendations-sync.component'
 
 @NgModule({
 	declarations: [
@@ -46,7 +48,9 @@ import  {ViewNotificationComponent} from './view-notification/view-notification.
 		ViewAdministrativeProceduresComponent,
 		ViewRightComponent,
 		ChatbotComponent,
-		ViewNotificationComponent
+		ViewNotificationComponent,
+		RecommendationsSyncComponent,
+		ViewRecommendationsSyncComponent
 	],
 	imports: [
 		CommonModule,

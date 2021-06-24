@@ -13,6 +13,7 @@ using System.Web;
 using Newtonsoft.Json;
 using PAKNAPI.Common;
 using PAKNAPI.Models;
+using PAKNAPI.ModelBase;
 
 namespace PAKNAPI
 {
@@ -38,10 +39,9 @@ namespace PAKNAPI
                 return reportUrlsFromAssemblies;
             }
         }
-
+        private readonly IAppSetting _appSetting;
         public ReportStorageWebExtension1()
         {
-
             Reports = new ConcurrentDictionary<string, ReportDetails>();
             EmbeddedResourceReportStorage = new EmbeddedResourceReportStorageService { Assemblies = new Assembly[] { Assembly.GetExecutingAssembly() } };
 

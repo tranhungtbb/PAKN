@@ -50,6 +50,7 @@ export class ListApproveWaitComponent implements OnInit {
 	pageIndex: number = 1
 	pageSize: number = 20
 	lstHistories: any = []
+	titleAccept : any = ''
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
@@ -157,6 +158,7 @@ export class ListApproveWaitComponent implements OnInit {
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
 			$('#modalReject').modal('show')
 		} else {
+			this.titleAccept = 'Anh/Chị có chắc chắn muốn phê duyệt PAKN này?'
 			$('#modalAccept').modal('show')
 		}
 	}

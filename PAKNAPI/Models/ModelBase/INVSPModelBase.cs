@@ -265,7 +265,7 @@ namespace PAKNAPI.ModelBase
 		public byte Status { get; set; }
 		public int? AmountWatched { get; set; }
 
-		public async Task<List<INVInvitationGetAllOnPage>> INVInvitationGetAllOnPageDAO(int? PageSize, int? PageIndex, string Title, DateTime? StartDate, DateTime? EndDate, string Place, byte? Status)
+		public async Task<List<INVInvitationGetAllOnPage>> INVInvitationGetAllOnPageDAO(int? PageSize, int? PageIndex, string Title, DateTime? StartDate, DateTime? EndDate, string Place, byte? Status, long UserProcessId)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
@@ -275,6 +275,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("EndDate", EndDate);
 			DP.Add("Place", Place);
 			DP.Add("Status", Status);
+			DP.Add("UserProcessId", UserProcessId);
 
 			return (await _sQLCon.ExecuteListDapperAsync<INVInvitationGetAllOnPage>("INV_InvitationGetAllOnPage", DP)).ToList();
 		}

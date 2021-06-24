@@ -62,21 +62,26 @@ export class RecommendationsByFieldDetailComponent implements OnInit {
 				this.dataSearch.status = Number(status)
 			}
 			this.getList()
-		})
-		this._serviceRecommendation.recommendationGetDataForCreate({}).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				if (response.result != null) {
-					this.lstUnit = response.result.lstUnit
-					let field = response.result.lstField.find(x=>x.value == this.dataSearch.fieldId)
-					this.fieldName = field.text.replaceAll('-', '')
+			this._serviceRecommendation.recommendationGetDataForCreate({}).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					if (response.result != null) {
+						let lstUnitId = this.dataSearch.lstUnitId.split(',').map(Number)
+						this.lstUnit  = response.result.lstUnit.filter(x=>{
+							if(lstUnitId.includes(x.value)){
+								return x
+							}
+						})
+						let field = response.result.lstField.find(x=>x.value == this.dataSearch.fieldId)
+						this.fieldName = field.text.replaceAll('-', '')
+					}
+				} else {
+					this._toastr.error(response.message)
 				}
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.log(error)
-			}
+			}),
+				(error) => {
+					console.log(error)
+				}
+		})
 	}
 
 	ngAfterViewInit() {
