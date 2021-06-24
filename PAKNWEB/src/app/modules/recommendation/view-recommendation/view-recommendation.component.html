@@ -46,6 +46,10 @@
 						</svg>
 						Phê duyệt
 					</button>
+					<button *ngIf="enableEdit" type="button" class="btn grd-brown text-dark border-0 ml-3 py-2 px-3 cursor-hand" title="Sửa"
+					[routerLink]="['/quan-tri/kien-nghi/them-moi',model.id]">
+						<i class="bi bi-pencil-square"></i> Sửa
+					</button>
 				</div>
 			</div>
 		</div>

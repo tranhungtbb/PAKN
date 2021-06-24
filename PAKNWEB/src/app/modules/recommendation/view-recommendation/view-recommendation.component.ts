@@ -55,6 +55,9 @@ export class ViewRecommendationComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	@ViewChild('file', { static: false }) public file: ElementRef
 	@ViewChild(RemindComponent, { static: true }) remindComponent: RemindComponent
+
+	enableEdit = false;
+
 	constructor(
 		private toastr: ToastrService,
 		private fileService: UploadFileService,
@@ -89,6 +92,9 @@ export class ViewRecommendationComponent implements OnInit {
 				this.suggest = suggest
 			}
 		})
+
+
+
 	}
 
 	getData() {
@@ -114,6 +120,10 @@ export class ViewRecommendationComponent implements OnInit {
 
 				this.commentQuery.recommendationId = this.model.id
 				this.getCommentPaged()
+
+
+				this.enableEdit = (this.model.status == 1 && this.model.createdBy == this.storeageService.getUserId())
+
 			} else {
 				this.toastr.error(response.message)
 			}

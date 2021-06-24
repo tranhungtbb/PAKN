@@ -75,9 +75,9 @@
 						<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_IsDate" [(ngModel)]="model._DateOfIssue"
 							formControlName="DateIssue" appBsDatepickerInvalid
 							[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" [maxDate]="dateNow" />
-						<div class="input-group-addon">
-							<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
-						</div>
+							<div class="input-group-addon p-2">
+								<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+							</div>
 					</div>
 
 					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.DateIssue.invalid)||(fOrgInfo.DateIssue.invalid && (fOrgInfo.DateIssue.dirty || fOrgInfo.DateIssue.touched))"

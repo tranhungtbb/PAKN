@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, AfterViewInit } from '@angular/core'
 import { DashBoardService } from '../../services/dashboard.service'
 import { UserInfoStorageService } from '../../commons/user-info-storage.service'
 import { DatepickerDateCustomClasses } from 'ngx-bootstrap/datepicker/models'
@@ -16,7 +16,7 @@ declare var $: any
 	templateUrl: './dash-board.component.html',
 	styleUrls: ['./dash-board.component.css'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
 	constructor(
 		private _toast: ToastrService,
 		private service: DashBoardService,
@@ -38,6 +38,9 @@ export class DashboardComponent implements OnInit {
 	ngOnInit() {
 		this.getDataGraph()
 		$('.data-attr').peity('donut')
+	}
+	ngAfterViewInit(){
+		
 	}
 
 	getDataGraph() {

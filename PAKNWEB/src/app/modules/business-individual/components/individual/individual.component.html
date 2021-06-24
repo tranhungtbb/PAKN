@@ -236,9 +236,9 @@
 									<input class="form-control" autocomplete="off" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dateIssue"
 										[(ngModel)]="model.dateOfIssue" formControlName="dateIssue" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" [maxDate]="dateNow" />
-									<div class="input-group-addon">
-										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
-									</div>
+										<div class="input-group-addon p-2">
+											<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+										</div>
 								</div>
 							</div>
 							<!-- row 3 -->
@@ -332,8 +332,8 @@
 									<input class="form-control" placeholder="Nhập..." autocomplete="off" bsDatepicker #n="bsDatepicker" maxlength="10" id="_dob"
 										[(ngModel)]="model.birthDate" formControlName="birthDate" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" [maxDate]="dateNow" />
-									<div class="input-group-addon">
-										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+									<div class="input-group-addon p-2">
+										<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 									</div>
 								</div>
 								<div *ngIf="(submitted && f.birthDate.invalid)||(f.birthDate.invalid && (f.birthDate.dirty || f.birthDate.touched))" class="has-error m-b-12">

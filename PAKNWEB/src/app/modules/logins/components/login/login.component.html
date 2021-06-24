@@ -27,7 +27,7 @@
 															nghiệp.</p>
 														<form [formGroup]="loginFormProduct" #formDir="ngForm" (ngSubmit)="loginProduct()">
 															<div class="form-group mb-4">
-																<input class="form-control rounded-xl px-4 border-brown" style="font-size: 20px" placeholder="Nhập số điện thoại..."
+																<input class="form-control rounded-8px h-50px px-4 border-brown" style="font-size: 20px" placeholder="Nhập số điện thoại..."
 																	maxlength="10" id="productname" type="text" formControlName="name" [(ngModel)]="userProduct.UserName" required
 																	onlyNumber="true" pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$"
 																	(change)="userProduct.UserName=userProduct.UserName.trim()">
@@ -42,7 +42,7 @@
 																</div>
 															</div>
 															<div class="form-group" style="position: relative;">
-																<input class="form-control rounded-xl px-4 border-brown" [type]="isShowPassword ? 'text' : 'password'"  id="productpass"
+																<input class="form-control rounded-8px h-50px px-4 border-brown" [type]="isShowPassword ? 'text' : 'password'"  id="productpass"
 																	(change)="userProduct.Password=userProduct.Password.trim()" style="font-size: 20px" placeholder="Mật khẩu..."
 																	formControlName="pass" [(ngModel)]="userProduct.Password" required>
 																	<i class="custom-show-pass" [ngClass]="{ 'bi bi-eye': isShowPassword, 'bi bi-eye-slash': !isShowPassword}" (click)="showPassword()"></i>
@@ -53,16 +53,16 @@
 																	</div>
 																</div>
 															</div>
-															<div class="form-group captcha-form bg-white rounded-xl pt-5 border border-brown position-relative">
-																<div class="bg-white captcha d-flex justify-content-between align-items-center rounded-xl shadow position-absolute">
-																	<img class="img-fluid rounded-xl" style="max-height: 70px; max-width: 70%; padding-left: 50px;" id="img-captcha"
+															<div class="form-group captcha-form bg-white rounded-xl pt-4 border border-brown position-relative">
+																<div class="bg-white captcha d-flex justify-content-between align-items-center rounded-8px h-50px shadow position-absolute">
+																	<img class="img-fluid rounded-xl mr-4 pl-3" style="max-height: 70px; max-width: 70%;" id="img-captcha"
 																		[src]="captchaImage" />
-																	<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat"
+																	<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl ml-5"><i class="bi bi-arrow-repeat"
 																			style="font-size: 34px"></i></button>
 																</div>
 																<input type="text" formControlName="captcha" [(ngModel)]="captchaCodeProduct" maxlength="5" style="font-size: 20px"
 																(change)="captchaCodeProduct=captchaCodeProduct.trim()"
-																	placeholder="Nhập mã xác thực..." class="form-control bg-transparent px-4 border-0" value="">
+																	placeholder="Nhập mã xác thực..." class="form-control bg-transparent px-4 border-0 " value="">
 															</div>
 															<div *ngIf="(submittedProduct && floginFormProduct.captcha.invalid)||(floginFormProduct.captcha.invalid && (floginFormProduct.captcha.dirty || floginFormProduct.captcha.touched))"
 																class="has-error m-b-12">
@@ -104,7 +104,7 @@
 														<p class="text-center cl-brown">Đăng nhập và sử dụng hệ thống dành cho cán bộ, người có thẩm quyền.</p>
 														<form [formGroup]="loginForm" #formDir="ngForm" (ngSubmit)="login()">
 															<div class="form-group mb-4">
-																<input class="form-control rounded-xl px-4 border-brown" (change)="user.UserName=user.UserName.trim()"
+																<input class="form-control rounded-8px h-50px px-4 border-brown" (change)="user.UserName=user.UserName.trim()"
 																	style="font-size: 20px" placeholder="Nhập tài khoản, email..." type="text" id="username" formControlName="name"
 																	[(ngModel)]="user.UserName" required>
 																<div *ngIf="name.invalid && (name.dirty || name.touched || submitted)" class="has-error m-b-12">
@@ -117,7 +117,7 @@
 																</div>
 															</div>
 															<div class="form-group" style="position: relative;">
-																<input class="form-control rounded-xl px-4 border-brown"  [type]="isShowPassword ? 'text' : 'password'"  style="font-size: 20px" id="userpass"
+																<input class="form-control rounded-8px h-50px px-4 border-brown"  [type]="isShowPassword ? 'text' : 'password'"  style="font-size: 20px" id="userpass"
 																	(change)="user.Password=user.Password.trim()" placeholder="Mật khẩu..." formControlName="pass"
 																	[(ngModel)]="user.Password" required>
 																	<i class="custom-show-pass" [ngClass]="{ 'bi bi-eye': isShowPassword, 'bi bi-eye-slash': !isShowPassword}" (click)="showPassword()"></i>
@@ -127,11 +127,11 @@
 																	</div>
 																</div>
 															</div>
-															<div class="form-group captcha-form bg-white rounded-xl pt-5 border border-brown position-relative">
-																<div class="bg-white captcha d-flex justify-content-between align-items-center rounded-xl shadow position-absolute">
-																	<img class="img-fluid rounded-xl" style="max-height: 70px; max-width: 70%; padding-left: 50px;" id="img-captcha"
+															<div class="form-group captcha-form bg-white rounded-xl pt-4 border border-brown position-relative">
+																<div class="bg-white captcha d-flex justify-content-between align-items-center rounded-8px h-50px shadow position-absolute">
+																	<img class="img-fluid rounded-xl mr-4 pl-3" style="max-height: 70px; max-width: 70%;" id="img-captcha"
 																		[src]="captchaImage" />
-																	<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat"
+																	<button type="button" (click)="reloadImage()" class="btn p-2 rounded-10px ml-5"><i class="bi bi-arrow-repeat"
 																			style="font-size: 34px"></i></button>
 																</div>
 																<input type="text" formControlName="captcha" [(ngModel)]="captchaCode" maxlength="5" style="font-size: 20px"
@@ -157,7 +157,7 @@
 															</div>
 															<div class="text-center">
 																<button type="submit"
-																	class="btn btn-blue text-white text-uppercase font-weight-normal btn-block border-0 rounded-xl"
+																	class="btn btn-blue text-white text-uppercase font-weight-normal btn-block border-0 rounded-10px"
 																	style="font-size: 20px">Đăng nhập</button>
 															</div>
 														</form>

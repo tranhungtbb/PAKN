@@ -1,5 +1,6 @@
 export class AppSettings {
 	public static HostingAddress = 'http://localhost'
+	public static weatherApi = 'http://api.openweathermap.org/data/2.5/weather'
 
 	public static API_ADDRESS = 'http://localhost:51046/api/'
 	public static API_DOWNLOADFILES = 'http://localhost:51046'
