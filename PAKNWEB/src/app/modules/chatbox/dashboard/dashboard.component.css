@@ -41,7 +41,7 @@
 	flex: 0 0 80px;
 	box-sizing: border-box;
 	padding: 21px 19px 18px;
-	background: rgba(211, 230, 255);
+	background: #ecf4ff;
 }
 
 .dashboardCB__logo {
@@ -243,7 +243,7 @@ app-dialogs {
 	border-bottom: 1px solid #dadfe1;
 	flex: 0 0 109px;
 	box-sizing: border-box;
-	background: rgba(193, 216, 246);
+	background: #dbebff;
 }
 
 .content__inner {
@@ -741,7 +741,7 @@ app-dialogs {
 	flex: 1 1 100%;
 	overflow-y: auto;
 	text-align: left;
-	background: rgba(211, 230, 255);
+	background: #ecf4ff;
 }
 
 .sidebar__dilog_list.loading:after {
@@ -946,6 +946,11 @@ app-dialogs {
 	overflow: hidden;
 	margin: 0 10px 6px 0;
 }
+.ex1:hover .dialog__name,
+.ex1:hover .dialog__last_message,
+.ex1:hover .dialog__last_message_date {
+	color: white;
+}
 
 .dialog__last_message {
 	display: block;
@@ -1143,3 +1148,10 @@ html {
 :hover {
 	border-radius: 15px;
 } */
+.ex1 {
+	background-color: white;
+}
+a.ex1:hover,
+a.ex1:active {
+	background-color: #1673d8;
+}

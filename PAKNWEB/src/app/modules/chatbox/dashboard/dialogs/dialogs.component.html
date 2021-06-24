@@ -1,14 +1,27 @@
 <div class="content__title j-content__title j-dialog">
   <button class="open_sidebar j-open_sidebar"></button>
-  <h1 class="dialog__title j-dialog__title"> {{chatName}} </h1>
+  <h1 class="dialog__title j-dialog__title">  
+  <input *ngIf="editab" type="text" class="border-0 rounded" [(ngModel)]="txtNameGroup" (keydown.enter)="LoadNameGroup()" />
+  <span *ngIf="!editab" (click)="editab=true" >{{txtNameGroup}}</span>
+
+  </h1>
   <div class="action_links" *ngIf="dialog && dialog.type !== CONSTANTS.DIALOG_TYPES.PUBLICCHAT" >
     <!-- <a *ngIf="dialog.type == CONSTANTS.DIALOG_TYPES.GROUPCHAT" class="add_to_dialog j-add_to_dialog" (click)="showUpdateDialog()"> -->
-    <a class="add_to_dialog j-add_to_dialog" (click)="showUpdateDialog()">
-      <i class="material-icons">person_add</i>
-    </a>
-    <a class="quit_fom_dialog_link" (click)="quitFromTheDialog()">
-      <i class="material-icons">delete</i>
-    </a>
+      <button class="bg-thead bg-w border-0 btn-icon mr-2 add_to_dialog j-add_to_dialog" (click)="showUpdateDialog()">
+        <i class="bi bi-person-plus"></i>
+      </button>
+      <button _ngcontent-qsk-c12="" class="bg-thead bg-w border-0 btn-icon mr-2" >
+        <i class="bi bi-telephone"></i>
+      </button>     
+      <button _ngcontent-qsk-c12="" class="bg-thead bg-w border-0 btn-icon mr-2" >
+        <i class="bi bi-camera-video"></i>
+      </button> 
+      <button class="bg-thead bg-w border-0 btn-icon mr-2 quit_fom_dialog_link" (click)="quitFromTheDialog()">
+        <i class="bi bi-box-arrow-right"></i>
+      </button>
+      <button _ngcontent-qsk-c12="" class="bg-thead bg-w border-0 btn-icon mr-2" >
+        <i class="bi bi-three-dots"></i>
+      </button>      
   </div>
 </div>
 <div class="notifications j-notifications hidden"></div>
@@ -28,13 +41,14 @@
   <form (ngSubmit)="onSubmit()" autocomplete="off" class="send_message" name="send_message" style="
   display: flex;">
     <label class="attach_btn" for="attach_btn">      
-      <i _ngcontent-qsk-c12="" class="bi bi-plus-circle-fill m-2" title="Đính kèm"></i>      
-      <input accept="image/*,.zip" class="attach_input" id="attach_btn" (change)="prepareToUpload($event)" name="attach_file" type="file"/>
+      <i _ngcontent-qsk-c12="" class="bi bi-plus-circle-fill m-2 mt-3"  title="Đính kèm"></i>      
+       <input accept="image/*,.zip" class="attach_input" id="attach_btn" (change)="prepareToUpload($event)" name="attach_file" type="file"/>
     </label>
     <textarea #field autocapitalize="off" (keydown)="onKeydown($event)"
               (keyup.shift)="shiftDown = false"
               autocomplete="off" autocorrect="off" autofocus
-              class="message_feald" [(ngModel)]="messageField" name="message_feald" placeholder="Type a message"></textarea>
+              class="message_feald" [(ngModel)]="messageField" name="message_feald" placeholder="Nhập Tin Nhắn..."></textarea>
+              <i class="bi bi-emoji-smile mt-4"></i>
     <div class="message__actions">
       <div class="attachments_preview j-attachments_preview">
         <ng-container *ngFor="let data of attachments">
@@ -45,7 +59,8 @@
       </div>
       
       <!-- <button class="send_btn">send</button> -->
-
+      
+      
       <button _ngcontent-qsk-c12="" class="btn-icon mr-2 grd-blue text-white border-0" >
         <i _ngcontent-qsk-c12="" class="bi bi-cursor-fill" title="Gửi"></i>
       </button>
