@@ -21,7 +21,6 @@ namespace PAKNAPI.Services.FileUpload
         {
             string contentRootPath = _webHostEnvironment.ContentRootPath;
             string fullPath = Path.Combine(contentRootPath, filePath);
-
             try
             {
                 if (!System.IO.File.Exists(fullPath)) return null;

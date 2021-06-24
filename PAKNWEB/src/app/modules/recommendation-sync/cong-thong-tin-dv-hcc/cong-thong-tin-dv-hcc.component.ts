@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {RecommandationSyncService} from 'src/app/services/recommandation-sync.service'
 
+declare var $:any
 @Component({
   selector: 'app-cong-thong-tin-dv-hcc',
   templateUrl: './cong-thong-tin-dv-hcc.component.html',
@@ -26,8 +27,6 @@ export class CongThongTinDvHccComponent implements OnInit {
 
   totalRecords=0
 
-  modelView:any
-
   //event
   onPageChange(event:any){
     this.query.pageSize = event.rows
@@ -37,7 +36,6 @@ export class CongThongTinDvHccComponent implements OnInit {
   dataStateChange (){
     this.getData();
   }
-  getDetail(item:any){}
 
   reSync(){
     //TODO
@@ -59,6 +57,13 @@ export class CongThongTinDvHccComponent implements OnInit {
           this.totalRecords = this.listData[0].rowNumber;
       }
     })
+  }
+
+  ///view detail
+  modelView:any={}
+  getDetail(item:any){
+    this.modelView = item
+    $('#modalDetail').modal('show')
   }
 
 }
