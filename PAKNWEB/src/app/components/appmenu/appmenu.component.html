@@ -18,9 +18,9 @@
 				<ul routerLinkActive="mm-show" aria-expanded="false">
 					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/danh-sach-tong-hop">Danh sách tổng hợp</a>
 					</li>
-					<li *ngIf="isMainMenu"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/cho-xu-ly">Chờ xử lý</a></li>
-					<li *ngIf="isMainMenu"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tiep-nhan-xu-ly">Tiếp nhận xử lý</a></li>
-					<li *ngIf="isMainMenu"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tu-choi-tiep-nhan">Từ chối tiếp nhận</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/cho-xu-ly">Chờ xử lý</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tiep-nhan-xu-ly">Tiếp nhận xử lý</a></li>
+					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tu-choi-tiep-nhan">Từ chối tiếp nhận</a></li>
 					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/cho-giai-quyet">Chờ giải quyết</a></li>
 					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/dang-giai-quyet">Đang giải quyết</a></li>
 					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tu-choi-giai-quyet">Từ chối giải quyết</a>
@@ -72,32 +72,34 @@
 					<span class="nav-text">Thư mời</span>
 				</a>
 			</li>
-			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">  
+				<!-- *hasPermission="['1','B']" -->
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-chat-right-dots"></i>
 					<span class="nav-text">Email/SMS</span>
 				</a>
 				<ul routerLinkActive="mm-show" aria-expanded="false">
-					<li><a routerLink="/quan-tri/email-sms/email">Dự thảo Email</a></li>
-					<li><a routerLink="/quan-tri/email-sms/email/sent">Email đã gửi</a></li>
-					<li><a routerLink="/quan-tri/email-sms/sms">Dự thảo SMS</a></li>
-					<li><a routerLink="/quan-tri/email-sms/sms-da-gui">SMS đã gửi</a></li>
+					<li *hasPermission="['3', 'B_I_2']"><a routerLink="/quan-tri/email-sms/email">Dự thảo Email</a></li>
+					<li *hasPermission="['3', 'B_I_2']"><a routerLink="/quan-tri/email-sms/email/sent">Email đã gửi</a></li>
+					<li *hasPermission="['3', 'B_II_3']"><a routerLink="/quan-tri/email-sms/sms">Dự thảo SMS</a></li>
+					<li *hasPermission="['3', 'B_II_3']"><a routerLink="/quan-tri/email-sms/sms-da-gui">SMS đã gửi</a></li>
 				</ul>
 			</li>
 			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+					<!-- *hasPermission="['1','C']" -->
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-distribute-vertical"></i>
 					<span class="nav-text">Danh mục</span>
 				</a>
 				<ul routerLinkActive="mm-show" aria-expanded="false">
-					<li><a routerLink="/quan-tri/danh-muc/chuc-vu">Chức vụ</a></li>
-					<li><a routerLink="/quan-tri/danh-muc/linh-vuc">Lĩnh vực</a></li>
-					<li><a routerLink="/quan-tri/danh-muc/loai-tin-tuc">Loại tin tức</a></li>
-					<li><a routerLink="/quan-tri/danh-muc/nhom-thu-vien-tu">Nhóm thư viện từ ngữ</a></li>
-					<li><a routerLink="/quan-tri/danh-muc/thu-vien-tu">Thư viện từ ngữ</a></li>
-					<li><a routerLink="/quan-tri/danh-muc/nhom-so-nganh">Nhóm sở ngành</a></li>
-					<li><a routerLink="/quan-tri/danh-muc/so-nganh">Sở ngành</a></li>
-					<li><a routerLink="/quan-tri/danh-muc/hashtag">Hashtag</a></li>
+					<li *hasPermission="['3', 'C_I_0']"><a routerLink="/quan-tri/danh-muc/chuc-vu">Chức vụ</a></li>
+					<li *hasPermission="['3', 'C_IV_3']"><a routerLink="/quan-tri/danh-muc/linh-vuc">Lĩnh vực</a></li>
+					<li *hasPermission="['3', 'C_V_3']"><a routerLink="/quan-tri/danh-muc/loai-tin-tuc">Loại tin tức</a></li>
+					<li *hasPermission="['3', 'C_VII_3']"><a routerLink="/quan-tri/danh-muc/nhom-thu-vien-tu">Nhóm thư viện từ ngữ</a></li>
+					<li *hasPermission="['3', 'C_VI_3']"><a routerLink="/quan-tri/danh-muc/thu-vien-tu">Thư viện từ ngữ</a></li>
+					<li *hasPermission="['3', 'C_II_3']"><a routerLink="/quan-tri/danh-muc/nhom-so-nganh">Nhóm sở ngành</a></li>
+					<li *hasPermission="['3', 'C_III_3']"><a routerLink="/quan-tri/danh-muc/so-nganh">Sở ngành</a></li>
+					<li *hasPermission="['3', 'C_VIII_3']"><a routerLink="/quan-tri/danh-muc/hashtag">Hashtag</a></li>
 				</ul>
 			</li>
 			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
@@ -108,7 +110,6 @@
 				<ul routerLinkActive="mm-show" aria-expanded="false">
 					<li><a routerLink="/quan-tri/he-thong/cau-hinh-he-thong">Cấu hình hệ thống</a></li>
 					<li><a routerLink="/quan-tri/he-thong/cau-hinh-time">Cấu hình thời gian làm việc</a></li>
-					<!-- <li><a routerLink="/quan-tri/he-thong/cau-hinh-sms">Cấu hình SMS thương hiệu</a></li> -->
 					<li><a routerLink="/quan-tri/he-thong/cau-hinh-trang-gioi-thieu">Cấu hình trang giới thiệu</a></li>
 					<li><a routerLink="/quan-tri/he-thong/cau-hinh-trang-chu">Cấu hình trang chủ</a></li>
 					<li><a routerLink="/quan-tri/he-thong/co-cau-to-chuc">Cơ cấu tổ chức</a></li>
@@ -125,9 +126,9 @@
 					<span class="nav-text">Báo cáo,Thống kê</span>
 				</a>
 				<ul routerLinkActive="mm-show" aria-expanded="false">
-					<li><a routerLink="/quan-tri/bao-cao/phan-anh-kien-nghi-theo-don-vi">Thống kê Phản ánh kiến nghị theo đơn vị</a></li>
-					<li><a routerLink="/quan-tri/bao-cao/phan-anh-kien-nghi-theo-linh-vuc">Thống kê Phản ánh kiến nghị theo lĩnh vực</a></li>
-					<li><a routerLink="/quan-tri/bao-cao/phan-anh-kien-nghi-theo-nhom-tu-ngu">Thống kê Phản ánh kiến nghị theo nhóm từ phản động</a></li>
+					<li *hasPermission="['3', 'D_I_3']"><a routerLink="/quan-tri/bao-cao/phan-anh-kien-nghi-theo-don-vi">Thống kê Phản ánh kiến nghị theo đơn vị</a></li>
+					<li *hasPermission="['3', 'D_II_3']"><a routerLink="/quan-tri/bao-cao/phan-anh-kien-nghi-theo-linh-vuc">Thống kê Phản ánh kiến nghị theo lĩnh vực</a></li>
+					<li *hasPermission="['3', 'D_III_3']"><a routerLink="/quan-tri/bao-cao/phan-anh-kien-nghi-theo-nhom-tu-ngu">Thống kê Phản ánh kiến nghị theo nhóm từ phản động</a></li>
 				</ul>
 			</li>
 			<!-- <li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">

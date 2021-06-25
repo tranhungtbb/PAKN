@@ -622,9 +622,9 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public short Id { get; set; }
-		public string Name { get; set; }
-		public string Code { get; set; }
+		public string PermissionCategories { get; set; }
+		public string PermissionFunctions { get; set; }
+		public string Permissions { get; set; }
 
 		public async Task<List<SYUSRGetPermissionByUserId>> SYUSRGetPermissionByUserIdDAO(long? UserId)
 		{

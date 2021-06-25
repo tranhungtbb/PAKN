@@ -17,7 +17,7 @@ export class RoleGuardService implements CanActivate {
 			this.userService.setReturnUrl(returnUrl)
 		} else {
 			let currentUserPermissions = this.userService.getPermissions().split(',')
-			let isAdmin = true
+			let isAdmin = this.userService.getIsMain()
 			if (isAdmin || currentUserPermissions.includes(next.data.role)) {
 				return true
 			} else {

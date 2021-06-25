@@ -7,7 +7,7 @@
 			</ol>
 			<div class="btn-group group-button-table" role="group">
 
-				<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="preCreate()">
+				<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" *hasPermission="['3', 'C_III_0']" (click)="preCreate()">
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 					</svg>
@@ -59,30 +59,6 @@
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="email" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
 								</th>
-								<!-- <th>
-                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-                    <strong>Địa chỉ</strong>
-                    <span class="caret-tb"></span>
-                  </p>
-                  <input class="form-control form-control-sm" [(ngModel)]="address" maxlength="100"
-                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
-                </th>
-                <th>
-                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-                    <strong>Fax</strong>
-                    <span class="caret-tb"></span>
-                  </p>
-                  <input class="form-control form-control-sm" [(ngModel)]="fax" maxlength="100"
-                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
-                </th>
-                <th style="width: 350px">
-                  <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-                    <strong>Mô tả</strong>
-                    <span class="caret-tb"></span>
-                  </p>
-                  <input class="form-control form-control-sm" [(ngModel)]="description" maxlength="100"
-                    (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
-                </th> -->
 								<th style="width: 160px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Trạng thái</strong>
@@ -104,32 +80,32 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									<strong (click)="preView(item)" class="highlight" title="Xem chi tiết">{{item.name}}</strong>
+									<strong  *hasNotPermission="['3', 'C_III_4']" class="highlight" title="Xem chi tiết">{{item.name}}</strong>
+									<strong *hasPermission="['3', 'C_III_4']" (click)="preView(item)" class="highlight" title="Xem chi tiết">{{item.name}}</strong>
 								</td>
 								<td>
-									<a (click)="preView(item)" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.groupName}}</a>
+									<a class="ellipsis text-dark" type="button">{{item.groupName}}</a>
 								</td>
 								<td>
-									<a (click)="preView(item)" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.phone}}</a>
+									<a class="ellipsis text-dark" type="button">{{item.phone}}</a>
 								</td>
 								<td>
-									<a (click)="preView(item)" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.email}}</a>
+									<a class="ellipsis text-dark" type="button">{{item.email}}</a>
 								</td>
-								<!-- <td>
-                  <a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.address}}</a>
-                </td>
-                <td>
-                  <a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.fax}}</a>
-                </td>
-                <td>{{item.description}}</td> -->
 								<td>
-									<span type="button" (click)="preUpdateStatus(item)" *ngIf="item.isActived == true" class="badge rounded-pill bg-success">Hiệu lực</span>
-									<span type="button" (click)="preUpdateStatus(item)" *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+									<p  *ngIf="item.isActived == true">
+										<span type="button" *hasNotPermission="['3', 'C_III_5']" class="badge rounded-pill bg-success">Hiệu lực</span>
+										<span type="button" *hasPermission="['3', 'C_III_5']" (click)="preUpdateStatus(item)" class="badge rounded-pill bg-success">Hiệu lực</span>
+									</p>
+									<p *ngIf="item.isActived == false">
+										<span type="button" *hasNotPermission="['3', 'C_III_6']" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+										<span type="button" *hasPermission="['3', 'C_III_6']"  (click)="preUpdateStatus(item)" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+									</p>
 								</td>
 								<td style="text-align: center;">
 									<div class="d-flex justify-content-end">
-										<a type="button" (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-										<a type="button" (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
+										<a type="button" *hasPermission="['3', 'C_III_1']" (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
+										<a type="button" *hasPermission="['3', 'C_III_2']" (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
 												class="bi bi-trash"></i></a>
 									</div>
 								</td>

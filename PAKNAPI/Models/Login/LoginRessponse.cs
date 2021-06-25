@@ -20,8 +20,8 @@ namespace PAKNAPI.Models.Results
         public bool? IsMain { get; set; }
         public bool? IsHaveToken { get; set; }
         public int Role { get; set; }
-        public List<SYUSRGetPermissionByUserId> Permissions { get; set; }
-        public List<string> Functions { get; set; }
-        public List<string> PermissionCategories { get; set; }
+        public string Permissions { get; set; }
+        public string PermissionFunctions { get; set; }
+        public string PermissionCategories { get; set; }
     }
 }

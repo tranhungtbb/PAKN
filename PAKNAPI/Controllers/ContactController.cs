@@ -53,56 +53,83 @@ namespace PAKNAPI.Controllers
 					{
 
 						var tokenString = GenerateJSONWebToken(user[0]);
-						List<SYUSRGetPermissionByUserId> rsSYUSRGetPermissionByUserId = await new SYUSRGetPermissionByUserId(_appSetting).SYUSRGetPermissionByUserIdDAO(Int32.Parse(user[0].Id.ToString()));
-						IDictionary<string, object> json = new Dictionary<string, object>
+						List<SYUSRGetPermissionByUserId> rsSYUSRGetPermissionByUserId = 
+							await new SYUSRGetPermissionByUserId(_appSetting).SYUSRGetPermissionByUserIdDAO(Int32.Parse(user[0].Id.ToString()));
+						if (rsSYUSRGetPermissionByUserId != null && rsSYUSRGetPermissionByUserId.Count > 0)
 						{
-							{ "Id", user[0].Id },
-							{ "UserName", user[0].UserName },
-							{ "FullName", user[0].FullName },
-							{ "Email", user[0].Email },
-							{ "Phone", user[0].Phone },
-							{ "AccessToken", tokenString},
-							{ "Permissions", rsSYUSRGetPermissionByUserId},
-						};
+							BaseRequest baseRequest = new LogHelper(_appSetting).ReadBodyFromRequest(HttpContext.Request);
+
+							SYLOGInsertIN sYSystemLogInsertIN = new SYLOGInsertIN
+							{
+								UserId = user[0].Id,
+								FullName = user[0].FullName,
+								Action = "Login",
+								IPAddress = baseRequest.ipAddress,
+								MACAddress = baseRequest.macAddress,
+								Description = baseRequest.logAction,
+								CreatedDate = DateTime.Now,
+								Status = 1,
+								Exception = null
+							};
+
+							if (user[0].IsActived == false) { sYSystemLogInsertIN.Status = 0; };
+							await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
+
+
+							return new LoginResponse
+							{
+								Success = ResultCode.OK,
+								UserId = user[0].Id,
+								UserName = user[0].UserName,
+								FullName = user[0].FullName,
+								Email = user[0].Email,
+								IsActive = user[0].IsActived,
+								Phone = user[0].UserName,
+								UnitId = user[0].UnitId,
+								UnitName = user[0].UnitName,
+								IsMain = user[0].IsMain,
+								TypeObject = user[0].TypeObject,
+								AccessToken = tokenString,
+								IsHaveToken = true,
+								Permissions = rsSYUSRGetPermissionByUserId[0].Permissions,
+								PermissionCategories = rsSYUSRGetPermissionByUserId[0].PermissionCategories,
+								PermissionFunctions = rsSYUSRGetPermissionByUserId[0].PermissionFunctions
+							};
+						}
+						else {
+							BaseRequest baseRequest = new LogHelper(_appSetting).ReadBodyFromRequest(HttpContext.Request);
+
+							SYLOGInsertIN sYSystemLogInsertIN = new SYLOGInsertIN
+							{
+								UserId = user[0].Id,
+								FullName = user[0].FullName,
+								Action = "Login",
+								IPAddress = baseRequest.ipAddress,
+								MACAddress = baseRequest.macAddress,
+								Description = baseRequest.logAction,
+								CreatedDate = DateTime.Now,
+								Status = 0,
+								Exception = null
+							};
+							await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
+							return new ResultApi { Success = ResultCode.INCORRECT, Message = "User not permissions", };
+
+						}
+
+						//IDictionary<string, object> json = new Dictionary<string, object>
+						//{
+						//	{ "Id", user[0].Id },
+						//	{ "UserName", user[0].UserName },
+						//	{ "FullName", user[0].FullName },
+						//	{ "Email", user[0].Email },
+						//	{ "Phone", user[0].Phone },
+						//	{ "AccessToken", tokenString},
+						//	{ "Permissions", rsSYUSRGetPermissionByUserId},
+						//};
 
 
 
-						BaseRequest baseRequest = new LogHelper(_appSetting).ReadBodyFromRequest(HttpContext.Request);
 						
-						SYLOGInsertIN sYSystemLogInsertIN = new SYLOGInsertIN
-						{
-							UserId = user[0].Id,
-							FullName = user[0].FullName,
-							Action = "Login",
-							IPAddress = baseRequest.ipAddress,
-							MACAddress = baseRequest.macAddress,
-							Description = baseRequest.logAction,
-							CreatedDate = DateTime.Now,
-							Status = 1,
-							Exception = null
-						};
-
-						if (user[0].IsActived == false) { sYSystemLogInsertIN.Status = 0; };
-						await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
-
-
-						return new LoginResponse
-						{
-							Success = ResultCode.OK,
-							UserId = user[0].Id,
-							UserName = user[0].UserName,
-							FullName = user[0].FullName,
-							Email = user[0].Email,
-							IsActive = user[0].IsActived,
-							Phone = user[0].UserName,
-							UnitId = user[0].UnitId,
-							UnitName = user[0].UnitName,
-							IsMain = user[0].IsMain,
-							TypeObject = user[0].TypeObject,
-							AccessToken = tokenString,
-							IsHaveToken = true,
-							Permissions = rsSYUSRGetPermissionByUserId,
-						};
 					}
 					else
 					{

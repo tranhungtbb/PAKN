@@ -21,6 +21,7 @@ import { HtmlToPlaintextPipe } from '../pipes/html-filter.pipe'
 import { UserCreateOrUpdateComponent } from '../modules/system-management/components/user/user-create-or-update/user-create-or-update.component'
 import { DiaDanhFilterPipe } from '../pipes/dia-danh-filter.pipi'
 import { SanitizerUrlPipe, SafeUrlPipe } from '../pipes/sanitizer-url.pipe'
+import {HasNotPermissionDirective} from 'src/app/directives/sv-notpermission.directive'
 
 @NgModule({
 	declarations: [
@@ -30,6 +31,7 @@ import { SanitizerUrlPipe, SafeUrlPipe } from '../pipes/sanitizer-url.pipe'
 		SvTrimDirective,
 		SvMoneyDirective,
 		HasPermissionDirective,
+		HasNotPermissionDirective,
 		SvVoiceDirective,
 		NumberOnlyDirective,
 		ReCaptchaDirective,
@@ -54,6 +56,7 @@ import { SanitizerUrlPipe, SafeUrlPipe } from '../pipes/sanitizer-url.pipe'
 		SvTrimDirective,
 		SvMoneyDirective,
 		HasPermissionDirective,
+		HasNotPermissionDirective,
 		SvVoiceDirective,
 		NumberOnlyDirective,
 		ReCaptchaDirective,
