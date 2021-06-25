@@ -31,6 +31,8 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public int? Status { get; set; }
 		public bool IsDeleted { get; set; }
 		public string Business { get; set; }
+		public string Tax { get; set; }
+		public string BusinessRegistration { get; set; }
 
 		public async Task<List<BI_BusinessGetAllOnPage>> BI_BusinessGetAllOnPageDAO(int? PageSize, int? PageIndex, string RepresentativeName, string Address, string Phone, string Email, byte? Status, string SortDir, string SortField)
 		{
