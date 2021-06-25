@@ -78,14 +78,14 @@ export class MessageComponent implements AfterViewInit {
 	}
 
 	classNameMess_Content() {
-		if (this.idUser !== this.message.sender_id) {
+		if (this.idUser !== this.message.sender_id && !this.message.notification_type) {
 			return 'm_content'
 		} else {
 			return 'message__text'
 		}
 	}
 	styleAT_User() {
-		if (this.idUser !== this.message.sender_id) {
+		if (this.idUser !== this.message.sender_id && !this.message.notification_type) {
 			return 'm_attachment'
 		} else {
 			return 'message_attachment'

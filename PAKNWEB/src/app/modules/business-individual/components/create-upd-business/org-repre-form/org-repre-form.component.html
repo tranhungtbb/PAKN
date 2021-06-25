@@ -103,9 +103,9 @@
 			<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dob" [(ngModel)]="model._RepresentativeBirthDay"
 				formControlName="DOB" appBsDatepickerInvalid [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}"
 				[maxDate]="dateNow" />
-			<div class="input-group-addon">
-				<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
-			</div>
+				<div class="input-group-addon p-2">
+					<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+				</div>
 		</div>
 
 		<div *ngIf="(fInfoSubmitted && fInfo.DOB.invalid)||(fInfo.DOB.invalid && (fInfo.DOB.dirty || fInfo.DOB.touched))" class="has-error m-b-12">

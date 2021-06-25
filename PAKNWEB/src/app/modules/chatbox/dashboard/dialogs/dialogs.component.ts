@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, ViewChild } from '@angular/core'
+import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core'
 import { CONSTANTS } from 'src/app/modules/chatbox/QBconfig'
 import { QBHelper } from 'src/app/modules/chatbox/helper/qbHelper'
 import { DialogService } from 'src/app/modules/chatbox/dashboard/dialogs/dialog.service'
@@ -12,7 +12,7 @@ import { Helpers } from '../../helper/helpers'
 	templateUrl: './dialogs.component.html',
 	styleUrls: ['./dialogs.component.css'],
 })
-export class DialogsComponent implements OnChanges {
+export class DialogsComponent implements OnChanges, OnInit {
 	@Input() dialog: any
 	@ViewChild('field', { static: true }) field: ElementRef
 
@@ -20,9 +20,11 @@ export class DialogsComponent implements OnChanges {
 	CONSTANTS = CONSTANTS
 	messages: any = []
 	messageField = ''
+	txtNameGroup = ''
 	userId = this.userService.user.id
 	attachments: any = []
 	shiftDown = false
+	editab = false
 
 	constructor(
 		private dashboardService: DashboardService,
@@ -41,7 +43,12 @@ export class DialogsComponent implements OnChanges {
 		})
 	}
 
+	ngOnInit() {
+		this.txtNameGroup = this.dialog.name
+	}
 	ngOnChanges() {
+		this.editab = false
+		this.txtNameGroup = this.dialog.name
 		this.messageField = ''
 		this.field.nativeElement.focus()
 		const self = this,
@@ -226,5 +233,75 @@ export class DialogsComponent implements OnChanges {
 			this.onSubmit()
 			return false
 		}
+	}
+
+	LoadNameGroup() {
+		this.editab = false
+		const self = this
+		let id = self.dialog._id
+		var dialogId = id
+
+		var toUpdateParams = {
+			name: this.txtNameGroup,
+		}
+
+		//QB.dialog.update(dialogId, toUpdateParams, function(error, dialog) {});
+		this.dialogService.updateDialog(dialogId, toUpdateParams).then((dialog) => {
+			let messageBody = 'Thay đổi tên nhóm thành : ' + this.txtNameGroup
+			const systemMessage = {
+					extension: {
+						notification_type: 1,
+						dialog_id: dialog._id,
+					},
+				},
+				notificationMessage = {
+					type: 'groupchat',
+					body: messageBody,
+					extension: {
+						save_to_history: 1,
+						dialog_id: dialog._id,
+						notification_type: 1,
+						date_sent: Date.now(),
+					},
+				}
+
+			new Promise(function (resolve) {
+				if (dialog.xmpp_room_jid) {
+					self.dialogService.joinToDialog(dialog).then(() => {
+						if (dialog.type === CONSTANTS.DIALOG_TYPES.GROUPCHAT) {
+							const message = self.messageService.sendMessage(dialog, notificationMessage),
+								newMessage = self.messageService.fillNewMessageParams(self.userService.user.id, message)
+							self.dialogService.dialogs[dialog._id] = dialog
+							self.dialogService.setDialogParams(newMessage)
+							self.messageService.messages.push(newMessage)
+							self.messageService.addMessageToDatesIds(newMessage)
+							self.messageService.messagesEvent.emit(self.messageService.datesIds)
+						}
+						resolve()
+					})
+				}
+				resolve()
+			}).then(() => {
+				const userIds = dialog.occupants_ids.filter((userId) => {
+					return userId !== self.userService.user.id
+				})
+				self.messageService.sendSystemMessage(userIds, systemMessage)
+				if (self.dialogService.dialogs[dialog._id] === undefined) {
+					const tmpObj = {}
+					tmpObj[dialog._id] = dialog
+					self.dialogService.dialogs = Object.assign(tmpObj, self.dialogService.dialogs)
+					self.dialogService.dialogsEvent.emit(self.dialogService.dialogs)
+				}
+
+				this.dialogService.currentDialog = dialog
+				this.dialogService.currentDialogEvent.emit(dialog)
+				this.dashboardService.showComponent({
+					createGroupClicked: false,
+					updateDialog: false,
+					welcomeChat: false,
+					onChatClick: true,
+				})
+			})
+		})
 	}
 }

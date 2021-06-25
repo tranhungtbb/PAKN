@@ -6,7 +6,7 @@
 				<div class="form-group">
 					<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
 					<input onlyNumber="true" maxlength="10" [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." autocomplete="off"
-						class="form-control border-brown" (change)="onCheckExist('Phone',$event.target.value)">
+						class="form-control border-brown h-34px rounded-6px" (change)="onCheckExist('Phone',$event.target.value)">
 					<div *ngIf="(fLoginSubmitted && fLogin.phone.invalid)||(fLogin.phone.invalid && (fLogin.phone.dirty || fLogin.phone.touched))" class="has-error m-b-12">
 						<div *ngIf="fLogin.phone.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -24,7 +24,7 @@
 				<div class="form-group">
 					<label class="mb-1">Mật khẩu <span class="cl-red">(*)</span></label>
 					<input svDisabledSpaceKey [(ngModel)]="model.password" formControlName="password" type="password" placeholder="Nhập..." autocomplete="off"
-						class="form-control border-brown" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$">
+						class="form-control border-brown h-34px rounded-6px" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$">
 					<div *ngIf="(fLoginSubmitted && fLogin.password.invalid)||(fLogin.password.invalid && (fLogin.password.dirty || fLogin.password.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fLogin.password.errors.required">
@@ -38,7 +38,7 @@
 				<div class="form-group">
 					<label class="mb-1">Nhập lại mật khẩu <span class="cl-red">(*)</span></label>
 					<input svDisabledSpaceKey [(ngModel)]="model.rePassword" formControlName="rePassword" type="password" placeholder="Nhập..." autocomplete="off"
-						class="form-control border-brown" value="">
+						class="form-control border-brown h-34px rounded-6px" value="">
 					<div *ngIf="(fLoginSubmitted && fLogin.rePassword.invalid)||(fLogin.rePassword.invalid && (fLogin.rePassword.dirty || fLogin.rePassword.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fLogin.rePassword.errors.required">
@@ -63,7 +63,7 @@
 			<form class="px-3" [formGroup]="formOrgInfo">
 				<div class="form-group">
 					<label class="mb-1">Tên tổ chức, doanh nghiệp <span class="cl-red">(*)</span></label>
-					<input [svTrim] [(ngModel)]="model.Business" formControlName="Business" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] [(ngModel)]="model.Business" formControlName="Business" type="text" placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown">
 					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.Business.invalid)||(fOrgInfo.Business.invalid && (fOrgInfo.Business.dirty || fOrgInfo.Business.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fOrgInfo.Business.errors.required">
@@ -76,7 +76,7 @@
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Số chứng nhận ĐKKD </label>
-					<input [svTrim] [(ngModel)]="model.BusinessRegistration" formControlName="RegistrationNum" type="text" placeholder="Nhập..." class="form-control border-brown"
+					<input [svTrim] [(ngModel)]="model.BusinessRegistration" formControlName="RegistrationNum" type="text" placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown"
 						(change)="onCheckExist('BusinessRegistration',$event.target.value)">
 					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.RegistrationNum.invalid)||(fOrgInfo.RegistrationNum.invalid && (fOrgInfo.RegistrationNum.dirty || fOrgInfo.RegistrationNum.touched))"
 						class="has-error m-b-12">
@@ -96,7 +96,7 @@
 				<div class="form-group">
 					<label class="mb-1">Số quyết định thành lập </label>
 					<input [svTrim] [(ngModel)]="model.DecisionOfEstablishing" formControlName="DecisionFoundation" type="text" placeholder="Nhập..."
-						class="form-control border-brown" (change)="onCheckExist('DecisionOfEstablishing',$event.target.value)">
+						class="form-control border-brown h-34px rounded-6px" (change)="onCheckExist('DecisionOfEstablishing',$event.target.value)">
 					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.DecisionFoundation.invalid)||(fOrgInfo.DecisionFoundation.invalid && (fOrgInfo.DecisionFoundation.dirty || fOrgInfo.DecisionFoundation.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fOrgInfo.DecisionFoundation.errors.required">
@@ -112,11 +112,11 @@
 				<div class="form-group">
 					<label class="mb-1">Ngày cấp / Thành lập </label>
 					<div class="input-group">
-						<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_IsDate" [(ngModel)]="model._DateOfIssue"
+						<input class="form-control h-34px rounded-6px" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_IsDate" [(ngModel)]="model._DateOfIssue"
 							formControlName="DateIssue" appBsDatepickerInvalid
 							[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" [maxDate]="dateNow" />
-						<div class="input-group-addon">
-							<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+						<div class="input-group-addon p-1 pr-2 xs">
+							<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 						</div>
 					</div>
 
@@ -129,7 +129,7 @@
 				</div>
 				<div class="form-group">
 					<label class="mb-1">Mã số thuế <span class="cl-red">(*)</span></label>
-					<input [svTrim] onlyNumber="true" maxlength="13" [(ngModel)]="model.Tax" formControlName="Tax" type="text" placeholder="Nhập..." class="form-control border-brown">
+					<input [svTrim] onlyNumber="true" maxlength="13" [(ngModel)]="model.Tax" formControlName="Tax" type="text" placeholder="Nhập..." class="form-control border-brown h-34px rounded-6px">
 					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.Tax.invalid)||(fOrgInfo.Tax.invalid && (fOrgInfo.Tax.dirty || fOrgInfo.Tax.touched))" class="has-error m-b-12">
 						<div *ngIf="fOrgInfo.Tax.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -149,11 +149,11 @@
 	</div>
 	<p class="cl-red font-italic mt-3">Vui lòng nhập đầy đủ, chính xác toàn bộ thông tin một lần để sử dụng nhiều lần trên hệ thống</p>
 	<div class="card-body d-flex justify-content-end px-0">
-		<a class="btn btn-outline-light px-5 mr-3 rounded-xl" (click)="backToHome()">
+		<a class="btn btn-outline-light px-5 mr-3 rounded-10px h-48px" (click)="backToHome()">
 			<i class="bi bi-arrow-left"></i>
 			Quay lại
 		</a>
-		<button type="button" class="btn btn-outline-light px-5 mr-3 rounded-xl" (click)="onReset()">Hủy</button>
-		<button type="button" class="btn text-white border-light grd-xanhngoc px-5 rounded-xl" (click)="onSave()">Đăng ký</button>
+		<button type="button" class="btn btn-outline-light px-5 mr-3 rounded-10px h-48px" (click)="onReset()">Hủy</button>
+		<button type="button" class="btn text-white border-light grd-xanhngoc px-5 rounded-10px h-48px" (click)="onSave()">Đăng ký</button>
 	</div>
 </div>

@@ -31,7 +31,8 @@ import { DialogsComponent } from './chatbox/dashboard/dialogs/dialogs.component'
 import { MessageComponent } from './chatbox/dashboard/messages/message.component'
 import { CreateDialogComponent } from './chatbox/dashboard/create-dialog/create-dialog.component'
 import { EditDialogComponent } from './chatbox/dashboard/edit-dialog/edit-dialog.component'
-import { DropdownModule } from 'primeng/dropdown'
+import { DropdownModule } from 'primeng/dropdown';
+import { WeatherComponent } from './dash-board/weather/weather.component'
 @NgModule({
 	imports: [
 		CommonModule,
@@ -71,6 +72,7 @@ import { DropdownModule } from 'primeng/dropdown'
 		MessageComponent,
 		CreateDialogComponent,
 		EditDialogComponent,
+		WeatherComponent,
 	],
 	exports: [UserCreateOrUpdateComponent, UserViewInfoComponent],
 })

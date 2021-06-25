@@ -2,7 +2,7 @@
 	<div class="col form-group">
 		<label class="mb-1">Người đại diện <span class="cl-red">(*)</span></label>
 		<input [svTrim] maxlength="100" [(ngModel)]="model.RepresentativeName" formControlName="RepresentativeName" type="text" placeholder="Nhập..."
-			class="form-control border-brown">
+			class="form-control border-brown h-34px rounded-6px">
 		<div *ngIf="(fInfoSubmitted && fInfo.RepresentativeName.invalid)||(fInfo.RepresentativeName.invalid && (fInfo.RepresentativeName.dirty || fInfo.RepresentativeName.touched))"
 			class="has-error m-b-12">
 			<div *ngIf="fInfo.RepresentativeName.errors.required">
@@ -15,7 +15,7 @@
 	</div>
 	<div class="col form-group">
 		<label class="mb-1">Quốc tịch <span class="cl-red">(*)</span></label>
-		<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.Nation" formControlName="Nation" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
+		<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.Nation" formControlName="Nation" class="form-control h-34px rounded-6px" placeholder="Chọn..." [closeOnSelect]="true"
 			(change)="onChangeNation()">
 			<ng-option *ngFor="let vill of listNation" [value]="vill.id">{{vill.name}}</ng-option>
 			<ng-option value="#">Khác</ng-option>
@@ -35,10 +35,10 @@
 	</div>
 	<div class="col form-group">
 		<label class="mb-1">Tỉnh / Thành phố <span class="cl-red">(*)</span></label>
-		<select *ngIf="isOtherNation" disabled [(ngModel)]="model.ProvinceId" formControlName="Province" class="form-control" placeholder="Chọn...">
+		<select *ngIf="isOtherNation" disabled [(ngModel)]="model.ProvinceId" formControlName="Province" class="form-control h-34px rounded-6px" placeholder="Chọn...">
 			<option [value]="0">Chọn...</option>
 		</select>
-		<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.ProvinceId" formControlName="Province" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
+		<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.ProvinceId" formControlName="Province" class="form-control h-34px rounded-6px" placeholder="Chọn..." [closeOnSelect]="true"
 			(change)="onChangeProvince()">
 			<ng-option *ngFor="let vill of listProvince" [value]="vill.id">{{vill.name}}</ng-option>
 		</ng-select>
@@ -54,7 +54,7 @@
 	<div class="w-100"></div>
 	<div class="col form-group">
 		<label class="mb-1">Email </label>
-		<input [svTrim] [(ngModel)]="model.Email" formControlName="Email" type="text" placeholder="Nhập..." class="form-control border-brown"
+		<input [svTrim] [(ngModel)]="model.Email" formControlName="Email" type="text" placeholder="Nhập..." class="form-control border-brown h-34px rounded-6px"
 			(change)="onCheckExist('Email',$event.target.value)">
 		<div *ngIf="(fInfoSubmitted && fInfo.Email.invalid)||(fInfo.Email.invalid && (fInfo.Email.dirty || fInfo.Email.touched))" class="has-error m-b-12">
 			<div *ngIf="fInfo.Email.errors.required">
@@ -73,10 +73,10 @@
 	<div class="col form-group">
 		<label class="mb-1">Huyện / Quận / Thị xã...<span class="cl-red">(*)</span></label>
 
-		<select *ngIf="isOtherNation" disabled [(ngModel)]="model.DistrictId" formControlName="District" class="form-control" placeholder="Chọn...">
+		<select *ngIf="isOtherNation" disabled [(ngModel)]="model.DistrictId" formControlName="District" class="form-control h-34px rounded-6px" placeholder="Chọn...">
 			<option [value]="0">Chọn...</option>
 		</select>
-		<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.DistrictId" formControlName="District" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
+		<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.DistrictId" formControlName="District" class="form-control h-34px rounded-6px" placeholder="Chọn..." [closeOnSelect]="true"
 			(change)="onChangeDistrict()">
 			<ng-option *ngFor="let vill of listDistrict" [value]="vill.id">{{vill.name}}</ng-option>
 		</ng-select>
@@ -93,10 +93,10 @@
 	<div class="col form-group">
 		<label class="mb-1">Xã / Phường / Thị trấn<span class="cl-red">(*)</span></label>
 
-		<select *ngIf="isOtherNation" disabled [(ngModel)]="model.WardsId" formControlName="Village" class="form-control" placeholder="Chọn...">
+		<select *ngIf="isOtherNation" disabled [(ngModel)]="model.WardsId" formControlName="Village" class="form-control h-34px rounded-6px" placeholder="Chọn...">
 			<option [value]="0">Chọn...</option>
 		</select>
-		<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.WardsId" formControlName="Village" class="form-control" placeholder="Chọn..." [closeOnSelect]="true">
+		<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.WardsId" formControlName="Village" class="form-control h-34px rounded-6px" placeholder="Chọn..." [closeOnSelect]="true">
 
 			<ng-option *ngFor="let vill of listVillage" [value]="vill.id">{{vill.name}}</ng-option>
 		</ng-select>
@@ -113,12 +113,12 @@
 	<div class="col form-group">
 		<label class="mb-1">Ngày tháng năm sinh </label>
 		<div class="input-group">
-			<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dob" [(ngModel)]="model._RepresentativeBirthDay"
+			<input class="form-control h-34px rounded-6px" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dob" [(ngModel)]="model._RepresentativeBirthDay"
 				formControlName="DOB" appBsDatepickerInvalid [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}"
 				[maxDate]="dateNow" />
-			<div class="input-group-addon">
-				<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
-			</div>
+				<div class="input-group-addon p-1 pr-2 xs">
+					<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+				</div>
 		</div>
 
 		<div *ngIf="(fInfoSubmitted && fInfo.DOB.invalid)||(fInfo.DOB.invalid && (fInfo.DOB.dirty || fInfo.DOB.touched))" class="has-error m-b-12">
@@ -132,7 +132,7 @@
 	</div>
 	<div class="col col-lg-8 form-group">
 		<label class="mb-1">Địa chỉ cụ thể </label>
-		<input [svTrim] [(ngModel)]="model.Address" formControlName="Address" type="text" placeholder="Nhập..." class="form-control border-brown">
+		<input [svTrim] [(ngModel)]="model.Address" formControlName="Address" type="text" placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown">
 		<div *ngIf="(fInfoSubmitted && fInfo.Address.invalid)||(fInfo.Address.invalid && (fInfo.Address.dirty || fInfo.Address.touched))" class="has-error m-b-12">
 			<div *ngIf="fInfo.Address.errors.required">
 				<span class="help-block">Trường dữ liệu này không được để trống</span>

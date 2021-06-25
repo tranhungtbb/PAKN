@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { HashtagObject } from 'src/app/models/hashtagObject'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { NotificationService } from 'src/app/services/notification.service'
+import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
 @Component({
 	selector: 'app-create-recommendation',
@@ -51,7 +52,8 @@ export class CreateRecommendationComponent implements OnInit {
 		private _serviceCatalog: CatalogService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		private notificationService: NotificationService
+		private notificationService: NotificationService,
+		private storeageService: UserInfoStorageService,
 	) {}
 	ngOnInit() {
 		this.model = new RecommendationObject()
@@ -137,6 +139,9 @@ export class CreateRecommendationComponent implements OnInit {
 		}
 		this.recommendationService.recommendationGetById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
+
+				if(this.model.createdBy != this.storeageService.getUserId() && this.model.status == 1) return;
+
 				this.model = response.result.model
 				this.lstHashtagSelected = response.result.lstHashtag
 				this.files = response.result.lstFiles

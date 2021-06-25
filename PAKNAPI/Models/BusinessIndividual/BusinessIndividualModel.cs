@@ -27,6 +27,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public string Phone { get; set; }
 		public string Email { get; set; }
 		public int? Status { get; set; }
+		public bool? Gender { get; set; }
 
 
 		public async Task<List<BI_IndividualGetAllOnPage>> BI_IndividualGetAllOnPageDAO(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, int? Status, string SortDir, string SortField)
