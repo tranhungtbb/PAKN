@@ -16,7 +16,7 @@
 					</svg>
 					Xuất excel
 				</button> -->
-				<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="preCreate()">
+				<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" *hasPermission="['3', 'C_IV_0']" (click)="preCreate()">
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 					</svg>
@@ -73,18 +73,24 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									<strong class="highlight"><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
+									<strong *hasPermission="['3', 'C_IV_4']" class="highlight"><a (click)="preView(item)" class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
+									<strong *hasNotPermission="['3', 'C_IV_4']" class="highlight"><a class="ellipsis" title="Xem chi tiết">{{item.name}}</a></strong>
 								</td>
 								<td>{{item.description}}</td>
 								<td>
-									<span type="button" (click)="confirmChangeStatus(item)" *ngIf="item.isActived == true" class="badge rounded-pill bg-success">Hiệu lực</span>
-									<span type="button" (click)="confirmChangeStatus(item)" *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Hết hiệu
-										lực</span>
+									<p  *ngIf="item.isActived == true">
+										<span type="button" *hasNotPermission="['3', 'C_IV_5']" class="badge rounded-pill bg-success">Hiệu lực</span>
+										<span type="button" *hasPermission="['3', 'C_IV_5']" (click)="confirmChangeStatus(item)" class="badge rounded-pill bg-success">Hiệu lực</span>
+									</p>
+									<p *ngIf="item.isActived == false">
+										<span type="button" *hasNotPermission="['3', 'C_IV_6']" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+										<span type="button" *hasPermission="['3', 'C_IV_6']"  (click)="confirmChangeStatus(item)" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+									</p>
 								</td>
 								<td style="text-align: center;">
 									<div class="hover-active d-flex justify-content-end">
-										<a (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-										<a (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
+										<a *hasPermission="['3', 'C_IV_1']" (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
+										<a *hasPermission="['3', 'C_IV_2']" (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
 												class="bi bi-trash"></i></a>
 									</div>
 								</td>

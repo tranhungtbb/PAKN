@@ -16,14 +16,53 @@ const routes: Routes = [
 		path: '',
 		component: CatalogManagementComponent,
 		children: [
-			{ path: 'chuc-vu', component: PositionComponent },
-			{ path: 'linh-vuc', component: FieldComponent },
-			{ path: 'loai-tin-tuc', component: NewsTypeComponent },
-			{ path: 'thu-vien-tu', component: WordLibraryComponent },
-			{ path: 'so-nganh', component: DepartmentComponent },
-			{ path: 'nhom-so-nganh', component: DepartmentGroupComponent },
-			{ path: 'hashtag', component: HashtagComponent },
-			{ path: 'nhom-thu-vien-tu', component: GroupWordComponent },
+			{ 
+				path: 'chuc-vu',
+				component: PositionComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'C_I_0' }
+			},
+			{ 
+				path: 'linh-vuc',
+				component: FieldComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'C_IV_3' }
+			},
+			{ 
+				path: 'loai-tin-tuc',
+				component: NewsTypeComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'C_V_3' } 
+			},
+			{ 
+				path: 'thu-vien-tu',
+				component: WordLibraryComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'C_VI_3' } 
+			},
+			{ 
+				path: 'so-nganh',
+				component: DepartmentComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'C_III_3' }
+			},
+			{ 
+				path: 'nhom-so-nganh',
+				component: DepartmentGroupComponent ,
+				canActivate: [RoleGuardService],
+				data: { role: 'C_II_3' }
+			},
+			{ 
+				path: 'hashtag', component: HashtagComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'C_VIII_3' }
+			},
+			{ 
+				path: 'nhom-thu-vien-tu',
+				component: GroupWordComponent ,
+				canActivate: [RoleGuardService],
+				data: { role: 'C_VII_3' }
+			},
 		],
 	},
 ]
