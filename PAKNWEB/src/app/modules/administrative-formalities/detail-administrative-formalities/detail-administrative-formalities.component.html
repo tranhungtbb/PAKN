@@ -14,8 +14,13 @@
 			</ol>
 			<div class="btn-group group-button-table" role="group">
 				<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" appSvBackButton><i class="bi bi-arrow-left mr-2"></i> quay lại</button>
-				<button *ngIf="model.status != 3" class="btn btn-sm grd-green rounded text-white border-0 mr-3" (click)="onSave(3)">Công bố</button>
-				<button *ngIf="model.status == 3" class="btn btn-sm grd-green rounded text-white border-0 mr-3" (click)="onSave(2)">Thu hồi</button>
+				<span *hasPermission="['3', 'H_I_4']">
+					<button *ngIf="model.status != 3" class="btn btn-sm grd-green rounded text-white border-0 mr-3" (click)="onSave(3)">Công bố</button>
+				</span>
+				<span *hasPermission="['3', 'H_I_4']">
+					<button *ngIf="model.status == 3" class="btn btn-sm grd-green rounded text-white border-0 mr-3" (click)="onSave(2)">Thu hồi</button>
+				</span>
+				
 				<!-- <a class="btn btn-sm rounded text-dark border-0 grd-brown" [routerLink]="['../../cap-nhat',model.id]">Sửa</a> -->
 
 			</div>

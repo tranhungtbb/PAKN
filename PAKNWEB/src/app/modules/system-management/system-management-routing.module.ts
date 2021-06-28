@@ -69,7 +69,7 @@ const routes: Routes = [
 				path: 'nguoi-dung',
 				component: UserComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'C_I_0' }
+				data: { role: 'A_IX_7' }
 			},
 			{ 
 				path: 'lich-su-he-thong',

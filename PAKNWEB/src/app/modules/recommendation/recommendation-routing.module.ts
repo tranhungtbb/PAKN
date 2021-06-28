@@ -16,27 +16,103 @@ import { ListApproveDenyComponent } from './list-approve-deny/list-approve-deny.
 import { ListApprovedComponent } from './list-approved/list-approved.component'
 import { DetailRecommendationComponent } from './detail-recommendation/detail-recommendation.component'
 import { ListReactionaryWordComponent } from './list-reactionary-word/list-reactionary-word.component'
+import { RoleGuardService } from '../../guards/role-guard.service'
 
 const routes: Routes = [
 	{
 		path: '',
 		component: RecommendationComponent,
 		children: [
-			{ path: 'them-moi/:id', component: CreateRecommendationComponent },
-			{ path: 'danh-sach-tong-hop', component: ListGeneralComponent },
-			{ path: 'cho-xu-ly', component: ListReceiveWaitComponent },
-			{ path: 'tiep-nhan-xu-ly', component: ListReceiveApprovedComponent },
-			{ path: 'tu-choi-tiep-nhan', component: ListReceiveDenyComponent },
-			{ path: 'cho-giai-quyet', component: ListProcessWaitComponent },
-			{ path: 'dang-giai-quyet', component: ListProcessingComponent },
-			{ path: 'tu-choi-giai-quyet', component: ListProcessDenyComponent },
-			{ path: 'chi-tiet/:id', component: ViewRecommendationComponent },
-			{ path: 'cho-phe-duyet', component: ListApproveWaitComponent },
-			{ path: 'tu-choi-phe-duyet', component: ListApproveDenyComponent },
-			{ path: 'da-giai-quyet', component: ListApprovedComponent },
-			{ path: 'chua-tu-ngu-bi-cam', component: ListReactionaryWordComponent },
-			{ path: 'danh-sach-knct', component: ListRequestComponent },
-			{ path: 'chi-tiet-knct/:id', component: DetailRecommendationComponent },
+			{ 
+				path: 'them-moi/:id',
+				component: CreateRecommendationComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_I_0' }
+			},
+			{ 
+				path: 'danh-sach-tong-hop',
+				component: ListGeneralComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_XIX_0' }
+			},
+			{ 
+				path: 'cho-xu-ly',
+				component: ListReceiveWaitComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_II_0' }
+			},
+			{
+				path: 'tiep-nhan-xu-ly',
+				component: ListReceiveApprovedComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_III_0' }
+			},
+			{ 
+				path: 'tu-choi-tiep-nhan',
+				component: ListReceiveDenyComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_IV_0' }
+			},
+			{ 
+				path: 'cho-giai-quyet',
+				component: ListProcessWaitComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_V_0' }
+			},
+			{ 
+				path: 'dang-giai-quyet',
+				component: ListProcessingComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_VII_0' }
+			},
+			{ 
+				path: 'tu-choi-giai-quyet',
+				component: ListProcessDenyComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_VI_0' }
+			},
+			{ 
+				path: 'chi-tiet/:id',
+				component: ViewRecommendationComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_I_4' }
+			},
+			{
+				path: 'cho-phe-duyet',
+				component: ListApproveWaitComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_VIII_0' }
+			},
+			{
+				path: 'tu-choi-phe-duyet',
+				component: ListApproveDenyComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_IX_0' }
+			},
+			{ 
+				path: 'da-giai-quyet',
+				component: ListApprovedComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_X_0' }
+			},
+			{ 
+				path: 'chua-tu-ngu-bi-cam',
+				component: ListReactionaryWordComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_XII_0' }
+			},
+			{ 
+				path: 'danh-sach-knct',
+				component: ListRequestComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_XIII_0' }
+			},
+			{ 
+				path: 'chi-tiet-knct/:id',
+				component: DetailRecommendationComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_XIII_1' }
+			},
 		],
 	},
 ]

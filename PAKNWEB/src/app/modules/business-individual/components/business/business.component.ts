@@ -334,7 +334,7 @@ export class BusinessComponent implements OnInit {
 
 				if (res.result.CountError > 0) {
 					setTimeout(() => {
-						this._toastr.error('Thêm không thành công ' + res.result.CountError + ' doanh nghiệp')
+						this._toastr.error('Thêm thất bại ' + res.result.CountError + ' doanh nghiệp')
 					}, 1000)
 				}
 				this.getList()

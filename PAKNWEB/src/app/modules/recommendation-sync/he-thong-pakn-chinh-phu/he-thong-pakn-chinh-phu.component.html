@@ -7,7 +7,7 @@
 				</ol>
 				<div class="btn-group group-button-table" role="group">
 				
-					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" click="reSync()" title="Đồng bộ">
+					<button *hasPermission="['3', 'I_III_2']" type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" click="reSync()" title="Đồng bộ">
 						<i class="bi bi-arrow-repeat"></i>
 					</button>
 				</div>
@@ -65,7 +65,10 @@
 								<tr>
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
-										<strong class="highlight" style="cursor: pointer;"><a class="ellipsis" (click)="getDetail(item)">{{item.createdBy}}</a></strong>
+										<strong class="highlight" style="cursor: pointer;">
+											<a *hasPermission="['3', 'I_III_1']" class="ellipsis" (click)="getDetail(item)">{{item.createdBy}}</a>
+											<a *hasNotPermission="['3', 'I_III_1']" class="ellipsis">{{item.createdBy}}</a>
+										</strong>
 									</td>
 									<td>
 										<p class="mb-0 text-2line" title="{{item.unitName}}">{{item.title}}</p>

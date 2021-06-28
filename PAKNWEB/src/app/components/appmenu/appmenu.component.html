@@ -16,23 +16,19 @@
 					<span class="nav-text">Phản ánh, Kiến nghị</span>
 				</a>
 				<ul routerLinkActive="mm-show" aria-expanded="false">
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/danh-sach-tong-hop">Danh sách tổng hợp</a>
-					</li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/cho-xu-ly">Chờ xử lý</a></li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tiep-nhan-xu-ly">Tiếp nhận xử lý</a></li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tu-choi-tiep-nhan">Từ chối tiếp nhận</a></li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/cho-giai-quyet">Chờ giải quyết</a></li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/dang-giai-quyet">Đang giải quyết</a></li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tu-choi-giai-quyet">Từ chối giải quyết</a>
-					</li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/cho-phe-duyet">Chờ phê duyệt</a></li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tu-choi-phe-duyet">Từ chối phê duyệt</a>
-					</li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/da-giai-quyet">Đã giải quyết</a></li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/chua-tu-ngu-bi-cam">PAKN chứa từ ngữ bị cấm</a></li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/pakn-chua-anh-gia">PAKN chứa ảnh giả</a>
-					</li>
-					<li><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/danh-sach-knct">Danh sách KNCT</a></li>
+					<li *hasPermission="['3', 'E_XIX_0']"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/danh-sach-tong-hop">Danh sách tổng hợp</a></li>
+					<li *hasPermission="['3', 'E_II_0']"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/cho-xu-ly">Chờ xử lý</a></li>
+					<li *hasPermission="['3', 'E_III_0']"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tiep-nhan-xu-ly">Tiếp nhận xử lý</a></li>
+					<li *hasPermission="['3', 'E_IV_0']"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tu-choi-tiep-nhan">Từ chối tiếp nhận</a></li>
+					<li *hasPermission="['3', 'E_V_0']"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/cho-giai-quyet">Chờ giải quyết</a></li>
+					<li *hasPermission="['3', 'E_VII_0']"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/dang-giai-quyet">Đang giải quyết</a></li>
+					<li *hasPermission="['3', 'E_VI_0']"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tu-choi-giai-quyet">Từ chối giải quyết</a></li>
+					<li *hasPermission="['3', 'E_VIII_0']"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/cho-phe-duyet">Chờ phê duyệt</a></li>
+					<li *hasPermission="['3', 'E_IX_0']"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/tu-choi-phe-duyet">Từ chối phê duyệt</a></li>
+					<li *hasPermission="['3', 'E_X_0']"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/da-giai-quyet">Đã giải quyết</a></li>
+					<li *hasPermission="['3', 'E_XII_0']"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/chua-tu-ngu-bi-cam">PAKN chứa từ ngữ bị cấm</a></li>
+					<li *hasPermission="['3', 'E_XI_0']"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/pakn-chua-anh-gia">PAKN chứa ảnh giả</a></li>
+					<li *hasPermission="['3', 'E_XIII_0']"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/danh-sach-knct">Danh sách KNCT</a></li>
 				</ul>
 			</li>
 			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
@@ -41,10 +37,9 @@
 					<span class="nav-text">Thủ tục hành chính</span>
 				</a>
 				<ul routerLinkActive="mm-show" aria-expanded="false">
-					<li><a a routerLinkActive="mm-active" routerLink="/quan-tri/thu-tuc-hanh-chinh/danh-sach-tong-hop">Danh sách
-							tổng hợp</a></li>
-					<li><a routerLink="/quan-tri/thu-tuc-hanh-chinh/thu-tuc-hanh-chinh-da-cong-bo">Đã công bố</a></li>
-					<li><a href="#">Đã gửi đơn vị, cơ quan</a></li>
+					<li *hasPermission="['3', 'H_I_0']"><a a routerLinkActive="mm-active" routerLink="/quan-tri/thu-tuc-hanh-chinh/danh-sach-tong-hop">Danh sách tổng hợp</a></li>
+					<li *hasPermission="['3', 'H_I_1']"><a routerLink="/quan-tri/thu-tuc-hanh-chinh/thu-tuc-hanh-chinh-da-cong-bo">Đã công bố</a></li>
+					<li *hasPermission="['3', 'H_I_2']"><a href="#">Đã gửi đơn vị, cơ quan</a></li>
 				</ul>
 			</li>
 			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
@@ -114,7 +109,7 @@
 					<li *hasPermission="['3', 'A_XIX_0']"><a routerLink="/quan-tri/he-thong/cau-hinh-trang-chu">Cấu hình trang chủ</a></li>
 					<li *hasPermission="['3', 'A_VII_0']"><a routerLink="/quan-tri/he-thong/co-cau-to-chuc">Cơ cấu tổ chức</a></li>
 					<li *hasPermission="['3', 'A_X_0']"><a routerLink="/quan-tri/he-thong/vai-tro">Quản lý vai trò</a></li>
-					<li><a routerLink="/quan-tri/he-thong/nguoi-dung">Quản lý nhân viên quản trị</a></li>
+					<li *hasPermission="['3', 'A_IX_7']"><a routerLink="/quan-tri/he-thong/nguoi-dung">Quản lý nhân viên quản trị</a></li>
 					<li *hasPermission="['3', 'A_XI_3']"><a routerLink="/quan-tri/he-thong/quan-ly-chat-bot">Quản lý chat bot</a></li>
 					<li *hasPermission="['3', 'A_XIV_0']"><a routerLink="/quan-tri/he-thong/lich-su-chat-bot">Lịch sử chat bot</a></li>
 					<li *hasPermission="['3', 'A_XIII_0']"><a routerLink="/quan-tri/he-thong/lich-su-he-thong">Lịch sử hệ thống</a></li>
@@ -164,7 +159,7 @@
 				</ul>
 
 			</li>
-			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+			<!-- <li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-chat-text"></i>
 					<span class="nav-text">Tin Nhắn</span>
@@ -173,19 +168,18 @@
 					<li><a routerLink="/quan-tri/tin-nhan">Chatbox</a></li>
 				</ul>
 
-			</li>
+			</li> -->
 			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-arrow-repeat"></i>
 					<span class="nav-text">Đồng bộ dữ liệu</span>
 				</a>
 				<ul routerLinkActive="mm-show" aria-expanded="false">
-					<li><a routerLink="/quan-tri/dong-bo-du-lieu/cong-thong-tin-dien-tu-tinh">Cổng thông tin điện tử tỉnh</a></li>
-					<li><a routerLink="/quan-tri/dong-bo-du-lieu/cong-thong-tin-dv-hcc">Cổng thông tin DV HCC trực tuyến</a></li>
-					<li><a routerLink="/quan-tri/dong-bo-du-lieu/he-thong-quan-ly-kien-nghi-cu-tri">Hệ thống quản lý kiến nghị cử tri</a></li>
-					<li><a routerLink="/quan-tri/dong-bo-du-lieu/he-thong-pakn-chinh-phu">Hệ thống PAKN của Chính phủ</a></li>
+					<li *hasPermission="['3', 'I_I_0']"><a routerLink="/quan-tri/dong-bo-du-lieu/cong-thong-tin-dien-tu-tinh">Cổng thông tin điện tử tỉnh</a></li>
+					<li *hasPermission="['3', 'I_IV_0']"><a routerLink="/quan-tri/dong-bo-du-lieu/cong-thong-tin-dv-hcc">Cổng thông tin DV HCC trực tuyến</a></li>
+					<li *hasPermission="['3', 'I_II_0']"><a routerLink="/quan-tri/dong-bo-du-lieu/he-thong-quan-ly-kien-nghi-cu-tri">Hệ thống quản lý kiến nghị cử tri</a></li>
+					<li *hasPermission="['3', 'I_III_0']"><a routerLink="/quan-tri/dong-bo-du-lieu/he-thong-pakn-chinh-phu">Hệ thống PAKN của Chính phủ</a></li>
 				</ul>
-
 			</li>
 
 		</ul>
