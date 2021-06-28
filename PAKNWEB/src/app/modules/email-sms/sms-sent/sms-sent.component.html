@@ -17,7 +17,7 @@
 					</svg>
 					Xuất excel
 				</button> -->
-					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="redirectCreate()">
+					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="redirectCreate()" *hasPermission="['3', 'B_II_8']">
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 						</svg>
@@ -93,7 +93,8 @@
 								<tr>
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
-										<strong class="highlight"><a class="ellipsis" (click)=" getSMSModelById(item.id)" title="Cập nhập">{{item.title}}</a></strong>
+										<strong *hasNotPermission="['3', 'B_II_4']" class="highlight"><a class="ellipsis" title="Xem chi tiết">{{item.title}}</a></strong>
+										<strong *hasPermission="['3', 'B_II_4']" class="highlight"><a class="ellipsis" (click)=" getSMSModelById(item.id)" title="Xem chi tiết">{{item.title}}</a></strong>
 										<span class="content-sms">{{item.content}}</span>
 									</td>
 									<td>{{item.unitName}}</td>
@@ -104,9 +105,9 @@
 									</td>
 									<td style="text-align: center;">
 										<div class="d-flex justify-content-end">
-											<a (click)="confirm(item.id)" class="btn-icon grd-red text-white cursor mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
+											<a *hasPermission="['3', 'B_II_5']" (click)="confirm(item.id)" class="btn-icon grd-red text-white cursor mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
 													class="bi bi-trash"></i></a>
-											<a class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
+											<a *hasPermission="['3', 'B_II_6']" class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
 									</td>
 								</tr>

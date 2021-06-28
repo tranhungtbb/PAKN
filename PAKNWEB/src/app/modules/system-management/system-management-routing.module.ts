@@ -23,21 +23,93 @@ const routes: Routes = [
 		path: '',
 		component: SystemManagemenetComponent,
 		children: [
-			{ path: 'cau-hinh-time', component: TimeSettingComponent },
-			{ path: 'cau-hinh-email/:id', component: EmailSettingComponent },
-			{ path: 'cau-hinh-he-thong', component:  SystemConfigComponent},
-			{ path: 'cau-hinh-sms/:id', component: SmsSettingComponent },
-			{ path: 'cau-hinh-switchboard/:id', component: SwitchboardSettingComponent },
-			{ path: 'cau-hinh-trang-gioi-thieu', component: IntroduceComponent },
-			{ path: 'cau-hinh-trang-chu', component: IndexSettingComponent },
-			{ path: 'nguoi-dung', component: UserComponent },
-			{ path: 'lich-su-he-thong', component: SystemLogComponent },
-			{ path: 'co-cau-to-chuc', component: UnitComponent },
-			{ path: 'nguoi-dung/them-moi', component: UserCreateOrUpdateComponent },
-			{ path: 'quan-ly-chat-bot', component: ChatBotComponent },
-			{ path: 'vai-tro', loadChildren: './components/role/role.module#RoleModule' },
-			{ path: 'lich-su-chat-bot', component: HistoryChatBotComponent },
-			{ path: 'nguoi-dung/thong-tin', component: UserViewInfoComponent },
+			{
+				path: 'cau-hinh-time',
+				component: TimeSettingComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'A_XVIII_0' }
+			},
+			{ 
+				path: 'cau-hinh-email/:id',
+				component: EmailSettingComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'A_I_0' }
+			},
+			{ 
+				path: 'cau-hinh-he-thong',
+				component:  SystemConfigComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'A_I_0' }
+			},
+			{ 
+				path: 'cau-hinh-sms/:id',
+				component: SmsSettingComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'A_I_0' }
+			},
+			{ 
+				path: 'cau-hinh-switchboard/:id', 
+				component: SwitchboardSettingComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'A_I_0' }
+			},
+			{ 
+				path: 'cau-hinh-trang-gioi-thieu', 
+				component: IntroduceComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'A_XV_4' }
+			},
+			{ 
+				path: 'cau-hinh-trang-chu',
+				component: IndexSettingComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'A_XIX_0' }
+			},
+			{ 
+				path: 'nguoi-dung',
+				component: UserComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'C_I_0' }
+			},
+			{ 
+				path: 'lich-su-he-thong',
+				component: SystemLogComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'A_XIII_0' }
+			},
+			{ 
+				path: 'co-cau-to-chuc',
+				component: UnitComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'A_VII_0' }
+			},
+			// { 
+			// 	path: 'nguoi-dung/them-moi', 
+			// 	component: UserCreateOrUpdateComponent,
+			// 	canActivate: [RoleGuardService],
+			// 	data: { role: 'C_I_0' }
+			// },
+			{ 
+				path: 'quan-ly-chat-bot',
+				component: ChatBotComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'A_XI_3' }},
+			{ 
+				path: 'vai-tro',
+				loadChildren: './components/role/role.module#RoleModule'
+			},
+			{ 
+				path: 'lich-su-chat-bot',
+				component: HistoryChatBotComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'A_XIV_0' }
+			},
+			// { 
+			// 	path: 'nguoi-dung/thong-tin',
+			// 	component: UserViewInfoComponent,
+			// 	canActivate: [RoleGuardService],
+			// 	data: { role: 'C_I_0' }
+			// },
 		],
 	},
 ]

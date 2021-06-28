@@ -18,7 +18,7 @@
 				</button>
 
 				<input type="file" #file [hidden]="true" id="excel-file" (change)="onExcelfileChange($event)">
-				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onChangeFileExcel()">
+				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onChangeFileExcel()" *hasPermission="['3', 'A_XVII_4']">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
 						<path
 							d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
@@ -27,7 +27,7 @@
 					</svg>
 					Nhập excel
 				</button>
-				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()">
+				<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()" *hasPermission="['3', 'A_XVII_7']">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
 						<path
 							d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
@@ -36,7 +36,7 @@
 					</svg>
 					Xuất excel
 				</button>
-				<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" [routerLink]="['/quan-tri/ca-nhan-doanh-nghiep/them-moi/0']">
+				<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" *hasPermission="['3', 'A_XVII_0']" [routerLink]="['/quan-tri/ca-nhan-doanh-nghiep/them-moi/0']">
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 					</svg>
@@ -114,20 +114,29 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									<strong><a (click)="preView(item.id)" class="ellipsis text-dark highlight" type="button" title="Xem chi tiết">{{item.business}}</a></strong>
+									<strong>
+										<a *hasNotPermission="['3', 'A_XVII_9']" class="ellipsis text-dark highlight" type="button" title="Xem chi tiết">{{item.business}}</a>
+										<a *hasPermission="['3', 'A_XVII_9']" (click)="preView(item.id)" class="ellipsis text-dark highlight" type="button" title="Xem chi tiết">{{item.business}}</a>
+									</strong>
 								</td>
 								<td>{{item.address}}</td>
 								<td>{{item.phone}}</td>
 								<td>{{item.email}}</td>
 								<td>
-									<span *ngIf="item.status == 0" class="badge rounded-pill badge-light cursor" (click)="onOpenConfirmModal(item.id,'Status')">Hết hiệu lực</span>
-									<span *ngIf="item.status == 1" class="badge rounded-pill bg-success cursor" (click)="onOpenConfirmModal(item.id,'Status')">Hiệu lực</span>
+									<p *ngIf="item.status == 0" style="margin-bottom: 0px;">
+										<span *hasNotPermission="['3', 'A_XVII_8']" class="badge rounded-pill badge-light cursor">Hết hiệu lực</span>
+										<span *hasPermission="['3', 'A_XVII_8']" class="badge rounded-pill badge-light cursor" (click)="onOpenConfirmModal(item.id,'Status')">Hết hiệu lực</span>
+									</p>
+									<p *ngIf="item.status == 1" style="margin-bottom: 0px;">
+										<span *hasNotPermission="['3', 'A_XVII_8']" class="badge rounded-pill bg-success cursor">Hiệu lực</span>
+										<span *hasPermission="['3', 'A_XVII_8']" class="badge rounded-pill bg-success cursor" (click)="onOpenConfirmModal(item.id,'Status')">Hiệu lực</span>
+									</p>
 								</td>
 								<td style="max-width: 100px;">
 									<div class="d-flex justify-content-end">
-										<a type="button" [routerLink]="['/quan-tri/ca-nhan-doanh-nghiep/them-moi/', item.id]" class="btn-icon grd-brown text-brown mr-2"><i
+										<a *hasPermission="['3', 'A_XVII_1']" type="button" [routerLink]="['/quan-tri/ca-nhan-doanh-nghiep/them-moi/', item.id]" class="btn-icon grd-brown text-brown mr-2"><i
 												class="bi bi-pencil-square"></i></a>
-										<a type="button" (click)="onOpenConfirmModal(item.id,'Individual')" class="btn-icon grd-red text-white" data-toggle="modal"
+										<a *hasPermission="['3', 'A_XVII_2']" type="button" (click)="onOpenConfirmModal(item.id,'Individual')" class="btn-icon grd-red text-white" data-toggle="modal"
 											data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
 									</div>
 								</td>

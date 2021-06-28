@@ -198,8 +198,9 @@ namespace PAKNAPI.Controllers
             try
 			{
 				//long? UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
-				//JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+				
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 				return new ResultApi { Success = ResultCode.OK };
 			}
             catch (Exception ex)

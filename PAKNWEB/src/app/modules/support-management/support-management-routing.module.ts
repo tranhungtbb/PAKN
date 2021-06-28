@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
+
+import { RoleGuardService } from '../../guards/role-guard.service'
 import { SupportManagementComponent } from './support-management.component'
 import { SupportListComponent } from './support-list/support-list.component'
 import { SupportListDocumentComponent } from './support-list-document/support-list-document.component'
@@ -8,20 +10,27 @@ import { SupportListVideoComponent } from './support-list-video/support-list-vid
 const routes: Routes = [
 	{
 		path: '',
-		component: SupportManagementComponent,
+		component: SupportListDocumentComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'G_I_3' },
 		children: [
-			{ path: '', component: SupportListComponent },
-			{
-				path: 'support-list',
-				component: SupportListComponent,
+			{ 
+				path: '',
+				component: SupportListDocumentComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'G_I_3' }
 			},
 			{
 				path: 'tai-lieu',
 				component: SupportListDocumentComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'G_I_3' }
 			},
 			{
 				path: 'video',
 				component: SupportListVideoComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'G_II_3' }
 			},
 		],
 	},
