@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {WeatherService} from 'src/app/services/weather.service'
 import { Subscription, timer } from 'rxjs';
 import { map, share } from 'rxjs/operators';
-import { UrlResolver } from '@angular/compiler';
+import { ConstantPool, UrlResolver } from '@angular/compiler';
+import { jsonpFactory } from '@angular/http/src/http_module';
 
 declare var $:any
 @Component({
@@ -39,15 +40,8 @@ export class WeatherComponent implements OnInit {
         this.getWeather(this);
       else{
         this.data = data
-        let {main} = data;
         this.weather.iconPath = '/assets/dist/icons/weather-icons/openweather/'+this.data.weather[0].icon+'.svg'
-
-        this.tempCr = {
-          temp: Math.round(main.temp - 273.15),
-          feels_like: Math.round(main.feels_like - 273.15),
-          min: Math.round(main.temp_min - 273.15),
-          max: Math.round(main.temp_max - 273.15)
-        }
+        this.parserData(data);
       }
         
     }else
@@ -68,15 +62,13 @@ export class WeatherComponent implements OnInit {
   }
 
   getData(lat:any, long:any, appid:string=null){
-    //this._WeatherService.getByGeographic(lat,long).subscribe(this.cb)
-    let url = new URL('http://api.openweathermap.org/data/2.5/weather?appid=3203582b0e1e98b17f97b639bcef2350&lat=20.985009&lon=105.783966');
-    if(appid)
-      url.searchParams.set('appid',appid)
-    url.searchParams.set('lat',lat)
-    url.searchParams.set('lon',long)
-
-    $.get(url.href,this.cb)
-
+    // this._WeatherService.getByGeographic(lat,long).subscribe(this.cb)
+    this._WeatherService.getByGeographic$(lat,long).subscribe(res=>{
+      if(res){
+        let jobject = JSON.parse(res.result.Data);
+        this.cb(jobject);
+      }
+    })
   }
 
   private getWeather(seft:any){
@@ -92,9 +84,7 @@ export class WeatherComponent implements OnInit {
   }
 
   
-
-  private cb(res){
-    if(!res) return;
+  private parserData(res:any){
     this.data =res;
     let {main} = res;
     this.tempCr = {
@@ -103,6 +93,11 @@ export class WeatherComponent implements OnInit {
       min: Math.round(main.temp_min - 273.15),
       max: Math.round(main.temp_max - 273.15)
     }
+  }
+
+  private cb(res){
+    if(!res) return;
+    this.parserData(res);
     ///
     //this.weather.iconPath = 'http://openweathermap.org/img/wn/'+this.data.weather[0].icon+'.png';
     this.weather = {iconPath:'assets/dist/icons/weather-icons/openweather/'+this.data.weather[0].icon+'.svg'}

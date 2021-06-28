@@ -12,12 +12,16 @@ import { Api } from '../constants/api'
 import { UserInfoStorageService } from '../commons/user-info-storage.service'
 import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 
+
+declare var $ :any
+
 @Injectable({
 	providedIn: 'root',
 })
 export class WeatherService {
 	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, 
     private localStronageService: UserInfoStorageService) {
+      this.headers.append('Access-Control-Allow-Origin','*')
     }
     headers = new HttpHeaders();
 
@@ -47,6 +51,12 @@ export class WeatherService {
           lat,lon:long
         }
       });
-
   }
+
+  getByGeographic$(lat:any,long:any,appid:string=null):Observable<any>{
+    return this.serviceInvoker.get({
+      lat,lon:long
+    },AppSettings.API_ADDRESS+Api.Weather);
+  }
+  
 }
