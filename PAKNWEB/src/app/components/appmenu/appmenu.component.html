@@ -53,8 +53,8 @@
 					<span class="nav-text">Tin tức, Sự kiện</span>
 				</a>
 				<ul routerLinkActive="mm-show" aria-expanded="false">
-					<li><a routerLink="/quan-tri/tin-tuc/danh-sach-tong-hop">Danh sách tổng hợp</a></li>
-					<li><a routerLink="/quan-tri/tin-tuc/danh-sach-da-cong-bo">Đã công bố</a></li>
+					<li *hasPermission="['3', 'F_I_3']"><a routerLink="/quan-tri/tin-tuc/danh-sach-tong-hop">Danh sách tổng hợp</a></li>
+					<li *hasPermission="['3', 'F_I_3']"><a routerLink="/quan-tri/tin-tuc/danh-sach-da-cong-bo">Đã công bố</a></li>
 				</ul>
 			</li>
 			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
@@ -63,8 +63,8 @@
 					<span class="nav-text">Cá nhân, Doanh nghiệp</span>
 				</a>
 				<ul routerLinkActive="mm-show" aria-expanded="false">
-					<li><a routerLink="/quan-tri/ca-nhan-doanh-nghiep/ca-nhan">Quản lý Cá nhân</a></li>
-					<li><a routerLink="/quan-tri/ca-nhan-doanh-nghiep/doanh-nghiep">Quản lý Doanh nghiệp</a></li>
+					<li *hasPermission="['3', 'A_XVII_3']"><a routerLink="/quan-tri/ca-nhan-doanh-nghiep/ca-nhan">Quản lý Cá nhân</a></li>
+					<li *hasPermission="['3', 'A_XVII_3']"><a routerLink="/quan-tri/ca-nhan-doanh-nghiep/doanh-nghiep">Quản lý Doanh nghiệp</a></li>
 				</ul>
 			</li>
 			<li routerLinkActive="mm-active active"><a routerLink="/quan-tri/thu-moi" class="ai-icon" aria-expanded="false">
@@ -108,16 +108,16 @@
 					<span class="nav-text">Hệ thống</span>
 				</a>
 				<ul routerLinkActive="mm-show" aria-expanded="false">
-					<li><a routerLink="/quan-tri/he-thong/cau-hinh-he-thong">Cấu hình hệ thống</a></li>
-					<li><a routerLink="/quan-tri/he-thong/cau-hinh-time">Cấu hình thời gian làm việc</a></li>
-					<li><a routerLink="/quan-tri/he-thong/cau-hinh-trang-gioi-thieu">Cấu hình trang giới thiệu</a></li>
-					<li><a routerLink="/quan-tri/he-thong/cau-hinh-trang-chu">Cấu hình trang chủ</a></li>
-					<li><a routerLink="/quan-tri/he-thong/co-cau-to-chuc">Cơ cấu tổ chức</a></li>
-					<li><a routerLink="/quan-tri/he-thong/vai-tro">Quản lý vai trò</a></li>
+					<li *hasPermission="['3', 'A_I_0']"><a routerLink="/quan-tri/he-thong/cau-hinh-he-thong">Cấu hình hệ thống</a></li>
+					<li *hasPermission="['3', 'A_XVIII_0']"><a routerLink="/quan-tri/he-thong/cau-hinh-time">Cấu hình thời gian làm việc</a></li>
+					<li *hasPermission="['3', 'A_XV_4']"><a routerLink="/quan-tri/he-thong/cau-hinh-trang-gioi-thieu">Cấu hình trang giới thiệu</a></li>
+					<li *hasPermission="['3', 'A_XIX_0']"><a routerLink="/quan-tri/he-thong/cau-hinh-trang-chu">Cấu hình trang chủ</a></li>
+					<li *hasPermission="['3', 'A_VII_0']"><a routerLink="/quan-tri/he-thong/co-cau-to-chuc">Cơ cấu tổ chức</a></li>
+					<li *hasPermission="['3', 'A_X_0']"><a routerLink="/quan-tri/he-thong/vai-tro">Quản lý vai trò</a></li>
 					<li><a routerLink="/quan-tri/he-thong/nguoi-dung">Quản lý nhân viên quản trị</a></li>
-					<li><a routerLink="/quan-tri/he-thong/quan-ly-chat-bot">Quản lý chat bot</a></li>
-					<li><a routerLink="/quan-tri/he-thong/lich-su-chat-bot">Lịch sử chat bot</a></li>
-					<li><a routerLink="/quan-tri/he-thong/lich-su-he-thong">Lịch sử hệ thống</a></li>
+					<li *hasPermission="['3', 'A_XI_3']"><a routerLink="/quan-tri/he-thong/quan-ly-chat-bot">Quản lý chat bot</a></li>
+					<li *hasPermission="['3', 'A_XIV_0']"><a routerLink="/quan-tri/he-thong/lich-su-chat-bot">Lịch sử chat bot</a></li>
+					<li *hasPermission="['3', 'A_XIII_0']"><a routerLink="/quan-tri/he-thong/lich-su-he-thong">Lịch sử hệ thống</a></li>
 				</ul>
 			</li>
 			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
@@ -131,18 +131,6 @@
 					<li *hasPermission="['3', 'D_III_3']"><a routerLink="/quan-tri/bao-cao/phan-anh-kien-nghi-theo-nhom-tu-ngu">Thống kê Phản ánh kiến nghị theo nhóm từ phản động</a></li>
 				</ul>
 			</li>
-			<!-- <li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
-				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-					<i class="bi bi-file-earmark-text"></i>
-					<span class="nav-text">Báo cáo</span>
-				</a>
-				<ul routerLinkActive="mm-show" aria-expanded="false">
-					<li><a href="#">Sub menu</a></li>
-					<li><a href="#">Sub menu</a></li>
-					<li><a href="#">Sub menu</a></li>
-					<li><a href="#">Sub menu</a></li>
-				</ul>
-			</li> -->
 			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-layout-text-sidebar-reverse"></i>
@@ -162,9 +150,8 @@
 					<span class="nav-text">Hỗ trợ</span>
 				</a>
 				<ul routerLinkActive="mm-show" aria-expanded="false">
-					<!-- <li><a routerLink="/quan-tri/huong-dan-su-dung">Tài liệu hướng dẫn sử dụng</a></li> -->
-					<li><a routerLink="/quan-tri/huong-dan-su-dung/tai-lieu">Tài liệu hướng dẫn sử dụng</a></li>
-					<li><a routerLink="/quan-tri/huong-dan-su-dung/video">Video hướng dẫn sử dụng</a></li>
+					<li *hasPermission="['3', 'G_I_3']"><a routerLink="/quan-tri/huong-dan-su-dung/tai-lieu">Tài liệu hướng dẫn sử dụng</a></li>
+					<li *hasPermission="['3', 'G_II_3']"><a routerLink="/quan-tri/huong-dan-su-dung/video">Video hướng dẫn sử dụng</a></li>
 				</ul>
 			</li>
 			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
@@ -173,7 +160,6 @@
 					<span class="nav-text">Cuộc gọi</span>
 				</a>
 				<ul routerLinkActive="mm-show" aria-expanded="false">
-					<!-- <li><a routerLink="/quan-tri/huong-dan-su-dung">Tài liệu hướng dẫn sử dụng</a></li> -->
 					<li><a routerLink="/quan-tri/cuoc-goi/danh-sach-cuoc-goi">Danh sách cuộc gọi</a></li>
 				</ul>
 

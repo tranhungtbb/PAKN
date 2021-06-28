@@ -10,7 +10,7 @@
 					<i class="bi bi-arrow-left"></i>&nbsp;
 					Quay lại
 				</a>
-				<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave()">Công bố</button>
+				<button *hasPermission="['3', 'A_XV_4']" class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave()">Công bố</button>
 			</div>
 		</div>
 	</div>
@@ -22,7 +22,7 @@
 					<div class="col-sm-12 padding-col" style="position: relative; padding-bottom: 20px;">
 						<label class="control-label department">Banner lớn<span class="text-danger">(*)</span></label>
 						<input class="form-control" (change)="ChangeBanner($event)" id="bannerImg" hidden type="file" />
-						<a class="btn btn-sm btn-default rounded mr-3 btn-change-banner" title="Thay banner" type="button" (click)="ChooseBanner()">
+						<a *hasPermission="['3', 'A_XV_6']" class="btn btn-sm btn-default rounded mr-3 btn-change-banner" title="Thay banner" type="button" (click)="ChooseBanner()">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
 								<path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
 								<path
@@ -73,7 +73,7 @@
 						<div class="card mb-0 shadow-none" style="border: 1px solid rgba(214, 214, 214, 0.8); border-radius: 5px;">
 							<p class="p-3 h4 d-flex justify-content-between align-items-center">
 								<span>Danh sách đơn vị</span>
-								<button class="btn grd-blue border-0 p-2 btn-sm text-white" (click)="preCreate()" type="button"><i class="pi pi-plus"></i></button>
+								<button *hasPermission="['3', 'A_XV_0']" class="btn grd-blue border-0 p-2 btn-sm text-white" (click)="preCreate()" type="button"><i class="pi pi-plus"></i></button>
 							</p>
 							<div class="table-responsive">
 								<p-table #table [value]="ltsIntroductUnit" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
@@ -123,8 +123,8 @@
 
 											<td style="text-align: center;">
 												<div class="hover-active d-flex justify-content-end">
-													<a (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-													<a (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
+													<a  *hasPermission="['3', 'A_XV_1']" (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
+													<a  *hasPermission="['3', 'A_XV_2']" (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
 															class="bi bi-trash"></i></a>
 												</div>
 											</td>
@@ -156,7 +156,10 @@
 
 					<div class="col-12 col-sm-6 flex">
 						<div class="item-introduce">
-							<div class="icon" (click)="ChooseIcon(lstIntroduceFunction[0].id)">
+							<div *hasNotPermission="['3', 'A_XV_5']" class="icon">
+								<img src="{{lstIntroduceFunction[0].icon}}">
+							</div>
+							<div *hasPermission="['3', 'A_XV_5']" class="icon" (click)="ChooseIcon(lstIntroduceFunction[0].id)">
 								<img [id]="'img_icon_' + lstIntroduceFunction[0].id" src="{{lstIntroduceFunction[0].icon}}">
 								<input type="file" hidden [id]="lstIntroduceFunction[0].id" (change)="ChangeIcon($event)">
 							</div>
@@ -184,7 +187,10 @@
 
 					<div class="col-12 col-sm-6 flex">
 						<div class="item-introduce">
-							<div class="icon" (click)="ChooseIcon(lstIntroduceFunction[1].id)">
+							<div *hasNotPermission="['3', 'A_XV_5']" class="icon">
+								<img src="{{lstIntroduceFunction[1].icon}}">
+							</div>
+							<div *hasPermission="['3', 'A_XV_5']" class="icon" (click)="ChooseIcon(lstIntroduceFunction[1].id)">
 								<img [id]="'img_icon_' + lstIntroduceFunction[1].id" src="{{lstIntroduceFunction[1].icon}}">
 								<input type="file" hidden [id]="lstIntroduceFunction[1].id" (change)="ChangeIcon($event)">
 							</div>
@@ -213,7 +219,10 @@
 
 					<div class="col-12 col-sm-6 flex">
 						<div class="item-introduce">
-							<div class="icon" (click)="ChooseIcon(lstIntroduceFunction[2].id)">
+							<div *hasNotPermission="['3', 'A_XV_5']" class="icon">
+								<img src="{{lstIntroduceFunction[2].icon}}">
+							</div>
+							<div *hasPermission="['3', 'A_XV_5']" class="icon" (click)="ChooseIcon(lstIntroduceFunction[2].id)">
 								<img [id]="'img_icon_' + lstIntroduceFunction[2].id" src="{{lstIntroduceFunction[2].icon}}">
 								<input type="file" hidden [id]="lstIntroduceFunction[2].id" (change)="ChangeIcon($event)">
 							</div>
@@ -241,7 +250,10 @@
 
 					<div class="col-12 col-sm-6 flex">
 						<div class="item-introduce">
-							<div class="icon" (click)="ChooseIcon(lstIntroduceFunction[3].id)">
+							<div *hasNotPermission="['3', 'A_XV_5']" class="icon">
+								<img src="{{lstIntroduceFunction[3].icon}}">
+							</div>
+							<div *hasPermission="['3', 'A_XV_5']" class="icon" (click)="ChooseIcon(lstIntroduceFunction[3].id)">
 								<img [id]="'img_icon_' + lstIntroduceFunction[3].id" src="{{lstIntroduceFunction[3].icon}}">
 								<input type="file" hidden [id]="lstIntroduceFunction[3].id" (change)="ChangeIcon($event)">
 							</div>
@@ -270,7 +282,10 @@
 
 					<div class="col-12 col-sm-6 flex">
 						<div class="item-introduce">
-							<div class="icon" (click)="ChooseIcon(lstIntroduceFunction[4].id)">
+							<div *hasNotPermission="['3', 'A_XV_5']" class="icon">
+								<img src="{{lstIntroduceFunction[4].icon}}">
+							</div>
+							<div *hasPermission="['3', 'A_XV_5']" class="icon" (click)="ChooseIcon(lstIntroduceFunction[4].id)">
 								<img [id]="'img_icon_' + lstIntroduceFunction[4].id" src="{{lstIntroduceFunction[4].icon}}">
 								<input type="file" hidden [id]="lstIntroduceFunction[4].id" (change)="ChangeIcon($event)">
 							</div>
@@ -298,7 +313,10 @@
 
 					<div class="col-12 col-sm-6 flex">
 						<div class="item-introduce">
-							<div class="icon" (click)="ChooseIcon(lstIntroduceFunction[5].id)">
+							<div *hasNotPermission="['3', 'A_XV_5']" class="icon">
+								<img src="{{lstIntroduceFunction[5].icon}}">
+							</div>
+							<div *hasPermission="['3', 'A_XV_5']" class="icon" (click)="ChooseIcon(lstIntroduceFunction[5].id)">
 								<img [id]="'img_icon_' + lstIntroduceFunction[5].id" src="{{lstIntroduceFunction[5].icon}}">
 								<input type="file" hidden [id]="lstIntroduceFunction[5].id" (change)="ChangeIcon($event)">
 							</div>

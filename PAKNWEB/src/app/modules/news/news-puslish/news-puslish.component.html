@@ -9,7 +9,7 @@
 				</ol>
 				<div class="btn-group group-button-table" role="group">
 
-					<a [routerLink]="['../them-moi']" class="btn grd-xanhngoc btn-sm rounded border-0 text-white">
+					<a [routerLink]="['../them-moi']" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" *hasPermission="['3', 'F_I_0']">
 						<i class="bi bi-plus"></i>&nbsp;
 						Thêm mới
 					</a>
@@ -52,16 +52,6 @@
 											<strong>Trạng thái</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<!-- <div class="dropdown bootstrap-select form-control form-control-sm">
-											[items]="listStatus" bindLabel="text" bindValue="value"
-										<ng-select class="" placeholder="Trạng thái" [closeOnSelect]="true" [(ngModel)]="query.status" (change)="filterChange()"
-											[searchable]="false" style="width: 170px;">
-											<ng-option *ngFor="let stt of listStatus" [value]="stt.value">
-												{{stt.text}}
-											</ng-option>
-										</ng-select>
-					</div> -->
-
 									</th>
 									<th class="text-center text-uppercase" style=width:130px;><strong>Thao tác</strong></th>
 								</tr>
@@ -72,8 +62,8 @@
 										<img class="avatar-size rounded-3" [src]="item.imagePath">
 
 										<strong class="news-title col-sm-10 highlight">
-											<a [routerLink]="['../chi-tiet', item.id]" title="Chi tiết tin tức sự kiện">
-												{{item.title}}</a>
+											<a *hasNotPermission="['3', 'F_I_4']" href="javascript:void(0)" title="Chi tiết tin tức sự kiện">{{item.title}}</a>
+											<a *hasPermission="['3', 'F_I_4']" [routerLink]="['../chi-tiet', item.id]" title="Chi tiết tin tức sự kiện">{{item.title}}</a>
 										</strong>
 									</td>
 									<td>
@@ -86,15 +76,15 @@
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
-											<button class="btn-icon text-white mr-2 border-0" (click)="onOpenModalConfirm(item.id,'publish')"
+											<button *hasPermission="['3', 'F_I_7']" class="btn-icon text-white mr-2 border-0" (click)="onOpenModalConfirm(item.id,'publish')"
 												[ngClass]="{'bg-xanhla':(item.status > 0), 'bg-xam':item.status == 0}">
 												<i class="bi bi-box-arrow-up" *ngIf="item.status > 0" title="{{item.isPublished?'Đã công bố':'Công bố'}}"></i>
 												<i class="bi bi-box-arrow-down text-dark" *ngIf="item.status == 0" title="Đã thu hồi"></i>
 											</button>
-											<a [routerLink]="['../chinh-sua', item.id]" class="btn-icon mr-2 border-0" title="Sửa"><i class="bi bi-pencil-square"></i></a>
-											<button class="btn-icon mr-2 grd-red text-white border-0" data-toggle="modal" data-target="#modal-history-pakn"
+											<a *hasPermission="['3', 'F_I_1']" [routerLink]="['../chinh-sua', item.id]" class="btn-icon mr-2 border-0" title="Sửa"><i class="bi bi-pencil-square"></i></a>
+											<button  *hasPermission="['3', 'F_I_6']" class="btn-icon mr-2 grd-red text-white border-0" data-toggle="modal" data-target="#modal-history-pakn"
 												(click)="onOpenModalConfirm(item.id,'delete')"><i class="bi bi-trash" title="Xóa"></i></button>
-											<a class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
+											<a  *hasPermission="['3', 'F_I_2']" class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
 									</td>
 								</tr>

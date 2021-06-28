@@ -6,7 +6,7 @@
 			</ol>
 			<div class="btn-group group-button-table" role="group">
 
-				<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="preCreate()">
+				<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="preCreate()" *hasPermission="['3', 'A_XI_0']">
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 					</svg>
@@ -65,17 +65,26 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									<strong><a (click)="preView(item)" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.question}}</a></strong>
+									<strong>
+										<a *hasNotPermission="['3', 'A_XI_4']" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.question}}</a>
+										<a *hasPermission="['3', 'A_XI_4']" (click)="preView(item)" class="ellipsis text-dark" type="button" title="Xem chi tiết">{{item.question}}</a>
+									</strong>
 								</td>
 								<td>{{item.answer}}</td>
 								<td>
-									<span type="button" (click)="preUpdateStatus(item)" *ngIf="item.isActived == true" class="badge rounded-pill bg-success">Hiệu lực</span>
-									<span type="button" (click)="preUpdateStatus(item)" *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+									<p *ngIf="item.isActived" style="margin-bottom: 0px;">
+										<span *hasPermission="['3', 'A_XI_5']" type="button" class="badge rounded-pill bg-success">Hiệu lực</span>
+										<span *hasPermission="['3', 'A_XI_5']" type="button" (click)="preUpdateStatus(item)" class="badge rounded-pill bg-success">Hiệu lực</span>
+									</p>
+									<p *ngIf="!item.isActived" style="margin-bottom: 0px;">
+										<span *hasPermission="['3', 'A_XI_5']" type="button" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+										<span *hasPermission="['3', 'A_XI_5']" type="button" (click)="preUpdateStatus(item)" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+									</p>
 								</td>
 								<td style="max-width: 100px;">
 									<div class="d-flex justify-content-end">
-										<a type="button" (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-										<a type="button" (click)="preDelete(item.id, item.categoryId)" class="btn-icon grd-red text-white" data-toggle="modal"
+										<a *hasPermission="['3', 'A_XI_1']" type="button" (click)="preUpdate(item)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
+										<a *hasPermission="['3', 'A_XI_2']" type="button" (click)="preDelete(item.id, item.categoryId)" class="btn-icon grd-red text-white" data-toggle="modal"
 											data-target="#modal-tc-pakn"><i class="bi bi-trash"></i></a>
 									</div>
 								</td>

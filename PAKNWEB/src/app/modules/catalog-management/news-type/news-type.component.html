@@ -70,11 +70,11 @@
 								</td>
 								<td>{{item.description}}</td>
 								<td style="width: 160px;">
-									<p  *ngIf="item.isActived == true">
+									<p  *ngIf="item.isActived == true" style="margin-bottom: 0px;">
 										<span type="button" *hasNotPermission="['3', 'C_V_5']" class="badge rounded-pill bg-success">Hiệu lực</span>
 										<span type="button" *hasPermission="['3', 'C_V_5']" (click)="preUpdateStatus(item)" class="badge rounded-pill bg-success">Hiệu lực</span>
 									</p>
-									<p *ngIf="item.isActived == false">
+									<p *ngIf="item.isActived == false" style="margin-bottom: 0px;">
 										<span type="button" *hasNotPermission="['3', 'C_V_6']" class="badge rounded-pill badge-light">Hết hiệu lực</span>
 										<span type="button" *hasPermission="['3', 'C_V_6']"  (click)="preUpdateStatus(item)" class="badge rounded-pill badge-light">Hết hiệu lực</span>
 									</p>

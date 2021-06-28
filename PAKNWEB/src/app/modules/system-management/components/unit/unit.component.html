@@ -29,19 +29,23 @@
 			<div class="card mb-0 border-bottom rounded-0">
 				<div class="card-header d-flex align-items-center">
 					<p class="card-title d-flex align-items-center mb-0">
-						<span class="badge rounded-pill badge-success mr-3 cursor-hand" *ngIf="unitObject.isActived" (click)="onOpenConfirmModal(unitObject.id,'unit_status')">Hiệu
-							lực</span>
-						<span class="badge rounded-pill badge-light mr-3 cursor-hand" *ngIf="!unitObject.isActived" (click)="onOpenConfirmModal(unitObject.id,'unit_status')">Hết
-							hiệu
-							lực</span>
+						<span *ngIf="unitObject.isActived">
+							<span *hasNotPermission="['3', 'A_VII_4']" class="badge rounded-pill badge-success mr-3 cursor-hand">Hiệu lực</span>
+							<span *hasPermission="['3', 'A_VII_4']" class="badge rounded-pill badge-success mr-3 cursor-hand" (click)="onOpenConfirmModal(unitObject.id,'unit_status')">Hiệu lực</span>
+						</span>
+						<span *ngIf="!unitObject.isActived">
+							<span *hasPermission="['3', 'A_VII_4']" class="badge rounded-pill badge-light mr-3 cursor-hand">Hết hiệu lực</span>
+							<span *hasNotPermission="['3', 'A_VII_4']" class="badge rounded-pill badge-light mr-3 cursor-hand" (click)="onOpenConfirmModal(unitObject.id,'unit_status')">Hết hiệu lực</span>
+						</span>
+						
 						<span>{{unitObject.name}}</span>
 					</p>
 					<div class="d-flex align-items-center">
-						<button type="button" class="btn grd-brown text-dark border-0 mr-3 py-2 px-3 cursor-hand"
+						<button *hasPermission="['3', 'A_VII_2']" type="button" class="btn grd-brown text-dark border-0 mr-3 py-2 px-3 cursor-hand"
 							(click)="modalCreateOrUpdate(unitObject.id,unitObject.unitLevel)"><i class="bi bi-pencil-square mr-2"></i>
 							Sửa
 						</button>
-						<button type="button" class="btn grd-red text-white border-0 py-2 px-3 cursor-hand" (click)="onOpenConfirmModal(unitObject.id,'unit')"><i
+						<button *hasPermission="['3', 'A_VII_3']" type="button" class="btn grd-red text-white border-0 py-2 px-3 cursor-hand" (click)="onOpenConfirmModal(unitObject.id,'unit')"><i
 								class="bi bi-trash mr-2"></i>
 							Xóa
 						</button>
@@ -56,19 +60,18 @@
 					<p class="card-text text-dark mb-0">Địa chỉ: <strong title="{{unitObject.address}}">{{unitObject.address}}</strong></p>
 				</div>
 			</div>
-			<div id="accordion-four" class="accordion accordion-no-gutter accordion-bordered">
+			<div id="accordion-four" class="accordion accordion-no-gutter accordion-bordered"  *hasPermission="['3', 'A_VIII_0']">
 				<div class="accordion__item">
 					<div class="accordion__header collapsed">
 						<div class="d-flex justify-content-between align-items-center pr-5">
 							<span class="accordion__header--text text-uppercase h4" id="title-user-in-unit" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne"
-								aria-expanded="true" (click)="onCollapsed('item01')">Người dùng trong đơn
-								vị</span>
+								aria-expanded="true" (click)="onCollapsed('item01')">Người dùng trong đơn vị</span>
 							<div class="btn-group" role="group" [hidden]="!collapsed_checked['item01']">
-								<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()">
+								<button *hasPermission="['3', 'A_VIII_6']" type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()">
 									<i class="pi pi-file-excel"></i>
 									Xuất excel
 								</button>
-								<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalUserCreateOrUpdate(null)">
+								<button *hasPermission="['3', 'A_VIII_1']" type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalUserCreateOrUpdate(null)">
 									<i class="pi pi-plus"></i>
 									Thêm mới
 								</button>
@@ -141,18 +144,20 @@
 										<td><strong>{{item.fullName}}</strong></td>
 										<td>{{item.phone}}</td>
 										<td>
-											<span class="badge rounded-pill badge-light cursor-hand" *ngIf="!item.isActived" (click)="onOpenConfirmModal(item.id,'user_status')">Hết
-												hiệu
-												lực</span>
-											<span class="badge rounded-pill badge-success cursor-hand" *ngIf="item.isActived"
-												(click)="onOpenConfirmModal(item.id,'user_status')">Hiệu
-												lực</span>
+											<p *ngIf="!item.isActived" style="margin-bottom: 0px;">
+												<span *hasNotPermission="['3', 'A_VIII_5']" class="badge rounded-pill badge-light cursor-hand">Hết hiệu lực</span>
+												<span *hasPermission="['3', 'A_VIII_5']" class="badge rounded-pill badge-light cursor-hand" (click)="onOpenConfirmModal(item.id,'user_status')">Hết hiệu lực</span>
+											</p>
+											<p *ngIf="item.isActived" style="margin-bottom: 0px;">
+												<span *hasNotPermission="['3', 'A_VIII_5']" class="badge rounded-pill badge-success cursor-hand">Hiệu lực</span>
+												<span *hasPermission="['3', 'A_VIII_5']" class="badge rounded-pill badge-success cursor-hand" (click)="onOpenConfirmModal(item.id,'user_status')">Hiệu lực</span>
+											</p>
 										</td>
 										<td>
 											<div class="d-flex justify-content-end">
-												<a href="javascript:void(0);" class="btn-icon grd-brown text-brown mr-2" (click)="modalUserCreateOrUpdate(item.id)"><i
+												<a *hasPermission="['3', 'A_VIII_3']" href="javascript:void(0);" class="btn-icon grd-brown text-brown mr-2" (click)="modalUserCreateOrUpdate(item.id)"><i
 														class="bi bi-pencil-square"></i></a>
-												<a href="javascript:void(0);" class="btn-icon grd-red text-white" (click)="onOpenConfirmModal(item.id,'user')"><i
+												<a *hasPermission="['3', 'A_VIII_4']" href="javascript:void(0);" class="btn-icon grd-red text-white" (click)="onOpenConfirmModal(item.id,'user')"><i
 														class="bi bi-trash"></i></a>
 											</div>
 										</td>

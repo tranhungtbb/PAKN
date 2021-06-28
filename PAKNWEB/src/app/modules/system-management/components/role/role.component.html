@@ -16,7 +16,7 @@
 					</svg>
 					Xuất excel
 				</button> -->
-				<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="redirectCreate()">
+				<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="redirectCreate()" *hasPermission="['3', 'A_X_1']">
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 					</svg>
@@ -82,23 +82,30 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									<strong class="highlight"><a (click)="redirectUpdate(item.id)" class="ellipsis" title="Cập nhập">{{item.name}}</a></strong>
+									<strong class="highlight">
+										<a *hasNotPermission="['3', 'A_X_2']" class="ellipsis" title="Cập nhập">{{item.name}}</a>
+										<a *hasPermission="['3', 'A_X_2']" (click)="redirectUpdate(item.id)" class="ellipsis" title="Cập nhập">{{item.name}}</a>
+									</strong>
 								</td>
 								<td>{{item.description}}</td>
 								<td>
 									{{item.userCount}}
 								</td>
 								<td>
-									<span type="button" (click)="confirm(item,'changeStatus')" *ngIf="item.isActived == true" class="badge rounded-pill bg-success">Hiệu
-										lực</span>
-									<span type="button" (click)="confirm(item,'changeStatus')" *ngIf="item.isActived == false" class="badge rounded-pill badge-light">Hết hiệu
-										lực</span>
+									<p *ngIf="item.isActived" style="margin-bottom: 0px;">
+										<span *hasNotPermission="['3', 'A_X_8']" type="button" class="badge rounded-pill bg-success">Hiệu lực</span>
+										<span *hasPermission="['3', 'A_X_8']" type="button" (click)="confirm(item,'changeStatus')" class="badge rounded-pill bg-success">Hiệu lực</span>
+									</p>
+									<p *ngIf="!item.isActived" style="margin-bottom: 0px;">
+										<span *hasNotPermission="['3', 'A_X_8']" type="button" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+										<span *hasPermission="['3', 'A_X_8']" type="button" (click)="confirm(item,'changeStatus')" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+									</p>
 								</td>
 								<td style="text-align: center;">
 									<div class="d-flex justify-content-end">
-										<a (click)="showListUser(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i class="bi bi-person-plus"></i></a>
-										<a (click)="redirectUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i class="bi bi-pencil-square"></i></a>
-										<a (click)="confirm(item,'delete')" class="btn-icon grd-red text-white cursor" data-toggle="modal" data-target="#modal-tc-pakn"><i
+										<a *hasPermission="['3', 'A_X_6']" (click)="showListUser(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i class="bi bi-person-plus"></i></a>
+										<a *hasPermission="['3', 'A_X_2']" (click)="redirectUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i class="bi bi-pencil-square"></i></a>
+										<a *hasPermission="['3', 'A_X_3']" (click)="confirm(item,'delete')" class="btn-icon grd-red text-white cursor" data-toggle="modal" data-target="#modal-tc-pakn"><i
 												class="bi bi-trash"></i></a>
 									</div>
 								</td>
@@ -160,7 +167,7 @@
 
 				</div>
 				<div style="width: 10%;" class="text-center-x">
-					<button type="button" (click)="onCreateUserRole()" class="btn grd-xanhngoc btn-sm rounded border-0 text-white text-center-x"
+					<button *hasPermission="['3', 'A_X_9']" type="button" (click)="onCreateUserRole()" class="btn grd-xanhngoc btn-sm rounded border-0 text-white text-center-x"
 						style="width: 60%; height: 100%;">Thêm</button>
 				</div>
 			</div>
@@ -223,10 +230,8 @@
 									lực</span>
 							</td>
 							<td class="text-center">
-								<div class="hover-active">
-									<a class="btn-icon grd-red text-white" (click)="onDeleteUserRole(item.id)" data-toggle="modal" data-target="#modal-tc-pakn"><i
-											class="bi bi-trash"></i></a>
-								</div>
+								<a *hasPermission="['3', 'A_X_7']" class="btn-icon grd-red text-white" (click)="onDeleteUserRole(item.id)" data-toggle="modal" data-target="#modal-tc-pakn"><i
+									class="bi bi-trash"></i></a>
 							</td>
 
 						</tr>
