@@ -16,7 +16,7 @@
 						</svg>
 						Xuất excel
 					</button>
-					<button type="button" *ngIf="isMain" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" [routerLink]="['/quan-tri/kien-nghi/them-moi/0']">
+					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" [routerLink]="['/quan-tri/kien-nghi/them-moi/0']" *hasPermission="['3', 'E_I_0']">
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 						</svg>
@@ -125,7 +125,7 @@
 											<a class="btn-icon grd-red text-white mr-2" *ngIf="item.unitReceiveId == unitLoginId"
 												(click)="preProcess(item.id,item.processId,3,item.isForwardProcess)" title="Từ chối giải quyết">
 												<i class="bi bi-file-earmark-break"></i></a>
-											<a class="btn-icon" (click)="getHistories(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
+											<a *hasPermission="['3', 'E_I_5']" class="btn-icon" (click)="getHistories(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
 									</td>
 								</tr>

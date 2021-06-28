@@ -102,8 +102,10 @@
 										<strong>{{item.code}}</strong>
 									</td>
 									<td>
-										<strong><a [routerLink]="['/quan-tri/thu-tuc-hanh-chinh/chi-tiet/',item.id]" class="text-2line mb-0"
-												title="Xem chi tiết">{{item.name}}</a></strong>
+										<strong>
+											<a *hasPermission="['3', 'H_I_4']" [routerLink]="['/quan-tri/thu-tuc-hanh-chinh/chi-tiet/',item.id]" class="text-2line mb-0" title="Xem chi tiết">{{item.name}}</a>
+											<a *hasNotPermission="['3', 'H_I_4']" class="text-2line mb-0" title="Xem chi tiết">{{item.name}}</a>
+											</strong>
 									</td>
 									<td>
 										<p class="text-2line mb-0">{{item.object}}</p>

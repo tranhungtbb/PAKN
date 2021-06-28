@@ -129,7 +129,6 @@ export class UserCreateOrUpdateComponent implements OnInit {
 
 		//avatar file;
 		let files = $('#' + this.modalId + ' .seclect-avatar')[0].files
-
 		this.modelUser.roleIds = this.selectedRoles.toString()
 		this.modelUser.permissionIds = this.listPermissionUserSelected.join(',')
 		this.modelUser.userName = this.modelUser.email
@@ -241,7 +240,6 @@ export class UserCreateOrUpdateComponent implements OnInit {
 					let output: any = $('#' + this.modalId + ' .user-avatar-view')
 					output.attr('src', this.userAvatar)
 				}
-				debugger
 				this.modelUser.positionName = this.unitsList.find((c) => c.value == this.modelUser.unitId).text
 				this.modelUser.unitName = this.unitsList.find((c) => c.value == this.modelUser.unitId).text
 				let rolesIds = this.modelUser.roleIds.split(',').map((c) => parseInt(c))
@@ -418,37 +416,5 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			permissioncategory.selected = isCategorySelected
 			permissioncategory.disabled = isCategoryDisabled
 		}
-	}
-	getActiveName(){
-		if(this.modelUser.isActived == null){
-			return ""
-		}
-		else if(this.modelUser.isActived == true){
-			return 'Hiệu lực'
-		}else{ return 'Hết hiệu lực'}
-		
-	}
-	getRoleName(){
-		if(this.modelUser.roleIds == null){
-			return ""
-		}
-		let rolesNames = this.rolesList.filter((c) => this.selectedRoles.includes(c.id)).map((c) => c.name)
-		return rolesNames.join('; ') 
-	}
-	getUnitName(){
-		if(this.modelUser.unitId == null){
-			return ""
-		}
-		debugger
-		let unit = this.unitsList.find(x=>x.value == this.modelUser.unitId)
-		return unit.text
-	}
-	getPositionName(){
-		debugger
-		if(this.modelUser.positionId == null){
-			return ""
-		}
-		let position = this.positionsList.find(x=>x.value == this.modelUser.positionId)
-		return position.text
 	}
 }
