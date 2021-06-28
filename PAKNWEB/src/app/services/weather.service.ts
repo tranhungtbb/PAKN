@@ -44,7 +44,7 @@ export class WeatherService {
         headers:this.headers,
         params:{
           appid:this.appid,
-          lat,long
+          lat,lon:long
         }
       });
 
