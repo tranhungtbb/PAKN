@@ -1639,7 +1639,7 @@ ng-select.h-34px > ng-dropdown-panel{
 	border-radius: 10px !important;
 }
 
-/* set all button in content rounded = 10px */
+/* custom form field */
 .content-body .btn{
 	border-radius: 10px !important;
 }
@@ -1684,4 +1684,12 @@ ng-select.h-34px > ng-dropdown-panel{
 	padding-top: 6px !important;
 	border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
+}
+
+table thead input.form-control,
+table thead select.form-control,
+table thead .form-control,
+table thead .form-control ng-select {
+		height: 34px;
+    border-radius: 10px !important;
 }

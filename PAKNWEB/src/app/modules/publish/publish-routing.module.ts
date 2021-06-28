@@ -75,7 +75,10 @@ const routes: Routes = [
 				path: 'phan-anh-kien-nghi',
 				component: ReflectionsRecommendationsComponent,
 			},
-
+			{
+				path: 'phan-anh-kien-nghi/da-tra-loi',
+				component: ReflectionsRecommendationsComponent,
+			},
 			{
 				path: 'phan-anh-kien-nghi/:id',
 				component: ViewReflectionsRecommendationComponent,

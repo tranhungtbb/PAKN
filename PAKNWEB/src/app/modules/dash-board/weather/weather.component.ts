@@ -17,8 +17,8 @@ export class WeatherComponent implements OnInit {
 
   subscription: Subscription;
   curentDate = new Date()
-  data = {};
-  tempCr = {};
+  data:any = {};
+  tempCr:any = {};
   geoName = ''
   
   geoLocation = {}
@@ -34,23 +34,21 @@ export class WeatherComponent implements OnInit {
       });
 
       
-      this.doPromise(this);
+      this.getWeather(this);
       
   }
 
-  private doPromise(seft:any){
-    var promise = new Promise<any>((resolve, reject) => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          console.log(position);
-          if(!position) return;
-          let {latitude,longitude} = position.coords;
-          seft.getData(latitude,longitude);
-        });
-      } else {
-       return null;
-      }
-    });
+  private getWeather(seft:any){
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        console.log(position);
+        if(!position) return;
+        let {latitude,longitude} = position.coords;
+        seft.getData(latitude,longitude);
+      });
+    } else {
+     return null;
+    }
   }
 
   private cb(res){

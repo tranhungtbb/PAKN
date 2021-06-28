@@ -1,3 +1,6 @@
+// openweathermap user login
+// duonglt2@thanglonginc.com / abcd@12345
+
 import { Injectable } from '@angular/core'
 import { HttpClient,HttpHeaders } from '@angular/common/http'
 import { ServiceInvokerService } from '../commons/service-invoker.service'
@@ -15,11 +18,6 @@ import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 export class WeatherService {
 	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, 
     private localStronageService: UserInfoStorageService) {
-      this.headers.append("Access-Control-Allow-Origin", "*")
-      this.headers.append("Access-Control-Allow-Methods", "GET, POST")
-      this.headers.append("Access-Control-Allow-Headers", "X-PINGOTHER, Content-Type")
-      this.headers.append("Content-Type","application/json; charset=utf-8");
-
     }
     headers = new HttpHeaders();
 
