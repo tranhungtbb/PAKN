@@ -48,6 +48,8 @@ export class Api {
 	public static RecommendationGetSendUserDataGraph = 'MRSPBase/MRRecommendationGetSendUserDataGraphBase'
 	public static RecommendationGetByHashtagAllOnPage = 'MRSPBase/MRRecommendationGetByHashtagAllOnPageBase'
 	public static RecommendationGetDenyContents = 'MRSPBase/MRRecommendationGetDenyContentsBase'
+	public static InsertHashtagForRecommentdation = 'MRSPBase/MRInsertHashtagForRecommentdation'
+	public static DeleteHashtagForRecommentdation = 'MRSPBase/MRDeleteHashtagForRecommentdation'
 
 	public static PuRecommendationGetAllOnPage = 'PURecommendation/PURecommendationAllOnPage'
 	public static PuRecomentdationGetListOrderByCountClick = 'PURecommendation/PURecommendationGetListOrderByCountClick'

@@ -98,6 +98,12 @@ export class SystemConfigComponent implements OnInit {
 				if (response.result.SYConfigGetByID.length > 0) {
 					this.model = {...response.result.SYConfigGetByID[0]}
 					this.config = JSON.parse(this.model.content)
+					if(this.model.type == TYPECONFIG.CONFIG_EMAIL){
+						let s = this.config.password.split('').forEach(element => {
+							return '*'
+						});
+						this.config.password = s.join('')
+					}
 					$('#modalDetail').modal('show')
 				}
 			} else {

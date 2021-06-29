@@ -102,7 +102,7 @@ export class MyRecommendationComponent implements OnInit {
 		if (Status) this.LtsStatus = Status
 		let request = {
 			userId: this.storageService.getUserId(),
-			LtsStatus: Status == null ? '' : Status,
+			LtsStatus: this.LtsStatus == null ? '' : this.LtsStatus,
 			Title: this.title == null ? '' : this.title,
 			IsFilter: this.isFilter,
 			pageIndex: this.pageIndex,
@@ -137,26 +137,25 @@ export class MyRecommendationComponent implements OnInit {
 		switch (status) {
 			case 1:
 				// chờ xl
-				this.isFilter = true
 				this.getList(',2,5')
+				this.LtsStatus = ',2,5'
 				break
 			case 2:
 				// đã tiếp nhận
-				this.isFilter = true
 				this.getList(',4,5,7,8')
+				this.LtsStatus = ',4,5,7,8'
 				break
 			case 3:
 				// đã trả lời
-				this.isFilter = true
 				this.getList(',10')
+				this.LtsStatus = ',10'
 				break
 			case 4:
 				// bị từ chối
-				this.isFilter = true
 				this.getList(',3,6,9')
+				this.LtsStatus = ',3,6,9'
 				break
 			default:
-				this.isFilter = false
 				this.getList()
 				break
 		}

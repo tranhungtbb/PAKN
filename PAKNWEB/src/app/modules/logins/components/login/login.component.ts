@@ -151,6 +151,7 @@ export class LoginComponent implements OnInit {
 									this.toastr.error('Tài khoản của bạn đang hết hiệu lực')
 									return
 								}
+								debugger
 								localStorage.clear()
 								this.shareData.setIsLogin(true)
 								this.storeageService.setAccessToken(data.accessToken)

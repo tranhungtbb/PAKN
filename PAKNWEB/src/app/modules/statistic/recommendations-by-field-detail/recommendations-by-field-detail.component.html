@@ -36,7 +36,7 @@
 									<th style="width: 150px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Mã số</strong>
-											<span class="caret-tb"></span>
+											
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
@@ -44,7 +44,7 @@
 									<th style="min-width: 265px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tên Cá nhân/ Doanh nghiệp</strong>
-											<span class="caret-tb"></span>
+											
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.sendName" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
@@ -52,7 +52,7 @@
 									<th style="width: 350px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tiêu đề</strong>
-											<span class="caret-tb"></span>
+											
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.title" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
@@ -60,7 +60,7 @@
 									<th style="min-width: 240px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Đơn vị tiếp nhận</strong>
-											<span class="caret-tb"></span>
+											
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
 											<ng-select class="" [items]="lstUnit" placeholder="Đơn vị ..." bindLabel="text" bindValue="value" [(ngModel)]="unitId"
@@ -71,7 +71,7 @@
 									<th style="width: 160px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Trạng thái</strong>
-											<span class="caret-tb"></span>
+											
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
 											<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"

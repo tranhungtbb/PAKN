@@ -12,26 +12,7 @@ import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 })
 export class SystemconfigService {
 	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storageService: UserInfoStorageService) {}
-	getSystemEmail(): Observable<any> {
-		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.EmailGetFirstBase)
-	}
-	updateSystemEmail(query: any): Observable<any> {
-		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_EMAIL),
-		}
-		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.EmailConfigSystemUpdate, headers)
-	}
-	getSystemSMS(): Observable<any> {
-		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.SMSGetFirstBase)
-	}
-	updateSystemSMS(query: any): Observable<any> {
-		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_SMS),
-		}
-		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.SMSConfigSystemUpdate, headers)
-	}
+
 	getSystemTime(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.TimeConfigGetAllOnPage)
 	}
@@ -71,8 +52,8 @@ export class SystemconfigService {
 
 	syConfigUpdate(query : any) : Observable<any>{
 		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_TIME),
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_CONFIG),
 		}
 		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.SYConfigSystemUpdate,headers)
 
