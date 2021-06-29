@@ -364,5 +364,6 @@ export class Api {
 
 
 
-	public static Weather = 'Weather/get'
+	public static Weather = 'Weather/get' 
+	public static WeatherByQ = 'Weather/getByQ'
 }
