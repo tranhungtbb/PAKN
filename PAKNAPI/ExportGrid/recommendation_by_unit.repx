@@ -87,43 +87,43 @@
                   </ExpressionBindings>
                   <StylePriority Ref="51" UseFont="false" UseForeColor="false" UseBorders="false" />
                 </Item2>
-                <Item3 Ref="52" ControlType="XRTableCell" Name="tableCell9" Weight="0.64275786147786573" Multiline="true" Text="tableCell9" StyleName="DetailData3" Font="Times New Roman, 10pt" ForeColor="Black" Padding="2,2,0,0,100" Borders="All">
+                <Item3 Ref="52" ControlType="XRTableCell" Name="tableCell9" Weight="0.64275786147786573" Multiline="true" Text="tableCell9" TextAlignment="MiddleRight" StyleName="DetailData3" Font="Times New Roman, 10pt" ForeColor="Black" Padding="2,2,0,0,100" Borders="All">
                   <ExpressionBindings>
                     <Item1 Ref="53" Expression="[Finised]+[Processing]+[ProcessWait]+[ReceiveApproved]+[ReceiveDeny]+[ReceiveWait]" PropertyName="Text" EventName="BeforePrint" />
                   </ExpressionBindings>
-                  <StylePriority Ref="54" UseFont="false" UseForeColor="false" UseBorders="false" />
+                  <StylePriority Ref="54" UseFont="false" UseForeColor="false" UseBorders="false" UseTextAlignment="false" />
                 </Item3>
-                <Item4 Ref="55" ControlType="XRTableCell" Name="tableCell18" Weight="0.53815534526524411" Multiline="true" Text="tableCell18" TextAlignment="MiddleLeft" Font="Times New Roman, 10pt" ForeColor="Black" Padding="2,2,0,0,100" Borders="All">
+                <Item4 Ref="55" ControlType="XRTableCell" Name="tableCell18" Weight="0.53815534526524411" Multiline="true" Text="tableCell18" TextAlignment="MiddleRight" Font="Times New Roman, 10pt" ForeColor="Black" Padding="2,2,0,0,100" Borders="All">
                   <ExpressionBindings>
                     <Item1 Ref="56" Expression="[ReceiveWait]" PropertyName="Text" EventName="BeforePrint" />
                   </ExpressionBindings>
                   <StylePriority Ref="57" UseFont="false" UseForeColor="false" UsePadding="false" UseBorders="false" UseTextAlignment="false" />
                 </Item4>
-                <Item5 Ref="58" ControlType="XRTableCell" Name="tableCell7" Weight="0.50004042139756755" Multiline="true" Text="tableCell7" TextAlignment="MiddleLeft" Font="Times New Roman, 10pt" ForeColor="Black" Padding="2,2,0,0,100" Borders="All">
+                <Item5 Ref="58" ControlType="XRTableCell" Name="tableCell7" Weight="0.50004042139756755" Multiline="true" Text="tableCell7" TextAlignment="MiddleRight" Font="Times New Roman, 10pt" ForeColor="Black" Padding="2,2,0,0,100" Borders="All">
                   <ExpressionBindings>
                     <Item1 Ref="59" Expression="[ReceiveApproved]" PropertyName="Text" EventName="BeforePrint" />
                   </ExpressionBindings>
                   <StylePriority Ref="60" UseFont="false" UseForeColor="false" UsePadding="false" UseBorders="false" UseTextAlignment="false" />
                 </Item5>
-                <Item6 Ref="61" ControlType="XRTableCell" Name="tableCell14" Weight="0.55451352286190358" Multiline="true" Text="tableCell14" TextAlignment="MiddleLeft" Font="Times New Roman, 10pt" ForeColor="Black" Padding="2,2,0,0,100" Borders="All">
+                <Item6 Ref="61" ControlType="XRTableCell" Name="tableCell14" Weight="0.55451352286190358" Multiline="true" Text="tableCell14" TextAlignment="MiddleRight" Font="Times New Roman, 10pt" ForeColor="Black" Padding="2,2,0,0,100" Borders="All">
                   <ExpressionBindings>
                     <Item1 Ref="62" Expression="[ReceiveDeny]" PropertyName="Text" EventName="BeforePrint" />
                   </ExpressionBindings>
                   <StylePriority Ref="63" UseFont="false" UseForeColor="false" UsePadding="false" UseBorders="false" UseTextAlignment="false" />
                 </Item6>
-                <Item7 Ref="64" ControlType="XRTableCell" Name="tableCell10" Weight="0.5107962597463247" Multiline="true" Text="tableCell10" TextAlignment="MiddleLeft" Font="Times New Roman, 10pt" ForeColor="Black" Padding="2,2,0,0,100" Borders="All">
+                <Item7 Ref="64" ControlType="XRTableCell" Name="tableCell10" Weight="0.5107962597463247" Multiline="true" Text="tableCell10" TextAlignment="MiddleRight" Font="Times New Roman, 10pt" ForeColor="Black" Padding="2,2,0,0,100" Borders="All">
                   <ExpressionBindings>
                     <Item1 Ref="65" Expression="[ProcessWait]" PropertyName="Text" EventName="BeforePrint" />
                   </ExpressionBindings>
                   <StylePriority Ref="66" UseFont="false" UseForeColor="false" UsePadding="false" UseBorders="false" UseTextAlignment="false" />
                 </Item7>
-                <Item8 Ref="67" ControlType="XRTableCell" Name="tableCell12" Weight="0.51808247026558774" Multiline="true" Text="tableCell12" TextAlignment="MiddleLeft" Font="Times New Roman, 10pt" ForeColor="Black" Padding="2,2,0,0,100" Borders="All">
+                <Item8 Ref="67" ControlType="XRTableCell" Name="tableCell12" Weight="0.51808247026558774" Multiline="true" Text="tableCell12" TextAlignment="MiddleRight" Font="Times New Roman, 10pt" ForeColor="Black" Padding="2,2,0,0,100" Borders="All">
                   <ExpressionBindings>
                     <Item1 Ref="68" Expression="[Processing]" PropertyName="Text" EventName="BeforePrint" />
                   </ExpressionBindings>
                   <StylePriority Ref="69" UseFont="false" UseForeColor="false" UsePadding="false" UseBorders="false" UseTextAlignment="false" />
                 </Item8>
-                <Item9 Ref="70" ControlType="XRTableCell" Name="tableCell13" Weight="0.47436407309907869" Multiline="true" Text="tableCell13" TextAlignment="MiddleLeft" Font="Times New Roman, 10pt" ForeColor="Black" Padding="2,2,0,0,100" Borders="All">
+                <Item9 Ref="70" ControlType="XRTableCell" Name="tableCell13" Weight="0.47436407309907869" Multiline="true" Text="tableCell13" TextAlignment="MiddleRight" Font="Times New Roman, 10pt" ForeColor="Black" Padding="2,2,0,0,100" Borders="All">
                   <ExpressionBindings>
                     <Item1 Ref="71" Expression="[Finised]" PropertyName="Text" EventName="BeforePrint" />
                   </ExpressionBindings>

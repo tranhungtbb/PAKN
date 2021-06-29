@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {WeatherService} from 'src/app/services/weather.service'
 import { Subscription, timer } from 'rxjs';
 import { map, share } from 'rxjs/operators';
+import { ConstantPool, UrlResolver } from '@angular/compiler';
+import { jsonpFactory } from '@angular/http/src/http_module';
 
+declare var $:any
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
@@ -19,11 +22,30 @@ export class WeatherComponent implements OnInit {
   curentDate = new Date()
   data:any = {};
   tempCr:any = {};
+  weather:any={iconPath:''}
   geoName = ''
   
   geoLocation = {}
-
+  storeItem:string = null
   ngOnInit() {
+    const seft = this
+
+    this.storeItem = localStorage.getItem('localWeather');
+    if(this.storeItem){
+      let data = JSON.parse(this.storeItem)
+
+      let timeBet = Date.parse(new Date().toString()) - data.time
+
+      if(timeBet > 1800000)
+        this.getWeather(this);
+      else{
+        this.data = data
+        this.weather.iconPath = '/assets/dist/icons/weather-icons/openweather/'+this.data.weather[0].icon+'.svg'
+        this.parserData(data);
+      }
+        
+    }else
+      this.getWeather(this);
     
     this.subscription = timer(0, 1000)
       .pipe(
@@ -32,16 +54,26 @@ export class WeatherComponent implements OnInit {
       ).subscribe(time => {
         this.curentDate = time;
       });
+      
+  }
 
-      
-      this.getWeather(this);
-      
+  reloadData(){
+    this.getWeather(this)
+  }
+
+  getData(lat:any, long:any, appid:string=null){
+    // this._WeatherService.getByGeographic(lat,long).subscribe(this.cb)
+    this._WeatherService.getByGeographic$(lat,long).subscribe(res=>{
+      if(res){
+        let jobject = JSON.parse(res.result.Data);
+        this.cb(jobject);
+      }
+    })
   }
 
   private getWeather(seft:any){
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position);
         if(!position) return;
         let {latitude,longitude} = position.coords;
         seft.getData(latitude,longitude);
@@ -51,23 +83,27 @@ export class WeatherComponent implements OnInit {
     }
   }
 
-  private cb(res){
-    if(!res) return;
+  
+  private parserData(res:any){
     this.data =res;
     let {main} = res;
-
     this.tempCr = {
-      temp: (main.temp - 32) / 1.8,
-      feels_like: (main.feels_like - 32) / 1.8,
-      min: (main.temp_min - 32) / 1.8,
-      max: (main.temp_max - 32) / 1.8
+      temp: Math.round(main.temp - 273.15),
+      feels_like: Math.round(main.feels_like - 273.15),
+      min: Math.round(main.temp_min - 273.15),
+      max: Math.round(main.temp_max - 273.15)
     }
-
-    this.geoName = res.name;
   }
 
-  getData(lat:any, long:any){
-    this._WeatherService.getByGeographic(lat,long).subscribe(this.cb)
+  private cb(res){
+    if(!res) return;
+    this.parserData(res);
+    ///
+    //this.weather.iconPath = 'http://openweathermap.org/img/wn/'+this.data.weather[0].icon+'.png';
+    this.weather = {iconPath:'assets/dist/icons/weather-icons/openweather/'+this.data.weather[0].icon+'.svg'}
+    this.data.time = Date.parse(new Date().toString());
+    localStorage.setItem('localWeather',JSON.stringify(this.data));
+    console.log(this.data)
   }
 
 }

@@ -364,5 +364,7 @@ export class Api {
 	public static PU_RecommandationSyncPagedList = 'RecommandationSync/PUGetPagedList'
 	public static PU_RecommandationSyncGetDetail = 'RecommandationSync/PUGetGetById'
 
-	
+
+
+	public static Weather = 'Weather/get'
 }
