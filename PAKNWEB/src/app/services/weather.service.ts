@@ -27,30 +27,11 @@ export class WeatherService {
 
     appid:string = '3203582b0e1e98b17f97b639bcef2350'
 
-	getCurrent(loc:string = 'Nha trang,vn',appkey:string=null):Observable<any>{
+	getCurrent(q:string = 'Nha trang,vn',appkey:string=null):Observable<any>{
     if(appkey) this.appid = appkey;
-
-    return this.http.get(AppSettings.weatherApi,
-      {
-        headers:this.headers,
-        params:{
-          appid:this.appid,
-          q:loc
-        }
-      });
-  }
-  getByGeographic (lat:any,long:any,appkey:string=null):Observable<any>{
-    if(appkey) this.appid = appkey;
-    if(!lat || !long) return this.getCurrent();
-
-    return this.http.get(AppSettings.weatherApi,
-      {
-        headers:this.headers,
-        params:{
-          appid:this.appid,
-          lat,lon:long
-        }
-      });
+    return this.serviceInvoker.get({
+      q
+    },AppSettings.API_ADDRESS+Api.WeatherByQ);
   }
 
   getByGeographic$(lat:any,long:any,appid:string=null):Observable<any>{

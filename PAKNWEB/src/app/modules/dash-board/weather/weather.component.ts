@@ -70,18 +70,31 @@ export class WeatherComponent implements OnInit {
       }
     })
   }
+  getDataByQ(){
+    this._WeatherService.getCurrent().subscribe(res=>{
+      if(res){
+        let jobject = JSON.parse(res.result.Data);
+        this.cb(jobject);
+      }
+    })
+  }
 
   private getWeather(seft:any){
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        if(!position) return;
+        if(!position) {
+          seft.getDataByQ()
+        };
         let {latitude,longitude} = position.coords;
         seft.getData(latitude,longitude);
+      },(err)=>{
+        seft.getDataByQ()
       });
     } else {
-     return null;
+      seft.getDataByQ()
     }
   }
+
 
   
   private parserData(res:any){
