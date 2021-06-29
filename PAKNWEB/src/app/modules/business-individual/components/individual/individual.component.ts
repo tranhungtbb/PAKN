@@ -549,6 +549,8 @@ export class IndividualComponent implements OnInit {
 		let passingObj: any = {}
 		passingObj = this.dataSearch
 		passingObj.TitleReport = 'DANH SÁCH CÁ NHÂN'
+		passingObj.UserProcessId = this.storeageService.getUserId()
+		passingObj.UserProcessName = this.storeageService.getFullName()
 		this._shareData.setobjectsearch(passingObj)
 		this._shareData.sendReportUrl = 'BI_Individual_List?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])

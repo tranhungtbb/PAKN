@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Common\ESConnection.cs" />
+    <Compile Remove="Models\UserExtended.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="ExportGrid\BI_Business_List.repx" />

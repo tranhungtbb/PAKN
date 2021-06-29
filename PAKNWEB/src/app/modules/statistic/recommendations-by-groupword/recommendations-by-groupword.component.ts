@@ -8,11 +8,10 @@ import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker'
 
 import { Router, ActivatedRoute } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { CONSTANTS, STATUS_HISNEWS, FILETYPE } from 'src/app/constants/CONSTANTS'
-import { COMMONS } from 'src/app/commons/commons'
 import { StatisticService } from 'src/app/services/statistic.service'
 import { UnitService } from 'src/app/services/unit.service'
 import { DataService } from 'src/app/services/sharedata.service'
+import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
 declare var $: any
 defineLocale('vi', viLocale)
@@ -57,7 +56,8 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 		private BsLocaleService: BsLocaleService,
 		private _service: StatisticService,
 		private unitService: UnitService,
-		private _shareData: DataService
+		private _shareData: DataService,
+		private storeageService: UserInfoStorageService
 	) {
 		this.year = new Date().getFullYear()
 		this.listUnitSelected = []
@@ -204,7 +204,8 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 		passingObj.LstUnitId = this.ltsUnitId;
 		passingObj.FromDate = this.fromDate == null ? '' : JSON.stringify(new Date(this.fromDate)).slice(1, 11)
 		passingObj.ToDate = this.toDate == null ? '' : JSON.stringify(new Date(this.toDate)).slice(1, 11)
-
+		passingObj.UserProcessId = this.storeageService.getUserId()
+		passingObj.UserProcessName = this.storeageService.getFullName()
 		this._shareData.setobjectsearch(passingObj)
 		this._shareData.sendReportUrl = 'phan-anh-kien-nghi-theo-nhom-tu-ngu?' + JSON.stringify(passingObj)
 		this.router.navigate(['quan-tri/xuat-file'])

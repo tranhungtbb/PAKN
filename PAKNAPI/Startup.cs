@@ -198,7 +198,7 @@ namespace PAKNAPI
             //});
 
             // Dev
-            DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension.RegisterExtensionGlobal(new ReportStorageWebExtension1());
+            DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension.RegisterExtensionGlobal(new ReportStorageWebExtension1(new AppSetting(Configuration)));
 			DevExpress.XtraReports.Configuration.Settings.Default.UserDesignerOptions.DataBindingMode = DevExpress.XtraReports.UI.DataBindingMode.Bindings;
 			app.UseDevExpressControls();
 			app.UseStaticFiles();

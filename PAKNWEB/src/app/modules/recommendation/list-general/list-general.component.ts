@@ -415,6 +415,7 @@ export class ListGeneralComponent implements OnInit {
 		if (this.listData.length > 0) {
 			passingObj.UnitProcessId = this.storeageService.getUnitId()
 			passingObj.UserProcessId = this.storeageService.getUserId()
+			passingObj.UserProcessName = this.storeageService.getFullName()
 		}
 		passingObj.TitleReport = 'DANH SÁCH TỔNG HỢP'
 		this._shareData.setobjectsearch(passingObj)

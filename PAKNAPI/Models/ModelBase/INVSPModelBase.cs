@@ -378,11 +378,11 @@ namespace PAKNAPI.ModelBase
 
 		public string EmailReceive { get; set; }
 
-		public async Task<List<INVInvitationDetail>> INVInvitationDetailDAO(int? id)
+		public async Task<List<INVInvitationDetail>> INVInvitationDetailDAO(int? id, long UserProcessId)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("id", id);
-
+			DP.Add("Id", id);
+			DP.Add("UserProcessId", UserProcessId);
 			return (await _sQLCon.ExecuteListDapperAsync<INVInvitationDetail>("INV_InvitationDetail", DP)).ToList();
 		}
 	}

@@ -432,6 +432,8 @@ export class AppheaderComponent implements OnInit {
 		$('#modalDetailLog').modal('hide')
 		let passingObj: any = {}
 		passingObj.UserId = this.storageService.getUserId()
+		passingObj.UserProcessId = this.storageService.getUserId()
+		passingObj.UserProcessName = this.storageService.getFullName()
 
 		this.sharedataService.setobjectsearch(passingObj)
 		this.sharedataService.sendReportUrl = 'HistoryUser?' + JSON.stringify(passingObj)

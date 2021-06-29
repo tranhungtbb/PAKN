@@ -192,6 +192,8 @@ export class RecommendationsByGroupwordDetailComponent implements OnInit {
 		passingObj.GroupWordId = this.dataSearch.groupWordId != null ? this.dataSearch.groupWordId : ''
 		passingObj.FromDate = this.fromDate == null ? '' : this.fromDate
 		passingObj.ToDate = this.toDate == null ? '' : this.toDate
+		passingObj.UserProcessId = this.storeageService.getUserId()
+		passingObj.UserProcessName = this.storeageService.getFullName()
 		this._shareData.setobjectsearch(passingObj)
 		this._shareData.sendReportUrl = 'Statistic_Recommendation_ByGroupWord?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])

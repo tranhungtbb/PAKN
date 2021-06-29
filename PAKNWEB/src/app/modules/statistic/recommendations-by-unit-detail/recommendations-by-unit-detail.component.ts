@@ -160,6 +160,7 @@ export class RecommendationsByUnitDetailComponent implements OnInit {
 		passingObj.Field = this.dataSearch.fieldId
 		passingObj.UnitProcessId = this.storeageService.getUnitId()
 		passingObj.UserProcessId = this.storeageService.getUserId()
+		passingObj.UserProcessName = this.storeageService.getFullName()
 		passingObj.FromDate = this.fromDate == null ? '' : this.fromDate
 		passingObj.ToDate = this.toDate == null ? '' : this.toDate
 		this._shareData.setobjectsearch(passingObj)

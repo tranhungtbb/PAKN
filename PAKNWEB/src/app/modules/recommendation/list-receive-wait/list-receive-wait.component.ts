@@ -264,6 +264,7 @@ export class ListReceiveWaitComponent implements OnInit {
 		if (this.listData.length > 0) {
 			passingObj.UnitProcessId = this.storeageService.getUnitId()
 			passingObj.UserProcessId = this.storeageService.getUserId()
+			passingObj.UserProcessName = this.storeageService.getFullName()
 		}
 		passingObj.TitleReport = 'DANH SÁCH CHỜ XỬ LÝ'
 		this._shareData.setobjectsearch(passingObj)
