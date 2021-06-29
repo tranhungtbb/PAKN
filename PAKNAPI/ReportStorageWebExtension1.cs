@@ -14,6 +14,10 @@ using Newtonsoft.Json;
 using PAKNAPI.Common;
 using PAKNAPI.Models;
 using PAKNAPI.ModelBase;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using System.Threading;
 
 namespace PAKNAPI
 {
@@ -40,11 +44,12 @@ namespace PAKNAPI
             }
         }
         private readonly IAppSetting _appSetting;
-        public ReportStorageWebExtension1(IAppSetting appSetting)
+
+        public ReportStorageWebExtension1(IAppSetting _appSetting)
         {
             Reports = new ConcurrentDictionary<string, ReportDetails>();
             EmbeddedResourceReportStorage = new EmbeddedResourceReportStorageService { Assemblies = new Assembly[] { Assembly.GetExecutingAssembly() } };
-            _appSetting = appSetting;
+            this._appSetting = _appSetting;
         }
 
         public override bool CanSetData(string url)
@@ -86,6 +91,17 @@ namespace PAKNAPI
             XtraReport result = null;
             MemoryStream ms = new MemoryStream();
             string Dates = "Ngày " + DateTime.Now.Day + " tháng " + DateTime.Now.Month + " năm " + DateTime.Now.Year;
+
+            SYLOGInsertIN sYSystemLogInsertIN = new SYLOGInsertIN
+            {
+                Action = "Xuất báo cáo",
+                IPAddress = "",
+                MACAddress = "",
+                CreatedDate = DateTime.Now,
+                Status = 1,
+                Exception = null
+            };
+
             DynamicParameters parameters = new DynamicParameters();
             try
             {
@@ -112,8 +128,13 @@ namespace PAKNAPI
                     result.Parameters["UnitProcessId"].Value = paramExportNhatKyThanhTra.UnitProcessId;
                     result.Parameters["UserProcessId"].Value = paramExportNhatKyThanhTra.UserProcessId;
                     result.SaveLayoutToXml(ms);
+                    //log
+                    sYSystemLogInsertIN.UserId = paramExportNhatKyThanhTra.UserProcessId;
+                    sYSystemLogInsertIN.FullName = paramExportNhatKyThanhTra.UserProcessName;
+                    sYSystemLogInsertIN.Description ="Export PAKN " + paramExportNhatKyThanhTra.TitleReport.ToLower();
                     if (ms != null)
                     {
+                        new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
                         return ms.ToArray();
                     }
                     break;
@@ -128,8 +149,13 @@ namespace PAKNAPI
                     result.Parameters["Email"].Value = paramExportIndividual.Email;
                     result.Parameters["Status"].Value = paramExportIndividual.Status;
                     result.SaveLayoutToXml(ms);
+                    // log
+                    sYSystemLogInsertIN.UserId = paramExportIndividual.UserProcessId;
+                    sYSystemLogInsertIN.FullName = paramExportIndividual.UserProcessName;
+                    sYSystemLogInsertIN.Description = "Export "+ paramExportIndividual.TitleReport.ToLower();
                     if (ms != null)
                     {
+                        new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
                         return ms.ToArray();
                     }
                     break;
@@ -144,8 +170,13 @@ namespace PAKNAPI
                     result.Parameters["Email"].Value = paramExportBusiness.Email;
                     result.Parameters["Status"].Value = paramExportBusiness.Status;
                     result.SaveLayoutToXml(ms);
+                    // log
+                    sYSystemLogInsertIN.UserId = paramExportBusiness.UserProcessId;
+                    sYSystemLogInsertIN.FullName = paramExportBusiness.UserProcessName;
+                    sYSystemLogInsertIN.Description = "Export " + paramExportBusiness.TitleReport.ToLower();
                     if (ms != null)
                     {
+                        new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
                         return ms.ToArray();
                     }
                     break;
@@ -157,8 +188,13 @@ namespace PAKNAPI
                     result.Parameters["UserId"].Value = paraHisUser.UserId;
 
                     result.SaveLayoutToXml(ms);
+                    // log
+                    sYSystemLogInsertIN.UserId = paraHisUser.UserProcessId;
+                    sYSystemLogInsertIN.FullName = paraHisUser.UserProcessName;
+                    sYSystemLogInsertIN.Description = "Export lịch sử người dùng";
                     if (ms != null)
                     {
+                        new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
                         var re = ms.ToArray();
                         return re;
                     }
@@ -171,8 +207,13 @@ namespace PAKNAPI
                     result.Parameters["UnitId"].Value = paraUser.UnitId;
 
                     result.SaveLayoutToXml(ms);
+                    // log
+                    sYSystemLogInsertIN.UserId = paraUser.UserProcessId;
+                    sYSystemLogInsertIN.FullName = paraUser.UserProcessName;
+                    sYSystemLogInsertIN.Description = "Export danh sách người dùng theo đơn vị " + paraUser.UnitName;
                     if (ms != null)
                     {
+                        new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
                         var re = ms.ToArray();
                         return re;
                     }
@@ -190,9 +231,15 @@ namespace PAKNAPI
                     result.Parameters["FromDate"].Value = paraStatisticByGroupWord.FromDate;
                     result.Parameters["ToDate"].Value = paraStatisticByGroupWord.ToDate;
 
+
                     result.SaveLayoutToXml(ms);
+                    //log
+                    sYSystemLogInsertIN.UserId = paraStatisticByGroupWord.UserProcessId;
+                    sYSystemLogInsertIN.FullName = paraStatisticByGroupWord.UserProcessName;
+                    sYSystemLogInsertIN.Description = "Export " + paraStatisticByGroupWord.Title.ToLower();
                     if (ms != null)
                     {
+                        new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
                         return ms.ToArray();
                     }
                     break;
@@ -213,8 +260,13 @@ namespace PAKNAPI
                     result.Parameters["ToDate"].Value = paraExportRecomdationByUnit.toDate;
 
                     result.SaveLayoutToXml(ms);
+                    // log
+                    sYSystemLogInsertIN.UserId = paraExportRecomdationByUnit.UserProcessId;
+                    sYSystemLogInsertIN.FullName = paraExportRecomdationByUnit.UserProcessName;
+                    sYSystemLogInsertIN.Description = "Export " + paraExportRecomdationByUnit.TitleReport.ToLower();
                     if (ms != null)
                     {
+                        new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
                         return ms.ToArray();
                     }
                     break;
@@ -235,10 +287,14 @@ namespace PAKNAPI
                     result.Parameters["ToDate"].Value = paraExportRecomdationByUnitDetail.ToDate;
 
                     result.SaveLayoutToXml(ms);
+                    // log
+                    sYSystemLogInsertIN.UserId = paraExportRecomdationByUnitDetail.UserProcessId;
+                    sYSystemLogInsertIN.FullName = paraExportRecomdationByUnitDetail.UserProcessName;
+                    sYSystemLogInsertIN.Description = "Export " + paraExportRecomdationByUnitDetail.TitleReport.ToLower();
                     if (ms != null)
                     {
-                        var re = ms.ToArray();
-                        return re;
+                        new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
+                        return ms.ToArray();
                     }
                     break;
                 case "recommendation_by_fields":
@@ -258,8 +314,13 @@ namespace PAKNAPI
                     result.Parameters["ToDate"].Value = paraExportRecomdationByFields.toDate;
 
                     result.SaveLayoutToXml(ms);
+                    // log
+                    sYSystemLogInsertIN.UserId = paraExportRecomdationByFields.UserProcessId;
+                    sYSystemLogInsertIN.FullName = paraExportRecomdationByFields.UserProcessName;
+                    sYSystemLogInsertIN.Description = "Export " + paraExportRecomdationByFields.TitleReport.ToLower();
                     if (ms != null)
                     {
+                        new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
                         return ms.ToArray();
                     }
                     break;
@@ -280,8 +341,13 @@ namespace PAKNAPI
                     result.Parameters["ToDate"].Value = paraExportRecomdationByFieldDetail.ToDate;
 
                     result.SaveLayoutToXml(ms);
+                    // log
+                    sYSystemLogInsertIN.UserId = paraExportRecomdationByFieldDetail.UserProcessId;
+                    sYSystemLogInsertIN.FullName = paraExportRecomdationByFieldDetail.UserProcessName;
+                    sYSystemLogInsertIN.Description = "Export " + paraExportRecomdationByFieldDetail.TitleReport.ToLower();
                     if (ms != null)
                     {
+                        new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
                         return ms.ToArray();
                     }
                     break;
@@ -298,8 +364,13 @@ namespace PAKNAPI
                     result.Parameters["FromDate"].Value = queryParams.FromDate;
                     result.Parameters["ToDate"].Value = queryParams.ToDate;
                     result.SaveLayoutToXml(ms);
+                    // log
+                    sYSystemLogInsertIN.UserId = queryParams.UserProcessId;
+                    sYSystemLogInsertIN.FullName = queryParams.UserProcessName;
+                    sYSystemLogInsertIN.Description = "Export " + queryParams.TitleReport.ToLower();
                     if (ms != null)
                     {
+                        new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
                         return ms.ToArray();
                     }
                     break;
@@ -309,15 +380,22 @@ namespace PAKNAPI
                     result = XtraReport.FromStream(resource);
                     result.Parameters["TitleReport"].Value = paraExportuserReadedInvitationGetList.TitleReport;
                     result.Parameters["InvitationId"].Value = paraExportuserReadedInvitationGetList.InvitationId;
-
                     result.SaveLayoutToXml(ms);
+                    // log
+                    sYSystemLogInsertIN.UserId = paraExportuserReadedInvitationGetList.UserProcessId;
+                    sYSystemLogInsertIN.FullName = paraExportuserReadedInvitationGetList.UserProcessName;
+                    sYSystemLogInsertIN.Description = "Export " + paraExportuserReadedInvitationGetList.TitleReport.ToLower();
                     if (ms != null)
                     {
+                        new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
                         return ms.ToArray();
                     }
                     break;
             }
+            sYSystemLogInsertIN.Status = 0;
+            new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
             ReportDetails details = null;
+
             if (Reports.TryGetValue(url, out details))
             {
                 return details.Layout;

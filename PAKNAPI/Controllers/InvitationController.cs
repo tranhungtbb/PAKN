@@ -23,6 +23,7 @@ using PAKNAPI.Models.Invitation;
 using PAKNAPI.Job;
 using System.Threading;
 
+
 namespace PAKNAPI.Controllers
 {
     [Route("api/INVInvitation")]
@@ -208,7 +209,7 @@ namespace PAKNAPI.Controllers
 			{
 				Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
 				INVInvitationDetailModel invInvitation = new INVInvitationDetailModel();
-				invInvitation.Model = (await new INVInvitationDetail(_appSetting).INVInvitationDetailDAO(id)).FirstOrDefault();
+				invInvitation.Model = (await new INVInvitationDetail(_appSetting).INVInvitationDetailDAO(id, new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext))).FirstOrDefault();
 				invInvitation.INVFileAttach
 					 = await new INVFileAttachGetAllByInvitationId(_appSetting).INVFileAttachGetAllByInvitationIdDAO(id);
 				invInvitation.INVFileAttach.ForEach(item => {

@@ -182,6 +182,7 @@ export class ListApproveDenyComponent implements OnInit {
 		if (this.listData.length > 0) {
 			passingObj.UnitProcessId = this.storeageService.getUnitId()
 			passingObj.UserProcessId = this.storeageService.getUserId()
+			passingObj.UserProcessName = this.storeageService.getFullName()
 		}
 		passingObj.TitleReport = 'DANH SÁCH TỪ CHỐI PHÊ DUYỆT'
 		this._shareData.setobjectsearch(passingObj)

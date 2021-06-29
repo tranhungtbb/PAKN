@@ -16,6 +16,7 @@ namespace PAKNAPI.Models
         public int? Status { get; set; }
         public int? UnitProcessId { get; set; }
         public long? UserProcessId { get; set; }
+        public string UserProcessName { get; set; }
     }
 
     public class ExportIndividual
@@ -27,6 +28,8 @@ namespace PAKNAPI.Models
         public string Phone { get; set; }
         public int? Status { get; set; }
         public string RowNumber { get; set; }
+        public long? UserProcessId { get; set; }
+        public string UserProcessName { get; set; }
 
     }
 
@@ -39,6 +42,8 @@ namespace PAKNAPI.Models
         public string Phone { get; set; }
         public int? Status { get; set; }
         public string RowNumber { get; set; }
+        public long? UserProcessId { get; set; }
+        public string UserProcessName { get; set; }
 
     }
 
@@ -52,20 +57,25 @@ namespace PAKNAPI.Models
         public int? GroupWordId { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
+        public long? UserProcessId { get; set; }
+        public string UserProcessName { get; set; }
 
     }
 
     public class ExportHisUser
     {
         public int UserId { get; set; }
+        public int? UserProcessId { get; set; }
+        public string UserProcessName { get; set; }
 
     }
     public class ExportUserByUnit
     {
         public string UnitName { get; set; }
         public int UnitId { get; set; }
+        public long? UserProcessId { get; set; }
+        public string UserProcessName { get; set; }
 
-        
 
     }
 
@@ -80,6 +90,8 @@ namespace PAKNAPI.Models
         public int? Timeline { get; set; }
         public string fromDate { get; set; }
         public string toDate { get; set; }
+        public long? UserProcessId { get; set; }
+        public string UserProcessName { get; set; }
     }
 
     public class ExportRecomdationByUnitDetail
@@ -96,6 +108,7 @@ namespace PAKNAPI.Models
         public int? UserProcessId { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
+        public string UserProcessName { get; set; }
     }
 
     public class ExportRecomdationByFields
@@ -109,6 +122,8 @@ namespace PAKNAPI.Models
         public int? Timeline { get; set; }
         public string fromDate { get; set; }
         public string toDate { get; set; }
+        public long? UserProcessId { get; set; }
+        public string UserProcessName { get; set; }
     }
     public class ExportRecomdationByFieldDetail
     {
@@ -118,15 +133,18 @@ namespace PAKNAPI.Models
         public string Title { get; set; }
         public int? Status { get; set; }
         public string UnitProcessId { get; set; }
-        public string UserProcessId { get; set; }
+        public int UserProcessId { get; set; }
         public string LstUnitId { get; set; }
         public int Field { get; set; }
         public string FromDate { get; set; }
         public string ToDate { get; set; }
+        public string UserProcessName { get; set; }
     }
     public class ExportUserReadedInvitationGetList
     {
         public string InvitationId { get; set; }
         public string TitleReport { get; set; }
+        public long? UserProcessId { get; set; }
+        public string UserProcessName { get; set; }
     }
 }

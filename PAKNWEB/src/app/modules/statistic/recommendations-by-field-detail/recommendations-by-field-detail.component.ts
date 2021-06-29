@@ -161,6 +161,7 @@ export class RecommendationsByFieldDetailComponent implements OnInit {
 		passingObj.Title = this.dataSearch.title == '' ? null : this.dataSearch.title
 		passingObj.UnitProcessId = this.storeageService.getUnitId()
 		passingObj.UserProcessId = this.storeageService.getUserId()
+		passingObj.UserProcessName = this.storeageService.getFullName()
 		passingObj.Status = this.dataSearch.status 
 		passingObj.LstUnitId = this.dataSearch.lstUnitId == null ? '' : this.dataSearch.lstUnitId
 		passingObj.Field = this.dataSearch.fieldId

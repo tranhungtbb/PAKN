@@ -13,6 +13,7 @@ import { MESSAGE_COMMON, RESPONSE_STATUS, EXCEL_TYPE, EXCEL_EXTENSION } from 'sr
 import { COMMONS } from 'src/app/commons/commons'
 import { UserCreateOrUpdateComponent } from 'src/app/modules/system-management/components/user/user-create-or-update/user-create-or-update.component'
 import { UserViewInfoComponent } from 'src/app/modules/system-management/components/user/user-view-info/user-view-info.component'
+import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
 declare var $: any
 @Component({
@@ -29,7 +30,8 @@ export class UserComponent implements OnInit {
 		private unitService: UnitService,
 		private positionService: PositionService,
 		private _shareData: DataService,
-		private _router: Router
+		private _router: Router,
+		private storeageService: UserInfoStorageService,
 	) {}
 
 	listData = new Array<UserObject2>()
@@ -381,6 +383,8 @@ export class UserComponent implements OnInit {
 		let passingObj: any = {}
 		if (this.listHisData.length > 0) {
 			passingObj.UserId = this.hisUserId
+			passingObj.UserProcessId = this.storeageService.getUserId()
+			passingObj.UserProcessName = this.storeageService.getFullName()
 		}
 
 		this._shareData.setobjectsearch(passingObj)

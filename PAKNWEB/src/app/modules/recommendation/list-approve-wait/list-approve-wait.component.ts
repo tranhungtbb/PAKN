@@ -251,6 +251,7 @@ export class ListApproveWaitComponent implements OnInit {
 		if (this.listData.length > 0) {
 			passingObj.UnitProcessId = this.storeageService.getUnitId()
 			passingObj.UserProcessId = this.storeageService.getUserId()
+			passingObj.UserProcessName = this.storeageService.getFullName()
 		}
 		passingObj.TitleReport = 'DANH SÁCH CHỜ PHÊ DUYỆT'
 		this._shareData.setobjectsearch(passingObj)
