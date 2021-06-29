@@ -28,7 +28,7 @@
 						</button> -->
 					</div>
 				</div>
-				<div class="box">
+				<div class="box" *ngIf="[1,2,4].includes(query.src)">
 					<div *ngIf="listData.length == 0" style="text-align: center;">
 						<strong>Không tìm thấy dữ liệu</strong>
 					</div>
@@ -36,7 +36,7 @@
 						<div class="card-header pt-3 pb-0 d-flex align-items-center">
 							<div class="media align-items-center">
 								<div class="avatar-circle mr-2" style="background: #EBF2FF; color: #5D90F1">
-									<!-- {{item.shortName}} -->
+									<i class="bi bi-person"></i>
 								</div>
 								<div class="media-body">
 									<p class="my-0 h5">{{item.createdBy}}</p>
@@ -57,7 +57,7 @@
 						</div>
 					</div>
 				</div>
-				<nav aria-label="navigation">
+				<nav aria-label="navigation" *ngIf="[1,2,4].includes(query.src)">
 					<ul class="pagination pagination-lg justify-content-between align-items-center">
 						<li class="page-item" [ngClass]="{ 'disabled': query.pageIndex === 1 }">
 							<a (click)="changePagination(query.pageIndex - 1)" class="page-link border text-uppercase rounded-pill" href="javascript:void(0)" tabindex="-1"
@@ -77,6 +77,68 @@
 						</li>
 					</ul>
 				</nav>
+
+				<!-- table view -->
+				<p-table *ngIf="[3].includes(query.src)" #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+					currentPageReportTemplate="Tổng số {{total}}" [rows]="query.pageSize" [totalRecords]="total" [responsive]="true" autoLayout="true"
+					tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+					<ng-template pTemplate="header" class="bg-thead">
+						<tr>
+							<th style="width: 50px;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>STT</strong>
+								</p>
+							</th>
+							<th style="min-width: 200px;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Nội dung kiến nghị</strong>
+								</p>
+							</th>
+
+							<th style="width: 200px; max-width: 250px;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Lĩnh vực</strong>
+								</p>
+							</th>
+
+							<th style="width: 180px;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Trạng thái</strong>
+								</p>
+							</th>
+							<th style="min-width: 200px;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Kết quả giải quyết</strong>
+								</p>
+							</th>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+						<tr>
+							<td class="text-center">{{rowIndex + 1}}</td>
+							<td>
+								<p [innerHTML]="item.content" class="text-2line pointer font-w600" title="{{item.content}}" [routerLink]="['../',query.src,item.id]">
+								</p>
+							</td>
+							<td>
+								<p class="mb-0 text-2line" class="text-2line" title="{{item.content}}">{{item.fields}}</p>
+							</td>
+							<td>{{item.status}}</td>
+							<td>
+								<p [innerHTML]="item.reply" class="text-2line" title="{{item.content}}">
+								</p>
+							</td>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="emptymessage">
+						<tr>
+							<td class="text-center" colspan="6">Không có dữ liệu</td>
+						</tr>
+					</ng-template>
+				</p-table>
+
+				<!-- end table view -->
+
 			</div>
 			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
 				<app-view-right></app-view-right>

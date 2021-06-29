@@ -40,11 +40,11 @@ namespace PAKNAPI
             }
         }
         private readonly IAppSetting _appSetting;
-        public ReportStorageWebExtension1()
+        public ReportStorageWebExtension1(IAppSetting appSetting)
         {
             Reports = new ConcurrentDictionary<string, ReportDetails>();
             EmbeddedResourceReportStorage = new EmbeddedResourceReportStorageService { Assemblies = new Assembly[] { Assembly.GetExecutingAssembly() } };
-
+            _appSetting = appSetting;
         }
 
         public override bool CanSetData(string url)

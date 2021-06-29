@@ -257,4 +257,8 @@ export class RecommendationService {
 	getDenyContent(request): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationGetDenyContents)
 	}
+
+	get7DayDataGraph(request): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.MR_Recommendation7dayGraph)
+	}
 }

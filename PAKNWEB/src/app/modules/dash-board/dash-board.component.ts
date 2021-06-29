@@ -48,16 +48,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 			UnitProcessId: this.userStorage.getUnitId(),
 			UserProcessId: this.userStorage.getUserId(),
 		}
-		this.recommenService.getDataGraph(req).subscribe((res) => {
+		this.recommenService.get7DayDataGraph(req).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				this.totalCount = res.result.MRRecommendationGetDataGraph.reduce((acc, item, index) => {
-					acc += item.count
+				this.totalCount = res.result.data.reduce((acc, item, index) => {
+					acc += item.total
 					return acc
 				}, 0)
-				let data = res.result.MRRecommendationGetDataGraph.reduce((acc, item, index) => {
-					item.per_10 = ((item.count / this.totalCount) * 10).toPrecision(2)
-					item.per_100 = ((item.count / this.totalCount) * 100).toPrecision(2)
-					acc['stt_' + item.status] = item
+				let data = res.result.data.reduce((acc, item, index) => {
+					item.per_10 = ((item.total / this.totalCount) * 10).toPrecision(2)
+					item.per_100 = ((item.total / this.totalCount) * 100).toPrecision(2)
+					acc['stt_' + item.status] = item;
 					return acc
 				}, {})
 				this.dataGraph = data

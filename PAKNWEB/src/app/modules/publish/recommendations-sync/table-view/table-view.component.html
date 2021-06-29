@@ -1,0 +1,57 @@
+<p-table #table [value]="parent.listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+  currentPageReportTemplate="Tổng số {{parent.total}}" [rows]="parent.query.pageSize" [totalRecords]="parent.total" [responsive]="true" autoLayout="true"
+  tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+  <ng-template pTemplate="header" class="bg-thead">
+    <tr>
+      <th style="width: 50px;">
+        <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+          <strong>STT</strong>
+        </p>
+      </th>
+      <th>
+        <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+          <strong>Nội dung kiến nghị</strong>
+        </p>
+      </th>
+
+      <th style="width: 200px; max-width: 250px;">
+        <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+          <strong>Lĩnh vực</strong>
+        </p>
+      </th>
+
+      <th style="width: 180px;">
+        <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+          <strong>Trạng thái</strong>
+        </p>
+      </th>
+      <th style="min-width: 200px;">
+        <p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+          <strong>Kết quả giải quyết</strong>
+        </p>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+    <tr>
+      <td class="text-center">{{rowIndex + 1}}</td>
+      <td>
+        <p [innerHTML]="item.content" class="text-2line">
+        </p>
+      </td>
+      <td>
+        <p class="mb-0 text-2line" class="text-2line">{{item.fields}}</p>
+      </td>
+      <td>{{item.status}}</td>
+      <td>
+        <p [innerHTML]="item.reply" class="text-2line">
+        </p>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td class="text-center" colspan="6">Không có dữ liệu</td>
+    </tr>
+  </ng-template>
+</p-table>

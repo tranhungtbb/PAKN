@@ -157,7 +157,7 @@
 					</div>
 					<div class="card-body p-0">
 						<p class="mb-1">Tiếp nhận Phản ánh, kiến nghị
-							<span class="pull-right font-weight-bold cl-blue2 counter">{{dataGraph['stt_4']?.count}}</span>
+							<span class="pull-right font-weight-bold cl-blue2 counter">{{dataGraph['stt_4']?.total}}</span>
 						</p>
 						<div class="progress ">
 							<div class="progress-bar grd-xanhngoc progress-animated" style="height:6px;" role="progressbar" [style.width]="dataGraph['stt_4']?.per_100+'%'">
@@ -165,7 +165,7 @@
 						</div>
 
 						<p class="mb-1 mt-4">Phản ánh, kiến nghị đang giải quyết
-							<span class="pull-right font-weight-bold cl-blue counter">{{dataGraph['stt_7']?.count}}</span>
+							<span class="pull-right font-weight-bold cl-blue counter">{{dataGraph['stt_7']?.total}}</span>
 						</p>
 						<div class="progress ">
 							<div class="progress-bar grd-blue progress-animated" style="height:6px;" role="progressbar" [style.width]="dataGraph['stt_7']?.per_100+'%'">
@@ -173,7 +173,7 @@
 						</div>
 
 						<p class="mb-1 mt-4">Phản ánh, kiến nghị đã giải quyết
-							<span class="pull-right font-weight-bold cl-green counter">{{dataGraph['stt_10']?.count}}</span>
+							<span class="pull-right font-weight-bold cl-green counter">{{dataGraph['stt_10']?.total}}</span>
 						</p>
 						<div class="progress ">
 							<div class="progress-bar grd-green progress-animated" style="height:6px;" role="progressbar" [style.width]="dataGraph['stt_10']?.per_100+'%'">
@@ -181,7 +181,7 @@
 						</div>
 
 						<p class="mb-1 mt-4">Từ chối Phản ánh, kiến nghị
-							<span class="pull-right font-weight-bold cl-red counter">{{dataGraph['stt_6']?.count}}</span>
+							<span class="pull-right font-weight-bold cl-red counter">{{dataGraph['stt_3']?.total + dataGraph['stt_6']?.total + dataGraph['stt_9']?.total}}</span>
 						</p>
 						<div class="progress ">
 							<div class="progress-bar grd-red progress-animated" style="height:6px;" role="progressbar" [style.width]="dataGraph['stt_6']?.per_100+'%'">
@@ -189,7 +189,7 @@
 						</div>
 
 						<p class="mb-1 mt-4">TTHC đã công bố
-							<span class="pull-right font-weight-bold cl-green counter">{{dataGraph['stt_1']?.count}}</span>
+							<span class="pull-right font-weight-bold cl-green counter">{{dataGraph['stt_10']?.total}}</span>
 						</p>
 						<div class="progress ">
 							<div class="progress-bar grd-green progress-animated" style="height:6px;" role="progressbar" [style.width]="dataGraph['stt_1']?.per_100+'%'">
@@ -197,7 +197,7 @@
 						</div>
 
 						<p class="mb-1 mt-4">TTHC đã thu hồi
-							<span class="pull-right font-weight-bold cl-brown counter">{{dataGraph['stt_0']?.count}}</span>
+							<span class="pull-right font-weight-bold cl-brown counter">{{dataGraph['stt_0']?.total}}</span>
 						</p>
 						<div class="progress ">
 							<div class="progress-bar grd-brown2 progress-animated" style="height:6px;" role="progressbar" [style.width]="dataGraph['stt_0']?.per_100+'%'">

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {Router} from '@angular/router'
 import {RecommandationSyncService} from 'src/app/services/recommandation-sync.service'
+import {TableViewComponent} from './table-view/table-view.component'
 
 @Component({
   selector: 'app-recommendations-sync',
@@ -13,11 +14,14 @@ export class RecommendationsSyncComponent implements OnInit {
     private router: Router,
     private _RecommandationSyncService:RecommandationSyncService
   ) { }
+
+  @ViewChild(TableViewComponent,{static:true}) childTableView :TableViewComponent
   
     title='Danh sách PAKN Cổng thông tin điện tử tỉnh Khánh Hòa'
 
   ngOnInit() {
-
+    //this.childTableView.parent = this;
+    
     if(this.router.url.includes('/cong-ttdt-tinh-khanh-hoa'))
       {
         this.query.src = 1
@@ -69,6 +73,11 @@ export class RecommendationsSyncComponent implements OnInit {
     })
   }
 
+  onPageChange(event:any){
+    // this.query.pageSize = event.rows
+		let pageIndex = event.first / event.rows + 1
+    this.changePagination(pageIndex);
+  }
   changeKeySearch(ev:any){
     this.getData();
   }

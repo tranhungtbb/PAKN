@@ -29,7 +29,8 @@ import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-righ
 import { ChatbotComponent } from './chatbot/chatbot.component'
 import  {ViewNotificationComponent} from './view-notification/view-notification.component';
 import { RecommendationsSyncComponent } from './recommendations-sync/recommendations-sync.component';
-import { ViewRecommendationsSyncComponent } from './view-recommendations-sync/view-recommendations-sync.component'
+import { ViewRecommendationsSyncComponent } from './view-recommendations-sync/view-recommendations-sync.component';
+import { TableViewComponent } from './recommendations-sync/table-view/table-view.component'
 
 @NgModule({
 	declarations: [
@@ -50,7 +51,8 @@ import { ViewRecommendationsSyncComponent } from './view-recommendations-sync/vi
 		ChatbotComponent,
 		ViewNotificationComponent,
 		RecommendationsSyncComponent,
-		ViewRecommendationsSyncComponent
+		ViewRecommendationsSyncComponent,
+		TableViewComponent
 	],
 	imports: [
 		CommonModule,

@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using Bugsnag;
+using PAKNAPI.Models.ModelBase;
 
 namespace PAKNAPI.ControllerBase
 {
@@ -1989,5 +1990,39 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		#region graph data
+		[HttpGet]
+		[Authorize]
+		[Route("MRRecommendation7dayGraph")]
+		public async Task<ActionResult<object>> MRRecommendation7dayGraph(
+			int? UnitProcessId, 
+			long? UserProcessId)
+		{
+			try
+			{
+
+				var ado = new MrRecommendationGetGraphBase(_appSetting);
+
+				var res = await ado.GetGraphData(UnitProcessId,UserProcessId);
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"data", res}
+					};
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+		#endregion
+
 	}
 }
