@@ -34,6 +34,7 @@ export class CallHistoryListComponent implements OnInit {
 	ngOnInit() {}
 
 	private getDataPageList() {
+		this.query.phone = this.query.phone.trim()
 		this.query.type = this.query.type == null ? '' : this.query.type
 		let query = { ...this.query }
 
@@ -50,7 +51,7 @@ export class CallHistoryListComponent implements OnInit {
 		this.getDataPageList()
 	}
 	filterText(event: any, key: string){
-		console.log(event)
+		event.target.value = event.target.value.trim()
 		this.query[key] = event.target.value
 		this.getDataPageList()
 	}

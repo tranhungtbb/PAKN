@@ -200,6 +200,7 @@ export class ViewRecommendationComponent implements OnInit {
 	}
 
 	onCreateHashtag(e) {
+		
 		if (e.target.value != null && e.target.value != '' && e.target.value.trim() != '' && e.keyCode == 13) {
 			var isExist = false
 			for (var i = 0; i < this.lstHashtag.length; i++) {
@@ -233,6 +234,15 @@ export class ViewRecommendationComponent implements OnInit {
 			}
 		}
 		if (!isExist) {
+			if(![7,8].includes(this.model.status)){
+				let hashtag = this.lstHashtag.find(x=>x.value == this.hashtagId)
+				let obj = {
+					RecommendationId : this.model.id,
+					HashtagId : this.hashtagId,
+					HashtagName : hashtag.text
+				}
+				this.recommendationService.addHashtagForRecommentdation(obj).subscribe()
+			}
 			for (var i = 0; i < this.lstHashtag.length; i++) {
 				if (this.lstHashtag[i].value == this.hashtagId) {
 					this.lstHashtagSelected.push(this.lstHashtag[i])
@@ -242,6 +252,13 @@ export class ViewRecommendationComponent implements OnInit {
 		}
 	}
 	onRemoveHashtag(item: any) {
+		if(![7,8].includes(this.model.status)){
+			let obj = {
+				RecommendationId : this.model.id,
+				HashtagId : item.value
+			}
+			this.recommendationService.deleteHashtagForRecommentdation(obj).subscribe()
+		}
 		for (let index = 0; index < this.lstHashtagSelected.length; index++) {
 			if (this.lstHashtagSelected[index].id == item.id) {
 				this.lstHashtagSelected.splice(index, 1)

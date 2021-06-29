@@ -247,6 +247,13 @@ export class RecommendationService {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationGetByHashtagAllOnPage)
 	}
 
+	addHashtagForRecommentdation(request) : Observable<any> {
+		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.InsertHashtagForRecommentdation)
+	}
+	deleteHashtagForRecommentdation(request) : Observable<any> {
+		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.DeleteHashtagForRecommentdation)
+	}
+
 	getDenyContent(request): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationGetDenyContents)
 	}

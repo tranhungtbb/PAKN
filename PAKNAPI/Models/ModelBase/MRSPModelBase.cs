@@ -99,6 +99,7 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+
 	public class HISRecommendationInsertIN
 	{
 		public int? ObjectId { get; set; }
@@ -970,6 +971,31 @@ namespace PAKNAPI.ModelBase
 			DP.Add("HashtagName", _mRRecommendationHashtagInsertIN.HashtagName);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_HashtagInsert", DP));
+		}
+	}
+
+	public class MRRecommendationHashtagDelete
+	{
+		private SQLCon _sQLCon;
+		public int? RecommendationId { get; set; }
+		public int? HashtagId { get; set; }
+
+		public MRRecommendationHashtagDelete(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRRecommendationHashtagDelete()
+		{
+		}
+
+		public async Task<int> MRRecommendationHashtagInsertDAO(MRRecommendationHashtagDelete _mRRecommendationHashtagDeleteIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationId", _mRRecommendationHashtagDeleteIN.RecommendationId);
+			DP.Add("HashtagId", _mRRecommendationHashtagDeleteIN.HashtagId);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Recommendation_HashtagDelete", DP));
 		}
 	}
 

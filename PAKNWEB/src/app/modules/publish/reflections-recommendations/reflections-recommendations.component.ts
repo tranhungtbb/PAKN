@@ -29,7 +29,7 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 	ReflectionsRecommendations = new Array<PuRecommendation>()
 	RecommendationsOrderByCountClick: any[]
 
-	constructor(private service: PuRecommendationService, private routers: Router) {}
+	constructor(private service: PuRecommendationService, private routers: Router, private userService : UserInfoStorageService) {}
 
 	ngOnInit() {
 		this.getList()
@@ -114,6 +114,12 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 		return
 	}
 	redirectCreateRecommendation() {
-		this.routers.navigate(['/cong-bo/them-moi-kien-nghi'])
+		let login = this.userService.getSaveLogin()
+		if(!login){
+			this.routers.navigate(['/dang-nhap'])
+		}else{
+			this.routers.navigate(['/cong-bo/them-moi-kien-nghi'])
+		}
+		
 	}
 }
