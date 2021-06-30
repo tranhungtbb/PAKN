@@ -2004,11 +2004,13 @@ namespace PAKNAPI.ControllerBase
 
 				var ado = new MrRecommendationGetGraphBase(_appSetting);
 
-				var res = await ado.GetGraphData(UnitProcessId,UserProcessId);
+				var res = await ado.Get7DayGraphData(UnitProcessId,UserProcessId);
+				var res2 = await ado.GetGraphData(UnitProcessId, UserProcessId);
 
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"data", res}
+						{"data7day", res},
+						{"data", res2}
 					};
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 

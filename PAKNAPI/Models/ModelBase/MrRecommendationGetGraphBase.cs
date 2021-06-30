@@ -25,13 +25,21 @@ namespace PAKNAPI.Models.ModelBase
 		{
 		}
 
+		public async Task<List<MrGraphCountByStatusModel>> Get7DayGraphData(int? UnitProcessId, long? UserProcessId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UnitProcessId", UnitProcessId);
+			DP.Add("UserProcessId", UserProcessId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MrGraphCountByStatusModel>("[MR_RecommendationGet7DayDataGraph]", DP)).ToList();
+		}
 		public async Task<List<MrGraphCountByStatusModel>> GetGraphData(int? UnitProcessId, long? UserProcessId)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("UnitProcessId", UnitProcessId);
 			DP.Add("UserProcessId", UserProcessId);
 
-			return (await _sQLCon.ExecuteListDapperAsync<MrGraphCountByStatusModel>("[MR_RecommendationGetGraphWithProcess]", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<MrGraphCountByStatusModel>("[MR_RecommendationGetDataGraph]", DP)).ToList();
 		}
 	}
 }
