@@ -1691,5 +1691,5 @@ table thead select.form-control,
 table thead .form-control,
 table thead .form-control ng-select {
 		height: 34px;
-    border-radius: 10px !important;
+    border-radius: 10px;
 }

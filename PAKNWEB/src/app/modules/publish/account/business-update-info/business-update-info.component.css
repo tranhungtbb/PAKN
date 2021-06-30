@@ -1,3 +1,13 @@
 .set-height{
   height: 2.4rem;
 }
+.input-group .input-group-addon{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.center{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}

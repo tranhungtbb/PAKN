@@ -180,6 +180,18 @@ export class IndividualComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
+		// $('#modal').on('hidden.bs.modal', function () {
+			
+		// });
+	}
+
+	close =()=>{
+		let dataRecommendation = this.storeageService.getRecommentdationObjectRemember()
+				if(dataRecommendation){
+					this._router.navigate(['/quan-tri/kien-nghi/them-moi/0'])
+					return
+				}
+				return
 	}
 
 	onSortIndividual(fieldName: string) {
@@ -385,6 +397,7 @@ export class IndividualComponent implements OnInit {
 		this.model._birthDay = fDob.value
 		this.model._dateOfIssue = fDateIssue.value
 		this.model.userId = this.userLoginId
+		if(!this.model.issuedPlace) this.model.issuedPlace = ''	
 		this.model.issuedPlace = this.model.issuedPlace.trim()
 		if (!this.model.email) this.model.email = ''
 

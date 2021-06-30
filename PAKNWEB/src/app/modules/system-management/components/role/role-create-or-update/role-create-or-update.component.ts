@@ -72,6 +72,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 								this.model = res.result.Data
 								this.listPermissionGroupUserSelected = res.result.ListPermission
 								this.onGroupUserLoadPermission(this.listPermissionGroupUserSelected)
+								this.getUsersByRoleId(this.model.id)
 							}
 						})
 					}
@@ -192,6 +193,10 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 	}
 
 	onCreateUser() {
+		if(!this.userId){
+			this._toastr.error('Vui lòng chọn người dùng')
+			return
+		}
 		if (this.listItemUserSelected.length == 0) {
 			let item = this.listUserIsSystem.find((x) => x.value == this.userId)
 			this.listItemUserSelected.push(item)
@@ -223,7 +228,8 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 			})
 			this.userService.insertMultiUserRole(listModel).subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
-					this.redirectList()
+					// this.redirectList()
+					return
 				}
 			})
 		}

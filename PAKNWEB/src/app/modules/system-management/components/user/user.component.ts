@@ -107,23 +107,15 @@ export class UserComponent implements OnInit {
 		this.childDetailUser.parentUser = this
 	}
 	getDropDown() {
-		this.positionService
-			.positionGetList({
-				pageIndex: 1,
-				pageSize: 1000,
-			})
-			.subscribe((res) => {
-				if (res.success != 'OK') return
-				this.positionsList = res.result.CAPositionGetAllOnPage
-			})
-		this.roleService.getAll({}).subscribe((res) => {
-			if (res.success != 'OK') return
-			this.rolesList = res.result.SYRoleGetAll
+		this._service.getDataForCreate({}).subscribe(res=>{
+			if(res.success == RESPONSE_STATUS.success){
+				this.positionsList = res.result.lstPossition
+				this.unitsList = res.result.lstUnit
+				console.log(res)
+			}
+			
 		})
-		this.unitService.getAll({}).subscribe((res) => {
-			if (res.success != 'OK') return
-			this.unitsList = res.result.CAUnitGetAll
-		})
+
 	}
 
 	getList() {

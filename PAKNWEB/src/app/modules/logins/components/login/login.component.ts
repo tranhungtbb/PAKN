@@ -177,20 +177,20 @@ export class LoginComponent implements OnInit {
 								} else {
 									this.storeageService.setKeyRemember('')
 								}
-								//this._router.navigate(['/quan-tri'])
-								// if (data.typeObject && data.typeObject == 1) {
-								// 	location.href = '/quan-tri'
-								// } else {
-								// 	location.href = '/quan-tri'
-								// 	// this.toastr.error(data.message, 'Tài khoản cá nhân, doanh nghiệp không thể đăng nhập hệ thống dành cho cán bộ quản lý')
-								// 	// localStorage.clear();
-								// }
-								if(this.storeageService.getRecommentdationObjectRemember() != null){
-									location.href='/cong-bo/them-moi-kien-nghi'
-								}
-								else{
+								localStorage.removeItem('recommentdationObjRemember')
+								if (data.typeObject && data.typeObject == 1) {
 									location.href = '/quan-tri'
+								} else {
+									location.href = '/quan-tri'
+									// this.toastr.error(data.message, 'Tài khoản cá nhân, doanh nghiệp không thể đăng nhập hệ thống dành cho cán bộ quản lý')
+									// localStorage.clear();
 								}
+								// if(this.storeageService.getRecommentdationObjectRemember() != null){
+								// 	location.href='/cong-bo/them-moi-kien-nghi'
+								// }
+								// else{
+								// 	location.href = '/quan-tri'
+								// }
 							} else if (data.success === RESPONSE_STATUS.incorrect) {
 								this.toastr.error(data.message, 'Tên tài khoản hoặc mật khẩu không chính xác')
 								this.reloadImage()

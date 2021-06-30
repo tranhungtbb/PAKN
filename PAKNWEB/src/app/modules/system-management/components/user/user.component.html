@@ -43,26 +43,26 @@
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Tên tài khoản</strong>
-										<span class="caret-tb"></span>
+										
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="userName" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập ..." />
 								</th>
-								<th style="max-width: 180px !important;">
+								<th style="min-width: 180px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Họ và tên</strong>
-										<span class="caret-tb"></span>
+										
 									</p>
 									<input type="text" class="form-control form-control-sm" [(ngModel)]="fullName" (keydown.enter)="dataStateChange()" placeholder="Nhập ...">
 								</th>
 								<th style="width: 140px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Chức vụ</strong>
-										<span class="caret-tb"></span>
+										
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
 										<ng-select placeholder="Chọn..." [closeOnSelect]="true" [(ngModel)]="positionId" (change)="dataStateChange()">
-											<ng-option *ngFor="let nt of positionsList" [value]="nt.id">
-												{{nt.name}}
+											<ng-option *ngFor="let nt of positionsList" [value]="nt.value">
+												{{nt.text}}
 											</ng-option>
 										</ng-select>
 									</div>
@@ -70,19 +70,19 @@
 								<th style="width: 120px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Điện thoại</strong>
-										<span class="caret-tb"></span>
+										
 									</p>
 									<input type="text" class="form-control form-control-sm" [(ngModel)]="phone" (keydown.enter)="dataStateChange()" placeholder="Nhập...">
 								</th>
-								<th style="width: 210px;">
+								<th style="width: 160px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Đơn vị</strong>
-										<span class="caret-tb"></span>
+										
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select placeholder="Chọn..." [closeOnSelect]="true" [(ngModel)]="unitId" (change)="dataStateChange()" style="width: 210px !important;">
-											<ng-option *ngFor="let nt of unitsList" [value]="nt.id">
-												{{nt.name}}
+										<ng-select placeholder="Chọn..." [closeOnSelect]="true" [(ngModel)]="unitId" (change)="dataStateChange()" style="width: 160px !important;">
+											<ng-option *ngFor="let nt of unitsList" [value]="nt.value">
+												{{nt.text}}
 											</ng-option>
 										</ng-select>
 									</div>
@@ -90,15 +90,18 @@
 								<th style="width: 110px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Trạng thái</strong>
-										<span class="caret-tb"></span>
+										
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
 										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="isActived"
+										style="width: 120px !important;"
 											[closeOnSelect]="true" (change)="dataStateChange()">
 										</ng-select>
 									</div>
 								</th>
-								<th style="text-align: center; width: 168px !important;"><strong>THAO TÁC</strong></th>
+								<th style="text-align: center; width: 168px !important;">
+									<strong>THAO TÁC</strong>
+								</th>
 							</tr>
 						</ng-template>
 						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
@@ -113,7 +116,11 @@
 								<td>{{item.fullName}}</td>
 								<td>{{item.positionName}}</td>
 								<td>{{item.phone}}</td>
-								<td>{{item.unitName}}</td>
+								<td>
+									<p class="text-2line mb-0">
+										{{item.unitName}}
+									</p>
+								</td>
 								<td>
 									<p *ngIf="item.isActived" style="margin-bottom: 0px;">
 										<span *hasNotPermission="['3', 'A_IX_4']" type="button" class="badge rounded-pill bg-success">Hiệu lực</span>
@@ -259,19 +266,19 @@
 												<th>
 													<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 														<strong>Ngày tạo</strong>
-														<span class="caret-tb"></span>
+														
 													</p>
 												</th>
 												<th>
 													<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 														<strong>Nội dung</strong>
-														<span class="caret-tb"></span>
+														
 													</p>
 												</th>
 												<th>
 													<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 														<strong>Trạng thái</strong>
-														<span class="caret-tb"></span>
+														
 													</p>
 												</th>
 											</tr>

@@ -1,7 +1,7 @@
-<div class="content-body" style="border-radius: 20px 20px 0 0">
+<div class="content-body">
 	<!-- row -->
 
-	<div class="container-fluid pl-lg-0 py-0">
+	<div class="container-fluid pl-lg-0 pr-0 py-0">
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách thông báo</div>
@@ -26,7 +26,7 @@
 											<strong>STT</strong>
 										</p>
 									</th>
-									<th style="width: 27%;">
+									<th style="width: 25%;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tên thông báo</strong>
 											<span class="caret-tb"></span>
@@ -34,7 +34,7 @@
 										<input class="form-control form-control-sm" [(ngModel)]="model.title" maxlength="100" (keydown.enter)="dataStateChange()"
 											placeholder="Nhập tên..." />
 									</th>
-									<th style="width: 40%;">
+									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Nội dung thông báo</strong>
 											<span class="caret-tb"></span>
@@ -58,14 +58,17 @@
 											<strong>Thời gian thông báo</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" (bsValueChange)="sendDateChange($event)" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker"
+										<div class="input-group">
+											<input class="form-control form-control-sm" (bsValueChange)="sendDateChange($event)" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker"
 											maxlength="10" appBsDatepickerInvalid [maxDate]="dateNow"
 											[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-										<div class="input-group-addon">
-											<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+											<div class="input-group-addon p-2" style="height: 34px;">
+												<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+											</div>
 										</div>
+										
 									</th>
-									<th style="width: 10%;" class="text-right"><strong>THAO TÁC</strong></th>
+									<th style="width: 8%;" class="text-right"><strong>THAO TÁC</strong></th>
 								</tr>
 							</ng-template>
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">

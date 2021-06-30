@@ -79,3 +79,8 @@
 .height-auto {
 	height: auto !important;
 }
+.border-input{
+	border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+	height: 38px;
+}

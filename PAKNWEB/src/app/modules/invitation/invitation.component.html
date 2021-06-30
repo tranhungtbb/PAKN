@@ -54,11 +54,13 @@
 											<strong>Thời gian</strong>
 											<span class="caret-tb"></span>
 										</p>
-										<input class="form-control form-control-sm" (bsValueChange)="sendDateChange($event)" placeholder="Chọn ngày" bsDaterangepicker
+										<div class="input-group">
+											<input class="form-control form-control-sm" (bsValueChange)="sendDateChange($event)" placeholder="Chọn ngày" bsDaterangepicker
 											[(ngModel)]="date" #n="bsDaterangepicker" appBsDatepickerInvalid [maxDate]="dateNow"
 											[bsConfig]="{ rangeInputFormat : 'DD/MM/YYYY', dateInputFormat: 'DD/MM/YYYY', showWeekNumbers: false ,containerClass: 'theme-dark-blue'}" />
-										<div class="input-group-addon">
-											<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+											<div class="input-group-addon p-2" style="height: 34px;">
+												<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+											</div>
 										</div>
 									</th>
 

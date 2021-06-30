@@ -35,8 +35,8 @@
 							<div class="input-group">
 								<input class="form-control" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="startDate"
 									[(ngModel)]="model.startDate" appBsDatepickerInvalid [bsConfig]="{ containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-								<div class="input-group-addon">
-									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+								<div class="input-group-addon p-2">
+									<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 								</div>
 							</div>
 							<div *ngIf="(submitted && f.startDate.invalid) || (f.startDate.invalid && (f.startDate.dirty || f.startDate.touched))" class="has-error">
@@ -57,8 +57,8 @@
 								<input class="form-control" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="endDate"
 									[(ngModel)]="model.endDate" appBsDatepickerInvalid [minDate]="model.startDate"
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-								<div class="input-group-addon">
-									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+								<div class="input-group-addon p-2">
+									<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 								</div>
 							</div>
 							<div *ngIf="(submitted && f.endDate.invalid) || (f.endDate.invalid && (f.endDate.dirty || f.endDate.touched))" class="has-error">

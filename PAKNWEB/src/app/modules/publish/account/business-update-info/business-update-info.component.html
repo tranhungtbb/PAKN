@@ -29,9 +29,15 @@
 								<p class="mb-1">Ngày tháng năm sinh</p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.representativeBirthDay}}</p>
 								<div class="form-group" *ngIf="editable">
-									<input type="text" class="form-control" [(ngModel)]="model.representativeBirthDay" formControlName="representativeBirthDay" bsDatepicker
+									<div class="input-group">
+										<input type="text" class="form-control" [(ngModel)]="model.representativeBirthDay" formControlName="representativeBirthDay" bsDatepicker
 										#n="bsDatepicker" maxlength="10" id="_dateOfBirth" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}">
+										<div class="input-group-addon p-2 center">
+											<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+										</div>
+									</div>
+								
 								</div>
 							</div>
 							<div class="col">
@@ -180,9 +186,15 @@
 								<p class="mb-1">Ngày cấp / Thành lập</p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.dateOfIssue}}</p>
 								<div class="form-group" *ngIf="editable">
-									<input type="text" class="form-control" [(ngModel)]="model.dateOfIssue" formControlName="dateOfIssue" bsDatepicker #n="bsDatepicker"
+									<div class="input-group">
+										<input type="text" class="form-control" [(ngModel)]="model.dateOfIssue" formControlName="dateOfIssue" bsDatepicker #n="bsDatepicker"
 										maxlength="10" id="_dateOfIssue" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true }">
+										<div class="input-group-addon p-2 center">
+											<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+										</div>
+									</div>
+								
 								</div>
 							</div>
 							<div class="col">

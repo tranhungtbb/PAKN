@@ -125,11 +125,14 @@
 		</div>
 		<div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Ngày cấp</label>
-			<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_issuedDate" [(ngModel)]="model.issuedDate"
+			<div class="input-group">
+				<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_issuedDate" [(ngModel)]="model.issuedDate"
 				formControlName="issuedDate" appBsDatepickerInvalid [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-			<div class="input-group-addon">
-				<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+				<div class="input-group-addon p-2 center">
+					<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+				</div>
 			</div>
+		
 			<div *ngIf="(submitted && f.issuedDate.invalid)||(f.issuedDate.invalid && (f.issuedDate.dirty || f.issuedDate.touched))" class="has-error m-b-12">
 				<div *ngIf="f.issuedDate.errors.required">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -138,11 +141,13 @@
 		</div>
 		<div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Ngày tháng năm sinh <span class="cl-red">(*)</span></label>
-			<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dateOfBirth" [(ngModel)]="model.dateOfBirth"
+			<div class="input-group">
+				<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dateOfBirth" [(ngModel)]="model.dateOfBirth"
 				formControlName="dateOfBirth" appBsDatepickerInvalid
 				[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true,language:'vi'}" />
-			<div class="input-group-addon">
-				<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+				<div class="input-group-addon p-2 center">
+					<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+				</div>
 			</div>
 			<div *ngIf="(submitted && f.dateOfBirth.invalid)||(f.dateOfBirth.invalid && (f.dateOfBirth.dirty || f.dateOfBirth.touched))" class="has-error m-b-12">
 				<div *ngIf="f.dateOfBirth.errors.required">

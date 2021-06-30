@@ -95,8 +95,8 @@
 								<input class="form-control" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="sendDate"
 									[(ngModel)]="model.sendDate" appBsDatepickerInvalid [maxDate]="dateNow"
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-								<div class="input-group-addon">
-									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+								<div class="input-group-addon p-2">
+									<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 								</div>
 							</div>
 							<div *ngIf="(submitted && f.sendDate.invalid) || (f.sendDate.invalid && (f.sendDate.dirty || f.sendDate.touched))" class="has-error">
