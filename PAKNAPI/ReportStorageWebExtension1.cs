@@ -44,6 +44,7 @@ namespace PAKNAPI
             }
         }
         private readonly IAppSetting _appSetting;
+
         public ReportStorageWebExtension1(IAppSetting _appSetting)
         {
             Reports = new ConcurrentDictionary<string, ReportDetails>();

@@ -55,6 +55,7 @@ namespace PAKNAPI.Models.Recommendation
         public string CreatedBy { get; set; }
         public string Fields { get; set; }
         public string Reply { get; set; }
+        public string Status { get; set; }
     }
     public class PURecommandationSyncPagedListModel : PURecommandationSyncModel
     {

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Router,ActivatedRoute} from '@angular/router'
 import {RecommandationSyncService} from 'src/app/services/recommandation-sync.service'
 
+
+
 @Component({
   selector: 'app-view-recommendations-sync',
   templateUrl: './view-recommendations-sync.component.html',
@@ -13,7 +15,7 @@ export class ViewRecommendationsSyncComponent implements OnInit {
     private _RecommandationSyncService: RecommandationSyncService,
     private _router:Router,
     private _activatedRoute:ActivatedRoute
-  ) { }
+  ) {}
 
   type = 0;
   id = 0;
@@ -21,15 +23,15 @@ export class ViewRecommendationsSyncComponent implements OnInit {
 
   ngOnInit() {
     this._activatedRoute.params.subscribe((params) => {
-			this.type = +params['type']
-      this.id = +params['id']
+			this.type = params['type']
+      this.id = params['id']
       this.getData(this.type,this.id);
     })
   }
 
   getData(type:any, id:any){
     this._RecommandationSyncService.getDetail({
-      type,
+      src:type,
       id
     }).subscribe(res=>{
       console.log(res);

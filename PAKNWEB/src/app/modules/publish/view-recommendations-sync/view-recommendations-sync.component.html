@@ -11,15 +11,15 @@
 				</div>
 				<div class="box" *ngIf="model">
 					<p class="card-text h3 mb-3"><span style="font-weight: 300;">Kiến nghị về việc : </span>
-						{{model.title}}
+						{{model.title || 'Không tiêu đề'}}
 					</p>
 					<div class="py-2 mb-4 d-flex justify-content-between align-items-center border-bottom border-top">
 						<div class="media align-items-center">
 							<div class="avatar-circle mr-2" style="background: #EBF2FF; color: #5D90F1">
-								{{model.shortName}}
+								<i class="bi bi-person"></i>
 							</div>
 							<div class="media-body">
-								<p class="my-0 h5">{{model.createdBy}}</p>
+								<p class="my-0 h5">{{model.createdBy || 'Không tên'}}</p>
 							</div>
 						</div>
 						<!-- <span>

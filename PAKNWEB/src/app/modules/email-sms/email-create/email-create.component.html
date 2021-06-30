@@ -32,7 +32,7 @@
 
 						<div class="col-sm-12 padding-col mb-3">
 							<label class="control-label department" style="font-weight: 500;">Nội dung<span class="text-danger"> (*)</span></label>
-							<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" maxlength="200" rows="7" placeholder="Nhập..."></textarea>
+							<textarea class="form-control" [(ngModel)]="model.content" formControlName="content" rows="7" placeholder="Nhập..."></textarea>
 							<div *ngIf="(submitted && f.content.invalid) || (f.content.invalid && (f.content.dirty || f.content.touched))" class="has-error m-b-12">
 								<div *ngIf="f.content.errors">
 									<span class="help-block">Trường dữ liệu này không để trống</span>

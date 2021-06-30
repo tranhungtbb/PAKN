@@ -94,6 +94,7 @@ export class IndividualComponent implements OnInit {
 		} else {
 			if (this.model.nation == '#') {
 				this.isOtherNation = true
+				this.model.nation = "Nhập..."
 				this.formInfo.controls['province'].setValue(0)
 				this.formInfo.controls['district'].setValue(0)
 				this.formInfo.controls['village'].setValue(0)

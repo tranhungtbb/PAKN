@@ -180,9 +180,7 @@ namespace PAKNAPI.Controllers
         [HttpGet]
         public async Task<object> PUGetGetById(
             long id,
-            int src = 1,
-            int pageIndex = 1,
-            int pageSize = 20)
+            int src = 1)
         {
 
             try
