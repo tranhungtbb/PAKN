@@ -151,8 +151,7 @@ export class LoginComponent implements OnInit {
 									this.toastr.error('Tài khoản của bạn đang hết hiệu lực')
 									return
 								}
-								debugger
-								localStorage.clear()
+								this.storeageService.clear()
 								this.shareData.setIsLogin(true)
 								this.storeageService.setAccessToken(data.accessToken)
 								this.storeageService.setUserId(data.userId)
@@ -179,12 +178,18 @@ export class LoginComponent implements OnInit {
 									this.storeageService.setKeyRemember('')
 								}
 								//this._router.navigate(['/quan-tri'])
-								if (data.typeObject && data.typeObject == 1) {
+								// if (data.typeObject && data.typeObject == 1) {
+								// 	location.href = '/quan-tri'
+								// } else {
+								// 	location.href = '/quan-tri'
+								// 	// this.toastr.error(data.message, 'Tài khoản cá nhân, doanh nghiệp không thể đăng nhập hệ thống dành cho cán bộ quản lý')
+								// 	// localStorage.clear();
+								// }
+								if(this.storeageService.getRecommentdationObjectRemember() != null){
+									location.href='/cong-bo/them-moi-kien-nghi'
+								}
+								else{
 									location.href = '/quan-tri'
-								} else {
-									location.href = '/quan-tri'
-									// this.toastr.error(data.message, 'Tài khoản cá nhân, doanh nghiệp không thể đăng nhập hệ thống dành cho cán bộ quản lý')
-									// localStorage.clear();
 								}
 							} else if (data.success === RESPONSE_STATUS.incorrect) {
 								this.toastr.error(data.message, 'Tên tài khoản hoặc mật khẩu không chính xác')
@@ -248,7 +253,7 @@ export class LoginComponent implements OnInit {
 									this.toastr.error('Tài khoản của bạn đang hết hiệu lực')
 									return
 								}
-								localStorage.clear()
+								this.storeageService.clear()
 								this.shareData.setIsLogin(true)
 								this.storeageService.setAccessToken(data.accessToken)
 								this.storeageService.setUserId(data.userId)
@@ -279,10 +284,15 @@ export class LoginComponent implements OnInit {
 									this.captchaCodeProduct = ''
 									this.rebuildFormProduct()
 									this.toastr.error(data.message, 'Tài khoản cán bộ quản lý không thể đăng nhập hệ thống dành cho cá nhân, doanh nghiệp')
-									localStorage.clear()
+									this.storeageService.clear()
 
 								} else {
-									location.href = '/cong-bo'
+									if(this.storeageService.getRecommentdationObjectRemember() != null){
+										location.href='/cong-bo/them-moi-kien-nghi'
+									}else{
+										location.href = '/cong-bo'
+									}
+									
 								}
 							} else if (data.success === RESPONSE_STATUS.incorrect) {
 								this.reloadImage()

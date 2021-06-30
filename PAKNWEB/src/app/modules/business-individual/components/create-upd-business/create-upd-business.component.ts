@@ -317,7 +317,13 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 					return
 				}
 				this.toast.success('Đăng ký doanh nghiệp thành công')
-				this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/doanh-nghiep'])
+				let dataRecommendation = this.storeageService.getRecommentdationObjectRemember()
+				if(dataRecommendation){
+					this.router.navigate(['/quan-tri/kien-nghi/them-moi/0'])
+				}
+				else{
+					this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/doanh-nghiep'])
+				}
 			})
 		}
 	}

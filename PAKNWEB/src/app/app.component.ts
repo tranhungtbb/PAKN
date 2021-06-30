@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
 			this.storeageService.setIsSession(true)
 		} else {
 			if (this.storeageService.getSaveLogin() == false && s == false) {
-				localStorage.clear()
+				this.storeageService.clear()
 			} else {
 				this.storeageService.setIsSession(false)
 			}

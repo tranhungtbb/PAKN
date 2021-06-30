@@ -114,12 +114,6 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 		return
 	}
 	redirectCreateRecommendation() {
-		let login = this.userService.getSaveLogin()
-		if(!login){
-			this.routers.navigate(['/dang-nhap'])
-		}else{
-			this.routers.navigate(['/cong-bo/them-moi-kien-nghi'])
-		}
-		
+		this.routers.navigate(['/cong-bo/them-moi-kien-nghi'])
 	}
 }

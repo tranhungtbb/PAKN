@@ -27,7 +27,7 @@ export class ResponseInterceptor implements HttpInterceptor {
 				if (err instanceof HttpErrorResponse) {
 					if (err.status === 401) {
 						this.loadingService.display(false)
-						this.storeageService.clearStoreage()
+						this.storeageService.clear()
 						this._router.navigate(['/cong-bo/trang-chu'])
 					} else if (err.status === 403) {
 						this.loadingService.display(false)

@@ -31,6 +31,7 @@ export class ViewFileDialogComponent implements OnInit {
 	typeFile: any
 	@ViewChild('pdfViewer', { static: false }) pdfViewer
 	listImg: any
+	
 
 	ngOnInit() {
 		this.typeFile = this.data.type

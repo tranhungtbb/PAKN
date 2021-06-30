@@ -90,7 +90,7 @@ export class MyRecommendationComponent implements OnInit {
 			if (success.success == RESPONSE_STATUS.success) {
 				this.sharedataService.setIsLogin(false)
 				this.storageService.setReturnUrl('')
-				this.storageService.clearStoreage()
+				this.storageService.clear()
 				this.router.navigate(['/dang-nhap'])
 			}
 		})
