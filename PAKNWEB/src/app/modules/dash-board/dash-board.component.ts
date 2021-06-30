@@ -33,7 +33,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 		stt_10: { count: 5 },
 	}
 
+	dataAll: any ={}
+
 	totalCount = 0
+
+	data={
+		datasets:[
+			{
+				data: [10, 4],
+				backgroundColor: [
+						"#FF6384",
+						"#36A2EB"
+				],
+			}
+		]
+	}
 
 	ngOnInit() {
 		this.getDataGraph()
@@ -50,17 +64,32 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 		}
 		this.recommenService.get7DayDataGraph(req).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				this.totalCount = res.result.data.reduce((acc, item, index) => {
+				this.totalCount = res.result.data7day.reduce((acc, item, index) => {
 					acc += item.total
 					return acc
 				}, 0)
-				let data = res.result.data.reduce((acc, item, index) => {
+				this.dataGraph = res.result.data7day.reduce((acc, item, index) => {
 					item.per_10 = ((item.total / this.totalCount) * 10).toPrecision(2)
 					item.per_100 = ((item.total / this.totalCount) * 100).toPrecision(2)
 					acc['stt_' + item.status] = item;
 					return acc
 				}, {})
-				this.dataGraph = data
+
+
+				let totalCountA = res.result.data.reduce((acc, item, index) => {
+					acc += item.total
+					return acc
+				}, 0)
+
+				this.dataAll = res.result.data.reduce((acc, item, index) => {
+					item.per_10 = ((item.total / totalCountA) * 10).toPrecision(2)
+					item.per_100 = ((item.total / totalCountA) * 100).toPrecision(2)
+					acc['stt_' + item.status] = item;
+					return acc
+				}, {})
+				console.log(totalCountA);
+				console.log(this.dataAll);
+				$('.data-attr').peity("donut")
 			}
 		})
 	}

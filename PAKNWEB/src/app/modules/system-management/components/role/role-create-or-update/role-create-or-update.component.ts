@@ -199,7 +199,9 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 		}
 		if (this.listItemUserSelected.length == 0) {
 			let item = this.listUserIsSystem.find((x) => x.value == this.userId)
-			this.listItemUserSelected.push(item)
+			if(item)
+				this.listItemUserSelected.push(item)
+				else this._toastr.error('Vui lòng chọn người dùng')
 		} else {
 			let check = this.listItemUserSelected.find((x) => x.value == this.userId)
 			if (check != undefined) {
@@ -207,7 +209,9 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 				return
 			}
 			let item = this.listUserIsSystem.find((x) => x.value == this.userId)
-			this.listItemUserSelected.push(item)
+			if(item)
+				this.listItemUserSelected.push(item)
+			else this._toastr.error('Vui lòng chọn người dùng')
 		}
 	}
 	onRemoveUser(item: any) {
