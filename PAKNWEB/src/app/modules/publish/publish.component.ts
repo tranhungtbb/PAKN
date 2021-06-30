@@ -131,7 +131,7 @@ export class PublishComponent implements OnInit, OnChanges {
 			if (success.success == RESPONSE_STATUS.success) {
 				this.sharedataService.setIsLogin(false)
 				this.storageService.setReturnUrl('')
-				this.storageService.clearStoreage()
+				this.storageService.clear()
 				this._router.navigate(['/dang-nhap'])
 			}
 		})

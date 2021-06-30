@@ -1024,7 +1024,6 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
 		[Route("MRRecommendationGetSuggestCreateBase")]
 		public async Task<ActionResult<object>> MRRecommendationGetSuggestCreateBase(string Title)
 		{

@@ -12,6 +12,25 @@ export class UserInfoStorageService {
 	role: number
 
 	constructor() {}
+	clear = ()=>{
+		localStorage.removeItem('KeyRework')
+		localStorage.removeItem('ReturnUrl')
+		localStorage.removeItem('userId')
+		localStorage.removeItem('accessToken')
+		localStorage.removeItem('isSaveLogin')
+		localStorage.removeItem('isSession')
+		localStorage.removeItem('permissions')
+		localStorage.removeItem('functions')
+		localStorage.removeItem('permissionCategories')
+		localStorage.removeItem('IsHaveToken')
+		localStorage.removeItem('IpAddress')
+		localStorage.removeItem('Role')
+		localStorage.removeItem('FullName')
+		localStorage.removeItem('unitName')
+		localStorage.removeItem('unitId')
+		localStorage.removeItem('isMain')
+		localStorage.removeItem('typeObject')
+	}
 	setKeyRemember(key: string): void {
 		localStorage.setItem('KeyRework', key)
 	}
@@ -76,6 +95,14 @@ export class UserInfoStorageService {
 
 	setTypeObject(value): void {
 		localStorage.setItem('typeObject', value)
+	}
+
+	setRecommentdationObjectRemember = (value)=> {
+		localStorage.setItem('recommentdationObjRemember', value)
+	}
+
+	getRecommentdationObjectRemember = ()=>{
+		return localStorage.getItem('recommentdationObjRemember')
 	}
 
 	getKeyRemember(): string {
@@ -147,19 +174,19 @@ export class UserInfoStorageService {
 		return localStorage.getItem('typeObject') as any
 	}
 
-	clearStoreage(): void {
-		this.setAccessToken('')
-		this.setFunctions('')
-		this.setIsHaveToken(false)
-		this.setIpAddress('')
-		this.setPermissionCategories('')
-		this.setPermissions('')
-		this.setSaveLogin(false)
-		this.setUserId('')
-		this.setRole('')
-		this.setFullName('')
-		localStorage.clear()
-	}
+	// clearStoreage(): void {
+	// 	this.setAccessToken('')
+	// 	this.setFunctions('')
+	// 	this.setIsHaveToken(false)
+	// 	this.setIpAddress('')
+	// 	this.setPermissionCategories('')
+	// 	this.setPermissions('')
+	// 	this.setSaveLogin(false)
+	// 	this.setUserId('')
+	// 	this.setRole('')
+	// 	this.setFullName('')
+	// 	localStorage.clear()
+	// }
 
 	checkRoleChuyenVien() {
 		let r = this.getRole()

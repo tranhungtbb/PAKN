@@ -204,6 +204,7 @@ export class CreateRecommendationComponent implements OnInit {
 					this.lstIndividual = response.result.lstIndividual
 					this.lstObject = response.result.lstIndividual
 					this.model.code = response.result.code
+
 				} else {
 					this.toastr.error(response.message)
 				}
@@ -240,6 +241,19 @@ export class CreateRecommendationComponent implements OnInit {
 				})
 
 				this.lstUnit = listUnit
+				// get data from localstogate
+				if(this.model.id == 0){
+					// nếu thêm mới và data local stogate vẫn có thì lấy ra
+					let dataRecommetdation = JSON.parse(this.storageService.getRecommentdationObjectRemember())
+					if(dataRecommetdation){
+						this.model = {...dataRecommetdation}
+						this.searchRecommendation()
+						this.hightLightText()
+						if(this.model.unitId){
+							this.unitSelected = this.lstUnit.find(x=>x.id == this.model.unitId)
+						}
+					}
+				}
 				this.lstUnitTree = this.unflatten(listUnit)
 			},
 			(err) => {
@@ -295,6 +309,7 @@ export class CreateRecommendationComponent implements OnInit {
 	}
 
 	onSave(status) {
+		let isLogin = this.storageService.getSaveLogin()
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
 		if (this.model.content == null || this.model.content == '') {
@@ -307,6 +322,12 @@ export class CreateRecommendationComponent implements OnInit {
 		this.submitted = true
 		if (this.form.invalid) {
 			this.reloadImage()
+			return
+		}
+		// nếu chưa đăng nhập cho lưu tạm
+		if(!isLogin){
+			this.storageService.setRecommentdationObjectRemember(JSON.stringify(this.model))
+			this.toastr.error('Vui lòng đăng nhập để gửi phản ánh kiến nghị')
 			return
 		}
 		this.model.status = status
@@ -331,6 +352,7 @@ export class CreateRecommendationComponent implements OnInit {
 						if (response.success == RESPONSE_STATUS.success) {
 							this.notificationService.insertNotificationTypeRecommendation({ recommendationId: response.result }).subscribe((res) => {})
 							this.toastr.success(COMMONS.ADD_SUCCESS)
+							localStorage.removeItem('recommentdationObjRemember')
 							return this.router.navigate(['/cong-bo/phan-anh-kien-nghi'])
 						} else {
 							this.toastr.error(response.message)

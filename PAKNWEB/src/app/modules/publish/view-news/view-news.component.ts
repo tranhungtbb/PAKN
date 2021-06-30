@@ -74,4 +74,7 @@ export class ViewNewsComponent implements OnInit {
 			}
 		})
 	}
+	redirectDetail(id: any) {
+		this.router.navigate(['/cong-bo/tin-tuc-su-kien/' + id])
+	}
 }

@@ -903,7 +903,6 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
 		[Route("CAUnitGetAllBase")]
 		public async Task<ActionResult<object>> CAUnitGetAllBase(int? ParentId, byte? UnitLevel)
 		{
@@ -1166,7 +1165,6 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 		[HttpGet]
-		[Authorize]
 		[Route("CAWordGetListSuggestBase")]
 		public async Task<ActionResult<object>> CA_WordGetListSuggestBase()
 		{

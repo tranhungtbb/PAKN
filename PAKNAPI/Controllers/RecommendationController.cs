@@ -35,7 +35,6 @@ namespace PAKNAPI.Controller
 
 
         [HttpGet]
-        [Authorize]
         [Route("RecommendationGetDataForCreate")]
         public async Task<ActionResult<object>> RecommendationGetDataForCreate()
         {
@@ -222,7 +221,6 @@ namespace PAKNAPI.Controller
                                     // không đọc được từ file scan
                                     //content = FileUtils.ExtractDataFromPDFFile(filePath);
                                     content = PdfTextExtractorCustom.ReadPdfFile(filePath);
-                                    var s = PdfTextExtractorCustom.ExtractTextFromPdf(filePath);
                                     isHasFullText = true;
                                     break;
 

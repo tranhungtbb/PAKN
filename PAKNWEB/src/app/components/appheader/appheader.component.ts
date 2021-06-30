@@ -287,7 +287,7 @@ export class AppheaderComponent implements OnInit {
 			if (success.success == RESPONSE_STATUS.success) {
 				this.sharedataService.setIsLogin(false)
 				this.storageService.setReturnUrl('')
-				this.storageService.clearStoreage()
+				this.storageService.clear()
 				this._router.navigate(['/dang-nhap'])
 				//location.href = "/dang-nhap";
 			}

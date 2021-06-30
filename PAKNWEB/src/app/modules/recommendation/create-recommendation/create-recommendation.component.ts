@@ -57,7 +57,6 @@ export class CreateRecommendationComponent implements OnInit {
 	) {}
 	ngOnInit() {
 		this.model = new RecommendationObject()
-		this.getDropdown()
 		this.activatedRoute.params.subscribe((params) => {
 			this.model.id = +params['id']
 			if (this.model.id != 0) {
@@ -69,6 +68,7 @@ export class CreateRecommendationComponent implements OnInit {
 			}
 			this.builForm()
 		})
+		this.getDropdown()
 		this.recommendationService.recommendationGetDataForCreate({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
@@ -170,13 +170,26 @@ export class CreateRecommendationComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.lstUnit = response.result.lstUnit
+					this.lstField = response.result.lstField
+					this.lstHashtag = response.result.lstHashTag
+					this.lstBusiness = response.result.lstBusiness
+					this.lstIndividual = response.result.lstIndividual
+					this.lstObject = response.result.lstIndividual
+					this.model.code = response.result.code
+					//
+					if(this.model.id == 0){
+						// nếu thêm mới và data local stogate vẫn có thì lấy ra
+						let dataRecommetdation = JSON.parse(this.storeageService.getRecommentdationObjectRemember())
+						if(dataRecommetdation){
+							this.model = {...dataRecommetdation.model, 'code' : response.result.code, 'sendId' : null}
+							this.lstHashtagSelected = [...dataRecommetdation.lstHashtagSelected]
+							if(this.model.sendDate){
+								this.model.sendDate = new Date(this.model.sendDate)
+							}
+						}
+					}
 				}
-				this.lstField = response.result.lstField
-				this.lstHashtag = response.result.lstHashTag
-				this.lstBusiness = response.result.lstBusiness
-				this.lstIndividual = response.result.lstIndividual
-				this.lstObject = response.result.lstIndividual
-				this.model.code = response.result.code
+				
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -197,10 +210,17 @@ export class CreateRecommendationComponent implements OnInit {
 		}
 	}
 	redirectToCreateIndividualBusiness() {
+		// lưu data
+		let obj = {
+			model : {...this.model},
+			lstHashtagSelected : [...this.lstHashtagSelected]
+		}
+		this.storeageService.setRecommentdationObjectRemember(JSON.stringify(obj))
+
 		if (this.model.typeObject == 1) {
 			this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/ca-nhan'])
 		} else if (this.model.typeObject == 2) {
-			this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/doanh-nghiep'])
+			this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/them-moi/0'])
 		}
 		return
 	}
@@ -285,7 +305,7 @@ export class CreateRecommendationComponent implements OnInit {
 			this.recommendationService.recommendationInsert(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.toastr.success(COMMONS.ADD_SUCCESS)
-
+					localStorage.removeItem('recommentdationObjRemember')
 					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: response.result }).subscribe((res) => {})
 
 					return this.router.navigate(['/quan-tri/kien-nghi/danh-sach-tong-hop'])
@@ -300,6 +320,7 @@ export class CreateRecommendationComponent implements OnInit {
 			this.recommendationService.recommendationUpdate(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.toastr.success(COMMONS.UPDATE_SUCCESS)
+					localStorage.removeItem('recommentdationObjRemember')
 					return this.router.navigate(['/quan-tri/kien-nghi/danh-sach-tong-hop'])
 				} else {
 					this.toastr.error(response.message)
