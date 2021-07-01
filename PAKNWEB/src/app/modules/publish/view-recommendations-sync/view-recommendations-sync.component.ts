@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {Router,ActivatedRoute} from '@angular/router'
 import {RecommandationSyncService} from 'src/app/services/recommandation-sync.service'
+import {ViewRightComponent} from 'src/app/modules/publish/view-right/view-right.component'
 
 
 
@@ -16,7 +17,7 @@ export class ViewRecommendationsSyncComponent implements OnInit {
     private _router:Router,
     private _activatedRoute:ActivatedRoute
   ) {}
-
+  @ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
   type = 0;
   id = 0;
   model:any = {}

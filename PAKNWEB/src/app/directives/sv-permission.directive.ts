@@ -53,7 +53,7 @@ export class HasPermissionDirective implements OnInit {
 
   private checkPermission() {
     let hasPermission = false;
-    let isAdmin = 0;
+    let isAdmin = this.userService.getIsMain();
 
     let isLogin = this.userService.getAccessToken();
     if (isLogin == '' || isLogin == null || isLogin == undefined) {

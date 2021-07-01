@@ -130,6 +130,7 @@
 													class="bi bi-file-earmark-check"></i></a>
 											<a *ngIf="item.status == 2" href="#" class="btn-icon grd-red text-white mr-2" data-toggle="modal" data-target="#modal-tc-pakn"
 												title="Từ chối tiếp nhận"><i class="bi bi-file-earmark-break"></i></a>
+											<a *hasPermission="['3', 'E_I_2']" class="btn-icon grd-red text-white mr-2" (click)="preDelete(item.id)" title="Xóa"><i class="bi bi-trash"></i></a>
 											<a *hasPermission="['3', 'E_I_5']" class="btn-icon" (click)="getHistories(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
 									</td>
@@ -147,6 +148,32 @@
 		</div>
 	</div>
 
+</div>
+
+<div class="modal fade" id="modalConfirmDelete">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<form class="form-horizontal">
+				<div class="panel panel-default no-margin">
+					<div class="modal-header">
+						<button class="close btn-close-modal" data-dismiss="modal">
+							×
+						</button>
+						<p class="modal-title h3">Xác nhận</p>
+					</div>
+					<div class="modal-body no-padding-bottom">
+						<div>
+							<p>Anh/Chị có chắc chắn muốn xóa PAKN này?</p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác nhận</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 
 <div class="modal fade pr-0" id="modal-history-pakn">

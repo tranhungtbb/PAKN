@@ -34,11 +34,11 @@
 							<span *hasPermission="['3', 'A_VII_4']" class="badge rounded-pill badge-success mr-3 cursor-hand" (click)="onOpenConfirmModal(unitObject.id,'unit_status')">Hiệu lực</span>
 						</span>
 						<span *ngIf="!unitObject.isActived">
-							<span *hasPermission="['3', 'A_VII_4']" class="badge rounded-pill badge-light mr-3 cursor-hand">Hết hiệu lực</span>
-							<span *hasNotPermission="['3', 'A_VII_4']" class="badge rounded-pill badge-light mr-3 cursor-hand" (click)="onOpenConfirmModal(unitObject.id,'unit_status')">Hết hiệu lực</span>
+							<span *hasNotPermission="['3', 'A_VII_4']" class="badge rounded-pill badge-light mr-3 cursor-hand">Hết hiệu lực</span>
+							<span *hasPermission="['3', 'A_VII_4']" class="badge rounded-pill badge-light mr-3 cursor-hand" (click)="onOpenConfirmModal(unitObject.id,'unit_status')">Hết hiệu lực</span>
 						</span>
 						
-						<span>{{unitObject.name}}</span>
+						<span *hasPermission="['3', 'A_VII_1']">{{unitObject.name}}</span>
 					</p>
 					<div class="d-flex align-items-center">
 						<button *hasPermission="['3', 'A_VII_2']" type="button" class="btn grd-brown text-dark border-0 mr-3 py-2 px-3 cursor-hand"
@@ -51,10 +51,10 @@
 						</button>
 					</div>
 				</div>
-				<div class="card-body pt-0 pb-3">
+				<div class="card-body pt-0 pb-3"  *hasPermission="['3', 'A_VII_1']">
 					<p class="card-text">{{unitObject.description}}</p>
 				</div>
-				<div class="card-footer d-sm-flex align-items-center">
+				<div class="card-footer d-sm-flex align-items-center"  *hasPermission="['3', 'A_VII_1']">
 					<p class="card-text text-dark mb-0 mr-4">Số ĐT: <strong title="{{unitObject.phone}}">{{unitObject.phone}}</strong></p>
 					<p class="card-text text-dark mb-0 mr-4">Email: <strong title="{{unitObject.email}}">{{unitObject.email}}</strong></p>
 					<p class="card-text text-dark mb-0">Địa chỉ: <strong title="{{unitObject.address}}">{{unitObject.address}}</strong></p>

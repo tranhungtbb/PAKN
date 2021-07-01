@@ -23,7 +23,7 @@
 							<p class="card-title h4 mb-4">Phản ánh, kiến nghị<br> Đã giải quyết</p>
 							<div class="position-relative">
 								<span class="data-attr"
-									data-peity='{ "fill": ["rgb(52, 181, 58)", "rgba(223, 255, 230, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 120 }'>2.5/10</span>
+									data-peity='{ "fill": ["rgb(52, 181, 58)", "rgba(223, 255, 230, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 120 }'>{{dataAll['stt_10']?.per_10}}/10</span>
 								<span class="h1 position-absolute number-chart">{{dataAll['stt_10']?.total || 0}}</span>
 							</div>
 						</div>
@@ -33,7 +33,7 @@
 							<p class="card-title h4 mb-4">Phản ánh, kiến nghị<br> Chờ giải quyết</p>
 							<div class="position-relative">
 								<span class="data-attr"
-									data-peity='{ "fill": ["rgb(22, 115, 216)", "rgba(227, 241, 255, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>4.6/10</span>
+									data-peity='{ "fill": ["rgb(22, 115, 216)", "rgba(227, 241, 255, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_5']?.per_10}}/10</span>
 								<span class="h1 position-absolute number-chart">{{dataAll['stt_5']?.total || 0}}</span>
 							</div>
 
@@ -44,7 +44,7 @@
 							<p class="card-title h4 mb-4">Phản ánh, kiến nghị<br> Từ chối giải quyết</p>
 							<div class="position-relative">
 								<span class="data-attr"
-									data-peity='{ "fill": ["rgb(218, 34, 34)", "rgba(255, 226, 226, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>1.5/10</span>
+									data-peity='{ "fill": ["rgb(218, 34, 34)", "rgba(255, 226, 226, 1)"],   "innerRadius": 50, "radius": 30, "height": 110, "width": 110 }'>{{dataAll['stt_6']?.per_10}}/10</span>
 								<span class="h1 position-absolute number-chart">{{dataAll['stt_6']?.total || 0}}</span>
 							</div>
 
@@ -61,6 +61,7 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="card mx-lg-4">
 					<!-- danh sach phan anh kien nghi -->
 					<app-recommnendation-get-list></app-recommnendation-get-list>

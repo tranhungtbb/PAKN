@@ -121,7 +121,7 @@
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Vai trò <span class="cl-red">(*)</span></label>
 									<input *ngIf="isUser" disabled type="text" class="form-control" value="{{roleName}}">
-									<ng-select [ngClass]="{ 'hide': isUser == true }" class="form-control" [items]="rolesList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="selectedRoles"
+									<ng-select [ngClass]="{ 'hide': isUser == true }" style="height: auto;" class="form-control" [items]="rolesList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="selectedRoles"
 										formControlName="roleId" [closeOnSelect]="true" [multiple]="true" (change)="onGroupUserChange()">
 									</ng-select>
 									<div *ngIf="(userFormSubmitted && fUser.roleId.invalid)||(fUser.roleId.invalid && (fUser.roleId.dirty || fUser.roleId.touched))"

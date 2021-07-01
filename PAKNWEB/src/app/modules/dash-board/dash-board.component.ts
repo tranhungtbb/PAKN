@@ -36,26 +36,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 	dataAll: any ={}
 
 	totalCount = 0
-
-	data={
-		datasets:[
-			{
-				data: [10, 4],
-				backgroundColor: [
-						"#FF6384",
-						"#36A2EB"
-				],
-			}
-		]
-	}
+	abc = 3
 
 	ngOnInit() {
 		this.getDataGraph()
-		$('.data-attr').peity('donut')
+		// $('.data-attr').peity('donut')
 	}
 	ngAfterViewInit(){
+		// setTimeout(()=>{
+		// 	$('.data-attr').peity('donut')
+		// },200)
 		
 	}
+
 
 	getDataGraph() {
 		let req = {
@@ -83,14 +76,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 				this.dataAll = res.result.data.reduce((acc, item, index) => {
 					item.per_10 = ((item.total / totalCountA) * 10).toPrecision(2)
-					item.per_100 = ((item.total / totalCountA) * 100).toPrecision(2)
 					acc['stt_' + item.status] = item;
 					return acc
 				}, {})
-				console.log(totalCountA);
-				console.log(this.dataAll);
-				$('.data-attr').peity("donut")
+				setTimeout(()=>{
+					$('.data-attr').peity('donut')
+				},1)
 			}
 		})
+
 	}
 }

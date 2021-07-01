@@ -107,6 +107,27 @@ export class ListReactionaryWordComponent implements OnInit {
 				alert(error)
 			}
 	}
+	preDelete(id: number) {
+		this.idDelete = id
+		$('#modalConfirmDelete').modal('show')
+	}
+	onDelete(id: number) {
+		let request = {
+			Id: id,
+		}
+		this._service.recommendationDelete(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
+				$('#modalConfirmDelete').modal('hide')
+				this.getList()
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(error) => {
+				console.error(error)
+			}
+	}
 
 	onPageChange(event: any) {
 		this.pageSize = event.rows

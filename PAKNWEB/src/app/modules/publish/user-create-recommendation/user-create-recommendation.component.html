@@ -11,6 +11,7 @@
 					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id == 0">Tạo mới phản ánh, Kiến nghị</li>
 					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id != 0">Cập nhật phản ánh, Kiến nghị</li>
 				</ol>
+				<p *ngIf="!isLogin" class="cl-red">Vui lòng đăng nhập để gửi phản ánh kiến nghị!</p>
 				<form class="form-row mb-3" [formGroup]="form">
 					<div class="col-12 form-group">
 						<label class="mb-1">Phản ánh, kiến nghị về việc <span class="cl-red">(*)</span></label>

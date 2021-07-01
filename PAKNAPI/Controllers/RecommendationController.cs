@@ -142,7 +142,7 @@ namespace PAKNAPI.Controller
                 request.Data = JsonConvert.DeserializeObject<MRRecommendationInsertIN>(Request.Form["Data"].ToString(), jss);
                 if (request.Data.UnitId == null) {
                     var syUnitByField = await new SYUnitGetByField(_appSetting).SYUnitGetByFieldDAO(request.Data.Field);
-                    if (syUnitByField.Count > 0) {
+                    if (syUnitByField.Count == 0) {
                         request.Data.UnitId = dataMain.Id;
                     }
                     else {

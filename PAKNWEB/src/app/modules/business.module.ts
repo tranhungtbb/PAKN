@@ -17,6 +17,7 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller'
 import { DxDropDownBoxModule, DxTreeViewModule, DxDataGridModule } from 'devextreme-angular'
 import { DxReportViewerModule } from 'devexpress-reporting-angular'
 import { TreeviewModule } from 'ngx-treeview'
+import {  ChartModule } from 'primeng/chart'
 
 import { DashboardComponent } from './dash-board/dash-board.component'
 import { NotificationComponent } from './notification/notification.component'
@@ -54,6 +55,7 @@ import { WeatherComponent } from './dash-board/weather/weather.component'
 		TreeviewModule.forRoot(),
 		UserModule,
 		DropdownModule,
+		ChartModule
 	],
 	declarations: [
 		BusinessComponent,

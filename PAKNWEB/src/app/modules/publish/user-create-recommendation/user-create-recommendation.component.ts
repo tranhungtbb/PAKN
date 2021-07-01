@@ -48,6 +48,7 @@ export class CreateRecommendationComponent implements OnInit {
 
 	unitSelected: any = { name: null, id: null }
 	lstUnitTree: any[] = []
+	isLogin : boolean
 
 	constructor(
 		private unitService: UnitService,
@@ -78,6 +79,7 @@ export class CreateRecommendationComponent implements OnInit {
 			}
 			this.builForm()
 		})
+		this.isLogin = this.storageService.getSaveLogin()
 	}
 
 	//unit select event
@@ -314,7 +316,6 @@ export class CreateRecommendationComponent implements OnInit {
 	}
 
 	onSave(status) {
-		let isLogin = this.storageService.getSaveLogin()
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
 		if (this.model.content == null || this.model.content == '') {
@@ -330,7 +331,7 @@ export class CreateRecommendationComponent implements OnInit {
 			return
 		}
 		// nếu chưa đăng nhập cho lưu tạm
-		if(!isLogin){
+		if(!this.isLogin){
 			this.storageService.setRecommentdationObjectRemember(JSON.stringify(this.model))
 			this.toastr.error('Vui lòng đăng nhập để gửi phản ánh kiến nghị')
 			return

@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 
 import { Router, ActivatedRoute } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { NewsService } from 'src/app/services/news.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import { AppSettings } from 'src/app/constants/app-setting'
+import {ViewRightComponent} from 'src/app/modules/publish/view-right/view-right.component'
 
 @Component({
 	selector: 'app-news',
@@ -15,7 +15,7 @@ export class ViewNewsComponent implements OnInit {
 	constructor(private newsService: NewsService, private router: Router, private activatedRoute: ActivatedRoute, private userStorage: UserInfoStorageService) {
 		this.newsHightlight = []
 	}
-
+	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	model: any = {}
 	newsRelates: any[] = []
 	viewDemo = false
@@ -75,6 +75,7 @@ export class ViewNewsComponent implements OnInit {
 		})
 	}
 	redirectDetail(id: any) {
+		debugger
 		this.router.navigate(['/cong-bo/tin-tuc-su-kien/' + id])
 	}
 }

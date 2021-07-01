@@ -2011,7 +2011,7 @@ namespace PAKNAPI.ControllerBase
 						{"data7day", res},
 						{"data", res2}
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
