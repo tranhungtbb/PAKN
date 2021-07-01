@@ -140,7 +140,16 @@ namespace PAKNAPI.Controller
                 request.UserType = new LogHelper(_appSetting).GetTypeFromRequest(HttpContext);
                 request.UserFullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
                 request.Data = JsonConvert.DeserializeObject<MRRecommendationInsertIN>(Request.Form["Data"].ToString(), jss);
-                request.Data.UnitId = request.Data.UnitId != null ? request.Data.UnitId : dataMain.Id;
+                if (request.Data.UnitId == null) {
+                    var syUnitByField = await new SYUnitGetByField(_appSetting).SYUnitGetByFieldDAO(request.Data.Field);
+                    if (syUnitByField.Count > 0) {
+                        request.Data.UnitId = dataMain.Id;
+                    }
+                    else {
+                        request.Data.UnitId = syUnitByField.FirstOrDefault().Id;
+                    }
+                }
+                //request.Data.UnitId = request.Data.UnitId != null ? request.Data.UnitId : dataMain.Id;
                 request.ListHashTag = JsonConvert.DeserializeObject<List<DropdownObject>>(Request.Form["Hashtags"].ToString(), jss);
                 request.Files = Request.Form.Files;
                 request.Data.CreatedBy = request.UserId;

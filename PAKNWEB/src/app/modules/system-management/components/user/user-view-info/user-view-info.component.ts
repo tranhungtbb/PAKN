@@ -93,10 +93,14 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 
 					this.model.positionName = this.unitsList.find((c) => c.id == this.model.unitId).name
 					this.model.unitName = this.unitsList.find((c) => c.id == this.model.unitId).name
-
-					let rolesIds = this.model.roleIds.split(',').map((c) => parseInt(c))
-					let rolesNames = this.rolesList.filter((c) => rolesIds.includes(c.id)).map((c) => c.name)
-					this.model.rolesNames = rolesNames.join('; ')
+					if(this.model.roleIds){
+						let rolesIds = this.model.roleIds.split(',').map((c) => parseInt(c))
+						let rolesNames = this.rolesList.filter((c) => rolesIds.includes(c.id)).map((c) => c.name)
+						this.model.rolesNames = rolesNames.join('; ')
+					}else{
+						this.model.rolesNames = ''
+					}
+					
 					$('#' + this.modalId).modal('show')
 				} else {
 					this.userId = null
@@ -116,10 +120,14 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 
 					this.model.positionName = this.unitsList.find((c) => c.id == this.model.unitId).name
 					this.model.unitName = this.unitsList.find((c) => c.id == this.model.unitId).name
-
-					let rolesIds = this.model.roleIds.split(',').map((c) => parseInt(c))
-					let rolesNames = this.rolesList.filter((c) => rolesIds.includes(c.id)).map((c) => c.name)
-					this.model.rolesNames = rolesNames.join('; ')
+					if(this.model.roleIds){
+						let rolesIds = this.model.roleIds.split(',').map((c) => parseInt(c))
+						let rolesNames = this.rolesList.filter((c) => rolesIds.includes(c.id)).map((c) => c.name)
+						this.model.rolesNames = rolesNames.join('; ')
+					}else{
+						this.model.rolesNames =''
+					}
+					
 					$('#' + this.modalId).modal('show')
 				}
 			})

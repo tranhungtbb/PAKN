@@ -280,10 +280,18 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-12 form-group">
+						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">Địa chỉ</label>
 							<input formControlName="address" [(ngModel)]="modelUnit.address" type="text" class="form-control" placeholder="Nhập..." maxlength="500">
 						</div>
+						<div class="col-12 col-lg-4 form-group">
+							<label class="mb-1">Lĩnh vực</label>
+							<ng-select class="form-control" style="font-weight: bold;" [items]="lstField" placeholder="Chọn..." bindLabel="text" bindValue="value"
+								formControlName="field" [(ngModel)]="modelUnit.field" [closeOnSelect]="true" [searchable]="false">
+							</ng-select>
+							<!-- <input formControlName="field" [(ngModel)]="modelUnit.field" type="text" class="form-control" placeholder="Nhập..." maxlength="500"> -->
+						</div>
+
 						<div class="col-12 form-group">
 							<label class="mb-1">Mô tả</label>
 							<textarea [(ngModel)]="modelUnit.description" formControlName="description" class="form-control" rows="4" placeholder="Nhập..."

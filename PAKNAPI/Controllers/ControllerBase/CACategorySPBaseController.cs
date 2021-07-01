@@ -903,6 +903,29 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Authorize]
+		[Route("UnitGetDataForCreateBase")]
+		public async Task<ActionResult<object>> UnitGetDataForCreateBase()
+		{
+			try
+			{
+				List<CAFieldGetDropdown> rsCAFieldGetDropdown = await new CAFieldGetDropdown(_appSetting).CAFieldGetDropdownDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"lstField", rsCAFieldGetDropdown},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
 		[Route("CAUnitGetAllBase")]
 		public async Task<ActionResult<object>> CAUnitGetAllBase(int? ParentId, byte? UnitLevel)
 		{
@@ -1021,8 +1044,8 @@ namespace PAKNAPI.ControllerBase
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new CAUnitUpdate(_appSetting).CAUnitUpdateDAO(_cAUnitUpdateIN) };
+				var s = await new CAUnitUpdate(_appSetting).CAUnitUpdateDAO(_cAUnitUpdateIN);
+				return new ResultApi { Success = ResultCode.OK, Result = s};
 			}
 			catch (Exception ex)
 			{

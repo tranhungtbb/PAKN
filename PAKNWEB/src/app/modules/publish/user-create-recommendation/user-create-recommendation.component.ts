@@ -246,12 +246,17 @@ export class CreateRecommendationComponent implements OnInit {
 					// nếu thêm mới và data local stogate vẫn có thì lấy ra
 					let dataRecommetdation = JSON.parse(this.storageService.getRecommentdationObjectRemember())
 					if(dataRecommetdation){
-						this.model = {...dataRecommetdation}
-						this.searchRecommendation()
-						this.hightLightText()
-						if(this.model.unitId){
-							this.unitSelected = this.lstUnit.find(x=>x.id == this.model.unitId)
+						if(dataRecommetdation.model){
+							localStorage.removeItem('recommentdationObjRemember')
+						}else{
+							this.model = {...dataRecommetdation}
+							this.searchRecommendation()
+							this.hightLightText()
+							if(this.model.unitId){
+								this.unitSelected = this.lstUnit.find(x=>x.id == this.model.unitId)
+							}
 						}
+						
 					}
 				}
 				this.lstUnitTree = this.unflatten(listUnit)

@@ -1448,6 +1448,30 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class SYUnitGetByField
+	{
+		private SQLCon _sQLCon;
+
+		public SYUnitGetByField(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUnitGetByField()
+		{
+		}
+		public int Id { get; set; }
+		public string Name { get; set; }
+
+		public async Task<List<SYUnitGetByField>> SYUnitGetByFieldDAO(int? fieldId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("FieldId", fieldId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUnitGetByField>("SY_UnitGetByField", DP)).ToList();
+		}
+	}
+
 	public class SYUserGetByUnitId
 	{
 		private SQLCon _sQLCon;

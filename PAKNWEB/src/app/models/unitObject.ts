@@ -22,6 +22,7 @@ export class UnitObject {
 		this.isActived = true
 		this.id = 0
 		this.index = 0
+		this.field = null
 	}
 	id: number
 	name: string
@@ -35,4 +36,5 @@ export class UnitObject {
 	address: string
 	isMain: boolean
 	index: number
+	field : number
 }

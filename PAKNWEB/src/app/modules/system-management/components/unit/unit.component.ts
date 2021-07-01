@@ -42,8 +42,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	unitObject: any = {}
 	listUserPaged: any[] = []
 	unitFlatlist: any[] = []
-	rolesList: any[] = []
-	positionsList: any[] = []
+	lstField : any [] = []
 
 	createUnitFrom: FormGroup
 	titleConfirm : any = ''
@@ -109,23 +108,15 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			phone: [this.modelUnit.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
 			address: [this.modelUnit.address],
 			index: [this.modelUnit.index],
+			field: [this.modelUnit.field],
 		})
 
-		this.positionService
-			.positionGetList({
-				pageIndex: 1,
-				pageSize: 1000,
-			})
-			.subscribe((res) => {
-				if (res.success != 'OK') return
-				this.positionsList = res.result.CAPositionGetAllOnPage
-			})
-		this.roleService.getAll({}).subscribe((res) => {
-			if (res.success != 'OK') return
-			this.rolesList = res.result.SYRoleGetAll
+		this.unitService.getDataForCreate().subscribe(res=>{
+			if(res.success == RESPONSE_STATUS.success){
+				this.lstField = res.result.lstField
+			}
+			
 		})
-
-		//bind parent
 	}
 	ngAfterViewInit() {
 		this.childCreateOrUpdateUser.parentUnit = this
@@ -153,34 +144,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.unitSortDir = this.unitSortDir == 'DESC' ? 'ASC' : 'DESC'
 		//this.getUnitPagedList()
 	}
-	// getUnitPagedList(): void {
-	// 	this.query.name = this.query.name.trim()
-	// 	this.query.email = this.query.email.trim()
-	// 	this.query.phone = this.query.phone.trim()
-	// 	this.query.address = this.query.address.trim()
-	// 	this.unitService
-	// 		.getAllPagedList({
-	// 			parentId: this.query.parentId,
-	// 			pageSize: this.query.pageSize,
-	// 			pageIndex: this.query.pageIndex,
-	// 			name: this.query.name.trim(),
-	// 			email: this.query.email.trim(),
-	// 			phone: this.query.phone.trim(),
-	// 			address: this.query.address.trim(),
-	// 			isActived: this.query.isActived == null ? '' : this.query.isActived,
-	// 			sortDir: this.unitSortDir,
-	// 			sortField: this.unitSortField,
-	// 		})
-	// 		.subscribe(
-	// 			(res) => {
-	// 				if (res.success != 'OK') return
-	// 				this.listUnitPaged = res.result.CAUnitGetAllOnPage
-	// 				if (this.totalCount_Unit <= 0) this.totalCount_Unit = res.result.TotalCount
-	// 				this.unitPageCount = Math.ceil(this.totalCount_Unit / this.query.pageSize)
-	// 			},
-	// 			(err) => {}
-	// 		)
-	// }
 	unitFilterChange(): void {
 		//this.getUnitPagedList()
 	}
@@ -199,7 +162,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.totalCount_User = 0
 
 		this.getUnitInfo(id)
-		//this.getUnitPagedList()
 	}
 
 	onFilterTree(data) {
@@ -338,6 +300,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			phone: [this.modelUnit.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
 			address: [this.modelUnit.address],
 			index: [this.modelUnit.index],
+			field : [this.modelUnit.field]
 		})
 
 		// this.createUnitFrom.reset({
@@ -425,11 +388,14 @@ export class UnitComponent implements OnInit, AfterViewInit {
 						// cập nhật tên ptree khi đã sửa thành công
 						let current_edit = this.searchTree(this.treeUnit, this.modelUnit.id)
 						current_edit.name = this.modelUnit.name
-						this.modelUnit = new UnitObject()
 						$('#modal-create-or-update').modal('hide')
-					} else {
+					} else if(res.result == -1) {
+						
 						$("[id='unitId']").focus()
 						this._toastr.error('Tên đơn vị đã tồn tại.')
+					}
+					else{
+						this._toastr.error('Lĩnh vực này đã được sử dụng cho đơn vị khác')
 					}
 				}
 			})
@@ -445,9 +411,12 @@ export class UnitComponent implements OnInit, AfterViewInit {
 						this.getAllUnitShortInfo(this.unitObject)
 						this.modelUnit = new UnitObject()
 						$('#modal-create-or-update').modal('hide')
-					} else {
+					} else if(res.result == -1){
 						$("[id='unitId']").focus()
 						this._toastr.error('Tên đơn vị đã tồn tại')
+					}
+					else{
+						this._toastr.error('Lĩnh vực này đã được sử dụng cho đơn vị khác')
 					}
 				}
 			})

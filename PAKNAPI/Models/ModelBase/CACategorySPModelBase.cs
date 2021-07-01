@@ -1365,6 +1365,7 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public bool IsMain { get; set; }
 		public int Index { get; set; }
+		public int? Field { get; set; }
 
 		public async Task<List<CAUnitGetByID>> CAUnitGetByIDDAO(int? Id)
 		{
@@ -1431,9 +1432,10 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cAUnitInsertIN.IsDeleted);
 			DP.Add("IsMain", _cAUnitInsertIN.IsMain);
 			DP.Add("Index", _cAUnitInsertIN.Index);
+			DP.Add("Field", _cAUnitInsertIN.Field);
 
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_UnitInsert", DP));
+			return (await _sQLCon.ExecuteListDapperAsync<int>("CA_UnitInsert", DP)).FirstOrDefault();
 		}
 	}
 
@@ -1450,6 +1452,7 @@ namespace PAKNAPI.ModelBase
 		public bool? IsDeleted { get; set; }
 		public bool? IsMain { get; set; }
 		public int Index { get; set; }
+		public int? Field { get; set; }
 	}
 
 	public class CAUnitUpdate
@@ -1480,8 +1483,9 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cAUnitUpdateIN.IsDeleted);
 			DP.Add("IsMain", _cAUnitUpdateIN.IsMain);
 			DP.Add("Index", _cAUnitUpdateIN.Index);
+			DP.Add("Field", _cAUnitUpdateIN.Field);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_UnitUpdate", DP));
+			return (await _sQLCon.ExecuteListDapperAsync<int>("CA_UnitUpdate", DP)).FirstOrDefault();
 		}
 	}
 
@@ -1499,6 +1503,9 @@ namespace PAKNAPI.ModelBase
 		public bool? IsDeleted { get; set; }
 		public bool? IsMain { get; set; }
 		public int Index { get; set; }
+		public int? Field { get; set; }
+
+
 	}
 
 	public class CAUserGetByUnitId

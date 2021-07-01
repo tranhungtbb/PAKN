@@ -83,7 +83,7 @@ export class CreateRecommendationComponent implements OnInit {
 	}
 
 	onCreateHashtag(e) {
-		if (e.target.value != null && e.target.value != '' && e.target.value.trim() != '' && e.keyCode == 13) {
+		if (e.target.value != undefined && e.target.value != null && e.target.value != '' && e.target.value.trim() != '' && e.keyCode == 13) {
 			var isExist = false
 			for (var i = 0; i < this.lstHashtag.length; i++) {
 				if (this.lstHashtag[i].text.toUpperCase() == e.target.value) {

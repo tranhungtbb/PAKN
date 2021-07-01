@@ -8,7 +8,9 @@ import { InvitationDetailComponent } from './invitation-detail/invitation-detail
 const routes: Routes = [
 	{ 
 		path: '',
-		component: InvitationComponent
+		component: InvitationComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'B_IV_10'}
  	},
 	{ 
 		path: 'them-moi',

@@ -24,6 +24,9 @@ export class UnitService {
 	getChildrenDropdown(): Observable<any> {
 		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.UnitGetChildrenDropdown)
 	}
+	getDataForCreate(): Observable<any> {
+		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.UnitGetDataForCreate)
+	}
 
 	getById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UnitGetById)
@@ -35,9 +38,6 @@ export class UnitService {
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.UnitInsert, headers)
 	}
-	// create(data: any): Observable<any> {
-	// 	return this.http.post(AppSettings.API_ADDRESS + Api.UnitInsert, data)
-	// }
 	update(data: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
