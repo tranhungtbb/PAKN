@@ -287,7 +287,7 @@ namespace PAKNAPI.ModelBase
 	}
 
 
-		public class SYIntroduceUnit
+	public class SYIntroduceUnit
 	{
 		private SQLCon _sQLCon;
 
@@ -590,6 +590,68 @@ namespace PAKNAPI.ModelBase
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_EmailInsert", DP);
 		}
+	}
+
+	public class SYUserUserAgent
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserUserAgent(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserUserAgent()
+		{
+		}
+
+		public SYUserUserAgent(long userId, string userAgent, string ipAddress, bool status)
+		{
+			this.UserId = userId;
+			this.UserAgent = userAgent;
+			this.IpAddress = ipAddress;
+			this.Status = status;
+		}
+		public SYUserUserAgent(long userId, string userAgent, string ipAddress)
+		{
+			this.UserId = userId;
+			this.UserAgent = userAgent;
+			this.IpAddress = ipAddress;
+		}
+
+		public long UserId { get; set; }
+		public string UserAgent { get; set; }
+		public string IpAddress { get; set; }
+		public bool Status { get; set; }
+
+		public async Task<int?> SYUserUserAgentInsertDAO(SYUserUserAgent sYUserUserAgentInsert)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", sYUserUserAgentInsert.UserId);
+			DP.Add("UserAgent", sYUserUserAgentInsert.UserAgent);
+			DP.Add("IpAddress", sYUserUserAgentInsert.IpAddress);
+			DP.Add("Status", sYUserUserAgentInsert.Status);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_UserUserAgentInsert", DP);
+		}
+
+		public async Task<int?> SYUserUserAgentUpdateStatusDAO(long UserId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", UserId);
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_UserUserAgentUpdateStatus", DP);
+		}
+
+		public async Task<List<SYUserUserAgent>> SYUserUserAgentGetDAO(SYUserUserAgent sYUserUserAgentInsert)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", sYUserUserAgentInsert.UserId);
+			DP.Add("UserAgent", sYUserUserAgentInsert.UserAgent);
+			DP.Add("IpAddress", sYUserUserAgentInsert.IpAddress);
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserUserAgent>("SY_UserUserAgentGetByUserId_UserAgent_IpAddress", DP)).ToList();
+		}
+
+		
 	}
 
 	public class SYEmailInsertIN

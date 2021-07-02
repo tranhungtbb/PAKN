@@ -58,7 +58,7 @@ namespace PAKNAPI.Controllers
 						if (rsSYUSRGetPermissionByUserId != null && rsSYUSRGetPermissionByUserId.Count > 0)
 						{
 							BaseRequest baseRequest = new LogHelper(_appSetting).ReadBodyFromRequest(HttpContext.Request);
-
+							var s = Request.Headers;
 							SYLOGInsertIN sYSystemLogInsertIN = new SYLOGInsertIN
 							{
 								UserId = user[0].Id,
@@ -72,9 +72,12 @@ namespace PAKNAPI.Controllers
 								Exception = null
 							};
 
+							
+
 							if (user[0].IsActived == false) { sYSystemLogInsertIN.Status = 0; };
 							await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
-
+							SYUserUserAgent query = new SYUserUserAgent(user[0].Id, Request.Headers["User-Agent"].ToString(), baseRequest.ipAddress, true);
+							await new SYUserUserAgent(_appSetting).SYUserUserAgentInsertDAO(query);
 
 							return new LoginResponse
 							{

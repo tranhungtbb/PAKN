@@ -76,10 +76,12 @@
 				<!-- </form> -->
 			</div>
 			<div class="modal-footer border-top-0">
-				<button *hasPermission="['3', 'A_IX_1']" type="button" class="btn btn-outline-secondary border px-5 bg-dark-alt" (click)="showEditUserInfo()">Sửa thông tin</button>
-				<!-- <button type="button" (click)="onSaveUser()" class="btn btn-danger border-0 px-5 grd-blue">
-					{{modal_btn_save}}
-				</button> -->
+				<span *ngIf="userCurrent == model.id">
+					<button type="button" class="btn btn-outline-secondary border px-5 bg-dark-alt" (click)="showEditUserInfo()">Sửa thông tin</button>
+				</span>
+				<span *ngIf="userCurrent != model.id">
+					<button *hasPermission="['3', 'A_IX_1']" type="button" class="btn btn-outline-secondary border px-5 bg-dark-alt" (click)="showEditUserInfo()">Sửa thông tin</button>
+				</span>
 			</div>
 		</div>
 	</div>

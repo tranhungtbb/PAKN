@@ -705,8 +705,13 @@ namespace PAKNAPI.Controllers
 					Salt = newPwd["Salt"]
 				};
 				_model.Id = accInfo[0].Id;
-
 				var rs = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_model);
+				// cho trạng thái = false hết
+				await new SYUserUserAgent(_appSetting).SYUserUserAgentUpdateStatusDAO(accInfo[0].Id);
+
+				SYUserUserAgent sy_UserAgent = new SYUserUserAgent(accInfo[0].Id, Request.Headers["User-Agent"].ToString(), Request.Headers["ipAddress"].ToString(), true);
+				await new SYUserUserAgent(_appSetting).SYUserUserAgentInsertDAO(sy_UserAgent);
+
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new Models.Results.ResultApi { Success = ResultCode.OK};
 			}
@@ -750,6 +755,12 @@ namespace PAKNAPI.Controllers
 				_model.Id = accInfo[0].Id;
 
 				var rs = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_model);
+				// cho trạng thái = false hết
+				await new SYUserUserAgent(_appSetting).SYUserUserAgentUpdateStatusDAO(accInfo[0].Id);
+
+				//SYUserUserAgent sy_UserAgent = new SYUserUserAgent(accInfo[0].Id, Request.Headers["User-Agent"].ToString(), Request.Headers["ipAddress"].ToString(), true);
+				//await new SYUserUserAgent(_appSetting).SYUserUserAgentInsertDAO(sy_UserAgent);
+
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new Models.Results.ResultApi { Success = ResultCode.OK };
 			}

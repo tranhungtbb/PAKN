@@ -3,7 +3,6 @@ import { UserInfoStorageService } from '../../commons/user-info-storage.service'
 import { AuthenticationService } from '../../services/authentication.service'
 import { Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
-import { ChangePasswordUserObject } from '../../models/changePasswordUserObject'
 import { ToastrService } from 'ngx-toastr'
 import { UserObject } from '../../models/UserObject'
 import { UserService } from '../../services/user.service'
@@ -11,9 +10,6 @@ import { DataService } from '../../services/sharedata.service'
 import { AccountService } from 'src/app/services/account.service'
 import { RESPONSE_STATUS, RECOMMENDATION_STATUS, TYPE_NOTIFICATION } from 'src/app/constants/CONSTANTS'
 import { NotificationService } from 'src/app/services/notification.service'
-import { from } from 'rxjs'
-import { UserViewInfoComponent } from '../../modules/system-management/components/user/user-view-info/user-view-info.component'
-import { create } from 'domain'
 
 declare var $: any
 @HostListener('window:scroll', ['$event'])
@@ -215,6 +211,8 @@ export class AppheaderComponent implements OnInit {
 			}
 			this._toastr.success('Đổi mật khẩu thành công')
 			$('#modalChangePasswordByMe').modal('hide')
+			this.storageService.clear()
+			this.router.navigate(['/dang-nhap'])
 		}),
 			(error) => {
 				console.error(error)

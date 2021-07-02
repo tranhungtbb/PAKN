@@ -32,8 +32,7 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 		private roleService: RoleService,
 		private sanitizer: DomSanitizer,
 		private userStorage: UserInfoStorageService,
-		private accountService: AccountService,
-		private router: Router
+		private accountService: AccountService
 	) {
 		this.modalId = element.nativeElement.getAttribute('modalid')
 	}
@@ -51,7 +50,7 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 	userId: any
 	public parent_BusinessComponent: BusinessComponent
 	public parentUser: UserComponent
-
+	userCurrent : any
 	ngOnInit() {
 		this.positionService
 			.positionGetList({
@@ -70,6 +69,7 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 			if (res.success != 'OK') return
 			this.unitsList = res.result.CAUnitGetAll
 		})
+		this.userCurrent = this.userStorage.getUserId()
 	}
 
 	ngAfterViewInit() {

@@ -23,7 +23,7 @@ export class UserInfoStorageService {
 		localStorage.removeItem('functions')
 		localStorage.removeItem('permissionCategories')
 		localStorage.removeItem('IsHaveToken')
-		localStorage.removeItem('IpAddress')
+		// localStorage.removeItem('IpAddress')
 		localStorage.removeItem('Role')
 		localStorage.removeItem('FullName')
 		localStorage.removeItem('unitName')

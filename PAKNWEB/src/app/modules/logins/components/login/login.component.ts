@@ -11,7 +11,6 @@ import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { AppSettings } from 'src/app/constants/app-setting'
 import { Api } from 'src/app/constants/api'
 import { CaptchaService } from 'src/app/services/captcha-service'
-import {Parterms} from 'src/app/constants/parterm'
 
 declare var $: any
 
@@ -171,6 +170,7 @@ export class LoginComponent implements OnInit {
 									if (dataIP != null) {
 										this.storeageService.setIpAddress(dataIP.ip)
 									}
+									this.storeageService.setIpAddress(dataIP.ip)
 								})
 								if (this.isSaveLogin) {
 									this.storeageService.setKeyRemember(btoa(this.user.Password))
@@ -244,7 +244,6 @@ export class LoginComponent implements OnInit {
 					this.authenService.login(this.userProduct).subscribe(
 						(data) => {
 							if (data.success === RESPONSE_STATUS.success) {
-								debugger
 								if (data.isActive == false) {
 									this.reloadImage()
 									this.captchaCodeProduct = ''

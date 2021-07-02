@@ -25,11 +25,9 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 		// if (request.url == AppSettings.API_ADDRESS + Api.GetNotification) {
 		//   this.env.isContentLoading = false;
 		// }
-
 		if (request.url != 'https://jsonip.com/' && request.url != AppSettings.API_ADDRESS + Api.GetFile) {
 			let logAction = request.headers.get('logAction') && request.headers.get('logAction') != 'null' ? request.headers.get('logAction') : ''
 			let logObject = request.headers.get('logObject') && request.headers.get('logObject') != 'null' ? request.headers.get('logObject') : ''
-			let ipAddress = request.headers.get('ipAddress') && request.headers.get('ipAddress') != 'null' ? request.headers.get('ipAddress') : ''
 			let macAddress = request.headers.get('macAddress') && request.headers.get('macAddress') != 'null' ? request.headers.get('macAddress') : ''
 			request = request.clone({
 				headers: new HttpHeaders({
@@ -37,8 +35,8 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 					Authorization: `Bearer ${this.storeageService.getAccessToken()}`,
 					logAction: logAction,
 					logObject: logObject,
-					ipAddress: ipAddress,
-					macAddress: macAddress,
+					ipAddress: localStorage.getItem('IpAddress') && localStorage.getItem('IpAddress') != null ? localStorage.getItem('IpAddress') : '',
+					macAddress: macAddress
 				}),
 			})
 		}
@@ -51,7 +49,8 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 					if (err.status === 401) {
 						this.env.isContentLoading = false
 						this.storeageService.clear()
-						this._router.navigate(['/cong-bo/trang-chu'])
+						window.location.href = '/cong-bo/trang-chu'
+						// this._router.navigate(['/cong-bo/trang-chu'])
 					} else if (err.status === 403) {
 						this.env.isContentLoading = false
 						this._router.navigate(['/forbidden'])
