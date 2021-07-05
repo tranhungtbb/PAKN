@@ -28,6 +28,8 @@ export class AppheaderComponent implements OnInit {
 	listData: any[] = []
 	totalRecords: number = 0
 	emailUser: string = ''
+	isShowPassword : any = false
+	isShowPasswordNew : any = false
 
 	pageSizeGrid: number = 10
 	files: any
@@ -119,6 +121,12 @@ export class AppheaderComponent implements OnInit {
 			newPassword: [this.newPassword, Validators.required],
 			rePassword: [this.rePassword, Validators.required],
 		})
+	}
+	showPassword(){
+		this.isShowPassword = !this.isShowPassword
+	}
+	showPasswordNew(){
+		this.isShowPasswordNew = !this.isShowPasswordNew
 	}
 
 	getNotifications(PageSize: Number) {

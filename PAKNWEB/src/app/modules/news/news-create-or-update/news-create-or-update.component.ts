@@ -127,6 +127,8 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				}
 				this.listNewsTypes = res.result.CANewsTypeGetAllOnPage
 			})
+
+			this.onChangePostType(0,true)
 	}
 
 	rebuidForm() {

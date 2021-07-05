@@ -27,6 +27,10 @@
 .color-brow {
 	color: #743f15;
 }
+.permision-category{
+	color: black;
+	font-weight: 600;
+}
 
 .mod.ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value {
 	font-weight: bold !important;

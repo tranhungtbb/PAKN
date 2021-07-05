@@ -57,6 +57,7 @@ export class ViewNewsComponent implements OnInit {
 		this.newsService.getViewDetail({ id }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.model = res.result.NENewsViewDetail[0]
+				console.log(this.model)
 			}
 		})
 	}

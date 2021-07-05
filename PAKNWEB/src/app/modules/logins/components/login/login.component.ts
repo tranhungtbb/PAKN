@@ -322,11 +322,6 @@ export class LoginComponent implements OnInit {
 
 	showPassword(){
 		this.isShowPassword = !this.isShowPassword
-		if(this.isShowPassword== true){
-			this.typeInput = 'password'
-		}else{
-			this.typeInput = 'text'
-		}
 	}
 
 	get name() {

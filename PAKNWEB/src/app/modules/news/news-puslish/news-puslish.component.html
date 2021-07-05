@@ -77,9 +77,9 @@
 									<td>
 										<div class="d-flex justify-content-end">
 											<button *hasPermission="['3', 'F_I_7']" class="btn-icon text-white mr-2 border-0" (click)="onOpenModalConfirm(item.id,'publish')"
-												[ngClass]="{'bg-xanhla':(item.status > 0), 'bg-xam':item.status == 0}">
-												<i class="bi bi-box-arrow-up" *ngIf="item.status > 0" title="{{item.isPublished?'Đã công bố':'Công bố'}}"></i>
-												<i class="bi bi-box-arrow-down text-dark" *ngIf="item.status == 0" title="Đã thu hồi"></i>
+												[ngClass]="{'bg-xanhla':(item.status == 0 || item.status == 2), 'bg-xam':item.status == 1}">
+												<i class="bi bi-box-arrow-down text-dark" *ngIf="item.status ==1" title="Hủy công bố"></i>
+												<i class="bi bi-box-arrow-up" *ngIf="item.status == 0 || item.status == 2" title="Công bố"></i>
 											</button>
 											<a *hasPermission="['3', 'F_I_1']" [routerLink]="['../chinh-sua', item.id]" class="btn-icon mr-2 border-0" title="Sửa"><i class="bi bi-pencil-square"></i></a>
 											<button  *hasPermission="['3', 'F_I_6']" class="btn-icon mr-2 grd-red text-white border-0" data-toggle="modal" data-target="#modal-history-pakn"
@@ -99,21 +99,21 @@
 
 <!-- confirm modal -->
 <div class="modal fade" id="modal-confirm">
-	<div class="modal-dialog modal-dialog-centered modal-md" role="document" style="width: 27%;">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0">
 				<p class="modal-title h3">Xác nhận</p>
 				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
 				</button>
 			</div>
-			<div class="modal-body pb-1">
+			<div class="modal-body pb-3 pt-3">
 				<span>
 					{{modalConfirm_message}}
 				</span>
 			</div>
 			<div class="modal-footer border-top-0">
-				<button type="button" class="btn btn-outline-secondary border px-5"  style="font-size: 15px;" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 px-5 grd-blue"  style="font-size: 15px;" data-dismiss="modal" (click)="acceptConfirm()">Đồng ý</button>
+				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="acceptConfirm()">Xác nhận</button>
 			</div>
 		</div>
 	</div>

@@ -210,85 +210,46 @@
 	</div>
 </div>
 
-<div class="modal fade" id="modalConfirmChangeStatus">
-	<div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
-		<div class="modal-content rounded">
-			<form class="form-horizontal">
-				<div class="panel panel-default no-margin">
-					<div class="modal-header" style="border: none;">
-						<button class="close btn-close-modal" data-dismiss="modal">
-							×
-						</button>
-						<!-- <p class="modal-title h3">Xác nhận</p> -->
-					</div>
-					<div class="modal-body no-padding-bottom" style="border: none;">
-						<div style="text-align: center;">
-							<strong class="change-status-title">Anh/Chị có chắc chắn muốn thay đổi trạng thái của lĩnh vực này?</strong>
-						</div>
-					</div>
-					<div class="modal-footer" style="border: none; justify-content: center;">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onUpdateStatus()">Xác
-							nhận</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-
-
 
 <div class="modal fade" id="modalConfirmDelete">
-	<div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
 		<div class="modal-content rounded">
-			<form class="form-horizontal">
-				<div class="panel panel-default no-margin">
-					<div class="modal-header" style="border: none;">
-						<button class="close btn-close-modal" data-dismiss="modal">
-							×
-						</button>
-						<!-- <p class="modal-title h3">Xác nhận</p> -->
-					</div>
-					<div class="modal-body no-padding-bottom" style="border: none;">
-						<div style="text-align: center;">
-							<strong class="change-status-title">Anh/Chị có chắc chắn muốn xóa lĩnh vực này?</strong>
-						</div>
-					</div>
-					<div class="modal-footer" style="border: none; justify-content: center;">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác
-							nhận</button>
-					</div>
-				</div>
-			</form>
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					Anh/Chị có chắc chắn muốn xóa lĩnh vực này?
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="onDelete(idDelete)">Xác nhận</button>
+			</div>
 		</div>
 	</div>
 </div>
 
-<!-- <div class="modal fade" id="modalConfirmDelete">
-	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
+
+<div class="modal fade" id="modalConfirmChangeStatus">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
 		<div class="modal-content rounded">
-			<form class="form-horizontal">
-				<div class="panel panel-default no-margin">
-					<div class="modal-header">
-						<button class="close btn-close-modal" data-dismiss="modal">
-							×
-						</button>
-						<p class="modal-title h3">Xác nhận</p>
-					</div>
-					<div class="modal-body no-padding-bottom">
-						<div>
-							<p>Anh/Chị có chắc chắn thực hiện hành động này?</p>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" style="text-transform: none;" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" style="text-transform: none;" (click)="onDelete(idDelete)">Xác
-							nhận</button>
-					</div>
-				</div>
-			</form>
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Xác nhận</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					Anh/Chị có chắc chắn muốn thay đổi trạng thái của lĩnh vực này?
+				</span>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="onUpdateStatus()">Xác nhận</button>
+			</div>
 		</div>
 	</div>
-</div> -->
+</div>

@@ -350,6 +350,8 @@ namespace PAKNAPI.ModelBase
 
 		public int Id { get; set; }
 		public string Title { get; set; }
+
+		public int Status { get; set; }
 		public string Summary { get; set; }
 		public string Contents { get; set; }
 		public DateTime? CreatedDate { get; set; }

@@ -201,11 +201,15 @@
 						</button>
 						<p class="modal-title h3">Đổi mật khẩu</p>
 					</div>
-					<div class="modal-body no-padding-bottom" style="border: none;">
+					<div class="modal-body no-padding-bottom pt-3 pb-3" style="border: none;">
 						<div class="row form-group">
 							<div class="col-sm-12">
 								<label class="control-label">Mật khẩu cũ <span class="text-danger">(*)</span></label>
-								<input class="form-control" type="password" formControlName="oldPassword" [(ngModel)]="oldPassword" maxlength="50" placeholder="Nhập..." />
+								<input 
+									class="form-control border-input" style="position: relative;"
+									[type]="isShowPassword ? 'text' : 'password'" 
+									formControlName="oldPassword" [(ngModel)]="oldPassword" maxlength="50" placeholder="Nhập..." />
+								<i class="custom-show-pass" [ngClass]="{ 'bi bi-eye': isShowPassword, 'bi bi-eye-slash': !isShowPassword}" (click)="showPassword()"></i>
 								<div *ngIf="(submitted && fChangePass.oldPassword.invalid) || (fChangePass.oldPassword.invalid && (fChangePass.oldPassword.dirty || fChangePass.oldPassword.touched))"
 									class="has-error m-b-12">
 									<div *ngIf="fChangePass.oldPassword.errors.required">
@@ -215,8 +219,11 @@
 							</div>
 							<div class="col-sm-12">
 								<label class="control-label">Mật khẩu mới <span class="text-danger">(*)</span></label>
-								<input class="form-control" type="password" formControlName="newPassword" [(ngModel)]="newPassword" maxlength="50" placeholder="Nhập..."
-								pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$" />
+								<input class="form-control border-input" style="position: relative;"
+									[type]="isShowPasswordNew ? 'text' : 'password'"
+									formControlName="newPassword" [(ngModel)]="newPassword" maxlength="50" placeholder="Nhập..."
+								pattern="^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z\d@$!%*#?&()^]{6,}$" />
+								<i class="custom-show-pass" [ngClass]="{ 'bi bi-eye': isShowPasswordNew, 'bi bi-eye-slash': !isShowPasswordNew}" (click)="showPasswordNew()"></i>
 								<div *ngIf="(submitted && fChangePass.newPassword.invalid) || (fChangePass.newPassword.invalid && (fChangePass.newPassword.dirty || fChangePass.newPassword.touched))"
 									class="has-error m-b-12">
 									<div *ngIf="fChangePass.newPassword.errors.required">
@@ -229,7 +236,7 @@
 							</div>
 							<div class="col-sm-12">
 								<label class="control-label">Xác nhận mật khẩu <span class="text-danger">(*)</span></label>
-								<input class="form-control" type="password" formControlName="rePassword" [(ngModel)]="rePassword" maxlength="50" placeholder="Nhập..." />
+								<input class="form-control border-input" type="password" formControlName="rePassword" [(ngModel)]="rePassword" maxlength="50" placeholder="Nhập..." />
 								<div *ngIf="(submitted && fChangePass.rePassword.invalid) || (fChangePass.rePassword.invalid && (fChangePass.rePassword.dirty || fChangePass.rePassword.touched))"
 									class="has-error m-b-12">
 									<div *ngIf="fChangePass.rePassword.errors.required">
@@ -244,7 +251,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="modal-footer" style="border: none; justify-content: center;">
+					<div class="modal-footer" style="border: none; text-align: right;">
 						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
 						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onChangePassword()">Xác
 							nhận</button>

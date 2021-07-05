@@ -80,7 +80,14 @@
 	height: auto !important;
 }
 .border-input{
+	border-radius: 10px;
 	border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 	height: 38px;
+}
+.custom-show-pass{
+	position: absolute;
+	top: 30px;
+	right: 25px;
+	font-size: 20px;
 }

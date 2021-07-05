@@ -134,8 +134,10 @@ export class NewsPuslishComponent implements OnInit {
 				this.hisNewsModel.status = item.isPublished ? STATUS_HISNEWS.PUBLIC : STATUS_HISNEWS.CANCEL
 				this.newsService.hisNewsCreate(this.hisNewsModel).subscribe((res) => console.log(res))
 				this.toast.success(item.isPublished ? 'Đã công bố' : 'Đã thu hồi')
+				// this.getListPaged()
 			})
 		}
+		$('#modal-confirm').modal('hide')
 	}
 
 	filterChange() {

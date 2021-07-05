@@ -8,3 +8,9 @@ strong.highlight {
 .cursor {
 	cursor: pointer;
 }
+.custom-show-pass{
+	position: absolute;
+	top: 30px;
+	right: 25px;
+	font-size: 20px;
+}

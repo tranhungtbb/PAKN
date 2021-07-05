@@ -61,6 +61,7 @@ export class UserComponent implements OnInit {
 	positionId: any
 	pageIndex: number = 1
 	pageSize: number = 20
+	isShowPassword : any = false
 
 	// view child
 	@ViewChild('table', { static: false }) table: any
@@ -369,6 +370,9 @@ export class UserComponent implements OnInit {
 				this.listHisData = []
 			}
 		})
+	}
+	showPassword(){
+		this.isShowPassword = !this.isShowPassword
 	}
 	onExport() {
 		$('#modalHis').modal('hide')

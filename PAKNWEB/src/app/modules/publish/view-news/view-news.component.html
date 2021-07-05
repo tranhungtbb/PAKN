@@ -10,7 +10,7 @@
 						&nbsp;Quay lại
 					</a>
 				</div>
-				<div class="">
+				<div *ngIf="viewDemo || model.status == 1">
 					<h1 style="line-height: 1.5; font-weight: 500;font-size: 28px;line-height: 34px;">
 						<span *ngIf="viewDemo" style="color: red;">(Xem trước) </span>
 						{{model.title}}
@@ -28,6 +28,7 @@
 					</div>
 					<div class="contents" [innerHTML]="model.contents" style="text-align: justify;"></div>
 				</div>
+				<p *ngIf="!viewDemo || model.status != 1">Bài viết chưa được công bố</p>
 				<div>
 					<div class="mb-4">
 						<h5 class="pb-2 border-bottom text-uppercase" style="font-size: 14pt;">Bài viết liên quan khác</h5>

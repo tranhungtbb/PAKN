@@ -40,7 +40,7 @@ export class RecommendationsSyncComponent implements OnInit {
     else if(this.router.url.includes('/he-thong-pakn-quoc-gia'))
       {
         this.query.src = 4
-        this.title = 'Hệ thống tiếp nhận, trả lời PAKN của người dân của chính phủ'
+        this.title = 'Hệ thống tiếp nhận, trả lời PAKN của chính phủ'
       }
     
     this.getData();

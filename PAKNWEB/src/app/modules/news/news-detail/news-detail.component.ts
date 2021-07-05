@@ -139,6 +139,10 @@ export class NewsDetailComponent implements OnInit {
 		}
 	}
 
+	redirectUpdate(){
+		this.router.navigate(['/quan-tri/tin-tuc/chinh-sua/' + this.model.id])
+	}
+
 	get f() {
 		return this.newsForm.controls
 	}

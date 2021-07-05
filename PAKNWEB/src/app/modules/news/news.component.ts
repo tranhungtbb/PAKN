@@ -136,6 +136,7 @@ export class NewsComponent implements OnInit {
 				this.toast.success(item.isPublished ? 'Đã công bố' : 'Đã thu hồi')
 			})
 		}
+		$('#modal-confirm').modal('hide')
 	}
 
 	filterChange() {
