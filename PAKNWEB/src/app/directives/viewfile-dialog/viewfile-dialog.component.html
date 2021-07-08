@@ -6,7 +6,8 @@
 	</div>
 	<div class="modal-body" style="width:100%;height:96%">
 		<iframe *ngIf="!IsPDF && !IsIMG && !IsVideo" id="viewfile" class="no-border" style="width:100%;height:100%;text-align:center" src=""></iframe>
-		<ng2-pdfjs-viewer *ngIf="IsPDF && !IsIMG && !IsVideo" #pdfViewer></ng2-pdfjs-viewer>
+		<iframe *ngIf="IsPDF && !IsIMG && !IsVideo" id="viewfilePDF" class="no-border" style="width:100%;height:100%;text-align:center" src=""></iframe>
+		<!-- <ng2-pdfjs-viewer *ngIf="IsPDF && !IsIMG && !IsVideo" #pdfViewer></ng2-pdfjs-viewer> -->
 		<div *ngIf="!IsPDF && !IsIMG &&IsVideo">
 			<video #videodemo id="videoPlayer" controls autoplay muted style="width: 100%; height: calc(100vh - 110px); left: 0px; top: 0px;">
 				<source [src]="VideoSource" type="video/mp4" #sourcevideo>

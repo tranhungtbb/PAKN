@@ -15,8 +15,14 @@ import { MyRecommendationComponent } from './my-recommendation/my-recommendation
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
 import { ViewAdministrativeProceduresComponent } from './view-administrative-procedures/view-administrative-procedures.component'
 import  {ViewNotificationComponent} from './view-notification/view-notification.component'
-import { RecommendationsSyncComponent } from './recommendations-sync/recommendations-sync.component'
-import { ViewRecommendationsSyncComponent } from './view-recommendations-sync/view-recommendations-sync.component'
+import { DetailRecommendationKnctComponent } from './recommendations-sync/recommendation-knct-detail/recommendation-knct-detail.component'
+import {ListRecommendationKnct} from 'src/app/modules/publish/recommendations-sync/recommendation-knct/recommendation-knct.component'
+import { RecommendationsDvhhcComponent } from 'src/app/modules/publish/recommendations-sync/recommendations-dvhhc/recommendations-dvhhc.component'
+import {DetailRecommendationDvhhcComponent} from 'src/app/modules/publish/recommendations-sync/recommendations-dvhhc-detail/recommendations-dvhhc-detail.component'
+import {RecommendationsCttdtComponent} from './recommendations-sync/recommendations-cttdt/recommendations-cttdt.component'
+import {DetailRecommendationCttdtComponent} from './recommendations-sync/recommendations-cttdt-detail/recommendations-cttdt-detail.component'
+import {RecommendationsPaknCPComponent} from './recommendations-sync/recommendation-pakn-cp/recommendation-pakn-cp.component'
+import {DetailRecommendationPaknCPComponent} from './recommendations-sync/recommendation-pakn-cp-detail/recommendation-pakn-cp-detail.component'
 
 const routes: Routes = [
 	{
@@ -72,41 +78,50 @@ const routes: Routes = [
 				component: ViewNotificationComponent,
 			},
 			{
-				path: 'phan-anh-kien-nghi',
+				path: 'phan-anh-kien-nghi/da-tra-loi',
 				component: ReflectionsRecommendationsComponent,
 			},
 			{
-				path: 'phan-anh-kien-nghi/da-tra-loi',
+				path: 'phan-anh-kien-nghi',
 				component: ReflectionsRecommendationsComponent,
 			},
 			{
 				path: 'phan-anh-kien-nghi/:id',
 				component: ViewReflectionsRecommendationComponent,
 			},
+			
 			{
-				path: 'phan-anh-kien-nghi/sync/cong-ttdt-tinh-khanh-hoa',
-				component: RecommendationsSyncComponent,
+				path: 'phan-anh-kien-nghi/sync/he-thong-cu-tri-khanh-hoa',
+				component: ListRecommendationKnct,
+			},
+			{
+				path: 'phan-anh-kien-nghi/sync/he-thong-cu-tri-khanh-hoa/:id',
+				component: DetailRecommendationKnctComponent,
 			},
 			{
 				path: 'phan-anh-kien-nghi/sync/cong-dv-hcc-tinh-khoanh-hoa',
-				component: RecommendationsSyncComponent,
+				component: RecommendationsDvhhcComponent,
 			},
 			{
-				path: 'phan-anh-kien-nghi/sync/he-thong-cu-tri-khanh-hoa',
-				component: RecommendationsSyncComponent,
+				path: 'phan-anh-kien-nghi/sync/cong-dv-hcc-tinh-khoanh-hoa/:id',
+				component: DetailRecommendationDvhhcComponent,
+			},
+			{
+				path: 'phan-anh-kien-nghi/sync/cong-ttdt-tinh-khanh-hoa',
+				component: RecommendationsCttdtComponent,
+			},
+			{
+				path: 'phan-anh-kien-nghi/sync/cong-ttdt-tinh-khanh-hoa/:id',
+				component: DetailRecommendationCttdtComponent,
 			},
 			{
 				path: 'phan-anh-kien-nghi/sync/he-thong-pakn-quoc-gia',
-				component: RecommendationsSyncComponent,
+				component: RecommendationsPaknCPComponent,
 			},
 			{
-				path: 'phan-anh-kien-nghi/sync/:type/:id',
-				component: ViewRecommendationsSyncComponent,
+				path: 'phan-anh-kien-nghi/sync/he-thong-pakn-quoc-gia/:id',
+				component: DetailRecommendationPaknCPComponent,
 			},
-			// {
-			// 	path: 'ho-tro/:type',
-			// 	component: SupportComponent,
-			// },
 			{
 				path: 'ho-tro',
 				component: SupportComponent,
@@ -119,7 +134,7 @@ const routes: Routes = [
 				path: 'phan-anh-kien-nghi-cua-toi',
 				component: MyRecommendationComponent,
 			},
-
+		
 			{
 				path: 'tai-khoan',
 				loadChildren: './account/account.module#AccountModule', //() => import('./account/account.module').then((m) => m.AccountModule),

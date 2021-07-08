@@ -32,6 +32,7 @@ export class LOG_ACTION {
 	public static PUBLIC = 'Công bố'
 	public static WITHDRAW = 'Hủy công bố'
 	public static SEND = 'Gửi'
+	public static ASYNC = 'Đồng bộ'
 }
 
 export class LOG_OBJECT {
@@ -61,6 +62,9 @@ export class LOG_OBJECT {
 
 	public static HIS_USER = 'Lịch sử người dùng hệ thống'
 	public static MR_RECOMMENDATION = 'Phản ánh / Kiến nghị'
+	public static MR_RECOMMENDATION_HOPTHUGOPY = 'Hành chính công Khánh Hòa'
+	public static MR_RECOMMENDATION_PAKN_CHINHPHU = 'Hệ thống PAKN Chính phủ'
+	public static MR_RECOMMENDATION_GOPY = 'Cổng thông tin điện tử tỉnh Khánh Hòa'
 	public static MR_HISTORIES = 'Lịch sử phản ánh / Kiến nghị'
 	public static RM_REMIND = 'Danh sách nhắc nhở'
 	public static MR_BY_HASHTAG = 'Danh sách PAKN theo hashtag'

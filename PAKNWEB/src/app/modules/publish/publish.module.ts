@@ -28,9 +28,16 @@ import { ViewAdministrativeProceduresComponent } from './view-administrative-pro
 import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component';
 import { ChatbotComponent } from './chatbot/chatbot.component'
 import  {ViewNotificationComponent} from './view-notification/view-notification.component';
-import { RecommendationsSyncComponent } from './recommendations-sync/recommendations-sync.component';
 import { ViewRecommendationsSyncComponent } from './view-recommendations-sync/view-recommendations-sync.component';
-import { TableViewComponent } from './recommendations-sync/table-view/table-view.component'
+import {ListRecommendationKnct} from 'src/app/modules/publish/recommendations-sync/recommendation-knct/recommendation-knct.component'
+import { DetailRecommendationKnctComponent } from './recommendations-sync/recommendation-knct-detail/recommendation-knct-detail.component'
+import { RecommendationsDvhhcComponent } from 'src/app/modules/publish/recommendations-sync/recommendations-dvhhc/recommendations-dvhhc.component'
+import {DetailRecommendationDvhhcComponent} from 'src/app/modules/publish/recommendations-sync/recommendations-dvhhc-detail/recommendations-dvhhc-detail.component'
+import {RecommendationsCttdtComponent} from './recommendations-sync/recommendations-cttdt/recommendations-cttdt.component'
+import {DetailRecommendationCttdtComponent} from './recommendations-sync/recommendations-cttdt-detail/recommendations-cttdt-detail.component'
+import {RecommendationsPaknCPComponent} from './recommendations-sync/recommendation-pakn-cp/recommendation-pakn-cp.component'
+import {DetailRecommendationPaknCPComponent} from './recommendations-sync/recommendation-pakn-cp-detail/recommendation-pakn-cp-detail.component'
+
 
 @NgModule({
 	declarations: [
@@ -50,9 +57,15 @@ import { TableViewComponent } from './recommendations-sync/table-view/table-view
 		ViewRightComponent,
 		ChatbotComponent,
 		ViewNotificationComponent,
-		RecommendationsSyncComponent,
 		ViewRecommendationsSyncComponent,
-		TableViewComponent
+		ListRecommendationKnct,
+		DetailRecommendationKnctComponent,
+		RecommendationsDvhhcComponent,
+		DetailRecommendationDvhhcComponent,
+		RecommendationsCttdtComponent,
+		DetailRecommendationCttdtComponent,
+		RecommendationsPaknCPComponent,
+		DetailRecommendationPaknCPComponent
 	],
 	imports: [
 		CommonModule,

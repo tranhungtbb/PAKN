@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS';
 import {RecommandationSyncService} from 'src/app/services/recommandation-sync.service'
 
 declare var $:any
@@ -19,9 +20,8 @@ export class HeThongPaknChinhPhuComponent implements OnInit {
   listData:any[] = []
 
   query={
-    title:'',
-    status:'',
-    createdby:'',
+    questioner : '',
+    question : '',
     pageIndex:1,
     pageSize:20
   }
@@ -38,35 +38,39 @@ export class HeThongPaknChinhPhuComponent implements OnInit {
     this.getData();
   }
 
-  reSync(){
+  getDataSync(){
     //TODO
-    this.getData();
+    this._RecommandationSyncService.asyncPAKNChinhPhu().subscribe(res=>{
+      if(res.success == RESPONSE_STATUS.success){
+        this.getData();
+      }
+    })
   }
   getData(){
-    this.query.title = this.query.title.trim();
-    this.query.createdby = this.query.createdby.trim();
-    this.query.status = this.query.status.trim();
+    this.query.questioner = this.query.questioner.trim();
+    this.query.question = this.query.question.trim();
 
     let query = {...this.query}
     
     this._RecommandationSyncService.getHeThongPANKChinhPhuPagedList(query).subscribe(res=>{
-      if(res){
-        this.listData = res.result.Data.map(c=>{
-          if(c.questioner)
-            c.questioner = c.questioner.substr(0,c.questioner.length-1)
-          return c;
-        })
-
-        if(this.listData[0])
-          this.totalRecords = this.listData[0].rowNumber;
+      if(res.success === RESPONSE_STATUS.success){
+        if(res.result.Data.length > 0){
+          this.listData = res.result.Data
+          this.totalRecords = res.result.TotalCount
+          this.query.pageIndex = res.result.PageIndex
+          this.query.pageSize = res.result.PageSize
+        }
+        else{
+          this.listData = []
+          this.totalRecords = 0
+          this.query.pageIndex = 1
+          this.query.pageSize = 20
+        }
+        
       }
-    })
+    }),(err)=>{
+      console.log(err)
+    }
   }
 
-  ///view detail
-  modelView:any={}
-  getDetail(item:any){
-    this.modelView = item
-    $('#modalDetail').modal('show')
-  }
 }

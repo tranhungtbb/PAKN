@@ -86,7 +86,7 @@ namespace PAKNAPI.Controllers
 							mRRecommendationKNCTInsertIN.Term = item.nhiemKy;
 							CAFieldKNCTInsertIN cAFieldKNCTInsertIN = new CAFieldKNCTInsertIN();
 							cAFieldKNCTInsertIN.Name = item.linhVuc;
-							mRRecommendationKNCTInsertIN.FieldId = await new CAFieldKNCTInsert(_appSetting).CAFieldKNCTInsertDAO(cAFieldKNCTInsertIN);
+							mRRecommendationKNCTInsertIN.FieldId = await new CAFieldKNCTModel(_appSetting).CAFieldKNCTInsertDAO(cAFieldKNCTInsertIN);
 							mRRecommendationKNCTInsertIN.Place = item.noiCoKienNghi;
 							mRRecommendationKNCTInsertIN.Department = item.coQuanChuTri;
 							mRRecommendationKNCTInsertIN.Progress = item.noiDungTraLoi;
@@ -107,7 +107,7 @@ namespace PAKNAPI.Controllers
 								mRRecommendationKNCTUpdateIN.Term = item.nhiemKy;
 								CAFieldKNCTInsertIN cAFieldKNCTUpdateIN = new CAFieldKNCTInsertIN();
 								cAFieldKNCTUpdateIN.Name = item.linhVuc;
-								mRRecommendationKNCTUpdateIN.FieldId = await new CAFieldKNCTInsert(_appSetting).CAFieldKNCTInsertDAO(cAFieldKNCTUpdateIN);
+								mRRecommendationKNCTUpdateIN.FieldId = await new CAFieldKNCTModel(_appSetting).CAFieldKNCTInsertDAO(cAFieldKNCTInsertIN);
 								mRRecommendationKNCTUpdateIN.Place = item.noiCoKienNghi;
 								mRRecommendationKNCTUpdateIN.Department = item.coQuanChuTri;
 								mRRecommendationKNCTUpdateIN.Progress = item.noiDungTraLoi;

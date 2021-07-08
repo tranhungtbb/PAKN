@@ -10,16 +10,8 @@ import { SupportListVideoComponent } from './support-list-video/support-list-vid
 const routes: Routes = [
 	{
 		path: '',
-		component: SupportListDocumentComponent,
-		canActivate: [RoleGuardService],
-		data: { role: 'G_I_3' },
+		component: SupportManagementComponent,
 		children: [
-			{ 
-				path: '',
-				component: SupportListDocumentComponent,
-				canActivate: [RoleGuardService],
-				data: { role: 'G_I_3' }
-			},
 			{
 				path: 'tai-lieu',
 				component: SupportListDocumentComponent,

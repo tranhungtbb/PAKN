@@ -19,7 +19,7 @@
 								{{model.shortName}}
 							</div>
 							<div class="media-body">
-								<p class="my-0 h5">{{model.name}}</p>
+								<p class="my-0 h5">{{model.recommendationPlace}}</p>
 							</div>
 						</div>
 						<span>
@@ -123,18 +123,6 @@
 									title="Xem file">
 									<i class="bi bi-eye"></i>
 								</span>
-								<!-- <button type="button" class="btn border btn-block text-dark p-0">
-									<span class="rounded text-white p-3 bg-success mr-3">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-paperclip" viewBox="0 0 16 16">
-											<path
-												d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z" />
-										</svg>
-									</span>
-									<span class="text-left text-truncate">
-										<small class="small">Tài liệu đính kèm {{i + 1}}</small><br>
-										{{item.name}}
-									</span>
-								</button> -->
 							</p>
 							<p class="d-flex justify-content-end">
 								<button type="button" class="btn btn-outline-success mr-3" (click)="changeSatisfaction(true)" [ngClass]="{ 'like': satisfactionCurrent == true }">

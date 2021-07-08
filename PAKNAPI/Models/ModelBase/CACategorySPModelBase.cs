@@ -511,31 +511,40 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-	public class CAFieldKNCTInsert
+	public class CAFieldKNCTModel
 	{
 		private SQLCon _sQLCon;
 
-		public CAFieldKNCTInsert(IAppSetting appSetting)
+		public CAFieldKNCTModel(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public CAFieldKNCTInsert()
+		public CAFieldKNCTModel()
 		{
 		}
 
 		public async Task<int?> CAFieldKNCTInsertDAO(CAFieldKNCTInsertIN _cAFieldKNCTInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Name", _cAFieldKNCTInsertIN.Name);
+			DP.Add("@Name", _cAFieldKNCTInsertIN.Name);
+			DP.Add("@Code", _cAFieldKNCTInsertIN.Code);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_FieldKNCTInsert", DP);
+		}
+
+		public async Task<int> CAFieldKNCTDeleteAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldKNCTDeleteAll", DP));
 		}
 	}
 
 	public class CAFieldKNCTInsertIN
 	{
 		public string Name { get; set; }
+		public int Code { get; set; }
 	}
 
 	public class CAFieldUpdate

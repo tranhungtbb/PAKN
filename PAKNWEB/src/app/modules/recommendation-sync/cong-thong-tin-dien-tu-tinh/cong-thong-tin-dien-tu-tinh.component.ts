@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core'
+import { ToastrService } from 'ngx-toastr'
+import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import {RecommandationSyncService} from 'src/app/services/recommandation-sync.service'
 
 declare var $ :any
@@ -11,7 +12,8 @@ declare var $ :any
 export class CongThongTinDienTuTinhComponent implements OnInit {
 
   constructor(
-    private _RecommandationSyncService:RecommandationSyncService
+    private _RecommandationSyncService:RecommandationSyncService,
+    private _toastr : ToastrService
   ) { }
 
   ngOnInit() {
@@ -38,9 +40,19 @@ export class CongThongTinDienTuTinhComponent implements OnInit {
     this.getData();
   }
 
-  reSync(){
-    //TODO
-    this.getData();
+  asyncData(){
+    this._RecommandationSyncService.asyncCongThongTinDienTu({}).subscribe(res=>{
+      if(res.success == RESPONSE_STATUS.success){
+        this._toastr.success('Đồng bộ thành công')
+        this.getData();
+      }
+      else{
+        this._toastr.error('Đồng bộ lỗi')
+      }
+    })
+    , (err)=>{
+      console.log(err)
+    }
   }
   getData(){
     this.query.questioner = this.query.questioner.trim();
@@ -53,6 +65,7 @@ export class CongThongTinDienTuTinhComponent implements OnInit {
       }
     })
   }
+
 
   ///view detail
   modelView:any={}

@@ -17,19 +17,19 @@ const routes: Routes = [
 		path: 'them-moi',
 		component: NewsCreateOrUpdateComponent,
 		canActivate: [RoleGuardService],
-		data: { role: 'B_IV_0'} 
+		data: { role: 'F_I_0'} 
 	},
 	{ 
 		path: 'chinh-sua/:id', 
 		component: NewsCreateOrUpdateComponent,
 		canActivate: [RoleGuardService],
-		data: { role: 'B_IV_1'}
+		data: { role: 'F_I_1'}
 	},
 	{ 
 		path: 'chi-tiet/:id',
 		component: NewsDetailComponent,
 		canActivate: [RoleGuardService],
-		data: { role: 'B_IV_4'}
+		data: { role: 'F_I_4'}
 	},
 	{ 
 		path: 'danh-sach-da-cong-bo',

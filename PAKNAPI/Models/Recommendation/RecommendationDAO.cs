@@ -117,5 +117,46 @@ namespace PAKNAPI.Models.Recommendation
 				_sQLCon.ExecuteNonQueryDapper("MR_RecommendationSync_Insert", DP);
 			}
 		}
+
+		public void SyncHopThuGopYKhanhHoa(List<GopYKienNghi> lstData)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			_sQLCon.ExecuteNonQueryDapper("MR_Sync_HanhChinhCongKhanhHoaDeleteAll", DP);
+			foreach (var item in lstData)
+			{
+				DP = new DynamicParameters();
+				DP.Add("Questioner", item.Questioner);
+				DP.Add("Question", item.Question);
+				DP.Add("QuestionContent", item.QuestionContent);
+				DP.Add("Reply", item.Reply);
+				DP.Add("CreatedDate", item.CreatedDate);
+				_sQLCon.ExecuteNonQueryDapper("MR_Sync_HanhChinhCongKhanhHoaInsert", DP);
+			}
+		}
+		public async Task<int> SyncDichVuCongQuocGiaInsert(DichViCongQuocGia mr_DichVuCong)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Questioner", mr_DichVuCong.Questioner);
+			DP.Add("Question", mr_DichVuCong.Question);
+			DP.Add("QuestionContent", mr_DichVuCong.QuestionContent);
+			DP.Add("Reply", mr_DichVuCong.Reply);
+			DP.Add("CreatedDate", mr_DichVuCong.CreatedDate);
+			DP.Add("Status", mr_DichVuCong.Status);
+			DP.Add("ObjectId", mr_DichVuCong.ObjectId);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Sync_CongDichVuCongQuocGia_Insert", DP));
+		}
+
+		public async Task<List<DichViCongQuocGia>> SyncDichVuCongQuocGiaGetByObjecId(int ObjectId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ObjectId", ObjectId);
+			return (await _sQLCon.ExecuteListDapperAsync<DichViCongQuocGia>("MR_Sync_CongDichVuCongQuocGia_GetByObjectId", DP)).ToList();
+		}
+
+		public async Task<int> SyncDichVuCongQuocGiaDeleteAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Sync_CongDichVuCongQuocGia_DeleteAll", DP));
+		}
 	}
 }

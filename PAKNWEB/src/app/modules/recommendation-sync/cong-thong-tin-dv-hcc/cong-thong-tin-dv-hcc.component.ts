@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {RecommandationSyncService} from 'src/app/services/recommandation-sync.service'
+import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { ToastrService } from 'ngx-toastr'
 
 declare var $:any
 @Component({
@@ -10,7 +12,8 @@ declare var $:any
 export class CongThongTinDvHccComponent implements OnInit {
 
   constructor(
-    private _RecommandationSyncService:RecommandationSyncService
+    private _RecommandationSyncService:RecommandationSyncService,
+    private _toastr : ToastrService
   ) { }
 
   ngOnInit() {
@@ -37,9 +40,20 @@ export class CongThongTinDvHccComponent implements OnInit {
     this.getData();
   }
 
-  reSync(){
-    //TODO
-    this.getData();
+  asyncData(){
+    this._RecommandationSyncService.asyncDichVuHCC({}).subscribe(res=>{
+      console.log(res)
+      if(res.success == RESPONSE_STATUS.success){
+        this._toastr.success('Đồng bộ thành công')
+        this.getData();
+      }
+      else{
+        this._toastr.error('Đồng bộ lỗi')
+      }
+    })
+    , (err)=>{
+      console.log(err)
+    }
   }
   getData(){
     this.query.questioner = this.query.questioner.trim();
@@ -47,11 +61,7 @@ export class CongThongTinDvHccComponent implements OnInit {
     let query = {...this.query}
     this._RecommandationSyncService.getDichVuHCCPagedList(query).subscribe(res=>{
       if(res){
-        this.listData = res.result.Data.map(c=>{
-          if(c.questioner)
-            c.questioner = c.questioner.substr(0,c.questioner.length-1)
-          return c;
-        })
+        this.listData = res.result.Data
 
         if(this.listData[0])
           this.totalRecords = this.listData[0].rowNumber;

@@ -9,12 +9,10 @@ import { ListReceiveApprovedComponent } from './list-receive-approved/list-recei
 import { ListReceiveDenyComponent } from './list-receive-deny/list-receive-deny.component'
 import { ListReceiveWaitComponent } from './list-receive-wait/list-receive-wait.component'
 import { ListApproveWaitComponent } from './list-approve-wait/list-approve-wait.component'
-import { ListRequestComponent } from './list-request/list-request.component'
 import { RecommendationComponent } from './recommendation.component'
 import { ViewRecommendationComponent } from './view-recommendation/view-recommendation.component'
 import { ListApproveDenyComponent } from './list-approve-deny/list-approve-deny.component'
 import { ListApprovedComponent } from './list-approved/list-approved.component'
-import { DetailRecommendationComponent } from './detail-recommendation/detail-recommendation.component'
 import { ListReactionaryWordComponent } from './list-reactionary-word/list-reactionary-word.component'
 import { RoleGuardService } from '../../guards/role-guard.service'
 
@@ -100,19 +98,7 @@ const routes: Routes = [
 				component: ListReactionaryWordComponent,
 				canActivate: [RoleGuardService],
 				data: { role: 'E_XII_0' }
-			},
-			{ 
-				path: 'danh-sach-knct',
-				component: ListRequestComponent,
-				canActivate: [RoleGuardService],
-				data: { role: 'E_XIII_0' }
-			},
-			{ 
-				path: 'chi-tiet-knct/:id',
-				component: DetailRecommendationComponent,
-				canActivate: [RoleGuardService],
-				data: { role: 'E_XIII_1' }
-			},
+			}
 		],
 	},
 ]

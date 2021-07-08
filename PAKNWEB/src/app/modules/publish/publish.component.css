@@ -415,10 +415,10 @@ div.bubble.reply {
 }
 .sub-nav{
 	position: absolute;
-    /* margin: auto; */
-    width: 250px;
-		display: none;
-		margin-top: -0.25rem;
+	/* margin: auto; */
+	width: 460px;
+	display: none;
+	margin-top: -0.25rem;
 }
 .sub-item:hover{
 	background-color:white;

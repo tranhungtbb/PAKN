@@ -29,7 +29,7 @@ export class ViewFileDialogComponent implements OnInit {
 	IsShowCreateVersion = false
 	files: any
 	typeFile: any
-	@ViewChild('pdfViewer', { static: false }) pdfViewer
+	// @ViewChild('pdfViewer', { static: false }) pdfViewer
 	listImg: any
 	
 
@@ -55,7 +55,8 @@ export class ViewFileDialogComponent implements OnInit {
 				this.IsIMG = false
 				this.IsVideo = false
 				this.cdRef.detectChanges()
-				this.LoadView(linkfile)
+				// this.LoadView(linkfile)
+				this.showFilePDF(linkfile)
 			} else if (extenfile == 'doc' || extenfile == 'docx' || extenfile == 'xls' || extenfile == 'xlsx') {
 				var linkfile = this.data.link
 				linkfile = linkfile
@@ -132,22 +133,40 @@ export class ViewFileDialogComponent implements OnInit {
 		}
 	}
 
-	LoadView(link) {
+	// LoadView(link) {
+	// 	var request = {
+	// 		Path: link,
+	// 		Name: this.data.name,
+	// 	}
+	// 	this.filesService.downloadFile(request).subscribe(
+	// 		(response) => {
+	// 			var blob = new Blob([response], { type: response.type })
+	// 			this.pdfViewer.pdfSrc = blob
+	// 			this.pdfViewer.refresh()
+	// 		},
+	// 		(error) => {
+	// 			this.toastr.error('Không tìm thấy file trên hệ thống')
+	// 		}
+	// 	)
+	// }
+
+
+  public showFilePDF(link: string): void {
+   
 		var request = {
 			Path: link,
 			Name: this.data.name,
 		}
 		this.filesService.downloadFile(request).subscribe(
 			(response) => {
-				var blob = new Blob([response], { type: response.type })
-				this.pdfViewer.pdfSrc = blob
-				this.pdfViewer.refresh()
+				var blob = new Blob([response], { type: "application/pdf" })
+				$('#viewfilePDF').attr('src', window.URL.createObjectURL(blob))
 			},
 			(error) => {
 				this.toastr.error('Không tìm thấy file trên hệ thống')
 			}
 		)
-	}
+  }
 
 	LoadViewImage(link, name) {
 		var request = {

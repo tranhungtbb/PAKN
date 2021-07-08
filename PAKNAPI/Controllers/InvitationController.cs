@@ -438,7 +438,6 @@ namespace PAKNAPI.Controllers
 			try
 			{
 				string _imageToBeDeleted = Path.Combine(_hostingEnvironment.WebRootPath, fname);
-				//string _imageToBeDeleted = Path.Combine(_hostingEnvironment.WebRootPath, "Invitation\\", fname);
 				if ((System.IO.File.Exists(_imageToBeDeleted)))
 				{
 					System.IO.File.Delete(_imageToBeDeleted);

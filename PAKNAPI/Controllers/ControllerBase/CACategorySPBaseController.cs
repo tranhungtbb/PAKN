@@ -378,7 +378,7 @@ namespace PAKNAPI.ControllerBase
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldKNCTInsert(_appSetting).CAFieldKNCTInsertDAO(_cAFieldKNCTInsertIN) };
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldKNCTModel(_appSetting).CAFieldKNCTInsertDAO(_cAFieldKNCTInsertIN) };
 			}
 			catch (Exception ex)
 			{

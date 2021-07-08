@@ -23,13 +23,11 @@ import { ListProcessDenyComponent } from './list-process-deny/list-process-deny.
 import { ListProcessingComponent } from './list-processing/list-processing.component'
 import { ViewRecommendationComponent } from './view-recommendation/view-recommendation.component'
 import { ListApproveWaitComponent } from './list-approve-wait/list-approve-wait.component'
-import { ListRequestComponent } from './list-request/list-request.component'
 import { ListApproveDenyComponent } from './list-approve-deny/list-approve-deny.component'
 import { ListApprovedComponent } from './list-approved/list-approved.component'
 
 import { RemindComponent } from './remind/remind.component'
 
-import { DetailRecommendationComponent } from './detail-recommendation/detail-recommendation.component';
 import { ListReactionaryWordComponent } from './list-reactionary-word/list-reactionary-word.component'
 // import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
 @NgModule({
@@ -62,10 +60,7 @@ import { ListReactionaryWordComponent } from './list-reactionary-word/list-react
 		ListApproveWaitComponent,
 		ListApproveDenyComponent,
 		ListApprovedComponent,
-		ListRequestComponent,
 		RemindComponent,
-		// ChangePipe,
-		DetailRecommendationComponent,
 		ListReactionaryWordComponent,
 	],
 })

@@ -243,7 +243,7 @@ export class Api {
 	public static SYIndexWebsiteGetAll = 'SYIndexSetting/IndexWebsiteGetAll'
 
 	//RequestRecommendation
-	public static RecommendationRequestGetListProcess = 'MRSPBase/MRRecommendationKNCTGetAllWithProcessBase'
+	public static RecommendationRequestGetListProcess = 'RecommandationSync/MR_Sync_CuTriTinhKhanhHoaGetListBase'
 	public static RecommendationRequestGetDataForCreate = 'CACategorySPBase/CAFieldKNCTGetDropdownBase'
 
 	//api dia danh
@@ -258,8 +258,6 @@ export class Api {
 	public static IndividualCheckExists = 'BISPBase/BIIndividualCheckExistsBase'
 	public static OrganizationCheckExists = 'BISPBase/BIBusinessCheckExistsBase'
 
-	public static RecommendationRequestGetByIdView = 'MRSPBase/MRRecommendationKNCTGetByIdBase'
-	public static RecommendationRequestGetFile = 'MRSPBase/MRRecommendationKNCTFilesGetByRecommendationIdBase'
 
 	//tai khoan ca nhan, doanh nghiep
 	public static AccountGetInfo = 'user/UserGetInfo'
@@ -359,8 +357,20 @@ export class Api {
 
 	// đồng bộ
 	public static MrSyncCongThongTinDienTuTinhPagedList = 'RecommandationSync/CongThongTinDienTuTinhPagedList'
+	public static AsyncCongThongTinDienTu = 'SyncData/SyncKhanhHoa'
+	public static MrSyncCongThongTinDienTuTinhGetById = 'RecommandationSync/CongThongTinDienTuTinhGetById'
+
 	public static MrSyncCongThongTinDichVuHCCPagedList = 'RecommandationSync/CongThongTinDichVuHCCPagedList'
+	public static AsyncCongThongTinDichVuHCC = 'SyncData/SyncHopThuGopYKhanhHoa'
+	public static MrSyncCongThongTinDichVuHCCGetById = 'RecommandationSync/CongThongTinDichVuHCCGetById'
+
+	public static AsyncRecommendationKNCT = 'SyncData/SyncQuanLyKienNghiCuTri'
+	public static RecommendationRequestGetByIdView = 'RecommandationSync/MR_Sync_CuTriTinhKhanhHoaGetById'
+
 	public static MrSyncHeThongPANKChinhPhuPagedList = 'RecommandationSync/HeThongPANKChinhPhuPagedList'
+	public static MrSyncHeThongPANKChinhPhuGetByObjectId = 'RecommandationSync/MR_Sync_PANKChinhPhuGetByObjectId'
+	public static AsyncMrSyncHeThongPANKChinhPhu = 'SyncData/SyncCongDichVuCongQuocGia'
+
 	public static MrSyncHeThongQuanLyKienNghiCuTriPagedList = 'RecommandationSync/HeThongQuanLyKienNghiCuTriPagedList'
 	public static PU_RecommandationSyncPagedList = 'RecommandationSync/PUGetPagedList'
 	public static PU_RecommandationSyncGetDetail = 'RecommandationSync/PUGetGetById'
