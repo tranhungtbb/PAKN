@@ -235,6 +235,8 @@ namespace PAKNAPI.Models.Recommendation
         public string Response { get; set; }
         public DateTime? EndDate { get; set; }
 
+        public int? TotalCount { get; set; }
+
 
 
         public async Task<int?> MR_Sync_CuTriTinhKhanhHoaInsertDAO(MR_CuTriTinhKhanhHoa mr_CuTriTinhKhanhHoa)
@@ -264,6 +266,12 @@ namespace PAKNAPI.Models.Recommendation
             DynamicParameters DP = new DynamicParameters();
             DP.Add("Id", id);
             return (await _sQLCon.ExecuteListDapperAsync<MR_CuTriTinhKhanhHoa>("MR_Sync_CuTriTinhKhanhHoaGetByKNCTId", DP)).ToList();
+        }
+
+        public async Task<MR_CuTriTinhKhanhHoa> MR_Sync_CuTriTinhKhanhHoaGetTopOrderbyElectorId()
+        {
+            DynamicParameters DP = new DynamicParameters();
+            return (await _sQLCon.ExecuteListDapperAsync<MR_CuTriTinhKhanhHoa>("[MR_Sync_CuTriTinhKhanhHoa_GetTopOrderbyElectorId]", DP)).FirstOrDefault();
         }
 
         // delete

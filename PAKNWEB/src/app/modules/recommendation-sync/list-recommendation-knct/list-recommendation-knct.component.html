@@ -7,7 +7,7 @@
 					<li class="breadcrumb-item active"><a class="font-weight-bold"> Danh sách Kiến nghị cử tri</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
-					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" click="requestSync()" title="Đồng bộ">
+					<button *hasPermission="['3', 'I_II_2']" type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" click="requestSync()" title="Đồng bộ">
 						<i class="bi bi-arrow-repeat"></i>
 					</button>
 					<!-- *hasPermission="['3', 'I_III_2']" -->
@@ -84,7 +84,8 @@
 								<tr>
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
-										<a class="text-2line mb-0" [routerLink]="['/quan-tri/dong-bo-du-lieu/he-thong-quan-ly-kien-nghi-cu-tri/',item.electorId]" title="Xem chi tiết">{{item.content}}</a>
+										<a *hasNotPermission="['3', 'I_II_1']" class="text-2line mb-0" title="Xem chi tiết">{{item.content}}</a>
+										<a *hasPermission="['3', 'I_II_1']" class="text-2line mb-0" [routerLink]="['/quan-tri/dong-bo-du-lieu/he-thong-quan-ly-kien-nghi-cu-tri/',item.electorId]" title="Xem chi tiết">{{item.content}}</a>
 									</td>
 									<td>{{item.unitPreside}}</td>
 									<td>{{item.fieldName}}</td>

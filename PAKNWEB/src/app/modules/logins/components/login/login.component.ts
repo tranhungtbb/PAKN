@@ -137,8 +137,8 @@ export class LoginComponent implements OnInit {
 			var constdata = {
 				CaptchaCode: this.captchaCode,
 			}
-			// this.captchaService.send(constdata).subscribe((result) => {
-			// 	if (result.success === RESPONSE_STATUS.success) {
+			this.captchaService.send(constdata).subscribe((result) => {
+				if (result.success === RESPONSE_STATUS.success) {
 					this.authenService.login(this.user).subscribe(
 						(data) => {
 							if (data.success === RESPONSE_STATUS.success) {
@@ -207,15 +207,15 @@ export class LoginComponent implements OnInit {
 							this.rebuildForm()
 						}
 					)
-				// } else {
-				// 	this.toastr.error('Vui lòng nhập lại mã xác thực')
-				// 	this.reloadImage()
-				// 	this.submitted = false
-				// 	this.rebuildForm()
-				// 	this.captchaCode = ''
-				// 	//   this.captchaEl.nativeElement.focus();
-				// }
-			// })
+				} else {
+					this.toastr.error('Vui lòng nhập lại mã xác thực')
+					this.reloadImage()
+					this.submitted = false
+					this.rebuildForm()
+					this.captchaCode = ''
+					//   this.captchaEl.nativeElement.focus();
+				}
+			})
 		}
 	}
 	get floginFormProduct() {

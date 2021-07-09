@@ -114,8 +114,8 @@ namespace PAKNAPI.Models.Recommendation
         public string Reply { get; set; }
         public string CreatedDate { get; set; }
         public string Status { get; set; }
-
         public int ObjectId { get; set; }
+        public int? TotalCount { get; set; }
 
     }
 

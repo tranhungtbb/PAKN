@@ -31,43 +31,43 @@ const routes: Routes = [
 				path: 'danh-sach-tong-hop',
 				component: ListGeneralComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_XIX_0' }
+				data: { role: 'E_I_3' }
 			},
 			{ 
 				path: 'cho-xu-ly',
 				component: ListReceiveWaitComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_II_0' }
+				data: { role: 'E_I_3' }
 			},
 			{
 				path: 'tiep-nhan-xu-ly',
 				component: ListReceiveApprovedComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_III_0' }
+				data: { role: 'E_I_3' }
 			},
 			{ 
 				path: 'tu-choi-tiep-nhan',
 				component: ListReceiveDenyComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_IV_0' }
+				data: { role: 'E_I_3' }
 			},
 			{ 
 				path: 'cho-giai-quyet',
 				component: ListProcessWaitComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_V_0' }
+				data: { role: 'E_I_3' }
 			},
 			{ 
 				path: 'dang-giai-quyet',
 				component: ListProcessingComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_VII_0' }
+				data: { role: 'E_I_3' }
 			},
 			{ 
 				path: 'tu-choi-giai-quyet',
 				component: ListProcessDenyComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_VI_0' }
+				data: { role: 'E_I_3' }
 			},
 			{ 
 				path: 'chi-tiet/:id',
@@ -79,19 +79,19 @@ const routes: Routes = [
 				path: 'cho-phe-duyet',
 				component: ListApproveWaitComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_VIII_0' }
+				data: { role: 'E_I_3' }
 			},
 			{
 				path: 'tu-choi-phe-duyet',
 				component: ListApproveDenyComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_IX_0' }
+				data: { role: 'E_I_3' }
 			},
 			{ 
 				path: 'da-giai-quyet',
 				component: ListApprovedComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_X_0' }
+				data: { role: 'E_I_3' }
 			},
 			{ 
 				path: 'chua-tu-ngu-bi-cam',

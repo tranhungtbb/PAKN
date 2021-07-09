@@ -41,18 +41,17 @@ namespace PAKNAPI.Controllers
 
 		[Route("SyncKhanhHoa")]
 		[HttpGet]
-        [AllowAnonymous]
-        public List<GopYKienNghi> SyncKhanhHoa()
+        public async Task<ActionResult<object>> SyncKhanhHoa()
         {
             HtmlWeb htmlWeb = new HtmlWeb()
             {
                 AutoDetectEncoding = false,
                 OverrideEncoding = Encoding.UTF8  //Set UTF8 để hiển thị tiếng Việt
             };//Load trang web, nạp html vào document
-            HtmlDocument document = htmlWeb.Load("https://www.khanhhoa.gov.vn/module/gop-y");
+            Task<HtmlDocument> document = htmlWeb.LoadFromWebAsync("https://www.khanhhoa.gov.vn/module/gop-y");
 
             var items = new List<GopYKienNghi>();
-            var threadItems = document.DocumentNode.Descendants("div")
+            var threadItems = document.Result.DocumentNode.Descendants("div")
                 .First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "content-feedback")
                 .ChildNodes.Where(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "row").First()
                 .ChildNodes.Where(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "item col-xs-12 col-sm-6 col-md-4").ToList();
@@ -79,7 +78,11 @@ namespace PAKNAPI.Controllers
                 items.Add(objectAdd);
             }
             new RecommendationDAO(_appSetting).SyncKhanhHoa(items);
-            return items;
+            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+            return new ResultApi
+            {
+                Success = ResultCode.OK
+            };
         }
 
         [Route("SyncCongDichVuCongQuocGia")]
@@ -87,6 +90,8 @@ namespace PAKNAPI.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<object>> SyncCongDichVuCongQuocGiaAsync()
         {
+            // lấy totalCount
+            var totalCount = await new RecommendationDAO(_appSetting).SyncDichVuCongQuocGiaGetTotalCount();
             HtmlWeb htmlWeb = new HtmlWeb()
             {
                 AutoDetectEncoding = false,
@@ -94,10 +99,21 @@ namespace PAKNAPI.Controllers
             };
             MR_SyncFileAttach fileInsert = new MR_SyncFileAttach();
             //Load trang web, nạp html vào document
-            await new RecommendationDAO(_appSetting).SyncDichVuCongQuocGiaDeleteAll();
+            //await new RecommendationDAO(_appSetting).SyncDichVuCongQuocGiaDeleteAll();
             Task<HtmlDocument> document;
             int record_per_page = 40;
-            int page_index = 0;
+            int page_index;
+
+            if (totalCount != 0)
+            {
+                page_index = Convert.ToInt32(Math.Floor(Convert.ToDecimal(totalCount / record_per_page)));
+                page_index = page_index < 0 ? 0 : page_index;
+            }
+            else
+            {
+                page_index = 0;
+            }
+
             try {
                 while (true)
                 {
@@ -117,6 +133,13 @@ namespace PAKNAPI.Controllers
                         var linkNode = item.Descendants("h3").First()
                             .ChildNodes.FirstOrDefault();
                         var id = linkNode.Attributes["href"].Value.Split("?")[1].Split("=")[1];
+
+                        var checkObject = await new RecommendationDAO(_appSetting).SyncDichVuCongQuocGiaGetByObjecId(Convert.ToInt32(id));
+                        if (checkObject.Count > 0)
+                        {
+                            continue;
+                        }
+
                         objectAdd.Question = linkNode.InnerText.ToString();
 
                         Task<HtmlDocument> documentDetail = htmlWeb.LoadFromWebAsync("https://dichvucong.gov.vn/p/phananhkiennghi/jsp/pakn-detail.jsp?id=" + id);
@@ -193,10 +216,10 @@ namespace PAKNAPI.Controllers
             };//Load trang web, nạp html vào document
             try
             {
-                HtmlDocument document = htmlWeb.Load("https://thongtin.hanhchinhcong.khanhhoa.gov.vn/module/hop-thu-gop-y");
+                Task<HtmlDocument> document = htmlWeb.LoadFromWebAsync("https://thongtin.hanhchinhcong.khanhhoa.gov.vn/module/hop-thu-gop-y");
 
                 var items = new List<GopYKienNghi>();
-                var threadItems = document.DocumentNode.Descendants("div")
+                var threadItems = document.Result.DocumentNode.Descendants("div")
                     .First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "content-feedback")
                     .ChildNodes.Where(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "row").First()
                     .ChildNodes.Where(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "item col-xs-12 col-sm-6 col-md-4").ToList();
@@ -214,9 +237,9 @@ namespace PAKNAPI.Controllers
                         objectAdd.Question = textHead[1].Trim();
                     }
                     objectAdd.CreatedDate = "09/10/2018 | 10:02-AM";//item.Descendants("span").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("feedday")).InnerText;
-                    HtmlDocument documentDetail = htmlWeb.Load("https://thongtin.hanhchinhcong.khanhhoa.gov.vn/" + link);
+                    Task<HtmlDocument> documentDetail = htmlWeb.LoadFromWebAsync("https://thongtin.hanhchinhcong.khanhhoa.gov.vn/" + link);
 
-                    var threadItemsChild = documentDetail.DocumentNode.Descendants("div")
+                    var threadItemsChild = documentDetail.Result.DocumentNode.Descendants("div")
                     .First(node => node.Attributes.Contains("id") && node.Attributes["id"].Value == "print-chitiet");
                     objectAdd.QuestionContent = threadItemsChild.Descendants("div").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("chitietbaiviet")).InnerHtml;
                     objectAdd.Reply = threadItemsChild.Descendants("div").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("feedback-traloi-content")).InnerHtml.Trim();
@@ -247,14 +270,11 @@ namespace PAKNAPI.Controllers
         {
             try
             {
-                var fieldKNCT = SyncFieldKienNghiCuTriAsync();
-                if (fieldKNCT.Result.Count <= 0) {
-                    return new ResultApi
-                    {
-                        Success = ResultCode.ORROR,
-                        Message = "error while clone fieldKNCT"
-                    };
-                }
+                var fieldKNCT = await new CAFieldKNCTGetDropdown(_appSetting).CAFieldKNCTGetDropdownDAO();
+
+                // tìm trong datbase object có id nhỏ nhất
+                MR_CuTriTinhKhanhHoa objectTop = await new MR_CuTriTinhKhanhHoa(_appSetting).MR_Sync_CuTriTinhKhanhHoaGetTopOrderbyElectorId();
+
                 var results = new HttpResponseMessage();
                 /// header
                 var TkeyHeader = new List<KeyValuePair<string, string>>();
@@ -264,18 +284,27 @@ namespace PAKNAPI.Controllers
                 header.Tkey = TkeyHeader;
                 header.ContentType = "application/json";
                 var request = new RequestKienNghiCuTri();
-                request.PageIndex = 0;
+                if (objectTop != null)
+                {
+                    request.PageIndex = Convert.ToInt32(Math.Floor(Convert.ToDecimal(objectTop.TotalCount/request.PageSize)));
+                    request.PageIndex = request.PageIndex < 0 ? 0 : request.PageIndex;
+                }
+                else {
+                    request.PageIndex = 0;
+                }
+                
                 string jsonData = "";
                 ResponseKienNghiCuTri model = new ResponseKienNghiCuTri();
                 // xóa hết
-                await new MR_CuTriTinhKhanhHoa(_appSetting).MR_Sync_CuTriTinhKhanhHoaDeleteAllDAO();
+                //await new MR_CuTriTinhKhanhHoa(_appSetting).MR_Sync_CuTriTinhKhanhHoaDeleteAllDAO();
                 // xóa file
                 //string[] files = Directory.GetFiles("Upload\\KienNghiCuTri\\");
                 //foreach (string file in files)
                 //{
                 //    Directory.Delete(file);
                 //}
-
+                
+                
                 while (true) {
                     request.PageIndex++;
                     jsonData = JsonConvert.SerializeObject(request);
@@ -285,17 +314,26 @@ namespace PAKNAPI.Controllers
                         model = JsonConvert.DeserializeObject<ResponseKienNghiCuTri>(results.Content.ReadAsStringAsync().Result);
                         if (model.dataGrid.Count > 0)
                         {
+                            if (objectTop != null && model.dataGrid.FirstOrDefault(x => x.Id < objectTop.ElectorId && x.trangThai != 1) == null) {
+                                continue;
+                            }
                             // insert data base
                             foreach (var item in model.dataGrid) {
+
+                                if (objectTop != null && item.Id > objectTop.ElectorId && item.trangThai != 1)
+                                {
+                                    continue;
+                                }
+
                                 MR_CuTriTinhKhanhHoa modelInsert = new MR_CuTriTinhKhanhHoa();
                                 modelInsert.ElectorId = item.Id;
                                 modelInsert.Content = item.noiDungKienNghi;
                                 modelInsert.Result = item.ketQua;
                                 modelInsert.Status = item.trangThai;
                                 modelInsert.CategoryName = item.phanLoai;
-                                var filed = fieldKNCT.Result.FirstOrDefault(x => x.text == item.linhVuc);
+                                var filed = fieldKNCT.FirstOrDefault(x => x.Text == item.linhVuc);
                                 if (filed != null) {
-                                    modelInsert.FieldId = filed.value;
+                                    modelInsert.FieldId = filed.Value;
                                 }
                                 modelInsert.RecommendationPlace = item.noiCoKienNghi;
                                 modelInsert.Term = item.nhiemKy;

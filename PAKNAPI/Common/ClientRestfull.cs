@@ -31,8 +31,7 @@ namespace PAKNAPI.Common
                 {
                     client.DefaultRequestHeaders.Add(item.Key, item.Value);
                 }
-                HttpResponseMessage response = client.GetAsync(querry).Result;
-                return response;
+                return client.GetAsync(querry).Result;
             }
 
         }
@@ -51,8 +50,7 @@ namespace PAKNAPI.Common
                 {
                     client.DefaultRequestHeaders.Add(item.Key, item.Value);
                 }
-                var response = client.PostAsync(querry, content).Result;
-                return response;
+                return client.PostAsync(querry, content).Result;
             }
         }
         /// application/json
@@ -70,8 +68,7 @@ namespace PAKNAPI.Common
                 {
                     client.DefaultRequestHeaders.Add(item.Key, item.Value);
                 }
-                var response = client.PostAsync(querry, jsonContent).Result;
-                return response;
+                return client.PostAsync(querry, jsonContent).Result;
             }
         }
 

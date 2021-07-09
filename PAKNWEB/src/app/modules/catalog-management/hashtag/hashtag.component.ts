@@ -212,22 +212,19 @@ export class HashtagComponent implements OnInit {
 	}
 
 	UpdateIsActived() {
+		$('#modalConfirmChangeStatus').modal('hide')
 		this.service.changeStatus(this.hashtag).subscribe((res) => {
-			$('#modalConfirmChangeStatus').modal('hide')
 			if (res != 'undefined') {
 				if (res.success == RESPONSE_STATUS.success) {
-					$('#modal').modal('hide')
 					this.rebuilForm()
 					this.GetListHashtag()
 					this._toastr.success(MESSAGE_COMMON.UPDATE_SUCCESS)
 				} else if (res.success == RESPONSE_STATUS.orror && res.result == -1) {
 					this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
 				} else {
-					$('#modal').modal('hide')
 					this._toastr.error(MESSAGE_COMMON.UPDATE_FAILED)
 				}
 			} else {
-				$('#modal').modal('hide')
 				this._toastr.error(MESSAGE_COMMON.UPDATE_FAILED)
 			}
 		})

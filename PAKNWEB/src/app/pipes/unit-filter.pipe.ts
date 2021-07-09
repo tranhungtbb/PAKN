@@ -16,6 +16,10 @@ export class UnitFilterPipe implements PipeTransform {
 })
 export class ChangePipe implements PipeTransform {
 	transform(data: string, data2: string): any {
-		return data.replace('\n', '<br>')
+		if(data){
+			return data.replace('\n', '<br>')
+		}
+		return
+		
 	}
 }

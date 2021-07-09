@@ -109,7 +109,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg-12 form-group">
+					<div class="col-12 col-lg-12 form-group" *hasPermission="['3', 'F_I_5']">
 						<label class="mb-1"><span class="text-uppercase">thông báo</span></label>
 						<div class="checkbox">
 							<label><input [(ngModel)]="model.isNotification" type="checkbox" formControlName="pushNotify" checked> Gửi thông báo đến người dân, doanh nghiệp</label>

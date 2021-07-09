@@ -124,3 +124,24 @@
 
 <script src="../../../../assets/dist/js/owl.carousel.min.js"></script>
 <!-- <script src="../../../../assets/dist/js/sd-js.js"></script> -->
+<script>
+	$('#owl-news').owlCarousel({
+				loop: true,
+				margin: 30,
+				nav: false,
+				autoplay: true,
+				autoplayTimeout: 10000,
+				autoplayHoverPause: true,
+				responsive: {
+					0: {
+						items: 1,
+					},
+					600: {
+						items: 2,
+					},
+					1000: {
+						items: 2,
+					},
+				},
+			})
+</script>

@@ -44,7 +44,7 @@ const routes: Routes = [
     path: 'he-thong-quan-ly-kien-nghi-cu-tri/:id',
     component: DetailRecommendationComponent,
     canActivate: [RoleGuardService],
-    data: { role: 'E_XIII_1' }
+    data: { role: 'I_II_1' }
   },
 ];
 

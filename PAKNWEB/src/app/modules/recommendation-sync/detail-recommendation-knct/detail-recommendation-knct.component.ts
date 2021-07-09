@@ -44,7 +44,6 @@ export class DetailRecommendationComponent implements OnInit {
 		this.recommendationService.recommendationGetByIdView(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.modelData = response.result.MRRecommendationKNCTGetById[0]
-				console.log(response.result.FileAttach)
 				this.file = response.result.FileAttach
 
 			} else {
@@ -87,5 +86,6 @@ export class RequestData {
 		this.content = ''
 		this.progress = ''
 		this.response = ''
+		this.result = ''
 	}
 }

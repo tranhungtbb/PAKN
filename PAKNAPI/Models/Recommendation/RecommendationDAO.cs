@@ -153,6 +153,12 @@ namespace PAKNAPI.Models.Recommendation
 			return (await _sQLCon.ExecuteListDapperAsync<DichViCongQuocGia>("MR_Sync_CongDichVuCongQuocGia_GetByObjectId", DP)).ToList();
 		}
 
+		public async Task<int> SyncDichVuCongQuocGiaGetTotalCount()
+		{
+			DynamicParameters DP = new DynamicParameters();
+			return (await _sQLCon.ExecuteListDapperAsync<int>("MR_Sync_CongDichVuCongQuocGia_TotalCount", DP)).FirstOrDefault();
+		}
+
 		public async Task<int> SyncDichVuCongQuocGiaDeleteAll()
 		{
 			DynamicParameters DP = new DynamicParameters();

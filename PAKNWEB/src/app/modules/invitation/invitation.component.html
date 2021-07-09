@@ -105,7 +105,7 @@
 										<span type="button" *ngIf="item.status == 4" class="badge rounded-pill badge-success">Đã xem</span>
 									</td>
 									<td style="text-align: right;">
-										<strong *hasNotPermission="['3', 'B_IV_7']" style="cursor: pointer;" (click)="preUserWatched(item.id)">{{item.amountWatched}}</strong>
+										<strong *hasNotPermission="['3', 'B_IV_7']" style="cursor: pointer;">{{item.amountWatched}}</strong>
 										<strong *hasPermission="['3', 'B_IV_7']" style="cursor: pointer;" (click)="preUserWatched(item.id)">{{item.amountWatched}}</strong>
 									</td>
 									<td style="text-align: center;">
