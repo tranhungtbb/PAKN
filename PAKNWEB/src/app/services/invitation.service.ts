@@ -78,6 +78,10 @@ export class InvitationService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserReadedInvitationGetList)
 	}
 
+	GetListHisOnPage(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.InnvitationGetListHisOnPage)
+	}
+
 	delete(query: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),

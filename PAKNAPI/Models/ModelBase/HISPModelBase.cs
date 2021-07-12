@@ -87,7 +87,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> HISSMSInsertDAO(HISSMSInsertIN _hISSMSInsertIN)
+		public async Task<int> HISSMSInsertDAO(HISInsertIN _hISSMSInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("ObjectId", _hISSMSInsertIN.ObjectId);
@@ -102,14 +102,77 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-	public class HISSMSInsertIN
+	public class HISInsertIN
 	{
-		public string ObjectId { get; set; }
+		public int ObjectId { get; set; }
 		public int? Type { get; set; }
 		public string Content { get; set; }
 		public int? Status { get; set; }
 		public int? CreatedBy { get; set; }
 		public string CreatedName { get; set; }
 		public DateTime? CreatedDate { get; set; }
+	}
+
+	public class HISInvitationGetByInvitationIdOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public HISInvitationGetByInvitationIdOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public HISInvitationGetByInvitationIdOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int Id { get; set; }
+		public string Content { get; set; }
+		public byte Status { get; set; }
+		public DateTime CreatedDate { get; set; }
+		public long CreatedBy { get; set; }
+		public string CreateName { get; set; }
+
+		public async Task<List<HISInvitationGetByInvitationIdOnPage>> HISInvitationGetByInvitationIdOnPageDAO(int? PageSize, int? PageIndex, int? SMSId, string Content, string UserName, DateTime? CreateDate, int? Status)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("ObjectId", SMSId);
+			DP.Add("Content", Content);
+			DP.Add("UserName", UserName);
+			DP.Add("CreateDate", CreateDate);
+			DP.Add("Status", Status);
+
+			return (await _sQLCon.ExecuteListDapperAsync<HISInvitationGetByInvitationIdOnPage>("HIS_InvitationGetByInvitationIdOnPage", DP)).ToList();
+		}
+	}
+
+	public class HISInvitationInsert
+	{
+		private SQLCon _sQLCon;
+
+		public HISInvitationInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public HISInvitationInsert()
+		{
+		}
+
+		public async Task<int> HISSMSInsertDAO(HISInsertIN _hISSMSInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ObjectId", _hISSMSInsertIN.ObjectId);
+			DP.Add("Type", _hISSMSInsertIN.Type);
+			DP.Add("Content", _hISSMSInsertIN.Content);
+			DP.Add("Status", _hISSMSInsertIN.Status);
+			DP.Add("CreatedBy", _hISSMSInsertIN.CreatedBy);
+			DP.Add("CreatedDate", _hISSMSInsertIN.CreatedDate);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("[HIS_Invitation_Insert]", DP));
+		}
 	}
 }

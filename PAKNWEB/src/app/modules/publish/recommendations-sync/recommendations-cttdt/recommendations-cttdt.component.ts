@@ -40,7 +40,7 @@ export class RecommendationsCttdtComponent implements OnInit {
 		this.KeySearch = this.KeySearch.trim()
 	
 		var obj = {
-			questioner: this.KeySearch,
+			questioner: '',
 			question: this.KeySearch, //FINISED
 			pageSize: this.PageSize,
 			pageIndex: this.PageIndex,

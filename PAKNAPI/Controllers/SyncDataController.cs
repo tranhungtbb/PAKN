@@ -55,7 +55,8 @@ namespace PAKNAPI.Controllers
                 .First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "content-feedback")
                 .ChildNodes.Where(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "row").First()
                 .ChildNodes.Where(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "item col-xs-12 col-sm-6 col-md-4").ToList();
-
+            // delete all
+            //await new RecommendationDAO(_appSetting).SyncKhanhHoaDeleteAll();
             foreach (var item in threadItems)
             {
                 var objectAdd = new GopYKienNghi();
@@ -69,15 +70,43 @@ namespace PAKNAPI.Controllers
                     objectAdd.Question = textHead[1].Trim();
                 }
                 objectAdd.CreatedDate = item.Descendants("span").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("feedday")).InnerText;
-                HtmlDocument documentDetail = htmlWeb.Load("https://www.khanhhoa.gov.vn/" + link);
+                Task<HtmlDocument> documentDetail = htmlWeb.LoadFromWebAsync("https://www.khanhhoa.gov.vn/" + link);
 
-                var threadItemsChild = documentDetail.DocumentNode.Descendants("div")
+                var threadItemsChild = documentDetail.Result.DocumentNode.Descendants("div")
                 .First(node => node.Attributes.Contains("id") && node.Attributes["id"].Value == "print-chitiet");
                 objectAdd.QuestionContent = threadItemsChild.Descendants("div").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("chitietbaiviet")).InnerHtml;
                 objectAdd.Reply = threadItemsChild.Descendants("div").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("feedback-traloi-content")).InnerHtml.Trim();
-                items.Add(objectAdd);
+                objectAdd.ReplyDate = documentDetail.Result.DocumentNode.Descendants("div")
+                    .FirstOrDefault(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "feedback-traloi-bottom").InnerText.Split(":")[1];
+                
+                var id = await new RecommendationDAO(_appSetting).SyncKhanhHoaInsert(objectAdd);
+                if (Convert.ToInt32(id) < 0) { continue; };
+
+                var files = documentDetail.Result.GetElementbyId("ctl38_ctl03_pnTep");
+                if (files != null) {
+                    string url = files.ChildNodes.Descendants("a").FirstOrDefault().Attributes["href"].Value;
+                    string fileName = url.Split("/")[url.Split("/").Length - 1];
+                    MR_SyncFileAttach fileInsert = new MR_SyncFileAttach();
+
+                    string folder = "Upload\\CongThongTinDienTu\\" + id;
+                    string folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+                    using (WebClient webClient = new WebClient())
+                    {
+                        string[] fileNameArr = url.Split(".");
+                        fileInsert.ObjectId = Convert.ToInt32(id);
+                        fileInsert.Type = GetFileTypes.GetFileTypeExtension("." + fileNameArr.FirstOrDefault(x => x == fileNameArr[fileNameArr.Length - 1]).ToString());
+                        fileInsert.FileName = Path.GetFileName(fileName).Replace("+", "");
+                        fileInsert.FilePath = Path.Combine(folder, fileInsert.FileName);
+                        webClient.DownloadFileAsync(new Uri("https://www.khanhhoa.gov.vn/" + url), Path.Combine(folderPath, fileInsert.FileName));
+                        await new MR_SyncFileAttach(_appSetting).RecommentdationSyncFileAttachInsertDAO(fileInsert);
+                    }
+                }
+
             }
-            new RecommendationDAO(_appSetting).SyncKhanhHoa(items);
             new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
             return new ResultApi
             {
@@ -142,7 +171,7 @@ namespace PAKNAPI.Controllers
 
                         objectAdd.Question = linkNode.InnerText.ToString();
 
-                        Task<HtmlDocument> documentDetail = htmlWeb.LoadFromWebAsync("https://dichvucong.gov.vn/p/phananhkiennghi/jsp/pakn-detail.jsp?id=" + id);
+                        Task<HtmlDocument> documentDetail = htmlWeb.LoadFromWebAsync("https://dichvucong.gov.vn/p/phananhkiennghi/jsp/pakn-detail.jsp?id=" + id, Encoding.UTF8);
 
 
                         string[] info = documentDetail.Result.DocumentNode.Descendants("div")
@@ -152,12 +181,46 @@ namespace PAKNAPI.Controllers
                         objectAdd.QuestionContent = documentDetail.Result.DocumentNode.Descendants("textarea")
                             .FirstOrDefault(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "showContent").InnerHtml;
                         objectAdd.Status = "Đã trả lời";
-                        Task<HtmlDocument> response = htmlWeb.LoadFromWebAsync("https://dichvucong.gov.vn/p/phananhkiennghi/jsp/pakn_answer_byid.jsp?pakn_id=" + id);
+                        Task<HtmlDocument> response = htmlWeb.LoadFromWebAsync("https://dichvucong.gov.vn/p/phananhkiennghi/jsp/pakn_answer_byid.jsp?pakn_id=" + id, Encoding.UTF8);
                         objectAdd.Reply = response.Result.DocumentNode.Descendants("textarea")
                             .First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "showContent").InnerHtml;
                         objectAdd.ObjectId = Convert.ToInt32(id);
                         // lưu database
                         await new RecommendationDAO(_appSetting).SyncDichVuCongQuocGiaInsert(objectAdd);
+
+                        // file request
+
+                        var elementFilesRequest = documentDetail.Result.DocumentNode.Descendants("div")
+                            .FirstOrDefault(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "file");
+                        if (elementFilesRequest != null) {
+                            // insert file
+                            var filesRequest = elementFilesRequest.ChildNodes.FirstOrDefault(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "content")
+                                .ChildNodes.Where(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "link").ToList();
+                            foreach (var file in filesRequest)
+                            {
+                                // lưu file
+                                string folder = "Upload\\DichVuCongQuocGia\\" + id;
+                                string folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
+                                if (!Directory.Exists(folderPath))
+                                {
+                                    Directory.CreateDirectory(folderPath);
+                                }
+
+                                using (WebClient webClient = new WebClient())
+                                {
+                                    string[] s = file.InnerText.Split(".");
+                                    fileInsert.ObjectId = Convert.ToInt32(id);
+                                    fileInsert.Type = GetFileTypes.GetFileTypeExtension("." + s.FirstOrDefault(x => x == s[s.Length - 1]).ToString().ToLower());
+                                    fileInsert.FileName = Path.GetFileName(file.InnerText).Replace("+", "");
+                                    fileInsert.FilePath = Path.Combine(folder, fileInsert.FileName);
+                                    fileInsert.IsReply = false;
+                                    webClient.DownloadFileAsync(new Uri("https://dichvucong.gov.vn/" + file.Attributes["href"].Value), Path.Combine(folderPath, fileInsert.FileName));
+                                    await new MR_SyncFileAttach(_appSetting).MR_Sync_DichVuCongQuocGiaFileAttachInsertDAO(fileInsert);
+                                }
+
+                            }
+                        }
+
 
                         var elementFiles = response.Result.GetElementbyId("list-file-attach");
                         if (elementFiles == null) { continue; };
@@ -181,6 +244,7 @@ namespace PAKNAPI.Controllers
                                 fileInsert.Type = GetFileTypes.GetFileTypeExtension("." + s.FirstOrDefault(x => x == s[s.Length - 1]).ToString().ToLower());
                                 fileInsert.FileName = Path.GetFileName(file.InnerText).Replace("+", "");
                                 fileInsert.FilePath = Path.Combine(folder, fileInsert.FileName);
+                                fileInsert.IsReply = true;
                                 webClient.DownloadFileAsync(new Uri("https://dichvucong.gov.vn/" + file.Attributes["href"].Value), Path.Combine(folderPath, fileInsert.FileName));
                                 await new MR_SyncFileAttach(_appSetting).MR_Sync_DichVuCongQuocGiaFileAttachInsertDAO(fileInsert);
                             }
@@ -236,16 +300,15 @@ namespace PAKNAPI.Controllers
                     {
                         objectAdd.Question = textHead[1].Trim();
                     }
-                    objectAdd.CreatedDate = "09/10/2018 | 10:02-AM";//item.Descendants("span").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("feedday")).InnerText;
+                    //objectAdd.CreatedDate = "09/10/2018 | 10:02-AM";//item.Descendants("span").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("feedday")).InnerText;
                     Task<HtmlDocument> documentDetail = htmlWeb.LoadFromWebAsync("https://thongtin.hanhchinhcong.khanhhoa.gov.vn/" + link);
-
+                    var dates = documentDetail.Result.GetElementbyId("datearticle").InnerText.Split(":");
+                    objectAdd.CreatedDate = string.Join(" ", dates.Where(x => x != dates[0]).ToArray());
                     var threadItemsChild = documentDetail.Result.DocumentNode.Descendants("div")
                     .First(node => node.Attributes.Contains("id") && node.Attributes["id"].Value == "print-chitiet");
                     objectAdd.QuestionContent = threadItemsChild.Descendants("div").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("chitietbaiviet")).InnerHtml;
                     objectAdd.Reply = threadItemsChild.Descendants("div").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("feedback-traloi-content")).InnerHtml.Trim();
                     items.Add(objectAdd);
-
-
                 }
                 new RecommendationDAO(_appSetting).SyncHopThuGopYKhanhHoa(items);
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);

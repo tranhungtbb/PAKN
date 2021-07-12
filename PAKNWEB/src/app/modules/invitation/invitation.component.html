@@ -119,7 +119,7 @@
 												data-target="#modal-tc-pakn" [ngClass]="{ 'mr-2': item.status != 1 }"><i class="bi bi-trash"></i></a>
 											</span>
 											<span *hasPermission="['3', 'B_IV_9']">
-												<a *ngIf="item.status != 1" class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i
+												<a class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i
 													class="bi bi-clock-history"></i></a>
 											</span>
 										
@@ -264,4 +264,105 @@
 		</div>
 	</div>
 </div>
+
+
+
+<div class="modal fade" id="modalHisInvitation">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="min-width: 90%;">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4">Lịch sử Thư mời</p>
+				<button type="button" class="close" data-dismiss="modal" ><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pt-3 pb-3">
+				<p-table #tableHis [value]="listHis" [lazy]="true" (onLazyLoad)="onPageChange2($event)" [paginator]="true" [showCurrentPageReport]="true"
+					currentPageReportTemplate="Tổng số {{hisTotalRecords}}" [rows]="hisPageSize" [totalRecords]="hisTotalRecords" [responsive]="true" autoLayout="true"
+					tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+					<ng-template pTemplate="header" class="bg-thead">
+						<tr>
+							<th style="width: 5%">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>STT</strong>
+								</p>
+							</th>
+
+							<th style="width: 40%;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Nội dung</strong>
+									<span class="caret-tb"></span>
+								</p>
+								<input class="form-control form-control-sm" [(ngModel)]="hisContent" maxlength="100" (keydown.enter)="dataStateChange2()"
+									placeholder="Nhập nội dung..." />
+							</th>
+
+							<th style="width: 20%;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Người tạo</strong>
+									<span class="caret-tb"></span>
+								</p>
+								<input class="form-control form-control-sm" [(ngModel)]="hisUserCreate" maxlength="100" (keydown.enter)="dataStateChange2()"
+									placeholder="Nhập tên..." />
+							</th>
+
+							<th style="width: 15%;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Ngày tạo</strong>
+									<span class="caret-tb"></span>
+								</p>
+								<div class="dropdown bootstrap-select form-control form-control-sm">
+									<input class="form-control form-control-sm" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" [(ngModel)]="hisCreateDate"
+										appBsDatepickerInvalid (bsValueChange)="sendDateChange($event)"
+										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+									<div class="input-group-addon">
+										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+									</div>
+								</div>
+
+							</th>
+
+							<th style="width: 180px;">
+								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+									<strong>Trạng thái</strong>
+									<span class="caret-tb"></span>
+								</p>
+								<div class="dropdown bootstrap-select form-control form-control-sm">
+									<ng-select class="" [items]="listHisStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="hisStatus"
+										[closeOnSelect]="true" (change)="dataStateChange2()">
+									</ng-select>
+								</div>
+							</th>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+						<tr>
+							<td class="text-center">{{rowIndex + 1}}</td>
+							<td>
+								<strong class="highlight"><a class="ellipsis" title="Xem chi tiết">{{item.content}}</a></strong>
+							</td>
+
+							<td>
+								<p>{{item.createName}}</p>
+							</td>
+							<td>
+								<p>{{item.createdDate | date : 'dd/MM/yyyy HH:mm'}}</p>
+							</td>
+							<td>
+								<span *ngIf="item.status == 0" class="badge rounded-pill bg-blue2">Đã khởi tạo</span>
+								<span *ngIf="item.status == 1" class="badge rounded-pill badge-outline-green2">Đã cập nhập</span>
+								<span *ngIf="item.status == 2" class="badge rounded-pill bg-red">Đã gửi</span>
+							</td>
+						</tr>
+					</ng-template>
+					<ng-template pTemplate="emptymessage">
+						<tr>
+							<td class="text-center" colspan="5">Không có dữ liệu</td>
+						</tr>
+					</ng-template>
+				</p-table>
+			</div>
+		</div>
+	</div>
+</div>
+
 

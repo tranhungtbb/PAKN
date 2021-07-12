@@ -197,7 +197,7 @@
 					</div>
 					<div class="col-12 col-lg">
 						<label class="mb-1">Nhập mã xác thực <span class="cl-red">(*)</span></label>
-						<input type="text" placeholder="Nhập..." class="form-control" [(ngModel)]="captchaCode" formControlName="captcha" maxlength="5">
+						<input type="text" placeholder="Nhập..." class="form-control" [(ngModel)]="captchaCode" style="height: 56px;" formControlName="captcha" maxlength="5">
 						<div *ngIf="(submitted && f.captcha.invalid) || (f.captcha.invalid && (f.captcha.dirty || f.captcha.touched))" class="has-error">
 							<div *ngIf="f.captcha.errors.required">
 								<span class="help-block">Vui lòng nhập mã captcha</span>

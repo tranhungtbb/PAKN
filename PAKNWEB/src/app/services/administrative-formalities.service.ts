@@ -64,7 +64,7 @@ export class AdministrativeFormalitiesService {
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.DAM_ADMINISTRATOR),
 		})
 		const form = new FormData()
 		form.append('Data', JSON.stringify(request.Data))
@@ -102,7 +102,7 @@ export class AdministrativeFormalitiesService {
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.DAM_ADMINISTRATOR),
 		})
 		const form = new FormData()
 		form.append('Data', JSON.stringify(request.Data))
@@ -136,15 +136,23 @@ export class AdministrativeFormalitiesService {
 	}
 	updateShow(request: any): Observable<any> {
 		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
+			logObject: encodeURIComponent(LOG_OBJECT.DAM_ADMINISTRATOR),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.AdministrativeFormalitiesUpdateShow, headers)
 	}
+	forward(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.FORWARD),
+			logObject: encodeURIComponent(LOG_OBJECT.DAM_ADMINISTRATOR),
+		}
+		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.AdministrativeForward, headers)
+	}
+
 	delete(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.DAM_ADMINISTRATOR),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.AdministrativeFormalitiesDelete, headers)
 	}

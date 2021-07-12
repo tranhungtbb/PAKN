@@ -37,3 +37,12 @@ export class AdministrativeFormalitiesObject {
 	updatedDate: string
 	updatedBy: number
 }
+
+export class AdministrativeFormalitiesForward{
+	unitId : number
+	content : string
+	constructor (){
+		this.unitId = null
+		this.content = ''
+	}
+}

@@ -17,6 +17,7 @@ declare var $: any
 export class DetailRecommendationPaknCPComponent implements OnInit {
 	id : any
 	files : any = []
+	filesRequest : any = []
 	APIADDRESS: any
 	modelData: RequestData = new RequestData()
 	constructor(
@@ -47,10 +48,12 @@ export class DetailRecommendationPaknCPComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				if(response.result.MRRecommendationPAKNCPGetById.length > 0){
 					this.modelData = response.result.MRRecommendationPAKNCPGetById[0]
-					this.files = response.result.FileAttach
+					this.files = response.result.FileAttach.filter((x)=>x.isReply == true)
+					this.filesRequest = response.result.FileAttach.filter((x)=>x.isReply == false)
 				}else{
 					this.modelData = null
 					this.files = []
+					this.filesRequest = []
 				}
 			} else {
 				this.toastr.error(response.message)

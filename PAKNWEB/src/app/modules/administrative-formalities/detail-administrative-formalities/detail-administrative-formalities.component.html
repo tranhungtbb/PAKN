@@ -14,6 +14,9 @@
 			</ol>
 			<div class="btn-group group-button-table" role="group">
 				<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" appSvBackButton><i class="bi bi-arrow-left mr-2"></i> quay lại</button>
+				<span *hasPermission="['3', 'H_I_2']">
+					<button class="btn grd-xanhngoc btn-sm rounded border-0 text-white mr-3" (click)="preForward()">Gửi cơ quan đơn vị</button>
+				</span>
 				<span *hasPermission="['3', 'H_I_4']">
 					<button *ngIf="model.status != 3" class="btn btn-sm grd-green rounded text-white border-0 mr-3" (click)="onSave(3)">Công bố</button>
 				</span>
@@ -433,6 +436,46 @@
 					</div>
 				</div>
 			</form>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modal-forward">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4">Gửi cơ quan đơn vị</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pt-3 pb-0">
+				<form class="form-horizontal" [formGroup]="formForward" #formDir="ngForm">
+					<div class="form-row">
+						<div class="col-12 col-lg-12 form-group">
+							<label class="mb-2">Đơn vị được chuyển tiếp<span class="cl-red">(*)</span></label>
+							<ng-select class="form-control border-input" [items]="lstUnitNotMain" bindLabel="text" bindValue="value" formControlName="unitId" placeholder="Chọn đơn vị giải quyết"
+								[(ngModel)]="modelForward.unitId" [closeOnSelect]="true"></ng-select>
+							<div *ngIf="(submitted && fForward.unitId.invalid) || (fForward.unitId.invalid && (fForward.unitId.dirty || fForward.unitId.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="fForward.unitId.errors.required">
+									<span class="help-block">Trường dữ liệu này không để trống</span>
+								</div>
+							</div>
+						</div>
+					
+						<div class="col-12 form-group">
+							<label class="mb-2">Nội dung</label>
+							<textarea class="form-control" rows="6" [(ngModel)]="modelForward.content" formControlName="content" placeholder="Nhập nội dung..."
+								maxlength="500"></textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary border px-5 mr-3" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn text-white grd-blue border-0 px-5" (click)="onForward()">Gửi</button>
+			</div>
 		</div>
 	</div>
 </div>

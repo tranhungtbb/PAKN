@@ -55,5 +55,39 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		[HttpGet]
+		[Route("DAMAdministrationForward")]
+		[Authorize]
+		public async Task<ActionResult<object>> DAMAdministrationForward(int UnitId, int AdministrationId, string Content)
+		{
+			try
+			{
+				var lstUser = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(UnitId);
+				var lstUserId = new List<long>();
+				lstUser.ForEach(item => {
+					lstUserId.Add(item.Id);
+				});
+				DAMAdministrationForward modelInsert = new DAMAdministrationForward();
+				modelInsert.AdministrationId = AdministrationId;
+				modelInsert.UnitId = UnitId;
+				modelInsert.CreateBy = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				modelInsert.CreatedDate = DateTime.Now;
+				modelInsert.Content = Content;
+				modelInsert.LstUserReceive = String.Join(",", lstUserId);
+				await new DAMAdministrationForward(_appSetting).DAMAdministrationForwardInsertDAO(modelInsert);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				return new ResultApi { Success = ResultCode.OK};
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		// DAMAdministrationForward
 	}
 }

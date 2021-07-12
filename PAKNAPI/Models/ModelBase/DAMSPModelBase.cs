@@ -341,6 +341,80 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class DAMAdministrationForward
+	{
+		private SQLCon _sQLCon;
+
+		public DAMAdministrationForward(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public DAMAdministrationForward()
+		{
+		}
+
+		//public int Id { get; set; }
+		public int AdministrationId { get; set; }
+		public long UnitId { get; set; }
+		public long CreateBy { get; set; }
+		public string Content { get; set; }
+		public string LstUserReceive { get; set; }
+		public DateTime CreatedDate { get; set; }
+
+
+		public async Task<int?> DAMAdministrationForwardInsertDAO(DAMAdministrationForward model)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("AdministrationId", model.AdministrationId);
+			DP.Add("UnitId", model.UnitId);
+			DP.Add("CreateBy",model.CreateBy);
+			DP.Add("Content", model.Content);
+			DP.Add("LstUserReceive", model.LstUserReceive);
+			DP.Add("CreatedDate", model.CreatedDate);
+
+			return await _sQLCon.ExecuteNonQueryDapperAsync("DAM_Administration_Forward_Insert", DP);
+		}
+	}
+
+
+	public class DAMAdministrationForwardGetList
+	{
+		private SQLCon _sQLCon;
+
+		public DAMAdministrationForwardGetList(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public DAMAdministrationForwardGetList()
+		{
+		}
+
+		//public int Id { get; set; }
+		public int AdministrationId { get; set; }
+		public int UnitId { get; set; }
+		public int CreateBy { get; set; }
+		public string Content { get; set; }
+		public string LstUserReceive { get; set; }
+		public DateTime CreatedDate { get; set; }
+
+
+		public async Task<int?> DAMAdministrationForwardGetListDAO(DAMAdministrationForward model)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("AdministrationId", model.AdministrationId);
+			DP.Add("UnitId", model.UnitId);
+			DP.Add("CreateBy", model.CreateBy);
+			DP.Add("Content", model.Content);
+			DP.Add("LstUserReceive", model.LstUserReceive);
+			DP.Add("CreatedDate", model.CreatedDate);
+
+			return await _sQLCon.ExecuteNonQueryDapperAsync("DAM_Administration_Forward_Insert", DP);
+		}
+	}
+
+
 	public class DAMAdministrationInsertIN
 	{
 		public string Name { get; set; }

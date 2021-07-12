@@ -251,7 +251,7 @@
 					<div class="form-row">
 						<div class="col-12 col-lg-6 form-group">
 							<label class="mb-1">Đơn vị giải quyết <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" [items]="lstUnitNotMain" bindLabel="text" bindValue="value" formControlName="unitReceiveId"
+							<ng-select class="form-control border-input" [items]="lstUnitNotMain" bindLabel="text" bindValue="value" formControlName="unitReceiveId" placeholder="Chọn đơn vị giải quyết"
 								[(ngModel)]="modelForward.unitReceiveId" [closeOnSelect]="true"></ng-select>
 							<div *ngIf="(submitted && f.unitReceiveId.invalid) || (f.unitReceiveId.invalid && (f.unitReceiveId.dirty || f.unitReceiveId.touched))"
 								class="has-error m-b-12">
@@ -263,11 +263,11 @@
 						<div class="col-12 col-lg-6 form-group">
 							<label class="mb-1">Hạn giải quyết</label>
 							<div class="input-group">
-								<input class="form-control" placeholder="Chọn hạn giải quyết" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="expiredDate"
+								<input class="form-control border-input" placeholder="Chọn hạn giải quyết" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="expiredDate"
 									[(ngModel)]="modelForward.expiredDate" appBsDatepickerInvalid [minDate]="dateNow"
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-								<div class="input-group-addon">
-									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+								<div class="input-group-addon p-2">
+									<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 								</div>
 							</div>
 						</div>

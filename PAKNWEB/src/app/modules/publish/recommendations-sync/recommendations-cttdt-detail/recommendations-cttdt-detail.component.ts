@@ -47,6 +47,7 @@ export class DetailRecommendationCttdtComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				if(response.result.Data.length > 0){
 					this.modelData = response.result.Data[0]
+					this.files = response.result.FileAttach
 				}else{
 					this.modelData = null
 				}

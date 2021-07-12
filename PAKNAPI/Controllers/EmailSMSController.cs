@@ -306,7 +306,7 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Authorize]
 		[Route("HISSMSInsert")]
-		public async Task<ActionResult<object>> HISNewsInsert(HISSMSInsertIN _hISSMS)
+		public async Task<ActionResult<object>> HISNewsInsert(HISInsertIN _hISSMS)
 		{
 			try
 			{

@@ -4,10 +4,10 @@ import { COMMONS } from 'src/app/commons/commons'
 import { CONSTANTS, FILETYPE, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
-import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { FormControl, FormGroup, Validators , FormBuilder} from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { CatalogService } from 'src/app/services/catalog.service'
-import { AdministrativeFormalitiesObject } from 'src/app/models/AdministrativeFormalitiesObject'
+import { AdministrativeFormalitiesObject, AdministrativeFormalitiesForward } from 'src/app/models/AdministrativeFormalitiesObject'
 import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
 declare var $: any
 
@@ -18,7 +18,9 @@ declare var $: any
 })
 export class DetailAdministrativeFormalitiesComponent implements OnInit {
 	form: FormGroup
+	formForward : FormGroup
 	model: AdministrativeFormalitiesObject = new AdministrativeFormalitiesObject()
+	modelForward : AdministrativeFormalitiesForward = new AdministrativeFormalitiesForward()
 	titleObject: string = 'Cá nhân'
 	lstUnitDAM: any[] = []
 	lstUnit: any[] = []
@@ -42,6 +44,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		{ value: true, text: 'Có' },
 		{ value: false, text: 'Không' },
 	]
+	lstUnitNotMain : any []
 	@ViewChild('file', { static: false }) public file: ElementRef
 
 	lstCompositionProfile: any[] = []
@@ -58,7 +61,9 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		private recommendationService: RecommendationService,
 		private _serviceCatalog: CatalogService,
 		private router: Router,
-		private activatedRoute: ActivatedRoute
+		private activatedRoute: ActivatedRoute,
+		private _fb: FormBuilder,
+		private _service: RecommendationService,
 	) {}
 
 	ngOnInit() {
@@ -70,6 +75,20 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 				this.getData()
 			}
 			this.builForm()
+			this.buildFormForward()
+			this._service.recommendationGetDataForForward({}).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					if (response.result != null) {
+						this.lstUnitNotMain = response.result.lstUnitNotMain
+						$('#modal-tc-pakn').modal('show')
+					}
+				} else {
+					this.toastr.error(response.message)
+				}
+			}),
+				(error) => {
+					console.log(error)
+				}
 		})
 	}
 
@@ -141,6 +160,23 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 			impactAssessment: new FormControl(this.model.impactAssessment),
 			note: new FormControl(this.model.note),
 		})
+	}
+
+	buildFormForward() {
+		this.formForward = this._fb.group({
+			unitId: [this.modelForward.unitId, Validators.required],
+			content: [this.modelForward.content],
+		})
+	}
+
+	rebuilFormForward() {
+		this.form.reset({
+			unitId: this.modelForward.unitId,
+			content: this.modelForward.content,
+		})
+	}
+	get fForward() {
+		return this.formForward.controls
 	}
 
 	get f() {
@@ -230,6 +266,36 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 				(err) => {
 					console.error(err)
 				}
+		}
+	}
+
+	// forward
+	preForward = ()=>{
+		this.modelForward = new AdministrativeFormalitiesForward();
+		this.rebuilFormForward()
+		$('#modal-forward').modal('show')
+	}
+	onForward = () =>{
+		this.modelForward.content = this.modelForward.content.trim()
+		this.submitted = true
+		if(this.formForward.invalid){
+			return
+		}
+		let obj = {
+			UnitId : this.modelForward.unitId,
+			AdministrationId : this.model.id,
+			Content : this.modelForward.content
+		}
+		this.afService.forward(obj).subscribe(res =>{
+			if(res.success == RESPONSE_STATUS.success){
+				this.toastr.success("Gửi cơ quan, đơn vị thành công")
+				$('#modal-forward').modal('hide')
+			}
+			else{
+				this.toastr.error("Lỗi khi gửi cơ quan, đơn vị")
+			}
+		}),(err) =>{
+			console.log(err)
 		}
 	}
 

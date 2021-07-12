@@ -50,8 +50,8 @@ export class ListRecommendationKnct implements OnInit {
 		this.keySearch = this.keySearch.trim()
 		let request = {
 			Content: this.keySearch,
-			Unit: this.keySearch,
-			Place: this.keySearch,
+			Unit: '',
+			Place: '',
 			Field: '',
 			Status: 3, // đã giải quyết
 			PageIndex: this.pageIndex,

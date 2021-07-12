@@ -318,13 +318,14 @@ export class CreateRecommendationComponent implements OnInit {
 	onSave(status) {
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
-		if (this.model.content == null || this.model.content == '') {
-			return
-		}
+		// if (this.model.content == null || this.model.content == '') {
 
-		if (this.model.title == null || this.model.title == '') {
-			return
-		}
+		// 	return
+		// }
+
+		// if (this.model.title == null || this.model.title == '') {
+		// 	return
+		// }
 		this.submitted = true
 		if (this.form.invalid) {
 			this.reloadImage()

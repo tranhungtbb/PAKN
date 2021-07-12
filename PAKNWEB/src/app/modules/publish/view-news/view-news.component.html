@@ -1,14 +1,14 @@
 <div class="content-nd">
 	<div class="container">
 		<div class="row justify-content-between pt-5">
-			<div class="col main-ct pr-3 pr-lg-5 col-lg-9">
+			<div class="col-9 main-ct pr-3 pr-lg-5 col-lg-9">
 				<div class="clearfix">
 					<span>Trang chủ / <strong>Tin tức sự kiện</strong></span>
-					<a class="btn btn-sm btn-default border-1 border-brown pull-right" style="display: inline-block;" *ngIf="viewDemo"
+					<!-- <a class="btn btn-sm btn-default border-1 border-brown pull-right" style="display: inline-block;" *ngIf="viewDemo"
 						[routerLink]="['/quan-tri/tin-tuc/chinh-sua', model.id]">
 						<i class="pi pi-arrow-left"></i>
 						&nbsp;Quay lại
-					</a>
+					</a> -->
 				</div>
 				<div *ngIf="viewDemo || model.status == 1">
 					<h1 style="line-height: 1.5; font-weight: 500;font-size: 28px;line-height: 34px;">
@@ -47,7 +47,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+			<div class="col-3 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
 				<div class="sb-tk-pakn mb-4">
 					<div class="d-flex search-ct" style="width: 100%; padding-bottom: 20px;">
 						<input (keyup)="changeKeySearch($event)" (keydown.enter)="redirectNews()" class="form-control" style="border-radius: 10px; height: 45px;" type="text"

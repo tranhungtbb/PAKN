@@ -102,20 +102,22 @@ namespace PAKNAPI.Models.Recommendation
 			}
 			return data;
 		}
-		public void SyncKhanhHoa(List<GopYKienNghi> lstData)
+		public async Task<int?> SyncKhanhHoaInsert(GopYKienNghi item)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			_sQLCon.ExecuteNonQueryDapper("MR_RecommendationSync_DeleteAll", DP);
-            foreach (var item in lstData)
-			{
-				DP = new DynamicParameters();
-				DP.Add("Questioner", item.Questioner);
-				DP.Add("Question", item.Question);
-				DP.Add("QuestionContent", item.QuestionContent);
-				DP.Add("Reply", item.Reply);
-				DP.Add("CreatedDate", item.CreatedDate);
-				_sQLCon.ExecuteNonQueryDapper("MR_RecommendationSync_Insert", DP);
-			}
+			DP.Add("Questioner", item.Questioner);
+			DP.Add("Question", item.Question);
+			DP.Add("QuestionContent", item.QuestionContent);
+			DP.Add("Reply", item.Reply);
+			DP.Add("CreatedDate", item.CreatedDate);
+			DP.Add("ReplyDate", item.ReplyDate);
+			return (await _sQLCon.ExecuteListDapperAsync<int>("MR_RecommendationSync_Insert", DP)).FirstOrDefault();
+		}
+
+		public async Task<int?> SyncKhanhHoaDeleteAll()
+		{
+			DynamicParameters DP = new DynamicParameters();
+			return _sQLCon.ExecuteNonQueryDapper("MR_RecommendationSync_DeleteAll", DP);
 		}
 
 		public void SyncHopThuGopYKhanhHoa(List<GopYKienNghi> lstData)

@@ -116,10 +116,36 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("HISInvitationGetByInvitationIdOnPageBase")]
+		public async Task<ActionResult<object>> HISInvitationGetByInvitationIdOnPageBase(int? PageSize, int? PageIndex, int? ObjectId, string Content, string UserName, DateTime? CreateDate, int? Status)
+		{
+			try
+			{
+				List<HISInvitationGetByInvitationIdOnPage> rsHIS = await new HISInvitationGetByInvitationIdOnPage(_appSetting).HISInvitationGetByInvitationIdOnPageDAO(PageSize, PageIndex, ObjectId, Content, UserName, CreateDate, Status);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"HISInvitationGetByInvitaionIdOnPage", rsHIS},
+						{"TotalCount", rsHIS != null && rsHIS.Count > 0 ? rsHIS[0].RowNumber : 0},
+						{"PageIndex", rsHIS != null && rsHIS.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsHIS != null && rsHIS.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("HISSMSInsertBase")]
-		public async Task<ActionResult<object>> HISSMSInsertBase(HISSMSInsertIN _hISSMSInsertIN)
+		public async Task<ActionResult<object>> HISSMSInsertBase(HISInsertIN _hISSMSInsertIN)
 		{
 			try
 			{
@@ -139,7 +165,7 @@ namespace PAKNAPI.ControllerBase
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("HISSMSInsertListBase")]
-		public async Task<ActionResult<object>> HISSMSInsertListBase(List<HISSMSInsertIN> _hISSMSInsertINs)
+		public async Task<ActionResult<object>> HISSMSInsertListBase(List<HISInsertIN> _hISSMSInsertINs)
 		{
 			try
 			{

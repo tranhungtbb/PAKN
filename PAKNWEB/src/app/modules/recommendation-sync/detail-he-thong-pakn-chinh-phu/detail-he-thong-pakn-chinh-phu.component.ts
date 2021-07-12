@@ -16,6 +16,7 @@ declare var $: any
 export class DetailHeThongPAKNChinhPhuComponent implements OnInit {
 	id : any
 	file : any = []
+	fileRequest : any []
 	APIADDRESS: any
 	modelData: RequestData = new RequestData()
 	constructor(
@@ -44,7 +45,8 @@ export class DetailHeThongPAKNChinhPhuComponent implements OnInit {
 		this._service.getHeThongPANKChinhPhuGetByObjectId(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.modelData = response.result.MRRecommendationPAKNCPGetById[0]
-				this.file = response.result.FileAttach
+				this.file = response.result.FileAttach.filter((x)=>x.isReply == true)
+				this.fileRequest = response.result.FileAttach.filter((x)=>x.isReply == false)
 
 			} else {
 				this.toastr.error(response.message)

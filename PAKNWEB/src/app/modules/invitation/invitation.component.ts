@@ -31,6 +31,7 @@ export class InvitationComponent implements OnInit {
 		this.listItemUserSelected = []
 	}
 	@ViewChild('table', { static: false }) table: any
+	@ViewChild('tableHis', { static: false }) tableHis: any
 	// @ViewChild('tableLstUser', { static: false }) tableLstUser: any
 
 	listStatus: any = [
@@ -39,6 +40,13 @@ export class InvitationComponent implements OnInit {
 		{ value: 3, text: 'Chưa xem' },
 		{ value: 4, text: 'Đã xem' },
 	]
+
+	listHisStatus: any = [
+		{ value: '0', text: 'Khởi tạo' },
+		{ value: '1', text: 'Cập nhập' },
+		{ value: '2', text: 'Đã gửi' },
+	]
+
 	model: any = new InvitationObject()
 	title: string = ''
 	place: string = ''
@@ -53,6 +61,18 @@ export class InvitationComponent implements OnInit {
 	listFile: any[]
 	listUserIsSystem: any[]
 	InvitationId: any
+
+	// his
+
+	hisStatus: Number
+	hisContent: string
+	hisCreateDate: string
+	hisUserCreate: string
+	hisPageIndex: number = 1
+	hisPageSize: number = 10
+	hisTotalRecords: Number
+	hisInvitationId : Number
+	listHis: any[]
 
 	// lts user
 	lstUser : any = []
@@ -191,9 +211,7 @@ export class InvitationComponent implements OnInit {
 		this.getListPaged()
 	}
 
-	getHistory(id: any) {
-		return
-	}
+
 	padi() {
 		this.pagination = []
 		for (let i = 0; i < Math.ceil(this.totalRecordsUser / this.queryLstUser.PageSize); i++) {
@@ -217,6 +235,65 @@ export class InvitationComponent implements OnInit {
 		}
 		return
 	}
+
+	// his
+
+	
+	getHistory(id: Number) {
+		if (id == undefined) return
+		if (id != this.hisInvitationId) {
+			this.tableHis.reset()
+			this.hisPageSize = 10
+			this.hisPageIndex = 1
+		}
+		this.hisInvitationId = id
+		this.hisContent == null ? (this.hisContent = '') : (this.hisContent = this.hisContent.trim())
+		this.hisUserCreate == null ? (this.hisContent = '') : (this.hisUserCreate = this.hisUserCreate.trim())
+		var obj = {
+			PageSize: this.hisPageSize,
+			PageIndex: this.hisPageIndex,
+			ObjectId: id,
+			CreateDate: this.hisCreateDate == null ? '' : this.hisCreateDate,
+			Content: this.hisContent == null ? '' : this.hisContent,
+			UserName: this.hisUserCreate == null ? '' : this.hisUserCreate,
+			Status: this.hisStatus == null ? '' : this.hisStatus,
+		}
+		this.invitationService.GetListHisOnPage(obj).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				if (res.result.HISInvitationGetByInvitaionIdOnPage.length > 0) {
+					this.listHis = res.result.HISInvitationGetByInvitaionIdOnPage
+					this.hisTotalRecords = res.result.TotalCount
+					this.hisPageSize = res.result.PageSize
+					this.hisPageIndex = res.result.PageIndex
+				} else {
+					this.listHis = []
+					this.hisTotalRecords = 0
+					this.hisPageSize = 10
+					this.hisPageIndex = 1
+				}
+				$('#modalHisInvitation').modal('show')
+			} else {
+				this.listHis = []
+				this.hisTotalRecords = 0
+				this.hisPageSize = 10
+				this.hisPageIndex = 1
+				this.toast.error(res.message)
+			}
+		})
+	}
+
+	onPageChange2(event: any) {
+		this.hisPageSize = event.rows
+		this.hisPageIndex = event.first / event.rows + 1
+		this.getHistory(this.hisInvitationId)
+	}
+	dataStateChange2() {
+		this.hisPageIndex = 1
+		this.table.first = 0
+		this.getHistory(this.hisInvitationId)
+	}
+
+
 	onExport() {
 		let passingObj: any = {}
 		$('#modalLstUser').modal('hide')

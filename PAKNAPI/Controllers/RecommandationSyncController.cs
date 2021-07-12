@@ -60,12 +60,18 @@ namespace PAKNAPI.Controllers
         {
             try
             {
+                Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
                 var repository = new RecommandationSyncDAO(_appSetting);
-
                 var rs = await repository.CongThongTinDienTuTinhGetByIdDAO(Id);
+                var files = await new MR_SyncFileAttach(_appSetting).RecommentdationSyncFileAttachGetByObjectIdDAO(Id);
+                foreach (var item in files)
+                {
+                    item.FilePath = decrypt.EncryptData(item.FilePath);
+                }
                 IDictionary<string, object> json = new Dictionary<string, object>
                 {
-                    {"Data", rs}
+                    {"Data", rs},
+                    {"FileAttach", files},
                 };
                 return new ResultApi { Success = ResultCode.OK, Result = json };
             }

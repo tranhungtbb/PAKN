@@ -67,4 +67,11 @@
 		public const int UPDATE = 1; // soan thao
 		public const int SEND = 2; //2 gửi
 	}
+		
+	public class STATUS_HIS_INVITATION
+	{
+		public const int CREATE = 0; //khoi tao
+		public const int UPDATE = 1; // soan thao
+		public const int SEND = 2; //2 gửi
+	}
 }

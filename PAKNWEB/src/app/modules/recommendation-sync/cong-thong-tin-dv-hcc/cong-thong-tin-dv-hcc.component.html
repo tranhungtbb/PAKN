@@ -95,14 +95,14 @@
 						<button class="close btn-close-modal" data-dismiss="modal">
 							×
 						</button>
-						<p class="modal-title h3">Chi tiết</p>
+						<!-- <p class="modal-title h3">Chi tiết</p> -->
 					</div>
 					<div class="modal-body no-padding-bottom pt-0">
 						<div class="box" *ngIf="!modelView" style="text-align: center;">
 							<strong>Không tìm thấy dữ liệu</strong>
 						</div>
 						<div class="box" *ngIf="modelView">
-							<p class="card-text h3 mb-3"><span style="font-weight: 300;">Kiến nghị về việc : </span>
+							<p class="card-text h3 mb-3 mt-2"><span style="font-weight: 300;">Kiến nghị về việc : </span>
 								{{modelView.question}}
 							</p>
 							<div class="py-2 mb-4 d-flex justify-content-between align-items-center border-bottom border-top">

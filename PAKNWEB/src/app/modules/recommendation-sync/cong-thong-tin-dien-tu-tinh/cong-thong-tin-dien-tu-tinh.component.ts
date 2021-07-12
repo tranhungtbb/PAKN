@@ -20,6 +20,7 @@ export class CongThongTinDienTuTinhComponent implements OnInit {
   }
 
   listData:any[] = []
+  files : any [] = []
 
   query={
     questioner:'',
@@ -70,8 +71,26 @@ export class CongThongTinDienTuTinhComponent implements OnInit {
   ///view detail
   modelView:any={}
   getDetail(item:any){
-    this.modelView = item
-    $('#modalDetail').modal('show')
+    let request = {
+			Id: item.id,
+		}
+		this._RecommandationSyncService.getCongThongTinDienTuTinhGetById(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if(response.result.Data.length > 0){
+					this.modelView = response.result.Data[0]
+          this.files = response.result.FileAttach
+
+          $('#modalDetail').modal('show')
+				}else{
+					this.modelView = null
+				}
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(error) => {
+				console.log(error)
+			}
   }
 
 }

@@ -57,27 +57,27 @@
 							<p class="mb-4" *ngFor="let file of file; let i = index">
 								<a *ngIf="file.type == 1" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
 									<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
-									<span class="small text-truncate">{{file.fileName}}</span>
+									<span class="small text-truncate">{{file.fileName.length > 30? file.fileName.slice(0,30) + "..." : file.fileName}}</span>
 								</a>
 								<a *ngIf="file.type == 2" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
 									<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;" alt="">
-									<span class="small text-truncate">{{file.fileName}}</span>
+									<span class="small text-truncate">{{file.fileName.length > 30? file.fileName.slice(0,30) + "..." : file.fileName}}</span>
 								</a>
 								<a *ngIf="file.type == 3" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
 									<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
-									<span class="small text-truncate">{{file.fileName}}</span>
+									<span class="small text-truncate">{{file.fileName.length > 30? file.fileName.slice(0,30) + "..." : file.fileName}}</span>
 								</a>
 								<a *ngIf="file.type == 4" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
 									<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;" alt="">
-									<span class="small text-truncate">{{file.fileName}}</span>
+									<span class="small text-truncate">{{file.fileName.length > 30? file.fileName.slice(0,30) + "..." : file.fileName}}</span>
 								</a>
 								<a *ngIf="file.type == 6" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
 									<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;" alt="">
-									<span class="small text-truncate">{{file.fileName}}</span>
+									<span class="small text-truncate">{{file.fileName.length > 30? file.fileName.slice(0,30) + "..." : file.fileName}}</span>
 								</a>
 								<a *ngIf="file.type == 7" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
 									<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;" alt="">
-									<span class="small text-truncate">{{file.fileName}}</span>
+									<span class="small text-truncate">{{file.fileName.length > 30? file.fileName.slice(0,30) + "..." : file.fileName}}</span>
 								</a>
 								<span *ngIf="file.type != 6 && file.type != 5" class="pointer" appViewFile [linkfile]="file.filePath" [namefile]="file.fileName"
 									title="Xem file">

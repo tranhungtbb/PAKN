@@ -184,6 +184,23 @@ namespace PAKNAPI.Controllers
 						});
 						t.Start();
 					}
+					// insert his
+					var history = new HISInsertIN();
+					history.ObjectId = id;
+					history.CreatedBy = invInvitation.Model.UserCreateId;
+					history.Content = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext) + " đã khởi tạo thư mời.";
+					history.CreatedDate = DateTime.Now;
+					history.Status = STATUS_HIS_INVITATION.CREATE;
+
+					await new HISInvitationInsert(_appSetting).HISSMSInsertDAO(history);
+
+					if (invInvitation.Model.Status == 2) // is send
+					{
+						history.Content = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext) + " đã gửi thư mời.";
+						history.Status = STATUS_HIS_INVITATION.SEND;
+						await new HISInvitationInsert(_appSetting).HISSMSInsertDAO(history);
+					}
+
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 					return new ResultApi { Success = ResultCode.OK};
 
@@ -412,7 +429,27 @@ namespace PAKNAPI.Controllers
 							t.Start();
 						}
 					}
-					
+
+					// insert his
+					var history = new HISInsertIN();
+					history.ObjectId = id;
+					history.CreatedBy = invInvitation.Model.UserCreateId;
+					history.CreatedDate = DateTime.Now;
+
+
+					if (invInvitation.Model.Status == 1) // is update
+					{
+						history.Content = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext) + " đã cập nhập mời.";
+						history.Status = STATUS_HIS_INVITATION.UPDATE;
+						
+					}
+					else if(invInvitation.Model.Status == 2) {
+						history.Content = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext) + " đã gửi thư mời.";
+						history.Status = STATUS_HIS_INVITATION.SEND;
+					}
+
+					await new HISInvitationInsert(_appSetting).HISSMSInsertDAO(history);
+
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 					return new ResultApi { Success = ResultCode.OK };
 

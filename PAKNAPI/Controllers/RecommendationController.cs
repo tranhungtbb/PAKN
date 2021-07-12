@@ -327,6 +327,20 @@ namespace PAKNAPI.Controller
                 request.UserType = new LogHelper(_appSetting).GetTypeFromRequest(HttpContext);
                 request.UserFullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
                 request.Data = JsonConvert.DeserializeObject<MRRecommendationUpdateIN>(Request.Form["Data"].ToString(), jss);
+                SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
+                if (request.Data.UnitId == null)
+                {
+                    var syUnitByField = await new SYUnitGetByField(_appSetting).SYUnitGetByFieldDAO(request.Data.Field);
+                    if (syUnitByField.Count == 0)
+                    {
+                        request.Data.UnitId = dataMain.Id;
+                    }
+                    else
+                    {
+                        request.Data.UnitId = syUnitByField.FirstOrDefault().Id;
+                    }
+                }
+
                 request.LstXoaFile = JsonConvert.DeserializeObject<List<MRRecommendationFiles>>(Request.Form["LstXoaFile"].ToString(), jss);
                 request.ListHashTag = JsonConvert.DeserializeObject<List<DropdownObject>>(Request.Form["Hashtags"].ToString(), jss);
                 request.Files = Request.Form.Files;
@@ -335,7 +349,7 @@ namespace PAKNAPI.Controller
                 var oldRecommendation = await new RecommendationDAO(_appSetting).RecommendationGetByID(request.Data.Id);
 
                 await new MRRecommendationUpdate(_appSetting).MRRecommendationUpdateDAO(request.Data);
-                SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
+
                 if (request.Data.Status > 1 && dataMain != null && dataMain.Id != request.Data.UnitId && request.UserType != 1)
                 {
                     request.Data.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;

@@ -2,3 +2,6 @@ body p-multiselect .ui-multiselect{
   border-radius: .25rem!important;
   height: 56px;
 }
+:host ::ng-deep .dropdown-menu {
+	width: 200% !important;
+}

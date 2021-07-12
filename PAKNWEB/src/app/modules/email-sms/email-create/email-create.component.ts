@@ -24,6 +24,7 @@ declare var $:any
 	selector: 'app-email-create',
 	templateUrl: './email-create.component.html',
 	styleUrls: ['./email-create.component.css'],
+	providers: [{ provide: TreeviewI18n, useClass: SMSTreeviewI18n }],
 })
 export class EmailCreateComponent implements OnInit {
 	constructor(
@@ -89,7 +90,7 @@ export class EmailCreateComponent implements OnInit {
 						this.listIndividual = res.result.ListIndividual
 						this.listBusiness = res.result.ListBusiness
 
-						console.log([].concat(this.listBusinessNew,this.listIndividualNew,this.listBusiness,this.listIndividual));
+						// console.log([].concat(this.listBusinessNew,this.listIndividualNew,this.listBusiness,this.listIndividual));
 						
 					}
 				})
@@ -177,7 +178,7 @@ export class EmailCreateComponent implements OnInit {
 	
 				}
 			})
-			console.log(item)
+			// console.log(item)
 		});
 		$('#modalConfirmChangeStatus').modal('hide')
 	}

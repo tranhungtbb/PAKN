@@ -85,8 +85,9 @@
 }
 
 :host ::ng-deep .dropdown-menu {
-	width: 250% !important;
+	width: 200% !important;
 }
+
 
 :host ::ng-deep li.ui-multiselect-item {
 	display: flex !important;
@@ -94,6 +95,16 @@
 :host ::ng-deep .ui-multiselect {
 	width: 100%;
 	height: 100%;
+}
+
+:host ::ng-deep .dropdown{
+	height: 56px;
+}
+:host ::ng-deep button.btn.dropdown-toggle.btn-outline-primary {
+	height: 56px;
+}
+.btn-outline-primary{
+	height: 56px;
 }
 
 :host ::ng-deep .ui-multiselected-item-token,

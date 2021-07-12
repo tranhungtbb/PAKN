@@ -344,6 +344,7 @@ namespace PAKNAPI.Models.Recommendation
         public string FileName { get; set; }
         public int Type { get; set; }
         public int ObjectId { get; set; }
+        public bool IsReply { get; set; }
 
         public async Task<int?> MR_Sync_CuTriTinhKhanhHoaFileAttachInsertDAO(MR_SyncFileAttach mr_CuTriTinhKhanhHoaFile)
         {
@@ -362,6 +363,23 @@ namespace PAKNAPI.Models.Recommendation
             return (await _sQLCon.ExecuteListDapperAsync<MR_SyncFileAttach>("[MR_Sync_CuTriTinhKhanhHoa_FileAttachGetListByKNCTId]", DP)).ToList();
         }
 
+        public async Task<int?> RecommentdationSyncFileAttachInsertDAO(MR_SyncFileAttach mr_CuTriTinhKhanhHoaFile)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("@FilePath", mr_CuTriTinhKhanhHoaFile.FilePath);
+            DP.Add("@FileName", mr_CuTriTinhKhanhHoaFile.FileName);
+            DP.Add("@Type", mr_CuTriTinhKhanhHoaFile.Type);
+            DP.Add("@ObjectId", mr_CuTriTinhKhanhHoaFile.ObjectId);
+            return (await _sQLCon.ExecuteNonQueryDapperAsync("[MR_RecommendationSync_FileAttachInsert]", DP));
+        }
+
+        public async Task<List<MR_SyncFileAttach>> RecommentdationSyncFileAttachGetByObjectIdDAO(long ElectorId)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("@ObjectId", ElectorId);
+            return (await _sQLCon.ExecuteListDapperAsync<MR_SyncFileAttach>("[MR_RecommendationSync_FileAttachGetListByObjectId]", DP)).ToList();
+        }
+
 
         public async Task<int?> MR_Sync_DichVuCongQuocGiaFileAttachInsertDAO(MR_SyncFileAttach mr_CuTriTinhKhanhHoaFile)
         {
@@ -370,6 +388,7 @@ namespace PAKNAPI.Models.Recommendation
             DP.Add("@FileName", mr_CuTriTinhKhanhHoaFile.FileName);
             DP.Add("@Type", mr_CuTriTinhKhanhHoaFile.Type);
             DP.Add("@ObjectId", mr_CuTriTinhKhanhHoaFile.ObjectId);
+            DP.Add("@IsReply", mr_CuTriTinhKhanhHoaFile.IsReply);
             return (await _sQLCon.ExecuteNonQueryDapperAsync("[MR_Sync_CongDichVuCongQuocGiaFileAttachInsert]", DP));
         }
 

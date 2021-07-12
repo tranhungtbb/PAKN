@@ -29,7 +29,6 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<RecommendationObject>()
 	listStatus: any = [
-		{ value: 1, text: 'Đang soạn thảo' },
 		{ value: 3, text: 'Đã công bố' },
 		{ value: 2, text: 'Đã thu hồi' },
 	]
@@ -55,6 +54,9 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 		unitId: null,
 		status: null,
 	}
+
+	idChangeStatus : any
+	statusChange : number
 
 	ngOnInit() {
 		this.getDataForCreate()
@@ -172,5 +174,33 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 			(error) => {
 				console.error(error)
 			}
+	}
+
+	preChangeStatus(id : number,  status : number){
+		this.idChangeStatus = id
+		this.statusChange = status
+		$('#modalConfirmChangeStatus').modal('show')
+
+	}
+
+	onChangeStatus(){
+		const request = {
+			Id: this.idChangeStatus,
+			Status: this.statusChange,
+		}
+		console.log(request)
+		$('#modalConfirmChangeStatus').modal('hide')
+		this.afService.updateShow(request).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				this._toastr.success(COMMONS.UPDATE_SUCCESS)
+				this.getList()
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(err) => {
+				console.error(err)
+			}
+		
 	}
 }

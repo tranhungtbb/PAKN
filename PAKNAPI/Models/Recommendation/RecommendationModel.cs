@@ -103,6 +103,7 @@ namespace PAKNAPI.Models.Recommendation
         public string QuestionContent { get; set; }
         public string Reply { get; set; }
         public string CreatedDate { get; set; }
+        public string ReplyDate { get; set; }
     }
 
     public class DichViCongQuocGia
@@ -125,7 +126,7 @@ namespace PAKNAPI.Models.Recommendation
         private bool isTongHop = false;
         private string keyWord = "";
         private int tinhTrangGiaiQuyet = -1;
-        private int trangThai = -1;
+        private int trangThai = 3;
         private int pageSize = 40;
         public int AccountId { get; set; }
         public int DeparmentId { get; set; }

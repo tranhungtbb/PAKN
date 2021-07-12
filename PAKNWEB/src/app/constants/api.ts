@@ -205,6 +205,7 @@ export class Api {
 	public static InvitationGetList = 'INVSPBase/INVInvitationGetAllOnPageBase'
 	public static InnvitationDetail = 'INVInvitation/INVInvitationDetail'
 	public static UserReadedInvitationGetList = 'INVSPBase/SYUserReadedInvitationGetAllOnPage'
+	public static InnvitationGetListHisOnPage = 'HISPBase/HISInvitationGetByInvitationIdOnPageBase'
 
 	//sms
 	public static SMSManagementGetOnPage = 'SMSSPBase/SMSQuanLyTinNhanGetAllOnPageBase'
@@ -275,6 +276,7 @@ export class Api {
 	public static AdministrativeFormalitiesDelete = 'DAMSPBase/DAMAdministrationDeleteBase'
 	public static AdministrativeFormalitiesUpdateShow = 'DAMSPBase/DAMAdministrationUpdateShowBase'
 	public static AdministrativeFormalitiesCAFieldDAM = 'CASPBase/CAFieldDAMGetDropdownBase'
+	public static AdministrativeForward = 'DAMAdministration/DAMAdministrationForward'
 
 	// Notification
 	public static NotificationInsertTypeNews = 'SYNotification/SYNotificationInsertTypeNews'
