@@ -51,15 +51,23 @@ export class ViewNewsComponent implements OnInit {
 	redirectNews() {
 		if (this.title == null || this.title == '') return
 		this.router.navigateByUrl('/cong-bo/tin-tuc-su-kien?title=' + this.title)
-		// window.location.href = '/cong-bo/tin-tuc-su-kien?title=' + this.title
 	}
 	getData(id) {
-		this.newsService.getViewDetail({ id }).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				this.model = res.result.NENewsViewDetail[0]
-				console.log(this.model)
-			}
-		})
+		if(this.viewDemo){
+			this.newsService.getViewDetail({ id }).subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.model = res.result.NENewsViewDetail[0]
+				}
+			})
+		}else{
+			this.newsService.getViewDetailPublic({ id }).subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.model = res.result
+				}else{
+					this.model = null
+				}
+			})
+		}
 	}
 
 	getNewsRelates(id) {

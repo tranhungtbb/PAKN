@@ -39,6 +39,8 @@ namespace PAKNAPI.ExportGrid {
             this.tableCell18 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell18");
             this.tableCell7 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell7");
             this.tableCell5 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell5");
+            this.tableCell6 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell6");
+            this.tableCell10 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell10");
 
             // Parameters
             this.FromDate = reportInitializer.GetParameter("FromDate");
@@ -55,6 +57,7 @@ namespace PAKNAPI.ExportGrid {
 
             // Data Sources
             this.sqlDataSource1 = reportInitializer.GetDataSource<DevExpress.DataAccess.Sql.SqlDataSource>("sqlDataSource1");
+            this.sqlDataSource2 = reportInitializer.GetDataSource<DevExpress.DataAccess.Sql.SqlDataSource>("sqlDataSource2");
 
             // Styles
             this.Title = reportInitializer.GetStyle("Title");
@@ -106,5 +109,8 @@ namespace PAKNAPI.ExportGrid {
         private DevExpress.XtraReports.Parameters.Parameter CreateName;
         private DevExpress.XtraReports.Parameters.Parameter TitleMR;
         private DevExpress.XtraReports.Parameters.Parameter Status;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell6;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell10;
+        private DevExpress.DataAccess.Sql.SqlDataSource sqlDataSource2;
     }
 }

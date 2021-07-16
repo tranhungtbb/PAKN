@@ -219,6 +219,38 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("DAMAdministrationForwardGetListOnPage")]
+		public async Task<ActionResult<object>> DAMAdministrationForwardGetListOnPageBase(string Code, string Name, string Organization, int? FieldId, int? UnitForward, int? Status, int PageSize, int PageIndex)
+		{
+			try
+			{
+				var userProcess = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				List<DAMAdministrationForwardGetList> rsDAMAdministrationGetList = 
+					await new DAMAdministrationForwardGetList(_appSetting).
+					DAMAdministrationForwardGetListDAO(userProcess, Code, Name, Organization, FieldId, UnitForward,Status, PageSize, PageIndex);
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"DAMAdministrationForwardGetListOnPage", rsDAMAdministrationGetList},
+						{"TotalCount", rsDAMAdministrationGetList != null && rsDAMAdministrationGetList.Count > 0 ? rsDAMAdministrationGetList[0].RowNumber : 0},
+						{"PageIndex", rsDAMAdministrationGetList != null && rsDAMAdministrationGetList.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsDAMAdministrationGetList != null && rsDAMAdministrationGetList.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("DAMAdministrationGetListTopBase")]

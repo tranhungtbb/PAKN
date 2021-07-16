@@ -24,7 +24,7 @@
 				<div class="form-group">
 					<label class="mb-1">Mật khẩu <span class="cl-red">(*)</span></label>
 					<input svDisabledSpaceKey [(ngModel)]="model.password" formControlName="password" type="password" placeholder="Nhập..." autocomplete="off"
-						class="form-control border-brown h-34px rounded-6px" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$">
+						class="form-control border-brown h-34px rounded-6px" pattern="^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z\d@$!%*#?&()^]{6,}$">
 					<div *ngIf="(fLoginSubmitted && fLogin.password.invalid)||(fLogin.password.invalid && (fLogin.password.dirty || fLogin.password.touched))"
 						class="has-error m-b-12">
 						<div *ngIf="fLogin.password.errors.required">

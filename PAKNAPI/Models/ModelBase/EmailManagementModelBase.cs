@@ -58,6 +58,17 @@ namespace PAKNAPI.Models.ModelBase
         public string UnitName { get; set; }
         public int? AdUnitId { get; set; }
     }
+
+    public class EmailIndividualBusinessModel
+    {
+        public int? Id { get; set; }
+        public long? EmailId { get; set; }
+        public int? ObjectId { get; set; }
+        public string ObjectName { get; set; }
+        public string UnitName { get; set; }
+        public int Category { get; set; }
+        public int AdmintrativeUnitId { get; set; }
+    }
     public class EmailManagementHisModel
     {
         public int? Id { get; set; }
@@ -217,45 +228,34 @@ namespace PAKNAPI.Models.ModelBase
         {
         }
 
-        public async Task<int> Update(EmailManagementIndividualModel model)
+        public async Task<int> Insert(EmailManagementIndividualModel model)
         {
             DynamicParameters DP = new DynamicParameters();
-            if (model.Id.HasValue && model.Id > 0 )
-            {
-                DP.Add("EmailId", model.EmailId);
-                DP.Add("IndividualId", model.IndividualId);
-                DP.Add("Id", model.Id);
-                return await _sQLCon.ExecuteNonQueryDapperAsync("[Email_quanlytinnhan_IndividualUpdate]", DP);
-            }
-            else
-            {
-                DP = new DynamicParameters();
-                DP.Add("EmailId", model.EmailId);
-                DP.Add("IndividualId", model.IndividualId);
-                DP.Add("UnitName", model.UnitName);
-                DP.Add("AdUnitId", model.AdUnitId);
-                return await _sQLCon.ExecuteNonQueryDapperAsync("[Email_quanlytinnhan_IndividualInsert]", DP);
-            }
-            
+            DP.Add("EmailId", model.EmailId);
+            DP.Add("IndividualId", model.IndividualId);
+            DP.Add("UnitName", model.UnitName);
+            DP.Add("AdUnitId", model.AdUnitId);
+            return await _sQLCon.ExecuteNonQueryDapperAsync("[Email_quanlytinnhan_IndividualInsert]", DP);
+
         }
-        public async Task<int> Delete(string Ids)
-        {
-            DynamicParameters DP = new DynamicParameters();
-            DP.Add("Ids", Ids);
-            return await _sQLCon.ExecuteNonQueryDapperAsync("[Email_quanlytinnhan_IndividualDelMuti]", DP);
-        }
-        public async Task<IEnumerable<EmailManagementIndividualModel>> GetByEmailId(long emailId)
+        public async Task<int> DeleteByEmailId(long? emailId)
         {
             DynamicParameters DP = new DynamicParameters();
             DP.Add("EmailId", emailId);
-            return await _sQLCon.ExecuteListDapperAsync<EmailManagementIndividualModel>("Email_Individual_GetByEmailId", DP);
+            return await _sQLCon.ExecuteNonQueryDapperAsync("[Email_QuanLyTinNhan_IndividualDeleteByEmailId]", DP);
+        }
+        public async Task<List<EmailManagementIndividualModel>> GetByEmailId(long emailId)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("EmailId", emailId);
+            return (await _sQLCon.ExecuteListDapperAsync<EmailManagementIndividualModel>("Email_Individual_GetByEmailId", DP)).ToList();
         }
 
-        public async Task<IEnumerable<string>> GetAllEmailAddressByEmailId(long emailId)
+        public async Task<List<string>> GetAllEmailAddressByEmailId(long emailId)
         {
             DynamicParameters DP = new DynamicParameters();
             DP.Add("EmailId", emailId);
-            return await _sQLCon.ExecuteListDapperAsync<string>("Email_Individual_GetEmailAddressByEmailID", DP);
+            return (await _sQLCon.ExecuteListDapperAsync<string>("Email_Individual_GetEmailAddressByEmailID", DP)).ToList();
         }
     }
     public class EmailManagementBusinessADO
@@ -271,45 +271,35 @@ namespace PAKNAPI.Models.ModelBase
         {
         }
 
-        public async Task<int> Update(EmailManagementBusinessModel model)
+        public async Task<int> Insert(EmailManagementBusinessModel model)
         {
             DynamicParameters DP = new DynamicParameters();
-            if (model.Id.HasValue && model.Id > 0)
-            {
-                DP.Add("EmailId", model.EmailId);
-                DP.Add("BusinessId", model.BusinessId);
-                DP.Add("Id", model.Id);
-                return await _sQLCon.ExecuteNonQueryDapperAsync("[Email_quanlytinnhan_BusinessUpdate]", DP);
-            }
-            else
-            {
-                DP = new DynamicParameters();
-                DP.Add("EmailId", model.EmailId);
-                DP.Add("BusinessId", model.BusinessId);
-                DP.Add("UnitName", model.UnitName);
-                DP.Add("AdUnitId", model.AdUnitId);
-                return await _sQLCon.ExecuteNonQueryDapperAsync("[Email_quanlytinnhan_BusinessInsert]", DP);
-            }
+            DP = new DynamicParameters();
+            DP.Add("EmailId", model.EmailId);
+            DP.Add("BusinessId", model.BusinessId);
+            DP.Add("UnitName", model.UnitName);
+            DP.Add("AdUnitId", model.AdUnitId);
+            return await _sQLCon.ExecuteNonQueryDapperAsync("[Email_quanlytinnhan_BusinessInsert]", DP);
 
 
         }
-        public async Task<int> Delete(string Ids)
-        {
-            DynamicParameters DP = new DynamicParameters();
-            DP.Add("Ids", Ids);
-            return await _sQLCon.ExecuteNonQueryDapperAsync("Email_quanlytinnhan_BusinessDelMuti", DP);
-        }
-        public async Task<IEnumerable<EmailManagementBusinessModel>> GetByEmailId(long emailId)
+        public async Task<int> DeleteByEmailId(long? emailId)
         {
             DynamicParameters DP = new DynamicParameters();
             DP.Add("EmailId", emailId);
-            return await _sQLCon.ExecuteListDapperAsync<EmailManagementBusinessModel>("Email_Business_GetByEmailId", DP);
+            return await _sQLCon.ExecuteNonQueryDapperAsync("Email_QuanLyTinNhan_BusinessDeleteByEmailId", DP);
         }
-        public async Task<IEnumerable<string>> GetAllEmailAddressByEmailId(long emailId)
+        public async Task<List<EmailManagementBusinessModel>> GetByEmailId(long emailId)
         {
             DynamicParameters DP = new DynamicParameters();
             DP.Add("EmailId", emailId);
-            return await _sQLCon.ExecuteListDapperAsync<string>("Email_Business_GetEmailAddressByEmailID", DP);
+            return (await _sQLCon.ExecuteListDapperAsync<EmailManagementBusinessModel>("Email_Business_GetByEmailId", DP)).ToList();
+        }
+        public async Task<List<string>> GetAllEmailAddressByEmailId(long emailId)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("EmailId", emailId);
+            return (await _sQLCon.ExecuteListDapperAsync<string>("Email_Business_GetEmailAddressByEmailID", DP)).ToList();
         }
     }
     public class EmailManagemnetHisADO

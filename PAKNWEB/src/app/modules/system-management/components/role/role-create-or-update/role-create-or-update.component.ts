@@ -32,6 +32,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 	listPermissionCategories: any[]
 	listPermissionGroupUserSelected: any[] = []
 	userId: any
+	listUserIsSystemBase : any = []
 	constructor(
 		private _toastr: ToastrService,
 		private formBuilder: FormBuilder,
@@ -46,7 +47,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 	ngOnInit() {
 		this.getRoleById()
 		this.buildForm()
-		this.getUsersIsSystem()
+		// this.getUsersIsSystem()
 	}
 
 	buildForm() {
@@ -92,18 +93,36 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 					}
 					this.listItemUserSelected.push(obj)
 				})
+				this.getUsersIsSystem()
 			}
 		})
 	}
 
 	getUsersIsSystem() {
-		this.userService.getIsSystem({}).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				this.listUserIsSystem = res.result.SYUserGetIsSystem
-			} else {
-				this.listUserIsSystem = []
-			}
+		if(this.listUserIsSystemBase.length == 0){
+			this.userService.getIsSystem({}).subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					if(res.result.SYUserGetIsSystem.length > 0){
+						this.listUserIsSystemBase = res.result.SYUserGetIsSystem
+						this.listUserIsSystem = res.result.SYUserGetIsSystem.filter(x=>{
+								let arr = this.listItemUserSelected.map(x=>{return x.value})
+								if(arr.includes(x.value)){return}
+								return x
+						})
+					}
+				} else {
+					this.listUserIsSystem = []
+				}
+			})
+		}else{
+			this.listUserIsSystem = this.listUserIsSystemBase.filter(x=>{
+				let arr = this.listItemUserSelected.map(x=>{return x.value})
+				if(arr.includes(x.value)){return}
+				return x
 		})
+		}
+		
+		
 	}
 
 	get f() {
@@ -213,9 +232,12 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 				this.listItemUserSelected.push(item)
 			else this._toastr.error('Vui lòng chọn người dùng')
 		}
+		this.getUsersIsSystem()
+		this.userId = null
 	}
 	onRemoveUser(item: any) {
 		this.listItemUserSelected = this.listItemUserSelected.filter((x) => x.value != item.value)
+		this.getUsersIsSystem()
 		return
 	}
 

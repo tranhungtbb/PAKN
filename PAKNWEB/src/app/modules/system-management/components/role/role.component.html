@@ -150,7 +150,7 @@
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="min-width: 90%;">
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0">
-				<p class="modal-title h4">Danh sách người dùng</p>
+				<p class="modal-title h4">Danh sách người dùng thuộc vai trò</p>
 				<button class="close btn-close-modal" data-dismiss="modal">
 					×
 				</button>
@@ -158,12 +158,12 @@
 			<div style="display: flex; margin: 10px 20px;">
 				<div style="width: 15%;" class="text-center-x">Chọn người dùng</div>
 				<div style="width: 75%;">
-					<ng-select class="form-control" [items]="listUserIsSystem" multiple="true" bindValue="value" bindLabel="text" [(ngModel)]="listItem"></ng-select>
+					<ng-select class="form-control" [items]="SYUserGetIsNotRole" style="height: auto;" multiple="true" bindValue="value" bindLabel="text" [(ngModel)]="listItem"></ng-select>
 
 				</div>
 				<div style="width: 10%;" class="text-center-x">
 					<button *hasPermission="['3', 'A_X_9']" type="button" (click)="onCreateUserRole()" class="btn grd-xanhngoc btn-sm rounded border-0 text-white text-center-x"
-						style="width: 60%; height: 100%;">Thêm</button>
+						style="width: 60%;">Thêm</button>
 				</div>
 			</div>
 			<div class="modal-body pt-3 pb-3">
@@ -188,7 +188,7 @@
 
 							<th>
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-									<strong>Phone</strong>
+									<strong>Số điện thoại</strong>
 									<span class="caret-tb"></span>
 								</p>
 							</th>

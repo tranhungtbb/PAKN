@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace PAKNAPI.Controllers
 {
@@ -19,30 +20,22 @@ namespace PAKNAPI.Controllers
         static readonly HttpClient client = new HttpClient();
 
         private readonly IAppSetting _appSetting;
+        private readonly IConfiguration _config;
 
-        public WeatherController(IAppSetting appSetting)
+        public WeatherController(IAppSetting appSetting, IConfiguration config)
         {
             _appSetting = appSetting;
+            _config = config;
         }
 
         [Route("get")]
         public async Task<object> getWeatherAsync(string lat, string lon)
         {
-            var config = new WeatherConfigModel
-            {
-                api = "http://api.openweathermap.org/data/2.5/weather",
-                appid = "3203582b0e1e98b17f97b639bcef2350"
+            var config = new WeatherConfigModel { 
+                api = _config["ConfigWeather:api"],
+                appid = _config["ConfigWeather:appid"],
             };
 
-            try
-            {
-                var _config = await new SYConfig(_appSetting).SYConfigGetByTypeDAO(4);
-                config = JsonConvert.DeserializeObject<WeatherConfigModel>(_config.FirstOrDefault().Content);
-            }
-            catch
-            {
-
-            }
 
 
             var data = await this.getWeatherData(lat,lon, config);
@@ -60,16 +53,9 @@ namespace PAKNAPI.Controllers
         {
             var config = new WeatherConfigModel
             {
-                api = "http://api.openweathermap.org/data/2.5/weather",
-                appid = "3203582b0e1e98b17f97b639bcef2350"
+                api = _config["ConfigWeather:api"],
+                appid = _config["ConfigWeather:appid"],
             };
-
-            try
-            {
-                var _config = await new SYConfig(_appSetting).SYConfigGetByTypeDAO(4);
-                config = JsonConvert.DeserializeObject<WeatherConfigModel>(_config.FirstOrDefault().Content);
-            }catch{}
-
 
             var data = await this.getWeatherDataByQ(q, config);
 

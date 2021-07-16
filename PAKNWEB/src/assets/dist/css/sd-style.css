@@ -688,7 +688,11 @@ transition: all .3s ease-in-out;
 
 
 .table-striped>tbody>tr:nth-of-type(odd){
-	--bs-table-accent-bg: rgb(255 255 255 / 68%);
+	--bs-table-accent-bg: #fff;
+}
+
+.table-striped>tbody>tr:nth-of-type(even){
+	--bs-table-accent-bg: #FDFCFC;
 }
 .table-tthc th{
 	width: 250px;
@@ -1329,16 +1333,21 @@ a:not([href]):not([tabindex]){
 
 .file-att{
 	display: inline-block;
-	padding: 0 15px;
-	border-right: 1px solid #eeeeee;
+	padding: 4px 15px;
+	border: 1px solid #eeeeee;
+	margin: 3px 7px;
+	width: 180px;
+	border-radius: 10px;
 }
 .file-att i{
 	margin-left: 10px;
+	float: right;
 }
 
 .table-sd thead,
 body .ui-table .ui-table-thead > tr > th{		
-	background-color: #ECF4FF!important;
+	background-color: #EDF4FD !important;
+
 }
 .table tbody tr td, body .ui-paginator {
 	border-color: #f0f1f5!important;
@@ -1564,7 +1573,7 @@ body .ui-editor-container .ui-editor-content {
 	overflow: auto;
 	position: absolute;
 	top: 0;
-	border-radius: 4px;
+	border-radius: 0.75rem;
 	border: 1px solid #C0C0C0;
 	background: #ffffff;
 	font-size: 16px;
@@ -1697,3 +1706,23 @@ table thead .form-control ng-select {
 		height: 34px;
     border-radius: 10px;
 }
+:host ::ng-deep .dx-designer{
+	height: 100% !important;
+}
+/* span.ng-clear-wrapper[title]:hover::after {
+	content: 'Xóa hết';
+	position: absolute;
+  top: -100%;
+  left: 0;
+} */
+
+/* span.ng-clear-wrapper {
+	display:none;
+} */
+
+/* span.ng-clear-wrapper  {
+	color: #337ab7;
+	font-size: 12px;
+	font-family: 'Glyphicons Halflings';
+	content: "\e014";
+} */

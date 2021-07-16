@@ -1216,7 +1216,7 @@ namespace PAKNAPI.ModelBase
 		public long? UpdatedBy { get; set; }
 		public DateTime? UpdatedDate { get; set; }
 
-		public async Task<List<MRRecommendationGetByHashtagAllOnPage>> MRRecommendationGetByHashtagAllOnPageDAO(string Code, string SendName, string Title, string Content, int? Status, int? UnitId, int? HashtagId, int? PageSize, int? PageIndex)
+		public async Task<List<MRRecommendationGetByHashtagAllOnPage>> MRRecommendationGetByHashtagAllOnPageDAO(string Code, string SendName, string Title, string Content, int? Status,long userId, int? UnitId, int? HashtagId, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Code", Code);
@@ -1224,6 +1224,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Title", Title);
 			DP.Add("Content", Content);
 			DP.Add("Status", Status);
+			DP.Add("UserProcessId", userId);
 			DP.Add("UnitId", UnitId);
 			DP.Add("HashtagId", HashtagId);
 			DP.Add("PageSize", PageSize);

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
+import { Component, ElementRef, OnInit, ViewChild, HostListener } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { COMMONS } from 'src/app/commons/commons'
 import { CONSTANTS, FILETYPE, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
@@ -60,7 +60,8 @@ export class CreateRecommendationComponent implements OnInit {
 		private router: Router,
 		private captchaService: CaptchaService,
 		private activatedRoute: ActivatedRoute,
-		private notificationService: NotificationService
+		private notificationService: NotificationService,
+		private eRef: ElementRef
 	) {}
 
 	ngOnInit() {
@@ -398,7 +399,15 @@ export class CreateRecommendationComponent implements OnInit {
 		this.submitted = false
 		this.model = new RecommendationObject()
 		this.captchaCode = null
-		this.form.reset()
+		this.form.reset({
+			title: this.model.title,
+			content: this.model.content,
+			field: this.model.field,
+			unitId: this.model.unitId,
+			hashtag: this.hashtagId,
+			captcha: this.captchaCode,
+		})
+		$('#contentRecommendation').html()
 	}
 	hightLightText() {
 		if (this.model.content != null && this.model.content != '' && this.model.content.trim() != '') {

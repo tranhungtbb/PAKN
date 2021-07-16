@@ -36,9 +36,16 @@ export class ForgetPasswordUserComponent implements OnInit {
 
 		this.authenService.forgetpassword(this.user).subscribe(
 			(data) => {
-				if (data.status === 1) {
-					this._router.navigate(['/dang-nhap'])
-				} else if (data.status !== 2) {
+				if (data.result > 0) {
+					this.toastr.info("Vui lòng đăng nhập với mật khẩu mới trong email của bạn" ,'',{timeOut:300000})
+					// this.toastr.info(
+					// 	'message',
+					// 	'title',
+					// 	{positionClass:'inline',
+					// timeOut:500000},
+					// );
+					// this._router.navigate(['/dang-nhap'])
+				} else  {
 					this.toastr.error(data.message)
 				}
 			},
@@ -50,7 +57,6 @@ export class ForgetPasswordUserComponent implements OnInit {
 	login(): void {
 		this._router.navigate(['/dang-nhap'])
 	}
-	//get email() { return this.forgetPasswordForm.get('email'); }
 	get f() {
 		return this.forgetPasswordForm.controls
 	}

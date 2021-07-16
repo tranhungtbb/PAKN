@@ -50,10 +50,15 @@ namespace PAKNAPI.Common
             "Hủy giữ",//30
         };
         private readonly IAppSetting _appSetting;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public LogHelper(IAppSetting appSetting)
         {
             _appSetting = appSetting;
         }
+        //public LogHelper( IHttpContextAccessor httpContextAccessor)
+        //{
+        //    _httpContextAccessor = httpContextAccessor;
+        //}
         //Custome code here
         public async void InsertSystemLogging(Logs logHelper)
         {
@@ -79,19 +84,6 @@ namespace PAKNAPI.Common
                 Exception = logHelper.e != null ? logHelper.e.Message + " - " + logHelper.e.InnerException : null
             };
             await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
-            //DynamicParameters DP = new DynamicParameters();
-            //DP.Add("TenNguoiDung", sYUser.FullName);
-            //DP.Add("NgayHanhDong", DateTime.Now);
-            //DP.Add("TenHanhDong", logHelper.logAction);//Ten action (add, edit..), truyen tu client
-            //DP.Add("DiaChiIp", logHelper.ipAddress);
-            //DP.Add("DiaChiMac", logHelper.macAddress);
-            //DP.Add("NgoaiLe", logHelper.e != null ? logHelper.e.Message + " - " + logHelper.e.InnerException : null);
-            //DP.Add("TacNhan", logHelper.logObject);//Ten tac nhan, truyen tu client
-            //DP.Add("NoiXayRaLoi", logHelper.location);//Ten vi tri gay loi
-            //DP.Add("MaDonVi", sYUser.OrganizationName);
-            //DP.Add("NoiDung", logHelper.logAction + " " + logHelper.logObject);
-
-            //await _sQLCon.ExecuteNonQueryDapperAsync("TenStoredInsertLog", DP);
         }
 
         public BaseRequest ReadBodyFromRequest(HttpRequest httpRequest)
@@ -138,6 +130,11 @@ namespace PAKNAPI.Common
             });
         }
 
+        public string GetFullNameFromRequest2(HttpContext httpContext)
+        {
+            var s = httpContext.User.Identities.FirstOrDefault().Claims;
+            return httpContext.User.Claims.FirstOrDefault(c => c.Type == "FullName").Value;
+        }
         public string GetFullNameFromRequest(HttpContext httpContext)
         {
             return httpContext.User.Claims.FirstOrDefault(c => c.Type == "FullName").Value;

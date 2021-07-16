@@ -82,10 +82,11 @@ namespace PAKNAPI
 				options.SerializerSettings.DateParseHandling = DateParseHandling.DateTimeOffset;
 			});
 			services.AddTransient<CustomMiddleware>();
-			services.AddHttpContextAccessor();
+			services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 			services.AddTransient<IAppSetting, AppSetting>();
 			services.AddTransient<IFileService, FileService>();
 			services.AddTransient<IMailService, MailService>();
+			services.AddHttpContextAccessor();
 			services.AddDevExpressControls();
 
 			//services.Configure<MailSettings>();

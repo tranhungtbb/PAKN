@@ -33,7 +33,7 @@
 								</th>
 								<th style="width: 350px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Từ ngữ</strong>
+										<strong>Nhóm từ ngữ</strong>
 
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
@@ -122,7 +122,7 @@
 					<div class="modal-body no-padding-bottom">
 						<div class="row form-group">
 							<div class="col-sm-8">
-								<label class="control-label">Tiêu đề <span class="text-danger">(*)</span></label>
+								<label class="control-label">Nhóm từ ngữ <span class="text-danger">(*)</span></label>
 								<input placeholder="Nhập..." id="target" svTrim class="form-control" formControlName="name" [(ngModel)]="model.name" maxlength="100" />
 								<div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))" class="has-error m-b-12">
 									<div *ngIf="f.name.errors.required">

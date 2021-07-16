@@ -5,3 +5,18 @@ body p-multiselect .ui-multiselect{
 :host ::ng-deep .dropdown-menu {
 	width: 200% !important;
 }
+
+.title-user-map {
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 21px;
+	margin: 30px 0px 15px 0px;
+	text-transform: uppercase;
+	color: #1b1b3e;
+}
+.center {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}

@@ -122,6 +122,12 @@ export class AppheaderComponent implements OnInit {
 			rePassword: [this.rePassword, Validators.required],
 		})
 	}
+	ngAfterViewInit() {
+		$('#modalChangePasswordByMe').on('keypress', function (e) {
+			if (e.which == 13) e.preventDefault()
+		})
+	}
+
 	showPassword(){
 		this.isShowPassword = !this.isShowPassword
 	}

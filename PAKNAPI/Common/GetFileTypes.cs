@@ -89,6 +89,7 @@ namespace PAKNAPI.Common
                 { ".ppsx" , 6 },
                 {".wmv", 7},
                 {".mp4", 7},
+                {".tif", 8},
             };
         }
     }

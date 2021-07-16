@@ -122,6 +122,7 @@ export class Api {
 	public static SystemLogDelete = 'AdministrationFormalities/SYSystemLogDeleteBase'
 	public static SystemGetUserDropDown = 'SYSPBase/SYUsersGetDropdownBase'
 	public static UserGetIsSystem = 'SYUserSPBase/SYUserGetIsSystemBase'
+	public static UserGetIsNotRole = 'SYUserSPBase/SYUserGetIsNotRole'
 	public static UserGetIsSystem2 = 'SYUserSPBase/SYUserGetIsSystem2Base'
 	public static getIsSystemOrderByUnit = 'User/GetOrderByUnit'
 	public static DeleteUserRole = 'SYUserSPBase/SYUserRoleMapDeleteBase'
@@ -183,6 +184,7 @@ export class Api {
 	public static HisNewsInsert = 'HISNews/HISNewsInsert'
 	public static HisNewsGetListByNewsId = 'HISNews/HISNewsGetByNewsId'
 	public static NewsGetViewDetail = 'NESPBase/NENewsViewDetailBase'
+	public static NewsGetViewDetailPublic = 'NESPBase/NENewsViewDetailPublicBase'
 	public static NewsGetAllRelates = 'NESPBase/NENewsGetAllRelatesBase'
 
 	//Department
@@ -268,6 +270,7 @@ export class Api {
 	//Administrative Formalities
 	public static AdministrativeFormalitiesGetDropdown = 'AdministrativeFormalities/AdministrativeFormalitiesGetDropdown'
 	public static AdministrativeFormalitiesGetList = 'DAMSPBase/DAMAdministrationGetListBase'
+	public static AdministrativeFormalitiesGetListForward = 'DAMSPBase/DAMAdministrationForwardGetListOnPage'
 	public static AdministrativeFormalitiesGetListHomePage = 'DAMSPBase/DAMAdministrationGetListTopBase'
 	public static AdministrativeFormalitiesGetById = 'AdministrationFormalities/AdministrationFormalitiesGetByID'
 	public static AdministrativeFormalitiesGetByIdView = 'AdministrativeFormalities/RecommendationGetByIdView'

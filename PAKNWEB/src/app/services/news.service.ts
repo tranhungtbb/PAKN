@@ -113,6 +113,12 @@ export class NewsService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NewsGetViewDetail)
 	}
 
+	getViewDetailPublic(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NewsGetViewDetailPublic)
+	}
+
+	
+
 	getAllRelates(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NewsGetAllRelates)
 	}

@@ -143,6 +143,8 @@ export class HashtagComponent implements OnInit {
 	}
 
 	listRecommendationByHashtag(id: any) {
+		debugger
+		if(id == undefined) return
 		this.mrrHashtagId = id
 		var obj = {
 			Code: this.mrrCode != null ? this.mrrCode : '',
@@ -155,6 +157,7 @@ export class HashtagComponent implements OnInit {
 			PageSize: this.mrrPageSize,
 			PageIndex: this.mrrPageIndex,
 		}
+		debugger
 		this.service.recommendationGetByHashtagAllOnPage(obj).subscribe((res) => {
 			if ((res.success = RESPONSE_STATUS.success)) {
 				this.recommendationsGetByHashtag = res.result.MRRecommendationGetByHashtagAllOnPage

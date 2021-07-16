@@ -26,7 +26,12 @@ a.hight-light:hover {
 }
 .custom-show-pass{
 	position: absolute;
-    top: 12px;
-    right: 17px;
-    font-size: 20px;
+	top: 12px;
+	right: 17px;
+	font-size: 20px;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus{
+	outline:none;
+	box-shadow:none;
 }

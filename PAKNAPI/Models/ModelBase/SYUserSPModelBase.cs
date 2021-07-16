@@ -57,7 +57,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UserId", _sYUserRoleMapInsertIN.UserId);
 			DP.Add("RoleId", _sYUserRoleMapInsertIN.RoleId);
 
-			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_User_Role_MapInsert", DP);
+			return (await _sQLCon.ExecuteListDapperAsync<int?>("SY_User_Role_MapInsert", DP)).FirstOrDefault();
 		}
 	}
 
@@ -360,6 +360,12 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetIsSystem>("SY_UserGetIsSystem", DP)).ToList();
+		}
+		public async Task<List<SYUserGetIsSystem>> SYUserGetIsNotRole(int? roleId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RoleId", roleId);
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetIsSystem>("SY_UserGetIsNotRole", DP)).ToList();
 		}
 	}
 

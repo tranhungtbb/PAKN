@@ -41,7 +41,7 @@ export class RoleComponent implements OnInit {
 
 	// LIST USER
 	listUser: any[]
-	listUserIsSystem: any[]
+	SYUserGetIsNotRole: any[]
 	userPageIndex: Number = 1
 	userPageSize: Number = 10
 	userTotalRecords: Number
@@ -53,7 +53,7 @@ export class RoleComponent implements OnInit {
 
 	ngOnInit() {
 		this.getListPaged()
-		this.getUsersIsSystem()
+		// this.getUsersIsSystem()
 	}
 
 	getListPaged() {
@@ -78,12 +78,12 @@ export class RoleComponent implements OnInit {
 			})
 	}
 
-	getUsersIsSystem() {
-		this.userService.getIsSystem({}).subscribe((res) => {
+	getIsNotRole() {
+		this.userService.getIsNotRole({RoleId : this.roleId}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				this.listUserIsSystem = res.result.SYUserGetIsSystem
+				this.SYUserGetIsNotRole = res.result.SYUserGetIsNotRole
 			} else {
-				this.listUserIsSystem = []
+				this.SYUserGetIsNotRole = []
 			}
 		})
 	}
@@ -156,10 +156,12 @@ export class RoleComponent implements OnInit {
 			this.userPageSize = 10
 			this.listItem = []
 		}
+		this.listItem = []
 		this.roleId = id
+		this.getIsNotRole()
 		var obj = {
-			PageIndex: this.userPageIndex,
-			PageSize: this.userPageSize,
+			PageIndex: this.userPageIndex == 0 ? 1 : this.pageIndex,
+			PageSize: this.userPageSize == 0 ? 10 : this.pageSize,
 			RoleId: this.roleId,
 		}
 		this.userService.getByRoleIdOnPage(obj).subscribe((res) => {

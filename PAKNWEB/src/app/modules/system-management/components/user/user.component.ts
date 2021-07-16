@@ -104,6 +104,10 @@ export class UserComponent implements OnInit {
 		$('#modal').on('keypress', function (e) {
 			if (e.which == 13) e.preventDefault()
 		})
+		$('#modalChangePassword').on('keypress', function (e) {
+			if (e.which == 13) e.preventDefault()
+		})
+	
 		this.childCreateOrUpdateUser.parentUser = this
 		this.childDetailUser.parentUser = this
 	}
@@ -112,7 +116,6 @@ export class UserComponent implements OnInit {
 			if(res.success == RESPONSE_STATUS.success){
 				this.positionsList = res.result.lstPossition
 				this.unitsList = res.result.lstUnit
-				console.log(res)
 			}
 			
 		})

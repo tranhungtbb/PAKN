@@ -1407,13 +1407,14 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		[Route("MRRecommendationGetByHashtagAllOnPageBase")]
 		public async Task<ActionResult<object>> MRRecommendationGetByHashtagAllOnPageBase(string Code, string SendName, string Title, string Content, int? Status, int? UnitId, int? HashtagId, int? PageSize, int? PageIndex)
 		{
 			try
 			{
-				List<MRRecommendationGetByHashtagAllOnPage> rsMRRecommendationGetByHashtagAllOnPage = await new MRRecommendationGetByHashtagAllOnPage(_appSetting).MRRecommendationGetByHashtagAllOnPageDAO(Code, SendName, Title, Content, Status, UnitId, HashtagId, PageSize, PageIndex);
+				var userId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				List<MRRecommendationGetByHashtagAllOnPage> rsMRRecommendationGetByHashtagAllOnPage = await new MRRecommendationGetByHashtagAllOnPage(_appSetting).MRRecommendationGetByHashtagAllOnPageDAO(Code, SendName, Title, Content, Status, userId, UnitId, HashtagId, PageSize, PageIndex);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"MRRecommendationGetByHashtagAllOnPage", rsMRRecommendationGetByHashtagAllOnPage},

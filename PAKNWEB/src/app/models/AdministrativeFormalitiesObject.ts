@@ -39,10 +39,10 @@ export class AdministrativeFormalitiesObject {
 }
 
 export class AdministrativeFormalitiesForward{
-	unitId : number
+	lstUnitId : []
 	content : string
 	constructor (){
-		this.unitId = null
+		this.lstUnitId = []
 		this.content = ''
 	}
 }

@@ -10,7 +10,11 @@ namespace PAKNAPI.Models.Results
 		public string UserName { get; set; }
 	}
 	public class EditUserRequest : BaseRequest
-    {
+	{
 
-    }
+	}
+
+	public class Forgetpassword {
+		public string Email { get; set; }
+	}
 }

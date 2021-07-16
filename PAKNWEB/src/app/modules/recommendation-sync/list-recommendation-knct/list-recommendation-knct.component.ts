@@ -73,7 +73,7 @@ export class ListRequestComponent implements OnInit {
 			Unit: this.dataSearch.unit,
 			Place: this.dataSearch.place,
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
-			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
+			Status: 3,
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}

@@ -12,7 +12,7 @@ import { EmailManagementService } from 'src/app/services/email-management.servic
 import { SMSManagementService } from 'src/app/services/sms-management'
 import { smsManagementObject, smsManagementMapObject } from 'src/app/models/smsManagementObject'
 import { SMSTreeviewI18n } from 'src/app/shared/sms-treeview-i18n'
-import { EmailAttachmentObject, EmailBusinessObject, EmailIndividualObject, EmailObject } from 'src/app/models/emailManagementObject'
+import { EmailAttachmentObject,EmailBusinessIndividualObject, EmailObject } from 'src/app/models/emailManagementObject'
 import { first } from 'rxjs/operators'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { data } from 'jquery'
@@ -45,15 +45,11 @@ export class EmailCreateComponent implements OnInit {
 	model: EmailObject = new EmailObject()
 	form: FormGroup
 	listAttachment: any[] = []
-	listIndividual: any[] = []
-	listBusiness: any[] = []
+
 
 	listAttchamentDel: any[] = []
 	listFileNew: any[] = []
-	listIndividualDel: any[] = []
-	listBusinessDel: any[] = []
-	listIndividualNew: any[] = []
-	listBusinessNew: any[] = []
+	listBusinessIndividual = new Array<EmailBusinessIndividualObject>()
 	
 	///data display
 	listDiadanh: any[] = []
@@ -87,10 +83,7 @@ export class EmailCreateComponent implements OnInit {
 					if (res && res.success == 'OK') {
 						this.model = res.result.Data
 						this.listAttachment = res.result.ListAttachment
-						this.listIndividual = res.result.ListIndividual
-						this.listBusiness = res.result.ListBusiness
-
-						// console.log([].concat(this.listBusinessNew,this.listIndividualNew,this.listBusiness,this.listIndividual));
+						this.listBusinessIndividual = res.result.ListBusinessIndividual
 						
 					}
 				})
@@ -101,8 +94,6 @@ export class EmailCreateComponent implements OnInit {
 		this.smsService.GetListAdmintrative({ id: 37 }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.listDiadanh = res.result.CAAdministrativeUnitsGetDropDown
-				// this.listDiadanhTree = this.unflatten(this.listDiadanh)
-				// console.log(this.listDiadanhTree)
 				if (this.listDiadanh.length > 0) {
 					var itemFirst = new TreeViewDrop()
 					itemFirst.text = this.listDiadanh[0].name
@@ -138,26 +129,22 @@ export class EmailCreateComponent implements OnInit {
 	submitted = false
 	onSave(sendNow = false, cb:any=null) {
 		this.submitted = true
+		this.model.status = sendNow == false ? 1 : 2
 		if (this.form.invalid) {
 			return
 		}
-		if([].concat(this.listBusinessNew,this.listIndividualNew,this.listBusiness,this.listIndividual).length ==0){
-			return
-		}
+		
 
-		if(sendNow){
-			$('#modalConfirmChangeStatus').modal('show')
-			return;
+		if (this.listBusinessIndividual.length == 0 && this.model.status == 2) {
+			this._toastr.error('Vui lòng chọn cá nhân, doanh nghiệp được gửi SMS')
+			return
 		}
 
 
 		let model = {
 			Data: this.model,
 			ListAttachmentDel: this.listAttchamentDel,
-			ListIndividualDel: this.listIndividualDel,
-			ListIndividualNew: this.listIndividualNew,
-			ListBusinessDel: this.listBusinessDel,
-			ListBusinessNew: this.listBusinessNew,
+			ListBusinessIndividual: this.listBusinessIndividual,
 		}
 
 		this.emailService.createOrUpdate(model, this.listFileNew).subscribe((res) => {
@@ -185,66 +172,45 @@ export class EmailCreateComponent implements OnInit {
 
 	userId:any[] = []
 	onCreateUser() {
-		
 		if (this.ltsAdministrativeUnitId == undefined || this.ltsAdministrativeUnitId == '') {
 			this._toastr.error('Vui lòng chọn đơn vị')
 			return
 		}
 		if (this.userId != undefined && this.userId.length > 0 && this.userId != null) {
-			//this. = []
-			let arr = [].concat(this.listIndividualNew,this.listIndividual).map(c=>c.individualId)
-			let arr2 = [].concat(this.listBusiness, this.listBusinessNew).map(c=>c.businessId)
+			let indexSuccess = 0
+			let indexError =0 
 			for (const iterator of this.userId) {
-				if(iterator.category == 1){
-					let item:any = new EmailIndividualObject();
-					item.individualId = iterator.id
-					item.individualFullName = iterator.name
-					item.unitName = iterator.administrativeUnitName
-					item.adUnitId = iterator.administrativeUnitId
-					if(!arr.includes(item.individualId))
-						this.listIndividualNew.push(item);
-				}else if (iterator.category == 2){
-					let item:any = new EmailBusinessObject();
-					item.businessId = iterator.id
-					item.businessName = iterator.name
-					item.unitName = iterator.administrativeUnitName
-					item.adUnitId = iterator.administrativeUnitId
-					if(!arr2.includes(item.businessId))
-						this.listBusinessNew.push(item);
+				let check = this.listBusinessIndividual.find(x=>x.objectId == iterator.id && x.category == iterator.category)
+				if(check != null || check != undefined)
+				{ 
+					indexError ++
+					continue;
 				}
+				let item:any = new EmailBusinessIndividualObject();
+					item.objectId = iterator.id
+					item.category = iterator.category
+					item.objectName = iterator.name
+					item.unitName = iterator.administrativeUnitName
+					item.admintrativeUnitId = iterator.administrativeUnitId
+					this.listBusinessIndividual.push(item)
+					indexSuccess ++
 			}
-			this._toastr.success('Thêm mới thành công ' + this.userId.length + ' người dùng!')
-			this.userId = []
+			if(indexSuccess > 0){
+				this._toastr.success('Thêm mới thành công ' + indexSuccess + ' người dùng!')
+			}
+			if(indexError > 0){
+				this._toastr.error('Thêm mới thất bại ' + indexError + ' người dùng!')
+			}			
+			// this.userId = []
 		} else {
 			this._toastr.error('Vui lòng chọn cá nhân, doanh nghiệp')
 			return
 		}
+		console.log(this.listBusinessIndividual)
 	}
-	onRemoveUser(item:any){
-		if(item.individualId){
-			let index = this.listIndividual.indexOf(item);
-			
-			if(index === -1)
-			{
-				index = this.listIndividualNew.indexOf(item);
-				this.listIndividualNew.splice(index,1)
-			}else{
-				this.listIndividualDel.push(item);
-				this.listIndividual.splice(index,1);
-			}
-		}
-		if(item.businessId){
-			let index = this.listBusinessNew.indexOf(item);
-			
-			if(index === -1)
-			{
-				this.listBusinessDel.push(item);
-				index = this.listBusiness.indexOf(item);
-				this.listBusiness.splice(index,1)
-			}else{
-				this.listBusinessNew.splice(index,1);
-			}
-		}
+	onRemoveUser(item: any) {
+		this.listBusinessIndividual.splice(this.listBusinessIndividual.indexOf(item), 1)
+		return
 	}
 
 	onUpload(event) {

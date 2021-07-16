@@ -78,9 +78,9 @@ export class CU_AdministrativeFormalitiesComponent implements OnInit {
 	}
 	getData() {
 		let request = {
-			Id: this.model.id,
+			Id: this.model.administrationId,
 		}
-		this.afService.getById(request).subscribe((response) => {
+		this.afService.getByAdmintrativeId(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.data
 				this.files = response.result.files

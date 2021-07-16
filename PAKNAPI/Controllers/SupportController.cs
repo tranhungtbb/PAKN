@@ -45,8 +45,8 @@ namespace PAKNAPI.Controllers
         public async Task<object> SYSupportGetAll(int? Category) {
             try {
 
-
-                return new ResultApi { Success = ResultCode.OK, Result = await new SYSupportMenu(_appSetting).SYSupportMenuGetByCategoryDAO(Category) };
+                var result = await new SYSupportMenu(_appSetting).SYSupportMenuGetByCategoryDAO(Category);
+                return new ResultApi { Success = ResultCode.OK, Result = result };
             }
             catch(Exception ex)
             {

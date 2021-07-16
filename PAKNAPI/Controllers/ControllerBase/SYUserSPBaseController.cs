@@ -256,6 +256,29 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize]
+		[Route("SYUserGetIsNotRole")]
+		public async Task<ActionResult<object>> SYUserGetIsNotRole(int? RoleId)
+		{
+			try
+			{
+				List<SYUserGetIsSystem> rsSYUserGetIsSystem = await new SYUserGetIsSystem(_appSetting).SYUserGetIsNotRole(RoleId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserGetIsNotRole", rsSYUserGetIsSystem},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
 		[Route("SYUserGetIsSystem2Base")]
 		public async Task<ActionResult<object>> SYUserGetIsSystem2Base()
 		{

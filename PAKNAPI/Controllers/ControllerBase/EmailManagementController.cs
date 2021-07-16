@@ -49,9 +49,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			try
 			{
 				var req = Request.Query;
-				var users = _httpContextAccessor.HttpContext.User.Identities.FirstOrDefault().Claims; //FindFirst(ClaimTypes.NameIdentifier);
-				//var userId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext) +"";
-				//var userId = users.FirstOrDefault(c => c.Type.Equals("Id", StringComparison.OrdinalIgnoreCase)).Value;
+				var users = _httpContextAccessor.HttpContext.User.Identities.FirstOrDefault().Claims;
 				var jss = new JsonSerializerSettings
 				{
 					DateFormatHandling = DateFormatHandling.IsoDateFormat,
@@ -64,10 +62,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 				var data = JsonConvert.DeserializeObject<EmailManagementModelBase>(form["Data"].ToString(), jss);
 				var listAttachemntDel = JsonConvert.DeserializeObject<IEnumerable<EmailManagementAttachmentModel>>(form["ListAttachmentDel"].ToString(), jss);
 				var listAttachemntNew = JsonConvert.DeserializeObject<IEnumerable<EmailManagementAttachmentModel>>(form["ListAttachmentNew"].ToString(), jss);
-				var listIndividualDel = JsonConvert.DeserializeObject<IEnumerable<EmailManagementIndividualModel>>(form["ListIndividualDel"].ToString(), jss);
-				var listIndividualNew = JsonConvert.DeserializeObject<IEnumerable<EmailManagementIndividualModel>>(form["ListIndividualNew"].ToString(), jss);
-				var listBusinessDel = JsonConvert.DeserializeObject<IEnumerable<EmailManagementBusinessModel>>(form["ListBusinessDel"].ToString(), jss);
-				var listBusinessNew = JsonConvert.DeserializeObject<IEnumerable<EmailManagementBusinessModel>>(form["ListBusinessNew"].ToString(), jss);
+				var listBusinessIndividual = JsonConvert.DeserializeObject<IEnumerable<EmailIndividualBusinessModel>>(form["ListBusinessIndividual"].ToString(), jss);
 				var files = form.Files;
 				///
 				EmailManagementHisModel hisModel = new EmailManagementHisModel { CreatedBy = int.Parse(userId) };
@@ -110,39 +105,40 @@ namespace PAKNAPI.Controllers.ControllerBase
 							var fileRs = await new EmailManagementAttachmentADO(_appSetting).Insert(fileInfo);
                         }
                 }
-				///individual
-				///
-				if (listIndividualDel != null && listIndividualDel.Any())
-				{
-					var ids = string.Join(",", listIndividualDel.Select(c => c.Id));
-					var delFileRs = await new EmailManagementIndividualADO(_appSetting).Delete(ids);
-				}
-				if (listIndividualNew != null && listIndividualNew.Any())
-				{
-                    foreach (var item in listIndividualNew)
-                    {
-						item.EmailId = model.Id;
-						await new EmailManagementIndividualADO(_appSetting).Update(item);
-                    }
-				}
+				// delete all invididual , business 
+				await new EmailManagementIndividualADO(_appSetting).DeleteByEmailId(model.Id);
+				await new EmailManagementBusinessADO(_appSetting).DeleteByEmailId(model.Id);
 
-				///business
-				///
-				if (listBusinessDel != null && listBusinessDel.Any())
-				{
-					var ids = string.Join(",", listBusinessDel.Select(c => c.Id));
-					var delFileRs = await new EmailManagementBusinessADO(_appSetting).Delete(ids);
-				}
-				if (listBusinessNew != null && listBusinessNew.Any())
-				{
-					foreach (var item in listBusinessNew)
-					{
-						item.EmailId = model.Id;
-						await new EmailManagementBusinessADO(_appSetting).Update(item);
+				// insert 
+				if (listBusinessIndividual.Count() > 0) {
+					foreach (var item in listBusinessIndividual) {
+						if (item.Category == 2)
+						{
+							// doanh nghiệp
+							var businessInsert = new EmailManagementBusinessModel();
+							businessInsert.EmailId = model.Id;
+							businessInsert.AdUnitId = item.AdmintrativeUnitId;
+							businessInsert.UnitName = item.UnitName;
+							businessInsert.BusinessId = item.ObjectId;
+
+							await new EmailManagementBusinessADO(_appSetting).Insert(businessInsert);
+						}
+						else if (item.Category == 1)
+						{
+							// cá nhân
+							var invididualInsert = new EmailManagementIndividualModel();
+							invididualInsert.EmailId = model.Id;
+							invididualInsert.AdUnitId = item.AdmintrativeUnitId;
+							invididualInsert.UnitName = item.UnitName;
+							invididualInsert.IndividualId = item.ObjectId;
+
+							await new EmailManagementIndividualADO(_appSetting).Insert(invididualInsert);
+						}
+						else {
+							continue;
+						}
 					}
 				}
-
-
 
 				IDictionary<string, object> json = new Dictionary<string, object>
 				{
@@ -181,16 +177,38 @@ namespace PAKNAPI.Controllers.ControllerBase
 				var listAttachment = await new EmailManagementAttachmentADO(_appSetting).GetByEmailId(id);
 				var listIndividual = await new EmailManagementIndividualADO(_appSetting).GetByEmailId(id);
 				var listBusiness = await new EmailManagementBusinessADO(_appSetting).GetByEmailId(id);
+				var listBusinessIndividual = new List<EmailIndividualBusinessModel>();
 
+				listIndividual.ForEach(item => {
+					var itemAdd = new EmailIndividualBusinessModel();
+					itemAdd.Id = item.Id;
+					itemAdd.EmailId = item.EmailId;
+					itemAdd.ObjectId = item.IndividualId;
+					itemAdd.ObjectName = item.IndividualFullName;
+					itemAdd.UnitName = item.UnitName;
+					itemAdd.Category = 1;
+					itemAdd.AdmintrativeUnitId = Convert.ToInt32(item.IndividualId);
+					listBusinessIndividual.Add(itemAdd);
+				});
+				listBusiness.ForEach(item => {
+					var itemAdd = new EmailIndividualBusinessModel();
+					itemAdd.Id = item.Id;
+					itemAdd.EmailId = item.EmailId;
+					itemAdd.ObjectId = item.BusinessId;
+					itemAdd.ObjectName = item.BusinessName;
+					itemAdd.UnitName = item.UnitName;
+					itemAdd.Category = 2;
+					itemAdd.AdmintrativeUnitId = Convert.ToInt32(item.BusinessId);
+					listBusinessIndividual.Add(itemAdd);
+				});
 
 				IDictionary<string, object> json = new Dictionary<string, object>
 				{
 					{"Data", model.FirstOrDefault()},
 					{"ListAttachment", listAttachment},
-					{"ListIndividual", listIndividual},
-					{"ListBusiness", listBusiness},
+					{"ListBusinessIndividual", listBusinessIndividual},
 				};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch(Exception ex)

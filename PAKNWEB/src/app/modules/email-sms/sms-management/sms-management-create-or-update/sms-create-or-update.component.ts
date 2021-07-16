@@ -145,12 +145,6 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 						if (res.result) {
 							this.model = { ...res.result.model }
 							this.listItemUserSelected = [...res.result.individualBusinessInfo]
-							// for (const iterator of this.listItemUserSelected) {
-							// 	this.userId.push(iterator.id)
-							// 	this.ltsAdministrativeUnitId += ',' + iterator.administrativeUnitId
-							// 	// this.ltsUnitFirst.push(iterator.administrativeUnitId)
-							// }
-							// this.getAdministrativeUnits()
 						}
 					}
 				})

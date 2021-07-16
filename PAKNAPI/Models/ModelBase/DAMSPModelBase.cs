@@ -268,7 +268,7 @@ namespace PAKNAPI.ModelBase
 		public string FieldName { get; set; }
 		public string Object { get; set; }
 		public byte? Status { get; set; }
-		public int Id { get; set; }
+		public int AdministrationId { get; set; }
 		public string Organization { get; set; }
 
 		public async Task<List<DAMAdministrationGetList>> DAMAdministrationGetListDAO(string Code, string Name, string Object, string Organization, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex, int? TotalRecords)
@@ -391,26 +391,34 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		//public int Id { get; set; }
 		public int AdministrationId { get; set; }
+		public string Code { get; set; }
+		public string AdministrationName { get; set; }
+		public string Organization { get; set; }
+		public string Field { get; set; }
+		public string UnitForward { get; set; }
+
 		public int UnitId { get; set; }
-		public int CreateBy { get; set; }
 		public string Content { get; set; }
-		public string LstUserReceive { get; set; }
+		public string FieldName { get; set; }
 		public DateTime CreatedDate { get; set; }
+		public int Status { get; set; }
+		public int? RowNumber { get; set; }
 
-
-		public async Task<int?> DAMAdministrationForwardGetListDAO(DAMAdministrationForward model)
+		public async Task<List<DAMAdministrationForwardGetList>> DAMAdministrationForwardGetListDAO(long UserProcess, string Code, string Name, string Organization, int? FieldId,int? UnitForward, int? Status, int PageSize, int PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("AdministrationId", model.AdministrationId);
-			DP.Add("UnitId", model.UnitId);
-			DP.Add("CreateBy", model.CreateBy);
-			DP.Add("Content", model.Content);
-			DP.Add("LstUserReceive", model.LstUserReceive);
-			DP.Add("CreatedDate", model.CreatedDate);
+			DP.Add("@UserProcess", UserProcess);
+			DP.Add("@Code", Code);
+			DP.Add("@Name", Name);
+			DP.Add("@Organization", Organization);
+			DP.Add("@FieldId", FieldId);
+			DP.Add("@UnitForward", UnitForward);
+			DP.Add("@Status", Status);
+			DP.Add("@PageSize", PageSize);
+			DP.Add("@PageIndex", PageIndex);
 
-			return await _sQLCon.ExecuteNonQueryDapperAsync("DAM_Administration_Forward_Insert", DP);
+			return (await _sQLCon.ExecuteListDapperAsync<DAMAdministrationForwardGetList>("[DAM_Administration_Forward_GetListOnPage]", DP)).ToList();
 		}
 	}
 

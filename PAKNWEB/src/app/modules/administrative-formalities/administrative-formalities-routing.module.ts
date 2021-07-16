@@ -6,6 +6,7 @@ import { ListAdministrativeFormalitiesComponent } from './list-administrative-fo
 import { CU_AdministrativeFormalitiesComponent } from './cu-administrative-formalities/cu-administrative-formalities.component'
 import { DetailAdministrativeFormalitiesComponent } from './detail-administrative-formalities/detail-administrative-formalities.component'
 import { ListAdministrativeFormalitiesPublishComponent } from './list-administrative-formalities-publish/list-administrative-formalities-publish.component'
+import { ListAdministrativeForwardComponent } from './list-administrative-forward/list-administrative-forward.component'
 
 const routes: Routes = [
 	{ 
@@ -42,6 +43,12 @@ const routes: Routes = [
 		component: ListAdministrativeFormalitiesPublishComponent,
 		canActivate: [RoleGuardService],
 		data: { role: 'H_I_1' }
+	},
+	{ 
+		path: 'thu-tuc-hanh-chinh-chuyen-tiep-tiep-nhan',
+		component: ListAdministrativeForwardComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'H_I_2' }
 	},
 ]
 

@@ -60,6 +60,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		address: '',
 		isActived: null,
 	}
+	titleSearch : any = ''
 
 	//sort
 	unitSortDir = 'DESC'
@@ -164,8 +165,9 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.getUnitInfo(id)
 	}
 
-	onFilterTree(data) {
-		this.getAllUnitShortInfo(null, data)
+	onFilterTree() {
+		this.titleSearch = this.titleSearch.trim()
+		this.getAllUnitShortInfo(null, this.titleSearch)
 	}
 
 	getUnitInfo(id) {
@@ -185,7 +187,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 					if (title == '' && e.isActived == false) {
 						this.ltsUnitIdNonActive.push(e.id)
 					}
-					if (e.name.includes(title)) {
+					if (e.name.toLowerCase().includes(title.toLowerCase())) {
 						let item = {
 							id: e.id,
 							name: e.name,

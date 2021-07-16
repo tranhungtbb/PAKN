@@ -17,8 +17,7 @@ import { UnitComponent } from '../../unit/unit.component'
 import { UserComponent } from 'src/app/modules/system-management/components/user/user.component'
 import { BusinessComponent } from 'src/app/modules/business.component'
 import file_uploader from 'devextreme/ui/file_uploader'
-import { Console } from 'console'
-import { debounceTime } from 'rxjs/operators'
+import {UserInfoStorageService} from 'src/app/commons/user-info-storage.service'
 
 declare var jquery: any
 declare var $: any
@@ -32,17 +31,17 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		private elm: ElementRef,
 		private unitService: UnitService,
 		private userService: UserService,
-		private positionService: PositionService,
+		private stogateService: UserInfoStorageService,
 		private formBuilder: FormBuilder,
 		private toast: ToastrService,
 		private roleService: RoleService,
-		private sanitizer: DomSanitizer
+		private sanitizer: DomSanitizer,
 	) {
 		this.modalId = elm.nativeElement.getAttribute('modalid')
 		this.isOrganizational = elm.nativeElement.getAttribute('isOrganizational') == 'true' ? true : false
-		this.isUser = elm.nativeElement.getAttribute('isUser') == 'true' ? true : false
+		this.isAdmin = this.stogateService.getIsMain()
 	}
-	isUser : boolean = false
+	isAdmin : boolean = false
 	modalId = ''
 	isOrganizational: boolean = false
 	public parentUnit: UnitComponent

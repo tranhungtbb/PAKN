@@ -45,6 +45,7 @@ export class DetailHeThongPAKNChinhPhuComponent implements OnInit {
 		this._service.getHeThongPANKChinhPhuGetByObjectId(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.modelData = response.result.MRRecommendationPAKNCPGetById[0]
+				console.log(this.modelData.questionContent)
 				this.file = response.result.FileAttach.filter((x)=>x.isReply == true)
 				this.fileRequest = response.result.FileAttach.filter((x)=>x.isReply == false)
 

@@ -14,6 +14,9 @@ import { CU_AdministrativeFormalitiesComponent } from './cu-administrative-forma
 import { ListAdministrativeFormalitiesComponent } from './list-administrative-formalities/list-administrative-formalities.component'
 import { DetailAdministrativeFormalitiesComponent } from './detail-administrative-formalities/detail-administrative-formalities.component'
 import { ListAdministrativeFormalitiesPublishComponent } from './list-administrative-formalities-publish/list-administrative-formalities-publish.component'
+import { ListAdministrativeForwardComponent } from './list-administrative-forward/list-administrative-forward.component'
+
+
 @NgModule({
 	declarations: [
 		AdministrativeFormalitiesComponent,
@@ -21,6 +24,7 @@ import { ListAdministrativeFormalitiesPublishComponent } from './list-administra
 		ListAdministrativeFormalitiesPublishComponent,
 		ListAdministrativeFormalitiesComponent,
 		DetailAdministrativeFormalitiesComponent,
+		ListAdministrativeForwardComponent
 	],
 	imports: [
 		CommonModule,

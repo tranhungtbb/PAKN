@@ -21,6 +21,8 @@ using Microsoft.AspNetCore.Hosting;
 using PAKNAPI.Models.Recommendation;
 using PAKNAPI.Models.Invitation;
 using PAKNAPI.Models.EmailSMSModel;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace PAKNAPI.Controllers
 {
@@ -32,13 +34,15 @@ namespace PAKNAPI.Controllers
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;
         private readonly IWebHostEnvironment _hostingEnvironment;
+		private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public EmailSMSController(IAppSetting appSetting, IClient bugsnag, IWebHostEnvironment hostEnvironment)
+		public EmailSMSController(IAppSetting appSetting, IClient bugsnag, IWebHostEnvironment hostEnvironment, IHttpContextAccessor httpContextAccessor)
         {
             _appSetting = appSetting;
             _bugsnag = bugsnag;
             _hostingEnvironment = hostEnvironment;
-        }
+			_httpContextAccessor = httpContextAccessor;
+		}
 
 		[HttpPost]
 		[Authorize]
@@ -47,6 +51,8 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
+				var s = _httpContextAccessor.HttpContext.User.Identities.FirstOrDefault().Claims;
+				var identity = (ClaimsIdentity)User.Identity;
 				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				SMSDoanhNghiepDeleteBySMSIdIN dn = new SMSDoanhNghiepDeleteBySMSIdIN();
 				dn.SMSId = _sMSQuanLyTinNhanDeleteIN.Id;

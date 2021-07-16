@@ -36,6 +36,7 @@
 		public const int NEWS = 1; // thông báo tin tức
 		public const int RECOMMENDATION = 2; // thông báo PAKN
 		public const int INVITATION = 3;
+		public const int ADMINISTRATIVE = 4;
 	}
 
 	public static class TYPECONFIG

@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { AdministrativeFormalitiesObject, AdministrativeFormalitiesForward } from 'src/app/models/AdministrativeFormalitiesObject'
 import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
+import { UnitService } from 'src/app/services/unit.service'
+import {UserInfoStorageService} from 'src/app/commons/user-info-storage.service'
 declare var $: any
 
 @Component({
@@ -24,6 +26,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 	titleObject: string = 'Cá nhân'
 	lstUnitDAM: any[] = []
 	lstUnit: any[] = []
+	lstUnitForward : any [] = []
 	lstField: any[] = []
 	lstBusiness: any[] = []
 	lstIndividual: any[] = []
@@ -44,7 +47,6 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		{ value: true, text: 'Có' },
 		{ value: false, text: 'Không' },
 	]
-	lstUnitNotMain : any []
 	@ViewChild('file', { static: false }) public file: ElementRef
 
 	lstCompositionProfile: any[] = []
@@ -59,28 +61,29 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		private fileService: UploadFileService,
 		private afService: AdministrativeFormalitiesService,
 		private recommendationService: RecommendationService,
-		private _serviceCatalog: CatalogService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private _fb: FormBuilder,
-		private _service: RecommendationService,
+		private _service: UnitService,
+		private stogateService : UserInfoStorageService
 	) {}
 
 	ngOnInit() {
 		this.model = new AdministrativeFormalitiesObject()
 		this.getDropdown()
 		this.activatedRoute.params.subscribe((params) => {
-			this.model.id = params['id']
-			if (this.model.id != 0) {
+			this.model.administrationId = params['id']
+			if (this.model.administrationId != 0) {
 				this.getData()
 			}
 			this.builForm()
-			this.buildFormForward()
-			this._service.recommendationGetDataForForward({}).subscribe((response) => {
+			this._service.getChildrenDropdown().subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result != null) {
-						this.lstUnitNotMain = response.result.lstUnitNotMain
-						$('#modal-tc-pakn').modal('show')
+						let arrUnit = response.result.filter(x=>x.unitId  != this.stogateService.getUnitId())
+						this.lstUnitForward = arrUnit.map(item =>{
+							return {text : item.unitName, value : item.unitId}
+						})
 					}
 				} else {
 					this.toastr.error(response.message)
@@ -94,9 +97,9 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 
 	getData() {
 		let request = {
-			Id: this.model.id,
+			Id: this.model.administrationId,
 		}
-		this.afService.getById(request).subscribe((response) => {
+		this.afService.getByAdmintrativeId(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.data
 				this.files = response.result.files
@@ -162,22 +165,8 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		})
 	}
 
-	buildFormForward() {
-		this.formForward = this._fb.group({
-			unitId: [this.modelForward.unitId, Validators.required],
-			content: [this.modelForward.content],
-		})
-	}
+	
 
-	rebuilFormForward() {
-		this.form.reset({
-			unitId: this.modelForward.unitId,
-			content: this.modelForward.content,
-		})
-	}
-	get fForward() {
-		return this.formForward.controls
-	}
 
 	get f() {
 		return this.form.controls
@@ -272,17 +261,22 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 	// forward
 	preForward = ()=>{
 		this.modelForward = new AdministrativeFormalitiesForward();
-		this.rebuilFormForward()
+		this.submitted = false
 		$('#modal-forward').modal('show')
 	}
 	onForward = () =>{
 		this.modelForward.content = this.modelForward.content.trim()
-		this.submitted = true
-		if(this.formForward.invalid){
+		if(this.modelForward.lstUnitId.length < 0)
+		{
+			this.toastr.error('Vui lòng chọn cơ quan tiếp nhận')
 			return
 		}
+		this.submitted = true
+		let lstUnit = this.modelForward.lstUnitId.reduce((x, y) => {
+			return (x += y + ',')
+		}, '')
 		let obj = {
-			UnitId : this.modelForward.unitId,
+			LstUnitId : lstUnit.substring(0,lstUnit.length-1),
 			AdministrationId : this.model.id,
 			Content : this.modelForward.content
 		}

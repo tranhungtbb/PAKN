@@ -11,8 +11,8 @@
 						<i class="bi bi-arrow-left"></i>&nbsp;
 						Quay lại
 					</a>
-					<button *ngIf="statusCurent != 2" class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave(false)">Lưu</button>
-					<button *ngIf="statusCurent != 2" class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave(true)">Gửi</button>
+					<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave(false)">Lưu</button>
+					<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave(true)">Gửi</button>
 				</div>
 			</div>
 		</div>
@@ -207,29 +207,29 @@
 										</button>
 									</div>
 								</div>
-								<div *ngIf="submitted" class="has-error m-b-12">
-									<div *ngIf="[].concat(listBusinessNew,listIndividualNew,listBusiness,listIndividual).length ==0">
+								<!-- <div *ngIf="submitted" class="has-error m-b-12">
+									<div *ngIf="listBusinessIndividual.length ==0">
 										<span class="help-block">Chọn cá nhân doanh nghiệp nhận email</span>
 									</div>
-								</div>
+								</div> -->
 							</div>
 							
 						</div>
 
 
 						<div class="list-user">
-							<div class="title-user-map center" style="text-transform: none;" *ngIf="[].concat(listBusinessNew,listIndividualNew,listBusiness,listIndividual).length ==0">Chưa có cá nhân, doanh nghiệp</div>
-							<div class="border col-sm-12 item-user ng-star-inserted p-3 rounded mt-3" style="display: flex;" *ngFor="let item of [].concat(listBusinessNew,listIndividualNew,listBusiness,listIndividual)">
+							<div class="title-user-map center" style="text-transform: none;" *ngIf="listBusinessIndividual.length ==0">Chưa có cá nhân, doanh nghiệp</div>
+							<div class="border col-sm-12 item-user ng-star-inserted p-3 rounded mt-3" style="display: flex;" *ngFor="let item of listBusinessIndividual">
 								<div class="info-user border-right padding-item" style="padding-left: 0px; flex: 1 1;">
-									<div class="title" *ngIf="item.individualId">Cá nhân</div>
-									<div class="title" *ngIf="item.businessId">Doanh nghiệp</div>
-									<div class="department"><strong>{{item.individualFullName || item.businessName}}</strong></div>
+									<div class="title" *ngIf="item.category == 1">Cá nhân</div>
+									<div class="title" *ngIf="item.category == 2">Doanh nghiệp</div>
+									<div class="department"><strong>{{item.objectName}}</strong></div>
 								</div>
 								<div class="info-unit border-right padding-item ml-2" style="flex: 1 1;">
 									<div class="title">Đơn vị</div>
 									<div class="department"><strong>{{item.unitName}}</strong></div>
 								</div>
-								<div class="action padding-item center ml-2" *ngIf="statusCurent != 2">
+								<div class="action padding-item center ml-2">
 									<button type="button" (click)="onRemoveUser(item)" style="height: 40px;background: #E0E7FA; color: black;"
 										class="btn btn-block border-0 px-3 center">
 										<i class="bi bi-dash"></i>

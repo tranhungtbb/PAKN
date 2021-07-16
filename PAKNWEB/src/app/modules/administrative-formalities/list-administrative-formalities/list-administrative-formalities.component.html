@@ -103,7 +103,7 @@
 									</td>
 									<td>
 										<strong>
-											<a *hasPermission="['3', 'H_I_4']" [routerLink]="['/quan-tri/thu-tuc-hanh-chinh/chi-tiet/',item.id]" class="text-2line mb-0" title="Xem chi tiết">{{item.name}}</a>
+											<a *hasPermission="['3', 'H_I_4']" [routerLink]="['/quan-tri/thu-tuc-hanh-chinh/chi-tiet/',item.administrationId]" class="text-2line mb-0" title="Xem chi tiết">{{item.name}}</a>
 											<a *hasNotPermission="['3', 'H_I_4']" class="text-2line mb-0" title="Xem chi tiết">{{item.name}}</a>
 											</strong>
 									</td>
@@ -116,8 +116,8 @@
 										<!-- <span *ngIf="item.status == 1" class="badge rounded-pill badge-outline-light bg-white">Đang soạn
 											thảo</span> -->
 										<p  class="pb-0" *hasPermission="['3', 'H_I_4']">
-											<span *ngIf="item.status == 3" class="badge rounded-pill bg-success cursor" (click)="preChangeStatus(item.id,2)">Đã công bố</span>
-											<span *ngIf="item.status == 2" class="badge rounded-pill bg-xam text-dark cursor" (click)="preChangeStatus(item.id,3)">Đã thu hồi</span>
+											<span *ngIf="item.status == 3" class="badge rounded-pill bg-success cursor" (click)="preChangeStatus(item.administrationId,2)">Đã công bố</span>
+											<span *ngIf="item.status == 2" class="badge rounded-pill bg-xam text-dark cursor" (click)="preChangeStatus(item.administrationId,3)">Đã thu hồi</span>
 										</p>
 										<p  class="pb-0" *hasNotPermission="['3', 'H_I_4']">
 											<span *ngIf="item.status == 3" class="badge rounded-pill bg-success cursor">Đã công bố</span>

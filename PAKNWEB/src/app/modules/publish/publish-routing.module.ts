@@ -46,7 +46,7 @@ const routes: Routes = [
 				component: AdministrativeProceduresComponent,
 			},
 			{
-				path: 'chi-tiet/:id',
+				path: 'thu-tuc-hanh-chinh/:id',
 				component: ViewAdministrativeProceduresComponent,
 			},
 			{

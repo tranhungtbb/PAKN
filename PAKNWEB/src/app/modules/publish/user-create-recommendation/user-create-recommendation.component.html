@@ -38,7 +38,7 @@
 					<div class="col-12 form-group">
 						<label class="mb-1">Nội dung <span class="cl-red">(*)</span></label>
 						<div class="group-content-recommendation">
-							<textarea id="inputContent" class="form-control" [(ngModel)]="model.content" formControlName="content" style="height: 158px;" rows="6"
+							<textarea id="inputContent" class="form-control" [(ngModel)]="model.content" formControlName="content" style="height: 158px; border-radius: 0.75rem;" rows="6"
 								placeholder="Nhập nội dung..." (blur)="hightLightText()"></textarea>
 							<div id="contentRecommendation" (click)="showEditContent()"></div>
 						</div>
@@ -220,7 +220,7 @@
 									d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z">
 								</path>
 							</svg>
-							<span class="ml-2">Gửi Phản ánh, kiến nghị</span>
+							<span class="ml-2">Gửi</span>
 						</button>
 					</div>
 				</form>

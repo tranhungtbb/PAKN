@@ -1,4 +1,4 @@
-using PAKNAPI.Common;
+﻿using PAKNAPI.Common;
 using PAKNAPI.Controllers;
 using PAKNAPI.Models;
 using PAKNAPI.ModelBase;
@@ -266,6 +266,35 @@ namespace PAKNAPI.ControllerBase
 						{"NENewsViewDetail", rsNENewsViewDetail},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Route("NENewsViewDetailPublicBase")]
+		public async Task<ActionResult<object>> NENewsViewDetailPublicBase(long? Id)
+		{
+			try
+			{
+				NENewsViewDetail rsNENewsViewDetail = (await new NENewsViewDetail(_appSetting).NENewsViewDetailDAO(Id)).FirstOrDefault();
+				if (rsNENewsViewDetail == null)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Result = -1, Message = "Không tồn tại bài viết" };
+				}
+				if (rsNENewsViewDetail.Status != 1)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Result = 0, Message = "Bài viết chưa được công bố" };
+				}
+				else {
+					return new ResultApi { Success = ResultCode.OK, Result = rsNENewsViewDetail };
+				}
+				
 			}
 			catch (Exception ex)
 			{

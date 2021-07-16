@@ -22,6 +22,7 @@ using System.Net;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using System.Web;
+using System.Text.RegularExpressions;
 
 namespace PAKNAPI.Controllers
 {
@@ -176,14 +177,22 @@ namespace PAKNAPI.Controllers
 
                         string[] info = documentDetail.Result.DocumentNode.Descendants("div")
                             .FirstOrDefault(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "post-info").InnerHtml.Trim().Split("-");
-                        objectAdd.Questioner = info[0];
-                        objectAdd.CreatedDate = info[1];
+                        
+                        objectAdd.Questioner = HttpUtility.HtmlDecode(info[0]);
+                        objectAdd.CreatedDate = info[info.Length-1];
                         objectAdd.QuestionContent = documentDetail.Result.DocumentNode.Descendants("textarea")
                             .FirstOrDefault(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "showContent").InnerHtml;
                         objectAdd.Status = "Đã trả lời";
                         Task<HtmlDocument> response = htmlWeb.LoadFromWebAsync("https://dichvucong.gov.vn/p/phananhkiennghi/jsp/pakn_answer_byid.jsp?pakn_id=" + id, Encoding.UTF8);
-                        objectAdd.Reply = response.Result.DocumentNode.Descendants("textarea")
-                            .First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "showContent").InnerHtml;
+                        var reply = response.Result.DocumentNode.Descendants("textarea").FirstOrDefault(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "showContent");
+                        if (reply == null)
+                        {
+                            objectAdd.Reply = "";
+                        }
+                        else {
+                            objectAdd.Reply = reply.InnerHtml;
+                        }
+                        
                         objectAdd.ObjectId = Convert.ToInt32(id);
                         // lưu database
                         await new RecommendationDAO(_appSetting).SyncDichVuCongQuocGiaInsert(objectAdd);
@@ -211,8 +220,8 @@ namespace PAKNAPI.Controllers
                                     string[] s = file.InnerText.Split(".");
                                     fileInsert.ObjectId = Convert.ToInt32(id);
                                     fileInsert.Type = GetFileTypes.GetFileTypeExtension("." + s.FirstOrDefault(x => x == s[s.Length - 1]).ToString().ToLower());
-                                    fileInsert.FileName = Path.GetFileName(file.InnerText).Replace("+", "");
-                                    fileInsert.FilePath = Path.Combine(folder, fileInsert.FileName);
+                                    fileInsert.FileName = HttpUtility.HtmlDecode(Path.GetFileName(file.InnerText).Replace("+", ""));
+                                    fileInsert.FilePath = Path.Combine(folder, Path.GetFileName(file.InnerText).Replace("+", ""));
                                     fileInsert.IsReply = false;
                                     webClient.DownloadFileAsync(new Uri("https://dichvucong.gov.vn/" + file.Attributes["href"].Value), Path.Combine(folderPath, fileInsert.FileName));
                                     await new MR_SyncFileAttach(_appSetting).MR_Sync_DichVuCongQuocGiaFileAttachInsertDAO(fileInsert);
@@ -242,7 +251,7 @@ namespace PAKNAPI.Controllers
                                 string[] s = file.InnerText.Split(".");
                                 fileInsert.ObjectId = Convert.ToInt32(id);
                                 fileInsert.Type = GetFileTypes.GetFileTypeExtension("." + s.FirstOrDefault(x => x == s[s.Length - 1]).ToString().ToLower());
-                                fileInsert.FileName = Path.GetFileName(file.InnerText).Replace("+", "");
+                                fileInsert.FileName = HttpUtility.HtmlDecode(Path.GetFileName(file.InnerText).Replace("+", ""));
                                 fileInsert.FilePath = Path.Combine(folder, fileInsert.FileName);
                                 fileInsert.IsReply = true;
                                 webClient.DownloadFileAsync(new Uri("https://dichvucong.gov.vn/" + file.Attributes["href"].Value), Path.Combine(folderPath, fileInsert.FileName));

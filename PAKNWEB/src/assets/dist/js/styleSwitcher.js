@@ -141,6 +141,7 @@ jQuery(window).on('load',function(){
     $('input[name="primary_bg"]').on('click', function() {
         body.attr('data-primary', this.value);
     });
+    $('.ng-clear-wrapper').title ='Xóa tất'
 
 })(jQuery);
 

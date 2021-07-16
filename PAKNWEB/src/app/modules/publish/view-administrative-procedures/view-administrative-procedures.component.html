@@ -3,10 +3,12 @@
 		<div class="row justify-content-between pt-5">
 			<div class="col main-ct pr-3 pr-lg-5">
 				<ol class="breadcrumb px-0 bg-transparent">
-					<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-					<li class="breadcrumb-item active"><a href="#">Danh sách thủ tục hành chính</a></li>
+					<li class="breadcrumb-item"><a href="/cong-bo/trang-chu">Trang chủ</a></li>
+					<li class="breadcrumb-item"><a routerLink="/cong-bo/thu-tuc-hanh-chinh">Danh sách thủ tục hành chính</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold" href="javascript:void(0)">Chi tiết thủ tục hành chính</a></li>
 				</ol>
-				<div class="table-responsive">
+				<p *ngIf="model && model.status != 3">Thủ tục hành chính chưa được công bố</p>
+				<div class="table-responsive" *ngIf="model && model.status== 3">
 					<table class="table table-tthc table-bordered table-striped rounded overflow-hidden mb-4">
 						<tbody>
 							<tr>

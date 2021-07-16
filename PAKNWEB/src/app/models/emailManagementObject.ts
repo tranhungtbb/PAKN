@@ -15,15 +15,12 @@ export class EmailAttachmentObject {
 	name: string
 	fileType: number
 }
-export class EmailIndividualObject {
-	id: number
-	emailId: number
-	individualId: number
-	unitName:string
-}
-export class EmailBusinessObject {
-	id: number
-	emailId: number
-	businessId: number
-	unitName:string
+export class EmailBusinessIndividualObject {
+	id : number
+	emailId : number
+	objectId : number
+	objectName : string
+	unitName : string
+	category : number
+	admintrativeUnitId : number
 }

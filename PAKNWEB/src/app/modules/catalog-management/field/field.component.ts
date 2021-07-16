@@ -74,7 +74,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 
 	getList() {
 		this.name = this.name.trim()
-
+		this.description = this.description.trim()
 		let request = {
 			Name: this.name,
 			isActived: this.isActived != null ? this.isActived : '',

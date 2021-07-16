@@ -12,7 +12,7 @@ import { EmailManagementService } from 'src/app/services/email-management.servic
 import { SMSManagementService } from 'src/app/services/sms-management'
 import { smsManagementObject, smsManagementMapObject } from 'src/app/models/smsManagementObject'
 import { SMSTreeviewI18n } from 'src/app/shared/sms-treeview-i18n'
-import { EmailAttachmentObject, EmailBusinessObject, EmailIndividualObject, EmailObject } from 'src/app/models/emailManagementObject'
+import { EmailAttachmentObject, EmailObject } from 'src/app/models/emailManagementObject'
 import { first } from 'rxjs/operators'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { data } from 'jquery'
@@ -121,21 +121,23 @@ export class EmailManagementComponent implements OnInit {
 			}
 		})
 	}
-	onSend(id: number) {
+	onSend(item: any) {
+		if(item.unitName == null){
+			this._toastr.error('Vui lòng chọn Cá nhân, doanh nghiệp nhận email')
+			return
+		}
 		$('#modalConfirmChangeStatus').modal('show')
-		this.emailId = id
+		this.emailId = item.id
 	}
 
 	onUpdateStatusTypeSend() {
 		$('#modalConfirmChangeStatus').modal('hide')
 		this.emailService.SendEmail(this.emailId).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-
 				this.getPagedList();
-			} else {
-
 			}
 		})
+		this.getPagedList();
 	}
 	AdministrativeUnits:any[]=[]
 	getAdministrativeUnits() {

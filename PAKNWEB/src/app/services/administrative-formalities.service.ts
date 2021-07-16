@@ -37,11 +37,15 @@ export class AdministrativeFormalitiesService {
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.AdministrativeFormalitiesGetList, headers)
 	}
 
+	getListForward(request: any): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.AdministrativeFormalitiesGetListForward)
+	}
+
 	getListHomePage(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.AdministrativeFormalitiesGetListHomePage)
 	}
 
-	getById(request: any): Observable<any> {
+	getByAdmintrativeId(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETINFO),
 			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),

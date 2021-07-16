@@ -61,6 +61,12 @@ export class UserService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetIsSystem)
 	}
 
+	getIsNotRole(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetIsNotRole)
+	}
+
+	
+
 	getIsSystem2(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetIsSystem2)
 	}

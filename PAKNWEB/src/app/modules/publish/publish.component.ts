@@ -136,24 +136,19 @@ export class PublishComponent implements OnInit, OnChanges {
 			}
 		})
 	}
-	onClickNotification(id: number) {
+	onClickNotification(id: number, type : number, typeSend : number) {
 		this.updateIsReadNotification(id)
-		this._router.navigate(['/cong-bo/thong-bao/' + id])
-		// if (type == TYPE_NOTIFICATION.NEWS) {
-		// 	this.updateIsReadNotification(id)
-		// 	this._router.navigate(['cong-bo/tin-tuc-su-kien/' + id])
-		// } else if(type == TYPE_NOTIFICATION.RECOMMENDATION){
-		// 	if (typeSend == RECOMMENDATION_STATUS.FINISED) {
-		// 		this.updateIsReadNotification(id)
-		// 		this._router.navigate(['/cong-bo/phan-anh-kien-nghi/' + id])
-		// 	} else {
-		// 		this.updateIsReadNotification(id)
-		// 		this._router.navigate(['/cong-bo/chi-tiet-kien-nghi/' + id])
-		// 	}
-		// }else if (type == TYPE_NOTIFICATION.INVITATION) { // Thư mời
-		// 	this.updateIsReadNotification(id)
-		// 	this._router.navigate(['/quan-tri/thu-moi/chi-tiet/' + id])
-		// }
+		if (type == TYPE_NOTIFICATION.NEWS) {
+			this._router.navigate(['cong-bo/tin-tuc-su-kien/' + id])
+		} else if(type == TYPE_NOTIFICATION.RECOMMENDATION){
+			if (typeSend == RECOMMENDATION_STATUS.FINISED) {
+				this._router.navigate(['/cong-bo/phan-anh-kien-nghi/' + id])
+			} else {
+				this._router.navigate(['/cong-bo/chi-tiet-kien-nghi/' + id])
+			}
+		}else if (type == TYPE_NOTIFICATION.INVITATION) {
+			this._router.navigate(['/quan-tri/thu-moi/chi-tiet/' + id])
+		}
 	}
 
 	updateIsReadNotification(dataId: any) {

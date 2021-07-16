@@ -12,7 +12,7 @@
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 						</svg>
-						Thêm mới
+					Soạn thảo
 					</button>
 				</div>
 			</div>
@@ -98,7 +98,7 @@
 									<td style="text-align: center;">
 										<div class="d-flex justify-content-end">
 											<ng-container *ngIf="!isSentLst">
-												<a *ngIf="item.status == 1" class="btn-icon grd-blue text-white mr-2 cursor" style="cursor: pointer;" (click)="onSend(item.id)">
+												<a *ngIf="item.status == 1" class="btn-icon grd-blue text-white mr-2 cursor" style="cursor: pointer;" (click)="onSend(item)">
 													<svg fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
 														<path d="M13.5938 0.125927L0.468823 7.69624C-0.205005 8.08589
 														 -0.137622 9.07905 0.580151 9.37495L4.68757 11.0742V14.0625C4.68757 

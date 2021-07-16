@@ -42,7 +42,7 @@
 									[ngClass]="{ 'height-auto': notifications && notifications.length < 4}">
 									<ul class="timeline" id="notificationScroll" *ngIf="notifications">
 										<li *ngFor="let item of notifications" class="item-notification">
-											<a href="javascript:void(0)" (click)="onClickNotification(item.id)" class="timeline-panel">
+											<a href="javascript:void(0)" (click)="onClickNotification(item.id, item.type, item.typeSend)" class="timeline-panel">
 												<div class="media mr-2 grd-brown">
 													<i class="bi bi-file-earmark-medical cl-brown"></i>
 												</div>

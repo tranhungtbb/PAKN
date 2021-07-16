@@ -39,7 +39,7 @@
 				<ul routerLinkActive="mm-show" aria-expanded="false">
 					<li *hasPermission="['3', 'H_I_0']"><a a routerLinkActive="mm-active" routerLink="/quan-tri/thu-tuc-hanh-chinh/danh-sach-tong-hop">Danh sách tổng hợp</a></li>
 					<li *hasPermission="['3', 'H_I_1']"><a routerLink="/quan-tri/thu-tuc-hanh-chinh/thu-tuc-hanh-chinh-da-cong-bo">Đã công bố</a></li>
-					<li *hasPermission="['3', 'H_I_2']"><a href="#">Chuyển tiếp/Tiếp nhận thủ tục hành chính</a></li>
+					<li *hasPermission="['3', 'H_I_2']"><a routerLink="/quan-tri/thu-tuc-hanh-chinh/thu-tuc-hanh-chinh-chuyen-tiep-tiep-nhan">Chuyển tiếp/Tiếp nhận thủ tục hành chính</a></li>
 				</ul>
 			</li>
 			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
@@ -62,7 +62,8 @@
 					<li *hasPermission="['3', 'A_XVII_3']"><a routerLink="/quan-tri/ca-nhan-doanh-nghiep/doanh-nghiep">Quản lý Doanh nghiệp</a></li>
 				</ul>
 			</li>
-			<li *hasPermission="['3', 'B_IV_10']" routerLinkActive="mm-active active"><a routerLink="/quan-tri/thu-moi" class="ai-icon" aria-expanded="false">
+			<li *hasPermission="['3', 'B_IV_10']" routerLinkActive="mm-active active">
+				<a routerLink="/quan-tri/thu-moi" class="ai-icon" aria-expanded="false">
 					<i class="bi bi-envelope-open"></i>
 					<span class="nav-text">Thư mời</span>
 				</a>
@@ -106,7 +107,7 @@
 					<li *hasPermission="['3', 'A_XVIII_0']"><a routerLink="/quan-tri/he-thong/cau-hinh-time">Cấu hình thời gian làm việc</a></li>
 					<li *hasPermission="['3', 'A_VII_0']"><a routerLink="/quan-tri/he-thong/co-cau-to-chuc">Cơ cấu tổ chức</a></li>
 					<li *hasPermission="['3', 'A_X_0']"><a routerLink="/quan-tri/he-thong/vai-tro">Quản lý vai trò</a></li>
-					<li *hasPermission="['3', 'A_IX_5']"><a routerLink="/quan-tri/he-thong/nguoi-dung">Quản lý nhân viên quản trị</a></li>
+					<li *hasPermission="['3', 'A_IX_5']"><a routerLink="/quan-tri/he-thong/nguoi-dung">Quản lý người dùng</a></li>
 					<li *hasPermission="['3', 'A_XI_3']"><a routerLink="/quan-tri/he-thong/quan-ly-chat-bot">Quản lý chatbot</a></li>
 					<li *hasPermission="['3', 'A_XIV_0']"><a routerLink="/quan-tri/he-thong/lich-su-chat-bot">Lịch sử chatbot</a></li>
 					<li *hasPermission="['3', 'A_XIII_0']"><a routerLink="/quan-tri/he-thong/lich-su-he-thong">Lịch sử hệ thống</a></li>
@@ -144,13 +145,13 @@
 				</ul>
 			</li>
 			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
-				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+				<a routerLink="/quan-tri/cuoc-goi/danh-sach-cuoc-goi" class="ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-phone"></i>
 					<span class="nav-text">Cuộc gọi</span>
 				</a>
-				<ul routerLinkActive="mm-show" aria-expanded="false">
+				<!-- <ul routerLinkActive="mm-show" aria-expanded="false">
 					<li><a routerLink="/quan-tri/cuoc-goi/danh-sach-cuoc-goi">Danh sách cuộc gọi</a></li>
-				</ul>
+				</ul> -->
 
 			</li>
 			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">

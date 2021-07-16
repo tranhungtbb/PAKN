@@ -66,8 +66,8 @@ export class ViewAdministrativeProceduresComponent implements OnInit {
 		this.model = new AdministrativeFormalitiesObject()
 		this.getDropdown()
 		this.activatedRoute.params.subscribe(params => {
-			this.model.id = params['id']
-			if (this.model.id != 0) {
+			this.model.administrationId = params['id']
+			if (this.model.administrationId != 0) {
 				this.getData()
 			}
 			this.builForm()
@@ -76,9 +76,9 @@ export class ViewAdministrativeProceduresComponent implements OnInit {
 
 	getData() {
 		let request = {
-			Id: this.model.id,
+			Id: this.model.administrationId,
 		}
-		this.afService.getById(request).subscribe(response => {
+		this.afService.getByAdmintrativeId(request).subscribe(response => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.data
 				this.files = response.result.files

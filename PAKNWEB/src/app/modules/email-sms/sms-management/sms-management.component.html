@@ -21,7 +21,7 @@
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 						</svg>
-						Thêm mới
+						Soạn thảo
 					</button>
 				</div>
 			</div>
@@ -93,11 +93,18 @@
 								<tr>
 									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
-										<strong *hasNotPermission="['3', 'B_II_4']" class="highlight"><a class="ellipsis" title="Xem chi tiết">{{item.title}}</a></strong>
-										<strong *hasPermission="['3', 'B_II_4']" class="highlight"><a class="ellipsis" (click)=" getSMSModelById(item.id)" title="Xem chi tiết">{{item.title}}</a></strong>
-										<span class="content-sms">{{item.content}}</span>
+										<p class="mb-0 text-2line" style="-webkit-line-clamp: 3;">
+											<strong *hasNotPermission="['3', 'B_II_4']" class="highlight"><a class="ellipsis" title="Xem chi tiết">{{item.title}}</a></strong>
+											<strong *hasPermission="['3', 'B_II_4']" class="highlight"><a class="ellipsis" (click)=" getSMSModelById(item.id)" title="Xem chi tiết">{{item.title}}</a></strong>
+											<span class="content-sms">{{item.content}}</span>
+										</p>
+									
 									</td>
-									<td>{{item.unitName}}</td>
+									<td>
+										<p class="mb-0 text-2line" style="-webkit-line-clamp: 3;">
+											{{item.unitName}}
+										</p>
+									</td>
 									<td>{{item.type}}</td>
 									<td>
 										<span type="button" *ngIf="item.status == 1" class="badge rounded-pill badge-outline-light bg-white">Đang soạn thảo</span>

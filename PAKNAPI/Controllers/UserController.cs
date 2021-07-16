@@ -392,7 +392,7 @@ namespace PAKNAPI.Controllers
 
 				///mod loginInfo
 				///
-				var pwd = generatePassword(model.Password);
+				var pwd = GeneratePassword.generatePassword(model.Password);
 				var account = new SYUserInsertIN
 				{
 					Password = pwd["Password"],
@@ -501,7 +501,7 @@ namespace PAKNAPI.Controllers
 
 				///mod loginInfo
 				///
-				var pwd = generatePassword(model.Password);
+				var pwd = GeneratePassword.generatePassword(model.Password);
 				var account = new SYUserInsertIN
 				{
 					Password = pwd["Password"],
@@ -698,7 +698,7 @@ namespace PAKNAPI.Controllers
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu cũ không đúng" };
 				}
 
-				var newPwd = generatePassword(model.NewPassword);
+				var newPwd = GeneratePassword.generatePassword(model.NewPassword);
 				var _model = new SYUserChangePwdIN
 				{
 					Password = newPwd["Password"],
@@ -706,6 +706,7 @@ namespace PAKNAPI.Controllers
 				};
 				_model.Id = accInfo[0].Id;
 				var rs = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_model);
+
 				// cho trạng thái = false hết
 				await new SYUserUserAgent(_appSetting).SYUserUserAgentUpdateStatusDAO(accInfo[0].Id);
 
@@ -746,7 +747,7 @@ namespace PAKNAPI.Controllers
 				PasswordHasher hasher = new PasswordHasher();
 				
 
-				var newPwd = generatePassword(model.NewPassword);
+				var newPwd = GeneratePassword.generatePassword(model.NewPassword);
 				var _model = new SYUserChangePwdIN
 				{
 					Password = newPwd["Password"],
@@ -755,6 +756,7 @@ namespace PAKNAPI.Controllers
 				_model.Id = accInfo[0].Id;
 
 				var rs = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_model);
+
 				// cho trạng thái = false hết
 				await new SYUserUserAgent(_appSetting).SYUserUserAgentUpdateStatusDAO(accInfo[0].Id);
 
@@ -943,70 +945,44 @@ namespace PAKNAPI.Controllers
 			}
         }
 
-    //    public async Task<IActionResult> ExportExcelHisUser(int ? id)
-    //    {
-    //        using (var workbook = new XLWorkbook())
-    //        {
-				//List<SYSystemLogGetAllOnPage> data  = await new SYSystemLogGetAllOnPage(_appSetting).SYSystemLogGetAllOnPageDAO(id, 1000, 1, null, null);
-				//var worksheet = workbook.Worksheets.Add("Users");
-    //            var currentRow = 1;
-    //            worksheet.Cell(currentRow, 1).Value = "Id";
-    //            worksheet.Cell(currentRow, 2).Value = "Username";
-				//worksheet.Cell(currentRow, 3).Value = "Id";
-				//worksheet.Cell(currentRow, 4).Value = "Username";
-				//worksheet.Cell(currentRow, 5).Value = "Id";
-				//foreach (var item in data)
-    //            {
-    //                currentRow++;
-    //                worksheet.Cell(currentRow, 1).Value = item.Id;
-				//	worksheet.Cell(currentRow, 2).Value = item.CreatedDate;
-				//	worksheet.Cell(currentRow, 3).Value = item.Action;
-				//	worksheet.Cell(currentRow, 4).Value = item.Description;
-				//	worksheet.Cell(currentRow, 5).Value = item.Status;
-				//}
+		//    public async Task<IActionResult> ExportExcelHisUser(int ? id)
+		//    {
+		//        using (var workbook = new XLWorkbook())
+		//        {
+		//List<SYSystemLogGetAllOnPage> data  = await new SYSystemLogGetAllOnPage(_appSetting).SYSystemLogGetAllOnPageDAO(id, 1000, 1, null, null);
+		//var worksheet = workbook.Worksheets.Add("Users");
+		//            var currentRow = 1;
+		//            worksheet.Cell(currentRow, 1).Value = "Id";
+		//            worksheet.Cell(currentRow, 2).Value = "Username";
+		//worksheet.Cell(currentRow, 3).Value = "Id";
+		//worksheet.Cell(currentRow, 4).Value = "Username";
+		//worksheet.Cell(currentRow, 5).Value = "Id";
+		//foreach (var item in data)
+		//            {
+		//                currentRow++;
+		//                worksheet.Cell(currentRow, 1).Value = item.Id;
+		//	worksheet.Cell(currentRow, 2).Value = item.CreatedDate;
+		//	worksheet.Cell(currentRow, 3).Value = item.Action;
+		//	worksheet.Cell(currentRow, 4).Value = item.Description;
+		//	worksheet.Cell(currentRow, 5).Value = item.Status;
+		//}
 
-    //            using (var stream = new MemoryStream())
-    //            {
-    //                workbook.SaveAs(stream);
-    //                var content = stream.ToArray();
+		//            using (var stream = new MemoryStream())
+		//            {
+		//                workbook.SaveAs(stream);
+		//                var content = stream.ToArray();
 
-    //                return File(
-    //                    content,
-    //                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    //                    "users.xlsx");
-    //            }
-    //        }
-    //    }
-
-
-        #endregion
+		//                return File(
+		//                    content,
+		//                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+		//                    "users.xlsx");
+		//            }
+		//        }
+		//    }
 
 
-        #region private
+		#endregion
 
-        private Dictionary<string,string> generatePassword(string pwd)
-        {
-			byte[] salt = new byte[128 / 8];
-			using (var rng = RandomNumberGenerator.Create())
-			{
-				rng.GetBytes(salt);
-			}
-			// derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
-			string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-				password: pwd,
-				salt: salt,
-				prf: KeyDerivationPrf.HMACSHA1,
-				iterationCount: 10000,
-				numBytesRequested: 256 / 8));
-
-			return new Dictionary<string,string>
-			{
-				{"Password",hashed},
-				{"Salt",Convert.ToBase64String(salt) }
-			};
-		}
-
-        #endregion
 
     }
 }
