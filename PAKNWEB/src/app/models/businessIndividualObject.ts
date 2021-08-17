@@ -1,3 +1,5 @@
+import { NgIf } from '@angular/common'
+
 export class IndividualObject {
 	constructor() {
 		this.fullName = ''
@@ -187,4 +189,56 @@ export class BusinessExportObject {
 	phone: string
 	email: string
 	status: number
+}
+
+export class BussinessUpdateModel {
+	address: string
+	business: string
+	businessRegistration: string
+	code: string
+	createdBy: number
+	createdDate: Date
+	dateOfBirth: Date
+	dateOfIssue: Date
+	decisionOfEstablishing: string
+	districtId: Number
+	districtName: string
+	email: string
+	fullName: string
+	id: number
+	idCard: string
+	isActived: boolean
+	isDeleted: boolean
+	nation: string
+	nativePlace: string
+	orgAddress: string
+	orgDistrictId: Number
+	orgDistrictName: string
+	orgEmail: string
+	orgPhone: string
+	orgProvinceId: number
+	orgProvinceName: string
+	orgWardsId: number
+	orgWardsName: string
+	permanentPlace: string
+	phone: string
+	place: string
+	provinceId: number
+	provinceName: string
+	representative: string
+	representativeBirthDay: Date
+	representativeGender: boolean
+	representativeName: string
+	status: number
+	tax: string
+	updatedBy: null
+	updatedDate: Date
+	userId: number
+	wardsId: number
+	wardsName: string
+	_representativeBirthDay : Date
+	_dateOfBirth : Date
+	constructor() {
+		
+	}
 }

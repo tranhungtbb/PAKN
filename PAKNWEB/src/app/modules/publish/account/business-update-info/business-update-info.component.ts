@@ -10,10 +10,9 @@ import { BsLocaleService } from 'ngx-bootstrap/datepicker'
 
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { RESPONSE_STATUS, REGEX } from 'src/app/constants/CONSTANTS'
-import { AuthenticationService } from 'src/app/services/authentication.service'
-import { DataService } from 'src/app/services/sharedata.service'
 import { DiadanhService } from 'src/app/services/diadanh.service'
 import { AccountSideLeftComponent } from '../account-side-left/account-side-left.component'
+import { BussinessUpdateModel} from 'src/app/models/businessIndividualObject'
 
 @Component({
 	selector: 'app-business-update-info',
@@ -27,9 +26,6 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		private toast: ToastrService,
 		private router: Router,
 		private accountService: AccountService,
-		private storageService: UserInfoStorageService,
-		private authenService: AuthenticationService,
-		private sharedataService: DataService,
 		private diadanhService: DiadanhService,
 		private userLocal: UserInfoStorageService
 	) {
@@ -39,7 +35,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 
 	formUpdateAccountInfo: FormGroup
 
-	model: any = {}
+	model: any = new BussinessUpdateModel()
 	editable = false
 	@ViewChild(AccountSideLeftComponent, { static: false }) child_SideLeft: AccountSideLeftComponent
 
@@ -73,15 +69,15 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			provinceId: [this.model.provinceId],
 			districtId: [this.model.districtId],
 			wardsId: [this.model.wardsId],
-			address: [this.model.address, [Validators.required]],
+			address: [this.model.address],
 			representativeGender: [this.model.representativeGender],
 			businessRegistration: [this.model.businessRegistration],
 			decisionOfEstablishing: [this.model.decisionOfEstablishing],
 			dateOfIssue: [this.model.dateOfIssue],
 			tax: [this.model.tax, [Validators.required]],
-			orgProvinceId: [this.model.orgProvinceId],
-			orgDistrictId: [this.model.orgDistrictId],
-			orgWardsId: [this.model.orgWardsId],
+			orgProvinceId: [this.model.orgProvinceId, [Validators.required]],
+			orgDistrictId: [this.model.orgDistrictId , [Validators.required]],
+			orgWardsId: [this.model.orgWardsId, [Validators.required]],
 			orgAddress: [this.model.orgAddress, [Validators.required]],
 			orgPhone: [this.model.orgPhone, [Validators.required]],
 			orgEmail: [this.model.orgEmail, [Validators.email]],
@@ -100,6 +96,8 @@ export class BusinessUpdateInfoComponent implements OnInit {
 				return
 			}
 			this.model = res.result
+			this.model._representativeBirthDay  = this.model.representativeBirthDay != null ? new Date(this.model.representativeBirthDay) : null
+			this.model._dateOfIssue = this.model.dateOfIssue != null ? new Date(this.model.dateOfIssue) : null
 			if (this.model.nation == 'Việt Nam') {
 				this.nation_enable_type = false
 			} else {
@@ -107,7 +105,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			}
 			this.onChangeNation()
 			this.getAllProvice()
-			this.child_SideLeft.model = this.model
+			// this.child_SideLeft.model = this.model
 		})
 	}
 	resetNationField(event: any) {
@@ -116,31 +114,37 @@ export class BusinessUpdateInfoComponent implements OnInit {
 	submitted = false
 	onSave() {
 		this.submitted = true
-		let fDob: any = document.querySelector('#_dateOfBirth')
-		let fDateIssue: any = document.querySelector('#_dateOfIssue')
+		// let fDob: any = document.querySelector('#_dateOfBirth')
+		// let fDateIssue: any = document.querySelector('#_dateOfIssue')
 		if (this.model.nation == 'Nhập...') {
 			this.model.nation = ''
 		}
-		this.model.dateOfBirth = fDob.value
-		this.model.dateOfIssue = fDateIssue.value
-		this.model.fullName = this.model.representativeName
+		// this.model.dateOfBirth = fDob.value
+		// this.model.dateOfIssue = fDateIssue.value
+		this.model.fullName = this.model.business
 		this.model.idCard == null ? (this.model.idCard = '') : (this.model.idCard = this.model.idCard)
 		this.model.businessRegistration == null ? (this.model.businessRegistration = '') : (this.model.businessRegistration = this.model.businessRegistration)
 		this.model.decisionOfEstablishing == null ? (this.model.decisionOfEstablishing = '') : (this.model.decisionOfEstablishing = this.model.decisionOfEstablishing)
 		this.model.nativePlace == null ? (this.model.nativePlace = '') : (this.model.nativePlace = this.model.nativePlace)
 		if (!this.model.orgEmail) this.model.orgEmail = ''
-		if (!this.model.wardsId) this.model.wardsId = 0
-		if (!this.model.provinceId) this.model.provinceId = 0
-		if (!this.model.districtId) this.model.districtId = 0
-		// if (!this.model.orgProvinceId) this.model.orgProvinceId = 0
-		// if (!this.model.orgDistrictId) this.model.orgDistrictId =0
-		// if (!this.model.orgWardsId) this.model.orgWardsId = 0
-
+		if (!this.model.email) this.model.email = ''
+		
+		
 		if (this.formUpdateAccountInfo.invalid) {
-			//this.toast.error('Dữ liệu không hợp lệ')
-			console.log(this.formUpdateAccountInfo)
 			return
 		}
+		if(!this.nation_enable_type && (!this.model.wardsId || !this.model.provinceId || !this.model.districtId ))
+		{
+			return
+		}
+
+		this.model.wardsId = this.model.wardsId == null ? '' : this.model.wardsId;
+		this.model.provinceId = this.model.provinceId == null ? '' : this.model.provinceId;
+		this.model.districtId = this.model.districtId == null ? '' : this.model.districtId;
+		this.model.representativeBirthDay = this.model._representativeBirthDay == null ? '': JSON.stringify(new Date(this.model._representativeBirthDay)).slice(1, 11);
+		this.model.dateOfBirth = this.model._dateOfIssue == null ? '': JSON.stringify(new Date(this.model._dateOfIssue)).slice(1, 11);
+		
+
 
 		this.accountService.updateInfoUserCurrent(this.model).subscribe((res) => {
 			if (res.success != 'OK') {
@@ -149,7 +153,8 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			}
 			this.userLocal.setFullName(this.model.fullName)
 			this.toast.success(COMMONS.UPDATE_SUCCESS)
-			this.router.navigate(['/cong-bo/tai-khoan/thong-tin'])
+			// this.router.navigate(['/cong-bo/tai-khoan/thong-tin'])
+			window.location.href = '/cong-bo/tai-khoan/thong-tin';
 		})
 	}
 
@@ -198,10 +203,10 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		} else {
 			if (this.model.nation == '#') {
 				this.nation_enable_type = true
-				this.model.nation = 'Nhập...'
-				this.formUpdateAccountInfo.controls['provinceId'].setValue(0)
-				this.formUpdateAccountInfo.controls['districtId'].setValue(0)
-				this.formUpdateAccountInfo.controls['wardsId'].setValue(0)
+				this.model.nation = ''
+				this.model.ProvinceId = 0
+				this.model.DistrictId = 0
+				this.model.WardsId = 0
 				//
 				// this.formInfo.controls.province.disable()
 				// this.formInfo.controls.district.disable()
@@ -256,7 +261,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			this.listOrgDistrict = []
 			this.listOrgVillage = []
 
-			this.model.orgProvinceId = null
+			this.model.orgDistrictId = null
 			this.model.orgWardsId = null
 		}
 		if (this.model.orgProvinceId != null && this.model.orgProvinceId != '') {
@@ -280,6 +285,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			this.diadanhService.getAllVillage(this.model.orgProvinceId, this.model.orgDistrictId).subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listOrgVillage = res.result.CAVillageGetAll
+					console.log(this.listOrgVillage)
 				}
 			})
 		} else {

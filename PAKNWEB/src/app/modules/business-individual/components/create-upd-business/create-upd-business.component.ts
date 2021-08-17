@@ -49,7 +49,7 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 	model: OrganizationObject = new OrganizationObject()
 	nation_enable_type = false
 	userLoginId: number = this.storeageService.getUserId()
-	title: string = 'Tạo mới doanh nghiệp'
+	title: string = 'Thêm mới doanh nghiệp'
 
 	ngOnInit() {
 		this.localeService.use('vi')
@@ -61,9 +61,9 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 			this.model.id = +params['id']
 			if (this.model.id != 0) {
 				this.getData()
-				this.title = 'Cập nhật thông tin'
+				this.title = 'Cập nhật doanh nghiệp'
 			} else {
-				this.title = 'Tạo mới doanh nghiệp'
+				this.title = 'Thêm mới doanh nghiệp'
 				//
 			}
 		})
@@ -319,7 +319,7 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 				this.toast.success('Đăng ký doanh nghiệp thành công')
 				let dataRecommendation = this.storeageService.getRecommentdationObjectRemember()
 				if(dataRecommendation){
-					this.router.navigate(['/quan-tri/kien-nghi/them-moi/0'])
+					this.router.navigate(['/quan-tri/kien-nghi/them-moi/0/2'])
 				}
 				else{
 					this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/doanh-nghiep'])

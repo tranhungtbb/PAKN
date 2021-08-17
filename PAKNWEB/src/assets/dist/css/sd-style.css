@@ -2,6 +2,8 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import url('../../../../node_modules/devextreme/dist/css/dx.common.css');
 @import url('../../../../node_modules/devextreme/dist/css/dx.light.css');
+/* @import url('../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.carousel.scss');
+@import url('../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.theme.default.scss'); */
 
 .cdk-overlay-pane {
   max-width: 98vw !important;
@@ -123,7 +125,8 @@ a:hover{
 	background: linear-gradient(180deg, #FFD36C 0%, #D29914 100%);
 }
 .grd-xanhngoc{
-	background: linear-gradient(180deg, #42A4FF 0%, #2A5494 100%);
+	/* background: linear-gradient(180deg, #42A4FF 0%, #2A5494 100%); */
+	background: linear-gradient(180deg, #41D1FF 0%, #216277 100%);
 }
 .grd-blue{
 	background: linear-gradient(180deg, #42A4FF 0%, #2A5494 100%);
@@ -1412,6 +1415,7 @@ body .ui-paginator .ui-paginator-current{
 	padding-left: 13px;
 	padding-top: 4px;
 	padding-bottom: 7px;
+	color: #6e6e6e;
 }
 .form-control-sm .ng-select .ng-select-container{
 	min-height: 28px;
@@ -1709,20 +1713,12 @@ table thead .form-control ng-select {
 :host ::ng-deep .dx-designer{
 	height: 100% !important;
 }
-/* span.ng-clear-wrapper[title]:hover::after {
-	content: 'Xóa hết';
-	position: absolute;
-  top: -100%;
-  left: 0;
-} */
-
-/* span.ng-clear-wrapper {
-	display:none;
-} */
-
-/* span.ng-clear-wrapper  {
-	color: #337ab7;
-	font-size: 12px;
-	font-family: 'Glyphicons Halflings';
-	content: "\e014";
-} */
+.modal-dialog-right .rounded-0{
+	min-height: 100vh;
+}
+.center{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}

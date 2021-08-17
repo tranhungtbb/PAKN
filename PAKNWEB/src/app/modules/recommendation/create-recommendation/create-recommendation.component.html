@@ -10,22 +10,23 @@
 			</ol>
 			<div class="btn-group group-button-table" role="group">
 				<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" appSvBackButton><i class="bi bi-arrow-left mr-2"></i> quay lại</button>
-				<button type="button" class="btn btn-sm rounded text-white border-0 grd-xanhngoc px-5" (click)="onSave()">Lưu</button>
+				<button type="button" class="btn btn-sm rounded text-white border-0 grd-xanhngoc px-4 mr-3" (click)="onSave(false)">Lưu</button>
+				<button type="button" class="btn btn-sm rounded text-white border-0 grd-blue px-4" (click)="onSave(true)">Gửi</button>
 			</div>
 		</div>
 	</div>
 	<!-- row -->
-	<div class="container p-0">
+	<div class="container p-0 pr-4 pl-4">
 		<div class="row">
 			<div class="col align-items-center form-group mb-0 border-bottom pb-3 border-brown">
 				<div class="row">
 					<div class="col-md-6">
 						<strong class="h4 mr-5">Đối tượng:</strong>
 						<label class="radio-inline mr-5">
-							<input type="radio" name="optradio" (click)="changeTypeObject(1)" [value]="1" [(ngModel)]="model.typeObject"> Cá nhân
+							<input type="radio" name="optradio" (click)="changeTypeObject(1)" id="individual" checked [value]="1" [(ngModel)]="model.typeObject"> Cá nhân
 						</label>
 						<label class="radio-inline">
-							<input type="radio" name="optradio" (click)="changeTypeObject(2)" [value]="2" [(ngModel)]="model.typeObject"> Doanh nghiệp
+							<input type="radio" name="optradio" (click)="changeTypeObject(2)" id="bussiness" [value]="2" [(ngModel)]="model.typeObject"> Doanh nghiệp
 						</label>
 					</div>
 					<div class="col-md-6">
@@ -57,14 +58,14 @@
 							<div class="row">
 								<label class="mb-1">&nbsp;</label>
 							<button *ngIf="model.typeObject == 1" (click)="redirectToCreateIndividualBusiness()" type="button"
-								class="btn grd-xanhngoc btn-block border-0 text-white">
+								class="btn grd-blue btn-block border-0 text-white">
 								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 									<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 								</svg>
 								Thêm mới CN
 							</button>
 							<button *ngIf="model.typeObject == 2" (click)="redirectToCreateIndividualBusiness()" type="button"
-								class="btn grd-xanhngoc btn-block border-0 text-white">
+								class="btn grd-blue btn-block border-0 text-white">
 								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 									<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 								</svg>

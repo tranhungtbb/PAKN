@@ -149,6 +149,10 @@ export class PublishComponent implements OnInit, OnChanges {
 		}else if (type == TYPE_NOTIFICATION.INVITATION) {
 			this._router.navigate(['/quan-tri/thu-moi/chi-tiet/' + id])
 		}
+		else if (type == TYPE_NOTIFICATION.ADMINISTRATIVE) { // tthc
+			// this.updateIsReadNotification(dataId)
+			this._router.navigate(['/quan-tri/thu-tuc-hanh-chinh/chi-tiet/' + id])
+		}
 	}
 
 	updateIsReadNotification(dataId: any) {

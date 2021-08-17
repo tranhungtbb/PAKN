@@ -142,6 +142,7 @@ export class AppheaderComponent implements OnInit {
 				if (res.result.syNotifications.length > 0) {
 					this.Notifications = res.result.syNotifications
 					this.ViewedCount = res.result.syNotifications[0].viewedCount
+					console.log(this.Notifications)
 				} else {
 					this.Notifications = []
 				}
@@ -261,6 +262,10 @@ export class AppheaderComponent implements OnInit {
 		else if (type == TYPE_NOTIFICATION.INVITATION) { // Thư mời
 			this.updateIsReadNotification(dataId)
 			this.router.navigate(['/quan-tri/thu-moi/chi-tiet/' + dataId])
+		}
+		else if (type == TYPE_NOTIFICATION.ADMINISTRATIVE) { // tthc
+			this.updateIsReadNotification(dataId)
+			this.router.navigate(['/quan-tri/thu-tuc-hanh-chinh/chi-tiet/' + dataId])
 		}
 	}
 

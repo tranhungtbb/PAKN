@@ -31,7 +31,7 @@ namespace PAKNAPI.Controllers
 
 		[Route("GetCaptchaImage")]
 		[HttpGet]
-		public IActionResult GetCaptchaImage()
+		public async Task<IActionResult> GetCaptchaImageAsync(string IpAddress = null)
 		{
 			try
 			{
@@ -39,9 +39,11 @@ namespace PAKNAPI.Controllers
 				int height = 60;
 				var captchaCode = new Captcha(_appSetting).GenerateCaptchaCode();
 				var result = new Captcha(_appSetting).GenerateCaptchaImage(width, height, captchaCode);
-				new Captcha(_appSetting).InsertCaptcha(result.CaptchaCode);
+				await new Captcha(_appSetting).DeleteCaptchaByUserAgent(IpAddress, Request.Headers["User-Agent"].ToString());
+				await new Captcha(_appSetting).InsertCaptcha(result.CaptchaCode, IpAddress, Request.Headers["User-Agent"].ToString());
 				Stream s = new MemoryStream(result.CaptchaByteData);
-				return new FileStreamResult(s, "image/png");
+				var r = new FileStreamResult(s, "image/png");
+				return r;
 			}
 			catch (Exception ex)
 			{

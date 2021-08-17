@@ -51,19 +51,39 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public int? RowNumber { get; set; }
+		public long? Id { get; set; }
 		public int? WardsId { get; set; }
+		public string WardsName { get; set; }
 		public int? DistrictId { get; set; }
+
+		public string DistrictName { get; set; }
 		public string RepresentativeName { get; set; }
 		public string Code { get; set; }
-		public bool IsActived { get; set; }
-		public bool IsDeleted { get; set; }
-		public long Id { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public string OrgPhone { get; set; }
+		public string OrgEmail { get; set; }
 		public DateTime? RepresentativeBirthDay { get; set; }
 		public int? ProvinceId { get; set; }
+		public string ProvinceName { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public DateTime? UpdatedDate { get; set; }
+		public int? CreatedBy { get; set; }
+		public int? UpdatedBy { get; set; }
 		public int? Status { get; set; }
 		public bool? RepresentativeGender { get; set; }
+		public string BusinessRegistration { get; set; }
+		public string DecisionOfEstablishing { get; set; }
 		public DateTime? DateOfIssue { get; set; }
+		public string Tax { get; set; }
+		public int? OrgProvinceId { get; set; }
+
+		public string OrgProvinceName { get; set; }
+		public int? OrgDistrictId { get; set; }
+		public string OrgWardsName { get; set; }
+		public int? OrgWardsId { get; set; }
+		public string OrgDistrictName { get; set; }
+		public string OrgAddress { get; set; }
 		public string Address { get; set; }
 		public string Email { get; set; }
 		public string Phone { get; set; }
@@ -73,17 +93,8 @@ namespace PAKNAPI.ModelBase
 		public string NativePlace { get; set; }
 		public string PermanentPlace { get; set; }
 		public string Nation { get; set; }
-		public string BusinessRegistration { get; set; }
-		public string DecisionOfEstablishing { get; set; }
-		public string Tax { get; set; }
-		public int? OrgProvinceId { get; set; }
-		public int? OrgDistrictId { get; set; }
-		public int? OrgWardsId { get; set; }
-		public string OrgAddress { get; set; }
-		public string OrgPhone { get; set; }
-		public string OrgEmail { get; set; }
 		public string Business { get; set; }
-		public long UserId { get; set; }
+		public long? UserId { get; set; }
 
 		public async Task<List<BIBusinessGetByUserId>> BIBusinessGetByUserIdDAO(long? UserId)
 		{

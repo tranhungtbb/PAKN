@@ -23,7 +23,7 @@
 							</a>
 						</li>
 						<li class="nav-item dropdown notification_dropdown">
-							<a class="nav-link  ai-icon bg-transparent" style="position: relative;" (click)="updateNotifications()" href="#" role="button" data-toggle="dropdown">
+							<a class="nav-link  ai-icon bg-transparent" style="position: relative;" href="#" role="button" data-toggle="dropdown">
 								<span *ngIf="ViewedCount > 0" class="count-notification">{{ViewedCount}}</span>
 								<i class="bi bi-bell"></i>
 								<!-- <div class="pulse-css"></div> -->
@@ -42,7 +42,7 @@
 									[ngClass]="{ 'height-auto': notifications && notifications.length < 4}">
 									<ul class="timeline" id="notificationScroll" *ngIf="notifications">
 										<li *ngFor="let item of notifications" class="item-notification">
-											<a href="javascript:void(0)" (click)="onClickNotification(item.id, item.type, item.typeSend)" class="timeline-panel">
+											<a href="javascript:void(0)" (click)="onClickNotification(item.dataId, item.type, item.typeSend)" class="timeline-panel">
 												<div class="media mr-2 grd-brown">
 													<i class="bi bi-file-earmark-medical cl-brown"></i>
 												</div>
@@ -131,9 +131,7 @@
 						<li class="nav-item">
 							<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./gioi-thieu']">giới thiệu</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./thu-tuc-hanh-chinh']">Thủ tục hành chính</a>
-						</li>
+					
 						<li class="nav-item">
 							<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./tin-tuc-su-kien']">Tin tức & sự kiện</a>
 						</li>
@@ -147,6 +145,9 @@
 									<li class="border-bottom" *ngIf="i+1 < subMenu.length"></li>
 								</ng-container>
 							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./thu-tuc-hanh-chinh']">Thủ tục hành chính</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./ho-tro']">hỗ trợ</a>

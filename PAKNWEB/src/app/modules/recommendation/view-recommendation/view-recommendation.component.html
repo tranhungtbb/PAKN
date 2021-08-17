@@ -27,7 +27,7 @@
 						Từ chối
 					</button>
 
-					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="preProcess(2)"
+					<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="preProcess(2)"
 						*ngIf="(model.status == 2 || model.status == 5) && (model.userActive == userLoginId || model.unitActive == unitLoginId)">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-check mr-2" viewBox="0 0 16 16">
 							<path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
@@ -37,7 +37,7 @@
 						Tiếp nhận
 					</button>
 
-					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="preProcess(2)"
+					<button type="button" class="btn grd-green btn-sm rounded border-0 text-white" (click)="preProcess(2)"
 						*ngIf="model.status == 8 && model.userActive == userLoginId">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-check mr-2" viewBox="0 0 16 16">
 							<path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
@@ -84,6 +84,7 @@
 						<div class="media-body">
 							<p class="h4 font-weight-bold">Nội dung kiến nghị:</p>
 							<p>{{model.content}}</p>
+
 							<p *ngIf="filesModel.length > 0">
 									<span class="text-left">
 										<small class="small">Tài liệu đính kèm</small><br>
@@ -254,43 +255,43 @@
 							</ng-container>
 							<ng-container *ngIf="model.status > 7 && (model.status != 9 || model.userActive != userLoginId)">
 								<p>{{modelConclusion.content}}</p>
-								<p *ngIf="files.length > 0">
-									<button type="button" class="btn border btn-block text-dark p-0">
-										<span class="rounded grd-green text-white p-3 mr-3">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
-												<path
-													d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z">
-												</path>
-											</svg>
-										</span>
-										<span class="text-left text-truncate">
-											<small class="small">Tài liệu đính kèm</small><br>
-											<div *ngFor="let file of files">
-												<a *ngIf="file.fileType == 1" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
-													<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
-													<span class="small">{{file.name}}</span>
-												</a>
-												<a *ngIf="file.fileType == 2" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
-													<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;" alt="">
-													<span class="small">{{file.name}}</span>
-												</a>
-												<a *ngIf="file.fileType == 3" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
-													<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
-													<span class="small">{{file.name}}</span>
-												</a>
-												<a *ngIf="file.fileType == 4" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
-													<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;" alt="">
-													<span class="small">{{file.name}}</span>
-												</a>
-												<a *ngIf="file.fileType == 6" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
-													<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;" alt="">
-													<span class="small">{{file.name}}</span>
-												</a>
-											</div>
-										</span>
 
-									</button>
-								</p>
+
+								<p *ngIf="files.length > 0">
+									<span class="text-left">
+										<small class="small">Tài liệu đính kèm</small><br>
+										<div *ngFor="let file of files" class="file-att">
+											<a *ngIf="file.fileType == 1" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+												<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
+												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+											</a>
+											<a *ngIf="file.fileType == 2" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+												<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;" alt="">
+												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+											</a>
+											<a *ngIf="file.fileType == 3" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+												<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
+												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+											</a>
+											<a *ngIf="file.fileType == 4" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+												<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;" alt="">
+												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+											</a>
+											<a *ngIf="file.fileType == 6" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+												<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;" alt="">
+												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+											</a>
+											<a *ngIf="file.fileType == 7" download [href]="APIADDRESS + file.filePath" target="_blank" style="color: #333;">
+												<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;" alt="">
+												<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+											</a>
+											<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile [linkfile]="file.filePath" [namefile]="file.name"
+												title="Xem file">
+												<i class="bi bi-eye"></i>
+											</span>
+										</div>
+									</span>
+							</p>
 							</ng-container>
 						</div>
 					</div>
@@ -419,7 +420,7 @@
 					<div class="form-row">
 						<div class="col-12 col-lg-6 form-group">
 							<label class="mb-1">Đơn vị giải quyết <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" [items]="lstUnitNotMain" bindLabel="text" bindValue="value" formControlName="unitReceiveId"
+							<ng-select class="form-control border-input" [items]="lstUnitNotMain" bindLabel="text" bindValue="value" formControlName="unitReceiveId"
 								[(ngModel)]="modelForward.unitReceiveId" [closeOnSelect]="true"></ng-select>
 							<div *ngIf="(submitted && f.unitReceiveId.invalid) || (f.unitReceiveId.invalid && (f.unitReceiveId.dirty || f.unitReceiveId.touched))"
 								class="has-error m-b-12">
@@ -431,11 +432,11 @@
 						<div class="col-12 col-lg-6 form-group">
 							<label class="mb-1">Hạn giải quyết</label>
 							<div class="input-group">
-								<input class="form-control" placeholder="Chọn hạn giải quyết" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="expiredDate"
+								<input class="form-control border-input" placeholder="Chọn hạn giải quyết" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="expiredDate"
 									[(ngModel)]="modelForward.expiredDate" appBsDatepickerInvalid [minDate]="dateNow"
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-								<div class="input-group-addon">
-									<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+								<div class="input-group-addon p-2">
+									<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 								</div>
 							</div>
 						</div>
@@ -560,7 +561,7 @@
 								<div class="d-flex justify-content-end">
 									<a href="quan-tri/kien-nghi/chi-tiet/{{item.id}}?suggest=true" target="_blank" class="btn-icon grd-brown text-brown mr-2"
 										title="Xem chi tiết"><i class="bi bi-eye"></i></a>
-									<a class="btn-icon grd-xanhngoc text-white mr-2" (click)="useConclustion(item.contentReply)" title="Sử dụng câu trả lời"><i
+									<a class="btn-icon grd-blue text-white mr-2" (click)="useConclustion(item.contentReply)" title="Sử dụng câu trả lời"><i
 											class="bi bi-file-earmark-check"></i></a>
 								</div>
 							</td>

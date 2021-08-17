@@ -12,3 +12,7 @@ strong.highlight:hover {
 .cursor {
 	cursor: pointer;
 }
+
+:host ::ng-deep .ng-clear-wrapper{
+	z-index: 100;
+}

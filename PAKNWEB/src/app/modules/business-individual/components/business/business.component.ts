@@ -47,8 +47,8 @@ export class BusinessComponent implements OnInit {
 	unitLoginId: number = this.storeageService.getUnitId()
 	listData = new Array<BusinessionObject>()
 	listStatus: any = [
-		{ value: 0, text: 'Hết hiệu lực' },
 		{ value: 1, text: 'Hiệu lực' },
+		{ value: 0, text: 'Hết hiệu lực' },
 	]
 
 	listGender: any[] = [

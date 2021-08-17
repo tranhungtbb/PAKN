@@ -35,7 +35,7 @@ namespace PAKNAPI.Controller
 
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         [Route("AdministrationFormalitiesGetByID")]
         public async Task<ActionResult<object>> AdministrationFormalitiesGetByID(int? Id)
         {

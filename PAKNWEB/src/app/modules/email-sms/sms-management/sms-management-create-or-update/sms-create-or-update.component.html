@@ -12,12 +12,12 @@
 						Quay lại
 					</a>
 					<span *ngIf="model.id ==0">
-						<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" *hasPermission="['3', 'B_II_8']" (click)="onSave(false)">{{action}}</button>
+						<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3 px-4" *hasPermission="['3', 'B_II_8']" (click)="onSave(false)">{{action}}</button>
 					</span>
 					<span *ngIf="model.id !=0">
-						<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" *hasPermission="['3', 'B_II_7']" (click)="onSave(false)">{{action}}</button>
+						<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3 px-4" *hasPermission="['3', 'B_II_7']" (click)="onSave(false)">{{action}}</button>
 					</span>
-					<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" *hasPermission="['3', 'B_II_0']" (click)="onSave(true)">Gửi</button>
+					<button class="btn btn-sm grd-blue text-white rounded border-0 mr-3 px-4" *hasPermission="['3', 'B_II_0']" (click)="onSave(true)">Gửi</button>
 				</div>
 			</div>
 		</div>

@@ -53,8 +53,8 @@ export class OrgFormAddressComponent implements OnInit, AfterViewInit {
 		this.listDistrict = []
 		this.listVillage = []
 
-		this.model.OrgDistrictId = ''
-		this.model.OrgWardsId = ''
+		this.model.OrgDistrictId = null
+		this.model.OrgWardsId = null
 		if (this.model.OrgProvinceId != null && this.model.OrgProvinceId != '') {
 			this.diadanhService.getAllDistrict(this.model.OrgProvinceId).subscribe((res) => {
 				if (res.success == 'OK') {
@@ -68,7 +68,7 @@ export class OrgFormAddressComponent implements OnInit, AfterViewInit {
 	onChangeDistrict() {
 		this.listVillage = []
 
-		this.model.OrgWardsId = ''
+		this.model.OrgWardsId = null
 		if (this.model.OrgDistrictId != null && this.model.OrgDistrictId != '') {
 			this.diadanhService.getAllVillage(this.model.OrgProvinceId, this.model.OrgDistrictId).subscribe((res) => {
 				if (res.success == 'OK') {

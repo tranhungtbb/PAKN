@@ -16,7 +16,7 @@
 						</svg>
 						Xuất excel
 					</button>
-					<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" [routerLink]="['/quan-tri/kien-nghi/them-moi/0']" *hasPermission="['3', 'E_I_0']">
+					<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" [routerLink]="['/quan-tri/kien-nghi/them-moi/0']" *hasPermission="['3', 'E_I_0']">
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 						</svg>
@@ -105,7 +105,7 @@
 									<td>{{item.fieldName}}</td>
 									<td>
 										<span *ngIf="item.status == 2" class="badge rounded-pill badge-outline-light bg-white">Chờ xử lý</span>
-										<span *ngIf="item.status == 3" class="badge rounded-pill bg-red">Từ chối xử lý</span>
+										<span *ngIf="item.status == 3" class="badge rounded-pill bg-red">Từ chối tiếp nhận</span>
 										<span *ngIf="item.status == 4" class="badge rounded-pill bg-blue2">Đã tiếp nhận</span>
 										<span *ngIf="item.status == 5" class="badge rounded-pill badge-outline-green2">Chờ giải quyết</span>
 										<span *ngIf="item.status == 6" class="badge rounded-pill bg-red">Từ chối giải quyết</span>
@@ -183,7 +183,7 @@
 
 <div class="modal fade pr-0" id="modal-history-pakn">
 	<div class="modal-dialog modal-dialog-right vh-100" role="document">
-		<div class="modal-content rounded-0 h-100">
+		<div class="modal-content rounded-0">
 			<div class="modal-header border-bottom-0">
 				<p class="modal-title h4">Lịch sử quy trình xử lý</p>
 				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
@@ -209,7 +209,7 @@
 								<p class="mb-2 d-flex justify-content-between align-items-center">
 									<span *ngIf="item.status == 1" class="badge rounded-pill mb-0 badge-outline-light bg-white">Đã khởi tạo</span>
 									<span *ngIf="item.status == 2" class="badge rounded-pill mb-0 badge-outline-info">Gửi xử lý</span>
-									<span *ngIf="item.status == 3" class="badge rounded-pill mb-0 bg-red">Từ chối xử lý</span>
+									<span *ngIf="item.status == 3" class="badge rounded-pill mb-0 bg-red">Từ chối tiếp nhận</span>
 									<span *ngIf="item.status == 4" class="badge rounded-pill mb-0 bg-blue2">Đã tiếp nhận</span>
 									<span *ngIf="item.status == 5" class="badge rounded-pill mb-0 badge-outline-green2">Đã gửi giải quyết</span>
 									<span *ngIf="item.status == 6" class="badge rounded-pill mb-0 bg-red">Từ chối giải quyết</span>

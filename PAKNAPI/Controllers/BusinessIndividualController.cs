@@ -459,7 +459,7 @@ namespace PAKNAPI.Controllers
 						Phone = model.Phone,
 						Email = model.Email,
 						UserName = model.Phone,
-						FullName = model.RepresentativeName,
+						FullName = model.Business,
 						Gender = model.RepresentativeGender,
 						Address = model.Address,//
 						TypeId = 3,
@@ -697,8 +697,7 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Authorize]
 		[Route("InvididualUpdate")]
-		public async Task<ActionResult<object>> InvididualUpdate(
-			[FromBody] Models.BusinessIndividual.BI_InvididualUpdateIN_body _bI_InvididualUpdateIN)
+		public async Task<ActionResult<object>> InvididualUpdate(BI_InvididualUpdateIN_body _bI_InvididualUpdateIN)
 		{
 			try
 			{
@@ -921,7 +920,7 @@ namespace PAKNAPI.Controllers
 					Phone = model.Phone,
 					Email = model.Email,
 					UserName = model.Phone,
-					FullName = model.RepresentativeName,
+					FullName = model.Business,
 					Gender = model.RepresentativeGender,
 					Address = model.Address,//
 					TypeId = 3,
@@ -1033,6 +1032,14 @@ namespace PAKNAPI.Controllers
 				//	//model.OrgProvinceId = null;
 				//	//model.OrgWardsId = null;
 				//}
+
+				var rsUpdateAcc = new SYUserUpdateInfo(_appSetting).SYUserUpdateInfoDAO(new SYUserUpdateInfoIN
+				{
+					Id = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext),
+					FullName = model.Business,
+					Address = model.Address,
+				});
+
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = await new BI_BusinessUpdateInfo(_appSetting).BI_BusinessUpdateInfoDAO(model) };
 			}

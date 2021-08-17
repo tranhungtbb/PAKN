@@ -9,6 +9,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PAKNAPI.Models.Results
 {
@@ -51,13 +52,15 @@ namespace PAKNAPI.Models.Results
             return isValid;
         }
 
-        public void InsertCaptcha(string captcha)
+        public async Task<int?> InsertCaptcha(string captcha, string ipAddress, string userAgent)
         {
             try
             {
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@Code", captcha);
-                _sQLCon.ExecuteNonQueryDapper("SY_CaptChaInsertData", parameters);
+                parameters.Add("@IpAddress", ipAddress);
+                parameters.Add("@UserAgent", userAgent);
+                return await _sQLCon.ExecuteNonQueryDapperAsync("SY_CaptChaInsertData", parameters);
             }
             catch (Exception ex)
             {
@@ -66,11 +69,19 @@ namespace PAKNAPI.Models.Results
 
         }
 
-        public void DeleteCaptcha(string captcha)
+        public async Task<int?> DeleteCaptcha(string captcha)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Code", captcha);
-            _sQLCon.ExecuteNonQueryDapper("SY_CaptChaDelete", parameters);
+            return await _sQLCon.ExecuteNonQueryDapperAsync("SY_CaptChaDelete", parameters);
+        }
+
+        public async Task<int?> DeleteCaptchaByUserAgent(string ipAddress, string userAgent)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@IpAddress", ipAddress);
+            parameters.Add("@UserAgent", userAgent);
+            return await _sQLCon.ExecuteNonQueryDapperAsync("SY_CaptChaDeleteByUserAgent", parameters);
         }
 
         public CaptchaResult GenerateCaptchaImage(int width, int height, string captchaCode)

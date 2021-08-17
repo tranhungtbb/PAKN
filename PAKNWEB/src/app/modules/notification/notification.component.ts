@@ -29,7 +29,6 @@ export class NotificationComponent implements OnInit {
 	idDelete: number
 
 	listType: any = [
-		{ value: '', text: 'Loại thông báo' },
 		{ value: 1, text: 'Bài viết' },
 		{ value: 2, text: 'Phản ánh kiến nghị' },
 		{ value: 3, text: 'Nhắc việc' },

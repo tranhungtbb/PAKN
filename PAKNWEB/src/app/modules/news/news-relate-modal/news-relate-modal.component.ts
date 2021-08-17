@@ -67,10 +67,7 @@ export class NewsRelateModalComponent implements OnInit {
 			})
 			.subscribe((res) => {
 				if (res.success != 'OK') return
-				this.listDataPaged = res.result.NENewsGetAllOnPage.filter((c) => c.id != this.parentNews).map((item) => {
-					// item.imagePath = `${AppSettings.API_DOWNLOADFILES}/${item.imagePath}`
-					return item
-				})
+				this.listDataPaged = res.result.NENewsGetAllOnPage.filter((c) => c.id != this.parentNews)
 				if (this.totalCount <= 0) this.totalCount = res.result.TotalCount
 				this.totalCount = Math.ceil(this.totalCount / this.query.pageSize)
 			})

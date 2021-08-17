@@ -124,6 +124,7 @@ export class TYPE_NOTIFICATION {
 	public static NEWS = 1 // thông báo tin tức
 	public static RECOMMENDATION = 2 // thông báo PAKN
 	public static INVITATION = 3 // thông báo có thư mời
+	public static ADMINISTRATIVE = 4 // administrative-formalities
 }
 
 export class PROCESS_STATUS_RECOMMENDATION {

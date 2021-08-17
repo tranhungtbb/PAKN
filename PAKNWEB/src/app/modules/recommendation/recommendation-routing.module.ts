@@ -28,6 +28,12 @@ const routes: Routes = [
 				data: { role: 'E_I_0' }
 			},
 			{ 
+				path: 'them-moi/:id/:typeObject',
+				component: CreateRecommendationComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_I_0' }
+			},
+			{ 
 				path: 'danh-sach-tong-hop',
 				component: ListGeneralComponent,
 				canActivate: [RoleGuardService],

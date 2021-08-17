@@ -374,12 +374,12 @@ export class LoginComponent implements OnInit {
 	captchaCode: string = null
 	captchaImage: any = ''
 	reloadImage() {
-		this.captchaImage = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?' + Math.random() * 100000000000000000000
+		this.captchaImage = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?IpAddress=' + this.storeageService.getIpAddress()+  '&&Ramdom' + Math.random() * 100000000000000000000
 	}
 
 	captchaCodeProduct: string = null
 	captchaImageProduct: any = ''
 	reloadImageProduct() {
-		this.captchaImageProduct = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?' + Math.random() * 100000000000000000000
+		this.captchaImageProduct = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?IpAddress=' + this.storeageService.getIpAddress()+  '&&Ramdom' + Math.random() * 100000000000000000000
 	}
 }

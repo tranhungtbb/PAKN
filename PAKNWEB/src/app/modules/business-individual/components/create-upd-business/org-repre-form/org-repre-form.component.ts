@@ -74,14 +74,11 @@ export class OrgRepreFormComponent implements OnInit, AfterViewInit {
 		} else {
 			if (this.model.Nation == '#') {
 				this.nation_enable_type = true
-				this.model.Nation = 'Nhập...'
+				this.model.Nation = ''
 
 				this.model.ProvinceId = 0
 				this.model.DistrictId = 0
 				this.model.WardsId = 0
-				// this.model.OrgProvinceId = 0
-				// this.model.OrgDistrictId = 0
-				// this.model.OrgWardsId = 0
 			}
 		}
 		//update state for child
@@ -92,8 +89,8 @@ export class OrgRepreFormComponent implements OnInit, AfterViewInit {
 		this.listDistrict = []
 		this.listVillage = []
 
-		this.model.DistrictId = ''
-		this.model.WardsId = ''
+		this.model.DistrictId = null
+		this.model.WardsId = null
 		if (this.model.ProvinceId != null && this.model.ProvinceId != '') {
 			this.diadanhService.getAllDistrict(this.model.ProvinceId).subscribe((res) => {
 				if (res.success == 'OK') {
@@ -107,7 +104,7 @@ export class OrgRepreFormComponent implements OnInit, AfterViewInit {
 	onChangeDistrict() {
 		this.listVillage = []
 
-		this.model.WardsId = ''
+		this.model.WardsId = null
 		if (this.model.DistrictId != null && this.model.DistrictId != '') {
 			this.diadanhService.getAllVillage(this.model.ProvinceId, this.model.DistrictId).subscribe((res) => {
 				if (res.success == 'OK') {
@@ -127,9 +124,9 @@ export class OrgRepreFormComponent implements OnInit, AfterViewInit {
 			Gender: [this.model.RepresentativeGender, [Validators.required]],
 			DOB: [this.model._RepresentativeBirthDay, []],
 			Nation: [this.model.Nation, [Validators.required]],
-			Province: [this.model.ProvinceId, []], //int
-			District: [this.model.DistrictId, []], // int
-			Village: [this.model.WardsId, []], // int
+			Province: [this.model.ProvinceId, [Validators.required]], //int
+			District: [this.model.DistrictId, [Validators.required]], // int
+			Village: [this.model.WardsId, [Validators.required]], // int
 			Address: [this.model.Address, []],
 			phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/)]],
 		})

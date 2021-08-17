@@ -65,14 +65,22 @@ export class NewsPuslishComponent implements OnInit {
 				status: 1,
 			})
 			.subscribe((res) => {
-				if (res.success != 'OK') return
-				this.listDataPaged = res.result.NENewsGetAllOnPage.map((item) => {
-					// item.imagePath = `${AppSettings.API_DOWNLOADFILES}/${item.imagePath}`
-					return item
-				})
-				if (res.result.TotalCount) this.totalCount = res.result.TotalCount
-				// load image
-				//this.getNewsAvatars()
+				if (res.success != 'OK'){
+					this.listDataPaged = []
+					this.totalCount = 0
+					this.query.pageSize = 20
+					this.query.pageIndex = 1
+				}else{
+					if(res.result.NENewsGetAllOnPage.length > 0){
+						this.listDataPaged = res.result.NENewsGetAllOnPage
+						if (res.result.TotalCount) this.totalCount = res.result.TotalCount
+					}else{
+						this.listDataPaged = []
+						this.totalCount = 0
+						this.query.pageSize = 20
+						this.query.pageIndex = 1
+					}
+				}
 			})
 	}
 

@@ -2,8 +2,8 @@
   height: 2.4rem;
 }
 .input-group .input-group-addon{
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 .center{
   display: flex;

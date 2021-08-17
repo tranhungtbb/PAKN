@@ -38,6 +38,7 @@ export class EmailManagementComponent implements OnInit {
 
 	/// kiểu hiển thị: Email đã gửi
 	isSentLst = false;
+	title = 'Danh sách Email'
 
 	listStatus: any = [
 		{ value: 1, text: 'Đang soạn thảo' },
@@ -84,6 +85,7 @@ export class EmailManagementComponent implements OnInit {
 	//
 	getPagedList(){
 		if(this.isSentLst)
+			this.title = 'Danh sách Email đã gửi'
 			this.query.status = 2
 		this.query.title = this.query.title.trim()
 

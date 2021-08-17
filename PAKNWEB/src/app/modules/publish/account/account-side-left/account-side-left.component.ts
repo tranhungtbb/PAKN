@@ -1,18 +1,14 @@
 import { Component, OnInit } from '@angular/core'
 
 import { Router } from '@angular/router'
-import { ToastrService } from 'ngx-toastr'
-import { AccountService } from 'src/app/services/account.service'
 import { RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
 
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { AuthenticationService } from 'src/app/services/authentication.service'
 import { DataService } from 'src/app/services/sharedata.service'
-import { DiadanhService } from 'src/app/services/diadanh.service'
-import { UserInfoObject } from 'src/app/models/UserObject'
-import { RecommendationService } from 'src/app/services/recommendation.service'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
+import {UserService} from 'src/app/services/user.service'
 
 @Component({
 	selector: 'app-account-side-left',
@@ -21,17 +17,14 @@ import { PuRecommendationService } from 'src/app/services/pu-recommendation.serv
 })
 export class AccountSideLeftComponent implements OnInit {
 	constructor(
-		private toast: ToastrService,
 		private router: Router,
-		private accountService: AccountService,
 		private storageService: UserInfoStorageService,
 		private authenService: AuthenticationService,
 		private sharedataService: DataService,
-		private diadanhService: DiadanhService,
-		private recomnendationService: RecommendationService,
-		private puRecommendationService: PuRecommendationService
+		private puRecommendationService: PuRecommendationService,
+		private userService : UserService
 	) {}
-	model: any = { userName: '' }
+	modelInfo: any = {}
 	urlPath: string
 	userId: number = 0
 	graphData: any = {}
@@ -51,6 +44,14 @@ export class AccountSideLeftComponent implements OnInit {
 				}
 			}
 			return
+		})
+		this.userService.getById({Id : this.userId}).subscribe(res=>{
+			if(res.success == RESPONSE_STATUS.success){
+				if( res.result.SYUserGetByID.length > 0){
+					this.modelInfo = res.result.SYUserGetByID[0]
+					// console.log(this.model)
+				}
+			}
 		})
 	}
 

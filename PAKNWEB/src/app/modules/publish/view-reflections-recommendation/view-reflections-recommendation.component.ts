@@ -63,11 +63,11 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result.model != null) {
 							this.model = { ...res.result.model, shortName: this.getShortName(res.result.model.name) }
-							console.log(this.model)
+							// console.log(this.model)
 							this.lstFiles = res.result.lstFiles
 							this.lstConclusion = res.result.lstConclusion
 							this.lstConclusionFiles = res.result.lstConclusionFiles
-							console.log(this.lstConclusionFiles)
+							// console.log(this.lstConclusionFiles)
 						}
 					}
 				})

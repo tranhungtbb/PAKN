@@ -24,7 +24,31 @@
 					</div>
 				</div>
 				<div class="col col-lg-7">
-					<div id="owl-news" class="owl-carousel owl-theme h-100">
+
+					<owl-carousel-o [options]="customOptions">
+						<ng-container *ngFor="let item of news">
+							<ng-template carouselSlide [id]="item.id">
+								<div class="card mb-lg-0">
+									<a href="javascript:void(0)" (click)="redirectDetailNews(item.id)" class="image-box ratio-16-9 rounded">
+										<span class="image">
+											<img *ngIf="item" [src]="item.imagePath">
+										</span>
+									</a>
+									<p class="card-text text-dark px-4 pt-3 py-0 mb-0">{{item.createdDate | date: 'dd/MM/yyyy'}}</p>
+									<div class="card-header px-4 pt-1 pb-0" style="height: 80px;">
+										<p class="card-title text-3line"><a href="javascript:void(0)" (click)="redirectDetailNews(item.id)">{{item.title}}</a></p>
+									</div>
+									<div class="card-body px-4 pt-2 pb-3" style="height: 75px;">
+										<p class="card-text text-2line"><a href="javascript:void(0)" (click)="redirectDetailNews(item.id)">{{item.summary}}</a>
+										</p>
+									</div>
+								</div>
+							</ng-template>
+						</ng-container>
+				 
+					</owl-carousel-o>
+
+					<!-- <div id="owl-news" class="owl-carousel owl-theme h-100">
 						<div class="item" *ngFor="let item of news">
 							<div class="card mb-lg-0">
 								<a href="javascript:void(0)" (click)="redirectDetailNews(item.id)" class="image-box ratio-16-9 rounded">
@@ -42,7 +66,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -121,27 +145,3 @@
 		</div>
 	</div>
 </div>
-
-<script src="../../../../assets/dist/js/owl.carousel.min.js"></script>
-<!-- <script src="../../../../assets/dist/js/sd-js.js"></script> -->
-<script>
-	$('#owl-news').owlCarousel({
-				loop: true,
-				margin: 30,
-				nav: false,
-				autoplay: true,
-				autoplayTimeout: 10000,
-				autoplayHoverPause: true,
-				responsive: {
-					0: {
-						items: 1,
-					},
-					600: {
-						items: 2,
-					},
-					1000: {
-						items: 2,
-					},
-				},
-			})
-</script>

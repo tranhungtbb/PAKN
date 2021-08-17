@@ -87,7 +87,7 @@ export class AccountInfoComponent implements OnInit {
 
 			this.onChangeNation()
 
-			this.child_SideLeft.model = this.model
+			// this.child_SideLeft.model = this.model
 		})
 	}
 	signOut(): void {

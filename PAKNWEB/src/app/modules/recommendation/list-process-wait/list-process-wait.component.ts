@@ -6,7 +6,7 @@ import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import { stat } from 'fs'
+// import { stat } from 'fs'
 import { COMMONS } from 'src/app/commons/commons'
 import { NotificationService } from 'src/app/services/notification.service'
 import { Router } from '@angular/router'
@@ -239,6 +239,11 @@ export class ListProcessWaitComponent implements OnInit {
 	}
 
 	onProcessForward() {
+		this.contentForward = this.contentForward == null ? '' : this.contentForward.trim();
+		if(this.contentForward == ''){
+			this._toastr.error('Vui lòng nhập lí do từ chối')
+			return
+		}
 		this.modelProcess.reasonDeny = this.contentForward
 		var request = {
 			_mRRecommendationForwardProcessIN: this.modelProcess,

@@ -22,7 +22,7 @@ export class AccountService {
 
 	getUserInfo(): Observable<any> {
 		let url = `${AppSettings.API_ADDRESS}${Api.AccountGetInfo}`
-		return this.serviceInvoker.get({}, url)
+		return this.serviceInvoker.get({id : this.localStronageService.getUserId()}, url)
 	}
 
 	changePassword(body: any): Observable<any> {
@@ -37,13 +37,13 @@ export class AccountService {
 	}
 
 	updateInfoUserCurrent(body: any) {
-		let url = `${AppSettings.API_ADDRESS}${Api.AccountUpdateInfo}`
+		// let url = `${AppSettings.API_ADDRESS}${Api.AccountUpdateInfo}`
 
 		var form = new FormData()
 		for (var b in body) {
 			form.append(b, body[b])
 		}
 
-		return this.serviceInvoker.post(form, url)
+		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.AccountUpdateInfo)
 	}
 }

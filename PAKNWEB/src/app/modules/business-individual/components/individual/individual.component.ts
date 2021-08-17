@@ -52,8 +52,8 @@ export class IndividualComponent implements OnInit {
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<IndividualObject>()
 	listStatus: any = [
-		{ value: 0, text: 'Hết hiệu lực' },
 		{ value: 1, text: 'Hiệu lực' },
+		{ value: 0, text: 'Hết hiệu lực' },
 	]
 
 	listGender: any[] = [
@@ -121,13 +121,13 @@ export class IndividualComponent implements OnInit {
 		} else {
 			if (this.model.nation == '#') {
 				this.isOtherNation = true
-				this.model.nation = 'Nhập...'
+				this.model.nation = ''
 
 				this.model.provinceId = 0
 				this.model.districtId = 0
 				this.model.wardsId = 0
 
-				this.form.get('nation').setErrors(null)
+				// this.form.get('nation').setErrors(null)
 			}
 		}
 	}
@@ -188,7 +188,7 @@ export class IndividualComponent implements OnInit {
 	close =()=>{
 		let dataRecommendation = this.storeageService.getRecommentdationObjectRemember()
 				if(dataRecommendation){
-					this._router.navigate(['/quan-tri/kien-nghi/them-moi/0'])
+					this._router.navigate(['/quan-tri/kien-nghi/them-moi/0/1'])
 					return
 				}
 				return
@@ -355,7 +355,7 @@ export class IndividualComponent implements OnInit {
 			iDCard: [this.model.iDCard, [Validators.required]], //, Validators.pattern(/^([0-9]){8,12}$/g)
 			placeIssue: [this.model.issuedPlace],
 			dateIssue: [this.model.dateOfIssue],
-			status: [this.model.status],
+			status: [this.model.status, [Validators.required]],
 		})
 	}
 
@@ -392,8 +392,8 @@ export class IndividualComponent implements OnInit {
 		// 	this.model.wardsId = 0
 		// }
 
-		this.model.birthDate = fDob.value
-		this.model.dateOfIssue = fDateIssue.value
+		// this.model.birthDate = fDob.value
+		// this.model.dateOfIssue = fDateIssue.value
 		this.model._birthDay = fDob.value
 		this.model._dateOfIssue = fDateIssue.value
 		this.model.userId = this.userLoginId
@@ -415,7 +415,7 @@ export class IndividualComponent implements OnInit {
 		let dateIssue = new Date(this.model.dateOfIssue)
 		let dateOfBirth = new Date(this.model.birthDate)
 
-		if (dateIssue < dateOfBirth) {
+		if (this.model.dateOfIssue && dateIssue < dateOfBirth) {
 			this._toastr.error('Ngày cấp phải lớn hơn ngày sinh')
 			return
 		}
@@ -425,7 +425,6 @@ export class IndividualComponent implements OnInit {
 		// 	this.model.districtId = ''
 		// 	this.model.wardsId = ''
 		// }
-		
 
 		if (this.model.id != null && this.model.id > 0) {
 			this._service.invididualUpdate(this.model).subscribe((res) => {

@@ -27,6 +27,7 @@ export class CreateRecommendationComponent implements OnInit {
 		{ value: 3, text: 'Trả đơn' },
 		{ value: 4, text: 'Từ chối xử lý' },
 	]
+	isIndividual :  boolean = true
 	title: string = 'Thêm mới'
 	spc: string = '-'
 	treeUnit: any[]
@@ -59,6 +60,7 @@ export class CreateRecommendationComponent implements OnInit {
 		this.model = new RecommendationObject()
 		this.activatedRoute.params.subscribe((params) => {
 			this.model.id = +params['id']
+			
 			if (this.model.id != 0) {
 				this.getData()
 				this.title = 'Sửa'
@@ -66,8 +68,22 @@ export class CreateRecommendationComponent implements OnInit {
 				this.model.typeObject = 1
 				this.title = 'Thêm mới'
 			}
+			let typeObject = params['typeObject']
+			if(typeObject){
+				if(Number(typeObject)){
+					this.isIndividual = Number(typeObject) == 1 ? true : false
+					console.log(this.isIndividual)
+					if(this.isIndividual){
+						this.changeTypeObject(1)
+					}
+					else{
+						this.changeTypeObject(2)
+					}
+				}
+			}
 			this.builForm()
 		})
+
 		this.getDropdown()
 		this.recommendationService.recommendationGetDataForCreate({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -285,7 +301,7 @@ export class CreateRecommendationComponent implements OnInit {
 		this.files.splice(index, 1)
 	}
 
-	onSave() {
+	onSave(onSend : any) {
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
 		this.builForm()
@@ -294,7 +310,8 @@ export class CreateRecommendationComponent implements OnInit {
 			return
 		}
 		this.changeObject()
-		this.model.status = RECOMMENDATION_STATUS.RECEIVE_APPROVED
+		
+		onSend == false ? this.model.status = RECOMMENDATION_STATUS.CREATED : this.model.status = RECOMMENDATION_STATUS.RECEIVE_APPROVED
 		const request = {
 			Data: this.model,
 			Hashtags: this.lstHashtagSelected,

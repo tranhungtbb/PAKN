@@ -10,7 +10,7 @@ namespace PAKNAPI.Models
     {
         public string UserName { get; set; }
         public string FullName { get; set; }
-        public string DateOfBirth { get;set; }
+        public DateTime? DateOfBirth { get;set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Nation { get; set; }
@@ -20,7 +20,7 @@ namespace PAKNAPI.Models
         public string Address { get; set; }
         public string IdCard { get; set; }
         public string IssuedPlace { get; set; }
-        public string IssuedDate { get; set; }
+        public DateTime? IssuedDate { get; set; }
         public bool Gender { get; set; }
     }
 
@@ -32,15 +32,15 @@ namespace PAKNAPI.Models
             DistrictId = entity.DistrictId;
             RepresentativeName = entity.RepresentativeName;
             Code = entity.Code;
-            IsActived = entity.IsActived;
-            IsDeleted= entity.IsDeleted;
-            Id= entity.Id;
+            IsActived = (bool)entity.IsActived;
+            IsDeleted= (bool)entity.IsDeleted;
+            Id= (long)entity.Id;
 
-            RepresentativeBirthDay = entity.RepresentativeBirthDay?.ToString("dd/MM/yyyy");
+            RepresentativeBirthDay = entity.RepresentativeBirthDay;
             ProvinceId= entity.ProvinceId;
             Status= entity.Status;
             RepresentativeGender = entity.RepresentativeGender;
-            DateOfIssue= entity.DateOfIssue == null ? "": entity.DateOfIssue?.ToString("dd/MM/yyyy");
+            DateOfIssue= entity.DateOfIssue;
             Address= entity.Address;
             Email= entity.Email;
             Phone= entity.Phone;
@@ -64,18 +64,19 @@ namespace PAKNAPI.Models
 
         public string UserName { get; set; }
         public string FullName { get; set; }
-        //public int? WardsId { get; set; }
+        public int? WardsId { get; set; }
         public int? DistrictId { get; set; }
+        public int? ProvinceId { get; set; }
+
         public string RepresentativeName { get; set; }
         public string Code { get; set; }
         public bool IsActived { get; set; }
         public bool IsDeleted { get; set; }
         public long Id { get; set; }
-        public string RepresentativeBirthDay { get; set; }
-        public int? ProvinceId { get; set; }
+        public DateTime? RepresentativeBirthDay { get; set; }
         public int? Status { get; set; }
         public bool? RepresentativeGender { get; set; }
-        public string DateOfIssue { get; set; }
+        public DateTime? DateOfIssue { get; set; }
         public string Address { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }

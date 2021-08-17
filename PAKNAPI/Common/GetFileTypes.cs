@@ -90,6 +90,7 @@ namespace PAKNAPI.Common
                 {".wmv", 7},
                 {".mp4", 7},
                 {".tif", 8},
+                {".mp3", 9}
             };
         }
     }

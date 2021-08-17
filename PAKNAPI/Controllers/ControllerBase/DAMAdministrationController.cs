@@ -92,7 +92,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 					lstUser.ForEach(async item =>
 					{
 						model.ReceiveId = item.Id;
-						model.DataId = Convert.ToInt32(id);
+						model.DataId = Convert.ToInt32(AdministrationId);
 						model.SendDate = DateTime.Now;
 						model.Type = TYPENOTIFICATION.ADMINISTRATIVE;
 						model.Title = "Tiếp nhận thủ tục hành chính";

@@ -520,7 +520,7 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                await new MRRecommendationDeleteByStep(_appSetting).MRRecommendationDeleteByStepDAO(request._mRRecommendationForwardInsertIN.RecommendationId, request._mRRecommendationForwardInsertIN.Step);
+                //await new MRRecommendationDeleteByStep(_appSetting).MRRecommendationDeleteByStepDAO(request._mRRecommendationForwardInsertIN.RecommendationId, request._mRRecommendationForwardInsertIN.Step);
 
                 request._mRRecommendationForwardInsertIN.UserSendId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
                 request._mRRecommendationForwardInsertIN.UnitSendId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
@@ -765,6 +765,41 @@ namespace PAKNAPI.Controller
         {
             try
             {
+                var oldRecommendation = await new RecommendationDAO(_appSetting).RecommendationGetByID(request.id);
+                SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
+                if (oldRecommendation.Model.Status == 1 && request.status == 2) {
+                    // insert forwa
+                    MRRecommendationForwardInsertIN _mRRecommendationForwardInsertIN = new MRRecommendationForwardInsertIN();
+                    var userInfo = await new SYUser(_appSetting).SYUserGetByID(oldRecommendation.Model.SendId);
+
+                    _mRRecommendationForwardInsertIN.RecommendationId = request.id;
+                    _mRRecommendationForwardInsertIN.UserSendId = oldRecommendation.Model.SendId;
+                    _mRRecommendationForwardInsertIN.SendDate = DateTime.Now;
+                    if (userInfo.TypeId != 1)
+                    {
+                        if (dataMain != null && dataMain.Id != oldRecommendation.Model.UnitId)
+                        {
+                            _mRRecommendationForwardInsertIN.Step = STEP_RECOMMENDATION.PROCESS;
+                        }
+                        else
+                        {
+                            _mRRecommendationForwardInsertIN.Step = STEP_RECOMMENDATION.RECEIVE;
+                        }
+                        _mRRecommendationForwardInsertIN.UnitReceiveId = oldRecommendation.Model.UnitId;
+                        _mRRecommendationForwardInsertIN.Status = PROCESS_STATUS_RECOMMENDATION.WAIT;
+                        _mRRecommendationForwardInsertIN.IsViewed = false;
+                    }
+                    else
+                    {
+                        _mRRecommendationForwardInsertIN.Step = STEP_RECOMMENDATION.RECEIVE;
+                        _mRRecommendationForwardInsertIN.UnitReceiveId = oldRecommendation.Model.UnitId != null ? oldRecommendation.Model.UnitId : dataMain.Id;
+                        _mRRecommendationForwardInsertIN.Status = PROCESS_STATUS_RECOMMENDATION.APPROVED;
+                        //_mRRecommendationForwardInsertIN.ReceiveId = ;
+                        _mRRecommendationForwardInsertIN.ProcessingDate = DateTime.Now;
+                        _mRRecommendationForwardInsertIN.IsViewed = true;
+                    }
+                    await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_mRRecommendationForwardInsertIN);
+                }
                 MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
                 _mRRecommendationUpdateStatusIN.Status = request.status;
                 _mRRecommendationUpdateStatusIN.Id = request.id;

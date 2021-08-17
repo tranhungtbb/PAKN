@@ -359,6 +359,11 @@ export class ListGeneralComponent implements OnInit {
 	}
 
 	onProcessForward() {
+		this.contentForward = this.contentForward == null ? '' : this.contentForward.trim();
+		if(this.contentForward == ''){
+			this._toastr.error('Vui lòng nhập lí do từ chối')
+			return
+		}
 		this.modelProcess.reasonDeny = this.contentForward
 		var request = {
 			_mRRecommendationForwardProcessIN: this.modelProcess,

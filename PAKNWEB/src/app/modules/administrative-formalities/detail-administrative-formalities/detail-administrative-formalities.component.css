@@ -28,3 +28,6 @@
 .grd-ab {
 	background-image: linear-gradient(to bottom, white 50%, #f7fbff 50%);
 }
+:host ::ng-deep .ng-clear-wrapper{
+	z-index: 100;
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
 import { DomSanitizer } from '@angular/platform-browser'
+import { OwlOptions } from 'ngx-owl-carousel-o'
 
 import { PuRecommendation } from 'src/app/models/recommendationObject'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
@@ -34,6 +35,34 @@ export class IndexComponent implements OnInit {
 	news: any[]
 	firstNews: any
 	Administrations: any[]
+
+	customOptions: OwlOptions = {
+    loop: true,
+    // mouseDrag: false,
+    // touchDrag: false,
+    // pullDrag: false,
+    dots: true,
+		margin: 30,
+		lazyLoad : true,
+		autoplay : true,
+		autoplayTimeout: 5000,
+		autoplaySpeed : 1000,
+    dotsSpeed: 700,
+		dotsEach : true,
+    navText: ['', ''],
+    responsive: {
+			0: {
+				items: 1,
+			},
+			600: {
+				items: 2,
+			},
+			1000: {
+				items: 2,
+			},
+		},
+    nav: false
+  }
 
 	indexSettingObj = new IndexSettingObjet()
 	ngOnInit() {
@@ -100,27 +129,7 @@ export class IndexComponent implements OnInit {
 	}
 
 	ngAfterViewInit() {
-		setTimeout(function () {
-			$('#owl-news').owlCarousel({
-				loop: true,
-				margin: 30,
-				nav: false,
-				autoplay: true,
-				autoplayTimeout: 10000,
-				autoplayHoverPause: true,
-				responsive: {
-					0: {
-						items: 1,
-					},
-					600: {
-						items: 2,
-					},
-					1000: {
-						items: 2,
-					},
-				},
-			})
-		}, 200)
+		
 	}
 
 	getShortName(string) {

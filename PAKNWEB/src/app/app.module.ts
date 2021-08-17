@@ -28,6 +28,7 @@ import { ImageViewerModule } from 'ng2-image-viewer'
 import { UnitFilterPipe } from './pipes/unit-filter.pipe'
 import { DxReportViewerModule } from 'devexpress-reporting-angular'
 import { TreeviewModule } from 'ngx-treeview';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
 	declarations: [AppComponent, SvFocusDirective, ConfirmDialogComponent, ViewFileDialogComponent],
@@ -63,6 +64,7 @@ import { TreeviewModule } from 'ngx-treeview';
 		TreeModule,
 		DxReportViewerModule,
 		TreeviewModule.forRoot(),
+		CarouselModule
 	],
 	providers: [
 		{

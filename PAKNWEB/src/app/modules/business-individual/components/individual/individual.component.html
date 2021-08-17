@@ -36,7 +36,7 @@
 					</svg>
 					Xuất excel
 				</button>
-				<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="preCreate()" *hasPermission="['3', 'A_XVII_0']">
+				<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="preCreate()" *hasPermission="['3', 'A_XVII_0']">
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 					</svg>
@@ -60,7 +60,7 @@
 										<strong>STT</strong>
 									</p>
 								</th>
-								<th style="width: 250px">
+								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Cá nhân</strong>
 										<span class="caret-tb" (click)="onSortIndividual('FullName')"></span>
@@ -84,7 +84,7 @@
 									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.phone" maxlength="11" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập ..." />
 								</th>
-								<th style="width: 250px">
+								<th style="width: 200px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Email</strong>
 										<span class="caret-tb" (click)="onSortIndividual('Email')"></span>
@@ -92,12 +92,12 @@
 									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.email" maxlength="256" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập ..." />
 								</th>
-								<th style="width: 160px">
+								<th style="max-width: 160px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Trạng thái</strong>
 										<span class="caret-tb" (click)="onSortIndividual('Email')"></span>
 									</p>
-									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
+									<div style="max-width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
 										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
 											[closeOnSelect]="true" (change)="dataStateChange()">
 										</ng-select>
@@ -119,9 +119,14 @@
 										<a *hasPermission="['3', 'A_XVII_9']" (click)="preView(item.id)" class="ellipsis text-dark highlight" title="Xem chi tiết" type="button">{{item.fullName}}</a>
 									</strong>
 								</td>
-								<td>{{item.address}}</td>
+								<td>
+									<p class="text-1line mb-0">{{item.address}}</p>
+								</td>
 								<td>{{item.phone}}</td>
-								<td>{{item.email}}</td>
+								<td>
+									<p class="text-1line mb-0">{{item.email}}</p>
+								</td>
+								
 								<td>
 									<p *ngIf="item.status == 0" style="margin-bottom: 0px;">
 										<span *hasNotPermission="['3', 'A_XVII_8']" class="badge rounded-pill badge-light cursor">Hết hiệu lực</span>
@@ -334,6 +339,11 @@
 								<ng-select [(ngModel)]="model.gender" formControlName="gender" class="form-control" placeholder="Chọn..." [closeOnSelect]="true">
 									<ng-option *ngFor="let gen of listGender" [value]="gen.value">{{gen.text}}</ng-option>
 								</ng-select>
+								<div *ngIf="(submitted && f.gender.invalid)||(f.gender.invalid && (f.gender.dirty || f.gender.touched))" class="has-error m-b-12">
+									<div *ngIf="f.gender.errors.required">
+										<span class="help-block">Trường dữ liệu này không được để trống</span>
+									</div>
+								</div>
 							</div>
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Ngày, tháng, năm, sinh <span class="cl-red">(*)</span></label>
@@ -356,6 +366,12 @@
 								<ng-select class="form-control" [items]="listStatus" formControlName="status" placeholder="Chọn ..." bindLabel="text" bindValue="value"
 									[(ngModel)]="model.status" [closeOnSelect]="true">
 								</ng-select>
+
+								<div *ngIf="(submitted && f.status.invalid)||(f.status.invalid && (f.status.dirty || f.status.touched))" class="has-error m-b-12">
+									<div *ngIf="f.status.errors.required">
+										<span class="help-block">Trường dữ liệu này không được để trống</span>
+									</div>
+								</div>
 							</div>
 
 						</div>

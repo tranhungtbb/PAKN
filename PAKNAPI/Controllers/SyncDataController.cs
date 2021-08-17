@@ -219,6 +219,14 @@ namespace PAKNAPI.Controllers
                                 {
                                     string[] s = file.InnerText.Split(".");
                                     fileInsert.ObjectId = Convert.ToInt32(id);
+                                    if (s.Length > 1)
+                                    {
+                                        fileInsert.Type = GetFileTypes.GetFileTypeExtension("." + s.FirstOrDefault(x => x == s[s.Length - 1]).ToString().ToLower());
+                                    }
+                                    else
+                                    {
+                                        fileInsert.Type = 4;
+                                    }
                                     fileInsert.Type = GetFileTypes.GetFileTypeExtension("." + s.FirstOrDefault(x => x == s[s.Length - 1]).ToString().ToLower());
                                     fileInsert.FileName = HttpUtility.HtmlDecode(Path.GetFileName(file.InnerText).Replace("+", ""));
                                     fileInsert.FilePath = Path.Combine(folder, Path.GetFileName(file.InnerText).Replace("+", ""));
@@ -250,7 +258,14 @@ namespace PAKNAPI.Controllers
                             {
                                 string[] s = file.InnerText.Split(".");
                                 fileInsert.ObjectId = Convert.ToInt32(id);
-                                fileInsert.Type = GetFileTypes.GetFileTypeExtension("." + s.FirstOrDefault(x => x == s[s.Length - 1]).ToString().ToLower());
+                                if (s.Length > 1)
+                                {
+                                    fileInsert.Type = GetFileTypes.GetFileTypeExtension("." + s.FirstOrDefault(x => x == s[s.Length - 1]).ToString().ToLower());
+                                }
+                                else {
+                                    fileInsert.Type = 4;
+                                }
+                                
                                 fileInsert.FileName = HttpUtility.HtmlDecode(Path.GetFileName(file.InnerText).Replace("+", ""));
                                 fileInsert.FilePath = Path.Combine(folder, fileInsert.FileName);
                                 fileInsert.IsReply = true;

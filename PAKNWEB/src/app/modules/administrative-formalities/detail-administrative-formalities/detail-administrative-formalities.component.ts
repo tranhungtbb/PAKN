@@ -26,7 +26,8 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 	titleObject: string = 'Cá nhân'
 	lstUnitDAM: any[] = []
 	lstUnit: any[] = []
-	lstUnitForward : any [] = []
+	lstUnitForward : any = new Array<itemSelected>()
+	lstUnitForwardBase : any = new Array<itemSelected>()
 	lstField: any[] = []
 	lstBusiness: any[] = []
 	lstIndividual: any[] = []
@@ -84,6 +85,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 						this.lstUnitForward = arrUnit.map(item =>{
 							return {text : item.unitName, value : item.unitId}
 						})
+						this.lstUnitForwardBase = [...this.lstUnitForward]
 					}
 				} else {
 					this.toastr.error(response.message)
@@ -165,7 +167,14 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		})
 	}
 
-	
+	onChangeLstItemUnit(){
+		console.log(this.lstUnitForward)
+		this.lstUnitForward = this.lstUnitForwardBase.filter((item, index)=>{
+			let check = this.modelForward.lstUnitId.find(x=>x == item.value)
+			if(check){return;}
+			return item
+		});
+	}
 
 
 	get f() {
@@ -277,7 +286,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		}, '')
 		let obj = {
 			LstUnitId : lstUnit.substring(0,lstUnit.length-1),
-			AdministrationId : this.model.id,
+			AdministrationId : this.model.administrationId,
 			Content : this.modelForward.content
 		}
 		this.afService.forward(obj).subscribe(res =>{
@@ -378,4 +387,8 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 			console.log(res)
 		})
 	}
+}
+class itemSelected {
+	text : string
+	value : number
 }

@@ -42,6 +42,7 @@ export class RoleComponent implements OnInit {
 	// LIST USER
 	listUser: any[]
 	SYUserGetIsNotRole: any[]
+	SYUserGetIsNotRoleBase : any[]
 	userPageIndex: Number = 1
 	userPageSize: Number = 10
 	userTotalRecords: Number
@@ -82,10 +83,19 @@ export class RoleComponent implements OnInit {
 		this.userService.getIsNotRole({RoleId : this.roleId}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.SYUserGetIsNotRole = res.result.SYUserGetIsNotRole
+				this.SYUserGetIsNotRoleBase = res.result.SYUserGetIsNotRole
 			} else {
 				this.SYUserGetIsNotRole = []
+				this.SYUserGetIsNotRoleBase = []
 			}
 		})
+	}
+
+	onChangeLstItemUser(){
+		this.SYUserGetIsNotRole = this.SYUserGetIsNotRoleBase.filter((item, index)=>{
+			if(this.listItem.includes(item.value)){return}
+			return item
+		});
 	}
 
 	onPageChange(event: any) {

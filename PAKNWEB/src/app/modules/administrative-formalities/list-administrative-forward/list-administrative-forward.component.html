@@ -4,25 +4,10 @@
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
 					<li class="breadcrumb-item"><a>Thủ tục hành chính</a></li>
-					<li class="breadcrumb-item active"><a class="font-weight-bold"> Danh sách đã công bố</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold"> Chuyển tiếp, tiếp nhận thủ tục hành chính</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
-					<!-- <button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
-							<path
-								d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
-							<path
-								d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-						</svg>
-						Xuất excel
-					</button> -->
-					<!-- <button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" [routerLink]="['/quan-tri/thu-tuc-hanh-chinh/them-moi']">
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-						</svg>
-						Thêm mới
-					</button> -->
+				
 				</div>
 			</div>
 		</div>
@@ -36,34 +21,24 @@
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
-									<th style="width: 120px">
+									<th style="width: 100px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Mã số</strong>
-											<span class="caret-tb"></span>
+											<strong>Mã TTHC</strong>
 										</p>
-										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100"
-											(keydown.enter)="dataStateChange()" />
 									</th>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tên thủ tục</strong>
-											<span class="caret-tb"></span>
+											
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
 									</th>
-									<th style="width: 150px">
-										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-											<strong>Đối tượng</strong>
-											<span class="caret-tb"></span>
-										</p>
-										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.object" maxlength="100"
-											(keydown.enter)="dataStateChange()" />
-									</th>
-									<th style="width: 300px">
+									
+									<th style="width: 250px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Cơ quan thực hiện</strong>
-											<span class="caret-tb"></span>
+											
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.organization" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
@@ -71,7 +46,7 @@
 									<th style="width: 200px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>lĩnh vực</strong>
-											<span class="caret-tb"></span>
+											
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
 											<ng-select placeholder="Chọn..." class="" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field"
@@ -79,11 +54,27 @@
 											</ng-select>
 										</div>
 									</th>
-									<th style="width: 110px;">
+									<th>
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Đơn vị</strong>
+											
+										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select placeholder="Chọn..." class="" [items]="lstUnit" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.unitForward" style="min-width: 250px;"
+												[closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
+											</ng-select>
+										</div>
+									</th>
+									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Trạng thái</strong>
-											<span class="caret-tb"></span>
+											
 										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select placeholder="Chọn..." class="" [items]="listStatus" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status" style="min-width: 110px;"
+												[closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
+											</ng-select>
+										</div>
 									</th>
 								</tr>
 							</ng-template>
@@ -94,20 +85,18 @@
 									</td>
 									<td>
 										<strong>
-											<a *hasPermission="['3', 'H_I_4']" [routerLink]="['/quan-tri/thu-tuc-hanh-chinh/chi-tiet/',item.administrationId]" class="text-2line mb-0" title="Xem chi tiết">{{item.name}}</a>
-											<a *hasNotPermission="['3', 'H_I_4']" class="text-2line mb-0" title="Xem chi tiết">{{item.name}}</a>
+											<a *hasPermission="['3', 'H_I_4']" [routerLink]="['/quan-tri/thu-tuc-hanh-chinh/chi-tiet/',item.administrationId]" class="text-2line mb-0" title="Xem chi tiết">{{item.administrationName}}</a>
+											<a *hasNotPermission="['3', 'H_I_4']" class="text-2line mb-0" title="Xem chi tiết">{{item.administrationName}}</a>
 										</strong>
-									</td>
-									<td>
-										<p class="text-2line mb-0">{{item.object}}</p>
 									</td>
 									<td>{{item.organization}}</td>
 									<td>{{item.fieldName}}</td>
 									<td>
-										<span *ngIf="item.status == 1" class="badge rounded-pill badge-outline-light bg-white">Đang soạn
-											thảo</span>
-										<span *ngIf="item.status == 3" class="badge rounded-pill bg-success">Đã công bố</span>
-										<span *ngIf="item.status == 2" class="badge rounded-pill bg-xam text-dark">Đã thu hồi</span>
+										<p class="text-2line mb-0">{{item.unitForward}}</p>
+									</td>
+									<td>
+										<span *ngIf="item.status == 1" class="badge rounded-pill bg-xam text-dark">Đã nhận</span>
+										<span *ngIf="item.status == 0" class="badge rounded-pill bg-success">Đã gửi</span>
 									</td>
 								</tr>
 							</ng-template>
@@ -124,7 +113,7 @@
 	</div>
 
 </div>
-<div class="modal fade" id="modalConfirmDelete">
+<!-- <div class="modal fade" id="modalConfirmDelete">
 	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
 		<div class="modal-content rounded">
 			<form class="form-horizontal">
@@ -149,7 +138,7 @@
 			</form>
 		</div>
 	</div>
-</div>
+</div> -->
 
 <!-- <div class="modal fade pr-0" id="modal-history-pakn">
 	<div class="modal-dialog modal-dialog-right vh-100" role="document">

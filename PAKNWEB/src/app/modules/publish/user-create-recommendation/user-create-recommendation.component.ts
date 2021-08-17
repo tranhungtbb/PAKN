@@ -66,6 +66,7 @@ export class CreateRecommendationComponent implements OnInit {
 
 	ngOnInit() {
 		this.model = new RecommendationObject()
+		this.model.typeObject = this.storageService.getTypeObject();
 		this.reloadImage()
 		this.getDropdown()
 		this.activatedRoute.params.subscribe((params) => {
@@ -392,12 +393,13 @@ export class CreateRecommendationComponent implements OnInit {
 	}
 
 	reloadImage() {
-		this.captchaImage = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?' + Math.random() * 100000000000000000000
+		this.captchaImage = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?IpAddress=' + this.storageService.getIpAddress()+  '&&Ramdom' + Math.random() * 100000000000000000000
 	}
 
 	reloadForm() {
 		this.submitted = false
 		this.model = new RecommendationObject()
+		this.model.typeObject = this.storageService.getTypeObject();
 		this.captchaCode = null
 		this.form.reset({
 			title: this.model.title,
