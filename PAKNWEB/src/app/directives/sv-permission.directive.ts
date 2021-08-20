@@ -21,14 +21,6 @@ export class HasPermissionDirective implements OnInit {
   ) {
     const state: RouterState = router.routerState;
     const snapshot: RouterStateSnapshot = state.snapshot;
-
-
-    //let isLogin = this.userService.getAccessToken();
-    //if (isLogin == '' || isLogin == null || isLogin == undefined) {
-    //  var returnUrl = snapshot.url;
-    //  this.userService.setReturnUrl(returnUrl);
-    //}
-
   }
 
   ngOnInit() {
@@ -43,7 +35,6 @@ export class HasPermissionDirective implements OnInit {
   }
 
   private updateView() {
-    var a = this.checkPermission();
     if (this.checkPermission()) {
       this.viewContainer.createEmbeddedView(this.templateRef);
     } else {

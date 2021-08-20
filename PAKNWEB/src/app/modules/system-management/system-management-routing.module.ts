@@ -6,17 +6,15 @@ import { SystemLogComponent } from './components/system-log/system-log.component
 import { EmailSettingComponent } from './components/email-setting/email-setting.component'
 import { TimeSettingComponent } from './components/time-setting/time-setting.component'
 import { SmsSettingComponent } from './components/sms-setting/sms-setting.component'
-import { GroupUserComponent } from './components/group-user/group-user.component'
 import { UserComponent } from './components/user/user.component'
 import { UnitComponent } from './components/unit/unit.component'
-import { UserCreateOrUpdateComponent } from './components/user/user-create-or-update/user-create-or-update.component'
 import { ChatBotComponent } from './components/chat-bot/chat-bot.component'
 import { HistoryChatBotComponent } from './components/history-chat-bot/history-chat-bot.component'
-import { UserViewInfoComponent } from './components/user/user-view-info/user-view-info.component'
 import { IntroduceComponent } from './components/introduce/introduce.component'
 import { IndexSettingComponent } from './components/index-setting/index-setting.component'
 import {SystemConfigComponent} from './components/system-config/system-config.component'
 import {SwitchboardSettingComponent} from './components/switchboard-setting/switchboard-setting.component'
+import { UserSystemComponent } from './components/user-system/user-system.component'
 
 const routes: Routes = [
 	{
@@ -83,12 +81,7 @@ const routes: Routes = [
 				canActivate: [RoleGuardService],
 				data: { role: 'A_VII_0' }
 			},
-			// { 
-			// 	path: 'nguoi-dung/them-moi', 
-			// 	component: UserCreateOrUpdateComponent,
-			// 	canActivate: [RoleGuardService],
-			// 	data: { role: 'C_I_0' }
-			// },
+			
 			{ 
 				path: 'quan-ly-chat-bot',
 				component: ChatBotComponent,
@@ -104,12 +97,12 @@ const routes: Routes = [
 				canActivate: [RoleGuardService],
 				data: { role: 'A_XIV_0' }
 			},
-			// { 
-			// 	path: 'nguoi-dung/thong-tin',
-			// 	component: UserViewInfoComponent,
-			// 	canActivate: [RoleGuardService],
-			// 	data: { role: 'C_I_0' }
-			// },
+			{ 
+				path: 'quan-tri',
+				component: UserSystemComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'C_I_0' }
+			},
 		],
 	},
 ]

@@ -71,7 +71,6 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 					this.listUserSelected.push(check)
 				}
 			}
-			console.log(this.listUserSelected)
 			return
 		}
 	}
@@ -144,7 +143,6 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 								} else {
 									obj.avatar = item.avatar
 								}
-								// obj.avatar = item.avatar
 								this.listItemUserSelected.push(obj)
 							}
 							console.log(this.listItemUserSelected)

@@ -117,6 +117,16 @@ export class Api {
 	public static UserChangePwdInManage = 'User/UserChangePwdInManage'
 	public static UserCheckExists = 'SYUserSPBase/SYUserCheckExistsBase'
 
+	// user system
+
+	public static UserSystemGetAllOnPagedList = 'User/SYUserSystemGetAllOnPageList'
+	public static UserSystemUpdate = 'User/UserSystemUpdate'
+	public static UserSystemCreate = 'User/UserSystemCreate'
+	
+
+	
+
+
 	public static SystemLogin = 'SYSPBase/SYSystemLogGetAllOnPageBase'
 	public static SystemLoginAdmin = 'SYSPBase/SYSystemLogGetAllOnPageAdminBase'
 	public static SystemLogDelete = 'AdministrationFormalities/SYSystemLogDeleteBase'

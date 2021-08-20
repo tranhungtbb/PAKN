@@ -130,8 +130,6 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		let files = $('#' + this.modalId + ' .seclect-avatar')[0].files
 		this.modelUser.roleIds = this.selectedRoles.toString()
 		this.modelUser.permissionIds = this.listPermissionUserSelected.join(',')
-		this.modelUser.userName = this.modelUser.email
-		// this.modelUser.avatar = ''
 		this.modelUser.countLock = 0
 		this.modelUser.lockEndOut = ''
 		if (this.modelUser.id != null && this.modelUser.id > 0) {
@@ -174,8 +172,6 @@ export class UserCreateOrUpdateComponent implements OnInit {
 					this.parentUser.getList()
 				}
 				this.toast.success(COMMONS.ADD_SUCCESS)
-				// this.parentUnit.getUserPagedList()
-				// this.modelUser = new UserObject2()
 				$('#' + this.modalId).modal('hide')
 			})
 		}
@@ -209,7 +205,6 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	openModal(unitId = 0, userId = 0, editByMyself = false): void {
 		this.listPermissionUserSelected = []
 		this.createUserForm = this.formBuilder.group({
-			//userName: ['', [Validators.required]],
 			email: [this.modelUser.email, [Validators.required, Validators.email]],
 			fullName: [this.modelUser.fullName, [Validators.required]],
 			phone: [this.modelUser.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],

@@ -165,6 +165,7 @@ export class LoginComponent implements OnInit {
 								this.storeageService.setIsHaveToken(data.isHaveToken)
 								this.storeageService.setRole(data.role)
 								this.storeageService.setFullName(data.fullName)
+								this.storeageService.setIsAdmin(data.isAdmin)
 								this.storeageService.setTypeObject(data.typeObject)
 								this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((dataIP) => {
 									if (dataIP != null) {
@@ -177,7 +178,6 @@ export class LoginComponent implements OnInit {
 								} else {
 									this.storeageService.setKeyRemember('')
 								}
-								localStorage.removeItem('recommentdationObjRemember')
 								if (data.typeObject && data.typeObject == 1) {
 									location.href = '/quan-tri'
 								} else {

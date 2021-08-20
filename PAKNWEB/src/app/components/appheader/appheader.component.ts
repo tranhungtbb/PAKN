@@ -4,12 +4,13 @@ import { AuthenticationService } from '../../services/authentication.service'
 import { Router } from '@angular/router'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
-import { UserObject } from '../../models/UserObject'
+import { UserSystemObject } from '../../models/UserObject'
 import { UserService } from '../../services/user.service'
 import { DataService } from '../../services/sharedata.service'
 import { AccountService } from 'src/app/services/account.service'
-import { RESPONSE_STATUS, RECOMMENDATION_STATUS, TYPE_NOTIFICATION } from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS, RECOMMENDATION_STATUS, TYPE_NOTIFICATION} from 'src/app/constants/CONSTANTS'
 import { NotificationService } from 'src/app/services/notification.service'
+import { COMMONS } from 'src/app/commons/commons'
 
 declare var $: any
 @HostListener('window:scroll', ['$event'])
@@ -35,6 +36,7 @@ export class AppheaderComponent implements OnInit {
 	files: any
 	updateForm: FormGroup
 	userForm: FormGroup
+	createUserForm: FormGroup
 	userName: string
 	errorMessage: any
 	year: Date = new Date()
@@ -44,11 +46,19 @@ export class AppheaderComponent implements OnInit {
 	lstUserbyDep: Array<any> = []
 	lstTimline: Array<any> = []
 	lstTimlineMore: Array<any> = []
-	model: UserObject = new UserObject()
+	model: UserSystemObject = new UserSystemObject()
 	submitted: boolean = false
 	listSexs: any[] = [
 		{ text: 'Nam', value: true },
 		{ text: 'Nữ', value: false },
+	]
+	listStatus : any = [
+		{value : 1, text : "Thành công" },
+		{value : 0, text : "Thất bại" }
+	]
+	listStatusUser: any = [
+		{ value: true, text: 'Hiệu lực' },
+		{ value: false, text: 'Hết hiệu lực' },
 	]
 	lstDropDownLayout = [
 		{ value: 1, Text: 'Thành công' },
@@ -76,6 +86,8 @@ export class AppheaderComponent implements OnInit {
 	numberNotifications: any = 7
 	ViewedCount: number = 0
 	@ViewChild('table', { static: false }) table: any
+	isMain : any = this.storageService.getIsMain()
+	userId : any = this.storageService.getUserId()
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -104,8 +116,11 @@ export class AppheaderComponent implements OnInit {
 		this.form = this._fb.group({
 			toDate: [this.dataSearch.toDate],
 			fromDate: [this.dataSearch.toDate],
+			content : [this.dataSearch.content],
+			status : [this.dataSearch.status],
 		})
 		this.userName = this.storageService.getFullName()
+		this.buildForm()
 
 		this.sharedataService.getnotificationDropdown.subscribe((data) => {
 			if (data) {
@@ -124,6 +139,9 @@ export class AppheaderComponent implements OnInit {
 	}
 	ngAfterViewInit() {
 		$('#modalChangePasswordByMe').on('keypress', function (e) {
+			if (e.which == 13) e.preventDefault()
+		})
+		$('#modalDetailLog').on('keypress', function (e) {
 			if (e.which == 13) e.preventDefault()
 		})
 	}
@@ -233,18 +251,6 @@ export class AppheaderComponent implements OnInit {
 				console.error(error)
 				alert(error)
 			}
-		// this.userService.changePasswordInManage(obj).subscribe((res) => {
-		// 	if (res.success == RESPONSE_STATUS.success) {
-		// 		$('#modalChangePasswordByMe').modal('hide')
-		// 		this._toastr.success('Đổi mật khẩu thành công.')
-		// 	} else {
-		// 		this._toastr.error(res.message)
-		// 	}
-		// }),
-		// 	(error) => {
-		// 		console.error(error)
-		// 		alert(error)
-		// 	}
 	}
 
 	redirectListNotification() {
@@ -274,9 +280,7 @@ export class AppheaderComponent implements OnInit {
 		this.getNotifications(this.pageSize)
 	}
 
-	preUpdate() {
-		this.GetListChucVuAndListPhongBan()
-	}
+
 
 	loadImage(path: string) {
 		let request = {
@@ -298,6 +302,118 @@ export class AppheaderComponent implements OnInit {
 	}
 
 	onUpdate() {}
+
+	// profile
+
+	buildForm(){
+		this.createUserForm = this._fb.group({
+			email: ['', [Validators.required, Validators.email]],
+			fullName: ['', [Validators.required]],
+			phone: ['', [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
+			gender: ['', [Validators.required]],
+			isActived: ['', [Validators.required]],
+			address: [''],
+		})
+	}
+
+	reBuildForm(){
+		this.createUserForm.reset({
+			email: this.model.email,
+			fullName: this.model.fullName,
+			phone: this.model.phone,
+			gender: this.model.gender,
+			isActived: this.model.isActived,
+			address: this.model.address
+		})
+	}
+	get fUser() {
+		return this.createUserForm.controls
+	}
+	checkExists = {
+		Email: false,
+		Phone: false,
+	}
+	onCheckExist(field: string, value: string) {
+		this.userService
+			.checkExists({
+				field,
+				value,
+				id: this.model.id ? this.model.id : 0,
+			})
+			.subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.checkExists[field] = res.result.SYUserCheckExists[0].exists
+				}
+			})
+	}
+
+	userAvatar : any
+	preUpdate(){
+		this.submitted = false
+		$('#modalViewUserInfo').modal('hide')
+		this.userService.getByIdUpdate({ id: this.userId }).subscribe((res) => {
+			if (res.success != 'OK') return
+			this.model = res.result.SYUserGetByID[0]
+			if (this.model.avatar == '' || this.model.avatar == null) {
+				this.userAvatar = null
+			} else {
+				this.userAvatar = this.model.avatar
+				let output: any = $('#modalEditUserInfo .user-avatar-view')
+				output.attr('src', this.userAvatar)
+			}
+			$('#modalEditUserInfo').modal('show')
+		})
+	}
+
+	preView(){
+		this.userService.getByIdUpdate({ id: this.userId }).subscribe((res) => {
+			if (res.success != 'OK') return
+			this.model = res.result.SYUserGetByID[0]
+			if (this.model.avatar == '' || this.model.avatar == null) {
+				this.userAvatar = null
+			} else {
+				this.userAvatar = this.model.avatar
+				let output: any = $('#modalViewUserInfo .user-avatar-view')
+				output.attr('src', this.userAvatar)
+			}
+			$('#modalViewUserInfo').modal('show')
+		})
+	}
+
+	onSave(){
+		this.submitted = true
+		this.model.userName = this.model.email
+		if (this.createUserForm.invalid) {
+			return
+		}
+		if (this.checkExists['Email'] || this.checkExists['Phone']) {
+			return
+		}
+		let files = $('#modal .seclect-avatar')[0].files
+		this.model.countLock = 0
+		this.model.lockEndOut = ''
+		this.userService.userSystemUpdate(this.model, files).subscribe((res) => {
+			$('#modal .seclect-avatar').val('')
+			if (res.success != 'OK') {
+				let errorMsg = res.message
+				this._toastr.error(errorMsg)
+				return
+			}
+			else{
+				$('#modal').modal('hide')
+				this._toastr.success(COMMONS.ADD_SUCCESS)
+				this.getList()
+			}
+		})
+	}
+
+
+	preViewUserInfo(){
+		if(this.isMain){
+			
+		}
+		return
+	}
 
 	signOut(): void {
 		this.authenService.logOut({}).subscribe((success) => {
@@ -384,7 +500,6 @@ export class AppheaderComponent implements OnInit {
 		}
 	}
 
-	GetListChucVuAndListPhongBan() {}
 
 	isInvalidNam(event) {
 		let test = event
@@ -398,10 +513,34 @@ export class AppheaderComponent implements OnInit {
 		this.pageIndex = event.first / event.rows + 1
 		this.getList()
 	}
+
+	onChangeFromDate(event){
+		if(event){
+			this.dataSearch.fromDate = event;
+		}
+		else{
+			this.dataSearch.fromDate = null;
+		}
+		this.getList();
+	}
+
+	onChangeToDate(event){
+		if(event){
+			this.dataSearch.toDate = event;
+		}
+		else{
+			this.dataSearch.toDate = null;
+		}
+		this.getList()
+	}
+
 	getList() {
+		this.dataSearch.content = this.dataSearch.content == null ? '' : this.dataSearch.content.trim();
 		let req = {
-			FromDate: this.dataSearch.fromDate == null ? '' : JSON.stringify(new Date(this.dataSearch.fromDate)).slice(1, 11),
-			ToDate: this.dataSearch.toDate == null ? '' : JSON.stringify(new Date(this.dataSearch.toDate)).slice(1, 11),
+			FromDate: this.dataSearch.fromDate == null ? '' : this.dataSearch.fromDate.toDateString(),
+			ToDate: this.dataSearch.toDate == null ? '' : this.dataSearch.toDate.toDateString(),
+			Content : this.dataSearch.content,
+			Status : this.dataSearch.status == null ? '' : this.dataSearch.status,
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 			UserId: localStorage.getItem('userId'),
@@ -452,6 +591,11 @@ export class AppheaderComponent implements OnInit {
 		passingObj.UserProcessId = this.storageService.getUserId()
 		passingObj.UserProcessName = this.storageService.getFullName()
 
+		passingObj.FromDate = this.dataSearch.fromDate;
+		passingObj.ToDate = this.dataSearch.toDate;
+		passingObj.Content = this.dataSearch.content;
+		passingObj.Status = this.dataSearch.status;
+
 		this.sharedataService.setobjectsearch(passingObj)
 		this.sharedataService.sendReportUrl = 'HistoryUser?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])
@@ -464,4 +608,6 @@ export class SearchHistoryUser {
 	}
 	fromDate: Date
 	toDate: Date
+	content : string
+	status : number
 }

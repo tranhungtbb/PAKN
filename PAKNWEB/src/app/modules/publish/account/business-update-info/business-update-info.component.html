@@ -240,6 +240,11 @@
 										[closeOnSelect]="true" (change)="onChangeOrgProvince(true)">
 										<ng-option *ngFor="let prov of listProvince" [value]="prov.id">{{prov.name}}</ng-option>
 									</ng-select>
+									<div *ngIf="(submitted && f.orgProvinceId.invalid)||(f.orgProvinceId.invalid && (f.orgProvinceId.dirty || f.orgProvinceId.touched))" class="has-error m-b-12">
+										<div *ngIf="f.orgProvinceId.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
 								</div>
 
 							</div>
@@ -251,6 +256,11 @@
 										[closeOnSelect]="true" (change)="onChangeOrgDistrict(true)">
 										<ng-option *ngFor="let prov of listOrgDistrict" [value]="prov.id">{{prov.name}}</ng-option>
 									</ng-select>
+									<div *ngIf="(submitted && f.orgDistrictId.invalid)||(f.orgDistrictId.invalid && (f.orgDistrictId.dirty || f.orgDistrictId.touched))" class="has-error m-b-12">
+										<div *ngIf="f.orgDistrictId.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
 								</div>
 
 							</div>
@@ -262,6 +272,11 @@
 										[closeOnSelect]="true">
 										<ng-option *ngFor="let prov of listOrgVillage" [value]="prov.id">{{prov.name}}</ng-option>
 									</ng-select>
+									<div *ngIf="(submitted && f.orgWardsId.invalid)||(f.orgWardsId.invalid && (f.orgWardsId.dirty || f.orgWardsId.touched))" class="has-error m-b-12">
+										<div *ngIf="f.orgWardsId.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="w-100 mb-3"></div>

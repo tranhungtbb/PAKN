@@ -65,3 +65,12 @@ form.form-row {
 	justify-content: center;
 	align-items: center;
 }
+
+.nav-link{
+  color: black;
+	cursor: pointer;
+}
+
+a.nav-link.px-0.h5:hover{
+  color: #1673D8 !important;
+}

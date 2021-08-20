@@ -110,7 +110,7 @@
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Ngày tháng năm sinh <span class="cl-red">(*)</span></label>
 					<div class="input-group">
-						<input class="form-control h-34px rounded-6px" placeholder="Nhập..." bsDatepicker #n1="bsDatepicker" maxlength="10" id="_dob" [(ngModel)]="model._birthDay"
+						<input class="form-control h-34px rounded-6px" placeholder="Nhập..." bsDatepicker #n1="bsDatepicker" maxlength="10" id="_dob" [(ngModel)]="model.birthDay"
 							formControlName="dob" appBsDatepickerInvalid [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}"
 							[maxDate]="dateNow" />
 						<div class="input-group-addon p-1 pr-2 xs">
@@ -229,7 +229,8 @@
 				<div class="col-12 col-lg form-group">
 					<label class="mb-1">Ngày cấp</label>
 					<div class="input-group">
-						<input class="form-control h-34px rounded-6px" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dateIssue" [(ngModel)]="model._dateOfIssue"
+						<input class="form-control h-34px rounded-6px" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" 
+							maxlength="10" [(ngModel)]="model.dateOfIssue"
 							formControlName="dateIssue" appBsDatepickerInvalid
 							[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" [maxDate]="dateNow" />
 						<div class="input-group-addon p-1 pr-2 xs">
@@ -237,10 +238,10 @@
 						</div>
 					</div>
 					<!--  -->
-					<div *ngIf="(fLoginSubmitted && fInfo.dateIssue.invalid)||(fInfo.dateIssue.invalid && (fInfo.dateIssue.dirty || fInfo.dateIssue.touched))"
+					<div *ngIf="(fLoginSubmitted && !validateDateOfIssue && model.birthDay  && model.dateOfIssue)"
 						class="has-error m-b-12">
-						<div *ngIf="fInfo.dateIssue.errors.required">
-							<span class="help-block">Trường dữ liệu này không được để trống</span>
+						<div>
+							<span class="help-block">Ngày cấp không được nhỏ hơn ngày sinh</span>
 						</div>
 					</div>
 				</div>

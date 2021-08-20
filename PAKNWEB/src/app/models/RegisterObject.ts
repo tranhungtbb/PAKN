@@ -28,14 +28,14 @@ export class IndividualObject {
 	districtId: any
 	wardsId: any
 	gender: boolean
-	_birthDay: string
+	birthDay: Date
 
 	email: string
 	address: string
 
 	iDCard: string
 	issuedPlace: string
-	_dateOfIssue: string
+	dateOfIssue: Date
 
 	PermanentPlace: string
 	NativePlace: string

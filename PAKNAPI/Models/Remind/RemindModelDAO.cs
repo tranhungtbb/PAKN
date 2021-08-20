@@ -32,7 +32,12 @@ namespace PAKNAPI.Models.Remind
             DP.Add("IsSenderOrg", IsSenderOrg);
             return (await _sQLCon.ExecuteListDapperAsync<RMRemindObject>("[RM_RemindGetList]", DP)).ToList();
         }
-
+        public async Task<List<RMRemindObject>> RMRemindGetListDashBoard(int? OrgId)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("OrgId", OrgId);
+            return (await _sQLCon.ExecuteListDapperAsync<RMRemindObject>("RM_RemindGetListDashBoard", DP)).ToList();
+        }
     }
 
     public class RMFileAttach

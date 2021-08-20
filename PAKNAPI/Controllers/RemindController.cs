@@ -123,32 +123,44 @@ namespace PAKNAPI.Controllers
             try
             {
                 Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
-                var recommentdation = await new RecommendationDAO(_appSetting).RecommendationGetByID(RecommendationId);
-                List<RecommendationForward> lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(RecommendationId)).ToList();
-                var UnitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
                 List<RMRemindObject> result = new List<RMRemindObject>();
-                if (recommentdation.Model.UnitId == new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext))
+                if (RecommendationId != null)
                 {
-                    result = await new RMRemind(_appSetting).RMRemindGetList(RecommendationId, recommentdation.Model.UnitId, true);
+                    var recommentdation = await new RecommendationDAO(_appSetting).RecommendationGetByID(RecommendationId);
+                    List<RecommendationForward> lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(RecommendationId)).ToList();
+                    var UnitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
+                    if (recommentdation.Model.UnitId == new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext))
+                    {
+                        result = await new RMRemind(_appSetting).RMRemindGetList(RecommendationId, recommentdation.Model.UnitId, true);
+                    }
+                    else if (UnitReceiveId == new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext))
+                    {
+                        result = await new RMRemind(_appSetting).RMRemindGetList(RecommendationId, UnitReceiveId, false);
+                    }
+                    else { }
+
+                    
                 }
-                else if (UnitReceiveId == new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext))
+                else {
+                    var s = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                    result = await new RMRemind(_appSetting).RMRemindGetListDashBoard(new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext));
+                }
+
+                if (result.Count > 0)
                 {
-                    result = await new RMRemind(_appSetting).RMRemindGetList(RecommendationId, UnitReceiveId, false);
-                }
-                else { }
-                
-                if (result.Count > 0) {
-                    foreach (var item in result) {
+                    foreach (var item in result)
+                    {
                         List<RMFileAttachModel> files = await new RMFileAttach(_appSetting).RMFileAttachGetByRemindID(item.Id);
-                        foreach (var file in files) {
+                        foreach (var file in files)
+                        {
                             file.FileAttach = decrypt.EncryptData(file.FileAttach);
                         }
                         item.Files = files;
                     }
-                    return new ResultApi { Success = ResultCode.OK, Result = result };
+                    return new ResultApi { Success = ResultCode.OK, Result = result, Message = "Success" };
                 }
-                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-                return new ResultApi { Success = ResultCode.OK, Result = null };
+
+                return new ResultApi { Success = ResultCode.OK, Result = null , Message = "Không có dữ liệu"};
             }
             catch (Exception ex) {
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);

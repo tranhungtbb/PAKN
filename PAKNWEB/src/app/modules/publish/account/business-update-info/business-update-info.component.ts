@@ -98,6 +98,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			this.model = res.result
 			this.model._representativeBirthDay  = this.model.representativeBirthDay != null ? new Date(this.model.representativeBirthDay) : null
 			this.model._dateOfIssue = this.model.dateOfIssue != null ? new Date(this.model.dateOfIssue) : null
+			// this.model.dateOfIssue = this.model.dateOfIssue == null ? null : new Date(this.model.dateOfIssue)
 			if (this.model.nation == 'Việt Nam') {
 				this.nation_enable_type = false
 			} else {
@@ -141,9 +142,9 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		this.model.wardsId = this.model.wardsId == null ? '' : this.model.wardsId;
 		this.model.provinceId = this.model.provinceId == null ? '' : this.model.provinceId;
 		this.model.districtId = this.model.districtId == null ? '' : this.model.districtId;
-		this.model.representativeBirthDay = this.model._representativeBirthDay == null ? '': JSON.stringify(new Date(this.model._representativeBirthDay)).slice(1, 11);
-		this.model.dateOfBirth = this.model._dateOfIssue == null ? '': JSON.stringify(new Date(this.model._dateOfIssue)).slice(1, 11);
-		
+		this.model.representativeBirthDay = this.model._representativeBirthDay == null ? '': this.model._representativeBirthDay.toDateString();
+		this.model.dateOfBirth = this.model._dateOfBirth == null ? '': this.model._dateOfBirth.toDateString();
+		this.model.dateOfIssue = this.model._dateOfIssue == null ? '': this.model._dateOfIssue.toDateString();
 
 
 		this.accountService.updateInfoUserCurrent(this.model).subscribe((res) => {

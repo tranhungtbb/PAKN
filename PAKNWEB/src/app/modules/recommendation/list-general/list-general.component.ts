@@ -250,6 +250,8 @@ export class ListGeneralComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modal-tc-pakn').modal('hide')
 				this.getList()
+				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
+
 				this._toastr.success(COMMONS.FORWARD_SUCCESS)
 			} else {
 				this._toastr.error(response.message)

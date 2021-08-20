@@ -152,7 +152,7 @@ namespace PAKNAPI.ControllerBase
 		[HttpPost]
 		[Authorize]
 		[Route("NENewsInsertBase"),DisableRequestSizeLimit]
-		public async Task<ActionResult<object>> NENewsInsertBase(/*NENewsInsertIN _nENewsInsertIN*/)
+		public async Task<ActionResult<object>> NENewsInsertBase()
 		{
 			try
 			{
@@ -179,8 +179,19 @@ namespace PAKNAPI.ControllerBase
 				{
 					_nENewsInsertIN.ImagePath = avatarFilePath;
 				}
+				int res = Int32.Parse((await new NENewsInsert(_appSetting).NENewsInsertDAO(_nENewsInsertIN)).ToString());
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsInsert(_appSetting).NENewsInsertDAO(_nENewsInsertIN) };
+				if (res > 0) {
+					return new ResultApi { Success = ResultCode.OK, Result =  res, Message ="Thêm mới thành công"};
+                }
+                else if(res == -1){
+					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Tiêu đề bị trùng" };
+                }
+                else
+                {
+					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Thêm mới thất bại" };
+				}
+				
 			}
 			catch (Exception ex)
 			{
@@ -243,7 +254,22 @@ namespace PAKNAPI.ControllerBase
 					_nENewsUpdateIN.ImagePath = avatarFilePath;
 				}
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN) };
+
+
+				int res = Int32.Parse((await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN)).ToString());
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				if (res > 0)
+				{
+					return new ResultApi { Success = ResultCode.OK, Result = res, Message = "Cập nhập thành công" };
+				}
+				else if (res == -1)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Tiêu đề bị trùng" };
+				}
+				else
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Cập nhập thất bại" };
+				}
 			}
 			catch (Exception ex)
 			{

@@ -29,6 +29,7 @@ export class BusinessComponent implements OnInit, AfterViewInit {
 	userId: number
 	url: string = ''
 	currentRouter: string = ''
+	isMain : any = this.userInfoService.getIsMain()
 
 	constructor(
 		private localeService: BsLocaleService,
@@ -74,8 +75,8 @@ export class BusinessComponent implements OnInit, AfterViewInit {
 
 		// this.loadScript('assets/dist/vendor/global/global.min.js')
 		// this.loadScript('assets/dist/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')
-		this.loadScript('assets/dist/js/custom.min.js')
-		this.loadScript('assets/dist/js/deznav-init.js')
+		//this.loadScript('assets/dist/js/custom.min.js')
+		//this.loadScript('assets/dist/js/deznav-init.js')
 		// this.loadScript('assets/dist/vendor/waypoints/jquery.waypoints.min.js')
 		// this.loadScript('assets/dist/vendor/jquery.counterup/jquery.counterup.min.js')
 		// this.loadScript('assets/dist/vendor/apexchart/apexchart.js')
@@ -85,6 +86,9 @@ export class BusinessComponent implements OnInit, AfterViewInit {
 	}
 	ngAfterViewInit() {
 		$('#show-modal-account-info').click(() => {
+			if(this.isMain){
+				return
+			}
 			this.child_UserViewInfoComponent.openModal()
 		})
 		this.child_UserViewInfoComponent.parent_BusinessComponent = this

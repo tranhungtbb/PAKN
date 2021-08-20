@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace PAKNAPI.Controllers
@@ -609,8 +610,20 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
+				// validate
 
-                var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
+				if (!Regex.Match(model.Phone.ToString(), ConstantRegex.PHONE, RegexOptions.IgnoreCase).Success) {
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại không hợp lệ" };
+				}
+
+				if (model.Email != null && !ConstantRegex.EmailIsValid(model.Email))
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Email không hợp lệ" };
+				}
+
+
+
+				var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
                 if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
 
 				// check exist:Phone,Email,IDCard
@@ -627,22 +640,7 @@ namespace PAKNAPI.Controllers
                 if (checkExists[0].Exists.Value)
                     return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 
-				DateTime birthDay, dateOfIssue;
-				if (!DateTime.TryParseExact(model._BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out birthDay))
-				{
-					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
-				}
-				if (!DateTime.TryParseExact(model._DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out dateOfIssue))
-				{
-					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
-				}
-
-				//if(model.ProvinceId == 0)
-    //            {
-				//	model.ProvinceId = null;
-				//	model.DistrictId = null;
-				//	model.WardsId = null;
-    //            }
+				
 
 				//add login info
 				string defaultPwd = "abc123";
@@ -670,9 +668,9 @@ namespace PAKNAPI.Controllers
 				var accRs = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(account.UserName);
 
 				if (string.IsNullOrEmpty(model._DateOfIssue)) model.DateOfIssue = null;
-				else model.DateOfIssue = dateOfIssue;
+				else model.DateOfIssue = model.DateOfIssue;
 				if (string.IsNullOrEmpty(model._BirthDay)) model.BirthDay = null;
-				else model.BirthDay = birthDay;
+				else model.BirthDay = model.BirthDay;
 				model.CreatedDate = DateTime.Now;
 				model.CreatedBy = Convert.ToInt32(new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext));
 				model.UpdatedBy = 0;
@@ -701,6 +699,17 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
+				// validate
+
+				if (!Regex.Match(_bI_InvididualUpdateIN.Phone.ToString(), ConstantRegex.PHONE, RegexOptions.IgnoreCase).Success)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại không hợp lệ" };
+				}
+
+				if (_bI_InvididualUpdateIN.Email != null && !ConstantRegex.EmailIsValid(_bI_InvididualUpdateIN.Email))
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Email không hợp lệ" };
+				}
 
 				// check exist:Phone,Email,IDCard
 				var checkExists = await new Models.BusinessIndividual.BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", _bI_InvididualUpdateIN.Phone, _bI_InvididualUpdateIN.Id);
@@ -720,28 +729,11 @@ namespace PAKNAPI.Controllers
 				if (DateTime.TryParseExact(_bI_InvididualUpdateIN._BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime _birthDay))
 				{
 					birthDay = _birthDay;
-					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày sinh không hợp lệ" };
 				}
 				if (DateTime.TryParseExact(_bI_InvididualUpdateIN._DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime _dateOfIssue))
 				{
 					dateOfIssue = _dateOfIssue;
-					//return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Định dạng ngày cấp không hợp lệ" };
 				}
-				//if (string.IsNullOrEmpty(_DateOfIssue)) _bI_InvididualUpdateIN.DateOfIssue = null;
-				//else _bI_InvididualUpdateIN.DateOfIssue = dateOfIssue;
-				//if (string.IsNullOrEmpty(_BirthDay)) _bI_InvididualUpdateIN.BirthDate = null;
-				//else _bI_InvididualUpdateIN.BirthDate = birthDay;
-				//if (_bI_InvididualUpdateIN.ProvinceId == 0)
-				//{
-				//	_bI_InvididualUpdateIN.ProvinceId = null;
-				//	_bI_InvididualUpdateIN.DistrictId = null;
-				//	_bI_InvididualUpdateIN.WardsId = null;
-				//}
-
-                //if (string.IsNullOrEmpty(_DateOfIssue)) _bI_InvididualUpdateIN.DateOfIssue = null;
-                //else _bI_InvididualUpdateIN.DateOfIssue = dateOfIssue;
-                //if (string.IsNullOrEmpty(_BirthDay)) _bI_InvididualUpdateIN.BirthDate = null;
-                //else _bI_InvididualUpdateIN.BirthDate = birthDay;
 				_bI_InvididualUpdateIN.DateOfIssue = dateOfIssue;
 				_bI_InvididualUpdateIN.BirthDate = birthDay;
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
@@ -874,6 +866,28 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
+				// validate
+
+				if (!Regex.Match(model.Phone.ToString(), ConstantRegex.PHONE, RegexOptions.IgnoreCase).Success)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại người đại diện không hợp lệ" };
+				}
+
+				if (model.Email != null && !ConstantRegex.EmailIsValid(model.Email))
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện không hợp lệ" };
+				}
+
+				if (!Regex.Match(model.OrgPhone.ToString(), ConstantRegex.PHONE, RegexOptions.IgnoreCase).Success)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện văn phòng đại diện không hợp lệ" };
+				}
+
+				if (model.OrgEmail != null && !ConstantRegex.EmailIsValid(model.OrgEmail))
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Email văn phòng đại diện không hợp lệ" };
+				}
+
 				var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
 				if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tài khoản đăng nhập đã tồn tại" };
 
@@ -900,15 +914,6 @@ namespace PAKNAPI.Controllers
 				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Tax", model.Tax, 0);
 				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế đã tồn tại" };
 
-     //           if (model.DistrictId == 0)
-     //           {
-					//model.DistrictId = null;
-					//model.ProvinceId = null;
-					//model.WardsId = null;
-					////model.OrgDistrictId = null;
-					////model.OrgProvinceId = null;
-					////model.OrgWardsId = null;
-     //           }
 
 				//add login info
 				string defaultPwd = "abc123";
@@ -935,10 +940,6 @@ namespace PAKNAPI.Controllers
 				var rs1 = await new SYUserInsert(_appSetting).SYUserInsertDAO(account);
 				var accRs = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(account.UserName);
 
-				//if (string.IsNullOrEmpty(model._DateOfIssue)) model.DateOfIssue = null;
-				//else model.DateOfIssue = dateOfIssue;
-				//if (string.IsNullOrEmpty(model._RepresentativeBirthDay)) model.RepresentativeBirthDay = null;
-				//else model.RepresentativeBirthDay = birdDay;
 				model.CreatedDate = DateTime.Now;
 				model.CreatedBy = 0;
 				model.UpdatedBy = 0;
@@ -988,6 +989,28 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
+				// validate
+
+				if (!Regex.Match(model.Phone.ToString(), ConstantRegex.PHONE, RegexOptions.IgnoreCase).Success)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại người đại diện không hợp lệ" };
+				}
+
+				if (model.Email != null && !ConstantRegex.EmailIsValid(model.Email))
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện không hợp lệ" };
+				}
+
+				if (!Regex.Match(model.OrgPhone.ToString(), ConstantRegex.PHONE, RegexOptions.IgnoreCase).Success)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện văn phòng đại diện không hợp lệ" };
+				}
+
+				if (model.OrgEmail != null && !ConstantRegex.EmailIsValid(model.OrgEmail))
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Email văn phòng đại diện không hợp lệ" };
+				}
+
 				///check ton tai
 				var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone", model.Phone, model.Id);
 				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
@@ -1021,17 +1044,6 @@ namespace PAKNAPI.Controllers
 				{
 					model.DateOfIssue = _dateOfIssue;
 				}
-
-
-				//if (model.DistrictId == 0)
-				//{
-				//	model.DistrictId = null;
-				//	model.ProvinceId = null;
-				//	model.WardsId = null;
-				//	//model.OrgDistrictId = null;
-				//	//model.OrgProvinceId = null;
-				//	//model.OrgWardsId = null;
-				//}
 
 				var rsUpdateAcc = new SYUserUpdateInfo(_appSetting).SYUserUpdateInfoDAO(new SYUserUpdateInfoIN
 				{

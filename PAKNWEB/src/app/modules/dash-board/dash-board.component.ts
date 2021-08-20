@@ -61,12 +61,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 					acc += item.total
 					return acc
 				}, 0)
+
 				this.dataGraph = res.result.data7day.reduce((acc, item, index) => {
 					item.per_10 = ((item.total / this.totalCount) * 10).toPrecision(2)
 					item.per_100 = ((item.total / this.totalCount) * 100).toPrecision(2)
 					acc['stt_' + item.status] = item;
 					return acc
 				}, {})
+
+				console.log(res.result.data7day);
 
 
 				let totalCountA = res.result.data.reduce((acc, item, index) => {

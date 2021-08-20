@@ -1,40 +1,34 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Input } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 import { Router } from '@angular/router'
 
 import { DataService } from 'src/app/services/sharedata.service'
-import { UserObject, UserObject2 } from 'src/app/models/UserObject'
+import { UserSystemObject } from 'src/app/models/UserObject'
 import { UserService } from 'src/app/services/user.service'
-import { UnitService } from 'src/app/services/unit.service'
-import { PositionService } from 'src/app/services/position.service'
 import { RoleService } from 'src/app/services/role.service'
-import { MESSAGE_COMMON, RESPONSE_STATUS, EXCEL_TYPE, EXCEL_EXTENSION } from 'src/app/constants/CONSTANTS'
+import { MESSAGE_COMMON, RESPONSE_STATUS, CONSTANTS } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
-import { UserCreateOrUpdateComponent } from 'src/app/modules/system-management/components/user/user-create-or-update/user-create-or-update.component'
-import { UserViewInfoComponent } from 'src/app/modules/system-management/components/user/user-view-info/user-view-info.component'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
 declare var $: any
 @Component({
-	selector: 'app-user',
-	templateUrl: './user.component.html',
-	styleUrls: ['./user.component.css'],
+	selector: 'app-user-system',
+	templateUrl: './user-system.component.html',
+	styleUrls: ['./user-system.component.css'],
 })
-export class UserComponent implements OnInit {
+export class UserSystemComponent implements OnInit {
 	constructor(
 		private _service: UserService,
 		private roleService: RoleService,
 		private _toastr: ToastrService,
 		private _fb: FormBuilder,
-		private unitService: UnitService,
-		private positionService: PositionService,
 		private _shareData: DataService,
 		private _router: Router,
 		private storeageService: UserInfoStorageService,
 	) {}
 
-	listData = new Array<UserObject2>()
+	listData = new Array<UserSystemObject>()
 	listStatus: any = [
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
@@ -42,12 +36,11 @@ export class UserComponent implements OnInit {
 	listHisStatus : any = [
 		{value : 1, text : "Thành công" },
 		{value : 0, text : "Thất bại" }
-	] 
-
-	positionsList: any[] = []
-	rolesList: any[] = []
-	unitsList: any[] = []
-
+	]
+	listGender: any = [
+		{ value: true, text: 'Nam' },
+		{ value: false, text: 'Nữ' },
+	]
 	// change Password
 	formChangePassword: FormGroup
 	newPassword: string
@@ -55,7 +48,7 @@ export class UserComponent implements OnInit {
 	samePass = false
 
 	// object User
-	modelUser: any = new UserObject2()
+	model = new UserSystemObject()
 	submitted: boolean = false
 	isActived: boolean
 	userName: string = ''
@@ -70,8 +63,6 @@ export class UserComponent implements OnInit {
 	// view child
 	@ViewChild('table', { static: false }) table: any
 	@ViewChild('table2', { static: false }) table2: any
-	@ViewChild(UserCreateOrUpdateComponent, { static: false }) childCreateOrUpdateUser: UserCreateOrUpdateComponent
-	@ViewChild(UserViewInfoComponent, { static: false }) childDetailUser: UserViewInfoComponent
 
 	// history
 	dataSearch2: HistoryUser = new HistoryUser()
@@ -82,26 +73,23 @@ export class UserComponent implements OnInit {
 	hisPageSize: any = 10
 	hisUserId: any
 
-	modalUserCreateOrUpdate(key: any = 0) {
-		this.childCreateOrUpdateUser.openModal(0, key)
-	}
-	modalUserInfo(id: any) {
-		this.childDetailUser.openModal(id)
-	}
-
 	totalRecords: number = 0
 	userId: number = 0
 	title: any
 
-	ngOnInit() {
-		// this.buildForm()
-		this.getList()
-		this.getDropDown()
+	// create or update
+	createUserForm: FormGroup
+	isAdmin : any
+	fileAccept = CONSTANTS.FILEACCEPTAVATAR
 
+	ngOnInit() {
+		this.getList()
+		this.buildForm()
 		this.formChangePassword = this._fb.group({
 			newPassword: [this.newPassword, Validators.required],
 			rePassword: [this.rePassword, Validators.required],
 		})
+		this.isAdmin = this.storeageService.getIsAdmin()
 	}
 
 	ngAfterViewInit() {
@@ -112,20 +100,164 @@ export class UserComponent implements OnInit {
 			if (e.which == 13) e.preventDefault()
 		})
 	
-		this.childCreateOrUpdateUser.parentUser = this
-		this.childDetailUser.parentUser = this
 	}
-	getDropDown() {
-		this._service.getDataForCreate({}).subscribe(res=>{
-			if(res.success == RESPONSE_STATUS.success){
-				this.positionsList = res.result.lstPossition
-				this.unitsList = res.result.lstUnit
-			}
-			
+
+	buildForm(){
+		this.createUserForm = this._fb.group({
+			email: ['', [Validators.required, Validators.email]],
+			fullName: ['', [Validators.required]],
+			phone: ['', [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
+			gender: ['', [Validators.required]],
+			isActived: ['', [Validators.required]],
+			address: [''],
 		})
-
 	}
 
+	reBuildForm(){
+		this.createUserForm.reset({
+			email: this.model.email,
+			fullName: this.model.fullName,
+			phone: this.model.phone,
+			gender: this.model.gender,
+			isActived: this.model.isActived,
+			address: this.model.address
+		})
+	}
+	get fUser() {
+		return this.createUserForm.controls
+	}
+	checkExists = {
+		Email: false,
+		Phone: false,
+	}
+	onCheckExist(field: string, value: string) {
+		this._service
+			.checkExists({
+				field,
+				value,
+				id: this.model.id ? this.model.id : 0,
+			})
+			.subscribe((res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.checkExists[field] = res.result.SYUserCheckExists[0].exists
+				}
+			})
+	}
+
+	preCreate(){
+		this.model = new UserSystemObject()
+		this.submitted = false
+		this.checkExists = {
+			Email: false,
+			Phone: false,
+		}
+		this.reBuildForm()
+		$('#modal').modal('show')
+	}
+
+	preUpdate(Id : any){
+		this.submitted = false
+		$('#modalView').modal('hide')
+		this._service.getByIdUpdate({ id: Id }).subscribe((res) => {
+			if (res.success != 'OK') return
+			this.model = res.result.SYUserGetByID[0]
+			if (this.model.avatar == '' || this.model.avatar == null) {
+				this.userAvatar = null
+			} else {
+				this.userAvatar = this.model.avatar
+				let output: any = $('#modal .user-avatar-view')
+				output.attr('src', this.userAvatar)
+			}
+			$('#modal').modal('show')
+		})
+	}
+
+	preView(Id : any){
+		this._service.getByIdUpdate({ id: Id }).subscribe((res) => {
+			if (res.success != 'OK') return
+			this.model = res.result.SYUserGetByID[0]
+			if (this.model.avatar == '' || this.model.avatar == null) {
+				this.userAvatar = null
+			} else {
+				this.userAvatar = this.model.avatar
+				let output: any = $('#modalView .user-avatar-view')
+				output.attr('src', this.userAvatar)
+			}
+			$('#modalView').modal('show')
+		})
+	}
+
+	onSave(){
+		this.submitted = true
+		this.model.userName = this.model.email
+		if (this.createUserForm.invalid) {
+			return
+		}
+		if (this.checkExists['Email'] || this.checkExists['Phone']) {
+			return
+		}
+		let files = $('#modal .seclect-avatar')[0].files
+		this.model.countLock = 0
+		this.model.lockEndOut = ''
+		if(!this.model.id || this.model.id == 0){
+			this._service.userSystemInsert(this.model, files).subscribe((res) => {
+				$('#modal .seclect-avatar').val('')
+				if (res.success != 'OK') {
+					let errorMsg = res.message
+					this._toastr.error(errorMsg)
+					return
+				}
+				else{
+					$('#modal').modal('hide')
+					this._toastr.success(COMMONS.ADD_SUCCESS)
+					this.getList()
+				}
+			})
+		}
+		else{
+			this._service.userSystemUpdate(this.model, files).subscribe((res) => {
+				$('#modal .seclect-avatar').val('')
+				if (res.success != 'OK') {
+					let errorMsg = res.message
+					this._toastr.error(errorMsg)
+					return
+				}
+				else{
+					$('#modal').modal('hide')
+					this._toastr.success(COMMONS.ADD_SUCCESS)
+					this.getList()
+				}
+			})
+		}
+	}
+
+
+	// avatar
+	userAvatar: any
+	onChangeAvatar() {
+		$('#modal .seclect-avatar').click()
+	}
+	changeSelectAvatar(event: any) {
+		var file = event.target.files[0]
+		if (!['image/jpeg', 'image/png'].includes(file.type)) {
+			this._toastr.error('Chỉ chọn tệp tin ảnh')
+			event.target.value = null
+			return
+		}
+		if (file.size > 3000000) {
+			this._toastr.error('Ảnh dung lượng tối đa 3MB')
+			event.target.value = null
+			return
+		}
+		let output: any = $('#modal .user-avatar-view')
+		output.attr('src', URL.createObjectURL(file))
+		this.userAvatar = ''
+		output.onload = function () {
+			URL.revokeObjectURL(output.src) // free memory
+		}
+	}
+
+	
 	getList() {
 		this.userName = this.userName.trim()
 		this.fullName = this.fullName.trim()
@@ -135,13 +267,11 @@ export class UserComponent implements OnInit {
 			FullName: this.fullName != null ? this.fullName : '',
 			IsActived: this.isActived != null ? this.isActived : '',
 			Phone: this.phone != null ? this.phone : '',
-			UnitId: this.unitId != null ? this.unitId : '',
-			PositionId: this.positionId != null ? this.positionId : '',
-			TypeId: 1, // auto 1
+			TypeId: 1,
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
-		this._service.getAllOnPagedList(request).subscribe((response) => {
+		this._service.getUserSystemAllOnPagedList(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result.SYUserGetAllOnPage.length > 0) {
 					this.listData = response.result.SYUserGetAllOnPage
@@ -201,7 +331,6 @@ export class UserComponent implements OnInit {
 		}
 	}
 
-	// changePass
 
 	get f() {
 		return this.formChangePassword.controls
@@ -301,7 +430,6 @@ export class UserComponent implements OnInit {
 		let item = this.listData.find((c) => c.id == this.userId)
 		$('#modalConfirmChangeStatus').modal('hide')
 		item.isActived = !item.isActived
-		item.typeId = 1
 		item.countLock = 0
 		item.lockEndOut = ''
 		this._service.changeStatus({ Id: item.id, IsActived: item.isActived }).subscribe((res) => {
@@ -387,7 +515,7 @@ export class UserComponent implements OnInit {
 				if (response.result.SYSystemLogGetAllOnPage.length > 0) {
 					this.listHisData = response.result.SYSystemLogGetAllOnPage
 					this.hisTotalRecords = response.result.SYSystemLogGetAllOnPage.length != 0 ? response.result.SYSystemLogGetAllOnPage[0].rowNumber : 0
-					// this.hisPageIndex = response.result.
+					
 					$('#modalHis').modal('show')
 				} else {
 					this.hisPageIndex = 1

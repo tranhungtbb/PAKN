@@ -493,11 +493,11 @@ namespace PAKNAPI.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("SYSystemLogGetAllOnPageBase")]
-		public async Task<ActionResult<object>> SYSystemLogGetAllOnPageBase(int? UserId, int? PageSize, int? PageIndex, DateTime? FromDate, DateTime? ToDate)
+		public async Task<ActionResult<object>> SYSystemLogGetAllOnPageBase(int? UserId, int? PageSize, int? PageIndex, DateTime? FromDate, DateTime? ToDate, string Content, int? Status )
 		{
 			try
 			{
-				List<SYSystemLogGetAllOnPage> rsSYSystemLogGetAllOnPage = await new SYSystemLogGetAllOnPage(_appSetting).SYSystemLogGetAllOnPageDAO(UserId, PageSize, PageIndex, FromDate, ToDate);
+				List<SYSystemLogGetAllOnPage> rsSYSystemLogGetAllOnPage = await new SYSystemLogGetAllOnPage(_appSetting).SYSystemLogGetAllOnPageDAO(UserId, PageSize, PageIndex, FromDate, ToDate, Content,Status);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYSystemLogGetAllOnPage", rsSYSystemLogGetAllOnPage},

@@ -93,10 +93,40 @@ export class UserObject2 {
 	permissionIds: string
 }
 
+export class UserSystemObject {
+	constructor() {
+		this.id = 0
+		this.fullName = ''
+		this.userName = ''
+		this.email = ''
+		this.phone = ''
+		this.isActived = true
+		this.isDeleted = false
+		this.gender = null
+		this.isAdmin = true
+		this.address = ''
+	}
+
+	id: number
+	fullName: string
+	userName: string
+	isActived: boolean
+	isDeleted: boolean
+	gender: boolean
+	isAdmin: boolean
+	email: string
+	phone: string
+	countLock: number
+	lockEndOut: string
+	avatar: string
+	address: string
+}
+
+
 export class UserInfoObject {
 	userName: string
 	fullName: string
-	dateOfBirth: string
+	dateOfBirth: Date
 	email: string
 	phone: string
 	nation: any
@@ -106,7 +136,7 @@ export class UserInfoObject {
 	address: string
 	idCard: string
 	issuedPlace: string
-	issuedDate: string
+	issuedDate: Date
 	gender: boolean
 }
 

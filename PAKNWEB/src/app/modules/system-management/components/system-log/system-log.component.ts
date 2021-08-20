@@ -86,6 +86,15 @@ export class SystemLogComponent implements OnInit {
 		this.pageIndex = event.first / event.rows + 1
 		this.getList()
 	}
+	onChangeCreateDate(event){
+		if(event){
+			this.dataSearch.createDate = event
+		}
+		else{
+			this.dataSearch.createDate = null
+		}
+		this.getList()
+	}
 	dataStateChange() {
 		this.pageIndex = 1
 		if ($("[id='createDate']").val() == 'Invalid date') {

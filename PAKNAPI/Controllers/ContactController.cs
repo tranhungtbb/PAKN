@@ -97,6 +97,7 @@ namespace PAKNAPI.Controllers
 								UnitId = user[0].UnitId,
 								UnitName = user[0].UnitName,
 								IsMain = user[0].IsMain,
+								IsAdmin = user[0].IsAdmin,
 								TypeObject = user[0].TypeObject,
 								AccessToken = tokenString,
 								IsHaveToken = true,
@@ -227,7 +228,7 @@ namespace PAKNAPI.Controllers
 					{
 						res.Append(textRamdom[rnd.Next(textRamdom.Length)]);
 					}
-					length = 2;
+					length = 3;
 					while (0 < length--)
 					{
 						res.Append(numberRamdom[rnd.Next(numberRamdom.Length)]);

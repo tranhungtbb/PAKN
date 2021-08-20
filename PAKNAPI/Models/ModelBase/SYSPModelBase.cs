@@ -1105,7 +1105,7 @@ namespace PAKNAPI.ModelBase
 		public string Action { get; set; }
 		public string Exception { get; set; }
 
-		public async Task<List<SYSystemLogGetAllOnPage>> SYSystemLogGetAllOnPageDAO(int? UserId, int? PageSize, int? PageIndex, DateTime? FromDate, DateTime? ToDate)
+		public async Task<List<SYSystemLogGetAllOnPage>> SYSystemLogGetAllOnPageDAO(int? UserId, int? PageSize, int? PageIndex, DateTime? FromDate, DateTime? ToDate, string Content, int? Status)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("UserId", UserId);
@@ -1113,6 +1113,8 @@ namespace PAKNAPI.ModelBase
 			DP.Add("PageIndex", PageIndex);
 			DP.Add("FromDate", FromDate);
 			DP.Add("ToDate", ToDate);
+			DP.Add("Content", Content);
+			DP.Add("Status", Status);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYSystemLogGetAllOnPage>("SY_SystemLogGetAllOnPage", DP)).ToList();
 		}

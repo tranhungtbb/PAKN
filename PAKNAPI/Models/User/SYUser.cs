@@ -92,6 +92,50 @@ namespace PAKNAPI.Models.User
 		}
 	}
 
+
+	public class SYUserSystemGetAllOnPageList
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserSystemGetAllOnPageList(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserSystemGetAllOnPageList()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public bool IsActived { get; set; }
+		public bool IsDeleted { get; set; }
+		public bool Gender { get; set; }
+		public byte Type { get; set; }
+		public bool IsSuperAdmin { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public byte? CountLock { get; set; }
+		public DateTime? LockEndOut { get; set; }
+		public string Avatar { get; set; }
+		public string Address { get; set; }
+
+		public async Task<List<SYUserSystemGetAllOnPageList>> SYUserSystemGetAllOnPageDAO(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("UserName", UserName);
+			DP.Add("FullName", FullName);
+			DP.Add("Phone", Phone);
+			DP.Add("IsActived", IsActived);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserSystemGetAllOnPageList>("[SY_UserSystemGetAllOnPageList]", DP)).ToList();
+		}
+	}
+
 	public class DropListTreeView {
 		public string text { get; set; }
 		public long value { get; set; }

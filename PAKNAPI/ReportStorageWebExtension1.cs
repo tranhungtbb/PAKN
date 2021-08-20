@@ -187,6 +187,11 @@ namespace PAKNAPI
                     result.Parameters["TitleReport"].Value = "LỊCH SỬ NGƯỜI DÙNG";
                     result.Parameters["UserId"].Value = paraHisUser.UserId;
 
+                    result.Parameters["Content"].Value = paraHisUser.Content;
+                    result.Parameters["FromDate"].Value = paraHisUser.FromDate == null ? "" : Convert.ToDateTime(paraHisUser.FromDate).ToString("dd/MM/yyyy");
+                    result.Parameters["ToDate"].Value = paraHisUser.ToDate == null ? "" : Convert.ToDateTime(paraHisUser.ToDate).ToString("dd/MM/yyyy");
+                    result.Parameters["Status"].Value = paraHisUser.Status == null ? -1 : paraHisUser.Status;
+
                     result.SaveLayoutToXml(ms);
                     // log
                     sYSystemLogInsertIN.UserId = paraHisUser.UserProcessId;

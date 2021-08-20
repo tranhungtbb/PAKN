@@ -18,7 +18,7 @@
 				<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dateOfBirth" [(ngModel)]="model.dateOfBirth"
 				formControlName="dateOfBirth" appBsDatepickerInvalid
 				[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true,language:'vi'}" />
-				<div class="input-group-addon p-2 center">
+				<div class="input-group-addon p-2 center border-right">
 					<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 				</div>
 			</div>
@@ -67,8 +67,8 @@
 				(change)="onChangeProvince(true)">
 				<ng-option *ngFor="let prov of listProvince" [value]="prov.id">{{prov.name}}</ng-option>
 			</ng-select>
-			<div *ngIf="(submitted && f.provinceId.invalid)||(f.provinceId.invalid && (f.provinceId.dirty || f.provinceId.touched))" class="has-error m-b-12">
-				<div *ngIf="f.provinceId.errors.required">
+			<div *ngIf="(submitted && !nation_enable_type && !model.provinceId)" class="has-error m-b-12">
+				<div>
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
 				</div>
 			</div>
@@ -83,8 +83,8 @@
 				<ng-option *ngFor="let dis of listDistrict" [value]="dis.id">{{dis.name}}</ng-option>
 			</ng-select>
 
-			<div *ngIf="(submitted && f.districtId.invalid)||(f.districtId.invalid && (f.districtId.dirty || f.districtId.touched))" class="has-error m-b-12">
-				<div *ngIf="f.districtId.errors.required">
+			<div *ngIf="(submitted && !nation_enable_type && !model.districtId)">
+				<div class="has-error m-b-12">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
 				</div>
 			</div>
@@ -99,8 +99,8 @@
 
 				<ng-option *ngFor="let vill of listVillage" [value]="vill.id">{{vill.name}}</ng-option>
 			</ng-select>
-			<div *ngIf="(submitted && f.wardsId.invalid)||(f.wardsId.invalid && (f.wardsId.dirty || f.wardsId.touched))" class="has-error m-b-12">
-				<div *ngIf="f.wardsId.errors.required">
+			<div *ngIf="(submitted && !nation_enable_type && !model.wardsId)">
+				<div class="has-error m-b-12">
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
 				</div>
 			</div>
@@ -142,9 +142,10 @@
 		<div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Ngày cấp</label>
 			<div class="input-group">
-				<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_issuedDate" [(ngModel)]="model.issuedDate"
+				<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_issuedDate" 
+					[(ngModel)]="model.issuedDate"
 				formControlName="issuedDate" appBsDatepickerInvalid [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-				<div class="input-group-addon p-2 center">
+				<div class="input-group-addon p-2 center border-right">
 					<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 				</div>
 			</div>

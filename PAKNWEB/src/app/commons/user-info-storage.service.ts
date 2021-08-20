@@ -13,23 +13,32 @@ export class UserInfoStorageService {
 
 	constructor() {}
 	clear = ()=>{
-		localStorage.removeItem('KeyRework')
-		localStorage.removeItem('ReturnUrl')
-		localStorage.removeItem('userId')
-		localStorage.removeItem('accessToken')
-		localStorage.removeItem('isSaveLogin')
-		localStorage.removeItem('isSession')
-		localStorage.removeItem('permissions')
-		localStorage.removeItem('functions')
-		localStorage.removeItem('permissionCategories')
-		localStorage.removeItem('IsHaveToken')
-		// localStorage.removeItem('IpAddress')
-		localStorage.removeItem('Role')
-		localStorage.removeItem('FullName')
-		localStorage.removeItem('unitName')
-		localStorage.removeItem('unitId')
-		localStorage.removeItem('isMain')
-		localStorage.removeItem('typeObject')
+		// localStorage.removeItem('KeyRework')
+		// localStorage.removeItem('ReturnUrl')
+		// localStorage.removeItem('userId')
+		// localStorage.removeItem('accessToken')
+		// localStorage.removeItem('isSaveLogin')
+		// localStorage.removeItem('isSession')
+		// localStorage.removeItem('permissions')
+		// localStorage.removeItem('functions')
+		// localStorage.removeItem('permissionCategories')
+		// localStorage.removeItem('IsHaveToken')
+		// // localStorage.removeItem('IpAddress')
+		// localStorage.removeItem('Role')
+		// localStorage.removeItem('FullName')
+		// localStorage.removeItem('unitName')
+		// localStorage.removeItem('unitId')
+		// localStorage.removeItem('isMain')
+		// localStorage.removeItem('isAdmin')
+		// localStorage.removeItem('typeObject')
+		let rememberObject = this.getRecommentdationObjectRemember()
+		localStorage.clear()
+		if(rememberObject != 'null'){
+			this.setRecommentdationObjectRemember(rememberObject)
+		}
+	}
+	setIsAdmin(key: string): void {
+		localStorage.setItem('isAdmin', key)
 	}
 	setKeyRemember(key: string): void {
 		localStorage.setItem('KeyRework', key)
@@ -99,6 +108,9 @@ export class UserInfoStorageService {
 
 	setRecommentdationObjectRemember = (value)=> {
 		localStorage.setItem('recommentdationObjRemember', value)
+	}
+	getIsAdmin(): boolean {
+		return localStorage.getItem('isAdmin') === 'true'
 	}
 
 	getRecommentdationObjectRemember = ()=>{

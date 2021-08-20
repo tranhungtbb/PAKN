@@ -97,7 +97,6 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			imagePath: [this.model.imagePath, [Validators.required]],
 			pushNotify: [''],
 		})
-		// this.model.imagePath = 'assets/dist/images/no.jpg'
 
 		this.activatedRoute.params.subscribe((params) => {
 			if (params['id']) {
@@ -105,10 +104,11 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					if (res.success != 'OK') {
 						return
 					}
+					this.rebuidForm()
 					this.model = res.result.NENewsGetByID[0]
 					this.hisPublic = this.model.isPublished
 					this.postTypeSelected = this.model.postType.trim().split(',')
-					this.rebuidForm()
+					
 					//lay danh sach bai viet lien quan
 					this.getNewsRelatesInfo()
 				})
@@ -171,7 +171,6 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	submitted = false
 	onSave(event, published = false, viewDemo = false) {
 		this.submitted = true
-
 		if (this.postTypeSelected.length > 0) this.model.postType = this.postTypeSelected.toString()
 		//this.newsForm.controls.postType.setValue(this.model.postType)
 
@@ -212,8 +211,14 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			} else {
 				this.newsService.update(this.model, this.filePost).subscribe((res) => {
 					if (res.success != 'OK') {
-						this.toast.error(COMMONS.UPDATE_FAILED)
-						return
+						let result = Number(res.result);
+						if(result && result == -1){
+							this.toast.error('Tiêu đề bài viết bị trùng')
+							return
+						}else{
+							this.toast.error(COMMONS.UPDATE_FAILED)
+							return
+						}
 					}
 					this.insertNotification(false)
 					if (viewDemo) {
@@ -240,8 +245,12 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		} else {
 			this.newsService.create(this.model, this.filePost).subscribe((res) => {
 				if (res.success != 'OK') {
-					let errorMsg = COMMONS.ADD_FAILED
-					this.toast.error(errorMsg)
+					let result = Number(res.result);
+					if(result && result == -1){
+						this.toast.error('Tiêu đề bài viết bị trùng')
+					}else{
+						this.toast.error(COMMONS.ADD_FAILED)
+					}
 					return
 				}
 				this.model.id = res.result

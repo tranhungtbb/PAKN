@@ -84,9 +84,10 @@ export class EmailManagementComponent implements OnInit {
 	
 	//
 	getPagedList(){
-		if(this.isSentLst)
+		if(this.isSentLst){
 			this.title = 'Danh sách Email đã gửi'
 			this.query.status = 2
+		}
 		this.query.title = this.query.title.trim()
 
 		let query = {...this.query}
@@ -209,19 +210,15 @@ export class EmailManagementComponent implements OnInit {
 
 	///view detail
 	modelView:any ={
-		ListBusiness:[],
-		ListIndividual:[],
 		ListAttachment:[],
+		ListBusinessIndividual : [],
 		Data:{}
 	}
 	getDetail(id:any){
 		this.emailService.getById(id).subscribe(res=>{
-			// this.modelView.data = res.result.Data
-			// this.modelView.listAttachment = res.result.ListAttachment
-			// this.modelView.listBusiness = res.result.ListBusiness
-			// this.modelView.listIndividual = res.result.ListIndividual
-			this.modelView = res.result;
-			console.log(res.result)
+			this.modelView.Data = res.result.Data
+			this.modelView.ListAttachment = res.result.ListAttachment
+			this.modelView.ListBusinessIndividual = res.result.ListBusinessIndividual
 			$('#modalDetail').modal('show')
 		})
 	}

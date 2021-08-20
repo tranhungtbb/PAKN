@@ -1402,7 +1402,7 @@ body .ui-paginator .ui-paginator-current{
 	padding: 0;
 }
 .form-control-sm .ng-select, .ng-select input{	
-	padding: 2px 0;
+	padding: 4px 0;
 }
 .form-control-sm .ng-select .ng-select-container .ng-value-container .ng-input>input{
 	padding-left: 3px;

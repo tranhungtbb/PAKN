@@ -449,6 +449,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Gender", _sYUserInsertIN.Gender);
 			DP.Add("Type", _sYUserInsertIN.Type);
 			DP.Add("IsSuperAdmin", _sYUserInsertIN.IsSuperAdmin);
+			DP.Add("IsAdmin", _sYUserInsertIN.IsAdmin);
 			DP.Add("Email", _sYUserInsertIN.Email);
 			DP.Add("Phone", _sYUserInsertIN.Phone);
 			DP.Add("UnitId", _sYUserInsertIN.UnitId);
@@ -486,6 +487,8 @@ namespace PAKNAPI.ModelBase
 		public int? PositionId { get; set; }
 		public string RoleIds { get; set; }
 		public string PermissionIds { get; set; }
+
+		public bool IsAdmin { get; set; }
 	}
 
 	public class SYUserRoleMapDelete
@@ -544,6 +547,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Gender", _sYUserUpdateIN.Gender);
 			DP.Add("Type", _sYUserUpdateIN.Type);
 			DP.Add("IsSuperAdmin", _sYUserUpdateIN.IsSuperAdmin);
+			DP.Add("IsAdmin", _sYUserUpdateIN.IsAdmin);
 			DP.Add("Email", _sYUserUpdateIN.Email);
 			DP.Add("Phone", _sYUserUpdateIN.Phone);
 			DP.Add("UnitId", _sYUserUpdateIN.UnitId);
@@ -557,6 +561,24 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserUpdate", DP));
 		}
+
+		public async Task<int> SYUserSystemUpdateDAO(SYUserSystemUpdateIN _sYUserUpdateIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYUserUpdateIN.Id);
+			DP.Add("FullName", _sYUserUpdateIN.FullName);
+			DP.Add("IsActived", _sYUserUpdateIN.IsActived);
+			DP.Add("IsDeleted", _sYUserUpdateIN.IsDeleted);
+			DP.Add("Gender", _sYUserUpdateIN.Gender);
+			DP.Add("Email", _sYUserUpdateIN.Email);
+			DP.Add("Phone", _sYUserUpdateIN.Phone);
+			DP.Add("Avatar", _sYUserUpdateIN.Avatar);
+			DP.Add("Address", _sYUserUpdateIN.Address);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserSystemUpdate", DP));
+		}
+
+
 	}
 
 	public class SYUserUpdateIN
@@ -572,6 +594,7 @@ namespace PAKNAPI.ModelBase
 		public bool? Gender { get; set; }
 		public byte? Type { get; set; }
 		public bool? IsSuperAdmin { get; set; }
+		public bool? IsAdmin { get; set; }
 		public string Email { get; set; }
 		public string Phone { get; set; }
 		public int? UnitId { get; set; }
@@ -582,6 +605,39 @@ namespace PAKNAPI.ModelBase
 		public int? PositionId { get; set; }
 		public string RoleIds { get; set; }
 		public string PermissionIds { get; set; }
+	}
+
+	public class SYUserSystemUpdateIN
+	{
+		public long? Id { get; set; }
+		public string FullName { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public bool? Gender { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Avatar { get; set; }
+		public string Address { get; set; }
+	}
+
+	public class SYUserSystemInsertIN
+	{
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public string Password { get; set; }
+		public string Salt { get; set; }
+		public bool? IsActived { get; set; }
+		public bool? IsDeleted { get; set; }
+		public bool? Gender { get; set; }
+		public bool? IsSuperAdmin { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public int? UnitId { get; set; }
+		public byte? CountLock { get; set; }
+		public DateTime? LockEndOut { get; set; }
+		public string Avatar { get; set; }
+		public string Address { get; set; }
+		public bool IsAdmin { get; set; }
 	}
 
 	public class SYUserUpdateInfo
@@ -671,6 +727,7 @@ namespace PAKNAPI.ModelBase
 		public string UnitName { get; set; }
 		public int TypeId { get; set; }
 		public bool? IsMain { get; set; }
+		public bool? IsAdmin { get; set; }
 		public int TypeObject { get; set; }
 
 		public bool? IsActived { get; set; }

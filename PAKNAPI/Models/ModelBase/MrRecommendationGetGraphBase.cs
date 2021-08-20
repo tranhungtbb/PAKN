@@ -8,9 +8,12 @@ using System.Threading.Tasks;
 namespace PAKNAPI.Models.ModelBase
 {
 	public class MrGraphCountByStatusModel
-    {
+	{
 		public int? Total { get; set; }
 		public int Status { get; set; }
+		public int? Type { get; set; }
+
+		public int? Sum { get; set; }
     }
     public class MrRecommendationGetGraphBase
     {

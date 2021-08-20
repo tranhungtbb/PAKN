@@ -82,12 +82,14 @@ namespace PAKNAPI.ModelBase
 		public PUSupportModelBase()
 		{
 		}
-		public string Title {get;set;}
-		public int? Category {get;set;}
+		public string Title { get; set; }
+		public int? Category { get; set; }
 		public string Content { get; set; }
 		public string FilePath { get; set; }
 		public int? FileType { get; set; }
 		public DateTime? Date { get; set; }
+
+		public int? Type { get; set; }
 
 		public async Task<List<PUSupportModelBase>> PUSupportModelBaseDAO()
 		{

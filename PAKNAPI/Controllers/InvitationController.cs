@@ -358,10 +358,10 @@ namespace PAKNAPI.Controllers
 					// delete map
 					INVInvitationUserMapDeleteByInvitationIdIN deleteMap = new INVInvitationUserMapDeleteByInvitationIdIN();
 					deleteMap.InvitationId = invInvitation.Model.Id;
-					int s = await new INVInvitationUserMapDeleteByInvitationId(_appSetting).INVInvitationUserMapDeleteByInvitationIdDAO(deleteMap);
+					await new INVInvitationUserMapDeleteByInvitationId(_appSetting).INVInvitationUserMapDeleteByInvitationIdDAO(deleteMap);
 					Dictionary<string, string> lstUserSend = new Dictionary<string, string>();
 					// insert map user
-					if (s > 0) {
+					if (true) {
 						string senderName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
 						foreach (var item in invInvitation.InvitationUserMap)
 						{

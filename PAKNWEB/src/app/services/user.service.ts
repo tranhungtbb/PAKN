@@ -31,6 +31,14 @@ export class UserService {
 		return this.serviceInvoker.getwithHeaders(query, AppSettings.API_ADDRESS + Api.UserGetAllOnPagedList, headers)
 	}
 
+	getUserSystemAllOnPagedList(query: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+		}
+		return this.serviceInvoker.getwithHeaders(query, AppSettings.API_ADDRESS + Api.UserSystemGetAllOnPagedList, headers)
+	}
+
 	getDataForCreate(query: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
@@ -119,6 +127,46 @@ export class UserService {
 		}
 		return this.serviceInvoker.postwithHeaders(form, AppSettings.API_ADDRESS + Api.UserUpdate, headers)
 	}
+
+	userSystemInsert(data: any, files: any = null): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+		}
+		let form = new FormData()
+
+		for (let item in data) {
+			form.append(item, data[item])
+		}
+		if (files != null && files.length > 0) {
+			for (let item of files) {
+				form.append('files', item, item.name)
+			}
+		}
+
+		return this.serviceInvoker.postwithHeaders(form, AppSettings.API_ADDRESS + Api.UserSystemCreate, headers)
+	}
+
+	userSystemUpdate(data: any, files: any = null): Observable<any> {
+		let form = new FormData()
+
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+		}
+
+		for (let key in data) {
+			form.append(key, data[key])
+		}
+		if (files != null && files.length > 0) {
+			for (let item of files) {
+				form.append('files', item, item.name)
+			}
+		}
+		return this.serviceInvoker.postwithHeaders(form, AppSettings.API_ADDRESS + Api.UserSystemUpdate, headers)
+	}
+
+
 	delete(data: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),

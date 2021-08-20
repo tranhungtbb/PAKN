@@ -21,6 +21,7 @@ using PAKNAPI.Models.User;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using PAKNAPI.Models.BusinessIndividual;
+using System.Text.RegularExpressions;
 
 namespace PAKNAPI.Controllers
 {
@@ -76,6 +77,9 @@ namespace PAKNAPI.Controllers
 					var info = await _fileService.Save(files, "User");
 					filePath = info[0].Path;
 				}
+				else {
+					model.Avatar = null;
+				}
 
 				//generate mật khẩu
 				byte[] salt = new byte[128 / 8];
@@ -85,7 +89,7 @@ namespace PAKNAPI.Controllers
 				}
 				// derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
 				string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-					password: "12345",
+					password: "12345a@@",
 					salt: salt,
 					prf: KeyDerivationPrf.HMACSHA1,
 					iterationCount: 10000,
@@ -95,6 +99,7 @@ namespace PAKNAPI.Controllers
 				model.Avatar = filePath;
 				model.Password = hashed;
 				model.Salt = Convert.ToBase64String(salt);
+				model.IsSuperAdmin = false;
 
 				var result = await new SYUserInsert(_appSetting).SYUserInsertDAO(model);
 			}
@@ -138,8 +143,110 @@ namespace PAKNAPI.Controllers
 
 				model.Password = modelOld[0].Password;
 				model.Salt = modelOld[0].Salt;
+				model.IsSuperAdmin = false;
 				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				var result = await new SYUserUpdate(_appSetting).SYUserUpdateDAO(model);
+
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//xóa file đã tải
+				await _fileService.Remove(filePath);
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+			new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+			return new Models.Results.ResultApi { Success = ResultCode.OK };
+		}
+
+		[HttpPost, DisableRequestSizeLimit]
+		[Route("UserSystemCreate")]
+		[Authorize]
+		public async Task<object> UserSystemCreate([FromForm] SYUserInsertIN model, [FromForm] IFormFileCollection files = null)
+		{
+			// tải file
+			string filePath = "";
+			try
+			{
+				if (files != null && files.Any())
+				{
+					var info = await _fileService.Save(files, "User");
+					filePath = info[0].Path;
+				}
+				else
+				{
+					model.Avatar = null;
+				}
+
+				//generate mật khẩu
+				byte[] salt = new byte[128 / 8];
+				using (var rng = RandomNumberGenerator.Create())
+				{
+					rng.GetBytes(salt);
+				}
+				// derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
+				string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+					password: "12345a@@",
+					salt: salt,
+					prf: KeyDerivationPrf.HMACSHA1,
+					iterationCount: 10000,
+					numBytesRequested: 256 / 8));
+
+				// thêm người dùng vào db
+				model.Avatar = filePath;
+				model.Password = hashed;
+				model.Salt = Convert.ToBase64String(salt);
+				model.IsSuperAdmin = false;
+
+				var unitMainId = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
+				if (unitMainId == null) {
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Không tồn tại đơn vị trung tâm" };
+				}
+				model.UnitId = unitMainId.Id;
+
+				var result = await new SYUserInsert(_appSetting).SYUserInsertDAO(model);
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//xóa file đã tải
+				if (!string.IsNullOrEmpty(filePath))
+					await _fileService.Remove(filePath);
+				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+			new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+			return new Models.Results.ResultApi { Success = ResultCode.OK };
+		}
+
+
+		[HttpPost, DisableRequestSizeLimit]
+		[Route("UserSystemUpdate")]
+		[Authorize]
+		public async Task<object> UserSystemUpdate([FromForm] SYUserSystemUpdateIN model, [FromForm] IFormFileCollection files = null)
+		{
+			// tải file
+			string filePath = "";
+			try
+			{
+				var modelOld = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(model.Id);
+				if (files != null && files.Any())
+				{
+					var info = await _fileService.Save(files, "User");
+					filePath = info[0].Path;
+
+					//xóa avatar cũ
+					if (!string.IsNullOrEmpty(modelOld[0].Avatar))
+						await _fileService.Remove(modelOld[0].Avatar);
+					if (!string.IsNullOrEmpty(filePath))
+					{
+						model.Avatar = filePath;
+					}
+				}
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				var result = await new SYUserUpdate(_appSetting).SYUserSystemUpdateDAO(model);
 
 			}
 			catch (Exception ex)
@@ -217,6 +324,32 @@ namespace PAKNAPI.Controllers
 			try
 			{
 				List<SYUserGetAllOnPageList> rsSYUserGetAllOnPage = await new SYUserGetAllOnPageList(_appSetting).SYUserGetAllOnPageDAO(PageSize, PageIndex, UserName, FullName, Phone, IsActived, UnitId, TypeId, PositionId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserGetAllOnPage", rsSYUserGetAllOnPage},
+						{"TotalCount", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? rsSYUserGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("SYUserSystemGetAllOnPageList")]
+		public async Task<ActionResult<object>> SYUserSystemGetAllOnPageList(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived)
+		{
+			try
+			{
+				List<SYUserSystemGetAllOnPageList> rsSYUserGetAllOnPage = await new SYUserSystemGetAllOnPageList(_appSetting).SYUserSystemGetAllOnPageDAO(PageSize, PageIndex, UserName, FullName, Phone, IsActived);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYUserGetAllOnPage", rsSYUserGetAllOnPage},
@@ -454,20 +587,37 @@ namespace PAKNAPI.Controllers
 		
 		[HttpPost]
 		[Route("InvididualRegister")]
-		public async Task<object> InvididualRegister_Body(
-			[FromBody] IndivialRegisterModel model)
+		public async Task<object> InvididualRegister_Body([FromBody] IndivialRegisterModel model)
 		{
 
 
 			try
 			{
-				if (model.Password != model.RePassword)
+				// validate
+
+				if (!Regex.Match(model.Phone.ToString(), ConstantRegex.PHONE, RegexOptions.IgnoreCase).Success)
 				{
-					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu không khớp" };
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại không hợp lệ" };
 				}
 
-				//var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(loginInfo.Phone);
-				//if(hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+				if (model.Email != null && !ConstantRegex.EmailIsValid(model.Email))
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Email không hợp lệ" };
+				}
+
+				if (!Regex.Match(model.IDCard.ToString(), ConstantRegex.CMT, RegexOptions.IgnoreCase).Success)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMT/Hộ chiếu không hợp lệ" };
+				}
+
+				if (model.Password != model.RePassword)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu không khớp" };
+				}
+
+				//if(model.)
+
+
 
 				var accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Phone", model.Phone, 0);
 				if (accCheckExist[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
@@ -556,8 +706,7 @@ namespace PAKNAPI.Controllers
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 
 			return new Models.Results.ResultApi { Success = ResultCode.OK };

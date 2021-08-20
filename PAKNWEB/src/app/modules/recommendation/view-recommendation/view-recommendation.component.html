@@ -232,7 +232,7 @@
 									<div class="col-12 col-lg-3 form-group">
 										<label class="mb-1 mt-3">NGƯỜI PHÊ DUYỆT <span class="cl-red">(*)</span></label>
 									</div>
-									<div class="col-12 col-lg-3 form-group">
+									<div class="col-12 col-lg-5 form-group">
 										<ng-select class="form-control" [items]="lstUsers" placeholder="Nhập..." bindValue="value" bindLabel="text"
 											[(ngModel)]="modelConclusion.receiverId">
 											<ng-template ng-option-tmp let-item="item">
@@ -240,7 +240,7 @@
 											</ng-template>
 										</ng-select>
 									</div>
-									<div class="col-12 col-lg-3 form-group">
+									<div class="col-12 col-lg-4 form-group">
 										<button type="button" class="btn grd-xanhngoc border-0 text-white" (click)="onProcessConclusion()">
 											<svg _ngcontent-jqu-c6="" fill="none" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
 												<path _ngcontent-jqu-c6=""

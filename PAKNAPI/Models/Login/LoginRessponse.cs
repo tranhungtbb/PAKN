@@ -18,6 +18,7 @@ namespace PAKNAPI.Models.Results
         public int? TypeObject { get; set; }
         public string UnitName { get; set; }
         public bool? IsMain { get; set; }
+        public bool? IsAdmin { get; set; }
         public bool? IsHaveToken { get; set; }
         public int Role { get; set; }
         public string Permissions { get; set; }

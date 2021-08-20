@@ -132,6 +132,7 @@ export class IndividualComponent implements OnInit {
 		} else {
 		}
 	}
+	validateDateOfIssue : any = true
 
 	onReset() {
 		this.formLogin.reset()
@@ -140,9 +141,6 @@ export class IndividualComponent implements OnInit {
 		this.fLoginSubmitted = false
 		this.fInfoSubmitted = false
 		this.model = new IndividualObject()
-		this.model._birthDay = ''
-		this.model._dateOfIssue = ''
-		this.model.fullName = ''
 		this.model.gender = true
 		this.formInfo.get('gender').setValue(this.model.gender)
 	}
@@ -150,10 +148,6 @@ export class IndividualComponent implements OnInit {
 	onSave() {
 		this.fLoginSubmitted = true
 		this.fInfoSubmitted = true
-		let fDob: any = document.querySelector('#_dob')
-		let fDateIssue: any = document.querySelector('#_dateIssue')
-		this.model._birthDay = fDob.value
-		this.model._dateOfIssue = fDateIssue.value
 
 		if (!this.model.email) this.model.email = ''
 		if (this.model.nation == 'Nhập...') this.model.nation = ''
@@ -164,12 +158,8 @@ export class IndividualComponent implements OnInit {
 			return
 		}
 
-		//check ngày cấp < ngày sinh
-		let dateIssue = new Date(this.model._dateOfIssue)
-		let dateOfBirth = new Date(this.model._birthDay)
-
-		if (dateIssue < dateOfBirth) {
-			this.toast.error('Ngày cấp phải lớn hơn ngày sinh')
+		if (this.model.dateOfIssue && this.model.birthDay > this.model.dateOfIssue) {
+			this.validateDateOfIssue = false
 			return
 		}
 
@@ -215,7 +205,7 @@ export class IndividualComponent implements OnInit {
 		this.formInfo = this.formBuilder.group({
 			fullName: [this.model.fullName, [Validators.required, Validators.maxLength(100)]],
 			gender: [this.model.gender, [Validators.required]],
-			dob: [this.model._birthDay, [Validators.required]],
+			dob: [this.model.birthDay, [Validators.required]],
 			nation: [this.model.nation, [Validators.required]],
 			province: [this.model.provinceId, [Validators.required]],
 			district: [this.model.districtId, [Validators.required]],
@@ -225,7 +215,7 @@ export class IndividualComponent implements OnInit {
 			address: [this.model.address, [Validators.required]],
 			iDCard: [this.model.iDCard, [Validators.required]], //, Validators.pattern(/^([0-9]){8,12}$/g)
 			placeIssue: [this.model.issuedPlace, []],
-			dateIssue: [this.model._dateOfIssue, []],
+			dateIssue: [this.model.dateOfIssue, []],
 		})
 	}
 
@@ -248,9 +238,6 @@ export class IndividualComponent implements OnInit {
 			})
 			.subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
-					// if (field == 'Phone') this.phone_exists = res.result.BIIndividualCheckExists[0].exists
-					// else if (field == 'Email') this.email_exists = res.result.BIIndividualCheckExists[0].exists
-					// else if (field == 'IDCard') this.idCard_exists = res.result.BIIndividualCheckExists[0].exists
 					this.checkExists[field] = res.result.BIIndividualCheckExists[0].exists
 				}
 			})

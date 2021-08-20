@@ -3,20 +3,12 @@
 		<div class="col-lg-12">
 			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
 				<li class="breadcrumb-item"><a>Hệ thống</a></li>
-				<li class="breadcrumb-item active"><a class="font-weight-bold"> Danh sách người dùng</a></li>
+				<li class="breadcrumb-item active"><a class="font-weight-bold"> Danh sách người dùng hệ thống</a></li>
 			</ol>
 			<!-- <div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách lĩnh vực</div> -->
 			<div class="btn-group group-button-table" role="group">
-				<!-- <button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
-						<path
-							d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
-						<path
-							d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-					</svg>
-					Xuất excel
-				</button> -->
-				<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalUserCreateOrUpdate(null)" *hasPermission="['3', 'A_IX_6']">
+				
+				<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="preCreate()" *hasPermission="['3', 'A_IX_6']">
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
 					</svg>
@@ -54,40 +46,15 @@
 									</p>
 									<input type="text" class="form-control form-control-sm" [(ngModel)]="fullName" (keydown.enter)="dataStateChange()" placeholder="Nhập ...">
 								</th>
-								<th style="width: 140px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Chức vụ</strong>
-										
-									</p>
-									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select placeholder="Chọn..." [closeOnSelect]="true" [(ngModel)]="positionId" (change)="dataStateChange()">
-											<ng-option *ngFor="let nt of positionsList" [value]="nt.value">
-												{{nt.text}}
-											</ng-option>
-										</ng-select>
-									</div>
-								</th>
-								<th style="width: 120px;">
+								
+								<th style="width: 150px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Điện thoại</strong>
 										
 									</p>
 									<input type="text" class="form-control form-control-sm" [(ngModel)]="phone" (keydown.enter)="dataStateChange()" placeholder="Nhập...">
 								</th>
-								<th style="width: 160px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Đơn vị</strong>
-										
-									</p>
-									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select placeholder="Chọn..." [closeOnSelect]="true" [(ngModel)]="unitId" (change)="dataStateChange()" style="width: 160px !important;">
-											<ng-option *ngFor="let nt of unitsList" [value]="nt.value">
-												{{nt.text}}
-											</ng-option>
-										</ng-select>
-									</div>
-								</th>
-								<th style="width: 110px;">
+								<th style="width: 120px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Trạng thái</strong>
 										
@@ -109,35 +76,26 @@
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
 									<strong class="highlight cursor">
-										<a *hasNotPermission="['3', 'A_IX_0']" class="ellipsis" title="Xem chi tiết">{{item.userName}}</a>
-										<a *hasPermission="['3', 'A_IX_0']" (click)="modalUserInfo(item.id)" class="ellipsis" title="Xem chi tiết">{{item.userName}}</a>
+										<a (click)="preView(item.id)" class="ellipsis" title="Xem chi tiết">{{item.userName}}</a>
 									</strong>
 								</td>
 								<td>{{item.fullName}}</td>
-								<td>{{item.positionName}}</td>
 								<td>{{item.phone}}</td>
 								<td>
-									<p class="text-2line mb-0">
-										{{item.unitName}}
-									</p>
-								</td>
-								<td>
 									<p *ngIf="item.isActived" style="margin-bottom: 0px;">
-										<span *hasNotPermission="['3', 'A_IX_4']" type="button" class="badge rounded-pill bg-success">Hiệu lực</span>
-										<span *hasPermission="['3', 'A_IX_4']" type="button" (click)="changeStatus(item.id)" class="badge rounded-pill bg-success">Hiệu lực</span>
+										<span type="button" (click)="changeStatus(item.id)" class="badge rounded-pill bg-success">Hiệu lực</span>
 									</p>
 									<p *ngIf="!item.isActived" style="margin-bottom: 0px;">
-										<span *hasNotPermission="['3', 'A_IX_4']" type="button" class="badge rounded-pill badge-light">Hết hiệu lực</span>
-										<span *hasPermission="['3', 'A_IX_4']" type="button" (click)="changeStatus(item.id)" class="badge rounded-pill badge-light">Hết hiệu lực</span>
+										<span type="button" (click)="changeStatus(item.id)" class="badge rounded-pill badge-light">Hết hiệu lực</span>
 									</p>
 								</td>
 								<td>
 									<div class="hover-active d-flex justify-content-end">
-										<a *hasPermission="['3', 'A_IX_1']" (click)="modalUserCreateOrUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-										<a *hasPermission="['3', 'A_IX_2']" (click)="preChangePassword(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i class="bi bi-key"></i></a>
-										<a *hasPermission="['3', 'A_IX_7']" class="btn-icon mr-2 cursor" (click)="getHistory(item.id, item.userName, true)" title="Xem lịch sử"><i
+										<a (click)="preUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
+										<a (click)="preChangePassword(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i class="bi bi-key"></i></a>
+										<a class="btn-icon mr-2 cursor" (click)="getHistory(item.id, item.userName, true)" title="Xem lịch sử"><i
 												class="bi bi-clock-history"></i></a>
-										<a *hasPermission="['3', 'A_IX_3']" (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
+										<a (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
 												class="bi bi-trash"></i></a>
 									</div>
 								</td>
@@ -154,6 +112,212 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="modal">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document"> 
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0 bg-ligth-gold">
+				<p class="modal-title h3">Thêm mới người dùng hệ thống</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-0 mt-0 pt-0">
+				<div class="row">
+					<div class="col-md-12">
+						<form [formGroup]="createUserForm" (ngSubmit)="onSave()">
+							<div class="align-items-center mb-4 avatar-bg">
+								<div class="avatar-frame">
+									<img class="user-avatar-view" [ngClass]="{ 'hide': userAvatar == null }" style="height: 100%; width: 100%; object-fit: cover;" />
+									<span class="no-avatar-view" *ngIf="userAvatar == null">
+										<svg width="78" height="78" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd" clip-rule="evenodd"
+												d="M6.5 78C6.5 78 0 78 0 71.5C0 65 6.5 45.5 39 45.5C71.5 45.5 78 65 78 71.5C78 78 71.5 78 71.5 78H6.5ZM39 39C44.1717 39 49.1316 36.9455 52.7886 33.2886C56.4455 29.6316 58.5 24.6717 58.5 19.5C58.5 14.3283 56.4455 9.36838 52.7886 5.71142C49.1316 2.05446 44.1717 0 39 0C33.8283 0 28.8684 2.05446 25.2114 5.71142C21.5545 9.36838 19.5 14.3283 19.5 19.5C19.5 24.6717 21.5545 29.6316 25.2114 33.2886C28.8684 36.9455 33.8283 39 39 39Z"
+												fill="#743F15" />
+										</svg>
+									</span>
+								</div>
+								<div class="text-center">
+									<input type="file" [hidden]="true" class="seclect-avatar" accept="{{fileAccept}}" (change)="changeSelectAvatar($event)">
+									<a class="color-brow" style="cursor: pointer;" (click)="onChangeAvatar()">
+										<i class="pi bi-image"></i>&nbsp;
+										Tải lên ảnh đại diện
+									</a>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="col-12 col-lg-8 form-group">
+									<label class="mb-1">Email <span class="cl-red">(*)</span></label>
+									<input svTrim formControlName="email" [(ngModel)]="model.email" type="text" class="form-control" placeholder="Nhập..." maxlength="100"
+										[readonly]="model.id != null && model.id > 0" (change)="onCheckExist('Email',$event.target.value)">
+									<div *ngIf="(submitted && fUser.email.invalid)||(fUser.email.invalid && (fUser.email.dirty || fUser.email.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.email.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+										<div *ngIf="fUser.email.errors.email">
+											<span class="help-block">Định dạng email không đúng</span>
+										</div>
+									</div>
+									<div *ngIf="checkExists['Email'] && fUser.email.valid" class="has-error m-b-12">
+										<div *ngIf="checkExists['Email']">
+											<span class="help-block">Email đã tồn tại</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-lg-4 form-group">
+									<label class="mb-1">Họ và tên <span class="cl-red">(*)</span></label>
+									<input svTrim formControlName="fullName" [(ngModel)]="model.fullName" type="text" class="form-control" placeholder="Nhập..."
+										maxlength="100">
+									<div *ngIf="(submitted && fUser.fullName.invalid)||(fUser.fullName.invalid && (fUser.fullName.dirty || fUser.fullName.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.fullName.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 col-lg-4 form-group">
+									<label class="mb-1">Điện thoại <span class="cl-red">(*)</span></label>
+									<input svTrim onlyNumber="true" stopLength="10" formControlName="phone" [(ngModel)]="model.phone" type="text" class="form-control"
+										placeholder="Nhập..." (change)="onCheckExist('Phone',$event.target.value)">
+									<div *ngIf="(submitted && fUser.phone.invalid)||(fUser.phone.invalid && (fUser.phone.dirty || fUser.phone.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.phone.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+										<div *ngIf="fUser.phone.errors.pattern">
+											<span class="help-block">Định dạng số điện thoại không đúng</span>
+										</div>
+									</div>
+									<div *ngIf="checkExists['Phone'] && fUser.phone.valid" class="has-error m-b-12">
+										<div *ngIf="checkExists['Phone']">
+											<span class="help-block">Số điện thoại đã tồn tại</span>
+										</div>
+									</div>
+								</div>
+								
+								
+								<div class="col-12 col-lg-4 form-group">
+									<label class="mb-1">Giới tính <span class="cl-red">(*)</span></label>
+									<!--  -->
+									<ng-select class="form-control" placeholder="Chọn..." [items]="listGender" bindLabel="text" bindValue="value" [(ngModel)]="model.gender"
+										formControlName="gender" [closeOnSelect]="true" [searchable]="false">
+									</ng-select>
+									<div *ngIf="(submitted && fUser.gender.invalid)||(fUser.gender.invalid && (fUser.gender.dirty || fUser.gender.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.gender.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-12 col-lg-4 form-group">
+									<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
+									<!-- <input *ngIf="!isAdmin && model.id > 0 && model.isActived" disabled type="text" class="form-control" value="Hiệu lực">
+									<input *ngIf="!isAdmin && model.id > 0 && !model.isActived" disabled type="text" class="form-control" value="Hết hiệu lực"> -->
+									<ng-select class="form-control" style="font-weight: bold;" placeholder="Chọn..." [items]="listStatus" bindLabel="text" bindValue="value"
+										formControlName="isActived" [(ngModel)]="model.isActived" [closeOnSelect]="true" [searchable]="false">
+									</ng-select>
+									<div *ngIf="(submitted && fUser.isActived.invalid)||(fUser.isActived.invalid && (fUser.isActived.dirty || fUser.isActived.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.isActived.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 form-group">
+									<label class="mb-1">Địa chỉ</label>
+									<textarea class="form-control" formControlName="address" [(ngModel)]="model.address" rows="4" placeholder="Nhập..."
+										maxlength="300"></textarea>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
+				<button type="button" (click)="onSave()" class="btn btn-danger border-0 px-5 grd-blue">
+					Lưu
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal view -->
+
+<div class="modal fade" id="modalView">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0 bg-ligth-gold">
+				<p class="modal-title h3">Thông tin người dùng</p>
+				<button type="button" class="close"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-0 mt-0 pt-0">
+
+				<!-- <form id="createUserForm" [formGroup]="createUserForm" (ngSubmit)="onSaveUser()"> -->
+				<div class="align-items-center mb-4 avatar-bg">
+					<div class="avatar-frame">
+						<img *ngIf="userAvatar != null" [src]="userAvatar" style="height: 100%; width: 100%; object-fit: cover;" />
+						<span class="no-avatar-view" *ngIf="userAvatar == null">
+							<!-- <i class="pi pi-user"></i> -->
+							<svg width="78" height="78" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" clip-rule="evenodd"
+									d="M6.5 78C6.5 78 0 78 0 71.5C0 65 6.5 45.5 39 45.5C71.5 45.5 78 65 78 71.5C78 78 71.5 78 71.5 78H6.5ZM39 39C44.1717 39 49.1316 36.9455 52.7886 33.2886C56.4455 29.6316 58.5 24.6717 58.5 19.5C58.5 14.3283 56.4455 9.36838 52.7886 5.71142C49.1316 2.05446 44.1717 0 39 0C33.8283 0 28.8684 2.05446 25.2114 5.71142C21.5545 9.36838 19.5 14.3283 19.5 19.5C19.5 24.6717 21.5545 29.6316 25.2114 33.2886C28.8684 36.9455 33.8283 39 39 39Z"
+									fill="#743F15" />
+							</svg>
+
+						</span>
+					</div>
+					<div class="text-center">
+						<p class="mb-0 h4"><strong>{{model.fullName}}</strong></p>
+						<p>Tài khoản: <strong>{{model.userName}}</strong></p>
+					</div>
+				</div>
+				<div class="box">
+					<div class="row mb-3">
+						<div class="col">
+							<p class="mb-1">Số điện thoại</p>
+							<p class="h4 mb-0 pb-2 border-bottom">{{model.phone}}</p>
+						</div>
+						<div class="col">
+							<p class="mb-1">Giới tính</p>
+							<p class="h4 mb-0 pb-2 border-bottom">
+								<span *ngIf="model.gender">Nam</span>
+								<span *ngIf="!model.gender">Nữ</span>
+							</p>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col">
+							<p class="mb-1">Email</p>
+							<p class="h4 mb-0 pb-2 border-bottom">{{model.email}}</p>
+						</div>
+						<div class="col">
+							<p class="mb-1">Trạng thái</p>
+							<p class="h4 mb-0 pb-2 border-bottom">
+								<span *ngIf="model.isActived == listStatus[0].value" style="color: seagreen;">{{listStatus[0].text}}</span>
+								<span *ngIf="model.isActived == listStatus[1].value">{{listStatus[1].text}}</span>
+							</p>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-lg-12">
+							<p class="mb-1">Địa chỉ</p>
+							<p class="h4 mb-0 pb-2 border-bottom">{{model.address}}</p>
+						</div>
+					</div>
+				</div>
+				<!-- </form> -->
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary border px-5 bg-dark-alt" (click)="preUpdate(model.id)">Sửa thông tin</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 
 <div class="modal fade" id="modalConfirmDelete">
@@ -198,11 +362,6 @@
 		</div>
 	</div>
 </div>
-
-
-<app-user-create-or-update modalid="user-create-or-update-1" isOrganizational="false"></app-user-create-or-update>
-<app-user-view-info modalid="user-info-1"></app-user-view-info>
-
 
 
 <div class="modal fade" id="modalHis">
@@ -285,8 +444,9 @@
 											currentPageReportTemplate="Tổng số {{hisTotalRecords}}" [rows]="pageSize" [totalRecords]="hisTotalRecords" [responsive]="true"
 											autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 
-											<ng-template pTemplate="body" let-item>
+											<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 												<tr>
+													<td style="width: 5%;">{{rowIndex + 1}}</td>
 													<td style="width: 20%;">{{item.createdDate | date:'HH:mm'}} - {{item.createdDate | date: 'dd/MM/yyyy'}} </td>
 													<td>{{item.description}}</td>
 													<td style="width: 20%;">
@@ -319,7 +479,7 @@
 </div>
 
 
-<div class="modal fade" id="modalChangePassword" (close)="close()">
+<div class="modal fade" id="modalChangePassword">
 	<div class="modal-dialog modal-dialog-centered" style="max-width: 390px" role="document">
 		<div class="modal-content rounded">
 			<form class="form-horizontal" [formGroup]="formChangePassword" #formDir="ngForm">
@@ -376,3 +536,5 @@
 		</div>
 	</div>
 </div>
+
+

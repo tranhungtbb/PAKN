@@ -105,7 +105,7 @@
 														<form [formGroup]="loginForm" #formDir="ngForm" (ngSubmit)="login()">
 															<div class="form-group mb-4">
 																<input class="form-control rounded-8px h-50px px-4 border-brown" (change)="user.UserName=user.UserName.trim()"
-																	style="font-size: 20px" placeholder="Nhập tài khoản, email..." type="text" id="username" formControlName="name"
+																	style="font-size: 20px" placeholder="Nhập email..." type="text" id="username" formControlName="name"
 																	[(ngModel)]="user.UserName" required>
 																<div *ngIf="name.invalid && (name.dirty || name.touched || submitted)" class="has-error m-b-12">
 																	<div *ngIf="name.errors.email">

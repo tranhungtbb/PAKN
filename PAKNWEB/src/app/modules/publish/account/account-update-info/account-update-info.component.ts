@@ -57,13 +57,13 @@ export class AccountUpdateInfoComponent implements OnInit {
 	//event
 	backToVal() {
 		this.nation_enable_type = false
-		this.model.nation = ''
-		this.model.provinceId = ''
-		this.model.districtId = ''
-		this.model.wardsId = ''
-		this.formData.controls['provinceId'].setValue('')
-		this.formData.controls['districtId'].setValue('')
-		this.formData.controls['wardsId'].setValue('')
+		this.model.nation = null
+		this.model.provinceId = null
+		this.model.districtId = null
+		this.model.wardsId = null
+		this.formData.controls['provinceId'].setValue(null)
+		this.formData.controls['districtId'].setValue(null)
+		this.formData.controls['wardsId'].setValue(null)
 	}
 	resetNationField() {
 		if (this.model.nation == 'Nhập...') this.model.nation = ''
@@ -89,7 +89,7 @@ export class AccountUpdateInfoComponent implements OnInit {
 		} else {
 			if (this.model.nation == '#') {
 				this.nation_enable_type = true
-				this.model.nation = 'Nhập...'
+				this.model.nation = ''
 				this.model.provinceId = 0
 				this.model.districtId = 0
 				this.model.wardsId = 0
@@ -165,6 +165,8 @@ export class AccountUpdateInfoComponent implements OnInit {
 				return
 			}
 			this.model = res.result
+			this.model.dateOfBirth = this.model.dateOfBirth == null ? null : new Date(this.model.dateOfBirth)
+			this.model.issuedDate = this.model.issuedDate == null ? null : new Date(this.model.issuedDate)
 			if (this.model.nation == 'Việt Nam') {
 				this.nation_enable_type = false
 			} else {
@@ -187,15 +189,19 @@ export class AccountUpdateInfoComponent implements OnInit {
 
 		this.model.dateOfBirth = fDob.value
 		this.model.issuedDate = fDateIssue.value
-		if (this.model.nation == 'Nhập...') {
-			this.model.nation = ''
+		// if (this.model.nation == 'Nhập...') {
+		// 	this.model.nation = ''
+		// }
+		this.model.nation = this.model.nation == null ? '' : this.model.nation.trim()
+		if(this.model.nation == ''){
+			return
 		}
 		if (!this.model.email) this.model.email = ''
 		if (!this.model.issuedPlace) this.model.issuedPlace = ''
-		if (!this.model.districtId) this.model.districtId = 0
-		if (!this.model.provinceId) this.model.provinceId = 0
-		if (!this.model.wardsId) this.model.wardsId = 0
-
+		// if (!this.model.districtId) this.model.districtId = 0
+		// if (!this.model.provinceId) this.model.provinceId = 0
+		// if (!this.model.wardsId) this.model.wardsId = 0
+		if(this.model.nation.trim())
 		if (this.formData.invalid) {
 			this.toast.error('Dữ liệu không hợp lệ')
 			return

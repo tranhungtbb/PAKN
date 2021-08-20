@@ -36,6 +36,7 @@ import { IntroduceComponent } from './components/introduce/introduce.component'
 import { IndexSettingComponent } from './components/index-setting/index-setting.component'
 import {SystemConfigComponent} from './components/system-config/system-config.component'
 import {SwitchboardSettingComponent} from './components/switchboard-setting/switchboard-setting.component'
+import { UserSystemComponent } from './components/user-system/user-system.component'
 
 @NgModule({
 	imports: [
@@ -75,7 +76,8 @@ import {SwitchboardSettingComponent} from './components/switchboard-setting/swit
 		HistoryChatBotComponent,
 		IntroduceComponent,
 		IndexSettingComponent,
-		SwitchboardSettingComponent
+		SwitchboardSettingComponent,
+		UserSystemComponent
 	],
 	entryComponents: [UserCreateOrUpdateComponent, UserViewInfoComponent],
 })
