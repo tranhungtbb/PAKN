@@ -50,9 +50,6 @@ export class OrganizationObject {
 
 		//
 		this.RepresentativeName = ''
-		this.Email = ''
-		this.phone = ''
-
 		this.Address = ''
 		this.Nation = 'Việt Nam'
 		this.ProvinceId = null

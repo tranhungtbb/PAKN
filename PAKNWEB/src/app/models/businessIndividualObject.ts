@@ -1,5 +1,3 @@
-import { NgIf } from '@angular/common'
-
 export class IndividualObject {
 	constructor() {
 		this.fullName = ''
@@ -16,7 +14,7 @@ export class IndividualObject {
 		this.IsDeleted = false
 		this.userId = null
 		this.status = 1
-		this.birthDate = null
+		this.birthDay = null
 		this.dateOfIssue = null
 		this.issuedPlace = ""
 	}
@@ -30,14 +28,12 @@ export class IndividualObject {
 	wardsName: any
 	districtName: any
 	gender: boolean
-	_birthDay: string
 
 	email: string
 	address: string
 
-	iDCard: string
+	idCard: string
 	issuedPlace: string
-	_dateOfIssue: string
 
 	PermanentPlace: string
 	NativePlace: string
@@ -47,8 +43,7 @@ export class IndividualObject {
 	status: number
 	id: number
 	imagePath: string
-	// birthDay: string
-	birthDate: Date
+	birthDay: Date
 	dateOfIssue: Date
 }
 

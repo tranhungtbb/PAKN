@@ -606,41 +606,72 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Authorize]
 		[Route("InvididualRegister")]
-		public async Task<object> InvididualRegister([FromBody] Models.BusinessIndividual.BIIndividualInsertIN_Cus model)
+		public async Task<object> InvididualRegister([FromBody] Models.BusinessIndividual.BIIndividualInsertIN model)
 		{
 			try
 			{
 				// validate
 
-				if (!Regex.Match(model.Phone.ToString(), ConstantRegex.PHONE, RegexOptions.IgnoreCase).Success) {
+				if (!Regex.Match(model.Phone.ToString(), ConstantRegex.PHONE).Success)
+				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại không hợp lệ" };
 				}
 
-				if (model.Email != null && !ConstantRegex.EmailIsValid(model.Email))
+				if (model.Email != null && model.Email.Trim() != "" && !ConstantRegex.EmailIsValid(model.Email))
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Email không hợp lệ" };
+				}
+
+				if (!Regex.Match(model.IDCard.ToString(), ConstantRegex.CMT, RegexOptions.IgnoreCase).Success)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMT/Hộ chiếu không hợp lệ" };
+				}
+
+				if (model.BirthDay == null)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được để trống" };
+				}
+
+
+				if (model.BirthDay >= DateTime.Now)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn hoặc bằng ngày hiện tại" };
+				}
+
+				if (model.DateOfIssue != null && model.DateOfIssue < model.BirthDay)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn ngày thành lập" };
+				}
+
+				if (!ConstantRegex.CheckValueIsNull(model.FullName))
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Họ tên không được để trống" };
 				}
 
 
 
 				var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
-                if (hasOne != null && hasOne.Any()) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+				if (hasOne != null && hasOne.Any()) {
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+				}
 
 				// check exist:Phone,Email,IDCard
-				var checkExists = await new Models.BusinessIndividual.BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", model.Phone, 0);
-                if (checkExists[0].Exists.Value)
-                    return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+				var checkExists = await new BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", model.Phone, 0);
+				if (checkExists[0].Exists.Value) {
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+				}
+
                 if (!string.IsNullOrEmpty(model.Email))
                 {
-                    checkExists = await new Models.BusinessIndividual.BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", model.Email, 0);
-                    if (checkExists[0].Exists.Value)
-                        return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
+                    checkExists = await new BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", model.Email, 0);
+					if (checkExists[0].Exists.Value) {
+						return new ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
+					}   
                 }
-                checkExists = await new Models.BusinessIndividual.BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", model.IDCard, 0);
-                if (checkExists[0].Exists.Value)
-                    return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
-
-				
+                checkExists = await new BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", model.IDCard, 0);
+				if (checkExists[0].Exists.Value) {
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
+				}
 
 				//add login info
 				string defaultPwd = "abc123";
@@ -667,10 +698,6 @@ namespace PAKNAPI.Controllers
 				var rs1 = await new SYUserInsert(_appSetting).SYUserInsertDAO(account);
 				var accRs = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(account.UserName);
 
-				if (string.IsNullOrEmpty(model._DateOfIssue)) model.DateOfIssue = null;
-				else model.DateOfIssue = model.DateOfIssue;
-				if (string.IsNullOrEmpty(model._BirthDay)) model.BirthDay = null;
-				else model.BirthDay = model.BirthDay;
 				model.CreatedDate = DateTime.Now;
 				model.CreatedBy = Convert.ToInt32(new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext));
 				model.UpdatedBy = 0;
@@ -686,22 +713,22 @@ namespace PAKNAPI.Controllers
 			{
 				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 
-			return new Models.Results.ResultApi { Success = ResultCode.OK };
+			return new ResultApi { Success = ResultCode.OK, Message = ResultMessage.OK };
 		}
 
 		[HttpPost]
 		[Authorize]
 		[Route("InvididualUpdate")]
-		public async Task<ActionResult<object>> InvididualUpdate(BI_InvididualUpdateIN_body _bI_InvididualUpdateIN)
+		public async Task<ActionResult<object>> InvididualUpdate(BI_InvididualUpdateIN _bI_InvididualUpdateIN)
 		{
 			try
 			{
 				// validate
 
-				if (!Regex.Match(_bI_InvididualUpdateIN.Phone.ToString(), ConstantRegex.PHONE, RegexOptions.IgnoreCase).Success)
+				if (!Regex.Match(_bI_InvididualUpdateIN.Phone.ToString(), ConstantRegex.PHONE).Success)
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại không hợp lệ" };
 				}
@@ -709,6 +736,27 @@ namespace PAKNAPI.Controllers
 				if (_bI_InvididualUpdateIN.Email != null && !ConstantRegex.EmailIsValid(_bI_InvididualUpdateIN.Email))
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Email không hợp lệ" };
+				}
+
+				if (!Regex.Match(_bI_InvididualUpdateIN.IDCard.ToString(), ConstantRegex.CMT, RegexOptions.IgnoreCase).Success)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMT/Hộ chiếu không hợp lệ" };
+				}
+
+				if (_bI_InvididualUpdateIN.BirthDay == null)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được để trống" };
+				}
+
+
+				if (_bI_InvididualUpdateIN.BirthDay >= DateTime.Now)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn hoặc bằng ngày hiện tại" };
+				}
+
+				if (_bI_InvididualUpdateIN.DateOfIssue != null && _bI_InvididualUpdateIN.DateOfIssue < _bI_InvididualUpdateIN.BirthDay)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn ngày thành lập" };
 				}
 
 				// check exist:Phone,Email,IDCard
@@ -725,17 +773,7 @@ namespace PAKNAPI.Controllers
 				if (checkExists[0].Exists.Value)
 					return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 
-				DateTime? birthDay =null, dateOfIssue=null;
-				if (DateTime.TryParseExact(_bI_InvididualUpdateIN._BirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime _birthDay))
-				{
-					birthDay = _birthDay;
-				}
-				if (DateTime.TryParseExact(_bI_InvididualUpdateIN._DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime _dateOfIssue))
-				{
-					dateOfIssue = _dateOfIssue;
-				}
-				_bI_InvididualUpdateIN.DateOfIssue = dateOfIssue;
-				_bI_InvididualUpdateIN.BirthDate = birthDay;
+				
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = await new BI_InvididualUpdate(_appSetting).BI_InvididualUpdateDAO(_bI_InvididualUpdateIN) };
 			}
@@ -868,24 +906,68 @@ namespace PAKNAPI.Controllers
 			{
 				// validate
 
-				if (!Regex.Match(model.Phone.ToString(), ConstantRegex.PHONE, RegexOptions.IgnoreCase).Success)
+				if (!Regex.Match(model.Phone.ToString(), ConstantRegex.PHONE).Success)
 				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại người đại diện không hợp lệ" };
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại không hợp lệ" };
 				}
-
-				if (model.Email != null && !ConstantRegex.EmailIsValid(model.Email))
+				if (model.Email != null && model.Email.Trim() != "" && !ConstantRegex.EmailIsValid(model.Email))
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện không hợp lệ" };
 				}
 
-				if (!Regex.Match(model.OrgPhone.ToString(), ConstantRegex.PHONE, RegexOptions.IgnoreCase).Success)
+				if (!ConstantRegex.CheckValueIsNull(model.RepresentativeName))
 				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện văn phòng đại diện không hợp lệ" };
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Tên người đại diện không được để trống" };
 				}
 
-				if (model.OrgEmail != null && !ConstantRegex.EmailIsValid(model.OrgEmail))
+
+				if (model.RepresentativeBirthDay != null && model.RepresentativeBirthDay >= DateTime.Now)
 				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Email văn phòng đại diện không hợp lệ" };
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh người đại diện không được lớn hơn ngày hiện tại" };
+				}
+
+				if (!ConstantRegex.CheckValueIsNull(model.Business))
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Tên tổ chức doanh nghiệp không được để trống" };
+				}
+
+				if (!Regex.Match(model.Tax.ToString(), ConstantRegex.NUMBER).Success)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế không hợp lệ" };
+				}
+
+
+				if (!ConstantRegex.CheckValueIsNull(model.OrgAddress))
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Địa chỉ tổ chức doanh nghiệp không được để trống" };
+				}
+
+				if (!Regex.Match(model.OrgPhone.ToString(), ConstantRegex.PHONE).Success)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tổ chức doanh nghiệp không hợp lệ" };
+				}
+
+
+				if (model.OrgEmail != null && model.OrgEmail.Trim() != "" && !ConstantRegex.EmailIsValid(model.OrgEmail))
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Email tổ chức doanh nghiệp không hợp lệ" };
+				}
+
+
+				if (!ConstantRegex.CheckValueIsNull(model.OrgAddress))
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Địa chỉ tổ chức doanh nghiệp không được để trống" };
+				}
+
+				if (!Regex.Match(model.OrgPhone.ToString(), ConstantRegex.PHONE).Success)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tổ chức doanh nghiệp không hợp lệ" };
+				}
+
+
+				if (model.OrgEmail != null && model.OrgEmail.Trim() != "" && !ConstantRegex.EmailIsValid(model.OrgEmail))
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Email tổ chức doanh nghiệp không hợp lệ" };
 				}
 
 				var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
@@ -991,24 +1073,51 @@ namespace PAKNAPI.Controllers
 			{
 				// validate
 
-				if (!Regex.Match(model.Phone.ToString(), ConstantRegex.PHONE, RegexOptions.IgnoreCase).Success)
+				if (!Regex.Match(model.Phone.ToString(), ConstantRegex.PHONE).Success)
 				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại người đại diện không hợp lệ" };
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại không hợp lệ" };
 				}
-
-				if (model.Email != null && !ConstantRegex.EmailIsValid(model.Email))
+				if (model.Email != null && model.Email.Trim() != "" && !ConstantRegex.EmailIsValid(model.Email))
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện không hợp lệ" };
 				}
 
-				if (!Regex.Match(model.OrgPhone.ToString(), ConstantRegex.PHONE, RegexOptions.IgnoreCase).Success)
+				if (!ConstantRegex.CheckValueIsNull(model.RepresentativeName))
 				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện văn phòng đại diện không hợp lệ" };
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Tên người đại diện không được để trống" };
 				}
 
-				if (model.OrgEmail != null && !ConstantRegex.EmailIsValid(model.OrgEmail))
+
+				if (model.RepresentativeBirthDay != null && model.RepresentativeBirthDay >= DateTime.Now)
 				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Email văn phòng đại diện không hợp lệ" };
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh người đại diện không được lớn hơn ngày hiện tại" };
+				}
+
+				if (!ConstantRegex.CheckValueIsNull(model.Business))
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Tên tổ chức doanh nghiệp không được để trống" };
+				}
+
+				if (!Regex.Match(model.Tax.ToString(), ConstantRegex.NUMBER).Success)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế không hợp lệ" };
+				}
+
+
+				if (!ConstantRegex.CheckValueIsNull(model.OrgAddress))
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Địa chỉ tổ chức doanh nghiệp không được để trống" };
+				}
+
+				if (!Regex.Match(model.OrgPhone.ToString(), ConstantRegex.PHONE).Success)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tổ chức doanh nghiệp không hợp lệ" };
+				}
+
+
+				if (model.OrgEmail != null && model.OrgEmail.Trim() != "" && !ConstantRegex.EmailIsValid(model.OrgEmail))
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Email tổ chức doanh nghiệp không hợp lệ" };
 				}
 
 				///check ton tai

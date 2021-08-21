@@ -224,18 +224,18 @@
 							<!-- row 2 -->
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">CMND/CCCD/Hộ chiếu <span class="cl-red">(*)</span></label>
-								<input svDisabledSpaceKey maxlength="12" [(ngModel)]="model.iDCard" formControlName="iDCard" type="text" placeholder="Nhập..."
-									class="form-control border-brown" pattern="^(\w{1}[0-9]{7}|[0-9]{8}|[0-9]{9}|[0-9]{12})$" (change)="onCheckExist('IDCard',$event.target.value)">
+								<input svDisabledSpaceKey maxlength="12" [(ngModel)]="model.idCard" formControlName="idCard" type="text" placeholder="Nhập..."
+									class="form-control border-brown" pattern="^(\w{1}[0-9]{7}|[0-9]{8}|[0-9]{9}|[0-9]{12})$" (change)="onCheckExist('idCard',$event.target.value)">
 
-								<div *ngIf="(submitted && f.iDCard.invalid)||(f.iDCard.invalid && (f.iDCard.dirty || f.iDCard.touched))" class="has-error m-b-12">
-									<div *ngIf="f.iDCard.errors.required">
+								<div *ngIf="(submitted && f.idCard.invalid)||(f.idCard.invalid && (f.idCard.dirty || f.idCard.touched))" class="has-error m-b-12">
+									<div *ngIf="f.idCard.errors.required">
 										<span class="help-block">Trường dữ liệu này không được để trống</span>
 									</div>
-									<div *ngIf="f.iDCard.errors.pattern">
+									<div *ngIf="f.idCard.errors.pattern">
 										<span class="help-block">Số CMND/CCCD không hợp lệ!</span>
 									</div>
 								</div>
-								<div *ngIf="idCard_exists && f.iDCard.valid" class="has-error m-b-12">
+								<div *ngIf="idCard_exists && f.idCard.valid" class="has-error m-b-12">
 									<div *ngIf="idCard_exists">
 										<span class="help-block">Số CMND/CCCD đã được sử dụng</span>
 									</div>
@@ -248,11 +248,18 @@
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Ngày cấp</label>
 								<div class="input-group">
-									<input class="form-control" autocomplete="off" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dateIssue"
+									<input class="form-control" autocomplete="off" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10"
 										[(ngModel)]="model.dateOfIssue" formControlName="dateIssue" appBsDatepickerInvalid
-										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" [maxDate]="dateNow" />
+										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}"
+										[maxDate]="dateNow"
+									/>
 										<div class="input-group-addon p-2">
 											<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+										</div>
+										<div *ngIf="(submitted && model.dateIssue && model.birthDay && !validateDateOfIssue)" class="has-error m-b-12">
+											<div>
+												<span class="help-block">Ngày cấp không được nhỏ hơn ngày sinh</span>
+											</div>
 										</div>
 								</div>
 							</div>
@@ -349,15 +356,15 @@
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Ngày, tháng, năm, sinh <span class="cl-red">(*)</span></label>
 								<div class="input-group">
-									<input class="form-control" placeholder="Nhập..." autocomplete="off" bsDatepicker #n="bsDatepicker" maxlength="10" id="_dob"
-										[(ngModel)]="model.birthDate" formControlName="birthDate" appBsDatepickerInvalid
+									<input class="form-control" placeholder="Nhập..." autocomplete="off" bsDatepicker #ns="bsDatepicker" maxlength="10"
+										[(ngModel)]="model.birthDay" formControlName="birthDay" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" [maxDate]="dateNow" />
 									<div class="input-group-addon p-2">
-										<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+										<i class="bi bi-calendar-date" (click)="ns.toggle()" [attr.aria-expanded]="ns.isOpen"></i>
 									</div>
 								</div>
-								<div *ngIf="(submitted && f.birthDate.invalid)||(f.birthDate.invalid && (f.birthDate.dirty || f.birthDate.touched))" class="has-error m-b-12">
-									<div *ngIf="f.birthDate.errors.required">
+								<div *ngIf="(submitted && f.birthDay.invalid)||(f.birthDay.invalid && (f.birthDay.dirty || f.birthDay.touched))" class="has-error m-b-12">
+									<div *ngIf="f.birthDay.errors.required">
 										<span class="help-block">Trường dữ liệu này không được để trống</span>
 									</div>
 								</div>
@@ -416,7 +423,7 @@
 					<div class="row">
 						<div class="col-sm-4">
 							<strong class="control-label lb600">CMND</strong>
-							<p>{{modelDetail.iDCard}}</p>
+							<p>{{modelDetail.idCard}}</p>
 						</div>
 						<div class="col-sm-4">
 							<strong class="control-label lb600">Nơi cấp</strong>
@@ -461,7 +468,7 @@
 						</div>
 						<div class="col-sm-4">
 							<strong class="control-label lb600">Ngày sinh</strong>
-							<p>{{modelDetail.birthDate | date: 'dd/MM/yyyy'}}</p>
+							<p>{{modelDetail.birthDay | date: 'dd/MM/yyyy'}}</p>
 						</div>
 						<div class="col-sm-4">
 							<strong class="control-label lb600">Trạng thái</strong>

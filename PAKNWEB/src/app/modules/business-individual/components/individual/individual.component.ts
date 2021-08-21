@@ -63,6 +63,7 @@ export class IndividualComponent implements OnInit {
 
 	fileAccept = '.xls, .xlsx'
 	listInvPaged: any[] = []
+	validateDateOfIssue : any = true
 
 	form: FormGroup
 	model: IndividualObject = new IndividualObject()
@@ -339,20 +340,18 @@ export class IndividualComponent implements OnInit {
 	}
 
 	private loadFormBuilder() {
-		//form model
 		this.form = this._fb.group({
 			fullName: [this.model.fullName, [Validators.required, Validators.maxLength(100)]],
 			gender: [this.model.gender, [Validators.required]],
-			birthDate: [this.model.birthDate, [Validators.required]],
+			birthDay: [this.model.birthDay, [Validators.required]],
 			nation: [this.model.nation, [Validators.required]],
 			province: [this.model.provinceId, [Validators.required]],
 			district: [this.model.districtId, [Validators.required]],
 			village: [this.model.wardsId, [Validators.required]],
 			phone: [this.model.phone, [Validators.required]],
-
 			email: [this.model.email, [Validators.email]],
 			address: [this.model.address, [Validators.required]],
-			iDCard: [this.model.iDCard, [Validators.required]], //, Validators.pattern(/^([0-9]){8,12}$/g)
+			idCard: [this.model.idCard, [Validators.required]],
 			placeIssue: [this.model.issuedPlace],
 			dateIssue: [this.model.dateOfIssue],
 			status: [this.model.status, [Validators.required]],
@@ -363,7 +362,7 @@ export class IndividualComponent implements OnInit {
 		this.form.reset({
 			fullName: this.model.fullName,
 			gender: this.model.gender,
-			birthDate: this.model.birthDate,
+			birthDay: this.model.birthDay,
 			nation: this.model.nation,
 			province: this.model.provinceId,
 			district: this.model.districtId,
@@ -371,60 +370,38 @@ export class IndividualComponent implements OnInit {
 			phone: this.model.phone,
 			email: this.model.email,
 			address: this.model.address,
-			iDCard: this.model.iDCard,
+			idCard: this.model.idCard,
 			placeIssue: this.model.issuedPlace,
 			dateIssue: this.model.dateOfIssue,
 			status: this.model.status,
 		})
 	}
 
+
 	onSave() {
 		this.submitted = true
 
-		let fDob: any = document.querySelector('#_dob')
-		let fDateIssue: any = document.querySelector('#_dateIssue')
 		if (this.model.nation == 'Nhập...') {
 			this.model.nation = ''
 		}
-		// if (this.isOtherNation) {
-		// 	this.model.provinceId = 0
-		// 	this.model.districtId = 0
-		// 	this.model.wardsId = 0
-		// }
-
-		// this.model.birthDate = fDob.value
-		// this.model.dateOfIssue = fDateIssue.value
-		this.model._birthDay = fDob.value
-		this.model._dateOfIssue = fDateIssue.value
 		this.model.userId = this.userLoginId
 		if(!this.model.issuedPlace) this.model.issuedPlace = ''	
 		this.model.issuedPlace = this.model.issuedPlace.trim()
 		if (!this.model.email) this.model.email = ''
 
 		if (this.email_exists || this.phone_exists || this.idCard_exists) {
-			//this._toastr.error('Dữ liệu không hợp lệ')
 			return
 		}
 
 		if (this.form.invalid) {
-			//this._toastr.error('Dữ liệu không hợp lệ')
 			return
 		}
 
-		//check ngày cấp < ngày sinh
-		let dateIssue = new Date(this.model.dateOfIssue)
-		let dateOfBirth = new Date(this.model.birthDate)
 
-		if (this.model.dateOfIssue && dateIssue < dateOfBirth) {
-			this._toastr.error('Ngày cấp phải lớn hơn ngày sinh')
+		if (this.model.dateOfIssue && this.model.dateOfIssue < this.model.birthDay) {
+			this.validateDateOfIssue = false
 			return
 		}
-
-		// if (this.isOtherNation) {
-		// 	this.model.provinceId = ''
-		// 	this.model.districtId = ''
-		// 	this.model.wardsId = ''
-		// }
 
 		if (this.model.id != null && this.model.id > 0) {
 			this._service.invididualUpdate(this.model).subscribe((res) => {
@@ -434,8 +411,6 @@ export class IndividualComponent implements OnInit {
 					return
 				}
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
-				// this.model = new IndividualObject()
-				// this.rebuidForm()
 				$('#modal').modal('hide')
 				this.getList()
 			})
@@ -452,7 +427,6 @@ export class IndividualComponent implements OnInit {
 					return
 				}
 				this._toastr.success(COMMONS.ADD_SUCCESS)
-				// this.model = new IndividualObject()
 				$('#modal').modal('hide')
 				let dataRecommendation = this.storeageService.getRecommentdationObjectRemember()
 				if(dataRecommendation){
@@ -480,7 +454,7 @@ export class IndividualComponent implements OnInit {
 				if (res.success == RESPONSE_STATUS.success) {
 					if (field == 'Phone') this.phone_exists = res.result.BIInvididualCheckExists[0].exists
 					else if (field == 'Email') this.email_exists = res.result.BIInvididualCheckExists[0].exists
-					else if (field == 'IDCard') this.idCard_exists = res.result.BIInvididualCheckExists[0].exists
+					else if (field == 'idCard') this.idCard_exists = res.result.BIInvididualCheckExists[0].exists
 				}
 			})
 	}
@@ -490,8 +464,6 @@ export class IndividualComponent implements OnInit {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.InvididualGetByID.length > 0) {
 					this.modelDetail = res.result.InvididualGetByID[0]
-					this.modelDetail.iDCard = res.result.InvididualGetByID[0].idCard
-					// console.log(res.result.InvididualGetByID[0])
 					$('#modalDetail').modal('show')
 				}
 			}
@@ -503,9 +475,6 @@ export class IndividualComponent implements OnInit {
 			Id: data.id,
 			Type: 1,
 		}
-		// this.phone_exists = false
-		// this.email_exists = false
-		// this.idCard_exists = false
 		this.submitted = false
 		this.isOtherNation = false
 		this._service.individualById(request).subscribe((response) => {
@@ -514,16 +483,14 @@ export class IndividualComponent implements OnInit {
 				this.model = response.result.InvididualGetByID[0]
 				if (this.model.nation != this.listNation[0].id) {
 					this.isOtherNation = true
-					this.model.provinceId = 0
-					this.model.districtId = 0
-					this.model.wardsId = 0
+					this.model.provinceId = null
+					this.model.districtId = null
+					this.model.wardsId = null
 				}
 
-				this.model.iDCard = response.result.InvididualGetByID[0].idCard
-				this.model.birthDate = new Date(response.result.InvididualGetByID[0].birthDate)
-				if (this.model.dateOfIssue != null) {
-					this.model.dateOfIssue = new Date(response.result.InvididualGetByID[0].dateOfIssue)
-				}
+				this.model.birthDay = this.model.birthDay == null ? null : new Date(this.model.birthDay)
+				this.model.dateOfIssue = this.model.dateOfIssue == null ? null : new Date(this.model.dateOfIssue)
+				
 				this.getProvince()
 				this.getDistrict(response.result.InvididualGetByID[0].provinceId)
 				this.getVillage(response.result.InvididualGetByID[0].provinceId, response.result.InvididualGetByID[0].districtId)

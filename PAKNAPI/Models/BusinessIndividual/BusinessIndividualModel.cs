@@ -216,11 +216,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public bool? Gender { get; set; }
 		public long? UserId { get; set; }
 	}
-	public class BIIndividualInsertIN_Cus : BIIndividualInsertIN
-    {
-		public string _BirthDay { get; set; }
-		public string _DateOfIssue { get; set; }
-	}
+	
 	#endregion
 
 	#region BI_InvididualUpdate
@@ -244,7 +240,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 			DP.Add("Id", _bI_InvididualUpdateIN.Id);
 			DP.Add("FullName", _bI_InvididualUpdateIN.FullName);
 			DP.Add("Phone", _bI_InvididualUpdateIN.Phone);
-			DP.Add("DateOfBirth", _bI_InvididualUpdateIN.BirthDate);
+			DP.Add("DateOfBirth", _bI_InvididualUpdateIN.BirthDay);
 			DP.Add("Email", _bI_InvididualUpdateIN.Email);
 			DP.Add("Nation", _bI_InvididualUpdateIN.Nation);
 			DP.Add("ProvinceId", _bI_InvididualUpdateIN.ProvinceId);
@@ -284,17 +280,11 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public string NativePlace { get; set; }
 		public string PermanentPlace { get; set; }
 		public string Nation { get; set; }
-		public DateTime? BirthDate { get; set; }
+		public DateTime? BirthDay { get; set; }
 		public bool? Gender { get; set; }
 		public long? UserId { get; set; }
 	}
-	public class BI_InvididualUpdateIN_body : BI_InvididualUpdateIN
-	{
-		public string _BirthDay { get; set; }
-		public string _DateOfIssue { get; set; }
-
-	}
-
+	
 	#endregion
 
 	#region BI_InvididualGetByID
@@ -315,15 +305,15 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public int? ProvinceId { get; set; }
-		public string? ProviceName { get; set; }
+		public string ProviceName { get; set; }
 		public int? WardsId { get; set; }
-		public string? WardsName { get; set; }
+		public string WardsName { get; set; }
 		public int? DistrictId { get; set; }
-		public string? DistrictName { get; set; }
+		public string DistrictName { get; set; }
 		public DateTime? DateOfIssue { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public DateTime? UpdatedDate { get; set; }
-		public DateTime? BirthDate { get; set; }
+		public DateTime? BirthDay { get; set; }
 		public int? CreatedBy { get; set; }
 		public int? UpdatedBy { get; set; }
 		public int? Status { get; set; }
@@ -331,7 +321,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public string Address { get; set; }
 		public string Email { get; set; }
 		public string Phone { get; set; }
-		public string IDCard { get; set; }
+		public string IdCard { get; set; }
 		public string IssuedPlace { get; set; }
 		public string NativePlace { get; set; }
 		public string PermanentPlace { get; set; }
