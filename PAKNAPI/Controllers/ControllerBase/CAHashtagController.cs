@@ -58,6 +58,45 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("CAHashtagGetAll")]
+		public async Task<ActionResult<object>> CAHashtagGetAll()
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAHashtag(_appSetting).CAHashtagGetAll() };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAHashtagInsert")]
+		public async Task<ActionResult<object>> CAHashtagInsert(CAHashtag _cAHashtag)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAHashtag(_appSetting).CAHashtagInsert(_cAHashtag) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
 		[Route("CAHashtagUpdate")]
@@ -76,6 +115,36 @@ namespace PAKNAPI.Controllers.ControllerBase
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
 
 					return new ResultApi { Success = ResultCode.ORROR, Result = count, Message = ResultMessage.ORROR };
+				}
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("CAHashtagDelete")]
+		public async Task<ActionResult<object>> CAHashtagDelete(CAHashtag _cAHashtag)
+		{
+			try
+			{
+				int count = await new CAHashtag(_appSetting).CAHashtagDelete(_cAHashtag);
+				if (count > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.OK, Result = count };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
 			}
 			catch (Exception ex)

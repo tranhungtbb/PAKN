@@ -1087,7 +1087,7 @@ namespace PAKNAPI.Controllers
 					}
 
 
-					if (businessModel.OrgEmail != null && businessModel.OrgEmail.Trim() != "" && !ConstantRegex.EmailIsValid(model.OrgEmail))
+					if (businessModel.OrgEmail != null && businessModel.OrgEmail.Trim() != "" && !ConstantRegex.EmailIsValid(businessModel.OrgEmail))
 					{
 						return new ResultApi { Success = ResultCode.ORROR, Message = "Email tổ chức doanh nghiệp không hợp lệ" };
 					}

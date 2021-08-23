@@ -72,13 +72,12 @@ export class Api {
 	public static FieldDelete = 'CACategorySPBase/CAFieldDeleteBase'
 
 	//Field
-	public static HashtagGetAll = 'CATableBase/CAHashtagGetAll'
+	public static HashtagGetAll = 'CAHashtag/CAHashtagGetAll'
 	public static HashtagGetList = 'CAHashtag/CAHashtagGetAllOnPage'
 	public static HashtagGetById = 'CACategorySPBase/CAHashtagGetByID'
-	public static HashtagInsert = 'CATableBase/CAHashtagInsert'
+	public static HashtagInsert = 'CAHashtag/CAHashtagInsert'
 	public static HashtagUpdate = 'CAHashtag/CAHashtagUpdate'
-	public static HashtagUpdateStatus = 'CATableBase/'
-	public static HashtagDelete = 'CATableBase/CAHashtagDelete'
+	public static HashtagDelete = 'CAHashtag/CAHashtagDelete'
 
 	//Unit
 	public static UnitGetPagedList = 'CACategorySPBase/CAUnitGetAllOnPageBase'

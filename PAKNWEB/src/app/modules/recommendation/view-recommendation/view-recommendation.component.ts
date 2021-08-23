@@ -464,6 +464,7 @@ export class ViewRecommendationComponent implements OnInit {
 					this.toastr.success(COMMONS.ACCEPT_SUCCESS)
 				}
 				this.getData()
+				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
 			} else {
 				this.toastr.error(response.message)
 			}
