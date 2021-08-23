@@ -256,7 +256,7 @@
 										<div class="input-group-addon p-2">
 											<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 										</div>
-										<div *ngIf="(submitted && model.dateIssue && model.birthDay && !validateDateOfIssue)" class="has-error m-b-12">
+										<div *ngIf="(submitted && model.dateOfIssue && model.birthDay && !validateDateOfIssue)" class="has-error m-b-12">
 											<div>
 												<span class="help-block">Ngày cấp không được nhỏ hơn ngày sinh</span>
 											</div>

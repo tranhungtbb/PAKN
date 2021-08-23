@@ -8,7 +8,7 @@ import { UserSystemObject } from '../../models/UserObject'
 import { UserService } from '../../services/user.service'
 import { DataService } from '../../services/sharedata.service'
 import { AccountService } from 'src/app/services/account.service'
-import { RESPONSE_STATUS, RECOMMENDATION_STATUS, TYPE_NOTIFICATION} from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS, RECOMMENDATION_STATUS, TYPE_NOTIFICATION, CONSTANTS} from 'src/app/constants/CONSTANTS'
 import { NotificationService } from 'src/app/services/notification.service'
 import { COMMONS } from 'src/app/commons/commons'
 
@@ -20,6 +20,8 @@ declare var $: any
 	styleUrls: ['./appheader.component.css'],
 })
 export class AppheaderComponent implements OnInit {
+
+	fileAccept = CONSTANTS.FILEACCEPTAVATAR
 	totalThongBao: number = 0
 	myDate: any
 	myHours: any
@@ -145,6 +147,7 @@ export class AppheaderComponent implements OnInit {
 			if (e.which == 13) e.preventDefault()
 		})
 	}
+	
 
 	showPassword(){
 		this.isShowPassword = !this.isShowPassword
@@ -255,6 +258,30 @@ export class AppheaderComponent implements OnInit {
 
 	redirectListNotification() {
 		this.router.navigate(['/quan-tri/thong-bao'])
+	}
+
+	onChangeAvatar() {
+		$('#modalEditUserInfo .seclect-avatar').click()
+	}
+
+	changeSelectAvatar(event: any) {
+		var file = event.target.files[0]
+		if (!['image/jpeg', 'image/png'].includes(file.type)) {
+			this._toastr.error('Chỉ chọn tệp tin ảnh')
+			event.target.value = null
+			return
+		}
+		if (file.size > 3000000) {
+			this._toastr.error('Ảnh dung lượng tối đa 3MB')
+			event.target.value = null
+			return
+		}
+		let output: any = $('#modal .user-avatar-view')
+		output.attr('src', URL.createObjectURL(file))
+		this.userAvatar = ''
+		output.onload = function () {
+			URL.revokeObjectURL(output.src) // free memory
+		}
 	}
 
 	onClickNotification(dataId: any, type: any, typeSend: any) {
