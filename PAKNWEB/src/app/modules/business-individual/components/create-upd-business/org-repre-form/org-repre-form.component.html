@@ -100,7 +100,7 @@
 	<div class="col form-group">
 		<label class="mb-1">Ngày tháng năm sinh</label>
 		<div class="input-group">
-			<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dob" [(ngModel)]="model._RepresentativeBirthDay"
+			<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dob" [(ngModel)]="model.RepresentativeBirthDay"
 				formControlName="DOB" appBsDatepickerInvalid [bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}"
 				[maxDate]="dateNow" />
 				<div class="input-group-addon p-2">

@@ -18,7 +18,7 @@ using PAKNAPI.Job;
 
 namespace PAKNAPI.Controllers
 {
-    [Route("api/Contact")]
+    [Route("api/contact")]
 	[ApiController]
 	public class ContactController : BaseApiController
 	{
@@ -41,7 +41,7 @@ namespace PAKNAPI.Controllers
 			_bugsnag = client;
 		}
 
-		[Route("Login")]
+		[Route("login")]
 		[HttpPost]
 		[AllowAnonymous]
 		public async Task<ActionResult<object>> Login(LoginIN loginIN)
@@ -187,7 +187,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
-		[Route("LogOut")]
+		[Route("log-out")]
 		[Authorize]
 		public async Task<ActionResult<object>> LogOut(EditUserRequest request)
 		{
@@ -208,7 +208,7 @@ namespace PAKNAPI.Controllers
 
 		// lấy lại mk của quản trị qua gmail
 		[HttpPost]
-		[Route("Forgetpassword")]
+		[Route("forget-password")]
 		[AllowAnonymous]
 		public async Task<ActionResult<object>> Forgetpassword(Forgetpassword request)
 		{

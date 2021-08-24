@@ -29,7 +29,6 @@ import { ViewAdministrativeProceduresComponent } from './view-administrative-pro
 import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component';
 import { ChatbotComponent } from './chatbot/chatbot.component'
 import  {ViewNotificationComponent} from './view-notification/view-notification.component';
-import { ViewRecommendationsSyncComponent } from './view-recommendations-sync/view-recommendations-sync.component';
 import {ListRecommendationKnct} from 'src/app/modules/publish/recommendations-sync/recommendation-knct/recommendation-knct.component'
 import { DetailRecommendationKnctComponent } from './recommendations-sync/recommendation-knct-detail/recommendation-knct-detail.component'
 import { RecommendationsDvhhcComponent } from 'src/app/modules/publish/recommendations-sync/recommendations-dvhhc/recommendations-dvhhc.component'
@@ -58,7 +57,6 @@ import {DetailRecommendationPaknCPComponent} from './recommendations-sync/recomm
 		ViewRightComponent,
 		ChatbotComponent,
 		ViewNotificationComponent,
-		ViewRecommendationsSyncComponent,
 		ListRecommendationKnct,
 		DetailRecommendationKnctComponent,
 		RecommendationsDvhhcComponent,

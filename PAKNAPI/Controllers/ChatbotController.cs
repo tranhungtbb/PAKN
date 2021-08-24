@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PAKNAPI.Controllers.ChatbotController
 {
-    [Route("api/[controller]")]
+    [Route("api/chat-bot")]
     [ApiController]
     public class ChatbotController : BaseApiController
     {
@@ -27,7 +27,7 @@ namespace PAKNAPI.Controllers.ChatbotController
 
         [HttpPost]
         [Authorize]
-        [Route("ChatbotDeleteBase")]
+        [Route("delete")]
         public async Task<ActionResult<object>> ChatbotDeleteBase(ChatbotDeleteIN _ChatbotDeleteIN)
         {
             try
@@ -45,7 +45,7 @@ namespace PAKNAPI.Controllers.ChatbotController
 
         [HttpGet]
         [Authorize]
-        [Route("ChatbotGetAllOnPageBase")]
+        [Route("get-list-chat-bot-on-page")]
         public async Task<ActionResult<object>> ChatbotGetAllOnPageBase(int? PageSize, int? PageIndex, string Question, string Answer, bool? IsActived)
         {
             try
@@ -69,7 +69,7 @@ namespace PAKNAPI.Controllers.ChatbotController
 
         [HttpGet]
         [Authorize("ThePolicy")]
-        [Route("HistoryChatbotGetAllOnPage")]
+        [Route("list-his")]
         public async Task<ActionResult<object>> HistoryChatbotGetAllOnPage(int? PageSize, int? PageIndex, string FullName, string Question, string Answer, DateTime? CreatedDate)
         {
             try
@@ -93,7 +93,7 @@ namespace PAKNAPI.Controllers.ChatbotController
 
         [HttpGet]
         [Authorize("ThePolicy")]
-        [Route("ChatbotGetByID")]
+        [Route("get-by-id")]
         public async Task<ActionResult<object>> ChatbotGetByIDBase(int? Id)
         {
             try
@@ -115,7 +115,7 @@ namespace PAKNAPI.Controllers.ChatbotController
 
         [HttpPost]
         [Authorize]
-        [Route("ChatbotInsertQuestion")]
+        [Route("insert-question")]
         public async Task<object> ChatbotInsertQuestion(ChatbotInsertIN _chatbotInsertIN)
         {
             try
@@ -133,7 +133,7 @@ namespace PAKNAPI.Controllers.ChatbotController
 
         [HttpPost]
         [Authorize]
-        [Route("ChatbotUpdateBase")]
+        [Route("update")]
         public async Task<ActionResult<object>> ChatbotUpdateBase(ChatbotUpdateIN ChatbotUpdateIN)
         {
             try
@@ -151,7 +151,7 @@ namespace PAKNAPI.Controllers.ChatbotController
 
         [HttpPost]
         [Authorize]
-        [Route("ChatbotInsertData")]
+        [Route("insert-data")]
         public async Task<object> ChatbotInsertData(ChatbotDataInsertIN _chatbotDataInsertIN)
         {
             try

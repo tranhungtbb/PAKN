@@ -26,17 +26,17 @@ using System.Security.Claims;
 
 namespace PAKNAPI.Controllers
 {
-    [Route("api/EmailSMS")]
+    [Route("api/sms")]
     [ApiController]
    
-    public class EmailSMSController : BaseApiController
+    public class SMSController : BaseApiController
     {
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;
         private readonly IWebHostEnvironment _hostingEnvironment;
 		private readonly IHttpContextAccessor _httpContextAccessor;
 
-		public EmailSMSController(IAppSetting appSetting, IClient bugsnag, IWebHostEnvironment hostEnvironment, IHttpContextAccessor httpContextAccessor)
+		public SMSController(IAppSetting appSetting, IClient bugsnag, IWebHostEnvironment hostEnvironment, IHttpContextAccessor httpContextAccessor)
         {
             _appSetting = appSetting;
             _bugsnag = bugsnag;
@@ -46,7 +46,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Authorize]
-		[Route("SMSDelete")]
+		[Route("delete")]
 		public async Task<ActionResult<object>> SMSQuanLyTinNhanDeleteBase(SMSQuanLyTinNhanDeleteIN _sMSQuanLyTinNhanDeleteIN)
 		{
 			try
@@ -80,7 +80,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Authorize]
-		[Route("SMSInsert")]
+		[Route("insert")]
 		public async Task<object> SMSInsert(SMSInsertModel response)
 		{
 			try
@@ -153,7 +153,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize]
-		[Route("SMSUpdate")]
+		[Route("update")]
 		public async Task<object> SMSUpdate(int id)
 		{
 			try
@@ -175,7 +175,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Authorize]
-		[Route("SMSUpdate")]
+		[Route("update")]
 		public async Task<object> SMSUpdate(SMSUpdateRequestModel response)
 		{
 			try
@@ -270,7 +270,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize]
-		[Route("SMSUpdateStatusTypeSend")]
+		[Route("update-status")]
 		public async Task<object> SMSUpdateStatusTypeSend(int idMSMS)
 		{
 			try
@@ -311,7 +311,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Authorize]
-		[Route("HISSMSInsert")]
+		[Route("insert-his")]
 		public async Task<ActionResult<object>> HISNewsInsert(HISInsertIN _hISSMS)
 		{
 			try
@@ -341,6 +341,82 @@ namespace PAKNAPI.Controllers
 			{
 				_bugsnag.Notify(ex);
 				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("get-by-id")]
+		public async Task<ActionResult<object>> SMSQuanLyTinNhanGetByIdBase(int? Id)
+		{
+			try
+			{
+				List<SMSQuanLyTinNhanGetById> rsSMSQuanLyTinNhanGetById = await new SMSQuanLyTinNhanGetById(_appSetting).SMSQuanLyTinNhanGetByIdDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SMSQuanLyTinNhanGetById", rsSMSQuanLyTinNhanGetById},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("get-list-sms-on-page")]
+		public async Task<ActionResult<object>> SMSQuanLyTinNhanGetAllOnPageBase(int? PageSize, int? PageIndex, string Title, int? UnitId, string Type, byte? Status)
+		{
+			try
+			{
+				List<SMSQuanLyTinNhanGetAllOnPage> rsSMSQuanLyTinNhanGetAllOnPage = await new SMSQuanLyTinNhanGetAllOnPage(_appSetting).SMSQuanLyTinNhanGetAllOnPageDAO(PageSize, PageIndex, Title, UnitId, Type, Status);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SMSQuanLyTinNhanGetAllOnPage", rsSMSQuanLyTinNhanGetAllOnPage},
+						{"TotalCount", rsSMSQuanLyTinNhanGetAllOnPage != null && rsSMSQuanLyTinNhanGetAllOnPage.Count > 0 ? rsSMSQuanLyTinNhanGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsSMSQuanLyTinNhanGetAllOnPage != null && rsSMSQuanLyTinNhanGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsSMSQuanLyTinNhanGetAllOnPage != null && rsSMSQuanLyTinNhanGetAllOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("list-his")]
+		public async Task<ActionResult<object>> HISSMSGetBySMSIdOnPageBase(int? PageSize, int? PageIndex, int? SMSId, string Content, string UserName, DateTime? CreateDate, int? Status)
+		{
+			try
+			{
+				List<HISSMSGetBySMSIdOnPage> rsHISSMSGetBySMSIdOnPage = await new HISSMSGetBySMSIdOnPage(_appSetting).HISSMSGetBySMSIdOnPageDAO(PageSize, PageIndex, SMSId, Content, UserName, CreateDate, Status);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"HISSMSGetBySMSIdOnPage", rsHISSMSGetBySMSIdOnPage},
+						{"TotalCount", rsHISSMSGetBySMSIdOnPage != null && rsHISSMSGetBySMSIdOnPage.Count > 0 ? rsHISSMSGetBySMSIdOnPage[0].RowNumber : 0},
+						{"PageIndex", rsHISSMSGetBySMSIdOnPage != null && rsHISSMSGetBySMSIdOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsHISSMSGetBySMSIdOnPage != null && rsHISSMSGetBySMSIdOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}

@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace PAKNAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/weather")]
     [ApiController]
     public class WeatherController : BaseApiController
     {
@@ -48,7 +48,7 @@ namespace PAKNAPI.Controllers
             return new ResultApi { Success = ResultCode.OK, Result = json };
         }
 
-        [Route("getByQ")]
+        [Route("get-by-q")]
         public async Task<object> getByQ(string q= "Nha Trang, VN")
         {
             var config = new WeatherConfigModel

@@ -18,7 +18,7 @@ using PAKNAPI.Models.ModelBase;
 
 namespace PAKNAPI.ControllerBase
 {
-	[Route("api/PURecommendation")]
+	[Route("api/pu-recommendation")]
 	[ApiController]
 	public class PURecommendationController : BaseApiController
 	{
@@ -34,7 +34,7 @@ namespace PAKNAPI.ControllerBase
 		#region PURecommendationAllOnPage
 
 		[HttpGet]
-		[Route("PURecommendationAllOnPage")]
+		[Route("get-list-recommentdation-on-page")]
 		public async Task<ActionResult<object>> PURecommendationAllOnPage(string? KeySearch, int Status, int PageSize, int PageIndex)
 		{
 			try
@@ -59,7 +59,7 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Route("MyRecommendationAllOnPage")]
+		[Route("get-list-my-recommentdation-on-page")]
 		public async Task<ActionResult<object>> MyRecommendationAllOnPage(int? userId ,string LtsStatus, string Title , int PageSize, int PageIndex)
 		{
 			try
@@ -90,7 +90,7 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize]
-		[Route("PURecommendationStatisticsGetByUserIdBase")]
+		[Route("recommendation-statistics-get-by-user-id")]
 		public async Task<ActionResult<object>> PURecommendationStatisticsGetByUserIdBase()
 		{
 			try
@@ -115,7 +115,7 @@ namespace PAKNAPI.ControllerBase
 
 		#region PURecommendationGetListOrderByCountClick
 		[HttpGet]
-		[Route("PURecommendationGetListOrderByCountClick")]
+		[Route("recommendation-get-list-order-by-count-click")]
 		public async Task<ActionResult<object>> PURecommendationGetListOrderByCountClick(int? Status)
 		{
 			try
@@ -136,7 +136,7 @@ namespace PAKNAPI.ControllerBase
 
 		#region
 		[HttpGet]
-		[Route("PURecommendationCountClick")]
+		[Route("recommendation-count-click")]
 		public async Task<ActionResult<object>> PURecommendationCountClick(int? RecommendationId)
 		{
 			try
@@ -165,7 +165,7 @@ namespace PAKNAPI.ControllerBase
 		#region PURecommendationgetById
 
 		[HttpGet]
-		[Route("PURecommendationGetById")]
+		[Route("get-by-id")]
 		public async Task<ActionResult<object>> PURecommendationGetById(int? Id, int?Status)
 		{
 			try
@@ -206,7 +206,7 @@ namespace PAKNAPI.ControllerBase
 		#region ChangeSatisfaction
 
 		[HttpGet]
-		[Route("ChangeSatisfaction")]
+		[Route("change-satisfaction")]
 		public async Task<object> ChangeSatisfaction(int? RecommendationId, bool? Satisfaction)
 		{
 			try {

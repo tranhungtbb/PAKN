@@ -18,7 +18,7 @@ using PAKNAPI.Models.Results;
 namespace PAKNAPI.Controllers
 {
 
-    [Route("api/files")]
+    [Route("api/upload-files")]
     [ApiController]
     public class UploadFileController : BaseApiController
     {
@@ -155,7 +155,7 @@ namespace PAKNAPI.Controllers
         }
 
         [HttpGet]
-        [Route("DownloadBin")]
+        [Route("downloadbin")]
         public async Task<byte[]> DownloadBin(string path)
         {
             Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
@@ -167,7 +167,7 @@ namespace PAKNAPI.Controllers
 
         }
         [HttpPost]
-        [Route("DownloadFile")]
+        [Route("downloadfile")]
         public async Task<IActionResult> DownloadFile([FromForm]string path)
         {
             Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
@@ -202,7 +202,7 @@ namespace PAKNAPI.Controllers
             }
         }
         [HttpPost]
-        [Route("UploadImageNews")]
+        [Route("upload-image-news")]
         public async Task<ActionResult<object>> UploadImageNews () {
             try
             {

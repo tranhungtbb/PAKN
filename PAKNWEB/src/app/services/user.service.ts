@@ -65,9 +65,9 @@ export class UserService {
 		return this.serviceInvoker.getwithHeaders(query, AppSettings.API_ADDRESS + Api.UserGetByRoleId, headers)
 	}
 
-	getIsSystem(query: any): Observable<any> {
-		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetIsSystem)
-	}
+	// getIsSystem(query: any): Observable<any> {
+	// 	return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetIsSystem)
+	// }
 
 	getIsNotRole(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetIsNotRole)
@@ -75,8 +75,8 @@ export class UserService {
 
 	
 
-	getIsSystem2(query: any): Observable<any> {
-		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetIsSystem2)
+	getIsSystem(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetIsSystem)
 	}
 
 	getIsSystemOrderByUnit(query: any): Observable<any> {
@@ -198,10 +198,6 @@ export class UserService {
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.DeleteUserRole, headers)
 	}
 
-	getAvatar(id: number): Observable<any> {
-		let url = AppSettings.API_ADDRESS + Api.UserGetAvatar + '/' + id
-		return this.serviceInvoker.get({}, url)
-	}
 	getSystemLogin(request: any): Observable<any> {
 		let url = AppSettings.API_ADDRESS + Api.SystemLogin
 		return this.serviceInvoker.get(request, url)

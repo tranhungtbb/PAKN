@@ -26,7 +26,7 @@ using static PAKNAPI.Models.Login.BusinessRegisterModel;
 
 namespace PAKNAPI.Controllers
 {
-	[Route("api/[controller]")]
+	[Route("api/user")]
 	[ApiController]
 	public class UserController : BaseApiController
 	{
@@ -49,7 +49,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize]
-		[Route("UsersGetDataForCreate")]
+		[Route("get-data-for-create")]
 		public async Task<ActionResult<object>> UsersGetDataForCreate()
 		{
 			try
@@ -65,7 +65,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost, DisableRequestSizeLimit]
-		[Route("Create")]
+		[Route("create")]
 		[Authorize]
 		public async Task<object> Create([FromForm] SYUserInsertIN model, [FromForm] IFormFileCollection files = null)
 		{
@@ -118,7 +118,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost, DisableRequestSizeLimit]
-		[Route("Update")]
+		[Route("update")]
 		[Authorize]
 		public async Task<object> Update([FromForm] SYUserUpdateIN model, [FromForm] IFormFileCollection files = null)
 		{
@@ -162,7 +162,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost, DisableRequestSizeLimit]
-		[Route("UserSystemCreate")]
+		[Route("user-system-create")]
 		[Authorize]
 		public async Task<object> UserSystemCreate([FromForm] SYUserInsertIN model, [FromForm] IFormFileCollection files = null)
 		{
@@ -224,7 +224,7 @@ namespace PAKNAPI.Controllers
 
 
 		[HttpPost, DisableRequestSizeLimit]
-		[Route("UserSystemUpdate")]
+		[Route("user-system-update")]
 		[Authorize]
 		public async Task<object> UserSystemUpdate([FromForm] SYUserSystemUpdateIN model, [FromForm] IFormFileCollection files = null)
 		{
@@ -263,7 +263,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost, DisableRequestSizeLimit]
-		[Route("Delete")]
+		[Route("delete")]
 		[Authorize]
 		public async Task<object> Delete(SYUserDeleteIN model)
 		{
@@ -305,21 +305,21 @@ namespace PAKNAPI.Controllers
 			return new ResultApi { Success = ResultCode.OK };
 		}
 
-		[HttpGet]
-		[Route("GetAvatar/{id}")]
-		[Authorize]
-		public async Task<byte[]> GetAvatar(int id)
-		{
-			var modelOld = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(id);
-			if (string.IsNullOrEmpty(modelOld[0].Avatar?.Trim())) return null;
-			var data = await _fileService.GetBinary(modelOld[0].Avatar);
+		//[HttpGet]
+		//[Route("GetAvatar/{id}")]
+		//[Authorize]
+		//public async Task<byte[]> GetAvatar(int id)
+		//{
+		//	var modelOld = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(id);
+		//	if (string.IsNullOrEmpty(modelOld[0].Avatar?.Trim())) return null;
+		//	var data = await _fileService.GetBinary(modelOld[0].Avatar);
 
-			return data;
-		}
+		//	return data;
+		//}
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("SYUserGetAllOnPageList")]
+		[Route("user/get-list-user-on-page")]
 		public async Task<ActionResult<object>> SYUserGetAllOnPageList(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived, int? UnitId, int? TypeId, int? PositionId)
 		{
 			try
@@ -345,7 +345,172 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("SYUserSystemGetAllOnPageList")]
+		[Route("get-list-user-on-page-base")]
+		public async Task<ActionResult<object>> SYUserGetAllOnPageBase(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived, int? UnitId, int? TypeId, string SortDir, string SortField)
+		{
+			try
+			{
+				List<SYUserGetAllOnPage> rsSYUserGetAllOnPage = await new SYUserGetAllOnPage(_appSetting).SYUserGetAllOnPageDAO(PageSize, PageIndex, UserName, FullName, Phone, IsActived, UnitId, TypeId, SortDir, SortField);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserGetAllOnPage", rsSYUserGetAllOnPage},
+						{"TotalCount", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? rsSYUserGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("change-status")]
+		public async Task<ActionResult<object>> SYUserChangeStatusBase(SYUserChangeStatusIN _sYUserChangeStatusIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserChangeStatus(_appSetting).SYUserChangeStatusDAO(_sYUserChangeStatusIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("check-exists")]
+		public async Task<ActionResult<object>> SYUserCheckExistsBase(string Field, string Value, long? Id)
+		{
+			try
+			{
+				List<SYUserCheckExists> rsSYUserCheckExists = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO(Field, Value, Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserCheckExists", rsSYUserCheckExists},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
+		[HttpGet]
+		[Authorize]
+		[Route("get-list-user-on-page-base-by-role-id")]
+		public async Task<ActionResult<object>> SYUserGetAllByRoleIdBase(int? RoleId)
+		{
+			try
+			{
+				List<SYUserGetAllByRoleId> rsSYUserGetAllByRoleId = await new SYUserGetAllByRoleId(_appSetting).SYUserGetAllByRoleIdDAO(RoleId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserGetAllByRoleId", rsSYUserGetAllByRoleId},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("get-drop-down")]
+		public async Task<ActionResult<object>> SYUsersGetDropdownBase()
+		{
+			try
+			{
+				List<SYUsersGetDropdown> rsSYUsersGetDropdown = await new SYUsersGetDropdown(_appSetting).SYUsersGetDropdownDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUsersGetDropdown", rsSYUsersGetDropdown},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("get-list-user-on-page-by-role-id")]
+		public async Task<ActionResult<object>> SYUserGetByRoleIdAllOnPageBase(int? PageSize, int? PageIndex, int? RoleId)
+		{
+			try
+			{
+				List<SYUserGetByRoleIdAllOnPage> rsSYUserGetByRoleIdAllOnPage = await new SYUserGetByRoleIdAllOnPage(_appSetting).SYUserGetByRoleIdAllOnPageDAO(PageSize, PageIndex, RoleId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserGetByRoleIdAllOnPage", rsSYUserGetByRoleIdAllOnPage},
+						{"TotalCount", rsSYUserGetByRoleIdAllOnPage != null && rsSYUserGetByRoleIdAllOnPage.Count > 0 ? rsSYUserGetByRoleIdAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsSYUserGetByRoleIdAllOnPage != null && rsSYUserGetByRoleIdAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsSYUserGetByRoleIdAllOnPage != null && rsSYUserGetByRoleIdAllOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("get-by-id")]
+		public async Task<ActionResult<object>> SYUserGetByIDBase(long? Id)
+		{
+			try
+			{
+				List<SYUserGetByID> rsSYUserGetByID = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserGetByID", rsSYUserGetByID},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("get-list-user-system-on-page")]
 		public async Task<ActionResult<object>> SYUserSystemGetAllOnPageList(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived)
 		{
 			try
@@ -371,7 +536,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize]
-		[Route("UserGetByID")]
+		[Route("get-info")]
 		public async Task<ActionResult<object>> UserGetByID(long? Id)
 		{
 			try
@@ -397,7 +562,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("GetOrderByUnit")]
+		[Route("get-user-order-by-unit")]
 		public async Task<ActionResult<object>> SYUserGetAllOrderByUnit()
 		{
 			try
@@ -458,10 +623,78 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("get-user-is-system")]
+		public async Task<ActionResult<object>> SYUserGetIsSystemBase()
+		{
+			try
+			{
+				List<SYUserGetIsSystem2> rsSYUserGetIsSystem2 = await new SYUserGetIsSystem2(_appSetting).SYUserGetIsSystem2DAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserGetIsSystem", rsSYUserGetIsSystem2},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("user-role-map-delete")]
+		public async Task<ActionResult<object>> SYUserRoleMapDeleteBase(SYUserRoleMapDeleteIN _sYUserRoleMapDeleteIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new SYUserRoleMapDelete(_appSetting).SYUserRoleMapDeleteDAO(_sYUserRoleMapDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("user-not-role")]
+		public async Task<ActionResult<object>> SYUserGetIsNotRole(int? RoleId)
+		{
+			try
+			{
+				List<SYUserGetIsSystem> rsSYUserGetIsSystem = await new SYUserGetIsSystem(_appSetting).SYUserGetIsNotRole(RoleId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserGetIsNotRole", rsSYUserGetIsSystem},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
+
 
 		#region nguoi dan, doanh nghiep
 		[HttpPost]
-		[Route("OrganizationRegister")]
+		[Route("organization-register")]
 		public async Task<object> OrganizationRegister([FromBody] BusinessRegisterModel model)
         {
 			try
@@ -632,7 +865,7 @@ namespace PAKNAPI.Controllers
 
 		
 		[HttpPost]
-		[Route("InvididualRegister")]
+		[Route("individual-register")]
 		public async Task<object> InvididualRegister_Body([FromBody] IndivialRegisterModel model)
 		{
 			try
@@ -746,27 +979,27 @@ namespace PAKNAPI.Controllers
 		}
 
 
-		[HttpGet]
-		[Route("SendDemo")]
-		public string SendDemo()
-        {
-            try
-			{
-				string contentSMSOPT = "(Trung tam tiep nhan PAKN tinh Khanh Hoa) Xin chao: Trần Thanh Quyền. Mat khau dang nhap he thong la: abcAbc123123. Xin cam on!";
-				SV.MailSMS.Model.SMTPSettings settings = new SV.MailSMS.Model.SMTPSettings();
-				settings.COM = _config["SmsCOM"].ToString();
-				SV.MailSMS.Control.SMSs sMSs = new SV.MailSMS.Control.SMSs(settings);
-				string MessageResult = sMSs.SendOTPSMS("0984881580", contentSMSOPT);
-				return "ok";
-			}
-            catch (Exception ex)
-			{
-				return ex.Message;
-			}
-		}
+		//[HttpGet]
+		//[Route("SendDemo")]
+		//public string SendDemo()
+  //      {
+  //          try
+		//	{
+		//		string contentSMSOPT = "(Trung tam tiep nhan PAKN tinh Khanh Hoa) Xin chao: Trần Thanh Quyền. Mat khau dang nhap he thong la: abcAbc123123. Xin cam on!";
+		//		SV.MailSMS.Model.SMTPSettings settings = new SV.MailSMS.Model.SMTPSettings();
+		//		settings.COM = _config["SmsCOM"].ToString();
+		//		SV.MailSMS.Control.SMSs sMSs = new SV.MailSMS.Control.SMSs(settings);
+		//		string MessageResult = sMSs.SendOTPSMS("0984881580", contentSMSOPT);
+		//		return "ok";
+		//	}
+  //          catch (Exception ex)
+		//	{
+		//		return ex.Message;
+		//	}
+		//}
 
 		[HttpGet]
-		[Route("UserGetInfo")]
+		[Route("user-get-info")]
 		[Authorize]
 		public async Task<object> UserGetInfo(long? id)
         {
@@ -844,7 +1077,7 @@ namespace PAKNAPI.Controllers
 		}
 
 		[HttpPost]
-		[Route("UserChagePwd")]
+		[Route("user-change-password")]
 		[Authorize]
 		public async Task<object> UserChagePwd([FromForm] ChangePwdModel model)
         {
@@ -901,7 +1134,7 @@ namespace PAKNAPI.Controllers
 
 
 		[HttpPost]
-		[Route("UserChangePwdInManage")]
+		[Route("user-change-password-in-manage")]
 		[Authorize]
 		public async Task<object> UserChangePwdInManage(ChangePwdInManage model)
 		{
@@ -948,7 +1181,7 @@ namespace PAKNAPI.Controllers
 
 
 		[HttpPost]
-		[Route("UpdateCurrentInfo")]
+		[Route("update-current-info")]
 		[Authorize]
 		public async Task<object> UpdateCurrentInfo([FromForm] AccountInfoModel model,[FromForm] BusinessAccountInfoModel businessModel)
         {
@@ -1180,7 +1413,7 @@ namespace PAKNAPI.Controllers
 
 				
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-				return new ResultApi { Success = ResultCode.OK};
+				return new ResultApi { Success = ResultCode.OK, Message = ResultMessage.OK};
 			}
             catch (Exception ex)
             {

@@ -22,7 +22,7 @@ using PAKNAPI.Models.ModelBase;
 
 namespace PAKNAPI.Controllers
 {
-    [Route("api/SYNotification")]
+    [Route("api/notification")]
     [ApiController]
 
     public class NotificationController : BaseApiController
@@ -40,7 +40,7 @@ namespace PAKNAPI.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("SYNotificationInsertTypeNews")]
+        [Route("insert-type-new")]
         public async Task<object> SYNotificationInsertTypeNews(int Id, string Title, bool isCreateNews)
         {
             try
@@ -85,7 +85,7 @@ namespace PAKNAPI.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("NotificationGetById")]
+        [Route("get-by-id")]
         public async Task<ActionResult<object>> NotificationGetByIdBase(int? Id)
         {
             try
@@ -111,7 +111,7 @@ namespace PAKNAPI.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("SYNotificationInsertTypeRecommendation")]
+        [Route("insert-type-recommendation")]
         public async Task<object> SYNotificationInsertTypeRecommendation(int? recommendationId)
         {
             try
@@ -381,7 +381,7 @@ namespace PAKNAPI.Controllers
         #region SYNotificationGetAll
         [HttpPost]
         [Authorize]
-        [Route("SYNotificationGetListOnPage")]
+        [Route("get-list-notification-on-page")]
         public async Task<object> SYNotificationGetListOnPage() {
             try{
                 var jss = new JsonSerializerSettings
@@ -412,7 +412,7 @@ namespace PAKNAPI.Controllers
         #region SYNotificationUpdateIsViewed
         [HttpGet]
         [Authorize]
-        [Route("SYNotificationUpdateIsViewed")]
+        [Route("update-is-viewed")]
         public async Task<object> SYNotificationUpdateIsViewed()
         {
             try
@@ -436,7 +436,7 @@ namespace PAKNAPI.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("SYNotificationUpdateIsReaded")]
+        [Route("update-is-readed")]
         public async Task<object> SYNotificationUpdateReaded(int? ObjectId)
         {
             try
@@ -459,7 +459,7 @@ namespace PAKNAPI.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("SYNotificationDelete")]
+        [Route("delete")]
         public async Task<ActionResult<object>> SYNotificationDelete(SYNotificationModel _syNotification)
         {
             try

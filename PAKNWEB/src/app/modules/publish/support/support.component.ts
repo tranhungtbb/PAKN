@@ -36,16 +36,6 @@ export class SupportComponent implements OnInit, AfterViewInit {
 				this.loadDocView(this.contentType, this.title)
 			}
 		})
-
-		// this.model = {
-		// 	createdDate: new Date(),
-		// 	contents: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis vero earum a perspiciatis expedita, amet totam, cumque ullam tempore exercitationem
-		//   alias deserunt quo nesciunt accusamus rerum obcaecati autem nisi quae.
-		//   Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum fugit quisquam optio quo culpa saepe veritatis assumenda aperiam, repudiandae laudantium
-		//   praesentium, debitis adipisci provident, minus inventore consectetur modi! Ipsum, animi.
-		//   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Animi explicabo voluptas a minima sit eveniet, dolorem fugit, dolorum itaque odit qui tenetur
-		//   expedita nemo natus iste facere numquam quod repellat.`,
-		// }
 	}
 	changeDoc() {
 		this.loadDocView(this.contentType, this.title)

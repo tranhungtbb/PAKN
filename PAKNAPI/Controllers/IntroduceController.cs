@@ -22,7 +22,7 @@ using PAKNAPI.Models.Recommendation;
 
 namespace PAKNAPI.Controllers
 {
-    [Route("api/SYIntroduce")]
+    [Route("api/introduce")]
     [ApiController]
    
     public class IntroduceController : BaseApiController
@@ -41,7 +41,7 @@ namespace PAKNAPI.Controllers
         //'SYIntroduce/IntroduceGetInfo'
         [HttpGet]
         //[Authorize]
-        [Route("IntroduceGetInfo")]
+        [Route("get-by-id")]
         public async Task<object> SYIntroduceGetInfo() {
             try {
                 IntroduceModel result = new IntroduceModel();
@@ -71,7 +71,7 @@ namespace PAKNAPI.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("IntroduceUpdate")]
+        [Route("update")]
         public async Task<object> SYIntroduceUpdate() {
             try
             {
@@ -152,7 +152,7 @@ namespace PAKNAPI.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("IntroduceUnitGetOnPage")]
+        [Route("get-list-introduce-unit-on-page")]
         public async Task<object> SYIntroduceUnitGetOnPage(int? IntroduceId, int? PageSize, int? PageIndex)
         {
             try
@@ -176,7 +176,7 @@ namespace PAKNAPI.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("IntroduceUnitGetById")]
+        [Route("introduce-unit-get-by-id")]
         public async Task<object> SYIntroduceUnitGetById(int? Id)
         {
             try
@@ -195,7 +195,7 @@ namespace PAKNAPI.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("IntroduceUnitInsert")]
+        [Route("introduce-unit-insert")]
         public async Task<object> SYIntroduceUnitInsert(SYIntroduceUnit model)
         {
             try
@@ -222,7 +222,7 @@ namespace PAKNAPI.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("IntroduceUnitUpdate")]
+        [Route("introduce-unit-update")]
         public async Task<object> SYIntroduceUnitUpdate(SYIntroduceUnit model)
         {
             try
@@ -249,7 +249,7 @@ namespace PAKNAPI.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("IntroduceUnitDetete")]
+        [Route("introduce-unit-delete")]
         public async Task<object> SYIntroduceUnitDelete(SYIntroduceUnitDelete model)
         {
             try

@@ -124,7 +124,7 @@ export class OrganizationObject {
 	//----thông tin người đại diện
 	RepresentativeName: string // RepresentativeName tên người đại diện
 	RepresentativeGender: boolean
-	_RepresentativeBirthDay: string
+	RepresentativeBirthDay: Date
 	Email: string
 	Nation: any
 	ProvinceId: any //int
@@ -146,7 +146,7 @@ export class OrganizationObject {
 
 	BusinessRegistration: string //Số ĐKKD
 	DecisionOfEstablishing: string //Quyết định thành lập
-	_DateOfIssue: string //Ngày cấp/thành lập
+	DateOfIssue: Date //Ngày cấp/thành lập
 
 	Status: number //
 	isActived: boolean

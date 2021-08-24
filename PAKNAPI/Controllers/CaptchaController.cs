@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace PAKNAPI.Controllers
 {
-	[Route("api/Captcha")]
+	[Route("api/captcha")]
 	public class CaptchaController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
@@ -29,7 +29,7 @@ namespace PAKNAPI.Controllers
 			_bugsnag = bugsnag;
 		}
 
-		[Route("GetCaptchaImage")]
+		[Route("get-captcha-image")]
 		[HttpGet]
 		public async Task<IActionResult> GetCaptchaImageAsync(string IpAddress = null)
 		{
@@ -152,23 +152,23 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
-		[Route("RecommendationKNCTInsert")]
-		[HttpPost]
-		public async Task<ActionResult<object>> RecommendationKNCTInsert(MRRecommendationKNCTInsertIN mRRecommendationKNCTInsertIN)
-		{
-			try
-			{
-				var m = await new MRRecommendationKNCTInsert(_appSetting).MRRecommendationKNCTInsertDAO(mRRecommendationKNCTInsertIN);
-				return new ResultApi { Success = ResultCode.OK };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
+		//[Route("RecommendationKNCTInsert")]
+		//[HttpPost]
+		//public async Task<ActionResult<object>> RecommendationKNCTInsert(MRRecommendationKNCTInsertIN mRRecommendationKNCTInsertIN)
+		//{
+		//	try
+		//	{
+		//		var m = await new MRRecommendationKNCTInsert(_appSetting).MRRecommendationKNCTInsertDAO(mRRecommendationKNCTInsertIN);
+		//		return new ResultApi { Success = ResultCode.OK };
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		_bugsnag.Notify(ex);
+		//		return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+		//	}
+		//}
 
-		[Route("ValidatorCaptcha")]
+		[Route("validator-captcha")]
 		[HttpGet]
 		public ActionResult<object> ValidatorCaptcha(string CaptchaCode)
 		{

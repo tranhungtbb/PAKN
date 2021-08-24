@@ -22,7 +22,7 @@ using PAKNAPI.Models.Recommendation;
 
 namespace PAKNAPI.Controllers
 {
-    [Route("api/RMRemind")]
+    [Route("api/remind")]
     [ApiController]
    
     public class RemindController : BaseApiController
@@ -42,7 +42,7 @@ namespace PAKNAPI.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("RemindInsert")]
+        [Route("insert")]
         public async Task<object> RMRemindInsert() {
             try {
                 // insert vào Remind
@@ -117,7 +117,7 @@ namespace PAKNAPI.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("RemindGetList")]
+        [Route("get-remind-list")]
         // receive org ID
         public async Task<object> RMRemindGetAll(int? RecommendationId) {
             try

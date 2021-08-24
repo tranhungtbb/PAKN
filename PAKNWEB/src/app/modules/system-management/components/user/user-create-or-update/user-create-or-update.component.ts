@@ -263,14 +263,14 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	}
 
 	userAvatar: any
-	getUserAvatar(id: number) {
-		this.userService.getAvatar(id).subscribe((res) => {
-			if (res) {
-				let objectURL = 'data:image/jpeg;base64,' + res
-				this.userAvatar = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-			}
-		})
-	}
+	// getUserAvatar(id: number) {
+	// 	this.userService.getAvatar(id).subscribe((res) => {
+	// 		if (res) {
+	// 			let objectURL = 'data:image/jpeg;base64,' + res
+	// 			this.userAvatar = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+	// 		}
+	// 	})
+	// }
 
 	onGroupUserChange(): void {
 		this.clearPermisison()

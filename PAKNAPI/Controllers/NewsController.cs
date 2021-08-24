@@ -16,18 +16,19 @@ using Newtonsoft.Json;
 using Bugsnag;
 using PAKNAPI.Services.FileUpload;
 using Microsoft.AspNetCore.Http;
+using PAKNAPI.Models.ModelBase;
 
-namespace PAKNAPI.ControllerBase
+namespace PAKNAPI.Controller
 {
-	[Route("api/NESPBase")]
+	[Route("api/news")]
 	[ApiController]
-	public class NESPBaseController : BaseApiController
+	public class NewsController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;
 		private readonly IFileService _fileService;
 
-		public NESPBaseController(IAppSetting appSetting, IClient bugsnag, IFileService fileService)
+		public NewsController(IAppSetting appSetting, IClient bugsnag, IFileService fileService)
 		{
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
@@ -36,7 +37,7 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		//[Authorize]
-		[Route("NENewsGetAllOnPageBase")]
+		[Route("get-list-group-word-on-page")]
 		public async Task<ActionResult<object>> NENewsGetAllOnPageBase(string NewsIds, int? PageSize, int? PageIndex, string Title, int? NewsType, int? Status)
 		{
 			try
@@ -54,50 +55,26 @@ namespace PAKNAPI.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		[HttpPost]
-		[Authorize]
-		[Route("NENewsDeleteBase")]
-		public async Task<ActionResult<object>> NENewsDeleteBase(NENewsDeleteIN _nENewsDeleteIN)
-		{
-			try
-			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsDelete(_appSetting).NENewsDeleteDAO(_nENewsDeleteIN) };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
-		[Route("NENewsGetAllRelatesBase")]
-		public async Task<ActionResult<object>> NENewsGetAllRelatesBase(long? Id)
+		[Route("get-list-group-word-on-home-page")]
+		public async Task<ActionResult<object>> NENewsGetListHome()
 		{
 			try
 			{
-				List<NENewsGetAllRelates> rsNENewsGetAllRelates = await new NENewsGetAllRelates(_appSetting).NENewsGetAllRelatesDAO(Id);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"NENewsGetAllRelates", rsNENewsGetAllRelates},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
+				List<NENewsGetListHomePage> rsPUNewsGetListHomePage = await new NENewsGetListHomePage(_appSetting).PU_NewsGetListHomePage(true);
+				if (rsPUNewsGetListHomePage.Count < 4)
+				{
+					rsPUNewsGetListHomePage = await new NENewsGetListHomePage(_appSetting).PU_NewsGetListHomePage(false);
+				}
+				return new ResultApi { Success = ResultCode.OK, Result = rsPUNewsGetListHomePage };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -105,7 +82,7 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Authorize]
-		[Route("NENewsGetByIDBase")]
+		[Route("get-by-id")]
 		public async Task<ActionResult<object>> NENewsGetByIDBase(int? Id)
 		{
 			try
@@ -126,19 +103,16 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpGet]
+		[HttpPost]
 		[Authorize]
-		[Route("NENewsGetByIDOnJoinBase")]
-		public async Task<ActionResult<object>> NENewsGetByIDOnJoinBase(int? Id)
+		[Route("delete")]
+		public async Task<ActionResult<object>> NENewsDeleteBase(NENewsDeleteIN _nENewsDeleteIN)
 		{
 			try
 			{
-				List<NENewsGetByIDOnJoin> rsNENewsGetByIDOnJoin = await new NENewsGetByIDOnJoin(_appSetting).NENewsGetByIDOnJoinDAO(Id);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"NENewsGetByIDOnJoin", rsNENewsGetByIDOnJoin},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsDelete(_appSetting).NENewsDeleteDAO(_nENewsDeleteIN) };
 			}
 			catch (Exception ex)
 			{
@@ -151,7 +125,7 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("NENewsInsertBase"),DisableRequestSizeLimit]
+		[Route("insert"), DisableRequestSizeLimit]
 		public async Task<ActionResult<object>> NENewsInsertBase()
 		{
 			try
@@ -181,17 +155,19 @@ namespace PAKNAPI.ControllerBase
 				}
 				int res = Int32.Parse((await new NENewsInsert(_appSetting).NENewsInsertDAO(_nENewsInsertIN)).ToString());
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-				if (res > 0) {
-					return new ResultApi { Success = ResultCode.OK, Result =  res, Message ="Thêm mới thành công"};
-                }
-                else if(res == -1){
+				if (res > 0)
+				{
+					return new ResultApi { Success = ResultCode.OK, Result = res, Message = "Thêm mới thành công" };
+				}
+				else if (res == -1)
+				{
 					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Tiêu đề bị trùng" };
-                }
-                else
-                {
+				}
+				else
+				{
 					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Thêm mới thất bại" };
 				}
-				
+
 			}
 			catch (Exception ex)
 			{
@@ -202,30 +178,11 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		//[HttpPost]
-		//[Authorize]
-		//[Route("NENewsUpdateBase")]
-		//public async Task<ActionResult<object>> NENewsUpdateBase(NENewsUpdateIN _nENewsUpdateIN)
-		//{
-		//	try
-		//	{
-		//		new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-		//		return new ResultApi { Success = ResultCode.OK, Result = await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN) };
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		_bugsnag.Notify(ex);
-		//		new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-		//		return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-		//	}
-		//}
 		[HttpPost]
 		[Authorize]
-		[Route("NENewsUpdateBase"),DisableRequestSizeLimit]
+		[Route("update"), DisableRequestSizeLimit]
 		public async Task<ActionResult<object>> NENewsUpdateBase(
-			//[FromForm] NENewsUpdateIN _nENewsUpdateIN
+		//[FromForm] NENewsUpdateIN _nENewsUpdateIN
 		)
 		{
 			try
@@ -249,7 +206,7 @@ namespace PAKNAPI.ControllerBase
 				}
 
 				if (!string.IsNullOrEmpty(avatarFilePath))
-                {
+				{
 					var rs = await _fileService.Remove(_nENewsUpdateIN.ImagePath);
 					_nENewsUpdateIN.ImagePath = avatarFilePath;
 				}
@@ -280,8 +237,33 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+
 		[HttpGet]
-		[Route("NENewsViewDetailBase")]
+		[Authorize]
+		[Route("get-list-relates")]
+		public async Task<ActionResult<object>> NERelateGetAllBase(int? NewsId)
+		{
+			try
+			{
+				List<NERelateGetAll> rsNERelateGetAll = await new NERelateGetAll(_appSetting).NERelateGetAllDAO(NewsId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"NERelateGetAll", rsNERelateGetAll},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
+		[HttpGet]
+		[Route("get-detail")]
 		public async Task<ActionResult<object>> NENewsViewDetailBase(long? Id)
 		{
 			try
@@ -302,8 +284,9 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
+
 		[HttpGet]
-		[Route("NENewsViewDetailPublicBase")]
+		[Route("get-detail-public")]
 		public async Task<ActionResult<object>> NENewsViewDetailPublicBase(long? Id)
 		{
 			try
@@ -317,10 +300,11 @@ namespace PAKNAPI.ControllerBase
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Result = 0, Message = "Bài viết chưa được công bố" };
 				}
-				else {
+				else
+				{
 					return new ResultApi { Success = ResultCode.OK, Result = rsNENewsViewDetail };
 				}
-				
+
 			}
 			catch (Exception ex)
 			{
@@ -332,16 +316,16 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
-		[Authorize]
-		[Route("NERelateGetAllBase")]
-		public async Task<ActionResult<object>> NERelateGetAllBase(int? NewsId)
+		[Authorize("ThePolicy")]
+		[Route("get-list-relates-by-id")]
+		public async Task<ActionResult<object>> NENewsGetAllRelatesBase(long? Id)
 		{
 			try
 			{
-				List<NERelateGetAll> rsNERelateGetAll = await new NERelateGetAll(_appSetting).NERelateGetAllDAO(NewsId);
+				List<NENewsGetAllRelates> rsNENewsGetAllRelates = await new NENewsGetAllRelates(_appSetting).NENewsGetAllRelatesDAO(Id);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"NERelateGetAll", rsNERelateGetAll},
+						{"NENewsGetAllRelates", rsNENewsGetAllRelates},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -353,5 +337,68 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+
+		[HttpPost]
+		[Authorize]
+		[Route("insert-his")]
+		public async Task<ActionResult<object>> HISNewsInsert(HISNews _hISNews)
+		{
+			try
+			{
+				_hISNews.CreatedBy = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				_hISNews.CreatedDate = DateTime.Now;
+				string userName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
+
+				switch (_hISNews.Status)
+				{
+					case STATUS_HISNEWS.CREATE:
+						_hISNews.Content = userName + " đã khởi tạo bài viết";
+						break;
+					case STATUS_HISNEWS.UPDATE:
+						_hISNews.Content = userName + " đã cập nhập bài viết";
+						break;
+					case STATUS_HISNEWS.COMPILE:
+						_hISNews.Content = userName + " đang soạn thảo bài viết";
+						break;
+					case STATUS_HISNEWS.PUBLIC:
+						_hISNews.Content = userName + " đã công bố bài viết";
+						break;
+					case STATUS_HISNEWS.CANCEL:
+						_hISNews.Content = userName + " đã hủy công bố bài viết";
+						break;
+				}
+
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new HISNews(_appSetting).HISNewsInsert(_hISNews) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
+		[HttpGet]
+		[Authorize]
+		[Route("get-list-his-on-page")]
+		public async Task<ActionResult<object>> HISNewsGetByNewsId(int NewsId)
+		{
+			try
+			{
+				return new ResultApi { Success = ResultCode.OK, Result = await new HISNewsModel(_appSetting).HISNewsGetByNewsId(NewsId) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
+
 	}
 }

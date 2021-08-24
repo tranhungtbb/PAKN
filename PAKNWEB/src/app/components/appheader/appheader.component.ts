@@ -393,6 +393,9 @@ export class AppheaderComponent implements OnInit {
 	}
 
 	preView(){
+		if(!this.isMain){
+			return
+		}
 		this.userService.getByIdUpdate({ id: this.userId }).subscribe((res) => {
 			if (res.success != 'OK') return
 			this.model = res.result.SYUserGetByID[0]

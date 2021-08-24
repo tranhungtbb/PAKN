@@ -240,23 +240,23 @@ export class ListReceiveWaitComponent implements OnInit {
 			}
 	}
 
-	exportExcel() {
-		let request = {
-			IsActived: this.isActived,
-		}
+	// exportExcel() {
+	// 	let request = {
+	// 		IsActived: this.isActived,
+	// 	}
 
-		this._service.recommendationExportExcel(request).subscribe((response) => {
-			var today = new Date()
-			var dd = String(today.getDate()).padStart(2, '0')
-			var mm = String(today.getMonth() + 1).padStart(2, '0')
-			var yyyy = today.getFullYear()
-			var hh = String(today.getHours()).padStart(2, '0')
-			var minute = String(today.getMinutes()).padStart(2, '0')
-			var fileName = 'DM_ChucVuHanhChinh_' + yyyy + mm + dd + hh + minute
-			var blob = new Blob([response], { type: response.type })
-			importedSaveAs(blob, fileName)
-		})
-	}
+	// 	this._service.recommendationExportExcel(request).subscribe((response) => {
+	// 		var today = new Date()
+	// 		var dd = String(today.getDate()).padStart(2, '0')
+	// 		var mm = String(today.getMonth() + 1).padStart(2, '0')
+	// 		var yyyy = today.getFullYear()
+	// 		var hh = String(today.getHours()).padStart(2, '0')
+	// 		var minute = String(today.getMinutes()).padStart(2, '0')
+	// 		var fileName = 'DM_ChucVuHanhChinh_' + yyyy + mm + dd + hh + minute
+	// 		var blob = new Blob([response], { type: response.type })
+	// 		importedSaveAs(blob, fileName)
+	// 	})
+	// }
 
 	onExport() {
 		let passingObj: any = {}

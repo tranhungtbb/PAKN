@@ -25,7 +25,7 @@ using PAKNAPI.Models.Statistic;
 
 namespace PAKNAPI.Controllers
 {
-    [Route("api/Statistic")]
+    [Route("api/statistic")]
     [ApiController]
    
     public class StatisticController : BaseApiController
@@ -43,7 +43,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize]
-		[Route("STT_RecommendationByUnit")]
+		[Route("recommendation-by-unit")]
 		public async Task<ActionResult<object>> STT_RecommendationByUnitGetAllOnPageBase(string LtsUnitId, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			try
@@ -76,7 +76,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize]
-		[Route("STT_RecommendationsByUnitDetail")]
+		[Route("recommendation-by-unit-detail")]
 		public async Task<ActionResult<object>> RecommendationsByUnitDetailGetAllOnPageBase(int UnitId,string Code,string CreateName, string Title, int? Field, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			try
@@ -107,7 +107,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize]
-		[Route("STT_RecommendationByGroupWord")]
+		[Route("recommendation-by-group-word")]
 		public async Task<ActionResult<object>> STT_RecommendationByGroupWordGetAllOnPageBase(string LtsUnitId, DateTime? FromDate, DateTime? ToDate)
 		{
 			try
@@ -133,7 +133,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize]
-		[Route("STT_RecommendationByGroupWordDetail")]
+		[Route("recommendation-by-group-word-detail")]
 		public async Task<ActionResult<object>> RecommendationByGroupWordDetail(string Code, string SendName, string Title, string Content, int? UnitId, int? GroupWordId, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			try
@@ -159,7 +159,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize]
-		[Route("STT_RecommendationByField")]
+		[Route("recommendation-by-field")]
 		public async Task<ActionResult<object>> STT_RecommendationByFieldGetAllOnPageBase(string LtsUnitId, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			try
@@ -190,7 +190,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize]
-		[Route("STT_RecommendationsByFieldDetail")]
+		[Route("recommendation-by-field-detail")]
 		public async Task<ActionResult<object>> RecommendationsByFieldDetailGetAllOnPageBase(int FiledId, string Code, string CreateName, string Title, string? LstUnitId, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			try
@@ -218,26 +218,6 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
-		[HttpGet]
-		[Authorize]
-		[Route("SY_UnitGetChildrenDropdown")]
-		public async Task<ActionResult<object>> SY_UnitGetChildrenDropdown()
-		{
-			try
-			{
-				var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-				List<UnitGetChildrenDropdown> data = await new UnitGetChildrenDropdown(_appSetting).UnitGetChildrenDropdownDAO(unitId);
-				
-				return new ResultApi { Success = ResultCode.OK, Result = data };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
 
 	}
 }

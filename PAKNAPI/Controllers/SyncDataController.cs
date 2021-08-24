@@ -23,24 +23,27 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using System.Web;
 using System.Text.RegularExpressions;
+using Bugsnag;
 
 namespace PAKNAPI.Controllers
 {
-	[Route("api/SyncData")]
+	[Route("api/sync-data")]
 	[ApiController]
 	public class SyncDataController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly IClient _bugsnag;
 
-        public SyncDataController(IAppSetting appSetting, IWebHostEnvironment hostingEnvironment)
+        public SyncDataController(IAppSetting appSetting, IWebHostEnvironment hostingEnvironment, IClient bugsnag)
 		{
 			_appSetting = appSetting;
             _hostingEnvironment = hostingEnvironment;
+            _bugsnag = bugsnag;
 
         }
 
-		[Route("SyncKhanhHoa")]
+		[Route("sync-gop-y-kien-nghi")]
 		[HttpGet]
         public async Task<ActionResult<object>> SyncKhanhHoa()
         {
@@ -115,7 +118,7 @@ namespace PAKNAPI.Controllers
             };
         }
 
-        [Route("SyncCongDichVuCongQuocGia")]
+        [Route("sync-cong-dich-vu-cong-quoc-gia")] // sync-cong-dich-vu-cong-quoc-gia
         [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult<object>> SyncCongDichVuCongQuocGiaAsync()
@@ -292,7 +295,7 @@ namespace PAKNAPI.Controllers
             }
         }
 
-        [Route("SyncHopThuGopYKhanhHoa")]
+        [Route("sync-hop-thu-gop-y-khanh-hoa")]
         [HttpGet]
         //[AllowAnonymous]
         public ActionResult<object> SyncHopThuGopYKhanhHoa()
@@ -351,7 +354,7 @@ namespace PAKNAPI.Controllers
             
         }
 
-        [Route("SyncQuanLyKienNghiCuTri")]
+        [Route("sync-quan-ly-kien-nghi-cu-tri")]
         [HttpGet]
         public async Task<ActionResult<object>> SyncQuanLyKienNghiCuTriAsync()
         {
@@ -482,6 +485,300 @@ namespace PAKNAPI.Controllers
                 };
             }
         }
+
+
+        [Route("get-list-cong-thong-tin-dien-tu-tinh-on-page")]
+        [HttpGet]
+        [Authorize]
+        public async Task<object> CongThongTinDienTuTinh(
+            string questioner,
+            string question,
+            int pageIndex = 1,
+            int pageSize = 20)
+        {
+
+            try
+            {
+                var repository = new RecommandationSyncDAO(_appSetting);
+
+                var rs = await repository.CongThongTinDienTuTinhGetPagedList(questioner, question, pageIndex, pageSize);
+                IDictionary<string, object> json = new Dictionary<string, object>
+                {
+                    {"Data", rs}
+                };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [Route("cong-thong-tin-dien-tu-tinh-get-by-id")]
+        [HttpGet]
+        public async Task<object> CongThongTinDienTuTinhGetByIdBase(int Id)
+        {
+            try
+            {
+                Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
+                var repository = new RecommandationSyncDAO(_appSetting);
+                var rs = await repository.CongThongTinDienTuTinhGetByIdDAO(Id);
+                var files = await new MR_SyncFileAttach(_appSetting).RecommentdationSyncFileAttachGetByObjectIdDAO(Id);
+                foreach (var item in files)
+                {
+                    item.FilePath = decrypt.EncryptData(item.FilePath);
+                }
+                IDictionary<string, object> json = new Dictionary<string, object>
+                {
+                    {"Data", rs},
+                    {"FileAttach", files},
+                };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [HttpGet]
+        [Authorize("ThePolicy")]
+        [Route("get-list-quan-ly-kien-nghi-cu-tri-on-page")]
+        public async Task<ActionResult<object>> MR_Sync_CuTriTinhKhanhHoaGetList(string Content, string Unit, string Place, int? Field, int? Status, int? PageSize, int? PageIndex)
+        {
+            try
+            {
+                List<MR_CuTriTinhKhanhHoaGetPage> rsMRRecommendationKNCTGetAllWithProcess = await new MR_CuTriTinhKhanhHoaGetPage(_appSetting).MR_Sync_CuTriTinhKhanhHoaGetListDAO(Content, Unit, Place, Field, Status, PageSize, PageIndex);
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"MRRecommendationKNCTGetAllWithProcess", rsMRRecommendationKNCTGetAllWithProcess},
+                        {"TotalCount", rsMRRecommendationKNCTGetAllWithProcess != null && rsMRRecommendationKNCTGetAllWithProcess.Count > 0 ? rsMRRecommendationKNCTGetAllWithProcess[0].RowNumber : 0},
+                        {"PageIndex", rsMRRecommendationKNCTGetAllWithProcess != null && rsMRRecommendationKNCTGetAllWithProcess.Count > 0 ? PageIndex : 0},
+                        {"PageSize", rsMRRecommendationKNCTGetAllWithProcess != null && rsMRRecommendationKNCTGetAllWithProcess.Count > 0 ? PageSize : 0},
+                    };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+
+        [HttpGet]
+        [Route("cu-tri-khanh-hoa-get-by-id")]
+        public async Task<ActionResult<object>> MRRecommendationKNCTGetByIdBase(int Id)
+        {
+            try
+            {
+                Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
+                List<MR_CuTriTinhKhanhHoa> rsMRRecommendationKNCTGetById = await new MR_CuTriTinhKhanhHoa(_appSetting).MR_Sync_CuTriTinhKhanhHoaGetByIdDAO(Id);
+                List<MR_SyncFileAttach> files = await new MR_SyncFileAttach(_appSetting).MR_Sync_CuTriTinhKhanhHoaFileAttachGetByKNCTIdDAO(Id);
+
+                foreach (var item in files)
+                {
+                    item.FilePath = decrypt.EncryptData(item.FilePath);
+                }
+
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"MRRecommendationKNCTGetById", rsMRRecommendationKNCTGetById},
+                        {"FileAttach", files},
+                    };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [Route("get-list-cong-thong-tin-dv-hcc-on-page")]
+        [HttpGet]
+        public async Task<object> CongThongTinDichVuHCCPagedList(
+            string questioner,
+            string question,
+            int pageIndex = 1,
+            int pageSize = 20)
+        {
+
+            try
+            {
+                var repository = new RecommandationSyncDAO(_appSetting);
+
+                var rs = await repository.CongThongTinDichVuHCCGetPagedList(questioner, question, pageIndex, pageSize);
+                IDictionary<string, object> json = new Dictionary<string, object>
+                {
+                    {"Data", rs},
+                    {"TotalCount", rs != null && rs.Count > 0 ? rs[0].RowNumber : 0},
+                    {"PageIndex", rs != null && rs.Count > 0 ? pageIndex : 0},
+                    {"PageSize", rs != null && rs.Count > 0 ? pageSize : 0},
+                };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [Route("cong-thong-tin-dv-hcc-get-by-id")]
+        [HttpGet]
+        public async Task<object> CongThongTinDichVuHCCGetByIdBase(int Id)
+        {
+            try
+            {
+                var repository = new RecommandationSyncDAO(_appSetting);
+
+                var rs = await repository.CongThongTinDichVuHCCGetById(Id);
+                IDictionary<string, object> json = new Dictionary<string, object>
+                {
+                    {"Data", rs}
+                };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+
+        [Route("get-list-pakn-chinh-phu-on-page")]
+        [HttpGet]
+        public async Task<object> HeThongPANKChinhPhuPagedList(
+            string Questioner,
+            string Question,
+            int PageIndex = 1,
+            int PageSize = 20)
+        {
+
+            try
+            {
+                var repository = new RecommandationSyncDAO(_appSetting);
+
+                var rs = await repository.HeThongPANKChinhPhuGetPagedList(Questioner, Question, PageIndex, PageSize);
+                IDictionary<string, object> json = new Dictionary<string, object>
+                {
+                    {"Data", rs},
+                    {"TotalCount", rs != null && rs.Count > 0 ? rs[0].RowNumber : 0},
+                    {"PageIndex", rs != null && rs.Count > 0 ? PageIndex : 0},
+                    {"PageSize", rs != null && rs.Count > 0 ? PageSize : 0},
+                };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [HttpGet]
+        [Route("pakn-chinh-phu-get-by-id")]
+        public async Task<ActionResult<object>> MR_Sync_PANKChinhPhuGetByObjectId(int Id)
+        {
+            try
+            {
+                Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
+                List<DichViCongQuocGia> rsMRRecommendationDVCGetById = await new RecommendationDAO(_appSetting).SyncDichVuCongQuocGiaGetByObjecId(Id);
+                List<MR_SyncFileAttach> files = await new MR_SyncFileAttach(_appSetting).MR_Sync_DichVuCongQuocGiaFileAttachGetByDVCIdDAO(Id);
+
+                foreach (var item in files)
+                {
+                    item.FilePath = decrypt.EncryptData(item.FilePath);
+                }
+
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"MRRecommendationPAKNCPGetById", rsMRRecommendationDVCGetById},
+                        {"FileAttach", files},
+                    };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+
+
+
+        //[Route("PUGetPagedList")]
+        //[HttpGet]
+        //[Authorize]
+        //public async Task<object> PUGetPagedList(
+        //    string keyword,
+        //    int src = 1,
+        //    int pageIndex = 1,
+        //    int pageSize = 20)
+        //{
+
+        //    try
+        //    {
+        //        var repository = new RecommandationSyncDAO(_appSetting);
+
+        //        var rs = await repository.PURecommandationSyncGetPagedList(keyword, src, pageIndex, pageSize);
+        //        IDictionary<string, object> json = new Dictionary<string, object>
+        //        {
+        //            {"Data", rs}
+        //        };
+        //        return new ResultApi { Success = ResultCode.OK, Result = json };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _bugsnag.Notify(ex);
+
+        //        return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+        //    }
+        //}
+
+        //[Route("PUGetGetById")]
+        //[HttpGet]
+        //[Authorize]
+        //public async Task<object> PUGetGetById(
+        //    long id,
+        //    int src = 1)
+        //{
+
+        //    try
+        //    {
+        //        var repository = new RecommandationSyncDAO(_appSetting);
+
+        //        var rs = await repository.PURecommandationSyncGetDetail(id, src);
+        //        IDictionary<string, object> json = new Dictionary<string, object>
+        //        {
+        //            {"Data", rs}
+        //        };
+        //        return new ResultApi { Success = ResultCode.OK, Result = json };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _bugsnag.Notify(ex);
+
+        //        return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+        //    }
+        //}
 
         private async Task<List<ResponseDropdownKienNghiCuTri>> SyncFieldKienNghiCuTriAsync()
         {

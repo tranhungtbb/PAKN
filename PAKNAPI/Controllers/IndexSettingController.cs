@@ -22,7 +22,7 @@ using PAKNAPI.Models.Recommendation;
 
 namespace PAKNAPI.Controllers
 {
-    [Route("api/SYIndexSetting")]
+    [Route("api/index-setting")]
     [ApiController]
    
     public class IndexSettingController : BaseApiController
@@ -41,7 +41,7 @@ namespace PAKNAPI.Controllers
         //'SYIntroduce/IntroduceGetInfo'
         [HttpGet]
         //[Authorize]
-        [Route("IndexSettingGetInfo")]
+        [Route("get-info")]
         public async Task<object> SYIndexSettingGetInfo() {
             try {
                 IndexSettingModel result = new IndexSettingModel();
@@ -71,7 +71,7 @@ namespace PAKNAPI.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("IndexSettingUpdate")]
+        [Route("update")]
         public async Task<object> IndexSettingUpdate() {
             try
             {
@@ -175,7 +175,7 @@ namespace PAKNAPI.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("IndexWebsiteGetAll")]
+        [Route("get-list-index-website")]
         public async Task<object> SYIndexWebsiteGetAll()
         {
             try
@@ -194,7 +194,7 @@ namespace PAKNAPI.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("IndexWebsiteInsert")]
+        [Route("index-website-insert")]
         public async Task<object> SYIndexWebsiteInsert(SYIndexWebsite model)
         {
             try

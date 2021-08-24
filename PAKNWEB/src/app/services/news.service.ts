@@ -90,16 +90,6 @@ export class NewsService {
 	getAllNewsRelates(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.NewsRelatesGetAll)
 	}
-	uploadFile(data: any): Observable<any> {
-		return this.serviceInvoker.postfile(data, AppSettings.API_ADDRESS + Api.NewsUploadFile)
-	}
-	getAvatar(data: string): Observable<any> {
-		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.NewsGetAvatar + '/' + data)
-	}
-
-	getAvatars(data: number[]): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.NewsGetAvatars)
-	}
 
 	hisNewsCreate(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.HisNewsInsert)

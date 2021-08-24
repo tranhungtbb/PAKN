@@ -65,7 +65,7 @@ export class BusinessIndividualService {
 	}
 
 	individualCheckExists(params: any): Observable<any> {
-		return this.serviceInvoker.get(params, AppSettings.API_ADDRESS + Api.InvididualCheckExists)
+		return this.serviceInvoker.get(params, AppSettings.API_ADDRESS + Api.IndividualCheckExists)
 	}
 
 	businessGetList(request: any): Observable<any> {

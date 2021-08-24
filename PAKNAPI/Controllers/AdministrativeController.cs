@@ -15,32 +15,34 @@ using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using Bugsnag;
 
-namespace PAKNAPI.ControllerBase
+namespace PAKNAPI
 {
-	[Route("api/PUSPBase")]
+	[Route("api/administrative")]
 	[ApiController]
-	public class PUSPBaseController : BaseApiController
+	public class AdministrativeController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;
 
-		public PUSPBaseController(IAppSetting appSetting, IClient bugsnag)
+		public AdministrativeController(IAppSetting appSetting, IClient bugsnag)
 		{
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
 		}
 
+
+
 		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("PURecommendationStatisticsGetByUserIdBase")]
-		public async Task<ActionResult<object>> PURecommendationStatisticsGetByUserIdBase(int? UserId)
+		[Route("get-list-province")]
+		public async Task<ActionResult<object>> CAProvinceGetAllBase()
 		{
 			try
 			{
-				List<PURecommendationStatisticsGetByUserId> rsPURecommendationStatisticsGetByUserId = await new PURecommendationStatisticsGetByUserId(_appSetting).PURecommendationStatisticsGetByUserIdDAO(UserId);
+				List<CAProvinceGetAll> rsCAProvinceGetAll = await new CAProvinceGetAll(_appSetting).CAProvinceGetAllDAO();
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"PURecommendationStatisticsGetByUserId", rsPURecommendationStatisticsGetByUserId},
+						{"CAProvinceGetAll", rsCAProvinceGetAll},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -52,18 +54,82 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("get-list-district")]
+		public async Task<ActionResult<object>> CADistrictGetAllBase(byte? ProvinceId)
+		{
+			try
+			{
+				List<CADistrictGetAll> rsCADistrictGetAll = await new CADistrictGetAll(_appSetting).CADistrictGetAllDAO(ProvinceId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CADistrictGetAll", rsCADistrictGetAll},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("get-list-village")]
+		public async Task<ActionResult<object>> CAVillageGetAllBase(short? ProvinceId, short? DistrictId)
+		{
+			try
+			{
+				List<CAVillageGetAll> rsCAVillageGetAll = await new CAVillageGetAll(_appSetting).CAVillageGetAllDAO(ProvinceId, DistrictId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAVillageGetAll", rsCAVillageGetAll},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+		[HttpGet]
+		[Route("get-list-province-by-province-id")]
+		public async Task<ActionResult<object>> GetAllByProvinceId(short? ProvinceId)
+		{
+			try
+			{
+				List<CAGetAllByProvinceId> rsList = await new CAGetAllByProvinceId(_appSetting).GetAll(ProvinceId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"ListData", rsList},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 		[HttpGet]
 		[Authorize]
-		[Route("PURecommendationGetAllOnPageBase")]
-		public async Task<ActionResult<object>> PURecommendationGetAllOnPageBase(string KeySearch, int? Status, int? PageSize, int? PageIndex)
+		[Route("get-drop-down")]
+		public async Task<ActionResult<object>> CAAdministrativeUnitsGetDropDownBase(int? Id)
 		{
 			try
 			{
-				List<PURecommendationGetAllOnPage> rsPURecommendationGetAllOnPage = await new PURecommendationGetAllOnPage(_appSetting).PURecommendationGetAllOnPageDAO(KeySearch, Status, PageSize, PageIndex);
+				List<CAAdministrativeUnitsGetDropDown> rsCAAdministrativeUnitsGetDropDown = await new CAAdministrativeUnitsGetDropDown(_appSetting).CAAdministrativeUnitsGetDropDownDAO(Id);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"PURecommendationGetAllOnPage", rsPURecommendationGetAllOnPage},
+						{"CAAdministrativeUnitsGetDropDown", rsCAAdministrativeUnitsGetDropDown},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -76,47 +142,7 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		[HttpGet]
-		[Route("PUSupportDocument")]
-		public async Task<ActionResult<object>> PUSupportDocument()
-		{
-			try
-			{
-				List<PUSupportModelBase> rsData = await new PUSupportModelBase(_appSetting).PUSupportModelBaseDAO();
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"ListData", rsData},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-		[HttpGet]
-		[Route("PuDowloadFile")]
-		public async Task<ActionResult<object>> PuDowloadFile(string filePath)
-		{
-			try
-			{
-				List<PUSupportModelBase> rsData = await new PUSupportModelBase(_appSetting).PUSupportModelBaseDAO();
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"ListData", rsData},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
 	}
 }

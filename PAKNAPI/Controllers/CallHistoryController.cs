@@ -12,14 +12,14 @@ using System.Threading.Tasks;
 
 namespace PAKNAPI.Controllers.ControllerBase
 {
-	[Route("api/[controller]")]
+	[Route("api/call-history")]
 	[ApiController]
-	public class SYCallHistoryController : BaseApiController
+	public class CallHistoryController : BaseApiController
     {
 		private readonly IAppSetting _appSetting;
 		private readonly IWebHostEnvironment _hostingEnvironment;
 		private readonly IClient _bugsnag;
-		public SYCallHistoryController(IWebHostEnvironment hostingEnvironment, IAppSetting appSetting, IClient bugsnag)
+		public CallHistoryController(IWebHostEnvironment hostingEnvironment, IAppSetting appSetting, IClient bugsnag)
 		{
 			_appSetting = appSetting;
 			_hostingEnvironment = hostingEnvironment;
@@ -27,7 +27,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 		[HttpGet]
-		[Route("SYCallHistoryGetPagedList")]
+		[Route("get-list-call-history-on-page")]
 		[Authorize]
 		public async Task<ActionResult<object>> SYCallHistoryGetPagedList(int? type, string phone, int pageIndex = 1, int pageSize =20)
 		{
@@ -51,7 +51,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 		[HttpGet]
-		[Route("Delete")]
+		[Route("delete")]
 		[Authorize]
 		public async Task<ActionResult<object>> Delete(long id)
 		{

@@ -63,12 +63,12 @@ export class RecommandationSyncService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.MrSyncHeThongQuanLyKienNghiCuTriPagedList)
 	}
 
-	getAllPagedList(query:any): Observable<any> {
-		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PU_RecommandationSyncPagedList)
-	}
+	// getAllPagedList(query:any): Observable<any> {
+	// 	return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PU_RecommandationSyncPagedList)
+	// }
 
-	getDetail(query:any): Observable<any> {
-		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PU_RecommandationSyncGetDetail)
-	}
+	// getDetail(query:any): Observable<any> {
+	// 	return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PU_RecommandationSyncGetDetail)
+	// }
 	
 }

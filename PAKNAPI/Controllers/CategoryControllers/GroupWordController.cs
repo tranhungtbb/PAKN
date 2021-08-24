@@ -1,0 +1,170 @@
+﻿using PAKNAPI.Common;
+using PAKNAPI.Controllers;
+using PAKNAPI.Models;
+using PAKNAPI.ModelBase;
+using PAKNAPI.Models.Results;
+using System;
+using Dapper;
+using System.Linq;
+using System.Web;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Net.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
+using Bugsnag;
+using Microsoft.AspNetCore.Http;
+using PAKNAPI.Models.ModelBase;
+
+namespace PAKNAPI.Controllers.ControllerBase
+{
+    [Route("api/group-word")]
+    [ApiController]
+    public class GroupWordController : BaseApiController
+	{
+        private readonly IAppSetting _appSetting;
+        private readonly IClient _bugsnag;
+
+        public GroupWordController(IAppSetting appSetting, IClient bugsnag)
+        {
+            _appSetting = appSetting;
+            _bugsnag = bugsnag;
+        }
+
+		[HttpPost]
+		[Authorize]
+		[Route("delete")]
+		public async Task<ActionResult<object>> CAGroupWordDeleteBase(CAGroupWordDeleteIN _cAGroupWordDeleteIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAGroupWordDelete(_appSetting).CAGroupWordDeleteDAO(_cAGroupWordDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("get-list-group-word-on-page")]
+		public async Task<ActionResult<object>> CAGroupWordGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
+		{
+			try
+			{
+				List<CAGroupWordGetAllOnPage> rsCAGroupWordGetAllOnPage = await new CAGroupWordGetAllOnPage(_appSetting).CAGroupWordGetAllOnPageDAO(PageSize, PageIndex, Name, Description, IsActived);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAGroupWordGetAllOnPage", rsCAGroupWordGetAllOnPage},
+						{"TotalCount", rsCAGroupWordGetAllOnPage != null && rsCAGroupWordGetAllOnPage.Count > 0 ? rsCAGroupWordGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsCAGroupWordGetAllOnPage != null && rsCAGroupWordGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsCAGroupWordGetAllOnPage != null && rsCAGroupWordGetAllOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("get-by-id")]
+		public async Task<ActionResult<object>> CAGroupWordGetByIDBase(int? Id)
+		{
+			try
+			{
+				List<CAGroupWordGetByID> rsCAGroupWordGetByID = await new CAGroupWordGetByID(_appSetting).CAGroupWordGetByIDDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAGroupWordGetByID", rsCAGroupWordGetByID},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("get-list-suggest")]
+		public async Task<ActionResult<object>> CAGroupWordGetListSuggestBase()
+		{
+			try
+			{
+				List<CAGroupWordGetListSuggest> rsCAGroupWordGetListSuggest = await new CAGroupWordGetListSuggest(_appSetting).CAGroupWordGetListSuggestDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAGroupWordGetListSuggest", rsCAGroupWordGetListSuggest},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("insert")]
+		public async Task<ActionResult<object>> CAGroupWordInsertBase(CAGroupWordInsertIN _cAGroupWordInsertIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAGroupWordInsert(_appSetting).CAGroupWordInsertDAO(_cAGroupWordInsertIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize]
+		[Route("update")]
+		public async Task<ActionResult<object>> CAGroupWordUpdateBase(CAGroupWordUpdateIN _cAGroupWordUpdateIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAGroupWordUpdate(_appSetting).CAGroupWordUpdateDAO(_cAGroupWordUpdateIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
+
+	}
+}

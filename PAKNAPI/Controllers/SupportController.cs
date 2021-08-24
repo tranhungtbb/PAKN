@@ -23,7 +23,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace PAKNAPI.Controllers
 {
-    [Route("api/SYSupport")]
+    [Route("api/Support")]
     [ApiController]
    
     public class SupportController : BaseApiController
@@ -41,7 +41,7 @@ namespace PAKNAPI.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("SYSupportGetByCategory")]
+        [Route("get-by-category")]
         public async Task<object> SYSupportGetAll(int? Category) {
             try {
 
@@ -58,7 +58,7 @@ namespace PAKNAPI.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("SYSupportInsert")]
+        [Route("insert")]
         public async Task<object> SYSupportInsert()
         {
             try
@@ -106,7 +106,7 @@ namespace PAKNAPI.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("SYSupportUpdate")]
+        [Route("update")]
         public async Task<object> SYIntroduceUpdate() {
             try
             {
@@ -154,7 +154,7 @@ namespace PAKNAPI.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("SYSupportDetete")]
+        [Route("delete")]
         public async Task<object> SYSupportDelete(SYSupportMenuDelete model)
         {
             try
@@ -178,6 +178,29 @@ namespace PAKNAPI.Controllers
             catch (Exception ex)
             {
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+
+        [HttpGet]
+        [Route("support-public")]
+        public async Task<ActionResult<object>> PUSupportDocument()
+        {
+            try
+            {
+                List<PUSupportModelBase> rsData = await new PUSupportModelBase(_appSetting).PUSupportModelBaseDAO();
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"ListData", rsData},
+                    };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }

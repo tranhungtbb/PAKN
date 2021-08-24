@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace PAKNAPI.Controllers
 {
-    [Route("api/Files")]
+    [Route("api/files")]
     [ApiController]
    
     public class FilesController : BaseApiController
@@ -33,7 +33,7 @@ namespace PAKNAPI.Controllers
         }
 
         [HttpGet]
-        [Route("DownloadFile")]
+        [Route("download-file")]
         [Authorize]
         public ActionResult DownloadFile(string Path, string Name)
         {
@@ -55,7 +55,7 @@ namespace PAKNAPI.Controllers
             }
         }
         [HttpGet]
-        [Route("GetFile")]
+        [Route("get-file")]
         [Authorize]
         public ActionResult GetFile(string Path, string Name)
         {
@@ -74,27 +74,27 @@ namespace PAKNAPI.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("GetFileSupport")]
-        [Authorize]
-        public List<string> GetFileSupport(int UserId)
-        {
-            //string strFileUrl = _hostingEnvironment.WebRootPath + "\\";
-            var _urlFileSupport = _appSetting.GetUrlFileSupports();
-            List<string> list = new List<string>();
-            var fileHdsdCv = _urlFileSupport.UrlHdsdCV;
-            var fileHdsdLdcb = _urlFileSupport.UrlHdsdLdcb;
-            var fileHdsdQtht = _urlFileSupport.UrlHdsdQtht;
-            var fileUrlHdsdDb = _urlFileSupport.UrlHdsdDb;
-            list.Add(fileHdsdCv);
-            list.Add(fileHdsdLdcb);
-            list.Add(fileHdsdQtht);
-            list.Add(fileUrlHdsdDb);
-            return list;
-        }
+        //[HttpGet]
+        //[Route("get-fileSupport")]
+        //[Authorize]
+        //public List<string> GetFileSupport(int UserId)
+        //{
+        //    //string strFileUrl = _hostingEnvironment.WebRootPath + "\\";
+        //    var _urlFileSupport = _appSetting.GetUrlFileSupports();
+        //    List<string> list = new List<string>();
+        //    var fileHdsdCv = _urlFileSupport.UrlHdsdCV;
+        //    var fileHdsdLdcb = _urlFileSupport.UrlHdsdLdcb;
+        //    var fileHdsdQtht = _urlFileSupport.UrlHdsdQtht;
+        //    var fileUrlHdsdDb = _urlFileSupport.UrlHdsdDb;
+        //    list.Add(fileHdsdCv);
+        //    list.Add(fileHdsdLdcb);
+        //    list.Add(fileHdsdQtht);
+        //    list.Add(fileUrlHdsdDb);
+        //    return list;
+        //}
 
         [HttpGet]
-        [Route("DownloadFileSupport")]
+        [Route("download-file-support")]
         public ActionResult LoadImage(string filePath, string Name)
         {
             try

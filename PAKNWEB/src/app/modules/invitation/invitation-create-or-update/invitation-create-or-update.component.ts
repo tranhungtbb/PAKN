@@ -190,9 +190,9 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 			}
 		})
 
-		this.userService.getIsSystem2({}).subscribe((res) => {
+		this.userService.getIsSystem({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				this.listUserIsSystem = res.result.SYUserGetIsSystem2
+				this.listUserIsSystem = res.result.SYUserGetIsSystem
 				this.getInvitatonModelById()
 			} else {
 				this.listUserIsSystem = []

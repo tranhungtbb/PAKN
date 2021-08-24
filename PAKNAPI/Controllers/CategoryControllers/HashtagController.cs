@@ -19,14 +19,14 @@ using PAKNAPI.Models.ModelBase;
 
 namespace PAKNAPI.Controllers.ControllerBase
 {
-    [Route("api/CAHashtag")]
+    [Route("api/hashtag")]
     [ApiController]
-    public class CAHashtagController : BaseApiController
+    public class HashtagController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;
 
-        public CAHashtagController(IAppSetting appSetting, IClient bugsnag)
+        public HashtagController(IAppSetting appSetting, IClient bugsnag)
         {
             _appSetting = appSetting;
             _bugsnag = bugsnag;
@@ -35,7 +35,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 
 		[HttpGet]
 		[Authorize]
-		[Route("CAHashtagGetAllOnPage")]
+		[Route("get-list-hashtag-on-page")]
 		public async Task<ActionResult<object>> CAHashtagGetAllOnPage(int PageSize, int PageIndex, string Name, int? QuantityUser, bool? IsActived)
 		{
 			try
@@ -61,7 +61,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 
 		[HttpGet]
 		[Authorize]
-		[Route("CAHashtagGetAll")]
+		[Route("get-all")]
 		public async Task<ActionResult<object>> CAHashtagGetAll()
 		{
 			try
@@ -77,9 +77,32 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("get-by-id")]
+		public async Task<ActionResult<object>> CAHashtagGetByIDBase(int? Id)
+		{
+			try
+			{
+				List<CAHashtagGetByID> rsCAHashtagGetByID = await new CAHashtagGetByID(_appSetting).CAHashtagGetByIDDAO(Id);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAHashtagGetByID", rsCAHashtagGetByID},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		[HttpPost]
 		[Authorize]
-		[Route("CAHashtagInsert")]
+		[Route("insert")]
 		public async Task<ActionResult<object>> CAHashtagInsert(CAHashtag _cAHashtag)
 		{
 			try
@@ -99,7 +122,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("CAHashtagUpdate")]
+		[Route("update")]
 		public async Task<ActionResult<object>> CAHashtagUpdate(CAHashtag _cAHashtag)
 		{
 			try
@@ -128,7 +151,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 
 		[HttpPost]
 		[Authorize]
-		[Route("CAHashtagDelete")]
+		[Route("delete")]
 		public async Task<ActionResult<object>> CAHashtagDelete(CAHashtag _cAHashtag)
 		{
 			try

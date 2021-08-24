@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace PAKNAPI.Controllers.ControllerBase
 {
-    [Route("api/[controller]")]
+    [Route("api/email-management")]
     [ApiController]
     public class EmailManagementController : BaseApiController
     {
@@ -43,7 +43,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 
 		[HttpPost]
 		[Authorize("ThePolicy")]
-		[Route("Update"), DisableRequestSizeLimit]
+		[Route("update"), DisableRequestSizeLimit]
 		public async Task<ActionResult<object>> Update([FromQuery] string userId)
 		{
 			try
@@ -166,7 +166,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("GetById")]
+		[Route("get-by-id")]
 		public async Task<ActionResult<object>> GetById(long id)
         {
             try
@@ -222,7 +222,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("GetPagedList")]
+		[Route("get-list-email-on-page")]
 		public async Task<ActionResult<object>> GetPagedList(
 			string title,
 			int? unit,
@@ -255,7 +255,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("Delete")]
+		[Route("delete")]
 		public async Task<ActionResult<object>> Delete(long id)
 		{
 			try
@@ -290,7 +290,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("SendEmail")]
+		[Route("send-email")]
 		public async Task<ActionResult<object>> SendEmail(long id, [FromQuery] string userId)
 		{
 			try
@@ -329,7 +329,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("GetHisPagedList")]
+		[Route("list-his")]
 		public async Task<ActionResult<object>> GetHisPagedList(
 			int objectId,
 			string content,

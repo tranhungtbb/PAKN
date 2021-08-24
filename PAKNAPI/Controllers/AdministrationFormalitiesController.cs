@@ -18,25 +18,29 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using PAKNAPI.Models.User;
+using PAKNAPI.Models.ModelBase;
+using Bugsnag;
 
 namespace PAKNAPI.Controller
 {
-    [Route("api/AdministrationFormalities")]
+    [Route("api/administration-formalities")]
     [ApiController]
     public class AdministrationFormalitiesController : BaseApiController
     {
         private readonly IAppSetting _appSetting;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        public AdministrationFormalitiesController(IWebHostEnvironment hostingEnvironment, IAppSetting appSetting)
+        private readonly IClient _bugsnag;
+        public AdministrationFormalitiesController(IWebHostEnvironment hostingEnvironment, IAppSetting appSetting, IClient bugsnag)
         {
             _appSetting = appSetting;
             _hostingEnvironment = hostingEnvironment;
+            _bugsnag = bugsnag;
         }
 
 
         [HttpGet]
         //[Authorize]
-        [Route("AdministrationFormalitiesGetByID")]
+        [Route("get-by-id")]
         public async Task<ActionResult<object>> AdministrationFormalitiesGetByID(int? Id)
         {
             try
@@ -51,94 +55,10 @@ namespace PAKNAPI.Controller
             }
         }
 
-        [HttpGet]
-        [Authorize]
-        [Route("AdministrativeUnitGetAllById")]
-        public async Task<ActionResult<object>> AdministrativeUnitGetAllById(int? Id)
-        {
-            try
-            {
-                List<DropListTreeView> result = new List<DropListTreeView>();
-                // lst đơn vị
-                //List<AdministrativeUnitGetAllById> lstAdministrative = await new AdministrativeUnitGetAllById(_appSetting).AdministrativeUnitsGetDropDownDAO(Id);
-                //// lst người dùng theo đơn vị từng đơn vị
-                //DropListTreeView tinh = new DropListTreeView();
-                //foreach (var province in lstAdministrative.Where(x => x.Id == Id).ToList())
-                //{
-                //    tinh = new DropListTreeView(province.Name, province.Id, new List<DropListTreeView>());
-                //    List<SYUserGetByUnitId> usersProvice = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(province.Value);
-                //    foreach (var userProvice in usersProvice)
-                //    {
-                //        tinh.children.Add(new DropListTreeView(userProvice.FullName, userProvice.Id));
-                //    }
-                //    // list chilldren của chil
-                //    DropListTreeView huyen = new DropListTreeView();
-                //    foreach (var district in lstUnit.Where(x => x.ParentId == province.Value && x.UnitLevel == 2).ToList())
-                //    {
-                //        huyen = new DropListTreeView(district.Text, district.Value, new List<DropListTreeView>());
-                //        List<SYUserGetByUnitId> usersDistrict = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(district.Value);
-                //        foreach (var userDistrict in usersDistrict)
-                //        {
-                //            huyen.children.Add(new DropListTreeView(userDistrict.FullName, userDistrict.Id));
-                //        }
-                //        // list children của child1
-                //        DropListTreeView xa = new DropListTreeView();
-                //        foreach (var commune in lstUnit.Where(x => x.ParentId == district.Value && x.UnitLevel == 3).ToList())
-                //        {
-                //            xa = new DropListTreeView(commune.Text, commune.Value, new List<DropListTreeView>());
-                //            List<SYUserGetByUnitId> usersCommune = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(commune.Value);
-                //            foreach (var userCommune in usersCommune)
-                //            {
-                //                xa.children.Add(new DropListTreeView(userCommune.FullName, userCommune.Id));
-                //            }
-                //            if (xa.children.Count > 0)
-                //            {
-                //                huyen.children.Add(xa);
-                //            }
-                //        }
-                //        if (huyen.children.Count > 0)
-                //        {
-                //            tinh.children.Add(huyen);
-                //        }
-
-                //    }
-                //    if (tinh.children.Count > 0) { result.Add(tinh); }
-
-                //}
-
-
-                return new ResultApi { Success = ResultCode.OK, Result = result };
-            }
-            catch (Exception ex)
-            {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-            }
-        }
-
-        //[HttpGet]
-        //[Authorize]
-        //[Route("AdministrationFormalitiesGetList")]
-        //public async Task<ActionResult<object>> AdministrationFormalitiesGetByIDView(int? Id)
-        //{
-        //    try
-        //    {
-        //        DAMAdministrationFilesGetByAdministrationId data = new AdministrationFormalitiesGetByIDViewResponse();
-        //        return new ResultApi { Success = ResultCode.OK, Result = await new AdministrationFormalitiesDAO(_appSetting).AdministrationFormalitiesGetByIDView(Id) };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-        //        return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-        //    }
-        //}
-
 
         [HttpPost]
         [Authorize]
-        [Route("AdministrationFormalitiesInsert")]
+        [Route("insert")]
         public async Task<ActionResult<object>> AdministrationFormalitiesInsert()
         {
             try
@@ -263,26 +183,11 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
-        [HttpPost]
-        [Authorize("ThePolicy")]
-        [Route("SYSystemLogDeleteBase")]
-        public async Task<ActionResult<object>> SYSystemLogDeleteBase(int? Id)
-        {
-            try
-            {
-                SYSystemLogDeleteIN _sYSystemLogDeleteIN = new SYSystemLogDeleteIN();
-                _sYSystemLogDeleteIN.Id = Id;
-                return new ResultApi { Success = ResultCode.OK, Result = await new SYSystemLogDelete(_appSetting).SYSystemLogDeleteDAO(_sYSystemLogDeleteIN) };
-            }
-            catch (Exception ex)
-            {
-                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-            }
-        }
+        
 
         [HttpPost,DisableRequestSizeLimit]
         [Authorize]
-        [Route("AdministrationFormalitiesUpdate")]
+        [Route("update")]
         public async Task<ActionResult<object>> AdministrationFormalitiesUpdate()
         {
             try
@@ -546,5 +451,206 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+
+        [HttpGet]
+        [Authorize("ThePolicy")]
+        [Route("get-list-administration-formalities-on-page")]
+        public async Task<ActionResult<object>> DAMAdministrationGetListBase(string Code, string Name, string Object, string Organization, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex, int? TotalRecords)
+        {
+            try
+            {
+                List<DAMAdministrationGetList> rsDAMAdministrationGetList = await new DAMAdministrationGetList(_appSetting).DAMAdministrationGetListDAO(Code, Name, Object, Organization, UnitId, Field, Status, PageSize, PageIndex, TotalRecords);
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"DAMAdministrationGetList", rsDAMAdministrationGetList},
+                    };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("get-list-administration-formalities-forward-on-page")]
+        public async Task<ActionResult<object>> DAMAdministrationForwardGetListOnPageBase(string Code, string Name, string Organization, int? FieldId, int? UnitForward, int? Status, int PageSize, int PageIndex)
+        {
+            try
+            {
+                var userProcess = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                List<DAMAdministrationForwardGetList> rsDAMAdministrationGetList =
+                    await new DAMAdministrationForwardGetList(_appSetting).
+                    DAMAdministrationForwardGetListDAO(userProcess, Code, Name, Organization, FieldId, UnitForward, Status, PageSize, PageIndex);
+
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"DAMAdministrationForwardGetListOnPage", rsDAMAdministrationGetList},
+                        {"TotalCount", rsDAMAdministrationGetList != null && rsDAMAdministrationGetList.Count > 0 ? rsDAMAdministrationGetList[0].RowNumber : 0},
+                        {"PageIndex", rsDAMAdministrationGetList != null && rsDAMAdministrationGetList.Count > 0 ? PageIndex : 0},
+                        {"PageSize", rsDAMAdministrationGetList != null && rsDAMAdministrationGetList.Count > 0 ? PageSize : 0},
+                    };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [HttpGet]
+        [Authorize("ThePolicy")]
+        [Route("get-list-administration-formalities-home-page")]
+        public async Task<ActionResult<object>> DAMAdministrationGetListTopBase()
+        {
+            try
+            {
+                List<DAMAdministrationGetList> rsDAMAdministrationGetListTop = await new DAMAdministrationGetList(_appSetting).DAMAdministrationGetListTopDAO();
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"DAMAdministrationGetListTop", rsDAMAdministrationGetListTop},
+                    };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [HttpPost]
+        [Authorize("ThePolicy")]
+        [Route("delete")]
+        public async Task<ActionResult<object>> DAMAdministrationDeleteBase(DAMAdministrationDeleteIN _dAMAdministrationDeleteIN)
+        {
+            try
+            {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+                return new ResultApi { Success = ResultCode.OK, Result = await new DAMAdministrationDelete(_appSetting).DAMAdministrationDeleteDAO(_dAMAdministrationDeleteIN) };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [HttpPost]
+        [Authorize("ThePolicy")]
+        [Route("update-status")]
+        public async Task<ActionResult<object>> DAMAdministrationUpdateShow(DAMAdministrationUpdateShowIN _dAMAdministrationUpdateShowIN)
+        {
+            try
+            {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+                return new ResultApi { Success = ResultCode.OK, Result = await new DAMAdministrationUpdateShow(_appSetting).DAMAdministrationUpdateShowDAO(_dAMAdministrationUpdateShowIN) };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [HttpGet]
+        [Route("administration-forward")]
+        [Authorize]
+        public async Task<ActionResult<object>> DAMAdministrationForward(string LstUnitId, int AdministrationId, string Content)
+        {
+            try
+            {
+                List<int> lstUnitId = new List<int>();
+                lstUnitId = LstUnitId.Split(',').Select(Int32.Parse).Where(x => x != 0).ToList();
+                if (lstUnitId.Count == 0)
+                {
+                    return new ResultApi { Success = ResultCode.ORROR, Message = "Unit is not null" };
+                }
+                DAMAdministrationForward modelInsert = new DAMAdministrationForward();
+                modelInsert.AdministrationId = AdministrationId;
+                modelInsert.CreateBy = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                modelInsert.CreatedDate = DateTime.Now;
+                modelInsert.Content = Content;
+
+                foreach (var item in lstUnitId)
+                {
+                    var lstUser = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(item);
+                    if (lstUser.Count() == 0) { continue; }
+                    var lstUserId = new List<long>();
+                    lstUser.ForEach(item => {
+                        lstUserId.Add(item.Id);
+                    });
+                    modelInsert.UnitId = item;
+                    modelInsert.LstUserReceive = String.Join(",", lstUserId);
+                    var id = await new DAMAdministrationForward(_appSetting).DAMAdministrationForwardInsertDAO(modelInsert);
+                    // tạo thông báo
+                    var model = new SYNotificationModel();
+                    model.SenderId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                    model.SendOrgId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+
+                    lstUser.ForEach(async item =>
+                    {
+                        model.ReceiveId = item.Id;
+                        model.DataId = Convert.ToInt32(AdministrationId);
+                        model.SendDate = DateTime.Now;
+                        model.Type = TYPENOTIFICATION.ADMINISTRATIVE;
+                        model.Title = "Tiếp nhận thủ tục hành chính";
+                        model.Content = "Bạn vừa nhận được một thủ tục hành chính từ " + new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
+                        model.IsViewed = true;
+                        model.IsReaded = true;
+                        // insert vào db-
+                        await new SYNotification(_appSetting).SYNotificationInsertDAO(model);
+                    });
+                }
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                return new ResultApi { Success = ResultCode.OK };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [HttpGet]
+        [Authorize("ThePolicy")]
+        [Route("get-drop-down")]
+        public async Task<ActionResult<object>> CAFieldDAMGetDropdownBase()
+        {
+            try
+            {
+                List<CAFieldDAMGetDropdown> rsCAFieldDAMGetDropdown = await new CAFieldDAMGetDropdown(_appSetting).CAFieldDAMGetDropdownDAO();
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"CAFieldDAMGetDropdown", rsCAFieldDAMGetDropdown},
+                    };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
     }
 }

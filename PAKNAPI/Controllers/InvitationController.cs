@@ -26,7 +26,7 @@ using System.Threading;
 
 namespace PAKNAPI.Controllers
 {
-    [Route("api/INVInvitation")]
+    [Route("api/invitation")]
     [ApiController]
    
     public class InvitationController : BaseApiController
@@ -44,7 +44,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Authorize]
-		[Route("INVInvitationDelete")]
+		[Route("delete")]
 		public async Task<ActionResult<object>> INVInvitationDeleteBase(INVInvitationDeleteIN _iNVInvitationDeleteIN)
 		{
 			try
@@ -74,10 +74,62 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		[HttpGet]
+		[Authorize]
+		[Route("get-list-user-readed-invitation-on-page")]
+		public async Task<ActionResult<object>> SYUserReadedInvitationGetAllOnPage(int InvitationId, string UserName, DateTime? WatchedDate, int? PageSize, int? PageIndex)
+		{
+			try
+			{
+				List<SYUserReadedInvitationGetAllOnPage> syUserReadedInvitationGetAllOnPage = await new SYUserReadedInvitationGetAllOnPage(_appSetting).INVInvitationGetAllOnPageDAO(InvitationId, UserName, WatchedDate, PageSize, PageIndex);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYUserReadedInvitationGetAllOnPage", syUserReadedInvitationGetAllOnPage},
+						{"TotalCount", syUserReadedInvitationGetAllOnPage != null && syUserReadedInvitationGetAllOnPage.Count > 0 ? syUserReadedInvitationGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", syUserReadedInvitationGetAllOnPage != null && syUserReadedInvitationGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", syUserReadedInvitationGetAllOnPage != null && syUserReadedInvitationGetAllOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize]
+		[Route("get-list-invitation-on-page")]
+		public async Task<ActionResult<object>> INVInvitationGetAllOnPageBase(int? PageSize, int? PageIndex, string Title, DateTime? StartDate, DateTime? EndDate, string Place, byte? Status)
+		{
+			try
+			{
+				long UserProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				List<INVInvitationGetAllOnPage> rsINVInvitationGetAllOnPage = await new INVInvitationGetAllOnPage(_appSetting).INVInvitationGetAllOnPageDAO(PageSize, PageIndex, Title, StartDate, EndDate, Place, Status, UserProcessId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"INVInvitationGetAllOnPage", rsINVInvitationGetAllOnPage},
+						{"TotalCount", rsINVInvitationGetAllOnPage != null && rsINVInvitationGetAllOnPage.Count > 0 ? rsINVInvitationGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsINVInvitationGetAllOnPage != null && rsINVInvitationGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsINVInvitationGetAllOnPage != null && rsINVInvitationGetAllOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 
 		[HttpPost]
 		[Authorize]
-		[Route("INVInvitationInsert")]
+		[Route("insert")]
 		public async Task<object> INVInvitationInsert()
 		{
 			try
@@ -207,7 +259,7 @@ namespace PAKNAPI.Controllers
 				}
 				else
 				{
-					return new ResultApi { Success = ResultCode.ORROR, Result = id, Message = "title already exists" };
+					return new ResultApi { Success = ResultCode.ORROR, Result = id, Message = "Tiêu đề thư mời đã tồn tại" };
 				}
 			}
 			catch (Exception ex) {
@@ -219,7 +271,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize]
-		[Route("INVInvitationDetail")]
+		[Route("get-detail")]
 		public async Task<object> INVInvitationDetail(int id)
 		{
 			try
@@ -262,7 +314,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize]
-		[Route("INVInvitationUpdate")]
+		[Route("update")]
 		public async Task<object> INVInvitationUpdate(int id)
 		{
 			try
@@ -286,7 +338,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost]
 		[Authorize]
-		[Route("INVInvitationUpdate")]
+		[Route("update")]
 		public async Task<object> INVInvitationUpdate()
 		{
 			try
@@ -462,6 +514,32 @@ namespace PAKNAPI.Controllers
 			}
 			catch (Exception ex)
 			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("get-list-his")]
+		public async Task<ActionResult<object>> HISInvitationGetByInvitationIdOnPageBase(int? PageSize, int? PageIndex, int? ObjectId, string Content, string UserName, DateTime? CreateDate, int? Status)
+		{
+			try
+			{
+				List<HISInvitationGetByInvitationIdOnPage> rsHIS = await new HISInvitationGetByInvitationIdOnPage(_appSetting).HISInvitationGetByInvitationIdOnPageDAO(PageSize, PageIndex, ObjectId, Content, UserName, CreateDate, Status);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"HISInvitationGetByInvitaionIdOnPage", rsHIS},
+						{"TotalCount", rsHIS != null && rsHIS.Count > 0 ? rsHIS[0].RowNumber : 0},
+						{"PageIndex", rsHIS != null && rsHIS.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsHIS != null && rsHIS.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };

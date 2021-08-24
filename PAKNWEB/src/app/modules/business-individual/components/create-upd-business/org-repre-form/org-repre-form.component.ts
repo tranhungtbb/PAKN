@@ -122,7 +122,7 @@ export class OrgRepreFormComponent implements OnInit, AfterViewInit {
 			RepresentativeName: [this.model.RepresentativeName, [Validators.required, Validators.maxLength(100)]], // tên người đại diện
 			Email: [this.model.Email, [Validators.email]],
 			Gender: [this.model.RepresentativeGender, [Validators.required]],
-			DOB: [this.model._RepresentativeBirthDay, []],
+			DOB: [this.model.RepresentativeBirthDay, []],
 			Nation: [this.model.Nation, [Validators.required]],
 			Province: [this.model.ProvinceId, [Validators.required]], //int
 			District: [this.model.DistrictId, [Validators.required]], // int

@@ -158,12 +158,12 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 		//this.router.navigate(['/quan-tri'])
 	}
 
-	private getUserAvatar(id: number) {
-		this.userService.getAvatar(id).subscribe((res) => {
-			if (res) {
-				let objectURL = 'data:image/jpeg;base64,' + res
-				this.userAvatar = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-			}
-		})
-	}
+	// private getUserAvatar(id: number) {
+	// 	this.userService.getAvatar(id).subscribe((res) => {
+	// 		if (res) {
+	// 			let objectURL = 'data:image/jpeg;base64,' + res
+	// 			this.userAvatar = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+	// 		}
+	// 	})
+	// }
 }

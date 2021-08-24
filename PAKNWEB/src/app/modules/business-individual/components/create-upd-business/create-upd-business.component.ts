@@ -141,8 +141,8 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 		this.fOrgInfoSubmitted = false
 		this.child_OrgAddressForm.fOrgAddressSubmitted = false
 		this.model = new OrganizationObject()
-		this.model._RepresentativeBirthDay = ''
-		this.model._DateOfIssue = ''
+		this.model.RepresentativeBirthDay = null
+		this.model.DateOfIssue = null
 		this.model.RepresentativeGender = true
 	}
 
@@ -152,20 +152,6 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 		}
 		this.businessIndividualService.businessGetByID(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				//this.model = response.result.BusinessGetById[0]
-				// this.child_OrgAddressForm.model = this.model
-				// this.child_OrgRepreForm.model = this.model
-
-				// // Thông tin người đại diện
-				// this.child_OrgRepreForm.model.RepresentativeName = response.result.BusinessGetById[0].representativeName
-				// this.child_OrgRepreForm.model.Email = response.result.BusinessGetById[0].email
-				// this.child_OrgRepreForm.model.Nation = response.result.BusinessGetById[0].nation
-				// this.child_OrgRepreForm.model.ProvinceId = response.result.BusinessGetById[0].provinceId
-				// this.child_OrgRepreForm.model.DistrictId = response.result.BusinessGetById[0].districtId
-				// this.child_OrgRepreForm.model.WardsId = response.result.BusinessGetById[0].wardsId
-				// this.child_OrgRepreForm.model.phone = response.result.BusinessGetById[0].phone
-				// this.child_OrgRepreForm.model.Address = response.result.BusinessGetById[0].address
-
 				this.model.RepresentativeName = response.result.BusinessGetById[0].representativeName
 				this.model.Email = response.result.BusinessGetById[0].email
 				this.model.Nation = response.result.BusinessGetById[0].nation
@@ -174,28 +160,16 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 				this.model.WardsId = response.result.BusinessGetById[0].wardsId
 				this.model.phone = response.result.BusinessGetById[0].phone
 				this.model.Address = response.result.BusinessGetById[0].address
-				if (response.result.BusinessGetById[0].representativeBirthDay != null) {
-					let fDob: any = document.querySelector('#_dob')
-					let yearDob = response.result.BusinessGetById[0].representativeBirthDay.substring(0, 4)
-					let monthDob = response.result.BusinessGetById[0].representativeBirthDay.substring(5, 7)
-					let dayDob = response.result.BusinessGetById[0].representativeBirthDay.substring(8, 10)
-					fDob.value = dayDob + '/' + monthDob + '/' + yearDob
-				}
-
-				if (response.result.BusinessGetById[0].dateOfIssue != null) {
-					let fIsDate: any = document.querySelector('#_IsDate')
-					let yearIsDate = response.result.BusinessGetById[0].dateOfIssue.substring(0, 4)
-					let monthIsDate = response.result.BusinessGetById[0].dateOfIssue.substring(5, 7)
-					let dayIsDate = response.result.BusinessGetById[0].dateOfIssue.substring(8, 10)
-					fIsDate.value = dayIsDate + '/' + monthIsDate + '/' + yearIsDate
-				}
-
+				
 				// //Thông tin doanh nghiệp
 				this.model.Business = response.result.BusinessGetById[0].business
 				this.model.BusinessRegistration = response.result.BusinessGetById[0].businessRegistration
 				this.model.DecisionOfEstablishing = response.result.BusinessGetById[0].decisionOfEstablishing
-				this.model._DateOfIssue = response.result.BusinessGetById[0]._dateOfIssue
+				this.model.DateOfIssue = response.result.BusinessGetById[0].dateOfIssue == null 
+					? null : new Date(response.result.BusinessGetById[0].dateOfIssue)
 				this.model.Tax = response.result.BusinessGetById[0].tax
+				this.model.RepresentativeBirthDay = response.result.BusinessGetById[0].representativeBirthDay == null
+					? null : new Date(response.result.BusinessGetById[0].representativeBirthDay)
 
 				// Địa chỉ trụ sở / Văn phòng đại diện
 				this.model.OrgProvinceId = response.result.BusinessGetById[0].orgProvinceId
@@ -217,13 +191,6 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 					this.nation_enable_type = true
 					this.child_OrgAddressForm.nation_enable_type = true
 					this.child_OrgRepreForm.nation_enable_type = true
-
-					// this.model.ProvinceId = 0
-					// this.model.DistrictId = 0
-					// this.model.WardsId = 0
-					// this.model.OrgProvinceId = 0
-					// this.model.OrgDistrictId = 0
-					// this.model.OrgWardsId = 0
 				}
 			} else {
 				this.toast.error(response.message)
@@ -240,22 +207,15 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 		this.child_OrgRepreForm.fInfoSubmitted = true
 		this.fOrgInfoSubmitted = true
 		this.child_OrgAddressForm.fOrgAddressSubmitted = true
-		let fDob: any = document.querySelector('#_dob')
-		let fIsDate: any = document.querySelector('#_IsDate')
-		this.model._RepresentativeBirthDay = fDob.value
-		this.model._DateOfIssue = fIsDate.value
 		this.model.userId = this.userLoginId
 		if (this.model.Nation == 'Nhập...') {
 			this.model.Nation = ''
 		}
 		//set model
 		if (this.nation_enable_type) {
-			this.model.ProvinceId = 0
-			this.model.DistrictId = 0
-			this.model.WardsId = 0
-			// this.model.OrgProvinceId = 0
-			// this.model.OrgDistrictId = 0
-			// this.model.OrgWardsId = 0
+			this.model.ProvinceId = null
+			this.model.DistrictId = null
+			this.model.WardsId = null
 		}
 
 		if (
@@ -277,14 +237,6 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 			return
 		}
 
-		// if (this.nation_enable_type) {
-		// 	this.model.ProvinceId = ''
-		// 	this.model.DistrictId = ''
-		// 	this.model.WardsId = ''
-		// 	this.model.OrgProvinceId = ''
-		// 	this.model.OrgDistrictId = ''
-		// 	this.model.OrgWardsId = ''
-		// }
 
 		if (this.model.id != null && this.model.id > 0) {
 			this.businessIndividualService.businessUpdate(this.model).subscribe((res) => {
@@ -339,7 +291,7 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 			Business: [this.model.Business, [Validators.required, Validators.maxLength(200)]], // tên tổ chức
 			RegistrationNum: [this.model.BusinessRegistration, [Validators.maxLength(20)]], //Số ĐKKD
 			DecisionFoundation: [this.model.DecisionOfEstablishing, [Validators.maxLength(20)]], //Quyết định thành lập
-			DateIssue: [this.model._DateOfIssue, []], //Ngày cấp/thành lập
+			DateIssue: [this.model.DateOfIssue, []], //Ngày cấp/thành lập
 			Tax: [this.model.Tax, [Validators.required, Validators.maxLength(13)]], //Mã số thuế
 		})
 	}
