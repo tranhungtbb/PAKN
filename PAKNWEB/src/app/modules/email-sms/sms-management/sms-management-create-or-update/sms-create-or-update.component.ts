@@ -258,25 +258,6 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 			this.smsService.Insert(obj).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					// insert his
-
-					this.smsService
-						.InsertHisSMS({
-							ObjectId: response.result,
-							Status: STATUS_HIS_SMS.CREATE,
-						})
-						.subscribe((res) => {
-							if (res.success == RESPONSE_STATUS.success) {
-								if (isSend == true) {
-									this.smsService
-										.InsertHisSMS({
-											ObjectId: response.result,
-											Status: STATUS_HIS_SMS.SEND,
-										})
-										.subscribe()
-								}
-								return
-							}
-						})
 					this._toastr.success(COMMONS.ADD_SUCCESS)
 					this.redirectList()
 					return
@@ -301,23 +282,6 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 				if (response.success == RESPONSE_STATUS.success) {
 					// ghi his
 
-					this.smsService
-						.InsertHisSMS({
-							ObjectId: response.result,
-							Status: STATUS_HIS_SMS.UPDATE,
-						})
-						.subscribe((res) => {
-							if (res.success == RESPONSE_STATUS.success) {
-								if (isSend == true) {
-									this.smsService
-										.InsertHisSMS({
-											ObjectId: response.result,
-											Status: STATUS_HIS_SMS.SEND,
-										})
-										.subscribe()
-								}
-							}
-						})
 					this._toastr.success(COMMONS.UPDATE_SUCCESS)
 					this.redirectList()
 

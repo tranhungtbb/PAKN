@@ -295,7 +295,7 @@ namespace PAKNAPI.Controllers
 
 						await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
 
-						return new ResultApi { Success = ResultCode.ORROR, Result = 1, Message = "Success" };
+						return new ResultApi { Success = ResultCode.OK, Result = 1, Message = ResultMessage.OK };
 
 					}
 				}

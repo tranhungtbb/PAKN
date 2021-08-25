@@ -111,6 +111,8 @@ namespace PAKNAPI.Controller
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				// delete file
+
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsDelete(_appSetting).NENewsDeleteDAO(_nENewsDeleteIN) };
 			}
@@ -157,11 +159,22 @@ namespace PAKNAPI.Controller
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				if (res > 0)
 				{
+					var his = new HISNews();
+					his.ObjectId = res;
+					his.Type = 1;
+					his.Status = STATUS_HISNEWS.CREATE;
+					await HISNewsInsert(his);
+					his.Status = STATUS_HISNEWS.COMPILE;
+					await HISNewsInsert(his);
+					if (_nENewsInsertIN.Status == 1) {
+						his.Status = STATUS_HISNEWS.PUBLIC;
+						await HISNewsInsert(his);
+					}
 					return new ResultApi { Success = ResultCode.OK, Result = res, Message = "Thêm mới thành công" };
 				}
 				else if (res == -1)
 				{
-					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Tiêu đề bị trùng" };
+					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Tiêu đề đã tồn tại" };
 				}
 				else
 				{
@@ -217,11 +230,26 @@ namespace PAKNAPI.Controller
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				if (res > 0)
 				{
+					var his = new HISNews();
+					his.ObjectId = res;
+					his.Type = 1;
+					his.Status = STATUS_HISNEWS.UPDATE;
+					await HISNewsInsert(his);
+					if (_nENewsUpdateIN.Status == 1)
+					{
+						his.Status = STATUS_HISNEWS.PUBLIC;
+						await HISNewsInsert(his);
+					}
+					if (_nENewsUpdateIN.Status == 0)
+					{
+						his.Status = STATUS_HISNEWS.CANCEL;
+						await HISNewsInsert(his);
+					}
 					return new ResultApi { Success = ResultCode.OK, Result = res, Message = "Cập nhập thành công" };
 				}
 				else if (res == -1)
 				{
-					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Tiêu đề bị trùng" };
+					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Tiêu đề đã tồn tại" };
 				}
 				else
 				{
@@ -339,10 +367,7 @@ namespace PAKNAPI.Controller
 		}
 
 
-		[HttpPost]
-		[Authorize]
-		[Route("insert-his")]
-		public async Task<ActionResult<object>> HISNewsInsert(HISNews _hISNews)
+		public async Task<bool> HISNewsInsert(HISNews _hISNews)
 		{
 			try
 			{
@@ -368,15 +393,14 @@ namespace PAKNAPI.Controller
 						_hISNews.Content = userName + " đã hủy công bố bài viết";
 						break;
 				}
-
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new HISNews(_appSetting).HISNewsInsert(_hISNews) };
+				await new HISNews(_appSetting).HISNewsInsert(_hISNews);
+				return true;
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
 
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+				return false;
 			}
 		}
 

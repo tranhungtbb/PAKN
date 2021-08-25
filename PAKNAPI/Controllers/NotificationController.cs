@@ -340,9 +340,11 @@ namespace PAKNAPI.Controllers
                         lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
                         unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
                         unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
+                        
 
                         notification.Title = "PAKN ĐÃ GIẢI QUYẾT XONG";
                         notification.Content = "Lãnh đạo đơn vị " + unitReceive.Name + " đã giải quyết PAKN số " + recommendation.Code;
+
                         foreach (var item in lstUser)
                         {
                             notification.ReceiveId = item.Id;
@@ -350,6 +352,17 @@ namespace PAKNAPI.Controllers
                             // insert notification
                             await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
                         }
+                        if (recommendation.UnitId != unitReceiveId) {
+                            var lstuserInunitReceive = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(unitReceiveId);
+                            foreach (var item in lstuserInunitReceive)
+                            {
+                                notification.ReceiveId = item.Id;
+                                notification.ReceiveOrgId = item.UnitId;
+                                // insert notification
+                                await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
+                            }
+                        }
+                        
 
                         // gửi cho người tiếp nhận PAKN -chưa chắc là người giải quyết nhá
 

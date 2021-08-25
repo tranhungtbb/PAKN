@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Dapper;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using PAKNAPI.Common;
 using PAKNAPI.Models.Results;
+using System.ComponentModel.DataAnnotations;
 
 namespace PAKNAPI.ModelBase
 {
@@ -623,7 +624,12 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int Id { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên hashtag không được để trống")]
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
+
 		public bool IsActived { get; set; }
 
 		public async Task<CAHashtag> CAHashtagGetByID(int? Id)

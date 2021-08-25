@@ -457,7 +457,7 @@ namespace PAKNAPI.Controllers
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại không hợp lệ" };
 				}
 
-				if (_bI_InvididualUpdateIN.Email != null && !ConstantRegex.EmailIsValid(_bI_InvididualUpdateIN.Email))
+				if (_bI_InvididualUpdateIN.Email != null && _bI_InvididualUpdateIN.Email.Trim() != "" && !ConstantRegex.EmailIsValid(_bI_InvididualUpdateIN.Email))
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Email không hợp lệ" };
 				}

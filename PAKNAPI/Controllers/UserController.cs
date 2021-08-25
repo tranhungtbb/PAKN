@@ -28,6 +28,7 @@ namespace PAKNAPI.Controllers
 {
 	[Route("api/user")]
 	[ApiController]
+	[ValidateModel]
 	public class UserController : BaseApiController
 	{
 		private readonly IFileService _fileService;
@@ -133,7 +134,7 @@ namespace PAKNAPI.Controllers
 					filePath = info[0].Path;
 
 					//xóa avatar cũ
-					if(!string.IsNullOrEmpty(modelOld[0].Avatar))
+					if (!string.IsNullOrEmpty(modelOld[0].Avatar))
 						await _fileService.Remove(modelOld[0].Avatar);
 					if (!string.IsNullOrEmpty(filePath))
 					{
@@ -292,7 +293,7 @@ namespace PAKNAPI.Controllers
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 					return new ResultApi { Success = ResultCode.ORROR, Result = result };
 				}
-				
+
 
 			}
 			catch (Exception ex)
@@ -319,7 +320,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("user/get-list-user-on-page")]
+		[Route("get-list-user-on-page")]
 		public async Task<ActionResult<object>> SYUserGetAllOnPageList(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived, int? UnitId, int? TypeId, int? PositionId)
 		{
 			try
@@ -567,13 +568,13 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				List <DropListTreeView> result = new List<DropListTreeView>();
+				List<DropListTreeView> result = new List<DropListTreeView>();
 				// lst đơn vị
 				List<SYUnitGetDropdown> lstUnit = await new SYUnitGetDropdown(_appSetting).SYUnitGetDropdownDAO();
 				// lst người dùng theo đơn vị từng đơn vị
 				DropListTreeView tinh = new DropListTreeView();
-				foreach (var province in lstUnit.Where(x=>x.UnitLevel == 1).ToList()) {
-					tinh = new DropListTreeView(province.Text,province.Value, new List<DropListTreeView>());
+				foreach (var province in lstUnit.Where(x => x.UnitLevel == 1).ToList()) {
+					tinh = new DropListTreeView(province.Text, province.Value, new List<DropListTreeView>());
 					List<SYUserGetByUnitId> usersProvice = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(province.Value);
 					foreach (var userProvice in usersProvice) {
 						tinh.children.Add(new DropListTreeView(userProvice.FullName, userProvice.Id));
@@ -591,7 +592,7 @@ namespace PAKNAPI.Controllers
 						DropListTreeView xa = new DropListTreeView();
 						foreach (var commune in lstUnit.Where(x => x.ParentId == district.Value && x.UnitLevel == 3).ToList())
 						{
-							xa = new DropListTreeView(commune.Text,commune.Value, new List<DropListTreeView>());
+							xa = new DropListTreeView(commune.Text, commune.Value, new List<DropListTreeView>());
 							List<SYUserGetByUnitId> usersCommune = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(commune.Value);
 							foreach (var userCommune in usersCommune)
 							{
@@ -605,12 +606,12 @@ namespace PAKNAPI.Controllers
 						if (huyen.children.Count > 0) {
 							tinh.children.Add(huyen);
 						}
-						
+
 					}
 					if (tinh.children.Count > 0) { result.Add(tinh); }
-					
+
 				}
-				
+
 
 				return new ResultApi { Success = ResultCode.OK, Result = result };
 			}
@@ -696,7 +697,7 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Route("organization-register")]
 		public async Task<object> OrganizationRegister([FromBody] BusinessRegisterModel model)
-        {
+		{
 			try
 			{
 				if (!Regex.Match(model.Phone.ToString(), ConstantRegex.PHONE).Success)
@@ -755,7 +756,7 @@ namespace PAKNAPI.Controllers
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tổ chức doanh nghiệp không hợp lệ" };
 				}
 
-				
+
 				if (model.OrgEmail != null && model.OrgEmail.Trim() != "" && !ConstantRegex.EmailIsValid(model.OrgEmail))
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Email tổ chức doanh nghiệp không hợp lệ" };
@@ -809,7 +810,7 @@ namespace PAKNAPI.Controllers
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Số đăng ký kinh doanh đã tồn tại" };
 				}
 
-                if(!string.IsNullOrEmpty(model.DecisionOfEstablishing)){
+				if (!string.IsNullOrEmpty(model.DecisionOfEstablishing)) {
 					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("DecisionOfEstablishing", model.DecisionOfEstablishing, 0);
 					if (checkExists[0].Exists.Value) {
 						return new ResultApi { Success = ResultCode.ORROR, Message = "Số quyết định thành lập đã tồn tại" };
@@ -863,7 +864,7 @@ namespace PAKNAPI.Controllers
 			return new ResultApi { Success = ResultCode.OK };
 		}
 
-		
+
 		[HttpPost]
 		[Route("individual-register")]
 		public async Task<object> InvididualRegister_Body([FromBody] IndivialRegisterModel model)
@@ -965,7 +966,7 @@ namespace PAKNAPI.Controllers
 				model.Status = 1;
 				model.IsDeleted = false;
 				model.UserId = accRs[0].Id;
-				
+
 				var rs2 = await new ModelBase.BIIndividualInsert(_appSetting).BIIndividualInsertDAO(model);
 
 			}
@@ -975,15 +976,15 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 
-			return new ResultApi { Success = ResultCode.OK , Message = ResultMessage.OK};
+			return new ResultApi { Success = ResultCode.OK, Message = ResultMessage.OK };
 		}
 
 
 		//[HttpGet]
 		//[Route("SendDemo")]
 		//public string SendDemo()
-  //      {
-  //          try
+		//      {
+		//          try
 		//	{
 		//		string contentSMSOPT = "(Trung tam tiep nhan PAKN tinh Khanh Hoa) Xin chao: Trần Thanh Quyền. Mat khau dang nhap he thong la: abcAbc123123. Xin cam on!";
 		//		SV.MailSMS.Model.SMTPSettings settings = new SV.MailSMS.Model.SMTPSettings();
@@ -992,7 +993,7 @@ namespace PAKNAPI.Controllers
 		//		string MessageResult = sMSs.SendOTPSMS("0984881580", contentSMSOPT);
 		//		return "ok";
 		//	}
-  //          catch (Exception ex)
+		//          catch (Exception ex)
 		//	{
 		//		return ex.Message;
 		//	}
@@ -1002,28 +1003,28 @@ namespace PAKNAPI.Controllers
 		[Route("user-get-info")]
 		[Authorize]
 		public async Task<object> UserGetInfo(long? id)
-        {
+		{
 			try
-            {
+			{
 				var users = _httpContextAccessor.HttpContext.User.Identities.FirstOrDefault().Claims; //FindFirst(ClaimTypes.NameIdentifier);
 
-				var userId = users.FirstOrDefault(c=> c.Type.Equals("Id", StringComparison.OrdinalIgnoreCase)).Value;
+				var userId = users.FirstOrDefault(c => c.Type.Equals("Id", StringComparison.OrdinalIgnoreCase)).Value;
 				var accInfo = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(long.Parse(userId));
-				
-				if(accInfo == null || !accInfo.Any())
-                {
+
+				if (accInfo == null || !accInfo.Any())
+				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Tài khoản không tồn tại" };
 				}
 
-                if (accInfo[0].TypeId == 1)
-                {
+				if (accInfo[0].TypeId == 1)
+				{
 					return new ResultApi { Success = ResultCode.OK, Result = accInfo[0] };
 				}
-                else if (accInfo[0].TypeId == 2)
-                {
+				else if (accInfo[0].TypeId == 2)
+				{
 					var info = await new BIIndividualGetByUserId(_appSetting).BIIndividualGetByUserIdDAO(accInfo[0].Id);
-					if(info == null || !info.Any())
-                    {
+					if (info == null || !info.Any())
+					{
 						return new ResultApi { Success = ResultCode.ORROR, Message = "Thông tin tài khoản không tồn tại" };
 					}
 
@@ -1044,18 +1045,18 @@ namespace PAKNAPI.Controllers
 						IssuedPlace = info[0].IssuedPlace,
 						IssuedDate = info[0].DateOfIssue,
 					};
-                    if (!model.ProvinceId.HasValue)
-                    {
+					if (!model.ProvinceId.HasValue)
+					{
 						model.DistrictId = null;
 						model.WardsId = null;
-                    }
+					}
 
 
 					return new ResultApi { Success = ResultCode.OK, Result = model };
 
 				}
 				else if (accInfo[0].TypeId == 3)
-                {
+				{
 					var rsBusinessGetById = await new BIBusinessGetByUserId(_appSetting).BIBusinessGetByUserIdDAO(accInfo[0].Id);
 					if (rsBusinessGetById == null || !rsBusinessGetById.Any())
 					{
@@ -1066,23 +1067,23 @@ namespace PAKNAPI.Controllers
 				}
 
 			}
-			catch(Exception ex)
-            {
+			catch (Exception ex)
+			{
 				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 
-			return new ResultApi { Success = ResultCode.ORROR, Message = "Thông tin tài khoản không tồn tại"};
+			return new ResultApi { Success = ResultCode.ORROR, Message = "Thông tin tài khoản không tồn tại" };
 		}
 
 		[HttpPost]
 		[Route("user-change-password")]
 		[Authorize]
 		public async Task<object> UserChagePwd([FromForm] ChangePwdModel model)
-        {
-            try
-            {
+		{
+			try
+			{
 				var users = _httpContextAccessor.HttpContext.User.Identities.FirstOrDefault().Claims; //FindFirst(ClaimTypes.NameIdentifier);
 
 				var userId = users.FirstOrDefault(c => c.Type.Equals("Id", StringComparison.OrdinalIgnoreCase)).Value;
@@ -1091,18 +1092,18 @@ namespace PAKNAPI.Controllers
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Tài khoản không tồn tại" };
 				}
-                if (string.IsNullOrEmpty(model.OldPassword) || string.IsNullOrEmpty(model.NewPassword))
-                {
+				if (string.IsNullOrEmpty(model.OldPassword) || string.IsNullOrEmpty(model.NewPassword))
+				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Dữ liệu không hợp lệ" };
 				}
-                if (model.NewPassword !=  model.RePassword)
-                {
+				if (model.NewPassword != model.RePassword)
+				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu mới không trùng khớp" };
 				}
 
 				PasswordHasher hasher = new PasswordHasher();
 				if (!hasher.AuthenticateUser(model.OldPassword, accInfo[0].Password, accInfo[0].Salt))
-                {
+				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu cũ không đúng" };
 				}
 
@@ -1122,15 +1123,15 @@ namespace PAKNAPI.Controllers
 				await new SYUserUserAgent(_appSetting).SYUserUserAgentInsertDAO(sy_UserAgent);
 
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-				return new ResultApi { Success = ResultCode.OK};
+				return new ResultApi { Success = ResultCode.OK };
 			}
-			catch(Exception ex)
-            {
+			catch (Exception ex)
+			{
 				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
-        }
+		}
 
 
 		[HttpPost]
@@ -1140,20 +1141,20 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				
+
 				var accInfo = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(long.Parse(model.UserId.ToString()));
 				if (accInfo == null || !accInfo.Any())
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Tài khoản không tồn tại" };
 				}
-				
+
 				if (model.NewPassword != model.RePassword)
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu mới không trùng khớp" };
 				}
 
 				PasswordHasher hasher = new PasswordHasher();
-				
+
 
 				var newPwd = GeneratePassword.generatePassword(model.NewPassword);
 				var _model = new SYUserChangePwdIN

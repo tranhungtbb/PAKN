@@ -304,8 +304,6 @@ namespace PAKNAPI.Controllers
 			}
 			catch (Exception ex)
 			{
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}

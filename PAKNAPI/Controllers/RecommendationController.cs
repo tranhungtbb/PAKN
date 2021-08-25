@@ -163,7 +163,7 @@ namespace PAKNAPI.Controller
                 {
                     request.Data.Code = await new MRRecommendationGenCodeGetCode(_appSetting).MRRecommendationGenCodeGetCodeDAO();
                 }
-                if(request.Data.Status > 1 && dataMain != null && dataMain.Id != request.Data.UnitId && request.UserType != 1)
+                if(request.Data.Status > 1 && dataMain != null && dataMain.Id != request.Data.UnitId && request.UserType != 1) // 
                 {
                     request.Data.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
                 }
@@ -354,7 +354,7 @@ namespace PAKNAPI.Controller
 
                 await new MRRecommendationUpdate(_appSetting).MRRecommendationUpdateDAO(request.Data);
 
-                if (request.Data.Status > 1 && dataMain != null && dataMain.Id != request.Data.UnitId && request.UserType != 1)
+                if (request.Data.Status > 1 && dataMain != null && dataMain.Id != request.Data.UnitId && request.UserType != 1) //
                 {
                     request.Data.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
                 }

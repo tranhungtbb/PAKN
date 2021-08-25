@@ -21,7 +21,8 @@ namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/group-word")]
     [ApiController]
-    public class GroupWordController : BaseApiController
+	[ValidateModel]
+	public class GroupWordController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;

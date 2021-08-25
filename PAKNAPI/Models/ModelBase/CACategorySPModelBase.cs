@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Dapper;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using PAKNAPI.Common;
 using PAKNAPI.Models.Results;
+using System.ComponentModel.DataAnnotations;
 
 namespace PAKNAPI.ModelBase
 {
@@ -237,7 +238,11 @@ namespace PAKNAPI.ModelBase
 
 	public class CADepartmentGroupInsertIN
 	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên nhóm sở ngành không được để trống")]
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -272,7 +277,13 @@ namespace PAKNAPI.ModelBase
 	public class CADepartmentGroupUpdateIN
 	{
 		public int? Id { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên nhóm sở ngành không được để trống")]
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
+
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -310,12 +321,24 @@ namespace PAKNAPI.ModelBase
 
 	public class CADepartmentInsertIN
 	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên sở ngành không được để trống")]
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nhóm sở ngành không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Nhóm sở ngành không đúng định dạng")]
 		public int? DepartmentGroupId { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
+		[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại không đúng định dạng")]
 		public string Phone { get; set; }
+
+		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
 		public string Email { get; set; }
 		public string Fax { get; set; }
 		public string Address { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -355,12 +378,25 @@ namespace PAKNAPI.ModelBase
 	public class CADepartmentUpdateIN
 	{
 		public int? Id { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên sở ngành không được để trống")]
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
+		[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại không đúng định dạng")]
 		public string Phone { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
+
+		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
 		public string Email { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nhóm sở ngành không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Nhóm sở ngành không đúng định dạng")]
 		public int? DepartmentGroupId { get; set; }
 		public string Address { get; set; }
 		public string Fax { get; set; }
@@ -481,7 +517,11 @@ namespace PAKNAPI.ModelBase
 
 	public class CAFieldInsertIN
 	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên lĩnh vực không được để trống")]
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -576,7 +616,12 @@ namespace PAKNAPI.ModelBase
 	public class CAFieldUpdateIN
 	{
 		public int? Id { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên lĩnh vực không được để trống")]
+
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -722,7 +767,12 @@ namespace PAKNAPI.ModelBase
 
 	public class CAGroupWordInsertIN
 	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên nhóm thư viện từ ngữ không được để trống")]
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
+
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -757,7 +807,13 @@ namespace PAKNAPI.ModelBase
 	public class CAGroupWordUpdateIN
 	{
 		public int? Id { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên nhóm thư viện từ ngữ không được để trống")]
+
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
+
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -1023,7 +1079,12 @@ namespace PAKNAPI.ModelBase
 
 	public class CANewsTypeInsertIN
 	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên loại tin tức không được để trống")]
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
+
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -1058,7 +1119,13 @@ namespace PAKNAPI.ModelBase
 	public class CANewsTypeUpdateIN
 	{
 		public int? Id { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên loại tin tức không được để trống")]
+
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
+
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -1204,7 +1271,12 @@ namespace PAKNAPI.ModelBase
 
 	public class CAPositionInsertIN
 	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên chức vụ không được để trống")]
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
+
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -1239,7 +1311,12 @@ namespace PAKNAPI.ModelBase
 	public class CAPositionUpdateIN
 	{
 		public int? Id { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên chức vụ không được để trống")]
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -1653,8 +1730,16 @@ namespace PAKNAPI.ModelBase
 
 	public class CAWordInsertIN
 	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nhóm từ ngữ không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Nhóm từ ngữ không đúng định dạng")]
 		public int? GroupId { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Từ ngữ không được để trống")]
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
+
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -1690,8 +1775,17 @@ namespace PAKNAPI.ModelBase
 	public class CAWordUpdateIN
 	{
 		public int? Id { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nhóm từ ngữ không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Nhóm từ ngữ không đúng định dạng")]
 		public int? GroupId { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Từ ngữ không được để trống")]
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
+
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }

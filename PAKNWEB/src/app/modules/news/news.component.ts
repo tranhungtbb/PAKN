@@ -138,10 +138,6 @@ export class NewsComponent implements OnInit {
 					this.toast.error('Xảy ra lỗi trong quá trình xử lý')
 					return
 				}
-				this.hisNewsModel.objectId = this.modalConfirm_item_id
-				this.hisNewsModel.type = 1 // tin tức
-				this.hisNewsModel.status = item.isPublished ? STATUS_HISNEWS.PUBLIC : STATUS_HISNEWS.CANCEL
-				this.newsService.hisNewsCreate(this.hisNewsModel).subscribe((res) => console.log(res))
 				this.toast.success(item.isPublished ? 'Đã công bố' : 'Đã thu hồi')
 			})
 		}

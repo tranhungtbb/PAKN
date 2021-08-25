@@ -133,6 +133,17 @@ namespace PAKNAPI.Controllers
 						map.AdministrativeUnitId = item;
 						await new SMSTinNhanAdministrativeUnitMapInsert(_appSetting).SMSTinNhanAdministrativeUnitMapInsertDAO(map);
 					}
+
+					var his = new HISInsertIN();
+					his.ObjectId = id;
+					his.Status = STATUS_HIS_SMS.CREATE;
+					await HISNewsInsert(his);
+
+					if (response.model.Status == 2) { // đã gửi
+						his.Status = STATUS_HIS_SMS.SEND;
+						await HISNewsInsert(his);
+					}
+
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 					return new ResultApi { Success = ResultCode.OK , Result = id};
 
@@ -250,13 +261,19 @@ namespace PAKNAPI.Controllers
 						map.AdministrativeUnitId = item;
 						await new SMSTinNhanAdministrativeUnitMapInsert(_appSetting).SMSTinNhanAdministrativeUnitMapInsertDAO(map);
 					}
+					// history
+					var his = new HISInsertIN();
+					his.ObjectId = id;
+					his.Status = STATUS_HIS_SMS.UPDATE;
+					await HISNewsInsert(his);
+
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-					return new ResultApi { Success = ResultCode.OK, Result = id };
+					return new ResultApi { Success = ResultCode.OK, Result = id , Message = ResultMessage.OK};
 
 				}
 				else
 				{
-					return new ResultApi { Success = ResultCode.ORROR, Result = id, Message = "title already exists" };
+					return new ResultApi { Success = ResultCode.ORROR, Result = id, Message = "Tiêu đề SMS đã tồn tại" };
 				}
 			}
 			catch (Exception ex)
@@ -292,6 +309,11 @@ namespace PAKNAPI.Controllers
 
 				if (id > 0)
 				{
+					var his = new HISInsertIN();
+					his.ObjectId = id;
+					his.Status = STATUS_HIS_SMS.SEND;
+					await HISNewsInsert(his);
+
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 					return new ResultApi { Success = ResultCode.OK };
 
@@ -309,10 +331,7 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
-		[HttpPost]
-		[Authorize]
-		[Route("insert-his")]
-		public async Task<ActionResult<object>> HISNewsInsert(HISInsertIN _hISSMS)
+		private async Task<bool> HISNewsInsert(HISInsertIN _hISSMS)
 		{
 			try
 			{
@@ -333,16 +352,13 @@ namespace PAKNAPI.Controllers
 						break;
 				}
 
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				await new HISSMSInsert(_appSetting).HISSMSInsertDAO(_hISSMS);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new HISSMSInsert(_appSetting).HISSMSInsertDAO(_hISSMS) };
+				return true;
 			}
 			catch (Exception ex)
 			{
-				_bugsnag.Notify(ex);
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+				return false;
 			}
 		}
 

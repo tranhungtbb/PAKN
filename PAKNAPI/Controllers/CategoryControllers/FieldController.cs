@@ -21,7 +21,8 @@ namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/field")]
     [ApiController]
-    public class FieldController : BaseApiController
+	[ValidateModel]
+	public class FieldController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;

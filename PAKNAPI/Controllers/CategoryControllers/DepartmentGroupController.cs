@@ -21,7 +21,8 @@ namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/department-group")]
     [ApiController]
-    public class DepartmentGroupController : BaseApiController
+	[ValidateModel]
+	public class DepartmentGroupController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;

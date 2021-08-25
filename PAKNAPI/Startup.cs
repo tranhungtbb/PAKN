@@ -27,6 +27,8 @@ using Microsoft.AspNetCore.Http.Features;
 using System.Globalization;
 using System.Collections.Generic;
 using PAKNAPI.Services.EmailService;
+using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace PAKNAPI
 {
@@ -67,6 +69,8 @@ namespace PAKNAPI
 					parts.Remove(reportingPart);
 				}
 			});
+			
+
 			services.AddMvc().AddNewtonsoftJson();
 			services.AddMvc(options =>
 			{
@@ -86,8 +90,15 @@ namespace PAKNAPI
 			services.AddTransient<IAppSetting, AppSetting>();
 			services.AddTransient<IFileService, FileService>();
 			services.AddTransient<IMailService, MailService>();
-			services.AddHttpContextAccessor();
+			
+			//services.AddHttpContextAccessor();
 			services.AddDevExpressControls();
+
+			services.Configure<ApiBehaviorOptions>(options =>
+			{
+				options.SuppressModelStateInvalidFilter = true;
+			});
+
 
 			//services.Configure<MailSettings>();
 

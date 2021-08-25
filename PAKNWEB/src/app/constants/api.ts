@@ -238,7 +238,7 @@ export class Api {
 	//dự thảo email
 	public static EmailManagementUpdate = 'email-management/update'
 	public static EmailManagementGetById = 'email-management/get-by-id'
-	public static EmailManagementGetPagedList = 'email-management/sms/get-list-email-on-page'
+	public static EmailManagementGetPagedList = 'email-management/get-list-email-on-page'
 	public static EmailManagementDelete = 'email-management/delete'
 	public static EmailManagementSendEmail = 'email-management/send-email'
 	public static EmailManagementHisPagedList = 'email-management/list-his'

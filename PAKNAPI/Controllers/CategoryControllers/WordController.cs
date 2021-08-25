@@ -21,7 +21,8 @@ namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/word")]
     [ApiController]
-    public class WordController : BaseApiController
+	[ValidateModel]
+	public class WordController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;

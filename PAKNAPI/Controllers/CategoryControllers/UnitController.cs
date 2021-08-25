@@ -22,7 +22,8 @@ namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/unit")]
     [ApiController]
-    public class UnitController : BaseApiController
+	[ValidateModel]
+	public class UnitController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;

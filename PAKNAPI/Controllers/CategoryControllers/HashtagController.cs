@@ -21,7 +21,8 @@ namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/hashtag")]
     [ApiController]
-    public class HashtagController : BaseApiController
+	[ValidateModel]
+	public class HashtagController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;

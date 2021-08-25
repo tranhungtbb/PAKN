@@ -21,7 +21,8 @@ namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/news-type")]
     [ApiController]
-    public class NewsTypeController : BaseApiController
+	[ValidateModel]
+	public class NewsTypeController : BaseApiController
 	{
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;

@@ -304,7 +304,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 				};
 
 
-				await sendEmail(id);
+				//await sendEmail(id);
 
 
 				///insert his

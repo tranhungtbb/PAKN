@@ -145,15 +145,6 @@ export class SMSManagementComponent implements OnInit {
 		$('#modalConfirmChangeStatus').modal('hide')
 		this.smsService.UpdateStatusSend({ idMSMS: this.smsId }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				// ghi his
-
-				this.smsService
-					.InsertHisSMS({
-						ObjectId: this.smsId,
-						Status: STATUS_HIS_SMS.SEND,
-					})
-					.subscribe()
-
 				this.toast.success('Gửi thành công')
 				this.getListPaged()
 			} else {
