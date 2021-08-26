@@ -25,7 +25,8 @@ namespace PAKNAPI.Controllers
 {
     [Route("api/Support")]
     [ApiController]
-   
+    [ValidateModel]
+
     public class SupportController : BaseApiController
     {
         private readonly IAppSetting _appSetting;
@@ -38,6 +39,12 @@ namespace PAKNAPI.Controllers
             _bugsnag = bugsnag;
             _hostingEnvironment = hostEnvironment;
         }
+
+        /// <summary>
+        /// danh sách tài liệu-video
+        /// </summary>
+        /// <param name="Category"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Authorize]
@@ -55,6 +62,10 @@ namespace PAKNAPI.Controllers
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+        /// <summary>
+        /// thêm mới tài liệu-video
+        /// </summary>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize]
@@ -103,6 +114,10 @@ namespace PAKNAPI.Controllers
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+        /// <summary>
+        /// cập nhập tài liệu-video
+        /// </summary>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize]
@@ -151,6 +166,11 @@ namespace PAKNAPI.Controllers
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+        /// <summary>
+        /// xóa tài liệu-video
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize]
@@ -181,7 +201,10 @@ namespace PAKNAPI.Controllers
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
-
+        /// <summary>
+        /// danh sách tài liệu-video trang công bố
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet]
         [Route("support-public")]

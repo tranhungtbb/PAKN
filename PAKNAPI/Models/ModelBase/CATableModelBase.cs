@@ -628,7 +628,6 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
-		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 
 		public bool IsActived { get; set; }
 

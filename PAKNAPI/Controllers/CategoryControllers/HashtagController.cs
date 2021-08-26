@@ -33,7 +33,15 @@ namespace PAKNAPI.Controllers.ControllerBase
             _bugsnag = bugsnag;
         }
 
-
+		/// <summary>
+		/// xóa hashtag
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="Name"></param>
+		/// <param name="QuantityUser"></param>
+		/// <param name="IsActived"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize]
 		[Route("get-list-hashtag-on-page")]
@@ -59,6 +67,10 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách hashtag - all
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -77,6 +89,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// chi tiết hashtag
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -100,6 +117,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// thêm mới hashtag
+		/// </summary>
+		/// <param name="_cAHashtag"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -120,7 +142,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// update hashtag
+		/// </summary>
+		/// <param name="_cAHashtag"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Authorize]
 		[Route("update")]
@@ -149,6 +175,12 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		/// <summary>
+		/// xóa hashtag
+		/// </summary>
+		/// <param name="_cAHashtag"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]

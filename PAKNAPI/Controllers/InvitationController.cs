@@ -28,8 +28,8 @@ namespace PAKNAPI.Controllers
 {
     [Route("api/invitation")]
     [ApiController]
-   
-    public class InvitationController : BaseApiController
+	[ValidateModel]
+	public class InvitationController : BaseApiController
     {
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;
@@ -41,6 +41,11 @@ namespace PAKNAPI.Controllers
             _bugsnag = bugsnag;
             _hostingEnvironment = hostEnvironment;
         }
+		/// <summary>
+		/// xóa thư mời
+		/// </summary>
+		/// <param name="_iNVInvitationDeleteIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -73,6 +78,15 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách người dùng đã xem thư mời
+		/// </summary>
+		/// <param name="InvitationId"></param>
+		/// <param name="UserName"></param>
+		/// <param name="WatchedDate"></param>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -100,6 +114,17 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		/// <summary>
+		/// danh sách thư mời
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="Title"></param>
+		/// <param name="StartDate"></param>
+		/// <param name="EndDate"></param>
+		/// <param name="Place"></param>
+		/// <param name="Status"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize]
 		[Route("get-list-invitation-on-page")]
@@ -126,6 +151,10 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// thêm mới thư mời
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -136,11 +165,28 @@ namespace PAKNAPI.Controllers
 			{
 				INVInvitationInsertModel invInvitation = new INVInvitationInsertModel();
 				invInvitation.Model = JsonConvert.DeserializeObject<INVInvitationInsertIN>(Request.Form["Model"].ToString());
+
+				var ErrorMessage = ValidationForFormData.validObject(invInvitation.Model);
+				if (ErrorMessage != null)
+				{
+					return StatusCode(400, new ResultApi
+					{
+						Success = ResultCode.ORROR,
+						Result = 0,
+						Message = ErrorMessage
+					});
+				}
+
 				invInvitation.Model.CreateDate = DateTime.Now;
 				invInvitation.Model.UserCreateId = (int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
 
 				invInvitation.InvitationUserMap = JsonConvert.DeserializeObject<List<INVInvitationUserMapInsertIN>>(Request.Form["InvitationUserMap"].ToString());
 				invInvitation.Files = Request.Form.Files;
+
+				if (invInvitation.Model.Status == 2 && invInvitation.InvitationUserMap.Count == 0)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Result = 0, Message = "Vui lòng chọn thành phần tham dự" };
+				}
 
 				invInvitation.Model.IsView = 0;
 				invInvitation.Model.Member = invInvitation.InvitationUserMap == null ? 0 : invInvitation.InvitationUserMap.Count();
@@ -269,6 +315,12 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		/// <summary>
+		/// chi tiết thư mời
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+
 		[HttpGet]
 		[Authorize]
 		[Route("get-detail")]
@@ -307,7 +359,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// chi tiết thư mời (để update)
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 
 
 		[HttpGet]
@@ -333,6 +389,10 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// cập nhập thư mời
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -343,9 +403,24 @@ namespace PAKNAPI.Controllers
 			{
 				INVInvitationUpdateModel invInvitation = new INVInvitationUpdateModel();
 				invInvitation.Model = JsonConvert.DeserializeObject<INVInvitationGetById>(Request.Form["Model"].ToString());
+
+				var ErrorMessage = ValidationForFormData.validObject(invInvitation.Model);
+				if (ErrorMessage != null)
+				{
+					return StatusCode(400, new ResultApi
+					{
+						Success = ResultCode.ORROR,
+						Result = 0,
+						Message = ErrorMessage
+					});
+				}
 				invInvitation.InvitationUserMap = JsonConvert.DeserializeObject<List<INVInvitationUserMapGetByInvitationId>>(Request.Form["InvitationUserMap"].ToString());
 				invInvitation.LtsDeleteFile = JsonConvert.DeserializeObject<List<InvitationFileAttach>>(Request.Form["LstFileDelete"].ToString());
 				invInvitation.Files = Request.Form.Files;
+
+				if (invInvitation.Model.Status == 2 && invInvitation.InvitationUserMap.Count ==0) {
+					return new ResultApi { Success = ResultCode.ORROR, Result = invInvitation.Model.Id, Message = "Vui lòng chọn thành phần tham dự" };
+				}
 
 				INVInvitationUpdateIN invUpdate = new INVInvitationUpdateIN();
 				invUpdate.Id = invInvitation.Model.Id;
@@ -507,7 +582,7 @@ namespace PAKNAPI.Controllers
 				else
 				{
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
-					return new ResultApi { Success = ResultCode.ORROR, Result = id, Message = "title already exists" };
+					return new ResultApi { Success = ResultCode.ORROR, Result = id, Message = "Tiêu đề thư mời đã tồn tại" };
 				}
 			}
 			catch (Exception ex)
@@ -517,6 +592,18 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		/// <summary>
+		/// lịch sử thư mời
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="ObjectId"></param>
+		/// <param name="Content"></param>
+		/// <param name="UserName"></param>
+		/// <param name="CreateDate"></param>
+		/// <param name="Status"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]

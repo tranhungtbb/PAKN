@@ -2,6 +2,7 @@
 using PAKNAPI.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,8 +12,14 @@ namespace PAKNAPI.Models.ModelBase
     public class EmailManagementModelBase
     {
         public long? Id { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Tiêu đề thư mời không được để trống")]
+        [StringLength(450, ErrorMessage = "Tiêu đề thư mời không vượt quá 450 kí tự")]
         public string Title { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung email không được để trống")]
         public string Content { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Chữ ký không được để trống")]
         public string Signature { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? UserCreatedId { get; set; }
@@ -21,6 +28,9 @@ namespace PAKNAPI.Models.ModelBase
         public DateTime? SendDate { get; set; }
         public int? UserSend { get; set; }
         public int? Unit { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+        [Range(0, int.MaxValue, ErrorMessage = "Trạng thái không đúng định dạng")]
         public int? Status { get; set; }
     }
 

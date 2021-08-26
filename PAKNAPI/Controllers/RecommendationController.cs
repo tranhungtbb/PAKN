@@ -36,7 +36,10 @@ namespace PAKNAPI.Controller
             _bugsnag = bugsnag;
         }
 
-
+        /// <summary>
+        /// get data for thêm mới pakn
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet]
         [Route("get-data-for-create")]
@@ -54,6 +57,10 @@ namespace PAKNAPI.Controller
             }
         }
 
+        /// <summary>
+        /// get data for chuyển tiếp pakn
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         [Route("get-data-for-forward")]
@@ -70,6 +77,11 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+        /// <summary>
+        /// get data for process
+        /// </summary>
+        /// <param name="UnitId"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Authorize]
@@ -87,7 +99,11 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
-
+        /// <summary>
+        /// chi tiết pakn
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         [Route("get-by-id")]
@@ -106,6 +122,12 @@ namespace PAKNAPI.Controller
             }
         }
 
+        /// <summary>
+        /// chi tiết pakn màn view chi tiết
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+
         [HttpGet]
         [Authorize]
         [Route("get-detail-by-id")]
@@ -123,7 +145,10 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
-
+        /// <summary>
+        /// thêm mới pakn
+        /// </summary>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize]
@@ -308,7 +333,10 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
-
+        /// <summary>
+        /// cập nhập pakn
+        /// </summary>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize]
@@ -515,7 +543,11 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
-
+        /// <summary>
+        /// chuyển tiếp pakn
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize]
@@ -663,6 +695,10 @@ namespace PAKNAPI.Controller
             }
         }
 
+        /// <summary>
+        /// giải quyết pakn
+        /// </summary>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize]
@@ -762,6 +798,12 @@ namespace PAKNAPI.Controller
             }
         }
 
+        /// <summary>
+        /// cập nhập trạng thái pakn
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+
         [HttpPost]
         [Authorize]
         [Route("recommendation-update-status")]
@@ -818,6 +860,18 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+        /// <summary>
+        /// danh sách pakn - không dùng
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <param name="SendName"></param>
+        /// <param name="Content"></param>
+        /// <param name="UnitId"></param>
+        /// <param name="Field"></param>
+        /// <param name="Status"></param>
+        /// <param name="PageSize"></param>
+        /// <param name="PageIndex"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Authorize]
@@ -841,6 +895,20 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+        /// <summary>
+        /// danh sách pakn
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <param name="SendName"></param>
+        /// <param name="Content"></param>
+        /// <param name="UnitId"></param>
+        /// <param name="Field"></param>
+        /// <param name="Status"></param>
+        /// <param name="UnitProcessId"></param>
+        /// <param name="UserProcessId"></param>
+        /// <param name="PageSize"></param>
+        /// <param name="PageIndex"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Authorize]
@@ -867,6 +935,20 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+        /// <summary>
+        /// danh sách pakn chứa từ cấm
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <param name="SendName"></param>
+        /// <param name="Content"></param>
+        /// <param name="UnitId"></param>
+        /// <param name="Field"></param>
+        /// <param name="Status"></param>
+        /// <param name="UnitProcessId"></param>
+        /// <param name="UserProcessId"></param>
+        /// <param name="PageSize"></param>
+        /// <param name="PageIndex"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Authorize("ThePolicy")]
@@ -894,6 +976,12 @@ namespace PAKNAPI.Controller
             }
         }
 
+        /// <summary>
+        /// lịch sử pakn
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+
         [HttpGet]
         [Authorize]
         [Route("get-his-by-recommentdation")]
@@ -917,6 +1005,12 @@ namespace PAKNAPI.Controller
             }
         }
 
+        /// <summary>
+        /// xóa pakn
+        /// </summary>
+        /// <param name="_mRRecommendationDeleteIN"></param>
+        /// <returns></returns>
+
         [HttpPost]
         [Authorize]
         [Route("delete")]
@@ -936,6 +1030,12 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+
+        /// <summary>
+        /// danh sách gợi ý pakn theo tiêu đề
+        /// </summary>
+        /// <param name="Title"></param>
+        /// <returns></returns>
 
 
         [HttpGet]
@@ -960,6 +1060,14 @@ namespace PAKNAPI.Controller
             }
         }
 
+        /// <summary>
+        /// danh sách pakn gợi ý theo hastag
+        /// </summary>
+        /// <param name="ListIdHashtag"></param>
+        /// <param name="PageSize"></param>
+        /// <param name="PageIndex"></param>
+        /// <returns></returns>
+
         [HttpGet]
         [Authorize]
         [Route("recommendation-get-suggest-reply")]
@@ -983,6 +1091,13 @@ namespace PAKNAPI.Controller
             }
         }
 
+        /// <summary>
+        /// thống kê pakn
+        /// </summary>
+        /// <param name="UnitProcessId"></param>
+        /// <param name="UserProcessId"></param>
+        /// <returns></returns>
+
         [HttpGet]
         [Authorize("ThePolicy")]
         [Route("recommendation-get-data-graph")]
@@ -1005,7 +1120,13 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
-
+        /// <summary>
+        /// thống kê pakn
+        /// </summary>
+        /// <param name="SendId"></param>
+        /// <param name="SendDateFrom"></param>
+        /// <param name="SendDateTo"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize("ThePolicy")]
         [Route("recommendation-get-send-user-data-graph")]
@@ -1028,7 +1149,19 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
-
+        /// <summary>
+        /// danh sách pakn theo hashtag
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <param name="SendName"></param>
+        /// <param name="Title"></param>
+        /// <param name="Content"></param>
+        /// <param name="Status"></param>
+        /// <param name="UnitId"></param>
+        /// <param name="HashtagId"></param>
+        /// <param name="PageSize"></param>
+        /// <param name="PageIndex"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Authorize]
@@ -1053,6 +1186,11 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+        /// <summary>
+        /// lí do từ chối pakn
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Authorize]
@@ -1076,6 +1214,11 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+        /// <summary>
+        /// thêm mới hashtag cho pakn
+        /// </summary>
+        /// <param name="_mRRecommendationHashtagInsertIN"></param>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize]
@@ -1096,6 +1239,11 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+        /// <summary>
+        /// xóa hashtag cho pakn
+        /// </summary>
+        /// <param name="_mRRecommendationHashtagDeleteIN"></param>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize]
@@ -1117,6 +1265,12 @@ namespace PAKNAPI.Controller
             }
         }
 
+        /// <summary>
+        /// thêm bình luận theo pakn
+        /// </summary>
+        /// <param name="_mRCommnentInsertIN"></param>
+        /// <returns></returns>
+
 
         [HttpPost]
         [Authorize("ThePolicy")]
@@ -1137,6 +1291,14 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+        /// <summary>
+        /// danh sách bình luận theo pakn
+        /// </summary>
+        /// <param name="PageSize"></param>
+        /// <param name="PageIndex"></param>
+        /// <param name="RecommendationId"></param>
+        /// <param name="IsPublish"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Authorize("ThePolicy")]
@@ -1163,6 +1325,12 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+        /// <summary>
+        /// tk pakn 7 ngày qua
+        /// </summary>
+        /// <param name="UnitProcessId"></param>
+        /// <param name="UserProcessId"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Authorize]

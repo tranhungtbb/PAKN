@@ -32,6 +32,11 @@ namespace PAKNAPI.Controllers.ControllerBase
             _appSetting = appSetting;
             _bugsnag = bugsnag;
         }
+		/// <summary>
+		/// xóa lĩnh vực
+		/// </summary>
+		/// <param name="_cAFieldDeleteIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -52,6 +57,15 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// dánh sách lĩnh vực
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="Name"></param>
+		/// <param name="Description"></param>
+		/// <param name="IsActived"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -76,6 +90,12 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+		/// <summary>
+		/// chi tiết lĩnh vực
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
+
 		[HttpGet]
 		[Authorize]
 		[Route("get-by-id")]
@@ -99,6 +119,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+		/// <summary>
+		/// :D
+		/// </summary>
+		/// <returns></returns>
+
 		[HttpGet]
 		[Authorize]
 		[Route("get-drop-down")]
@@ -121,6 +146,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// thêm mới lĩnh vực
+		/// </summary>
+		/// <param name="_cAFieldInsertIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -141,6 +171,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// cập nhập lĩnh vực
+		/// </summary>
+		/// <param name="_cAFieldUpdateIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -161,6 +196,10 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// dropdown lĩnh vực knct
+		/// </summary>
+		/// <returns></returns>
 
         [HttpGet]
         [Authorize("ThePolicy")]

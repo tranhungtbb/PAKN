@@ -32,7 +32,16 @@ namespace PAKNAPI.Controllers.ControllerBase
             _appSetting = appSetting;
             _bugsnag = bugsnag;
         }
-
+		/// <summary>
+		/// danh sách từ ngữ
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="GroupId"></param>
+		/// <param name="Name"></param>
+		/// <param name="Description"></param>
+		/// <param name="IsActived"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -56,6 +65,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách từ ngữ theo nhóm từ
+		/// </summary>
+		/// <param name="GroupId"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -80,6 +94,12 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+		/// <summary>
+		/// chi tiết từ ngữ
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
+
 		[HttpGet]
 		[Authorize]
 		[Route("get-by-id")]
@@ -102,7 +122,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// thêm mới từ ngữ
+		/// </summary>
+		/// <param name="_cAWordInsertIN"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Authorize]
 		[Route("insert")]
@@ -122,7 +146,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// cập nhập từ ngữ
+		/// </summary>
+		/// <param name="_cAWordUpdateIN"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Authorize]
 		[Route("update")]
@@ -160,6 +188,12 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		/// <summary>
+		/// xóa từ ngữ
+		/// </summary>
+		/// <param name="_cADepartmentGroupDeleteIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]

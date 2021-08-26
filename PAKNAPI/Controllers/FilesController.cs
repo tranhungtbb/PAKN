@@ -32,6 +32,13 @@ namespace PAKNAPI.Controllers
             _appSetting = appSetting;
         }
 
+        /// <summary>
+        /// tải file theo đường dẫn và tên
+        /// </summary>
+        /// <param name="Path"></param>
+        /// <param name="Name"></param>
+        /// <returns></returns>
+
         [HttpGet]
         [Route("download-file")]
         [Authorize]
@@ -54,6 +61,13 @@ namespace PAKNAPI.Controllers
                 return NotFound();
             }
         }
+
+        /// <summary>
+        /// return file
+        /// </summary>
+        /// <param name="Path"></param>
+        /// <param name="Name"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("get-file")]
         [Authorize]
@@ -93,6 +107,12 @@ namespace PAKNAPI.Controllers
         //    return list;
         //}
 
+        /// <summary>
+        /// tải file support // dự là ko dùng
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="Name"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("download-file-support")]
         public ActionResult LoadImage(string filePath, string Name)

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Dapper;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using PAKNAPI.Common;
 using PAKNAPI.Models.Results;
+using System.ComponentModel.DataAnnotations;
 
 namespace PAKNAPI.ModelBase
 {
@@ -422,15 +423,30 @@ namespace PAKNAPI.ModelBase
 
 	public class INVInvitationInsertIN
 	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tiêu đề thư mời không được để trống")]
+		[StringLength(100, ErrorMessage = "Tiêu đề thư mời không vượt quá 100 kí tự")]
 		public string Title { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Thời gian bắt đầu không được để trống")]
+		[DataType(DataType.DateTime, ErrorMessage = "Thời gian bắt đầu không đúng định dạng")]
 		public DateTime StartDate { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Thời gian kết thúc không được để trống")]
+		[DataType(DataType.DateTime, ErrorMessage = "Thời gian kết thúc không đúng định dạng")]
 		public DateTime EndDate { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung không được để trống")]
 		public string Content { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Địa điểm không được để trống")]
 		public string Place { get; set; }
 		public string Note { get; set; }
 		public DateTime? CreateDate { get; set; }
 		public int? UserCreateId { get; set; }
 		public DateTime? SendDate { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Trạng thái không đúng định dạng")]
 		public int? Status { get; set; }
 		public int? IsView { get; set; }
 		public int? Member { get; set; }
@@ -472,10 +488,23 @@ namespace PAKNAPI.ModelBase
 	public class INVInvitationUpdateIN
 	{
 		public int? Id { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tiêu đề thư mời không được để trống")]
+		[StringLength(100, ErrorMessage = "Tiêu đề thư mời không vượt quá 100 kí tự")]
 		public string Title { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Thời gian bắt đầu không được để trống")]
+		[DataType(DataType.DateTime, ErrorMessage = "Thời gian bắt đầu không đúng định dạng")]
 		public DateTime? StartDate { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Thời gian kết thúc không được để trống")]
+		[DataType(DataType.DateTime, ErrorMessage = "Thời gian kết thúc không đúng định dạng")]
 		public DateTime? EndDate { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung không được để trống")]
 		public string Content { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Địa điểm không được để trống")]
 		public string Place { get; set; }
 		public string Note { get; set; }
 		public DateTime? UpdateDate { get; set; }

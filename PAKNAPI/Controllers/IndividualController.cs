@@ -19,6 +19,7 @@ namespace PAKNAPI.Controllers
 {
     [Route("api/individual")]
 	[ApiController]
+	[ValidateModel]
 	public class IndividualController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
@@ -29,7 +30,11 @@ namespace PAKNAPI.Controllers
 			_appSetting = appSetting;
 			_hostingEnvironment = hostingEnvironment;
 		}
-
+		/// <summary>
+		/// import cá nhân với excel
+		/// </summary>
+		/// <param name="folder"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Route("import-data-individual")]
 		[Authorize]
@@ -250,7 +255,7 @@ namespace PAKNAPI.Controllers
 					Exception = e.Message.ToString()
 				};
 				await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
-				return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = e.Message };
+				return new ResultApi { Success = ResultCode.ORROR, Message = e.Message };
 			}
 			finally
 			{
@@ -259,7 +264,19 @@ namespace PAKNAPI.Controllers
 				System.IO.File.Delete(fileNamePath);
 			}			
 		}
-
+		/// <summary>
+		/// danh sách người dân
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="FullName"></param>
+		/// <param name="Address"></param>
+		/// <param name="Phone"></param>
+		/// <param name="Email"></param>
+		/// <param name="Status"></param>
+		/// <param name="SortDir"></param>
+		/// <param name="SortField"></param>
+		/// <returns></returns>
 		
 		[HttpGet]
 		[Authorize]
@@ -287,6 +304,12 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		/// <summary>
+		/// xóa người dân
+		/// </summary>
+		/// <param name="_bi_IndivialDeleteIN"></param>
+		/// <returns></returns>
+
 		[HttpPost]
 		[Authorize]
 		[Route("delete")]
@@ -306,6 +329,12 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		/// <summary>
+		/// cập nhập trạng thái người dân
+		/// </summary>
+		/// <param name="_bI_IndivialChageStatusIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -327,6 +356,12 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		/// <summary>
+		/// thêm mới người dân
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
+
 		[HttpPost]
 		[Authorize]
 		[Route("insert")]
@@ -335,26 +370,6 @@ namespace PAKNAPI.Controllers
 			try
 			{
 				// validate
-
-				if (!Regex.Match(model.Phone.ToString(), ConstantRegex.PHONE).Success)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại không hợp lệ" };
-				}
-
-				if (model.Email != null && model.Email.Trim() != "" && !ConstantRegex.EmailIsValid(model.Email))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Email không hợp lệ" };
-				}
-
-				if (!Regex.Match(model.IDCard.ToString(), ConstantRegex.CMT, RegexOptions.IgnoreCase).Success)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMT/Hộ chiếu không hợp lệ" };
-				}
-
-				if (model.BirthDay == null)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được để trống" };
-				}
 
 
 				if (model.BirthDay >= DateTime.Now)
@@ -366,13 +381,6 @@ namespace PAKNAPI.Controllers
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn ngày thành lập" };
 				}
-
-				if (!ConstantRegex.CheckValueIsNull(model.FullName))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Họ tên không được để trống" };
-				}
-
-
 
 				var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
 				if (hasOne != null && hasOne.Any()) {
@@ -443,6 +451,12 @@ namespace PAKNAPI.Controllers
 			return new ResultApi { Success = ResultCode.OK, Message = ResultMessage.OK };
 		}
 
+		/// <summary>
+		/// cập nhập người dân
+		/// </summary>
+		/// <param name="_bI_InvididualUpdateIN"></param>
+		/// <returns></returns>
+
 		[HttpPost]
 		[Authorize]
 		[Route("update")]
@@ -451,28 +465,7 @@ namespace PAKNAPI.Controllers
 			try
 			{
 				// validate
-
-				if (!Regex.Match(_bI_InvididualUpdateIN.Phone.ToString(), ConstantRegex.PHONE).Success)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại không hợp lệ" };
-				}
-
-				if (_bI_InvididualUpdateIN.Email != null && _bI_InvididualUpdateIN.Email.Trim() != "" && !ConstantRegex.EmailIsValid(_bI_InvididualUpdateIN.Email))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Email không hợp lệ" };
-				}
-
-				if (!Regex.Match(_bI_InvididualUpdateIN.IDCard.ToString(), ConstantRegex.CMT, RegexOptions.IgnoreCase).Success)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMT/Hộ chiếu không hợp lệ" };
-				}
-
-				if (_bI_InvididualUpdateIN.BirthDay == null)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được để trống" };
-				}
-
-
+				
 				if (_bI_InvididualUpdateIN.BirthDay >= DateTime.Now)
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn hoặc bằng ngày hiện tại" };
@@ -509,7 +502,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// chi tiết người dân
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-by-id")]
@@ -555,6 +552,13 @@ namespace PAKNAPI.Controllers
 		//	}
 		//}
 
+		/// <summary>
+		/// check tồn tại người dân
+		/// </summary>
+		/// <param name="Field"></param>
+		/// <param name="Value"></param>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("check-exists")]

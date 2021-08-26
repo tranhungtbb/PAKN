@@ -28,8 +28,8 @@ namespace PAKNAPI.Controllers
 {
     [Route("api/sms")]
     [ApiController]
-   
-    public class SMSController : BaseApiController
+	[ValidateModel]
+	public class SMSController : BaseApiController
     {
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;
@@ -43,6 +43,11 @@ namespace PAKNAPI.Controllers
             _hostingEnvironment = hostEnvironment;
 			_httpContextAccessor = httpContextAccessor;
 		}
+		/// <summary>
+		/// xóa SMS
+		/// </summary>
+		/// <param name="_sMSQuanLyTinNhanDeleteIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -76,7 +81,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// thêm mới SMS
+		/// </summary>
+		/// <param name="response"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -160,7 +169,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// thông tin SMS - để cập nhập
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -183,7 +196,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// cập nhập SMS
+		/// </summary>
+		/// <param name="response"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Authorize]
 		[Route("update")]
@@ -284,7 +301,11 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
-
+		/// <summary>
+		/// cập nhập trạng thái
+		/// </summary>
+		/// <param name="idMSMS"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize]
 		[Route("update-status")]
@@ -361,6 +382,11 @@ namespace PAKNAPI.Controllers
 				return false;
 			}
 		}
+		/// <summary>
+		/// chi tiếu SMS
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 
 
 		[HttpGet]
@@ -370,12 +396,18 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				List<SMSQuanLyTinNhanGetById> rsSMSQuanLyTinNhanGetById = await new SMSQuanLyTinNhanGetById(_appSetting).SMSQuanLyTinNhanGetByIdDAO(Id);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"SMSQuanLyTinNhanGetById", rsSMSQuanLyTinNhanGetById},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
+				//List<SMSQuanLyTinNhanGetById> rsSMSQuanLyTinNhanGetById = await new SMSQuanLyTinNhanGetById(_appSetting).SMSQuanLyTinNhanGetByIdDAO(Id);
+				//IDictionary<string, object> json = new Dictionary<string, object>
+				//	{
+				//		{"SMSQuanLyTinNhanGetById", rsSMSQuanLyTinNhanGetById},
+				//	};
+				//return new ResultApi { Success = ResultCode.OK, Result = json };
+				SMSUpdateModel sms = new SMSUpdateModel();
+				sms.model = (await new SMSQuanLyTinNhanGetById(_appSetting).SMSQuanLyTinNhanGetByIdDAO(Id)).FirstOrDefault();
+				sms.IndividualBusinessInfo = await new SMSGetListIndividualBusinessBySMSId(_appSetting).SMSGetListIndividualBusinessBySMSIdDAO(Id);
+
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				return new ResultApi { Success = ResultCode.OK, Result = sms };
 			}
 			catch (Exception ex)
 			{
@@ -385,6 +417,16 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách SMS
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="Title"></param>
+		/// <param name="UnitId"></param>
+		/// <param name="Type"></param>
+		/// <param name="Status"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -411,6 +453,18 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		/// <summary>
+		/// danh sách lịch sử SMS
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="SMSId"></param>
+		/// <param name="Content"></param>
+		/// <param name="UserName"></param>
+		/// <param name="CreateDate"></param>
+		/// <param name="Status"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]

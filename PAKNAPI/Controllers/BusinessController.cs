@@ -17,8 +17,12 @@ using System.Threading.Tasks;
 
 namespace PAKNAPI.Controllers
 {
+	/// <summary>
+	/// doanh nghiệp
+	/// </summary>
     [Route("api/business")]
 	[ApiController]
+	[ValidateModel]
 	public class BusinessController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
@@ -29,7 +33,11 @@ namespace PAKNAPI.Controllers
 			_appSetting = appSetting;
 			_hostingEnvironment = hostingEnvironment;
 		}
-
+		/// <summary>
+		/// impport excel
+		/// </summary>
+		/// <param name="folder"></param>
+		/// <returns></returns>
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("import-data-business")]
 		[Authorize]
@@ -306,6 +314,19 @@ namespace PAKNAPI.Controllers
 				System.IO.File.Delete(fileNamePath);
 			}
 		}
+		/// <summary>
+		/// danh sách doanh nghiệp
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="RepresentativeName"></param>
+		/// <param name="Address"></param>
+		/// <param name="Phone"></param>
+		/// <param name="Email"></param>
+		/// <param name="Status"></param>
+		/// <param name="SortDir"></param>
+		/// <param name="SortField"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -333,6 +354,12 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		/// <summary>
+		/// xóa doanh nghiệp
+		/// </summary>
+		/// <param name="_bI_BusinessDeleteIN"></param>
+		/// <returns></returns>
+
 		[HttpPost]
 		[Authorize]
 		[Route("delete")]
@@ -352,6 +379,12 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		/// <summary>
+		/// cập nhập trạng thái doanh nghiệp
+		/// </summary>
+		/// <param name="_bI_BusinessChageStatusIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -373,77 +406,25 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		/// <summary>
+		/// thêm mới doanh nghiệp
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
+
 		[HttpPost]
 		[Authorize]
 		[Route("insert")]
-		public async Task<object> BusinessRegister([FromBody] BI_BusinessInsertIN_Cus model)
+		public async Task<object> BusinessRegister([FromBody] BI_BusinessInsertIN model)
 		{
 			try
 			{
 				// validate
 
-				if (!Regex.Match(model.Phone.ToString(), ConstantRegex.PHONE).Success)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại không hợp lệ" };
-				}
-				if (model.Email != null && model.Email.Trim() != "" && !ConstantRegex.EmailIsValid(model.Email))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện không hợp lệ" };
-				}
-
-				if (!ConstantRegex.CheckValueIsNull(model.RepresentativeName))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Tên người đại diện không được để trống" };
-				}
-
 
 				if (model.RepresentativeBirthDay != null && model.RepresentativeBirthDay >= DateTime.Now)
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh người đại diện không được lớn hơn ngày hiện tại" };
-				}
-
-				if (!ConstantRegex.CheckValueIsNull(model.Business))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Tên tổ chức doanh nghiệp không được để trống" };
-				}
-
-				if (!Regex.Match(model.Tax.ToString(), ConstantRegex.NUMBER).Success)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế không hợp lệ" };
-				}
-
-
-				if (!ConstantRegex.CheckValueIsNull(model.OrgAddress))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Địa chỉ tổ chức doanh nghiệp không được để trống" };
-				}
-
-				if (!Regex.Match(model.OrgPhone.ToString(), ConstantRegex.PHONE).Success)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tổ chức doanh nghiệp không hợp lệ" };
-				}
-
-
-				if (model.OrgEmail != null && model.OrgEmail.Trim() != "" && !ConstantRegex.EmailIsValid(model.OrgEmail))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Email tổ chức doanh nghiệp không hợp lệ" };
-				}
-
-
-				if (!ConstantRegex.CheckValueIsNull(model.OrgAddress))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Địa chỉ tổ chức doanh nghiệp không được để trống" };
-				}
-
-				if (!Regex.Match(model.OrgPhone.ToString(), ConstantRegex.PHONE).Success)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tổ chức doanh nghiệp không hợp lệ" };
-				}
-
-
-				if (model.OrgEmail != null && model.OrgEmail.Trim() != "" && !ConstantRegex.EmailIsValid(model.OrgEmail))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Email tổ chức doanh nghiệp không hợp lệ" };
 				}
 
 				var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
@@ -518,6 +499,12 @@ namespace PAKNAPI.Controllers
 			return new Models.Results.ResultApi { Success = ResultCode.OK };
 		}
 
+		/// <summary>
+		/// chi tiết doanh nghiệp
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
+
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-by-id")]
@@ -540,60 +527,25 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		/// <summary>
+		///  cập nhập doanh nghiệp
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
+
 		[HttpPost]
 		[Authorize]
 		[Route("update")]
-		public async Task<ActionResult<object>> BusinessUpdate([FromBody] BI_BusinessUpdateInfoIN_body model)
+		public async Task<ActionResult<object>> BusinessUpdate([FromBody] BI_BusinessUpdateInfoIN model)
 		{
 			try
 			{
 				// validate
 
-				if (!Regex.Match(model.Phone.ToString(), ConstantRegex.PHONE).Success)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại không hợp lệ" };
-				}
-				if (model.Email != null && model.Email.Trim() != "" && !ConstantRegex.EmailIsValid(model.Email))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện không hợp lệ" };
-				}
-
-				if (!ConstantRegex.CheckValueIsNull(model.RepresentativeName))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Tên người đại diện không được để trống" };
-				}
-
 
 				if (model.RepresentativeBirthDay != null && model.RepresentativeBirthDay >= DateTime.Now)
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh người đại diện không được lớn hơn ngày hiện tại" };
-				}
-
-				if (!ConstantRegex.CheckValueIsNull(model.Business))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Tên tổ chức doanh nghiệp không được để trống" };
-				}
-
-				if (!Regex.Match(model.Tax.ToString(), ConstantRegex.NUMBER).Success)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế không hợp lệ" };
-				}
-
-
-				if (!ConstantRegex.CheckValueIsNull(model.OrgAddress))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Địa chỉ tổ chức doanh nghiệp không được để trống" };
-				}
-
-				if (!Regex.Match(model.OrgPhone.ToString(), ConstantRegex.PHONE).Success)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tổ chức doanh nghiệp không hợp lệ" };
-				}
-
-
-				if (model.OrgEmail != null && model.OrgEmail.Trim() != "" && !ConstantRegex.EmailIsValid(model.OrgEmail))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Email tổ chức doanh nghiệp không hợp lệ" };
 				}
 
 				///check ton tai
@@ -620,15 +572,7 @@ namespace PAKNAPI.Controllers
 				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Tax", model.Tax, model.Id);
 				if (checkExists[0].Exists.Value) return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế đã tồn tại" };
 
-				//DateTime? birdDay=null, dateOfIssue=null;
-				if (DateTime.TryParseExact(model._RepresentativeBirthDay, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime _birdDay))
-				{
-					model.RepresentativeBirthDay = _birdDay;
-				}
-				if (DateTime.TryParseExact(model._DateOfIssue, "dd/MM/yyyy", null, DateTimeStyles.None, out DateTime _dateOfIssue))
-				{
-					model.DateOfIssue = _dateOfIssue;
-				}
+			
 
 				var rsUpdateAcc = new SYUserUpdateInfo(_appSetting).SYUserUpdateInfoDAO(new SYUserUpdateInfoIN
 				{
@@ -648,6 +592,12 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách cá nhân doanh nghiệp theo đơn vị hành chính
+		/// </summary>
+		/// <param name="LtsAdministrativeId"></param>
+		/// <param name="Type"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -671,6 +621,14 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		/// <summary>
+		/// check doanh nghiệp đã tồn tại
+		/// </summary>
+		/// <param name="Field"></param>
+		/// <param name="Value"></param>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]

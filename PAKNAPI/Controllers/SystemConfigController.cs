@@ -24,8 +24,9 @@ namespace PAKNAPI.Controllers
 {
     [Route("api/system-config")]
     [ApiController]
-   
-    public class SystemConfigController : BaseApiController
+	[ValidateModel]
+
+	public class SystemConfigController : BaseApiController
     {
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;
@@ -37,7 +38,15 @@ namespace PAKNAPI.Controllers
             _bugsnag = bugsnag;
             _hostingEnvironment = hostEnvironment;
         }
-
+		/// <summary>
+		/// danh sách cấu hình hệ thống
+		/// </summary>
+		/// <param name="Title"></param>
+		/// <param name="Description"></param>
+		/// <param name="Type"></param>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize]
 		[Route("get-list-system-config-on-page")]
@@ -64,6 +73,12 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		/// <summary>
+		/// chi tiết cấu hình hệ thống
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
+
 		[HttpGet]
 		[Authorize]
 		[Route("get-by-id")]
@@ -86,7 +101,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// cập nhập cấu hình hệ thống
+		/// </summary>
+		/// <param name="_sYConfigUpdateIN"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Authorize]
 		[Route("update")]
@@ -106,7 +125,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// xóa cấu hình thời gian
+		/// </summary>
+		/// <param name="_sYTimeDeleteIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -127,6 +150,17 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách cấu hình thời gian
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="Name"></param>
+		/// <param name="Code"></param>
+		/// <param name="Time"></param>
+		/// <param name="Description"></param>
+		/// <param name="IsActived"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -150,6 +184,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// chi tiết cấu hình thời gian
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -173,6 +212,10 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách thời gian cấu hình
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -196,6 +239,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// thêm mới cấu hình thời gian
+		/// </summary>
+		/// <param name="_sYTimeInsertIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -216,7 +264,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// cập nhập cấu hình thời gian
+		/// </summary>
+		/// <param name="_sYTimeUpdateIN"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Authorize]
 		[Route("sys-time-update")]

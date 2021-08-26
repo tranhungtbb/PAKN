@@ -22,6 +22,7 @@ namespace PAKNAPI.Controllers
 {
 	[Route("api/role")]
 	[ApiController]
+	[ValidateModel]
 	public class RoleController : BaseApiController
 	{
 		private readonly IFileService _fileService;
@@ -39,6 +40,10 @@ namespace PAKNAPI.Controllers
 			_config = config;
 		}
 
+		/// <summary>
+		/// get data for create
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
 		[Route("get-data-for-create")]
 		[Authorize]
@@ -55,7 +60,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// chi tiết vai trò
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -81,6 +90,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// xóa vai trò
+		/// </summary>
+		/// <param name="_sYRoleDeleteIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -101,6 +115,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách người dùng theo vai trò
+		/// </summary>
+		/// <param name="_sYPermissionGroupUserInsertByListIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize("ThePolicy")]
@@ -121,6 +140,10 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách vao trò (all)
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -144,7 +167,16 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// danh sách vai trò (on page)
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="UserCount"></param>
+		/// <param name="Name"></param>
+		/// <param name="Description"></param>
+		/// <param name="IsActived"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize]
 		[Route("get-list-role-on-page")]
@@ -170,6 +202,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// thêm mới vai trò
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -193,6 +230,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// cập nhập vai trò
+		/// </summary>
+		/// <param name="_sYRoleUpdateIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -213,7 +255,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// thêm mới vai trò
+		/// </summary>
+		/// <param name="_sYRoleInsertIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -234,6 +280,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// thêm mới người dùng theo vai trò
+		/// </summary>
+		/// <param name="_sYUserRoleMaps"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]

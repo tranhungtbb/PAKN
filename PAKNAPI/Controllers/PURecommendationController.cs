@@ -32,7 +32,14 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		#region PURecommendationAllOnPage
-
+		/// <summary>
+		/// danh sách pakn đã giải quyết
+		/// </summary>
+		/// <param name="KeySearch"></param>
+		/// <param name="Status"></param>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Route("get-list-recommentdation-on-page")]
 		public async Task<ActionResult<object>> PURecommendationAllOnPage(string? KeySearch, int Status, int PageSize, int PageIndex)
@@ -57,6 +64,15 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách pakn của tôi
+		/// </summary>
+		/// <param name="userId"></param>
+		/// <param name="LtsStatus"></param>
+		/// <param name="Title"></param>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Route("get-list-my-recommentdation-on-page")]
@@ -86,7 +102,10 @@ namespace PAKNAPI.ControllerBase
 		
 
 		#endregion PURecommendationAllOnPage
-
+		/// <summary>
+		/// thống kê pakn của tôi
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -111,7 +130,11 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// pakn phổ biến
+		/// </summary>
+		/// <param name="Status"></param>
+		/// <returns></returns>
 
 		#region PURecommendationGetListOrderByCountClick
 		[HttpGet]
@@ -133,7 +156,11 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		#endregion PURecommendationGetListOrderByCountClick
-
+		/// <summary>
+		/// cập nhập lượt click pakn
+		/// </summary>
+		/// <param name="RecommendationId"></param>
+		/// <returns></returns>
 		#region
 		[HttpGet]
 		[Route("recommendation-count-click")]
@@ -163,7 +190,12 @@ namespace PAKNAPI.ControllerBase
 
 
 		#region PURecommendationgetById
-
+		/// <summary>
+		/// chi tiết pakn trang công bố
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <param name="Status"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> PURecommendationGetById(int? Id, int?Status)
@@ -204,7 +236,12 @@ namespace PAKNAPI.ControllerBase
 		#endregion PURecommendationgetById
 
 		#region ChangeSatisfaction
-
+		/// <summary>
+		/// cập nhập số lượng hài lòng, không hài lòng pakn
+		/// </summary>
+		/// <param name="RecommendationId"></param>
+		/// <param name="Satisfaction"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Route("change-satisfaction")]
 		public async Task<object> ChangeSatisfaction(int? RecommendationId, bool? Satisfaction)

@@ -20,6 +20,7 @@ namespace PAKNAPI.Controllers
 {
     [Route("api/contact")]
 	[ApiController]
+	[ValidateModel]
 	public class ContactController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
@@ -41,6 +42,12 @@ namespace PAKNAPI.Controllers
 			_bugsnag = client;
 		}
 
+		/// <summary>
+		/// đăng nhập
+		/// </summary>
+		/// <param name="loginIN"></param>
+		/// <returns></returns>
+
 		[Route("login")]
 		[HttpPost]
 		[AllowAnonymous]
@@ -54,6 +61,14 @@ namespace PAKNAPI.Controllers
 
 				if (user != null && user.Count > 0)
 				{
+					if (!(bool)user[0].IsActived) {
+						return StatusCode(401, new ResultApi
+						{
+							Success = ResultCode.ORROR,
+							Result = 0,
+							Message = "Tài khoản của bạn đang hết hiệu lực"
+						});
+					}
 					PasswordHasher hasher = new PasswordHasher();
 					if (hasher.AuthenticateUser(loginIN.Password, user[0].Password, user[0].Salt))
 					{
@@ -145,13 +160,23 @@ namespace PAKNAPI.Controllers
 						};
 						await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
 						//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception(), loginIN.UserName);
-						return new ResultApi { Success = ResultCode.INCORRECT, Message = "User/Pass not found", };
+
+						return StatusCode(401, new ResultApi
+						{
+							Success = ResultCode.ORROR,
+							Result = 0,
+							Message = "Tên tài khoản hoặc mật khẩu sai"
+						});
 					}
 				}
 				else
 				{
-                    //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception(), loginIN.UserName);
-                    return new ResultApi { Success = ResultCode.INCORRECT, Message = "User/Pass not found", };
+					return StatusCode(401, new ResultApi
+					{
+						Success = ResultCode.ORROR,
+						Result = 0,
+						Message = "Tên tài khoản hoặc mật khẩu sai"
+					});
 				}
 			}
 			catch (Exception ex)
@@ -185,7 +210,11 @@ namespace PAKNAPI.Controllers
 				signingCredentials: credentials);
 			return new JwtSecurityTokenHandler().WriteToken(token);
 		}
-
+		/// <summary>
+		/// đăng xuất
+		/// </summary>
+		/// <param name="request"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Route("log-out")]
 		[Authorize]
@@ -207,6 +236,12 @@ namespace PAKNAPI.Controllers
 		}
 
 		// lấy lại mk của quản trị qua gmail
+
+		/// <summary>
+		/// lấy lại mật khẩu qua email
+		/// </summary>
+		/// <param name="request"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Route("forget-password")]
 		[AllowAnonymous]
@@ -217,7 +252,7 @@ namespace PAKNAPI.Controllers
 				List<SYUSRLogin> user = await new SYUSRLogin(_appSetting).SYUSRLoginDAO(request.Email);
 				if (user.Count == 0)
 				{
-					return new ResultApi { Success = ResultCode.ORROR, Result = 0, Message = "Email not exits" };
+					return new ResultApi { Success = ResultCode.ORROR, Result = 0, Message = "Không tồn tại email" };
 				}
 				else {
 					int length = 3;

@@ -1,4 +1,4 @@
-using PAKNAPI.Common;
+﻿using PAKNAPI.Common;
 using PAKNAPI.Controllers;
 using PAKNAPI.Models;
 using PAKNAPI.ModelBase;
@@ -14,9 +14,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using Bugsnag;
+using NSwag.Annotations;
 
 namespace PAKNAPI
 {
+	/// <summary>
+	/// đơn vị hành chính
+	/// </summary>
 	[Route("api/administrative")]
 	[ApiController]
 	public class AdministrativeController : BaseApiController
@@ -31,6 +35,9 @@ namespace PAKNAPI
 		}
 
 
+		/// <summary>
+		///  Danh sách tỉnh, thành phố
+		/// </summary>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -54,6 +61,10 @@ namespace PAKNAPI
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		/// <summary>
+		///  Danh sách huyện, thị trấn theo tỉnh, thành phố
+		/// </summary>
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-district")]
@@ -76,6 +87,12 @@ namespace PAKNAPI
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+
+		/// <summary>
+		///  Danh sách xã, phường theo huyện, thị trấn
+		/// </summary>
+
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-village")]
@@ -98,8 +115,14 @@ namespace PAKNAPI
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		/// <summary>
+		/// danh sách hành chính theo tỉnh
+		/// </summary>
+		/// <param name="ProvinceId"></param>
+		/// <returns></returns>
 		[HttpGet]
-		[Route("get-list-province-by-province-id")]
+		[Route("get-list-all-by-province-id")]
 		public async Task<ActionResult<object>> GetAllByProvinceId(short? ProvinceId)
 		{
 			try
@@ -119,6 +142,11 @@ namespace PAKNAPI
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		/// <summary>
+		///  Dropdown  danh sách hành chính
+		/// </summary>
+
 		[HttpGet]
 		[Authorize]
 		[Route("get-drop-down")]

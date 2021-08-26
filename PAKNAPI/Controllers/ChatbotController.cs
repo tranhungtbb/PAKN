@@ -12,6 +12,7 @@ namespace PAKNAPI.Controllers.ChatbotController
 {
     [Route("api/chat-bot")]
     [ApiController]
+    [ValidateModel]
     public class ChatbotController : BaseApiController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -24,6 +25,11 @@ namespace PAKNAPI.Controllers.ChatbotController
             _appSetting = appSetting;
             _bugsnag = bugsnag;
         }
+        /// <summary>
+        /// xóa câu hỏi chatbot
+        /// </summary>
+        /// <param name="_ChatbotDeleteIN"></param>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize]
@@ -42,6 +48,16 @@ namespace PAKNAPI.Controllers.ChatbotController
                 return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+
+        /// <summary>
+        /// danh sách câu hỏi chatbot
+        /// </summary>
+        /// <param name="PageSize"></param>
+        /// <param name="PageIndex"></param>
+        /// <param name="Question"></param>
+        /// <param name="Answer"></param>
+        /// <param name="IsActived"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Authorize]
@@ -67,6 +83,17 @@ namespace PAKNAPI.Controllers.ChatbotController
             }
         }
 
+        /// <summary>
+        /// danh sách lịch sử chatbot
+        /// </summary>
+        /// <param name="PageSize"></param>
+        /// <param name="PageIndex"></param>
+        /// <param name="FullName"></param>
+        /// <param name="Question"></param>
+        /// <param name="Answer"></param>
+        /// <param name="CreatedDate"></param>
+        /// <returns></returns>
+
         [HttpGet]
         [Authorize("ThePolicy")]
         [Route("list-his")]
@@ -91,6 +118,12 @@ namespace PAKNAPI.Controllers.ChatbotController
             }
         }
 
+        /// <summary>
+        /// chi tiết câu hỏi chatbot
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+
         [HttpGet]
         [Authorize("ThePolicy")]
         [Route("get-by-id")]
@@ -113,6 +146,12 @@ namespace PAKNAPI.Controllers.ChatbotController
             }
         }
 
+        /// <summary>
+        /// thêm mới câu hỏi chatbot
+        /// </summary>
+        /// <param name="_chatbotInsertIN"></param>
+        /// <returns></returns>
+
         [HttpPost]
         [Authorize]
         [Route("insert-question")]
@@ -130,6 +169,12 @@ namespace PAKNAPI.Controllers.ChatbotController
                 return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+
+        /// <summary>
+        /// cập nhập câu hỏi chatbot
+        /// </summary>
+        /// <param name="ChatbotUpdateIN"></param>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize]

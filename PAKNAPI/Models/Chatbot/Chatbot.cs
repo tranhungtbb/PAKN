@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using PAKNAPI.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -239,7 +240,7 @@ namespace PAKNAPI.Models.Chatbot
 		public async Task<int> ChatbotInsertDAO(ChatbotInsertIN _chatbotInsertIN)
 		{
 			string nextCategoryId = await new ChatbotGetNextCategoryId(_appSetting).ChatbotGetMaxCategoryIdDAO();
-			_chatbotInsertIN.CategoryId = nextCategoryId;
+			_chatbotInsertIN.CategoryId = Convert.ToInt32(nextCategoryId);
 
 			await ChatbotInsertFile(_chatbotInsertIN);
 			return await InsertChatbotDAO(_chatbotInsertIN);
@@ -259,7 +260,7 @@ namespace PAKNAPI.Models.Chatbot
 
 		public async Task<string> ChatbotInsertFile(ChatbotInsertIN _chatbotInsertIN)
 		{
-			string categoryId = await GetcategoryId(_chatbotInsertIN.CategoryId);
+			string categoryId = await GetcategoryId(_chatbotInsertIN.CategoryId.ToString());
 
 			if (!string.IsNullOrEmpty(categoryId))
             {
@@ -342,7 +343,7 @@ namespace PAKNAPI.Models.Chatbot
 							write.WriteEndElement();
 
 							write.WriteStartElement("category");
-							write.WriteAttributeString("id", _chatbotInsertIN.CategoryId);
+							write.WriteAttributeString("id", _chatbotInsertIN.CategoryId.ToString());
 							write.WriteElementString("pattern", _chatbotInsertIN.Question.Trim());
 							write.WriteElementString("template", _chatbotInsertIN.Answer.Trim());
 							write.WriteEndElement();
@@ -373,9 +374,16 @@ namespace PAKNAPI.Models.Chatbot
 	public class ChatbotInsertIN
 	{
 		public string Id { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Câu hỏi không được để trống")]
+
 		public string Question { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Câu trả lời không được để trống")]
 		public string Answer { get; set; }
-		public string CategoryId { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Loại câu hỏi không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Loại câu hỏi không đúng định dạng")]
+		public int CategoryId { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 	}
@@ -496,9 +504,17 @@ namespace PAKNAPI.Models.Chatbot
 	public class ChatbotUpdateIN
 	{
 		public int? Id { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Câu hỏi không được để trống")]
+
 		public string Question { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Câu trả lời không được để trống")]
 		public string Answer { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Loại câu hỏi không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Loại câu hỏi không đúng định dạng")]
 		public int CategoryId { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 	}

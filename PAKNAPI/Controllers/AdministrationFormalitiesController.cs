@@ -23,6 +23,9 @@ using Bugsnag;
 
 namespace PAKNAPI.Controller
 {
+    /// <summary>
+    /// thủ tục hành chính
+    /// </summary>
     [Route("api/administration-formalities")]
     [ApiController]
     public class AdministrationFormalitiesController : BaseApiController
@@ -37,7 +40,11 @@ namespace PAKNAPI.Controller
             _bugsnag = bugsnag;
         }
 
-
+        /// <summary>
+        /// Chi tiết thủ tục hành chính
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         [HttpGet]
         //[Authorize]
         [Route("get-by-id")]
@@ -55,6 +62,10 @@ namespace PAKNAPI.Controller
             }
         }
 
+        /// <summary>
+        /// thêm mới thủ tục hành chính
+        /// </summary>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize]
@@ -183,8 +194,11 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
-        
 
+        /// <summary>
+        /// update thủ tục hành chính
+        /// </summary>
+        /// <returns></returns>
         [HttpPost,DisableRequestSizeLimit]
         [Authorize]
         [Route("update")]
@@ -452,6 +466,22 @@ namespace PAKNAPI.Controller
             }
         }
 
+
+        /// <summary>
+        /// danh sách thủ tục hành chính
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <param name="Name"></param>
+        /// <param name="Object"></param>
+        /// <param name="Organization"></param>
+        /// <param name="UnitId"></param>
+        /// <param name="Field"></param>
+        /// <param name="Status"></param>
+        /// <param name="PageSize"></param>
+        /// <param name="PageIndex"></param>
+        /// <param name="TotalRecords"></param>
+        /// <returns></returns>
+
         [HttpGet]
         [Authorize("ThePolicy")]
         [Route("get-list-administration-formalities-on-page")]
@@ -474,6 +504,19 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+
+        /// <summary>
+        /// danh sách chuyển tiếp thủ tục hành chính
+        /// </summary>
+        /// <param name="Code"></param>
+        /// <param name="Name"></param>
+        /// <param name="Organization"></param>
+        /// <param name="FieldId"></param>
+        /// <param name="UnitForward"></param>
+        /// <param name="Status"></param>
+        /// <param name="PageSize"></param>
+        /// <param name="PageIndex"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Authorize]
@@ -505,6 +548,11 @@ namespace PAKNAPI.Controller
             }
         }
 
+        /// <summary>
+        /// danh sách thủ tục hành chính trang chủ
+        /// </summary>
+        /// <returns></returns>
+
         [HttpGet]
         [Authorize("ThePolicy")]
         [Route("get-list-administration-formalities-home-page")]
@@ -528,6 +576,12 @@ namespace PAKNAPI.Controller
             }
         }
 
+        /// <summary>
+        /// xóa thủ tục hành chính
+        /// </summary>
+        /// <param name="_dAMAdministrationDeleteIN"></param>
+        /// <returns></returns>
+
         [HttpPost]
         [Authorize("ThePolicy")]
         [Route("delete")]
@@ -548,6 +602,12 @@ namespace PAKNAPI.Controller
             }
         }
 
+        /// <summary>
+        /// cập nhập trạng thái thủ tục hành chính
+        /// </summary>
+        /// <param name="_dAMAdministrationUpdateShowIN"></param>
+        /// <returns></returns>
+
         [HttpPost]
         [Authorize("ThePolicy")]
         [Route("update-status")]
@@ -567,6 +627,13 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+        /// <summary>
+        /// chuyển tiếp thủ tục hành chính
+        /// </summary>
+        /// <param name="LstUnitId"></param>
+        /// <param name="AdministrationId"></param>
+        /// <param name="Content"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Route("administration-forward")]
@@ -628,6 +695,11 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+
+        /// <summary>
+        /// drop down lĩnh vực thủ tục hành chính
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet]
         [Authorize("ThePolicy")]

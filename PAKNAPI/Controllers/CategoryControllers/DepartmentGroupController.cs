@@ -32,7 +32,11 @@ namespace PAKNAPI.Controllers.ControllerBase
             _appSetting = appSetting;
             _bugsnag = bugsnag;
         }
-
+		/// <summary>
+		/// xóa nhóm sở ngành
+		/// </summary>
+		/// <param name="_cADepartmentGroupDeleteIN"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Authorize]
 		[Route("delete")]
@@ -71,6 +75,15 @@ namespace PAKNAPI.Controllers.ControllerBase
 		//		return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 		//	}
 		//}
+		/// <summary>
+		/// danh sách nhóm sở ngành
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="Name"></param>
+		/// <param name="Description"></param>
+		/// <param name="IsActived"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize]
 		[Route("get-list-department-group-on-page")]
@@ -94,6 +107,12 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+		/// <summary>
+		/// chi tiết nhóm sở ngành
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
+
 		[HttpGet]
 		[Authorize]
 		[Route("get-by-id")]
@@ -116,6 +135,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// thêm mới nhóm sở ngành
+		/// </summary>
+		/// <param name="_cADepartmentGroupInsertIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -136,6 +160,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// cập nhập nhóm sở ngành
+		/// </summary>
+		/// <param name="_cADepartmentGroupUpdateIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]

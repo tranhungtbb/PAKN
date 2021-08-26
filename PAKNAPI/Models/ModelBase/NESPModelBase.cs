@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Dapper;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +9,7 @@ using System.Data;
 using PAKNAPI.Common;
 using PAKNAPI.Models.Results;
 using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace PAKNAPI.ModelBase
 {
@@ -245,13 +246,25 @@ namespace PAKNAPI.ModelBase
 
 	public class NENewsInsertIN
 	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu bài viết không được để trống")]
 		public string PostType { get; set; }
 		public bool? IsPublished { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Trạng thái không đúng định dạng")]
 		public int? Status { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tiêu đề bài viết không được để trống")]
+		[StringLength(500, ErrorMessage = "Tiêu đề bài viết không vượt quá 500 kí tự")]
 		public string Title { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung tóm tắt bài viết không được để trống")]
 		public string Summary { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung bài viết không được để trống")]
 		public string Contents { get; set; }
 		public string ImagePath { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu bài viết không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Kiểu bài viết không đúng định dạng")]
 		public int? NewsType { get; set; }
 		public int? ViewCount { get; set; }
 		public string Url { get; set; }
@@ -264,6 +277,10 @@ namespace PAKNAPI.ModelBase
 		public int? WithdrawBy { get; set; }
 		public DateTime? WithdrawDate { get; set; }
 		public string NewsRelateIds { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái gửi thông báo không được để trống")]
+		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái gửi thông báo không đúng định dạng")]
+
 		public bool? IsNotification { get; set; }
 	}
 
@@ -311,14 +328,26 @@ namespace PAKNAPI.ModelBase
 
 	public class NENewsUpdateIN
 	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu bài viết không được để trống")]
 		public string PostType { get; set; }
 		public bool? IsPublished { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Trạng thái không đúng định dạng")]
 		public int? Status { get; set; }
 		public int? Id { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tiêu đề bài viết không được để trống")]
+		[StringLength(500, ErrorMessage = "Tiêu đề bài viết không vượt quá 500 kí tự")]
 		public string Title { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung tóm tắt bài viết không được để trống")]
 		public string Summary { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung bài viết không được để trống")]
 		public string Contents { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Đường dẫn ảnh không được để trống")]
 		public string ImagePath { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu bài viết không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Kiểu bài viết không đúng định dạng")]
 		public int? NewsType { get; set; }
 		public int? ViewCount { get; set; }
 		public string Url { get; set; }
@@ -331,6 +360,9 @@ namespace PAKNAPI.ModelBase
 		public int? WithdrawBy { get; set; }
 		public DateTime? WithdrawDate { get; set; }
 		public string NewsRelateIds { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái gửi thông báo không được để trống")]
+		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái gửi thông báo không đúng định dạng")]
 		public bool? IsNotification { get; set; }
 		
 	}

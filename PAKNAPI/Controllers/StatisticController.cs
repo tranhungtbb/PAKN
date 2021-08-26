@@ -40,7 +40,15 @@ namespace PAKNAPI.Controllers
             _bugsnag = bugsnag;
             _hostingEnvironment = hostEnvironment;
         }
-
+		/// <summary>
+		/// tk pakn theo đơn vị
+		/// </summary>
+		/// <param name="LtsUnitId"></param>
+		/// <param name="FromDate"></param>
+		/// <param name="ToDate"></param>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize]
 		[Route("recommendation-by-unit")]
@@ -72,7 +80,20 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// chi tiết pakn theo đơn vị
+		/// </summary>
+		/// <param name="UnitId"></param>
+		/// <param name="Code"></param>
+		/// <param name="CreateName"></param>
+		/// <param name="Title"></param>
+		/// <param name="Field"></param>
+		/// <param name="Status"></param>
+		/// <param name="FromDate"></param>
+		/// <param name="ToDate"></param>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -103,7 +124,13 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// tk pakn theo từ ngữ 
+		/// </summary>
+		/// <param name="LtsUnitId"></param>
+		/// <param name="FromDate"></param>
+		/// <param name="ToDate"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -130,6 +157,20 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// chi tiết pakn theo nhóm từ ngữ
+		/// </summary>
+		/// <param name="Code"></param>
+		/// <param name="SendName"></param>
+		/// <param name="Title"></param>
+		/// <param name="Content"></param>
+		/// <param name="UnitId"></param>
+		/// <param name="GroupWordId"></param>
+		/// <param name="FromDate"></param>
+		/// <param name="ToDate"></param>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -156,6 +197,15 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// tk pakn theo lĩnh vực
+		/// </summary>
+		/// <param name="LtsUnitId"></param>
+		/// <param name="FromDate"></param>
+		/// <param name="ToDate"></param>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -187,6 +237,20 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách pakn theo lĩnh vực
+		/// </summary>
+		/// <param name="FiledId"></param>
+		/// <param name="Code"></param>
+		/// <param name="CreateName"></param>
+		/// <param name="Title"></param>
+		/// <param name="LstUnitId"></param>
+		/// <param name="Status"></param>
+		/// <param name="FromDate"></param>
+		/// <param name="ToDate"></param>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]

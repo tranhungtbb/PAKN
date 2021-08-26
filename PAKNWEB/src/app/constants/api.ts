@@ -190,8 +190,8 @@ export class Api {
 	public static GroupWordGetListSuggest = 'group-word/get-list-suggest'
 
 	//tin tuc
-	public static NewsGetAllOnPage = 'news/get-list-group-word-on-page' 
-	public static NewsGetListHomePage = 'news/get-list-group-word-on-home-page'
+	public static NewsGetAllOnPage = 'news/get-list-news-on-page' 
+	public static NewsGetListHomePage = 'news/get-list-news-on-home-page'
 	public static NewsGetById = 'news/get-by-id'
 	public static NewsInsert = 'news/insert'
 	public static NewsUpdate = 'news/update'

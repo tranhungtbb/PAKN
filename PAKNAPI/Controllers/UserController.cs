@@ -47,6 +47,7 @@ namespace PAKNAPI.Controllers
 			_config = config;
 			_hostingEnvironment = IWebHostEnvironment;
 		}
+		
 
 		[HttpGet]
 		[Authorize]
@@ -64,7 +65,12 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// thêm mới người dùng
+		/// </summary>
+		/// <param name="model"></param>
+		/// <param name="files"></param>
+		/// <returns></returns>
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("create")]
 		[Authorize]
@@ -102,6 +108,8 @@ namespace PAKNAPI.Controllers
 				model.Password = hashed;
 				model.Salt = Convert.ToBase64String(salt);
 				model.IsSuperAdmin = false;
+				model.IsAdmin = false;
+				model.UserName = model.Email;
 
 				var result = await new SYUserInsert(_appSetting).SYUserInsertDAO(model);
 			}
@@ -118,6 +126,14 @@ namespace PAKNAPI.Controllers
 			return new ResultApi { Success = ResultCode.OK };
 		}
 
+
+
+		/// <summary>
+		/// cập nhập người dùng
+		/// </summary>
+		/// <param name="model"></param>
+		/// <param name="files"></param>
+		/// <returns></returns>
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("update")]
 		[Authorize]
@@ -146,6 +162,8 @@ namespace PAKNAPI.Controllers
 				model.Password = modelOld[0].Password;
 				model.Salt = modelOld[0].Salt;
 				model.IsSuperAdmin = false;
+				model.IsAdmin = false;
+				model.UserName = model.Email;
 				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				var result = await new SYUserUpdate(_appSetting).SYUserUpdateDAO(model);
 
@@ -162,10 +180,17 @@ namespace PAKNAPI.Controllers
 			return new ResultApi { Success = ResultCode.OK };
 		}
 
+
+		/// <summary>
+		/// thêm mới nv quản trị
+		/// </summary>
+		/// <param name="model"></param>
+		/// <param name="files"></param>
+		/// <returns></returns>
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("user-system-create")]
 		[Authorize]
-		public async Task<object> UserSystemCreate([FromForm] SYUserInsertIN model, [FromForm] IFormFileCollection files = null)
+		public async Task<object> UserSystemCreate([FromForm] SYUserSystemInsertIN model, [FromForm] IFormFileCollection files = null)
 		{
 			// tải file
 			string filePath = "";
@@ -200,6 +225,9 @@ namespace PAKNAPI.Controllers
 				model.Password = hashed;
 				model.Salt = Convert.ToBase64String(salt);
 				model.IsSuperAdmin = false;
+				model.IsAdmin = true;
+				model.TypeId = 1; // quản trị
+				model.UserName = model.Email;
 
 				var unitMainId = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
 				if (unitMainId == null) {
@@ -208,7 +236,7 @@ namespace PAKNAPI.Controllers
 				}
 				model.UnitId = unitMainId.Id;
 
-				var result = await new SYUserInsert(_appSetting).SYUserInsertDAO(model);
+				var result = await new SYUserInsert(_appSetting).SYUserSystemInsertDAO(model);
 			}
 			catch (Exception ex)
 			{
@@ -223,6 +251,12 @@ namespace PAKNAPI.Controllers
 			return new ResultApi { Success = ResultCode.OK };
 		}
 
+		/// <summary>
+		/// cập nhập nv quản trị
+		/// </summary>
+		/// <param name="model"></param>
+		/// <param name="files"></param>
+		/// <returns></returns>
 
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("user-system-update")]
@@ -247,6 +281,7 @@ namespace PAKNAPI.Controllers
 						model.Avatar = filePath;
 					}
 				}
+				model.UserName = model.Email;
 				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				var result = await new SYUserUpdate(_appSetting).SYUserSystemUpdateDAO(model);
 
@@ -262,6 +297,11 @@ namespace PAKNAPI.Controllers
 			new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 			return new ResultApi { Success = ResultCode.OK };
 		}
+		/// <summary>
+		/// xóa người dùng
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("delete")]
@@ -318,6 +358,20 @@ namespace PAKNAPI.Controllers
 		//	return data;
 		//}
 
+		/// <summary>
+		/// danh sách người dùng
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="UserName"></param>
+		/// <param name="FullName"></param>
+		/// <param name="Phone"></param>
+		/// <param name="IsActived"></param>
+		/// <param name="UnitId"></param>
+		/// <param name="TypeId"></param>
+		/// <param name="PositionId"></param>
+		/// <returns></returns>
+
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-user-on-page")]
@@ -343,6 +397,20 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách quản trị
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="UserName"></param>
+		/// <param name="FullName"></param>
+		/// <param name="Phone"></param>
+		/// <param name="IsActived"></param>
+		/// <param name="UnitId"></param>
+		/// <param name="TypeId"></param>
+		/// <param name="SortDir"></param>
+		/// <param name="SortField"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -370,6 +438,12 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		/// <summary>
+		/// cập nhập trạng thái người dùng
+		/// </summary>
+		/// <param name="_sYUserChangeStatusIN"></param>
+		/// <returns></returns>
+
 		[HttpPost]
 		[Authorize]
 		[Route("change-status")]
@@ -389,7 +463,13 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// check tồn tại người dùng
+		/// </summary>
+		/// <param name="Field"></param>
+		/// <param name="Value"></param>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("check-exists")]
@@ -412,7 +492,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// danh sách người dùng theo vai trò - all
+		/// </summary>
+		/// <param name="RoleId"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -436,6 +520,10 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// :D
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -459,7 +547,13 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// danh sách người dùng theo vai trò
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="RoleId"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize]
 		[Route("get-list-user-on-page-by-role-id")]
@@ -485,6 +579,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// chi tiết người dùng
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -508,6 +607,16 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách người dùng( quản trị)
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="UserName"></param>
+		/// <param name="FullName"></param>
+		/// <param name="Phone"></param>
+		/// <param name="IsActived"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -534,6 +643,11 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// thông tin người dùng
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -559,7 +673,10 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// người dùng theo đơn vị
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -623,6 +740,10 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// người dùng thuộc hệ thống
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -647,6 +768,12 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		/// <summary>
+		/// xóa người dùng theo vai trò
+		/// </summary>
+		/// <param name="_sYUserRoleMapDeleteIN"></param>
+		/// <returns></returns>
+
 		[HttpPost]
 		[Authorize]
 		[Route("user-role-map-delete")]
@@ -666,6 +793,12 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		/// <summary>
+		/// danh sách người dùng ko thuộc vai trò
+		/// </summary>
+		/// <param name="RoleId"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -691,7 +824,11 @@ namespace PAKNAPI.Controllers
 		}
 
 
-
+		/// <summary>
+		/// đăng kí doanh nghiệp
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 
 		#region nguoi dan, doanh nghiep
 		[HttpPost]
@@ -864,7 +1001,11 @@ namespace PAKNAPI.Controllers
 			return new ResultApi { Success = ResultCode.OK };
 		}
 
-
+		/// <summary>
+		/// đăng kí người dân
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Route("individual-register")]
 		public async Task<object> InvididualRegister_Body([FromBody] IndivialRegisterModel model)
@@ -999,6 +1140,12 @@ namespace PAKNAPI.Controllers
 		//	}
 		//}
 
+		/// <summary>
+		/// thông tin người dùng
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+
 		[HttpGet]
 		[Route("user-get-info")]
 		[Authorize]
@@ -1077,6 +1224,12 @@ namespace PAKNAPI.Controllers
 			return new ResultApi { Success = ResultCode.ORROR, Message = "Thông tin tài khoản không tồn tại" };
 		}
 
+
+		/// <summary>
+		/// thay mk người dùng
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Route("user-change-password")]
 		[Authorize]
@@ -1133,7 +1286,11 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
-
+		/// <summary>
+		/// thay mk người dùng bởi quản trị
+		/// </summary>
+		/// <param name="model"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Route("user-change-password-in-manage")]
 		[Authorize]
@@ -1180,6 +1337,12 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		/// <summary>
+		/// cập nhập người dùng - công bố
+		/// </summary>
+		/// <param name="model"></param>
+		/// <param name="businessModel"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Route("update-current-info")]

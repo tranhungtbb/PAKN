@@ -24,7 +24,8 @@ namespace PAKNAPI.Controllers
 {
     [Route("api/index-setting")]
     [ApiController]
-   
+    [ValidateModel]
+
     public class IndexSettingController : BaseApiController
     {
         private readonly IAppSetting _appSetting;
@@ -39,6 +40,10 @@ namespace PAKNAPI.Controllers
         }
 
         //'SYIntroduce/IntroduceGetInfo'
+        /// <summary>
+        /// thông tin cấu hình trang chủ
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         //[Authorize]
         [Route("get-info")]
@@ -69,6 +74,10 @@ namespace PAKNAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// cập nhập cấu hình trang chủ
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         [Route("update")]
@@ -80,6 +89,18 @@ namespace PAKNAPI.Controllers
                 model.lstSYIndexWebsite = JsonConvert.DeserializeObject<List<SYIndexWebsite>>(Request.Form["ltsIndexWebsite"].ToString());
                 model.lstRemoveBanner = JsonConvert.DeserializeObject<List<SYIndexSettingBanner>>(Request.Form["lstRemoveBanner"].ToString());
                 model.Files = Request.Form.Files;
+
+                var ErrorMessage = ValidationForFormData.validObject(model.model);
+                if (ErrorMessage != null)
+                {
+                    return StatusCode(400, new ResultApi
+                    {
+                        Success = ResultCode.ORROR,
+                        Result = 0,
+                        Message = ErrorMessage
+                    });
+                }
+
 
                 // remove banner bị xóa
                 if (model.lstRemoveBanner.Count > 0)
@@ -173,49 +194,49 @@ namespace PAKNAPI.Controllers
         /// introduce unit
         /// 
 
-        [HttpGet]
-        [Authorize]
-        [Route("get-list-index-website")]
-        public async Task<object> SYIndexWebsiteGetAll()
-        {
-            try
-            {
-                var syIndexWebsiteGetAll = await new SYIndexWebsite(_appSetting).SY_IndexWebsiteDeleteAllDAO();
+        //[HttpGet]
+        //[Authorize]
+        //[Route("get-list-index-website")]
+        //public async Task<object> SYIndexWebsiteGetAll()
+        //{
+        //    try
+        //    {
+        //        var syIndexWebsiteGetAll = await new SYIndexWebsite(_appSetting).SY_IndexWebsiteDeleteAllDAO();
                
-                return new ResultApi { Success = ResultCode.OK, Result = syIndexWebsiteGetAll };
-            }
-            catch (Exception ex)
-            {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-            }
-        }
+        //        return new ResultApi { Success = ResultCode.OK, Result = syIndexWebsiteGetAll };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+        //        return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+        //    }
+        //}
 
 
-        [HttpPost]
-        [Authorize]
-        [Route("index-website-insert")]
-        public async Task<object> SYIndexWebsiteInsert(SYIndexWebsite model)
-        {
-            try
-            {
-                var result  = (int)await new SYIndexWebsite(_appSetting).SY_IndexWebsiteInsertDAO(model);
+        //[HttpPost]
+        //[Authorize]
+        //[Route("index-website-insert")]
+        //public async Task<object> SYIndexWebsiteInsert(SYIndexWebsite model)
+        //{
+        //    try
+        //    {
+        //        var result  = (int)await new SYIndexWebsite(_appSetting).SY_IndexWebsiteInsertDAO(model);
 
-                if (result > 0)
-                {
-                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-                    return new ResultApi { Success = ResultCode.OK, Result = result };
-                }
-                else {
-                    return new ResultApi { Success = ResultCode.ORROR,  Result = result};
-                }
-            }
-            catch (Exception ex)
-            {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-            }
-        }
+        //        if (result > 0)
+        //        {
+        //            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+        //            return new ResultApi { Success = ResultCode.OK, Result = result };
+        //        }
+        //        else {
+        //            return new ResultApi { Success = ResultCode.ORROR,  Result = result};
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+        //        return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+        //    }
+        //}
 
         public bool deletefile(string fname)
         {

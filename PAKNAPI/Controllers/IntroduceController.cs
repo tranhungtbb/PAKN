@@ -24,7 +24,7 @@ namespace PAKNAPI.Controllers
 {
     [Route("api/introduce")]
     [ApiController]
-   
+    [ValidateModel]
     public class IntroduceController : BaseApiController
     {
         private readonly IAppSetting _appSetting;
@@ -38,7 +38,10 @@ namespace PAKNAPI.Controllers
             _hostingEnvironment = hostEnvironment;
         }
 
-        //'SYIntroduce/IntroduceGetInfo'
+        /// <summary>
+        /// thông tin cấu hình trang giới thiệu
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         //[Authorize]
         [Route("get-by-id")]
@@ -69,6 +72,11 @@ namespace PAKNAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// cập nhập cấu hình trang giới thiệu
+        /// </summary>
+        /// <returns></returns>
+
         [HttpPost]
         [Authorize]
         [Route("update")]
@@ -77,6 +85,18 @@ namespace PAKNAPI.Controllers
             {
                 var model = new IntroduceModel();
                 model.model = JsonConvert.DeserializeObject<SYIntroduce>(Request.Form["model"].ToString());
+
+                var ErrorMessage = ValidationForFormData.validObject(model.model);
+                if (ErrorMessage != null)
+                {
+                    return StatusCode(400, new ResultApi
+                    {
+                        Success = ResultCode.ORROR,
+                        Result = 0,
+                        Message = ErrorMessage
+                    });
+                }
+
                 model.lstIntroduceFunction = JsonConvert.DeserializeObject<List<SYIntroduceFunction>>(Request.Form["lstIntroduceFunction"].ToString());
                 model.Files = Request.Form.Files;
 
@@ -146,10 +166,13 @@ namespace PAKNAPI.Controllers
             }
         }
 
-
-        /// introduce unit
-        /// 
-
+        /// <summary>
+        /// danh sách đơn vị trang giới thiệu
+        /// </summary>
+        /// <param name="IntroduceId"></param>
+        /// <param name="PageSize"></param>
+        /// <param name="PageIndex"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         [Route("get-list-introduce-unit-on-page")]
@@ -174,6 +197,12 @@ namespace PAKNAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// chi tiết đơn vị trang giới thiệu
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+
         [HttpGet]
         [Authorize]
         [Route("introduce-unit-get-by-id")]
@@ -192,7 +221,11 @@ namespace PAKNAPI.Controllers
             }
         }
 
-
+        /// <summary>
+        /// thêm mới đơn vị trang giới thiệu
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         [Route("introduce-unit-insert")]
@@ -219,6 +252,12 @@ namespace PAKNAPI.Controllers
             }
         }
 
+
+        /// <summary>
+        /// cập nhập đơn vị trang giới thiệu
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize]
@@ -247,6 +286,11 @@ namespace PAKNAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// xóa đơn vị trang giới thiệu
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         [Route("introduce-unit-delete")]

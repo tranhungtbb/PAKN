@@ -32,6 +32,11 @@ namespace PAKNAPI.Controllers.ControllerBase
             _appSetting = appSetting;
             _bugsnag = bugsnag;
         }
+		/// <summary>
+		/// xóa chức vụ
+		/// </summary>
+		/// <param name="_cAPositionDeleteIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -53,6 +58,16 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+		/// <summary>
+		/// danh sách chức vụ
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="Name"></param>
+		/// <param name="Code"></param>
+		/// <param name="Description"></param>
+		/// <param name="IsActived"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize]
 		[Route("get-list-position-on-page")]
@@ -75,7 +90,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// chi tiết
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize]
 		[Route("get-by-id")]
@@ -121,6 +140,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 		//		return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 		//	}
 		//}
+		/// <summary>
+		/// thêm mới chức vụ
+		/// </summary>
+		/// <param name="_cAPositionInsertIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -142,6 +166,12 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+
+		/// <summary>
+		/// cập nhập chức vụ
+		/// </summary>
+		/// <param name="_cAPositionUpdateIN"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Authorize]
 		[Route("update")]

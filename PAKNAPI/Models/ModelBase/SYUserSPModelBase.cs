@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Dapper;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using PAKNAPI.Common;
 using PAKNAPI.Models.Results;
+using System.ComponentModel.DataAnnotations;
 
 namespace PAKNAPI.ModelBase
 {
@@ -463,33 +464,81 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserInsert", DP));
 		}
+
+		public async Task<int> SYUserSystemInsertDAO(SYUserSystemInsertIN _sYUserInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("TypeId", _sYUserInsertIN.TypeId);
+			DP.Add("FullName", _sYUserInsertIN.FullName);
+			DP.Add("UserName", _sYUserInsertIN.UserName);
+			DP.Add("Password", _sYUserInsertIN.Password);
+			DP.Add("Salt", _sYUserInsertIN.Salt);
+			DP.Add("IsActived", _sYUserInsertIN.IsActived);
+			DP.Add("IsDeleted", _sYUserInsertIN.IsDeleted);
+			DP.Add("Gender", _sYUserInsertIN.Gender);
+			DP.Add("Type", _sYUserInsertIN.TypeId);
+			DP.Add("IsSuperAdmin", _sYUserInsertIN.IsSuperAdmin);
+			DP.Add("IsAdmin", _sYUserInsertIN.IsAdmin);
+			DP.Add("Email", _sYUserInsertIN.Email);
+			DP.Add("Phone", _sYUserInsertIN.Phone);
+			DP.Add("UnitId", _sYUserInsertIN.UnitId);
+			DP.Add("CountLock", _sYUserInsertIN.CountLock);
+			DP.Add("LockEndOut", _sYUserInsertIN.LockEndOut);
+			DP.Add("Avatar", _sYUserInsertIN.Avatar);
+			DP.Add("Address", _sYUserInsertIN.Address);
+			DP.Add("PositionId", null);
+			DP.Add("RoleIds", null);
+			DP.Add("PermissionIds", null);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserInsert", DP));
+		}
 	}
 
 	public class SYUserInsertIN
 	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Loại người dùng không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Loại người dùng không đúng định dạng")]
 		public int? TypeId { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Họ tên người dùng không được để trống")]
 		public string FullName { get; set; }
 		public string UserName { get; set; }
 		public string Password { get; set; }
 		public string Salt { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Giới tính không được để trống")]
 		public bool? Gender { get; set; }
 		public byte? Type { get; set; }
 		public bool? IsSuperAdmin { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "E-mail người dùng không được để trống")]
+		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
 		public string Email { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
+		[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại không đúng định dạng")]
 		public string Phone { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Đơn vị không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Đơn vị không đúng định dạng")]
 		public int? UnitId { get; set; }
 		public byte? CountLock { get; set; }
 		public DateTime? LockEndOut { get; set; }
 		public string Avatar { get; set; }
 		public string Address { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Chức vụ không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Chức vụ không đúng định dạng")]
 		public int? PositionId { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Vai trò không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Vai trò không đúng định dạng")]
 		public string RoleIds { get; set; }
 		public string PermissionIds { get; set; }
 
 		public bool IsAdmin { get; set; }
 	}
+
 
 	public class SYUserRoleMapDelete
 	{
@@ -567,6 +616,7 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _sYUserUpdateIN.Id);
 			DP.Add("FullName", _sYUserUpdateIN.FullName);
+			DP.Add("UserName", _sYUserUpdateIN.UserName);
 			DP.Add("IsActived", _sYUserUpdateIN.IsActived);
 			DP.Add("IsDeleted", _sYUserUpdateIN.IsDeleted);
 			DP.Add("Gender", _sYUserUpdateIN.Gender);
@@ -584,25 +634,51 @@ namespace PAKNAPI.ModelBase
 	public class SYUserUpdateIN
 	{
 		public long? Id { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Loại người dùng không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Loại người dùng không đúng định dạng")]
+
 		public int? TypeId { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Họ tên người dùng không được để trống")]
 		public string FullName { get; set; }
+
 		public string UserName { get; set; }
 		public string Password { get; set; }
 		public string Salt { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Giới tính không được để trống")]
 		public bool? Gender { get; set; }
 		public byte? Type { get; set; }
 		public bool? IsSuperAdmin { get; set; }
 		public bool? IsAdmin { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "E-mail người dùng không được để trống")]
+		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
+
 		public string Email { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
+		[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại không đúng định dạng")]
 		public string Phone { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Đơn vị không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Đơn vị không đúng định dạng")]
 		public int? UnitId { get; set; }
 		public byte? CountLock { get; set; }
 		public DateTime? LockEndOut { get; set; }
 		public string Avatar { get; set; }
 		public string Address { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Chức vụ không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Chức vụ không đúng định dạng")]
 		public int? PositionId { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Vai trò không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Vai trò không đúng định dạng")]
 		public string RoleIds { get; set; }
 		public string PermissionIds { get; set; }
 	}
@@ -610,11 +686,23 @@ namespace PAKNAPI.ModelBase
 	public class SYUserSystemUpdateIN
 	{
 		public long? Id { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Họ tên người dùng không được để trống")]
 		public string FullName { get; set; }
+
+		public string UserName { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Giới tính không được để trống")]
 		public bool? Gender { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "E-mail người dùng không được để trống")]
+		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
 		public string Email { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
+		[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại không đúng định dạng")]
 		public string Phone { get; set; }
 		public string Avatar { get; set; }
 		public string Address { get; set; }
@@ -622,15 +710,24 @@ namespace PAKNAPI.ModelBase
 
 	public class SYUserSystemInsertIN
 	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Họ tên người dùng không được để trống")]
 		public string FullName { get; set; }
 		public string UserName { get; set; }
 		public string Password { get; set; }
 		public string Salt { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Giới tính không được để trống")]
 		public bool? Gender { get; set; }
 		public bool? IsSuperAdmin { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "E-mail người dùng không được để trống")]
+		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
 		public string Email { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
+		[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại không đúng định dạng")]
 		public string Phone { get; set; }
 		public int? UnitId { get; set; }
 		public byte? CountLock { get; set; }
@@ -638,6 +735,8 @@ namespace PAKNAPI.ModelBase
 		public string Avatar { get; set; }
 		public string Address { get; set; }
 		public bool IsAdmin { get; set; }
+
+		public int? TypeId { get; set; }
 	}
 
 	public class SYUserUpdateInfo

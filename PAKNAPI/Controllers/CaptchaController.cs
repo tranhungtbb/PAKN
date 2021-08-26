@@ -29,6 +29,11 @@ namespace PAKNAPI.Controllers
 			_bugsnag = bugsnag;
 		}
 
+		/// <summary>
+		/// mã capcha (ảnh)
+		/// </summary>
+		/// <param name="IpAddress"></param>
+		/// <returns></returns>
 		[Route("get-captcha-image")]
 		[HttpGet]
 		public async Task<IActionResult> GetCaptchaImageAsync(string IpAddress = null)
@@ -168,6 +173,11 @@ namespace PAKNAPI.Controllers
 		//	}
 		//}
 
+		/// <summary>
+		/// check isvalid capcha
+		/// </summary>
+		/// <param name="CaptchaCode"></param>
+		/// <returns></returns>
 		[Route("validator-captcha")]
 		[HttpGet]
 		public ActionResult<object> ValidatorCaptcha(string CaptchaCode)

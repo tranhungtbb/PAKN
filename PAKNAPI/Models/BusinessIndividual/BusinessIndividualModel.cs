@@ -2,6 +2,7 @@
 using PAKNAPI.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -191,28 +192,50 @@ namespace PAKNAPI.Models.BusinessIndividual
 
 	public class BIIndividualInsertIN
 	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Họ tên cá nhân không được để trống")]
 		public string FullName { get; set; }
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public int? ProvinceId { get; set; }
 		public int? WardsId { get; set; }
 		public int? DistrictId { get; set; }
+
+		[DataType(DataType.DateTime, ErrorMessage = "Ngày cấp không đúng định dạng")]
 		public DateTime? DateOfIssue { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public DateTime? UpdatedDate { get; set; }
 		public int? CreatedBy { get; set; }
 		public int? UpdatedBy { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public int? Status { get; set; }
 		public string Code { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Địa chỉ không được để trống")]
 		public string Address { get; set; }
+
+		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
 		public string Email { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
+		[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại không đúng định dạng")]
 		public string Phone { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "CMT/Căn cước/Hộ chiếu không được để trống")]
+		[RegularExpression(ConstantRegex.CMT, ErrorMessage = "CMT/Căn cước/Hộ chiếu không đúng định dạng")]
 		public string IDCard { get; set; }
+
 		public string IssuedPlace { get; set; }
 		public string NativePlace { get; set; }
 		public string PermanentPlace { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Quốc tịch không được để trống")]
 		public string Nation { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Ngày sinh không được để trống")]
+		[DataType(DataType.DateTime, ErrorMessage = "Ngày sinh không đúng định dạng")]
+
 		public DateTime? BirthDay { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Giới tính không được để trống")]
 		public bool? Gender { get; set; }
 		public long? UserId { get; set; }
 	}
@@ -265,22 +288,41 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public int? ProvinceId { get; set; }
 		public int? WardsId { get; set; }
 		public int? DistrictId { get; set; }
+
+		[DataType(DataType.DateTime, ErrorMessage = "Ngày cấp không đúng định dạng")]
+
 		public DateTime? DateOfIssue { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public DateTime? UpdatedDate { get; set; }
 		public int? CreatedBy { get; set; }
 		public int? UpdatedBy { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public int? Status { get; set; }
 		public string Code { get; set; }
+
 		public string Address { get; set; }
+
+		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail người đại diện không đúng định dạng")]
 		public string Email { get; set; }
+		
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại người đại diện không được để trống")]
+		[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại người đại diện không đúng định dạng")]
 		public string Phone { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "CMT/Căn cước/Hộ chiếu không được để trống")]
+		[RegularExpression(ConstantRegex.CMT, ErrorMessage = "CMT/Căn cước/Hộ chiếu không đúng định dạng")]
 		public string IDCard { get; set; }
 		public string IssuedPlace { get; set; }
 		public string NativePlace { get; set; }
 		public string PermanentPlace { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Quốc tịch không được để trống")]
 		public string Nation { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Ngày sinh không được để trống")]
+		[DataType(DataType.DateTime, ErrorMessage = "Ngày sinh không đúng định dạng")]
 		public DateTime? BirthDay { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Giới tính không được để trống")]
 		public bool? Gender { get; set; }
 		public long? UserId { get; set; }
 	}

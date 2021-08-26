@@ -17,4 +17,8 @@
     <pattern>sdf</pattern>
     <template>sdf</template>
   </category>
+  <category id="7">
+    <pattern>dfsdf</pattern>
+    <template>sdfsd</template>
+  </category>
 </aiml>

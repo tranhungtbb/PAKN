@@ -39,7 +39,10 @@ namespace PAKNAPI.Controllers
         }
 
         #region RM_RemindInsert
-
+        /// <summary>
+        /// thêm mới nhắc nhỏ
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         [Route("insert")]
@@ -115,6 +118,11 @@ namespace PAKNAPI.Controllers
 
         #region danh sách nhắc việc trong detail PAKN mà cơ quan mình nhận được hoặc mình là người gửi
 
+        /// <summary>
+        /// danh sách nhắc nhỏ
+        /// </summary>
+        /// <param name="RecommendationId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         [Route("get-remind-list")]

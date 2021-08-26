@@ -32,7 +32,11 @@ namespace PAKNAPI.Controllers.ControllerBase
             _appSetting = appSetting;
             _bugsnag = bugsnag;
         }
-
+		/// <summary>
+		/// xóa nhóm thư viện từ
+		/// </summary>
+		/// <param name="_cAGroupWordDeleteIN"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Authorize]
 		[Route("delete")]
@@ -52,7 +56,15 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// danh sách nhóm thư viện từ
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="Name"></param>
+		/// <param name="Description"></param>
+		/// <param name="IsActived"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-group-word-on-page")]
@@ -78,6 +90,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// chi tiết nhóm thư viện từ
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -102,6 +119,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-suggest")]
@@ -124,7 +142,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// thêm mới nhóm thư viện từ
+		/// </summary>
+		/// <param name="_cAGroupWordInsertIN"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Authorize]
 		[Route("insert")]
@@ -144,7 +166,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// cập nhập nhóm thư viện từ
+		/// </summary>
+		/// <param name="_cAGroupWordUpdateIN"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Authorize]
 		[Route("update")]

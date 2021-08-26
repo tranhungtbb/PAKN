@@ -25,6 +25,14 @@ namespace PAKNAPI.Controllers.ControllerBase
 			_hostingEnvironment = hostingEnvironment;
 			_bugsnag = bugsnag;
 		}
+		/// <summary>
+		/// danh sách lịch sử hê thống
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="phone"></param>
+		/// <param name="pageIndex"></param>
+		/// <param name="pageSize"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Route("get-list-call-history-on-page")]
@@ -49,6 +57,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// xóa lịch sử hê thống
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Route("delete")]

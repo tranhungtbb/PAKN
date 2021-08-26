@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Dapper;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using PAKNAPI.Common;
 using PAKNAPI.Models.Results;
+using System.ComponentModel.DataAnnotations;
 
 namespace PAKNAPI.ModelBase
 {
@@ -110,10 +111,24 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int Id { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tiêu đề không được để trống")]
 		public string Title { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Level không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Level không đúng định dạng")]
 		public int Level { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Menu cha không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Menu cha không đúng định dạng")]
 		public int ParentId { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Loại hỗ trợ không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Loại hỗ trợ không đúng định dạng")]
 		public int Category { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu hỗ trợ không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Kiểu hỗ trợ không đúng định dạng")]
 		public int Type { get; set; }
 
 		public string Content { get; set; }
@@ -191,9 +206,13 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int Id { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tiêu đề không được để trống")]
 		public string Title { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Thông tin tóm tắt không được để trống")]
 		public string Summary { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Mô tả cơ cấu tổ chức không được để trống")]
 		public string DescriptionUnit { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Mô tả chức năng hệ thống không được để trống")]
 		public string DescriptionFunction { get; set; }
 		public string BannerUrl { get; set; }
 
@@ -301,13 +320,22 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int Id { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên đơn vị không được để trống")]
 		public string Title { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Mô tả đơn vị không được để trống")]
 		public string Description { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Thông tin liên hệ không được để trống")]
 		public string Infomation { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Số thứ tự hiển thị không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Số thứ tự hiển thị không đúng định dạng")]
+
 		public int? Index { get; set; }
 
 		public int RowNumber { get; set; }
 
+		[Required(AllowEmptyStrings = false, ErrorMessage = "IntroduceId không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "IntroduceId không đúng định dạng")]
 		public int IntroduceId { get; set; }
 
 		public async Task<List<SYIntroduceUnit>> SYIntroduceUnitGetByIntroduceId(int? IntroduceId)
@@ -434,11 +462,20 @@ namespace PAKNAPI.ModelBase
 
 		public int Id { get; set; }
 		public string BannerUrl { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
+		[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại không đúng định dạng")]
 		public string Phone { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "E-mail không được để trống")]
+		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
 		public string Email { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Địa chỉ không được để trống")]
 		public string Address { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Mô tả không được để trống")]
 		public string Description { get; set; }
 
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Mô tả giấy phép không được để trống")]
 		public string License { get; set; }
 
 		public async Task<List<SYIndexSetting>> SYIndexSettingGetInfoDAO()
@@ -941,7 +978,9 @@ namespace PAKNAPI.ModelBase
 	public class SYRoleInsertIN
 	{
 		public int? OrderNumber { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên vai trò không được để trống")]
 		public string Name { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -978,7 +1017,11 @@ namespace PAKNAPI.ModelBase
 	{
 		public int? Id { get; set; }
 		public int? OrderNumber { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên vai trò không được để trống")]
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -1299,8 +1342,16 @@ namespace PAKNAPI.ModelBase
 
 	public class SYTimeInsertIN
 	{
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên ngày nghỉ không được để trống")]
+		[StringLength(200, ErrorMessage = "Tên ngày nghỉ không vượt quá 200 kí tự")]
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public bool? IsActived { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Ngày nghỉ không được để trống")]
+		[DataType(DataType.DateTime, ErrorMessage = "Ngày nghỉ không đúng định dạng")]
 		public DateTime? Time { get; set; }
 		public string Description { get; set; }
 	}
@@ -1334,8 +1385,14 @@ namespace PAKNAPI.ModelBase
 	public class SYTimeUpdateIN
 	{
 		public int? Id { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên ngày nghỉ không được để trống")]
+		[StringLength(200, ErrorMessage = "Tên ngày nghỉ không vượt quá 200 kí tự")]
 		public string Name { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public bool? IsActived { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Ngày nghỉ không được để trống")]
+		[DataType(DataType.DateTime, ErrorMessage = "Ngày nghỉ không đúng định dạng")]
 		public DateTime? Time { get; set; }
 		public string Description { get; set; }
 	}

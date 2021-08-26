@@ -34,6 +34,13 @@ namespace PAKNAPI.Controllers.ControllerBase
             _bugsnag = bugsnag;
         }
 
+		/// <summary>
+		/// danh sách đơn vị - all
+		/// </summary>
+		/// <param name="ParentId"></param>
+		/// <param name="UnitLevel"></param>
+		/// <returns></returns>
+
 		[HttpGet]
 		[Route("get-all")]
 		public async Task<ActionResult<object>> CAUnitGetAllBase(int? ParentId, byte? UnitLevel)
@@ -55,6 +62,22 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách đơn vị
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="ParentId"></param>
+		/// <param name="UnitLevel"></param>
+		/// <param name="Name"></param>
+		/// <param name="Phone"></param>
+		/// <param name="Email"></param>
+		/// <param name="Address"></param>
+		/// <param name="IsActived"></param>
+		/// <param name="IsMain"></param>
+		/// <param name="SortDir"></param>
+		/// <param name="SortField"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -78,6 +101,10 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// :D
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -101,7 +128,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// chi tiết đơn vị
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -148,6 +179,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 		//		return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 		//	}
 		//}
+		/// <summary>
+		/// thêm mới đơn vị
+		/// </summary>
+		/// <param name="_cAUnitInsertIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -168,6 +204,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// cập nhập đơn vị
+		/// </summary>
+		/// <param name="_cAUnitUpdateIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -188,6 +229,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// xóa đơn vị
+		/// </summary>
+		/// <param name="_cAUnitDeleteIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -208,7 +254,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// thay trạng thái đơn vị
+		/// </summary>
+		/// <param name="_sYUnitChageStatusIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -230,7 +280,13 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
-
+		/// <summary>
+		/// check tồn tại
+		/// </summary>
+		/// <param name="Field"></param>
+		/// <param name="Value"></param>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("check-exists")]
@@ -253,6 +309,10 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// :D
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]

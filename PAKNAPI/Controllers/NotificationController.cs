@@ -37,7 +37,13 @@ namespace PAKNAPI.Controllers
         }
 
         #region SYNotificationInsertTypeNews
-
+        /// <summary>
+        /// thêm mới thông báo tin tức
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="Title"></param>
+        /// <param name="isCreateNews"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         [Route("insert-type-new")]
@@ -82,7 +88,11 @@ namespace PAKNAPI.Controllers
 
 
         #endregion SYNotificationInsertTypeNews
-
+        /// <summary>
+        /// chi tiết thông báo
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         [Route("get-by-id")]
@@ -108,7 +118,11 @@ namespace PAKNAPI.Controllers
 
 
         #region SYNotificationInsertTypeRecommendation
-
+        /// <summary>
+        /// thêm mới thông báo (pakn)
+        /// </summary>
+        /// <param name="recommendationId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         [Route("insert-type-recommendation")]
@@ -389,7 +403,10 @@ namespace PAKNAPI.Controllers
 
 
         #endregion SYNotificationInsertTypeRecommendation
-
+        /// <summary>
+        /// danh sách thông báo
+        /// </summary>
+        /// <returns></returns>
 
         #region SYNotificationGetAll
         [HttpPost]
@@ -423,6 +440,10 @@ namespace PAKNAPI.Controllers
 
 
         #region SYNotificationUpdateIsViewed
+        /// <summary>
+        /// cập nhập trạng thái đã xem
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         [Route("update-is-viewed")]
@@ -446,7 +467,11 @@ namespace PAKNAPI.Controllers
             }
         }
         #endregion
-
+        /// <summary>
+        /// cập nhập trạng thái đã đọc
+        /// </summary>
+        /// <param name="ObjectId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         [Route("update-is-readed")]
@@ -469,6 +494,11 @@ namespace PAKNAPI.Controllers
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+        /// <summary>
+        /// xóa  thông báo
+        /// </summary>
+        /// <param name="_syNotification"></param>
+        /// <returns></returns>
 
         [HttpPost]
         [Authorize]

@@ -27,6 +27,12 @@ namespace PAKNAPI.Controllers
             _appSetting = appSetting;
             _config = config;
         }
+        /// <summary>
+        /// thông tin thời tiết
+        /// </summary>
+        /// <param name="lat"></param>
+        /// <param name="lon"></param>
+        /// <returns></returns>
 
         [Route("get")]
         public async Task<object> getWeatherAsync(string lat, string lon)
@@ -47,6 +53,11 @@ namespace PAKNAPI.Controllers
 
             return new ResultApi { Success = ResultCode.OK, Result = json };
         }
+        /// <summary>
+        /// thông tin thời tiết theo thành phố
+        /// </summary>
+        /// <param name="q"></param>
+        /// <returns></returns>
 
         [Route("get-by-q")]
         public async Task<object> getByQ(string q= "Nha Trang, VN")

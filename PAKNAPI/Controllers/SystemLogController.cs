@@ -1,4 +1,4 @@
-using PAKNAPI.Common;
+﻿using PAKNAPI.Common;
 using PAKNAPI.Controllers;
 using PAKNAPI.Models;
 using PAKNAPI.ModelBase;
@@ -31,7 +31,17 @@ namespace PAKNAPI.ControllerBase
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
 		}
-
+		/// <summary>
+		/// danh sách lịch sử hệ thống
+		/// </summary>
+		/// <param name="UserId"></param>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="FromDate"></param>
+		/// <param name="ToDate"></param>
+		/// <param name="Content"></param>
+		/// <param name="Status"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-system-log-on-page")]
@@ -54,6 +64,16 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// lịch sử cá nhân
+		/// </summary>
+		/// <param name="UserId"></param>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="CreateDate"></param>
+		/// <param name="Status"></param>
+		/// <param name="Description"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -77,6 +97,12 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		/// <summary>
+		/// xóa lịch sử hệ thống
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize("ThePolicy")]

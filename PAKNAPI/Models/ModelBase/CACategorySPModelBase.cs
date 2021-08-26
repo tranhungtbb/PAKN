@@ -242,7 +242,6 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
-		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -282,7 +281,6 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
-		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
@@ -338,7 +336,6 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
-		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -387,7 +384,7 @@ namespace PAKNAPI.ModelBase
 		public string Phone { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
-		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
+		
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -521,7 +518,6 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
-		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -621,7 +617,6 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
-		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -771,7 +766,6 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
-		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
@@ -812,7 +806,6 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
-		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
@@ -1083,7 +1076,6 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
-		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
@@ -1124,7 +1116,6 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
-		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
@@ -1275,8 +1266,6 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
-		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
-
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -1316,7 +1305,6 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
-		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
@@ -1527,17 +1515,36 @@ namespace PAKNAPI.ModelBase
 
 	public class CAUnitInsertIN
 	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên đơn vị không được để trống")]
+		[StringLength(500, ErrorMessage = "Tên đơn vị không vượt quá 500 kí tự")]
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Cấp đơn vị không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Cấp đơn vị không đúng định dạng")]
+
 		public byte? UnitLevel { get; set; }
 		public int? ParentId { get; set; }
 		public string Description { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "E-mail không được để trống")]
+		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
+
 		public string Email { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
+		[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại không đúng định dạng")]
 		public string Phone { get; set; }
 		public string Address { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public bool? IsMain { get; set; }
+
+		[Range(0, int.MaxValue, ErrorMessage = "Thứ tự hiển thị không đúng định dạng")]
 		public int Index { get; set; }
+
+		[Range(0, int.MaxValue, ErrorMessage = "Lĩnh vực không đúng định dạng")]
 		public int? Field { get; set; }
 	}
 
@@ -1578,17 +1585,34 @@ namespace PAKNAPI.ModelBase
 	public class CAUnitUpdateIN
 	{
 		public int? Id { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên đơn vị không được để trống")]
+		[StringLength(500, ErrorMessage = "Tên đơn vị không vượt quá 500 kí tự")]
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Cấp đơn vị không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Cấp đơn vị không đúng định dạng")]
 		public byte? UnitLevel { get; set; }
 		public int? ParentId { get; set; }
 		public string Description { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "E-mail không được để trống")]
+		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
 		public string Email { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
+		[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại không đúng định dạng")]
 		public string Phone { get; set; }
 		public string Address { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public bool? IsMain { get; set; }
+
+		[Range(0, int.MaxValue, ErrorMessage = "Thứ tự hiển thị không đúng định dạng")]
 		public int Index { get; set; }
+		[Range(0, int.MaxValue, ErrorMessage = "Lĩnh vực không đúng định dạng")]
 		public int? Field { get; set; }
 
 
@@ -1738,7 +1762,6 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
-		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
@@ -1784,7 +1807,6 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
-		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái không đúng định dạng")]
 
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }

@@ -32,7 +32,11 @@ namespace PAKNAPI.Controllers.ControllerBase
             _appSetting = appSetting;
             _bugsnag = bugsnag;
         }
-
+		/// <summary>
+		/// xóa kiểu bài viết
+		/// </summary>
+		/// <param name="_cANewsTypeDeleteIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
@@ -53,6 +57,15 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách kiểu bài viết
+		/// </summary>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="Name"></param>
+		/// <param name="Description"></param>
+		/// <param name="IsActived"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -77,6 +90,12 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+		/// <summary>
+		/// chi tiết kiểu bài viết
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
+
 		[HttpGet]
 		[Authorize]
 		[Route("get-by-id")]
@@ -99,7 +118,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// thêm mới
+		/// </summary>
+		/// <param name="_cANewsTypeInsertIN"></param>
+		/// <returns></returns>
 		[HttpPost]
 		[Authorize]
 		[Route("insert")]
@@ -119,6 +142,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// cập nhập
+		/// </summary>
+		/// <param name="_cANewsTypeUpdateIN"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]

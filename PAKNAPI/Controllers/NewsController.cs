@@ -17,11 +17,13 @@ using Bugsnag;
 using PAKNAPI.Services.FileUpload;
 using Microsoft.AspNetCore.Http;
 using PAKNAPI.Models.ModelBase;
+using System.ComponentModel.DataAnnotations;
 
 namespace PAKNAPI.Controller
 {
 	[Route("api/news")]
 	[ApiController]
+	[ValidateModel]
 	public class NewsController : BaseApiController
 	{
 		private readonly IAppSetting _appSetting;
@@ -34,10 +36,19 @@ namespace PAKNAPI.Controller
 			_bugsnag = bugsnag;
 			_fileService = fileService;
 		}
-
+		/// <summary>
+		/// danh sách tin tức
+		/// </summary>
+		/// <param name="NewsIds"></param>
+		/// <param name="PageSize"></param>
+		/// <param name="PageIndex"></param>
+		/// <param name="Title"></param>
+		/// <param name="NewsType"></param>
+		/// <param name="Status"></param>
+		/// <returns></returns>
 		[HttpGet]
 		//[Authorize]
-		[Route("get-list-group-word-on-page")]
+		[Route("get-list-news-on-page")]
 		public async Task<ActionResult<object>> NENewsGetAllOnPageBase(string NewsIds, int? PageSize, int? PageIndex, string Title, int? NewsType, int? Status)
 		{
 			try
@@ -58,9 +69,13 @@ namespace PAKNAPI.Controller
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách tin tức trang chủ (slide)
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpGet]
-		[Route("get-list-group-word-on-home-page")]
+		[Route("get-list-news-on-home-page")]
 		public async Task<ActionResult<object>> NENewsGetListHome()
 		{
 			try
@@ -79,6 +94,11 @@ namespace PAKNAPI.Controller
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// chi tiết  tin tức 
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -103,6 +123,12 @@ namespace PAKNAPI.Controller
 			}
 		}
 
+		/// <summary>
+		/// xóa  tin tức 
+		/// </summary>
+		/// <param name="_nENewsDeleteIN"></param>
+		/// <returns></returns>
+
 		[HttpPost]
 		[Authorize]
 		[Route("delete")]
@@ -124,11 +150,15 @@ namespace PAKNAPI.Controller
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// thêm mới  tin tức 
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
 		[Route("insert"), DisableRequestSizeLimit]
-		public async Task<ActionResult<object>> NENewsInsertBase()
+		public async Task<ActionResult<object>> NENewsInsertBase() // [FromForm] NENewsInsertIN _nENewsInsertIN
 		{
 			try
 			{
@@ -138,11 +168,22 @@ namespace PAKNAPI.Controller
 					DateTimeZoneHandling = DateTimeZoneHandling.Local,
 					DateParseHandling = DateParseHandling.DateTimeOffset,
 				};
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				var files = Request.Form.Files;
 				NENewsInsertIN _nENewsInsertIN = JsonConvert.DeserializeObject<NENewsInsertIN>(Request.Form["data"].ToString(), jss);
 
+				var ErrorMessage = ValidationForFormData.validObject(_nENewsInsertIN);
+				if (ErrorMessage != null) {
+                    return StatusCode(400, new ResultApi
+                    {
+                        Success = ResultCode.ORROR,
+                        Result = 0,
+                        Message = ErrorMessage
+					});
+                }
+
+				var files = Request.Form.Files;
+				if (files.Count == 0) {
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Ảnh đại diện bài viết không được để trống" };
+				}
 				string avatarFilePath = null;
 				if (files != null && files.Any())
 				{
@@ -190,13 +231,15 @@ namespace PAKNAPI.Controller
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		///  cập nhập  tin tức 
+		/// </summary>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize]
 		[Route("update"), DisableRequestSizeLimit]
-		public async Task<ActionResult<object>> NENewsUpdateBase(
-		//[FromForm] NENewsUpdateIN _nENewsUpdateIN
-		)
+		public async Task<ActionResult<object>> NENewsUpdateBase()
 		{
 			try
 			{
@@ -209,6 +252,17 @@ namespace PAKNAPI.Controller
 
 				var files = Request.Form.Files;
 				NENewsUpdateIN _nENewsUpdateIN = JsonConvert.DeserializeObject<NENewsUpdateIN>(Request.Form["data"].ToString(), jss);
+
+				var ErrorMessage = ValidationForFormData.validObject(_nENewsUpdateIN);
+				if (ErrorMessage != null)
+				{
+					return StatusCode(400, new ResultApi
+					{
+						Success = ResultCode.ORROR,
+						Result = 0,
+						Message = ErrorMessage
+					});
+				}
 
 				string avatarFilePath = null;
 				if (files != null && files.Any())
@@ -265,6 +319,11 @@ namespace PAKNAPI.Controller
 			}
 		}
 
+		/// <summary>
+		/// danh sách tin tức liên quan
+		/// </summary>
+		/// <param name="NewsId"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]
@@ -288,7 +347,11 @@ namespace PAKNAPI.Controller
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// chi tiết tin tức 
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Route("get-detail")]
@@ -311,7 +374,11 @@ namespace PAKNAPI.Controller
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
+		/// <summary>
+		/// chi tiết tin tức trang chủ
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Route("get-detail-public")]
@@ -342,6 +409,11 @@ namespace PAKNAPI.Controller
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách tin tức liên quan theo tin tức đó
+		/// </summary>
+		/// <param name="Id"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -403,7 +475,11 @@ namespace PAKNAPI.Controller
 				return false;
 			}
 		}
-
+		/// <summary>
+		/// danh sách lịch sử  tin tức 
+		/// </summary>
+		/// <param name="NewsId"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize]

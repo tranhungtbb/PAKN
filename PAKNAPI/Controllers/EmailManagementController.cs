@@ -19,7 +19,8 @@ namespace PAKNAPI.Controllers.ControllerBase
 {
     [Route("api/email-management")]
     [ApiController]
-    public class EmailManagementController : BaseApiController
+	[ValidateModel]
+	public class EmailManagementController : BaseApiController
     {
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;
@@ -40,6 +41,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 			_webHostEnvironment = webHostEnvironment;
 			
 		}
+		/// <summary>
+		/// cập nhập Email
+		/// </summary>
+		/// <param name="userId"></param>
+		/// <returns></returns>
 
 		[HttpPost]
 		[Authorize("ThePolicy")]
@@ -162,7 +168,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
-
+		/// <summary>
+		/// chi tiết Email
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -219,6 +229,17 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
         }
+		/// <summary>
+		///  danh sách email
+		/// </summary>
+		/// <param name="title"></param>
+		/// <param name="unit"></param>
+		/// <param name="objectId"></param>
+		/// <param name="status"></param>
+		/// <param name="unitName"></param>
+		/// <param name="pageIndex"></param>
+		/// <param name="pageSize"></param>
+		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -253,6 +274,12 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		/// <summary>
+		/// xóa Email
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("delete")]
@@ -288,6 +315,12 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+		/// <summary>
+		/// gửi Email
+		/// </summary>
+		/// <param name="id"></param>
+		/// <param name="userId"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("send-email")]
@@ -327,6 +360,17 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// danh sách lịch sử Email
+		/// </summary>
+		/// <param name="objectId"></param>
+		/// <param name="content"></param>
+		/// <param name="createdBy"></param>
+		/// <param name="createdDate"></param>
+		/// <param name="status"></param>
+		/// <param name="pageIndex"></param>
+		/// <param name="pageSize"></param>
+		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("list-his")]
