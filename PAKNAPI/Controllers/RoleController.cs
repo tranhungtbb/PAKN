@@ -46,7 +46,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpGet]
 		[Route("get-data-for-create")]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		public async Task<ActionResult<object>> GetDataForCreate()
 		{
 			try
@@ -67,7 +67,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> GetByID(int? Id)
 		{
@@ -97,7 +97,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("delete")]
 		public async Task<ActionResult<object>> SYRoleDeleteBase(SYRoleDeleteIN _sYRoleDeleteIN)
 		{
@@ -146,7 +146,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-role-base")]
 		public async Task<ActionResult<object>> SYRoleGetAllBase()
 		{
@@ -178,7 +178,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="IsActived"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-role-on-page")]
 		public async Task<ActionResult<object>> SYRoleGetAllOnPageBase(int? PageSize, int? PageIndex, int? UserCount, string Name, string Description, bool? IsActived)
 		{
@@ -209,7 +209,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("SYRoleGetByIDBase")]
 		public async Task<ActionResult<object>> SYRoleGetByIDBase(int? Id)
 		{
@@ -237,7 +237,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update")]
 		public async Task<ActionResult<object>> SYRoleUpdateBase(SYRoleUpdateIN _sYRoleUpdateIN)
 		{
@@ -262,7 +262,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("insert")]
 		public async Task<ActionResult<object>> SYRoleInsertBase(SYRoleInsertIN _sYRoleInsertIN)
 		{
@@ -287,7 +287,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("user-role-map-insert-list")]
 		public async Task<ActionResult<object>> SYUserRoleMapListInsert(List<SYUserRoleMapInsertIN> _sYUserRoleMaps)
 		{

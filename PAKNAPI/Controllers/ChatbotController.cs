@@ -32,7 +32,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("delete")]
         public async Task<ActionResult<object>> ChatbotDeleteBase(ChatbotDeleteIN _ChatbotDeleteIN)
         {
@@ -60,7 +60,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("get-list-chat-bot-on-page")]
         public async Task<ActionResult<object>> ChatbotGetAllOnPageBase(int? PageSize, int? PageIndex, string Question, string Answer, bool? IsActived)
         {
@@ -153,7 +153,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("insert-question")]
         public async Task<object> ChatbotInsertQuestion(ChatbotInsertIN _chatbotInsertIN)
         {
@@ -177,7 +177,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("update")]
         public async Task<ActionResult<object>> ChatbotUpdateBase(ChatbotUpdateIN ChatbotUpdateIN)
         {
@@ -195,7 +195,7 @@ namespace PAKNAPI.Controllers.ChatbotController
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("insert-data")]
         public async Task<object> ChatbotInsertData(ChatbotDataInsertIN _chatbotDataInsertIN)
         {

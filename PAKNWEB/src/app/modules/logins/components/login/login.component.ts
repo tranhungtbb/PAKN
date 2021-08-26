@@ -171,7 +171,7 @@ export class LoginComponent implements OnInit {
 									if (dataIP != null) {
 										this.storeageService.setIpAddress(dataIP.ip)
 									}
-									this.storeageService.setIpAddress(dataIP.ip)
+									// this.storeageService.setIpAddress(dataIP.ip)
 								})
 								if (this.isSaveLogin) {
 									this.storeageService.setKeyRemember(btoa(this.user.Password))

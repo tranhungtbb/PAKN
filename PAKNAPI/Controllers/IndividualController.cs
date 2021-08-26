@@ -37,7 +37,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[Route("import-data-individual")]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		public async Task<ActionResult<object>> ImportDataInvididual(string folder = null)
 		{
 			var file = Request.Form.Files[0];
@@ -279,7 +279,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-individual-on-page")]
 		public async Task<ActionResult<object>> IndividualGetAllOnPage(int? PageSize, int? PageIndex, string FullName, string Address, string Phone, string Email, int? Status, string SortDir, string SortField)
 		{
@@ -311,7 +311,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("delete")]
 		public async Task<ActionResult<object>> IndivialDelete(BI_IndivialDeleteIN _bi_IndivialDeleteIN)
 		{
@@ -337,7 +337,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("change-status")]
 		public async Task<ActionResult<object>> IndivialChangeStatus(BI_IndivialChageStatusIN _bI_IndivialChageStatusIN)
 		{
@@ -363,7 +363,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("insert")]
 		public async Task<object> InvididualRegister([FromBody] Models.BusinessIndividual.BIIndividualInsertIN model)
 		{
@@ -458,7 +458,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update")]
 		public async Task<ActionResult<object>> InvididualUpdate(BI_InvididualUpdateIN _bI_InvididualUpdateIN)
 		{

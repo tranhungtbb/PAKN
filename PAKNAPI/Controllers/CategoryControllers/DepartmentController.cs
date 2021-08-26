@@ -39,7 +39,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="_cADepartmentDeleteIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("delete")]
 		public async Task<ActionResult<object>> CADepartmentDeleteBase(CADepartmentDeleteIN _cADepartmentDeleteIN)
 		{
@@ -73,7 +73,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-department-on-page")]
 		public async Task<ActionResult<object>> CADepartmentGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived, int? DepartmentGroupId, string Phone, string Email, string Address, string Fax)
 		{
@@ -101,7 +101,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> CADepartmentGetByIDBase(int? Id)
 		{
@@ -130,7 +130,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("insert")]
 		public async Task<ActionResult<object>> CADepartmentInsertBase(CADepartmentInsertIN _cADepartmentInsertIN)
 		{
@@ -156,7 +156,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update")]
 		public async Task<ActionResult<object>> CADepartmentUpdateBase(CADepartmentUpdateIN _cADepartmentUpdateIN)
 		{

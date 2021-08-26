@@ -48,7 +48,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("delete")]
 		public async Task<ActionResult<object>> INVInvitationDeleteBase(INVInvitationDeleteIN _iNVInvitationDeleteIN)
 		{
@@ -89,7 +89,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-user-readed-invitation-on-page")]
 		public async Task<ActionResult<object>> SYUserReadedInvitationGetAllOnPage(int InvitationId, string UserName, DateTime? WatchedDate, int? PageSize, int? PageIndex)
 		{
@@ -126,7 +126,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="Status"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-invitation-on-page")]
 		public async Task<ActionResult<object>> INVInvitationGetAllOnPageBase(int? PageSize, int? PageIndex, string Title, DateTime? StartDate, DateTime? EndDate, string Place, byte? Status)
 		{
@@ -157,7 +157,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("insert")]
 		public async Task<object> INVInvitationInsert()
 		{
@@ -322,7 +322,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-detail")]
 		public async Task<object> INVInvitationDetail(int id)
 		{
@@ -367,7 +367,7 @@ namespace PAKNAPI.Controllers
 
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update")]
 		public async Task<object> INVInvitationUpdate(int id)
 		{
@@ -395,7 +395,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update")]
 		public async Task<object> INVInvitationUpdate()
 		{

@@ -39,7 +39,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("delete")]
 		public async Task<ActionResult<object>> CAPositionDeleteBase(CAPositionDeleteIN _cAPositionDeleteIN)
 		{
@@ -69,7 +69,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="IsActived"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-position-on-page")]
 		public async Task<ActionResult<object>> CAPositionGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Code, string Description, bool? IsActived)
 		{
@@ -96,7 +96,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="Id"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> CAPositionGetByIDBase(int? Id)
 		{
@@ -119,7 +119,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 		//[HttpGet]
-		//[Authorize]
+		//[Authorize("ThePolicy")]
 		//[Route("CAPositionGetDropdownBase")]
 		//public async Task<ActionResult<object>> CAPositionGetDropdownBase()
 		//{
@@ -147,7 +147,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("insert")]
 		public async Task<ActionResult<object>> CAPositionInsertBase(CAPositionInsertIN _cAPositionInsertIN)
 		{
@@ -173,7 +173,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="_cAPositionUpdateIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update")]
 		public async Task<ActionResult<object>> CAPositionUpdateBase(CAPositionUpdateIN _cAPositionUpdateIN)
 		{

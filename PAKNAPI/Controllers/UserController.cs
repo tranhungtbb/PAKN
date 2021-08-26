@@ -47,10 +47,10 @@ namespace PAKNAPI.Controllers
 			_config = config;
 			_hostingEnvironment = IWebHostEnvironment;
 		}
-		
+
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-data-for-create")]
 		public async Task<ActionResult<object>> UsersGetDataForCreate()
 		{
@@ -73,7 +73,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("create")]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		public async Task<object> Create([FromForm] SYUserInsertIN model, [FromForm] IFormFileCollection files = null)
 		{
 			// tải file
@@ -136,7 +136,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("update")]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		public async Task<object> Update([FromForm] SYUserUpdateIN model, [FromForm] IFormFileCollection files = null)
 		{
 			// tải file
@@ -189,7 +189,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("user-system-create")]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		public async Task<object> UserSystemCreate([FromForm] SYUserSystemInsertIN model, [FromForm] IFormFileCollection files = null)
 		{
 			// tải file
@@ -260,7 +260,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("user-system-update")]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		public async Task<object> UserSystemUpdate([FromForm] SYUserSystemUpdateIN model, [FromForm] IFormFileCollection files = null)
 		{
 			// tải file
@@ -305,7 +305,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("delete")]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		public async Task<object> Delete(SYUserDeleteIN model)
 		{
 			try
@@ -348,7 +348,7 @@ namespace PAKNAPI.Controllers
 
 		//[HttpGet]
 		//[Route("GetAvatar/{id}")]
-		//[Authorize]
+		//[Authorize("ThePolicy")]
 		//public async Task<byte[]> GetAvatar(int id)
 		//{
 		//	var modelOld = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(id);
@@ -445,7 +445,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("change-status")]
 		public async Task<ActionResult<object>> SYUserChangeStatusBase(SYUserChangeStatusIN _sYUserChangeStatusIN)
 		{
@@ -499,7 +499,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-user-on-page-base-by-role-id")]
 		public async Task<ActionResult<object>> SYUserGetAllByRoleIdBase(int? RoleId)
 		{
@@ -555,7 +555,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="RoleId"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-user-on-page-by-role-id")]
 		public async Task<ActionResult<object>> SYUserGetByRoleIdAllOnPageBase(int? PageSize, int? PageIndex, int? RoleId)
 		{
@@ -586,7 +586,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> SYUserGetByIDBase(long? Id)
 		{
@@ -650,7 +650,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-info")]
 		public async Task<ActionResult<object>> UserGetByID(long? Id)
 		{
@@ -746,7 +746,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-user-is-system")]
 		public async Task<ActionResult<object>> SYUserGetIsSystemBase()
 		{
@@ -775,7 +775,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("user-role-map-delete")]
 		public async Task<ActionResult<object>> SYUserRoleMapDeleteBase(SYUserRoleMapDeleteIN _sYUserRoleMapDeleteIN)
 		{
@@ -801,7 +801,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("user-not-role")]
 		public async Task<ActionResult<object>> SYUserGetIsNotRole(int? RoleId)
 		{
@@ -837,33 +837,9 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				if (!Regex.Match(model.Phone.ToString(), ConstantRegex.PHONE).Success)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại không hợp lệ" };
-				}
-				if (model.Email != null && model.Email.Trim() != "" && !ConstantRegex.EmailIsValid(model.Email))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện không hợp lệ" };
-				}
-
-				if (!ConstantRegex.CheckValueIsNull(model.Password))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu không được để trống" };
-				}
-
-				if (!ConstantRegex.CheckValueIsNull(model.RePassword))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu xác nhận không được để trống" };
-				}
-
 				if (model.Password != model.RePassword)
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu không khớp" };
-				}
-
-				if (!ConstantRegex.CheckValueIsNull(model.RepresentativeName))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Tên người đại diện không được để trống" };
 				}
 
 
@@ -871,34 +847,6 @@ namespace PAKNAPI.Controllers
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh người đại diện không được lớn hơn ngày hiện tại" };
 				}
-
-				if (!ConstantRegex.CheckValueIsNull(model.Business))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Tên tổ chức doanh nghiệp không được để trống" };
-				}
-
-				if (!Regex.Match(model.Tax.ToString(), ConstantRegex.NUMBER).Success)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế không hợp lệ" };
-				}
-
-
-				if (!ConstantRegex.CheckValueIsNull(model.OrgAddress))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Địa chỉ tổ chức doanh nghiệp không được để trống" };
-				}
-
-				if (!Regex.Match(model.OrgPhone.ToString(), ConstantRegex.PHONE).Success)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tổ chức doanh nghiệp không hợp lệ" };
-				}
-
-
-				if (model.OrgEmail != null && model.OrgEmail.Trim() != "" && !ConstantRegex.EmailIsValid(model.OrgEmail))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Email tổ chức doanh nghiệp không hợp lệ" };
-				}
-
 
 				var accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Phone", model.Phone, 0);
 				if (accCheckExist[0].Exists.Value) {
@@ -1012,31 +960,9 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				if (!Regex.Match(model.Phone.ToString(), ConstantRegex.PHONE).Success)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại không hợp lệ" };
-				}
-
-				if (model.Email != null && model.Email.Trim() != "" && !ConstantRegex.EmailIsValid(model.Email))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Email không hợp lệ" };
-				}
-
-				if (!Regex.Match(model.IDCard.ToString(), ConstantRegex.CMT, RegexOptions.IgnoreCase).Success)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMT/Hộ chiếu không hợp lệ" };
-				}
-
-				if (model.Password != model.RePassword)
-				{
+				if (model.Password != model.RePassword) {
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Mật khẩu không khớp" };
 				}
-
-				if (model.BirthDay == null)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được để trống" };
-				}
-
 
 				if (model.BirthDay >= DateTime.Now) {
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn hoặc bằng ngày hiện tại" };
@@ -1045,13 +971,6 @@ namespace PAKNAPI.Controllers
 				if (model.DateOfIssue != null && model.DateOfIssue < model.BirthDay) {
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn ngày thành lập" };
 				}
-
-				if (!ConstantRegex.CheckValueIsNull(model.FullName))
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Họ tên không được để trống" };
-				}
-
-
 
 				var accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Phone", model.Phone, 0);
 				if (accCheckExist[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
@@ -1148,7 +1067,7 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Route("user-get-info")]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		public async Task<object> UserGetInfo(long? id)
 		{
 			try
@@ -1232,7 +1151,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[Route("user-change-password")]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		public async Task<object> UserChagePwd([FromForm] ChangePwdModel model)
 		{
 			try
@@ -1293,7 +1212,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[Route("user-change-password-in-manage")]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		public async Task<object> UserChangePwdInManage(ChangePwdInManage model)
 		{
 			try
@@ -1340,14 +1259,14 @@ namespace PAKNAPI.Controllers
 		/// <summary>
 		/// cập nhập người dùng - công bố
 		/// </summary>
-		/// <param name="model"></param>
-		/// <param name="businessModel"></param>
+		/// <param name="model"></param>7
+		/// <param name="AccountInfoModel"></param>
 		/// <returns></returns>
 
 		[HttpPost]
-		[Route("update-current-info")]
-		[Authorize]
-		public async Task<object> UpdateCurrentInfo([FromForm] AccountInfoModel model,[FromForm] BusinessAccountInfoModel businessModel)
+		[Route("update-current-info-individual")]
+		[Authorize("ThePolicy")]
+		public async Task<object> UpdateCurrentInfo( AccountInfoModel model)
         {
             try
             {
@@ -1361,222 +1280,64 @@ namespace PAKNAPI.Controllers
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Tài khoản không tồn tại" };
 				}
 
-				if (accInfo[0].TypeId == 2)
-                {
-					if (!Regex.Match(model.Phone.ToString(), ConstantRegex.PHONE).Success)
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại không hợp lệ" };
-					}
-
-					if (model.Email != null && !ConstantRegex.EmailIsValid(model.Email))
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Email không hợp lệ" };
-					}
-
-					if (!Regex.Match(model.IdCard.ToString(), ConstantRegex.CMT, RegexOptions.IgnoreCase).Success)
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMT/Hộ chiếu không hợp lệ" };
-					}
-
-					if (model.DateOfBirth == null)
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được để trống" };
-					}
-
-
-					if (model.DateOfBirth >= DateTime.Now)
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn hoặc bằng ngày hiện tại" };
-					}
-
-					if (model.IssuedDate != null && model.IssuedDate < model.DateOfBirth)
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn ngày thành lập" };
-					}
-
-					///Phone,Email,IDCard
-					///check ton tai
-					///
-					accInfo[0].FullName = model.FullName;
-					var info = await new BIIndividualGetByUserId(_appSetting).BIIndividualGetByUserIdDAO(accInfo[0].Id);
-
-					var checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", model.Phone, info[0].Id);
-					if (checkExists[0].Exists.Value)
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
-					if (!string.IsNullOrEmpty(model.Email))
-					{
-						checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", model.Email, info[0].Id);
-						if (checkExists[0].Exists.Value)
-							return new ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
-					}
-					checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", model.IdCard, info[0].Id);
-					if (checkExists[0].Exists.Value)
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
-
-					var _model = new BIInvididualUpdateInfoIN
-					{
-						Id = info[0].Id,
-						FullName = model.FullName,
-						DateOfBirth = model.DateOfBirth,
-						Email = model.Email,
-						Nation = model.Nation,
-						ProvinceId = model.ProvinceId,
-						DistrictId = model.DistrictId,
-						WardsId = model.WardsId,
-						Address = model.Address,
-						IdCard = model.IdCard,
-						IssuedPlace = model.IssuedPlace,
-						IssuedDate = model.IssuedDate,
-						Gender = model.Gender,
-					};
-
-					var rs = await new BIInvididualUpdateInfo(_appSetting).BIInvididualUpdateInfoDAO(_model);
-
-					var rsUpdateAcc = new SYUserUpdateInfo(_appSetting).SYUserUpdateInfoDAO(new SYUserUpdateInfoIN
-					{
-						Id = accInfo[0].Id,
-						FullName = accInfo[0].FullName,
-						Address = accInfo[0].Address,
-					});
-				}
-				else if (accInfo[0].TypeId == 3)
-                {
-
-					if (!Regex.Match(businessModel.Phone.ToString(), ConstantRegex.PHONE).Success)
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại không hợp lệ" };
-					}
-					if (businessModel.Email != null && model.Email.Trim() != "" && !ConstantRegex.EmailIsValid(businessModel.Email))
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện không hợp lệ" };
-					}
-
-					if (!ConstantRegex.CheckValueIsNull(businessModel.RepresentativeName))
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Tên người đại diện không được để trống" };
-					}
-
-
-					if (businessModel.RepresentativeBirthDay != null && businessModel.RepresentativeBirthDay >= DateTime.Now)
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh người đại diện không được lớn hơn ngày hiện tại" };
-					}
-
-					if (!ConstantRegex.CheckValueIsNull(businessModel.Business))
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Tên tổ chức doanh nghiệp không được để trống" };
-					}
-
-					if (!Regex.Match(businessModel.Tax.ToString(), ConstantRegex.NUMBER).Success)
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế không hợp lệ" };
-					}
-
-
-					if (!ConstantRegex.CheckValueIsNull(businessModel.OrgAddress))
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Địa chỉ tổ chức doanh nghiệp không được để trống" };
-					}
-
-					if (!Regex.Match(businessModel.OrgPhone.ToString(), ConstantRegex.PHONE).Success)
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tổ chức doanh nghiệp không hợp lệ" };
-					}
-
-
-					if (businessModel.OrgEmail != null && businessModel.OrgEmail.Trim() != "" && !ConstantRegex.EmailIsValid(businessModel.OrgEmail))
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Email tổ chức doanh nghiệp không hợp lệ" };
-					}
-
-
-					if (!ConstantRegex.CheckValueIsNull(businessModel.OrgAddress))
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Địa chỉ tổ chức doanh nghiệp không được để trống" };
-					}
-
-					if (!Regex.Match(businessModel.OrgPhone.ToString(), ConstantRegex.PHONE).Success)
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại tổ chức doanh nghiệp không hợp lệ" };
-					}
-
-
-					if (businessModel.OrgEmail != null && businessModel.OrgEmail.Trim() != "" && !ConstantRegex.EmailIsValid(businessModel.OrgEmail))
-					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Email tổ chức doanh nghiệp không hợp lệ" };
-					}
-
-					///check ton tai
-					///
-					var info = await new BIBusinessGetByUserId(_appSetting).BIBusinessGetByUserIdDAO(accInfo[0].Id);
-					var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone", businessModel.Phone, info[0].Id);
-					if (checkExists[0].Exists.Value && businessModel.Phone != null) return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
-					if (!string.IsNullOrEmpty(model.Email))
-					{
-						checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Email", businessModel.Email, info[0].Id);
-						if (checkExists[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện đã tồn tại" };
-					}
-					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("IDCard", businessModel.IDCard, info[0].Id);
-					if (checkExists[0].Exists.Value && businessModel.IDCard != null) return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
-					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgPhone", businessModel.OrgPhone, info[0].Id);
-					if (checkExists[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại doanh nghiệp đã tồn tại" };
-					if (!string.IsNullOrEmpty(businessModel.OrgEmail))
-					{
-						checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgEmail", businessModel.OrgEmail, info[0].Id);
-						if (checkExists[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Email doanh nghiệp đã tồn tại" };
-					}
-					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("BusinessRegistration", businessModel.BusinessRegistration, info[0].Id);
-					if (checkExists[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Số đăng ký kinh doanh đã tồn tại" };
-
-					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Tax", businessModel.Tax, info[0].Id);
-					if (checkExists[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế đã tồn tại" };
-
-					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("DecisionOfEstablishing", businessModel.DecisionOfEstablishing, info[0].Id);
-					if (checkExists[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Số quyết định thành lập đã tồn tại" };
-
-
-					accInfo[0].FullName = businessModel.RepresentativeName;
-					
-
-					var _model = new BIBusinessUpdateInfoIN
-					{
-						Id = info[0].Id,
-						FullName = businessModel.RepresentativeName,
-						DateOfBirth = businessModel.RepresentativeBirthDay,
-						Email = model.Email,
-						Nation = model.Nation,
-						ProvinceId = model.ProvinceId,
-						DistrictId = model.DistrictId,
-						WardsId = model.WardsId,
-						Address = model.Address,
-						IdCard = model.IdCard,
-						IssuedDate = businessModel.DateOfIssue,
-						Gender = model.Gender,
-						BusinessRegistration = businessModel.BusinessRegistration,
-						DecisionOfEstablishing = businessModel.DecisionOfEstablishing,
-						Tax = businessModel.Tax,
-						OrgProvinceId = businessModel.OrgProvinceId,
-						OrgDistrictId = businessModel.OrgDistrictId,
-						OrgWardsId = businessModel.OrgWardsId,
-						OrgAddress = businessModel.OrgAddress,
-						OrgPhone = businessModel.OrgPhone,
-						OrgEmail = businessModel.OrgEmail,
-						Business = businessModel.Business
-					};
-
-					var rs = await new BIBusinessUpdateInfo(_appSetting).BIBusinessUpdateInfoDAO(_model);
-					//update account
-
-					var rsUpdateAcc = new SYUserUpdateInfo(_appSetting).SYUserUpdateInfoDAO(new SYUserUpdateInfoIN
-					{
-						Id = accInfo[0].Id,
-						FullName = businessModel.Business,
-						Address = accInfo[0].Address,
-					});
-				}
-
 				
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
+				if (model.DateOfBirth >= DateTime.Now)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn hoặc bằng ngày hiện tại" };
+				}
+
+				if (model.IssuedDate != null && model.IssuedDate < model.DateOfBirth)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn ngày thành lập" };
+				}
+
+				///Phone,Email,IDCard
+				///check ton tai
+				///
+				accInfo[0].FullName = model.FullName;
+				var info = await new BIIndividualGetByUserId(_appSetting).BIIndividualGetByUserIdDAO(accInfo[0].Id);
+
+				var checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", model.Phone, info[0].Id);
+				if (checkExists[0].Exists.Value)
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+				if (!string.IsNullOrEmpty(model.Email))
+				{
+					checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Email", model.Email, info[0].Id);
+					if (checkExists[0].Exists.Value)
+						return new ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
+				}
+				checkExists = await new BIIndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("IDCard", model.IdCard, info[0].Id);
+				if (checkExists[0].Exists.Value)
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
+
+				var _model = new BIInvididualUpdateInfoIN
+				{
+					Id = info[0].Id,
+					FullName = model.FullName,
+					DateOfBirth = model.DateOfBirth,
+					Email = model.Email,
+					Nation = model.Nation,
+					ProvinceId = model.ProvinceId,
+					DistrictId = model.DistrictId,
+					WardsId = model.WardsId,
+					Address = model.Address,
+					IdCard = model.IdCard,
+					IssuedPlace = model.IssuedPlace,
+					IssuedDate = model.IssuedDate,
+					Gender = model.Gender,
+				};
+
+				var rs = await new BIInvididualUpdateInfo(_appSetting).BIInvididualUpdateInfoDAO(_model);
+
+				var rsUpdateAcc = new SYUserUpdateInfo(_appSetting).SYUserUpdateInfoDAO(new SYUserUpdateInfoIN
+				{
+					Id = accInfo[0].Id,
+					FullName = accInfo[0].FullName,
+					Address = accInfo[0].Address,
+				});
+
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Message = ResultMessage.OK};
 			}
             catch (Exception ex)
@@ -1587,8 +1348,110 @@ namespace PAKNAPI.Controllers
 			}
         }
 
+
+		[HttpPost]
+		[Route("update-current-info-business")]
+		[Authorize("ThePolicy")]
+		public async Task<object> UpdateCurrentInfoBusiness(BusinessAccountInfoModel businessModel)
+		{
+			try
+			{
+				var users = _httpContextAccessor.HttpContext.User.Identities.FirstOrDefault().Claims; //FindFirst(ClaimTypes.NameIdentifier);
+
+				var userId = users.FirstOrDefault(c => c.Type.Equals("Id", StringComparison.OrdinalIgnoreCase)).Value;
+				var accInfo = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(long.Parse(userId));
+
+				if (accInfo == null || !accInfo.Any())
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Tài khoản không tồn tại" };
+				}
+				if (businessModel.RepresentativeBirthDay != null && businessModel.RepresentativeBirthDay >= DateTime.Now)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh người đại diện không được lớn hơn ngày hiện tại" };
+				}
+
+				///check ton tai
+				///
+				var info = await new BIBusinessGetByUserId(_appSetting).BIBusinessGetByUserIdDAO(accInfo[0].Id);
+				var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone", businessModel.Phone, info[0].Id);
+				if (checkExists[0].Exists.Value && businessModel.Phone != null) return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+				if (!string.IsNullOrEmpty(businessModel.Email))
+				{
+					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Email", businessModel.Email, info[0].Id);
+					if (checkExists[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện đã tồn tại" };
+				}
+				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("IDCard", businessModel.IDCard, info[0].Id);
+				if (checkExists[0].Exists.Value && businessModel.IDCard != null) return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
+				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgPhone", businessModel.OrgPhone, info[0].Id);
+				if (checkExists[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại doanh nghiệp đã tồn tại" };
+				if (!string.IsNullOrEmpty(businessModel.OrgEmail))
+				{
+					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgEmail", businessModel.OrgEmail, info[0].Id);
+					if (checkExists[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Email doanh nghiệp đã tồn tại" };
+				}
+				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("BusinessRegistration", businessModel.BusinessRegistration, info[0].Id);
+				if (checkExists[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Số đăng ký kinh doanh đã tồn tại" };
+
+				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Tax", businessModel.Tax, info[0].Id);
+				if (checkExists[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế đã tồn tại" };
+
+				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("DecisionOfEstablishing", businessModel.DecisionOfEstablishing, info[0].Id);
+				if (checkExists[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Số quyết định thành lập đã tồn tại" };
+
+
+				accInfo[0].FullName = businessModel.RepresentativeName;
+
+
+				var _model = new BIBusinessUpdateInfoIN
+				{
+					Id = info[0].Id,
+					FullName = businessModel.RepresentativeName,
+					DateOfBirth = businessModel.RepresentativeBirthDay,
+					Email = businessModel.Email,
+					Nation = businessModel.Nation,
+					ProvinceId = businessModel.ProvinceId,
+					DistrictId = businessModel.DistrictId,
+					WardsId = businessModel.WardsId,
+					Address = businessModel.Address,
+					IdCard = businessModel.IDCard,
+					IssuedDate = businessModel.DateOfIssue,
+					Gender = businessModel.RepresentativeGender,
+					BusinessRegistration = businessModel.BusinessRegistration,
+					DecisionOfEstablishing = businessModel.DecisionOfEstablishing,
+					Tax = businessModel.Tax,
+					OrgProvinceId = businessModel.OrgProvinceId,
+					OrgDistrictId = businessModel.OrgDistrictId,
+					OrgWardsId = businessModel.OrgWardsId,
+					OrgAddress = businessModel.OrgAddress,
+					OrgPhone = businessModel.OrgPhone,
+					OrgEmail = businessModel.OrgEmail,
+					Business = businessModel.Business
+				};
+
+				var rs = await new BIBusinessUpdateInfo(_appSetting).BIBusinessUpdateInfoDAO(_model);
+				//update account
+
+				var rsUpdateAcc = new SYUserUpdateInfo(_appSetting).SYUserUpdateInfoDAO(new SYUserUpdateInfoIN
+				{
+					Id = accInfo[0].Id,
+					FullName = businessModel.Business,
+					Address = accInfo[0].Address,
+				});
+
+
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				return new ResultApi { Success = ResultCode.OK, Message = ResultMessage.OK };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		#endregion
 
 
-    }
+	}
 }

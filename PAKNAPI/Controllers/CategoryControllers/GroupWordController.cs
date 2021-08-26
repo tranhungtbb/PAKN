@@ -38,7 +38,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="_cAGroupWordDeleteIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("delete")]
 		public async Task<ActionResult<object>> CAGroupWordDeleteBase(CAGroupWordDeleteIN _cAGroupWordDeleteIN)
 		{
@@ -148,15 +148,22 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="_cAGroupWordInsertIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("insert")]
 		public async Task<ActionResult<object>> CAGroupWordInsertBase(CAGroupWordInsertIN _cAGroupWordInsertIN)
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new CAGroupWordInsert(_appSetting).CAGroupWordInsertDAO(_cAGroupWordInsertIN) };
+				var result = Convert.ToInt32(await new CAGroupWordInsert(_appSetting).CAGroupWordInsertDAO(_cAGroupWordInsertIN));
+				if (result > 0)
+				{
+					return new ResultApi { Success = ResultCode.OK, Result = result, Message = "Thêm mới thành công" };
+				}
+				else
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Result = result, Message = "Đã tồn tại nhóm thư viện từ ngữ" };
+				}
 			}
 			catch (Exception ex)
 			{
@@ -172,7 +179,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="_cAGroupWordUpdateIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update")]
 		public async Task<ActionResult<object>> CAGroupWordUpdateBase(CAGroupWordUpdateIN _cAGroupWordUpdateIN)
 		{
@@ -180,7 +187,16 @@ namespace PAKNAPI.Controllers.ControllerBase
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new CAGroupWordUpdate(_appSetting).CAGroupWordUpdateDAO(_cAGroupWordUpdateIN) };
+				var result = Convert.ToInt32(await new CAGroupWordUpdate(_appSetting).CAGroupWordUpdateDAO(_cAGroupWordUpdateIN));
+				if (result > 0)
+				{
+					return new ResultApi { Success = ResultCode.OK, Result = result, Message = "Thêm mới thành công" };
+				}
+				else
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Result = result, Message = "Đã tồn tại nhóm thư viện từ ngữ" };
+				}
+
 			}
 			catch (Exception ex)
 			{

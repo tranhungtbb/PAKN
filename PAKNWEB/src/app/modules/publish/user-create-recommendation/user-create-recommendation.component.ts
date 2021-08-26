@@ -320,14 +320,12 @@ export class CreateRecommendationComponent implements OnInit {
 	onSave(status) {
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
-		// if (this.model.content == null || this.model.content == '') {
-
-		// 	return
-		// }
-
-		// if (this.model.title == null || this.model.title == '') {
-		// 	return
-		// }
+		if (this.model.content == null || this.model.content == '') {
+			return
+		}
+		if (this.model.title == null || this.model.title == '') {
+			return
+		}
 		this.submitted = true
 		if (this.form.invalid) {
 			this.reloadImage()
@@ -342,8 +340,9 @@ export class CreateRecommendationComponent implements OnInit {
 		this.model.status = status
 		this.model.sendId = this.storageService.getUserId()
 		this.model.sendDate = new Date()
-		this.model.typeObject = this.storageService.getTypeObject() == 2 ? 1 : 2
+		this.model.typeObject = this.storageService.getTypeObject()//  == 2 ? 1 : 2
 		this.model.name = this.storageService.getFullName()
+		
 		const request = {
 			Data: this.model,
 			Hashtags: this.lstHashtagSelected,

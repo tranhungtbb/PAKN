@@ -72,7 +72,6 @@ export class CreateRecommendationComponent implements OnInit {
 			if(typeObject){
 				if(Number(typeObject)){
 					this.isIndividual = Number(typeObject) == 1 ? true : false
-					console.log(this.isIndividual)
 					if(this.isIndividual){
 						this.changeTypeObject(1)
 					}
@@ -226,13 +225,6 @@ export class CreateRecommendationComponent implements OnInit {
 		}
 	}
 	redirectToCreateIndividualBusiness() {
-		// lưu data
-		let obj = {
-			model : {...this.model},
-			lstHashtagSelected : [...this.lstHashtagSelected]
-		}
-		this.storeageService.setRecommentdationObjectRemember(JSON.stringify(obj))
-
 		if (this.model.typeObject == 1) {
 			this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/ca-nhan'])
 		} else if (this.model.typeObject == 2) {

@@ -47,7 +47,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("get-by-category")]
         public async Task<object> SYSupportGetAll(int? Category) {
             try {
@@ -68,7 +68,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("insert")]
         public async Task<object> SYSupportInsert()
         {
@@ -120,7 +120,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("update")]
         public async Task<object> SYIntroduceUpdate() {
             try
@@ -173,7 +173,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("delete")]
         public async Task<object> SYSupportDelete(SYSupportMenuDelete model)
         {

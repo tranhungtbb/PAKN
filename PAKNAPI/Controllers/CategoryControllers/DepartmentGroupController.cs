@@ -38,7 +38,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="_cADepartmentGroupDeleteIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("delete")]
 		public async Task<ActionResult<object>> CADepartmentGroupDeleteBase(CADepartmentGroupDeleteIN _cADepartmentGroupDeleteIN)
 		{
@@ -57,7 +57,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 		//[HttpPost]
-		//[Authorize]
+		//[Authorize("ThePolicy")]
 		//[Route("CAWordDeleteBase")]
 		//public async Task<ActionResult<object>> CAWordDeleteBase(CADepartmentGroupDeleteIN _cADepartmentGroupDeleteIN)
 		//{
@@ -85,7 +85,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="IsActived"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-department-group-on-page")]
 		public async Task<ActionResult<object>> CADepartmentGroupGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
 		{
@@ -114,7 +114,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> CADepartmentGroupGetByIDBase(int? Id)
 		{
@@ -142,15 +142,21 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("insert")]
 		public async Task<ActionResult<object>> CADepartmentGroupInsertBase(CADepartmentGroupInsertIN _cADepartmentGroupInsertIN)
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new CADepartmentGroupInsert(_appSetting).CADepartmentGroupInsertDAO(_cADepartmentGroupInsertIN) };
+				int result = Convert.ToInt32(await new CADepartmentGroupInsert(_appSetting).CADepartmentGroupInsertDAO(_cADepartmentGroupInsertIN));
+				if (result > 0) {
+					return new ResultApi { Success = ResultCode.OK, Result = result, Message = "Thêm mới thành công" };
+				}
+				else {
+					return new ResultApi { Success = ResultCode.ORROR, Result =  result, Message = "Đã tồn tại nhóm sở ngành"};
+				}
+				
 			}
 			catch (Exception ex)
 			{
@@ -167,7 +173,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update")]
 		public async Task<ActionResult<object>> CADepartmentGroupUpdateBase(CADepartmentGroupUpdateIN _cADepartmentGroupUpdateIN)
 		{

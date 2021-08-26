@@ -80,7 +80,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-unit-on-page")]
 		public async Task<ActionResult<object>> CAUnitGetAllOnPageBase(int? PageSize, int? PageIndex, int? ParentId, byte? UnitLevel, string Name, string Phone, string Email, string Address, bool? IsActived, bool? IsMain, string SortDir, string SortField)
 		{
@@ -107,7 +107,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-data-for-create")]
 		public async Task<ActionResult<object>> UnitGetDataForCreateBase()
 		{
@@ -135,7 +135,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> CAUnitGetByIDBase(int? Id)
 		{
@@ -158,7 +158,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		}
 
 		//[HttpGet]
-		//[Authorize]
+		//[Authorize("ThePolicy")]
 		//[Route("CAUnitGetTreeBase")]
 		//public async Task<ActionResult<object>> CAUnitGetTreeBase()
 		//{
@@ -186,7 +186,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("insert")]
 		public async Task<ActionResult<object>> CAUnitInsertBase(CAUnitInsertIN _cAUnitInsertIN)
 		{
@@ -211,7 +211,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update")]
 		public async Task<ActionResult<object>> CAUnitUpdateBase(CAUnitUpdateIN _cAUnitUpdateIN)
 		{
@@ -236,7 +236,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("delete")]
 		public async Task<ActionResult<object>> CAUnitDeleteBase(CAUnitDeleteIN _cAUnitDeleteIN)
 		{
@@ -261,7 +261,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("change-status")]
 		public async Task<ActionResult<object>> SYUnitChageStatusBase(SYUnitChageStatusIN _sYUnitChageStatusIN)
 		{
@@ -315,7 +315,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-children-dropdown")]
 		public async Task<ActionResult<object>> SY_UnitGetChildrenDropdown()
 		{

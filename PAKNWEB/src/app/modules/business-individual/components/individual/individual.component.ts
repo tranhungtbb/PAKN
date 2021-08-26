@@ -88,11 +88,7 @@ export class IndividualComponent implements OnInit {
 		this.localeService.use('vi')
 		this.loadFormBuilder()
 		this.onChangeNation()
-
-		let dataRecommendation = this.storeageService.getRecommentdationObjectRemember()
-		if(dataRecommendation){
-			$('#modal').modal('show')
-		}
+		
 	}
 
 	//event
@@ -187,12 +183,6 @@ export class IndividualComponent implements OnInit {
 	}
 
 	close =()=>{
-		let dataRecommendation = this.storeageService.getRecommentdationObjectRemember()
-				if(dataRecommendation){
-					this._router.navigate(['/quan-tri/kien-nghi/them-moi/0/1'])
-					return
-				}
-				return
 	}
 
 	onSortIndividual(fieldName: string) {

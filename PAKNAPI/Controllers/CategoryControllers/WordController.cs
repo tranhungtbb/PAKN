@@ -72,7 +72,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-word-on-page-by-group-id")]
 		public async Task<ActionResult<object>> CAWordGetAllOnPageByGroupIdBase(int GroupId)
 		{
@@ -101,7 +101,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> CAWordGetByIDBase(int? Id)
 		{
@@ -128,7 +128,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="_cAWordInsertIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("insert")]
 		public async Task<ActionResult<object>> CAWordInsertBase(CAWordInsertIN _cAWordInsertIN)
 		{
@@ -152,7 +152,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="_cAWordUpdateIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update")]
 		public async Task<ActionResult<object>> CAWordUpdateBase(CAWordUpdateIN _cAWordUpdateIN)
 		{
@@ -196,7 +196,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("delete")]
 		public async Task<ActionResult<object>> CAWordDeleteBase(CADepartmentGroupDeleteIN _cADepartmentGroupDeleteIN)
 		{

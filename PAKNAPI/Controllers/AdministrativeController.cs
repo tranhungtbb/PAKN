@@ -148,7 +148,7 @@ namespace PAKNAPI
 		/// </summary>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-drop-down")]
 		public async Task<ActionResult<object>> CAAdministrativeUnitsGetDropDownBase(int? Id)
 		{

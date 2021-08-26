@@ -13,28 +13,10 @@ export class UserInfoStorageService {
 
 	constructor() {}
 	clear = ()=>{
-		// localStorage.removeItem('KeyRework')
-		// localStorage.removeItem('ReturnUrl')
-		// localStorage.removeItem('userId')
-		// localStorage.removeItem('accessToken')
-		// localStorage.removeItem('isSaveLogin')
-		// localStorage.removeItem('isSession')
-		// localStorage.removeItem('permissions')
-		// localStorage.removeItem('functions')
-		// localStorage.removeItem('permissionCategories')
-		// localStorage.removeItem('IsHaveToken')
-		// // localStorage.removeItem('IpAddress')
-		// localStorage.removeItem('Role')
-		// localStorage.removeItem('FullName')
-		// localStorage.removeItem('unitName')
-		// localStorage.removeItem('unitId')
-		// localStorage.removeItem('isMain')
-		// localStorage.removeItem('isAdmin')
-		// localStorage.removeItem('typeObject')
-		let rememberObject = this.getRecommentdationObjectRemember()
+		var remember = this.getRecommentdationObjectRemember()
 		localStorage.clear()
-		if(rememberObject != 'null'){
-			this.setRecommentdationObjectRemember(rememberObject)
+		if(remember && remember != null && remember != 'null'){
+			this.setRecommentdationObjectRemember(remember)
 		}
 	}
 	setIsAdmin(key: string): void {

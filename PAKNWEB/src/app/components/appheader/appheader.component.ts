@@ -419,18 +419,18 @@ export class AppheaderComponent implements OnInit {
 		if (this.checkExists['Email'] || this.checkExists['Phone']) {
 			return
 		}
-		let files = $('#modal .seclect-avatar')[0].files
+		let files = $('#modalEditUserInfo .seclect-avatar')[0].files
 		this.model.countLock = 0
 		this.model.lockEndOut = ''
 		this.userService.userSystemUpdate(this.model, files).subscribe((res) => {
-			$('#modal .seclect-avatar').val('')
+			$('#modalEditUserInfo .seclect-avatar').val('')
 			if (res.success != 'OK') {
 				let errorMsg = res.message
 				this._toastr.error(errorMsg)
 				return
 			}
 			else{
-				$('#modal').modal('hide')
+				$('#modalEditUserInfo').modal('hide')
 				this._toastr.success(COMMONS.ADD_SUCCESS)
 				this.getList()
 			}

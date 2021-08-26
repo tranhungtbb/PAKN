@@ -217,7 +217,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[Route("log-out")]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		public async Task<ActionResult<object>> LogOut(EditUserRequest request)
 		{
             try

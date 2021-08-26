@@ -147,7 +147,7 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		this.model.dateOfIssue = this.model._dateOfIssue == null ? '': this.model._dateOfIssue.toDateString();
 
 
-		this.accountService.updateInfoUserCurrent(this.model).subscribe((res) => {
+		this.accountService.updateInfoBusinessCurrent(this.model).subscribe((res) => {
 			if (res.success != 'OK') {
 				this.toast.error(res.message)
 				return

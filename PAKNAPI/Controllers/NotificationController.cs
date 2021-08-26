@@ -45,7 +45,7 @@ namespace PAKNAPI.Controllers
         /// <param name="isCreateNews"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("insert-type-new")]
         public async Task<object> SYNotificationInsertTypeNews(int Id, string Title, bool isCreateNews)
         {
@@ -94,7 +94,7 @@ namespace PAKNAPI.Controllers
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("get-by-id")]
         public async Task<ActionResult<object>> NotificationGetByIdBase(int? Id)
         {
@@ -124,7 +124,7 @@ namespace PAKNAPI.Controllers
         /// <param name="recommendationId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("insert-type-recommendation")]
         public async Task<object> SYNotificationInsertTypeRecommendation(int? recommendationId)
         {
@@ -410,7 +410,7 @@ namespace PAKNAPI.Controllers
 
         #region SYNotificationGetAll
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("get-list-notification-on-page")]
         public async Task<object> SYNotificationGetListOnPage() {
             try{
@@ -445,7 +445,7 @@ namespace PAKNAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("update-is-viewed")]
         public async Task<object> SYNotificationUpdateIsViewed()
         {
@@ -473,7 +473,7 @@ namespace PAKNAPI.Controllers
         /// <param name="ObjectId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("update-is-readed")]
         public async Task<object> SYNotificationUpdateReaded(int? ObjectId)
         {
@@ -501,7 +501,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("delete")]
         public async Task<ActionResult<object>> SYNotificationDelete(SYNotificationModel _syNotification)
         {

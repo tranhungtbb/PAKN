@@ -278,9 +278,6 @@ namespace PAKNAPI.ModelBase
 		public DateTime? WithdrawDate { get; set; }
 		public string NewsRelateIds { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái gửi thông báo không được để trống")]
-		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái gửi thông báo không đúng định dạng")]
-
 		public bool? IsNotification { get; set; }
 	}
 
@@ -361,8 +358,6 @@ namespace PAKNAPI.ModelBase
 		public DateTime? WithdrawDate { get; set; }
 		public string NewsRelateIds { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái gửi thông báo không được để trống")]
-		[Range(typeof(bool), "true", "true", ErrorMessage = "Trạng thái gửi thông báo không đúng định dạng")]
 		public bool? IsNotification { get; set; }
 		
 	}

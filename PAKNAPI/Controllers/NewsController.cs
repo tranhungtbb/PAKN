@@ -47,7 +47,7 @@ namespace PAKNAPI.Controller
 		/// <param name="Status"></param>
 		/// <returns></returns>
 		[HttpGet]
-		//[Authorize]
+		//[Authorize("ThePolicy")]
 		[Route("get-list-news-on-page")]
 		public async Task<ActionResult<object>> NENewsGetAllOnPageBase(string NewsIds, int? PageSize, int? PageIndex, string Title, int? NewsType, int? Status)
 		{
@@ -101,7 +101,7 @@ namespace PAKNAPI.Controller
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> NENewsGetByIDBase(int? Id)
 		{
@@ -130,16 +130,13 @@ namespace PAKNAPI.Controller
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("delete")]
 		public async Task<ActionResult<object>> NENewsDeleteBase(NENewsDeleteIN _nENewsDeleteIN)
 		{
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-				// delete file
-
-
 				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsDelete(_appSetting).NENewsDeleteDAO(_nENewsDeleteIN) };
 			}
 			catch (Exception ex)
@@ -156,7 +153,7 @@ namespace PAKNAPI.Controller
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("insert"), DisableRequestSizeLimit]
 		public async Task<ActionResult<object>> NENewsInsertBase() // [FromForm] NENewsInsertIN _nENewsInsertIN
 		{
@@ -237,7 +234,7 @@ namespace PAKNAPI.Controller
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update"), DisableRequestSizeLimit]
 		public async Task<ActionResult<object>> NENewsUpdateBase()
 		{
@@ -277,8 +274,6 @@ namespace PAKNAPI.Controller
 					var rs = await _fileService.Remove(_nENewsUpdateIN.ImagePath);
 					_nENewsUpdateIN.ImagePath = avatarFilePath;
 				}
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 
 				int res = Int32.Parse((await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN)).ToString());
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
@@ -326,7 +321,7 @@ namespace PAKNAPI.Controller
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-relates")]
 		public async Task<ActionResult<object>> NERelateGetAllBase(int? NewsId)
 		{
@@ -482,7 +477,7 @@ namespace PAKNAPI.Controller
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-his-on-page")]
 		public async Task<ActionResult<object>> HISNewsGetByNewsId(int NewsId)
 		{

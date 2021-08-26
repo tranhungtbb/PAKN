@@ -36,14 +36,19 @@ export class AccountService {
 		return this.serviceInvoker.post(form, url)
 	}
 
-	updateInfoUserCurrent(body: any) {
-		// let url = `${AppSettings.API_ADDRESS}${Api.AccountUpdateInfo}`
-
-		var form = new FormData()
-		for (var b in body) {
-			form.append(b, body[b])
-		}
-
-		return this.serviceInvoker.post(form, AppSettings.API_ADDRESS + Api.AccountUpdateInfo)
+	updateInfoIndividualCurrent(body: any) {
+		
+		return this.serviceInvoker.post(body, AppSettings.API_ADDRESS + Api.updateInfoIndividualCurrent)
 	}
+
+	updateInfoBusinessCurrent(body: any) {
+		// var form = new FormData()
+		// for (var b in body) {
+		// 	form.append(b, body[b])
+		// }
+
+		return this.serviceInvoker.post(body, AppSettings.API_ADDRESS + Api.updateInfoBusinessCurrent)
+	}
+
+
 }

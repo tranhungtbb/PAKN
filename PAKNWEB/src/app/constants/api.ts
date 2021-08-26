@@ -130,7 +130,8 @@ export class Api {
 	//tai khoan ca nhan, doanh nghiep
 	public static AccountGetInfo = 'user/user-get-info'
 	public static AccountChangePassword = 'user/user-change-password'
-	public static AccountUpdateInfo = 'user/update-current-info'
+	public static updateInfoIndividualCurrent = 'user/update-current-info-individual'
+	public static updateInfoBusinessCurrent = 'user/update-current-info-business'
 
 	// user system
 

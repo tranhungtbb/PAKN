@@ -43,7 +43,7 @@ namespace PAKNAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        //[Authorize]
+        //[Authorize("ThePolicy")]
         [Route("get-by-id")]
         public async Task<object> SYIntroduceGetInfo() {
             try {
@@ -78,7 +78,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("update")]
         public async Task<object> SYIntroduceUpdate() {
             try
@@ -174,7 +174,7 @@ namespace PAKNAPI.Controllers
         /// <param name="PageIndex"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("get-list-introduce-unit-on-page")]
         public async Task<object> SYIntroduceUnitGetOnPage(int? IntroduceId, int? PageSize, int? PageIndex)
         {
@@ -204,7 +204,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("introduce-unit-get-by-id")]
         public async Task<object> SYIntroduceUnitGetById(int? Id)
         {
@@ -227,7 +227,7 @@ namespace PAKNAPI.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("introduce-unit-insert")]
         public async Task<object> SYIntroduceUnitInsert(SYIntroduceUnit model)
         {
@@ -260,7 +260,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("introduce-unit-update")]
         public async Task<object> SYIntroduceUnitUpdate(SYIntroduceUnit model)
         {
@@ -292,7 +292,7 @@ namespace PAKNAPI.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("introduce-unit-delete")]
         public async Task<object> SYIntroduceUnitDelete(SYIntroduceUnitDelete model)
         {

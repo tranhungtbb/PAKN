@@ -24,6 +24,7 @@ namespace PAKNAPI.Controller
 {
     [Route("api/recommendation")]
     [ApiController]
+    [ValidateModel]
     public class RecommendationController : BaseApiController
     {
         private readonly IAppSetting _appSetting;
@@ -62,7 +63,7 @@ namespace PAKNAPI.Controller
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("get-data-for-forward")]
         public async Task<ActionResult<object>> RecommendationGetDataForForward()
         {
@@ -84,7 +85,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("get-data-for-process")]
         public async Task<ActionResult<object>> RecommendationGetDataForProcess(int? UnitId)
         {
@@ -105,7 +106,7 @@ namespace PAKNAPI.Controller
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("get-by-id")]
         public async Task<ActionResult<object>> RecommendationGetByID(int? Id)
         {
@@ -129,7 +130,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("get-detail-by-id")]
         public async Task<ActionResult<object>> RecommendationGetByIDView(int? Id)
         {
@@ -151,7 +152,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("insert")]
         public async Task<ActionResult<object>> RecommendationInsert()
         {
@@ -169,6 +170,19 @@ namespace PAKNAPI.Controller
                 request.UserType = new LogHelper(_appSetting).GetTypeFromRequest(HttpContext);
                 request.UserFullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
                 request.Data = JsonConvert.DeserializeObject<MRRecommendationInsertIN>(Request.Form["Data"].ToString(), jss);
+
+                var ErrorMessage = ValidationForFormData.validObject(request.Data);
+                if (ErrorMessage != null)
+                {
+                    return StatusCode(400, new ResultApi
+                    {
+                        Success = ResultCode.ORROR,
+                        Result = 0,
+                        Message = ErrorMessage
+                    });
+                }
+
+
                 if (request.Data.UnitId == null) {
                     var syUnitByField = await new SYUnitGetByField(_appSetting).SYUnitGetByFieldDAO(request.Data.Field);
                     if (syUnitByField.Count == 0) {
@@ -339,7 +353,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("update")]
         public async Task<ActionResult<object>> RecommendationUpdate()
         {
@@ -359,6 +373,18 @@ namespace PAKNAPI.Controller
                 request.UserType = new LogHelper(_appSetting).GetTypeFromRequest(HttpContext);
                 request.UserFullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
                 request.Data = JsonConvert.DeserializeObject<MRRecommendationUpdateIN>(Request.Form["Data"].ToString(), jss);
+
+                var ErrorMessage = ValidationForFormData.validObject(request.Data);
+                if (ErrorMessage != null)
+                {
+                    return StatusCode(400, new ResultApi
+                    {
+                        Success = ResultCode.ORROR,
+                        Result = 0,
+                        Message = ErrorMessage
+                    });
+                }
+
                 SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
                 if (request.Data.UnitId == null)
                 {
@@ -550,7 +576,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("recommendation-forward")]
         public async Task<ActionResult<object>> RecommendationForward(RecommendationForwardRequest request)
         {
@@ -604,7 +630,7 @@ namespace PAKNAPI.Controller
 
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("recommendation-on-process")]
         public async Task<ActionResult<object>> MRRecommendationOnProcess(RecommendationForwardProcess request)
         {
@@ -701,7 +727,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("recommendation-on-process-conclusion")]
         public async Task<ActionResult<object>> RecommendationOnProcessConclusion()
         {
@@ -805,7 +831,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("recommendation-update-status")]
         public async Task<ActionResult<object>> RecommendationUpdateStatus(RecommendationSendProcess request)
         {
@@ -874,7 +900,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("get-list-recommentdation-on-page")]
         public async Task<ActionResult<object>> MRRecommendationGetAllOnPageBase(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex)
         {
@@ -911,7 +937,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("get-list-recommentdation-process-on-page")]
         public async Task<ActionResult<object>> MRRecommendationGetAllWithProcessBase(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId, int? PageSize, int? PageIndex)
         {
@@ -983,7 +1009,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("get-his-by-recommentdation")]
         public async Task<ActionResult<object>> HISRecommendationGetByObjectIdBase(int? Id)
         {
@@ -1012,7 +1038,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("delete")]
         public async Task<ActionResult<object>> MRRecommendationDeleteBase(MRRecommendationDeleteIN _mRRecommendationDeleteIN)
         {
@@ -1069,7 +1095,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("recommendation-get-suggest-reply")]
         public async Task<ActionResult<object>> MRRecommendationGetSuggestReplyBase(string ListIdHashtag, int? PageSize, int? PageIndex)
         {
@@ -1164,7 +1190,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("get-list-recommendation-by-hashtag-on-page")]
         public async Task<ActionResult<object>> MRRecommendationGetByHashtagAllOnPageBase(string Code, string SendName, string Title, string Content, int? Status, int? UnitId, int? HashtagId, int? PageSize, int? PageIndex)
         {
@@ -1193,7 +1219,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("recommendation-get-deny-contents")]
         public async Task<ActionResult<object>> MRRecommendationGetDenyContentsBase(int? Id)
         {
@@ -1221,7 +1247,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("insert-hashtag-for-recommentdation")]
         public async Task<ActionResult<object>> MRInsertHashtagForRecommentdation(MRRecommendationHashtagInsertIN _mRRecommendationHashtagInsertIN)
         {
@@ -1246,7 +1272,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("delete-hashtag-for-recommentdation")]
         public async Task<ActionResult<object>> MRDeleteHashtagForRecommentdation(MRRecommendationHashtagDelete _mRRecommendationHashtagDeleteIN)
         {
@@ -1333,7 +1359,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("recommendation7daygraph")]
         public async Task<ActionResult<object>> MRRecommendation7dayGraph(int? UnitProcessId,long? UserProcessId)
         {

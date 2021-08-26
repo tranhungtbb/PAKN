@@ -50,7 +50,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="PageIndex"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("recommendation-by-unit")]
 		public async Task<ActionResult<object>> STT_RecommendationByUnitGetAllOnPageBase(string LtsUnitId, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
@@ -96,7 +96,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("recommendation-by-unit-detail")]
 		public async Task<ActionResult<object>> RecommendationsByUnitDetailGetAllOnPageBase(int UnitId,string Code,string CreateName, string Title, int? Field, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
@@ -133,7 +133,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("recommendation-by-group-word")]
 		public async Task<ActionResult<object>> STT_RecommendationByGroupWordGetAllOnPageBase(string LtsUnitId, DateTime? FromDate, DateTime? ToDate)
 		{
@@ -173,7 +173,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("recommendation-by-group-word-detail")]
 		public async Task<ActionResult<object>> RecommendationByGroupWordDetail(string Code, string SendName, string Title, string Content, int? UnitId, int? GroupWordId, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
@@ -208,7 +208,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("recommendation-by-field")]
 		public async Task<ActionResult<object>> STT_RecommendationByFieldGetAllOnPageBase(string LtsUnitId, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
@@ -253,7 +253,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("recommendation-by-field-detail")]
 		public async Task<ActionResult<object>> RecommendationsByFieldDetailGetAllOnPageBase(int FiledId, string Code, string CreateName, string Title, string? LstUnitId, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{

@@ -40,7 +40,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpPost, DisableRequestSizeLimit]
 		[Route("import-data-business")]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		public async Task<ActionResult<object>> ImportDataBusiness(string folder = null)
 		{
 			var file = Request.Form.Files[0];
@@ -361,7 +361,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("delete")]
 		public async Task<ActionResult<object>> BusinessDelete(BI_BusinessDeleteIN _bI_BusinessDeleteIN)
 		{
@@ -387,7 +387,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("change-status")]
 		public async Task<ActionResult<object>> BusinessChageStatus(BI_BusinessChageStatusIN _bI_BusinessChageStatusIN)
 		{
@@ -413,7 +413,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("insert")]
 		public async Task<object> BusinessRegister([FromBody] BI_BusinessInsertIN model)
 		{
@@ -534,7 +534,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update")]
 		public async Task<ActionResult<object>> BusinessUpdate([FromBody] BI_BusinessUpdateInfoIN model)
 		{
@@ -600,7 +600,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-individual-business-by-provice-id")]
 		public async Task<ActionResult<object>> BIIndividualOrBusinessGetDropListByProviceIdBase(string LtsAdministrativeId, int? Type)
 		{

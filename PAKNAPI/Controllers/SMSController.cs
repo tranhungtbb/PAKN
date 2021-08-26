@@ -50,7 +50,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("delete")]
 		public async Task<ActionResult<object>> SMSQuanLyTinNhanDeleteBase(SMSQuanLyTinNhanDeleteIN _sMSQuanLyTinNhanDeleteIN)
 		{
@@ -88,7 +88,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("insert")]
 		public async Task<object> SMSInsert(SMSInsertModel response)
 		{
@@ -176,7 +176,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update")]
 		public async Task<object> SMSUpdate(int id)
 		{
@@ -202,7 +202,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="response"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update")]
 		public async Task<object> SMSUpdate(SMSUpdateRequestModel response)
 		{
@@ -307,7 +307,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="idMSMS"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update-status")]
 		public async Task<object> SMSUpdateStatusTypeSend(int idMSMS)
 		{
@@ -429,7 +429,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-sms-on-page")]
 		public async Task<ActionResult<object>> SMSQuanLyTinNhanGetAllOnPageBase(int? PageSize, int? PageIndex, string Title, int? UnitId, string Type, byte? Status)
 		{

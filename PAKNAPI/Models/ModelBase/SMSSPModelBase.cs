@@ -299,7 +299,7 @@ namespace PAKNAPI.ModelBase
 		[Range(0, int.MaxValue, ErrorMessage = "Trạng thái không đúng định dạng")]
 		public int? Status { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu SMS không được để trống")]
+		
 		public string Type { get; set; }
 	}
 

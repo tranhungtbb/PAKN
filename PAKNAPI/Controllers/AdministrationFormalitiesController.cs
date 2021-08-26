@@ -46,7 +46,7 @@ namespace PAKNAPI.Controller
         /// <param name="Id"></param>
         /// <returns></returns>
         [HttpGet]
-        //[Authorize]
+        //[Authorize("ThePolicy")]
         [Route("get-by-id")]
         public async Task<ActionResult<object>> AdministrationFormalitiesGetByID(int? Id)
         {
@@ -68,7 +68,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpPost]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("insert")]
         public async Task<ActionResult<object>> AdministrationFormalitiesInsert()
         {
@@ -200,7 +200,7 @@ namespace PAKNAPI.Controller
         /// </summary>
         /// <returns></returns>
         [HttpPost,DisableRequestSizeLimit]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("update")]
         public async Task<ActionResult<object>> AdministrationFormalitiesUpdate()
         {
@@ -519,7 +519,7 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize]
+        [Authorize("ThePolicy")]
         [Route("get-list-administration-formalities-forward-on-page")]
         public async Task<ActionResult<object>> DAMAdministrationForwardGetListOnPageBase(string Code, string Name, string Organization, int? FieldId, int? UnitForward, int? Status, int PageSize, int PageIndex)
         {
@@ -637,7 +637,7 @@ namespace PAKNAPI.Controller
 
         [HttpGet]
         [Route("administration-forward")]
-        [Authorize]
+        [Authorize("ThePolicy")]
         public async Task<ActionResult<object>> DAMAdministrationForward(string LstUnitId, int AdministrationId, string Content)
         {
             try

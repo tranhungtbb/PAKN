@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Dapper;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using PAKNAPI.Common;
 using PAKNAPI.Models.Results;
+using System.ComponentModel.DataAnnotations;
 
 namespace PAKNAPI.ModelBase
 {
@@ -1393,14 +1394,27 @@ namespace PAKNAPI.ModelBase
 
 	public class MRRecommendationInsertIN
 	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Mã PAKN không được để trống")]
 		public string Code { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tiêu đề PAKN không được để trống")]
 		public string Title { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung PAKN không được để trống")]
 		public string Content { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Lĩnh vực không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Lĩnh vực không đúng định dạng")]
 		public int? Field { get; set; }
+		[Range(0, int.MaxValue, ErrorMessage = "Đơn vị tiếp nhận không đúng định dạng")]
 		public int? UnitId { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu đối tượng không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Kiểu đối tượng không đúng định dạng")]
 		public short? TypeObject { get; set; }
 		public long? SendId { get; set; }
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Trạng thái không đúng định dạng")]
 		public byte? Status { get; set; }
 		public DateTime? SendDate { get; set; }
 		public bool? ReactionaryWord { get; set; }
@@ -1753,14 +1767,29 @@ namespace PAKNAPI.ModelBase
 	public class MRRecommendationUpdateIN
 	{
 		public int? Id { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Mã PAKN không được để trống")]
 		public string Code { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Tiêu đề PAKN không được để trống")]
 		public string Title { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung PAKN không được để trống")]
 		public string Content { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Lĩnh vực không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Lĩnh vực không đúng định dạng")]
 		public int? Field { get; set; }
+
+		[Range(0, int.MaxValue, ErrorMessage = "Đơn vị tiếp nhận không đúng định dạng")]
 		public int? UnitId { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu đối tượng không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Kiểu đối tượng không đúng định dạng")]
 		public short? TypeObject { get; set; }
 		public long? SendId { get; set; }
 		public string Name { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		[Range(0, int.MaxValue, ErrorMessage = "Trạng thái không đúng định dạng")]
 		public byte? Status { get; set; }
 		public DateTime? SendDate { get; set; }
 		public bool? ReactionaryWord { get; set; }

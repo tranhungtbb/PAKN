@@ -43,7 +43,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="IsActived"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-hashtag-on-page")]
 		public async Task<ActionResult<object>> CAHashtagGetAllOnPage(int PageSize, int PageIndex, string Name, int? QuantityUser, bool? IsActived)
 		{
@@ -73,7 +73,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-all")]
 		public async Task<ActionResult<object>> CAHashtagGetAll()
 		{
@@ -96,7 +96,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> CAHashtagGetByIDBase(int? Id)
 		{
@@ -124,7 +124,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("insert")]
 		public async Task<ActionResult<object>> CAHashtagInsert(CAHashtag _cAHashtag)
 		{
@@ -148,7 +148,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <param name="_cAHashtag"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update")]
 		public async Task<ActionResult<object>> CAHashtagUpdate(CAHashtag _cAHashtag)
 		{
@@ -183,7 +183,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("delete")]
 		public async Task<ActionResult<object>> CAHashtagDelete(CAHashtag _cAHashtag)
 		{

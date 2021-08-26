@@ -77,6 +77,7 @@ namespace PAKNAPI
 				options.Filters.Add(new AuthorizeFilter("ThePolicy"));
 			});
 
+
 			services.AddMvc().AddNewtonsoftJson(); ;
 
 			services.AddMvc().AddNewtonsoftJson(options =>
@@ -155,6 +156,12 @@ namespace PAKNAPI
 				options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
 				options.AddPolicy("ThePolicy", policy => policy.Requirements.Add(new ThePolicyRequirement()));
 			});
+
+			//services.AddAuthorization(options =>
+			//{
+			//	options.AddPolicy("ThePolicy", policy => policy.RequireClaim("ThePolicyRequirement"));
+			//});
+
 			services.AddTransient<IAuthorizationHandler, ThePolicyAuthorizationHandler>();
 
 			//services.AddSwaggerGen(c =>
@@ -219,7 +226,7 @@ namespace PAKNAPI
 			app.UseRouting();
 
 			//app.UseCors("AnotherPolicy");
-
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>

@@ -785,7 +785,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> CAGroupWordUpdateDAO(CAGroupWordUpdateIN _cAGroupWordUpdateIN)
+		public async Task<int?> CAGroupWordUpdateDAO(CAGroupWordUpdateIN _cAGroupWordUpdateIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _cAGroupWordUpdateIN.Id);
@@ -794,7 +794,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cAGroupWordUpdateIN.IsDeleted);
 			DP.Add("Description", _cAGroupWordUpdateIN.Description);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_GroupWordUpdate", DP));
+			return (await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_GroupWordUpdate", DP));
 		}
 	}
 

@@ -44,10 +44,6 @@ export class ResponseInterceptor implements HttpInterceptor {
 			// Log when response observable either completes or errors
 			finalize(() => {
 				this.loadingService.display(false)
-				//const elapsed = Date.now() - started;
-				//const msg = `${req.method} "${req.urlWithParams}"
-				//   ${ok} in ${elapsed} ms.`;
-				//alert(msg);
 			})
 		) as any
 	}

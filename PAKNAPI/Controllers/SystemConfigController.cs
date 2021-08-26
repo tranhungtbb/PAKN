@@ -48,7 +48,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="PageIndex"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-system-config-on-page")]
 		public async Task<ActionResult<object>> SYConfigGetAllOnPageBase(string Title, string Description, int? Type, int? PageSize, int? PageIndex)
 		{
@@ -80,7 +80,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> SYConfigGetByIDBase(int? Id)
 		{
@@ -107,7 +107,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="_sYConfigUpdateIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update")]
 		public async Task<ActionResult<object>> SYConfigUpdateBase(SYConfig _sYConfigUpdateIN)
 		{
@@ -132,7 +132,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("sys-time-delete")]
 		public async Task<ActionResult<object>> SYTimeDeleteBase(SYTimeDeleteIN _sYTimeDeleteIN)
 		{
@@ -246,7 +246,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("sys-time-insert")]
 		public async Task<ActionResult<object>> SYTimeInsertBase(SYTimeInsertIN _sYTimeInsertIN)
 		{
@@ -270,7 +270,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="_sYTimeUpdateIN"></param>
 		/// <returns></returns>
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("sys-time-update")]
 		public async Task<ActionResult<object>> SYTimeUpdateBase(SYTimeUpdateIN _sYTimeUpdateIN)
 		{

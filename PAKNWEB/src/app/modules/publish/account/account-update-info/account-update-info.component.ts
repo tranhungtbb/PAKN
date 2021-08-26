@@ -183,12 +183,6 @@ export class AccountUpdateInfoComponent implements OnInit {
 	submitted = false
 	onSave() {
 		this.submitted = true
-
-		let fDob: any = document.querySelector('#_dateOfBirth')
-		let fDateIssue: any = document.querySelector('#_issuedDate')
-
-		this.model.dateOfBirth = fDob.value
-		this.model.issuedDate = fDateIssue.value
 		// if (this.model.nation == 'Nhập...') {
 		// 	this.model.nation = ''
 		// }
@@ -198,24 +192,22 @@ export class AccountUpdateInfoComponent implements OnInit {
 		}
 		if (!this.model.email) this.model.email = ''
 		if (!this.model.issuedPlace) this.model.issuedPlace = ''
-		// if (!this.model.districtId) this.model.districtId = 0
-		// if (!this.model.provinceId) this.model.provinceId = 0
-		// if (!this.model.wardsId) this.model.wardsId = 0
 		if(this.model.nation.trim())
 		if (this.formData.invalid) {
-			this.toast.error('Dữ liệu không hợp lệ')
+			// this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
 
-		this.accountService.updateInfoUserCurrent(this.model).subscribe((res) => {
+		this.accountService.updateInfoIndividualCurrent(this.model).subscribe((res) => {
 			if (res.success != 'OK') {
 				this.toast.error(res.message)
 				return
 			}
-
 			this.userLocal.setFullName(this.model.fullName)
 			this.toast.success(COMMONS.UPDATE_SUCCESS)
-			this.router.navigate(['/cong-bo/tai-khoan/thong-tin'])
+			window.location.href = '/cong-bo/tai-khoan/thong-tin';
+		},(error) => {
+			console.error(error)
 		})
 	}
 }

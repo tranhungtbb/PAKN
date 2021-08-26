@@ -39,7 +39,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("delete")]
 		public async Task<ActionResult<object>> CAFieldDeleteBase(CAFieldDeleteIN _cAFieldDeleteIN)
 		{
@@ -68,7 +68,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-list-field-on-page")]
 		public async Task<ActionResult<object>> CAFieldGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
 		{
@@ -78,6 +78,9 @@ namespace PAKNAPI.Controllers.ControllerBase
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAFieldGetAllOnPage", rsCAFieldGetAllOnPage},
+						{"TotalCount", rsCAFieldGetAllOnPage != null && rsCAFieldGetAllOnPage.Count > 0 ? rsCAFieldGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsCAFieldGetAllOnPage != null && rsCAFieldGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsCAFieldGetAllOnPage != null && rsCAFieldGetAllOnPage.Count > 0 ? PageSize : 0},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -97,7 +100,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-by-id")]
 		public async Task<ActionResult<object>> CAFieldGetByIDBase(int? Id)
 		{
@@ -125,7 +128,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("get-drop-down")]
 		public async Task<ActionResult<object>> CAFieldGetDropdownBase()
 		{
@@ -153,7 +156,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("insert")]
 		public async Task<ActionResult<object>> CAFieldInsertBase(CAFieldInsertIN _cAFieldInsertIN)
 		{
@@ -178,7 +181,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <returns></returns>
 
 		[HttpPost]
-		[Authorize]
+		[Authorize("ThePolicy")]
 		[Route("update")]
 		public async Task<ActionResult<object>> CAFieldUpdateBase(CAFieldUpdateIN _cAFieldUpdateIN)
 		{
