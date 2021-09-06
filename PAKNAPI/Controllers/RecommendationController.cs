@@ -91,7 +91,8 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationGetDataForProcess(UnitId) };
+                var userId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationGetDataForProcess(UnitId, userId) };
             }
             catch (Exception ex)
             {
@@ -137,7 +138,9 @@ namespace PAKNAPI.Controller
             try
             {
                 RecommendationGetByIDViewResponse data = new RecommendationGetByIDViewResponse();
-                return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationGetByIDView(Id) };
+                var userProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                var unitProcessId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationGetByIDView(Id,userProcessId,unitProcessId) };
             }
             catch (Exception ex)
             {

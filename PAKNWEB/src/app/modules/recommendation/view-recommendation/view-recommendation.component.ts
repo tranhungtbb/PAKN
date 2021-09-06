@@ -139,7 +139,7 @@ export class ViewRecommendationComponent implements OnInit {
 		this.recommendationService.recommendationGetDataForProcess(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.lstHashtag = response.result.lstHashtag
-				this.lstUsers = response.result.lstUsers.filter(x=>x.value != this.storeageService.getUserId())
+				this.lstUsers = response.result.lstUsersProcess
 			} else {
 				this.toastr.error(response.message)
 			}

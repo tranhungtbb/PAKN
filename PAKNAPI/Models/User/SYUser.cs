@@ -93,6 +93,58 @@ namespace PAKNAPI.Models.User
 	}
 
 
+	public class SYUserGetAllOnPageListForChat
+	{
+		private SQLCon _sQLCon;
+
+		public SYUserGetAllOnPageListForChat(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYUserGetAllOnPageListForChat()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+		public long IdQB { get; set; }
+		public string FullName { get; set; }
+		public string UserName { get; set; }
+		public string Phone { get; set; }
+		public string Avatar { get; set; }
+
+		public string UnitName { get; set; }
+		public async Task<List<SYUserGetAllOnPageListForChat>> SYUserGetAllOnPageListForChatDAO(int? PageIndex, string UserName, string TextSearch)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("UserName", UserName);
+			DP.Add("TextSearch", TextSearch);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPageListForChat>("[SY_UserSystemGetForChat]", DP)).ToList();
+		}
+
+		public async Task<List<SYUserGetAllOnPageListForChat>> SYUserGetAllOnPageListByListIdQb(string lstIdQb)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("LstIdQb", lstIdQb);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPageListForChat>("[SY_UserSystemGetByLstIdQb]", DP)).ToList();
+		}
+
+		public async Task<int> SYUserUpdateIdQBDAO(int? id , int? idQB)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", id);
+			DP.Add("IdQB", idQB);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserUpdateQB", DP));
+		}
+
+	}
+
+
 	public class SYUserSystemGetAllOnPageList
 	{
 		private SQLCon _sQLCon;

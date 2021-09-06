@@ -14,6 +14,7 @@ import { COMMONS } from 'src/app/commons/commons'
 import { UserCreateOrUpdateComponent } from 'src/app/modules/system-management/components/user/user-create-or-update/user-create-or-update.component'
 import { UserViewInfoComponent } from 'src/app/modules/system-management/components/user/user-view-info/user-view-info.component'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { UserServiceChatBox } from 'src/app/modules/chatbox/user/user.service'
 
 declare var $: any
 @Component({
@@ -32,6 +33,7 @@ export class UserComponent implements OnInit {
 		private _shareData: DataService,
 		private _router: Router,
 		private storeageService: UserInfoStorageService,
+		private _userServiceChat : UserServiceChatBox
 	) {}
 
 	listData = new Array<UserObject2>()
@@ -272,6 +274,14 @@ export class UserComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				this.getList()
+				let user = this.listData.find(x=>x.id == this.userId)
+				if(user){
+					const userDel = {
+						login: user.userName,
+						password: 'quickblox'
+					};
+					this._userServiceChat.deleteUser(userDel)
+				}
 			} else {
 				if (isNaN(response.result)) {
 					this._toastr.error(response.message)

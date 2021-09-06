@@ -9,7 +9,7 @@
 				<li class="breadcrumb-item active"><a class="font-weight-bold">{{title}}</a></li>
 			</ol>
 			<div class="btn-group group-button-table" role="group">
-				<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" appSvBackButton><i class="bi bi-arrow-left mr-2"></i> quay lại</button>
+				<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" (click)="back()" ><i class="bi bi-arrow-left mr-2"></i> quay lại</button>
 				<button type="button" class="btn btn-sm rounded text-white border-0 grd-xanhngoc px-4 mr-3" (click)="onSave(false)">Lưu</button>
 				<button type="button" class="btn btn-sm rounded text-white border-0 grd-blue px-4" (click)="onSave(true)">Gửi</button>
 			</div>
@@ -23,11 +23,12 @@
 					<div class="col-md-6">
 						<strong class="h4 mr-5">Đối tượng:</strong>
 						<label class="radio-inline mr-5">
-							<input type="radio" name="optradio" (click)="changeTypeObject(1)" id="individual" checked [value]="1" [(ngModel)]="model.typeObject"> Cá nhân
+							<input type="radio" name="optradio" (click)="changeTypeObject(1)" id="individual" [checked]="isIndividual"> Cá nhân
 						</label>
 						<label class="radio-inline">
-							<input type="radio" name="optradio" (click)="changeTypeObject(2)" id="bussiness" [value]="2" [(ngModel)]="model.typeObject"> Doanh nghiệp
+							<input type="radio" name="optradio" (click)="changeTypeObject(2)" id="bussiness" [checked]="!isIndividual"> Doanh nghiệp
 						</label>
+						<!-- [(ngModel)]="model.typeObject" -->
 					</div>
 					<div class="col-md-6">
 						Mã phản ánh/kiến nghị:

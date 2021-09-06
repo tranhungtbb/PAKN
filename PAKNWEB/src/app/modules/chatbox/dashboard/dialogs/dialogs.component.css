@@ -309,7 +309,7 @@
 }
 
 .message__wrap {
-	display: flex;
+	/* display: flex; */
 	flex-wrap: nowrap;
 	margin: 0 0 16px 0;
 }
@@ -322,15 +322,49 @@
 	line-height: 15px;
 	text-align: center;
 }
+.date__send{
+	font-size: 13px;
+	color: #778594;
+	text-align: center;
+}
 
 .message__wrap.m-typing {
 	align-items: center;
 }
 
 .message__content {
-	flex: 1 0;
 	flex-wrap: nowrap;
 	overflow: hidden;
+	border-radius: 8px !important;
+	padding: 4px 8px;
+	max-width: 70%;
+}
+/* .custom-delete-message{
+	content: "";
+	width: 10px;
+	height: 10px;
+	background: inherit;
+	border-color: inherit;
+	border-style: solid;
+	border-width: 0px 0px 1px 1px;
+	display: block;
+	position: absolute;
+	left: 9px;
+	transform: rotate( -50deg);
+	bottom: -7px;
+} */
+
+.delete__message{
+	background-color: #fff;
+	color: #111;
+	min-width: 5rem;
+	margin: 0px;
+	padding: .3rem 0;
+	box-shadow: 1px 5px 8px rgb(0 0 0 / 12%);
+}
+.avatar-custom{
+	background-color: #ecf4ff;
+	width: 42px;
 }
 
 .message__sender_and_status {
@@ -361,7 +395,6 @@
 	color: #4a4a4a;
 	overflow: hidden;
 	white-space: pre-line;
-	word-break: break-all;
 }
 
 .message__text a {
@@ -378,7 +411,11 @@
 }
 
 .message__timestamp {
-	width: 30px;
+	width: 50px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 }
 
 .message_attachment {
@@ -443,10 +480,13 @@
 }
 
 .attach_btn {
-	flex: 0 0 30px;
+	flex: 0 0 35px;
 	overflow: hidden;
 	color: #778594;
 	cursor: pointer;
+	background-color: linear-gradient(
+		180deg
+		, #42A4FF 0%, #2A5494 100%);
 }
 
 .attach_btn i {
@@ -967,7 +1007,14 @@
 	color: white;
 	overflow: hidden;
 	white-space: pre-line;
-	word-break: break-all;
+}
+.notification{
+	width: 100%;
+	min-width: 100%;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
+	color: #4a4a4a;
 }
 
 .m_bg {

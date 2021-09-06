@@ -1,25 +1,19 @@
 import { Component, OnInit, ElementRef } from '@angular/core'
-import { DomSanitizer } from '@angular/platform-browser'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 
-import { UnitService } from '../../../../../services/unit.service'
 import { UserService } from '../../../../../services/user.service'
-import { PositionService } from '../../../../../services/position.service'
-import { RoleService } from '../../../../../services/role.service'
-import { AppSettings } from 'src/app/constants/app-setting'
 
-import { CONSTANTS, MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { CONSTANTS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
 import { UserObject2 } from 'src/app/models/UserObject'
 
 import { UnitComponent } from '../../unit/unit.component'
 import { UserComponent } from 'src/app/modules/system-management/components/user/user.component'
 import { BusinessComponent } from 'src/app/modules/business.component'
-import file_uploader from 'devextreme/ui/file_uploader'
 import {UserInfoStorageService} from 'src/app/commons/user-info-storage.service'
+import { UserServiceChatBox } from 'src/app/modules/chatbox/user/user.service'
 
-declare var jquery: any
 declare var $: any
 @Component({
 	selector: 'app-user-create-or-update',
@@ -29,13 +23,11 @@ declare var $: any
 export class UserCreateOrUpdateComponent implements OnInit {
 	constructor(
 		private elm: ElementRef,
-		private unitService: UnitService,
 		private userService: UserService,
 		private stogateService: UserInfoStorageService,
 		private formBuilder: FormBuilder,
 		private toast: ToastrService,
-		private roleService: RoleService,
-		private sanitizer: DomSanitizer,
+		private _userServiceChat : UserServiceChatBox
 	) {
 		this.modalId = elm.nativeElement.getAttribute('modalid')
 		this.isOrganizational = elm.nativeElement.getAttribute('isOrganizational') == 'true' ? true : false
@@ -57,6 +49,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	positionsList: any[] = []
 	rolesList: any[] = []
 	unitsList: any[] = []
+	files : any [] = []
 	selectedRoles: Array<number>
 	roleName : any =''
 	listStatus: any = [
@@ -126,24 +119,41 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		}
 		if (this.checkExists['Email'] || this.checkExists['Phone']) return
 
-		//avatar file;
-		let files = $('#' + this.modalId + ' .seclect-avatar')[0].files
 		this.modelUser.roleIds = this.selectedRoles.toString()
 		this.modelUser.permissionIds = this.listPermissionUserSelected.join(',')
 		this.modelUser.countLock = 0
 		this.modelUser.lockEndOut = ''
+
+		const user = {
+			login: this.modelUser.email,
+			password: 'quickblox',
+			full_name: this.modelUser.fullName,
+			phone : this.modelUser.phone,
+			email : this.modelUser.email,
+			custom_data : JSON.stringify({id : this.modelUser.id}),
+		};
+		let fileParams = null
+		if(this.files && this.files.length > 0){
+			fileParams = {
+				name: this.files[0].name,
+				file: this.files[0],
+				type: this.files[0].type,
+				size: this.files[0].size,
+				public: false,
+			};
+		}
+
 		if (this.modelUser.id != null && this.modelUser.id > 0) {
 			this.modelUser.avatar = this.modelUser.avatar
 			this.modelUser.address == null ? (this.modelUser.address = '') : (this.modelUser.address = this.modelUser.address.trim())
-			this.userService.update(this.modelUser, files).subscribe((res) => {
-				$('#' + this.modalId + ' .seclect-avatar').val('')
-
+			this.userService.update(this.modelUser, this.files).subscribe((res) => {
 				if (res.success != 'OK') {
 					let errorMsg = res.message
 					this.toast.error(errorMsg)
 					return
 				}
 				this.toast.success(COMMONS.UPDATE_SUCCESS)
+				this._userServiceChat.createUserForApp(user,fileParams).then(r => {console.log(r)}).catch(e=>{console.log(e)})
 				if (this.isOrganizational == true) {
 					if (!this.editByMyself) {
 						this.parentUnit.getUserPagedList()
@@ -156,14 +166,14 @@ export class UserCreateOrUpdateComponent implements OnInit {
 				$('#' + this.modalId).modal('hide')
 			})
 		} else {
-			this.userService.insert(this.modelUser, files).subscribe((res) => {
-				$('#' + this.modalId + ' .seclect-avatar').val('')
-
+			this.userService.insert(this.modelUser, this.files).subscribe((res) => {
 				if (res.success != 'OK') {
 					let errorMsg = res.message
 					this.toast.error(errorMsg)
 					return
 				}
+				user.custom_data = JSON.stringify({id : res.result})
+				this._userServiceChat.createUserForApp(user,fileParams)
 				if (this.isOrganizational == true) {
 					if (!this.editByMyself) {
 						this.parentUnit.getUserPagedList()
@@ -199,6 +209,9 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		output.onload = function () {
 			URL.revokeObjectURL(output.src) // free memory
 		}
+		this.files =[]
+		this.files.push(file)
+		$('#modal .seclect-avatar').val('')
 	}
 
 	modal_btn_save = 'Tạo mới'

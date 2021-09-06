@@ -18,7 +18,7 @@ export class LoginChatBoxComponent implements OnInit, AfterViewInit {
 	userNameFocused = true
 	userLoginFocused = true
 	private successUnSubscribe$
-	userNameinfo: string
+	user: any 
 	userLoginId: number = this.storeageService.getUserId()
 
 	constructor(private userServiceCB: UserServiceChatBox, private storeageService: UserInfoStorageService, private router: Router, private userService: UserService) {}
@@ -33,32 +33,21 @@ export class LoginChatBoxComponent implements OnInit, AfterViewInit {
 		this.userService.getById({ id: this.userLoginId }).subscribe((res) => {
 			console.log(res)
 			if (res.success == RESPONSE_STATUS.success) {
-				this.userNameinfo = res.result.SYUserGetByID[0].userName
+				this.user = res.result.SYUserGetByID[0]
+				console.log(this.user)
 				this.onSubmit()
 			}
 		})
 	}
 
-	params = {
-		login: this.loginModel.userLogin,
-		password: '12345678',
-		full_name: 'TL_CN',
-	}
+	
 
 	onSubmit() {
-		if (this.userNameFocused && this.userLoginFocused) {
-			console.log('Login form passed validation and ready to submit.')
-
-			this.params.login = this.loginModel.userLogin = this.userNameinfo
-			this.loginModel.userName = this.userNameinfo
-			this.userServiceCB.createUser(this.params)
-			this.userServiceCB.login(this.loginModel)
-		} else {
-			console.log('Login form failed validation')
+		let params= {
+			userLogin : this.user.userName,
+			userName : this.user.fullName,
+			id : this.user.id
 		}
-	}
-	onChange() {
-		this.userNameFocused = new RegExp(this.userNameRegExString).test(this.loginModel.userName)
-		this.userLoginFocused = new RegExp(this.userLoginRegExString).test(this.loginModel.userLogin)
+		this.userServiceCB.login(params)
 	}
 }

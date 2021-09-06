@@ -23,6 +23,23 @@ export class UserService {
 		return this.serviceInvoker.getwithHeaders(query, AppSettings.API_ADDRESS + Api.UserGetPagedList, headers)
 	}
 
+	getAllPagedListForChat(query: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+		}
+		return this.serviceInvoker.getwithHeaders(query, AppSettings.API_ADDRESS + Api.UserGetPagedListForChat, headers)
+	}
+	getAllByListIdQb(query: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+		}
+		return this.serviceInvoker.getwithHeaders(query, AppSettings.API_ADDRESS + Api.UserGetAllByIdQb, headers)
+	}
+
+
+
 	getAllOnPagedList(query: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
@@ -63,6 +80,10 @@ export class UserService {
 			logObject: encodeURIComponent(LOG_OBJECT.SY_USER_GET_BY_ROLE),
 		}
 		return this.serviceInvoker.getwithHeaders(query, AppSettings.API_ADDRESS + Api.UserGetByRoleId, headers)
+	}
+
+	updateBQId(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserUpdateQBId)
 	}
 
 	// getIsSystem(query: any): Observable<any> {
@@ -164,6 +185,25 @@ export class UserService {
 			}
 		}
 		return this.serviceInvoker.postwithHeaders(form, AppSettings.API_ADDRESS + Api.UserSystemUpdate, headers)
+	}
+
+	userUpdateProfile(data: any, files: any = null): Observable<any> {
+		let form = new FormData()
+
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+		}
+
+		for (let key in data) {
+			form.append(key, data[key])
+		}
+		if (files != null && files.length > 0) {
+			for (let item of files) {
+				form.append('files', item, item.name)
+			}
+		}
+		return this.serviceInvoker.postwithHeaders(form, AppSettings.API_ADDRESS + Api.UserUpdateProfile, headers)
 	}
 
 

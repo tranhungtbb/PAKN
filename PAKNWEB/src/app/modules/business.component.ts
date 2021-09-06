@@ -12,10 +12,7 @@ import 'rxjs/add/operator/pairwise'
 import { StoreLink } from '../constants/store-link'
 import { environment } from '../../environments/environment'
 import { UploadFileService } from '../services/uploadfiles.service'
-import { saveAs as importedSaveAs } from 'file-saver'
 import { DataService } from '../services/sharedata.service'
-import { UserViewInfoComponent } from './system-management/components/user/user-view-info/user-view-info.component'
-import { UserCreateOrUpdateComponent } from './system-management/components/user/user-create-or-update/user-create-or-update.component'
 
 defineLocale('vi', viLocale)
 
@@ -66,8 +63,6 @@ export class BusinessComponent implements OnInit, AfterViewInit {
 			})
 	}
 
-	@ViewChild(UserViewInfoComponent, { static: false }) child_UserViewInfoComponent: UserViewInfoComponent
-	@ViewChild(UserCreateOrUpdateComponent, { static: false }) child_UserCreateOrUpdateComponent: UserCreateOrUpdateComponent
 
 	ngOnInit() {
 		this.localeService.use('vi')
@@ -85,22 +80,8 @@ export class BusinessComponent implements OnInit, AfterViewInit {
 		// this.loadScript('assets/dist/js/dashboard/dashboard-1.js')
 	}
 	ngAfterViewInit() {
-		$('#show-modal-account-info').click(() => {
-			if(this.isMain){
-				return
-			}
-			this.child_UserViewInfoComponent.openModal()
-		})
-		this.child_UserViewInfoComponent.parent_BusinessComponent = this
-		this.child_UserCreateOrUpdateComponent.parent_BusinessComponent = this
-
 		this.currentRouter = this._router.url
 	}
-
-	public openModalEditInfo(userId: number) {
-		this.child_UserCreateOrUpdateComponent.openModal(0, userId, true)
-	}
-
 	public loadScript(url: string) {
 		$('script[src="' + url + '"]').remove()
 		$('<script>').attr('src', url).appendTo('body')

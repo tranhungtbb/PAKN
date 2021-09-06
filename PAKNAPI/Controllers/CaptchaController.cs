@@ -1,4 +1,5 @@
 ﻿using Bugsnag;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -36,6 +37,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[Route("get-captcha-image")]
 		[HttpGet]
+		//[Authorize("demo")]
 		public async Task<IActionResult> GetCaptchaImageAsync(string IpAddress = null)
 		{
 			try

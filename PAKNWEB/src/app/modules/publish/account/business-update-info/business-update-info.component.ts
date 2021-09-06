@@ -154,8 +154,10 @@ export class BusinessUpdateInfoComponent implements OnInit {
 			}
 			this.userLocal.setFullName(this.model.fullName)
 			this.toast.success(COMMONS.UPDATE_SUCCESS)
-			// this.router.navigate(['/cong-bo/tai-khoan/thong-tin'])
-			window.location.href = '/cong-bo/tai-khoan/thong-tin';
+			setTimeout(()=>{
+				window.location.href = '/cong-bo/tai-khoan/thong-tin';
+			},1000)
+		
 		})
 	}
 

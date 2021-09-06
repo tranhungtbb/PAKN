@@ -11,6 +11,7 @@ import { AccountService } from 'src/app/services/account.service'
 import { RESPONSE_STATUS, RECOMMENDATION_STATUS, TYPE_NOTIFICATION, CONSTANTS} from 'src/app/constants/CONSTANTS'
 import { NotificationService } from 'src/app/services/notification.service'
 import { COMMONS } from 'src/app/commons/commons'
+import { UserServiceChatBox } from 'src/app/modules/chatbox/user/user.service'
 
 declare var $: any
 @HostListener('window:scroll', ['$event'])
@@ -35,7 +36,7 @@ export class AppheaderComponent implements OnInit {
 	isShowPasswordNew : any = false
 
 	pageSizeGrid: number = 10
-	files: any
+	files: any = [] = []
 	updateForm: FormGroup
 	userForm: FormGroup
 	createUserForm: FormGroup
@@ -103,6 +104,7 @@ export class AppheaderComponent implements OnInit {
 		private sharedataService: DataService,
 		private notificationService: NotificationService,
 		private accountService: AccountService,
+		private _userServiceChat : UserServiceChatBox
 	) {}
 
 	formChangePassword: FormGroup
@@ -276,12 +278,15 @@ export class AppheaderComponent implements OnInit {
 			event.target.value = null
 			return
 		}
-		let output: any = $('#modal .user-avatar-view')
+		let output: any = $('#modalEditUserInfo .user-avatar-view')
 		output.attr('src', URL.createObjectURL(file))
 		this.userAvatar = ''
 		output.onload = function () {
 			URL.revokeObjectURL(output.src) // free memory
 		}
+		this.files =[]
+		this.files.push(file)
+		$('#modalEditUserInfo .seclect-avatar').val('')
 	}
 
 	onClickNotification(dataId: any, type: any, typeSend: any) {
@@ -378,27 +383,21 @@ export class AppheaderComponent implements OnInit {
 	preUpdate(){
 		this.submitted = false
 		$('#modalViewUserInfo').modal('hide')
-		this.userService.getByIdUpdate({ id: this.userId }).subscribe((res) => {
-			if (res.success != 'OK') return
-			this.model = res.result.SYUserGetByID[0]
-			if (this.model.avatar == '' || this.model.avatar == null) {
-				this.userAvatar = null
-			} else {
-				this.userAvatar = this.model.avatar
-				let output: any = $('#modalEditUserInfo .user-avatar-view')
-				output.attr('src', this.userAvatar)
-			}
-			$('#modalEditUserInfo').modal('show')
-		})
+		if (this.model.avatar == '' || this.model.avatar == null) {
+			this.userAvatar = null
+		} else {
+			this.userAvatar = this.model.avatar
+			let output: any = $('#modalEditUserInfo .user-avatar-view')
+			output.attr('src', this.userAvatar)
+		}
+		$('#modalEditUserInfo').modal('show')
 	}
 
 	preView(){
-		if(!this.isMain){
-			return
-		}
 		this.userService.getByIdUpdate({ id: this.userId }).subscribe((res) => {
 			if (res.success != 'OK') return
 			this.model = res.result.SYUserGetByID[0]
+
 			if (this.model.avatar == '' || this.model.avatar == null) {
 				this.userAvatar = null
 			} else {
@@ -419,22 +418,57 @@ export class AppheaderComponent implements OnInit {
 		if (this.checkExists['Email'] || this.checkExists['Phone']) {
 			return
 		}
-		let files = $('#modalEditUserInfo .seclect-avatar')[0].files
 		this.model.countLock = 0
 		this.model.lockEndOut = ''
-		this.userService.userSystemUpdate(this.model, files).subscribe((res) => {
-			$('#modalEditUserInfo .seclect-avatar').val('')
-			if (res.success != 'OK') {
-				let errorMsg = res.message
-				this._toastr.error(errorMsg)
-				return
-			}
-			else{
-				$('#modalEditUserInfo').modal('hide')
-				this._toastr.success(COMMONS.ADD_SUCCESS)
-				this.getList()
-			}
-		})
+		const user = {
+			login: this.model.email,
+			password: 'quickblox',
+			full_name: this.model.fullName,
+			phone : this.model.phone,
+			email : this.model.email,
+			custom_data : JSON.stringify({id : this.model.id}),
+		};
+		let fileParams = null
+		if(this.files && this.files.length > 0){
+			fileParams = {
+				name: this.files[0].name,
+				file: this.files[0],
+				type: this.files[0].type,
+				size: this.files[0].size,
+				public: false,
+			};
+		}
+		if(this.isMain != true){
+			this.userService.userUpdateProfile(this.model, this.files).subscribe((res) => {
+				$('#modalEditUserInfo .seclect-avatar').val('')
+				if (res.success != 'OK') {
+					let errorMsg = res.message
+					this._toastr.error(errorMsg)
+					return
+				}
+				else{
+					$('#modalEditUserInfo').modal('hide')
+					this._toastr.success(COMMONS.UPDATE_SUCCESS)
+					this._userServiceChat.createUserForApp(user,fileParams)
+				}
+			})
+		}
+		else{
+			this.userService.userSystemUpdate(this.model, this.files).subscribe((res) => {
+				$('#modalEditUserInfo .seclect-avatar').val('')
+				if (res.success != 'OK') {
+					let errorMsg = res.message
+					this._toastr.error(errorMsg)
+					return
+				}
+				else{
+					$('#modalEditUserInfo').modal('hide')
+					this._toastr.success(COMMONS.UPDATE_SUCCESS)
+					this._userServiceChat.createUserForApp(user,fileParams)
+				}
+			})
+		}
+		
 	}
 
 
@@ -478,51 +512,6 @@ export class AppheaderComponent implements OnInit {
 	get controlform() {
 		return this.exchange.controls
 	}
-
-	// getNotification() {
-	//   var request = {
-	//     PageSize: this.pageSizeGrid
-	//   }
-	//   this.notificationService.GetNotification(request).subscribe(response => {
-	//     if (response.status == 1) {
-	//       this.listThongBao = [];
-	//       this.listThongBao = response.listThongBao;
-	//       this.totalThongBao = response.total;
-	//     } else {
-	//       this.toastr.error(response.message);
-	//     }
-	//   }), err => {
-	//     console.error(err);
-	//   }
-	// }
-
-	goLink(type, id) {
-		if (type == 1 || type == 2 || type == 3) {
-			this.router.navigate([`/business/business-management/view-meeting/${id}`])
-		} else if (type == 4) {
-			this.router.navigate([`/business/business-management/contact-view/${id}`])
-		} else if (type == 5 || type == 6) {
-			this.router.navigate([`/business/business-management/resolution/list/${id}`])
-		} else if (type == 7 || type == 8) {
-			this.router.navigate([`/business/business-management/letters-view/${id}`])
-		} else if (type == 9 || type == 10 || type == 11) {
-			this.router.navigate([`/business/business-management/monitoring/view/${id}`])
-		} else if (type == 12) {
-			this.router.navigate([`/business/business-management/feedback/meeting/view/${id}`])
-		} else if (type == 15) {
-			this.router.navigate([`/business/business-management/feedback/petition/view/${id}`])
-		} else if (type == 16) {
-			this.router.navigate([`/business/business-management/feedback/letters/view/${id}`])
-		} else if (type == 13 || type == 14) {
-			this.router.navigate([`/business/business-management/records-view/${id}`])
-		} else if (type == 17) {
-			this.sharedataService.setQuestionId(id)
-			this.router.navigate(['/business/business-management/question/list'])
-		} else if (type == 18 || type == 19 || type == 20) {
-			this.router.navigate([`/business/business-management/session/view/${id}`])
-		}
-	}
-
 	onScroll(event: any) {
 		if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 50) {
 			this.numberNotifications = this.numberNotifications + 5

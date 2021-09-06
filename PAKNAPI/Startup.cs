@@ -72,10 +72,12 @@ namespace PAKNAPI
 			
 
 			services.AddMvc().AddNewtonsoftJson();
-			services.AddMvc(options =>
-			{
-				options.Filters.Add(new AuthorizeFilter("ThePolicy"));
-			});
+
+			// cái này ảnh hưởng đến controller ko authorize @@
+			//services.AddMvc(options =>
+			//{
+			//	options.Filters.Add(new AuthorizeFilter("ThePolicy"));
+			//});
 
 
 			services.AddMvc().AddNewtonsoftJson(); ;
@@ -153,8 +155,15 @@ namespace PAKNAPI
 			{
 				var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
 				defaultAuthorizationPolicyBuilder = defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
-				options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
-				options.AddPolicy("ThePolicy", policy => policy.Requirements.Add(new ThePolicyRequirement()));
+                options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
+				
+
+				options.AddPolicy("ThePolicy", policy =>
+                {
+                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                    policy.RequireAuthenticatedUser();
+                    policy.Requirements.Add(new ThePolicyRequirement());
+                });
 			});
 
 			//services.AddAuthorization(options =>
@@ -225,9 +234,10 @@ namespace PAKNAPI
 
 			app.UseRouting();
 
-			//app.UseCors("AnotherPolicy");
-			app.UseAuthentication();
+			app.UseCors("AnotherPolicy");
+			
 			app.UseAuthorization();
+			app.UseAuthentication();
 
 			app.UseEndpoints(endpoints =>
 			{

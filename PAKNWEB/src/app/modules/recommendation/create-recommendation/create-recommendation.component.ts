@@ -11,6 +11,7 @@ import { HashtagObject } from 'src/app/models/hashtagObject'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { NotificationService } from 'src/app/services/notification.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { debug } from 'console'
 
 @Component({
 	selector: 'app-create-recommendation',
@@ -68,17 +69,20 @@ export class CreateRecommendationComponent implements OnInit {
 				this.model.typeObject = 1
 				this.title = 'Thêm mới'
 			}
+			debugger
 			let typeObject = params['typeObject']
 			if(typeObject){
-				if(Number(typeObject)){
-					this.isIndividual = Number(typeObject) == 1 ? true : false
-					if(this.isIndividual){
-						this.changeTypeObject(1)
-					}
-					else{
-						this.changeTypeObject(2)
-					}
+				this.isIndividual = Number(typeObject) == 1 ? true : false
+				if(this.isIndividual){
+					this.changeTypeObject(1)
+					this.model.typeObject = 1
 				}
+				else{
+					this.changeTypeObject(2)
+					this.model.typeObject = 2
+				}
+			}else{
+				this.model.typeObject = 1
 			}
 			this.builForm()
 		})
@@ -95,6 +99,7 @@ export class CreateRecommendationComponent implements OnInit {
 			(error) => {
 				console.log(error)
 			}
+		
 	}
 
 	onCreateHashtag(e) {
@@ -218,16 +223,22 @@ export class CreateRecommendationComponent implements OnInit {
 		this.model.sendId = null
 		if (typeObject == 1) {
 			this.titleObject = 'Cá nhân'
+			this.isIndividual = true
+			this.model.typeObject = 1
 			this.lstObject = this.lstIndividual
 		} else {
 			this.titleObject = 'Doanh nghiệp'
+			this.isIndividual = false
+			this.model.typeObject = 2
 			this.lstObject = this.lstBusiness
 		}
 	}
 	redirectToCreateIndividualBusiness() {
 		if (this.model.typeObject == 1) {
+			localStorage.setItem('isIndividual', 'true')
 			this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/ca-nhan'])
 		} else if (this.model.typeObject == 2) {
+			localStorage.setItem('isIndividual', 'false')
 			this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/them-moi/0'])
 		}
 		return
@@ -368,5 +379,9 @@ export class CreateRecommendationComponent implements OnInit {
 			}
 		}
 		return tree
+	}
+	back(){
+		localStorage.removeItem('isIndividual')
+		this.router.navigate(['/quan-tri/kien-nghi/danh-sach-tong-hop'])
 	}
 }

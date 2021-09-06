@@ -72,13 +72,41 @@ export class QBHelper {
 					})
 				})
 				.catch((error) => {
-					alert(error)
 					console.log(error)
 					error.status = 401
 					reject(error)
 				})
 		})
 	}
+
+	public qbGetUserByLogin(user): Promise<any> {
+		return new Promise((resolve, reject) => {
+			this.appSession()
+				.then((sessionResponse) => {
+					localStorage.setItem('sessionResponse', JSON.stringify(sessionResponse))
+					const params = {
+						login: user.login,
+						password: user.password,
+					}
+					var searchParams = {login: user.login};
+					QB.users.get(searchParams, function(error, user) {
+						if(error){
+							reject(error)
+						}
+						else{
+							resolve(user)
+						}
+					});
+				})
+				.catch((error) => {
+					console.log(error)
+					error.status = 401
+					reject(error)
+				})
+		})
+	}
+
+
 
 	/**
 	 * chat connection

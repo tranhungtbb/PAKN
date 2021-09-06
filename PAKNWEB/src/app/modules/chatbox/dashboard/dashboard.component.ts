@@ -6,6 +6,7 @@ import { UserServiceChatBox } from '../user/user.service'
 import { QBHelper } from 'src/app/modules/chatbox/helper/qbHelper'
 import { MessageService } from './messages/message.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { Helpers } from 'src/app/modules/chatbox/helper/helpers'
 
 
 interface Message {
@@ -23,8 +24,7 @@ export class DashboardChatBoxComponent implements OnInit {
 	tinNhan: Message[];
 
 	SelectedMessage: Message;
-
-
+	public helpers: Helpers
 	public chats: any = []
 
 	chatsClicked = false // For displaying OneToOne and Group Chats
@@ -50,10 +50,11 @@ export class DashboardChatBoxComponent implements OnInit {
 		this.tinNhan = [
 			{name: 'Tin Nhắn Gần Đây'},
 			{name: 'Tin nhắn đến'},
-			{name: 'tin nhắn all'},			
-	];
+			{name: 'tin nhắn all'},
+		];
 		this.dialogService.dialogsEvent.subscribe((chatData: any[]) => {
 			this.chats = Object.values(chatData)
+			console.log(this.chats)
 		})
 		this.dialogService.currentDialogEvent.subscribe((dialog) => {
 			this.selectedChat = dialog._id
@@ -137,5 +138,48 @@ export class DashboardChatBoxComponent implements OnInit {
       'welcomeChat': false,
       'onChatClick': true
 		})
+	}
+
+	getTime(date : any){
+		let result = ''
+		let sendDate = new Date(date)
+		let currentDate = new Date()
+		if(sendDate.getFullYear() != currentDate.getFullYear()){
+			result = String(sendDate.getMinutes()) +':'+ sendDate.getHours() + ' ' + sendDate.getDate() + '/' + sendDate.getMonth() + '/' + sendDate.getFullYear()
+		}else{
+			if(sendDate.getMonth() != currentDate.getMonth()){
+				result = Number(currentDate.getMonth() - sendDate.getMonth()) + ' tháng trước'
+			}
+			else{
+				if(sendDate.getDate() != currentDate.getDate()){
+					result = Number(currentDate.getDate() - sendDate.getDate()) + ' ngày trước'
+				}
+				else{
+					if(sendDate.getHours() != currentDate.getHours()){
+						result = Number(currentDate.getHours() - sendDate.getHours()) + ' giờ trước'
+					}
+					else{
+						if(sendDate.getMinutes() != currentDate.getMinutes()){
+							result = Number(currentDate.getMinutes() - sendDate.getMinutes()) + ' phút trước'
+						}else{
+							result = '1 giây trước'
+						}
+						
+					}
+				}
+			}
+		}
+		return result
+	}
+	ramdom(){
+		return Math.floor(Math.random() * (10 - 1 + 1)) + 1
+	}
+	getShortName(string) {
+		var names = string.split(' '),
+			initials = names[0].substring(0, 1).toUpperCase()
+		if (names.length > 1) {
+			initials += names[names.length - 1].substring(0, 1).toUpperCase()
+		}
+		return initials
 	}
 }

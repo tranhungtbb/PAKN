@@ -10,6 +10,7 @@ import { DialogService } from '../dialogs/dialog.service'
 })
 export class MessageComponent implements AfterViewInit {
 	@Input() message: any = []
+	@Input() dialog_name : any
 	@ViewChild('element', { static: false }) el: ElementRef
 	public CONSTANTS = CONSTANTS
 
@@ -29,6 +30,7 @@ export class MessageComponent implements AfterViewInit {
 			this.el.nativeElement['dataset'].userId = this.message.sender_id
 			this.el.nativeElement['dataset'].dialogId = this.message.chat_dialog_id
 			this.messageService.intersectionObserver.observe(this.el.nativeElement)
+			console.log(this.dialog_name)
 		}
 	}
 	checkTypeFile(name: string) {
@@ -51,6 +53,16 @@ export class MessageComponent implements AfterViewInit {
 		})
 	}
 
+	classNameMess() {
+		if (this.idUser === this.message.sender_id && !this.message.notification_type) {
+			return 'bg-primary-light message__content border border-light rounded'
+		} else if (this.idUser !== this.message.sender_id && !this.message.notification_type) {
+			return 'bg-primary-light message__content m_bg border rounded'
+		} else {
+			return 'message__content notification'
+		}
+	}
+
 	loadImagesEvent(e) {
 		let img: any, container: Element, imgPos: number, scrollHeight: number
 		img = e.target
@@ -67,34 +79,46 @@ export class MessageComponent implements AfterViewInit {
 	}
 
 	styleClass: string
-	classNameMess() {
-		if (this.idUser === this.message.sender_id && !this.message.notification_type) {
-			return 'bg-primary-light message__content border border-light p-2 rounded'
-		} else if (this.idUser !== this.message.sender_id && !this.message.notification_type) {
-			return 'bg-primary-light message__content m_bg border p-2 rounded'
-		} else {
-			return 'message__content'
-		}
-	}
 
-	classNameMess_Content() {
-		if (this.idUser !== this.message.sender_id && !this.message.notification_type) {
-			return 'm_content'
-		} else {
-			return 'message__text'
-		}
-	}
-	styleAT_User() {
-		if (this.idUser !== this.message.sender_id && !this.message.notification_type) {
-			return 'm_attachment'
-		} else {
-			return 'message_attachment'
-		}
-	}
 	checkstatusAcc() {
 		if (this.idUser !== this.message.sender_id) {
 			this.statusAcc = false
 		}
 		this.statusAcc = true
 	}
+
+	deleteMessage(id){
+		this.messageService.deleteMessage(id)
+		.then(res => console.log('succ'))
+		.catch(err =>{console.log(err)})
+	}
+	getShortName(string) {
+		var names = string.split(' '),
+			initials = names[0].substring(0, 1).toUpperCase()
+		if (names.length > 1) {
+			initials += names[names.length - 1].substring(0, 1).toUpperCase()
+		}
+		return initials
+	}
+	getTimeMessage(sendDate : any){
+		let result = ''
+		let currentDate = new Date()
+		if(sendDate.getFullYear() != currentDate.getFullYear()){
+			result = String(sendDate.getHours() +':'+ sendDate.getMinutes() + ' ' + sendDate.getDate() + '/' + sendDate.getMonth() + '/' + sendDate.getFullYear())
+		}else{
+			if(sendDate.getMonth() != currentDate.getMonth()){
+				result = String(sendDate.getHours() +':'+ sendDate.getMinutes() + ' ' + sendDate.getDate() + '/' + sendDate.getMonth() + '/' + sendDate.getFullYear())
+			}
+			else{
+				if(sendDate.getDate() != currentDate.getDate()){
+					result = String(sendDate.getHours() +':'+ sendDate.getMinutes() + ' ' + sendDate.getDate() + '/' + sendDate.getMonth() + '/' + sendDate.getFullYear())
+				}
+				else{
+					result = String(sendDate.getHours() +':'+ sendDate.getMinutes())
+				}
+			}
+		}
+		return result
+	}
+
 }

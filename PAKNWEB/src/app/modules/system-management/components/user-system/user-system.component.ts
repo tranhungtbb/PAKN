@@ -10,6 +10,7 @@ import { RoleService } from 'src/app/services/role.service'
 import { MESSAGE_COMMON, RESPONSE_STATUS, CONSTANTS } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { UserServiceChatBox } from 'src/app/modules/chatbox/user/user.service'
 
 declare var $: any
 @Component({
@@ -26,6 +27,7 @@ export class UserSystemComponent implements OnInit {
 		private _shareData: DataService,
 		private _router: Router,
 		private storeageService: UserInfoStorageService,
+		private _userServiceChat : UserServiceChatBox
 	) {}
 
 	listData = new Array<UserSystemObject>()
@@ -81,6 +83,7 @@ export class UserSystemComponent implements OnInit {
 	createUserForm: FormGroup
 	isAdmin : any
 	fileAccept = CONSTANTS.FILEACCEPTAVATAR
+	files : any = []
 
 	ngOnInit() {
 		this.getList()
@@ -196,12 +199,29 @@ export class UserSystemComponent implements OnInit {
 		if (this.checkExists['Email'] || this.checkExists['Phone']) {
 			return
 		}
-		let files = $('#modal .seclect-avatar')[0].files
 		this.model.countLock = 0
 		this.model.lockEndOut = ''
+		const user = {
+			login: this.model.email,
+			password: 'quickblox',
+			full_name: this.model.fullName,
+			phone : this.model.phone,
+			email : this.model.email,
+			custom_data :  JSON.stringify({id : this.model.id})
+		};
+		let fileParams = null
+		if(this.files && this.files.length > 0){
+			fileParams = {
+				name: this.files[0].name,
+				file: this.files[0],
+				type: this.files[0].type,
+				size: this.files[0].size,
+				public: false,
+			};
+		}
+		
 		if(!this.model.id || this.model.id == 0){
-			this._service.userSystemInsert(this.model, files).subscribe((res) => {
-				$('#modal .seclect-avatar').val('')
+			this._service.userSystemInsert(this.model, this.files).subscribe((res) => {
 				if (res.success != 'OK') {
 					let errorMsg = res.message
 					this._toastr.error(errorMsg)
@@ -211,12 +231,13 @@ export class UserSystemComponent implements OnInit {
 					$('#modal').modal('hide')
 					this._toastr.success(COMMONS.ADD_SUCCESS)
 					this.getList()
+					user.custom_data = JSON.stringify({id : res.result})
+					this._userServiceChat.createUserForApp(user,fileParams)
 				}
 			})
 		}
 		else{
-			this._service.userSystemUpdate(this.model, files).subscribe((res) => {
-				$('#modal .seclect-avatar').val('')
+			this._service.userSystemUpdate(this.model, this.files).subscribe((res) => {
 				if (res.success != 'OK') {
 					let errorMsg = res.message
 					this._toastr.error(errorMsg)
@@ -224,9 +245,11 @@ export class UserSystemComponent implements OnInit {
 				}
 				else{
 					$('#modal').modal('hide')
-					this._toastr.success(COMMONS.ADD_SUCCESS)
+					this._toastr.success(COMMONS.UPDATE_SUCCESS)
 					this.getList()
+					this._userServiceChat.createUserForApp(user,fileParams)
 				}
+				
 			})
 		}
 	}
@@ -255,6 +278,9 @@ export class UserSystemComponent implements OnInit {
 		output.onload = function () {
 			URL.revokeObjectURL(output.src) // free memory
 		}
+		this.files =[]
+		this.files.push(file)
+		$('#modal .seclect-avatar').val('')
 	}
 
 	
@@ -401,6 +427,15 @@ export class UserSystemComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				this.getList()
+				let user = this.listData.find(x=>x.id == this.userId)
+				if(user){
+					const userDel = {
+						login: user.userName,
+						password: 'quickblox'
+					};
+					this._userServiceChat.deleteUser(userDel)
+				}
+				
 			} else {
 				if (isNaN(response.result)) {
 					this._toastr.error(response.message)

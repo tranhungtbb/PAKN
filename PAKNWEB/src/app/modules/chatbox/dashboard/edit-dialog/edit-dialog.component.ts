@@ -6,6 +6,7 @@ import { DialogService } from 'src/app/modules/chatbox/dashboard/dialogs/dialog.
 import { DashboardService } from 'src/app/modules/chatbox/dashboard/dashboard.service'
 import { CONSTANTS } from 'src/app/modules/chatbox/QBconfig'
 import { MessageService } from '../messages/message.service'
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
 	selector: 'app-edit-dialog',
@@ -21,10 +22,14 @@ export class EditDialogComponent implements OnInit {
 	public selectedUsers: number[] = []
 	public helpers: Helpers
 	public _usersCache: any
+	pageIndex : number = 1
+	textSearch : any = ''
+	lstIdQB : any = ''
 
 	constructor(
 		private dashboardService: DashboardService,
 		private qbHelper: QBHelper,
+		private _toastr : ToastrService,
 		public dialogService: DialogService,
 		private userService: UserServiceChatBox,
 		private messageService: MessageService
@@ -37,8 +42,9 @@ export class EditDialogComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.getUserList('')
 		this.selectedUsers = this.selectedUsers.concat(this.dialog.occupants_ids)
+		this.lstIdQB = this.dialog.occupants_ids.join(',')
+		this.getUserList()
 	}
 
 	toggleSelectItem(userId: number) {
@@ -61,14 +67,28 @@ export class EditDialogComponent implements OnInit {
 		})
 	}
 
-	getUserList(args) {
+	getUserList() {
+		let obj = {
+			PageIndex : this.pageIndex,
+			UserName : this.lstIdQB,
+			TextSearch : this.textSearch
+		}
 		this.userService
-			.getUserList(args)
-			.then((users) => {
-				this.users = users
+			.getUserListForChat(obj)
+			.then((res) => {
+				this.users = res.result.users
+				.map(item => {
+					item.color = Math.floor(Math.random() * (10 - 1 + 1)) + 1
+					return item
+				})
+				this.pageIndex = res.result.page
 			})
 			.catch((err) => {
 				console.log('Get User List Error: ', err)
+				this.pageIndex = 1
+				this.textSearch = ''
+				this.lstIdQB = ''
+				this.users = []
 			})
 	}
 
@@ -174,16 +194,21 @@ export class EditDialogComponent implements OnInit {
 	}
 
 	public onSubmit() {
-		// if (this.dialog.type !== CONSTANTS.DIALOG_TYPES.GROUPCHAT) {
-		// 	return false
-		// }
-		const self = this,
-			dialogId = this.dialog._id,
+		if (this.dialog.type !== CONSTANTS.DIALOG_TYPES.GROUPCHAT) {
+			this._toastr.error('Không thể thêm người dùng vào cuộc trò chuyện cá nhân');
+			return false
+		}
+		const self = this
+			const dialogId = this.dialog._id,
 			newUsers = this.selectedUsers.filter(function (occupantId) {
 				return self.dialog.occupants_ids.indexOf(occupantId) === -1
 			}),
 			usernames = newUsers.map(function (userId) {
-				return self._usersCache[userId].name || userId
+				let s = self.users.find(x=>x.idQB == userId)
+				if(s){
+					return s.fullName
+				}
+				return
 			}),
 			toUpdateParams = {},
 			updatedMsg = {
@@ -198,12 +223,11 @@ export class EditDialogComponent implements OnInit {
 				},
 				markable: 1,
 			}
-
 		if ('updates.userList' === 'updates.userList' && newUsers.length) {
 			toUpdateParams['push_all'] = {
 				occupants_ids: newUsers,
 			}
-			updatedMsg.body = self.userService.user.full_name + ' Thêm ' + usernames.join(', ') + '.'
+			updatedMsg.body = self.userService.user.full_name + ' đã thêm ' + usernames.join(', ') + ' vào cuộc trò chuyện.'
 			updatedMsg.extension['new_occupants_ids'] = newUsers.join(',')
 		}
 

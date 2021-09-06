@@ -62,12 +62,12 @@ namespace PAKNAPI.Controllers
 				if (user != null && user.Count > 0)
 				{
 					if (!(bool)user[0].IsActived) {
-						return StatusCode(401, new ResultApi
+						return new ResultApi
 						{
 							Success = ResultCode.ORROR,
 							Result = 0,
 							Message = "Tài khoản của bạn đang hết hiệu lực"
-						});
+						};
 					}
 					PasswordHasher hasher = new PasswordHasher();
 					if (hasher.AuthenticateUser(loginIN.Password, user[0].Password, user[0].Salt))
@@ -161,17 +161,17 @@ namespace PAKNAPI.Controllers
 						await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
 						//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception(), loginIN.UserName);
 
-						return StatusCode(401, new ResultApi
+						return new ResultApi
 						{
 							Success = ResultCode.ORROR,
 							Result = 0,
 							Message = "Tên tài khoản hoặc mật khẩu sai"
-						});
+						};
 					}
 				}
 				else
 				{
-					return StatusCode(401, new ResultApi
+					return StatusCode(200, new ResultApi
 					{
 						Success = ResultCode.ORROR,
 						Result = 0,

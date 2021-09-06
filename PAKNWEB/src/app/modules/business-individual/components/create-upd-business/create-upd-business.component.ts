@@ -50,7 +50,7 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 	nation_enable_type = false
 	userLoginId: number = this.storeageService.getUserId()
 	title: string = 'Thêm mới doanh nghiệp'
-
+	isBussiness : boolean = false
 	ngOnInit() {
 		this.localeService.use('vi')
 
@@ -65,6 +65,9 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 			} else {
 				this.title = 'Thêm mới doanh nghiệp'
 				//
+			}
+			if(localStorage.getItem('isIndividual') === 'false'){
+				this.isBussiness = true
 			}
 		})
 
@@ -239,6 +242,7 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 
 
 		if (this.model.id != null && this.model.id > 0) {
+			localStorage.removeItem('isIndividual')
 			this.businessIndividualService.businessUpdate(this.model).subscribe((res) => {
 				if (res.success != 'OK') {
 					let errorMsg = res.message
@@ -269,7 +273,11 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 					return
 				}
 				this.toast.success('Đăng ký doanh nghiệp thành công')
-				this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/doanh-nghiep'])
+				if(this.isBussiness){
+					this.router.navigate(['/quan-tri/kien-nghi/them-moi/0/2'])
+				}else{
+					this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/doanh-nghiep'])
+				}
 			})
 		}
 	}

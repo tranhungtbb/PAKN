@@ -42,8 +42,11 @@ namespace PAKNAPI.Common
         {
             //Message = modelState.Keys
             //        .Select(key => modelState[key].Errors.Select(x => x.ErrorMessage)).ToArray()[0].FirstOrDefault()[0].e;
-            Message = modelState.Keys.Select(x => modelState[x].Errors)
-                           .FirstOrDefault().ToArray()[0].ErrorMessage;
+            var err = modelState.Keys.Select(x => modelState[x].Errors)
+                           .FirstOrDefault().ToArray();
+            if (err.Count() > 0) {
+                Message = err[0].ErrorMessage;
+            }
         }
     }
 

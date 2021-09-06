@@ -101,7 +101,7 @@ export class MessageService {
           per_page: uuid.length
         }).then(resolve);
       } else {
-        resolve();
+        resolve('');
       }
     })).then(() => {
       messages.forEach( message => {
@@ -115,6 +115,34 @@ export class MessageService {
       setTimeout(() => {
         Helpers.scrollTo(document.querySelector('.j-messages'), scrollTo);
       }, 200);
+    });
+  }
+
+  public deleteMessage(_id): Promise<any> {
+    let params = {
+      force: 1 // remove message from all users
+    };
+    return new Promise((resolve, reject) => {
+      QB.chat.message.delete(_id, params, function(error, result) {
+        if(error){
+          reject(error)
+        }else{
+          resolve(result)
+        }
+      });
+    });
+  }
+
+  public updateMessage(messageId, updateParams): Promise<any> {
+    return new Promise((resolve, reject) => {
+      QB.chat.message.update(messageId, updateParams, function (error) {
+        if(error){
+          reject(error)
+        }
+        else{
+          resolve('')
+        }
+      });
     });
   }
 

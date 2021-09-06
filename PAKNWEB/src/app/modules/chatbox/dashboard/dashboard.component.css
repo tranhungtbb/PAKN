@@ -383,6 +383,10 @@ app-dialogs {
 	color: #778594;
 	flex: 1 0;
 }
+.avatar-custom{
+	background-color: #ecf4ff;
+	width: 48px;
+}
 
 .message__text_wrap {
 	flex: 1 0;
@@ -412,7 +416,11 @@ app-dialogs {
 }
 
 .message__timestamp {
-	width: 30px;
+	width: 50px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 }
 
 .message_attachment {
@@ -742,6 +750,7 @@ app-dialogs {
 	overflow-y: auto;
 	text-align: left;
 	background: #ecf4ff;
+	padding: 0px 10px;
 }
 
 .sidebar__dilog_list.loading:after {
@@ -766,10 +775,10 @@ app-dialogs {
 }
 
 .dialog__item_link {
-	padding: 16px;
 	display: flex;
 	flex-wrap: nowrap;
 	text-decoration: none;
+	
 }
 
 .open_sidebar {
@@ -940,16 +949,25 @@ app-dialogs {
 	font-size: 15px;
 	font-weight: 500;
 	line-height: 18px;
-	color: #4a4a4a;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	margin: 0 10px 6px 0;
 }
+.ex1{
+	padding: 16px;
+	color: #4a4a4a;
+}
 .ex1:hover .dialog__name,
 .ex1:hover .dialog__last_message,
-.ex1:hover .dialog__last_message_date {
+.ex1:hover .dialog__last_message_date,
+.ex1:hover .last__message{
 	color: white;
+}
+
+.selected{
+	color: white !important;
+	background-color: #1673d8 !important;
 }
 
 .dialog__last_message {
@@ -957,7 +975,6 @@ app-dialogs {
 	width: 100%;
 	font-size: 13px;
 	line-height: 15px;
-	color: #778594;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -975,7 +992,6 @@ app-dialogs {
 .dialog__last_message_date {
 	font-size: 12px;
 	line-height: 14px;
-	color: #4a4a4a;
 	margin: 0 0 2px 0;
 	display: inline-block;
 }
@@ -1054,6 +1070,15 @@ html {
 ::-webkit-scrollbar-thumb:hover {
 	background-color: #4054b2;
 	cursor: pointer;
+}
+
+.last__message{
+	width: 100%;
+	font-size: 13px;
+	display: block;
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 /* Animation */
@@ -1151,7 +1176,7 @@ html {
 .ex1 {
 	background-color: white;
 }
-a.ex1:hover,
-a.ex1:active {
+.ex1:hover,
+.ex1:active {
 	background-color: #1673d8;
 }

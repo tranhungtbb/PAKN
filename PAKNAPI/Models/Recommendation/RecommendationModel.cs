@@ -27,6 +27,7 @@ namespace PAKNAPI.Models.Recommendation
         public List<DropdownObject> lstHashtag { get; set; }
         public List<DropdownObject> lstUsers { get; set; }
         public List<DropdownObject> lstGroupWord { get; set; }
+        public List<DropdownObject> lstUsersProcess { get; set; }
     }
     public class RecommendationInsertRequest
     {

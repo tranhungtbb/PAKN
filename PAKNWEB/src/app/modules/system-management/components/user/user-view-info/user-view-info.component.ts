@@ -139,8 +139,6 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 
 		if (this.userId != null) {
 			this.parentUser.modalUserCreateOrUpdate(this.userId)
-		}else {
-			this.parent_BusinessComponent.openModalEditInfo(this.model.id)
 		}
 	}
 

@@ -266,13 +266,16 @@ namespace PAKNAPI.ModelBase
 		public string Email { get; set; }
 		public string Phone { get; set; }
 		public int? UnitId { get; set; }
+		public string UnitName { get; set; }
 		public byte? CountLock { get; set; }
 		public DateTime? LockEndOut { get; set; }
 		public string Avatar { get; set; }
 		public string Address { get; set; }
 		public int? PositionId { get; set; }
+		public string? PositionName { get; set; }
 		public int TypeId { get; set; }
 		public string RoleIds { get; set; }
+		public string RolesNames { get; set; }
 
 		public async Task<List<SYUserGetByID>> SYUserGetByIDDAO(long? Id)
 		{
@@ -462,7 +465,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("RoleIds", _sYUserInsertIN.RoleIds);
 			DP.Add("PermissionIds", _sYUserInsertIN.PermissionIds);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserInsert", DP));
+			return (await _sQLCon.ExecuteScalarDapperAsync<int>("SY_UserInsert", DP));
 		}
 
 		public async Task<int> SYUserSystemInsertDAO(SYUserSystemInsertIN _sYUserInsertIN)
@@ -490,7 +493,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("RoleIds", null);
 			DP.Add("PermissionIds", null);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserInsert", DP));
+			return (await _sQLCon.ExecuteScalarDapperAsync<int>("SY_UserInsert", DP));
 		}
 	}
 
@@ -611,6 +614,22 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserUpdate", DP));
 		}
 
+		public async Task<int> SYUserUpdateProfileDAO(SYUserUpdateProfile _sYUserUpdateIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _sYUserUpdateIN.Id);
+			DP.Add("FullName", _sYUserUpdateIN.FullName);
+			DP.Add("UserName", _sYUserUpdateIN.UserName);
+			DP.Add("IsActived", _sYUserUpdateIN.IsActived);
+			DP.Add("Gender", _sYUserUpdateIN.Gender);
+			DP.Add("Email", _sYUserUpdateIN.Email);
+			DP.Add("Phone", _sYUserUpdateIN.Phone);
+			DP.Add("Avatar", _sYUserUpdateIN.Avatar);
+			DP.Add("Address", _sYUserUpdateIN.Address);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_UserUpdateProfile", DP));
+		}
+
 		public async Task<int> SYUserSystemUpdateDAO(SYUserSystemUpdateIN _sYUserUpdateIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -681,6 +700,34 @@ namespace PAKNAPI.ModelBase
 		[Range(0, int.MaxValue, ErrorMessage = "Vai trò không đúng định dạng")]
 		public string RoleIds { get; set; }
 		public string PermissionIds { get; set; }
+	}
+
+	public class SYUserUpdateProfile
+	{
+		public long? Id { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Họ tên người dùng không được để trống")]
+		public string FullName { get; set; }
+
+		public string UserName { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		public bool? IsActived { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Giới tính không được để trống")]
+		public bool? Gender { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "E-mail người dùng không được để trống")]
+		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
+
+		public string Email { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
+		[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại không đúng định dạng")]
+		public string Phone { get; set; }
+
+		public string Avatar { get; set; }
+		public string Address { get; set; }
 	}
 
 	public class SYUserSystemUpdateIN

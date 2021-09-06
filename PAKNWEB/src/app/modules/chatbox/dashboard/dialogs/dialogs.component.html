@@ -6,22 +6,21 @@
 
   </h1>
   <div class="action_links" *ngIf="dialog && dialog.type !== CONSTANTS.DIALOG_TYPES.PUBLICCHAT" >
-    <!-- <a *ngIf="dialog.type == CONSTANTS.DIALOG_TYPES.GROUPCHAT" class="add_to_dialog j-add_to_dialog" (click)="showUpdateDialog()"> -->
-      <button class="bg-thead bg-w border-0 btn-icon mr-2 add_to_dialog j-add_to_dialog" (click)="showUpdateDialog()">
+      <button class="bg-thead bg-w border-0 btn-icon mr-2 add_to_dialog j-add_to_dialog" (click)="showUpdateDialog()" title="Thêm người dùng vào nhóm">
         <i class="bi bi-person-plus"></i>
       </button>
-      <button _ngcontent-qsk-c12="" class="bg-thead bg-w border-0 btn-icon mr-2" >
+      <!-- <button _ngcontent-qsk-c12="" class="bg-thead bg-w border-0 btn-icon mr-2" >
         <i class="bi bi-telephone"></i>
       </button>     
       <button _ngcontent-qsk-c12="" class="bg-thead bg-w border-0 btn-icon mr-2" >
         <i class="bi bi-camera-video"></i>
-      </button> 
-      <button class="bg-thead bg-w border-0 btn-icon mr-2 quit_fom_dialog_link" (click)="quitFromTheDialog()">
+      </button>  -->
+      <button class="bg-thead bg-w border-0 btn-icon mr-2 quit_fom_dialog_link" title="Rời nhóm" (click)="quitFromTheDialog()">
         <i class="bi bi-box-arrow-right"></i>
       </button>
-      <button _ngcontent-qsk-c12="" class="bg-thead bg-w border-0 btn-icon mr-2" >
+      <!-- <button _ngcontent-qsk-c12="" class="bg-thead bg-w border-0 btn-icon mr-2" >
         <i class="bi bi-three-dots"></i>
-      </button>      
+      </button>       -->
   </div>
 </div>
 <div class="notifications j-notifications hidden"></div>
@@ -29,12 +28,12 @@
 <div class="content__inner j-content__inner">
   <div class="messages j-messages" (scroll)="loadMoreMessages($event)" >
     <ng-container *ngFor="let data of messages">
-      <div class="message__wrap" >
+      <!-- <div class="message__wrap" >
         <div class="center">
-          {{data[0]}}
+          {{data[0]}} date : dd/MM/yyyy HH:mm
         </div>
-      </div>
-      <app-message *ngFor="let message of data[1];" [message]="message" class="message__wrap" id="{{message._id}}" >
+      </div> -->
+      <app-message *ngFor="let message of data[1];" [message]="message" [dialog_name]="txtNameGroup" class="message__wrap" id="{{message._id}}" >
       </app-message>
     </ng-container>
   </div>

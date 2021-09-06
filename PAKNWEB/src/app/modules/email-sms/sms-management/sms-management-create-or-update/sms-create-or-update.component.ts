@@ -140,6 +140,7 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 			let id = +params['id']
 			this.model.id = isNaN(id) == true ? 0 : id
 			if (this.model.id != 0) {
+				this.title = 'Cập nhập SMS'
 				this.smsService.GetById({ id: this.model.id }).subscribe((res) => {
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result) {

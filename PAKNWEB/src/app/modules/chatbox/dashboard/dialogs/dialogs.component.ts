@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core'
+import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild, ViewChildren } from '@angular/core'
 import { CONSTANTS } from 'src/app/modules/chatbox/QBconfig'
 import { QBHelper } from 'src/app/modules/chatbox/helper/qbHelper'
 import { DialogService } from 'src/app/modules/chatbox/dashboard/dialogs/dialog.service'
@@ -6,15 +6,17 @@ import { UserServiceChatBox } from 'src/app/modules/chatbox/user/user.service'
 import { MessageService } from 'src/app/modules/chatbox/dashboard/messages/message.service'
 import { DashboardService } from 'src/app/modules/chatbox/dashboard/dashboard.service'
 import { Helpers } from '../../helper/helpers'
+import { MessageComponent } from '../messages/message.component'
 
 @Component({
 	selector: 'app-dialogs',
 	templateUrl: './dialogs.component.html',
-	styleUrls: ['./dialogs.component.css'],
+	styleUrls: ['./dialogs.component.css']
 })
 export class DialogsComponent implements OnChanges, OnInit {
 	@Input() dialog: any
 	@ViewChild('field', { static: true }) field: ElementRef
+	@ViewChildren(MessageComponent) messageComponent: MessageComponent
 
 	chatName: string
 	CONSTANTS = CONSTANTS
@@ -119,7 +121,6 @@ export class DialogsComponent implements OnChanges, OnInit {
 
 		switch (dialog.type) {
 			case CONSTANTS.DIALOG_TYPES.PUBLICCHAT:
-				alert("you can't remove this dialog")
 				break
 			case CONSTANTS.DIALOG_TYPES.CHAT:
 			case CONSTANTS.DIALOG_TYPES.GROUPCHAT:
@@ -127,7 +128,7 @@ export class DialogsComponent implements OnChanges, OnInit {
 					// remove user from current  group dialog;
 					const msg = {
 						type: 'groupchat',
-						body: self.userService.user.full_name + ' left the chat.',
+						body: self.userService.user.full_name + ' đã rời khỏi cuộc trò chuyện.',
 						extension: {
 							save_to_history: 1,
 							dialog_id: dialog._id,
@@ -197,6 +198,7 @@ export class DialogsComponent implements OnChanges, OnInit {
 		if (this.messageField) {
 			this.sendMessage(this.messageField)
 			this.messageField = null
+			
 		}
 	}
 
@@ -277,10 +279,10 @@ export class DialogsComponent implements OnChanges, OnInit {
 							self.messageService.addMessageToDatesIds(newMessage)
 							self.messageService.messagesEvent.emit(self.messageService.datesIds)
 						}
-						resolve()
+						resolve('')
 					})
 				}
-				resolve()
+				resolve('')
 			}).then(() => {
 				const userIds = dialog.occupants_ids.filter((userId) => {
 					return userId !== self.userService.user.id

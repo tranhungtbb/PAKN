@@ -38,7 +38,7 @@ namespace PAKNAPI.Models.Recommendation
 			return data;
 		}
 
-		public async Task<RecommendationGetDataForProcessResponse> RecommendationGetDataForProcess(int? UnitId)
+		public async Task<RecommendationGetDataForProcessResponse> RecommendationGetDataForProcess(int? UnitId, long userId)
 		{
 			RecommendationGetDataForProcessResponse data = new RecommendationGetDataForProcessResponse();
 			DynamicParameters DP = new DynamicParameters();
@@ -46,6 +46,7 @@ namespace PAKNAPI.Models.Recommendation
 			data.lstGroupWord = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("CA_GroupWordGetListSuggest", DP)).ToList();
 			DP.Add("UnitId", UnitId);
 			data.lstUsers = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("SY_UsersGetDropdownByUnitId", DP)).ToList();
+			data.lstUsersProcess = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("[SY_UsersProcessDropdownByUnitId]", DP)).Where(x=>x.Value != userId).ToList();
 			return data;
 		}
 
@@ -65,13 +66,18 @@ namespace PAKNAPI.Models.Recommendation
 			return data;
 		}
 
-		public async Task<RecommendationGetByIDViewResponse> RecommendationGetByIDView(int? Id)
+		public async Task<RecommendationGetByIDViewResponse> RecommendationGetByIDView(int? Id,long userProcessId ,long unitProcessId)
 		{
 			RecommendationGetByIDViewResponse data = new RecommendationGetByIDViewResponse();
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", Id);
+			DP.Add("UserprocessId", userProcessId);
+			DP.Add("UnitProcessId", unitProcessId);
 			data.Model = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByIDView>("MR_RecommendationGetByIDView", DP)).FirstOrDefault();
-				data.lstHashtag = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationHashtagGetByRecommendationId>("MR_Recommendation_HashtagGetByRecommendationId", DP)).ToList();
+
+			DP = new DynamicParameters();
+			DP.Add("Id", Id);
+			data.lstHashtag = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationHashtagGetByRecommendationId>("MR_Recommendation_HashtagGetByRecommendationId", DP)).ToList();
 			data.lstFiles = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationFilesGetByRecommendationId>("MR_Recommendation_FilesGetByRecommendationId", DP)).ToList();
 			Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
 			foreach (var item in data.lstFiles)

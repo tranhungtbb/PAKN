@@ -5,7 +5,7 @@
 
   <form action="" name="update_chat_name" class="update_chat_name_form">
     <input type="text" name="update_chat__title" class="update_chat__title_input j-update_chat__title_input" value="{{ dialog.name }}" disabled="">
-    <button type="button" (click)="showTitle($event)" class="update_chat__title_button j-update_chat__title_button">
+    <button type="button" (click)="showTitle($event)" class="update_chat__title_button j-update_chat__title_button" title="Đổi tên nhóm">
       <i class="material-icons m-user_icon">create</i>
     </button>
   </form>
@@ -14,31 +14,41 @@
 <div class="notifications j-notifications hidden"></div>
 <div class="content__inner j-content__inner">
   <div class="group_chat__filter __web-inspector-hide-shortcut__">
-    <input [(ngModel)]="userName" (input)="getUserList({full_name:userName})" type="text" autocomplete="off"
-           autocorrect="off" placeholder="Filter by Username">
+    <input [(ngModel)]="textSearch" (keydown.enter)="getUserList()" type="text" autocomplete="off"
+           autocorrect="off" placeholder="Tìm kiếm ...">
   </div>
-  <p class="group__chat__description">Select participants:</p>
-  <div class="group_chat__user_list j-group_chat__user_list">
-    <div (click)="toggleSelectItem(user.id)" *ngFor="let user of users"
-         [ngClass]="{ 'disabled selected': selectedUsers.indexOf(user.id) >= 0 }" class="user__item"
-         id="{{ user.id }}">
-			<span class="user__avatar m-user__img_{{ _usersCache[user.id].color }}">
-				<i class="material-icons m-user_icon">account_circle</i>
-			</span>
-      <div class="user__details">
-        <p class="user__name">{{ _usersCache[user.id].name }}</p>
-        <p *ngIf="user.last_request_at"
-           class="user__last_seen">{{ helpers.parseTime(_usersCache[user.id].last_request_at) }}</p>
-      </div>
+  <p class="group__chat__description">Thêm người dùng:</p>
+  <div class="group_chat__user_list j-group_chat__user_list" *ngIf="users && users.length > 0; else users_null">
+    <div (click)="toggleSelectItem(user.idQB)" *ngFor="let user of users"
+         [ngClass]="{ 'disabled selected': selectedUsers.indexOf(user.idQB) >= 0 }" class="user__item"
+         id="{{ user.idQB }}">
+      <span *ngIf="(!user.avatar || user.avatar.trim() == '');else other_avatar"
+        class="user__avatar m-user__img_{{ user.color }}">
+        <i class="material-icons m-user_icon">account_circle</i>
+      </span>
+      <ng-template #other_avatar>
+        <span class="user__avatar">
+          <img style="width: 100%; height: 100%; object-fit: cover;" 
+            src="{{user.avatar}}">
+        </span>
+      </ng-template>
+       <div class="user__details">
+         <p class="user__name">{{ user.fullName }}</p>
+         <p class="user__last_seen">{{ user.unitName }}</p>
+       </div>
     </div>
+    <ng-template #users_null>
+      <p>Không tìm thấy người dùng</p>
+    </ng-template>
+    
   </div>
   <form action="" (ngSubmit)="onSubmit()" class="dialog_form m-dialog_form_create j-create_dialog_form"
         name="create_dialog">
     <button type="button" (click)="goBack()" class="btn m-update_dialog_btn_cancel j-update_dialog_btn_cancel"
-            name="update_dialog_cancel">cancel
+            name="update_dialog_cancel">Cancel
     </button>
     <button class="btn m-create_dialog_btn j-create_dialog_btn" name="create_dialog_submit"
-            type="submit">add member
+            type="submit">Thêm người dùng
     </button>
   </form>
 </div>

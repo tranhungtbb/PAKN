@@ -205,7 +205,10 @@ export class AccountUpdateInfoComponent implements OnInit {
 			}
 			this.userLocal.setFullName(this.model.fullName)
 			this.toast.success(COMMONS.UPDATE_SUCCESS)
-			window.location.href = '/cong-bo/tai-khoan/thong-tin';
+			setTimeout(()=>{
+				window.location.href = '/cong-bo/tai-khoan/thong-tin';
+			},1000)
+			
 		},(error) => {
 			console.error(error)
 		})

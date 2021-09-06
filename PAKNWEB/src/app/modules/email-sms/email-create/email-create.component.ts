@@ -44,6 +44,7 @@ export class EmailCreateComponent implements OnInit {
 	model: EmailObject = new EmailObject()
 	form: FormGroup
 	listAttachment: any[] = []
+	title = 'Soạn thảo email'
 
 
 	listAttchamentDel: any[] = []
@@ -78,6 +79,7 @@ export class EmailCreateComponent implements OnInit {
 		this.activatedRoute.params.subscribe((params) => {
 			let id = params['id']
 			if (id) {
+				this.title = 'Cập nhập Email'
 				this.emailService.getById(id).subscribe((res) => {
 					if (res && res.success == 'OK') {
 						this.model = res.result.Data

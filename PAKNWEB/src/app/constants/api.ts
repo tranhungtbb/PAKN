@@ -126,6 +126,12 @@ export class Api {
 	public static UserGetIsSystem = 'user/get-user-is-system'
 	public static UserGetIsNotRole = 'user/user-not-role'
 	public static DeleteUserRole = 'user/user-role-map-delete'
+	public static UserUpdateProfile = 'user/update-profile'
+	public static UserUpdateQBId = 'user/update-qb'
+	public static UserGetPagedListForChat = 'user/get-list-user-for-chat'
+	public static UserGetAllByIdQb = 'user/get-list-user-by-lst-id-qb'
+
+	
 
 	//tai khoan ca nhan, doanh nghiep
 	public static AccountGetInfo = 'user/user-get-info'

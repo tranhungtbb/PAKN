@@ -11,6 +11,7 @@ import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { AppSettings } from 'src/app/constants/app-setting'
 import { Api } from 'src/app/constants/api'
 import { CaptchaService } from 'src/app/services/captcha-service'
+import { UserServiceChatBox } from 'src/app/modules/chatbox/user/user.service'
 
 declare var $: any
 
@@ -57,7 +58,8 @@ export class LoginComponent implements OnInit {
 		private captchaService: CaptchaService,
 		private toastr: ToastrService,
 		private http: HttpClient,
-		private shareData: DataService
+		private shareData: DataService,
+		private _userServiceChat : UserServiceChatBox
 	) {
 		this.loginForm = new FormGroup({
 			name: new FormControl(this.user.UserName, [Validators.email]),
@@ -142,15 +144,14 @@ export class LoginComponent implements OnInit {
 					this.authenService.login(this.user).subscribe(
 						(data) => {
 							if (data.success === RESPONSE_STATUS.success) {
-								if (data.isActive == false) {
-									this.reloadImage()
-									this.captchaCodeProduct = ''
-									this.submitted = false
-									this.rebuildForm()
-									this.toastr.error('Tài khoản của bạn đang hết hiệu lực')
-									return
-								}
+								//QB
 								this.storeageService.clear()
+								const user = {
+									login: this.user.UserName,
+									password: 'quickblox'
+								};
+								this._userServiceChat.createUserForApp(user, null, true).then(r => {console.log(r)}).catch(e=>{console.log(e)})
+
 								this.shareData.setIsLogin(true)
 								this.storeageService.setAccessToken(data.accessToken)
 								this.storeageService.setUserId(data.userId)
@@ -171,7 +172,6 @@ export class LoginComponent implements OnInit {
 									if (dataIP != null) {
 										this.storeageService.setIpAddress(dataIP.ip)
 									}
-									// this.storeageService.setIpAddress(dataIP.ip)
 								})
 								if (this.isSaveLogin) {
 									this.storeageService.setKeyRemember(btoa(this.user.Password))
@@ -191,8 +191,8 @@ export class LoginComponent implements OnInit {
 								// else{
 								// 	location.href = '/quan-tri'
 								// }
-							} else if (data.success === RESPONSE_STATUS.incorrect) {
-								this.toastr.error(data.message, 'Tên tài khoản hoặc mật khẩu không chính xác')
+							} else{
+								this.toastr.error(data.message)
 								this.reloadImage()
 								this.captchaCode = ''
 								this.submitted = false
@@ -244,14 +244,6 @@ export class LoginComponent implements OnInit {
 					this.authenService.login(this.userProduct).subscribe(
 						(data) => {
 							if (data.success === RESPONSE_STATUS.success) {
-								if (data.isActive == false) {
-									this.reloadImage()
-									this.captchaCodeProduct = ''
-									this.submittedProduct = false
-									this.rebuildFormProduct()
-									this.toastr.error('Tài khoản của bạn đang hết hiệu lực')
-									return
-								}
 								this.storeageService.clear()
 								this.shareData.setIsLogin(true)
 								this.storeageService.setAccessToken(data.accessToken)
@@ -293,12 +285,12 @@ export class LoginComponent implements OnInit {
 									}
 									
 								}
-							} else if (data.success === RESPONSE_STATUS.incorrect) {
+							} else{
 								this.reloadImage()
 								this.captchaCodeProduct = ''
 								this.submittedProduct = false
 								this.rebuildFormProduct()
-								this.toastr.error(data.message, 'Tên tài khoản hoặc mật khẩu không chính xác')
+								this.toastr.error(data.message)
 							}
 						},
 						(error) => {

@@ -81,6 +81,7 @@ export class IndividualComponent implements OnInit {
 	inSortField = 'ID'
 
 	isOtherNation = false
+	isIndividual : boolean = false
 
 	ngOnInit() {
 		// this.buildForm()
@@ -88,6 +89,10 @@ export class IndividualComponent implements OnInit {
 		this.localeService.use('vi')
 		this.loadFormBuilder()
 		this.onChangeNation()
+		if(localStorage.getItem('isIndividual') === 'true'){
+			this.isIndividual = true
+			$('#modal').modal('show')
+		}
 		
 	}
 
@@ -394,6 +399,7 @@ export class IndividualComponent implements OnInit {
 		}
 
 		if (this.model.id != null && this.model.id > 0) {
+			localStorage.removeItem('isIndividual')
 			this._service.invididualUpdate(this.model).subscribe((res) => {
 				if (res.success != 'OK') {
 					this._toastr.error(res.message)
@@ -418,9 +424,8 @@ export class IndividualComponent implements OnInit {
 				}
 				this._toastr.success(COMMONS.ADD_SUCCESS)
 				$('#modal').modal('hide')
-				let dataRecommendation = this.storeageService.getRecommentdationObjectRemember()
-				if(dataRecommendation){
-					this._router.navigate(['/quan-tri/kien-nghi/them-moi/0'])
+				if(this.isIndividual){
+					this._router.navigate(['/quan-tri/kien-nghi/them-moi/0/1'])
 				}else{
 					this.getList()
 				}

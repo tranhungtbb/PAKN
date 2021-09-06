@@ -5,6 +5,8 @@ import { DialogService } from 'src/app/modules/chatbox/dashboard/dialogs/dialog.
 import { DashboardService } from 'src/app/modules/chatbox/dashboard/dashboard.service'
 import { MessageService } from 'src/app/modules/chatbox/dashboard/messages/message.service'
 import { CONSTANTS } from 'src/app/modules/chatbox/QBconfig'
+import {UserService } from 'src/app/services/user.service'
+import {RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 
 @Component({
 	selector: 'app-create-dialog',
@@ -15,14 +17,22 @@ export class CreateDialogComponent implements OnInit {
 	@Input() dialog: any
 
 	public loggedinUser: any
-	public userName: string
 	public users: any = []
 	public selectedUsers: number[] = []
 	public helpers: Helpers
 	public _usersCache: any
 	public messageField = ''
+	pageIndex : number = 1
+	textSearch : any = ''
+	lstIdQB : any = ''
 
-	constructor(private dashboardService: DashboardService, public dialogService: DialogService, private messageService: MessageService, private userService: UserServiceChatBox) {
+	constructor(
+		private dashboardService: DashboardService, 
+		public dialogService: DialogService, 
+		private messageService: MessageService,
+		private _service : UserService, 
+		private userService: UserServiceChatBox)
+		{
 		this.helpers = Helpers
 		this._usersCache = this.userService._usersCache
 		this.userService.usersCacheEvent.subscribe((usersCache: Object) => {
@@ -31,8 +41,7 @@ export class CreateDialogComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		console.log('ngOnInit')
-		this.getUserList('')
+		this.getUserList()
 		this.loggedinUser = this.userService.user
 		this.selectedUsers.push(this.loggedinUser.id)
 	}
@@ -57,55 +66,61 @@ export class CreateDialogComponent implements OnInit {
 		})
 	}
 
-	getUserList(args) {
+	getUserList() {
+		let obj = {
+			PageIndex : this.pageIndex,
+			UserName : this.lstIdQB,
+			TextSearch : this.textSearch
+		}
 		this.userService
-			.getUserList(args)
-			.then((users) => {
-				this.users = users
+			.getUserListForChat(obj)
+			.then((res) => {
+				this.users = res.result.users
+				.map(item => {
+					item.color = Math.floor(Math.random() * (10 - 1 + 1)) + 1
+					return item
+				})
+				this.pageIndex = res.result.page
 			})
 			.catch((err) => {
 				console.log('Get User List Error: ', err)
+				this.pageIndex = 1
+				this.textSearch = ''
+				this.lstIdQB = ''
+				this.users = []
 			})
 	}
 
 	public onSubmit() {
 		const self = this
-		const type = this.selectedUsers.length > 2 ? 2 : 3
 		const params = {
-			type: type,
+			type: this.selectedUsers.length > 2 ? 2 : 3,
 			occupants_ids: this.selectedUsers.join(','),
+			name : ''
 		}
 
 		let name = ''
 
-		if (type === 2) {
+		if (params.type) {
 			const userNames = this.users
-				.filter((array) => {
-					return self.selectedUsers.indexOf(array.id) !== -1 && array.id !== this.loggedinUser.id
-				})
-				.map((array) => {
-					return array.full_name
-				})
+			.filter((array) => {
+				return self.selectedUsers.indexOf(array.idQB) !== -1 && array.idQB !== this.loggedinUser.id
+			})
+			.map((array) => {
+				return array.fullName
+			})
 			name = userNames.join(', ')
 		}
 
 		if (this.messageField) {
-			name = this.messageField
-		}
-
-		if (type !== 3 && name) {
-			params['name'] = name
+			params.name = this.messageField
+		}else{
+			params.name = name
 		}
 
 		this.dialogService.createDialog(params).then((dialog) => {
-			const occupantsNames = []
-			let messageBody = this.userService.user.full_name + ' created new dialog with: '
-			dialog['occupants_ids'].forEach((userId) => {
-				occupantsNames.push(this._usersCache[userId].name)
-			})
-
-			messageBody += occupantsNames.join(', ')
-
+			let messageBody = this.userService.user.full_name + ' đã tạo nhóm mới với: '
+			messageBody += name
 			const systemMessage = {
 					extension: {
 						notification_type: 1,
@@ -159,6 +174,8 @@ export class CreateDialogComponent implements OnInit {
 					welcomeChat: false,
 					onChatClick: true,
 				})
+			}).catch(err=>{
+				console.log(err)	
 			})
 		})
 	}

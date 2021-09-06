@@ -112,6 +112,8 @@ namespace PAKNAPI.Controllers
 				model.UserName = model.Email;
 
 				var result = await new SYUserInsert(_appSetting).SYUserInsertDAO(model);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				return new ResultApi { Success = ResultCode.OK, Result = result };
 			}
 			catch (Exception ex)
 			{
@@ -122,8 +124,6 @@ namespace PAKNAPI.Controllers
 					await _fileService.Remove(filePath);
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
-			new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-			return new ResultApi { Success = ResultCode.OK };
 		}
 
 
@@ -134,7 +134,7 @@ namespace PAKNAPI.Controllers
 		/// <param name="model"></param>
 		/// <param name="files"></param>
 		/// <returns></returns>
-		[HttpPost, DisableRequestSizeLimit]
+		[HttpPost]
 		[Route("update")]
 		[Authorize("ThePolicy")]
 		public async Task<object> Update([FromForm] SYUserUpdateIN model, [FromForm] IFormFileCollection files = null)
@@ -179,6 +179,54 @@ namespace PAKNAPI.Controllers
 			new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 			return new ResultApi { Success = ResultCode.OK };
 		}
+		/// <summary>
+		/// cập nhập profile
+		/// </summary>
+		/// <param name="model"></param>
+		/// <param name="files"></param>
+		/// <returns></returns>
+		[HttpPost, DisableRequestSizeLimit]
+		[Route("update-profile")]
+		[Authorize("ThePolicy")]
+		public async Task<object> Update([FromForm] SYUserUpdateProfile model, [FromForm] IFormFileCollection files = null)
+		{
+			// tải file
+			string filePath = "";
+			try
+			{
+				var modelOld = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(model.Id);
+				if (files != null && files.Any())
+				{
+					var info = await _fileService.Save(files, "User");
+					filePath = info[0].Path;
+
+					//xóa avatar cũ
+					if (!string.IsNullOrEmpty(modelOld[0].Avatar))
+						await _fileService.Remove(modelOld[0].Avatar);
+					if (!string.IsNullOrEmpty(filePath))
+					{
+						model.Avatar = filePath;
+					}
+				}
+
+				model.UserName = model.Email;
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				var result = await new SYUserUpdate(_appSetting).SYUserUpdateProfileDAO(model);
+
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//xóa file đã tải
+				await _fileService.Remove(filePath);
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+			new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+			return new ResultApi { Success = ResultCode.OK };
+		}
+
+
 
 
 		/// <summary>
@@ -237,6 +285,8 @@ namespace PAKNAPI.Controllers
 				model.UnitId = unitMainId.Id;
 
 				var result = await new SYUserInsert(_appSetting).SYUserSystemInsertDAO(model);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				return new ResultApi { Success = ResultCode.OK, Result = result };
 			}
 			catch (Exception ex)
 			{
@@ -247,8 +297,6 @@ namespace PAKNAPI.Controllers
 					await _fileService.Remove(filePath);
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
-			new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-			return new ResultApi { Success = ResultCode.OK };
 		}
 
 		/// <summary>
@@ -397,6 +445,87 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		/// <summary>
+		/// list user chat
+		/// </summary>
+		/// <param name="PageIndex"></param>
+		/// <param name="UserName"></param>
+		/// <param name="TextSearch"></param>
+		/// <returns></returns>
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("get-list-user-for-chat")]
+		public async Task<ActionResult<object>> SYUserGetAllOnPageListForChat(int? PageIndex, string UserName, string TextSearch)
+		{
+			try
+			{
+				List<SYUserGetAllOnPageListForChat> rsSYUserGetAllOnPage = await new SYUserGetAllOnPageListForChat(_appSetting).SYUserGetAllOnPageListForChatDAO(PageIndex, UserName, TextSearch);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"users", rsSYUserGetAllOnPage},
+						{"total", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? rsSYUserGetAllOnPage[0].RowNumber : 0},
+						{"page", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"perPage", 30},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		/// <summary>
+		/// danh sách người dùng theo lst idQB
+		/// </summary>
+		/// <param name="lstId"></param>
+		/// <returns></returns>
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("get-list-user-by-lst-id-qb")]
+		public async Task<ActionResult<object>> SYUserGetAllOnPageListByListIdQb(string lstId)
+		{
+			try
+			{
+				List<SYUserGetAllOnPageListForChat> rsSYUserGetAllOnPage = await new SYUserGetAllOnPageListForChat(_appSetting).SYUserGetAllOnPageListByListIdQb(lstId);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"users", rsSYUserGetAllOnPage}
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("update-qb")]
+		public async Task<ActionResult<object>> SYUserUpdateQB(int? Id, int? IdQB)
+		{
+			try
+			{
+				await new SYUserGetAllOnPageListForChat(_appSetting).SYUserUpdateIdQBDAO(Id, IdQB);
+				return new ResultApi { Success = ResultCode.OK};
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		/// <summary>
 		/// danh sách quản trị
 		/// </summary>

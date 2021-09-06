@@ -85,7 +85,7 @@ export class DialogService {
 						delete self.dialogs[dialogId]
 					})
 					self.setDialogs(Object.values(self.dialogs))
-					resolve()
+					resolve('')
 				}
 			})
 		})
@@ -110,7 +110,7 @@ export class DialogService {
 						return reject()
 					}
 				}
-				resolve()
+				resolve('')
 			})
 		})
 	}
