@@ -487,16 +487,27 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-user-by-lst-id-qb")]
-		public async Task<ActionResult<object>> SYUserGetAllOnPageListByListIdQb(string lstId)
+		public async Task<ActionResult<object>> SYUserGetAllOnPageListByListIdQb(string lstId, string textSearch)
 		{
 			try
 			{
-				List<SYUserGetAllOnPageListForChat> rsSYUserGetAllOnPage = await new SYUserGetAllOnPageListForChat(_appSetting).SYUserGetAllOnPageListByListIdQb(lstId);
-				IDictionary<string, object> json = new Dictionary<string, object>
+				if (lstId == null || lstId.Trim() == "")
+				{
+					IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"users", new List<SYUserGetAllOnPageListForChat>()}
+					};
+					return new ResultApi { Success = ResultCode.OK, Result = json };
+				}
+				else {
+					List<SYUserGetAllOnPageListForChat> rsSYUserGetAllOnPage = await new SYUserGetAllOnPageListForChat(_appSetting).SYUserGetAllOnPageListByListIdQb(lstId, textSearch);
+					IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"users", rsSYUserGetAllOnPage}
 					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
+					return new ResultApi { Success = ResultCode.OK, Result = json };
+				}
+				
 			}
 			catch (Exception ex)
 			{

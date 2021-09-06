@@ -28,6 +28,10 @@
 .dialog__avatar.m-type_group i {
   font-size: 35px;
 }
+.avatar-custom{
+	background-color: #ecf4ff;
+	width: 42px;
+}
 
 .message__avatar {
   flex: 0 0 38px;
@@ -472,7 +476,8 @@
 }
 
 .user__item.disabled .user__avatar {
-  background-color: #a6a6a6;
+  background-color: #1673D8;
+  color: transparent;
 }
 
 .user__item.selected i {

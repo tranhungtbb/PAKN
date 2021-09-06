@@ -11,7 +11,8 @@ export class DashboardService {
     createGroupClicked: false, // For creating OneToOne and Group Chats
     onChatClick: false, // For displaying messages ( Dialog Component )
     welcomeChat: true, // Display default Welcome Chat screen
-    updateDialog: false // For displaying update dialog
+    updateDialog: false, // For displaying update dialog
+    deleteDialog : false
   };
 
   componentsEvent: EventEmitter<any> = new EventEmitter();
@@ -20,6 +21,9 @@ export class DashboardService {
   }
 
   public showComponent(components: Object) {
+    if(!this.components.onChatClick && !this.components.updateDialog && !this.components.deleteDialog){
+      this.components.welcomeChat = true
+    }
     Object.entries(components).forEach(([key, value]) => {
       this.components[key] = value;
     });

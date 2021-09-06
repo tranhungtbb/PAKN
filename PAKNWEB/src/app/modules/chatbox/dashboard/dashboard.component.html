@@ -2,16 +2,20 @@
 	<div class="dashboardCB">
 		<div class=" border-0 sidebar j-sidebar active">
 			<div class="sidebar__inner">
-				<div class="breadcrumb title-module col-md-6 px-0 bg-transparent mb-0">
+				<div class="breadcrumb title-module col-md-6 px-0 bg-transparent mb-0 p-0">
 					<!-- <li class="breadcrumb-item"><a>Vai trò</a></li> -->
 					<div style="display: flex;">
 						<div style="display: inline-block;" class="mt-lg-n4">
 							 <a class="active font-weight-bold mb-0 nav-link pb-0 pt-3" aria-current="page" >TIN NHẮN</a>
-						<p-dropdown styleClass="border-0" class="m-2 "  [options]="tinNhan" [(ngModel)]="SelectedMessage" optionLabel="name">
-						</p-dropdown>
+							 <div class="form-group">
+									<ng-select class="form-control" [clearable]="false" style="width: 10rem;"
+										[items]="lstTypeOrder" placeholder="Sắp xếp..." bindLabel="text" bindValue="value" 
+										[(ngModel)]="orderBy" (change)="getChatList('chat')">
+									</ng-select>
+							 </div>
 						</div>
 						<div style="display: inline-block; width: 100%" class="ml-2 mt-lg-n2">
-							<button (click)="createNewGroup()" 
+							<button (click)="createNewGroup()" style="padding: 0.625rem 1rem;"
 							[class.active]="createGroupClicked" target="_blank" class="btn mt-3 grd-blue btn-sm rounded text-white" type="button"><svg _ngcontent-vyf-c22="" class="bi bi-plus" fill="currentColor" height="20" viewBox="0 0 16 16" width="20" xmlns="http://www.w3.org/2000/svg"><path _ngcontent-vyf-c22="" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
 							</svg> Thêm mới </button>
 						</div>
@@ -25,7 +29,10 @@
 										<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
 									</svg>
 								</span>
-								<input type="text" class="border-0 form-control rounded-right" placeholder="Tìm kiếm..." aria-label="Input group example" aria-describedby="basic-addon1">
+								<input type="text" [(ngModel)]="searchDialog" (keydown.enter)="getChatList('chat')" autocomplete="off"
+									class="border-0 form-control rounded-right" 
+									placeholder="Tìm kiếm..." aria-label="Input group example" 
+									aria-describedby="basic-addon1">
 							</div>
 					</div>
 				</div>
@@ -66,11 +73,9 @@
 				</div>
 			</div>
 		</div>
-		<div>
-
-		</div>
 		<app-create-dialog *ngIf="createGroupClicked" [dialog]="dialog"></app-create-dialog>
 		<app-edit-dialog *ngIf="updateDialog" [dialog]="dialog"></app-edit-dialog>
+		<app-delete-dialog class="content j-content" *ngIf="deleteDialog" [dialog]="dialog"></app-delete-dialog>
 		<div *ngIf="welcomeChat" class="content j-content">
 			<div class="content__title j-content__title j-welcome border-0">
 				Xin chào bạn : {{loggedinUser.full_name}}

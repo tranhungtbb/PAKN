@@ -166,11 +166,6 @@ namespace PAKNAPI
                 });
 			});
 
-			//services.AddAuthorization(options =>
-			//{
-			//	options.AddPolicy("ThePolicy", policy => policy.RequireClaim("ThePolicyRequirement"));
-			//});
-
 			services.AddTransient<IAuthorizationHandler, ThePolicyAuthorizationHandler>();
 
 			//services.AddSwaggerGen(c =>
@@ -216,14 +211,6 @@ namespace PAKNAPI
 			app.UseSwaggerUi3();
 
 			app.UseHttpsRedirection();
-			//// note
-			app.UseStaticFiles();
-            // xóa đi trên local em test
-            //app.UseStaticFiles(new StaticFileOptions()
-            //{
-            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Upload/Introduce/IconIntroduce")),
-            //    RequestPath = new PathString("/Upload/Introduce/IconIntroduce")
-            //});
 
             // Dev
             DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension.RegisterExtensionGlobal(new ReportStorageWebExtension1(new AppSetting(Configuration)));

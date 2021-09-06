@@ -335,9 +335,12 @@
 .message__content {
 	flex-wrap: nowrap;
 	overflow: hidden;
-	border-radius: 8px !important;
+	border-radius: 10px !important;
 	padding: 4px 8px;
 	max-width: 70%;
+}
+.bg-primary-light, .bg-primary-light{
+	box-shadow: 0 3px 5px rgb(0 0 0 / 12%);
 }
 /* .custom-delete-message{
 	content: "";

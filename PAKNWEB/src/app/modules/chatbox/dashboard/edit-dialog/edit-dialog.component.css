@@ -379,6 +379,10 @@
   box-shadow: inset 0 -2px 0 0 #18C942;
   transition: .3s;
 }
+.avatar-custom{
+	background-color: #ecf4ff;
+	width: 42px;
+}
 
 .update_dialog__header {
   padding: 6px 16px;
@@ -472,7 +476,8 @@
 }
 
 .user__item.disabled .user__avatar {
-  background-color: #a6a6a6;
+  background-color: #1673D8;
+  color: transparent;
 }
 
 .user__item.selected i {

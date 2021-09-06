@@ -18,26 +18,17 @@
            autocorrect="off" placeholder="Tìm kiếm ...">
   </div>
   <p class="group__chat__description">Thêm người dùng:</p>
-  <div class="group_chat__user_list j-group_chat__user_list" *ngIf="users && users.length > 0; else users_null">
+  <div class="group_chat__user_list j-group_chat__user_list" *ngIf="users && users.length > 0">
     <div (click)="toggleSelectItem(user.idQB)" *ngFor="let user of users"
          [ngClass]="{ 'disabled selected': selectedUsers.indexOf(user.idQB) >= 0 }" class="user__item"
          id="{{ user.idQB }}">
-      <span *ngIf="(!user.avatar || user.avatar.trim() == '');else other_avatar"
-        class="user__avatar m-user__img_{{ user.color }}">
-        <i class="material-icons m-user_icon">account_circle</i>
-      </span>
-      <ng-template #other_avatar>
-        <span class="user__avatar">
-          <img style="width: 100%; height: 100%; object-fit: cover;" 
-            src="{{user.avatar}}">
-        </span>
-      </ng-template>
+      <span class="user__avatar avatar-circle mr-2 avatar-custom">{{getShortName(user.fullName)}} </span>
        <div class="user__details">
          <p class="user__name">{{ user.fullName }}</p>
          <p class="user__last_seen">{{ user.unitName }}</p>
        </div>
     </div>
-    <ng-template #users_null>
+    <ng-template *ngIf="users.length ==0">
       <p>Không tìm thấy người dùng</p>
     </ng-template>
     

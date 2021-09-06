@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, View
 import { MessageService } from './message.service'
 import { CONSTANTS } from 'src/app/modules/chatbox/QBconfig'
 import { DialogService } from '../dialogs/dialog.service'
+import {DialogsComponent } from '../dialogs/dialogs.component'
 
 @Component({
 	selector: 'app-message',
@@ -13,6 +14,7 @@ export class MessageComponent implements AfterViewInit {
 	@Input() dialog_name : any
 	@ViewChild('element', { static: false }) el: ElementRef
 	public CONSTANTS = CONSTANTS
+	public dialogsComponent: DialogsComponent
 
 	User: any
 	statusAcc: boolean = true
@@ -30,7 +32,6 @@ export class MessageComponent implements AfterViewInit {
 			this.el.nativeElement['dataset'].userId = this.message.sender_id
 			this.el.nativeElement['dataset'].dialogId = this.message.chat_dialog_id
 			this.messageService.intersectionObserver.observe(this.el.nativeElement)
-			console.log(this.dialog_name)
 		}
 	}
 	checkTypeFile(name: string) {
@@ -88,11 +89,17 @@ export class MessageComponent implements AfterViewInit {
 	}
 
 	deleteMessage(id){
+		const self = this
 		this.messageService.deleteMessage(id)
 		.then(res => console.log('succ'))
 		.catch(err =>{console.log(err)})
+		debugger
+		this.dialogsComponent.getMessage()
 	}
 	getShortName(string) {
+		if(!string){
+			return
+		}
 		var names = string.split(' '),
 			initials = names[0].substring(0, 1).toUpperCase()
 		if (names.length > 1) {
@@ -100,9 +107,10 @@ export class MessageComponent implements AfterViewInit {
 		}
 		return initials
 	}
-	getTimeMessage(sendDate : any){
+	getTimeMessage(date : any){
 		let result = ''
 		let currentDate = new Date()
+		let sendDate = new Date(date)
 		if(sendDate.getFullYear() != currentDate.getFullYear()){
 			result = String(sendDate.getHours() +':'+ sendDate.getMinutes() + ' ' + sendDate.getDate() + '/' + sendDate.getMonth() + '/' + sendDate.getFullYear())
 		}else{

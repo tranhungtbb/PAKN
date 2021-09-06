@@ -6,7 +6,6 @@ import { DashboardService } from 'src/app/modules/chatbox/dashboard/dashboard.se
 import { MessageService } from 'src/app/modules/chatbox/dashboard/messages/message.service'
 import { CONSTANTS } from 'src/app/modules/chatbox/QBconfig'
 import {UserService } from 'src/app/services/user.service'
-import {RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 
 @Component({
 	selector: 'app-create-dialog',
@@ -62,7 +61,9 @@ export class CreateDialogComponent implements OnInit {
 		this.dashboardService.showComponent({
 			createGroupClicked: false,
 			updateDialog: false,
+			deleteDialog : false,
 			onChatClick: !this.dashboardService.components.welcomeChat,
+			welcomeChat : this.dashboardService.components.welcomeChat,
 		})
 	}
 
@@ -76,10 +77,10 @@ export class CreateDialogComponent implements OnInit {
 			.getUserListForChat(obj)
 			.then((res) => {
 				this.users = res.result.users
-				.map(item => {
-					item.color = Math.floor(Math.random() * (10 - 1 + 1)) + 1
-					return item
-				})
+				// .map(item => {
+				// 	item.color = Math.floor(Math.random() * (10 - 1 + 1)) + 1
+				// 	return item
+				// })
 				this.pageIndex = res.result.page
 			})
 			.catch((err) => {
@@ -173,10 +174,19 @@ export class CreateDialogComponent implements OnInit {
 					updateDialog: false,
 					welcomeChat: false,
 					onChatClick: true,
+					deleteDialog: false,
 				})
 			}).catch(err=>{
 				console.log(err)	
 			})
 		})
+	}
+	getShortName(string) {
+		var names = string.split(' '),
+			initials = names[0].substring(0, 1).toUpperCase()
+		if (names.length > 1) {
+			initials += names[names.length - 1].substring(0, 1).toUpperCase()
+		}
+		return initials
 	}
 }

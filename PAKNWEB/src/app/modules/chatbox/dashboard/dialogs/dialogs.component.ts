@@ -16,7 +16,7 @@ import { MessageComponent } from '../messages/message.component'
 export class DialogsComponent implements OnChanges, OnInit {
 	@Input() dialog: any
 	@ViewChild('field', { static: true }) field: ElementRef
-	@ViewChildren(MessageComponent) messageComponent: MessageComponent
+	@ViewChild(MessageComponent, { static: true }) messageComponent: MessageComponent
 
 	chatName: string
 	CONSTANTS = CONSTANTS
@@ -47,12 +47,18 @@ export class DialogsComponent implements OnChanges, OnInit {
 
 	ngOnInit() {
 		this.txtNameGroup = this.dialog.name
+		this.messageComponent.dialogsComponent = this
 	}
 	ngOnChanges() {
 		this.editab = false
 		this.txtNameGroup = this.dialog.name
 		this.messageField = ''
 		this.field.nativeElement.focus()
+		this.getMessage()
+		
+	}
+
+	public getMessage(){
 		const self = this,
 			params = {
 				chat_dialog_id: this.dialog._id,
@@ -112,8 +118,20 @@ export class DialogsComponent implements OnChanges, OnInit {
 			updateDialog: true,
 			welcomeChat: false,
 			onChatClick: false,
+			deleteDialog : false
 		})
 	}
+
+	showDeleteDialog(){
+		this.dashboardService.showComponent({
+			createGroupClicked: false,
+			updateDialog: false,
+			welcomeChat: false,
+			onChatClick: false,
+			deleteDialog : true
+		})
+	}
+	 
 
 	public quitFromTheDialog() {
 		const self = this,
@@ -155,6 +173,7 @@ export class DialogsComponent implements OnChanges, OnInit {
 					updateDialog: false,
 					welcomeChat: true,
 					onChatClick: false,
+					deleteDialog : false
 				})
 				break
 		}

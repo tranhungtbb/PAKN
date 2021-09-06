@@ -33,9 +33,18 @@ export class DashboardChatBoxComponent implements OnInit {
 	onChatClick = false // For displaying messages ( Dialog Component )
 	welcomeChat = true // Display default Welcome Chat screen
 	updateDialog = false // For displaying update dialog
+	deleteDialog = false
 
 	dialog: any
 	selectedChat: string
+	searchDialog : string = ''
+	lstTypeOrder : any = [
+		{text : 'Mặc định', value : 'sort_desc'},
+		{text : 'Mới nhất', value : 'sort_desc'},
+		{text : 'Cũ nhất', value : 'sort_asc'},
+	]
+	orderBy : any = 'sort_desc'
+
 	private successUnSubscribe$
 
 	constructor(
@@ -49,12 +58,9 @@ export class DashboardChatBoxComponent implements OnInit {
 	) {
 		this.tinNhan = [
 			{name: 'Tin Nhắn Gần Đây'},
-			{name: 'Tin nhắn đến'},
-			{name: 'tin nhắn all'},
 		];
 		this.dialogService.dialogsEvent.subscribe((chatData: any[]) => {
 			this.chats = Object.values(chatData)
-			console.log(this.chats)
 		})
 		this.dialogService.currentDialogEvent.subscribe((dialog) => {
 			this.selectedChat = dialog._id
@@ -83,11 +89,16 @@ export class DashboardChatBoxComponent implements OnInit {
 
 	// Chats List
 	getChatList(type) {
-		const filter = {
-			limit: 100,
-			sort_desc: 'updated_at',
-		}
 
+		this.searchDialog = this.searchDialog == null ?'' : this.searchDialog.trim()
+		let filter = {
+			limit: 100,
+		}
+		filter['name[ctn]'] = this.searchDialog
+		filter[this.orderBy] = 'updated_at'
+		
+		
+		
 		this.dashboardService.showComponent({
 			chatsClicked: type === 'chat',
 			publicChatClicked: type !== 'chat',
@@ -124,6 +135,7 @@ export class DashboardChatBoxComponent implements OnInit {
 			updateDialog: false,
 			welcomeChat: false,
 			onChatClick: false,
+			deleteDialog : false
 		})
 	}
 
@@ -136,7 +148,8 @@ export class DashboardChatBoxComponent implements OnInit {
 	 'createGroupClicked': false,
       'updateDialog': false,
       'welcomeChat': false,
-      'onChatClick': true
+      'onChatClick': true,
+			'deleteDialog' : false
 		})
 	}
 

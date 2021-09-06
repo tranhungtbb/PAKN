@@ -125,10 +125,11 @@ namespace PAKNAPI.Models.User
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPageListForChat>("[SY_UserSystemGetForChat]", DP)).ToList();
 		}
 
-		public async Task<List<SYUserGetAllOnPageListForChat>> SYUserGetAllOnPageListByListIdQb(string lstIdQb)
+		public async Task<List<SYUserGetAllOnPageListForChat>> SYUserGetAllOnPageListByListIdQb(string lstIdQb, string textSearch)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("LstIdQb", lstIdQb);
+			DP.Add("TextSearch", textSearch);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPageListForChat>("[SY_UserSystemGetByLstIdQb]", DP)).ToList();
 		}

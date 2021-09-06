@@ -9,16 +9,16 @@
       <button class="bg-thead bg-w border-0 btn-icon mr-2 add_to_dialog j-add_to_dialog" (click)="showUpdateDialog()" title="Thêm người dùng vào nhóm">
         <i class="bi bi-person-plus"></i>
       </button>
-      <!-- <button _ngcontent-qsk-c12="" class="bg-thead bg-w border-0 btn-icon mr-2" >
+      <!-- <button  class="bg-thead bg-w border-0 btn-icon mr-2" >
         <i class="bi bi-telephone"></i>
-      </button>     
-      <button _ngcontent-qsk-c12="" class="bg-thead bg-w border-0 btn-icon mr-2" >
-        <i class="bi bi-camera-video"></i>
-      </button>  -->
+      </button>   --> 
+      <button class="bg-thead bg-w border-0 btn-icon mr-2" title="Xóa người dùng trong nhóm" (click)="showDeleteDialog()">
+        <i class="bi bi-person-dash"></i>
+      </button> 
       <button class="bg-thead bg-w border-0 btn-icon mr-2 quit_fom_dialog_link" title="Rời nhóm" (click)="quitFromTheDialog()">
         <i class="bi bi-box-arrow-right"></i>
       </button>
-      <!-- <button _ngcontent-qsk-c12="" class="bg-thead bg-w border-0 btn-icon mr-2" >
+      <!-- <button  class="bg-thead bg-w border-0 btn-icon mr-2" >
         <i class="bi bi-three-dots"></i>
       </button>       -->
   </div>
@@ -40,7 +40,7 @@
   <form (ngSubmit)="onSubmit()" autocomplete="off" class="send_message" name="send_message" style="
   display: flex;">
     <label class="attach_btn" for="attach_btn">      
-      <i _ngcontent-qsk-c12="" class="bi bi-plus-circle-fill m-2 mt-3"  title="Đính kèm"></i>      
+      <i  class="bi bi-plus-circle-fill m-2 mt-3"  title="Đính kèm"></i>      
        <input accept="image/*,.zip" class="attach_input" id="attach_btn" (change)="prepareToUpload($event)" name="attach_file" type="file"/>
     </label>
     <textarea #field autocapitalize="off" (keydown)="onKeydown($event)"
@@ -60,8 +60,8 @@
       <!-- <button class="send_btn">send</button> -->
       
       
-      <button _ngcontent-qsk-c12="" class="btn-icon mr-2 grd-blue text-white border-0" >
-        <i _ngcontent-qsk-c12="" class="bi bi-cursor-fill" title="Gửi"></i>
+      <button  class="btn-icon mr-2 grd-blue text-white border-0" >
+        <i  class="bi bi-cursor-fill" title="Gửi"></i>
       </button>
     </div>
   </form>

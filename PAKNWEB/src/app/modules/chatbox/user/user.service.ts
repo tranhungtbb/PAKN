@@ -182,6 +182,20 @@ export class UserServiceChatBox implements CanActivate {
     });
   }
 
+  public getUserListForDelete(args): Promise<any> {
+    const self = this;
+    return new Promise(function (resolve, reject) {
+      self.userService.getAllByListIdQb(args).subscribe(res =>{
+        if(res.success ==  RESPONSE_STATUS.success){
+          resolve(res)
+        }
+        else{
+          reject(res.message)
+        }
+      })
+    });
+  }
+
 
 
   public setUser(User) {

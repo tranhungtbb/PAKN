@@ -63,7 +63,9 @@ export class EditDialogComponent implements OnInit {
 		this.dashboardService.showComponent({
 			createGroupClicked: false,
 			updateDialog: false,
+			deleteDialog : false,
 			onChatClick: !this.dashboardService.components.welcomeChat,
+			welcomeChat : this.dashboardService.components.welcomeChat,
 		})
 	}
 
@@ -185,6 +187,7 @@ export class EditDialogComponent implements OnInit {
 						updateDialog: false,
 						welcomeChat: false,
 						onChatClick: true,
+						deleteDialog: false,
 					})
 				}
 			})
@@ -239,5 +242,14 @@ export class EditDialogComponent implements OnInit {
 			},
 		}
 		self.updateDialog(toUpdateParams, updatedMsg, systemMessage, true)
+	}
+	
+	getShortName(string) {
+		var names = string.split(' '),
+			initials = names[0].substring(0, 1).toUpperCase()
+		if (names.length > 1) {
+			initials += names[names.length - 1].substring(0, 1).toUpperCase()
+		}
+		return initials
 	}
 }
