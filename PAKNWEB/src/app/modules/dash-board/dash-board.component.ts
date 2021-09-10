@@ -1,13 +1,15 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core'
 import { DashBoardService } from '../../services/dashboard.service'
 import { UserInfoStorageService } from '../../commons/user-info-storage.service'
-import { DatepickerDateCustomClasses } from 'ngx-bootstrap/datepicker/models'
-import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from '../../services/sharedata.service'
 import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
+import { RemindService } from 'src/app/services/remind.service'
+import { STATUS_CODES } from 'http'
+import { type } from 'os'
 
 declare var $: any
 
@@ -23,32 +25,44 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 		private userStorage: UserInfoStorageService,
 		private _shareData: DataService,
 		private router: Router,
+		private remindService : RemindService,
 		private recommenService: RecommendationService
 	) {}
 
 	dataGraph: any = {
 		stt_2: { count: 0 },
-		stt_6: { count: 0 },
+		stt_3: { count: 0 },
 		stt_5: { count: 0 },
-		stt_10: { count: 5 },
+		stt_10: { count: 0 },
 	}
+
+	dataGraphTTHC : any = {
+		stt_2: { count: 0 },
+		stt_3: { count: 0 }
+	}
+
 
 	dataAll: any ={}
 
 	totalCount = 0
-	abc = 3
+	listRemind : any = []
 
 	ngOnInit() {
 		this.getDataGraph()
-		// $('.data-attr').peity('donut')
-	}
-	ngAfterViewInit(){
-		// setTimeout(()=>{
-		// 	$('.data-attr').peity('donut')
-		// },200)
+		this.remindService.remindGetList({}).subscribe(res=>{
+			if(res.success === RESPONSE_STATUS.success){
+				this.listRemind = res.result
+			}
+			else{
+				this.listRemind = []
+			}
+		})
 		
 	}
+	ngAfterViewInit(){
+	}
 
+	totalCountTTHC : any = 0
 
 	getDataGraph() {
 		let req = {
@@ -57,20 +71,26 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 		}
 		this.recommenService.get7DayDataGraph(req).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				this.totalCount = res.result.data7day.reduce((acc, item, index) => {
-					acc += item.total
-					return acc
-				}, 0)
+				
+				for (const item of res.result.data7day) {
+					if(item.type ==1){
+						this.totalCount += item.total
+					}
+					if(item.type == 2){
+						this.totalCountTTHC += item.total
+					}	
+				}
 
-				this.dataGraph = res.result.data7day.reduce((acc, item, index) => {
-					item.per_10 = ((item.total / this.totalCount) * 10).toPrecision(2)
-					item.per_100 = ((item.total / this.totalCount) * 100).toPrecision(2)
-					acc['stt_' + item.status] = item;
-					return acc
-				}, {})
-
-				console.log(res.result.data7day);
-
+				for (const item of res.result.data7day) {
+					if(item.type == 1){
+						item.per_100 = ((item.total / this.totalCount) * 100).toPrecision(2)
+						this.dataGraph['stt_' + item.status] = item;
+					}
+					if(item.type == 2){
+						item.per_100_TTHC = ((item.total / this.totalCountTTHC) * 100).toPrecision(2)
+						this.dataGraphTTHC['stt_' + item.status] = item;
+					}	
+				}
 
 				let totalCountA = res.result.data.reduce((acc, item, index) => {
 					acc += item.total

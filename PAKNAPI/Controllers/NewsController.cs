@@ -411,7 +411,6 @@ namespace PAKNAPI.Controller
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
 		[Route("get-list-relates-by-id")]
 		public async Task<ActionResult<object>> NENewsGetAllRelatesBase(long? Id)
 		{

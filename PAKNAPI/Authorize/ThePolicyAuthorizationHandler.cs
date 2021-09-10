@@ -4,12 +4,15 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Primitives;
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
+using PAKNAPI.Models.Results;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 
@@ -28,10 +31,11 @@ namespace PAKNAPI.Authorize
 			_appSetting = appSetting;
 		}
 
-		protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, ThePolicyRequirement requirement)
+		protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ThePolicyRequirement requirement)
 		{
-			var result = await requirement.isPass(_contextAccessor, context);
-
+			var result = requirement.isPass(_contextAccessor, context);
+			var json = JsonSerializer.Serialize(new ResultApi { Success = ResultCode.ORROR, Message = "Authorization fail" });
+			var bytes = Encoding.UTF8.GetBytes(json);
 			//check IsAuthorized
 			var IsAuthenticated = context.User.Identity.IsAuthenticated;
 
@@ -48,28 +52,40 @@ namespace PAKNAPI.Authorize
 				//await new SYAPIInsert(_appSetting).SYAPIInsertDAO(_sYAPIInsertIN);
 
 				//Check permission
-				List<SYPermissionCheckByUserId> rsSYPermissionCheckByUserId = await new SYPermissionCheckByUserId(_appSetting).SYPermissionCheckByUserIdDAO(Int32.Parse(userId.Value.ToString()), APIName);
+				//List<SYPermissionCheckByUserId> rsSYPermissionCheckByUserId = await new SYPermissionCheckByUserId(_appSetting).SYPermissionCheckByUserIdDAO(Int32.Parse(userId.Value.ToString()), APIName).;
 
-				if (rsSYPermissionCheckByUserId.Count > 0) permission = rsSYPermissionCheckByUserId[0].Permission > 0;
+				//if (rsSYPermissionCheckByUserId.Count > 0) permission = rsSYPermissionCheckByUserId[0].Permission > 0;
+
+				// check unit is Active
+				var unitId = context.User.Claims.FirstOrDefault(claim => claim.Type == "UnitId").Value;
+				if (Convert.ToInt32(unitId) != 0)
+				{
+					var unit = new SYUnit(_appSetting).SYUnitGetByID(Convert.ToInt32(unitId));
+					if (unit != null)
+					{
+						if (!unit.Result.IsActived) {
+							_contextAccessor.HttpContext.Response.StatusCode = 401;
+							_contextAccessor.HttpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
+							return Task.CompletedTask;
+						}
+                    }
+				}
+				
 
 				// check user isActived
 
-				var user = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(Convert.ToInt64(userId.Value));
-				if (user.Count() == 0)
+				var user = new SYUserGetByID(_appSetting).SYUserGetByIDDAO(Convert.ToInt64(userId.Value));
+				if (user.Result.Count() == 0)
 				{
-					response?.OnStarting(async () =>
-					{
-						filterContext.HttpContext.Response.StatusCode = 401;
-					});
-					return;
+					_contextAccessor.HttpContext.Response.StatusCode = 401;
+					_contextAccessor.HttpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
+					return Task.CompletedTask;
 				}
 				else {
-					if (user[0].IsActived == false) {
-						response?.OnStarting(async () =>
-						{
-							filterContext.HttpContext.Response.StatusCode = 401;
-						});
-						return;
+					if (user.Result[0].IsActived == false) {
+						_contextAccessor.HttpContext.Response.StatusCode = 401;
+						_contextAccessor.HttpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
+						return Task.CompletedTask;
 					}
 				}
 
@@ -78,7 +94,7 @@ namespace PAKNAPI.Authorize
 				LogHelper logHelper = new LogHelper(_appSetting);
 				BaseRequest baseRequest = logHelper.ReadHeaderFromRequest(_contextAccessor.HttpContext.Request);
 				SYUserUserAgent query = new SYUserUserAgent(Convert.ToInt32(userId.Value), _contextAccessor.HttpContext.Request.Headers["User-Agent"], baseRequest.ipAddress);
-				var check = (await new SYUserUserAgent(_appSetting).SYUserUserAgentGetDAO(query)).FirstOrDefault();
+				var check = (new SYUserUserAgent(_appSetting).SYUserUserAgentGetDAO(query)).Result.FirstOrDefault();
 
 				if (check != null) {
 					if (check.Status == true)
@@ -86,16 +102,15 @@ namespace PAKNAPI.Authorize
 						context.Succeed(requirement);
 					}
 					else {
-						response?.OnStarting(async () =>
-						{
-							filterContext.HttpContext.Response.StatusCode = 401;
-						});
-						return;
+						_contextAccessor.HttpContext.Response.StatusCode = 401;
+						_contextAccessor.HttpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
+						return Task.CompletedTask;
 					}
 				}
 				
 			}
 			context.Succeed(requirement);
+			return Task.CompletedTask;
 		}
 	}
 }

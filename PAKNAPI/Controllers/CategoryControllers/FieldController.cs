@@ -70,17 +70,15 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-field-on-page")]
-		public async Task<ActionResult<object>> CAFieldGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
+		public async Task<ActionResult<object>> CAFieldGetAllOnPageBase()
 		{
 			try
 			{
-				List<CAFieldGetAllOnPage> rsCAFieldGetAllOnPage = await new CAFieldGetAllOnPage(_appSetting).CAFieldGetAllOnPageDAO(PageSize, PageIndex, Name, Description, IsActived);
+				List<CAFieldGetAllOnPage> rsCAFieldGetAllOnPage = await new CAFieldGetAllOnPage(_appSetting).CAFieldGetAllOnPageDAO();
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAFieldGetAllOnPage", rsCAFieldGetAllOnPage},
-						{"TotalCount", rsCAFieldGetAllOnPage != null && rsCAFieldGetAllOnPage.Count > 0 ? rsCAFieldGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsCAFieldGetAllOnPage != null && rsCAFieldGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsCAFieldGetAllOnPage != null && rsCAFieldGetAllOnPage.Count > 0 ? PageSize : 0},
+						{"TotalCount", rsCAFieldGetAllOnPage != null && rsCAFieldGetAllOnPage.Count > 0 ? rsCAFieldGetAllOnPage[0].RowNumber : 0}
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

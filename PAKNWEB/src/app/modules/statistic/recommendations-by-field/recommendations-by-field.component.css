@@ -56,10 +56,10 @@ body .ui-table .ui-table-thead > tr > th {
 	padding-left: 1.857em !important;
 }
 
-/* .highlight:hover {
+.highlight:hover {
 	color: #42a4ff;
 	cursor: pointer;
 }
 .highlight {
 	cursor: pointer;
-} */
+}

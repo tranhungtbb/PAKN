@@ -20,9 +20,11 @@
 		<div class="col-lg-12">
 			<div class="card mb-0 shadow-none">
 				<div class="table-responsive">
-
-					<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-						currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+					<p-table #table [value]="listData" [paginator]="true" [rows]="20" sortMode="multiple"
+						[showCurrentPageReport]="true"
+						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [totalRecords]="totalRecords"
+						[responsive]="true" 
+						autoLayout="true"
 						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
@@ -32,40 +34,58 @@
 									</p>
 								</th>
 								<th>
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Tên sở ngành</strong>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead" 
+										[pSortableColumn]="'name'">
+										<strong>Tên sở ngành <p-sortIcon [field]="'name'"></p-sortIcon></strong>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
+									<!-- class="caret-tb" -->
+									
+									<input class="form-control form-control-sm" maxlength="100" trim
+									[ngSwitch]="'name'" (keydown.enter)="table.filter($event?.target.value.trim(), 'name', 'contains')"
+									 placeholder="Nhập..." />
 								</th>
 								<th style="max-width: 250px">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Nhóm sở ngành</strong>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead" 
+										[pSortableColumn]="'groupName'">
+										<strong>Nhóm sở ngành <p-sortIcon [field]="'groupName'"></p-sortIcon></strong>
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select class="" [items]="listDepartmentGroup" placeholder="Chọn nhóm ..." bindLabel="name" bindValue="id" [(ngModel)]="groupName"
-											(change)="dataStateChange()">
+										<ng-select [items]="listDepartmentGroup" placeholder="Chọn nhóm ..." bindLabel="name" bindValue="id"
+											[ngSwitch]="'groupName'"
+											(change)="table.filter($event?.name.toString(), 'groupName', 'contains')"
+										>
 										</ng-select>
 									</div>
 								</th>
 								<th>
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Điện thoại</strong>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'phone'">
+										<strong>Điện thoại <p-sortIcon [field]="'phone'"></p-sortIcon></strong>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="phone" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
+									<input class="form-control form-control-sm" maxlength="100" trim
+									[ngSwitch]="'phone'" (keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')"
+									 placeholder="Nhập..." />
 								</th>
 								<th>
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Email</strong>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'email'">
+										<strong>Email<p-sortIcon [field]="'email'"></p-sortIcon></strong>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="email" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập..." />
+									<input class="form-control form-control-sm" maxlength="100" trim
+										[ngSwitch]="'email'" (keydown.enter)="table.filter($event?.target.value.trim(), 'email', 'contains')"
+									 	placeholder="Nhập..." />
 								</th>
 								<th style="width: 160px">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Trạng thái</strong>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+										[pSortableColumn]="'isActived'">
+										<strong>Trạng thái<p-sortIcon [field]="'isActived'"></p-sortIcon></strong>
 									</p>
 									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="isActived"
-											[closeOnSelect]="true" (change)="dataStateChange()">
+										<ng-select class="" [items]="listStatus" 
+											placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
+											[ngSwitch]="'isActived'"
+											(change)="table.filter($event?.value.toString(), 'isActived')"
+											[closeOnSelect]="true">
 										</ng-select>
 									</div>
 								</th>
@@ -122,6 +142,7 @@
 		</div>
 	</div>
 </div>
+
 <div class="modal fade" id="modal">
 	<div class="modal-dialog modal-dialog-centered" style="min-width: 60%" role="document">
 		<div class="modal-content rounded">
@@ -299,58 +320,7 @@
 	</div>
 </div>
 
-<!-- <div class="modal fade" id="modalConfirmDelete">
-	<div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
-		<div class="modal-content rounded">
-			<form class="form-horizontal">
-				<div class="panel panel-default no-margin">
-					<div class="modal-header" style="border: none;">
-						<button class="close btn-close-modal" data-dismiss="modal">
-							×
-						</button>
-						<p class="modal-title h3">Xác nhận</p>
-					</div>
-					<div class="modal-body no-padding-bottom" style="border: none;">
-						<div style="text-align: center;">
-							<strong class="change-status-title">Anh/Chị có chắc chắn muốn xóa sở ngành này?</strong>
-						</div>
-					</div>
-					<div class="modal-footer" style="border: none; justify-content: center;">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onDelete(idDelete)">Xác
-							nhận</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-<div class="modal fade" id="modalConfirmUpdateStatus">
-	<div class="modal-dialog modal-dialog-centered" style="max-width: 400px" role="document">
-		<div class="modal-content rounded">
-			<form class="form-horizontal">
-				<div class="panel panel-default no-margin">
-					<div class="modal-header" style="border: none;">
-						<button class="close btn-close-modal" data-dismiss="modal">
-							×
-						</button>
-						<p class="modal-title h3">Xác nhận</p>
-					</div>
-					<div class="modal-body no-padding-bottom" style="border: none;">
-						<div style="text-align: center;">
-							<strong class="change-status-title">Anh/Chị có chắc chắn muốn thay đổi trạng thái của sở ngành này?</strong>
-						</div>
-					</div>
-					<div class="modal-footer" style="border: none; justify-content: center;">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onUpdateStatus(dataUpdate)">Xác
-							nhận</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-</div> -->
+
 
 <div class="modal fade" id="modalConfirmDelete">
 	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">

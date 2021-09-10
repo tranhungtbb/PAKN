@@ -108,6 +108,48 @@ namespace PAKNAPI.Models.Recommendation
 			}
 			return data;
 		}
+
+		public async Task<RecommendationGetByIDViewResponse> RecommendationGetByIDView(int? Id)
+		{
+			RecommendationGetByIDViewResponse data = new RecommendationGetByIDViewResponse();
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+			data.Model = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByIDView>("[MR_RecommendationGetByIDViewPublic]", DP)).FirstOrDefault();
+
+			DP = new DynamicParameters();
+			DP.Add("Id", Id);
+			data.lstHashtag = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationHashtagGetByRecommendationId>("MR_Recommendation_HashtagGetByRecommendationId", DP)).ToList();
+			data.lstFiles = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationFilesGetByRecommendationId>("MR_Recommendation_FilesGetByRecommendationId", DP)).ToList();
+			Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
+			foreach (var item in data.lstFiles)
+			{
+				item.FilePath = decrypt.EncryptData(item.FilePath);
+			}
+
+			if (data.Model.Status == STATUS_RECOMMENDATION.APPROVE_DENY || data.Model.Status == STATUS_RECOMMENDATION.PROCESS_DENY || data.Model.Status == STATUS_RECOMMENDATION.RECEIVE_DENY)
+			{
+				DynamicParameters DPdeny = new DynamicParameters();
+				DPdeny.Add("RecommendationId", Id);
+				data.denyContent = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetDenyContentsBase>("[MR_Recommendation_GetDenyContents]", DPdeny)).OrderByDescending(x => x.Status).Take(1).ToList();
+			}
+
+			if (data.Model.Status > STATUS_RECOMMENDATION.PROCESSING)
+			{
+				data.ModelConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionGetByRecommendationId>("MR_Recommendation_ConclusionGetByRecommendationId", DP)).FirstOrDefault();
+				DP = new DynamicParameters();
+				DP.Add("Id", data.ModelConclusion.Id);
+				if (data.ModelConclusion != null)
+				{
+					data.filesConclusion = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationConclusionFilesGetByConclusionId>("MR_Recommendation_Conclusion_FilesGetByConclusionId", DP)).ToList();
+					foreach (var item in data.filesConclusion)
+					{
+						item.FilePath = decrypt.EncryptData(item.FilePath);
+					}
+				}
+			}
+			return data;
+		}
+
 		public async Task<int?> SyncKhanhHoaInsert(GopYKienNghi item)
 		{
 			DynamicParameters DP = new DynamicParameters();

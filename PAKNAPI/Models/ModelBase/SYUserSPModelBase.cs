@@ -535,7 +535,6 @@ namespace PAKNAPI.ModelBase
 		public int? PositionId { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Vai trò không được để trống")]
-		[Range(0, int.MaxValue, ErrorMessage = "Vai trò không đúng định dạng")]
 		public string RoleIds { get; set; }
 		public string PermissionIds { get; set; }
 
@@ -697,7 +696,6 @@ namespace PAKNAPI.ModelBase
 		public int? PositionId { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Vai trò không được để trống")]
-		[Range(0, int.MaxValue, ErrorMessage = "Vai trò không đúng định dạng")]
 		public string RoleIds { get; set; }
 		public string PermissionIds { get; set; }
 	}

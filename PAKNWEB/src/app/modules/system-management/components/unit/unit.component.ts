@@ -199,7 +199,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 						}
 						return item
 					}
-					return
 				})
 				this.unitFlatlist = listUnit
 				this.treeUnit = this.unflatten(listUnit)
@@ -244,12 +243,14 @@ export class UnitComponent implements OnInit, AfterViewInit {
 					this.userPageCount = 0
 					this.queryUser.pageIndex = 1
 					this.queryUser.pageSize = 20
+					this.totalCount_User = 0
 				} else {
 					if (res.result.SYUserGetAllOnPage.length == 0) {
 						this.listUserPaged = []
 						this.userPageCount = 0
 						this.queryUser.pageIndex = 1
 						this.queryUser.pageSize = 20
+						this.totalCount_User = 0
 					} else {
 						this.listUserPaged = res.result.SYUserGetAllOnPage
 						if (res.result.TotalCount > 0) this.totalCount_User = res.result.TotalCount
@@ -371,7 +372,9 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.modelUnit.description == null ? (this.modelUnit.description = '') : (this.modelUnit.description = this.modelUnit.description.trim())
 
 		if (this.createUnitFrom.invalid) {
-			this._toastr.error('Dữ liệu không hợp lệ')
+			return
+		}
+		if(this.modelUnit.index < 0){
 			return
 		}
 		if (this.checkExists['Phone'] || this.checkExists['Email']) return
@@ -383,14 +386,14 @@ export class UnitComponent implements OnInit, AfterViewInit {
 					return
 				} else {
 					if (res.result > 0) {
+						this.unitFormSubmitted = false
+						$('#modal-create-or-update').modal('hide')
 						this._toastr.success(COMMONS.UPDATE_SUCCESS)
 						this.getAllUnitShortInfo()
 						this.treeViewActive(this.unitObject.id, this.unitObject.unitLevel)
-
 						// cập nhật tên ptree khi đã sửa thành công
 						let current_edit = this.searchTree(this.treeUnit, this.modelUnit.id)
 						current_edit.name = this.modelUnit.name
-						$('#modal-create-or-update').modal('hide')
 					} else if(res.result == -1) {
 						
 						$("[id='unitId']").focus()
@@ -409,10 +412,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 					return
 				} else {
 					if (res.result > 0) {
+						this.unitFormSubmitted = false
+						$('#modal-create-or-update').modal('hide')
 						this._toastr.success(COMMONS.ADD_SUCCESS)
 						this.getAllUnitShortInfo(this.unitObject)
-						this.modelUnit = new UnitObject()
-						$('#modal-create-or-update').modal('hide')
 					} else if(res.result == -1){
 						$("[id='unitId']").focus()
 						this._toastr.error('Tên đơn vị đã tồn tại')
@@ -589,8 +592,11 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				mappedElem = mappedArr[id]
 				// If the element is not at the root level, add it to its parent array of children.
 				if (mappedElem.parentId) {
-					if (!mappedArr[mappedElem['parentId']]) continue
-					mappedArr[mappedElem['parentId']]['children'].push(mappedElem)
+					if (!mappedArr[mappedElem['parentId']]){
+						tree.push(mappedElem)
+					}else{
+						mappedArr[mappedElem['parentId']]['children'].push(mappedElem)
+					}
 				}
 				// If the element is at the root level, add it to first level elements array.
 				else {

@@ -20,3 +20,10 @@ body p-multiselect .ui-multiselect{
 	justify-content: center;
 	align-items: center;
 }
+
+:host ::ng-deep .ui-multiselect{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}

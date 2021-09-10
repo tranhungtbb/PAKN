@@ -218,6 +218,10 @@ export class LoginComponent implements OnInit {
 			})
 		}
 	}
+
+	backToHome(){
+		window.location.href = '/cong-bo'
+	}
 	get floginFormProduct() {
 		return this.loginFormProduct.controls
 	}

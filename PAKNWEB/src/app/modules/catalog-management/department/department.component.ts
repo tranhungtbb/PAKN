@@ -6,6 +6,7 @@ import { CatalogService } from 'src/app/services/catalog.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { SortEvent } from 'primeng/api';
 
 declare var $: any
 
@@ -25,28 +26,20 @@ export class DepartmentComponent implements OnInit {
 	form: FormGroup
 	model: any = new DepartmentObject()
 	submitted: boolean = false
-	isActived: boolean
-	title: string = ''
-	name: string = ''
-	groupName: number = null
-	phone: string = ''
-	email: string = ''
-	address: string = ''
-	fax: string = ''
-	description: string = ''
-	pageIndex: number = 1
-	pageSize: number = 20
+
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
 	dataUpdate: any
+	title : any
+	cols: any[];
 	ngOnInit() {
 		this.buildForm()
 		this.getList()
 		let request = {
 			Name: '',
 			isActived: true,
-			PageIndex: this.pageIndex,
+			PageIndex: 1,
 			PageSize: 1000,
 		}
 		this._service.departmentGroupGetList(request).subscribe((response) => {
@@ -54,19 +47,16 @@ export class DepartmentComponent implements OnInit {
 				if (response.result != null) {
 					this.listDepartmentGroup = []
 					this.listDepartmentGroup = response.result.CADepartmentGroupGetAllOnPage
-					console.log(this.listDepartmentGroup)
 				}
 			}
 		})
 	}
 
+
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		$('#modal').on('keypress', function (e) {
-			if (e.which == 13) e.preventDefault()
-		})
 	}
-
+	
 	get f() {
 		return this.form.controls
 	}
@@ -99,22 +89,8 @@ export class DepartmentComponent implements OnInit {
 	}
 
 	getList() {
-		this.name = this.name.trim()
-
-		let request = {
-			Name: this.name.trim(),
-			Phone: this.phone.trim(),
-			Email: this.email.trim(),
-			Address: this.address.trim(),
-			Fax: this.fax.trim(),
-			Description: this.description.trim(),
-			DepartmentGroupId: this.groupName != null ? this.groupName : '',
-			isActived: this.isActived != null ? this.isActived : '',
-			PageIndex: this.pageIndex,
-			PageSize: this.pageSize,
-		}
-		console.log(request)
-		this._service.departmentGetList(request).subscribe((response) => {
+		
+		this._service.departmentGetList({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
@@ -132,38 +108,6 @@ export class DepartmentComponent implements OnInit {
 			}
 	}
 
-	onPageChange(event: any) {
-		this.pageSize = event.rows
-		this.pageIndex = event.first / event.rows + 1
-		this.getList()
-	}
-
-	dataStateChange() {
-		this.pageIndex = 1
-		this.table.first = 0
-		this.getList()
-	}
-
-	changeState(event: any) {
-		if (event) {
-			if (event.target.value == 'null') {
-				this.isActived = null
-			} else {
-				this.isActived = event.target.value
-			}
-			this.pageIndex = 1
-			this.pageSize = 20
-			this.getList()
-		}
-	}
-
-	changeType(event: any) {
-		if (event) {
-			this.pageIndex = 1
-			this.pageSize = 20
-			this.getList()
-		}
-	}
 
 	preCreate() {
 		this.model = new DepartmentObject()
@@ -301,23 +245,5 @@ export class DepartmentComponent implements OnInit {
 	preView(data) {
 		this.model = data
 		$('#modalDetail').modal('show')
-	}
-	exportExcel() {
-		let request = {
-			Name: this.name,
-			IsActived: this.isActived,
-		}
-
-		this._service.fieldExportExcel(request).subscribe((response) => {
-			var today = new Date()
-			var dd = String(today.getDate()).padStart(2, '0')
-			var mm = String(today.getMonth() + 1).padStart(2, '0')
-			var yyyy = today.getFullYear()
-			var hh = String(today.getHours()).padStart(2, '0')
-			var minute = String(today.getMinutes()).padStart(2, '0')
-			var fileName = 'DM_ChucVuHanhChinh_' + yyyy + mm + dd + hh + minute
-			var blob = new Blob([response], { type: response.type })
-			importedSaveAs(blob, fileName)
-		})
 	}
 }

@@ -71,11 +71,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-position-on-page")]
-		public async Task<ActionResult<object>> CAPositionGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Code, string Description, bool? IsActived)
+		public async Task<ActionResult<object>> CAPositionGetAllOnPageBase()
 		{
 			try
 			{
-				List<CAPositionGetAllOnPage> rsCAPositionGetAllOnPage = await new CAPositionGetAllOnPage(_appSetting).CAPositionGetAllOnPageDAO(PageSize, PageIndex, Name, Code, Description, IsActived);
+				List<CAPositionGetAllOnPage> rsCAPositionGetAllOnPage = await new CAPositionGetAllOnPage(_appSetting).CAPositionGetAllOnPageDAO();
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAPositionGetAllOnPage", rsCAPositionGetAllOnPage},

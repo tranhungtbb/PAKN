@@ -489,7 +489,6 @@ namespace PAKNAPI.Controllers
 
         [Route("get-list-cong-thong-tin-dien-tu-tinh-on-page")]
         [HttpGet]
-        [Authorize]
         public async Task<object> CongThongTinDienTuTinh(
             string questioner,
             string question,
@@ -546,7 +545,6 @@ namespace PAKNAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize("ThePolicy")]
         [Route("get-list-quan-ly-kien-nghi-cu-tri-on-page")]
         public async Task<ActionResult<object>> MR_Sync_CuTriTinhKhanhHoaGetList(string Content, string Unit, string Place, int? Field, int? Status, int? PageSize, int? PageIndex)
         {

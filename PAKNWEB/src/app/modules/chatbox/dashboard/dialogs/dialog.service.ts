@@ -91,6 +91,22 @@ export class DialogService {
 		})
 	}
 
+	public deleteDialogById(dialogId): Promise<any> {
+		const self = this
+		return new Promise((resolve, reject) => {
+			QB.chat.dialog.delete([dialogId], function (err) {
+				if (err) {
+					console.error(err)
+					reject(err)
+				} else {
+					delete self.dialogs[dialogId]
+					self.setDialogs(Object.values(self.dialogs))
+					resolve('')
+				}
+			})
+		})
+	}
+
 	public setDialogs(chats): any {
 		this.dialogs = chats.reduce((obj, item) => {
 			obj[item._id] = item
@@ -130,4 +146,9 @@ export class DialogService {
 		self.dialogs = Object.assign(tmpObj, self.dialogs)
 		self.dialogsEvent.emit(self.dialogs)
 	}
+
+	resetDialog(){
+		
+	}
+
 }

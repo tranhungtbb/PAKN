@@ -61,6 +61,19 @@ namespace PAKNAPI.Controllers
 
 				if (user != null && user.Count > 0)
 				{
+					if (user[0].TypeId == 1) {
+						var unit = await new SYUnit(_appSetting).SYUnitGetByID(user[0].UnitId);
+						if (!unit.IsActived)
+						{
+							return new ResultApi
+							{
+								Success = ResultCode.ORROR,
+								Result = 0,
+								Message = "Đơn vị của bạn đang hết hiệu lực"
+							};
+						}
+					}
+					
 					if (!(bool)user[0].IsActived) {
 						return new ResultApi
 						{
@@ -217,7 +230,7 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[HttpPost]
 		[Route("log-out")]
-		[Authorize("ThePolicy")]
+		[Authorize]
 		public async Task<ActionResult<object>> LogOut(EditUserRequest request)
 		{
             try
@@ -256,7 +269,6 @@ namespace PAKNAPI.Controllers
 				}
 				else {
 					int length = 3;
-					
 					StringBuilder res = new StringBuilder();
 					Random rnd = new Random();
 					while (0 < length--)

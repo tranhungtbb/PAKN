@@ -70,11 +70,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-news-type-on-page")]
-		public async Task<ActionResult<object>> CANewsTypeGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
+		public async Task<ActionResult<object>> CANewsTypeGetAllOnPageBase()
 		{
 			try
 			{
-				List<CANewsTypeGetAllOnPage> rsCANewsTypeGetAllOnPage = await new CANewsTypeGetAllOnPage(_appSetting).CANewsTypeGetAllOnPageDAO(PageSize, PageIndex, Name, Description, IsActived);
+				List<CANewsTypeGetAllOnPage> rsCANewsTypeGetAllOnPage = await new CANewsTypeGetAllOnPage(_appSetting).CANewsTypeGetAllOnPageDAO();
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CANewsTypeGetAllOnPage", rsCANewsTypeGetAllOnPage},

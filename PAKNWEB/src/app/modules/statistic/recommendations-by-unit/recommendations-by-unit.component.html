@@ -156,28 +156,28 @@
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
 									<td>
-										<strong style="cursor: pointer;"	(click)="viewDetail(item.unitId)">{{item.unitName}}</strong>
+										<strong class="highlight"	(click)="viewDetail(item.unitId)">{{item.unitName}}</strong>
 									</td>
 									<td>
-										<strong  style="cursor: pointer;" (click)="viewDetail(item.unitId)">{{item.total}}</strong>
+										<strong  class="highlight" (click)="viewDetail(item.unitId)">{{item.total}}</strong>
 									</td>
 									<td>
-										<strong  style="cursor: pointer;" (click)="viewDetail(item.unitId,2)">{{item.receiveWait}}</strong>
+										<strong  class="highlight" (click)="viewDetail(item.unitId,2)">{{item.receiveWait}}</strong>
 									</td>
 									<td>
-										<strong  style="cursor: pointer;" (click)="viewDetail(item.unitId, 4)">{{item.receiveApproved}}</strong>
+										<strong  class="highlight" (click)="viewDetail(item.unitId, 4)">{{item.receiveApproved}}</strong>
 									</td>
 									<td>
-										<strong  style="cursor: pointer;" (click)="viewDetail(item.unitId,3)">{{item.receiveDeny}}</strong>
+										<strong  class="highlight" (click)="viewDetail(item.unitId,3)">{{item.receiveDeny}}</strong>
 									</td>
 									<td>
-										<strong  style="cursor: pointer;" (click)="viewDetail(item.unitId,5)">{{item.processWait}}</strong>
+										<strong  class="highlight" (click)="viewDetail(item.unitId,5)">{{item.processWait}}</strong>
 									</td>
 									<td>
-										<strong  style="cursor: pointer;" (click)="viewDetail(item.unitId,7)">{{item.processing}}</strong>
+										<strong  class="highlight" (click)="viewDetail(item.unitId,7)">{{item.processing}}</strong>
 									</td>
 									<td>
-										<strong  style="cursor: pointer;" (click)="viewDetail(item.unitId,10)">{{item.finised}}</strong>
+										<strong  class="highlight" (click)="viewDetail(item.unitId,10)">{{item.finised}}</strong>
 									</td>
 								</tr>
 							</ng-template>

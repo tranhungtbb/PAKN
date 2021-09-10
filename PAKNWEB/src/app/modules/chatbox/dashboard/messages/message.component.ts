@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, View
 import { MessageService } from './message.service'
 import { CONSTANTS } from 'src/app/modules/chatbox/QBconfig'
 import { DialogService } from '../dialogs/dialog.service'
-import {DialogsComponent } from '../dialogs/dialogs.component'
+import { DialogsComponent } from '../dialogs/dialogs.component'
 
 @Component({
 	selector: 'app-message',
@@ -12,15 +12,15 @@ import {DialogsComponent } from '../dialogs/dialogs.component'
 export class MessageComponent implements AfterViewInit {
 	@Input() message: any = []
 	@Input() dialog_name : any
+	@Input() dialog : any
 	@ViewChild('element', { static: false }) el: ElementRef
 	public CONSTANTS = CONSTANTS
-	public dialogsComponent: DialogsComponent
 
 	User: any
 	statusAcc: boolean = true
 
 	idUser: number
-	constructor(private messageService: MessageService, private dialogService: DialogService) {
+	constructor(private messageService: MessageService, private dialogService: DialogService, private dialogsComponent : DialogsComponent) {
 		this.User = JSON.parse(localStorage.loggedinUser)
 		this.idUser = this.User.id
 		//this.classNameMess()
@@ -91,10 +91,10 @@ export class MessageComponent implements AfterViewInit {
 	deleteMessage(id){
 		const self = this
 		this.messageService.deleteMessage(id)
-		.then(res => console.log('succ'))
+		.then(res => {
+			this.dialogsComponent.getMessage()
+		})
 		.catch(err =>{console.log(err)})
-		debugger
-		this.dialogsComponent.getMessage()
 	}
 	getShortName(string) {
 		if(!string){

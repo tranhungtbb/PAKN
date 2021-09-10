@@ -26,13 +26,7 @@ export class WordLibraryComponent implements OnInit {
 	form: FormGroup
 	model: any = new WordObject()
 	submitted: boolean = false
-	isActived: boolean
 	title: string = ''
-	name: string = ''
-	groupId: number = null
-	description: string = ''
-	pageIndex: number = 1
-	pageSize: number = 20
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
@@ -44,9 +38,9 @@ export class WordLibraryComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		$('#modal').on('keypress', function (e) {
-			if (e.which == 13) e.preventDefault()
-		})
+		// $('#modal').on('keypress', function (e) {
+		// 	if (e.which == 13) e.preventDefault()
+		// })
 	}
 
 	get f() {
@@ -95,17 +89,8 @@ export class WordLibraryComponent implements OnInit {
 	}
 
 	getList() {
-		this.name = this.name.trim()
-		this.description = this.description.trim()
-		let request = {
-			Name: this.name,
-			Description: this.description.trim(),
-			GroupId: this.groupId != null ? this.groupId : '',
-			isActived: this.isActived != null ? this.isActived : '',
-			PageIndex: this.pageIndex,
-			PageSize: this.pageSize,
-		}
-		this._service.wordGetList(request).subscribe((response) => {
+		
+		this._service.wordGetList({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
@@ -120,39 +105,6 @@ export class WordLibraryComponent implements OnInit {
 				console.log(error)
 				alert(error)
 			}
-	}
-
-	onPageChange(event: any) {
-		this.pageSize = event.rows
-		this.pageIndex = event.first / event.rows + 1
-		this.getList()
-	}
-
-	dataStateChange() {
-		this.pageIndex = 1
-		this.table.first = 0
-		this.getList()
-	}
-
-	changeState(event: any) {
-		if (event) {
-			if (event.target.value == 'null') {
-				this.isActived = null
-			} else {
-				this.isActived = event.target.value
-			}
-			this.pageIndex = 1
-			this.pageSize = 20
-			this.getList()
-		}
-	}
-
-	changeType(event: any) {
-		if (event) {
-			this.pageIndex = 1
-			this.pageSize = 20
-			this.getList()
-		}
 	}
 
 	preCreate() {
@@ -281,23 +233,5 @@ export class WordLibraryComponent implements OnInit {
 	preView(data) {
 		this.model = data
 		$('#modalDetail').modal('show')
-	}
-	exportExcel() {
-		let request = {
-			Name: this.name,
-			IsActived: this.isActived,
-		}
-
-		this._service.fieldExportExcel(request).subscribe((response) => {
-			var today = new Date()
-			var dd = String(today.getDate()).padStart(2, '0')
-			var mm = String(today.getMonth() + 1).padStart(2, '0')
-			var yyyy = today.getFullYear()
-			var hh = String(today.getHours()).padStart(2, '0')
-			var minute = String(today.getMinutes()).padStart(2, '0')
-			var fileName = 'DM_ChucVuHanhChinh_' + yyyy + mm + dd + hh + minute
-			var blob = new Blob([response], { type: response.type })
-			importedSaveAs(blob, fileName)
-		})
 	}
 }

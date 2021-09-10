@@ -464,7 +464,6 @@ namespace PAKNAPI.ModelBase
 		public string BannerUrl { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
-		[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại không đúng định dạng")]
 		public string Phone { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "E-mail không được để trống")]

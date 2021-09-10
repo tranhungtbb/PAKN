@@ -90,7 +90,7 @@ namespace PAKNAPI.Controllers
                     _rMForwardInsert.SendOrgId = Int32.Parse(Request.Form["SendOrgId"].ToString());
                     _rMForwardInsert.ReceiveOrgId = UnitReceiveId;
                     _rMForwardInsert.DateSend = DateTime.Now;
-                    _rMForwardInsert.IsView = 1; // chưa biết là gì, auto để 1
+                    _rMForwardInsert.IsView = 1;
 
                     int? insertForward = await new RMForward(_appSetting).RMFileAttachInsert(_rMForwardInsert);
                     if (insertForward < 0)

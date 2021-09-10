@@ -65,20 +65,9 @@ namespace PAKNAPI.ModelBase
 		public string Fax { get; set; }
 		public string GroupName { get; set; }
 
-		public async Task<List<CADepartmentGetAllOnPage>> CADepartmentGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived, int? DepartmentGroupId, string Phone, string Email, string Address, string Fax)
+		public async Task<List<CADepartmentGetAllOnPage>> CADepartmentGetAllOnPageDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("Name", Name);
-			DP.Add("Description", Description);
-			DP.Add("IsActived", IsActived);
-			DP.Add("DepartmentGroupId", DepartmentGroupId);
-			DP.Add("Phone", Phone);
-			DP.Add("Email", Email);
-			DP.Add("Address", Address);
-			DP.Add("Fax", Fax);
-
 			return (await _sQLCon.ExecuteListDapperAsync<CADepartmentGetAllOnPage>("CA_DepartmentGetAllOnPage", DP)).ToList();
 		}
 	}
@@ -170,15 +159,9 @@ namespace PAKNAPI.ModelBase
 		public bool IsDeleted { get; set; }
 		public string Description { get; set; }
 
-		public async Task<List<CADepartmentGroupGetAllOnPage>> CADepartmentGroupGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
+		public async Task<List<CADepartmentGroupGetAllOnPage>> CADepartmentGroupGetAllOnPageDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("Name", Name);
-			DP.Add("Description", Description);
-			DP.Add("IsActived", IsActived);
-
 			return (await _sQLCon.ExecuteListDapperAsync<CADepartmentGroupGetAllOnPage>("CA_DepartmentGroupGetAllOnPage", DP)).ToList();
 		}
 	}
@@ -446,14 +429,9 @@ namespace PAKNAPI.ModelBase
 		public bool IsDeleted { get; set; }
 		public string Description { get; set; }
 
-		public async Task<List<CAFieldGetAllOnPage>> CAFieldGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
+		public async Task<List<CAFieldGetAllOnPage>> CAFieldGetAllOnPageDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("Name", Name);
-			DP.Add("Description", Description);
-			DP.Add("IsActived", IsActived);
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAFieldGetAllOnPage>("CA_FieldGetAllOnPage", DP)).ToList();
 		}
@@ -670,14 +648,9 @@ namespace PAKNAPI.ModelBase
 		public string Description { get; set; }
 		public int? CountWord { get; set; }
 
-		public async Task<List<CAGroupWordGetAllOnPage>> CAGroupWordGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
+		public async Task<List<CAGroupWordGetAllOnPage>> CAGroupWordGetAllOnPageDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("Name", Name);
-			DP.Add("Description", Description);
-			DP.Add("IsActived", IsActived);
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAGroupWordGetAllOnPage>("CA_GroupWordGetAllOnPage", DP)).ToList();
 		}
@@ -1004,14 +977,9 @@ namespace PAKNAPI.ModelBase
 		public bool IsDeleted { get; set; }
 		public string Description { get; set; }
 
-		public async Task<List<CANewsTypeGetAllOnPage>> CANewsTypeGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
+		public async Task<List<CANewsTypeGetAllOnPage>> CANewsTypeGetAllOnPageDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("Name", Name);
-			DP.Add("Description", Description);
-			DP.Add("IsActived", IsActived);
 
 			return (await _sQLCon.ExecuteListDapperAsync<CANewsTypeGetAllOnPage>("CA_NewsTypeGetAllOnPage", DP)).ToList();
 		}
@@ -1169,15 +1137,9 @@ namespace PAKNAPI.ModelBase
 		public bool IsDeleted { get; set; }
 		public string Description { get; set; }
 
-		public async Task<List<CAPositionGetAllOnPage>> CAPositionGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Code, string Description, bool? IsActived)
+		public async Task<List<CAPositionGetAllOnPage>> CAPositionGetAllOnPageDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("Name", Name);
-			DP.Add("Code", Code);
-			DP.Add("Description", Description);
-			DP.Add("IsActived", IsActived);
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAPositionGetAllOnPage>("CA_PositionGetAllOnPage", DP)).ToList();
 		}
@@ -1675,15 +1637,9 @@ namespace PAKNAPI.ModelBase
 		public int GroupId { get; set; }
 		public string Description { get; set; }
 
-		public async Task<List<CAWordGetAllOnPage>> CAWordGetAllOnPageDAO(int? PageSize, int? PageIndex, int? GroupId, string Name, string Description, bool? IsActived)
+		public async Task<List<CAWordGetAllOnPage>> CAWordGetAllOnPageDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("GroupId", GroupId);
-			DP.Add("Name", Name);
-			DP.Add("Description", Description);
-			DP.Add("IsActived", IsActived);
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAWordGetAllOnPage>("CA_WordGetAllOnPage", DP)).ToList();
 		}
@@ -1748,7 +1704,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cAWordInsertIN.IsDeleted);
 			DP.Add("Description", _cAWordInsertIN.Description);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_WordInsert", DP));
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_WordInsert", DP)); // ExecuteScalarDapperAsync
 		}
 	}
 

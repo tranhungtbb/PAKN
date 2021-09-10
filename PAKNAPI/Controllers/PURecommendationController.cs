@@ -108,7 +108,6 @@ namespace PAKNAPI.ControllerBase
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize]
 		[Route("recommendation-statistics-get-by-user-id")]
 		public async Task<ActionResult<object>> PURecommendationStatisticsGetByUserIdBase()
 		{

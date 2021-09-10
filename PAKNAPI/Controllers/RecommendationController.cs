@@ -149,6 +149,25 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+
+        [HttpGet]
+        [Authorize("ThePolicy")]
+        [Route("get-detail-public-by-id")]
+        public async Task<ActionResult<object>> RecommendationGetByIDViewPublic(int? Id)
+        {
+            try
+            {
+                RecommendationGetByIDViewResponse data = new RecommendationGetByIDViewResponse();
+                return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationGetByIDView(Id) };
+            }
+            catch (Exception ex)
+            {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
         /// <summary>
         /// thêm mới pakn
         /// </summary>
@@ -1128,7 +1147,6 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
         [Route("recommendation-get-data-graph")]
         public async Task<ActionResult<object>> MRRecommendationGetDataGraphBase(int? UnitProcessId, long? UserProcessId)
         {
@@ -1302,7 +1320,6 @@ namespace PAKNAPI.Controller
 
 
         [HttpPost]
-        [Authorize("ThePolicy")]
         [Route("insert-commnent")]
         public async Task<ActionResult<object>> MRCommnentInsertBase(MRCommnentInsertIN _mRCommnentInsertIN)
         {
@@ -1330,7 +1347,6 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
         [Route("get-all-commnent")]
         public async Task<ActionResult<object>> MRCommnentGetAllOnPageBase(int? PageSize, int? PageIndex, long? RecommendationId, bool IsPublish)
         {

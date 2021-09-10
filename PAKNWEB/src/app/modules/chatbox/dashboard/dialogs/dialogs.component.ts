@@ -47,7 +47,7 @@ export class DialogsComponent implements OnChanges, OnInit {
 
 	ngOnInit() {
 		this.txtNameGroup = this.dialog.name
-		this.messageComponent.dialogsComponent = this
+		// this.messageComponent.dialogsComponent = this
 	}
 	ngOnChanges() {
 		this.editab = false
@@ -255,6 +255,24 @@ export class DialogsComponent implements OnChanges, OnInit {
 			return false
 		}
 	}
+
+	deleteDialog(){
+		this.dialogService.deleteDialogById(this.dialog._id)
+		.then(success =>{
+			
+			this.dashboardService.showComponent({
+				createGroupClicked: false,
+				updateDialog: false,
+				deleteDialog : false,
+				onChatClick: false,
+				welcomeChat : true,
+			})
+		})
+		.catch(err=>{
+
+		})
+	}
+
 
 	LoadNameGroup() {
 		this.editab = false

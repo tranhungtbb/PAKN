@@ -57,7 +57,7 @@
 }
 
 :host ::ng-deep span.ng-clear-wrapper {
-	z-index: 100000 !important;
+	z-index: 100 !important;
 }
 
 .width-96vw{

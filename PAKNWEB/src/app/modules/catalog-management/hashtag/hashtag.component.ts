@@ -8,8 +8,7 @@ import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { RecommendationService } from 'src/app/services/recommendation.service'
-import { from, of } from 'rxjs'
-import { stringify } from '@angular/compiler/src/util'
+import { Table } from 'primeng/components/table/table';
 
 declare var $: any
 
@@ -31,12 +30,7 @@ export class HashtagComponent implements OnInit {
 	]
 
 	public hashtag = new HashtagObject()
-	public PageIndex
-	public PageSize
 	public totalRecord
-	public nameHash = ''
-	public IsActived
-	public QuantityUser
 	public fForm: FormGroup
 	public Title: string
 	public IdDelete: number
@@ -44,11 +38,11 @@ export class HashtagComponent implements OnInit {
 	listData: any[]
 	recommendationsGetByHashtag: any[]
 
-	@ViewChild('table', { static: false }) table: any
+	@ViewChild('table', { static: false }) table: Table
 	@ViewChild('tableMRR', { static: false }) tableMRR: any
 
 	listMrrStatus: any = [
-		{ value: '', text: 'Trạng thái' },
+		{ value: 1, text: 'Đang soạn thảo' },
 		{ value: 2, text: 'Chờ xử lý' },
 		{ value: 3, text: 'Từ chối xử lý' },
 		{ value: 4, text: 'Đã tiếp nhận' },
@@ -78,25 +72,33 @@ export class HashtagComponent implements OnInit {
 		private _shareData: DataService,
 		private recommendationService: RecommendationService
 	) {
-		this.PageIndex = 1
-		this.PageSize = 20
 		this.mrrPageSize = 10
 		this.mrrPageIndex = 1
 	}
+
+	// const FilterUtils = require('primeng/components/utils/filterutils').FilterUtils;
+
+
+
+	
 
 	ngOnInit() {
 		// form validate
 
 		this.buildForm()
 		this.GetListHashtag()
-	}
 
+		
+	}
+	
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		$('#modal').on('keypress', function (e) {
-			if (e.which == 13) e.preventDefault()
-		})
+		// $('#modal').on('keypress', function (e) {
+		// 	if (e.which == 13) e.preventDefault()
+		// })
 	}
+
+	
 
 	buildForm() {
 		this.fForm = this.formBuilder.group({
@@ -117,20 +119,8 @@ export class HashtagComponent implements OnInit {
 	}
 
 	GetListHashtag() {
-		this.nameHash = this.nameHash.trim()
-		var obj = {
-			PageSize: this.PageSize,
-			PageIndex: this.PageIndex,
-			Name: this.nameHash,
-		}
-		if (typeof this.IsActived !== 'undefined' && this.IsActived != null) {
-			obj['IsActived'] = this.IsActived
-		}
-
-		if (typeof this.QuantityUser !== 'undefined' && this.QuantityUser != null) {
-			obj['QuantityUser'] = this.QuantityUser
-		}
-		this.service.getAllPagedList(obj).subscribe((res) => {
+		
+		this.service.getAllPagedList({}).subscribe((res) => {
 			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 				if (res.result) {
 					this.listHastag = res.result.CAHashtag
@@ -143,7 +133,7 @@ export class HashtagComponent implements OnInit {
 	}
 
 	listRecommendationByHashtag(id: any) {
-		debugger
+		
 		if(id == undefined) return
 		this.mrrHashtagId = id
 		var obj = {
@@ -157,7 +147,7 @@ export class HashtagComponent implements OnInit {
 			PageSize: this.mrrPageSize,
 			PageIndex: this.mrrPageIndex,
 		}
-		debugger
+		
 		this.service.recommendationGetByHashtagAllOnPage(obj).subscribe((res) => {
 			if ((res.success = RESPONSE_STATUS.success)) {
 				this.recommendationsGetByHashtag = res.result.MRRecommendationGetByHashtagAllOnPage
@@ -168,11 +158,6 @@ export class HashtagComponent implements OnInit {
 		})
 	}
 
-	onPageChange(event: any) {
-		this.PageSize = event.rows
-		this.PageIndex = event.first / event.rows + 1
-		this.GetListHashtag()
-	}
 
 	onPageChange2(event: any) {
 		this.mrrPageSize = event.rows
@@ -180,17 +165,12 @@ export class HashtagComponent implements OnInit {
 		this.listRecommendationByHashtag(this.mrrHashtagId)
 	}
 
-	dataStateChange() {
-		this.table.first = 0
-		this.PageIndex = 1
-		this.PageSize = 20
-		this.GetListHashtag()
-	}
+
 
 	dataStateChange2() {
 		this.table.first = 0
 		this.mrrPageIndex = 1
-		this.mrrPageSize = 20
+		this.mrrPageSize = 10
 		this.listRecommendationByHashtag(this.mrrHashtagId)
 	}
 
@@ -247,7 +227,6 @@ export class HashtagComponent implements OnInit {
 		this.hashtag.name = this.hashtag.name.trim()
 
 		if (this.hashtag.name == '') {
-			this.nameHash = ''
 			return
 		}
 		// create

@@ -86,7 +86,7 @@ export class AppheaderComponent implements OnInit {
 	lstPhongBan: any = []
 
 	Notifications: any[]
-	numberNotifications: any = 7
+	numberNotifications: any = 10
 	ViewedCount: number = 0
 	@ViewChild('table', { static: false }) table: any
 	isMain : any = this.storageService.getIsMain()
@@ -177,7 +177,6 @@ export class AppheaderComponent implements OnInit {
 	updateNotifications() {
 		this.notificationService.updateIsViewedNotification({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				this.getNotifications(this.numberNotifications)
 			}
 			return
 		})
@@ -514,6 +513,9 @@ export class AppheaderComponent implements OnInit {
 	}
 	onScroll(event: any) {
 		if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 50) {
+			if(this.numberNotifications == 10){
+				this.updateNotifications()
+			}
 			this.numberNotifications = this.numberNotifications + 5
 			this.getNotifications(this.numberNotifications)
 		}

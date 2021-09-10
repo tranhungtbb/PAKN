@@ -22,6 +22,7 @@ import { UserCreateOrUpdateComponent } from '../modules/system-management/compon
 import { DiaDanhFilterPipe } from '../pipes/dia-danh-filter.pipi'
 import { SanitizerUrlPipe, SafeUrlPipe } from '../pipes/sanitizer-url.pipe'
 import {HasNotPermissionDirective} from 'src/app/directives/sv-notpermission.directive'
+import { TrimDirective } from 'src/app/directives/sv-trim-keydown-enter.derective'
 
 @NgModule({
 	declarations: [
@@ -48,6 +49,7 @@ import {HasNotPermissionDirective} from 'src/app/directives/sv-notpermission.dir
 		DiaDanhFilterPipe,
 		SanitizerUrlPipe,
 		SafeUrlPipe,
+		TrimDirective
 	],
 	exports: [
 		ConfirmClickDirective,
@@ -73,6 +75,7 @@ import {HasNotPermissionDirective} from 'src/app/directives/sv-notpermission.dir
 		DiaDanhFilterPipe,
 		SanitizerUrlPipe,
 		SafeUrlPipe,
+		TrimDirective
 	],
 })
 export class SharedModule {}

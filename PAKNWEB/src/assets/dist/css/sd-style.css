@@ -1722,3 +1722,8 @@ table thead .form-control ng-select {
 	justify-content: center;
 	align-items: center;
 }
+
+:host ::ng-deep .ui-state-highlight {
+	background-color: transparent !important;
+	color: #333333 !important;
+}

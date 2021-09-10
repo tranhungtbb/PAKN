@@ -71,7 +71,7 @@
 					<!-- danh sach phan anh kien nghi -->
 					<app-recommnendation-get-list></app-recommnendation-get-list>
 				</div>
-				<div class="card mb-3 mb-lg-2 mx-lg-4">
+				<!-- <div class="card mb-3 mb-lg-2 mx-lg-4">
 					<div class="card-header" style="background: #DBEBFF">
 						<h5 class="card-title">Thủ tục hành chính đang soạn thảo</h5>
 						<span class="badge badge-rounded bg-white text-dark" style="font-size: 1.2rem">10</span>
@@ -150,7 +150,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 			<div class="col-12 col-lg-auto z-index-1 right-dashboard px-3 px-lg-0">
 				<div class="card mb-3 px-3 py-2 d-none d-lg-block" style="margin-top: -35px">
@@ -193,30 +193,33 @@
 
 						<a [routerLink]="['/quan-tri/kien-nghi/danh-sach-tong-hop']">
 							<p class="mb-1 mt-4">Từ chối Phản ánh, kiến nghị
-								<span class="pull-right font-weight-bold cl-red counter">{{dataGraph['stt_3']?.total + dataGraph['stt_6']?.total + dataGraph['stt_9']?.total || 0}}</span>
+								<span class="pull-right font-weight-bold cl-red counter">{{dataGraph['stt_3']?.total || 0}}</span>
 							</p>
 							<div class="progress ">
-								<div class="progress-bar grd-red progress-animated" style="height:6px;" role="progressbar" [style.width]="dataGraph['stt_6']?.per_100+'%'">
+								<div class="progress-bar grd-red progress-animated" style="height:6px;" role="progressbar" 
+									[style.width]="dataGraph['stt_3']?.per_100+'%'">
 								</div>
 							</div>
 						</a>
 
 						<a [routerLink]="['/quan-tri/kien-nghi/da-giai-quyet']">
 							<p class="mb-1 mt-4">TTHC đã công bố
-								<span class="pull-right font-weight-bold cl-green counter">{{dataGraph['stt_10']?.total || 0}}</span>
+								<span class="pull-right font-weight-bold cl-green counter">{{dataGraphTTHC['stt_3']?.total || 0}}</span>
 							</p>
 							<div class="progress ">
-								<div class="progress-bar grd-green progress-animated" style="height:6px;" role="progressbar" [style.width]="dataGraph['stt_1']?.per_100+'%'">
+								<div class="progress-bar grd-green progress-animated" style="height:6px;" role="progressbar" 
+									[style.width]="dataGraphTTHC['stt_3']?.per_100_TTHC+'%'">
 								</div>
 							</div>
 						</a>
 						
 						<a [routerLink]="['/quan-tri/kien-nghi/danh-sach-tong-hop']">
 							<p class="mb-1 mt-4">TTHC đã thu hồi
-								<span class="pull-right font-weight-bold cl-brown counter">{{dataGraph['stt_0']?.total || 0}}</span>
+								<span class="pull-right font-weight-bold cl-brown counter">{{dataGraphTTHC['stt_2']?.total || 0}}</span>
 							</p>
 							<div class="progress ">
-								<div class="progress-bar grd-brown2 progress-animated" style="height:6px;" role="progressbar" [style.width]="dataGraph['stt_0']?.per_100+'%'">
+								<div class="progress-bar grd-brown2 progress-animated" style="height:6px;" role="progressbar" 
+									[style.width]="dataGraphTTHC['stt_2']?.per_100_TTHC+'%'">
 								</div>
 							</div>
 						</a>
@@ -224,17 +227,12 @@
 
 					</div>
 				</div>
-				<div class="alert alert-nv alert-dark alert-dismissible shadow rounded fade show">
+				<div class="alert alert-nv alert-dark alert-dismissible shadow rounded fade show"
+					*ngFor="let item of listRemind"
+				>
 					<p class="mb-0 cl-brown">Nhắc việc</p>
-					<span class="small d-block mb-2">3:30PM | 30/12/2020</span>
-					<p class="text-2line mb-0 text-dark"><a href="#">Họp về vấn đề an toàn vệ sinh thực phẩm toàn tỉnh Khánh Hòa</a></p>
-					<button type="button" class="close px-3" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
-					</button>
-				</div>
-				<div class="alert alert-nv alert-dark alert-dismissible shadow rounded fade show">
-					<p class="mb-0 cl-brown">Nhắc việc</p>
-					<span class="small d-block mb-2">4:30PM | 30/12/2020</span>
-					<p class="text-2line mb-0 text-dark"><a href="#">Cần xử lý gấp Phản ánh, Kiến nghị mã số: 11.225544</a></p>
+					<span class="small d-block mb-2">{{item.dateSend | date : 'HH:mm | dd/MM/yyy'}}</span>
+					<p class="text-2line mb-0 text-dark"><a href="javascript:void(0)">{{item.content}}</a></p>
 					<button type="button" class="close px-3" data-dismiss="alert" aria-label="Close"><span><i class="mdi mdi-close"></i></span>
 					</button>
 				</div>

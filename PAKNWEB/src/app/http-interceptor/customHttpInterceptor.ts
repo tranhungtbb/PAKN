@@ -50,7 +50,6 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 						this.env.isContentLoading = false
 						this.storeageService.clear()
 						window.location.href = '/cong-bo/trang-chu'
-						// this._router.navigate(['/cong-bo/trang-chu'])
 					} else if (err.status === 403) {
 						this.env.isContentLoading = false
 						this._router.navigate(['/forbidden'])

@@ -45,17 +45,15 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-hashtag-on-page")]
-		public async Task<ActionResult<object>> CAHashtagGetAllOnPage(int PageSize, int PageIndex, string Name, int? QuantityUser, bool? IsActived)
+		public async Task<ActionResult<object>> CAHashtagGetAllOnPage()
 		{
 			try
 			{
-				List<CAHashtagListPage> rsCAHashtagOnPage = await new CAHashtagListPage(_appSetting).CAHashtagGetAllOnPage(PageSize, PageIndex, Name, QuantityUser, IsActived);
+				List<CAHashtagListPage> rsCAHashtagOnPage = await new CAHashtagListPage(_appSetting).CAHashtagGetAllOnPage();
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAHashtag", rsCAHashtagOnPage},
-						{"TotalCount", rsCAHashtagOnPage != null && rsCAHashtagOnPage.Count > 0 ? rsCAHashtagOnPage[0].RowNumber : 0},
-						{"PageIndex", rsCAHashtagOnPage != null && rsCAHashtagOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsCAHashtagOnPage != null && rsCAHashtagOnPage.Count > 0 ? PageSize : 0},
+						{"TotalCount", rsCAHashtagOnPage != null && rsCAHashtagOnPage.Count > 0 ? rsCAHashtagOnPage[0].RowNumber : 0}
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

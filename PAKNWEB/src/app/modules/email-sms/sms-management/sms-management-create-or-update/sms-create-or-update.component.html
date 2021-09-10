@@ -74,13 +74,13 @@
 												{{nt.name}}
 											</ng-option>
 										</ng-select> -->
-										<div class="form-group" style="margin-bottom: 0px;">
+										<div class="form-group" style="margin-bottom: 0px;flex: 1 1;">
 											<ngx-dropdown-treeview [config]="config" [items]="administrativeUnits" buttonClass="btn btn-outline-primary"
 												(selectedChange)="onSelectedChange($event)">
 											</ngx-dropdown-treeview>
 										</div>
 									</div>
-									<div class="info-individual ml-2" style="width: 48%; position: relative;">
+									<div class="info-individual ml-2" style="flex: 1 1; position: relative;">
 										<div class="individual" style="display: flex; position: absolute;top: -40px;">
 											<div class="form-check" style="margin: 5px;">
 												<input class="form-check-input" type="checkbox" (click)="onChange(1)" formControlName="individual" id="sendSMS">
@@ -119,8 +119,9 @@
 										</p-multiSelect>
 
 									</div>
-									<div class="action padding-item center">
-										<button type="button" style="width: 40px; height: 40px;" class="btn grd-blue btn-block border-0 px-3 text-white center"
+									<div class="action center" style="margin-left: 8px;">
+										<button type="button" class="btn grd-blue btn-block border-0 px-3 text-white center"
+											style="height: auto;"
 											(click)="onCreateUser()">
 											<i class="bi bi-plus"></i>
 										</button>

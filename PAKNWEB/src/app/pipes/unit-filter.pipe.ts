@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core'
 })
 export class UnitFilterPipe implements PipeTransform {
 	transform(items: any[], ...args: any[]): any {
-		return items.filter((c) => c['unitLevel'] == args[0])
+		return items.filter((c) => c['unitLevel'] == args[0] && c.isActived == true)
 	}
 }
 

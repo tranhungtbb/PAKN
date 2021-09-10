@@ -33,7 +33,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	isHasToken: boolean = this.storageService.getIsHaveToken()
 	typeUserLoginPublish: number = this.storageService.getTypeObject()
 	currentFullnName: string = this.storageService.getFullName()
-	numberNotifications: any = 7
+	numberNotifications: any = 10
 	notifications: any[]
 	ViewedCount: number = 0
 	index: number = 0
@@ -162,6 +162,9 @@ export class PublishComponent implements OnInit, OnChanges {
 
 	onScroll(event: any) {
 		if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 50) {
+			if(this.numberNotifications == 10){
+				this.notificationService.updateIsViewedNotification({}).subscribe()
+			}
 			this.numberNotifications = this.numberNotifications + 5
 			this.getListNotification(this.numberNotifications)
 		}

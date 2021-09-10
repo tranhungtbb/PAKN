@@ -35,3 +35,10 @@ a.hight-light:hover {
 	outline:none;
 	box-shadow:none;
 }
+.btn-back-home{
+	color: #212529;
+	background-color: #c8c8c8;
+	font-size: 20px;
+}
+
+

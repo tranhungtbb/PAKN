@@ -35,6 +35,8 @@ export class Api {
 	public static RecommendationGetListReactionaryWord = 'recommendation/get-list-recommentdation-reactionary-word'
 	public static RecommendationGetById = 'recommendation/get-by-id'
 	public static RecommendationGetByIdView = 'recommendation/get-detail-by-id'
+	public static RecommendationGetByIdViewPublic = 'recommendation/get-detail-public-by-id'
+
 	public static RecommendationGetHistories = 'recommendation/get-his-by-recommentdation'
 	public static RecommendationInsert = 'recommendation/insert'
 	public static RecommendationUpdate = 'recommendation/update'

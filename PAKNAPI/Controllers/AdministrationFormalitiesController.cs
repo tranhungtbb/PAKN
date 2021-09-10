@@ -483,7 +483,6 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
         [Route("get-list-administration-formalities-on-page")]
         public async Task<ActionResult<object>> DAMAdministrationGetListBase(string Code, string Name, string Object, string Organization, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex, int? TotalRecords)
         {
@@ -554,7 +553,6 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
         [Route("get-list-administration-formalities-home-page")]
         public async Task<ActionResult<object>> DAMAdministrationGetListTopBase()
         {
@@ -702,7 +700,6 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Authorize("ThePolicy")]
         [Route("get-drop-down")]
         public async Task<ActionResult<object>> CAFieldDAMGetDropdownBase()
         {

@@ -114,7 +114,6 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		this.modelUser.userName = this.modelUser.email
 		this.modelUser.typeId = 1
 		if (this.createUserForm.invalid) {
-			this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
 		if (this.checkExists['Email'] || this.checkExists['Phone']) return

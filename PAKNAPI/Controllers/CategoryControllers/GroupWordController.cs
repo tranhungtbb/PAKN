@@ -68,17 +68,15 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-group-word-on-page")]
-		public async Task<ActionResult<object>> CAGroupWordGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Description, bool? IsActived)
+		public async Task<ActionResult<object>> CAGroupWordGetAllOnPageBase()
 		{
 			try
 			{
-				List<CAGroupWordGetAllOnPage> rsCAGroupWordGetAllOnPage = await new CAGroupWordGetAllOnPage(_appSetting).CAGroupWordGetAllOnPageDAO(PageSize, PageIndex, Name, Description, IsActived);
+				List<CAGroupWordGetAllOnPage> rsCAGroupWordGetAllOnPage = await new CAGroupWordGetAllOnPage(_appSetting).CAGroupWordGetAllOnPageDAO();
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAGroupWordGetAllOnPage", rsCAGroupWordGetAllOnPage},
-						{"TotalCount", rsCAGroupWordGetAllOnPage != null && rsCAGroupWordGetAllOnPage.Count > 0 ? rsCAGroupWordGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsCAGroupWordGetAllOnPage != null && rsCAGroupWordGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsCAGroupWordGetAllOnPage != null && rsCAGroupWordGetAllOnPage.Count > 0 ? PageSize : 0},
+						{"TotalCount", rsCAGroupWordGetAllOnPage != null && rsCAGroupWordGetAllOnPage.Count > 0 ? rsCAGroupWordGetAllOnPage[0].RowNumber : 0}
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

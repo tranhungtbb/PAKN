@@ -148,28 +148,28 @@
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
 									<td>
-										<strong style="cursor: pointer;"><a (click)="viewDetail(item.fieldId)" class="ellipsis" title="Xem chi tiết">{{item.fieldName}}</a></strong>
+										<strong class="highlight"><a (click)="viewDetail(item.fieldId)" class="ellipsis" title="Xem chi tiết">{{item.fieldName}}</a></strong>
 									</td>
 									<td>
-										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId)">{{item.total}}</strong>
+										<strong class="highlight" (click)="viewDetail(item.fieldId)">{{item.total}}</strong>
 									</td>
 									<td>
-										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 2)">{{item.receiveWait}}</strong>
+										<strong class="highlight" (click)="viewDetail(item.fieldId, 2)">{{item.receiveWait}}</strong>
 									</td>
 									<td>
-										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 4)">{{item.receiveApproved}}</strong>
+										<strong class="highlight" (click)="viewDetail(item.fieldId, 4)">{{item.receiveApproved}}</strong>
 									</td>
 									<td>
-										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 3)">{{item.receiveDeny}}</strong>
+										<strong class="highlight" (click)="viewDetail(item.fieldId, 3)">{{item.receiveDeny}}</strong>
 									</td>
 									<td>
-										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 5)">{{item.processWait}}</strong>
+										<strong class="highlight" (click)="viewDetail(item.fieldId, 5)">{{item.processWait}}</strong>
 									</td>
 									<td>
-										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 7)">{{item.processing}}</strong>
+										<strong class="highlight" (click)="viewDetail(item.fieldId, 7)">{{item.processing}}</strong>
 									</td>
 									<td>
-										<strong style="cursor: pointer;" (click)="viewDetail(item.fieldId, 10)">{{item.finised}}</strong>
+										<strong class="highlight" (click)="viewDetail(item.fieldId, 10)">{{item.finised}}</strong>
 									</td>
 								</tr>
 							</ng-template>

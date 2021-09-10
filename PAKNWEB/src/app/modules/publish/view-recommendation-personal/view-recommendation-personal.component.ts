@@ -63,7 +63,7 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 		let request = {
 			Id: this.model.id,
 		}
-		this.recommendationService.recommendationGetByIdView(request).subscribe((response) => {
+		this.recommendationService.recommendationGetByIdViewPublic(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.model
 				if (this.model.status > RECOMMENDATION_STATUS.PROCESSING) {

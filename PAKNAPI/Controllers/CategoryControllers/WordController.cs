@@ -46,11 +46,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-word-on-page")]
-		public async Task<ActionResult<object>> CAWordGetAllOnPageBase(int? PageSize, int? PageIndex, int? GroupId, string Name, string Description, bool? IsActived)
+		public async Task<ActionResult<object>> CAWordGetAllOnPageBase()
 		{
 			try
 			{
-				List<CAWordGetAllOnPage> rsCAWordGetAllOnPage = await new CAWordGetAllOnPage(_appSetting).CAWordGetAllOnPageDAO(PageSize, PageIndex, GroupId, Name, Description, IsActived);
+				List<CAWordGetAllOnPage> rsCAWordGetAllOnPage = await new CAWordGetAllOnPage(_appSetting).CAWordGetAllOnPageDAO();
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"CAWordGetAllOnPage", rsCAWordGetAllOnPage},
@@ -136,7 +136,22 @@ namespace PAKNAPI.Controllers.ControllerBase
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new CAWordInsert(_appSetting).CAWordInsertDAO(_cAWordInsertIN) };
+				var result = await new CAWordInsert(_appSetting).CAWordInsertDAO(_cAWordInsertIN);
+
+				if (result > 0)
+				{
+					return new ResultApi { Success = ResultCode.OK, Result = result, Message = "Thêm mới thành công" };
+				}
+				else if (result == -1)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
+					return new ResultApi { Success = ResultCode.ORROR, Result = result, Message = "Tiêu đề đã bị trùng" };
+				}
+				else {
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
+					return new ResultApi { Success = ResultCode.ORROR, Result = result, Message = "Thêm mới thất bại" };
+				}
+
 			}
 			catch (Exception ex)
 			{
@@ -158,9 +173,24 @@ namespace PAKNAPI.Controllers.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new CAWordUpdate(_appSetting).CAWordUpdateDAO(_cAWordUpdateIN) };
+				var result = await new CAWordUpdate(_appSetting).CAWordUpdateDAO(_cAWordUpdateIN);
+
+				if (result > 0)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					return new ResultApi { Success = ResultCode.OK, Result = result, Message = "Cập nhập thành công" };
+				}
+				else if (result == -1)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
+					return new ResultApi { Success = ResultCode.ORROR, Result = result, Message = "Tiêu đề đã bị trùng" };
+				}
+				else
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
+					return new ResultApi { Success = ResultCode.ORROR, Result = result, Message = "Cập nhập thất bại" };
+				}
 			}
 			catch (Exception ex)
 			{

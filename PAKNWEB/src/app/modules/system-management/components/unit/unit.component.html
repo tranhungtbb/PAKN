@@ -8,7 +8,7 @@
 		<div class="col-auto treeView px-0">
 			<p class="p-3 h4 d-flex justify-content-between align-items-center shadow">
 				<span class="text-uppercase">Danh sách đơn vị</span>
-				<button type="button" class="btn grd-blue border-0 p-2 btn-sm text-white" (click)="modalCreateOrUpdate(0)">
+				<button type="button" class="btn grd-blue border-0 p-2 btn-sm text-white" (click)="modalCreateOrUpdate(0)" title="Thêm mới đơn vị">
 					<i class="pi pi-plus"></i>
 				</button>
 			</p>
@@ -41,11 +41,13 @@
 						<span *hasPermission="['3', 'A_VII_1']">{{unitObject.name}}</span>
 					</p>
 					<div class="d-flex align-items-center">
-						<button *hasPermission="['3', 'A_VII_2']" type="button" class="btn grd-brown text-dark border-0 mr-3 py-2 px-3 cursor-hand"
+						<button *hasPermission="['3', 'A_VII_2']" type="button" title="Sửa đơn vị"
+							class="btn grd-brown text-dark border-0 mr-3 py-2 px-3 cursor-hand"
 							(click)="modalCreateOrUpdate(unitObject.id,unitObject.unitLevel)"><i class="bi bi-pencil-square mr-2"></i>
 							Sửa
 						</button>
-						<button *hasPermission="['3', 'A_VII_3']" type="button" class="btn grd-red text-white border-0 py-2 px-3 cursor-hand" (click)="onOpenConfirmModal(unitObject.id,'unit')"><i
+						<button *hasPermission="['3', 'A_VII_3']" type="button" title="Xóa đơn vị"
+							class="btn grd-red text-white border-0 py-2 px-3 cursor-hand" (click)="onOpenConfirmModal(unitObject.id,'unit')"><i
 								class="bi bi-trash mr-2"></i>
 							Xóa
 						</button>
@@ -67,14 +69,18 @@
 							<span class="accordion__header--text text-uppercase h4" id="title-user-in-unit" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne"
 								aria-expanded="true" (click)="onCollapsed('item01')">Người dùng trong đơn vị</span>
 							<div class="btn-group" role="group" [hidden]="!collapsed_checked['item01']">
-								<button *hasPermission="['3', 'A_VIII_6']" type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()">
+								<button *hasPermission="['3', 'A_VIII_6']" type="button" title="Xuất excel"
+									class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()">
 									<i class="pi pi-file-excel"></i>
 									Xuất excel
 								</button>
-								<button *hasPermission="['3', 'A_VIII_1']" type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalUserCreateOrUpdate(null)">
-									<i class="pi pi-plus"></i>
-									Thêm mới
-								</button>
+								<span *ngIf="unitObject.isActived">
+									<button *hasPermission="['3', 'A_VIII_1']" type="button" title="Thêm mới người dùng"
+										class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalUserCreateOrUpdate(null)">
+												<i class="pi pi-plus"></i>Thêm mới
+									</button>
+								</span>
+								
 							</div>
 						</div>
 						<span class="accordion__header--indicator style_two" data-toggle="collapse" data-target="#bordered_no-gutter_collapseOne" aria-expanded="true"
@@ -155,9 +161,11 @@
 										</td>
 										<td>
 											<div class="d-flex justify-content-end">
-												<a *hasPermission="['3', 'A_VIII_3']" href="javascript:void(0);" class="btn-icon grd-brown text-brown mr-2" (click)="modalUserCreateOrUpdate(item.id)"><i
+												<a *hasPermission="['3', 'A_VIII_3']" href="javascript:void(0);"  title="Cập nhập người dùng"
+													class="btn-icon grd-brown text-brown mr-2" (click)="modalUserCreateOrUpdate(item.id)"><i
 														class="bi bi-pencil-square"></i></a>
-												<a *hasPermission="['3', 'A_VIII_4']" href="javascript:void(0);" class="btn-icon grd-red text-white" (click)="onOpenConfirmModal(item.id,'user')"><i
+												<a *hasPermission="['3', 'A_VIII_4']" href="javascript:void(0);" title="Xóa người dùng"
+													class="btn-icon grd-red text-white" (click)="onOpenConfirmModal(item.id,'user')"><i
 														class="bi bi-trash"></i></a>
 											</div>
 										</td>
@@ -180,7 +188,7 @@
 
 <app-user-create-or-update modalid="user-create-or-update-1" isOrganizational="true"></app-user-create-or-update>
 <!-- Modal unit -->
-<div class="modal fade" id="modal-create-or-update">
+<div class="modal fade" id="modal-create-or-update" style="overflow-y: hidden;">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0">
@@ -260,7 +268,13 @@
 						</div>
 						<div class="col-12 col-lg-3 form-group">
 							<label class="mb-1">Thứ tự hiển thị</label>
-							<input formControlName="index" [(ngModel)]="modelUnit.index" type="number" class="form-control" placeholder="Nhập...">
+							<input formControlName="index" [(ngModel)]="modelUnit.index" min="0"
+								type="number" class="form-control" placeholder="Nhập...">
+								<div *ngIf="unitFormSubmitted && modelUnit.index < 0" class="has-error m-b-12">
+									<div>
+										<span class="help-block">Số thứ tự hiển thị không được nhỏ hơn 0</span>
+									</div>
+								</div>
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>

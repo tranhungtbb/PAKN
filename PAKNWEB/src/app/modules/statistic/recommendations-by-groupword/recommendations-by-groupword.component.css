@@ -61,3 +61,11 @@ body .ui-table .ui-table-thead > tr > th {
 	overflow: hidden;
 	white-space: nowrap;
 }
+
+.highlight:hover {
+	color: #42a4ff;
+	cursor: pointer;
+}
+.highlight {
+	cursor: pointer;
+}

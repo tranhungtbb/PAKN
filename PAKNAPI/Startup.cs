@@ -73,14 +73,14 @@ namespace PAKNAPI
 
 			services.AddMvc().AddNewtonsoftJson();
 
-			// cái này ảnh hưởng đến controller ko authorize @@
-			//services.AddMvc(options =>
-			//{
-			//	options.Filters.Add(new AuthorizeFilter("ThePolicy"));
-			//});
+            // cái này ảnh hưởng đến controller ko authorize @@
+            //services.AddMvc(options =>
+            //{
+            //    options.Filters.Add(new AuthorizeFilter("ThePolicy"));
+            //});
 
 
-			services.AddMvc().AddNewtonsoftJson(); ;
+            services.AddMvc().AddNewtonsoftJson(); ;
 
 			services.AddMvc().AddNewtonsoftJson(options =>
 			{
@@ -93,8 +93,9 @@ namespace PAKNAPI
 			services.AddTransient<IAppSetting, AppSetting>();
 			services.AddTransient<IFileService, FileService>();
 			services.AddTransient<IMailService, MailService>();
-			
-			//services.AddHttpContextAccessor();
+			services.AddTransient<IAuthorizationHandler, ThePolicyAuthorizationHandler>();
+
+			services.AddHttpContextAccessor();
 			services.AddDevExpressControls();
 
 			services.Configure<ApiBehaviorOptions>(options =>
@@ -161,12 +162,11 @@ namespace PAKNAPI
 				options.AddPolicy("ThePolicy", policy =>
                 {
                     policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-                    policy.RequireAuthenticatedUser();
+                    policy.RequireAuthenticatedUser().Build();
                     policy.Requirements.Add(new ThePolicyRequirement());
                 });
 			});
 
-			services.AddTransient<IAuthorizationHandler, ThePolicyAuthorizationHandler>();
 
 			//services.AddSwaggerGen(c =>
 			//{

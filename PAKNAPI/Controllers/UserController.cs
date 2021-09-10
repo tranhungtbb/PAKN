@@ -23,6 +23,10 @@ using Microsoft.AspNetCore.Hosting;
 using PAKNAPI.Models.BusinessIndividual;
 using System.Text.RegularExpressions;
 using static PAKNAPI.Models.Login.BusinessRegisterModel;
+using System.Text;
+using PAKNAPI.Job;
+using Newtonsoft.Json;
+using System.Threading;
 
 namespace PAKNAPI.Controllers
 {
@@ -37,6 +41,10 @@ namespace PAKNAPI.Controllers
 		private readonly IHttpContextAccessor _httpContextAccessor;
 		private readonly IWebHostEnvironment _hostingEnvironment;
 		private Microsoft.Extensions.Configuration.IConfiguration _config;
+
+		private static string textRamdom = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		private static string numberRamdom = "1234567890";
+		private static string specialCharacters = "!@#$%^&*";
 		public UserController(IFileService fileService, IAppSetting appSetting, IClient bugsnag,
 			IHttpContextAccessor httpContextAccessor, Microsoft.Extensions.Configuration.IConfiguration config, IWebHostEnvironment IWebHostEnvironment)
 		{
@@ -89,31 +97,75 @@ namespace PAKNAPI.Controllers
 					model.Avatar = null;
 				}
 
-				//generate mật khẩu
-				byte[] salt = new byte[128 / 8];
-				using (var rng = RandomNumberGenerator.Create())
+				int length = 3;
+				StringBuilder res = new StringBuilder();
+				Random rnd = new Random();
+				while (0 < length--)
 				{
-					rng.GetBytes(salt);
+					res.Append(textRamdom[rnd.Next(textRamdom.Length)]);
 				}
-				// derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
-				string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-					password: "12345a@@",
-					salt: salt,
-					prf: KeyDerivationPrf.HMACSHA1,
-					iterationCount: 10000,
-					numBytesRequested: 256 / 8));
+				length = 3;
+				while (0 < length--)
+				{
+					res.Append(numberRamdom[rnd.Next(numberRamdom.Length)]);
+				}
+				length = 2;
+				while (0 < length--)
+				{
+					res.Append(specialCharacters[rnd.Next(specialCharacters.Length)]);
+				}
 
-				// thêm người dùng vào db
-				model.Avatar = filePath;
-				model.Password = hashed;
-				model.Salt = Convert.ToBase64String(salt);
-				model.IsSuperAdmin = false;
-				model.IsAdmin = false;
-				model.UserName = model.Email;
+				// lưu db
 
-				var result = await new SYUserInsert(_appSetting).SYUserInsertDAO(model);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-				return new ResultApi { Success = ResultCode.OK, Result = result };
+				var config = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(TYPECONFIG.CONFIG_EMAIL));
+				if (config.Count == 0)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Result = -1, Message = "Config email not exits" };
+				}
+				else
+				{
+					// gửi mail
+					var configEmail = JsonConvert.DeserializeObject<ConfigEmail>(config[0].Content);
+					string content =
+						"<p><span style = 'font-family:times new roman,times,serif'><span style='font-size:16px'>Dear {FullName},</span></span></p>" +
+						"<p style ='font-family:times new roman,times,serif'> Đây là mật khẩu mới. Vui lòng đăng nhập lại với tài khoản của bạn</p>" +
+						"<br/><strong>Mật khẩu mới</strong><span style = 'font-size:14px'>: {NewPassword}</span>";
+					content = content.Replace("{FullName}", model.FullName);
+					content = content.Replace("{NewPassword}", res.ToString());
+					Thread t = new Thread(async () => {
+						MailHelper.SendMail(configEmail, model.Email, "Mật khẩu của bạn", content, null);
+					});
+					t.Start();
+
+					// lưu db
+					
+					byte[] salt = new byte[128 / 8];
+					using (var rng = RandomNumberGenerator.Create())
+					{
+						rng.GetBytes(salt);
+					}
+					// derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
+					string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+						password: res.ToString(),
+						salt: salt,
+						prf: KeyDerivationPrf.HMACSHA1,
+						iterationCount: 10000,
+						numBytesRequested: 256 / 8));
+
+					// thêm người dùng vào db
+					model.Avatar = filePath;
+					model.Password = hashed;
+					model.Salt = Convert.ToBase64String(salt);
+					model.IsSuperAdmin = false;
+					model.IsAdmin = false;
+					model.UserName = model.Email;
+
+					var result = await new SYUserInsert(_appSetting).SYUserInsertDAO(model);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					return new ResultApi { Success = ResultCode.OK, Result = result };
+
+					//generate mật khẩu
+				}
 			}
 			catch (Exception ex)
 			{
@@ -254,39 +306,82 @@ namespace PAKNAPI.Controllers
 					model.Avatar = null;
 				}
 
-				//generate mật khẩu
-				byte[] salt = new byte[128 / 8];
-				using (var rng = RandomNumberGenerator.Create())
+				int length = 3;
+				StringBuilder res = new StringBuilder();
+				Random rnd = new Random();
+				while (0 < length--)
 				{
-					rng.GetBytes(salt);
+					res.Append(textRamdom[rnd.Next(textRamdom.Length)]);
 				}
-				// derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
-				string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-					password: "12345a@@",
-					salt: salt,
-					prf: KeyDerivationPrf.HMACSHA1,
-					iterationCount: 10000,
-					numBytesRequested: 256 / 8));
+				length = 3;
+				while (0 < length--)
+				{
+					res.Append(numberRamdom[rnd.Next(numberRamdom.Length)]);
+				}
+				length = 2;
+				while (0 < length--)
+				{
+					res.Append(specialCharacters[rnd.Next(specialCharacters.Length)]);
+				}
 
-				// thêm người dùng vào db
-				model.Avatar = filePath;
-				model.Password = hashed;
-				model.Salt = Convert.ToBase64String(salt);
-				model.IsSuperAdmin = false;
-				model.IsAdmin = true;
-				model.TypeId = 1; // quản trị
-				model.UserName = model.Email;
+				// lưu db
 
-				var unitMainId = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
-				if (unitMainId == null) {
+				var config = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(TYPECONFIG.CONFIG_EMAIL));
+				if (config.Count == 0)
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Result = -1, Message = "Config email not exits" };
+				}
+				else
+				{
+					// gửi mail
+					var configEmail = JsonConvert.DeserializeObject<ConfigEmail>(config[0].Content);
+					string content =
+						"<p><span style = 'font-family:times new roman,times,serif'><span style='font-size:16px'>Dear {FullName},</span></span></p>" +
+						"<p style ='font-family:times new roman,times,serif'> Đây là mật khẩu mới. Vui lòng đăng nhập lại với tài khoản của bạn</p>" +
+						"<br/><strong>Mật khẩu mới</strong><span style = 'font-size:14px'>: {NewPassword}</span>";
+					content = content.Replace("{FullName}", model.FullName);
+					content = content.Replace("{NewPassword}", res.ToString());
+
+					//generate mật khẩu
+					byte[] salt = new byte[128 / 8];
+					using (var rng = RandomNumberGenerator.Create())
+					{
+						rng.GetBytes(salt);
+					}
+					// derive a 256-bit subkey (use HMACSHA1 with 10,000 iterations)
+					string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+						password: res.ToString(),
+						salt: salt,
+						prf: KeyDerivationPrf.HMACSHA1,
+						iterationCount: 10000,
+						numBytesRequested: 256 / 8));
+
+					// thêm người dùng vào db
+					model.Avatar = filePath;
+					model.Password = hashed;
+					model.Salt = Convert.ToBase64String(salt);
+					model.IsSuperAdmin = false;
+					model.IsAdmin = true;
+					model.TypeId = 1; // quản trị
+					model.UserName = model.Email;
+
+					var unitMainId = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
+					if (unitMainId == null)
+					{
+						new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+						return new ResultApi { Success = ResultCode.ORROR, Message = "Không tồn tại đơn vị trung tâm" };
+					}
+					model.UnitId = unitMainId.Id;
+
+					var result = await new SYUserInsert(_appSetting).SYUserSystemInsertDAO(model);
+					Thread t = new Thread(async () => { 
+						MailHelper.SendMail(configEmail, model.Email, "Mật khẩu của bạn", content, null); 
+					});
+					t.Start();
+					
 					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Không tồn tại đơn vị trung tâm" };
+					return new ResultApi { Success = ResultCode.OK, Result = result };
 				}
-				model.UnitId = unitMainId.Id;
-
-				var result = await new SYUserInsert(_appSetting).SYUserSystemInsertDAO(model);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-				return new ResultApi { Success = ResultCode.OK, Result = result };
 			}
 			catch (Exception ex)
 			{
