@@ -263,7 +263,6 @@ namespace PAKNAPI.Controllers.ControllerBase
 				{
 					{"Data", listPaged}
 				};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
@@ -390,7 +389,6 @@ namespace PAKNAPI.Controllers.ControllerBase
 				{
 					{"Data", rs}
 				};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)

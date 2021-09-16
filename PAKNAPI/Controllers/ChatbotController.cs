@@ -62,17 +62,15 @@ namespace PAKNAPI.Controllers.ChatbotController
         [HttpGet]
         [Authorize("ThePolicy")]
         [Route("get-list-chat-bot-on-page")]
-        public async Task<ActionResult<object>> ChatbotGetAllOnPageBase(int? PageSize, int? PageIndex, string Question, string Answer, bool? IsActived)
+        public async Task<ActionResult<object>> ChatbotGetAllOnPageBase()
         {
             try
             {
-                List<ChatbotGetAllOnPage> rsChatbotGetAllOnPage = await new ChatbotGetAllOnPage(_appSetting).ChatbotGetAllOnPageDAO(PageSize, PageIndex, Question, Answer, IsActived);
+                List<ChatbotGetAllOnPage> rsChatbotGetAllOnPage = await new ChatbotGetAllOnPage(_appSetting).ChatbotGetAllOnPageDAO();
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"ChatbotGetAllOnPage", rsChatbotGetAllOnPage},
                         {"TotalCount", rsChatbotGetAllOnPage != null && rsChatbotGetAllOnPage.Count > 0 ? rsChatbotGetAllOnPage[0].RowNumber : 0},
-                        {"PageIndex", rsChatbotGetAllOnPage != null && rsChatbotGetAllOnPage.Count > 0 ? PageIndex : 0},
-                        {"PageSize", rsChatbotGetAllOnPage != null && rsChatbotGetAllOnPage.Count > 0 ? PageSize : 0},
                     };
                 return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
             }

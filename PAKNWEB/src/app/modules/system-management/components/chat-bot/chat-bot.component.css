@@ -1,0 +1,4 @@
+:host ::ng-deep .ui-state-highlight, :host ::ng-deep .ui-sortable-column:hover {
+	background-color: transparent !important;
+	color: #333333 !important;
+}

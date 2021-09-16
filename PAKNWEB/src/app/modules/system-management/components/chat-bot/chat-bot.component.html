@@ -20,8 +20,8 @@
 			<div class="card mb-0 shadow-none">
 				<div class="table-responsive">
 
-					<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-						currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+					<p-table #table [value]="listData" [paginator]="true" [showCurrentPageReport]="true"
+						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
 						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
@@ -31,26 +31,38 @@
 									</p>
 								</th>
 								<th style="width: 350px">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Câu hỏi</strong>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+										[pSortableColumn]="'question'"
+									>
+										<strong>Câu hỏi <p-sortIcon [field]="'question'"></p-sortIcon></strong>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="question" maxlength="100" (keydown.enter)="dataStateChange()"
+									<input class="form-control form-control-sm" maxlength="100"
+										trim [ngSwitch]="'question'" 
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'question', 'contains')"
 										placeholder="Nhập câu hỏi..." />
 								</th>
 								<th>
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Trả lời</strong>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'answer'">
+										<strong>Trả lời <p-sortIcon [field]="'answer'"></p-sortIcon></strong>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="answer" maxlength="100" (keydown.enter)="dataStateChange()"
+									<input class="form-control form-control-sm" maxlength="100" 
+										trim [ngSwitch]="'answer'" (keydown.enter)="table.filter($event?.target.value.trim(), 'answer', 'contains')"
 										placeholder="Nhập câu trả lời..." />
 								</th>
 								<th style="width: 160px">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Trạng thái</strong>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'isActived'"
+									>
+										<strong>Trạng thái <p-sortIcon [field]="'isActived'"></p-sortIcon></strong>
 									</p>
 									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="isActived"
-											[closeOnSelect]="true" (change)="dataStateChange()">
+										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." 
+											bindLabel="text" bindValue="value"
+											[closeOnSelect]="true"
+											[ngSwitch]="'isActived'"
+											(change)="table.filter($event?.value.toString(), 'isActived')"
+											>
 										</ng-select>
 									</div>
 								</th>

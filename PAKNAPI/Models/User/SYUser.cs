@@ -46,18 +46,9 @@ namespace PAKNAPI.Models.User
 
 		public string PositionName { get; set; }
 
-		public async Task<List<SYUserGetAllOnPageList>> SYUserGetAllOnPageDAO(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived, int? UnitId, int? TypeId, int? PositionId)
+		public async Task<List<SYUserGetAllOnPageList>> SYUserGetAllOnPageDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("UserName", UserName);
-			DP.Add("FullName", FullName);
-			DP.Add("Phone", Phone);
-			DP.Add("IsActived", IsActived);
-			DP.Add("UnitId", UnitId);
-			DP.Add("TypeId", TypeId);
-			DP.Add("PositionId", PositionId);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPageList>("[SY_UserGetAllOnPageList]", DP)).ToList();
 		}
@@ -175,15 +166,9 @@ namespace PAKNAPI.Models.User
 		public string Avatar { get; set; }
 		public string Address { get; set; }
 
-		public async Task<List<SYUserSystemGetAllOnPageList>> SYUserSystemGetAllOnPageDAO(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived)
+		public async Task<List<SYUserSystemGetAllOnPageList>> SYUserSystemGetAllOnPageDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("UserName", UserName);
-			DP.Add("FullName", FullName);
-			DP.Add("Phone", Phone);
-			DP.Add("IsActived", IsActived);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserSystemGetAllOnPageList>("[SY_UserSystemGetAllOnPageList]", DP)).ToList();
 		}

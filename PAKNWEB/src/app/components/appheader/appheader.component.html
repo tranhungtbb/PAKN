@@ -319,7 +319,7 @@
 							<div class="form-row">
 								<div class="col-12 col-lg-8 form-group">
 									<label class="mb-1">Email <span class="cl-red">(*)</span></label>
-									<input svTrim formControlName="email" [(ngModel)]="model.email" type="text" class="form-control" placeholder="Nhập..." maxlength="100"
+									<input disabled svTrim formControlName="email" [(ngModel)]="model.email" type="text" class="form-control" placeholder="Nhập..." maxlength="100"
 										(change)="onCheckExist('Email',$event.target.value)">
 									<div *ngIf="(submitted && fUser.email.invalid)||(fUser.email.invalid && (fUser.email.dirty || fUser.email.touched))"
 										class="has-error m-b-12">

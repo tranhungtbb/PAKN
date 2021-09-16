@@ -221,7 +221,7 @@ namespace PAKNAPI
 
 			app.UseRouting();
 
-			app.UseCors("AnotherPolicy");
+			//app.UseCors("AnotherPolicy");
 			
 			app.UseAuthorization();
 			app.UseAuthentication();

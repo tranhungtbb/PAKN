@@ -88,8 +88,8 @@
 					</div>
 					<div id="bordered_no-gutter_collapseOne" class="accordion__body collapse show">
 						<div class="table-responsive">
-							<p-table #table [value]="listUserPaged" [rows]="queryUser.pageSize" [totalRecords]="totalCount_User"
-								currentPageReportTemplate="Tổng số {{totalCount_User}}" (onLazyLoad)="onUserPageChange($event)" [lazy]="true" [responsive]="true" [paginator]="true"
+							<p-table #table [value]="listUserPaged" [rows]="20" [totalRecords]="totalCount_User"
+								currentPageReportTemplate="Tổng số {{table.totalRecords}}" [responsive]="true" [paginator]="true"
 								[showCurrentPageReport]="true" autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 								<ng-template pTemplate="header" class="bg-thead">
 									<tr>
@@ -99,41 +99,43 @@
 											</p>
 										</th>
 										<th>
-											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong class="no-wrap">Tên đăng nhập</strong>
-												<span class="caret-tb" (click)="onSortUser('UserName')"></span>
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+												[pSortableColumn]="'userName'" >
+												<strong class="no-wrap">Tên đăng nhập <p-sortIcon [field]="'userName'"></p-sortIcon></strong>
 											</p>
-											<input [(ngModel)]="queryUser.userName" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
-												(change)="onUserFilterChange()">
+											<input placeholder="Nhập ..." type="text"
+												class="form-control form-control-sm"
+												trim [ngSwitch]="'userName'" (keydown.enter)="table.filter($event?.target.value.trim(), 'userName', 'contains')"
+												>
 										</th>
 										<th>
-											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong class="no-wrap">Tên người dùng</strong>
-												<span class="caret-tb" (click)="onSortUser('FullName')"></span>
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+												[pSortableColumn]="'fullName'">
+												<strong class="no-wrap">Tên người dùng <p-sortIcon [field]="'fullName'"></p-sortIcon></strong>
 											</p>
-											<input [(ngModel)]="queryUser.fullName" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
-												(change)="onUserFilterChange()">
+											<input placeholder="Nhập ..." type="text" class="form-control form-control-sm"
+											trim [ngSwitch]="'fullName'" (keydown.enter)="table.filter($event?.target.value.trim(), 'fullName', 'contains')"
+											>
 										</th>
 										<th style="min-width: 150px;">
-											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong class="no-wrap">Số điện thoại</strong>
-												<span class="caret-tb" (click)="onSortUser('phone')"></span>
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+												[pSortableColumn]="'phone'">
+												<strong class="no-wrap">Số điện thoại <p-sortIcon [field]="'phone'"></p-sortIcon></strong>
 											</p>
-											<input [(ngModel)]="queryUser.phone" placeholder="Nhập ..." type="text" class="form-control form-control-sm"
-												(change)="onUserFilterChange()">
+											<input placeholder="Nhập ..." type="text" class="form-control form-control-sm"
+											numbersOnly [ngSwitch]="'phone'" (keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')">
 										</th>
 										<th>
-											<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-												<strong class="no-wrap">Trạng thái</strong>
-												<span class="caret-tb" (click)="onSortUser('IsActive')"></span>
+											<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+											[pSortableColumn]="'isActived'">
+												<strong class="no-wrap">Trạng thái <p-sortIcon [field]="'isActived'"></p-sortIcon></strong>
 											</p>
 											<div class="dropdown bootstrap-select form-control form-control-sm">
-												<!-- [items]="listStatus" bindLabel="text" bindValue="value" -->
-												<ng-select [(ngModel)]="queryUser.isActived" [closeOnSelect]="true" [searchable]="false"
-													(change)="onUserFilterChange()" placeholder="Chọn...">
-													<ng-option *ngFor="let item of listStatus" [value]="item.value">
-														{{item.text}}
-													</ng-option>
+												<ng-select [closeOnSelect]="true" [searchable]="false" 
+													[items]="listStatus" bindLabel="text" bindValue="value"
+													[ngSwitch]="'isActived'"
+													(change)="table.filter($event?.value.toString(), 'isActived')"
+													placeholder="Chọn...">
 												</ng-select>
 											</div>
 
@@ -188,7 +190,7 @@
 
 <app-user-create-or-update modalid="user-create-or-update-1" isOrganizational="true"></app-user-create-or-update>
 <!-- Modal unit -->
-<div class="modal fade" id="modal-create-or-update" style="overflow-y: hidden;">
+<div class="modal fade" id="modal-create-or-update">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0">

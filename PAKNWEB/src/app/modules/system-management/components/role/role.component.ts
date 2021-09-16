@@ -30,12 +30,6 @@ export class RoleComponent implements OnInit {
 	model: any = new RoleObject()
 	type: string
 	mess: string
-	pageIndex: Number = 1
-	pageSize: Number = 20
-	name: string = ''
-	description: string = ''
-	isActived: boolean
-	userCount: Number
 	totalRecords: Number
 	listData: any[]
 
@@ -58,17 +52,8 @@ export class RoleComponent implements OnInit {
 	}
 
 	getListPaged() {
-		this.name = this.name.trim()
-		this.description = this.description.trim()
 		this.roleService
-			.getAllPagedList({
-				PageIndex: this.pageIndex,
-				PageSize: this.pageSize,
-				Name: this.name == null ? '' : this.name,
-				UserCount: this.userCount == null ? '' : this.userCount,
-				Description: this.description == null ? '' : this.description,
-				IsActived: this.isActived == null ? '' : this.isActived,
-			})
+			.getAllPagedList({})
 			.subscribe((res) => {
 				if (res.success != 'OK') {
 					this.totalRecords = 0
@@ -96,18 +81,6 @@ export class RoleComponent implements OnInit {
 			if(this.listItem.includes(item.value)){return}
 			return item
 		});
-	}
-
-	onPageChange(event: any) {
-		this.pageSize = event.rows
-		this.pageIndex = event.first / event.rows + 1
-		this.getListPaged()
-	}
-
-	dataStateChange() {
-		this.pageIndex = 1
-		this.table.first = 0
-		this.getListPaged()
 	}
 
 	confirm(item: RoleObject, type: string) {
@@ -170,8 +143,8 @@ export class RoleComponent implements OnInit {
 		this.roleId = id
 		this.getIsNotRole()
 		var obj = {
-			PageIndex: this.userPageIndex == 0 ? 1 : this.pageIndex,
-			PageSize: this.userPageSize == 0 ? 10 : this.pageSize,
+			PageIndex: this.userPageIndex == 0 ? 1 : this.userPageIndex,
+			PageSize: this.userPageSize == 0 ? 10 : this.userPageSize,
 			RoleId: this.roleId,
 		}
 		this.userService.getByRoleIdOnPage(obj).subscribe((res) => {

@@ -674,10 +674,10 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_HashtagUpdate", DP));
 		}
 
-		public async Task<int> CAHashtagDelete(CAHashtag _cAHashtag)
+		public async Task<int> CAHashtagDelete(HashtagDelete _cAHashtag)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _cAHashtag.Id);
+			DP.Add("Id", _cAHashtag.id);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_HashtagDelete", DP));
 		}
@@ -695,6 +695,11 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteDapperAsync<int>("CA_HashtagCount", DP));
 		}
+	}
+
+	public class HashtagDelete
+	{
+		public int? id { get; set; }
 	}
 
 	public class CANewsTypeOnPage

@@ -183,7 +183,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("delete")]
-		public async Task<ActionResult<object>> CAHashtagDelete(CAHashtag _cAHashtag)
+		public async Task<ActionResult<object>> CAHashtagDelete(HashtagDelete _cAHashtag)
 		{
 			try
 			{

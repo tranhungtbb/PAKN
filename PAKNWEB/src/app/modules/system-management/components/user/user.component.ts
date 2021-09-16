@@ -59,14 +59,6 @@ export class UserComponent implements OnInit {
 	// object User
 	modelUser: any = new UserObject2()
 	submitted: boolean = false
-	isActived: boolean
-	userName: string = ''
-	fullName: string = ''
-	phone: string = ''
-	unitId: any
-	positionId: any
-	pageIndex: number = 1
-	pageSize: number = 20
 	isShowPassword : any = false
 
 	// view child
@@ -129,38 +121,18 @@ export class UserComponent implements OnInit {
 	}
 
 	getList() {
-		this.userName = this.userName.trim()
-		this.fullName = this.fullName.trim()
-		this.phone = this.phone.trim()
-		let request = {
-			UserName: this.userName != null ? this.userName : '',
-			FullName: this.fullName != null ? this.fullName : '',
-			IsActived: this.isActived != null ? this.isActived : '',
-			Phone: this.phone != null ? this.phone : '',
-			UnitId: this.unitId != null ? this.unitId : '',
-			PositionId: this.positionId != null ? this.positionId : '',
-			TypeId: 1, // auto 1
-			PageIndex: this.pageIndex,
-			PageSize: this.pageSize,
-		}
-		this._service.getAllOnPagedList(request).subscribe((response) => {
+		this._service.getAllOnPagedList({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result.SYUserGetAllOnPage.length > 0) {
 					this.listData = response.result.SYUserGetAllOnPage
 					this.totalRecords = response.result.TotalCount
-					this.pageSize = response.result.PageSize
-					this.pageIndex = response.result.PageIndex
 				} else {
 					this.listData = []
 					this.totalRecords = 0
-					this.pageSize = 20
-					this.pageIndex = 1
 				}
 			} else {
 				this.listData = []
 				this.totalRecords = 0
-				this.pageSize = 20
-				this.pageIndex = 1
 				this._toastr.error(response.message)
 			}
 		}),
@@ -170,40 +142,6 @@ export class UserComponent implements OnInit {
 			}
 	}
 
-	onPageChange(event: any) {
-		this.pageSize = event.rows
-		this.pageIndex = event.first / event.rows + 1
-		this.getList()
-	}
-
-	dataStateChange() {
-		this.pageIndex = 1
-		this.table.first = 0
-		this.getList()
-	}
-
-	changeState(event: any) {
-		if (event) {
-			if (event.target.value == 'null') {
-				this.isActived = null
-			} else {
-				this.isActived = event.target.value
-			}
-			this.pageIndex = 1
-			this.pageSize = 20
-			this.getList()
-		}
-	}
-
-	changeType(event: any) {
-		if (event) {
-			this.pageIndex = 1
-			this.pageSize = 20
-			this.getList()
-		}
-	}
-
-	// changePass
 
 	get f() {
 		return this.formChangePassword.controls
@@ -222,9 +160,7 @@ export class UserComponent implements OnInit {
 	}
 	preChangePassword(id: any) {
 		this.submitted = false
-		if (id != this.userId) {
-			this.clearChangePasswordModel()
-		}
+		this.clearChangePasswordModel()
 		this.samePass = false
 		this.userId = id
 		this.rebuilForm()
@@ -359,7 +295,7 @@ export class UserComponent implements OnInit {
 		else{
 			this.dataSearch2.fromDate = null;
 		}
-		this.getList();
+		this.getHistory(this.hisUserId, this.emailUser);
 	}
 
 	onChangeToDate(event){
@@ -369,7 +305,7 @@ export class UserComponent implements OnInit {
 		else{
 			this.dataSearch2.toDate = null;
 		}
-		this.getList()
+		this.getHistory(this.hisUserId, this.emailUser);
 	}
 
 	getHistory(id: any, email: any, status = null) {
@@ -416,9 +352,9 @@ export class UserComponent implements OnInit {
 		this.isShowPassword = !this.isShowPassword
 	}
 	onExport() {
-		$('#modalHis').modal('hide')
 		let passingObj: any = {}
 		if (this.listHisData.length > 0) {
+			$('#modalHis').modal('hide')
 			passingObj.UserId = this.hisUserId
 			passingObj.UserProcessId = this.storeageService.getUserId()
 			passingObj.UserProcessName = this.storeageService.getFullName()
@@ -427,11 +363,12 @@ export class UserComponent implements OnInit {
 			passingObj.ToDate = this.dataSearch2.toDate;
 			passingObj.Content = this.dataSearch2.content;
 			passingObj.Status = this.dataSearch2.status;
+			this._shareData.setobjectsearch(passingObj)
+			this._shareData.sendReportUrl = 'HistoryUser?' + JSON.stringify(passingObj)
+			this._router.navigate(['quan-tri/xuat-file'])
+		}else{
+			this._toastr.error('Không có thông tin lịch sử')
 		}
-
-		this._shareData.setobjectsearch(passingObj)
-		this._shareData.sendReportUrl = 'HistoryUser?' + JSON.stringify(passingObj)
-		this._router.navigate(['quan-tri/xuat-file'])
 	}
 }
 

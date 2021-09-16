@@ -52,14 +52,6 @@ export class UserSystemComponent implements OnInit {
 	// object User
 	model = new UserSystemObject()
 	submitted: boolean = false
-	isActived: boolean
-	userName: string = ''
-	fullName: string = ''
-	phone: string = ''
-	unitId: any
-	positionId: any
-	pageIndex: number = 1
-	pageSize: number = 20
 	isShowPassword : any = false
 
 	// view child
@@ -285,36 +277,18 @@ export class UserSystemComponent implements OnInit {
 
 	
 	getList() {
-		this.userName = this.userName.trim()
-		this.fullName = this.fullName.trim()
-		this.phone = this.phone.trim()
-		let request = {
-			UserName: this.userName != null ? this.userName : '',
-			FullName: this.fullName != null ? this.fullName : '',
-			IsActived: this.isActived != null ? this.isActived : '',
-			Phone: this.phone != null ? this.phone : '',
-			TypeId: 1,
-			PageIndex: this.pageIndex,
-			PageSize: this.pageSize,
-		}
-		this._service.getUserSystemAllOnPagedList(request).subscribe((response) => {
+		this._service.getUserSystemAllOnPagedList({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result.SYUserGetAllOnPage.length > 0) {
 					this.listData = response.result.SYUserGetAllOnPage
 					this.totalRecords = response.result.TotalCount
-					this.pageSize = response.result.PageSize
-					this.pageIndex = response.result.PageIndex
 				} else {
 					this.listData = []
 					this.totalRecords = 0
-					this.pageSize = 20
-					this.pageIndex = 1
 				}
 			} else {
 				this.listData = []
 				this.totalRecords = 0
-				this.pageSize = 20
-				this.pageIndex = 1
 				this._toastr.error(response.message)
 			}
 		}),
@@ -323,40 +297,6 @@ export class UserSystemComponent implements OnInit {
 				alert(error)
 			}
 	}
-
-	onPageChange(event: any) {
-		this.pageSize = event.rows
-		this.pageIndex = event.first / event.rows + 1
-		this.getList()
-	}
-
-	dataStateChange() {
-		this.pageIndex = 1
-		this.table.first = 0
-		this.getList()
-	}
-
-	changeState(event: any) {
-		if (event) {
-			if (event.target.value == 'null') {
-				this.isActived = null
-			} else {
-				this.isActived = event.target.value
-			}
-			this.pageIndex = 1
-			this.pageSize = 20
-			this.getList()
-		}
-	}
-
-	changeType(event: any) {
-		if (event) {
-			this.pageIndex = 1
-			this.pageSize = 20
-			this.getList()
-		}
-	}
-
 
 	get f() {
 		return this.formChangePassword.controls

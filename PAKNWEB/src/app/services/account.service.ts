@@ -32,8 +32,11 @@ export class AccountService {
 		for (var b in body) {
 			form.append(b, body[b])
 		}
-
-		return this.serviceInvoker.post(form, url)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.CHANGEPASSWORD),
+			logObject: encodeURIComponent(LOG_OBJECT.NO_CONTENT),
+		}
+		return this.serviceInvoker.postwithHeaders(form, url,headers)
 	}
 
 	updateInfoIndividualCurrent(body: any) {

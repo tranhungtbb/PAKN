@@ -222,21 +222,11 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public int? PositionId { get; set; }
 
-		public async Task<List<SYUserGetAllOnPage>> SYUserGetAllOnPageDAO(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived, int? UnitId, int? TypeId, string SortDir, string SortField)
+		public async Task<List<SYUserGetAllOnPage>> SYUserGetAllOnPageDAO(int? UnitId)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("UserName", UserName);
-			DP.Add("FullName", FullName);
-			DP.Add("Phone", Phone);
-			DP.Add("IsActived", IsActived);
 			DP.Add("UnitId", UnitId);
-			DP.Add("TypeId", TypeId);
-			DP.Add("SortDir", SortDir);
-			DP.Add("SortField", SortField);
-
-			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPage>("SY_UserGetAllOnPage", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<SYUserGetAllOnPage>("SY_UserGetAllOnPageByUnitId", DP)).ToList();
 		}
 	}
 

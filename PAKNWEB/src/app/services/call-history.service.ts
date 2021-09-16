@@ -16,6 +16,6 @@ export class CallHistoryService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.CallHistoryGetPagedList)
 	}
 	delete(id:any){
-		return this.serviceInvoker.get({id},AppSettings.API_ADDRESS +'SYCallHistory/delete')
+		return this.serviceInvoker.get({id},AppSettings.API_ADDRESS + Api.CallHisDelete)
 	}
 }

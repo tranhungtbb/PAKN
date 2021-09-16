@@ -92,14 +92,9 @@ namespace PAKNAPI.Models.Chatbot
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
 
-		public async Task<List<ChatbotGetAllOnPage>> ChatbotGetAllOnPageDAO(int? PageSize, int? PageIndex, string Question, string Answer, bool? IsActived)
+		public async Task<List<ChatbotGetAllOnPage>> ChatbotGetAllOnPageDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("Question", Question);
-			DP.Add("Answer", Answer);
-			DP.Add("IsActived", IsActived);
 
 			return (await _sQLCon.ExecuteListDapperAsync<ChatbotGetAllOnPage>("ChatbotGetAllOnPage", DP)).ToList();
 		}

@@ -50,7 +50,9 @@
 					</div>
 					<div class="col-12 col-lg form-group">
 						<label class="mb-1">Đơn vị tiếp nhận </label>
-						<ng-select id="_unitId" class="form-control" [items]="lstUnitTree" placeholder="Chọn..." formControlName="unitId" [ngModel]="unitSelected.name"
+						<ng-select id="_unitId" class="form-control" [items]="lstUnitTree"
+							placeholder="Chọn..." formControlName="unitId" [ngModel]="unitSelected.name"
+							
 							(change)="changeSelectUnit($event)">
 							<ng-template ng-option-tmp let-item="item">
 								<ul>

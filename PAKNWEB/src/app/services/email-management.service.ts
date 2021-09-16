@@ -5,8 +5,7 @@ import { from, Observable } from 'rxjs'
 import { AppSettings } from '../constants/app-setting'
 import { Api } from '../constants/api'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-// import { GroupUserObject } from '../models/groupUserObject';
-// import { RequestGroupUserModel } from '../models/requestGroupUserModel';
+import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 
 @Injectable({
 	providedIn: 'root',
@@ -37,8 +36,12 @@ export class EmailManagementService {
 				form.append('files', item, item.name)
 			}
 		}
+		let headers = {
+			logAction: encodeURIComponent( body.Data.id == 0 ? LOG_ACTION.INSERT : LOG_ACTION.UPDATE),
+			logObject: encodeURIComponent(LOG_OBJECT.EMAIL),
+		}
 
-		return this.serviceInvoker.post(form, `${AppSettings.API_ADDRESS}/${Api.EmailManagementUpdate}?userId=${this.currentUserId}`)
+		return this.serviceInvoker.postwithHeaders(form, `${AppSettings.API_ADDRESS}/${Api.EmailManagementUpdate}?userId=${this.currentUserId}`, headers)
 	}
 
 	public getById(id: number): Observable<any> {

@@ -117,9 +117,10 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			return
 		}
 		if (this.checkExists['Email'] || this.checkExists['Phone']) return
-
 		this.modelUser.roleIds = this.selectedRoles.toString()
-		this.modelUser.permissionIds = this.listPermissionUserSelected.join(',')
+		let arrPermission = this.listPermissionUserSelectedByGroup.concat(this.listPermissionUserSelected)
+		arrPermission = arrPermission.filter((item, index) => arrPermission.indexOf(item) === index);
+		this.modelUser.permissionIds = arrPermission.join(',')
 		this.modelUser.countLock = 0
 		this.modelUser.lockEndOut = ''
 
@@ -283,18 +284,37 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	// 		}
 	// 	})
 	// }
-
+	listPermissionUserSelectedByGroup : any [] = []
+	selectedRolesOld : any [] = []
 	onGroupUserChange(): void {
 		this.clearPermisison()
+		this.listPermissionUserSelectedByGroup = []
 		let listGroup: any[] = []
 		for (var i = 0; i < this.selectedRoles.length; i++) {
-			for (let j = 0; j < this.rolesList.length; j++) {
-				if (this.selectedRoles[i] == this.rolesList[i].value) {
-					listGroup.push(this.rolesList[i])
+			for (var k = 0; k < this.rolesList.length; k++) {
+				if (this.selectedRoles[i] == this.rolesList[k].value) {
+					listGroup.push(this.rolesList[k])
+					this.listPermissionUserSelectedByGroup = this.listPermissionUserSelectedByGroup.concat(this.rolesList[k].permissionIds)
 					break
 				}
 			}
 		}
+		debugger
+		if(this.selectedRolesOld.length > 0){
+			let arrRolesDelete = this.selectedRoles.filter(x=>{
+				return this.selectedRolesOld.includes(x)
+			})
+			arrRolesDelete.map(de =>{
+				this.rolesList.map(r =>{
+					if(de == r.value){
+						this.listPermissionUserSelected = this.listPermissionUserSelected.filter(x=>{
+							return !r.permissionIds.includes(x)
+						})
+					}
+				})
+			})
+		}
+		this.selectedRolesOld = [...this.selectedRoles]
 
 		for (var i = 0; i < this.listPermissionUserSelected.length; i++) {
 			this.checkPermission(this.listPermissionUserSelected[i], true)

@@ -6,15 +6,6 @@
 				<li class="breadcrumb-item active"><a class="font-weight-bold">Cấu hình hệ thống</a></li>
 			</ol>
 			<div class="btn-group group-button-table" role="group">
-				<!-- <button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" *hasPermission="['3', 'A_I_3']">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
-						<path
-							d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
-						<path
-							d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-					</svg>
-					Xuất excel
-				</button> -->
 			</div>
 		</div>
 	</div>
@@ -23,8 +14,9 @@
 			<div class="card mb-0 shadow-none">
 				<div class="table-responsive">
 
-					<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-						currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+					<p-table #table [value]="listData" [paginator]="true" [showCurrentPageReport]="true"
+						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20" [totalRecords]="totalRecords" 
+						[responsive]="true" autoLayout="true"
 						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
@@ -34,27 +26,36 @@
 									</p>
 								</th>
 								<th style="width: 250px">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Tên cấu hình</strong>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'title'"
+									>
+										<strong>Tên cấu hình <p-sortIcon [field]="'title'"></p-sortIcon></strong>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="title" maxlength="100" (keydown.enter)="dataStateChange()"
+									<input class="form-control form-control-sm" maxlength="100"
+									trim [ngSwitch]="'title'" (keydown.enter)="table.filter($event?.target.value.trim(), 'title', 'contains')"
 										placeholder="Nhập tên..." />
 								</th>
 								<th style="width: 350px">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Mô tả</strong>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'description'"
+									>
+										<strong>Mô tả <p-sortIcon [field]="'description'"></p-sortIcon></strong>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="description" maxlength="100" (keydown.enter)="dataStateChange()"
+									<input class="form-control form-control-sm" maxlength="100"
+										trim [ngSwitch]="'description'" (keydown.enter)="table.filter($event?.target.value.trim(), 'description', 'contains')"
 										placeholder="Nhập mô tả..." />
 								</th>
 								<th style="width: 170px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Loại cấu hình</strong>
-										<span class="caret-tb"></span>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+										[pSortableColumn]="'type'"
+									>
+										<strong>Loại cấu hình <p-sortIcon [field]="'type'"></p-sortIcon></strong>
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select class="" [items]="listType" placeholder="Loại cấu hình ..." bindLabel="text" bindValue="value" [(ngModel)]="type"
-											[closeOnSelect]="true" (change)="dataStateChange()">
+										<ng-select [items]="listType" placeholder="Loại cấu hình ..." bindLabel="text" bindValue="value"
+										[ngSwitch]="'type'"
+										(change)="table.filter($event?.value.toString(), 'type')"
+										[closeOnSelect]="true">
 										</ng-select>
 									</div>
 								</th>

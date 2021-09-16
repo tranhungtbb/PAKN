@@ -120,3 +120,7 @@ body .ui-tree .ui-tree-container .ui-treenode .ui-treenode-content .ui-tree-togg
 	justify-content: center;
 	align-items: center;
 }
+:host ::ng-deep .ui-state-highlight, :host ::ng-deep .ui-sortable-column:hover {
+	background-color: transparent !important;
+	color: #333333 !important;
+}

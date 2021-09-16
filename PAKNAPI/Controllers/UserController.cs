@@ -518,17 +518,15 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-user-on-page")]
-		public async Task<ActionResult<object>> SYUserGetAllOnPageList(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived, int? UnitId, int? TypeId, int? PositionId)
+		public async Task<ActionResult<object>> SYUserGetAllOnPageList()
 		{
 			try
 			{
-				List<SYUserGetAllOnPageList> rsSYUserGetAllOnPage = await new SYUserGetAllOnPageList(_appSetting).SYUserGetAllOnPageDAO(PageSize, PageIndex, UserName, FullName, Phone, IsActived, UnitId, TypeId, PositionId);
+				List<SYUserGetAllOnPageList> rsSYUserGetAllOnPage = await new SYUserGetAllOnPageList(_appSetting).SYUserGetAllOnPageDAO();
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYUserGetAllOnPage", rsSYUserGetAllOnPage},
-						{"TotalCount", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? rsSYUserGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageSize : 0},
+						{"TotalCount", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? rsSYUserGetAllOnPage[0].RowNumber : 0}
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -649,18 +647,16 @@ namespace PAKNAPI.Controllers
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("get-list-user-on-page-base")]
-		public async Task<ActionResult<object>> SYUserGetAllOnPageBase(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived, int? UnitId, int? TypeId, string SortDir, string SortField)
+		[Route("get-list-user-on-page-by-unit-id")]
+		public async Task<ActionResult<object>> SYUserGetAllOnPageBase(int? UnitId)
 		{
 			try
 			{
-				List<SYUserGetAllOnPage> rsSYUserGetAllOnPage = await new SYUserGetAllOnPage(_appSetting).SYUserGetAllOnPageDAO(PageSize, PageIndex, UserName, FullName, Phone, IsActived, UnitId, TypeId, SortDir, SortField);
+				List<SYUserGetAllOnPage> rsSYUserGetAllOnPage = await new SYUserGetAllOnPage(_appSetting).SYUserGetAllOnPageDAO(UnitId);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYUserGetAllOnPage", rsSYUserGetAllOnPage},
-						{"TotalCount", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? rsSYUserGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageSize : 0},
+						{"TotalCount", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? rsSYUserGetAllOnPage[0].RowNumber : 0}
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -856,17 +852,15 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-user-system-on-page")]
-		public async Task<ActionResult<object>> SYUserSystemGetAllOnPageList(int? PageSize, int? PageIndex, string UserName, string FullName, string Phone, bool? IsActived)
+		public async Task<ActionResult<object>> SYUserSystemGetAllOnPageList()
 		{
 			try
 			{
-				List<SYUserSystemGetAllOnPageList> rsSYUserGetAllOnPage = await new SYUserSystemGetAllOnPageList(_appSetting).SYUserSystemGetAllOnPageDAO(PageSize, PageIndex, UserName, FullName, Phone, IsActived);
+				List<SYUserSystemGetAllOnPageList> rsSYUserGetAllOnPage = await new SYUserSystemGetAllOnPageList(_appSetting).SYUserSystemGetAllOnPageDAO();
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYUserGetAllOnPage", rsSYUserGetAllOnPage},
-						{"TotalCount", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? rsSYUserGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? PageSize : 0},
+						{"TotalCount", rsSYUserGetAllOnPage != null && rsSYUserGetAllOnPage.Count > 0 ? rsSYUserGetAllOnPage[0].RowNumber : 0}
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

@@ -7,17 +7,17 @@
 	<div class="container-fluid p-0">
 		<div class="row ml-0">
 			<div class="col-auto treeView px-0" style="position: relative;">
-				<button type="button" class="btn grd-blue border-0 p-2 btn-sm text-white" style="position: absolute; top: 8px; right: 15px" (click)="preCreate()" *hasPermission="['3', 'G_I_0']">
+				<button type="button" title="Thêm tài liệu" class="btn grd-blue border-0 p-2 btn-sm text-white" style="position: absolute; top: 8px; right: 15px" (click)="preCreate()" *hasPermission="['3', 'G_I_0']">
 					<i class="pi pi-plus"></i>
 				</button>
 				<p-tree id="tree-unit" [value]="treeSp" [filter]="false" emptyMessage="Không tìm mục nào">
 					<ng-template let-node pTemplate="default" style="width:100%; overflow: hidden;">
 						<a class="cursor-hand" [ngClass]="{'text-color-blue':(objSupport.id && objSupport.id == node.id)}">
 							<strong (click)="treeViewActive(node.id)">{{node.name}}</strong>
-							<span *hasPermission="['3', 'G_I_1']">
+							<span *hasPermission="['3', 'G_I_1']" title="Cập nhập tài liệu">
 								<i class="bi bi-arrow-repeat margin-icon" *ngIf="ltsUpdateMenu.includes(node.id)" (click)="preUpdate(node.id)"></i>
 							</span>
-							<span *hasPermission="['3', 'G_I_2']">
+							<span *hasPermission="['3', 'G_I_2']" title="Xóa tài liệu">
 								<i class="bi bi-x-circle margin-icon" *ngIf="ltsDeleteMenu.includes(node.id)" (click)="preDelete(node.id)"></i>
 							</span>
 						</a>

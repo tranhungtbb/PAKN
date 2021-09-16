@@ -26,13 +26,7 @@ export class ChatBotComponent implements OnInit {
 	form: FormGroup
 	model: any = new ChatbotObject()
 	submitted: boolean = false
-	isActived: boolean
-	title: string = ''
-	question: string = ''
-	answer: string = ''
 	categoryId: string = ''
-	pageIndex: number = 1
-	pageSize: number = 20
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
@@ -70,18 +64,7 @@ export class ChatBotComponent implements OnInit {
 	}
 
 	getList() {
-		this.question = this.question.trim()
-		this.answer = this.answer.trim()
-
-		let request = {
-			Question: this.question.trim(),
-			Answer: this.answer.trim(),
-			CategoryId: this.categoryId,
-			isActived: this.isActived != null ? this.isActived : '',
-			PageIndex: this.pageIndex,
-			PageSize: this.pageSize,
-		}
-		this._service.chatbotGetList(request).subscribe((response) => {
+		this._service.chatbotGetList({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
@@ -105,39 +88,7 @@ export class ChatBotComponent implements OnInit {
 		$('#modalConfirmUpdateStatus').modal('show')
 	}
 
-	onPageChange(event: any) {
-		this.pageSize = event.rows
-		this.pageIndex = event.first / event.rows + 1
-		this.getList()
-	}
-
-	dataStateChange() {
-		this.pageIndex = 1
-		this.table.first = 0
-		this.getList()
-	}
-
-	changeState(event: any) {
-		if (event) {
-			if (event.target.value == 'null') {
-				this.isActived = null
-			} else {
-				this.isActived = event.target.value
-			}
-			this.pageIndex = 1
-			this.pageSize = 20
-			this.getList()
-		}
-	}
-
-	changeType(event: any) {
-		if (event) {
-			this.pageIndex = 1
-			this.pageSize = 20
-			this.getList()
-		}
-	}
-
+	title : any
 	preCreate() {
 		this.model = new ChatbotObject()
 		this.rebuilForm()

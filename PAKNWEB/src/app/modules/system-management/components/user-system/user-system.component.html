@@ -22,8 +22,8 @@
 			<div class="card mb-0 shadow-none">
 				<div class="table-responsive">
 
-					<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-						currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+					<p-table #table [value]="listData" [paginator]="true" [showCurrentPageReport]="true"
+						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
 						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
@@ -33,36 +33,47 @@
 									</p>
 								</th>
 								<th>
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Tên tài khoản</strong>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'userName'">
+										<strong>Tên tài khoản <p-sortIcon [field]="'userName'"></p-sortIcon></strong>
 										
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="userName" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập ..." />
+									<input class="form-control form-control-sm"
+										trim [ngSwitch]="'userName'" (keydown.enter)="table.filter($event?.target.value.trim(), 'userName', 'contains')"
+									 	placeholder="Nhập ..." />
 								</th>
 								<th style="min-width: 180px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Họ và tên</strong>
-										<!-- <strong style="white-space: nowrap;">Họ và tên</strong> -->
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'fullName'">
+										<strong>Họ và tên <p-sortIcon [field]="'fullName'"></p-sortIcon></strong>
 									</p>
-									<input type="text" class="form-control form-control-sm" [(ngModel)]="fullName" (keydown.enter)="dataStateChange()" placeholder="Nhập ...">
+									<input type="text" class="form-control form-control-sm"
+										trim [ngSwitch]="'fullName'" (keydown.enter)="table.filter($event?.target.value.trim(), 'fullName', 'contains')"
+										placeholder="Nhập ...">
 								</th>
 								
 								<th style="width: 150px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Điện thoại</strong>
-										
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'phone'">
+										<strong>Điện thoại <p-sortIcon [field]="'phone'"></p-sortIcon></strong>
 									</p>
-									<input type="text" class="form-control form-control-sm" [(ngModel)]="phone" (keydown.enter)="dataStateChange()" placeholder="Nhập...">
+									<input type="text" class="form-control form-control-sm" 
+									trim [ngSwitch]="'phone'" (keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')"
+									 placeholder="Nhập...">
 								</th>
 								<th style="width: 120px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Trạng thái</strong>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'isActived'">
+										<strong>Trạng thái <p-sortIcon [field]="'isActived'"></p-sortIcon></strong>
 										
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="isActived"
-										style="width: 120px !important;"
-											[closeOnSelect]="true" (change)="dataStateChange()">
+										<ng-select class="" [items]="listStatus" 
+											placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
+											style="width: 120px !important;"
+											[ngSwitch]="'isActived'"
+											(change)="table.filter($event?.value.toString(), 'isActived')"
+											[closeOnSelect]="true">
 										</ng-select>
 									</div>
 								</th>

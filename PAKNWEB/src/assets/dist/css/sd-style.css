@@ -1727,3 +1727,11 @@ table thead .form-control ng-select {
 	background-color: transparent !important;
 	color: #333333 !important;
 }
+
+:host ::ng-deep .ui-paginator .ui-paginator-first{
+	background-color: transparent !important;
+}
+:host ::ng-deep .ui-widget-header .ui-state-default{
+	background-color: transparent !important;
+}
+

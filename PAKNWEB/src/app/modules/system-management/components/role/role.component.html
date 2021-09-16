@@ -30,8 +30,8 @@
 			<div class="card mb-0 shadow-none">
 				<div class="table-responsive">
 
-					<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-						currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+					<p-table #table [value]="listData" [paginator]="true" [showCurrentPageReport]="true"
+						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
 						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
@@ -41,37 +41,51 @@
 									</p>
 								</th>
 								<th style="max-width: 180px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Tên vai trò</strong>
-										<span class="caret-tb"></span>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+										[pSortableColumn]="'name'"
+									>
+										<strong>Tên vai trò <p-sortIcon [field]="'name'"></p-sortIcon></strong>
+										
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+									<input class="form-control form-control-sm"
+										trim [ngSwitch]="'name'" (keydown.enter)="table.filter($event?.target.value.trim(), 'name', 'contains')"
+									 	maxlength="100" placeholder="Nhập tên..." />
 								</th>
 								<th>
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Mô tả</strong>
-										<span class="caret-tb"></span>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+										[pSortableColumn]="'description'"
+									>
+										<strong>Mô tả <p-sortIcon [field]="'description'"></p-sortIcon></strong>
+										
 									</p>
-									<input type="text" class="form-control form-control-sm" [(ngModel)]="description" (keydown.enter)="dataStateChange()"
+									<input type="text" class="form-control form-control-sm"
+										trim [ngSwitch]="'description'" (keydown.enter)="table.filter($event?.target.value.trim(), 'description', 'contains')"
 										placeholder="Nhập mô tả...">
 								</th>
 
 								<th style="width: 160px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Số người</strong>
-										<span class="caret-tb"></span>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'userCount'"
+									>
+										<strong>Số người <p-sortIcon [field]="'userCount'"></p-sortIcon></strong>
 									</p>
-									<input type="text" class="form-control form-control-sm" [(ngModel)]="userCount" (keydown.enter)="dataStateChange()"
+									<input type="text" class="form-control form-control-sm"
+										numbersOnly [ngSwitch]="'userCount'" 
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'userCount', 'contains')"
 										placeholder="Nhập số lượng...">
 								</th>
 								<th style="width: 180px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Trạng thái</strong>
-										<span class="caret-tb"></span>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'isActived'"
+									>
+										<strong>Trạng thái <p-sortIcon [field]="'isActived'"></p-sortIcon></strong>
+										
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="isActived"
-											[closeOnSelect]="true" (change)="dataStateChange()">
+										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
+											[closeOnSelect]="true" [ngSwitch]="'isActived'"
+											(change)="table.filter($event?.value.toString(), 'isActived')"
+											>
 										</ng-select>
 									</div>
 								</th>
@@ -185,28 +199,28 @@
 							<th>
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Tên người dùng</strong>
-									<span class="caret-tb"></span>
+									
 								</p>
 							</th>
 
 							<th>
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Tên đăng nhập</strong>
-									<span class="caret-tb"></span>
+									
 								</p>
 							</th>
 
 							<th>
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Số điện thoại</strong>
-									<span class="caret-tb"></span>
+									
 								</p>
 							</th>
 
 							<th style="width: 180px;">
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Trạng thái</strong>
-									<span class="caret-tb"></span>
+									
 								</p>
 							</th>
 							<td style="text-align: center; width: 100px;">

@@ -25,15 +25,9 @@ export class TimeSettingComponent implements OnInit {
 	form: FormGroup
 	model: any = new TimeObject()
 	submitted: boolean = false
-	isActived: boolean
-	title: string = ''
-	name: string = ''
 	time: Date
 	date1: Date
 	date11: Date = new Date('01/11/2021')
-	description: string = ''
-	pageIndex: number = 1
-	pageSize: number = 20
 	listDate: []
 	lstDate = []
 	@ViewChild('table', { static: false }) table: any
@@ -119,18 +113,8 @@ export class TimeSettingComponent implements OnInit {
 	}
 
 	getList() {
-		this.name = this.name.trim()
-		this.description = this.description.trim()
-		let request = {
-			Name: this.name,
-			Time: this.time == null || this.time.toString() == 'Invalid Date' ? '' : this.time.toLocaleDateString(),
-			Description: this.description.trim(),
-			isActived: this.isActived != null ? this.isActived : '',
-			PageIndex: this.pageIndex,
-			PageSize: this.pageSize,
-		}
 
-		this._service.getSystemTime(request).subscribe((response) => {
+		this._service.getSystemTime({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
@@ -152,44 +136,7 @@ export class TimeSettingComponent implements OnInit {
 		this.dataUpdate = data
 		$('#modalConfirmUpdateStatus').modal('show')
 	}
-	onPageChange(event: any) {
-		this.pageSize = event.rows
-		this.pageIndex = event.first / event.rows + 1
-		this.getList()
-	}
-
-	dataStateChange() {
-		this.pageIndex = 1
-		this.table.first = 0
-		$(document).ready(function () {
-			if ($('#TimeSearch').val() == 'Invalid date') {
-				$('#TimeSearch').val('')
-			}
-		})
-		this.getList()
-	}
-
-	changeState(event: any) {
-		if (event) {
-			if (event.target.value == 'null') {
-				this.isActived = null
-			} else {
-				this.isActived = event.target.value
-			}
-			this.pageIndex = 1
-			this.pageSize = 20
-			this.getList()
-		}
-	}
-
-	changeType(event: any) {
-		if (event) {
-			this.pageIndex = 1
-			this.pageSize = 20
-			this.getList()
-		}
-	}
-
+	title : any
 	preCreate() {
 		this.model = new FieldObject()
 		this.rebuilForm()

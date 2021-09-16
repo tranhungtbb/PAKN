@@ -44,7 +44,7 @@
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tiêu đề</strong>
-											<span class="caret-tb"></span>
+											
 										</p>
 										<input class="form-control form-control-sm" [(ngModel)]="title" maxlength="100" (keydown.enter)="dataStateChange()"
 											placeholder="Nhập tên..." />
@@ -52,7 +52,7 @@
 									<th style="width: 220px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Thời gian</strong>
-											<span class="caret-tb"></span>
+											
 										</p>
 										<div class="input-group">
 											<input class="form-control form-control-sm" (bsValueChange)="sendDateChange($event)" placeholder="Chọn ngày" bsDaterangepicker
@@ -67,7 +67,7 @@
 									<th style="width: 250px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Địa điểm</strong>
-											<span class="caret-tb"></span>
+											
 										</p>
 										<input type="text" class="form-control form-control-sm" [(ngModel)]="place" (keydown.enter)="dataStateChange()"
 											placeholder="Nhập địa điểm...">
@@ -75,7 +75,7 @@
 									<th style="width: 180px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Trạng thái</strong>
-											<span class="caret-tb"></span>
+											
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm" style="max-width: 180px;">
 											<ng-select [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="status"
@@ -290,7 +290,7 @@
 							<th style="width: 40%;">
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Nội dung</strong>
-									<span class="caret-tb"></span>
+									
 								</p>
 								<input class="form-control form-control-sm" [(ngModel)]="hisContent" maxlength="100" (keydown.enter)="dataStateChange2()"
 									placeholder="Nhập nội dung..." />
@@ -299,7 +299,7 @@
 							<th style="width: 20%;">
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Người tạo</strong>
-									<span class="caret-tb"></span>
+									
 								</p>
 								<input class="form-control form-control-sm" [(ngModel)]="hisUserCreate" maxlength="100" (keydown.enter)="dataStateChange2()"
 									placeholder="Nhập tên..." />
@@ -308,7 +308,7 @@
 							<th style="width: 15%;">
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Ngày tạo</strong>
-									<span class="caret-tb"></span>
+									
 								</p>
 								<div class="dropdown bootstrap-select form-control form-control-sm">
 									<input class="form-control form-control-sm" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" [(ngModel)]="hisCreateDate"
@@ -324,7 +324,7 @@
 							<th style="width: 180px;">
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Trạng thái</strong>
-									<span class="caret-tb"></span>
+									
 								</p>
 								<div class="dropdown bootstrap-select form-control form-control-sm">
 									<ng-select class="" [items]="listHisStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="hisStatus"

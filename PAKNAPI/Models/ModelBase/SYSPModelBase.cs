@@ -279,14 +279,9 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<SYConfig>("SY_ConfigGetByType", DP)).ToList();
 		}
 
-		public async Task<List<SYConfig>> SYConfigGetAllOnPageDAO(string Title,string Description, int? Type, int? PageSize, int? PageIndex)
+		public async Task<List<SYConfig>> SYConfigGetAllOnPageDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Title", Title);
-			DP.Add("Description", Description);
-			DP.Add("Type", Type);
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYConfig>("[SY_ConfigGetAllOnPage]", DP)).ToList();
 		}
@@ -905,15 +900,9 @@ namespace PAKNAPI.ModelBase
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
 
-		public async Task<List<SYRoleGetAllOnPage>> SYRoleGetAllOnPageDAO(int? PageSize, int? PageIndex, int? UserCount, string Name, string Description, bool? IsActived)
+		public async Task<List<SYRoleGetAllOnPage>> SYRoleGetAllOnPageDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("UserCount", UserCount);
-			DP.Add("Name", Name);
-			DP.Add("Description", Description);
-			DP.Add("IsActived", IsActived);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYRoleGetAllOnPage>("SY_RoleGetAllOnPage", DP)).ToList();
 		}
@@ -1248,16 +1237,9 @@ namespace PAKNAPI.ModelBase
 		public DateTime? Time { get; set; }
 		public string Description { get; set; }
 
-		public async Task<List<SYTimeGetAllOnPage>> SYTimeGetAllOnPageDAO(int? PageSize, int? PageIndex, string Name, string Code, DateTime? Time, string Description, bool? IsActived)
+		public async Task<List<SYTimeGetAllOnPage>> SYTimeGetAllOnPageDAO()
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			DP.Add("Name", Name);
-			DP.Add("Code", Code);
-			DP.Add("Time", Time);
-			DP.Add("Description", Description);
-			DP.Add("IsActived", IsActived);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYTimeGetAllOnPage>("SY_TimeGetAllOnPage", DP)).ToList();
 		}

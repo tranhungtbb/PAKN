@@ -180,17 +180,15 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-role-on-page")]
-		public async Task<ActionResult<object>> SYRoleGetAllOnPageBase(int? PageSize, int? PageIndex, int? UserCount, string Name, string Description, bool? IsActived)
+		public async Task<ActionResult<object>> SYRoleGetAllOnPageBase()
 		{
 			try
 			{
-				List<SYRoleGetAllOnPage> rsSYRoleGetAllOnPage = await new SYRoleGetAllOnPage(_appSetting).SYRoleGetAllOnPageDAO(PageSize, PageIndex, UserCount, Name, Description, IsActived);
+				List<SYRoleGetAllOnPage> rsSYRoleGetAllOnPage = await new SYRoleGetAllOnPage(_appSetting).SYRoleGetAllOnPageDAO();
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYRoleGetAllOnPage", rsSYRoleGetAllOnPage},
-						{"TotalCount", rsSYRoleGetAllOnPage != null && rsSYRoleGetAllOnPage.Count > 0 ? rsSYRoleGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsSYRoleGetAllOnPage != null && rsSYRoleGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsSYRoleGetAllOnPage != null && rsSYRoleGetAllOnPage.Count > 0 ? PageSize : 0},
+						{"TotalCount", rsSYRoleGetAllOnPage != null && rsSYRoleGetAllOnPage.Count > 0 ? rsSYRoleGetAllOnPage[0].RowNumber : 0}
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}

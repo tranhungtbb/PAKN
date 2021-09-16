@@ -7,15 +7,6 @@
 			</ol>
 			<!-- <div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách lĩnh vực</div> -->
 			<div class="btn-group group-button-table" role="group">
-				<!-- <button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
-						<path
-							d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
-						<path
-							d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-					</svg>
-					Xuất excel
-				</button> -->
 				<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="modalUserCreateOrUpdate(null)" *hasPermission="['3', 'A_IX_6']">
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
@@ -30,8 +21,8 @@
 			<div class="card mb-0 shadow-none">
 				<div class="table-responsive">
 
-					<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-						currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+					<p-table #table [value]="listData" [paginator]="true" [showCurrentPageReport]="true"
+						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
 						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
@@ -41,61 +32,78 @@
 									</p>
 								</th>
 								<th>
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Tên tài khoản</strong>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'userName'">
+										<strong>Tên tài khoản <p-sortIcon [field]="'userName'"></p-sortIcon></strong>
 										
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="userName" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập ..." />
+									<input class="form-control form-control-sm"
+									trim [ngSwitch]="'userName'" (keydown.enter)="table.filter($event?.target.value.trim(), 'userName', 'contains')"
+									maxlength="100" placeholder="Nhập ..." />
 								</th>
 								<th style="min-width: 180px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Họ và tên</strong>
-										<!-- <strong style="white-space: nowrap;">Họ và tên</strong> -->
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'fullName'"
+									>
+										<strong>Họ và tên <p-sortIcon [field]="'fullName'"></p-sortIcon></strong>
 									</p>
-									<input type="text" class="form-control form-control-sm" [(ngModel)]="fullName" (keydown.enter)="dataStateChange()" placeholder="Nhập ...">
+									<input type="text" class="form-control form-control-sm"
+										trim [ngSwitch]="'fullName'" (keydown.enter)="table.filter($event?.target.value.trim(), 'fullName', 'contains')"
+										placeholder="Nhập ...">
 								</th>
 								<th style="width: 140px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Chức vụ</strong>
-										
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'positionName'">
+										<strong>Chức vụ <p-sortIcon [field]="'positionName'"></p-sortIcon></strong>
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select placeholder="Chọn..." [closeOnSelect]="true" [(ngModel)]="positionId" (change)="dataStateChange()">
-											<ng-option *ngFor="let nt of positionsList" [value]="nt.value">
-												{{nt.text}}
-											</ng-option>
+										<ng-select placeholder="Chọn..." [closeOnSelect]="true"
+											bindLabel="text" 
+											bindValue="value" 
+											[items]= 'positionsList'
+											[ngSwitch]="'positionName'"
+											(change)="table.filter($event?.value.toString(), 'positionName')"
+										>
 										</ng-select>
 									</div>
 								</th>
 								<th style="width: 120px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Điện thoại</strong>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'phone'">
+										<strong>Điện thoại <p-sortIcon [field]="'phone'"></p-sortIcon></strong>
 										
 									</p>
-									<input type="text" class="form-control form-control-sm" [(ngModel)]="phone" (keydown.enter)="dataStateChange()" placeholder="Nhập...">
+									<input type="text" class="form-control form-control-sm"
+									trim [ngSwitch]="'phone'" (keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')"
+									placeholder="Nhập...">
 								</th>
 								<th style="width: 160px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Đơn vị</strong>
-										
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+										[pSortableColumn]="'unitName'"
+									>
+										<strong>Đơn vị <p-sortIcon [field]="'unitName'"></p-sortIcon></strong>
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select placeholder="Chọn..." [closeOnSelect]="true" [(ngModel)]="unitId" (change)="dataStateChange()" style="width: 160px !important;">
-											<ng-option *ngFor="let nt of unitsList" [value]="nt.value">
-												{{nt.text}}
-											</ng-option>
+										<ng-select placeholder="Chọn..." [closeOnSelect]="true" [items]= 'unitsList'
+											bindLabel="text" 
+											bindValue="value"
+											[ngSwitch]="'unitName'"
+											(change)="table.filter($event?.value.toString(), 'unitName')"
+											style="width: 160px !important;">
 										</ng-select>
 									</div>
 								</th>
 								<th style="width: 110px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Trạng thái</strong>
-										
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'isActived'">
+										<strong>Trạng thái <p-sortIcon [field]="'isActived'"></p-sortIcon></strong>
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="isActived"
-										style="width: 120px !important;"
-											[closeOnSelect]="true" (change)="dataStateChange()">
+										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" 
+											[ngSwitch]="'isActived'"
+											(change)="table.filter($event?.value.toString(), 'isActived')"
+											style="width: 120px !important;"
+											[closeOnSelect]="true">
 										</ng-select>
 									</div>
 								</th>
@@ -206,9 +214,8 @@
 
 
 <div class="modal fade" id="modalHis">
-	<div class="modal-dialog modal-dialog-centered" style="max-width: 75%" role="document">
+	<div class="modal-dialog modal-dialog-centered" style="max-width: 80%" role="document">
 		<div class="modal-content rounded">
-			<!-- <form class="form-horizontal" autocomplete="off"> -->
 				<div class="panel panel-default no-margin">
 					<div class="modal-header" style="border: none;">
 						<button class="close btn-close-modal" data-dismiss="modal">
@@ -262,7 +269,7 @@
 										(change)="dataHisStateChange()">
 									</ng-select>
 								</div>
-								<div class="col-12 col-sm-3 form-group">
+								<div class="col-12 col-sm-3 form-group" style="padding-right: 0px;">
 									<label></label>
 									<div style="display:flex;">
 										<a (click)="dataHisStateChange()" class="btn grd-blue btn-sm rounded border-0 mr-3 text-white">
@@ -282,7 +289,7 @@
 									<div class="table-responsive">
 
 										<p-table #table2 [value]="listHisData" [lazy]="true" (onLazyLoad)="onHisPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-											currentPageReportTemplate="Tổng số {{hisTotalRecords}}" [rows]="pageSize" [totalRecords]="hisTotalRecords" [responsive]="true"
+											currentPageReportTemplate="Tổng số {{hisTotalRecords}}" [rows]="hisPageSize" [totalRecords]="hisTotalRecords" [responsive]="true"
 											autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 
 											<ng-template pTemplate="body" let-item>

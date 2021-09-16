@@ -63,7 +63,6 @@
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Cá nhân</strong>
-										<span class="caret-tb" (click)="onSortIndividual('FullName')"></span>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.fullName" maxlength="100" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập ..." />
@@ -71,7 +70,6 @@
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Nơi ở hiện tại</strong>
-										<span class="caret-tb" (click)="onSortIndividual('Address')"></span>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.address" maxlength="100" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập ..." />
@@ -79,7 +77,6 @@
 								<th style="width: 150px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Số điện thoại</strong>
-										<span class="caret-tb" (click)="onSortIndividual('Phone')"></span>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.phone" maxlength="11" 
 									(keydown.enter)="dataStateChange()"
@@ -88,7 +85,6 @@
 								<th style="width: 200px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Email</strong>
-										<span class="caret-tb" (click)="onSortIndividual('Email')"></span>
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.email" maxlength="256" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập ..." />
@@ -96,7 +92,6 @@
 								<th style="max-width: 160px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 										<strong>Trạng thái</strong>
-										<span class="caret-tb" (click)="onSortIndividual('Email')"></span>
 									</p>
 									<div style="max-width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
 										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"

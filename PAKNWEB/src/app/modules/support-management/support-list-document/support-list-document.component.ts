@@ -143,14 +143,15 @@ export class SupportListDocumentComponent implements OnInit {
 		$('#modal').modal('show')
 	}
 	onSave() {
+		this.submitted = true
+		
+		if (this.form.invalid) {
+			return
+		}
 		if (this.files.length == 0) {
 			this.toastr.error('Vui lòng chọn file đính kèm')
 			return
 		}
-		if (this.form.invalid) {
-			return
-		}
-		this.submitted = true
 		let obj = {
 			model: this.model,
 			files: this.files,

@@ -20,9 +20,8 @@
 		<div class="col-lg-12">
 			<div class="card mb-0 shadow-none">
 				<div class="table-responsive">
-
-					<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-						currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+					<p-table #table [value]="listData" [paginator]="true" [showCurrentPageReport]="true"
+						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
 						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
@@ -32,39 +31,54 @@
 									</p>
 								</th>
 								<th style="max-width: 210px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Tên ngày nghỉ</strong>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'name'"
+									>
+										<strong>Tên ngày nghỉ <p-sortIcon [field]="'name'"></p-sortIcon></strong>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="name" maxlength="100" (keydown.enter)="dataStateChange()" placeholder="Nhập tên..." />
+									<input class="form-control form-control-sm" maxlength="100"
+										trim [ngSwitch]="'name'" (keydown.enter)="table.filter($event?.target.value.trim(), 'name', 'contains')"
+									 	placeholder="Nhập tên..." />
 								</th>
 								<th style="width: 200px">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Ngày nghỉ</strong>
-										<span class="caret-tb"></span>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+										[pSortableColumn]="'time'"
+									>
+										<strong>Ngày nghỉ <p-sortIcon [field]="'time'"></p-sortIcon></strong>
 									</p>
 									<div class="input-group">
-										<input class="form-control form-control-sm" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="TimeSearch"
-										[(ngModel)]="time" (keydown.enter)="dataStateChange()" appBsDatepickerInvalid
+										<input class="form-control form-control-sm"
+										trim [ngSwitch]="'time'" (keydown.enter)="table.filter($event?.target.value.trim(), 'time', 'contains')"
+										placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="TimeSearch" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 										<div class="input-group-addon p-2" style="height: 34px;">
-											<i class="bi bi-calendar-date" (click)="dataStateChange()" [attr.aria-expanded]="n.isOpen"></i>
+											<i class="bi bi-calendar-date" [attr.aria-expanded]="n.isOpen"></i>
 										</div>
 									</div>
 								</th>
 								<th>
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Mô tả</strong>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+										[pSortableColumn]="'description'"
+									>
+										<strong>Mô tả <p-sortIcon [field]="'description'"></p-sortIcon></strong>
 									</p>
-									<input class="form-control form-control-sm" [(ngModel)]="description" maxlength="100" (keydown.enter)="dataStateChange()"
+									<input class="form-control form-control-sm" maxlength="100"
+										trim [ngSwitch]="'description'" (keydown.enter)="table.filter($event?.target.value.trim(), 'description', 'contains')"
 										placeholder="Nhập mô tả..." />
 								</th>
 								<th style="width: 200px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
-										<strong>Trạng thái</strong>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+										[pSortableColumn]="'isActived'"
+									>
+										<strong>Trạng thái <p-sortIcon [field]="'isActived'"></p-sortIcon></strong>
 									</p>
 									<div style="width: 100%" class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="isActived"
-											[closeOnSelect]="true" (change)="dataStateChange()">
+										<ng-select [items]="listStatus" placeholder="Trạng thái ..."
+											bindLabel="text" bindValue="value"
+											[closeOnSelect]="true"
+											[ngSwitch]="'isActived'"
+											(change)="table.filter($event?.value.toString(), 'isActived')"
+										>
 										</ng-select>
 									</div>
 								</th>

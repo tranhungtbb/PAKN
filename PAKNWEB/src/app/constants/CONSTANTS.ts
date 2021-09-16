@@ -49,6 +49,7 @@ export class LOG_OBJECT {
 	public static CA_NEWS_TYPE = 'Loại tin tức'
 	public static DAM_ADMINISTRATOR = 'Thủ tục hành chính'
 
+	public static EMAIL = 'Email'
 	public static SMS_EMAIL = 'Tin nhắn sms'
 	public static HIS_EMAIL = 'Lịch sử sms'
 	public static SY_INVITATION = 'Thư mời'

@@ -1,5 +1,7 @@
 export class EmailObject {
-	constructor() {}
+	constructor() {
+		this.id = 0
+	}
 	id: number
 	title: string
 	content: string

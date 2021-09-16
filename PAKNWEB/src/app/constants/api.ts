@@ -110,7 +110,7 @@ export class Api {
 	public static PositionUpdate = 'position/update'
 
 	// user
-	public static UserGetPagedList = 'user/get-list-user-on-page-base'
+	public static UserGetPagedList = 'user/get-list-user-on-page-by-unit-id'
 	public static UserGetAllOnPagedList = 'user/get-list-user-on-page'
 	public static UsersGetDataForCreate = 'user/get-data-for-create'
 	public static UserGetById = 'user/get-by-id'
@@ -376,6 +376,7 @@ export class Api {
 
 	//call history
 	public static CallHistoryGetPagedList = 'call-history/get-list-call-history-on-page'
+	public static CallHisDelete = 'call-history/delete'
 
 
 

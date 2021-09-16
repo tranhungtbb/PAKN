@@ -72,16 +72,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	totalCount_Unit: number = 0
 	unitPageCount: number = 0
 
-	/*user query*/
-	queryUser: any = {
-		pageSize: 20,
-		pageIndex: 1,
-		userName: '',
-		email: '',
-		fullName: '',
-		phone: '',
-		isActived: null,
-	}
+
 	totalCount_User: number = 0
 	userPageCount: number = 0
 
@@ -158,8 +149,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.query.parentId = id
 		this.query.pageIndex = 1
 		this.totalCount_Unit = 0
-
-		this.queryUser.pageIndex = 1
 		this.totalCount_User = 0
 
 		this.getUnitInfo(id)
@@ -213,43 +202,21 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		)
 	}
 
-	/*start user area*/
-	onSortUser(fieldName: string) {
-		this.usSortField = fieldName
-		this.usSortDir = this.usSortDir == 'DESC' ? 'ASC' : 'DESC'
-		this.getUserPagedList()
-	}
+
 	getUserPagedList() {
-		this.queryUser.userName = this.queryUser.userName.trim()
-		this.queryUser.email = this.queryUser.email.trim()
-		this.queryUser.fullName = this.queryUser.fullName.trim()
-		this.queryUser.phone = this.queryUser.phone.trim()
 		this.userService
 			.getAllPagedList({
-				unitid: this.unitObject.id,
-				pageSize: this.queryUser.pageSize,
-				pageIndex: this.queryUser.pageIndex,
-				userName: this.queryUser.userName.trim(),
-				email: this.queryUser.email.trim(),
-				fullName: this.queryUser.fullName.trim(),
-				phone: this.queryUser.phone.trim(),
-				isActived: this.queryUser.isActived == null ? '' : this.queryUser.isActived,
-				sortDir: this.usSortDir,
-				sortField: this.usSortField,
+				unitid: this.unitObject.id
 			})
 			.subscribe((res) => {
 				if (res.success != 'OK') {
 					this.listUserPaged = []
 					this.userPageCount = 0
-					this.queryUser.pageIndex = 1
-					this.queryUser.pageSize = 20
 					this.totalCount_User = 0
 				} else {
 					if (res.result.SYUserGetAllOnPage.length == 0) {
 						this.listUserPaged = []
 						this.userPageCount = 0
-						this.queryUser.pageIndex = 1
-						this.queryUser.pageSize = 20
 						this.totalCount_User = 0
 					} else {
 						this.listUserPaged = res.result.SYUserGetAllOnPage
@@ -259,14 +226,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				}
 			})
 	}
-	onUserFilterChange() {
-		this.getUserPagedList()
-	}
-	onUserPageChange(event: any) {
-		this.queryUser.pageSize = event.rows
-		this.queryUser.pageIndex = event.first / event.rows + 1
-		this.getUserPagedList()
-	}
+	
 
 	@ViewChild(UserCreateOrUpdateComponent, { static: false }) childCreateOrUpdateUser: UserCreateOrUpdateComponent
 	modalUserCreateOrUpdate(key: any = 0) {

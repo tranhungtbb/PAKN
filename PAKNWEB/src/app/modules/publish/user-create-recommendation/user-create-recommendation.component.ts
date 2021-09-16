@@ -400,6 +400,10 @@ export class CreateRecommendationComponent implements OnInit {
 		this.model = new RecommendationObject()
 		this.model.typeObject = this.storageService.getTypeObject();
 		this.captchaCode = null
+		this.unitSelected.name = null
+		$('#_unitId .ng-input input').val('')
+		this.showEditContent()
+		this.resultsRecommendation = []
 		this.form.reset({
 			title: this.model.title,
 			content: this.model.content,

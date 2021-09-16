@@ -50,17 +50,15 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-system-config-on-page")]
-		public async Task<ActionResult<object>> SYConfigGetAllOnPageBase(string Title, string Description, int? Type, int? PageSize, int? PageIndex)
+		public async Task<ActionResult<object>> SYConfigGetAllOnPageBase()
 		{
 			try
 			{
-				List<SYConfig> rsSYConfigGetAllOnPage = await new SYConfig(_appSetting).SYConfigGetAllOnPageDAO(Title, Description, Type, PageSize, PageIndex);
+				List<SYConfig> rsSYConfigGetAllOnPage = await new SYConfig(_appSetting).SYConfigGetAllOnPageDAO();
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYConfigGetAllOnPageBase", rsSYConfigGetAllOnPage},
-						{"TotalCount", rsSYConfigGetAllOnPage != null && rsSYConfigGetAllOnPage.Count > 0 ? rsSYConfigGetAllOnPage[0].RowNumber : 0},
-						{"PageIndex", rsSYConfigGetAllOnPage != null && rsSYConfigGetAllOnPage.Count > 0 ? PageIndex : 0},
-						{"PageSize", rsSYConfigGetAllOnPage != null && rsSYConfigGetAllOnPage.Count > 0 ? PageSize : 0},
+						{"TotalCount", rsSYConfigGetAllOnPage != null && rsSYConfigGetAllOnPage.Count > 0 ? rsSYConfigGetAllOnPage[0].RowNumber : 0}
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -165,11 +163,11 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("get-list-sys-time-on-page")]
-		public async Task<ActionResult<object>> SYTimeGetAllOnPageBase(int? PageSize, int? PageIndex, string Name, string Code, DateTime? Time, string Description, bool? IsActived)
+		public async Task<ActionResult<object>> SYTimeGetAllOnPageBase()
 		{
 			try
 			{
-				List<SYTimeGetAllOnPage> rsSYTimeGetAllOnPage = await new SYTimeGetAllOnPage(_appSetting).SYTimeGetAllOnPageDAO(PageSize, PageIndex, Name, Code, Time, Description, IsActived);
+				List<SYTimeGetAllOnPage> rsSYTimeGetAllOnPage = await new SYTimeGetAllOnPage(_appSetting).SYTimeGetAllOnPageDAO();
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"SYTimeGetAllOnPage", rsSYTimeGetAllOnPage},
