@@ -130,6 +130,7 @@ export class SystemLogComponent implements OnInit {
 			}
 	}
 	getList() {
+		this.dataSearch.description = this.dataSearch.description == null ? '' : this.dataSearch.description.trim()
 		let req = {
 			CreateDate: this.dataSearch.createDate == null ? '' : this.dataSearch.createDate.toDateString(),
 			PageIndex: this.pageIndex,

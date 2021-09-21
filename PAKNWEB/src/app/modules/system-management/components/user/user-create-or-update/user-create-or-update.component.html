@@ -95,7 +95,7 @@
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Đơn vị <span class="cl-red">(*)</span></label>
 									<input *ngIf="!isAdmin && modelUser.id > 0" disabled value="{{modelUser.unitName}}" type="text" class="form-control">
-									<ng-select [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" class="form-control" [items]="unitsList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="modelUser.unitId"
+									<ng-select notFoundText="Không có dữ liệu" [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" class="form-control" [items]="unitsList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="modelUser.unitId"
 										formControlName="unitId" [closeOnSelect]="true">
 									</ng-select>
 									<div *ngIf="(userFormSubmitted && fUser.unitId.invalid)||(fUser.unitId.invalid && (fUser.unitId.dirty || fUser.unitId.touched))"

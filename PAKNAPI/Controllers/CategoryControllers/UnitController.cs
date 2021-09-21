@@ -113,7 +113,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		{
 			try
 			{
-				List<CAFieldGetDropdown> rsCAFieldGetDropdown = await new CAFieldGetDropdown(_appSetting).CAFieldGetDropdownDAO();
+				List<CAFieldGetDropdown> rsCAFieldGetDropdown = await new CAFieldGetDropdown(_appSetting).CAFieldGetDropdownForCreateUnitDAO();
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"lstField", rsCAFieldGetDropdown},

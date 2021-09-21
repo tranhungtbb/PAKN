@@ -79,7 +79,8 @@
 					<div class="row">
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">Lĩnh vực <span class="cl-red">(*)</span></label>
-							<ng-select placeholder="Chọn..." class="form-control" [items]="lstField" bindValue="value" bindLabel="text" formControlName="field"
+							<ng-select placeholder="Chọn..." class="form-control" 
+							[items]="lstField" bindValue="value" bindLabel="text" formControlName="field"
 								[(ngModel)]="model.field">
 								<ng-template ng-option-tmp let-item="item">
 									<div title="{{item.text}}">{{item.text}}</div>
@@ -114,7 +115,8 @@
 					<div class="form-row align-items-end justify-content-between">
 						<div class="col-12 form-group">
 							<label class="mb-1">Đơn vị tiếp nhận <span class="cl-red">(*)</span></label>
-							<ng-select formControlName="unitId" class="form-control" [(ngModel)]="model.unitId" [closeOnSelect]="true" [searchable]="false" placeholder="Chọn...">
+							<ng-select formControlName="unitId" class="form-control" 
+								[(ngModel)]="model.unitId" [closeOnSelect]="true" [searchable]="true" placeholder="Chọn...">
 								<div *ngFor="let item of lstUnit">
 									<ng-option [value]="item.value">
 										{{item.text}}

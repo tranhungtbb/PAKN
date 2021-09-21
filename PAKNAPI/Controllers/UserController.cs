@@ -1418,10 +1418,9 @@ namespace PAKNAPI.Controllers
 				var rs = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_model);
 
 				// cho trạng thái = false hết
-				await new SYUserUserAgent(_appSetting).SYUserUserAgentUpdateStatusDAO(accInfo[0].Id);
+				string token = Request.Headers["Authorization"].ToString().Split(' ')[1].Trim();
 
-				SYUserUserAgent sy_UserAgent = new SYUserUserAgent(accInfo[0].Id, Request.Headers["User-Agent"].ToString(), Request.Headers["ipAddress"].ToString(), true);
-				await new SYUserUserAgent(_appSetting).SYUserUserAgentInsertDAO(sy_UserAgent);
+				await new SYUserUserAgent(_appSetting).SYUserUserAgentUpdateStatusDAO(accInfo[0].Id, token);
 
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK };
@@ -1433,6 +1432,7 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+		
 
 		/// <summary>
 		/// thay mk người dùng bởi quản trị
@@ -1472,7 +1472,15 @@ namespace PAKNAPI.Controllers
 				var rs = await new SYUserChangePwd(_appSetting).SYUserChangePwdDAO(_model);
 
 				// cho trạng thái = false hết
-				await new SYUserUserAgent(_appSetting).SYUserUserAgentUpdateStatusDAO(accInfo[0].Id);
+				if (accInfo[0].Id == new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext))
+				{
+					string token = Request.Headers["Authorization"].ToString().Split(' ')[1].Trim();
+					await new SYUserUserAgent(_appSetting).SYUserUserAgentUpdateStatusDAO(accInfo[0].Id, token);
+				}
+				else {
+					await new SYUserUserAgent(_appSetting).SYUserUserAgentUpdateStatusDAO(accInfo[0].Id, null);
+				}
+				
 
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK };

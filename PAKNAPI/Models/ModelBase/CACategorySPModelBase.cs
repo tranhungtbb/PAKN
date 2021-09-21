@@ -1695,7 +1695,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> CAWordInsertDAO(CAWordInsertIN _cAWordInsertIN)
+		public async Task<int?> CAWordInsertDAO(CAWordInsertIN _cAWordInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("GroupId", _cAWordInsertIN.GroupId);
@@ -1704,7 +1704,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cAWordInsertIN.IsDeleted);
 			DP.Add("Description", _cAWordInsertIN.Description);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_WordInsert", DP)); // ExecuteScalarDapperAsync
+			return (await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_WordInsert", DP)); // ExecuteScalarDapperAsync // ExecuteNonQueryDapperAsync
 		}
 	}
 

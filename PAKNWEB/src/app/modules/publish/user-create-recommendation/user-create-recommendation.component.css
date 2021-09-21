@@ -26,3 +26,6 @@ form label{
 	color: #222222;
 	text-transform: uppercase;
 }
+.form-control, .ng-select {
+	color: black;
+}

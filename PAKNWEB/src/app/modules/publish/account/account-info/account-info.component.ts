@@ -31,13 +31,12 @@ export class AccountInfoComponent implements OnInit {
 	model: UserInfoObject = new UserInfoObject()
 	recommendationStatistics: any
 	totalRecommentdation: number = 0
+	userType = this.storageService.getTypeObject()
 	@ViewChild(AccountSideLeftComponent, { static: false }) child_SideLeft: AccountSideLeftComponent
 
 	ngOnInit() {
-		var userType = this.storageService.getTypeObject()
-
 		// chuyển hướng trang xem tài khoản doanh nghiệp
-		if (userType == 3 && this.router.url.includes('/tai-khoan/thong-tin')) {
+		if (this.userType == 3 && this.router.url.includes('/tai-khoan/thong-tin')) {
 			this.router.navigate(['/cong-bo/tai-khoan/thong-tin-doanh-nghiep'])
 			return
 		}

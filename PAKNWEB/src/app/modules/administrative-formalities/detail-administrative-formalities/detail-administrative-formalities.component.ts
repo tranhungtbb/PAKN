@@ -4,13 +4,13 @@ import { COMMONS } from 'src/app/commons/commons'
 import { CONSTANTS, FILETYPE, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
-import { FormControl, FormGroup, Validators , FormBuilder} from '@angular/forms'
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { AdministrativeFormalitiesObject, AdministrativeFormalitiesForward } from 'src/app/models/AdministrativeFormalitiesObject'
 import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
 import { UnitService } from 'src/app/services/unit.service'
-import {UserInfoStorageService} from 'src/app/commons/user-info-storage.service'
+import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 declare var $: any
 
 @Component({
@@ -20,14 +20,14 @@ declare var $: any
 })
 export class DetailAdministrativeFormalitiesComponent implements OnInit {
 	form: FormGroup
-	formForward : FormGroup
+	formForward: FormGroup
 	model: AdministrativeFormalitiesObject = new AdministrativeFormalitiesObject()
-	modelForward : AdministrativeFormalitiesForward = new AdministrativeFormalitiesForward()
+	modelForward: AdministrativeFormalitiesForward = new AdministrativeFormalitiesForward()
 	titleObject: string = 'Cá nhân'
 	lstUnitDAM: any[] = []
 	lstUnit: any[] = []
-	lstUnitForward : any = new Array<itemSelected>()
-	lstUnitForwardBase : any = new Array<itemSelected>()
+	lstUnitForward: any = new Array<itemSelected>()
+	lstUnitForwardBase: any = new Array<itemSelected>()
 	lstField: any[] = []
 	lstBusiness: any[] = []
 	lstIndividual: any[] = []
@@ -66,7 +66,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private _fb: FormBuilder,
 		private _service: UnitService,
-		private stogateService : UserInfoStorageService
+		private stogateService: UserInfoStorageService
 	) {}
 
 	ngOnInit() {
@@ -81,9 +81,9 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 			this._service.getChildrenDropdown().subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result != null) {
-						let arrUnit = response.result.filter(x=>x.unitId  != this.stogateService.getUnitId())
-						this.lstUnitForward = arrUnit.map(item =>{
-							return {text : item.unitName, value : item.unitId}
+						let arrUnit = response.result.filter((x) => x.unitId != this.stogateService.getUnitId())
+						this.lstUnitForward = arrUnit.map((item) => {
+							return { text: item.unitName, value: item.unitId }
 						})
 						this.lstUnitForwardBase = [...this.lstUnitForward]
 					}
@@ -167,15 +167,16 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		})
 	}
 
-	onChangeLstItemUnit(){
+	onChangeLstItemUnit() {
 		console.log(this.lstUnitForward)
-		this.lstUnitForward = this.lstUnitForwardBase.filter((item, index)=>{
-			let check = this.modelForward.lstUnitId.find(x=>x == item.value)
-			if(check){return;}
+		this.lstUnitForward = this.lstUnitForwardBase.filter((item, index) => {
+			let check = this.modelForward.lstUnitId.find((x) => x == item.value)
+			if (check) {
+				return
+			}
 			return item
-		});
+		})
 	}
-
 
 	get f() {
 		return this.form.controls
@@ -256,7 +257,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 			this.afService.updateShow(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.toastr.success(COMMONS.UPDATE_SUCCESS)
-					return this.router.navigate(['/quan-tri/thu-tuc-hanh-chinh'])
+					// return this.router.navigate(['/quan-tri/thu-tuc-hanh-chinh'])
 				} else {
 					this.toastr.error(response.message)
 				}
@@ -268,15 +269,14 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 	}
 
 	// forward
-	preForward = ()=>{
-		this.modelForward = new AdministrativeFormalitiesForward();
+	preForward = () => {
+		this.modelForward = new AdministrativeFormalitiesForward()
 		this.submitted = false
 		$('#modal-forward').modal('show')
 	}
-	onForward = () =>{
+	onForward = () => {
 		this.modelForward.content = this.modelForward.content.trim()
-		if(this.modelForward.lstUnitId.length < 0)
-		{
+		if (this.modelForward.lstUnitId.length < 0) {
 			this.toastr.error('Vui lòng chọn cơ quan tiếp nhận')
 			return
 		}
@@ -285,21 +285,21 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 			return (x += y + ',')
 		}, '')
 		let obj = {
-			LstUnitId : lstUnit.substring(0,lstUnit.length-1),
-			AdministrationId : this.model.administrationId,
-			Content : this.modelForward.content
+			LstUnitId: lstUnit.substring(0, lstUnit.length - 1),
+			AdministrationId: this.model.administrationId,
+			Content: this.modelForward.content,
 		}
-		this.afService.forward(obj).subscribe(res =>{
-			if(res.success == RESPONSE_STATUS.success){
-				this.toastr.success("Gửi cơ quan, đơn vị thành công")
+		this.afService.forward(obj).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.toastr.success('Gửi cơ quan, đơn vị thành công')
 				$('#modal-forward').modal('hide')
+			} else {
+				this.toastr.error('Lỗi khi gửi cơ quan, đơn vị')
 			}
-			else{
-				this.toastr.error("Lỗi khi gửi cơ quan, đơn vị")
+		}),
+			(err) => {
+				console.log(err)
 			}
-		}),(err) =>{
-			console.log(err)
-		}
 	}
 
 	onAddCompositionProfile() {
@@ -389,6 +389,6 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 	}
 }
 class itemSelected {
-	text : string
-	value : number
+	text: string
+	value: number
 }

@@ -58,7 +58,7 @@
 										<strong>Điện thoại <p-sortIcon [field]="'phone'"></p-sortIcon></strong>
 									</p>
 									<input type="text" class="form-control form-control-sm" 
-									trim [ngSwitch]="'phone'" (keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')"
+									numbersOnly [ngSwitch]="'phone'" (keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')"
 									 placeholder="Nhập...">
 								</th>
 								<th style="width: 120px;">
@@ -452,7 +452,7 @@
 									<div class="table-responsive">
 
 										<p-table #table2 [value]="listHisData" [lazy]="true" (onLazyLoad)="onHisPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-											currentPageReportTemplate="Tổng số {{hisTotalRecords}}" [rows]="pageSize" [totalRecords]="hisTotalRecords" [responsive]="true"
+											currentPageReportTemplate="Tổng số {{hisTotalRecords}}" [rows]="20" [totalRecords]="hisTotalRecords" [responsive]="true"
 											autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 
 											<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">

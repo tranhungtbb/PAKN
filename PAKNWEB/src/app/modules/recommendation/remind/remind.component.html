@@ -9,27 +9,27 @@
 			<span class="text-left text-truncate">
 				<small *ngIf="item.files.length > 0" class="mr-2" style="font-size: 17px;font-weight: 500;">Tài liệu đính kèm</small><br>
 				<div *ngFor="let file of item.files" class="file-att">
-					<a *ngIf="file.fileType == 1" download [href]="APIADDRESS + file.fileAttach" target="_blank" style="color: #333;">
+					<a *ngIf="file.fileType == 1" (click)="DownloadFile(file)" download href="javascript:void(0)"  style="color: #333;">
 						<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
 						<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
 					</a>
-					<a *ngIf="file.fileType == 2" download [href]="APIADDRESS + file.fileAttach" target="_blank" style="color: #333;">
+					<a *ngIf="file.fileType == 2" (click)="DownloadFile(file)" download href="javascript:void(0)"  style="color: #333;">
 						<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;" alt="">
 						<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
 					</a>
-					<a *ngIf="file.fileType == 3" download [href]="APIADDRESS + file.fileAttach" target="_blank" style="color: #333;">
+					<a *ngIf="file.fileType == 3" (click)="DownloadFile(file)" download href="javascript:void(0)"  style="color: #333;">
 						<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
 						<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
 					</a>
-					<a *ngIf="file.fileType == 4" download [href]="APIADDRESS + file.fileAttach" target="_blank" style="color: #333;">
+					<a *ngIf="file.fileType == 4" (click)="DownloadFile(file)" download href="javascript:void(0)"  style="color: #333;">
 						<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;" alt="">
 						<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
 					</a>
-					<a *ngIf="file.fileType == 6" download [href]="APIADDRESS + file.fileAttach" target="_blank" style="color: #333;">
+					<a *ngIf="file.fileType == 6" (click)="DownloadFile(file)" download href="javascript:void(0)"  style="color: #333;">
 						<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;" alt="">
 						<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
 					</a>
-					<a *ngIf="file.fileType == 7" download [href]="APIADDRESS + file.fileAttach" target="_blank" style="color: #333;">
+					<a *ngIf="file.fileType == 7" (click)="DownloadFile(file)" download href="javascript:void(0)"  style="color: #333;">
 						<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;" alt="">
 						<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
 					</a>
@@ -38,28 +38,6 @@
 					</span>
 				</div>
 
-				<!-- <div *ngFor="let file of item.files">
-					<a *ngIf="file.fileType == 1" download [href]="APIADDRESS + file.fileAttach" target="_blank" style="color: #333;">
-						<img src="../../../../assets/dist/images/file-word.svg" style="width: 20px;padding-right: 5px;" alt="">
-						<span class="small">{{file.name}}</span>
-					</a>
-					<a *ngIf="file.fileType == 2" download [href]="APIADDRESS + file.fileAttach" target="_blank" style="color: #333;">
-						<img src="../../../../assets/dist/images/file-excel.svg" style="width: 20px;padding-right: 5px;" alt="">
-						<span class="small">{{file.name}}</span>
-					</a>
-					<a *ngIf="file.fileType == 3" download [href]="APIADDRESS + file.fileAttach" target="_blank" style="color: #333;">
-						<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 20px;padding-right: 5px;" alt="">
-						<span class="small">{{file.name}}</span>
-					</a>
-					<a *ngIf="file.fileType == 4" download [href]="APIADDRESS + file.fileAttach" target="_blank" style="color: #333;">
-						<img src="../../../../assets/dist/images/file-image.svg" style="width: 20px;padding-right: 5px;" alt="">
-						<span class="small">{{file.name}}</span>
-					</a>
-					<a *ngIf="file.fileType == 6" download [href]="APIADDRESS + file.fileAttach" target="_blank" style="color: #333;">
-						<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 20px;padding-right: 5px;" alt="">
-						<span class="small">{{file.name}}</span>
-					</a>
-				</div> -->
 			</span>
 		</div>
 		<div *ngIf="listRemind.length <= 0">Chưa có nhắc việc</div>

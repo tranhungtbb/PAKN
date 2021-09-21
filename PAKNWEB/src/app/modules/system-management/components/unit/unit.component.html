@@ -13,7 +13,7 @@
 				</button>
 			</p>
 			<div class="center">
-				<input class="form-control form-control-sm" style="width: 90%;" [(ngModel)]="titleSearch" (keydown.enter)="onFilterTree()" placeholder="Nhập...">
+				<input class="form-control form-control-sm" style="width: 90%;" [(ngModel)]="titleSearch"  (blur)="onFilterTree()" (keydown.enter)="onFilterTree()" placeholder="Nhập...">
 			</div>
 			<p-tree id="tree-unit" [value]="treeUnit" [filter]="false" emptyMessage="Không tìm thấy đơn vị nào.">
 				<ng-template let-node pTemplate="default" style="width:100%; overflow: hidden;">
@@ -270,7 +270,7 @@
 						</div>
 						<div class="col-12 col-lg-3 form-group">
 							<label class="mb-1">Thứ tự hiển thị</label>
-							<input formControlName="index" [(ngModel)]="modelUnit.index" min="0"
+							<input formControlName="index" [(ngModel)]="modelUnit.index" min="0" numbersOnly
 								type="number" class="form-control" placeholder="Nhập...">
 								<div *ngIf="unitFormSubmitted && modelUnit.index < 0" class="has-error m-b-12">
 									<div>

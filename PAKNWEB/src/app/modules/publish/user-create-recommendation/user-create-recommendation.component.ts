@@ -84,19 +84,6 @@ export class CreateRecommendationComponent implements OnInit {
 		this.isLogin = this.storageService.getSaveLogin()
 	}
 
-	//unit select event
-	onSelectUnit(item: any) {
-		this.unitSelected = item
-		$('#_unitId .ng-input input').val(item.name)
-		this.model.unitId = item.id
-	}
-	changeSelectUnit(event: any) {
-		if (!event) {
-			$('#_unitId .ng-input input').val('')
-			this.unitSelected = {}
-			this.model.unitId = null
-		}
-	}
 	searchRecommendation() {
 		this.resultsRecommendation = []
 		if (this.model.title != '' && this.model.title.trim() != '') {
@@ -201,13 +188,13 @@ export class CreateRecommendationComponent implements OnInit {
 		this.recommendationService.recommendationGetDataForCreate(request).subscribe(
 			(response) => {
 				if (response.success == RESPONSE_STATUS.success) {
-					//this.lstUnit = response.result.lstUnit
 					this.lstField = response.result.lstField
 					this.lstHashtag = response.result.lstHashTag
 					this.lstBusiness = response.result.lstBusiness
 					this.lstIndividual = response.result.lstIndividual
 					this.lstObject = response.result.lstIndividual
 					this.model.code = response.result.code
+					this.lstUnit = response.result.lstUnit
 
 				} else {
 					this.toastr.error(response.message)
@@ -275,7 +262,7 @@ export class CreateRecommendationComponent implements OnInit {
 		this.form = new FormGroup({
 			title: new FormControl(this.model.title, [Validators.required]),
 			content: new FormControl(this.model.content, [Validators.required]),
-			field: new FormControl(this.model.field, [Validators.required]),
+			field: new FormControl(this.model.field),
 			unitId: new FormControl(this.model.unitId),
 			hashtag: new FormControl(this.hashtagId),
 			captcha: new FormControl(this.captchaCode, [Validators.required]),
@@ -318,6 +305,7 @@ export class CreateRecommendationComponent implements OnInit {
 	}
 
 	onSave(status) {
+		this.submitted = true
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
 		if (this.model.content == null || this.model.content == '') {
@@ -326,7 +314,6 @@ export class CreateRecommendationComponent implements OnInit {
 		if (this.model.title == null || this.model.title == '') {
 			return
 		}
-		this.submitted = true
 		if (this.form.invalid) {
 			this.reloadImage()
 			return
@@ -342,6 +329,11 @@ export class CreateRecommendationComponent implements OnInit {
 		this.model.sendDate = new Date()
 		this.model.typeObject = this.storageService.getTypeObject()//  == 2 ? 1 : 2
 		this.model.name = this.storageService.getFullName()
+
+		if(this.model.typeObject == 1){
+			this.toastr.error('Vui lòng đăng nhập tài khoản người dân, doanh nghiệp để gửi Phản ánh, Kiến nghị')
+			return
+		}
 		
 		const request = {
 			Data: this.model,
@@ -361,7 +353,7 @@ export class CreateRecommendationComponent implements OnInit {
 							this.notificationService.insertNotificationTypeRecommendation({ recommendationId: response.result }).subscribe((res) => {})
 							this.toastr.success(COMMONS.ADD_SUCCESS)
 							localStorage.removeItem('recommentdationObjRemember')
-							return this.router.navigate(['/cong-bo/phan-anh-kien-nghi'])
+							return this.router.navigate(['/cong-bo/phan-anh-kien-nghi-cua-toi'])
 						} else {
 							this.toastr.error(response.message)
 						}
@@ -374,7 +366,7 @@ export class CreateRecommendationComponent implements OnInit {
 					this.recommendationService.recommendationUpdate(request).subscribe((response) => {
 						if (response.success == RESPONSE_STATUS.success) {
 							this.toastr.success(COMMONS.ADD_SUCCESS)
-							return this.router.navigate(['/cong-bo/phan-anh-kien-nghi'])
+							return this.router.navigate(['/cong-bo/phan-anh-kien-nghi-cua-toi'])
 						} else {
 							this.toastr.error(response.message)
 						}
@@ -397,10 +389,9 @@ export class CreateRecommendationComponent implements OnInit {
 
 	reloadForm() {
 		this.submitted = false
-		this.model = new RecommendationObject()
+		this.model = {...new RecommendationObject(), 'code' : this.model.code}
 		this.model.typeObject = this.storageService.getTypeObject();
 		this.captchaCode = null
-		this.unitSelected.name = null
 		$('#_unitId .ng-input input').val('')
 		this.showEditContent()
 		this.resultsRecommendation = []

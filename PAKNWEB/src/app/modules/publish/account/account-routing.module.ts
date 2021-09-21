@@ -8,6 +8,7 @@ const routes: Routes = [
 	{ path: 'thay-doi-mat-khau', component: AccountInfoComponent },
 	{ path: 'chinh-sua-thong-tin', component: AccountInfoComponent },
 	{ path: 'thong-tin-doanh-nghiep', component: BusinessUpdateInfoComponent },
+	
 ]
 
 @NgModule({

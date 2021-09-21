@@ -29,10 +29,10 @@ export class LoginComponent implements OnInit {
 		UserName: '',
 		Password: '',
 	}
-	isShowPassword : boolean = false
-	typeInput : any = 'text'
+	isShowPassword: boolean = false
+	typeInput: any = 'text'
 	isAbleCaptcha: any = ''
-	isSaveLogin: boolean = true
+	isSaveLogin: boolean = false
 	loginForm: FormGroup
 	loginFormProduct: FormGroup
 	lang: any = 'vi'
@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
 		private toastr: ToastrService,
 		private http: HttpClient,
 		private shareData: DataService,
-		private _userServiceChat : UserServiceChatBox
+		private _userServiceChat: UserServiceChatBox
 	) {
 		this.loginForm = new FormGroup({
 			name: new FormControl(this.user.UserName, [Validators.email]),
@@ -103,20 +103,20 @@ export class LoginComponent implements OnInit {
 		return this.loginForm.controls
 	}
 
-	rebuildFormProduct(){
+	rebuildFormProduct() {
 		this.loginFormProduct.reset({
 			name: this.userProduct.UserName,
 			pass: this.userProduct.Password,
 			captcha: this.captchaCodeProduct,
-			isRemember: this.isSaveLogin
+			isRemember: this.isSaveLogin,
 		})
 	}
-	rebuildForm(){
+	rebuildForm() {
 		this.loginForm.reset({
 			name: this.user.UserName,
 			pass: this.user.Password,
 			captcha: this.captchaCode,
-			isRemember: this.isSaveLogin
+			isRemember: this.isSaveLogin,
 		})
 	}
 
@@ -148,9 +148,16 @@ export class LoginComponent implements OnInit {
 								this.storeageService.clear()
 								const user = {
 									login: this.user.UserName,
-									password: 'quickblox'
-								};
-								this._userServiceChat.createUserForApp(user, null, true).then(r => {console.log(r)}).catch(e=>{console.log(e)})
+									password: 'quickblox',
+								}
+								this._userServiceChat
+									.createUserForApp(user, null, true)
+									.then((r) => {
+										console.log(r)
+									})
+									.catch((e) => {
+										console.log(e)
+									})
 
 								this.shareData.setIsLogin(true)
 								this.storeageService.setAccessToken(data.accessToken)
@@ -191,7 +198,7 @@ export class LoginComponent implements OnInit {
 								// else{
 								// 	location.href = '/quan-tri'
 								// }
-							} else{
+							} else {
 								this.toastr.error(data.message)
 								this.reloadImage()
 								this.captchaCode = ''
@@ -219,7 +226,7 @@ export class LoginComponent implements OnInit {
 		}
 	}
 
-	backToHome(){
+	backToHome() {
 		window.location.href = '/cong-bo'
 	}
 	get floginFormProduct() {
@@ -280,16 +287,14 @@ export class LoginComponent implements OnInit {
 									this.rebuildFormProduct()
 									this.toastr.error(data.message, 'Tài khoản cán bộ quản lý không thể đăng nhập hệ thống dành cho cá nhân, doanh nghiệp')
 									this.storeageService.clear()
-
 								} else {
-									if(this.storeageService.getRecommentdationObjectRemember() != null){
-										location.href='/cong-bo/them-moi-kien-nghi'
-									}else{
+									if (this.storeageService.getRecommentdationObjectRemember() != null) {
+										location.href = '/cong-bo/them-moi-kien-nghi'
+									} else {
 										location.href = '/cong-bo'
 									}
-									
 								}
-							} else{
+							} else {
 								this.reloadImage()
 								this.captchaCodeProduct = ''
 								this.submittedProduct = false
@@ -316,7 +321,7 @@ export class LoginComponent implements OnInit {
 		}
 	}
 
-	showPassword(){
+	showPassword() {
 		this.isShowPassword = !this.isShowPassword
 	}
 
@@ -370,12 +375,13 @@ export class LoginComponent implements OnInit {
 	captchaCode: string = null
 	captchaImage: any = ''
 	reloadImage() {
-		this.captchaImage = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?IpAddress=' + this.storeageService.getIpAddress()+  '&&Ramdom' + Math.random() * 100000000000000000000
+		this.captchaImage = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?IpAddress=' + this.storeageService.getIpAddress() + '&&Ramdom' + Math.random() * 100000000000000000000
 	}
 
 	captchaCodeProduct: string = null
 	captchaImageProduct: any = ''
 	reloadImageProduct() {
-		this.captchaImageProduct = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?IpAddress=' + this.storeageService.getIpAddress()+  '&&Ramdom' + Math.random() * 100000000000000000000
+		this.captchaImageProduct =
+			AppSettings.API_ADDRESS + Api.getImageCaptcha + '?IpAddress=' + this.storeageService.getIpAddress() + '&&Ramdom' + Math.random() * 100000000000000000000
 	}
 }

@@ -1115,7 +1115,7 @@ namespace PAKNAPI.ModelBase
 		public string UnitName { get; set; }
 		public string GroupWordName { get; set; }
 
-		public async Task<List<MRRecommendationGetAllReactionaryWord>> MRRecommendationGetAllReactionaryWordDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId, int? PageSize, int? PageIndex)
+		public async Task<List<MRRecommendationGetAllReactionaryWord>> MRRecommendationGetAllReactionaryWordDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId,int? GroupWord, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Code", Code);
@@ -1126,6 +1126,8 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Status", Status);
 			DP.Add("UnitProcessId", UnitProcessId);
 			DP.Add("UserProcessId", UserProcessId);
+			DP.Add("GroupWord", GroupWord);
+
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
 
@@ -1401,7 +1403,7 @@ namespace PAKNAPI.ModelBase
 		public string Title { get; set; }
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung PAKN không được để trống")]
 		public string Content { get; set; }
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Lĩnh vực không được để trống")]
+
 		[Range(0, int.MaxValue, ErrorMessage = "Lĩnh vực không đúng định dạng")]
 		public int? Field { get; set; }
 		[Range(0, int.MaxValue, ErrorMessage = "Đơn vị tiếp nhận không đúng định dạng")]
@@ -1775,7 +1777,6 @@ namespace PAKNAPI.ModelBase
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung PAKN không được để trống")]
 		public string Content { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Lĩnh vực không được để trống")]
 		[Range(0, int.MaxValue, ErrorMessage = "Lĩnh vực không đúng định dạng")]
 		public int? Field { get; set; }
 

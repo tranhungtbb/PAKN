@@ -39,6 +39,7 @@ export class ListReactionaryWordComponent implements OnInit {
 	]
 	lstUnit: any = []
 	lstField: any = []
+	lstGroupWord : any = []
 	dataSearch: RecommendationSearchObject = new RecommendationSearchObject()
 	submitted: boolean = false
 	isActived: boolean
@@ -63,6 +64,7 @@ export class ListReactionaryWordComponent implements OnInit {
 				if (response.result != null) {
 					this.lstUnit = response.result.lstUnit
 					this.lstField = response.result.lstField
+					this.lstGroupWord = response.result.lstGroupWord
 				}
 			} else {
 				this._toastr.error(response.message)
@@ -85,8 +87,7 @@ export class ListReactionaryWordComponent implements OnInit {
 			UnitId: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
 			Status: this.dataSearch.status != null ? this.dataSearch.status : '',
-			UnitProcessId: this.storeageService.getUnitId(),
-			UserProcessId: this.storeageService.getUserId(),
+			GroupWord : this.dataSearch.groupWord != null ?  this.dataSearch.groupWord : '',
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}

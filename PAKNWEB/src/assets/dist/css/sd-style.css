@@ -1587,8 +1587,9 @@ body .ui-editor-container .ui-editor-content {
 	width: 100%;
 }
 .txthighlight{
-	color: #1673D8;
+	color: red;
 	text-decoration: underline;
+	cursor: pointer;
 }
 .form-control:disabled, .form-control[readonly] {
 	background-color: #e9ecef!important;

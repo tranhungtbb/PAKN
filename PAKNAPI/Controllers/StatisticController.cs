@@ -46,30 +46,24 @@ namespace PAKNAPI.Controllers
 		/// <param name="LtsUnitId"></param>
 		/// <param name="FromDate"></param>
 		/// <param name="ToDate"></param>
-		/// <param name="PageSize"></param>
-		/// <param name="PageIndex"></param>
 		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("recommendation-by-unit")]
-		public async Task<ActionResult<object>> STT_RecommendationByUnitGetAllOnPageBase(string LtsUnitId, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		public async Task<ActionResult<object>> STT_RecommendationByUnitGetAllOnPageBase(string LtsUnitId, DateTime? FromDate, DateTime? ToDate)
 		{
 			try
 			{
 				int UnitProcessId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
 				long UserProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
 				List<StatisticRecommendationByUnitGetAllOnPage> mrrRecommendationByUnit = 
-					await new StatisticRecommendationByUnitGetAllOnPage(_appSetting).StatisticRecommendationByUnitGetAllOnPageDAO(LtsUnitId, UnitProcessId, UserProcessId, FromDate,ToDate,PageSize,PageIndex);
+					await new StatisticRecommendationByUnitGetAllOnPage(_appSetting).StatisticRecommendationByUnitGetAllOnPageDAO(LtsUnitId, UnitProcessId, UserProcessId, FromDate,ToDate);
 				
 
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"StatisticRecommendationByUnitGetAllOnPage", mrrRecommendationByUnit},
-						{"TotalCount", mrrRecommendationByUnit != null && mrrRecommendationByUnit.Count > 0 ? mrrRecommendationByUnit[0].RowNumber : 0},
-						{"PageIndex", mrrRecommendationByUnit != null && mrrRecommendationByUnit.Count > 0 ? PageIndex : 0},
-						{"PageSize", mrrRecommendationByUnit != null && mrrRecommendationByUnit.Count > 0 ? PageSize : 0},
+						{"StatisticRecommendationByUnitGetAllOnPage", mrrRecommendationByUnit}
 					};
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
@@ -203,28 +197,23 @@ namespace PAKNAPI.Controllers
 		/// <param name="LtsUnitId"></param>
 		/// <param name="FromDate"></param>
 		/// <param name="ToDate"></param>
-		/// <param name="PageSize"></param>
-		/// <param name="PageIndex"></param>
 		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("recommendation-by-field")]
-		public async Task<ActionResult<object>> STT_RecommendationByFieldGetAllOnPageBase(string LtsUnitId, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		public async Task<ActionResult<object>> STT_RecommendationByFieldGetAllOnPageBase(string LtsUnitId, DateTime? FromDate, DateTime? ToDate)
 		{
 			try
 			{
 				int UnitProcessId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
 				long UserProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
-				List<StatisticRecommendationByFieldGetAllOnPage> mrrRecommendationByField = await new StatisticRecommendationByFieldGetAllOnPage(_appSetting).StatisticRecommendationByFieldGetAllOnPageDAO(LtsUnitId, UnitProcessId, UserProcessId, FromDate, ToDate, PageSize, PageIndex);
+				List<StatisticRecommendationByFieldGetAllOnPage> mrrRecommendationByField = await new StatisticRecommendationByFieldGetAllOnPage(_appSetting).StatisticRecommendationByFieldGetAllOnPageDAO(LtsUnitId, UnitProcessId, UserProcessId, FromDate, ToDate);
 				
 
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
-						{"StatisticRecommendationByFieldGetAllOnPage", mrrRecommendationByField},
-						{"TotalCount", mrrRecommendationByField != null && mrrRecommendationByField.Count > 0 ? mrrRecommendationByField[0].RowNumber : 0},
-						{"PageIndex", mrrRecommendationByField != null && mrrRecommendationByField.Count > 0 ? PageIndex : 0},
-						{"PageSize", mrrRecommendationByField != null && mrrRecommendationByField.Count > 0 ? PageSize : 0},
+						{"StatisticRecommendationByFieldGetAllOnPage", mrrRecommendationByField}
 					};
 				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };

@@ -93,7 +93,7 @@ namespace PAKNAPI.Authorize
 
 				LogHelper logHelper = new LogHelper(_appSetting);
 				BaseRequest baseRequest = logHelper.ReadHeaderFromRequest(_contextAccessor.HttpContext.Request);
-				SYUserUserAgent query = new SYUserUserAgent(Convert.ToInt32(userId.Value), _contextAccessor.HttpContext.Request.Headers["User-Agent"], baseRequest.ipAddress);
+				SYUserUserAgent query = new SYUserUserAgent(Convert.ToInt32(userId.Value), _contextAccessor.HttpContext.Request.Headers["Authorization"].ToString().Split(' ')[1]);
 				var check = (new SYUserUserAgent(_appSetting).SYUserUserAgentGetDAO(query)).Result.FirstOrDefault();
 
 				if (check != null) {

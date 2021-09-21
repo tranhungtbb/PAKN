@@ -197,10 +197,7 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 
 	onExport() {
 		let passingObj: any = {}
-
-		// passingObj.PageIndex = this.pageIndex == null ? 1 : this.pageIndex
-		// passingObj.PageSize = this.pageSize == null ? 20 : this.pageSize
-		passingObj.TitleReport = 'Thống kê Phản ánh kiến nghị theo nhóm từ phản động'
+		passingObj.TitleReport = 'Thống kê Phản ánh kiến nghị theo nhóm từ'
 		passingObj.LstUnitId = this.ltsUnitId;
 		passingObj.FromDate = this.fromDate == null ? '' : JSON.stringify(new Date(this.fromDate)).slice(1, 11)
 		passingObj.ToDate = this.toDate == null ? '' : JSON.stringify(new Date(this.toDate)).slice(1, 11)

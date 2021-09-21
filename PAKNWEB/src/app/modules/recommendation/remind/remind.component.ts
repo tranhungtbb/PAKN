@@ -7,8 +7,7 @@ import { ViewRecommendationComponent } from 'src/app/modules/recommendation/view
 import { RemindObject } from '../../../models/remindObject'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RemindService } from 'src/app/services/remind.service'
-import { from } from 'rxjs'
-import { ThrowStmt } from '@angular/compiler'
+import { saveAs as importedSaveAs } from 'file-saver'
 
 declare var $: any
 
@@ -149,5 +148,20 @@ export class RemindComponent implements OnInit {
 		}
 		this.checkShow = false
 		return false
+	}
+	DownloadFile(file: any) {
+		var request1 = {
+			Path: file.fileAttach,
+			Name: file.name,
+		}
+		this.fileService.downloadFile(request1).subscribe(
+			(response) => {
+				var blob = new Blob([response], { type: response.type })
+				importedSaveAs(blob, file.name)
+			},
+			(error) => {
+				this.toastr.error('Không tìm thấy file trên hệ thống')
+			}
+		)
 	}
 }

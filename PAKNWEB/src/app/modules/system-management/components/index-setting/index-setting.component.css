@@ -22,6 +22,7 @@ label {
 	top: 60px;
 	right: 20px;
 	z-index: 1;
+	background : #fff;
 }
 
 .description {

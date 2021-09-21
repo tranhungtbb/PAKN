@@ -8,3 +8,6 @@ strong.highlight:hover {
 	background-color: transparent !important;
 	color: #333333 !important;
 }
+:host ::ng-deep .ui-table .ui-sortable-column.ui-state-highlight .ui-sortable-column-icon{
+	color: #111 !important;
+}

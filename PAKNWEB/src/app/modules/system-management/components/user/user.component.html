@@ -51,7 +51,7 @@
 										trim [ngSwitch]="'fullName'" (keydown.enter)="table.filter($event?.target.value.trim(), 'fullName', 'contains')"
 										placeholder="Nhập ...">
 								</th>
-								<th style="width: 140px;">
+								<th style="width: 130px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
 									[pSortableColumn]="'positionName'">
 										<strong>Chức vụ <p-sortIcon [field]="'positionName'"></p-sortIcon></strong>
@@ -67,17 +67,17 @@
 										</ng-select>
 									</div>
 								</th>
-								<th style="width: 120px;">
+								<th style="width: 130px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
 									[pSortableColumn]="'phone'">
 										<strong>Điện thoại <p-sortIcon [field]="'phone'"></p-sortIcon></strong>
 										
 									</p>
 									<input type="text" class="form-control form-control-sm"
-									trim [ngSwitch]="'phone'" (keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')"
+									numbersOnly [ngSwitch]="'phone'" (keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')"
 									placeholder="Nhập...">
 								</th>
-								<th style="width: 160px;">
+								<th style="width: 140px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
 										[pSortableColumn]="'unitName'"
 									>
@@ -141,11 +141,11 @@
 								</td>
 								<td>
 									<div class="hover-active d-flex justify-content-end">
-										<a *hasPermission="['3', 'A_IX_1']" (click)="modalUserCreateOrUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-										<a *hasPermission="['3', 'A_IX_2']" (click)="preChangePassword(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i class="bi bi-key"></i></a>
-										<a *hasPermission="['3', 'A_IX_7']" class="btn-icon mr-2 cursor" (click)="getHistory(item.id, item.userName, true)" title="Xem lịch sử"><i
+										<a *hasPermission="['3', 'A_IX_1']" title="Cập nhập" (click)="modalUserCreateOrUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
+										<a *hasPermission="['3', 'A_IX_2']" title="Thay đổi mật khẩu" (click)="preChangePassword(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i class="bi bi-key"></i></a>
+										<a *hasPermission="['3', 'A_IX_7']" title="Lịch sử người dùng" class="btn-icon mr-2 cursor" (click)="getHistory(item.id, item.userName, true)" title="Xem lịch sử"><i
 												class="bi bi-clock-history"></i></a>
-										<a *hasPermission="['3', 'A_IX_3']" (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
+										<a *hasPermission="['3', 'A_IX_3']" title="Xóa người dùng" (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
 												class="bi bi-trash"></i></a>
 									</div>
 								</td>
@@ -359,7 +359,10 @@
 							</div>
 							<div class="col-sm-12 pb-2">
 								<label class="control-label">Xác nhận mật khẩu <span class="text-danger">(*)</span></label>
-								<input class="form-control" type="password" formControlName="rePassword" [(ngModel)]="rePassword" maxlength="50" placeholder="Nhập..." />
+								<input class="form-control" formControlName="rePassword"
+								[type]="isShowRePassword ? 'text' : 'password'"
+								[(ngModel)]="rePassword" maxlength="50" placeholder="Nhập..." />
+								<i class="custom-show-pass" [ngClass]="{ 'bi bi-eye': isShowRePassword, 'bi bi-eye-slash': !isShowRePassword}" (click)="showRePassword()"></i>
 								<div *ngIf="(submitted && f.rePassword.invalid) || (f.rePassword.invalid && (f.rePassword.dirty || f.rePassword.touched))" class="has-error m-b-12">
 									<div *ngIf="f.rePassword.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>

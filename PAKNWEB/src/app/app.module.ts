@@ -29,6 +29,7 @@ import { UnitFilterPipe } from './pipes/unit-filter.pipe'
 import { DxReportViewerModule } from 'devexpress-reporting-angular'
 import { TreeviewModule } from 'ngx-treeview';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { TooltipModule  } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
 	declarations: [AppComponent, SvFocusDirective, ConfirmDialogComponent, ViewFileDialogComponent],
@@ -64,7 +65,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 		TreeModule,
 		DxReportViewerModule,
 		TreeviewModule.forRoot(),
-		CarouselModule
+		CarouselModule,
+		TooltipModule.forRoot()
 	],
 	providers: [
 		{

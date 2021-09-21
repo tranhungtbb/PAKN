@@ -31,6 +31,7 @@ export class AccountSideLeftComponent implements OnInit {
 	totalPANK: number = 0
 	totalRecommentdation: number = 0
 	recommendationStatistics: any = new RecommendationStatistics()
+	typeUserLoginPublish: number = this.storageService.getTypeObject()
 	ngOnInit() {
 		let urlPathArr = this.router.url.split('/')
 		this.urlPath = urlPathArr[urlPathArr.length - 1]

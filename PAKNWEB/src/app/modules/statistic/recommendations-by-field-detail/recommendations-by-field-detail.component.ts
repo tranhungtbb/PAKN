@@ -39,6 +39,7 @@ export class RecommendationsByFieldDetailComponent implements OnInit {
 	pageSize: number = 20
 	lstHistories: any = []
 	listStatus: any = [
+		{ value: 1, text: 'Đang soạn thảo' },
 		{ value: 2, text: 'Chờ xử lý' },
 		{ value: 3, text: 'Từ chối xử lý' },
 		{ value: 4, text: 'Đã tiếp nhận' },

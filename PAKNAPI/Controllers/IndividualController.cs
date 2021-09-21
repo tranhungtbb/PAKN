@@ -560,7 +560,6 @@ namespace PAKNAPI.Controllers
 		/// <param name="Id"></param>
 		/// <returns></returns>
 		[HttpGet]
-		[Authorize("ThePolicy")]
 		[Route("check-exists")]
 		public async Task<ActionResult<object>> BIIndividualCheckExistsBase(string Field, string Value, long? Id)
 		{

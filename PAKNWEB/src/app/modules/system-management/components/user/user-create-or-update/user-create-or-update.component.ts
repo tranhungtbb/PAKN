@@ -250,6 +250,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 				this.modelUser.positionName = this.unitsList.find((c) => c.value == this.modelUser.unitId).text
 				this.modelUser.unitName = this.unitsList.find((c) => c.value == this.modelUser.unitId).text
 				let rolesIds = this.modelUser.roleIds.split(',').map((c) => parseInt(c))
+				this.selectedRolesOld = [...rolesIds]
 				let rolesNames = this.rolesList.filter((c) => rolesIds.includes(c.value)).map((c) => c.text)
 				this.roleName = rolesNames.join(';')
 				this.listPermissionUserSelected = res.result.lstPermissionUserSelected

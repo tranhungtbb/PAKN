@@ -26,8 +26,6 @@ defineLocale('vi', viLocale)
 export class RecommendationsByFieldComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 
-	pageIndex: Number = 1
-	pageSize: Number = 20
 	totalRecords: Number
 	listData: any[]
 	fromDate: any
@@ -70,9 +68,22 @@ export class RecommendationsByFieldComponent implements OnInit {
 
 	ngOnInit() {
 		this.BsLocaleService.use('vi')
-		this.fromDate = new Date(this.year, 0, 1)
-		let tmp_date = new Date(this.year + 1, 0, 1)
-		this.toDate = this.minusDays(tmp_date, 1)
+		const currentMonth = new Date().getMonth()
+		switch(currentMonth){
+			case 1 : case 2 : case 3 :
+				this.timeline = 1
+			break;
+			case 4 : case 5 : case 6 :
+				this.timeline = 2
+			break;
+			case 7 : case 8 : case 9 :
+				this.timeline = 3
+			break;
+			case 10 : case 11 : case 12 :
+				this.timeline = 4
+			break;
+		}
+		this.changeTimeLine()
 		this.unitService.getChildrenDropdown().subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.listUnit = res.result
@@ -103,11 +114,12 @@ export class RecommendationsByFieldComponent implements OnInit {
 			this.fromDate = new Date(this.year, 0, 1)
 			let tmp_date = new Date(this.year + 1, 0, 1)
 			this.toDate = this.minusDays(tmp_date, 1)
-			this.dataStateChange()
+			this.getList()
 		}
 	}
 	changeTimeLine() {
 		if (this.year != null) {
+			debugger
 			if (this.timeline == 1) {
 				this.fromDate = new Date(this.year, 0, 1)
 				let tmp_date = new Date(this.year, 3, 1)
@@ -133,8 +145,17 @@ export class RecommendationsByFieldComponent implements OnInit {
 				let tmp_date = new Date(this.year + 1, 0, 1)
 				this.toDate = this.minusDays(tmp_date, 1)
 			}
-			this.dataStateChange()
+			else{
+				this.fromDate = new Date(this.year, 0, 1)
+				let tmp_date = new Date(this.year + 1, 0, 1)
+				this.toDate = this.minusDays(tmp_date, 1)
+			}
 		}
+	}
+
+	dataStateChange(){
+		this.changeTimeLine()
+		this.getList()
 	}
 
 	getList() {
@@ -149,8 +170,6 @@ export class RecommendationsByFieldComponent implements OnInit {
 			this.ltsUnitId = this.ltsUnitIdAll
 		}
 		let obj = {
-			PageIndex: this.pageIndex == null ? 1 : this.pageIndex,
-			PageSize: this.pageSize == null ? 20 : this.pageSize,
 			LtsUnitId: this.ltsUnitId,
 			FromDate: this.fromDate == null ? '' : this.getFormattedDate(this.fromDate),
 			ToDate: this.toDate == null ? '' : this.getFormattedDate(this.toDate),
@@ -159,45 +178,31 @@ export class RecommendationsByFieldComponent implements OnInit {
 			if (res.success != RESPONSE_STATUS.success) {
 				this.listData = []
 				this.totalRecords = 0
-				this.pageIndex = 1
-				this.pageSize = 20
 				return
 			} else {
 				if (res.result.StatisticRecommendationByFieldGetAllOnPage.length > 0) {
 					this.listData = res.result.StatisticRecommendationByFieldGetAllOnPage
-					this.pageIndex = res.result.PageIndex
-					this.pageSize = res.result.PageSize
-					this.totalRecords = res.result.TotalCount
+					this.totalRecords = this.listData.length
 				} else {
 					this.listData = []
-					this.pageIndex = 1
-					this.pageSize = 20
+					this.totalRecords = 0
 				}
 			}
 		})
 	}
 
-	onPageChange(event: any) {
-		this.pageSize = event.rows
-		this.pageIndex = event.first / event.rows + 1
-		this.getList()
-	}
-
-	dataStateChange() {
-		this.pageIndex = 1
-		this.table.first = 0
-		this.getList()
-	}
-
+	
 	fromDateChange(data) {
 		if(data){
-			this.getList()
+			this.fromDate = data
 		}
+		this.getList()
 	}
 	toDateChange(data) {
 		if(data){
-			this.getList()
+			this.toDate = data
 		}
+		this.getList()
 	}
 	viewDetail(fieldId : any , status : any = null) {
 		if(status){
@@ -221,15 +226,13 @@ export class RecommendationsByFieldComponent implements OnInit {
 
 	onExport() {
 		let passingObj: any = {}
-
-		passingObj.PageIndex = this.pageIndex == null ? 1 : this.pageIndex
-		passingObj.PageSize = this.pageSize == null ? 20 : this.pageSize
 		passingObj.LtsUnitId = this.ltsUnitId
 		passingObj.Year = this.year
 		passingObj.Timeline = this.timeline == null ? '' : this.timeline
 		passingObj.FromDate = this.fromDate == null ? '' : (this.fromDate = JSON.stringify(new Date(this.fromDate)).slice(1, 11))
 		passingObj.ToDate = this.toDate == null ? '' : (this.toDate = JSON.stringify(new Date(this.toDate)).slice(1, 11))
 		passingObj.UserProcessId = this.storeageService.getUserId()
+		passingObj.UnitProcessId = this.storeageService.getUnitId()
 		passingObj.UserProcessName = this.storeageService.getFullName()
 		this._shareData.setobjectsearch(passingObj)
 		this._shareData.sendReportUrl = 'recommendation_by_fields?' + JSON.stringify(passingObj)

@@ -55,6 +55,7 @@ export class RecommendationSearchObject {
 	status: number
 	place: string
 	unit: string
+	groupWord : number
 }
 export class RecommendationForwardObject {
 	id: number = 0

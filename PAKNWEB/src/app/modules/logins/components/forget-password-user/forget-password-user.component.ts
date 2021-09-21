@@ -38,13 +38,8 @@ export class ForgetPasswordUserComponent implements OnInit {
 			(data) => {
 				if (data.result > 0) {
 					this.toastr.info("Vui lòng đăng nhập với mật khẩu mới trong email của bạn" ,'',{timeOut:300000})
-					// this.toastr.info(
-					// 	'message',
-					// 	'title',
-					// 	{positionClass:'inline',
-					// timeOut:500000},
-					// );
-					// this._router.navigate(['/dang-nhap'])
+					
+					this._router.navigate(['/dang-nhap'])
 				} else  {
 					this.toastr.error(data.message)
 				}

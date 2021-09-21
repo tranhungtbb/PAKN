@@ -110,7 +110,7 @@ namespace PAKNAPI.Controllers
 
 							if (user[0].IsActived == false) { sYSystemLogInsertIN.Status = 0; };
 							await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
-							SYUserUserAgent query = new SYUserUserAgent(user[0].Id, Request.Headers["User-Agent"].ToString(), baseRequest.ipAddress, true);
+							SYUserUserAgent query = new SYUserUserAgent(user[0].Id, tokenString , Request.Headers["User-Agent"].ToString(), baseRequest.ipAddress, true);
 							await new SYUserUserAgent(_appSetting).SYUserUserAgentInsertDAO(query);
 
 							return new LoginResponse
@@ -221,7 +221,7 @@ namespace PAKNAPI.Controllers
 				claims,
 				expires: DateTime.Now.AddDays(20),
 				signingCredentials: credentials);
-			return new JwtSecurityTokenHandler().WriteToken(token);
+			return new JwtSecurityTokenHandler().WriteToken(token).Trim();
 		}
 		/// <summary>
 		/// đăng xuất
@@ -317,10 +317,10 @@ namespace PAKNAPI.Controllers
 
 
 						// cho trạng thái = false hết
-						await new SYUserUserAgent(_appSetting).SYUserUserAgentUpdateStatusDAO(user[0].Id);
+						await new SYUserUserAgent(_appSetting).SYUserUserAgentUpdateStatusDAO(user[0].Id, null);
 
-						SYUserUserAgent sy_UserAgent = new SYUserUserAgent(user[0].Id, Request.Headers["User-Agent"].ToString(), Request.Headers["ipAddress"].ToString(), true);
-						await new SYUserUserAgent(_appSetting).SYUserUserAgentInsertDAO(sy_UserAgent);
+						//SYUserUserAgent sy_UserAgent = new SYUserUserAgent(user[0].Id, Request.Headers["User-Agent"].ToString(),Request.Headers["ipAddress"].ToString(), true);
+						//await new SYUserUserAgent(_appSetting).SYUserUserAgentInsertDAO(sy_UserAgent);
 
 
 						// ghi log

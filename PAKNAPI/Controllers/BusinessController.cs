@@ -631,7 +631,6 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
 		[Route("check-exists")]
 		public async Task<ActionResult<object>> BIBusinessCheckExistsBase(string Field, string Value, long? Id)
 		{

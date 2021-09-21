@@ -34,6 +34,7 @@ export class AppheaderComponent implements OnInit {
 	emailUser: string = ''
 	isShowPassword : any = false
 	isShowPasswordNew : any = false
+	isShowRePasswordNew : any = false
 
 	pageSizeGrid: number = 10
 	files: any = [] = []
@@ -157,6 +158,9 @@ export class AppheaderComponent implements OnInit {
 	showPasswordNew(){
 		this.isShowPasswordNew = !this.isShowPasswordNew
 	}
+	showRePasswordNew(){
+		this.isShowRePasswordNew = !this.isShowRePasswordNew
+	}
 
 	getNotifications(PageSize: Number) {
 		this.ViewedCount = 0
@@ -248,8 +252,8 @@ export class AppheaderComponent implements OnInit {
 			}
 			this._toastr.success('Đổi mật khẩu thành công')
 			$('#modalChangePasswordByMe').modal('hide')
-			this.storageService.clear()
-			this.router.navigate(['/dang-nhap'])
+			// this.storageService.clear()
+			// this.router.navigate(['/dang-nhap'])
 		}),
 			(error) => {
 				console.error(error)

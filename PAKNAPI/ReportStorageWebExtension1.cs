@@ -131,7 +131,7 @@ namespace PAKNAPI
                     //log
                     sYSystemLogInsertIN.UserId = paramExportNhatKyThanhTra.UserProcessId;
                     sYSystemLogInsertIN.FullName = paramExportNhatKyThanhTra.UserProcessName;
-                    sYSystemLogInsertIN.Description ="Export PAKN " + paramExportNhatKyThanhTra.TitleReport.ToLower();
+                    sYSystemLogInsertIN.Description ="Xuất file PAKN " + paramExportNhatKyThanhTra.TitleReport.ToLower();
                     if (ms != null)
                     {
                         new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
@@ -152,7 +152,7 @@ namespace PAKNAPI
                     // log
                     sYSystemLogInsertIN.UserId = paramExportIndividual.UserProcessId;
                     sYSystemLogInsertIN.FullName = paramExportIndividual.UserProcessName;
-                    sYSystemLogInsertIN.Description = "Export "+ paramExportIndividual.TitleReport.ToLower();
+                    sYSystemLogInsertIN.Description = "Xuất danh sách "+ paramExportIndividual.TitleReport.ToLower();
                     if (ms != null)
                     {
                         new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
@@ -173,7 +173,7 @@ namespace PAKNAPI
                     // log
                     sYSystemLogInsertIN.UserId = paramExportBusiness.UserProcessId;
                     sYSystemLogInsertIN.FullName = paramExportBusiness.UserProcessName;
-                    sYSystemLogInsertIN.Description = "Export " + paramExportBusiness.TitleReport.ToLower();
+                    sYSystemLogInsertIN.Description = "Xuất danh sách " + paramExportBusiness.TitleReport.ToLower();
                     if (ms != null)
                     {
                         new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
@@ -196,7 +196,7 @@ namespace PAKNAPI
                     // log
                     sYSystemLogInsertIN.UserId = paraHisUser.UserProcessId;
                     sYSystemLogInsertIN.FullName = paraHisUser.UserProcessName;
-                    sYSystemLogInsertIN.Description = "Export lịch sử người dùng";
+                    sYSystemLogInsertIN.Description = "Xuất danh sách lịch sử người dùng";
                     if (ms != null)
                     {
                         new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
@@ -215,7 +215,7 @@ namespace PAKNAPI
                     // log
                     sYSystemLogInsertIN.UserId = paraUser.UserProcessId;
                     sYSystemLogInsertIN.FullName = paraUser.UserProcessName;
-                    sYSystemLogInsertIN.Description = "Export danh sách người dùng theo đơn vị " + paraUser.UnitName;
+                    sYSystemLogInsertIN.Description = "Xuất danh sách người dùng theo đơn vị " + paraUser.UnitName;
                     if (ms != null)
                     {
                         new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
@@ -241,7 +241,7 @@ namespace PAKNAPI
                     //log
                     sYSystemLogInsertIN.UserId = paraStatisticByGroupWord.UserProcessId;
                     sYSystemLogInsertIN.FullName = paraStatisticByGroupWord.UserProcessName;
-                    sYSystemLogInsertIN.Description = "Export " + paraStatisticByGroupWord.Title.ToLower();
+                    sYSystemLogInsertIN.Description = "Xuất danh sách " + paraStatisticByGroupWord.Title.ToLower();
                     if (ms != null)
                     {
                         new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
@@ -254,13 +254,10 @@ namespace PAKNAPI
                     result = XtraReport.FromStream(resource);
                     result.Parameters["TitleReport"].Value = paraExportRecomdationByUnit.TitleReport;
                     result.Parameters["NgayThang"].Value = Dates;
-                    result.Parameters["HoTen"].Value = "";
-
-                    result.Parameters["PageIndex"].Value = paraExportRecomdationByUnit.pageIndex;
-                    result.Parameters["pageSize"].Value = paraExportRecomdationByUnit.pageSize;
+                    result.Parameters["HoTen"].Value = paraExportRecomdationByUnit.UserProcessName;
+                    result.Parameters["UserProcessId"].Value = paraExportRecomdationByUnit.UserProcessId;
+                    result.Parameters["UnitProcessId"].Value = paraExportRecomdationByUnit.UnitProcessId;
                     result.Parameters["LtsUnitId"].Value = paraExportRecomdationByUnit.ltsUnitId;
-                    result.Parameters["Year"].Value = paraExportRecomdationByUnit.year;
-                    result.Parameters["Timeline"].Value = paraExportRecomdationByUnit.Timeline;
                     result.Parameters["FromDate"].Value = paraExportRecomdationByUnit.fromDate;
                     result.Parameters["ToDate"].Value = paraExportRecomdationByUnit.toDate;
 
@@ -268,7 +265,7 @@ namespace PAKNAPI
                     // log
                     sYSystemLogInsertIN.UserId = paraExportRecomdationByUnit.UserProcessId;
                     sYSystemLogInsertIN.FullName = paraExportRecomdationByUnit.UserProcessName;
-                    sYSystemLogInsertIN.Description = "Export " + paraExportRecomdationByUnit.TitleReport.ToLower();
+                    sYSystemLogInsertIN.Description = "Xuất danh sách " + paraExportRecomdationByUnit.TitleReport.ToLower();
                     if (ms != null)
                     {
                         new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
@@ -295,7 +292,7 @@ namespace PAKNAPI
                     // log
                     sYSystemLogInsertIN.UserId = paraExportRecomdationByUnitDetail.UserProcessId;
                     sYSystemLogInsertIN.FullName = paraExportRecomdationByUnitDetail.UserProcessName;
-                    sYSystemLogInsertIN.Description = "Export " + paraExportRecomdationByUnitDetail.TitleReport.ToLower();
+                    sYSystemLogInsertIN.Description = "Xuất danh sách " + paraExportRecomdationByUnitDetail.TitleReport.ToLower();
                     if (ms != null)
                     {
                         new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
@@ -308,13 +305,10 @@ namespace PAKNAPI
                     result = XtraReport.FromStream(resource);
                     result.Parameters["TitleReport"].Value = paraExportRecomdationByFields.TitleReport;
                     result.Parameters["NgayThang"].Value = Dates;
-                    result.Parameters["HoTen"].Value = "";
-
-                    result.Parameters["PageIndex"].Value = paraExportRecomdationByFields.pageIndex;
-                    result.Parameters["pageSize"].Value = paraExportRecomdationByFields.pageSize;
+                    result.Parameters["HoTen"].Value = paraExportRecomdationByFields.UserProcessName;
                     result.Parameters["LtsUnitId"].Value = paraExportRecomdationByFields.ltsUnitId;
-                    result.Parameters["Year"].Value = paraExportRecomdationByFields.year;
-                    result.Parameters["Timeline"].Value = paraExportRecomdationByFields.Timeline;
+                    result.Parameters["UserProcessId"].Value = paraExportRecomdationByFields.UserProcessId;
+                    result.Parameters["UnitProcessId"].Value = paraExportRecomdationByFields.UnitProcessId;
                     result.Parameters["FromDate"].Value = paraExportRecomdationByFields.fromDate;
                     result.Parameters["ToDate"].Value = paraExportRecomdationByFields.toDate;
 
@@ -322,7 +316,7 @@ namespace PAKNAPI
                     // log
                     sYSystemLogInsertIN.UserId = paraExportRecomdationByFields.UserProcessId;
                     sYSystemLogInsertIN.FullName = paraExportRecomdationByFields.UserProcessName;
-                    sYSystemLogInsertIN.Description = "Export " + paraExportRecomdationByFields.TitleReport.ToLower();
+                    sYSystemLogInsertIN.Description = "Xuất danh sách " + paraExportRecomdationByFields.TitleReport.ToLower();
                     if (ms != null)
                     {
                         new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
@@ -349,7 +343,7 @@ namespace PAKNAPI
                     // log
                     sYSystemLogInsertIN.UserId = paraExportRecomdationByFieldDetail.UserProcessId;
                     sYSystemLogInsertIN.FullName = paraExportRecomdationByFieldDetail.UserProcessName;
-                    sYSystemLogInsertIN.Description = "Export " + paraExportRecomdationByFieldDetail.TitleReport.ToLower();
+                    sYSystemLogInsertIN.Description = "Xuất danh sách " + paraExportRecomdationByFieldDetail.TitleReport.ToLower();
                     if (ms != null)
                     {
                         new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
@@ -363,7 +357,7 @@ namespace PAKNAPI
                     result = XtraReport.FromStream(resource);
                     result.Parameters["TitleReport"].Value = queryParams.TitleReport;
                     result.Parameters["NgayThang"].Value = Dates;
-                    result.Parameters["HoTen"].Value = "";
+                    result.Parameters["HoTen"].Value = queryParams.UserProcessName;
 
                     result.Parameters["LtsUnitId"].Value = queryParams.LstUnitId;
                     result.Parameters["FromDate"].Value = queryParams.FromDate;
@@ -372,7 +366,7 @@ namespace PAKNAPI
                     // log
                     sYSystemLogInsertIN.UserId = queryParams.UserProcessId;
                     sYSystemLogInsertIN.FullName = queryParams.UserProcessName;
-                    sYSystemLogInsertIN.Description = "Export " + queryParams.TitleReport.ToLower();
+                    sYSystemLogInsertIN.Description = "Xuất danh sách " + queryParams.TitleReport.ToLower();
                     if (ms != null)
                     {
                         new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
@@ -389,7 +383,7 @@ namespace PAKNAPI
                     // log
                     sYSystemLogInsertIN.UserId = paraExportuserReadedInvitationGetList.UserProcessId;
                     sYSystemLogInsertIN.FullName = paraExportuserReadedInvitationGetList.UserProcessName;
-                    sYSystemLogInsertIN.Description = "Export " + paraExportuserReadedInvitationGetList.TitleReport.ToLower();
+                    sYSystemLogInsertIN.Description = "Xuất danh sách " + paraExportuserReadedInvitationGetList.TitleReport.ToLower();
                     if (ms != null)
                     {
                         new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);

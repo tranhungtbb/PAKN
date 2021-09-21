@@ -166,10 +166,10 @@
 								<label class="control-label">Ngày nghỉ <span class="text-danger">(*)</span></label>
 								<div class="input-group">
 									<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="createTime"
-									[(ngModel)]="model.time" (keydown.enter)="dataStateChange()" appBsDatepickerInvalid formControlName="time"
+									[(ngModel)]="model.time" appBsDatepickerInvalid formControlName="time"
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 									<div class="input-group-addon p-2">
-										<i class="bi bi-calendar-date" (click)="dataStateChange()" [attr.aria-expanded]="n.isOpen"></i>
+										<i class="bi bi-calendar-date" [attr.aria-expanded]="n.isOpen"></i>
 									</div>		
 								</div>
 								<div *ngIf="(submitted && f.time.invalid) || (f.time.invalid && (f.time.dirty || f.time.touched))" class="has-error m-b-12">

@@ -60,6 +60,7 @@ export class UserComponent implements OnInit {
 	modelUser: any = new UserObject2()
 	submitted: boolean = false
 	isShowPassword : any = false
+	isShowRePassword : any = false
 
 	// view child
 	@ViewChild('table', { static: false }) table: any
@@ -350,6 +351,9 @@ export class UserComponent implements OnInit {
 	}
 	showPassword(){
 		this.isShowPassword = !this.isShowPassword
+	}
+	showRePassword(){
+		this.isShowRePassword = !this.isShowRePassword
 	}
 	onExport() {
 		let passingObj: any = {}

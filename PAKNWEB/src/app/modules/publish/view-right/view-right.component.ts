@@ -29,6 +29,7 @@ export class ViewRightComponent implements OnInit {
 	lstIndexSettingBanner: Array<IndexBanner>
 	bannerFinal: any = new IndexBanner()
 	ltsIndexSettingWebsite: Array<IndexWebsite>
+	typeUserLoginPublish: number = this.storageService.getTypeObject()
 
 	ngOnInit() {
 		this.getData()

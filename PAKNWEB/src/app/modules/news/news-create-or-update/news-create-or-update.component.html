@@ -12,7 +12,12 @@
 				</a>
 				<button class="btn btn-sm grd-blue text-white rounded border-0 mr-3" (click)="onSave($event,model.isPublished,true)">Xem trước</button>
 				<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3" (click)="onSave($event)">&nbsp;&nbsp;&nbsp;&nbsp;Lưu&nbsp;&nbsp;&nbsp;&nbsp;</button>
-				<button *hasPermission="['3', 'F_I_7']" class="btn btn-sm grd-green rounded text-white border-0" (click)="onSave($event,true)">Công bố</button>
+				<span *ngIf="model.id > 0 && model.status == 1">
+					<button *hasPermission="['3', 'F_I_7']" class="btn btn-sm grd-green rounded text-white border-0" (click)="onSave($event,false)">Hủy công bố</button>
+				</span>
+				<span *ngIf="model.id == 0 || model.status == 0">
+					<button *hasPermission="['3', 'F_I_7']" class="btn btn-sm grd-green rounded text-white border-0" (click)="onSave($event,true)">Công bố</button>
+				</span>
 			</div>
 		</div>
 	</div>

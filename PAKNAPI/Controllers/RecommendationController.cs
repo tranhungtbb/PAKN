@@ -349,14 +349,17 @@ namespace PAKNAPI.Controller
                     }
                     else
                     {
-                        hisData = new HISRecommendationInsertIN();
-                        hisData.ObjectId = Id;
-                        hisData.Type = 1;
-                        hisData.Content = "";
-                        hisData.Status = STATUS_RECOMMENDATION.RECEIVE_APPROVED;
-                        hisData.CreatedBy = request.UserId;
-                        hisData.CreatedDate = DateTime.Now;
-                        await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+                        if (request.Data.Status != STATUS_RECOMMENDATION.CREATED) {
+                            hisData = new HISRecommendationInsertIN();
+                            hisData.ObjectId = Id;
+                            hisData.Type = 1;
+                            hisData.Content = "";
+                            hisData.Status = STATUS_RECOMMENDATION.RECEIVE_APPROVED;
+                            hisData.CreatedBy = request.UserId;
+                            hisData.CreatedDate = DateTime.Now;
+                            await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+                        }
+                        
                     }
                 }
                 //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
@@ -580,6 +583,19 @@ namespace PAKNAPI.Controller
                     hisData.CreatedBy = request.UserId;
                     hisData.CreatedDate = DateTime.Now;
                     await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+                }
+                else {
+                    if (request.Data.Status != STATUS_RECOMMENDATION.CREATED)
+                    {
+                        hisData = new HISRecommendationInsertIN();
+                        hisData.ObjectId = request.Data.Id;
+                        hisData.Type = 1;
+                        hisData.Content = "";
+                        hisData.Status = STATUS_RECOMMENDATION.RECEIVE_APPROVED;
+                        hisData.CreatedBy = request.UserId;
+                        hisData.CreatedDate = DateTime.Now;
+                        await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+                    }
                 }
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
                 return new ResultApi { Success = ResultCode.OK };
@@ -1001,11 +1017,13 @@ namespace PAKNAPI.Controller
         [HttpGet]
         [Authorize("ThePolicy")]
         [Route("get-list-recommentdation-reactionary-word")]
-        public async Task<ActionResult<object>> MRRecommendationGetAllReactionaryWordBase(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? UnitProcessId, long? UserProcessId, int? PageSize, int? PageIndex)
+        public async Task<ActionResult<object>> MRRecommendationGetAllReactionaryWordBase(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status,int? GroupWord, int? PageSize, int? PageIndex)
         {
             try
             {
-                List<MRRecommendationGetAllReactionaryWord> rsMRRecommendationGetAllReactionaryWord = await new MRRecommendationGetAllReactionaryWord(_appSetting).MRRecommendationGetAllReactionaryWordDAO(Code, SendName, Content, UnitId, Field, Status, UnitProcessId, UserProcessId, PageSize, PageIndex);
+                int? UnitProcessId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                long? UserProcessId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                List<MRRecommendationGetAllReactionaryWord> rsMRRecommendationGetAllReactionaryWord = await new MRRecommendationGetAllReactionaryWord(_appSetting).MRRecommendationGetAllReactionaryWordDAO(Code, SendName, Content, UnitId, Field, Status, UnitProcessId, UserProcessId, GroupWord,  PageSize, PageIndex);
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"MRRecommendationGetAllReactionaryWord", rsMRRecommendationGetAllReactionaryWord},

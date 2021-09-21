@@ -62,7 +62,7 @@ export class RecommendationsByUnitComponent implements OnInit {
 		private _service: StatisticService,
 		private unitService: UnitService,
 		private _shareData: DataService,
-		private storeageService: UserInfoStorageService,
+		private storeageService: UserInfoStorageService
 	) {
 		this.year = new Date().getFullYear()
 		this.listUnitSelected = []
@@ -70,9 +70,32 @@ export class RecommendationsByUnitComponent implements OnInit {
 	ngAfterViewInit() {}
 	ngOnInit() {
 		this.BsLocaleService.use('vi')
-		this.fromDate = new Date(this.year, 0, 1)
-		let tmp_date = new Date(this.year + 1, 0, 1)
-		this.toDate = this.minusDays(tmp_date, 1)
+
+		const currentMonth = new Date().getMonth()
+		switch (currentMonth) {
+			case 1:
+			case 2:
+			case 3:
+				this.timeline = 1
+				break
+			case 4:
+			case 5:
+			case 6:
+				this.timeline = 2
+				break
+			case 7:
+			case 8:
+			case 9:
+				this.timeline = 3
+				break
+			case 10:
+			case 11:
+			case 12:
+				this.timeline = 4
+				break
+		}
+		this.changeTimeLine()
+
 		this.unitService.getChildrenDropdown().subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.listUnit = res.result
@@ -103,7 +126,7 @@ export class RecommendationsByUnitComponent implements OnInit {
 			this.fromDate = new Date(this.year, 0, 1)
 			let tmp_date = new Date(this.year + 1, 0, 1)
 			this.toDate = this.minusDays(tmp_date, 1)
-			this.dataStateChange()
+			this.getList()
 		}
 	}
 	changeTimeLine() {
@@ -132,9 +155,17 @@ export class RecommendationsByUnitComponent implements OnInit {
 				this.fromDate = new Date(this.year, 6, 1)
 				let tmp_date = new Date(this.year + 1, 0, 1)
 				this.toDate = this.minusDays(tmp_date, 1)
+			} else {
+				this.fromDate = new Date(this.year, 0, 1)
+				let tmp_date = new Date(this.year + 1, 0, 1)
+				this.toDate = this.minusDays(tmp_date, 1)
 			}
-			this.dataStateChange()
 		}
+	}
+
+	dataStateChange() {
+		this.changeTimeLine()
+		this.getList()
 	}
 
 	getList() {
@@ -143,7 +174,7 @@ export class RecommendationsByUnitComponent implements OnInit {
 				return (x += y.unitId + ',')
 			}, '')
 		} else {
-			if(!this.ltsUnitIdAll){
+			if (!this.ltsUnitIdAll) {
 				return
 			}
 			this.ltsUnitId = this.ltsUnitIdAll
@@ -175,44 +206,29 @@ export class RecommendationsByUnitComponent implements OnInit {
 		})
 	}
 
-	onPageChange(event: any) {
-		this.pageSize = event.rows
-		this.pageIndex = event.first / event.rows + 1
-		this.getList()
-	}
-
-	dataStateChange() {
-		this.pageIndex = 1
-		this.table.first = 0
-		this.getList()
-	}
-
 	fromDateChange(data) {
-		if(data){
-			this.getList()
+		if (data) {
+			this.fromDate = data
 		}
+		this.getList()
 	}
 	toDateChange(data) {
-		if(data){
-			this.getList()
+		if (data) {
+			this.toDate = data
 		}
+		this.getList()
 	}
-	viewDetail(unitId : any , status : any = null) {
-		if(status){
+	viewDetail(unitId: any, status: any = null) {
+		if (status) {
 			return this.router.navigate([
 				'/quan-tri/bao-cao/phan-anh-kien-nghi-theo-don-vi-chi-tiet',
 				unitId,
 				this.getFormattedDate(this.fromDate),
 				this.getFormattedDate(this.toDate),
-				status
+				status,
 			])
 		}
-		return this.router.navigate([
-			'/quan-tri/bao-cao/phan-anh-kien-nghi-theo-don-vi-chi-tiet',
-			unitId,
-			this.getFormattedDate(this.fromDate),
-			this.getFormattedDate(this.toDate),
-		])
+		return this.router.navigate(['/quan-tri/bao-cao/phan-anh-kien-nghi-theo-don-vi-chi-tiet', unitId, this.getFormattedDate(this.fromDate), this.getFormattedDate(this.toDate)])
 	}
 
 	onExport() {
@@ -223,12 +239,12 @@ export class RecommendationsByUnitComponent implements OnInit {
 		passingObj.PageIndex = this.pageIndex == null ? 1 : this.pageIndex
 		passingObj.PageSize = this.pageSize == null ? 20 : this.pageSize
 		passingObj.LtsUnitId = this.ltsUnitId
-		passingObj.Year = this.year
-		passingObj.Timeline = this.timeline == null ? '' : this.timeline
 		passingObj.FromDate = this.fromDate == null ? '' : (this.fromDate = JSON.stringify(new Date(this.fromDate)).slice(1, 11))
 		passingObj.ToDate = this.toDate == null ? '' : (this.toDate = JSON.stringify(new Date(this.toDate)).slice(1, 11))
 		passingObj.UserProcessId = this.storeageService.getUserId()
+		passingObj.UnitProcessId = this.storeageService.getUnitId()
 		passingObj.UserProcessName = this.storeageService.getFullName()
+
 		this._shareData.setobjectsearch(passingObj)
 		this._shareData.sendReportUrl = 'recommendation_by_unit?' + JSON.stringify(passingObj)
 		this.router.navigate(['quan-tri/xuat-file'])

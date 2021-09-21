@@ -63,6 +63,10 @@ export class RecommnendationGetListComponent implements OnInit {
 		return initials
 	}
 	redirectList(){
-		this.router.navigate(['/quan-tri/kien-nghi/cho-giai-quyet'])
+		if(this.isMain == true){
+			this.router.navigate(['/quan-tri/kien-nghi/cho-xu-ly'])
+		}else{
+			this.router.navigate(['/quan-tri/kien-nghi/cho-giai-quyet'])
+		}
 	}
 }

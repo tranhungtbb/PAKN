@@ -51,7 +51,11 @@ export class EmailManagementService {
 		return this.serviceInvoker.get(query, `${AppSettings.API_ADDRESS}/${Api.EmailManagementGetPagedList}?userId=${this.currentUserId}`)
 	}
 	public Delete(id:number): Observable<any> {
-		return this.serviceInvoker.get({id}, `${AppSettings.API_ADDRESS}/${Api.EmailManagementDelete}?userId=${this.currentUserId}`)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.EMAIL),
+		}
+		return this.serviceInvoker.getwithHeaders({id}, `${AppSettings.API_ADDRESS}/${Api.EmailManagementDelete}?userId=${this.currentUserId}`, headers)
 	}
 	public SendEmail(id:number): Observable<any> {
 		return this.serviceInvoker.get({id}, `${AppSettings.API_ADDRESS}/${Api.EmailManagementSendEmail}?userId=${this.currentUserId}`)

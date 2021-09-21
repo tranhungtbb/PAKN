@@ -84,6 +84,7 @@ export class IndividualComponent implements OnInit {
 		this.model.wardsId = null
 
 		if (this.model.nation == 'Việt Nam') {
+			debugger
 			this.diadanhService.getAllProvince().subscribe((res) => {
 				if (res.success == 'OK') {
 					this.listProvince = res.result.CAProvinceGetAll

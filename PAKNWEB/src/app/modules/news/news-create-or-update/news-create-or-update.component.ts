@@ -27,22 +27,6 @@ import { HttpClient } from '@angular/common/http'
 
 declare var $: any
 
-// ClassicEditor.create(document.querySelector('#editor'), {
-// 	extraPlugins: [MyUploadAdapterPlugin],
-// })
-// 	.then((editor) => {
-// 		console.log('Editor was initialized', editor)
-// 	})
-// 	.catch((error) => {
-// 		console.error(error)
-// 	})
-
-// function MyUploadAdapterPlugin(editor) {
-// 	console.log(editor)
-// 	editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
-// 		console.log(loader)
-// 	}
-// }
 
 @Component({
 	selector: 'app-news-create-or-update',

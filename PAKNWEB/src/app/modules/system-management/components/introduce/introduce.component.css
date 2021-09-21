@@ -50,6 +50,7 @@ label {
 	top: 80px;
 	right: 30px;
 	z-index: 1;
+	background: #fff;
 }
 .icon {
 	width: 100px;

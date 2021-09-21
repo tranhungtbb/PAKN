@@ -40,7 +40,6 @@ namespace PAKNAPI
 		/// </summary>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
 		[Route("get-list-province")]
 		public async Task<ActionResult<object>> CAProvinceGetAllBase()
 		{
@@ -66,7 +65,6 @@ namespace PAKNAPI
 		///  Danh sách huyện, thị trấn theo tỉnh, thành phố
 		/// </summary>
 		[HttpGet]
-		[Authorize("ThePolicy")]
 		[Route("get-list-district")]
 		public async Task<ActionResult<object>> CADistrictGetAllBase(byte? ProvinceId)
 		{
@@ -94,7 +92,6 @@ namespace PAKNAPI
 		/// </summary>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
 		[Route("get-list-village")]
 		public async Task<ActionResult<object>> CAVillageGetAllBase(short? ProvinceId, short? DistrictId)
 		{
@@ -148,7 +145,6 @@ namespace PAKNAPI
 		/// </summary>
 
 		[HttpGet]
-		[Authorize("ThePolicy")]
 		[Route("get-drop-down")]
 		public async Task<ActionResult<object>> CAAdministrativeUnitsGetDropDownBase(int? Id)
 		{

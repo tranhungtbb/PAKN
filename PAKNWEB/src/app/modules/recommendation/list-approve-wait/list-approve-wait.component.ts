@@ -158,7 +158,7 @@ export class ListApproveWaitComponent implements OnInit {
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
 			$('#modalReject').modal('show')
 		} else {
-			this.titleAccept = 'Anh/Chị có chắc chắn muốn phê duyệt PAKN này?'
+			this.titleAccept = 'Anh/Chị có chắc chắn muốn phê duyệt Phản ánh, Kiến nghị này?'
 			$('#modalAccept').modal('show')
 		}
 	}

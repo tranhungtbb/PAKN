@@ -51,7 +51,7 @@
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
 									</th>
-									<th style="min-width: 250px">
+									<th style="min-width: 200px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tiêu đề</strong>
 											
@@ -65,7 +65,7 @@
 											
 										</p>
 										<div style="width: 200px" class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select placeholder="Chọn..." class="" [items]="lstUnit" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.unitId"
+											<ng-select placeholder="Chọn..." notFoundText="Không có dữ liệu" [items]="lstUnit" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.unitId"
 												[closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>
@@ -76,23 +76,28 @@
 											
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select placeholder="Chọn..." class="" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field"
+											<ng-select placeholder="Chọn..." notFoundText="Không có dữ liệu" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field"
 												[closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>
 									</th>
-									<th>
+									<th style="width: 140px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>nhóm từ ngữ</strong>
 										</p>
+										<div class="dropdown bootstrap-select form-control form-control-sm">
+											<ng-select placeholder="Chọn..." [items]="lstGroupWord" notFoundText="Không có dữ liệu"  bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.groupWord"
+												[closeOnSelect]="true" (change)="dataStateChange()">
+											</ng-select>
+										</div>
 									</th>
-									<th style="width: 160px">
+									<th style="width: 130px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Trạng thái</strong>
 											
 										</p>
 									</th>
-									<th style="width: 100px">
+									<th style="width: 60px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead"><strong>Thao tác</strong></p>
 									</th>
 								</tr>

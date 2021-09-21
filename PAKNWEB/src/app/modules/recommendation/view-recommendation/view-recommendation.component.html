@@ -379,7 +379,7 @@
 						<li class="list-group-item">
 							Đơn vị tiếp nhận: <strong class="h4 font-weight-bold">{{model.unitName}}</strong>
 						</li>
-						<li class="list-group-item">
+						<li class="list-group-item" *ngIf="model.receiveName">
 							Người tiếp nhận: <strong class="h4 font-weight-bold">{{model.receiveName}}</strong>
 						</li>
 						<li class="list-group-item">
@@ -388,7 +388,7 @@
 					</ul>
 					<app-remind></app-remind>
 					<ul class="list-group list-group-flush" *ngIf="model.status >= 5">
-						<li class="list-group-item">
+						<li class="list-group-item" *ngIf="model.expriredDate">
 							Hạn giải quyết: <strong class="h4 font-weight-bold">{{model.expriredDate | date:'dd/MM/yyyy'}}</strong>
 						</li>
 						<li class="list-group-item" *ngIf="model.status >= 6">
@@ -561,7 +561,7 @@
 								<div class="d-flex justify-content-end">
 									<a href="quan-tri/kien-nghi/chi-tiet/{{item.id}}?suggest=true" target="_blank" class="btn-icon grd-brown text-brown mr-2"
 										title="Xem chi tiết"><i class="bi bi-eye"></i></a>
-									<a class="btn-icon grd-blue text-white mr-2" (click)="useConclustion(item.contentReply)" title="Sử dụng câu trả lời"><i
+									<a *ngIf="model.status == 7" class="btn-icon grd-blue text-white mr-2" (click)="useConclustion(item.contentReply)" title="Sử dụng câu trả lời"><i
 											class="bi bi-file-earmark-check"></i></a>
 								</div>
 							</td>

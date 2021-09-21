@@ -636,23 +636,24 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public SYUserUserAgent(long userId, string userAgent, string ipAddress, bool status)
+		public SYUserUserAgent(long userId, string token, string userAgent, string ipAddress, bool status)
 		{
 			this.UserId = userId;
 			this.UserAgent = userAgent;
 			this.IpAddress = ipAddress;
+			this.Token = token;
 			this.Status = status;
 		}
-		public SYUserUserAgent(long userId, string userAgent, string ipAddress)
+		public SYUserUserAgent(long userId, string token)
 		{
 			this.UserId = userId;
-			this.UserAgent = userAgent;
-			this.IpAddress = ipAddress;
+			this.Token = token;
 		}
 
 		public long UserId { get; set; }
 		public string UserAgent { get; set; }
 		public string IpAddress { get; set; }
+		public string Token { get; set; }
 		public bool Status { get; set; }
 
 		public async Task<int?> SYUserUserAgentInsertDAO(SYUserUserAgent sYUserUserAgentInsert)
@@ -661,15 +662,17 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UserId", sYUserUserAgentInsert.UserId);
 			DP.Add("UserAgent", sYUserUserAgentInsert.UserAgent);
 			DP.Add("IpAddress", sYUserUserAgentInsert.IpAddress);
+			DP.Add("Token", sYUserUserAgentInsert.Token);
 			DP.Add("Status", sYUserUserAgentInsert.Status);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_UserUserAgentInsert", DP);
 		}
 
-		public async Task<int?> SYUserUserAgentUpdateStatusDAO(long UserId)
+		public async Task<int?> SYUserUserAgentUpdateStatusDAO(long UserId, string Token)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("UserId", UserId);
+			DP.Add("Token", Token);
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_UserUserAgentUpdateStatus", DP);
 		}
 
@@ -677,8 +680,7 @@ namespace PAKNAPI.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("UserId", sYUserUserAgentInsert.UserId);
-			DP.Add("UserAgent", sYUserUserAgentInsert.UserAgent);
-			DP.Add("IpAddress", sYUserUserAgentInsert.IpAddress);
+			DP.Add("Token", sYUserUserAgentInsert.Token);
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserUserAgent>("SY_UserUserAgentGetByUserId_UserAgent_IpAddress", DP)).ToList();
 		}
 

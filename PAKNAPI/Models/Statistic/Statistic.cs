@@ -19,22 +19,23 @@ namespace PAKNAPI.Models.Statistic
 		public StatisticRecommendationByUnitGetAllOnPage()
 		{
 		}
-
-		public int? RowNumber { get; set; }
 		public int UnitId { get; set; }
 		public string UnitName { get; set; }
 
 		public int Total { get; set; }
-		public int ReceiveWait { get; set; }
-		public int ReceiveApproved { get; set; }
-		public int ReceiveDeny { get; set; }
-		public int ProcessWait { get; set; }
-
-		public int Processing { get; set; }
+		public int Created { get; set; } //1
+		public int ReceiveWait { get; set; } // 2
+		public int ReceiveApproved { get; set; } // 3
+		public int ReceiveDeny { get; set; } // 4
+		public int ProcessWait { get; set; } // 5
+		public int ProcessDeny { get; set; } // 6
+		public int Processing { get; set; } // 7
+		public int ApproveWait { get; set; } // 8
+		public int ApproveDeny { get; set; } // 9
 
 		public int Finised { get; set; }
 
-		public async Task<List<StatisticRecommendationByUnitGetAllOnPage>> StatisticRecommendationByUnitGetAllOnPageDAO(string LtsUnitId, int UnitProcessId, long UserProcessId, DateTime? FromDate,DateTime? ToDate, int? PageSize, int? PageIndex)
+		public async Task<List<StatisticRecommendationByUnitGetAllOnPage>> StatisticRecommendationByUnitGetAllOnPageDAO(string LtsUnitId, int UnitProcessId, long UserProcessId, DateTime? FromDate,DateTime? ToDate)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("LtsUnitId", LtsUnitId);
@@ -42,8 +43,6 @@ namespace PAKNAPI.Models.Statistic
 			DP.Add("UserProcessId", UserProcessId);
 			DP.Add("FromDate", FromDate);
 			DP.Add("ToDate", ToDate);
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
 
 			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationByUnitGetAllOnPage>("[TK_ListRecommendationByUnit]", DP)).ToList();
 		}
@@ -103,21 +102,23 @@ namespace PAKNAPI.Models.Statistic
 		{
 		}
 
-		public int? RowNumber { get; set; }
 		public int FieldId { get; set; }
 		public string FieldName { get; set; }
 
 		public int Total { get; set; }
-		public int ReceiveWait { get; set; }
-		public int ReceiveApproved { get; set; }
-		public int ReceiveDeny { get; set; }
-		public int ProcessWait { get; set; }
-
-		public int Processing { get; set; }
+		public int Created { get; set; } //1
+		public int ReceiveWait { get; set; } // 2
+		public int ReceiveApproved { get; set; } // 3
+		public int ReceiveDeny { get; set; } // 4
+		public int ProcessWait { get; set; } // 5
+		public int ProcessDeny { get; set; } // 6
+		public int Processing { get; set; } // 7
+		public int ApproveWait { get; set; } // 8
+		public int ApproveDeny { get; set; } // 9
 
 		public int Finised { get; set; }
 
-		public async Task<List<StatisticRecommendationByFieldGetAllOnPage>> StatisticRecommendationByFieldGetAllOnPageDAO(string LtsUnitId, int UnitProcessId, long UserProcessId, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		public async Task<List<StatisticRecommendationByFieldGetAllOnPage>> StatisticRecommendationByFieldGetAllOnPageDAO(string LtsUnitId, int UnitProcessId, long UserProcessId, DateTime? FromDate, DateTime? ToDate)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("LtsUnitId", LtsUnitId);
@@ -125,8 +126,6 @@ namespace PAKNAPI.Models.Statistic
 			DP.Add("UserProcessId", UserProcessId);
 			DP.Add("FromDate", FromDate);
 			DP.Add("ToDate", ToDate);
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
 
 			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationByFieldGetAllOnPage>("[TK_ListRecommendationByField]", DP)).ToList();
 		}

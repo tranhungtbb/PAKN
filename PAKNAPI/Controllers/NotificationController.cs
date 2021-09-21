@@ -324,7 +324,7 @@ namespace PAKNAPI.Controllers
                     case STATUS_RECOMMENDATION.APPROVE_DENY: //9 Từ chối phê duyệt
 
                         lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
-                        unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 3).UnitReceiveId;
+                        unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 3).UnitSendId;
                         unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
 
                         notification.Title = "PAKN ĐÃ BỊ TỪ CHỐI PHÊ DUYỆT";

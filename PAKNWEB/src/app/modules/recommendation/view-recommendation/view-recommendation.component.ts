@@ -435,13 +435,13 @@ export class ViewRecommendationComponent implements OnInit {
 			}
 		} else {
 			if (this.model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
-				this.titleAccept = 'Anh/Chị có chắc chắn muốn tiếp nhận PAKN này?'
+				this.titleAccept = 'Anh/Chị có chắc chắn muốn tiếp nhận Phản ánh, Kiến nghị này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_APPROVED
 			} else if (this.model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
-				this.titleAccept = 'Anh/Chị có chắc chắn muốn giải quyết PAKN này?'
+				this.titleAccept = 'Anh/Chị có chắc chắn muốn giải quyết Phản ánh, Kiến nghị này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
 			} else if (this.model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
-				this.titleAccept = 'Anh/Chị có chắc chắn muốn phê duyệt PAKN này?'
+				this.titleAccept = 'Anh/Chị có chắc chắn muốn phê duyệt Phản ánh, Kiến nghị này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.FINISED
 			}
 			$('#modalAccept').modal('show')

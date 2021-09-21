@@ -4,7 +4,7 @@
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
 					<!-- <li class="breadcrumb-item"><a>Thư mời</a></li> -->
-					<li class="breadcrumb-item"><a class="font-weight-bold uppercase"> Báo cáo phản ánh kiến nghị theo đơn vị</a></li>
+					<li class="breadcrumb-item"><a class="font-weight-bold uppercase"> Báo cáo phản ánh, Kiến nghị theo đơn vị</a></li>
 				</ol>
 				<!-- <div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách lĩnh vực</div> -->
 				<div class="btn-group group-button-table" role="group">
@@ -17,12 +17,6 @@
 						</svg>
 						Xuất báo cáo
 					</button>
-					<!-- <button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="redirectCreate()">
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-							<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-						</svg>
-						Thêm mới
-					</button> -->
 				</div>
 			</div>
 		</div>
@@ -30,16 +24,16 @@
 			<div class="form-serach">
 				<div class="col-md-4">
 					<p-multiSelect [options]="listUnit" [(ngModel)]="listUnitSelected" optionLabel="unitName" [virtualScroll]="true" optionValue="unitId"
-						(onChange)="dataStateChange()">
+						(onChange)="getList()">
 						<ng-template let-userSelected pTemplate="selectedItems">
-							<ng-container *ngIf="userSelected && userSelected.length <= 2">
+							<ng-container *ngIf="userSelected && userSelected.length < 2">
 								<div *ngFor="let val of userSelected" class="ui-multiselected-item-token ui-corner-all">
 									<span>{{val.unitName}}</span>
 								</div>
 							</ng-container>
 
 							<span *ngIf="!userSelected || userSelected.length === 0" class="ui-multiselected-empty-token  ui-corner-all">Chọn đơn vị...</span>
-							<span *ngIf="userSelected && userSelected.length > 2" class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
+							<span *ngIf="userSelected && userSelected.length > 1" class="ui-multiselected-empty-token ui-corner-all">{{userSelected.length}}
 								đơn vị đã được chọn</span>
 						</ng-template>
 						<ng-template let-user pTemplate="item">
@@ -59,7 +53,7 @@
 						<div class="col-md-8">
 							<div class="dropdown bootstrap-select form-control form-control-sm">
 								<ng-select [items]="lstTimeline" placeholder="Chọn mốc thời gian ..." bindLabel="text" bindValue="value" [(ngModel)]="timeline"
-									(change)="changeTimeLine()">
+									(change)="dataStateChange()">
 								</ng-select>
 							</div>
 						</div>
@@ -68,20 +62,24 @@
 				<div class="col-md-4">
 					<div class="row">
 						<div class="col-md-6">
-							<input class="form-control form-control-sm" placeholder="Từ ngày..." bsDatepicker #n="bsDatepicker" maxlength="10" id="fromDate2" appBsDatepickerInvalid
+							<div class="input-group">
+							<input class="form-control form-control-sm" placeholder="Từ ngày..." bsDatepicker #fdate="bsDatepicker" maxlength="10" id="fromDate2" appBsDatepickerInvalid
 								[(ngModel)]="fromDate" (bsValueChange)="fromDateChange($event)"
 								[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-							<div class="input-group-addon">
-								<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
+							<div class="input-group-addon p-2" style="height: 34px;">
+								<i class="bi bi-calendar-date" (click)="fdate.toggle()" [attr.aria-expanded]="fdate.isOpen"></i>
 							</div>
 						</div>
+						</div>
 						<div class="col-md-6">
-							<input class="form-control form-control-sm" placeholder="Đến ngày..." bsDatepicker #n="bsDatepicker" maxlength="10" id="toDate2" appBsDatepickerInvalid
+							<div class="input-group">
+							<input class="form-control form-control-sm" placeholder="Đến ngày..." bsDatepicker #tdate="bsDatepicker" maxlength="10" id="toDate2" appBsDatepickerInvalid
 								[(ngModel)]="toDate" (bsValueChange)="toDateChange($event)"
 								[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-							<div class="input-group-addon">
-								<i class="far fa-calendar-alt" [attr.aria-expanded]="n.isOpen"></i>
+							<div class="input-group-addon p-2" style="height: 34px;">
+								<i class="bi bi-calendar-date" (click)="tdate.toggle()" [attr.aria-expanded]="tdate.isOpen"></i>
 							</div>
+						</div>
 						</div>
 					</div>
 				</div>
@@ -89,8 +87,8 @@
 			<div class="col-lg-12">
 				<div class="card mb-0 shadow-none">
 					<div class="table-responsive">
-						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="false" [showCurrentPageReport]="true"
+							 [rows]="listData.length" [totalRecords]="table.totalRecords" [responsive]="true" autoLayout="true"
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
@@ -104,42 +102,55 @@
 									<th style=" max-width: 150px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tổng số</strong>
-											
 										</p>
 									</th>
 
-
+									<th style="max-width: 160px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Đang soạn thảo</strong>
+										</p>
+									</th>
 									<th style=" max-width: 160px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Chờ xử lý</strong>
-											
 										</p>
 									</th>
-
 									<th style=" max-width: 160px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tiếp nhận xử lý</strong>
-											
 										</p>
 									</th>
-
 									<th style="max-width: 180px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Từ chối tiếp nhận</strong>
-											
 										</p>
 									</th>
 									<th style="max-width: 160px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Chờ giải quyết</strong>
-											
+										</p>
+									</th>
+
+									<th style="max-width: 160px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Từ chối giải quyết</strong>
 										</p>
 									</th>
 
 									<th style=" max-width: 160px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Đang giải quyết</strong>
-											
+										</p>
+									</th>
+
+									<th style="max-width: 160px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Chờ phê duyệt</strong>
+										</p>
+									</th>
+									<th style="max-width: 160px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>Từ chối phê duyệt</strong>
 										</p>
 									</th>
 
@@ -162,6 +173,9 @@
 										<strong  class="highlight" (click)="viewDetail(item.unitId)">{{item.total}}</strong>
 									</td>
 									<td>
+										<strong class="highlight" (click)="viewDetail(item.unitId, 1)">{{item.created}}</strong>
+									</td>
+									<td>
 										<strong  class="highlight" (click)="viewDetail(item.unitId,2)">{{item.receiveWait}}</strong>
 									</td>
 									<td>
@@ -174,8 +188,16 @@
 										<strong  class="highlight" (click)="viewDetail(item.unitId,5)">{{item.processWait}}</strong>
 									</td>
 									<td>
+										<strong class="highlight" (click)="viewDetail(item.unitId, 6)">{{item.processDeny}}</strong>
+									</td>
+									<td>
 										<strong  class="highlight" (click)="viewDetail(item.unitId,7)">{{item.processing}}</strong>
 									</td>
+									<td>
+										<strong class="highlight" (click)="viewDetail(item.unitId, 8)">{{item.approveWait}}</strong>
+									</td>
+									<td>
+										<strong class="highlight" (click)="viewDetail(item.unitId, 9)">{{item.approveDeny}}</strong>
 									<td>
 										<strong  class="highlight" (click)="viewDetail(item.unitId,10)">{{item.finised}}</strong>
 									</td>
@@ -183,7 +205,7 @@
 							</ng-template>
 							<ng-template pTemplate="emptymessage">
 								<tr>
-									<td class="text-center" colspan="8">Không có dữ liệu</td>
+									<td class="text-center" colspan="12">Không có dữ liệu</td>
 								</tr>
 							</ng-template>
 						</p-table>

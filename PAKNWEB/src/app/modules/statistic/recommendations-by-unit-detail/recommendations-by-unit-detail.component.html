@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
-					<li class="breadcrumb-item"><a>Phản ánh kiến nghị đơn vị :</a></li>
+					<li class="breadcrumb-item"><a>Phản ánh, Kiến nghị đơn vị :</a></li>
 					<li class="breadcrumb-item active"><a class="font-weight-bold"> {{unitName}}</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
@@ -97,6 +97,7 @@
 										<p class="text-2line mb-0">{{item.fieldName}}</p>
 									</td>
 									<td>
+										<span *ngIf="item.status == 1" class="badge rounded-pill badge-outline-blue">Đang soạn thảo</span>
 										<span *ngIf="item.status == 2" class="badge rounded-pill badge-outline-light bg-white">Chờ xử lý</span>
 										<span *ngIf="item.status == 3" class="badge rounded-pill bg-red">Từ chối tiếp nhận</span>
 										<span *ngIf="item.status == 4" class="badge rounded-pill bg-blue2">Đã tiếp nhận</span>

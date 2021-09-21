@@ -50,46 +50,30 @@
 					</div>
 					<div class="col-12 col-lg form-group">
 						<label class="mb-1">Đơn vị tiếp nhận </label>
-						<ng-select id="_unitId" class="form-control" [items]="lstUnitTree"
-							placeholder="Chọn..." formControlName="unitId" [ngModel]="unitSelected.name"
-							
-							(change)="changeSelectUnit($event)">
-							<ng-template ng-option-tmp let-item="item">
+						<ng-select class="form-control" [items]="lstUnit"
+							bindLabel="text" bindValue="value" notFoundText="Không tìm thấy dữ liệu"
+							placeholder="Chọn..." formControlName="unitId" [(ngModel)]="model.unitId">
+							<!-- <ng-template ng-option-tmp let-item="item">
 								<ul>
 									<li>
-										<p (click)="onSelectUnit(item)" class="bg-hover mb-0" [ngClass]="{'active':item.id == model.unitId}">
-											<strong>{{item.name}}</strong>
+										<p class="bg-hover mb-0" *ngIf="item.unitLevel == 1">
+											<strong>{{item.text}}</strong>
 										</p>
-										<ul class="">
-											<li *ngFor="let item_c1 of item.children">
-												<p (click)="onSelectUnit(item_c1)" class="bg-hover mb-0" [ngClass]="{'active':item_c1.id == model.unitId}">- {{item_c1.name}}</p>
-												<ul class="">
-													<li *ngFor="let item_c2 of item_c1.children">
-														<p (click)="onSelectUnit(item_c2)" class="bg-hover mb-0" [ngClass]="{'active':item_c2.id == model.unitId}">
-															-- {{item_c2.name}}
-														</p>
-													</li>
-												</ul>
-											</li>
-										</ul>
+										<p class="bg-hover mb-0">{{item.text}}</p>
 									</li>
 								</ul>
-							</ng-template>
+							</ng-template> -->
 						</ng-select>
 					</div>
 					<div class="col-12 col-lg form-group">
-						<label class="mb-1">Lĩnh vực <span class="cl-red">(*)</span></label>
-						<ng-select class="form-control" [items]="lstField" bindValue="value" bindLabel="text" placeholder="Chọn..." formControlName="field"
+						<label class="mb-1">Lĩnh vực</label>
+						<ng-select class="form-control" [items]="lstField" bindValue="value" bindLabel="text" 
+							placeholder="Chọn..." formControlName="field" notFoundText="Không tìm thấy dữ liệu"
 							[(ngModel)]="model.field">
 							<ng-template ng-option-tmp let-item="item">
 								<div title="{{item.text}}">{{item.text}}</div>
 							</ng-template>
 						</ng-select>
-						<div *ngIf="(submitted && f.field.invalid) || (f.field.invalid && (f.field.dirty || f.field.touched))" class="has-error">
-							<div *ngIf="f.field.errors.required">
-								<span class="help-block">Trường dữ liệu này không được để trống</span>
-							</div>
-						</div>
 					</div>
 				</form>
 				<div class="box attach-ct">
@@ -123,7 +107,7 @@
 								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
 									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 									</button>
-									<a href="#" class="d-block text-center box-fileinput">
+									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
 										<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
 										<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
 									</a>
@@ -133,7 +117,7 @@
 								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
 									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 									</button>
-									<a href="#" class="d-block text-center box-fileinput">
+									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
 										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
 										<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
 									</a>
@@ -143,7 +127,7 @@
 								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
 									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 									</button>
-									<a href="#" class="d-block text-center box-fileinput">
+									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
 										<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="">
 										<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
 									</a>
@@ -153,7 +137,7 @@
 								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
 									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 									</button>
-									<a href="#" class="d-block text-center box-fileinput">
+									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
 										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 40px" alt="">
 										<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
 									</a>
@@ -163,7 +147,7 @@
 								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
 									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 									</button>
-									<a href="#" class="d-block text-center box-fileinput">
+									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
 										<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
 										<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
 									</a>
@@ -173,7 +157,7 @@
 								<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center" style="width: 170px">
 									<button type="button" class="close" (click)="onRemoveFile(item)"><span><i class="mdi mdi-close"></i></span>
 									</button>
-									<a href="#" class="d-block text-center box-fileinput">
+									<a href="javascript:void(0)" class="d-block text-center box-fileinput">
 										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 45px" alt="">
 										<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
 									</a>
@@ -190,14 +174,8 @@
 							<img class="img-fluid rounded-xl" style="max-height: 56px; max-width: 70%;" id="img-captcha" [src]="captchaImage" />
 							<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat" style="font-size: 24px"></i></button>
 						</div>
-
-						<!-- <div class="bg-white captcha border d-flex w-100 justify-content-between align-items-center rounded">
-							<img class="img-fluid rounded-xl" style="max-height: 56px; max-width: 70%;" src="captchaImage" alt="">
-							<button type="button" (click)="reloadImage()" class="btn px-3 py-0 rounded-xl"><i
-									class="bi bi-arrow-repeat" style="font-size: 24px"></i></button>
-						</div> -->
 					</div>
-					<div class="col-12 col-lg">
+					<div class="col-12 col-lg-3">
 						<label class="mb-1">Nhập mã xác thực <span class="cl-red">(*)</span></label>
 						<input type="text" placeholder="Nhập..." class="form-control" [(ngModel)]="captchaCode" style="height: 56px;" formControlName="captcha" maxlength="5">
 						<div *ngIf="(submitted && f.captcha.invalid) || (f.captcha.invalid && (f.captcha.dirty || f.captcha.touched))" class="has-error">

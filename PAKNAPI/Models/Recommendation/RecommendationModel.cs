@@ -15,6 +15,7 @@ namespace PAKNAPI.Models.Recommendation
         public List<DropdownObject> lstIndividual { get; set; }
         public List<DropdownObject> lstBusiness { get; set; }
         public List<DropdownObject> lstHashTag { get; set; }
+        public List<DropdownObject> lstGroupWord { get; set; }
     }
 
     public class RecommendationGetDataForForwardResponse

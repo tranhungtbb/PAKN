@@ -318,15 +318,15 @@ export class ListGeneralComponent implements OnInit {
 			}
 		} else if (status == PROCESS_STATUS_RECOMMENDATION.APPROVED) {
 			if (model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
-				this.titleAccept = 'Anh/Chị có chắc chắn muốn tiếp nhận PAKN này?'
+				this.titleAccept = 'Anh/Chị có chắc chắn muốn tiếp nhận Phản ánh, Kiến nghị này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_APPROVED
 				this.modelProcess.step = STEP_RECOMMENDATION.RECEIVE
 			} else if (model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
-				this.titleAccept = 'Anh/Chị có chắc chắn muốn giải quyết PAKN này?'
+				this.titleAccept = 'Anh/Chị có chắc chắn muốn giải quyết Phản ánh, Kiến nghị này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
 				this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
 			} else if (model.status == RECOMMENDATION_STATUS.APPROVE_WAIT) {
-				this.titleAccept = 'Anh/Chị có chắc chắn muốn phê duyệt PAKN này?'
+				this.titleAccept = 'Anh/Chị có chắc chắn muốn phê duyệt Phản ánh, Kiến nghị này?'
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.FINISED
 				this.modelProcess.step = STEP_RECOMMENDATION.APPROVE
 			}

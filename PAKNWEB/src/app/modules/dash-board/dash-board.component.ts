@@ -71,23 +71,22 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 		}
 		this.recommenService.get7DayDataGraph(req).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				
 				for (const item of res.result.data7day) {
 					if(item.type ==1){
 						this.totalCount += item.total
 					}
 					if(item.type == 2){
 						this.totalCountTTHC += item.total
-					}	
+					}
 				}
 
 				for (const item of res.result.data7day) {
 					if(item.type == 1){
-						item.per_100 = ((item.total / this.totalCount) * 100).toPrecision(2)
+						item.per_100 = ((item.total / this.totalCount) * 100)
 						this.dataGraph['stt_' + item.status] = item;
 					}
 					if(item.type == 2){
-						item.per_100_TTHC = ((item.total / this.totalCountTTHC) * 100).toPrecision(2)
+						item.per_100_TTHC = ((item.total / this.totalCountTTHC) * 100)
 						this.dataGraphTTHC['stt_' + item.status] = item;
 					}	
 				}
@@ -98,7 +97,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 				}, 0)
 
 				this.dataAll = res.result.data.reduce((acc, item, index) => {
-					item.per_10 = ((item.total / totalCountA) * 10).toPrecision(2)
+					item.per_10 = ((item.total / totalCountA) * 10)
 					acc['stt_' + item.status] = item;
 					return acc
 				}, {})
