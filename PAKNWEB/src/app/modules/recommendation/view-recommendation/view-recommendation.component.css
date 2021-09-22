@@ -14,3 +14,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+.btn-custom-send-process {
+	padding: 9px 1.5rem;
+	font-size: 14px;
+}

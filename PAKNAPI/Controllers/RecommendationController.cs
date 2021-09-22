@@ -203,18 +203,40 @@ namespace PAKNAPI.Controller
                         Message = ErrorMessage
                     });
                 }
-
-
-                if (request.Data.UnitId == null) {
-                    var syUnitByField = await new SYUnitGetByField(_appSetting).SYUnitGetByFieldDAO(request.Data.Field);
-                    if (syUnitByField.Count == 0) {
-                        request.Data.UnitId = dataMain.Id;
+                var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                var unitSend = request.Data.UnitId;
+                if (unitId == 0)
+                {
+                    // người dân, doanh nghiệp gửi
+                    if (request.Data.UnitId == null)
+                    {
+                        var syUnitByField = await new SYUnitGetByField(_appSetting).SYUnitGetByFieldDAO(request.Data.Field);
+                        if (syUnitByField.Count == 0)
+                        {
+                            request.Data.UnitId = dataMain.Id;
+                        }
+                        else
+                        {
+                            request.Data.UnitId = syUnitByField.FirstOrDefault().Id;
+                        }
                     }
-                    else {
-                        request.Data.UnitId = syUnitByField.FirstOrDefault().Id;
+                    if (request.Data.Status > 1 && dataMain != null && dataMain.Id != request.Data.UnitId && request.UserType != 1)
+                    {
+                        request.Data.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
                     }
                 }
-                //request.Data.UnitId = request.Data.UnitId != null ? request.Data.UnitId : dataMain.Id;
+                else {
+                    // quản trị gửi
+                    var unitInfo = new SYUnit(_appSetting).SYUnitGetByID(unitId);
+                    if (request.Data.Status > 1)
+                    {
+                        request.Data.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
+                        request.Data.UnitId = unitId;
+                    }
+
+                }
+
+                
                 request.ListHashTag = JsonConvert.DeserializeObject<List<DropdownObject>>(Request.Form["Hashtags"].ToString(), jss);
                 request.Files = Request.Form.Files;
                 request.Data.CreatedBy = request.UserId;
@@ -224,10 +246,7 @@ namespace PAKNAPI.Controller
                 {
                     request.Data.Code = await new MRRecommendationGenCodeGetCode(_appSetting).MRRecommendationGenCodeGetCodeDAO();
                 }
-                if(request.Data.Status > 1 && dataMain != null && dataMain.Id != request.Data.UnitId && request.UserType != 1) // 
-                {
-                    request.Data.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
-                }
+                
                 int? Id = Int32.Parse((await new MRRecommendationInsert(_appSetting).MRRecommendationInsertDAO(request.Data)).ToString());
                 if (Id > 0)
                 {
@@ -255,12 +274,13 @@ namespace PAKNAPI.Controller
                         }
                         else
                         {
-                            _mRRecommendationForwardInsertIN.Step = STEP_RECOMMENDATION.RECEIVE;
-                            _mRRecommendationForwardInsertIN.UnitReceiveId = request.Data.UnitId != null ? request.Data.UnitId : dataMain.Id;
+                            _mRRecommendationForwardInsertIN.Step = STEP_RECOMMENDATION.PROCESS;
+                            _mRRecommendationForwardInsertIN.UnitReceiveId = unitSend;
                             _mRRecommendationForwardInsertIN.Status = PROCESS_STATUS_RECOMMENDATION.APPROVED;
-                            _mRRecommendationForwardInsertIN.ReceiveId = request.UserId;
+                            _mRRecommendationForwardInsertIN.UserSendId = request.UserId;
                             _mRRecommendationForwardInsertIN.ProcessingDate = DateTime.Now;
                             _mRRecommendationForwardInsertIN.IsViewed = true;
+                            _mRRecommendationForwardInsertIN.UnitSendId = request.Data.UnitId != null ? request.Data.UnitId : dataMain.Id;
                         }
                         await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_mRRecommendationForwardInsertIN);
                     }
@@ -358,11 +378,17 @@ namespace PAKNAPI.Controller
                             hisData.CreatedBy = request.UserId;
                             hisData.CreatedDate = DateTime.Now;
                             await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+
+                            // đã chuyển đến xxx
+
+                            hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByIdDAO(unitSend)).FirstOrDefault().Name;
+                            hisData.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
+                            await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
                         }
                         
                     }
                 }
-                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
                 return new ResultApi { Success = ResultCode.OK, Result = Id };
             }
             catch (Exception ex)
@@ -409,20 +435,41 @@ namespace PAKNAPI.Controller
                         Message = ErrorMessage
                     });
                 }
-
                 SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
-                if (request.Data.UnitId == null)
+
+                var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                var unitSend = request.Data.UnitId;
+                if (unitId == 0)
                 {
-                    var syUnitByField = await new SYUnitGetByField(_appSetting).SYUnitGetByFieldDAO(request.Data.Field);
-                    if (syUnitByField.Count == 0)
+                    // người dân, doanh nghiệp gửi
+                    if (request.Data.UnitId == null)
                     {
-                        request.Data.UnitId = dataMain.Id;
+                        var syUnitByField = await new SYUnitGetByField(_appSetting).SYUnitGetByFieldDAO(request.Data.Field);
+                        if (syUnitByField.Count == 0)
+                        {
+                            request.Data.UnitId = dataMain.Id;
+                        }
+                        else
+                        {
+                            request.Data.UnitId = syUnitByField.FirstOrDefault().Id;
+                        }
                     }
-                    else
+                    if (request.Data.Status > 1 && dataMain != null && dataMain.Id != request.Data.UnitId && request.UserType != 1)
                     {
-                        request.Data.UnitId = syUnitByField.FirstOrDefault().Id;
+                        request.Data.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
                     }
                 }
+                else
+                {
+                    // quản trị gửi
+                    var unitInfo = new SYUnit(_appSetting).SYUnitGetByID(unitId);
+                    if (request.Data.Status > 1)
+                    {
+                        request.Data.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
+                        request.Data.UnitId = unitId;
+                    }
+                }
+                
 
                 request.LstXoaFile = JsonConvert.DeserializeObject<List<MRRecommendationFiles>>(Request.Form["LstXoaFile"].ToString(), jss);
                 request.ListHashTag = JsonConvert.DeserializeObject<List<DropdownObject>>(Request.Form["Hashtags"].ToString(), jss);
@@ -430,13 +477,15 @@ namespace PAKNAPI.Controller
                 request.Data.UpdatedBy = request.UserId;
                 request.Data.UpdatedDate = DateTime.Now;
                 var oldRecommendation = await new RecommendationDAO(_appSetting).RecommendationGetByID(request.Data.Id);
-
-                await new MRRecommendationUpdate(_appSetting).MRRecommendationUpdateDAO(request.Data);
+                
 
                 if (request.Data.Status > 1 && dataMain != null && dataMain.Id != request.Data.UnitId && request.UserType != 1) //
                 {
                     request.Data.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
                 }
+
+                await new MRRecommendationUpdate(_appSetting).MRRecommendationUpdateDAO(request.Data);
+
                 if (request.Data.Status > 1 && oldRecommendation.Model.Status == 1)
                 {
                     MRRecommendationForwardInsertIN _mRRecommendationForwardInsertIN = new MRRecommendationForwardInsertIN();
@@ -460,12 +509,13 @@ namespace PAKNAPI.Controller
                     }
                     else
                     {
-                        _mRRecommendationForwardInsertIN.Step = STEP_RECOMMENDATION.RECEIVE;
-                        _mRRecommendationForwardInsertIN.UnitReceiveId = request.Data.UnitId != null ? request.Data.UnitId : dataMain.Id;
+                        _mRRecommendationForwardInsertIN.Step = STEP_RECOMMENDATION.PROCESS;
+                        _mRRecommendationForwardInsertIN.UnitReceiveId = unitSend;
                         _mRRecommendationForwardInsertIN.Status = PROCESS_STATUS_RECOMMENDATION.APPROVED;
-                        _mRRecommendationForwardInsertIN.ReceiveId = request.UserId;
+                        _mRRecommendationForwardInsertIN.UserSendId = request.UserId;
                         _mRRecommendationForwardInsertIN.ProcessingDate = DateTime.Now;
                         _mRRecommendationForwardInsertIN.IsViewed = true;
+                        _mRRecommendationForwardInsertIN.UnitSendId = request.Data.UnitId != null ? request.Data.UnitId : dataMain.Id;
                     }
                     await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_mRRecommendationForwardInsertIN);
                 }
@@ -595,6 +645,11 @@ namespace PAKNAPI.Controller
                         hisData.CreatedBy = request.UserId;
                         hisData.CreatedDate = DateTime.Now;
                         await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+
+                        hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByIdDAO(unitSend)).FirstOrDefault().Name;
+                        hisData.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
+                        await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+
                     }
                 }
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);

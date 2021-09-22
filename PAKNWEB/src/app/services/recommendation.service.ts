@@ -7,6 +7,7 @@ import { Api } from '../constants/api'
 import { catchError, tap } from 'rxjs/operators'
 import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 import { UserInfoStorageService } from '../commons/user-info-storage.service'
+import { RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
 
 @Injectable({
 	providedIn: 'root',
@@ -92,7 +93,6 @@ export class RecommendationService {
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetByIdViewPublic, headers)
 	}
 
-
 	recommendationGetHistories(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETINFO),
@@ -133,7 +133,7 @@ export class RecommendationService {
 		let tempheaders = new HttpHeaders({
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
-			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logAction: encodeURIComponent(request.Data.status == RECOMMENDATION_STATUS.CREATED ? LOG_ACTION.UPDATE : LOG_ACTION.SEND),
 			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		})
 		const form = new FormData()
@@ -256,10 +256,10 @@ export class RecommendationService {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationGetByHashtagAllOnPage)
 	}
 
-	addHashtagForRecommentdation(request) : Observable<any> {
+	addHashtagForRecommentdation(request): Observable<any> {
 		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.InsertHashtagForRecommentdation)
 	}
-	deleteHashtagForRecommentdation(request) : Observable<any> {
+	deleteHashtagForRecommentdation(request): Observable<any> {
 		return this.serviceInvoker.post(request, AppSettings.API_ADDRESS + Api.DeleteHashtagForRecommentdation)
 	}
 

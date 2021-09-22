@@ -13,7 +13,13 @@ import { ChangePwdObject } from 'src/app/models/UserObject'
 	styleUrls: ['./change-password.component.css'],
 })
 export class ChangePasswordComponent implements OnInit {
-	constructor(private formBuider: FormBuilder, private toast: ToastrService, private accountService: AccountService, private router: Router, private storageService : UserInfoStorageService) {}
+	constructor(
+		private formBuider: FormBuilder,
+		private toast: ToastrService,
+		private accountService: AccountService,
+		private router: Router,
+		private storageService: UserInfoStorageService
+	) {}
 
 	formChangePwd: FormGroup
 	model: ChangePwdObject = new ChangePwdObject()
@@ -50,9 +56,8 @@ export class ChangePasswordComponent implements OnInit {
 				this.toast.error(res.message)
 				return
 			}
-			this.storageService.clear()
 			this.toast.success('Đổi mật khẩu thành công')
-			this.router.navigate(['/dang-nhap'])
+			this.router.navigate(['/cong-bo/tai-khoan/thong-tin'])
 		})
 	}
 }

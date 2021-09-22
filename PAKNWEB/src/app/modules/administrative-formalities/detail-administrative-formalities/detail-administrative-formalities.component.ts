@@ -250,7 +250,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		this.submitted = true
 		this.model.status = status
 		const request = {
-			Id: this.model.id,
+			Id: this.model.administrationId,
 			Status: this.model.status,
 		}
 		if (this.model.id != 0) {

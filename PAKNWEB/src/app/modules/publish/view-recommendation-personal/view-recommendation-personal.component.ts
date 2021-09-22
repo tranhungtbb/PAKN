@@ -11,6 +11,7 @@ import { CatalogService } from 'src/app/services/catalog.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
+import { saveAs as importedSaveAs } from 'file-saver'
 declare var $: any
 
 @Component({
@@ -383,5 +384,20 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 					console.error(err)
 				}
 		}
+	}
+	DownloadFile(file: any) {
+		var request = {
+			Path: file.filePath,
+			Name: file.name,
+		}
+		this.fileService.downloadFile(request).subscribe(
+			(response) => {
+				var blob = new Blob([response], { type: response.type })
+				importedSaveAs(blob, file.name)
+			},
+			(error) => {
+				this.toastr.error('Không tìm thấy file trên hệ thống')
+			}
+		)
 	}
 }

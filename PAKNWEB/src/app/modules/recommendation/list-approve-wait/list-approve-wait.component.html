@@ -118,10 +118,10 @@
 									<td>
 										<div class="d-flex justify-content-end">
 											<a class="btn-icon grd-xanhngoc text-white mr-2" *ngIf="item.receiveId == userLoginId" (click)="preProcess(item.id,item.processId,2)"
-												title="Tiếp nhận giải quyết">
+												title="Phê duyệt">
 												<i class="bi bi-file-earmark-check"></i></a>
 											<a class="btn-icon grd-red text-white mr-2" *ngIf="item.receiveId == userLoginId" (click)="preProcess(item.id,item.processId,3)"
-												title="Từ chối giải quyết">
+												title="Từ chối phê duyệt">
 												<i class="bi bi-file-earmark-break"></i></a>
 											<a *hasPermission="['3', 'E_I_5']" class="btn-icon" (click)="getHistories(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>

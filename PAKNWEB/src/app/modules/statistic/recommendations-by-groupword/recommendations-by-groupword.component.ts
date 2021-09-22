@@ -76,9 +76,32 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 	}
 	ngOnInit() {
 		this.BsLocaleService.use('vi')
-		this.fromDate = new Date(this.year, 0, 1)
-		let tmp_date = new Date(this.year + 1, 0, 1)
-		this.toDate = this.minusDays(tmp_date, 1)
+
+		const currentMonth = new Date().getMonth()
+		switch (currentMonth) {
+			case 1:
+			case 2:
+			case 3:
+				this.timeline = 1
+				break
+			case 4:
+			case 5:
+			case 6:
+				this.timeline = 2
+				break
+			case 7:
+			case 8:
+			case 9:
+				this.timeline = 3
+				break
+			case 10:
+			case 11:
+			case 12:
+				this.timeline = 4
+				break
+		}
+		this.changeTimeLine()
+
 		this.unitService.getChildrenDropdown().subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.listUnit = res.result
@@ -126,7 +149,6 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 				let tmp_date = new Date(this.year + 1, 0, 1)
 				this.toDate = this.minusDays(tmp_date, 1)
 			}
-			this.dataStateChange()
 		}
 	}
 
@@ -136,7 +158,7 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 				return (x += y.unitId + ',')
 			}, '')
 		} else {
-			if(! this.ltsUnitIdAll){
+			if (!this.ltsUnitIdAll) {
 				return
 			}
 			this.ltsUnitId = this.ltsUnitIdAll
@@ -176,13 +198,20 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 	}
 
 	dataStateChange() {
+		this.changeTimeLine()
 		this.getList()
 	}
 
 	fromDateChange(data) {
+		if (data) {
+			this.fromDate = data
+		}
 		this.getList()
 	}
 	toDateChange(data) {
+		if (data) {
+			this.toDate = data
+		}
 		this.getList()
 	}
 	viewDetail(unitId, groupWordId) {
@@ -198,7 +227,7 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 	onExport() {
 		let passingObj: any = {}
 		passingObj.TitleReport = 'Thống kê Phản ánh kiến nghị theo nhóm từ'
-		passingObj.LstUnitId = this.ltsUnitId;
+		passingObj.LstUnitId = this.ltsUnitId
 		passingObj.FromDate = this.fromDate == null ? '' : JSON.stringify(new Date(this.fromDate)).slice(1, 11)
 		passingObj.ToDate = this.toDate == null ? '' : JSON.stringify(new Date(this.toDate)).slice(1, 11)
 		passingObj.UserProcessId = this.storeageService.getUserId()
@@ -207,5 +236,4 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 		this._shareData.sendReportUrl = 'phan-anh-kien-nghi-theo-nhom-tu-ngu?' + JSON.stringify(passingObj)
 		this.router.navigate(['quan-tri/xuat-file'])
 	}
-
 }

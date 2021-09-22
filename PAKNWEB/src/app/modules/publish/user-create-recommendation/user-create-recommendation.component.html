@@ -11,7 +11,7 @@
 					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id == 0">Tạo mới phản ánh, Kiến nghị</li>
 					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id != 0">Cập nhật phản ánh, Kiến nghị</li>
 				</ol>
-				<p *ngIf="!isLogin" class="cl-red">Vui lòng đăng nhập để gửi phản ánh kiến nghị!</p>
+				<p *ngIf="!isLogin || (isLogin && isLogin.trim() == '')" class="cl-red">Vui lòng đăng nhập để gửi phản ánh kiến nghị!</p>
 				<form class="form-row mb-3" [formGroup]="form">
 					<div class="col-12 form-group">
 						<label class="mb-1">Phản ánh, kiến nghị về việc <span class="cl-red">(*)</span></label>
@@ -53,16 +53,16 @@
 						<ng-select class="form-control" [items]="lstUnit"
 							bindLabel="text" bindValue="value" notFoundText="Không tìm thấy dữ liệu"
 							placeholder="Chọn..." formControlName="unitId" [(ngModel)]="model.unitId">
-							<!-- <ng-template ng-option-tmp let-item="item">
+							<ng-template ng-option-tmp let-item="item">
 								<ul>
 									<li>
 										<p class="bg-hover mb-0" *ngIf="item.unitLevel == 1">
 											<strong>{{item.text}}</strong>
 										</p>
-										<p class="bg-hover mb-0">{{item.text}}</p>
+										<p class="bg-hover mb-0" *ngIf="item.unitLevel != 1">{{item.text}}</p>
 									</li>
 								</ul>
-							</ng-template> -->
+							</ng-template>
 						</ng-select>
 					</div>
 					<div class="col-12 col-lg form-group">

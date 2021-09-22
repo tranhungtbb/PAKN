@@ -150,11 +150,11 @@ export class RemindComponent implements OnInit {
 		return false
 	}
 	DownloadFile(file: any) {
-		var request1 = {
+		var request = {
 			Path: file.fileAttach,
 			Name: file.name,
 		}
-		this.fileService.downloadFile(request1).subscribe(
+		this.fileService.downloadFile(request).subscribe(
 			(response) => {
 				var blob = new Blob([response], { type: response.type })
 				importedSaveAs(blob, file.name)

@@ -21,6 +21,7 @@ import { RemindComponent } from 'src/app/modules/recommendation/remind/remind.co
 import { NotificationService } from 'src/app/services/notification.service'
 import { AppSettings } from 'src/app/constants/app-setting'
 import { RecommendationCommentService } from 'src/app/services/recommendation-comment.service'
+import { saveAs as importedSaveAs } from 'file-saver'
 
 declare var $: any
 
@@ -51,12 +52,12 @@ export class ViewRecommendationComponent implements OnInit {
 	dateNow: Date = new Date()
 	lstGroupWord: any = []
 	lstGroupWordSelected: any = []
-	titleAccept : any = ''
+	titleAccept: any = ''
 	@ViewChild('table', { static: false }) table: any
 	@ViewChild('file', { static: false }) public file: ElementRef
 	@ViewChild(RemindComponent, { static: true }) remindComponent: RemindComponent
 
-	enableEdit = false;
+	enableEdit = false
 
 	constructor(
 		private toastr: ToastrService,
@@ -92,9 +93,6 @@ export class ViewRecommendationComponent implements OnInit {
 				this.suggest = suggest
 			}
 		})
-
-
-
 	}
 
 	getData() {
@@ -121,9 +119,7 @@ export class ViewRecommendationComponent implements OnInit {
 				this.commentQuery.recommendationId = this.model.id
 				this.getCommentPaged()
 
-
-				this.enableEdit = (this.model.status == 1 && this.model.createdBy == this.storeageService.getUserId())
-
+				this.enableEdit = this.model.status == 1 && this.model.createdBy == this.storeageService.getUserId()
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -200,7 +196,6 @@ export class ViewRecommendationComponent implements OnInit {
 	}
 
 	onCreateHashtag(e) {
-		
 		if (e.target.value != null && e.target.value != '' && e.target.value.trim() != '' && e.keyCode == 13) {
 			var isExist = false
 			for (var i = 0; i < this.lstHashtag.length; i++) {
@@ -234,12 +229,12 @@ export class ViewRecommendationComponent implements OnInit {
 			}
 		}
 		if (!isExist) {
-			if(![7,8].includes(this.model.status)){
-				let hashtag = this.lstHashtag.find(x=>x.value == this.hashtagId)
+			if (![7, 8].includes(this.model.status)) {
+				let hashtag = this.lstHashtag.find((x) => x.value == this.hashtagId)
 				let obj = {
-					RecommendationId : this.model.id,
-					HashtagId : this.hashtagId,
-					HashtagName : hashtag.text
+					RecommendationId: this.model.id,
+					HashtagId: this.hashtagId,
+					HashtagName: hashtag.text,
 				}
 				this.recommendationService.addHashtagForRecommentdation(obj).subscribe()
 			}
@@ -252,10 +247,10 @@ export class ViewRecommendationComponent implements OnInit {
 		}
 	}
 	onRemoveHashtag(item: any) {
-		if(![7,8].includes(this.model.status)){
+		if (![7, 8].includes(this.model.status)) {
 			let obj = {
-				RecommendationId : this.model.id,
-				HashtagId : item.value
+				RecommendationId: this.model.id,
+				HashtagId: item.value,
 			}
 			this.recommendationService.deleteHashtagForRecommentdation(obj).subscribe()
 		}
@@ -546,4 +541,20 @@ export class ViewRecommendationComponent implements OnInit {
 		})
 	}
 	//end comment area
+
+	DownloadFile(file: any) {
+		var request = {
+			Path: file.filePath,
+			Name: file.name,
+		}
+		this.fileService.downloadFile(request).subscribe(
+			(response) => {
+				var blob = new Blob([response], { type: response.type })
+				importedSaveAs(blob, file.name)
+			},
+			(error) => {
+				this.toastr.error('Không tìm thấy file trên hệ thống')
+			}
+		)
+	}
 }

@@ -48,7 +48,7 @@ export class CreateRecommendationComponent implements OnInit {
 
 	unitSelected: any = { name: null, id: null }
 	lstUnitTree: any[] = []
-	isLogin : boolean
+	isLogin: any
 
 	constructor(
 		private unitService: UnitService,
@@ -66,7 +66,7 @@ export class CreateRecommendationComponent implements OnInit {
 
 	ngOnInit() {
 		this.model = new RecommendationObject()
-		this.model.typeObject = this.storageService.getTypeObject();
+		this.model.typeObject = this.storageService.getTypeObject()
 		this.reloadImage()
 		this.getDropdown()
 		this.activatedRoute.params.subscribe((params) => {
@@ -81,7 +81,7 @@ export class CreateRecommendationComponent implements OnInit {
 			}
 			this.builForm()
 		})
-		this.isLogin = this.storageService.getSaveLogin()
+		this.isLogin = this.storageService.getAccessToken()
 	}
 
 	searchRecommendation() {
@@ -94,7 +94,7 @@ export class CreateRecommendationComponent implements OnInit {
 						this.resultsRecommendation.forEach((recommens) => {
 							recommens.title.split(' ').forEach((element) => {
 								if (item == element.toLowerCase()) {
-									recommens.title = recommens.title.replaceAll(element, '<span class ="text-primary">' + element + '</span>')
+									recommens.title = recommens.title.replaceAll(element, '<span class ="txthighlight">' + element + '</span>')
 								}
 							})
 						})
@@ -195,7 +195,6 @@ export class CreateRecommendationComponent implements OnInit {
 					this.lstObject = response.result.lstIndividual
 					this.model.code = response.result.code
 					this.lstUnit = response.result.lstUnit
-
 				} else {
 					this.toastr.error(response.message)
 				}
@@ -214,46 +213,6 @@ export class CreateRecommendationComponent implements OnInit {
 			},
 			(error) => {
 				console.log(error)
-			}
-		)
-
-		this.unitService.getAll({}).subscribe(
-			(res) => {
-				if (res.success != 'OK') return
-				let listUnit = res.result.CAUnitGetAll.map((e) => {
-					let item = {
-						id: e.id,
-						name: e.name,
-						parentId: e.parentId == null ? 0 : e.parentId,
-						unitLevel: e.unitLevel,
-						children: [],
-					}
-					return item
-				})
-
-				this.lstUnit = listUnit
-				// get data from localstogate
-				if(this.model.id == 0){
-					// nếu thêm mới và data local stogate vẫn có thì lấy ra
-					let dataRecommetdation = JSON.parse(this.storageService.getRecommentdationObjectRemember())
-					if(dataRecommetdation){
-						if(dataRecommetdation.model){
-							localStorage.removeItem('recommentdationObjRemember')
-						}else{
-							this.model = {...dataRecommetdation}
-							this.searchRecommendation()
-							this.hightLightText()
-							if(this.model.unitId){
-								this.unitSelected = this.lstUnit.find(x=>x.id == this.model.unitId)
-							}
-						}
-						
-					}
-				}
-				this.lstUnitTree = this.unflatten(listUnit)
-			},
-			(err) => {
-				console.log(err)
 			}
 		)
 	}
@@ -319,7 +278,7 @@ export class CreateRecommendationComponent implements OnInit {
 			return
 		}
 		// nếu chưa đăng nhập cho lưu tạm
-		if(!this.isLogin){
+		if (!this.isLogin || (this.isLogin && this.isLogin.trim() == '')) {
 			this.storageService.setRecommentdationObjectRemember(JSON.stringify(this.model))
 			this.toastr.error('Vui lòng đăng nhập để gửi phản ánh kiến nghị')
 			return
@@ -327,14 +286,14 @@ export class CreateRecommendationComponent implements OnInit {
 		this.model.status = status
 		this.model.sendId = this.storageService.getUserId()
 		this.model.sendDate = new Date()
-		this.model.typeObject = this.storageService.getTypeObject()//  == 2 ? 1 : 2
+		this.model.typeObject = this.storageService.getTypeObject() //  == 2 ? 1 : 2
 		this.model.name = this.storageService.getFullName()
 
-		if(this.model.typeObject == 1){
+		if (this.model.typeObject == 1) {
 			this.toastr.error('Vui lòng đăng nhập tài khoản người dân, doanh nghiệp để gửi Phản ánh, Kiến nghị')
 			return
 		}
-		
+
 		const request = {
 			Data: this.model,
 			Hashtags: this.lstHashtagSelected,
@@ -384,13 +343,13 @@ export class CreateRecommendationComponent implements OnInit {
 	}
 
 	reloadImage() {
-		this.captchaImage = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?IpAddress=' + this.storageService.getIpAddress()+  '&&Ramdom' + Math.random() * 100000000000000000000
+		this.captchaImage = AppSettings.API_ADDRESS + Api.getImageCaptcha + '?IpAddress=' + this.storageService.getIpAddress() + '&&Ramdom' + Math.random() * 100000000000000000000
 	}
 
 	reloadForm() {
 		this.submitted = false
-		this.model = {...new RecommendationObject(), 'code' : this.model.code}
-		this.model.typeObject = this.storageService.getTypeObject();
+		this.model = { ...new RecommendationObject(), code: this.model.code }
+		this.model.typeObject = this.storageService.getTypeObject()
 		this.captchaCode = null
 		$('#_unitId .ng-input input').val('')
 		this.showEditContent()
@@ -407,10 +366,9 @@ export class CreateRecommendationComponent implements OnInit {
 	}
 	hightLightText() {
 		if (this.model.content != null && this.model.content != '' && this.model.content.trim() != '') {
-			let content = ''
-			content = this.model.content.replace(/\\n/g, String.fromCharCode(13, 10))
+			let content = this.model.content //.replace(/\\n/g, String.fromCharCode(13, 10))
 			for (let index = 0; index < this.lstDictionariesWord.length; index++) {
-				var nameWord = new RegExp(this.lstDictionariesWord[index].name, 'i')
+				var nameWord = new RegExp(this.lstDictionariesWord[index].name, 'ig')
 				content = content.replace(
 					nameWord,
 					'<span class="txthighlight" title="' + this.lstDictionariesWord[index].description + '">' + this.lstDictionariesWord[index].name + '</span>'
@@ -423,6 +381,7 @@ export class CreateRecommendationComponent implements OnInit {
 	}
 	showEditContent() {
 		$('#contentRecommendation').removeClass('show')
+		$('#inputContent').focus()
 	}
 
 	private unflatten(arr): any[] {

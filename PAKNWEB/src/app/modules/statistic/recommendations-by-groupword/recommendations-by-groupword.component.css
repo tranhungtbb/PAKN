@@ -69,3 +69,16 @@ body .ui-table .ui-table-thead > tr > th {
 .highlight {
 	cursor: pointer;
 }
+.form-control ng-select {
+	height: 34px;
+	border-radius: 10px;
+}
+:host ::ng-deep .ui-multiselect {
+	border-radius: 10px !important;
+}
+:host ::ng-deep .ui-multiselect .ui-multiselect-trigger {
+	margin-right: 7px;
+}
+:host ::ng-deep .table-sd thead {
+	text-align: center;
+}

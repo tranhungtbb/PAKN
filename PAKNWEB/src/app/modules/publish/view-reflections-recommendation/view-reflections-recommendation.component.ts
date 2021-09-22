@@ -9,6 +9,8 @@ import { RecommendationCommentService } from 'src/app/services/recommendation-co
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { RecommnendationCommentObject } from 'src/app/models/recommendationObject'
 import { AppSettings } from 'src/app/constants/app-setting'
+import { UploadFileService } from 'src/app/services/uploadfiles.service'
+import { saveAs as importedSaveAs } from 'file-saver'
 
 declare var require: any
 const FileSaver = require('file-saver')
@@ -37,7 +39,8 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 		public router: Router,
 		private _toastr: ToastrService,
 		private commentService: RecommendationCommentService,
-		private storeageService: UserInfoStorageService
+		private storeageService: UserInfoStorageService,
+		private fileService: UploadFileService
 	) {
 		this.checkSatisfaction = false
 		this.listCommentsPaged = []
@@ -205,6 +208,21 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	loadComment() {
 		this.pageSizeComment += 20
 		this.getCommentPaged()
+	}
+	DownloadFile(file: any) {
+		var request = {
+			Path: file.filePath,
+			Name: file.name,
+		}
+		this.fileService.downloadFile(request).subscribe(
+			(response) => {
+				var blob = new Blob([response], { type: response.type })
+				importedSaveAs(blob, file.name)
+			},
+			(error) => {
+				this._toastr.error('Không tìm thấy file trên hệ thống')
+			}
+		)
 	}
 }
 
