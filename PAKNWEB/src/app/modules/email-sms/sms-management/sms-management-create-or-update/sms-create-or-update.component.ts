@@ -89,23 +89,22 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 						item.value = iterator.id
 						item.text = iterator.name
 						item.children = []
-						item.checked = false
+						item.checked = this.ltsUnitFirst.includes(iterator.id) == true ? true : false
 						item.collapsed = true
 						for (const iterator1 of this.administrativeUnitsBase.filter((x) => x.parentId == iterator.id)) {
 							let item2 = new TreeViewDrop()
 							item2.value = iterator1.id
 							item2.text = iterator1.name
-							item2.checked = false
+							item2.checked = this.ltsUnitFirst.includes(iterator1.id) == true ? true : false
 							item2.collapsed = false
-							// if (this.ltsUnitFirst.includes(iterator1.value)) {
-							// 	item2.checked = true
-							// }
+							if (item2.checked) {
+								item.collapsed = false
+							}
 							item.children.push(item2)
 						}
 						itemFirst.children.push(item)
 					}
 					this.administrativeUnits = [new TreeviewItem({ ...itemFirst })]
-					// this.onSelectedChange(this.ltsUnitFirst)
 				}
 			} else {
 				this.administrativeUnits = []
@@ -146,11 +145,17 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 						if (res.result) {
 							this.model = { ...res.result.model }
 							this.listItemUserSelected = [...res.result.individualBusinessInfo]
+							this.listItemUserSelected.forEach((x) => {
+								this.ltsUnitFirst.push(x['administrativeUnitId'])
+							})
+							this.ltsUnitFirst = this.ltsUnitFirst.filter((item, index) => this.ltsUnitFirst.indexOf(item) === index)
+							this.getAdministrativeUnits()
 						}
 					}
 				})
+			} else {
+				this.getAdministrativeUnits()
 			}
-			this.getAdministrativeUnits()
 		})
 		this.action = this.model.id == 0 ? 'Lưu' : 'Lưu'
 	}

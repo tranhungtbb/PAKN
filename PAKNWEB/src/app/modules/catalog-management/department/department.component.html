@@ -50,7 +50,7 @@
 										<strong>Nhóm sở ngành <p-sortIcon [field]="'groupName'"></p-sortIcon></strong>
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select [items]="listDepartmentGroup" placeholder="Chọn nhóm ..." bindLabel="name" bindValue="id"
+										<ng-select notFoundText="Không có dữ liệu" [items]="listDepartmentGroup" placeholder="Chọn nhóm ..." bindLabel="name" bindValue="id"
 											[ngSwitch]="'groupName'"
 											(change)="table.filter($event?.name.toString(), 'groupName', 'contains')"
 										>
@@ -81,7 +81,7 @@
 										<strong>Trạng thái<p-sortIcon [field]="'isActived'"></p-sortIcon></strong>
 									</p>
 									<div style="width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select class="" [items]="listStatus" 
+										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus" 
 											placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
 											[ngSwitch]="'isActived'"
 											(change)="table.filter($event?.value.toString(), 'isActived')"
@@ -167,7 +167,7 @@
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label">Nhóm sở ngành <span class="text-danger">(*)</span></label>
-								<ng-select class="form-control " [items]="listDepartmentGroup" bindValue="id" placeholder="Chọn..." bindLabel="name"
+								<ng-select notFoundText="Không có dữ liệu" class="form-control " [items]="listDepartmentGroup" bindValue="id" placeholder="Chọn..." bindLabel="name"
 									formControlName="departmentGroupId" [(ngModel)]="model.departmentGroupId">
 								</ng-select>
 								<div *ngIf="(submitted && f.departmentGroupId.invalid) || (f.departmentGroupId.invalid && (f.departmentGroupId.dirty || f.departmentGroupId.touched))"
@@ -179,7 +179,7 @@
 							</div>
 							<div class="col-sm-4">
 								<label class="control-label">Trạng thái <span class="text-danger">(*)</span></label>
-								<ng-select class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
+								<ng-select notFoundText="Không có dữ liệu" class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
 									[(ngModel)]="model.isActived" style="font-weight: 600;">
 								</ng-select>
 								<div *ngIf="(submitted && f.isActived.invalid) || (f.isActived.invalid && (f.isActived.dirty || f.isActived.touched))" class="has-error m-b-12">

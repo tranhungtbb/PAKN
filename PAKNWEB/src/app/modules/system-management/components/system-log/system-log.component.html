@@ -38,7 +38,7 @@
 									<span class="caret-tb"></span>
 								</p>
 								<div *hasPermission="['3', 'A_XIII_2']" class="dropdown bootstrap-select form-control form-control-sm">
-									<ng-select class="" [items]="listUser" placeholder="Người tạo ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.userId"
+									<ng-select notFoundText="Không có dữ liệu"  class="" [items]="listUser" placeholder="Người tạo ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.userId"
 										[closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
 									</ng-select>
 								</div>
@@ -58,7 +58,7 @@
 									<span class="caret-tb"></span>
 								</p>
 								<div *hasPermission="['3', 'A_XIII_2']" class="dropdown bootstrap-select form-control form-control-sm">
-									<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
+									<ng-select notFoundText="Không có dữ liệu"  class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
 										[closeOnSelect]="true" (change)="dataStateChange()">
 									</ng-select>
 								</div>

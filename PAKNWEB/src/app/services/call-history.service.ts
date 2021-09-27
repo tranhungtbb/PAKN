@@ -15,7 +15,11 @@ export class CallHistoryService {
 	getPagedList(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.CallHistoryGetPagedList)
 	}
-	delete(id:any){
-		return this.serviceInvoker.get({id},AppSettings.API_ADDRESS + Api.CallHisDelete)
+	delete(id: any) {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.CALL_HISTORY),
+		}
+		return this.serviceInvoker.getwithHeaders({ id }, AppSettings.API_ADDRESS + Api.CallHisDelete, headers)
 	}
 }

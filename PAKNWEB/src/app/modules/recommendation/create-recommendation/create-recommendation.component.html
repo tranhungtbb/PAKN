@@ -43,7 +43,9 @@
 					<div class="row">
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">{{titleObject}} <span class="cl-red">(*)</span></label>
-							<ng-select placeholder="Chọn..." class="form-control" [items]="lstObject" bindValue="value" bindLabel="text" (change)="changeObject()"
+							<ng-select placeholder="Chọn..." class="form-control" [items]="lstObject" 
+								bindValue="value" bindLabel="text" (change)="changeObject()"
+								notFoundText="Không có dữ liệu"
 								formControlName="sendId" [(ngModel)]="model.sendId">
 								<ng-template ng-option-tmp let-item="item">
 									<div title="{{item.text}}">{{item.text}}</div>
@@ -79,7 +81,7 @@
 					<div class="row">
 						<div class="col-12 col-lg-8 form-group">
 							<label class="mb-1">Lĩnh vực <span class="cl-red">(*)</span></label>
-							<ng-select placeholder="Chọn..." class="form-control" 
+							<ng-select placeholder="Chọn..." class="form-control" notFoundText="Không có dữ liệu"
 							[items]="lstField" bindValue="value" bindLabel="text" formControlName="field"
 								[(ngModel)]="model.field">
 								<ng-template ng-option-tmp let-item="item">
@@ -115,7 +117,7 @@
 					<div class="form-row align-items-end justify-content-between">
 						<div class="col-12 form-group">
 							<label class="mb-1">Đơn vị giải quyết <span class="cl-red">(*)</span></label>
-							<ng-select formControlName="unitId" class="form-control" 
+							<ng-select formControlName="unitId" class="form-control" notFoundText="Không có dữ liệu"
 								[(ngModel)]="model.unitId" [closeOnSelect]="true" [searchable]="true" placeholder="Chọn...">
 								<div *ngFor="let item of lstUnit">
 									<ng-option [value]="item.value">
@@ -133,7 +135,8 @@
 						<div class="w-100"></div>
 						<div class="col form-group">
 							<label class="mb-1"><i class="bi bi-tags mr-2"></i>Hashtags</label>
-							<ng-select placeholder="Chọn..." class="form-control" [items]="lstHashtag" bindValue="value" bindLabel="text" formControlName="hashtag"
+							<ng-select placeholder="Chọn..." class="form-control" [items]="lstHashtag" 
+								bindValue="value" bindLabel="text" formControlName="hashtag" notFoundText="Không có dữ liệu"
 								(keydown.enter)="onCreateHashtag($event)" [(ngModel)]="hashtagId" [virtualScroll]="true">
 								<ng-template ng-option-tmp let-item="item">
 									<div title="{{item.text}}">{{item.text}}</div>

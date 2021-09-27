@@ -379,12 +379,12 @@ div.bubble.reply {
 	font-size: 12px;
 	top: 4px;
 	left: 23px;
-	width: 17px;
+	min-width: 17px;
 	height: 16px;
 	background: red;
 	border-radius: 100%;
 	text-align: center;
-	padding-top: 2px;
+	padding: 2px;
 	z-index: 1000;
 }
 
@@ -410,22 +410,22 @@ div.bubble.reply {
 }
 
 /* //////// sub menu /////// */
-.nav-item:hover > ul.sub-nav{
+.nav-item:hover > ul.sub-nav {
 	display: block;
 }
-.sub-nav{
+.sub-nav {
 	position: absolute;
 	/* margin: auto; */
 	width: 460px;
 	display: none;
 	margin-top: -0.25rem;
 }
-.sub-item:hover{
-	background-color:white;
+.sub-item:hover {
+	background-color: white;
 }
-.sub-item:hover a{
-	color:  #1455a0 !important;
+.sub-item:hover a {
+	color: #1455a0 !important;
 }
-.active{
-	color:  #1455a0 !important;
+.active {
+	color: #1455a0 !important;
 }

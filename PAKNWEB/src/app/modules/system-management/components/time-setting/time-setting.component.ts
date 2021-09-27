@@ -113,7 +113,6 @@ export class TimeSettingComponent implements OnInit {
 	}
 
 	getList() {
-
 		this._service.getSystemTime({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
@@ -136,7 +135,7 @@ export class TimeSettingComponent implements OnInit {
 		this.dataUpdate = data
 		$('#modalConfirmUpdateStatus').modal('show')
 	}
-	title : any
+	title: any
 	preCreate() {
 		this.model = new FieldObject()
 		this.rebuilForm()
@@ -247,7 +246,7 @@ export class TimeSettingComponent implements OnInit {
 
 	onUpdateStatus(data) {
 		data.isActived = !data.isActived
-		this._service.updateSystemTime(data).subscribe((res) => {
+		this._service.updateSystemTime(data, true).subscribe((res) => {
 			$('#modalConfirmUpdateStatus').modal('hide')
 			if (res.success == 'OK') {
 				if (data.isActived == true) {

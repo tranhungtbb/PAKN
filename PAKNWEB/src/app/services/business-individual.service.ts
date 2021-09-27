@@ -16,7 +16,11 @@ export class BusinessIndividualService {
 	}
 
 	individualChangeStatus(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.IndivialChangeStatus)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
+			logObject: encodeURIComponent(LOG_OBJECT.BI_INDIVIDUAL),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.IndivialChangeStatus, headers)
 	}
 
 	individualDelete(data: any): Observable<any> {

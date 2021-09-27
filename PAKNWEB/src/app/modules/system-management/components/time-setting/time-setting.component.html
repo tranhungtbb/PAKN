@@ -73,7 +73,7 @@
 										<strong>Trạng thái <p-sortIcon [field]="'isActived'"></p-sortIcon></strong>
 									</p>
 									<div style="width: 100%" class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select [items]="listStatus" placeholder="Trạng thái ..."
+										<ng-select notFoundText="Không có dữ liệu"  [items]="listStatus" placeholder="Trạng thái ..."
 											bindLabel="text" bindValue="value"
 											[closeOnSelect]="true"
 											[ngSwitch]="'isActived'"
@@ -180,7 +180,7 @@
 							</div>
 							<div class="col-sm-6">
 								<label class="control-label">Trạng thái <span class="text-danger">(*)</span></label>
-								<ng-select class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
+								<ng-select notFoundText="Không có dữ liệu"  class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
 									[(ngModel)]="model.isActived" style="font-weight: 600;">
 								</ng-select>
 								<div *ngIf="(submitted && f.isActived.invalid) || (f.isActived.invalid && (f.isActived.dirty || f.isActived.touched))" class="has-error m-b-12">

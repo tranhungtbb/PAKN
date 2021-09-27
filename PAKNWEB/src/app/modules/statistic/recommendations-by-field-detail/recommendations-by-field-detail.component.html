@@ -63,7 +63,7 @@
 											
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [items]="lstUnit" placeholder="Đơn vị ..." bindLabel="text" bindValue="value" [(ngModel)]="unitId"
+											<ng-select notFoundText="Không có dữ liệu"  class="" [items]="lstUnit" placeholder="Đơn vị ..." bindLabel="text" bindValue="value" [(ngModel)]="unitId"
 												[closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>
@@ -74,7 +74,7 @@
 											
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
+											<ng-select notFoundText="Không có dữ liệu"  class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
 												[closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>

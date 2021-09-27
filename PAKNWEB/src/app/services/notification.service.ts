@@ -13,10 +13,6 @@ import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
 export class NotificationService {
 	constructor(private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService, private http: HttpClient) {}
 
-	insertNotificationTypeNews(query: any): Observable<any> {
-		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.NotificationInsertTypeNews)
-	}
-
 	insertNotificationTypeRecommendation(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NotificationInsertTypeRecommendation)
 	}
@@ -24,7 +20,7 @@ export class NotificationService {
 	getListNotificationOnPageByReceiveId(query: any): Observable<any> {
 		let tempheaders = new HttpHeaders({
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
-			macAddress: ''
+			macAddress: '',
 		})
 		const form = new FormData()
 		form.append('model', JSON.stringify(query))
@@ -36,7 +32,7 @@ export class NotificationService {
 		return this.http.post(AppSettings.API_ADDRESS + Api.NotificationGetList, form, httpPackage)
 	}
 	getListNotificationGetById(query: any): Observable<any> {
-		return this.serviceInvoker.get(query,AppSettings.API_ADDRESS + Api.NotificationGetById)
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NotificationGetById)
 	}
 
 	updateIsViewedNotification(query: any): Observable<any> {
@@ -48,6 +44,10 @@ export class NotificationService {
 	}
 
 	deleteNotification(query: any): Observable<any> {
-		return this.serviceInvoker.post(query, AppSettings.API_ADDRESS + Api.NotificationDelete)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_NOTIFICATION),
+		}
+		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.NotificationDelete, headers)
 	}
 }

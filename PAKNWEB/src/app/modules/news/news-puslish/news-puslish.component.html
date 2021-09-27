@@ -30,7 +30,7 @@
 											<strong>Tiêu đề</strong>
 											
 										</p>
-										<input [(ngModel)]="query.title" (change)="filterChange()" type="text" class="form-control form-control-sm" placeholder="Nhập ...">
+										<input [(ngModel)]="query.title" svTrim trim (change)="filterChange()" type="text" class="form-control form-control-sm" placeholder="Nhập ...">
 									</th>
 									<th style="width: 180px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -39,7 +39,7 @@
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
 											<!-- [items]="listNewCategories" bindLabel="name" bindValue="id" -->
-											<ng-select class="" placeholder="Loại tin tức" [closeOnSelect]="true" [(ngModel)]="query.newsType" (change)="filterChange()"
+											<ng-select notFoundText="Không có dữ liệu"  class="" placeholder="Loại tin tức" [closeOnSelect]="true" [(ngModel)]="query.newsType" (change)="filterChange()"
 												style="width: 170px;">
 												<ng-option *ngFor="let nt of listNewCategories" [value]="nt.id">
 													{{nt.name}}
@@ -58,12 +58,12 @@
 							</ng-template>
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
-									<td>
+									<td style="display: flex;">
 										<img class="avatar-size rounded-3" [src]="item.imagePath">
 
 										<strong class="news-title col-sm-10 highlight">
-											<a *hasNotPermission="['3', 'F_I_4']" href="javascript:void(0)" title="Chi tiết tin tức sự kiện">{{item.title}}</a>
-											<a *hasPermission="['3', 'F_I_4']" [routerLink]="['../chi-tiet', item.id]" title="Chi tiết tin tức sự kiện">{{item.title}}</a>
+											<a *hasNotPermission="['3', 'F_I_4']" class="text-2line mb-0" href="javascript:void(0)" title="Chi tiết tin tức sự kiện">{{item.title}}</a>
+											<a *hasPermission="['3', 'F_I_4']" class="text-2line mb-0" [routerLink]="['../chi-tiet', item.id]" title="Chi tiết tin tức sự kiện">{{item.title}}</a>
 										</strong>
 									</td>
 									<td>

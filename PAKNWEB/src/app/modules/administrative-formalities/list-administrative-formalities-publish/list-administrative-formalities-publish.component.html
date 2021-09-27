@@ -74,7 +74,7 @@
 											
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select placeholder="Chọn..." class="" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field"
+											<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn..." class="" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field"
 												[closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
 											</ng-select>
 										</div>

@@ -48,7 +48,7 @@ export class MyRecommendationComponent implements OnInit {
 		private puRecommendationService: PuRecommendationService,
 		private activatedRoute: ActivatedRoute,
 		private authenService: AuthenticationService,
-		private sharedataService: DataService,
+		private sharedataService: DataService
 	) {}
 
 	ngOnInit() {
@@ -156,7 +156,7 @@ export class MyRecommendationComponent implements OnInit {
 				this.LtsStatus = ',3,6,9'
 				break
 			default:
-				this.getList()
+				this.getList('')
 				break
 		}
 	}

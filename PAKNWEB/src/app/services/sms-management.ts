@@ -15,7 +15,7 @@ export class SMSManagementService {
 
 	Insert(request: any): Observable<any> {
 		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logAction: encodeURIComponent(request.model.status == 1 ? LOG_ACTION.INSERT : LOG_ACTION.INSERT_AND_SEND),
 			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.SMSManagementInsert, headers)
@@ -39,9 +39,10 @@ export class SMSManagementService {
 
 	Update(request: any): Observable<any> {
 		let headers = {
-			logAction: request.status == 1 ? encodeURIComponent(LOG_ACTION.UPDATE) : encodeURIComponent(LOG_ACTION.SEND),
+			logAction: encodeURIComponent(request.model.status == 1 ? LOG_ACTION.UPDATE : LOG_ACTION.UPDATE_AND_SEND),
 			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL),
 		}
+		debugger
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.SMSManagementUpdate, headers)
 	}
 

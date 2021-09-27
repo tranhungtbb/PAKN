@@ -46,14 +46,12 @@ namespace PAKNAPI.Controllers.ControllerBase
 					{
 						{"ListData", rsData},
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}

@@ -163,8 +163,14 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
+				var jss = new JsonSerializerSettings
+				{
+					DateFormatHandling = DateFormatHandling.IsoDateFormat,
+					DateTimeZoneHandling = DateTimeZoneHandling.Local,
+					DateParseHandling = DateParseHandling.DateTimeOffset,
+				};
 				INVInvitationInsertModel invInvitation = new INVInvitationInsertModel();
-				invInvitation.Model = JsonConvert.DeserializeObject<INVInvitationInsertIN>(Request.Form["Model"].ToString());
+				invInvitation.Model = JsonConvert.DeserializeObject<INVInvitationInsertIN>(Request.Form["Model"].ToString(), jss);
 
 				var ErrorMessage = ValidationForFormData.validObject(invInvitation.Model);
 				if (ErrorMessage != null)
@@ -401,8 +407,14 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
+				var jss = new JsonSerializerSettings
+				{
+					DateFormatHandling = DateFormatHandling.IsoDateFormat,
+					DateTimeZoneHandling = DateTimeZoneHandling.Local,
+					DateParseHandling = DateParseHandling.DateTimeOffset,
+				};
 				INVInvitationUpdateModel invInvitation = new INVInvitationUpdateModel();
-				invInvitation.Model = JsonConvert.DeserializeObject<INVInvitationGetById>(Request.Form["Model"].ToString());
+				invInvitation.Model = JsonConvert.DeserializeObject<INVInvitationGetById>(Request.Form["Model"].ToString(), jss);
 
 				var ErrorMessage = ValidationForFormData.validObject(invInvitation.Model);
 				if (ErrorMessage != null)

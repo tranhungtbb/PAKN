@@ -1,7 +1,9 @@
+import { isNull } from 'util'
+
 export class NewsModel {
 	constructor() {
 		this.id = 0
-		this.postType = ''
+		this.postType = '0,'
 		this.isPublished = false
 		this.status = 2 // 0: đã thu hồi | 1: đã công bố | 2: đang soạn thảo
 		this.imagePath = ''
@@ -16,7 +18,6 @@ export class NewsModel {
 		this.viewCount = 0
 		this.withdrawDate = ''
 		this.withdrawDate = ''
-
 	}
 	id: number
 	title: string

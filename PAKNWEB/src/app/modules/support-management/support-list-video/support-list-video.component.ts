@@ -137,7 +137,7 @@ export class SupportListVideoComponent implements OnInit {
 	preUpdate(id: any) {
 		this.submitted = false
 		this.files = []
-		this.model = {...this.lstSupport.find((x) => x.id == id)}
+		this.model = { ...this.lstSupport.find((x) => x.id == id) }
 		this.files.push({
 			fileType: this.model.fileType,
 			name: this.model.fileName,
@@ -159,7 +159,7 @@ export class SupportListVideoComponent implements OnInit {
 			files: this.files,
 		}
 		if (this.model.id == undefined || this.model.id == 0) {
-			this.supportService.Insert(obj).subscribe((res) => {
+			this.supportService.Insert(obj, true).subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
 					$('#modal').modal('hide')
 					this.files = []
@@ -180,7 +180,7 @@ export class SupportListVideoComponent implements OnInit {
 					console.log(err)
 				}
 		} else {
-			this.supportService.Update(obj).subscribe((res) => {
+			this.supportService.Update(obj, true).subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
 					$('#modal').modal('hide')
 					this.files = []
@@ -210,7 +210,7 @@ export class SupportListVideoComponent implements OnInit {
 	}
 	onDelete() {
 		$('#modal-confirm').modal('hide')
-		this.supportService.Delete({ Id: this.model.id }).subscribe((res) => {
+		this.supportService.Delete({ Id: this.model.id }, true).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.toastr.success(COMMONS.DELETE_SUCCESS)
 				this.getAllUnitShortInfo()

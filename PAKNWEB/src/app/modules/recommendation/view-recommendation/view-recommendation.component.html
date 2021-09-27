@@ -83,8 +83,7 @@
 						</div>
 						<div class="media-body">
 							<p class="h4 font-weight-bold">Nội dung kiến nghị:</p>
-							<p>{{model.content}}</p>
-
+							<p [innerHTML]="model.content"></p>
 							<p *ngIf="filesModel.length > 0">
 									<span class="text-left">
 										<small class="small">Tài liệu đính kèm</small><br>
@@ -559,7 +558,7 @@
 							<td>{{item.sendDate | date:'dd/MM/yyyy'}}</td>
 							<td>
 								<div class="d-flex justify-content-end">
-									<a href="quan-tri/kien-nghi/chi-tiet/{{item.id}}?suggest=true" (click)="DownloadFile(file)" class="btn-icon grd-brown text-brown mr-2"
+									<a href="quan-tri/kien-nghi/chi-tiet/{{item.id}}?suggest=true" target="_blank" class="btn-icon grd-brown text-brown mr-2"
 										title="Xem chi tiết"><i class="bi bi-eye"></i></a>
 									<a *ngIf="model.status == 7" class="btn-icon grd-blue text-white mr-2" (click)="useConclustion(item.contentReply)" title="Sử dụng câu trả lời"><i
 											class="bi bi-file-earmark-check"></i></a>

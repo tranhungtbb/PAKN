@@ -52,7 +52,7 @@
 										<strong>Loại cấu hình <p-sortIcon [field]="'type'"></p-sortIcon></strong>
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select [items]="listType" placeholder="Loại cấu hình ..." bindLabel="text" bindValue="value"
+										<ng-select notFoundText="Không có dữ liệu"  [items]="listType" placeholder="Loại cấu hình ..." bindLabel="text" bindValue="value"
 										[ngSwitch]="'type'"
 										(change)="table.filter($event?.value.toString(), 'type')"
 										[closeOnSelect]="true">

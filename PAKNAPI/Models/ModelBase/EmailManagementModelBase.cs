@@ -56,7 +56,7 @@ namespace PAKNAPI.Models.ModelBase
         public int? IndividualId { get; set; }
         public string IndividualFullName { get; set; }
         public string UnitName { get; set; }
-        public int? AdUnitId { get; set; }
+        public int? UnitId { get; set; }
     }
     public class EmailManagementBusinessModel
     {
@@ -66,7 +66,7 @@ namespace PAKNAPI.Models.ModelBase
         public string RepreFullName { get; set; }
         public string BusinessName { get; set; }
         public string UnitName { get; set; }
-        public int? AdUnitId { get; set; }
+        public int? UnitId { get; set; }
     }
 
     public class EmailIndividualBusinessModel
@@ -119,6 +119,7 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("UpdateDate", DateTime.Now);
             DP.Add("UserUpdateId", model.UserUpdateId);
             DP.Add("SendDate", model.SendDate);
+            DP.Add("Status", model.Status);
             DP.Add("UserSend", model.UserSend);
             DP.Add("Unit", model.Unit);
             //DP.Add("IdOut", model.Id, null, System.Data.ParameterDirection.Output);
@@ -133,7 +134,7 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("Content", model.Content);
             DP.Add("Signature", model.Signature);
             //DP.Add("CreatedDate", model.CreatedDate);
-            //DP.Add("UserCreatedId", model.UserCreatedId);
+            DP.Add("Status", model.Status);
             DP.Add("UpdateDate", DateTime.Now);
             DP.Add("UserUpdateId", model.UserUpdateId);
             DP.Add("SendDate", model.SendDate);
@@ -244,7 +245,7 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("EmailId", model.EmailId);
             DP.Add("IndividualId", model.IndividualId);
             DP.Add("UnitName", model.UnitName);
-            DP.Add("AdUnitId", model.AdUnitId);
+            DP.Add("AdUnitId", model.UnitId);
             return await _sQLCon.ExecuteNonQueryDapperAsync("[Email_quanlytinnhan_IndividualInsert]", DP);
 
         }
@@ -288,7 +289,7 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("EmailId", model.EmailId);
             DP.Add("BusinessId", model.BusinessId);
             DP.Add("UnitName", model.UnitName);
-            DP.Add("AdUnitId", model.AdUnitId);
+            DP.Add("AdUnitId", model.UnitId);
             return await _sQLCon.ExecuteNonQueryDapperAsync("[Email_quanlytinnhan_BusinessInsert]", DP);
 
 

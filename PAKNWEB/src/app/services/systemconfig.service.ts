@@ -16,9 +16,9 @@ export class SystemconfigService {
 	getSystemTime(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.TimeConfigGetAllOnPage)
 	}
-	updateSystemTime(query: any): Observable<any> {
+	updateSystemTime(query: any, isUpdateStatus: boolean = false): Observable<any> {
 		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logAction: encodeURIComponent(isUpdateStatus == false ? LOG_ACTION.UPDATE : LOG_ACTION.UPDATESTATUS),
 			logObject: encodeURIComponent(LOG_OBJECT.SY_TIME),
 		}
 		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.TimeConfigUpdate, headers)
@@ -44,24 +44,19 @@ export class SystemconfigService {
 		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.TimeConfigGetDateActive)
 	}
 	/// chính thức
-	
-	getAllOnPage(query : any) : Observable<any>{
-		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.SYConfigSystemGetAllOnPage)
 
+	getAllOnPage(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.SYConfigSystemGetAllOnPage)
 	}
 
-	syConfigUpdate(query : any) : Observable<any>{
+	syConfigUpdate(query: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
 			logObject: encodeURIComponent(LOG_OBJECT.SY_CONFIG),
 		}
-		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.SYConfigSystemUpdate,headers)
-
+		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.SYConfigSystemUpdate, headers)
 	}
-	syConfigGetById(query : any) : Observable<any>{
+	syConfigGetById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.SYConfigSystemGetById)
-
 	}
-
-
 }

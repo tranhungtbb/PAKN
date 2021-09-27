@@ -68,6 +68,13 @@ namespace PAKNAPI.ModelBase
 		public long? RoleId { get; set; }
 	}
 
+	public class SYUserRoleMapInsertObject {
+		public List<SYUserRoleMapInsertIN> _sYUserRoleMaps { get; set; }
+		public bool? isCreated { get; set; }
+	}
+
+	
+
 	public class SYUserChangePwd
 	{
 		private SQLCon _sQLCon;

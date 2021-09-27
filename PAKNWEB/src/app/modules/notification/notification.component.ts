@@ -35,6 +35,8 @@ export class NotificationComponent implements OnInit {
 	]
 
 	getList() {
+		this.model.title = this.model.title != null ? this.model.title.trim() : ''
+		this.model.content = this.model.content != null ? this.model.content.trim() : ''
 		let request = {
 			title: this.model.title != null ? this.model.title : '',
 			content: this.model.content != null ? this.model.content : '',

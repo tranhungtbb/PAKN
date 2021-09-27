@@ -65,7 +65,9 @@
 											
 										</p>
 										<div style="width: 200px" class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select placeholder="Chọn..." class="" [items]="lstUnit" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.unitId"
+											<ng-select placeholder="Chọn..." class="" [items]="lstUnit" bindLabel="text" bindValue="value"
+												notFoundText="Không có dữ liệu"
+												[(ngModel)]="dataSearch.unitId"
 												[closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>
@@ -76,7 +78,9 @@
 											
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select placeholder="Chọn..." class="" [items]="lstField" bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field"
+											<ng-select placeholder="Chọn..." class="" [items]="lstField" bindLabel="text" bindValue="value"
+												notFoundText="Không có dữ liệu" 
+												[(ngModel)]="dataSearch.field"
 												[closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>
@@ -87,7 +91,9 @@
 											
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
+											<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
+												notFoundText="Không có dữ liệu"
+												[(ngModel)]="dataSearch.status"
 												[closeOnSelect]="true" (change)="dataStateChange()">
 											</ng-select>
 										</div>
@@ -252,7 +258,9 @@
 					<div class="form-row">
 						<div class="col-12 col-lg-6 form-group">
 							<label class="mb-1">Đơn vị giải quyết <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control border-input" [items]="lstUnitNotMain" bindLabel="text" bindValue="value" formControlName="unitReceiveId" placeholder="Chọn đơn vị giải quyết"
+							<ng-select class="form-control border-input" [items]="lstUnitNotMain" bindLabel="text" bindValue="value"
+								notFoundText="Không có dữ liệu"
+								formControlName="unitReceiveId" placeholder="Chọn đơn vị giải quyết"
 								[(ngModel)]="modelForward.unitReceiveId" [closeOnSelect]="true"></ng-select>
 							<div *ngIf="(submitted && f.unitReceiveId.invalid) || (f.unitReceiveId.invalid && (f.unitReceiveId.dirty || f.unitReceiveId.touched))"
 								class="has-error m-b-12">
@@ -287,32 +295,6 @@
 		</div>
 	</div>
 </div>
-
-<!-- <div class="modal fade" id="modalAccept">
-	<div class="modal-dialog modal-dialog-centered" style="min-width: 500px" role="document">
-		<div class="modal-content rounded">
-			<form class="form-horizontal">
-				<div class="panel panel-default no-margin">
-					<div class="modal-header">
-						<button class="close btn-close-modal" data-dismiss="modal">
-							×
-						</button>
-						<p class="modal-title h3">Xác nhận</p>
-					</div>
-					<div class="modal-body no-padding-bottom">
-						<div>
-							<p>{{titleAccept}}</p>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-						<button type="button" class="btn btn-danger border-0 px-5 grd-blue" (click)="onProcessAccept()">Xác nhận</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-</div> -->
 
 <div class="modal fade" id="modalAccept">
 	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
@@ -373,7 +355,9 @@
 						<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord" id="basic_checkbox_1">
 						<label class="custom-control-label" for="basic_checkbox_1">Chứa từ ngữ bị cấm</label>
 					</div>
-					<ng-select *ngIf="modelProcess.reactionaryWord" placeholder="Chọn nhóm từ ngữ" class="form-control" [items]="lstGroupWord" bindLabel="text" bindValue="value"
+					<ng-select *ngIf="modelProcess.reactionaryWord" placeholder="Chọn nhóm từ ngữ" class="form-control"
+						notFoundText="Không có dữ liệu" 
+						[items]="lstGroupWord" bindLabel="text" bindValue="value"
 						[(ngModel)]="lstGroupWordSelected" [closeOnSelect]="false" [multiple]="true">
 					</ng-select>
 				</ng-container>

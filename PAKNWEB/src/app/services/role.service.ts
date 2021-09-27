@@ -35,9 +35,9 @@ export class RoleService {
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.RoleInsert, headers)
 	}
-	update(data: any): Observable<any> {
+	update(data: any, isUpdateStatus: any = false): Observable<any> {
 		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
+			logAction: encodeURIComponent(isUpdateStatus == false ? LOG_ACTION.UPDATE : LOG_ACTION.UPDATESTATUS),
 			logObject: encodeURIComponent(LOG_OBJECT.SY_ROLE),
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.RoleUpdate, headers)

@@ -33,7 +33,7 @@ export class UserComponent implements OnInit {
 		private _shareData: DataService,
 		private _router: Router,
 		private storeageService: UserInfoStorageService,
-		private _userServiceChat : UserServiceChatBox
+		private _userServiceChat: UserServiceChatBox
 	) {}
 
 	listData = new Array<UserObject2>()
@@ -41,10 +41,10 @@ export class UserComponent implements OnInit {
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
 	]
-	listHisStatus : any = [
-		{value : 1, text : "Thành công" },
-		{value : 0, text : "Thất bại" }
-	] 
+	listHisStatus: any = [
+		{ value: 1, text: 'Thành công' },
+		{ value: 0, text: 'Thất bại' },
+	]
 
 	positionsList: any[] = []
 	rolesList: any[] = []
@@ -59,8 +59,8 @@ export class UserComponent implements OnInit {
 	// object User
 	modelUser: any = new UserObject2()
 	submitted: boolean = false
-	isShowPassword : any = false
-	isShowRePassword : any = false
+	isShowPassword: any = false
+	isShowRePassword: any = false
 
 	// view child
 	@ViewChild('table', { static: false }) table: any
@@ -106,19 +106,17 @@ export class UserComponent implements OnInit {
 		$('#modalChangePassword').on('keypress', function (e) {
 			if (e.which == 13) e.preventDefault()
 		})
-	
+
 		this.childCreateOrUpdateUser.parentUser = this
 		this.childDetailUser.parentUser = this
 	}
 	getDropDown() {
-		this._service.getDataForCreate({}).subscribe(res=>{
-			if(res.success == RESPONSE_STATUS.success){
+		this._service.getDataForCreate({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
 				this.positionsList = res.result.lstPossition
 				this.unitsList = res.result.lstUnit
 			}
-			
 		})
-
 	}
 
 	getList() {
@@ -142,7 +140,6 @@ export class UserComponent implements OnInit {
 				alert(error)
 			}
 	}
-
 
 	get f() {
 		return this.formChangePassword.controls
@@ -211,12 +208,12 @@ export class UserComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				this.getList()
-				let user = this.listData.find(x=>x.id == this.userId)
-				if(user){
+				let user = this.listData.find((x) => x.id == this.userId)
+				if (user) {
 					const userDel = {
 						login: user.userName,
-						password: 'quickblox'
-					};
+						password: 'quickblox',
+					}
 					this._userServiceChat.deleteUser(userDel)
 				}
 			} else {
@@ -261,6 +258,9 @@ export class UserComponent implements OnInit {
 			this.getList()
 		})
 	}
+	onChange(data) {
+		console.log(data)
+	}
 
 	cleaseHisModel() {
 		this.hisPageIndex = 1
@@ -289,24 +289,22 @@ export class UserComponent implements OnInit {
 		this.table2.first = 0
 		this.getHistory(this.hisUserId, this.emailUser)
 	}
-	onChangeFromDate(event){
-		if(event){
-			this.dataSearch2.fromDate = event;
+	onChangeFromDate(event) {
+		if (event) {
+			this.dataSearch2.fromDate = event
+		} else {
+			this.dataSearch2.fromDate = null
 		}
-		else{
-			this.dataSearch2.fromDate = null;
-		}
-		this.getHistory(this.hisUserId, this.emailUser);
+		this.getHistory(this.hisUserId, this.emailUser)
 	}
 
-	onChangeToDate(event){
-		if(event){
-			this.dataSearch2.toDate = event;
+	onChangeToDate(event) {
+		if (event) {
+			this.dataSearch2.toDate = event
+		} else {
+			this.dataSearch2.toDate = null
 		}
-		else{
-			this.dataSearch2.toDate = null;
-		}
-		this.getHistory(this.hisUserId, this.emailUser);
+		this.getHistory(this.hisUserId, this.emailUser)
 	}
 
 	getHistory(id: any, email: any, status = null) {
@@ -319,12 +317,12 @@ export class UserComponent implements OnInit {
 		this.hisUserId = id
 		this.listHisData = []
 		this.emailUser = email
-		this.dataSearch2.content = this.dataSearch2.content == null ? '' : this.dataSearch2.content.trim();
+		this.dataSearch2.content = this.dataSearch2.content == null ? '' : this.dataSearch2.content.trim()
 		let req = {
 			FromDate: this.dataSearch2.fromDate == null ? '' : this.dataSearch2.fromDate.toDateString(),
 			ToDate: this.dataSearch2.toDate == null ? '' : this.dataSearch2.toDate.toDateString(),
-			Content : this.dataSearch2.content,
-			Status : this.dataSearch2.status == null ? '' : this.dataSearch2.status,
+			Content: this.dataSearch2.content,
+			Status: this.dataSearch2.status == null ? '' : this.dataSearch2.status,
 			PageIndex: this.hisPageIndex,
 			PageSize: this.hisPageSize,
 			UserId: id,
@@ -349,10 +347,10 @@ export class UserComponent implements OnInit {
 			}
 		})
 	}
-	showPassword(){
+	showPassword() {
 		this.isShowPassword = !this.isShowPassword
 	}
-	showRePassword(){
+	showRePassword() {
 		this.isShowRePassword = !this.isShowRePassword
 	}
 	onExport() {
@@ -363,14 +361,14 @@ export class UserComponent implements OnInit {
 			passingObj.UserProcessId = this.storeageService.getUserId()
 			passingObj.UserProcessName = this.storeageService.getFullName()
 
-			passingObj.FromDate = this.dataSearch2.fromDate;
-			passingObj.ToDate = this.dataSearch2.toDate;
-			passingObj.Content = this.dataSearch2.content;
-			passingObj.Status = this.dataSearch2.status;
+			passingObj.FromDate = this.dataSearch2.fromDate
+			passingObj.ToDate = this.dataSearch2.toDate
+			passingObj.Content = this.dataSearch2.content
+			passingObj.Status = this.dataSearch2.status
 			this._shareData.setobjectsearch(passingObj)
 			this._shareData.sendReportUrl = 'HistoryUser?' + JSON.stringify(passingObj)
 			this._router.navigate(['quan-tri/xuat-file'])
-		}else{
+		} else {
 			this._toastr.error('Không có thông tin lịch sử')
 		}
 	}
@@ -383,6 +381,6 @@ export class HistoryUser {
 	}
 	fromDate: Date
 	toDate: Date
-	content : string
-	status : number
+	content: string
+	status: number
 }

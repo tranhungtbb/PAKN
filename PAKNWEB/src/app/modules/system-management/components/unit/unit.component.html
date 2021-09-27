@@ -131,7 +131,7 @@
 												<strong class="no-wrap">Trạng thái <p-sortIcon [field]="'isActived'"></p-sortIcon></strong>
 											</p>
 											<div class="dropdown bootstrap-select form-control form-control-sm">
-												<ng-select [closeOnSelect]="true" [searchable]="false" 
+												<ng-select notFoundText="Không có dữ liệu"  [closeOnSelect]="true" [searchable]="false" 
 													[items]="listStatus" bindLabel="text" bindValue="value"
 													[ngSwitch]="'isActived'"
 													(change)="table.filter($event?.value.toString(), 'isActived')"
@@ -227,7 +227,7 @@
 						<input hidden value="0" formControlName="parentId" [(ngModel)]="modelUnit.parentId" *ngIf="modelUnit.unitLevel == 1">
 						<div class="col-12 col-lg-4 form-group" *ngIf="modelUnit.unitLevel > 1">
 							<label class="mb-1">Đơn vị cấp trên <span class="cl-red">(*)</span></label>
-							<ng-select formControlName="parentId" [(ngModel)]="modelUnit.parentId" class="
+							<ng-select notFoundText="Không có dữ liệu"  formControlName="parentId" [(ngModel)]="modelUnit.parentId" class="
 							form-control" placeholder="Chọn...">
 								<ng-option *ngFor="let item of unitFlatlist | unitFilter:modelUnit.unitLevel-1" [value]="item.id">{{item.name}}</ng-option>
 							</ng-select>
@@ -240,7 +240,7 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
-							<ng-select class="form-control" style="font-weight: bold;" [items]="listStatus" placeholder="Chọn..." bindLabel="text" bindValue="value"
+							<ng-select notFoundText="Không có dữ liệu"  class="form-control" style="font-weight: bold;" [items]="listStatus" placeholder="Chọn..." bindLabel="text" bindValue="value"
 								formControlName="isActived" [(ngModel)]="modelUnit.isActived" [closeOnSelect]="true" [searchable]="false">
 							</ng-select>
 							<div *ngIf="(unitFormSubmitted && fUnit.isActived.invalid)||(fUnit.isActived.invalid && (fUnit.isActived.dirty || fUnit.isActived.touched))"
@@ -302,7 +302,7 @@
 						</div>
 						<div class="col-12 col-lg-4 form-group">
 							<label class="mb-1">Lĩnh vực</label>
-							<ng-select class="form-control" style="font-weight: bold;" [items]="lstField" placeholder="Chọn..." bindLabel="text" bindValue="value"
+							<ng-select notFoundText="Không có dữ liệu"  class="form-control" style="font-weight: bold;" [items]="lstField" placeholder="Chọn..." bindLabel="text" bindValue="value"
 								formControlName="field" [(ngModel)]="modelUnit.field" [closeOnSelect]="true" [searchable]="false">
 							</ng-select>
 							<!-- <input formControlName="field" [(ngModel)]="modelUnit.field" type="text" class="form-control" placeholder="Nhập..." maxlength="500"> -->

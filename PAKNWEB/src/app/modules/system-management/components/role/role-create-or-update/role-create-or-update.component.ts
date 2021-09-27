@@ -32,7 +32,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 	listPermissionCategories: any[]
 	listPermissionGroupUserSelected: any[] = []
 	userId: any
-	listUserIsSystemBase : any = []
+	listUserIsSystemBase: any = []
 	constructor(
 		private _toastr: ToastrService,
 		private formBuilder: FormBuilder,
@@ -99,30 +99,36 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 	}
 
 	getUsersIsSystem() {
-		if(this.listUserIsSystemBase.length == 0){
+		if (this.listUserIsSystemBase.length == 0) {
 			this.userService.getIsSystem({}).subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
-					if(res.result.SYUserGetIsSystem.length > 0){
+					if (res.result.SYUserGetIsSystem.length > 0) {
 						this.listUserIsSystemBase = res.result.SYUserGetIsSystem
-						this.listUserIsSystem = res.result.SYUserGetIsSystem.filter(x=>{
-								let arr = this.listItemUserSelected.map(x=>{return x.value})
-								if(arr.includes(x.value)){return}
-								return x
+						this.listUserIsSystem = res.result.SYUserGetIsSystem.filter((x) => {
+							let arr = this.listItemUserSelected.map((x) => {
+								return x.value
+							})
+							if (arr.includes(x.value)) {
+								return
+							}
+							return x
 						})
 					}
 				} else {
 					this.listUserIsSystem = []
 				}
 			})
-		}else{
-			this.listUserIsSystem = this.listUserIsSystemBase.filter(x=>{
-				let arr = this.listItemUserSelected.map(x=>{return x.value})
-				if(arr.includes(x.value)){return}
+		} else {
+			this.listUserIsSystem = this.listUserIsSystemBase.filter((x) => {
+				let arr = this.listItemUserSelected.map((x) => {
+					return x.value
+				})
+				if (arr.includes(x.value)) {
+					return
+				}
 				return x
-		})
+			})
 		}
-		
-		
 	}
 
 	get f() {
@@ -155,7 +161,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 						return
 					} else {
 						this._toastr.success(COMMONS.ADD_SUCCESS)
-						this.onCreateUserRole(response.result)
+						this.onCreateUserRole(response.result, true)
 						this.onCreatePermission(response.result)
 						this.redirectList()
 						return
@@ -180,7 +186,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 						return
 					} else {
 						this._toastr.success(COMMONS.UPDATE_SUCCESS)
-						this.onCreateUserRole(response.result)
+						this.onCreateUserRole(response.result, true)
 						this.onCreatePermission(response.result)
 						this.redirectList()
 						return
@@ -212,15 +218,14 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 	}
 
 	onCreateUser() {
-		if(!this.userId){
+		if (!this.userId) {
 			this._toastr.error('Vui lòng chọn người dùng')
 			return
 		}
 		if (this.listItemUserSelected.length == 0) {
 			let item = this.listUserIsSystem.find((x) => x.value == this.userId)
-			if(item)
-				this.listItemUserSelected.push(item)
-				else this._toastr.error('Vui lòng chọn người dùng')
+			if (item) this.listItemUserSelected.push(item)
+			else this._toastr.error('Vui lòng chọn người dùng')
 		} else {
 			let check = this.listItemUserSelected.find((x) => x.value == this.userId)
 			if (check != undefined) {
@@ -228,8 +233,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 				return
 			}
 			let item = this.listUserIsSystem.find((x) => x.value == this.userId)
-			if(item)
-				this.listItemUserSelected.push(item)
+			if (item) this.listItemUserSelected.push(item)
 			else this._toastr.error('Vui lòng chọn người dùng')
 		}
 		this.getUsersIsSystem()
@@ -241,7 +245,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 		return
 	}
 
-	onCreateUserRole(roleId: any) {
+	onCreateUserRole(roleId: any, isCreated: boolean = false) {
 		if (this.listItemUserSelected.length == 0) {
 			return
 		} else {
@@ -252,7 +256,11 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 					RoleId: roleId,
 				})
 			})
-			this.userService.insertMultiUserRole(listModel).subscribe((res) => {
+			let obj = {
+				_sYUserRoleMaps: listModel,
+				isCreated: isCreated,
+			}
+			this.userService.insertMultiUserRole(obj).subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
 					// this.redirectList()
 					return

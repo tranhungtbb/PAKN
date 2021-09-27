@@ -171,6 +171,33 @@ export class RecommendationService {
 			logAction: encodeURIComponent(LOG_ACTION.PROCESSED),
 			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		}
+		debugger
+		switch (request.RecommendationStatus) {
+			case 2:
+				headers.logAction = encodeURIComponent(LOG_ACTION.FORWARD_TT)
+				break
+			case 3:
+				headers.logAction = encodeURIComponent(LOG_ACTION.RECEIVE_DENY)
+				break
+			case 4:
+				headers.logAction = encodeURIComponent(LOG_ACTION.RECEIVE_APPROVED)
+				break
+			case 5:
+				headers.logAction = encodeURIComponent(LOG_ACTION.PROCESS_SEND)
+				break
+			case 6:
+				headers.logAction = encodeURIComponent(LOG_ACTION.PROCESS_DENY)
+				break
+			case 7:
+				headers.logAction = encodeURIComponent(LOG_ACTION.PROCESSING)
+				break
+			case 9:
+				headers.logAction = encodeURIComponent(LOG_ACTION.APPROVE_DENY)
+				break
+			case 10:
+				headers.logAction = encodeURIComponent(LOG_ACTION.APPROVE)
+				break
+		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationProcess, headers)
 	}
 
@@ -186,7 +213,7 @@ export class RecommendationService {
 		let tempheaders = new HttpHeaders({
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
-			logAction: encodeURIComponent(LOG_ACTION.PROCESSED),
+			logAction: encodeURIComponent(LOG_ACTION.APPROVE_SEND),
 			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
 		})
 		const form = new FormData()

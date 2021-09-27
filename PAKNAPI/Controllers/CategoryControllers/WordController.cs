@@ -35,12 +35,6 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <summary>
 		/// danh sách từ ngữ
 		/// </summary>
-		/// <param name="PageSize"></param>
-		/// <param name="PageIndex"></param>
-		/// <param name="GroupId"></param>
-		/// <param name="Name"></param>
-		/// <param name="Description"></param>
-		/// <param name="IsActived"></param>
 		/// <returns></returns>
 
 		[HttpGet]

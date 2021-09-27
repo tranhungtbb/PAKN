@@ -27,7 +27,6 @@ import { HttpClient } from '@angular/common/http'
 
 declare var $: any
 
-
 @Component({
 	selector: 'app-news-create-or-update',
 	templateUrl: './news-create-or-update.component.html',
@@ -82,6 +81,8 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			pushNotify: [''],
 		})
 
+		this.postTypeSelected = this.model.postType.trim().split(',')
+
 		this.activatedRoute.params.subscribe((params) => {
 			if (params['id']) {
 				this.newsService.getById({ id: params['id'] }).subscribe((res) => {
@@ -92,7 +93,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					this.model = res.result.NENewsGetByID[0]
 					this.hisPublic = this.model.isPublished
 					this.postTypeSelected = this.model.postType.trim().split(',')
-					
+
 					//lay danh sach bai viet lien quan
 					this.getNewsRelatesInfo()
 				})
@@ -112,7 +113,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 				this.listNewsTypes = res.result.CANewsTypeGetAllOnPage
 			})
 
-			this.onChangePostType(0,true)
+		this.onChangePostType(0, true)
 	}
 
 	rebuidForm() {
@@ -153,19 +154,24 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 
 	filePost: any = null
 	submitted = false
-	onSave(event, published = false, viewDemo = false) {
+	onSave(isSave = false, published = false, viewDemo = false) {
 		this.submitted = true
 		if (this.postTypeSelected.length > 0) this.model.postType = this.postTypeSelected.toString()
 		//this.newsForm.controls.postType.setValue(this.model.postType)
 
 		if (this.newsForm.invalid) {
-			this.toast.error('Vui lòng nhập dữ liệu những trường bắt buộc')
+			// this.toast.error('Vui lòng nhập dữ liệu những trường bắt buộc')
 			return
 		}
 		//return
 		this.model.isPublished = published
 		if (published) this.model.status = 1
-		else this.model.status = 2
+		else this.model.status = 0
+
+		if (isSave == true) {
+			this.model.status = 2
+		}
+
 		if (this.model.id && this.model.id > 0) {
 			if (published == true) {
 				this.newsService.changeStatus(this.model, this.filePost).subscribe((res) => {
@@ -173,28 +179,26 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 						this.toast.error(COMMONS.UPDATE_FAILED)
 						return
 					}
-					this.insertNotification(false)
 					if (viewDemo) {
 						window.open('/cong-bo/tin-tuc-su-kien/xem-truoc/' + this.model.id)
 						return
 					}
-					
+
 					this.toast.success(COMMONS.UPDATE_SUCCESS)
 					this.router.navigate(['/quan-tri/tin-tuc/danh-sach-tong-hop'])
 				})
 			} else {
 				this.newsService.update(this.model, this.filePost).subscribe((res) => {
 					if (res.success != 'OK') {
-						let result = Number(res.result);
-						if(result && result == -1){
+						let result = Number(res.result)
+						if (result && result == -1) {
 							this.toast.error('Tiêu đề bài viết bị trùng')
 							return
-						}else{
+						} else {
 							this.toast.error(COMMONS.UPDATE_FAILED)
 							return
 						}
 					}
-					this.insertNotification(false)
 					if (viewDemo) {
 						window.open('/cong-bo/tin-tuc-su-kien/xem-truoc/' + this.model.id)
 						return
@@ -206,16 +210,16 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		} else {
 			this.newsService.create(this.model, this.filePost).subscribe((res) => {
 				if (res.success != 'OK') {
-					let result = Number(res.result);
-					if(result && result == -1){
+					let result = Number(res.result)
+					if (result && result == -1) {
 						this.toast.error('Tiêu đề bài viết bị trùng')
-					}else{
+					} else {
 						this.toast.error(COMMONS.ADD_FAILED)
 					}
 					return
 				}
 				this.model.id = res.result
-				this.insertNotification(true)
+				// this.insertNotification(true)
 
 				if (viewDemo) {
 					window.open('/cong-bo/tin-tuc-su-kien/xem-truoc/' + this.model.id)
@@ -313,24 +317,24 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		}
 	}
 
-	insertNotification(isCreate: boolean) {
-		if (this.model.status == 1) {
-			var obj = {
-				id: this.model.id,
-				title: this.model.title,
-				isCreateNews: isCreate,
-			}
-			if (this.model.isNotification == true) {
-				this.notificationService.insertNotificationTypeNews(obj).subscribe((res) => {
-					if ((res.success = RESPONSE_STATUS.success)) {
-						return
-					}
-				})
-			}
-			return
-		}
-		return
-	}
+	// insertNotification(isCreate: boolean) {
+	// 	if (this.model.status == 1) {
+	// 		var obj = {
+	// 			id: this.model.id,
+	// 			title: this.model.title,
+	// 			isCreateNews: isCreate,
+	// 		}
+	// 		if (this.model.isNotification == true) {
+	// 			this.notificationService.insertNotificationTypeNews(obj).subscribe((res) => {
+	// 				if ((res.success = RESPONSE_STATUS.success)) {
+	// 					return
+	// 				}
+	// 			})
+	// 		}
+	// 		return
+	// 	}
+	// 	return
+	// }
 	back() {
 		window.history.back()
 	}

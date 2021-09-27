@@ -123,7 +123,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 							// doanh nghiệp
 							var businessInsert = new EmailManagementBusinessModel();
 							businessInsert.EmailId = model.Id;
-							businessInsert.AdUnitId = item.AdmintrativeUnitId;
+							businessInsert.UnitId = item.AdmintrativeUnitId;
 							businessInsert.UnitName = item.UnitName;
 							businessInsert.BusinessId = item.ObjectId;
 
@@ -134,7 +134,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 							// cá nhân
 							var invididualInsert = new EmailManagementIndividualModel();
 							invididualInsert.EmailId = model.Id;
-							invididualInsert.AdUnitId = item.AdmintrativeUnitId;
+							invididualInsert.UnitId = item.AdmintrativeUnitId;
 							invididualInsert.UnitName = item.UnitName;
 							invididualInsert.IndividualId = item.ObjectId;
 
@@ -150,12 +150,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				{
 					{"Data", model},
 				};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
 				///insert his
 				///
 				hisModel.ObjectId = model.Id;
 				await insertHis(hisModel,userId);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -197,7 +196,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 					itemAdd.ObjectName = item.IndividualFullName;
 					itemAdd.UnitName = item.UnitName;
 					itemAdd.Category = 1;
-					itemAdd.AdmintrativeUnitId = Convert.ToInt32(item.IndividualId);
+					itemAdd.AdmintrativeUnitId = Convert.ToInt32(item.UnitId);
 					listBusinessIndividual.Add(itemAdd);
 				});
 				listBusiness.ForEach(item => {
@@ -208,7 +207,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 					itemAdd.ObjectName = item.BusinessName;
 					itemAdd.UnitName = item.UnitName;
 					itemAdd.Category = 2;
-					itemAdd.AdmintrativeUnitId = Convert.ToInt32(item.BusinessId);
+					itemAdd.AdmintrativeUnitId = Convert.ToInt32(item.UnitId);
 					listBusinessIndividual.Add(itemAdd);
 				});
 

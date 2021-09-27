@@ -32,15 +32,19 @@
 
 						<div class="col-sm-6 padding-col">
 							<label class="control-label department">Thời gian bắt đầu<span class="text-danger">(*)</span></label>
-							<div class="input-group">
-								<input class="form-control" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="startDate"
-									[(ngModel)]="model.startDate" appBsDatepickerInvalid [bsConfig]="{ containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-								<div class="input-group-addon p-2">
-									<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
-								</div>
-							</div>
+							<mat-form-field appearance="outline" style="width: 100%;">
+								<input matInput [ngxMatDatetimePicker]="startDate"
+									placeholder="Chọn ngày" formControlName="startDate" [(ngModel)]="model.startDate"
+								>
+								<mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+								<ngx-mat-datetime-picker #startDate [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+									[stepHour]="stepHour" [stepMinute]="stepMinute"  [touchUi]="touchUi"
+									[color]="color" [enableMeridian]="enableMeridian">
+								</ngx-mat-datetime-picker>
+							</mat-form-field>
+
 							<div *ngIf="(submitted && f.startDate.invalid) || (f.startDate.invalid && (f.startDate.dirty || f.startDate.touched))" class="has-error">
-								<!-- <ng-container> -->
+							
 								<div *ngIf="f.startDate.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
 								</div>
@@ -53,14 +57,17 @@
 						</div>
 						<div class="col-sm-6 padding-col">
 							<label class="control-label department">Thời gian kết thúc<span class="text-danger">(*)</span></label>
-							<div class="input-group">
-								<input class="form-control" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="endDate"
-									[(ngModel)]="model.endDate" appBsDatepickerInvalid [minDate]="model.startDate"
-									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-								<div class="input-group-addon p-2">
-									<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
-								</div>
-							</div>
+							
+							<mat-form-field appearance="outline" style="width: 100%;">
+									<input matInput [ngxMatDatetimePicker]="endDate"
+										placeholder="Chọn ngày" formControlName="endDate" [(ngModel)]="model.endDate"
+									>
+								<mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+								<ngx-mat-datetime-picker #endDate [showSpinners]="showSpinners" [showSeconds]="showSeconds"
+									[stepHour]="stepHour" [stepMinute]="stepMinute"  [touchUi]="touchUi"
+									[color]="color" [enableMeridian]="enableMeridian">
+								</ngx-mat-datetime-picker>
+							</mat-form-field>
 							<div *ngIf="(submitted && f.endDate.invalid) || (f.endDate.invalid && (f.endDate.dirty || f.endDate.touched))" class="has-error">
 								<div *ngIf="f.endDate.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -69,6 +76,7 @@
 									<span class="help-block">Định dạng ngày không đúng</span>
 								</div>
 							</div>
+
 						</div>
 						<div class="col-sm-12 padding-col">
 							<label class="control-label department">Địa điểm <span class="text-danger">(*)</span></label>
@@ -195,7 +203,7 @@
 								<div class="" style="display: flex;">
 									<div class="input-serach center" style="width: 60%;">
 
-										<div class="form-group" style="margin-bottom: 0px;">
+										<div class="form-group" style="margin-bottom: 0px; width: 100%;">
 											<ngx-dropdown-treeview [config]="config" [items]="items" buttonClass="btn btn-outline-primary"
 												(selectedChange)="onSelectedChange($event)" (filterChange)="onFilterChange($event)">
 											</ngx-dropdown-treeview>

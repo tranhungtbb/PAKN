@@ -82,7 +82,7 @@
 										
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
+										<ng-select notFoundText="Không có dữ liệu"  class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
 											[closeOnSelect]="true" [ngSwitch]="'isActived'"
 											(change)="table.filter($event?.value.toString(), 'isActived')"
 											>
@@ -172,14 +172,14 @@
 			<div style="display: flex; margin: 10px 20px;">
 				<div style="width: 15%;" class="text-center-x">Chọn người dùng</div>
 				<div style="width: 75%;">
-					<ng-select class="form-control" 
+					<ng-select notFoundText="Không có dữ liệu"  class="form-control" 
 						[items]="SYUserGetIsNotRole"
 						style="height: auto;" multiple="true" bindValue="value" bindLabel="text" 
 						[(ngModel)]="listItem"
 						(change)="onChangeLstItemUser()"
 					>
 					</ng-select>
-					<!-- <ng-select class="form-control" placeholder="Chọn..." [closeOnSelect]="true" [(ngModel)]="listItem"  multiple="true">
+					<!-- <ng-select notFoundText="Không có dữ liệu"  class="form-control" placeholder="Chọn..." [closeOnSelect]="true" [(ngModel)]="listItem"  multiple="true">
 						<ng-option *ngFor="let nt of SYUserGetIsNotRole" [value]="nt.value">
 							{{nt.text}}
 						</ng-option>

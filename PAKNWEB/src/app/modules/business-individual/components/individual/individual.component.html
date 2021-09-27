@@ -94,7 +94,7 @@
 										<strong>Trạng thái</strong>
 									</p>
 									<div style="max-width: 160px" class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
+										<ng-select notFoundText="Không có dữ liệu" class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
 											[closeOnSelect]="true" (change)="dataStateChange()">
 										</ng-select>
 									</div>
@@ -261,7 +261,7 @@
 							<!-- row 3 -->
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Quốc tịch <span class="cl-red">(*)</span></label>
-								<ng-select [(ngModel)]="model.nation" *ngIf="!isOtherNation" formControlName="nation" class="form-control" placeholder="Chọn..."
+								<ng-select notFoundText="Không có dữ liệu" [(ngModel)]="model.nation" *ngIf="!isOtherNation" formControlName="nation" class="form-control" placeholder="Chọn..."
 									[closeOnSelect]="true" (change)="onChangeNation()">
 									<ng-option *ngFor="let nation of listNation" [value]="nation.id">{{nation.name}}</ng-option>
 									<ng-option value="#">Khác</ng-option>
@@ -282,7 +282,7 @@
 								<select *ngIf="isOtherNation" class="form-control" disabled [(ngModel)]="model.provinceId" formControlName="province">
 									<option value="0">Chọn...</option>
 								</select>
-								<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.provinceId" formControlName="province" class="form-control" placeholder="Chọn..."
+								<ng-select notFoundText="Không có dữ liệu" *ngIf="!isOtherNation" [(ngModel)]="model.provinceId" formControlName="province" class="form-control" placeholder="Chọn..."
 									[closeOnSelect]="true" (change)="onChangeProvince()">
 
 									<ng-option *ngFor="let prov of listProvince" [value]="prov.id">{{prov.name}}</ng-option>
@@ -298,7 +298,7 @@
 								<select *ngIf="isOtherNation" class="form-control" disabled [(ngModel)]="model.districtId" formControlName="district">
 									<option value="0">Chọn...</option>
 								</select>
-								<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.districtId" formControlName="district" class="form-control" placeholder="Chọn..."
+								<ng-select notFoundText="Không có dữ liệu" *ngIf="!isOtherNation" [(ngModel)]="model.districtId" formControlName="district" class="form-control" placeholder="Chọn..."
 									[closeOnSelect]="true" (change)="onChangeDistrict()">
 
 									<ng-option *ngFor="let dis of listDistrict" [value]="dis.id">{{dis.name}}</ng-option>
@@ -315,7 +315,7 @@
 								<select *ngIf="isOtherNation" class="form-control" disabled [(ngModel)]="model.wardsId" formControlName="village">
 									<option value="0">Chọn...</option>
 								</select>
-								<ng-select *ngIf="!isOtherNation" [(ngModel)]="model.wardsId" formControlName="village" class="form-control" placeholder="Chọn..."
+								<ng-select notFoundText="Không có dữ liệu" *ngIf="!isOtherNation" [(ngModel)]="model.wardsId" formControlName="village" class="form-control" placeholder="Chọn..."
 									[closeOnSelect]="true">
 
 									<ng-option *ngFor="let vill of listVillage" [value]="vill.id">{{vill.name}}</ng-option>
@@ -339,7 +339,7 @@
 							<!-- row 5 -->
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Giới tính <span class="cl-red">(*)</span></label>
-								<ng-select [(ngModel)]="model.gender" formControlName="gender" class="form-control" placeholder="Chọn..." [closeOnSelect]="true">
+								<ng-select notFoundText="Không có dữ liệu" [(ngModel)]="model.gender" formControlName="gender" class="form-control" placeholder="Chọn..." [closeOnSelect]="true">
 									<ng-option *ngFor="let gen of listGender" [value]="gen.value">{{gen.text}}</ng-option>
 								</ng-select>
 								<div *ngIf="(submitted && f.gender.invalid)||(f.gender.invalid && (f.gender.dirty || f.gender.touched))" class="has-error m-b-12">
@@ -366,7 +366,7 @@
 							</div>
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
-								<ng-select class="form-control" [items]="listStatus" formControlName="status" placeholder="Chọn ..." bindLabel="text" bindValue="value"
+								<ng-select notFoundText="Không có dữ liệu" class="form-control" [items]="listStatus" formControlName="status" placeholder="Chọn ..." bindLabel="text" bindValue="value"
 									[(ngModel)]="model.status" [closeOnSelect]="true">
 								</ng-select>
 

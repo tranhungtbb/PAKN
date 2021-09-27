@@ -16,6 +16,8 @@ import { InvitationObject, InvitationUserMapObject } from 'src/app/models/invita
 import { UserService } from 'src/app/services/user.service'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { DefaultTreeviewI18n } from 'src/app/shared/default-treeview-i18n'
+import * as moment from 'moment'
+import { ThemePalette } from '@angular/material/core'
 
 declare var $: any
 defineLocale('vi', viLocale)
@@ -48,7 +50,19 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 	fileAccept = CONSTANTS.FILEACCEPT
 	listUserSelected: Array<UserIsSystem>
 	statusCurent: any = 1
+	listIdUserSelected: any[] = []
 	@ViewChild('file', { static: false }) public file: ElementRef
+
+	// datepicker
+	public date: moment.Moment
+	public disabled = false
+	public showSpinners = true
+	public showSeconds = false
+	public touchUi = false
+	public enableMeridian = false
+	public stepMinute = 5
+	public stepHour = 1
+	public color: ThemePalette = 'primary'
 
 	// treeview
 
@@ -95,9 +109,16 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 
 	ngOnInit() {
 		this.BsLocaleService.use('vi')
-		this.getUsersIsSystem()
 		this.buildForm()
 		// this.getInvitatonModelById()
+		this.userService.getIsSystem({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.listUserIsSystem = res.result.SYUserGetIsSystem
+				this.getInvitatonModelById()
+			} else {
+				this.listUserIsSystem = []
+			}
+		})
 
 		this.items = []
 	}
@@ -144,8 +165,8 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 									obj.avatar = item.avatar
 								}
 								this.listItemUserSelected.push(obj)
+								this.listIdUserSelected.push(iterator.userId)
 							}
-							console.log(this.listItemUserSelected)
 							if (this.statusCurent == 2) {
 								this.title = 'Chi tiết thư mời'
 							} else {
@@ -155,6 +176,7 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 					}
 				})
 			}
+			this.getUsersIsSystem()
 		})
 	}
 
@@ -163,19 +185,23 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		this.userService.getIsSystemOrderByUnit({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				for (const iterator of res.result) {
-					iterator.checked = false
+					iterator.checked = this.listIdUserSelected.includes(iterator.value) == true ? true : false
 					if (iterator.children == null || iterator.children.length == 0) {
 						delete iterator.children
 					} else {
 						for (const iterator2 of iterator.children) {
-							iterator2.checked = false
+							iterator2.checked = this.listIdUserSelected.includes(iterator2.value) == true ? true : false
 							if (iterator2.children == null || iterator2.children.length == 0) {
 								delete iterator2.children
 							} else {
 								for (const iterator3 of iterator2.children) {
-									iterator3.checked = false
+									iterator3.checked = this.listIdUserSelected.includes(iterator3.value) == true ? true : false
 									if (iterator3.children == null || iterator3.children.length == 0) {
 										delete iterator3.children
+									} else {
+										for (const iterator4 of iterator3.children) {
+											iterator4.checked = this.listIdUserSelected.includes(iterator4.value) == true ? true : false
+										}
 									}
 								}
 							}
@@ -187,15 +213,6 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 				}
 			} else {
 				this.items = []
-			}
-		})
-
-		this.userService.getIsSystem({}).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				this.listUserIsSystem = res.result.SYUserGetIsSystem
-				this.getInvitatonModelById()
-			} else {
-				this.listUserIsSystem = []
 			}
 		})
 	}
@@ -225,7 +242,8 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		this.model.title = this.model.title.trim()
 		this.model.content = this.model.content.trim()
 		this.model.place = this.model.place.trim()
-		this.rebuilForm()
+		// this.rebuilForm()
+		debugger
 
 		if (this.form.invalid) {
 			return

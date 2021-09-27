@@ -82,7 +82,7 @@
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Chức vụ <span class="cl-red">(*)</span></label>
 									<input *ngIf="!isAdmin && modelUser.id > 0" disabled value="{{modelUser.positionName}}" type="text" class="form-control">
-									<ng-select [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" class="form-control" [items]="positionsList" placeholder="Chọn..." bindLabel="text" bindValue="value" formControlName="positionId"
+									<ng-select notFoundText="Không có dữ liệu"  [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" class="form-control" [items]="positionsList" placeholder="Chọn..." bindLabel="text" bindValue="value" formControlName="positionId"
 										[(ngModel)]="modelUser.positionId" [closeOnSelect]="true">
 									</ng-select>
 									<div *ngIf="(userFormSubmitted && fUser.positionId.invalid)||(fUser.positionId.invalid && (fUser.positionId.dirty || fUser.positionId.touched))"
@@ -95,7 +95,7 @@
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Đơn vị <span class="cl-red">(*)</span></label>
 									<input *ngIf="!isAdmin && modelUser.id > 0" disabled value="{{modelUser.unitName}}" type="text" class="form-control">
-									<ng-select notFoundText="Không có dữ liệu" [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" class="form-control" [items]="unitsList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="modelUser.unitId"
+									<ng-select notFoundText="Không có dữ liệu"  notFoundText="Không có dữ liệu" [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" class="form-control" [items]="unitsList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="modelUser.unitId"
 										formControlName="unitId" [closeOnSelect]="true">
 									</ng-select>
 									<div *ngIf="(userFormSubmitted && fUser.unitId.invalid)||(fUser.unitId.invalid && (fUser.unitId.dirty || fUser.unitId.touched))"
@@ -108,7 +108,7 @@
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Giới tính <span class="cl-red">(*)</span></label>
 									<!--  -->
-									<ng-select class="form-control" placeholder="Chọn..." [items]="listGender" bindLabel="text" bindValue="value" [(ngModel)]="modelUser.gender"
+									<ng-select notFoundText="Không có dữ liệu"  class="form-control" placeholder="Chọn..." [items]="listGender" bindLabel="text" bindValue="value" [(ngModel)]="modelUser.gender"
 										formControlName="gender" [closeOnSelect]="true" [searchable]="false">
 									</ng-select>
 									<div *ngIf="(userFormSubmitted && fUser.gender.invalid)||(fUser.gender.invalid && (fUser.gender.dirty || fUser.gender.touched))"
@@ -121,7 +121,7 @@
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Vai trò <span class="cl-red">(*)</span></label>
 									<input *ngIf="!isAdmin && modelUser.id > 0" disabled type="text" class="form-control" value="{{roleName}}">
-									<ng-select [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" style="height: auto;" class="form-control" [items]="rolesList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="selectedRoles"
+									<ng-select notFoundText="Không có dữ liệu"  [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" style="height: auto;" class="form-control" [items]="rolesList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="selectedRoles"
 										formControlName="roleId" [closeOnSelect]="true" [multiple]="true" (change)="onGroupUserChange()">
 									</ng-select>
 									<div *ngIf="(userFormSubmitted && fUser.roleId.invalid)||(fUser.roleId.invalid && (fUser.roleId.dirty || fUser.roleId.touched))"
@@ -135,7 +135,7 @@
 									<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
 									<input *ngIf="!isAdmin && modelUser.id > 0 && modelUser.isActived" disabled type="text" class="form-control" value="Hiệu lực">
 									<input *ngIf="!isAdmin && modelUser.id > 0 && !modelUser.isActived" disabled type="text" class="form-control" value="Hết hiệu lực">
-									<ng-select [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" class="form-control" style="font-weight: bold;" placeholder="Chọn..." [items]="listStatus" bindLabel="text" bindValue="value"
+									<ng-select notFoundText="Không có dữ liệu"  [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" class="form-control" style="font-weight: bold;" placeholder="Chọn..." [items]="listStatus" bindLabel="text" bindValue="value"
 										formControlName="isActived" [(ngModel)]="modelUser.isActived" [closeOnSelect]="true" [searchable]="false">
 									</ng-select>
 									<div *ngIf="(userFormSubmitted && fUser.isActived.invalid)||(fUser.isActived.invalid && (fUser.isActived.dirty || fUser.isActived.touched))"

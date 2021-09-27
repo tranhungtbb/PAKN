@@ -294,7 +294,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> NENewsUpdateDAO(NENewsUpdateIN _nENewsUpdateIN)
+		public async Task<int?> NENewsUpdateDAO(NENewsUpdateIN _nENewsUpdateIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PostType", _nENewsUpdateIN.PostType);
@@ -319,7 +319,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("NewsRelateIds", _nENewsUpdateIN.NewsRelateIds);
 			DP.Add("IsNotification", _nENewsUpdateIN.IsNotification);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("NE_NewsUpdate", DP));
+			return (await _sQLCon.ExecuteScalarDapperAsync<int?>("NE_NewsUpdate", DP));
 		}
 	}
 

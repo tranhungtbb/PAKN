@@ -454,8 +454,8 @@
 					<div class="form-row">
 						<div class="col-12 col-lg-12 form-group">
 							<label class="mb-2">Đơn vị được chuyển tiếp<span class="cl-red">(*)</span></label>
-							<ng-select class="form-control border-input" multiple="true" [ngModelOptions]="{standalone: true}" [items]="lstUnitForward" bindLabel="text" bindValue="value" placeholder="Chọn đơn vị giải quyết"
-								[(ngModel)]="modelForward.lstUnitId" [closeOnSelect]="true" (change)="onChangeLstItemUnit()" ></ng-select>
+							<ng-select notFoundText="Không có dữ liệu" class="form-control border-input" multiple="true" hideSelected="true" [ngModelOptions]="{standalone: true}" [items]="lstUnitForward" bindLabel="text" bindValue="value" placeholder="Chọn đơn vị giải quyết"
+								[(ngModel)]="modelForward.lstUnitId" [closeOnSelect]="true" ></ng-select>
 							
 						</div>
 					

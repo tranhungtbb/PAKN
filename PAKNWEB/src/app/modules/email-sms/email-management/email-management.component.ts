@@ -17,8 +17,8 @@ import { first } from 'rxjs/operators'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { data } from 'jquery'
 
-declare var $:any
-declare var jquery:any
+declare var $: any
+declare var jquery: any
 
 @Component({
 	selector: 'app-email-management',
@@ -37,7 +37,7 @@ export class EmailManagementComponent implements OnInit {
 	) {}
 
 	/// kiểu hiển thị: Email đã gửi
-	isSentLst = false;
+	isSentLst = false
 	title = 'Danh sách Email'
 
 	listStatus: any = [
@@ -64,49 +64,48 @@ export class EmailManagementComponent implements OnInit {
 		unit: null,
 		objectId: null,
 		status: null,
-		unitName:null
+		unitName: null,
 	}
 	totalRecords = 0
 
 	ngOnInit() {
-		this.getPagedList();
-		this.getAdministrativeUnits();
+		this.getPagedList()
+		this.getAdministrativeUnits()
 		this.isSentLst = this.router.url.includes('/sent')
 	}
-	dataStateChange(){
-		this.getPagedList();
+	dataStateChange() {
+		this.getPagedList()
 	}
 	onPageChange(event: any) {
 		this.query.pageSize = event.rows
 		this.query.pageIndex = event.first / event.rows + 1
 		this.getPagedList()
 	}
-	
+
 	//
-	getPagedList(){
-		if(this.isSentLst){
+	getPagedList() {
+		if (this.isSentLst) {
 			this.title = 'Danh sách Email đã gửi'
 			this.query.status = 2
 		}
 		this.query.title = this.query.title.trim()
 
-		let query = {...this.query}
-		if(!query.unit)query.unit='';
-		if(!query.objectId)query.objectId=''
-		if(!query.status)query.status=''
-		if(!query.unitName)query.unitName = ''
+		let query = { ...this.query }
+		if (!query.unit) query.unit = ''
+		if (!query.objectId) query.objectId = ''
+		if (!query.status) query.status = ''
+		if (!query.unitName) query.unitName = ''
 
-		this.emailService.getPagedList(query).subscribe(res=>{
-			
-			this.listData = res.result.Data;
-			if(this.listData[0] && this.listData[0]!.rowNumber > 0){
+		this.emailService.getPagedList(query).subscribe((res) => {
+			this.listData = res.result.Data
+			if (this.listData[0] && this.listData[0]!.rowNumber > 0) {
 				this.totalRecords = this.listData[0].rowNumber
 			}
-		});
+		})
 	}
 
 	emailId = 0
-	confirm(id:number) {
+	confirm(id: number) {
 		this.emailId = id
 		$('#modalConfirm').modal('show')
 	}
@@ -117,7 +116,6 @@ export class EmailManagementComponent implements OnInit {
 			if (res.success == RESPONSE_STATUS.success) {
 				this._toastr.success(COMMONS.DELETE_SUCCESS)
 				this.getPagedList()
-				
 			} else {
 				this._toastr.error(COMMONS.DELETE_FAILED)
 				this.getPagedList()
@@ -125,7 +123,7 @@ export class EmailManagementComponent implements OnInit {
 		})
 	}
 	onSend(item: any) {
-		if(item.unitName == null){
+		if (item.unitName == null) {
 			this._toastr.error('Vui lòng chọn Cá nhân, doanh nghiệp nhận email')
 			return
 		}
@@ -137,12 +135,12 @@ export class EmailManagementComponent implements OnInit {
 		$('#modalConfirmChangeStatus').modal('hide')
 		this.emailService.SendEmail(this.emailId).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				this.getPagedList();
+				this.getPagedList()
 			}
 		})
-		this.getPagedList();
+		this.getPagedList()
 	}
-	AdministrativeUnits:any[]=[]
+	AdministrativeUnits: any[] = []
 	getAdministrativeUnits() {
 		this.smsService.GetListAdmintrative({ id: 37 }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
@@ -156,74 +154,68 @@ export class EmailManagementComponent implements OnInit {
 
 	///history list
 	objectId = 0
-	hisPagedList:any[] = []
-	hisQuery:any ={
-		objectId:0,
-		content:'',
-		createdBy:'',
-		createdDate:'',
-		status:'',
-		pageIndex:1,
-		pageSize:20
+	hisPagedList: any[] = []
+	hisQuery: any = {
+		objectId: 0,
+		content: '',
+		createdBy: '',
+		createdDate: '',
+		status: '',
+		pageIndex: 1,
+		pageSize: 20,
 	}
-	hisTotalRecords=0
-	
+	hisTotalRecords = 0
+
 	getHistory(id: number) {
 		if (!id) return
-		this.objectId = id;
+		this.objectId = id
 		this.hisQuery.content = ''
-		this.hisQuery.createdBy=''
-		this.hisQuery.createdDate=''
-		this.hisQuery.status=''
-		this.hisQuery.pageIndex = 1;
-		this.hisQuery.pageSize = 20;
+		this.hisQuery.createdBy = ''
+		this.hisQuery.createdDate = ''
+		this.hisQuery.status = ''
+		this.hisQuery.pageIndex = 1
+		this.hisQuery.pageSize = 20
 		this.getHisData(id)
 		$('#modalHisSMS').modal('show')
 	}
 
-	getHisData(id: Number){
-		
-		let query = {...this.hisQuery}
-		query.objectId = id;
-		if(!query.status) query.status = ''
+	getHisData(id: Number) {
+		let query = { ...this.hisQuery }
+		query.objectId = id
+		if (!query.status) query.status = ''
 
-		let date:any = document.querySelector('#fieldHisCratedDate')
-		if(date)
-			query.createdDate = date.value
-		this.emailService.getHisPagedList(query).subscribe(res=>{
-			this.hisPagedList =  res.result.Data;
-			if(this.hisPagedList[0] && this.hisPagedList[0]!.rowNumber > 0){
+		let date: any = document.querySelector('#fieldHisCratedDate')
+		if (date) query.createdDate = date.value
+		this.emailService.getHisPagedList(query).subscribe((res) => {
+			this.hisPagedList = res.result.Data
+			if (this.hisPagedList[0] && this.hisPagedList[0]!.rowNumber > 0) {
 				this.hisTotalRecords = this.hisPagedList[0].rowNumber
 			}
 		})
 	}
-	clearModelHis(){}
-	dataStateChange2(){
+	clearModelHis() {}
+	dataStateChange2() {
 		this.getHisData(this.objectId)
 	}
-	onPageChangeHis(event:any){
+	onPageChangeHis(event: any) {
 		this.hisQuery.pageSize = event.rows
 		this.hisQuery.pageIndex = event.first / event.rows + 1
 		this.getHisData(this.objectId)
 	}
-	
 
 	///view detail
-	modelView:any ={
-		ListAttachment:[],
-		ListBusinessIndividual : [],
-		Data:{}
+	modelView: any = {
+		ListAttachment: [],
+		ListBusinessIndividual: [],
+		Data: {},
 	}
-	getDetail(id:any){
-		this.emailService.getById(id).subscribe(res=>{
+	getDetail(id: any) {
+		this.emailService.getById(id).subscribe((res) => {
 			this.modelView.Data = res.result.Data
 			this.modelView.ListAttachment = res.result.ListAttachment
 			this.modelView.ListBusinessIndividual = res.result.ListBusinessIndividual
 			$('#modalDetail').modal('show')
 		})
 	}
-	previewFile(item:any){
-
-	}
-
+	previewFile(item: any) {}
 }

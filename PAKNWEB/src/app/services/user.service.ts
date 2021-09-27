@@ -46,8 +46,6 @@ export class UserService {
 		return this.serviceInvoker.getwithHeaders(query, AppSettings.API_ADDRESS + Api.UserGetAllByIdQb, headers)
 	}
 
-
-
 	getAllOnPagedList(query: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
@@ -101,8 +99,6 @@ export class UserService {
 	getIsNotRole(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetIsNotRole)
 	}
-
-	
 
 	getIsSystem(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UserGetIsSystem)
@@ -213,7 +209,6 @@ export class UserService {
 		}
 		return this.serviceInvoker.postwithHeaders(form, AppSettings.API_ADDRESS + Api.UserUpdateProfile, headers)
 	}
-
 
 	delete(data: any): Observable<any> {
 		let headers = {

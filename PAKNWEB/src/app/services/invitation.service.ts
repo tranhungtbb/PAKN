@@ -17,7 +17,7 @@ export class InvitationService {
 		let tempheaders = new HttpHeaders({
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
-			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logAction: encodeURIComponent(request.model.status == 1 ? LOG_ACTION.INSERT : LOG_ACTION.INSERT_AND_SEND),
 			logObject: encodeURIComponent(LOG_OBJECT.SY_INVITATION),
 		})
 		const form = new FormData()
@@ -44,12 +44,11 @@ export class InvitationService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.InnvitationDetail)
 	}
 
-
 	invitationUpdate(request: any): Observable<any> {
 		let tempheaders = new HttpHeaders({
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
-			logAction: request.status == 1 ? encodeURIComponent(LOG_ACTION.UPDATE) : encodeURIComponent(LOG_ACTION.SEND),
+			logAction: encodeURIComponent(request.model.status == 1 ? LOG_ACTION.UPDATE : LOG_ACTION.UPDATE_AND_SEND),
 			logObject: encodeURIComponent(LOG_OBJECT.SY_INVITATION),
 		})
 		const form = new FormData()

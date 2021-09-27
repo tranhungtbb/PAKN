@@ -37,7 +37,9 @@ export class EmailManagementService {
 			}
 		}
 		let headers = {
-			logAction: encodeURIComponent( body.Data.id == 0 ? LOG_ACTION.INSERT : LOG_ACTION.UPDATE),
+			logAction: encodeURIComponent(
+				body.Data.id == 0 ? (body.Data.status == 1 ? LOG_ACTION.INSERT : LOG_ACTION.INSERT_AND_SEND) : body.Data.status == 1 ? LOG_ACTION.UPDATE : LOG_ACTION.UPDATE_AND_SEND
+			),
 			logObject: encodeURIComponent(LOG_OBJECT.EMAIL),
 		}
 
@@ -50,18 +52,21 @@ export class EmailManagementService {
 	public getPagedList(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, `${AppSettings.API_ADDRESS}/${Api.EmailManagementGetPagedList}?userId=${this.currentUserId}`)
 	}
-	public Delete(id:number): Observable<any> {
+	public Delete(id: number): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
 			logObject: encodeURIComponent(LOG_OBJECT.EMAIL),
 		}
-		return this.serviceInvoker.getwithHeaders({id}, `${AppSettings.API_ADDRESS}/${Api.EmailManagementDelete}?userId=${this.currentUserId}`, headers)
+		return this.serviceInvoker.getwithHeaders({ id }, `${AppSettings.API_ADDRESS}/${Api.EmailManagementDelete}?userId=${this.currentUserId}`, headers)
 	}
-	public SendEmail(id:number): Observable<any> {
-		return this.serviceInvoker.get({id}, `${AppSettings.API_ADDRESS}/${Api.EmailManagementSendEmail}?userId=${this.currentUserId}`)
+	public SendEmail(id: number): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.SEND),
+			logObject: encodeURIComponent(LOG_OBJECT.EMAIL),
+		}
+		return this.serviceInvoker.getwithHeaders({ id }, `${AppSettings.API_ADDRESS}/${Api.EmailManagementSendEmail}?userId=${this.currentUserId}`, headers)
 	}
-	public getHisPagedList(query:any): Observable<any> {
+	public getHisPagedList(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, `${AppSettings.API_ADDRESS}/${Api.EmailManagementHisPagedList}?userId=${this.currentUserId}`)
 	}
-	
 }

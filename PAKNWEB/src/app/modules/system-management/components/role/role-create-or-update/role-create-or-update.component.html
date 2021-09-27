@@ -43,7 +43,7 @@
 					</div>
 					<div class="col-sm-12 padding-col">
 						<label class="control-label title-role">Trạng thái <span class="text-danger">(*)</span></label>
-						<ng-select class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
+						<ng-select notFoundText="Không có dữ liệu"  class="form-control " [items]="listStatus" bindValue="value" placeholder="Chọn trạng thái" bindLabel="text" formControlName="isActived"
 							[(ngModel)]="model.isActived" style="font-weight: 600;">
 						</ng-select>
 						<div *ngIf="(submitted && f.isActived.invalid) || (f.isActived.invalid && (f.isActived.dirty || f.isActived.touched))" class="has-error m-b-12">
@@ -54,7 +54,7 @@
 					</div>
 					<div class="col-sm-10 form-group padding-col">
 						<label class="mb-1 title-role">Thêm người dùng</label>
-						<ng-select placeholder="Nhập..." class="form-control" [items]="listUserIsSystem" bindValue="value" bindLabel="text" formControlName="userId"
+						<ng-select notFoundText="Không có dữ liệu"  placeholder="Nhập..." class="form-control" [items]="listUserIsSystem" bindValue="value" bindLabel="text" formControlName="userId"
 							[virtualScroll]="true" [(ngModel)]="userId">
 							<ng-template ng-option-tmp let-item="item">
 								<div title="{{item.text}}">{{item.text}}</div>

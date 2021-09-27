@@ -194,9 +194,9 @@ namespace PAKNAPI.Controller
 					_nENewsInsertIN.ImagePath = avatarFilePath;
 				}
 				int res = Int32.Parse((await new NENewsInsert(_appSetting).NENewsInsertDAO(_nENewsInsertIN)).ToString());
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 				if (res > 0)
 				{
+					// lịch sử
 					var his = new HISNews();
 					his.ObjectId = res;
 					his.Type = 1;
@@ -208,14 +208,23 @@ namespace PAKNAPI.Controller
 						his.Status = STATUS_HISNEWS.PUBLIC;
 						await HISNewsInsert(his);
 					}
+					// thông báo
+					if (_nENewsInsertIN.IsNotification == true)
+					{
+						await SYNotificationInsertTypeNews(res, _nENewsInsertIN.Title, true);
+					}
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+
 					return new ResultApi { Success = ResultCode.OK, Result = res, Message = "Thêm mới thành công" };
 				}
 				else if (res == -1)
 				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
 					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Tiêu đề đã tồn tại" };
 				}
 				else
 				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
 					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Thêm mới thất bại" };
 				}
 
@@ -276,7 +285,7 @@ namespace PAKNAPI.Controller
 				}
 
 				int res = Int32.Parse((await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN)).ToString());
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				
 				if (res > 0)
 				{
 					var his = new HISNews();
@@ -294,14 +303,22 @@ namespace PAKNAPI.Controller
 						his.Status = STATUS_HISNEWS.CANCEL;
 						await HISNewsInsert(his);
 					}
+					// thông báo
+					if (_nENewsUpdateIN.IsNotification == true)
+					{
+						await SYNotificationInsertTypeNews(res, _nENewsUpdateIN.Title, false);
+					}
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 					return new ResultApi { Success = ResultCode.OK, Result = res, Message = "Cập nhập thành công" };
 				}
 				else if (res == -1)
 				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
 					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Tiêu đề đã tồn tại" };
 				}
 				else
 				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
 					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Cập nhập thất bại" };
 				}
 			}
@@ -433,7 +450,7 @@ namespace PAKNAPI.Controller
 		}
 
 
-		public async Task<bool> HISNewsInsert(HISNews _hISNews)
+		private async Task<bool> HISNewsInsert(HISNews _hISNews)
 		{
 			try
 			{
@@ -469,6 +486,48 @@ namespace PAKNAPI.Controller
 				return false;
 			}
 		}
+
+
+		private async Task<bool> SYNotificationInsertTypeNews(int Id, string Title, bool isCreateNews)
+		{
+			try
+			{
+				//lấy tất cả danh sách người dùng là cá nhân, doanh nghiệp
+				List<SYUserGetNonSystem> lstUser = await new SYUserGetNonSystem(_appSetting).SYUserGetNonSystemDAO();
+				if (lstUser.Count > 0)
+				{
+					string senderName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
+					foreach (var user in lstUser)
+					{
+						var model = new SYNotificationModel();
+						model.SenderId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+						model.SendOrgId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+						model.ReceiveId = user.Id;
+						model.ReceiveOrgId = user.UnitId;
+						model.DataId = Id;
+						model.SendDate = DateTime.Now;
+						model.Type = TYPENOTIFICATION.NEWS;
+						model.Title = isCreateNews == true ? senderName + " vừa đăng một bài viết mới" : senderName + " vừa cập nhập một bài viết";
+						model.Content = Title;
+						model.IsViewed = true;
+						model.IsReaded = true;
+						// insert vào db-
+						var count = await new SYNotification(_appSetting).SYNotificationInsertDAO(model);
+					}
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			catch (Exception ex)
+			{
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				return false;
+			}
+		}
+
 		/// <summary>
 		/// danh sách lịch sử  tin tức 
 		/// </summary>
@@ -491,8 +550,7 @@ namespace PAKNAPI.Controller
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
-
-
+		
 	}
+
 }

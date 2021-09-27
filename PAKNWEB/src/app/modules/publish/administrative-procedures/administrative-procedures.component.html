@@ -13,7 +13,7 @@
 							<div class="form-row mx-0 p-3 rounded-xl border" style="background: #F9F9F9;">
 								<div class="col form-group">
 									<label class="mb-1">Lĩnh vực</label>
-									<ng-select placeholder="Chọn..." class="form-control border-brown" [items]="lstField" bindLabel="text" bindValue="value"
+									<ng-select notFoundText="Không có dữ liệu"  placeholder="Chọn..." class="form-control border-brown" [items]="lstField" bindLabel="text" bindValue="value"
 										[(ngModel)]="dataSearch.field" [closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
 									</ng-select>
 								</div>

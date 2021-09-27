@@ -4,7 +4,7 @@
 		<!-- <select *ngIf="nation_enable_type" class="form-control" disabled [(ngModel)]="model.OrgProvinceId" formControlName="OrgProvince">
 			<option value="0">Chon...</option>
 		</select> -->
-		<ng-select [disabled]="!nation_enable_type" [(ngModel)]="model.OrgProvinceId" formControlName="OrgProvince" class="form-control" id="_OrgDistrictId" [closeOnSelect]="true"
+		<ng-select notFoundText="Không có dữ liệu" [disabled]="!nation_enable_type" [(ngModel)]="model.OrgProvinceId" formControlName="OrgProvince" class="form-control" id="_OrgDistrictId" [closeOnSelect]="true"
 			placeholder="Chọn..." (change)="onChangeProvince()">
 			<ng-option *ngFor="let lItem of listProvince" [value]="lItem.id" ng-init="model.OrgProvinceId">{{lItem.name}}</ng-option>
 		</ng-select>
@@ -20,7 +20,7 @@
 		<!-- <select *ngIf="nation_enable_type" class="form-control" disabled [(ngModel)]="model.OrgDistrictId" formControlName="OrgDistrict">
 			<option value="0">Chon...</option>
 		</select> -->
-		<ng-select [disabled]="nation_enable_type" [(ngModel)]="model.OrgDistrictId" formControlName="OrgDistrict" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
+		<ng-select notFoundText="Không có dữ liệu" [disabled]="nation_enable_type" [(ngModel)]="model.OrgDistrictId" formControlName="OrgDistrict" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
 			(change)="onChangeDistrict()">
 			<ng-option *ngFor="let lItem of listDistrict" [value]="lItem.id" ng-init="model.OrgDistrictId">{{lItem.name}}</ng-option>
 		</ng-select>
@@ -36,7 +36,7 @@
 		<!-- <select *ngIf="nation_enable_type" class="form-control" disabled [(ngModel)]="model.OrgWardsId" formControlName="OrgVillage">
 			<option value="0">Chon...</option>
 		</select> -->
-		<ng-select ng-init="somethingHere" [disabled]="nation_enable_type" [(ngModel)]="model.OrgWardsId" formControlName="OrgVillage" class="form-control" placeholder="Chọn...">
+		<ng-select notFoundText="Không có dữ liệu" ng-init="somethingHere" [disabled]="nation_enable_type" [(ngModel)]="model.OrgWardsId" formControlName="OrgVillage" class="form-control" placeholder="Chọn...">
 			<ng-option *ngFor="let vill of listVillage" [value]="vill.id" ng-init="model.OrgWardsId">{{vill.name}}</ng-option>
 		</ng-select>
 		<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgVillage.invalid)||(fOrgAdr.OrgVillage.invalid && (fOrgAdr.OrgVillage.dirty || fOrgAdr.OrgVillage.touched))"

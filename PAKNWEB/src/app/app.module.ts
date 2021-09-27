@@ -27,9 +27,9 @@ import { PdfJsViewerModule } from 'ng2-pdfjs-viewer'
 import { ImageViewerModule } from 'ng2-image-viewer'
 import { UnitFilterPipe } from './pipes/unit-filter.pipe'
 import { DxReportViewerModule } from 'devexpress-reporting-angular'
-import { TreeviewModule } from 'ngx-treeview';
-import { CarouselModule } from 'ngx-owl-carousel-o';
-import { TooltipModule  } from 'ngx-bootstrap/tooltip';
+import { TreeviewModule } from 'ngx-treeview'
+import { CarouselModule } from 'ngx-owl-carousel-o'
+import { TooltipModule } from 'ngx-bootstrap/tooltip'
 
 @NgModule({
 	declarations: [AppComponent, SvFocusDirective, ConfirmDialogComponent, ViewFileDialogComponent],
@@ -66,7 +66,7 @@ import { TooltipModule  } from 'ngx-bootstrap/tooltip';
 		DxReportViewerModule,
 		TreeviewModule.forRoot(),
 		CarouselModule,
-		TooltipModule.forRoot()
+		TooltipModule.forRoot(),
 	],
 	providers: [
 		{

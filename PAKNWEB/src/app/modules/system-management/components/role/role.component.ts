@@ -36,7 +36,7 @@ export class RoleComponent implements OnInit {
 	// LIST USER
 	listUser: any[]
 	SYUserGetIsNotRole: any[]
-	SYUserGetIsNotRoleBase : any[]
+	SYUserGetIsNotRoleBase: any[]
 	userPageIndex: Number = 1
 	userPageSize: Number = 10
 	userTotalRecords: Number
@@ -52,20 +52,18 @@ export class RoleComponent implements OnInit {
 	}
 
 	getListPaged() {
-		this.roleService
-			.getAllPagedList({})
-			.subscribe((res) => {
-				if (res.success != 'OK') {
-					this.totalRecords = 0
-					return
-				}
-				this.listData = res.result.SYRoleGetAllOnPage
-				this.totalRecords = res.result.TotalCount
-			})
+		this.roleService.getAllPagedList({}).subscribe((res) => {
+			if (res.success != 'OK') {
+				this.totalRecords = 0
+				return
+			}
+			this.listData = res.result.SYRoleGetAllOnPage
+			this.totalRecords = res.result.TotalCount
+		})
 	}
 
 	getIsNotRole() {
-		this.userService.getIsNotRole({RoleId : this.roleId}).subscribe((res) => {
+		this.userService.getIsNotRole({ RoleId: this.roleId }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.SYUserGetIsNotRole = res.result.SYUserGetIsNotRole
 				this.SYUserGetIsNotRoleBase = res.result.SYUserGetIsNotRole
@@ -76,11 +74,13 @@ export class RoleComponent implements OnInit {
 		})
 	}
 
-	onChangeLstItemUser(){
-		this.SYUserGetIsNotRole = this.SYUserGetIsNotRoleBase.filter((item, index)=>{
-			if(this.listItem.includes(item.value)){return}
+	onChangeLstItemUser() {
+		this.SYUserGetIsNotRole = this.SYUserGetIsNotRoleBase.filter((item, index) => {
+			if (this.listItem.includes(item.value)) {
+				return
+			}
 			return item
-		});
+		})
 	}
 
 	confirm(item: RoleObject, type: string) {
@@ -112,7 +112,7 @@ export class RoleComponent implements OnInit {
 				}
 			})
 		} else {
-			this.roleService.update(this.model).subscribe((res) => {
+			this.roleService.update(this.model, true).subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
 					this.toast.success(COMMONS.UPDATE_SUCCESS)
 					this.getListPaged()
@@ -196,7 +196,11 @@ export class RoleComponent implements OnInit {
 					RoleId: this.roleId,
 				})
 			})
-			this.userService.insertMultiUserRole(listModel).subscribe((res) => {
+			let obj = {
+				_sYUserRoleMaps: listModel,
+				isCreated: false,
+			}
+			this.userService.insertMultiUserRole(obj).subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
 					if (res.result.CountSuccess == 0) {
 						this.toast.error(COMMONS.ADD_FAILED)

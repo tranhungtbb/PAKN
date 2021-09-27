@@ -44,7 +44,7 @@
 										</p>
 										<div class="dropdown bootstrap-select form-control form-control-sm" style="width: 170px;">
 											<!-- [items]="listStatus" bindLabel="text" bindValue="value" -->
-											<ng-select class="" placeholder="{{callTypes[0].text}}" [items]="callTypes" bindLabel="text" bindValue="value" [closeOnSelect]="true"
+											<ng-select notFoundText="Không có dữ liệu" class="" placeholder="{{callTypes[0].text}}" [items]="callTypes" bindLabel="text" bindValue="value" [closeOnSelect]="true"
 												[(ngModel)]="query.type" (change)="filterChange($event,'type')" [searchable]="false">
 											</ng-select>
 										</div>

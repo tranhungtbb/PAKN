@@ -42,3 +42,7 @@
 /* .highlight:hover {
 	color: #007ad9;
 } */
+
+:host ::ng-deep .ng-dropdown-panel {
+	z-index: 0;
+}

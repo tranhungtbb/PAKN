@@ -45,7 +45,7 @@
 					<div class="row">
 						<div class="col-md-4">
 							<div class="dropdown bootstrap-select form-control form-control-sm">
-								<ng-select [items]="listYear" placeholder="Năm ..." bindLabel="text"
+								<ng-select notFoundText="Không có dữ liệu"  [items]="listYear" placeholder="Năm ..." bindLabel="text"
 									bindValue="value" [(ngModel)]="year" [clearable]="false"
 									(change)="changeYear()">
 								</ng-select>
@@ -53,7 +53,7 @@
 						</div>
 						<div class="col-md-8">
 							<div class="dropdown bootstrap-select form-control form-control-sm">
-								<ng-select [items]="lstTimeline" placeholder="Chọn mốc thời gian ..."
+								<ng-select notFoundText="Không có dữ liệu"  [items]="lstTimeline" placeholder="Chọn mốc thời gian ..."
 									bindLabel="text" bindValue="value" [(ngModel)]="timeline"
 									(change)="dataStateChange()">
 								</ng-select>

@@ -53,6 +53,7 @@ export class ViewRecommendationComponent implements OnInit {
 	lstGroupWord: any = []
 	lstGroupWordSelected: any = []
 	titleAccept: any = ''
+	lstDictionariesWord: any = []
 	@ViewChild('table', { static: false }) table: any
 	@ViewChild('file', { static: false }) public file: ElementRef
 	@ViewChild(RemindComponent, { static: true }) remindComponent: RemindComponent
@@ -74,6 +75,18 @@ export class ViewRecommendationComponent implements OnInit {
 
 	ngOnInit() {
 		this.APIADDRESS = AppSettings.API_ADDRESS.replace('api/', '')
+		this._serviceCatalog.wordGetListSuggest({}).subscribe(
+			(response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					this.lstDictionariesWord = response.result.CAWordGetListSuggest
+				} else {
+					this.toastr.error(response.message)
+				}
+			},
+			(error) => {
+				console.log(error)
+			}
+		)
 		this.remindComponent.viewRecommendation = this
 		this.buildFormForward()
 		this.getDropdown()
@@ -118,7 +131,7 @@ export class ViewRecommendationComponent implements OnInit {
 
 				this.commentQuery.recommendationId = this.model.id
 				this.getCommentPaged()
-
+				this.sugestText()
 				this.enableEdit = this.model.status == 1 && this.model.createdBy == this.storeageService.getUserId()
 			} else {
 				this.toastr.error(response.message)
@@ -229,15 +242,14 @@ export class ViewRecommendationComponent implements OnInit {
 			}
 		}
 		if (!isExist) {
-			if (![7, 8].includes(this.model.status)) {
-				let hashtag = this.lstHashtag.find((x) => x.value == this.hashtagId)
-				let obj = {
-					RecommendationId: this.model.id,
-					HashtagId: this.hashtagId,
-					HashtagName: hashtag.text,
-				}
-				this.recommendationService.addHashtagForRecommentdation(obj).subscribe()
+			let hashtag = this.lstHashtag.find((x) => x.value == this.hashtagId)
+			let obj = {
+				RecommendationId: this.model.id,
+				HashtagId: this.hashtagId,
+				HashtagName: hashtag.text,
 			}
+			this.recommendationService.addHashtagForRecommentdation(obj).subscribe()
+
 			for (var i = 0; i < this.lstHashtag.length; i++) {
 				if (this.lstHashtag[i].value == this.hashtagId) {
 					this.lstHashtagSelected.push(this.lstHashtag[i])
@@ -247,19 +259,13 @@ export class ViewRecommendationComponent implements OnInit {
 		}
 	}
 	onRemoveHashtag(item: any) {
-		if (![7, 8].includes(this.model.status)) {
-			let obj = {
-				RecommendationId: this.model.id,
-				HashtagId: item.value,
-			}
-			this.recommendationService.deleteHashtagForRecommentdation(obj).subscribe()
+		let obj = {
+			RecommendationId: this.model.id,
+			HashtagId: item.value,
 		}
-		for (let index = 0; index < this.lstHashtagSelected.length; index++) {
-			if (this.lstHashtagSelected[index].id == item.id) {
-				this.lstHashtagSelected.splice(index, 1)
-				break
-			}
-		}
+		this.recommendationService.deleteHashtagForRecommentdation(obj).subscribe()
+		let index = this.lstHashtagSelected.indexOf(item)
+		this.lstHashtagSelected.splice(index, 1)
 	}
 
 	onUpload(event) {
@@ -541,6 +547,21 @@ export class ViewRecommendationComponent implements OnInit {
 		})
 	}
 	//end comment area
+
+	// sugest
+	sugestText = () => {
+		if ([2, 5, 8].includes(this.model.status)) {
+			let content = this.model.content //.replace(/\\n/g, String.fromCharCode(13, 10))
+			for (let index = 0; index < this.lstDictionariesWord.length; index++) {
+				var nameWord = new RegExp(this.lstDictionariesWord[index].name, 'ig')
+				content = content.replace(
+					nameWord,
+					'<span class="txthighlight" title="' + this.lstDictionariesWord[index].description + '">' + this.lstDictionariesWord[index].name + '</span>'
+				)
+			}
+			this.model.content = content
+		}
+	}
 
 	DownloadFile(file: any) {
 		var request = {

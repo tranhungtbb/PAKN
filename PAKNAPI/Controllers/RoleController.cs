@@ -128,7 +128,6 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new SYPermissionGroupUserInsertByList(_appSetting).SYPermissionGroupUserInsertByListDAO(_sYPermissionGroupUserInsertByListIN) };
 			}
@@ -170,12 +169,6 @@ namespace PAKNAPI.Controllers
 		/// <summary>
 		/// danh sách vai trò (on page)
 		/// </summary>
-		/// <param name="PageSize"></param>
-		/// <param name="PageIndex"></param>
-		/// <param name="UserCount"></param>
-		/// <param name="Name"></param>
-		/// <param name="Description"></param>
-		/// <param name="IsActived"></param>
 		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -287,13 +280,13 @@ namespace PAKNAPI.Controllers
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("user-role-map-insert-list")]
-		public async Task<ActionResult<object>> SYUserRoleMapListInsert(List<SYUserRoleMapInsertIN> _sYUserRoleMaps)
+		public async Task<ActionResult<object>> SYUserRoleMapListInsert(SYUserRoleMapInsertObject _sYUserRoleMaps)
 		{
 			try
 			{
 				int count = 0;
 				int errcount = 0;
-				foreach (SYUserRoleMapInsertIN _sYUserRoleMapInsertIN in _sYUserRoleMaps)
+				foreach (SYUserRoleMapInsertIN _sYUserRoleMapInsertIN in _sYUserRoleMaps._sYUserRoleMaps)
 				{
 					int? result = await new SYUserRoleMapInsert(_appSetting).SYUserRoleMapInsertDAO(_sYUserRoleMapInsertIN);
 					if (result != null)
@@ -311,8 +304,9 @@ namespace PAKNAPI.Controllers
 						{"CountSuccess", count},
 						{"CountError", errcount}
 					};
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
+				if (_sYUserRoleMaps.isCreated == false) {
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				}
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)

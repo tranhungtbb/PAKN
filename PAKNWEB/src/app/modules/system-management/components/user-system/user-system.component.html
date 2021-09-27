@@ -68,7 +68,7 @@
 										
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select class="" [items]="listStatus" 
+										<ng-select notFoundText="Không có dữ liệu"  class="" [items]="listStatus" 
 											placeholder="Trạng thái ..." bindLabel="text" bindValue="value"
 											style="width: 120px !important;"
 											[ngSwitch]="'isActived'"
@@ -210,7 +210,7 @@
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Giới tính <span class="cl-red">(*)</span></label>
 									<!--  -->
-									<ng-select class="form-control" placeholder="Chọn..." [items]="listGender" bindLabel="text" bindValue="value" [(ngModel)]="model.gender"
+									<ng-select notFoundText="Không có dữ liệu"  class="form-control" placeholder="Chọn..." [items]="listGender" bindLabel="text" bindValue="value" [(ngModel)]="model.gender"
 										formControlName="gender" [closeOnSelect]="true" [searchable]="false">
 									</ng-select>
 									<div *ngIf="(submitted && fUser.gender.invalid)||(fUser.gender.invalid && (fUser.gender.dirty || fUser.gender.touched))"
@@ -225,7 +225,7 @@
 									<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
 									<!-- <input *ngIf="!isAdmin && model.id > 0 && model.isActived" disabled type="text" class="form-control" value="Hiệu lực">
 									<input *ngIf="!isAdmin && model.id > 0 && !model.isActived" disabled type="text" class="form-control" value="Hết hiệu lực"> -->
-									<ng-select class="form-control" style="font-weight: bold;" placeholder="Chọn..." [items]="listStatus" bindLabel="text" bindValue="value"
+									<ng-select notFoundText="Không có dữ liệu"  class="form-control" style="font-weight: bold;" placeholder="Chọn..." [items]="listStatus" bindLabel="text" bindValue="value"
 										formControlName="isActived" [(ngModel)]="model.isActived" [closeOnSelect]="true" [searchable]="false">
 									</ng-select>
 									<div *ngIf="(submitted && fUser.isActived.invalid)||(fUser.isActived.invalid && (fUser.isActived.dirty || fUser.isActived.touched))"
@@ -425,7 +425,7 @@
 								</div>
 								<div class="col-12 col-sm-2 col-lg-2 form-group">
 									<label class="mb-1 text-uppercase"><strong>Trạng thái</strong></label>
-									<ng-select class="form-control" [items]="listHisStatus" placeholder="Trạng thái..."
+									<ng-select notFoundText="Không có dữ liệu"  class="form-control" [items]="listHisStatus" placeholder="Trạng thái..."
 										bindLabel="text" bindValue="value"
 										[ngModelOptions]="{standalone: true}"
 										[(ngModel)]="dataSearch2.status"

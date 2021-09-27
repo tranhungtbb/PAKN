@@ -61,12 +61,6 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <summary>
 		/// danh sách chức vụ
 		/// </summary>
-		/// <param name="PageSize"></param>
-		/// <param name="PageIndex"></param>
-		/// <param name="Name"></param>
-		/// <param name="Code"></param>
-		/// <param name="Description"></param>
-		/// <param name="IsActived"></param>
 		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -153,9 +147,13 @@ namespace PAKNAPI.Controllers.ControllerBase
 		{
 			try
 			{
+				var result = Convert.ToInt16(await new CAPositionInsert(_appSetting).CAPositionInsertDAO(_cAPositionInsertIN));
+				if (result == -1) {
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Tiêu đề đã tồn tại" };
+                }
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
-
-				return new ResultApi { Success = ResultCode.OK, Result = await new CAPositionInsert(_appSetting).CAPositionInsertDAO(_cAPositionInsertIN) };
+				return new ResultApi { Success = ResultCode.OK, Result =  result};
 			}
 			catch (Exception ex)
 			{
@@ -179,9 +177,15 @@ namespace PAKNAPI.Controllers.ControllerBase
 		{
 			try
 			{
+				var result = Convert.ToInt16(await new CAPositionUpdate(_appSetting).CAPositionUpdateDAO(_cAPositionUpdateIN));
+				if (result == -1)
+				{
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Tiêu đề đã tồn tại" };
+				}
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
 
-				return new ResultApi { Success = ResultCode.OK, Result = await new CAPositionUpdate(_appSetting).CAPositionUpdateDAO(_cAPositionUpdateIN) };
+				return new ResultApi { Success = ResultCode.OK, Result = result };
 			}
 			catch (Exception ex)
 			{

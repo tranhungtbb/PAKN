@@ -14,7 +14,7 @@
 	</div>
 	<div class="col form-group">
 		<label class="mb-1">Quốc tịch<span class="cl-red">(*)</span></label>
-		<ng-select *ngIf="!nation_enable_type" [(ngModel)]="model.Nation" formControlName="Nation" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
+		<ng-select notFoundText="Không có dữ liệu" *ngIf="!nation_enable_type" [(ngModel)]="model.Nation" formControlName="Nation" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
 			(change)="onChangeNation()">
 			<ng-option *ngFor="let vill of listNation" [value]="vill.id" ng-init="model.Nation">{{vill.name}}</ng-option>
 			<ng-option value="#">Khác</ng-option>
@@ -37,7 +37,7 @@
 		<select *ngIf="nation_enable_type" class="form-control" disabled [(ngModel)]="model.ProvinceId" formControlName="Province">
 			<option value="0">Chọn...</option>
 		</select>
-		<ng-select *ngIf="!nation_enable_type" [(ngModel)]="model.ProvinceId" formControlName="Province" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
+		<ng-select notFoundText="Không có dữ liệu" *ngIf="!nation_enable_type" [(ngModel)]="model.ProvinceId" formControlName="Province" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
 			(change)="onChangeProvince()">
 			<ng-option *ngFor="let vill of listProvince" [value]="vill.id" ng-init="model.ProvinceId">{{vill.name}}</ng-option>
 		</ng-select>
@@ -71,7 +71,7 @@
 		<select *ngIf="nation_enable_type" class="form-control" disabled [(ngModel)]="model.DistrictId" formControlName="District">
 			<option value="0">Chon...</option>
 		</select>
-		<ng-select *ngIf="!nation_enable_type" [disabled]="nation_enable_type" [(ngModel)]="model.DistrictId" formControlName="District" class="form-control" placeholder="Chọn..."
+		<ng-select notFoundText="Không có dữ liệu" *ngIf="!nation_enable_type" [disabled]="nation_enable_type" [(ngModel)]="model.DistrictId" formControlName="District" class="form-control" placeholder="Chọn..."
 			[closeOnSelect]="true" (change)="onChangeDistrict()">
 			<ng-option *ngFor="let vill of listDistrict" [value]="vill.id">{{vill.name}}</ng-option>
 		</ng-select>
@@ -86,7 +86,7 @@
 		<select *ngIf="nation_enable_type" class="form-control" disabled [(ngModel)]="model.WardsId" formControlName="Village">
 			<option value="0">Chon...</option>
 		</select>
-		<ng-select *ngIf="!nation_enable_type" [disabled]="nation_enable_type" [(ngModel)]="model.WardsId" formControlName="Village" class="form-control" placeholder="Chọn..."
+		<ng-select notFoundText="Không có dữ liệu" *ngIf="!nation_enable_type" [disabled]="nation_enable_type" [(ngModel)]="model.WardsId" formControlName="Village" class="form-control" placeholder="Chọn..."
 			[closeOnSelect]="true">
 			<ng-option *ngFor="let vill of listVillage" [value]="vill.id">{{vill.name}}</ng-option>
 		</ng-select>

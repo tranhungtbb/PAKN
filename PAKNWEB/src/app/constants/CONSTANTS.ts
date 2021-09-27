@@ -22,7 +22,9 @@ export class LOG_ACTION {
 	public static GETDATACREATE = 'Trả về dữ liệu danh mục'
 	public static GETINFO = 'Trả về thông tin'
 	public static INSERT = 'Thêm mới'
+	public static INSERT_AND_SEND = 'Thêm mới và Gửi'
 	public static UPDATE = 'Cập nhật'
+	public static UPDATE_AND_SEND = 'Cập nhập và Gửi'
 	public static FORWARD = 'Chuyển tiếp'
 	public static PROCESSED = 'Xử lý'
 	public static UPDATESTATUS = 'Cập nhật trạng thái'
@@ -33,13 +35,23 @@ export class LOG_ACTION {
 	public static WITHDRAW = 'Hủy công bố'
 	public static SEND = 'Gửi'
 	public static ASYNC = 'Đồng bộ'
+
+	public static FORWARD_TT = 'Gửi lại trung tâm'
+	public static RECEIVE_DENY = 'Từ chối xử lý' //3 Từ chối xử lý
+	public static RECEIVE_APPROVED = 'Tiếp nhận xử lý'
+	public static PROCESS_SEND = 'Gửi giải quyết'
+	public static PROCESS_DENY = 'Từ chối giải quyết' //6 Từ chối giải quyết
+	public static PROCESSING = 'Tiếp nhận giải quyết' //7  giải quyết
+	public static APPROVE_SEND = 'Gửi phê duyệt'
+	public static APPROVE = 'Phê duyệt'
+	public static APPROVE_DENY = 'Từ chối phê duyệt' //9 Từ chối phê duyệt
 }
 
 export class LOG_OBJECT {
 	public static NO_CONTENT = ''
 	public static login = 'Đăng nhập'
 
-	public static CA_FIELD = 'Danh mục lĩnh vực'
+	public static CA_FIELD = 'Lĩnh vực'
 	public static CA_WORD = 'Thư viện từ ngữ'
 	public static CA_GROUPWORD = 'Nhóm thư viện từ ngữ'
 	public static CA_DEPARTMENT = 'Sở ngành'
@@ -55,7 +67,7 @@ export class LOG_OBJECT {
 	public static SY_INVITATION = 'Thư mời'
 	public static HIS_INVITATION = 'Lịch sử thư mời'
 
-	public static NE_NEWS = 'tin tức'
+	public static NE_NEWS = 'Tin tức'
 
 	public static SY_ROLE = 'Vai trò hệ thống'
 
@@ -80,8 +92,11 @@ export class LOG_OBJECT {
 	public static SY_SMS = 'Cấu hình SMS thương hiệu'
 	public static SY_UNIT = 'Đơn vị'
 	public static SY_CHATBOX = 'Chat box'
-	public static SY_SUPPORT = 'Tài liệu hướng dẫn'
+	public static SY_SUPPORT = 'Tài liệu hướng dẫn sử dụng'
+	public static SY_SUPPORT_VIDEO = 'Video hướng dẫn sử dụng'
 	public static SY_SYSTEM = 'Lịch sử hệ thống'
+	public static CALL_HISTORY = 'Cuộc gọi'
+	public static SY_NOTIFICATION = 'Thông báo'
 }
 
 export class MESSAGE_COMMON {
@@ -187,9 +202,9 @@ export const FILETYPE = [
 ]
 
 export const TYPE_CONFIG = [
-	{ text : 'Cấu hình email', value : 1 }, //Email hệ thống
-	{ text : 'Cấu hình sms', value : 2 }, //SMS hệ thống
-	{ text : 'Cấu hình tổng đài', value : 3 } //Config tổng đài
+	{ text: 'Cấu hình email', value: 1 }, //Email hệ thống
+	{ text: 'Cấu hình sms', value: 2 }, //SMS hệ thống
+	{ text: 'Cấu hình tổng đài', value: 3 }, //Config tổng đài
 ]
 
 export class TYPECONFIG {

@@ -61,12 +61,12 @@
 	font-size: 12px;
 	top: 4px;
 	left: 23px;
-	width: 17px;
+	min-width: 17px;
 	height: 16px;
 	background: red;
 	border-radius: 100%;
 	text-align: center;
-	padding-top: 2px;
+	padding: 2px;
 	z-index: 1000;
 }
 
@@ -79,13 +79,13 @@
 .height-auto {
 	height: auto !important;
 }
-.border-input{
+.border-input {
 	border-radius: 10px;
 	border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+	border-bottom-left-radius: 10px;
 	height: 38px;
 }
-.custom-show-pass{
+.custom-show-pass {
 	position: absolute;
 	top: 30px;
 	right: 25px;
@@ -121,7 +121,7 @@
 .color-brow {
 	color: #743f15;
 }
-.permision-category{
+.permision-category {
 	color: black;
 	font-weight: 600;
 }
