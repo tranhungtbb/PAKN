@@ -21,7 +21,7 @@
 							<th style="width: 200px">
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Ngày tạo</strong>
-									<span class="caret-tb"></span>
+									
 								</p>
 								<span *hasPermission="['3', 'A_XIII_2']">
 									<input class="form-control form-control-sm" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="createDate"
@@ -32,10 +32,10 @@
 									</div>
 								</span>
 							</th>
-							<th style="min-width: 350px">
+							<th style="min-width: 180px">
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Người tạo</strong>
-									<span class="caret-tb"></span>
+									
 								</p>
 								<div *hasPermission="['3', 'A_XIII_2']" class="dropdown bootstrap-select form-control form-control-sm">
 									<ng-select notFoundText="Không có dữ liệu"  class="" [items]="listUser" placeholder="Người tạo ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.userId"
@@ -46,7 +46,7 @@
 							<th>
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Nội dung</strong>
-									<span class="caret-tb"></span>
+									
 								</p>
 								<input *hasPermission="['3', 'A_XIII_2']" placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.description" maxlength="100"
 									(keydown.enter)="dataStateChange()" />
@@ -55,7 +55,7 @@
 							<th style="width: 160px">
 								<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 									<strong>Trạng thái</strong>
-									<span class="caret-tb"></span>
+									
 								</p>
 								<div *hasPermission="['3', 'A_XIII_2']" class="dropdown bootstrap-select form-control form-control-sm">
 									<ng-select notFoundText="Không có dữ liệu"  class="" [items]="listStatus" placeholder="Trạng thái ..." bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.status"
@@ -74,7 +74,7 @@
 							<td>{{item.fullName}}</td>
 							<td>{{item.description}}</td>
 							<td>
-								<span *ngIf="item.status == 0" class="badge rounded-pill bg-red">Thất bại</span>
+								<span *ngIf="item.status == 0" class="badge rounded-pill bg-red" (click)="showMessageError(item.messageError)">Thất bại</span>
 								<span *ngIf="item.status == 1" class="badge rounded-pill badge-success">Thành công</span>
 							</td>
 							<td style="text-align: center;">
@@ -113,6 +113,24 @@
 				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
 				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="onDelete(idDelete)">Xác nhận</button>
 			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modal-error-his">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Thông tin</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					{{messageError}}
+				</span>
+			</div>
+			<div class="modal-footer border-top-0"></div>
 		</div>
 	</div>
 </div>

@@ -56,7 +56,7 @@ namespace PAKNAPI.Controllers
                     result.lstIntroduceFunction = await new SYIntroduceFunction(_appSetting).SYIntroduceFunctionGetByIntroductId(result.model.Id);
                     result.lstIntroduceUnit = await new SYIntroduceUnit(_appSetting).SYIntroduceUnitGetByIntroduceId(result.model.Id);
 
-                    //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                    //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                     return new ResultApi { Success = ResultCode.OK, Result = result, Message = "Success" };
 
                 }
@@ -66,7 +66,7 @@ namespace PAKNAPI.Controllers
             }
             catch(Exception ex)
             {
-                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -157,11 +157,11 @@ namespace PAKNAPI.Controllers
                     await new SYIntroduceFunction(_appSetting).SYIntroduceFunctionUpdateDAO(item);
                 }
 
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                 return new ResultApi { Success = ResultCode.OK, Result = null };
             }
             catch (Exception ex) {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
@@ -192,7 +192,7 @@ namespace PAKNAPI.Controllers
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
@@ -216,7 +216,7 @@ namespace PAKNAPI.Controllers
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
@@ -238,7 +238,7 @@ namespace PAKNAPI.Controllers
 
                 if (result > 0)
                 {
-                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                     return new ResultApi { Success = ResultCode.OK, Result = result };
                 }
                 else {
@@ -247,7 +247,7 @@ namespace PAKNAPI.Controllers
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
@@ -271,7 +271,7 @@ namespace PAKNAPI.Controllers
 
                 if (result > 0)
                 {
-                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                     return new ResultApi { Success = ResultCode.OK, Result = result };
                 }
                 else
@@ -281,7 +281,7 @@ namespace PAKNAPI.Controllers
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
@@ -302,7 +302,7 @@ namespace PAKNAPI.Controllers
 
                 if (result > 0)
                 {
-                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                     return new ResultApi { Success = ResultCode.OK, Result = result };
                 }
                 else
@@ -312,7 +312,7 @@ namespace PAKNAPI.Controllers
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }

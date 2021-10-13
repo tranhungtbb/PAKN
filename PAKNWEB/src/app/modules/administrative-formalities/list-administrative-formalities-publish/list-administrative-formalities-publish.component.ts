@@ -27,7 +27,7 @@ export class ListAdministrativeFormalitiesPublishComponent implements OnInit {
 		private _shareData: DataService
 	) {}
 	userLoginId: number = this.storeageService.getUserId()
-	listData = new Array<RecommendationObject>()
+	listData: any = []
 	listStatus: any = [
 		{ value: 1, text: 'Đang soạn thảo' },
 		{ value: 3, text: 'Đã công bố' },
@@ -171,6 +171,34 @@ export class ListAdministrativeFormalitiesPublishComponent implements OnInit {
 		}),
 			(error) => {
 				console.error(error)
+			}
+	}
+	idChangeStatus: number
+	statusChange: number
+
+	preChangeStatus(id: number, status: number) {
+		this.idChangeStatus = id
+		this.statusChange = status
+		$('#modalConfirmChangeStatus').modal('show')
+	}
+
+	onChangeStatus() {
+		const request = {
+			Id: this.idChangeStatus,
+			Status: this.statusChange,
+		}
+		let obj = this.listData.find((x) => x.administrationId == this.idChangeStatus)
+		$('#modalConfirmChangeStatus').modal('hide')
+		this.afService.updateShow(request, obj.name).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				this._toastr.success(COMMONS.UPDATE_SUCCESS)
+				this.getList()
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(err) => {
+				console.error(err)
 			}
 	}
 }

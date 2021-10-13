@@ -86,11 +86,10 @@ export class SystemLogComponent implements OnInit {
 		this.pageIndex = event.first / event.rows + 1
 		this.getList()
 	}
-	onChangeCreateDate(event){
-		if(event){
+	onChangeCreateDate(event) {
+		if (event) {
 			this.dataSearch.createDate = event
-		}
-		else{
+		} else {
 			this.dataSearch.createDate = null
 		}
 		this.getList()
@@ -150,6 +149,14 @@ export class SystemLogComponent implements OnInit {
 			} else {
 			}
 		})
+	}
+
+	messageError: any
+	showMessageError = (messageError: any) => {
+		if (messageError) {
+			this.messageError = messageError
+			$('#modal-error-his').modal('show')
+		}
 	}
 }
 

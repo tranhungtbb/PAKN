@@ -1,10 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-//import * as ClassicEditor from '../../../../ckeditor'
-
-//import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'
-
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 
@@ -15,12 +12,9 @@ import { CatalogService } from '../../../services/catalog.service'
 import { NotificationService } from '../../../services/notification.service'
 
 import { NewsRelateModalComponent } from '../news-relate-modal/news-relate-modal.component'
-import { CONSTANTS, STATUS_HISNEWS } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from '../../../commons/commons'
 import { AppSettings } from '../../../constants/app-setting'
 import { NewsModel, HISNewsModel } from '../../../models/NewsObject'
-import { from } from 'rxjs'
-import { switchMap } from 'rxjs/operators'
 import { Api } from 'src/app/constants/api'
 import { UploadAdapter } from 'src/app/services/uploadAdapter'
 import { HttpClient } from '@angular/common/http'
@@ -156,6 +150,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	submitted = false
 	onSave(isSave = false, published = false, viewDemo = false) {
 		this.submitted = true
+		this.model.title = this.model.title == null ? '' : this.model.title.trim()
 		if (this.postTypeSelected.length > 0) this.model.postType = this.postTypeSelected.toString()
 		//this.newsForm.controls.postType.setValue(this.model.postType)
 
@@ -294,20 +289,6 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		this.filePost = file
 		this.model.imagePath = URL.createObjectURL(file)
 		this.avatarLocalChange = true
-		////////
-		//if (!this.model.imagePath) this.model.imagePath = 'hasImage'
-		// let formData = new FormData()
-		// formData.append('file', file, file.name)
-
-		// this.newsService.uploadFile(formData).subscribe((res) => {
-		// 	if (res.success != 'OK') {
-		// 		this.toast.error('Xảy ra lỗi trong quá trình xử lý')
-		// 		return
-		// 	}
-		// 	this.model.imagePath = res.result.path
-		// 	this.newsForm.controls.imagePath.setValue(this.model.imagePath)
-		// 	// this.avatarUrl = `${AppSettings.API_DOWNLOADFILES}/${this.model.imagePath}`
-		// })
 	}
 
 	public onReady(editor) {
@@ -317,24 +298,6 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		}
 	}
 
-	// insertNotification(isCreate: boolean) {
-	// 	if (this.model.status == 1) {
-	// 		var obj = {
-	// 			id: this.model.id,
-	// 			title: this.model.title,
-	// 			isCreateNews: isCreate,
-	// 		}
-	// 		if (this.model.isNotification == true) {
-	// 			this.notificationService.insertNotificationTypeNews(obj).subscribe((res) => {
-	// 				if ((res.success = RESPONSE_STATUS.success)) {
-	// 					return
-	// 				}
-	// 			})
-	// 		}
-	// 		return
-	// 	}
-	// 	return
-	// }
 	back() {
 		window.history.back()
 	}

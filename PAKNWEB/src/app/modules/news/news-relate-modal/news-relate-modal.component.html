@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal-news-relate">
-	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="max-height: 80vh;">
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0">
 				<p class="modal-title h3">Thêm bài viết liên quan</p>
@@ -11,15 +11,28 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th colspan="2">
+								<th colspan="2" style="position: relative;">
 									<span class="text-uppercase">Bài viết</span>
+									<span class="form-control-feedback">
+										<svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd" clip-rule="evenodd" d="M0.786133 5.73047C0.786133 8.89533 3.35172 11.4609 6.51653 11.4609C9.67974 11.4571 12.2431 8.89373 12.2469 5.73047C12.2469 2.56562 9.68134 0 6.51653 0C3.35172 0 0.786133 2.56562 0.786133 5.73047ZM2.05939 5.73047C2.05939 3.26892 4.05485 1.27344 6.51637 1.27344C8.97673 1.27624 10.9705 3.27008 10.9733 5.73047C10.9733 8.19202 8.97789 10.1875 6.51637 10.1875C4.05485 10.1875 2.05939 8.19202 2.05939 5.73047Z" fill="#DBDDE1"/>
+											<path d="M4.60643 5.73047H3.33301C3.33511 3.97309 4.75921 2.54898 6.51656 2.54688V3.82031C5.46163 3.82031 4.60643 4.67552 4.60643 5.73047Z" fill="#DBDDE1"/>
+											<path d="M14.6072 12.9209L11.8974 10.2111C11.6253 10.5379 11.3239 10.8393 10.9971 11.1114L13.7069 13.8213C13.9567 14.0626 14.3539 14.0591 14.5995 13.8135C14.8451 13.5679 14.8485 13.1708 14.6072 12.9209Z" fill="#DBDDE1"/>
+											</svg>												
+									</span>
 									<input [(ngModel)]="query.title" (change)="filterChange()" type="text" class="form-control form-control-sm">
 								</th>
-								<th style="width:150px;">
+								<th style="width:170px; position: relative;">
 									<span class="text-uppercase">Loại tin tức</span>
+									<span class="form-control-feedback">
+										<svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd" clip-rule="evenodd" d="M0.786133 5.73047C0.786133 8.89533 3.35172 11.4609 6.51653 11.4609C9.67974 11.4571 12.2431 8.89373 12.2469 5.73047C12.2469 2.56562 9.68134 0 6.51653 0C3.35172 0 0.786133 2.56562 0.786133 5.73047ZM2.05939 5.73047C2.05939 3.26892 4.05485 1.27344 6.51637 1.27344C8.97673 1.27624 10.9705 3.27008 10.9733 5.73047C10.9733 8.19202 8.97789 10.1875 6.51637 10.1875C4.05485 10.1875 2.05939 8.19202 2.05939 5.73047Z" fill="#DBDDE1"/>
+											<path d="M4.60643 5.73047H3.33301C3.33511 3.97309 4.75921 2.54898 6.51656 2.54688V3.82031C5.46163 3.82031 4.60643 4.67552 4.60643 5.73047Z" fill="#DBDDE1"/>
+											<path d="M14.6072 12.9209L11.8974 10.2111C11.6253 10.5379 11.3239 10.8393 10.9971 11.1114L13.7069 13.8213C13.9567 14.0626 14.3539 14.0591 14.5995 13.8135C14.8451 13.5679 14.8485 13.1708 14.6072 12.9209Z" fill="#DBDDE1"/>
+											</svg>												
+									</span>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<!-- [items]="listNewsCategories" bindLabel="name" bindValue="id" [closeOnSelect]="true" -->
-										<ng-select notFoundText="Không có dữ liệu"  class="" [(ngModel)]="query.newsType" (change)="filterChange()" style="width:120px;" placeholder="Chọn...">
+										<ng-select notFoundText="Không có dữ liệu" [(ngModel)]="query.newsType" (change)="filterChange()" style="width:170px;" placeholder="Chọn...">
 											<ng-option *ngFor="let nt of listNewsCategories" [value]="nt.id">
 												{{nt.name}}
 											</ng-option>
@@ -50,21 +63,31 @@
 					</table>
 				</div>
 			</div>
-			<div class="modal-footer border-top-0">
-				<div class="nav-table paging-panel-left">
-					<div class="d-flex align-items-center">
-						<button type="button" class="btn btn-outline-secondary mr-2 p-2 rounded-3" style="padding: 3px !important;" (click)="changePage(1)"><i
-								class="bi bi-chevron-left"></i></button>
-						<div class="border d-flex align-items-center border-dark px-2 rounded">
-							<input type="number" [ngModel]="query.pageIndex" (ngModelChange)="changePage($event)" class="border-0 p-0 number-page-table text-right form-control-sm">
-							<span>/{{pageCount}}</span>
-						</div>
-						<button type="button" class="btn btn-outline-secondary ml-2 p-2 rounded-3" style="padding: 3px !important;" (click)="changePage(-1)"><i
-								class="bi bi-chevron-right"></i></button>
-					</div>
-				</div>
-				<button type="button" class="btn btn-sm btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
-				<button type="button" (click)="onSave()" class="btn btn-sm btn-danger border-0 px-5 grd-blue">Xác nhận</button>
+
+
+			<div class="mt-1 center mr-3">
+				<nav aria-label="navigation" style="width: 65%;">
+					<ul class="pagination pagination-lg justify-content-center align-items-center">
+						<li class="page-item" [ngClass]="{ 'disabled': query.pageIndex === 1 }">
+							<a (click)="changePagination(query.pageIndex - 1)" class="page-link text-uppercase rounded-pill" href="javascript:void(0)" tabindex="-1"
+								aria-disabled="true"><i class="bi bi-chevron-left mr-2"></i></a>
+						</li>
+						<li class="d-flex justify-content-center align-items-center">
+							<a *ngIf="query.pageIndex > 4">...</a>
+							<p class="mb-0 page-item" style="font-size: 1.2rem;" *ngFor="let item of pagination; let i = index" [ngClass]="{ 'active': item.index === query.pageIndex }">
+								<a (click)="changePagination(item.index)" *ngIf="i - 3 < query.pageIndex && i + 5 > query.pageIndex" class="page-link"
+									href="javascript:void(0)">{{item.index}}</a>
+							</p>
+							<a *ngIf="query.pageIndex < pagination.length -4">...</a>
+						</li>
+						<li class="page-item" [ngClass]="{ 'disabled': query.pageIndex === totalCount }">
+							<a (click)="changePagination(query.pageIndex + 1)" class="page-link text-uppercase rounded-pill" href="javascript:void(0)">
+								<i class="bi bi-chevron-right ml-2"></i></a>
+						</li>
+					</ul>
+				</nav>
+				<button type="button" class="btn btn-sm btn-outline-secondary px-5 border mr-3" data-dismiss="modal" style="height: 35px;">Hủy</button>
+				<button type="button" (click)="onSave()" class="btn btn-sm btn-danger border-0 px-4 grd-blue" style="height: 35px;">Xác nhận</button>
 			</div>
 		</div>
 	</div>

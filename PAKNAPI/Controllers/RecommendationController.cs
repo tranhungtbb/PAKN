@@ -53,7 +53,7 @@ namespace PAKNAPI.Controller
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -74,7 +74,7 @@ namespace PAKNAPI.Controller
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -97,7 +97,7 @@ namespace PAKNAPI.Controller
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -119,7 +119,7 @@ namespace PAKNAPI.Controller
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -145,7 +145,7 @@ namespace PAKNAPI.Controller
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -163,7 +163,7 @@ namespace PAKNAPI.Controller
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -394,13 +394,13 @@ namespace PAKNAPI.Controller
                     }
                 }
                 if (unitId != 0) {
-                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                 }
                 return new ResultApi { Success = ResultCode.OK, Result = Id };
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -663,13 +663,13 @@ namespace PAKNAPI.Controller
                 }
                 if (unitId != 0)
                 {
-                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                 }
                 return new ResultApi { Success = ResultCode.OK };
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -723,12 +723,12 @@ namespace PAKNAPI.Controller
                 hisData.CreatedDate = DateTime.Now;
                 await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
                 await SYNotificationInsertTypeRecommendation(request._mRRecommendationForwardInsertIN.RecommendationId);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                 return new ResultApi { Success = ResultCode.OK };
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -822,12 +822,12 @@ namespace PAKNAPI.Controller
                 hisData.CreatedDate = DateTime.Now;
                 await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
                 await SYNotificationInsertTypeRecommendation(request._mRRecommendationForwardProcessIN.RecommendationId);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                 return new ResultApi { Success = ResultCode.OK };
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -926,12 +926,12 @@ namespace PAKNAPI.Controller
                 hisData.CreatedDate = DateTime.Now;
                 await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
                 await SYNotificationInsertTypeRecommendation (request.DataConclusion.RecommendationId);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                 return new ResultApi { Success = ResultCode.OK };
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -987,7 +987,7 @@ namespace PAKNAPI.Controller
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -1022,7 +1022,7 @@ namespace PAKNAPI.Controller
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -1062,7 +1062,7 @@ namespace PAKNAPI.Controller
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -1102,7 +1102,7 @@ namespace PAKNAPI.Controller
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -1131,7 +1131,7 @@ namespace PAKNAPI.Controller
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -1150,14 +1150,14 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
                 return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationDelete(_appSetting).MRRecommendationDeleteDAO(_mRRecommendationDeleteIN) };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -1186,7 +1186,7 @@ namespace PAKNAPI.Controller
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -1217,7 +1217,7 @@ namespace PAKNAPI.Controller
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -1246,7 +1246,7 @@ namespace PAKNAPI.Controller
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -1275,7 +1275,7 @@ namespace PAKNAPI.Controller
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -1312,7 +1312,7 @@ namespace PAKNAPI.Controller
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -1340,7 +1340,7 @@ namespace PAKNAPI.Controller
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -1358,14 +1358,14 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
                 return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationHashtagInsert(_appSetting).MRRecommendationHashtagInsertDAO(_mRRecommendationHashtagInsertIN) };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -1383,14 +1383,14 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
                 return new ResultApi { Success = ResultCode.OK, Result = await new MRRecommendationHashtagDelete(_appSetting).MRRecommendationHashtagInsertDAO(_mRRecommendationHashtagDeleteIN) };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -1409,14 +1409,14 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
                 return new ResultApi { Success = ResultCode.OK, Result = await new MRCommnentInsert(_appSetting).MRCommnentInsertDAO(_mRCommnentInsertIN) };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -1449,7 +1449,7 @@ namespace PAKNAPI.Controller
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -1479,14 +1479,14 @@ namespace PAKNAPI.Controller
                         {"data7day", res},
                         {"data", res2}
                     };
-                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
                 return new ResultApi { Success = ResultCode.OK, Result = json };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -1552,7 +1552,7 @@ namespace PAKNAPI.Controller
                             notification.Title = "PAKN CHỜ XỬ LÝ";
                             notification.Content =
                                 recommendation.SendId != item.Id ?
-                                sender.FullName + " vừa gửi một PAKN." : "Bạn vừa tạo một PAKN.";
+                                sender.FullName + " vừa gửi một PAKN." : "Bạn vừa tạo một PAKN";
                             // insert notification
                             await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
                         }
@@ -1578,14 +1578,14 @@ namespace PAKNAPI.Controller
 
                         notification.ReceiveId = sender.Id;
                         notification.Title = "PAKN BỊ TỪ CHỐI";
-                        notification.Content = "Phản ánh kiến nghị số " + recommendation.Code + " của bạn đã bị từ chối.";
+                        notification.Content = "Phản ánh kiến nghị số " + recommendation.Code + " của bạn đã bị từ chối";
                         await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
 
                         break;
                     case STATUS_RECOMMENDATION.RECEIVE_APPROVED: //4 Đã tiếp nhận
 
                         notification.Title = "PAKN ĐÃ TIẾP NHẬN";
-                        notification.Content = "PAKN số " + recommendation.Code + " đã được tiếp nhận.";
+                        notification.Content = "PAKN số " + recommendation.Code + " đã được tiếp nhận";
                         foreach (var item in lstUser)
                         {
                             notification.ReceiveId = item.Id;
@@ -1626,7 +1626,7 @@ namespace PAKNAPI.Controller
                         unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
                         listUserReceiveResolve = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(unitReceiveId);
                         notification.Title = "PAKN ĐANG CHỜ GIẢI QUYẾT";
-                        notification.Content = "PAKN số " + recommendation.Code + " yêu cầu giải quyết được gửi từ đơn vị " + unit.Name + " được gửi tới yêu cầu giải quyết.";
+                        notification.Content = "PAKN số " + recommendation.Code + " yêu cầu giải quyết được gửi từ đơn vị " + unit.Name + " được gửi tới yêu cầu giải quyết";
 
                         foreach (var item in listUserReceiveResolve)
                         {
@@ -1653,7 +1653,7 @@ namespace PAKNAPI.Controller
                         unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
                         // gửi cho đơn vị tiếp nhận ban đầu
                         notification.Title = "PAKN BỊ TỪ CHỐI GIẢI QUYẾT";
-                        notification.Content = "PAKN số " + recommendation.Code + " đã bị " + unitReceive.Name + " từ chối giải quyết.";
+                        notification.Content = "PAKN số " + recommendation.Code + " đã bị " + unitReceive.Name + " từ chối giải quyết";
                         foreach (var item in lstUser)
                         {
                             notification.ReceiveId = item.Id;
@@ -1664,7 +1664,7 @@ namespace PAKNAPI.Controller
 
                         // người gửi PAKN
 
-                        notification.Content = "PAKN của bạn đã bị " + unitReceive.Name + " từ chối giải quyết.";
+                        notification.Content = "PAKN của bạn đã bị " + unitReceive.Name + " từ chối giải quyết";
                         notification.ReceiveId = sender.Id;
                         notification.ReceiveOrgId = null;
                         await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
@@ -1694,7 +1694,7 @@ namespace PAKNAPI.Controller
 
                         // gửi cho lãnh đạo
                         notification.Title = "PAKN CHỜ PHÊ DUYỆT";
-                        notification.Content = "Bạn có PAKN số " + recommendation.Code + " chờ phê duyệt.";
+                        notification.Content = "Bạn có PAKN số " + recommendation.Code + " chờ phê duyệt";
                         notification.ReceiveId = approver.Id;
                         await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
 
@@ -1706,7 +1706,7 @@ namespace PAKNAPI.Controller
                         unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
 
                         notification.Title = "PAKN ĐÃ BỊ TỪ CHỐI PHÊ DUYỆT";
-                        notification.Content = "Lãnh đạo đơn vị " + unitReceive.Name + " đã từ chối kết quả giải quyết PAKN số" + recommendation.Code + ".";
+                        notification.Content = "Lãnh đạo đơn vị " + unitReceive.Name + " đã từ chối kết quả giải quyết PAKN số" + recommendation.Code;
                         foreach (var item in lstUser)
                         {
                             notification.ReceiveId = item.Id;
@@ -1723,7 +1723,7 @@ namespace PAKNAPI.Controller
                         //người gửi PAKN
                         notification.ReceiveId = sender.Id;
                         notification.ReceiveOrgId = null;
-                        notification.Content = "Lãnh đạo đơn vị " + unitReceive.Name + " đã từ chối phê duyệt PAKN số " + recommendation.Code + " của bạn.";
+                        notification.Content = "Lãnh đạo đơn vị " + unitReceive.Name + " đã từ chối phê duyệt PAKN số " + recommendation.Code + " của bạn";
                         await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
 
                         break;
@@ -1735,7 +1735,7 @@ namespace PAKNAPI.Controller
 
 
                         notification.Title = "PAKN ĐÃ GIẢI QUYẾT XONG";
-                        notification.Content = "Lãnh đạo đơn vị " + unitReceive.Name + " đã giải quyết PAKN số " + recommendation.Code + ".";
+                        notification.Content = "Lãnh đạo đơn vị " + unitReceive.Name + " đã giải quyết PAKN số " + recommendation.Code;
 
                         foreach (var item in lstUser)
                         {

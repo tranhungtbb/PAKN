@@ -32,7 +32,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	model: any = new FieldObject()
 	submitted: boolean = false
 	title: string = ''
-	
+
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
@@ -69,7 +69,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	}
 
 	getList() {
-		this._service.fieldGetList({}).subscribe(response => {
+		this._service.fieldGetList({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
@@ -80,7 +80,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 				alert(error)
 			}
@@ -108,7 +108,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 			return
 		}
 		if (this.model.id == 0 || this.model.id == null) {
-			this._service.fieldInsert(this.model).subscribe(response => {
+			this._service.fieldInsert(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -122,12 +122,12 @@ export class FieldComponent implements OnInit, AfterViewInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				error => {
+				(error) => {
 					console.error(error)
 					alert(error)
 				}
 		} else {
-			this._service.fieldUpdate(this.model).subscribe(response => {
+			this._service.fieldUpdate(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -141,7 +141,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				error => {
+				(error) => {
 					console.error(error)
 					alert(error)
 				}
@@ -153,7 +153,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 			Id: data.id,
 			Type: 1,
 		}
-		this._service.fieldGetById(request).subscribe(response => {
+		this._service.fieldGetById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.rebuilForm()
 				this.title = 'Chỉnh sửa lĩnh vực'
@@ -163,7 +163,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 				alert(error)
 			}
@@ -177,7 +177,8 @@ export class FieldComponent implements OnInit, AfterViewInit {
 		let request = {
 			Id: id,
 		}
-		this._service.fieldDelete(request).subscribe(response => {
+		let obj = this.listData.find((x) => x.id == id)
+		this._service.fieldDelete(request, obj.name).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result > 0) {
 					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
@@ -190,13 +191,13 @@ export class FieldComponent implements OnInit, AfterViewInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 			}
 	}
 
 	onUpdateStatus() {
-		this._service.fieldUpdateStatus(this.model).subscribe(res => {
+		this._service.fieldUpdateStatus(this.model).subscribe((res) => {
 			if (res.success == 'OK') {
 				$('#modalConfirmChangeStatus').modal('hide')
 				this.getList()
@@ -209,7 +210,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 				this._toastr.error(res.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 			}
 	}

@@ -82,3 +82,6 @@ body .ui-table .ui-table-thead > tr > th {
 :host ::ng-deep .table-sd thead {
 	text-align: center;
 }
+.h-34 {
+	height: 34px !important;
+}

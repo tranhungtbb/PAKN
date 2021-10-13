@@ -216,6 +216,12 @@ export class SMSCreateOrUpdateComponent implements OnInit {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.BIIndividualOrBusinessGetDropListByProviceId.length > 0) {
 					this.listIndividualAndBusinessGetByAdmintrativeId = res.result.BIIndividualOrBusinessGetDropListByProviceId
+					this.listItemUserSelected.forEach((item) => {
+						let user = this.listIndividualAndBusinessGetByAdmintrativeId.find((x) => x.id == item.id && x.category == item.category)
+						if (user) {
+							this.userId.push(user)
+						}
+					})
 				} else {
 					this.listIndividualAndBusinessGetByAdmintrativeId = []
 				}

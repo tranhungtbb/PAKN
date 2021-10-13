@@ -34,28 +34,28 @@ export class UnitService {
 	create(data: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_UNIT),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_UNIT + ' ' + data.name),
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.UnitInsert, headers)
 	}
 	update(data: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_UNIT),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_UNIT + ' ' + data.name),
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.UnitUpdate, headers)
 	}
 	delete(data: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_UNIT),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_UNIT + ' ' + data.name),
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.UnitDelete, headers)
 	}
 	changeStatus(data: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_UNIT),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_UNIT + ' ' + data.name),
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.UnitChangeStatus, headers)
 	}

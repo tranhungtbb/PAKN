@@ -31,7 +31,7 @@ export class NewsService {
 			ipAddress: this.localStronageService.getIpAddress() && this.localStronageService.getIpAddress() != 'null' ? this.localStronageService.getIpAddress() : '',
 			macAddress: '',
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.NE_NEWS),
+			logObject: encodeURIComponent(LOG_OBJECT.NE_NEWS + ' ' + data.title),
 		})
 		const httpPackage = {
 			headers: tempheaders,
@@ -47,7 +47,7 @@ export class NewsService {
 			ipAddress: this.localStronageService.getIpAddress() && this.localStronageService.getIpAddress() != 'null' ? this.localStronageService.getIpAddress() : '',
 			macAddress: '',
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.NE_NEWS),
+			logObject: encodeURIComponent(LOG_OBJECT.NE_NEWS + ' ' + data.title),
 		})
 		const httpPackage = {
 			headers: tempheaders,
@@ -66,7 +66,7 @@ export class NewsService {
 			ipAddress: this.localStronageService.getIpAddress() && this.localStronageService.getIpAddress() != 'null' ? this.localStronageService.getIpAddress() : '',
 			macAddress: '',
 			logAction: data.status == 1 ? encodeURIComponent(LOG_ACTION.PUBLIC) : encodeURIComponent(LOG_ACTION.WITHDRAW),
-			logObject: encodeURIComponent(LOG_OBJECT.NE_NEWS),
+			logObject: encodeURIComponent(LOG_OBJECT.NE_NEWS + ' ' + data.title),
 		})
 		const httpPackage = {
 			headers: tempheaders,
@@ -80,10 +80,10 @@ export class NewsService {
 		return this.http.post(AppSettings.API_ADDRESS + Api.NewsUpdate, formData, httpPackage)
 	}
 
-	delete(data: any): Observable<any> {
+	delete(data: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.NE_NEWS),
+			logObject: encodeURIComponent(LOG_OBJECT.NE_NEWS + ' ' + title),
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.NewsDelete, headers)
 	}
@@ -106,8 +106,6 @@ export class NewsService {
 	getViewDetailPublic(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NewsGetViewDetailPublic)
 	}
-
-	
 
 	getAllRelates(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NewsGetAllRelates)

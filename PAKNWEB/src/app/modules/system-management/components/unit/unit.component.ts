@@ -1,7 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
-import { TreeNode } from 'primeng/api'
 import { Router } from '@angular/router'
 
 import { DataService } from 'src/app/services/sharedata.service'
@@ -15,8 +14,8 @@ import { UserCreateOrUpdateComponent } from '../user/user-create-or-update/user-
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
 import { UnitObject } from 'src/app/models/unitObject'
+import { UserServiceChatBox } from 'src/app/modules/chatbox/user/user.service'
 
-declare var jquery: any
 declare var $: any
 @Component({
 	selector: 'app-unit',
@@ -42,10 +41,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	unitObject: any = {}
 	listUserPaged: any[] = []
 	unitFlatlist: any[] = []
-	lstField : any [] = []
+	lstField: any[] = []
 
 	createUnitFrom: FormGroup
-	titleConfirm : any = ''
+	titleConfirm: any = ''
 	modelUnit: UnitObject = new UnitObject()
 
 	/*unit query*/
@@ -60,7 +59,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		address: '',
 		isActived: null,
 	}
-	titleSearch : any = ''
+	titleSearch: any = ''
 
 	//sort
 	unitSortDir = 'DESC'
@@ -71,7 +70,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 
 	totalCount_Unit: number = 0
 	unitPageCount: number = 0
-
 
 	totalCount_User: number = 0
 	userPageCount: number = 0
@@ -84,7 +82,8 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		private _toastr: ToastrService,
 		private _shareData: DataService,
 		private _router: Router,
-		private roleService: RoleService
+		private roleService: RoleService,
+		private _userServiceChat: UserServiceChatBox
 	) {}
 
 	ngOnInit() {
@@ -103,11 +102,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			field: [this.modelUnit.field],
 		})
 
-		this.unitService.getDataForCreate().subscribe(res=>{
-			if(res.success == RESPONSE_STATUS.success){
+		this.unitService.getDataForCreate().subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
 				this.lstField = res.result.lstField
 			}
-			
 		})
 	}
 	ngAfterViewInit() {
@@ -203,12 +201,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		)
 	}
 
-
-
 	getUserPagedList() {
 		this.userService
 			.getAllPagedList({
-				unitid: this.unitObject.id
+				unitid: this.unitObject.id,
 			})
 			.subscribe((res) => {
 				if (res.success != 'OK') {
@@ -228,7 +224,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				}
 			})
 	}
-	
 
 	@ViewChild(UserCreateOrUpdateComponent, { static: false }) childCreateOrUpdateUser: UserCreateOrUpdateComponent
 	modalUserCreateOrUpdate(key: any = 0) {
@@ -236,7 +231,8 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 
 	onDelUser(id: number) {
-		this.userService.delete({ Id: id }).subscribe((res) => {
+		let user = this.listUserPaged.find((x) => x.id == id)
+		this.userService.delete({ Id: id }, user.fullName).subscribe((res) => {
 			if (res.success != 'OK') {
 				if (isNaN(res.result)) {
 					this._toastr.error(res.message)
@@ -245,6 +241,13 @@ export class UnitComponent implements OnInit, AfterViewInit {
 					this._toastr.error('Dữ liệu đang được sử dụng, không được phép xoá!')
 					return
 				}
+			}
+			if (user) {
+				const userDel = {
+					login: user.userName,
+					password: 'quickblox',
+				}
+				this._userServiceChat.deleteUser(userDel)
 			}
 			this._toastr.success(COMMONS.DELETE_SUCCESS)
 			this.getUserPagedList()
@@ -265,7 +268,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			phone: [this.modelUnit.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
 			address: [this.modelUnit.address],
 			index: [this.modelUnit.index],
-			field : [this.modelUnit.field]
+			field: [this.modelUnit.field],
 		})
 		this.checkExists = {
 			Phone: false,
@@ -325,7 +328,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		if (this.createUnitFrom.invalid) {
 			return
 		}
-		if(this.modelUnit.index < 0){
+		if (this.modelUnit.index < 0) {
 			return
 		}
 		if (this.checkExists['Phone'] || this.checkExists['Email']) return
@@ -345,12 +348,10 @@ export class UnitComponent implements OnInit, AfterViewInit {
 						// cập nhật tên ptree khi đã sửa thành công
 						let current_edit = this.searchTree(this.treeUnit, this.modelUnit.id)
 						current_edit.name = this.modelUnit.name
-					} else if(res.result == -1) {
-						
+					} else if (res.result == -1) {
 						$("[id='unitId']").focus()
 						this._toastr.error('Tên đơn vị đã tồn tại.')
-					}
-					else{
+					} else {
 						this._toastr.error('Lĩnh vực này đã được sử dụng cho đơn vị khác')
 					}
 				}
@@ -367,14 +368,13 @@ export class UnitComponent implements OnInit, AfterViewInit {
 						$('#modal-create-or-update').modal('hide')
 						this._toastr.success(COMMONS.ADD_SUCCESS)
 						this.modelUnit.id = res.result
-						this.unitObject = {...this.modelUnit}
+						this.unitObject = { ...this.modelUnit }
 						this.treeViewActive(this.unitObject.id, this.unitObject.unitLevel)
 						this.getAllUnitShortInfo(this.unitObject)
-					} else if(res.result == -1){
+					} else if (res.result == -1) {
 						$("[id='unitId']").focus()
 						this._toastr.error('Tên đơn vị đã tồn tại')
-					}
-					else{
+					} else {
 						this._toastr.error('Lĩnh vực này đã được sử dụng cho đơn vị khác')
 					}
 				}
@@ -394,7 +394,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			}
 			this._toastr.success(COMMONS.UPDATE_SUCCESS)
 			this.getAllUnitShortInfo(this.unitObject)
-			//this.getUnitPagedList()
 			this.modelUnit = new UnitObject()
 			$('#modal-create-or-update').modal('hide')
 		})
@@ -406,7 +405,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		item.typeId = 1
 		item.countLock = 0
 		item.lockEndOut = ''
-		this.userService.changeStatus(item).subscribe((res) => {
+		this.userService.changeStatus(item, item.fullName).subscribe((res) => {
 			if (res.success != 'OK') {
 				this._toastr.error(COMMONS.UPDATE_FAILED)
 				item.isActived = !item.isActived
@@ -546,21 +545,21 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				mappedElem = mappedArr[id]
 				// If the element is not at the root level, add it to its parent array of children.
 				if (mappedElem.parentId) {
-					if (!mappedArr[mappedElem['parentId']]){
-						if(this.unitObject && mappedElem['id'] == this.unitObject.parentId){
-							mappedElem['expanded']=true;
-							let s = tree.find(x=>x.id == mappedElem['parentId'])
-							if(s){
-								s['expanded']=true;
+					if (!mappedArr[mappedElem['parentId']]) {
+						if (this.unitObject && mappedElem['id'] == this.unitObject.parentId) {
+							mappedElem['expanded'] = true
+							let s = tree.find((x) => x.id == mappedElem['parentId'])
+							if (s) {
+								s['expanded'] = true
 							}
 						}
 						tree.push(mappedElem)
-					}else{
-						if(this.unitObject && mappedElem['id'] == this.unitObject.parentId){
-							mappedElem['expanded']=true;
-							let s = tree.find(x=>x.id == mappedElem['parentId'])
-							if(s){
-								s['expanded']=true;
+					} else {
+						if (this.unitObject && mappedElem['id'] == this.unitObject.parentId) {
+							mappedElem['expanded'] = true
+							let s = tree.find((x) => x.id == mappedElem['parentId'])
+							if (s) {
+								s['expanded'] = true
 							}
 						}
 						mappedArr[mappedElem['parentId']]['children'].push(mappedElem)
@@ -568,12 +567,12 @@ export class UnitComponent implements OnInit, AfterViewInit {
 				}
 				// If the element is at the root level, add it to first level elements array.
 				else {
-					if(this.unitObject && mappedElem['id'] == this.unitObject.parentId){
-						mappedElem['expanded']=true;
-						let s = tree.find(x=>x.id == mappedElem['parentId'])
-							if(s){
-								s['expanded']=true;
-							}
+					if (this.unitObject && mappedElem['id'] == this.unitObject.parentId) {
+						mappedElem['expanded'] = true
+						let s = tree.find((x) => x.id == mappedElem['parentId'])
+						if (s) {
+							s['expanded'] = true
+						}
 					}
 					tree.push(mappedElem)
 				}

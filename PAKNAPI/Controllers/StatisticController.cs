@@ -69,7 +69,7 @@ namespace PAKNAPI.Controllers
 			catch (Exception ex)
 			{
 				//_bugsnag.Notify(ex);
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -107,13 +107,13 @@ namespace PAKNAPI.Controllers
 						{"PageIndex", mrrRecommendationByUnit != null && mrrRecommendationByUnit.Count > 0 ? PageIndex : 0},
 						{"PageSize", mrrRecommendationByUnit != null && mrrRecommendationByUnit.Count > 0 ? PageSize : 0},
 					};
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
 				//_bugsnag.Notify(ex);
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -140,13 +140,13 @@ namespace PAKNAPI.Controllers
 						{"ListData", mrrRecommendationByGroupWord},
 						{"ListUnits", rsSYUnitGetDropdownByListId},
 					};
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
 				//_bugsnag.Notify(ex);
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -186,7 +186,7 @@ namespace PAKNAPI.Controllers
 			catch (Exception ex)
 			{
 				//_bugsnag.Notify(ex);
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -215,13 +215,13 @@ namespace PAKNAPI.Controllers
 					{
 						{"StatisticRecommendationByFieldGetAllOnPage", mrrRecommendationByField}
 					};
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
 				//_bugsnag.Notify(ex);
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -259,13 +259,13 @@ namespace PAKNAPI.Controllers
 						{"PageIndex", mrrRecommendationByField != null && mrrRecommendationByField.Count > 0 ? PageIndex : 0},
 						{"PageSize", mrrRecommendationByField != null && mrrRecommendationByField.Count > 0 ? PageSize : 0},
 					};
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{
 				//_bugsnag.Notify(ex);
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}

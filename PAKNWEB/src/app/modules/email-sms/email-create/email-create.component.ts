@@ -85,7 +85,6 @@ export class EmailCreateComponent implements OnInit {
 							this.ltsUnitFirst.push(x['admintrativeUnitId'])
 						})
 						this.ltsUnitFirst = this.ltsUnitFirst.filter((item, index) => this.ltsUnitFirst.indexOf(item) === index)
-						console.log(this.ltsUnitFirst)
 						this.getAdministrativeUnits()
 					}
 				})
@@ -163,12 +162,11 @@ export class EmailCreateComponent implements OnInit {
 	///
 	pressSendButton() {
 		this.onSave(false, (item) => {
-			this.emailService.SendEmail(item.id).subscribe((res) => {
+			this.emailService.SendEmail(item.id, item.title).subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
 				} else {
 				}
 			})
-			// console.log(item)
 		})
 		$('#modalConfirmChangeStatus').modal('hide')
 	}
@@ -179,6 +177,7 @@ export class EmailCreateComponent implements OnInit {
 			this._toastr.error('Vui lòng chọn đơn vị')
 			return
 		}
+		debugger
 		if (this.userId != undefined && this.userId.length > 0 && this.userId != null) {
 			let indexSuccess = 0
 			let indexError = 0
@@ -261,7 +260,6 @@ export class EmailCreateComponent implements OnInit {
 		} else {
 			this.objectType -= category
 		}
-		console.log(this.objectType)
 		this.onLoadListIndividualAndBusiness()
 	}
 	onSelectedChange(values: any[]) {
@@ -284,6 +282,12 @@ export class EmailCreateComponent implements OnInit {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.BIIndividualOrBusinessGetDropListByProviceId.length > 0) {
 					this.listIndividualAndBusinessGetByAdmintrativeId = res.result.BIIndividualOrBusinessGetDropListByProviceId
+					this.listBusinessIndividual.forEach((item) => {
+						let user = this.listIndividualAndBusinessGetByAdmintrativeId.find((x) => x.id == item.objectId && x.category == item.category)
+						if (user) {
+							this.userId.push(user)
+						}
+					})
 				} else {
 					this.listIndividualAndBusinessGetByAdmintrativeId = []
 				}

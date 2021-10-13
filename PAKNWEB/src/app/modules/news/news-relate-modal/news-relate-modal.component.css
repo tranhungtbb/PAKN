@@ -10,8 +10,7 @@
 }
 
 .body-scroll {
-    min-height: 400px;
-    max-height: 500px;
+	max-height: 65vh;
 	overflow-x: hidden;
 	overflow-y: scroll;
 }
@@ -26,4 +25,9 @@
 	/* white-space: nowrap; */
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.form-control-sm .ng-select,
+.table thead input.form-control {
+	padding: 4px 0px 4px 30px;
 }

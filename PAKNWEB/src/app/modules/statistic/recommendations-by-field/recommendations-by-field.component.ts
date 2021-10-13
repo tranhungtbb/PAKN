@@ -32,6 +32,8 @@ export class RecommendationsByFieldComponent implements OnInit {
 	toDate: any
 	year: any
 	timeline: any
+	minDate: Date
+	maxDate: Date
 
 	lstTimeline: any = [
 		{ value: 1, text: 'Quý I' },
@@ -60,7 +62,7 @@ export class RecommendationsByFieldComponent implements OnInit {
 		private _service: StatisticService,
 		private unitService: UnitService,
 		private _shareData: DataService,
-		private storeageService: UserInfoStorageService,
+		private storeageService: UserInfoStorageService
 	) {
 		this.year = new Date().getFullYear()
 		this.listUnitSelected = []
@@ -69,19 +71,27 @@ export class RecommendationsByFieldComponent implements OnInit {
 	ngOnInit() {
 		this.BsLocaleService.use('vi')
 		const currentMonth = new Date().getMonth()
-		switch(currentMonth){
-			case 1 : case 2 : case 3 :
+		switch (currentMonth) {
+			case 1:
+			case 2:
+			case 3:
 				this.timeline = 1
-			break;
-			case 4 : case 5 : case 6 :
+				break
+			case 4:
+			case 5:
+			case 6:
 				this.timeline = 2
-			break;
-			case 7 : case 8 : case 9 :
+				break
+			case 7:
+			case 8:
+			case 9:
 				this.timeline = 3
-			break;
-			case 10 : case 11 : case 12 :
+				break
+			case 10:
+			case 11:
+			case 12:
 				this.timeline = 4
-			break;
+				break
 		}
 		this.changeTimeLine()
 		this.unitService.getChildrenDropdown().subscribe((res) => {
@@ -114,12 +124,13 @@ export class RecommendationsByFieldComponent implements OnInit {
 			this.fromDate = new Date(this.year, 0, 1)
 			let tmp_date = new Date(this.year + 1, 0, 1)
 			this.toDate = this.minusDays(tmp_date, 1)
+			this.minDate = this.fromDate
+			this.maxDate = this.toDate
 			this.getList()
 		}
 	}
 	changeTimeLine() {
 		if (this.year != null) {
-			debugger
 			if (this.timeline == 1) {
 				this.fromDate = new Date(this.year, 0, 1)
 				let tmp_date = new Date(this.year, 3, 1)
@@ -144,16 +155,17 @@ export class RecommendationsByFieldComponent implements OnInit {
 				this.fromDate = new Date(this.year, 6, 1)
 				let tmp_date = new Date(this.year + 1, 0, 1)
 				this.toDate = this.minusDays(tmp_date, 1)
-			}
-			else{
+			} else {
 				this.fromDate = new Date(this.year, 0, 1)
 				let tmp_date = new Date(this.year + 1, 0, 1)
 				this.toDate = this.minusDays(tmp_date, 1)
 			}
 		}
+		this.minDate = this.fromDate
+		this.maxDate = this.toDate
 	}
 
-	dataStateChange(){
+	dataStateChange() {
 		this.changeTimeLine()
 		this.getList()
 	}
@@ -164,7 +176,7 @@ export class RecommendationsByFieldComponent implements OnInit {
 				return (x += y.unitId + ',')
 			}, '')
 		} else {
-			if(! this.ltsUnitIdAll){
+			if (!this.ltsUnitIdAll) {
 				return
 			}
 			this.ltsUnitId = this.ltsUnitIdAll
@@ -191,28 +203,27 @@ export class RecommendationsByFieldComponent implements OnInit {
 		})
 	}
 
-	
 	fromDateChange(data) {
-		if(data){
+		if (data) {
 			this.fromDate = data
 		}
 		this.getList()
 	}
 	toDateChange(data) {
-		if(data){
+		if (data) {
 			this.toDate = data
 		}
 		this.getList()
 	}
-	viewDetail(fieldId : any , status : any = null) {
-		if(status){
+	viewDetail(fieldId: any, status: any = null) {
+		if (status) {
 			return this.router.navigate([
 				'/quan-tri/bao-cao/phan-anh-kien-nghi-theo-linh-vuc-chi-tiet',
 				fieldId,
 				this.ltsUnitId,
 				this.getFormattedDate(this.fromDate),
 				this.getFormattedDate(this.toDate),
-				status
+				status,
 			])
 		}
 		return this.router.navigate([

@@ -41,7 +41,7 @@ namespace PAKNAPI.Controllers
 
         [HttpGet]
         [Route("download-file")]
-        [Authorize("ThePolicy")]
+        //[Authorize("ThePolicy")]
         public ActionResult DownloadFile(string Path, string Name)
         {
             string strFileUrl = "";
@@ -70,7 +70,7 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("get-file")]
-        [Authorize("ThePolicy")]
+        //[Authorize("ThePolicy")]
         public ActionResult GetFile(string Path, string Name)
         {
             try

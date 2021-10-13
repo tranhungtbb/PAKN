@@ -10,7 +10,6 @@ import { CarouselModule } from 'ngx-owl-carousel-o'
 import { PublishComponent } from './publish.component'
 import { SharedModule } from '../../shared/shared.module'
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
-import { TooltipModule } from 'primeng/tooltip'
 import { IndexComponent } from './index/index.component'
 import { AdministrativeProceduresComponent } from './administrative-procedures/administrative-procedures.component'
 import { NewsComponent } from './news/news.component'
@@ -26,18 +25,18 @@ import { TableModule } from 'primeng/table'
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
 import { ViewNewsComponent } from './view-news/view-news.component'
 import { ViewAdministrativeProceduresComponent } from './view-administrative-procedures/view-administrative-procedures.component'
-import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component';
+import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 import { ChatbotComponent } from './chatbot/chatbot.component'
-import  {ViewNotificationComponent} from './view-notification/view-notification.component';
-import {ListRecommendationKnct} from 'src/app/modules/publish/recommendations-sync/recommendation-knct/recommendation-knct.component'
+import { ViewNotificationComponent } from './view-notification/view-notification.component'
+import { ListRecommendationKnct } from 'src/app/modules/publish/recommendations-sync/recommendation-knct/recommendation-knct.component'
 import { DetailRecommendationKnctComponent } from './recommendations-sync/recommendation-knct-detail/recommendation-knct-detail.component'
 import { RecommendationsDvhhcComponent } from 'src/app/modules/publish/recommendations-sync/recommendations-dvhhc/recommendations-dvhhc.component'
-import {DetailRecommendationDvhhcComponent} from 'src/app/modules/publish/recommendations-sync/recommendations-dvhhc-detail/recommendations-dvhhc-detail.component'
-import {RecommendationsCttdtComponent} from './recommendations-sync/recommendations-cttdt/recommendations-cttdt.component'
-import {DetailRecommendationCttdtComponent} from './recommendations-sync/recommendations-cttdt-detail/recommendations-cttdt-detail.component'
-import {RecommendationsPaknCPComponent} from './recommendations-sync/recommendation-pakn-cp/recommendation-pakn-cp.component'
-import {DetailRecommendationPaknCPComponent} from './recommendations-sync/recommendation-pakn-cp-detail/recommendation-pakn-cp-detail.component'
-
+import { DetailRecommendationDvhhcComponent } from 'src/app/modules/publish/recommendations-sync/recommendations-dvhhc-detail/recommendations-dvhhc-detail.component'
+import { RecommendationsCttdtComponent } from './recommendations-sync/recommendations-cttdt/recommendations-cttdt.component'
+import { DetailRecommendationCttdtComponent } from './recommendations-sync/recommendations-cttdt-detail/recommendations-cttdt-detail.component'
+import { RecommendationsPaknCPComponent } from './recommendations-sync/recommendation-pakn-cp/recommendation-pakn-cp.component'
+import { DetailRecommendationPaknCPComponent } from './recommendations-sync/recommendation-pakn-cp-detail/recommendation-pakn-cp-detail.component'
+import { TooltipModule } from 'ng2-tooltip-directive'
 
 @NgModule({
 	declarations: [
@@ -64,7 +63,7 @@ import {DetailRecommendationPaknCPComponent} from './recommendations-sync/recomm
 		RecommendationsCttdtComponent,
 		DetailRecommendationCttdtComponent,
 		RecommendationsPaknCPComponent,
-		DetailRecommendationPaknCPComponent
+		DetailRecommendationPaknCPComponent,
 	],
 	imports: [
 		CommonModule,
@@ -78,7 +77,7 @@ import {DetailRecommendationPaknCPComponent} from './recommendations-sync/recomm
 		BsDatepickerModule.forRoot(),
 		TooltipModule,
 		EditorModule,
-		CarouselModule
+		CarouselModule,
 	],
 })
 export class PublishModule {}

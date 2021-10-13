@@ -45,14 +45,14 @@ namespace PAKNAPI.Controllers.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new CAPositionDelete(_appSetting).CAPositionDeleteDAO(_cAPositionDeleteIN) };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -79,7 +79,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -106,7 +106,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -129,7 +129,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		//	catch (Exception ex)
 		//	{
 		//		_bugsnag.Notify(ex);
-		//		new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+		//		new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 		//		return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 		//	}
@@ -149,16 +149,16 @@ namespace PAKNAPI.Controllers.ControllerBase
 			{
 				var result = Convert.ToInt16(await new CAPositionInsert(_appSetting).CAPositionInsertDAO(_cAPositionInsertIN));
 				if (result == -1) {
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, "Tiêu đề đã tồn tại", new Exception());
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Tiêu đề đã tồn tại" };
                 }
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 				return new ResultApi { Success = ResultCode.OK, Result =  result};
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -180,17 +180,17 @@ namespace PAKNAPI.Controllers.ControllerBase
 				var result = Convert.ToInt16(await new CAPositionUpdate(_appSetting).CAPositionUpdateDAO(_cAPositionUpdateIN));
 				if (result == -1)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, "Tiêu đề đã tồn tại", new Exception());
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Tiêu đề đã tồn tại" };
 				}
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = result };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}

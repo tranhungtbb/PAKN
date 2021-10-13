@@ -225,7 +225,8 @@ export class TimeSettingComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.deleteSystemTime(request).subscribe((response) => {
+		let obj = this.listData.find((x) => x.id == id)
+		this._service.deleteSystemTime(request, obj.name).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result > 0) {
 					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)

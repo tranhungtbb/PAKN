@@ -3824,10 +3824,10 @@ input[type="button"].btn-block {
   border-radius: 0.75rem; }
 
 .breadcrumb-item + .breadcrumb-item {
-  padding-left: 0.5rem; }
+  padding-left: 0.1rem; }
   .breadcrumb-item + .breadcrumb-item::before {
     display: inline-block;
-    padding-right: 0.5rem;
+    padding-right: 0.1rem;
     color: #6c757d;
     content: "/"; }
 .breadcrumb-item + .breadcrumb-item:hover::before {

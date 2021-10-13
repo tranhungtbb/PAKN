@@ -108,10 +108,10 @@ export class UserService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.getIsSystemOrderByUnit)
 	}
 
-	insertMultiUserRole(query: any): Observable<any> {
+	insertMultiUserRole(query: any, titleRole: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_USER_GET_BY_ROLE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER_GET_BY_ROLE + ' ' + titleRole),
 		}
 		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.InsertMultiUserRole, headers)
 	}
@@ -119,7 +119,7 @@ export class UserService {
 	insert(data: any, files: any = null): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER + ' ' + data.fullName),
 		}
 		let form = new FormData()
 
@@ -139,7 +139,7 @@ export class UserService {
 
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER + ' ' + data.fullName),
 		}
 
 		for (let key in data) {
@@ -156,7 +156,7 @@ export class UserService {
 	userSystemInsert(data: any, files: any = null): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER + ' ' + data.fullName),
 		}
 		let form = new FormData()
 
@@ -177,7 +177,7 @@ export class UserService {
 
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER + ' ' + data.fullName),
 		}
 
 		for (let key in data) {
@@ -196,7 +196,7 @@ export class UserService {
 
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER + ' ' + data.fullName),
 		}
 
 		for (let key in data) {
@@ -210,17 +210,17 @@ export class UserService {
 		return this.serviceInvoker.postwithHeaders(form, AppSettings.API_ADDRESS + Api.UserUpdateProfile, headers)
 	}
 
-	delete(data: any): Observable<any> {
+	delete(data: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER + ' ' + title),
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.UserDelete, headers)
 	}
-	changeStatus(data: any): Observable<any> {
+	changeStatus(data: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_USER),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER + ' ' + title),
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.UserChangeStatus, headers)
 	}
@@ -233,10 +233,10 @@ export class UserService {
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.UserChangePwdInManage, headers)
 	}
 
-	deleteUserRole(data: any): Observable<any> {
+	deleteUserRole(data: any, titleRole: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_USER_GET_BY_ROLE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_USER_GET_BY_ROLE + ' ' + titleRole),
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.DeleteUserRole, headers)
 	}
@@ -250,8 +250,11 @@ export class UserService {
 		return this.serviceInvoker.get(request, url)
 	}
 	sysLogDelete(request: any): Observable<any> {
-		let url = AppSettings.API_ADDRESS + Api.SystemLogDelete
-		return this.serviceInvoker.post(request, url)
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_SYSTEM),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.SystemLogDelete, headers)
 	}
 
 	getCurrentUser(): Observable<any> {

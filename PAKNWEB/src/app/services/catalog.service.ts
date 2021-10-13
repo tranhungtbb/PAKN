@@ -42,7 +42,7 @@ export class CatalogService {
 	fieldInsert(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldInsert, headers)
 	}
@@ -50,7 +50,7 @@ export class CatalogService {
 	fieldUpdate(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldUpdate, headers)
 	}
@@ -58,15 +58,15 @@ export class CatalogService {
 	fieldUpdateStatus(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldUpdateStatus, headers)
 	}
 
-	fieldDelete(request: any): Observable<any> {
+	fieldDelete(request: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_FIELD + ' ' + title),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.FieldDelete, headers)
 	}
@@ -103,7 +103,7 @@ export class CatalogService {
 	newsTypeInsert(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_NEWS_TYPE),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_NEWS_TYPE + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.NewsTypeInsert, headers)
 	}
@@ -111,7 +111,7 @@ export class CatalogService {
 	newsTypeUpdate(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_NEWS_TYPE),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_NEWS_TYPE + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.NewsTypeUpdate, headers)
 	}
@@ -119,15 +119,15 @@ export class CatalogService {
 	newsTypeUpdateStatus(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_NEWS_TYPE),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_NEWS_TYPE + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.NewsTypeUpdateStatus, headers)
 	}
 
-	newsTypeDelete(request: any): Observable<any> {
+	newsTypeDelete(request: any, name: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_NEWS_TYPE),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_NEWS_TYPE + ' ' + name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.NewsTypeDelete, headers)
 	}
@@ -151,7 +151,7 @@ export class CatalogService {
 	departmentGroupInsert(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_DEPARTMENT_GROUP),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_DEPARTMENT_GROUP + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.DepartmentGroupInsert, headers)
 	}
@@ -159,7 +159,7 @@ export class CatalogService {
 	departmentGroupUpdate(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_DEPARTMENT_GROUP),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_DEPARTMENT_GROUP + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.DepartmentGroupUpdate, headers)
 	}
@@ -167,15 +167,15 @@ export class CatalogService {
 	departmentGroupUpdateStatus(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_DEPARTMENT_GROUP),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_DEPARTMENT_GROUP + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.DepartmentGroupUpdateStatus, headers)
 	}
 
-	departmentGroupDelete(request: any): Observable<any> {
+	departmentGroupDelete(request: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_DEPARTMENT_GROUP),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_DEPARTMENT_GROUP + ' ' + title),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.DepartmentGroupDelete, headers)
 	}
@@ -203,7 +203,7 @@ export class CatalogService {
 	wordInsert(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_WORD),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_WORD + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.WordInsert, headers)
 	}
@@ -211,7 +211,7 @@ export class CatalogService {
 	wordUpdate(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_WORD),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_WORD + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.WordUpdate, headers)
 	}
@@ -219,15 +219,15 @@ export class CatalogService {
 	wordUpdateStatus(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_WORD),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_WORD + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.WordUpdateStatus, headers)
 	}
 
-	wordDelete(request: any): Observable<any> {
+	wordDelete(request: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_WORD),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_WORD + ' ' + title),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.WordDelete, headers)
 	}
@@ -258,7 +258,7 @@ export class CatalogService {
 	groupWordInsert(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_GROUPWORD),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_GROUPWORD + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.GroupWordInsert, headers)
 	}
@@ -266,7 +266,7 @@ export class CatalogService {
 	groupWordUpdate(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_GROUPWORD),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_GROUPWORD + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.GroupWordUpdate, headers)
 	}
@@ -274,15 +274,15 @@ export class CatalogService {
 	groupWordUpdateStatus(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_GROUPWORD),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_GROUPWORD + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.GroupWordUpdateStatus, headers)
 	}
 
-	groupWordDelete(request: any): Observable<any> {
+	groupWordDelete(request: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_GROUPWORD),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_GROUPWORD + ' ' + title),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.GroupWordDelete, headers)
 	}
@@ -313,7 +313,7 @@ export class CatalogService {
 	departmentInsert(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_DEPARTMENT),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_DEPARTMENT + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.DepartmentInsert, headers)
 	}
@@ -321,7 +321,7 @@ export class CatalogService {
 	departmentUpdate(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_DEPARTMENT),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_DEPARTMENT + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.DepartmentUpdate, headers)
 	}
@@ -329,15 +329,15 @@ export class CatalogService {
 	departmentUpdateStatus(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_DEPARTMENT),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_DEPARTMENT + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.DepartmentUpdateStatus, headers)
 	}
 
-	departmentDelete(request: any): Observable<any> {
+	departmentDelete(request: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_DEPARTMENT),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_DEPARTMENT + ' ' + title),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.DepartmentDelete, headers)
 	}

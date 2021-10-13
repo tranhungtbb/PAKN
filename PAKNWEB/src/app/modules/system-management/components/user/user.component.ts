@@ -204,11 +204,12 @@ export class UserComponent implements OnInit {
 			Id: this.userId,
 		}
 		$('#modalConfirmDelete').modal('hide')
-		this._service.delete(request).subscribe((response) => {
+		let user = this.listData.find((x) => x.id == this.userId)
+		this._service.delete(request, user.fullName).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				this.getList()
-				let user = this.listData.find((x) => x.id == this.userId)
+
 				if (user) {
 					const userDel = {
 						login: user.userName,
@@ -248,7 +249,7 @@ export class UserComponent implements OnInit {
 		item.typeId = 1
 		item.countLock = 0
 		item.lockEndOut = ''
-		this._service.changeStatus({ Id: item.id, IsActived: item.isActived }).subscribe((res) => {
+		this._service.changeStatus({ Id: item.id, IsActived: item.isActived }, item.fullName).subscribe((res) => {
 			if (res.success != 'OK') {
 				this._toastr.error(COMMONS.UPDATE_FAILED)
 				//item.isActived = !item.isActived
@@ -352,6 +353,13 @@ export class UserComponent implements OnInit {
 	}
 	showRePassword() {
 		this.isShowRePassword = !this.isShowRePassword
+	}
+	messageError: any
+	showMessageError = (messageError: any) => {
+		if (messageError) {
+			this.messageError = messageError
+			$('#modal-error-his').modal('show')
+		}
 	}
 	onExport() {
 		let passingObj: any = {}

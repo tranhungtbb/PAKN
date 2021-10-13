@@ -88,7 +88,7 @@ export class ChatBotComponent implements OnInit {
 		$('#modalConfirmUpdateStatus').modal('show')
 	}
 
-	title : any
+	title: any
 	preCreate() {
 		this.model = new ChatbotObject()
 		this.rebuilForm()
@@ -176,7 +176,8 @@ export class ChatBotComponent implements OnInit {
 			Id: id,
 			CategoryId: categoryIdDelete,
 		}
-		this._service.chatbotDelete(request).subscribe((response) => {
+		let obj = this.listData.find((x) => x.id == id)
+		this._service.chatbotDelete(request, obj.question).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				$('#modalConfirmDelete').modal('hide')

@@ -18,11 +18,11 @@ import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
 import { DisabledSpaceKeyDirective } from 'src/app/directives/sv-disabled-space-key.directive'
 import { SvTextAreaTrimDirective } from '../directives/sv-textarea-trim.directive'
 import { HtmlToPlaintextPipe } from '../pipes/html-filter.pipe'
-import { UserCreateOrUpdateComponent } from '../modules/system-management/components/user/user-create-or-update/user-create-or-update.component'
 import { DiaDanhFilterPipe } from '../pipes/dia-danh-filter.pipi'
 import { SanitizerUrlPipe, SafeUrlPipe } from '../pipes/sanitizer-url.pipe'
-import {HasNotPermissionDirective} from 'src/app/directives/sv-notpermission.directive'
+import { HasNotPermissionDirective } from 'src/app/directives/sv-notpermission.directive'
 import { TrimDirective } from 'src/app/directives/sv-trim-keydown-enter.derective'
+import { OembedPipe } from 'src/app/pipes/oembed.pipe'
 
 @NgModule({
 	declarations: [
@@ -49,7 +49,8 @@ import { TrimDirective } from 'src/app/directives/sv-trim-keydown-enter.derectiv
 		DiaDanhFilterPipe,
 		SanitizerUrlPipe,
 		SafeUrlPipe,
-		TrimDirective
+		TrimDirective,
+		OembedPipe,
 	],
 	exports: [
 		ConfirmClickDirective,
@@ -75,7 +76,8 @@ import { TrimDirective } from 'src/app/directives/sv-trim-keydown-enter.derectiv
 		DiaDanhFilterPipe,
 		SanitizerUrlPipe,
 		SafeUrlPipe,
-		TrimDirective
+		TrimDirective,
+		OembedPipe,
 	],
 })
 export class SharedModule {}

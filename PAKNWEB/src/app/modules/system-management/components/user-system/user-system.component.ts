@@ -27,7 +27,7 @@ export class UserSystemComponent implements OnInit {
 		private _shareData: DataService,
 		private _router: Router,
 		private storeageService: UserInfoStorageService,
-		private _userServiceChat : UserServiceChatBox
+		private _userServiceChat: UserServiceChatBox
 	) {}
 
 	listData = new Array<UserSystemObject>()
@@ -35,9 +35,9 @@ export class UserSystemComponent implements OnInit {
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
 	]
-	listHisStatus : any = [
-		{value : 1, text : "Thành công" },
-		{value : 0, text : "Thất bại" }
+	listHisStatus: any = [
+		{ value: 1, text: 'Thành công' },
+		{ value: 0, text: 'Thất bại' },
 	]
 	listGender: any = [
 		{ value: true, text: 'Nam' },
@@ -52,7 +52,7 @@ export class UserSystemComponent implements OnInit {
 	// object User
 	model = new UserSystemObject()
 	submitted: boolean = false
-	isShowPassword : any = false
+	isShowPassword: any = false
 
 	// view child
 	@ViewChild('table', { static: false }) table: any
@@ -73,9 +73,9 @@ export class UserSystemComponent implements OnInit {
 
 	// create or update
 	createUserForm: FormGroup
-	isAdmin : any
+	isAdmin: any
 	fileAccept = CONSTANTS.FILEACCEPTAVATAR
-	files : any = []
+	files: any = []
 
 	ngOnInit() {
 		this.getList()
@@ -94,10 +94,9 @@ export class UserSystemComponent implements OnInit {
 		$('#modalChangePassword').on('keypress', function (e) {
 			if (e.which == 13) e.preventDefault()
 		})
-	
 	}
 
-	buildForm(){
+	buildForm() {
 		this.createUserForm = this._fb.group({
 			email: ['', [Validators.required, Validators.email]],
 			fullName: ['', [Validators.required]],
@@ -108,14 +107,14 @@ export class UserSystemComponent implements OnInit {
 		})
 	}
 
-	reBuildForm(){
+	reBuildForm() {
 		this.createUserForm.reset({
 			email: this.model.email,
 			fullName: this.model.fullName,
 			phone: this.model.phone,
 			gender: this.model.gender,
 			isActived: this.model.isActived,
-			address: this.model.address
+			address: this.model.address,
 		})
 	}
 	get fUser() {
@@ -139,7 +138,7 @@ export class UserSystemComponent implements OnInit {
 			})
 	}
 
-	preCreate(){
+	preCreate() {
 		this.model = new UserSystemObject()
 		this.submitted = false
 		this.checkExists = {
@@ -150,7 +149,7 @@ export class UserSystemComponent implements OnInit {
 		$('#modal').modal('show')
 	}
 
-	preUpdate(Id : any){
+	preUpdate(Id: any) {
 		this.submitted = false
 		$('#modalView').modal('hide')
 		this._service.getByIdUpdate({ id: Id }).subscribe((res) => {
@@ -167,7 +166,7 @@ export class UserSystemComponent implements OnInit {
 		})
 	}
 
-	preView(Id : any){
+	preView(Id: any) {
 		this._service.getByIdUpdate({ id: Id }).subscribe((res) => {
 			if (res.success != 'OK') return
 			this.model = res.result.SYUserGetByID[0]
@@ -182,7 +181,7 @@ export class UserSystemComponent implements OnInit {
 		})
 	}
 
-	onSave(){
+	onSave() {
 		this.submitted = true
 		this.model.userName = this.model.email
 		if (this.createUserForm.invalid) {
@@ -197,55 +196,50 @@ export class UserSystemComponent implements OnInit {
 			login: this.model.email,
 			password: 'quickblox',
 			full_name: this.model.fullName,
-			phone : this.model.phone,
-			email : this.model.email,
-			custom_data :  JSON.stringify({id : this.model.id})
-		};
+			phone: this.model.phone,
+			email: this.model.email,
+			custom_data: JSON.stringify({ id: this.model.id }),
+		}
 		let fileParams = null
-		if(this.files && this.files.length > 0){
+		if (this.files && this.files.length > 0) {
 			fileParams = {
 				name: this.files[0].name,
 				file: this.files[0],
 				type: this.files[0].type,
 				size: this.files[0].size,
 				public: false,
-			};
+			}
 		}
-		
-		if(!this.model.id || this.model.id == 0){
+
+		if (!this.model.id || this.model.id == 0) {
 			this._service.userSystemInsert(this.model, this.files).subscribe((res) => {
 				if (res.success != 'OK') {
 					let errorMsg = res.message
 					this._toastr.error(errorMsg)
 					return
-				}
-				else{
+				} else {
 					$('#modal').modal('hide')
 					this._toastr.success(COMMONS.ADD_SUCCESS)
 					this.getList()
-					user.custom_data = JSON.stringify({id : res.result})
-					this._userServiceChat.createUserForApp(user,fileParams)
+					user.custom_data = JSON.stringify({ id: res.result })
+					this._userServiceChat.createUserForApp(user, fileParams)
 				}
 			})
-		}
-		else{
+		} else {
 			this._service.userSystemUpdate(this.model, this.files).subscribe((res) => {
 				if (res.success != 'OK') {
 					let errorMsg = res.message
 					this._toastr.error(errorMsg)
 					return
-				}
-				else{
+				} else {
 					$('#modal').modal('hide')
 					this._toastr.success(COMMONS.UPDATE_SUCCESS)
 					this.getList()
-					this._userServiceChat.createUserForApp(user,fileParams)
+					this._userServiceChat.createUserForApp(user, fileParams)
 				}
-				
 			})
 		}
 	}
-
 
 	// avatar
 	userAvatar: any
@@ -270,12 +264,11 @@ export class UserSystemComponent implements OnInit {
 		output.onload = function () {
 			URL.revokeObjectURL(output.src) // free memory
 		}
-		this.files =[]
+		this.files = []
 		this.files.push(file)
 		$('#modal .seclect-avatar').val('')
 	}
 
-	
 	getList() {
 		this._service.getUserSystemAllOnPagedList({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -363,19 +356,19 @@ export class UserSystemComponent implements OnInit {
 			Id: this.userId,
 		}
 		$('#modalConfirmDelete').modal('hide')
-		this._service.delete(request).subscribe((response) => {
+		let user = this.listData.find((x) => x.id == this.userId)
+		this._service.delete(request, user.fullName).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				this.getList()
-				let user = this.listData.find(x=>x.id == this.userId)
-				if(user){
+
+				if (user) {
 					const userDel = {
 						login: user.userName,
-						password: 'quickblox'
-					};
+						password: 'quickblox',
+					}
 					this._userServiceChat.deleteUser(userDel)
 				}
-				
 			} else {
 				if (isNaN(response.result)) {
 					this._toastr.error(response.message)
@@ -407,7 +400,7 @@ export class UserSystemComponent implements OnInit {
 		item.isActived = !item.isActived
 		item.countLock = 0
 		item.lockEndOut = ''
-		this._service.changeStatus({ Id: item.id, IsActived: item.isActived }).subscribe((res) => {
+		this._service.changeStatus({ Id: item.id, IsActived: item.isActived }, item.fullName).subscribe((res) => {
 			if (res.success != 'OK') {
 				this._toastr.error(COMMONS.UPDATE_FAILED)
 				//item.isActived = !item.isActived
@@ -445,22 +438,20 @@ export class UserSystemComponent implements OnInit {
 		this.table2.first = 0
 		this.getHistory(this.hisUserId, this.emailUser)
 	}
-	onChangeFromDate(event){
-		if(event){
-			this.dataSearch2.fromDate = event;
+	onChangeFromDate(event) {
+		if (event) {
+			this.dataSearch2.fromDate = event
+		} else {
+			this.dataSearch2.fromDate = null
 		}
-		else{
-			this.dataSearch2.fromDate = null;
-		}
-		this.getList();
+		this.getList()
 	}
 
-	onChangeToDate(event){
-		if(event){
-			this.dataSearch2.toDate = event;
-		}
-		else{
-			this.dataSearch2.toDate = null;
+	onChangeToDate(event) {
+		if (event) {
+			this.dataSearch2.toDate = event
+		} else {
+			this.dataSearch2.toDate = null
 		}
 		this.getList()
 	}
@@ -475,12 +466,12 @@ export class UserSystemComponent implements OnInit {
 		this.hisUserId = id
 		this.listHisData = []
 		this.emailUser = email
-		this.dataSearch2.content = this.dataSearch2.content == null ? '' : this.dataSearch2.content.trim();
+		this.dataSearch2.content = this.dataSearch2.content == null ? '' : this.dataSearch2.content.trim()
 		let req = {
 			FromDate: this.dataSearch2.fromDate == null ? '' : this.dataSearch2.fromDate.toDateString(),
 			ToDate: this.dataSearch2.toDate == null ? '' : this.dataSearch2.toDate.toDateString(),
-			Content : this.dataSearch2.content,
-			Status : this.dataSearch2.status == null ? '' : this.dataSearch2.status,
+			Content: this.dataSearch2.content,
+			Status: this.dataSearch2.status == null ? '' : this.dataSearch2.status,
 			PageIndex: this.hisPageIndex,
 			PageSize: this.hisPageSize,
 			UserId: id,
@@ -490,7 +481,7 @@ export class UserSystemComponent implements OnInit {
 				if (response.result.SYSystemLogGetAllOnPage.length > 0) {
 					this.listHisData = response.result.SYSystemLogGetAllOnPage
 					this.hisTotalRecords = response.result.SYSystemLogGetAllOnPage.length != 0 ? response.result.SYSystemLogGetAllOnPage[0].rowNumber : 0
-					
+
 					$('#modalHis').modal('show')
 				} else {
 					this.hisPageIndex = 1
@@ -505,7 +496,7 @@ export class UserSystemComponent implements OnInit {
 			}
 		})
 	}
-	showPassword(){
+	showPassword() {
 		this.isShowPassword = !this.isShowPassword
 	}
 	onExport() {
@@ -516,10 +507,10 @@ export class UserSystemComponent implements OnInit {
 			passingObj.UserProcessId = this.storeageService.getUserId()
 			passingObj.UserProcessName = this.storeageService.getFullName()
 
-			passingObj.FromDate = this.dataSearch2.fromDate;
-			passingObj.ToDate = this.dataSearch2.toDate;
-			passingObj.Content = this.dataSearch2.content;
-			passingObj.Status = this.dataSearch2.status;
+			passingObj.FromDate = this.dataSearch2.fromDate
+			passingObj.ToDate = this.dataSearch2.toDate
+			passingObj.Content = this.dataSearch2.content
+			passingObj.Status = this.dataSearch2.status
 		}
 
 		this._shareData.setobjectsearch(passingObj)
@@ -535,6 +526,6 @@ export class HistoryUser {
 	}
 	fromDate: Date
 	toDate: Date
-	content : string
-	status : number
+	content: string
+	status: number
 }

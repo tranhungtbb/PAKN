@@ -81,6 +81,7 @@ namespace PAKNAPI.Common
                 Status = logHelper.status,
                 Description = logHelper.logAction + " " + logHelper.logObject,
                 CreatedDate = DateTime.Now,
+                MessageError = logHelper.messageError,
                 Exception = logHelper.e != null ? logHelper.e.Message + " - " + logHelper.e.InnerException : null
             };
             await new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
@@ -109,7 +110,7 @@ namespace PAKNAPI.Common
             };
         }
 
-        public void ProcessInsertLogAsync(HttpContext httpContext, Exception ex)
+        public void ProcessInsertLogAsync(HttpContext httpContext, string messageError,Exception ex)
         {
             LogHelper logHelper = new LogHelper(_appSetting);
 
@@ -123,7 +124,8 @@ namespace PAKNAPI.Common
                 logObject = System.Uri.UnescapeDataString(baseRequest.logObject),
                 ipAddress = baseRequest.ipAddress,
                 macAddress = baseRequest.macAddress,
-                status = (byte?)(ex != null ? 0 : 1),
+                messageError = messageError,
+                status = (byte?)(messageError != null || ex != null ? 0 : 1),
                 e = ex,
                 location = baseRequest.location,
                 claim = httpContext.User
@@ -167,6 +169,7 @@ namespace PAKNAPI.Common
         public string logObject { get; set; }
         public string ipAddress { get; set; }
         public string macAddress { get; set; }
+        public string messageError { get; set; }
         public byte? status { get; set; }
         public Exception e { get; set; }
         public string location { get; set; }

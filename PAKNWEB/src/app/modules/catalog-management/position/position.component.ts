@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild , ElementRef} from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 import { FieldObject } from 'src/app/models/fieldObject'
@@ -63,7 +63,6 @@ export class PositionComponent implements OnInit {
 	}
 
 	getList() {
-		
 		this._service.positionGetList({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
@@ -86,7 +85,6 @@ export class PositionComponent implements OnInit {
 		$('#modalConfirmUpdateStatus').modal('show')
 	}
 
-
 	preCreate() {
 		this.model = new FieldObject()
 		this.rebuilForm()
@@ -94,7 +92,6 @@ export class PositionComponent implements OnInit {
 		this.title = 'Thêm mới chức vụ'
 		$('#modal').modal('show')
 		$('#target').focus()
-		
 	}
 
 	onSave() {
@@ -157,7 +154,6 @@ export class PositionComponent implements OnInit {
 				this.model = response.result.CAPositionGetByID[0]
 				$('#modal').modal('show')
 				this.titleFocus.nativeElement.focus()
-				
 			} else {
 				this._toastr.error(response.message)
 			}
@@ -176,7 +172,8 @@ export class PositionComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.positionDelete(request).subscribe((response) => {
+		let obj = this.listData.find((x) => x.id == id)
+		this._service.positionDelete(request, obj.name).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result > 0) {
 					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
@@ -202,7 +199,7 @@ export class PositionComponent implements OnInit {
 			Id: data.id,
 		}
 		data.isActived = !data.isActived
-		this._service.positionUpdateStatus(data).subscribe((res) => {
+		this._service.positionUpdateStatus(data, data.name).subscribe((res) => {
 			$('#modalConfirmUpdateStatus').modal('hide')
 			if (res.success == 'OK') {
 				if (data.isActived == true) {
@@ -223,5 +220,4 @@ export class PositionComponent implements OnInit {
 		this.model = data
 		$('#modalDetail').modal('show')
 	}
-
 }

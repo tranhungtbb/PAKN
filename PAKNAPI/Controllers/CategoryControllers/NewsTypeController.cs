@@ -45,14 +45,14 @@ namespace PAKNAPI.Controllers.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new CANewsTypeDelete(_appSetting).CANewsTypeDeleteDAO(_cANewsTypeDeleteIN) };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -84,7 +84,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -113,7 +113,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -130,14 +130,14 @@ namespace PAKNAPI.Controllers.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new CANewsTypeInsert(_appSetting).CANewsTypeInsertDAO(_cANewsTypeInsertIN) };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -155,14 +155,14 @@ namespace PAKNAPI.Controllers.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new CANewsTypeUpdate(_appSetting).CANewsTypeUpdateDAO(_cANewsTypeUpdateIN) };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}

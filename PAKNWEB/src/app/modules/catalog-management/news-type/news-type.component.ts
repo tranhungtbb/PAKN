@@ -27,7 +27,7 @@ export class NewsTypeComponent implements OnInit {
 	model: any = new FieldObject()
 	submitted: boolean = false
 	title: string = ''
-	
+
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
@@ -64,8 +64,7 @@ export class NewsTypeComponent implements OnInit {
 	}
 
 	getList() {
-	
-		this._service.newsTypeGetList({}).subscribe(response => {
+		this._service.newsTypeGetList({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.listData = []
@@ -76,7 +75,7 @@ export class NewsTypeComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 				alert(error)
 			}
@@ -96,7 +95,7 @@ export class NewsTypeComponent implements OnInit {
 			return
 		}
 		if (this.model.id == 0 || this.model.id == null) {
-			this._service.newsTypeInsert(this.model).subscribe(response => {
+			this._service.newsTypeInsert(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -111,12 +110,12 @@ export class NewsTypeComponent implements OnInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				error => {
+				(error) => {
 					console.error(error)
 					alert(error)
 				}
 		} else {
-			this._service.newsTypeUpdate(this.model).subscribe(response => {
+			this._service.newsTypeUpdate(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
 						this._toastr.error(MESSAGE_COMMON.EXISTED_NAME)
@@ -131,7 +130,7 @@ export class NewsTypeComponent implements OnInit {
 					this._toastr.error(response.message)
 				}
 			}),
-				error => {
+				(error) => {
 					console.error(error)
 					alert(error)
 				}
@@ -143,7 +142,7 @@ export class NewsTypeComponent implements OnInit {
 			Id: data.id,
 			Type: 1,
 		}
-		this._service.newsTypeGetById(request).subscribe(response => {
+		this._service.newsTypeGetById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.rebuilForm()
 				this.title = 'Chỉnh sửa loại tin tức'
@@ -153,7 +152,7 @@ export class NewsTypeComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 				alert(error)
 			}
@@ -167,7 +166,8 @@ export class NewsTypeComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.newsTypeDelete(request).subscribe(response => {
+		let obj = this.listData.find((x) => x.id == id)
+		this._service.newsTypeDelete(request, obj.name).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result > 0) {
 					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
@@ -180,7 +180,7 @@ export class NewsTypeComponent implements OnInit {
 				this._toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 			}
 	}
@@ -196,7 +196,7 @@ export class NewsTypeComponent implements OnInit {
 			Id: data.id,
 		}
 		data.isActived = !data.isActived
-		this._service.newsTypeUpdateStatus(data).subscribe(res => {
+		this._service.newsTypeUpdateStatus(data).subscribe((res) => {
 			$('#modalConfirmUpdateStatus').modal('hide')
 			if (res.success == 'OK') {
 				if (data.isActived == true) {
@@ -208,7 +208,7 @@ export class NewsTypeComponent implements OnInit {
 				this._toastr.error(res.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.error(error)
 			}
 	}

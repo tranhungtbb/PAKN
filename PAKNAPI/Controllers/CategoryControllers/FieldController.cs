@@ -45,14 +45,14 @@ namespace PAKNAPI.Controllers.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldDelete(_appSetting).CAFieldDeleteDAO(_cAFieldDeleteIN) };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -85,7 +85,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -114,7 +114,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -142,7 +142,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -160,14 +160,14 @@ namespace PAKNAPI.Controllers.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldInsert(_appSetting).CAFieldInsertDAO(_cAFieldInsertIN) };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -185,14 +185,14 @@ namespace PAKNAPI.Controllers.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new CAFieldUpdate(_appSetting).CAFieldUpdateDAO(_cAFieldUpdateIN) };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -219,7 +219,7 @@ namespace PAKNAPI.Controllers.ControllerBase
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }

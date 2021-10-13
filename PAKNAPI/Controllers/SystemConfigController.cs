@@ -65,7 +65,7 @@ namespace PAKNAPI.Controllers
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -94,7 +94,7 @@ namespace PAKNAPI.Controllers
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -111,14 +111,14 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new SYConfig(_appSetting).SYConfigUpdateDAO(_sYConfigUpdateIN) };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -136,14 +136,14 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new SYTimeDelete(_appSetting).SYTimeDeleteDAO(_sYTimeDeleteIN) };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -177,7 +177,7 @@ namespace PAKNAPI.Controllers
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -205,7 +205,7 @@ namespace PAKNAPI.Controllers
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -232,7 +232,7 @@ namespace PAKNAPI.Controllers
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -250,14 +250,14 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new SYTimeInsert(_appSetting).SYTimeInsertDAO(_sYTimeInsertIN) };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -274,14 +274,14 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new SYTimeUpdate(_appSetting).SYTimeUpdateDAO(_sYTimeUpdateIN) };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}

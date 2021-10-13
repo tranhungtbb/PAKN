@@ -54,7 +54,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -82,7 +82,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -111,7 +111,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -128,7 +128,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 				var result = await new CAWordInsert(_appSetting).CAWordInsertDAO(_cAWordInsertIN);
 
@@ -138,11 +138,11 @@ namespace PAKNAPI.Controllers.ControllerBase
 				}
 				else if (result == -1)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
-					return new ResultApi { Success = ResultCode.ORROR, Result = result, Message = "Tiêu đề đã bị trùng" };
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, "Tiêu đề đã tồn tại", new Exception());
+					return new ResultApi { Success = ResultCode.ORROR, Result = result, Message = "Tiêu đề đã tồn tại" };
 				}
 				else {
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, "Thêm mới thất bại", new Exception());
 					return new ResultApi { Success = ResultCode.ORROR, Result = result, Message = "Thêm mới thất bại" };
 				}
 
@@ -150,7 +150,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -172,24 +172,24 @@ namespace PAKNAPI.Controllers.ControllerBase
 
 				if (result > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 					return new ResultApi { Success = ResultCode.OK, Result = result, Message = "Cập nhập thành công" };
 				}
 				else if (result == -1)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, "Tiêu đề đã bị trùng", new Exception());
 					return new ResultApi { Success = ResultCode.ORROR, Result = result, Message = "Tiêu đề đã bị trùng" };
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, "Cập nhập thất bại", new Exception());
 					return new ResultApi { Success = ResultCode.ORROR, Result = result, Message = "Cập nhập thất bại" };
 				}
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -226,14 +226,14 @@ namespace PAKNAPI.Controllers.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new CADepartmentGroupDelete(_appSetting).CAWordDeleteDAO(_cADepartmentGroupDeleteIN) };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}

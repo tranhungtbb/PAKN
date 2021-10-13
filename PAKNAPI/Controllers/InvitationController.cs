@@ -54,7 +54,7 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 				// delete file
 				List <INVFileAttachGetAllByInvitationId> rsINVFileAttachGetAllByInvitationId = await new INVFileAttachGetAllByInvitationId(_appSetting).INVFileAttachGetAllByInvitationIdDAO(_iNVInvitationDeleteIN.Id);
 
@@ -67,13 +67,13 @@ namespace PAKNAPI.Controllers
 				model.InvitationId = _iNVInvitationDeleteIN.Id;
 				await new INVFileAttachDeleteByInvitationId(_appSetting).INVFileAttachDeleteByInvitationIdDAO(model);
 
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 				return new ResultApi { Success = ResultCode.OK, Result = await new INVInvitationDelete(_appSetting).INVInvitationDeleteDAO(_iNVInvitationDeleteIN) };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -108,7 +108,7 @@ namespace PAKNAPI.Controllers
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -146,7 +146,7 @@ namespace PAKNAPI.Controllers
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -305,7 +305,7 @@ namespace PAKNAPI.Controllers
 						await new HISInvitationInsert(_appSetting).HISSMSInsertDAO(history);
 					}
 
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 					return new ResultApi { Success = ResultCode.OK};
 
 				}
@@ -315,7 +315,7 @@ namespace PAKNAPI.Controllers
 				}
 			}
 			catch (Exception ex) {
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -385,12 +385,12 @@ namespace PAKNAPI.Controllers
 				invInvitation.INVFileAttach
 					 = await new INVFileAttachGetAllByInvitationId(_appSetting).INVFileAttachGetAllByInvitationIdDAO(id);
 
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 				return new ResultApi { Success = ResultCode.OK , Result = invInvitation };
 			}
 			catch (Exception ex)
 			{
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -587,19 +587,19 @@ namespace PAKNAPI.Controllers
 
 					await new HISInvitationInsert(_appSetting).HISSMSInsertDAO(history);
 
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 					return new ResultApi { Success = ResultCode.OK };
 
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, "Tiêu đề thư mời đã tồn tại", new Exception());
 					return new ResultApi { Success = ResultCode.ORROR, Result = id, Message = "Tiêu đề thư mời đã tồn tại" };
 				}
 			}
 			catch (Exception ex)
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -637,7 +637,7 @@ namespace PAKNAPI.Controllers
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}

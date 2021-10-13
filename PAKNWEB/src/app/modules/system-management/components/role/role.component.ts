@@ -97,7 +97,7 @@ export class RoleComponent implements OnInit {
 	onAction() {
 		$('#modalConfirm').modal('hide')
 		if (this.type == 'delete') {
-			this.roleService.delete({ id: this.model.id }).subscribe((res) => {
+			this.roleService.delete({ id: this.model.id }, this.model.name).subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
 					if (res.result > 0) {
 						this.toast.success(COMMONS.DELETE_SUCCESS)
@@ -170,7 +170,8 @@ export class RoleComponent implements OnInit {
 	}
 
 	onDeleteUserRole(userId: any) {
-		this.userService.deleteUserRole({ UserId: userId, RoleId: this.roleId }).subscribe((res) => {
+		let obj = this.listData.find((x) => x.id == this.roleId)
+		this.userService.deleteUserRole({ UserId: userId, RoleId: this.roleId }, obj.name).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result > 0) {
 					this.toast.success(COMMONS.DELETE_SUCCESS)
@@ -200,7 +201,8 @@ export class RoleComponent implements OnInit {
 				_sYUserRoleMaps: listModel,
 				isCreated: false,
 			}
-			this.userService.insertMultiUserRole(obj).subscribe((res) => {
+			let role = this.listData.find((x) => x.id == this.roleId)
+			this.userService.insertMultiUserRole(obj, role.name).subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
 					if (res.result.CountSuccess == 0) {
 						this.toast.error(COMMONS.ADD_FAILED)

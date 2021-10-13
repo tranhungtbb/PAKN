@@ -210,7 +210,7 @@ export class SupportListVideoComponent implements OnInit {
 	}
 	onDelete() {
 		$('#modal-confirm').modal('hide')
-		this.supportService.Delete({ Id: this.model.id }, true).subscribe((res) => {
+		this.supportService.Delete({ Id: this.model.id }, this.model.title, true).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.toastr.success(COMMONS.DELETE_SUCCESS)
 				this.getAllUnitShortInfo()

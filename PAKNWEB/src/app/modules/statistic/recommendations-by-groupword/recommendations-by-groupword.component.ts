@@ -48,6 +48,8 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 	listUnitSelected: any[]
 	ltsUnitId: any
 	ltsUnitIdAll: any
+	minDate: Date
+	maxDate: Date
 
 	constructor(
 		private _toastr: ToastrService,
@@ -119,6 +121,8 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 			this.fromDate = new Date(this.year, 0, 1)
 			let tmp_date = new Date(this.year + 1, 0, 1)
 			this.toDate = this.minusDays(tmp_date, 1)
+			this.minDate = this.fromDate
+			this.maxDate = this.toDate
 			this.dataStateChange()
 		}
 	}
@@ -150,6 +154,8 @@ export class RecommendationsByGroupwordComponent implements OnInit {
 				this.toDate = this.minusDays(tmp_date, 1)
 			}
 		}
+		this.minDate = this.fromDate
+		this.maxDate = this.toDate
 	}
 
 	getList() {

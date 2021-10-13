@@ -58,8 +58,8 @@ export class ListGeneralComponent implements OnInit {
 	idDelete: number = 0
 	lstHistories: any = []
 	dateNow: Date = new Date()
-	titleAccept : any = ''
-	titleAcceptTag : any = ''
+	titleAccept: any = ''
+	titleAcceptTag: any = ''
 	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
 	ngOnInit() {
 		this.buildForm()
@@ -361,8 +361,8 @@ export class ListGeneralComponent implements OnInit {
 	}
 
 	onProcessForward() {
-		this.contentForward = this.contentForward == null ? '' : this.contentForward.trim();
-		if(this.contentForward == ''){
+		this.contentForward = this.contentForward == null ? '' : this.contentForward.trim()
+		if (this.contentForward == '') {
 			this._toastr.error('Vui lòng nhập lí do từ chối')
 			return
 		}

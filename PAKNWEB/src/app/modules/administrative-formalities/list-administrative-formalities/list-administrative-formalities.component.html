@@ -113,8 +113,6 @@
 									<td>{{item.organization}}</td>
 									<td>{{item.fieldName}}</td>
 									<td>
-										<!-- <span *ngIf="item.status == 1" class="badge rounded-pill badge-outline-light bg-white">Đang soạn
-											thảo</span> -->
 										<p  class="pb-0" *hasPermission="['3', 'H_I_4']">
 											<span *ngIf="item.status == 3" class="badge rounded-pill bg-success cursor" (click)="preChangeStatus(item.administrationId,2)">Đã công bố</span>
 											<span *ngIf="item.status == 2" class="badge rounded-pill bg-xam text-dark cursor" (click)="preChangeStatus(item.administrationId,3)">Đã thu hồi</span>

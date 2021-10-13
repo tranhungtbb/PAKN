@@ -11,7 +11,7 @@ import { UserObject2 } from 'src/app/models/UserObject'
 import { UnitComponent } from '../../unit/unit.component'
 import { UserComponent } from 'src/app/modules/system-management/components/user/user.component'
 import { BusinessComponent } from 'src/app/modules/business.component'
-import {UserInfoStorageService} from 'src/app/commons/user-info-storage.service'
+import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { UserServiceChatBox } from 'src/app/modules/chatbox/user/user.service'
 
 declare var $: any
@@ -27,13 +27,13 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		private stogateService: UserInfoStorageService,
 		private formBuilder: FormBuilder,
 		private toast: ToastrService,
-		private _userServiceChat : UserServiceChatBox
+		private _userServiceChat: UserServiceChatBox
 	) {
 		this.modalId = elm.nativeElement.getAttribute('modalid')
 		this.isOrganizational = elm.nativeElement.getAttribute('isOrganizational') == 'true' ? true : false
 		this.isAdmin = this.stogateService.getIsMain()
 	}
-	isAdmin : boolean = false
+	isAdmin: boolean = false
 	modalId = ''
 	isOrganizational: boolean = false
 	public parentUnit: UnitComponent
@@ -49,9 +49,9 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	positionsList: any[] = []
 	rolesList: any[] = []
 	unitsList: any[] = []
-	files : any [] = []
+	files: any[] = []
 	selectedRoles: Array<number>
-	roleName : any =''
+	roleName: any = ''
 	listStatus: any = [
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
@@ -119,7 +119,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		if (this.checkExists['Email'] || this.checkExists['Phone']) return
 		this.modelUser.roleIds = this.selectedRoles.toString()
 		let arrPermission = this.listPermissionUserSelectedByGroup.concat(this.listPermissionUserSelected)
-		arrPermission = arrPermission.filter((item, index) => arrPermission.indexOf(item) === index);
+		arrPermission = arrPermission.filter((item, index) => arrPermission.indexOf(item) === index)
 		this.modelUser.permissionIds = arrPermission.join(',')
 		this.modelUser.countLock = 0
 		this.modelUser.lockEndOut = ''
@@ -128,19 +128,19 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			login: this.modelUser.email,
 			password: 'quickblox',
 			full_name: this.modelUser.fullName,
-			phone : this.modelUser.phone,
-			email : this.modelUser.email,
-			custom_data : JSON.stringify({id : this.modelUser.id}),
-		};
+			phone: this.modelUser.phone,
+			email: this.modelUser.email,
+			custom_data: JSON.stringify({ id: this.modelUser.id }),
+		}
 		let fileParams = null
-		if(this.files && this.files.length > 0){
+		if (this.files && this.files.length > 0) {
 			fileParams = {
 				name: this.files[0].name,
 				file: this.files[0],
 				type: this.files[0].type,
 				size: this.files[0].size,
 				public: false,
-			};
+			}
 		}
 
 		if (this.modelUser.id != null && this.modelUser.id > 0) {
@@ -153,7 +153,14 @@ export class UserCreateOrUpdateComponent implements OnInit {
 					return
 				}
 				this.toast.success(COMMONS.UPDATE_SUCCESS)
-				this._userServiceChat.createUserForApp(user,fileParams).then(r => {console.log(r)}).catch(e=>{console.log(e)})
+				this._userServiceChat
+					.createUserForApp(user, fileParams)
+					.then((r) => {
+						console.log(r)
+					})
+					.catch((e) => {
+						console.log(e)
+					})
 				if (this.isOrganizational == true) {
 					if (!this.editByMyself) {
 						this.parentUnit.getUserPagedList()
@@ -161,8 +168,6 @@ export class UserCreateOrUpdateComponent implements OnInit {
 				} else {
 					this.parentUser.getList()
 				}
-
-				// this.modelUser = new UserObject2()
 				$('#' + this.modalId).modal('hide')
 			})
 		} else {
@@ -172,8 +177,8 @@ export class UserCreateOrUpdateComponent implements OnInit {
 					this.toast.error(errorMsg)
 					return
 				}
-				user.custom_data = JSON.stringify({id : res.result})
-				this._userServiceChat.createUserForApp(user,fileParams)
+				user.custom_data = JSON.stringify({ id: res.result })
+				this._userServiceChat.createUserForApp(user, fileParams)
 				if (this.isOrganizational == true) {
 					if (!this.editByMyself) {
 						this.parentUnit.getUserPagedList()
@@ -209,7 +214,7 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		output.onload = function () {
 			URL.revokeObjectURL(output.src) // free memory
 		}
-		this.files =[]
+		this.files = []
 		this.files.push(file)
 		$('#modal .seclect-avatar').val('')
 	}
@@ -285,8 +290,8 @@ export class UserCreateOrUpdateComponent implements OnInit {
 	// 		}
 	// 	})
 	// }
-	listPermissionUserSelectedByGroup : any [] = []
-	selectedRolesOld : any [] = []
+	listPermissionUserSelectedByGroup: any[] = []
+	selectedRolesOld: any[] = []
 	onGroupUserChange(): void {
 		this.clearPermisison()
 		this.listPermissionUserSelectedByGroup = []
@@ -301,14 +306,14 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			}
 		}
 		debugger
-		if(this.selectedRolesOld.length > 0){
-			let arrRolesDelete = this.selectedRoles.filter(x=>{
+		if (this.selectedRolesOld.length > 0) {
+			let arrRolesDelete = this.selectedRoles.filter((x) => {
 				return this.selectedRolesOld.includes(x)
 			})
-			arrRolesDelete.map(de =>{
-				this.rolesList.map(r =>{
-					if(de == r.value){
-						this.listPermissionUserSelected = this.listPermissionUserSelected.filter(x=>{
+			arrRolesDelete.map((de) => {
+				this.rolesList.map((r) => {
+					if (de == r.value) {
+						this.listPermissionUserSelected = this.listPermissionUserSelected.filter((x) => {
 							return !r.permissionIds.includes(x)
 						})
 					}

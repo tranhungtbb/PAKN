@@ -56,7 +56,7 @@ namespace PAKNAPI.Controller
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -184,12 +184,12 @@ namespace PAKNAPI.Controller
                         }
                     }
                 }
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                 return new ResultApi { Success = ResultCode.OK };
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -455,12 +455,12 @@ namespace PAKNAPI.Controller
                         }
                     }
                 }
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                 return new ResultApi { Success = ResultCode.OK };
             }
             catch (Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -498,7 +498,7 @@ namespace PAKNAPI.Controller
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -541,7 +541,7 @@ namespace PAKNAPI.Controller
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -568,7 +568,7 @@ namespace PAKNAPI.Controller
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -587,14 +587,14 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
                 return new ResultApi { Success = ResultCode.OK, Result = await new DAMAdministrationDelete(_appSetting).DAMAdministrationDeleteDAO(_dAMAdministrationDeleteIN) };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -613,14 +613,14 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
                 return new ResultApi { Success = ResultCode.OK, Result = await new DAMAdministrationUpdateShow(_appSetting).DAMAdministrationUpdateShowDAO(_dAMAdministrationUpdateShowIN) };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -682,13 +682,13 @@ namespace PAKNAPI.Controller
                         await new SYNotification(_appSetting).SYNotificationInsertDAO(model);
                     });
                 }
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                 return new ResultApi { Success = ResultCode.OK };
             }
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -715,7 +715,7 @@ namespace PAKNAPI.Controller
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }

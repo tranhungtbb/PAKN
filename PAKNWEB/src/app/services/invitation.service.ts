@@ -18,7 +18,7 @@ export class InvitationService {
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
 			logAction: encodeURIComponent(request.model.status == 1 ? LOG_ACTION.INSERT : LOG_ACTION.INSERT_AND_SEND),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_INVITATION),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_INVITATION + ' ' + request.model.title),
 		})
 		const form = new FormData()
 		form.append('Model', JSON.stringify(request.model))
@@ -49,7 +49,7 @@ export class InvitationService {
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
 			logAction: encodeURIComponent(request.model.status == 1 ? LOG_ACTION.UPDATE : LOG_ACTION.UPDATE_AND_SEND),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_INVITATION),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_INVITATION + ' ' + request.model.title),
 		})
 		const form = new FormData()
 		form.append('Model', JSON.stringify(request.model))
@@ -81,10 +81,10 @@ export class InvitationService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.InnvitationGetListHisOnPage)
 	}
 
-	delete(query: any): Observable<any> {
+	delete(query: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_INVITATION),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_INVITATION + ' ' + title),
 		}
 		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.InvitationDelete, headers)
 	}

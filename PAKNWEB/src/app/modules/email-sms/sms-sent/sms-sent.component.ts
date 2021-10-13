@@ -144,7 +144,8 @@ export class SMSSentComponent implements OnInit {
 
 	onDelete() {
 		$('#modalConfirm').modal('hide')
-		this.smsService.Delete({ id: this.smsId }).subscribe((res) => {
+		let obj = this.listData.find((x) => x.id == this.smsId)
+		this.smsService.Delete({ id: this.smsId }, obj.title).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result > 0) {
 					this.toast.success(COMMONS.DELETE_SUCCESS)

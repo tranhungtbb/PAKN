@@ -68,6 +68,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IPAddress", _sYLOGInsertIN.IPAddress);
 			DP.Add("MACAddress", _sYLOGInsertIN.MACAddress);
 			DP.Add("Description", _sYLOGInsertIN.Description);
+			DP.Add("MessageError", _sYLOGInsertIN.MessageError);
 			DP.Add("CreatedDate", _sYLOGInsertIN.CreatedDate);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_LOG_Insert", DP));
@@ -84,6 +85,7 @@ namespace PAKNAPI.ModelBase
 		public string IPAddress { get; set; }
 		public string MACAddress { get; set; }
 		public string Description { get; set; }
+		public string MessageError { get; set; }
 		public DateTime? CreatedDate { get; set; }
 	}
 }

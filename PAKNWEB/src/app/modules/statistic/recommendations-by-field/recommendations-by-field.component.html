@@ -41,7 +41,7 @@
 						</ng-template>
 					</p-multiSelect>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="row">
 						<div class="col-md-4">
 							<div class="dropdown bootstrap-select form-control form-control-sm">
@@ -66,7 +66,7 @@
 						<div class="col-md-6">
 							<div class="input-group">
 								<input class="form-control form-control-sm" placeholder="Từ ngày..." bsDatepicker #fdate="bsDatepicker" maxlength="10" id="fromDate2" appBsDatepickerInvalid
-									[(ngModel)]="fromDate" (bsValueChange)="fromDateChange($event)"
+									[(ngModel)]="fromDate" (bsValueChange)="fromDateChange($event)" [minDate]="minDate" [maxDate]="maxDate"
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon p-2" style="height: 34px;">
 									<i class="bi bi-calendar-date" (click)="fdate.toggle()" [attr.aria-expanded]="fdate.isOpen"></i>
@@ -76,7 +76,7 @@
 						<div class="col-md-6">
 							<div class="input-group">
 								<input class="form-control form-control-sm" placeholder="Đến ngày..." bsDatepicker #tdate="bsDatepicker" maxlength="10" id="toDate2" appBsDatepickerInvalid
-									[(ngModel)]="toDate" (bsValueChange)="toDateChange($event)"
+									[(ngModel)]="toDate" (bsValueChange)="toDateChange($event)" [minDate]="minDate" [maxDate]="maxDate"
 									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 								<div class="input-group-addon p-2" style="height: 34px;">
 									<i class="bi bi-calendar-date" (click)="tdate.toggle()" [attr.aria-expanded]="tdate.isOpen"></i>
@@ -84,6 +84,9 @@
 							</div>
 						</div>
 					</div>
+				</div>
+				<div class="col-md-1 p-0">
+					<button class="btn grd-blue btn-sm rounded border-0 text-white h-34" (click)="getList()"> Tìm kiếm</button>
 				</div>
 			</div>
 			<div class="col-lg-12">
@@ -94,31 +97,31 @@
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
-									<th>
+									<th style="min-width: 140px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											Lĩnh vực
 										</p>
 									</th>
 
-									<th style=" max-width: 150px;">
+									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tổng số</strong>
 										</p>
 									</th>
 
-									<th style=" max-width: 160px;">
+									<th >
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Đang soạn thảo</strong>
 										</p>
 									</th>
 
-									<th style=" max-width: 160px;">
+									<th >
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Chờ xử lý</strong>
 										</p>
 									</th>
 
-									<th style=" max-width: 160px;">
+									<th >
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Tiếp nhận xử lý</strong>
 										</p>
@@ -129,37 +132,37 @@
 											<strong>Từ chối tiếp nhận</strong>
 										</p>
 									</th>
-									<th style="max-width: 160px;">
+									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Chờ giải quyết</strong>
 										</p>
 									</th>
 
-									<th style="max-width: 160px;">
+									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Từ chối giải quyết</strong>
 										</p>
 									</th>
 
 
-									<th style=" max-width: 160px;">
+									<th >
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Đang giải quyết</strong>
 										</p>
 									</th>
 
-									<th style="max-width: 160px;">
+									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Chờ phê duyệt</strong>
 										</p>
 									</th>
-									<th style="max-width: 160px;">
+									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Từ chối phê duyệt</strong>
 										</p>
 									</th>
 
-									<th style="max-width: 160px;">
+									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Đã giải quyết</strong>
 										</p>

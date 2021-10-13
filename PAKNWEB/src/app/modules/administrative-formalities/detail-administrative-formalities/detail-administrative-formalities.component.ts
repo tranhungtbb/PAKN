@@ -289,7 +289,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 			AdministrationId: this.model.administrationId,
 			Content: this.modelForward.content,
 		}
-		this.afService.forward(obj).subscribe((res) => {
+		this.afService.forward(obj, this.model.name).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.toastr.success('Gửi cơ quan, đơn vị thành công')
 				$('#modal-forward').modal('hide')

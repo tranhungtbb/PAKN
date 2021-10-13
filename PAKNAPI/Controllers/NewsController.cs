@@ -47,7 +47,6 @@ namespace PAKNAPI.Controller
 		/// <param name="Status"></param>
 		/// <returns></returns>
 		[HttpGet]
-		//[Authorize("ThePolicy")]
 		[Route("get-list-news-on-page")]
 		public async Task<ActionResult<object>> NENewsGetAllOnPageBase(string NewsIds, int? PageSize, int? PageIndex, string Title, int? NewsType, int? Status)
 		{
@@ -69,6 +68,31 @@ namespace PAKNAPI.Controller
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+
+		[HttpGet]
+		[Route("get-list-news-othor")]
+		public async Task<ActionResult<object>> NENewsGetAllOnPageBase(string lstNewsId, int? PageSize, int? PageIndex, string Title, int? NewsType)
+		{
+			try
+			{
+				List<NENewsGetAllOnPage> rsNENewsGetAllOnPage = await new NENewsGetAllOnPage(_appSetting).NENewsGetAllOnPageDAO(lstNewsId, PageSize, PageIndex, Title, NewsType, null);
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"NENewsGetAllOnPage", rsNENewsGetAllOnPage},
+						{"TotalCount", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? rsNENewsGetAllOnPage[0].RowNumber : 0},
+						{"PageIndex", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageIndex : 0},
+						{"PageSize", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		/// <summary>
 		/// danh sách tin tức trang chủ (slide)
 		/// </summary>
@@ -117,7 +141,7 @@ namespace PAKNAPI.Controller
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -136,13 +160,13 @@ namespace PAKNAPI.Controller
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, null);
 				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsDelete(_appSetting).NENewsDeleteDAO(_nENewsDeleteIN) };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -213,18 +237,18 @@ namespace PAKNAPI.Controller
 					{
 						await SYNotificationInsertTypeNews(res, _nENewsInsertIN.Title, true);
 					}
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 					return new ResultApi { Success = ResultCode.OK, Result = res, Message = "Thêm mới thành công" };
 				}
 				else if (res == -1)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, "Tiêu đề đã tồn tại", new Exception());
 					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Tiêu đề đã tồn tại" };
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, "Thêm mới thất bại", new Exception());
 					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Thêm mới thất bại" };
 				}
 
@@ -232,7 +256,7 @@ namespace PAKNAPI.Controller
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -308,24 +332,24 @@ namespace PAKNAPI.Controller
 					{
 						await SYNotificationInsertTypeNews(res, _nENewsUpdateIN.Title, false);
 					}
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 					return new ResultApi { Success = ResultCode.OK, Result = res, Message = "Cập nhập thành công" };
 				}
 				else if (res == -1)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, "Tiêu đề đã tồn tại", new Exception());
 					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Tiêu đề đã tồn tại" };
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, "Cập nhập thất bại", new Exception());
 					return new ResultApi { Success = ResultCode.ORROR, Result = res, Message = "Cập nhập thất bại" };
 				}
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -354,7 +378,7 @@ namespace PAKNAPI.Controller
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -381,7 +405,7 @@ namespace PAKNAPI.Controller
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -416,7 +440,7 @@ namespace PAKNAPI.Controller
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -443,7 +467,7 @@ namespace PAKNAPI.Controller
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -523,7 +547,7 @@ namespace PAKNAPI.Controller
 			}
 			catch (Exception ex)
 			{
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 				return false;
 			}
 		}

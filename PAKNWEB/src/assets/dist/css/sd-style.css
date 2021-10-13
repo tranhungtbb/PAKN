@@ -1738,4 +1738,15 @@ table thead .form-control ng-select {
 :host ::ng-deep .ui-widget-header .ui-state-default{
 	background-color: transparent !important;
 }
+.form-control-feedback{
+	margin-left: 10px;
+	position: absolute;
+	z-index: 2;
+	display: block;
+	line-height: 2.375rem;
+	text-align: center;
+	pointer-events: none;
+	color: #aaa;
+	top: 23px;
 
+}

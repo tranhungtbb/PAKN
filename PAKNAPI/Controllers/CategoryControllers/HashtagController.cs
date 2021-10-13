@@ -60,7 +60,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -82,7 +82,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -110,7 +110,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -128,14 +128,14 @@ namespace PAKNAPI.Controllers.ControllerBase
 		{
 			try
 			{
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 				return new ResultApi { Success = ResultCode.OK, Result = await new CAHashtag(_appSetting).CAHashtagInsert(_cAHashtag) };
 			}
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -155,12 +155,12 @@ namespace PAKNAPI.Controllers.ControllerBase
 				int count = await new CAHashtag(_appSetting).CAHashtagUpdate(_cAHashtag);
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, new Exception());
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,"Tiêu đề bị trùng" , new Exception());
 
 					return new ResultApi { Success = ResultCode.ORROR, Result = count, Message = ResultMessage.ORROR };
 				}
@@ -168,7 +168,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -190,13 +190,13 @@ namespace PAKNAPI.Controllers.ControllerBase
 				int count = await new CAHashtag(_appSetting).CAHashtagDelete(_cAHashtag);
 				if (count > 0)
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
 				else
 				{
-					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+					new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
 					return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
 				}
@@ -204,7 +204,7 @@ namespace PAKNAPI.Controllers.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}

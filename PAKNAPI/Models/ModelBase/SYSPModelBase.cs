@@ -1137,6 +1137,7 @@ namespace PAKNAPI.ModelBase
 		public byte Status { get; set; }
 		public string Action { get; set; }
 		public string Exception { get; set; }
+		public string MessageError { get; set; }
 
 		public async Task<List<SYSystemLogGetAllOnPage>> SYSystemLogGetAllOnPageDAO(int? UserId, int? PageSize, int? PageIndex, DateTime? FromDate, DateTime? ToDate, string Content, int? Status)
 		{
@@ -1177,6 +1178,7 @@ namespace PAKNAPI.ModelBase
 		public byte Status { get; set; }
 		public string Action { get; set; }
 		public string Exception { get; set; }
+		public string MessageError { get; set; }
 
 		public async Task<List<SYSystemLogGetAllOnPageAdmin>> SYSystemLogGetAllOnPageAdminDAO(int? UserId, int? PageSize, int? PageIndex, DateTime? CreateDate, byte? Status, string Description)
 		{

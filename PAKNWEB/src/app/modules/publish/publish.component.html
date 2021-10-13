@@ -23,8 +23,8 @@
 							</a>
 						</li>
 						<li class="nav-item dropdown notification_dropdown">
-							<a class="nav-link  ai-icon bg-transparent" style="position: relative;" href="#" role="button" data-toggle="dropdown">
-								<span *ngIf="ViewedCount > 0" class="count-notification">{{ViewedCount}}</span>
+							<a class="nav-link  ai-icon bg-transparent" style="position: relative;" href="javascript:void(0)" (click)="updateNotifications()" role="button" data-toggle="dropdown">
+								<span *ngIf="viewedCountLate > 0" class="count-notification">{{viewedCountLate}}</span>
 								<i class="bi bi-bell"></i>
 								<!-- <div class="pulse-css"></div> -->
 							</a>

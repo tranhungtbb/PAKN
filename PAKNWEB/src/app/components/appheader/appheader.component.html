@@ -27,9 +27,9 @@
 						</a>
 					</li>
 					<li class="nav-item dropdown notification_dropdown">
-						<a class="nav-link text-dark ai-icon bg-transparent" style="position: relative;" href="#" role="button"
+						<a class="nav-link text-dark ai-icon bg-transparent" (click)="updateNotifications()" style="position: relative;" href="javascript:void(0)" role="button"
 							data-toggle="dropdown">
-							<span *ngIf="ViewedCount > 0" class="count-notification">{{ViewedCount}}</span>
+							<span *ngIf="viewedCountLate > 0" class="count-notification">{{viewedCountLate}}</span>
 							<i class="bi bi-bell"></i>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
@@ -179,7 +179,7 @@
 													<td>{{item.description}}</td>
 													<td style="width: 20%;">
 														<span *ngIf="item.status == 1" class="badge rounded-pill badge-success">Thành công</span>
-														<span *ngIf="item.status == 0" class="badge rounded-pill bg-red text-white">Thất bại</span>
+														<span *ngIf="item.status == 0" class="badge rounded-pill bg-red text-white" (click)="showMessageError(item.messageError)">Thất bại</span>
 													</td>
 												</tr>
 											</ng-template>
@@ -502,3 +502,22 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="modal-error-his-system">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Thông tin</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					{{messageError}}
+				</span>
+			</div>
+			<div class="modal-footer border-top-0"></div>
+		</div>
+	</div>
+</div>
+

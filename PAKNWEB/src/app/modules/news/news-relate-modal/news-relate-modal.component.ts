@@ -20,7 +20,7 @@ export class NewsRelateModalComponent implements OnInit {
 	listDataPaged: any[]
 	newsSelected: any[] = []
 	query: any = {
-		pageSize: 20,
+		pageSize: 15,
 		pageIndex: 1,
 		title: '',
 		newsType: null,
@@ -42,6 +42,11 @@ export class NewsRelateModalComponent implements OnInit {
 				}
 				this.listNewsCategories = res.result.CANewsTypeGetAllOnPage
 			})
+	}
+	onPageChange(event: any): void {
+		this.query.pageSize = event.rows
+		this.query.pageIndex = event.first / event.rows + 1
+		this.getListPaged()
 	}
 	onChangeChecked(id: number, checked: boolean) {
 		let newsItem = this.listDataPaged.find((c) => c.id == id)
@@ -66,10 +71,15 @@ export class NewsRelateModalComponent implements OnInit {
 				newsType: this.query.newsType == null ? '' : this.query.newsType,
 			})
 			.subscribe((res) => {
-				if (res.success != 'OK') return
+				if (res.success != 'OK') {
+					this.listDataPaged = []
+					this.totalCount = 0
+					this.padi()
+					return
+				}
 				this.listDataPaged = res.result.NENewsGetAllOnPage.filter((c) => c.id != this.parentNews)
-				if (this.totalCount <= 0) this.totalCount = res.result.TotalCount
-				this.totalCount = Math.ceil(this.totalCount / this.query.pageSize)
+				this.totalCount = res.result.TotalCount
+				this.padi()
 			})
 	}
 	changePage(page: any) {
@@ -85,6 +95,7 @@ export class NewsRelateModalComponent implements OnInit {
 		this.getListPaged()
 	}
 	filterChange() {
+		this.query.pageIndex = 1
 		this.getListPaged()
 	}
 
@@ -104,5 +115,30 @@ export class NewsRelateModalComponent implements OnInit {
 		}
 
 		$('#modal-news-relate').modal('show')
+	}
+
+	pagination = []
+	padi() {
+		this.pagination = []
+		for (let i = 0; i < Math.ceil(this.totalCount / this.query.pageSize); i++) {
+			this.pagination.push({ index: i + 1 })
+		}
+	}
+
+	changePagination(index: any) {
+		if (this.query.pageIndex > index) {
+			if (index > 0) {
+				this.query.pageIndex = index
+				this.getListPaged()
+			}
+			return
+		} else if (this.query.pageIndex < index) {
+			if (this.pagination.length >= index) {
+				this.query.pageIndex = index
+				this.getListPaged()
+			}
+			return
+		}
+		return
 	}
 }

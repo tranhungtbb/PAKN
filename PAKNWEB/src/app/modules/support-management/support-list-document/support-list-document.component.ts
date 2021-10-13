@@ -144,7 +144,7 @@ export class SupportListDocumentComponent implements OnInit {
 	}
 	onSave() {
 		this.submitted = true
-		
+
 		if (this.form.invalid) {
 			return
 		}
@@ -208,7 +208,7 @@ export class SupportListDocumentComponent implements OnInit {
 	}
 	onDelete() {
 		$('#modal-confirm').modal('hide')
-		this.supportService.Delete({ Id: this.model.id }).subscribe((res) => {
+		this.supportService.Delete({ Id: this.model.id }, this.model.title).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.toastr.success(COMMONS.DELETE_SUCCESS)
 				this.getAllUnitShortInfo()

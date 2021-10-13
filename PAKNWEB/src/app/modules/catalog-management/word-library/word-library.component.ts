@@ -89,7 +89,6 @@ export class WordLibraryComponent implements OnInit {
 	}
 
 	getList() {
-		
 		this._service.wordGetList({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
@@ -192,7 +191,8 @@ export class WordLibraryComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.wordDelete(request).subscribe((response) => {
+		let obj = this.listData.find((x) => x.id == id)
+		this._service.wordDelete(request, obj.name).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
 				$('#modalConfirmDelete').modal('hide')

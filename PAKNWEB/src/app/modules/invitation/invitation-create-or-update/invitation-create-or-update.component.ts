@@ -242,9 +242,6 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 		this.model.title = this.model.title.trim()
 		this.model.content = this.model.content.trim()
 		this.model.place = this.model.place.trim()
-		// this.rebuilForm()
-		debugger
-
 		if (this.form.invalid) {
 			return
 		}

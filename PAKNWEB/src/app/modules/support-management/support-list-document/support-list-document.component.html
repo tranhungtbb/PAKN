@@ -44,7 +44,7 @@
 						<div class="modal-body no-padding-bottom" style="border: none; padding: 0px 30px;">
 							<div class="row form-group">
 								<div class="col-sm-12">
-									<label> Tên chuyên mục</label>
+									<label> Tên chuyên mục <span class="cl-red">(*)</span></label>
 									<input class="form-control" style="border: 2px solid #E5E5E5; border-radius: 10px;" type="text" rows="7" formControlName="title"
 										[(ngModel)]="model.title" placeholder="Nhập ...">
 									<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">

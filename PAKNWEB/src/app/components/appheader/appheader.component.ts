@@ -8,7 +8,7 @@ import { UserSystemObject } from '../../models/UserObject'
 import { UserService } from '../../services/user.service'
 import { DataService } from '../../services/sharedata.service'
 import { AccountService } from 'src/app/services/account.service'
-import { RESPONSE_STATUS, RECOMMENDATION_STATUS, TYPE_NOTIFICATION, CONSTANTS} from 'src/app/constants/CONSTANTS'
+import { RESPONSE_STATUS, RECOMMENDATION_STATUS, TYPE_NOTIFICATION, CONSTANTS } from 'src/app/constants/CONSTANTS'
 import { NotificationService } from 'src/app/services/notification.service'
 import { COMMONS } from 'src/app/commons/commons'
 import { UserServiceChatBox } from 'src/app/modules/chatbox/user/user.service'
@@ -21,7 +21,6 @@ declare var $: any
 	styleUrls: ['./appheader.component.css'],
 })
 export class AppheaderComponent implements OnInit {
-
 	fileAccept = CONSTANTS.FILEACCEPTAVATAR
 	totalThongBao: number = 0
 	myDate: any
@@ -32,12 +31,12 @@ export class AppheaderComponent implements OnInit {
 	listData: any[] = []
 	totalRecords: number = 0
 	emailUser: string = ''
-	isShowPassword : any = false
-	isShowPasswordNew : any = false
-	isShowRePasswordNew : any = false
+	isShowPassword: any = false
+	isShowPasswordNew: any = false
+	isShowRePasswordNew: any = false
 
 	pageSizeGrid: number = 10
-	files: any = [] = []
+	files: any = ([] = [])
 	updateForm: FormGroup
 	userForm: FormGroup
 	createUserForm: FormGroup
@@ -56,9 +55,9 @@ export class AppheaderComponent implements OnInit {
 		{ text: 'Nam', value: true },
 		{ text: 'Nữ', value: false },
 	]
-	listStatus : any = [
-		{value : 1, text : "Thành công" },
-		{value : 0, text : "Thất bại" }
+	listStatus: any = [
+		{ value: 1, text: 'Thành công' },
+		{ value: 0, text: 'Thất bại' },
 	]
 	listStatusUser: any = [
 		{ value: true, text: 'Hiệu lực' },
@@ -90,8 +89,8 @@ export class AppheaderComponent implements OnInit {
 	numberNotifications: any = 10
 	ViewedCount: number = 0
 	@ViewChild('table', { static: false }) table: any
-	isMain : any = this.storageService.getIsMain()
-	userId : any = this.storageService.getUserId()
+	isMain: any = this.storageService.getIsMain()
+	userId: any = this.storageService.getUserId()
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -105,7 +104,7 @@ export class AppheaderComponent implements OnInit {
 		private sharedataService: DataService,
 		private notificationService: NotificationService,
 		private accountService: AccountService,
-		private _userServiceChat : UserServiceChatBox
+		private _userServiceChat: UserServiceChatBox
 	) {}
 
 	formChangePassword: FormGroup
@@ -113,6 +112,7 @@ export class AppheaderComponent implements OnInit {
 	newPassword: string
 	rePassword: string
 	samePass = false
+	viewedCountLate: number = 0
 
 	@Input('title') _title: string
 
@@ -121,8 +121,8 @@ export class AppheaderComponent implements OnInit {
 		this.form = this._fb.group({
 			toDate: [this.dataSearch.toDate],
 			fromDate: [this.dataSearch.toDate],
-			content : [this.dataSearch.content],
-			status : [this.dataSearch.status],
+			content: [this.dataSearch.content],
+			status: [this.dataSearch.status],
 		})
 		this.userName = this.storageService.getFullName()
 		this.buildForm()
@@ -150,26 +150,25 @@ export class AppheaderComponent implements OnInit {
 			if (e.which == 13) e.preventDefault()
 		})
 	}
-	
 
-	showPassword(){
+	showPassword() {
 		this.isShowPassword = !this.isShowPassword
 	}
-	showPasswordNew(){
+	showPasswordNew() {
 		this.isShowPasswordNew = !this.isShowPasswordNew
 	}
-	showRePasswordNew(){
+	showRePasswordNew() {
 		this.isShowRePasswordNew = !this.isShowRePasswordNew
 	}
 
 	getNotifications(PageSize: Number) {
 		this.ViewedCount = 0
 		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: PageSize, PageIndex: 1 }).subscribe((res) => {
-			if ((res.success = RESPONSE_STATUS.success)) {
+			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.syNotifications.length > 0) {
 					this.Notifications = res.result.syNotifications
 					this.ViewedCount = res.result.syNotifications[0].viewedCount
-					console.log(this.Notifications)
+					this.viewedCountLate = res.result.syNotifications[0].viewedCount
 				} else {
 					this.Notifications = []
 				}
@@ -179,6 +178,7 @@ export class AppheaderComponent implements OnInit {
 	}
 
 	updateNotifications() {
+		this.viewedCountLate = 0
 		this.notificationService.updateIsViewedNotification({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 			}
@@ -201,7 +201,7 @@ export class AppheaderComponent implements OnInit {
 	}
 	rebuilForm() {
 		this.formChangePassword.reset({
-			oldPassword : this.oldPassword,
+			oldPassword: this.oldPassword,
 			newPassword: this.newPassword,
 			rePassword: this.rePassword,
 		})
@@ -241,7 +241,7 @@ export class AppheaderComponent implements OnInit {
 		}
 		let obj = {
 			// UserId: this.storageService.getUserId(),
-			OldPassword : this.oldPassword,
+			OldPassword: this.oldPassword,
 			NewPassword: this.newPassword,
 			RePassword: this.rePassword,
 		}
@@ -287,24 +287,26 @@ export class AppheaderComponent implements OnInit {
 		output.onload = function () {
 			URL.revokeObjectURL(output.src) // free memory
 		}
-		this.files =[]
+		this.files = []
 		this.files.push(file)
 		$('#modalEditUserInfo .seclect-avatar').val('')
 	}
 
 	onClickNotification(dataId: any, type: any, typeSend: any) {
-		if (type == TYPE_NOTIFICATION.NEWS) { // tin tức
+		if (type == TYPE_NOTIFICATION.NEWS) {
+			// tin tức
 			this.updateIsReadNotification(dataId)
 			this.router.navigate(['/quan-tri/tin-tuc/chinh-sua/' + dataId])
-		} else if (type == TYPE_NOTIFICATION.RECOMMENDATION) { // PAKN
+		} else if (type == TYPE_NOTIFICATION.RECOMMENDATION) {
+			// PAKN
 			this.updateIsReadNotification(dataId)
 			this.router.navigate(['/quan-tri/kien-nghi/chi-tiet/' + dataId])
-		}
-		else if (type == TYPE_NOTIFICATION.INVITATION) { // Thư mời
+		} else if (type == TYPE_NOTIFICATION.INVITATION) {
+			// Thư mời
 			this.updateIsReadNotification(dataId)
 			this.router.navigate(['/quan-tri/thu-moi/chi-tiet/' + dataId])
-		}
-		else if (type == TYPE_NOTIFICATION.ADMINISTRATIVE) { // tthc
+		} else if (type == TYPE_NOTIFICATION.ADMINISTRATIVE) {
+			// tthc
 			this.updateIsReadNotification(dataId)
 			this.router.navigate(['/quan-tri/thu-tuc-hanh-chinh/chi-tiet/' + dataId])
 		}
@@ -314,8 +316,6 @@ export class AppheaderComponent implements OnInit {
 		this.notificationService.updateIsReadedNotification({ ObjectId: dataId }).subscribe()
 		this.getNotifications(this.pageSize)
 	}
-
-
 
 	loadImage(path: string) {
 		let request = {
@@ -340,7 +340,7 @@ export class AppheaderComponent implements OnInit {
 
 	// profile
 
-	buildForm(){
+	buildForm() {
 		this.createUserForm = this._fb.group({
 			email: ['', [Validators.required, Validators.email]],
 			fullName: ['', [Validators.required]],
@@ -351,14 +351,14 @@ export class AppheaderComponent implements OnInit {
 		})
 	}
 
-	reBuildForm(){
+	reBuildForm() {
 		this.createUserForm.reset({
 			email: this.model.email,
 			fullName: this.model.fullName,
 			phone: this.model.phone,
 			gender: this.model.gender,
 			isActived: this.model.isActived,
-			address: this.model.address
+			address: this.model.address,
 		})
 	}
 	get fUser() {
@@ -382,8 +382,8 @@ export class AppheaderComponent implements OnInit {
 			})
 	}
 
-	userAvatar : any
-	preUpdate(){
+	userAvatar: any
+	preUpdate() {
 		this.submitted = false
 		$('#modalViewUserInfo').modal('hide')
 		if (this.model.avatar == '' || this.model.avatar == null) {
@@ -396,7 +396,7 @@ export class AppheaderComponent implements OnInit {
 		$('#modalEditUserInfo').modal('show')
 	}
 
-	preView(){
+	preView() {
 		this.userService.getByIdUpdate({ id: this.userId }).subscribe((res) => {
 			if (res.success != 'OK') return
 			this.model = res.result.SYUserGetByID[0]
@@ -412,7 +412,7 @@ export class AppheaderComponent implements OnInit {
 		})
 	}
 
-	onSave(){
+	onSave() {
 		this.submitted = true
 		this.model.userName = this.model.email
 		if (this.createUserForm.invalid) {
@@ -427,57 +427,51 @@ export class AppheaderComponent implements OnInit {
 			login: this.model.email,
 			password: 'quickblox',
 			full_name: this.model.fullName,
-			phone : this.model.phone,
-			email : this.model.email,
-			custom_data : JSON.stringify({id : this.model.id}),
-		};
+			phone: this.model.phone,
+			email: this.model.email,
+			custom_data: JSON.stringify({ id: this.model.id }),
+		}
 		let fileParams = null
-		if(this.files && this.files.length > 0){
+		if (this.files && this.files.length > 0) {
 			fileParams = {
 				name: this.files[0].name,
 				file: this.files[0],
 				type: this.files[0].type,
 				size: this.files[0].size,
 				public: false,
-			};
+			}
 		}
-		if(this.isMain != true){
+		if (this.isMain != true) {
 			this.userService.userUpdateProfile(this.model, this.files).subscribe((res) => {
 				$('#modalEditUserInfo .seclect-avatar').val('')
 				if (res.success != 'OK') {
 					let errorMsg = res.message
 					this._toastr.error(errorMsg)
 					return
-				}
-				else{
+				} else {
 					$('#modalEditUserInfo').modal('hide')
 					this._toastr.success(COMMONS.UPDATE_SUCCESS)
-					this._userServiceChat.createUserForApp(user,fileParams)
+					this._userServiceChat.createUserForApp(user, fileParams)
 				}
 			})
-		}
-		else{
+		} else {
 			this.userService.userSystemUpdate(this.model, this.files).subscribe((res) => {
 				$('#modalEditUserInfo .seclect-avatar').val('')
 				if (res.success != 'OK') {
 					let errorMsg = res.message
 					this._toastr.error(errorMsg)
 					return
-				}
-				else{
+				} else {
 					$('#modalEditUserInfo').modal('hide')
 					this._toastr.success(COMMONS.UPDATE_SUCCESS)
-					this._userServiceChat.createUserForApp(user,fileParams)
+					this._userServiceChat.createUserForApp(user, fileParams)
 				}
 			})
 		}
-		
 	}
 
-
-	preViewUserInfo(){
-		if(this.isMain){
-			
+	preViewUserInfo() {
+		if (this.isMain) {
 		}
 		return
 	}
@@ -517,14 +511,13 @@ export class AppheaderComponent implements OnInit {
 	}
 	onScroll(event: any) {
 		if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 50) {
-			if(this.numberNotifications == 10){
+			if (this.numberNotifications == 10) {
 				this.updateNotifications()
 			}
 			this.numberNotifications = this.numberNotifications + 5
 			this.getNotifications(this.numberNotifications)
 		}
 	}
-
 
 	isInvalidNam(event) {
 		let test = event
@@ -539,33 +532,31 @@ export class AppheaderComponent implements OnInit {
 		this.getList()
 	}
 
-	onChangeFromDate(event){
-		if(event){
-			this.dataSearch.fromDate = event;
+	onChangeFromDate(event) {
+		if (event) {
+			this.dataSearch.fromDate = event
+		} else {
+			this.dataSearch.fromDate = null
 		}
-		else{
-			this.dataSearch.fromDate = null;
-		}
-		this.getList();
+		this.getList()
 	}
 
-	onChangeToDate(event){
-		if(event){
-			this.dataSearch.toDate = event;
-		}
-		else{
-			this.dataSearch.toDate = null;
+	onChangeToDate(event) {
+		if (event) {
+			this.dataSearch.toDate = event
+		} else {
+			this.dataSearch.toDate = null
 		}
 		this.getList()
 	}
 
 	getList() {
-		this.dataSearch.content = this.dataSearch.content == null ? '' : this.dataSearch.content.trim();
+		this.dataSearch.content = this.dataSearch.content == null ? '' : this.dataSearch.content.trim()
 		let req = {
 			FromDate: this.dataSearch.fromDate == null ? '' : this.dataSearch.fromDate.toDateString(),
 			ToDate: this.dataSearch.toDate == null ? '' : this.dataSearch.toDate.toDateString(),
-			Content : this.dataSearch.content,
-			Status : this.dataSearch.status == null ? '' : this.dataSearch.status,
+			Content: this.dataSearch.content,
+			Status: this.dataSearch.status == null ? '' : this.dataSearch.status,
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 			UserId: localStorage.getItem('userId'),
@@ -609,6 +600,15 @@ export class AppheaderComponent implements OnInit {
 		this.getUserDetail()
 		this.getList()
 	}
+
+	messageError: any
+	showMessageError = (messageError: any) => {
+		if (messageError) {
+			this.messageError = messageError
+			$('#modal-error-his-system').modal('show')
+		}
+	}
+
 	onExport() {
 		$('#modalDetailLog').modal('hide')
 		let passingObj: any = {}
@@ -616,10 +616,10 @@ export class AppheaderComponent implements OnInit {
 		passingObj.UserProcessId = this.storageService.getUserId()
 		passingObj.UserProcessName = this.storageService.getFullName()
 
-		passingObj.FromDate = this.dataSearch.fromDate;
-		passingObj.ToDate = this.dataSearch.toDate;
-		passingObj.Content = this.dataSearch.content;
-		passingObj.Status = this.dataSearch.status;
+		passingObj.FromDate = this.dataSearch.fromDate
+		passingObj.ToDate = this.dataSearch.toDate
+		passingObj.Content = this.dataSearch.content
+		passingObj.Status = this.dataSearch.status
 
 		this.sharedataService.setobjectsearch(passingObj)
 		this.sharedataService.sendReportUrl = 'HistoryUser?' + JSON.stringify(passingObj)
@@ -633,6 +633,6 @@ export class SearchHistoryUser {
 	}
 	fromDate: Date
 	toDate: Date
-	content : string
-	status : number
+	content: string
+	status: number
 }

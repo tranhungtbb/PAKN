@@ -98,7 +98,7 @@ namespace PAKNAPI.Controllers
                         throw new ArgumentException("error while insert RMForward");
                     }
 
-                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
                     return new ResultApi { Success = ResultCode.OK, Message = "Success" };
                 }
                 else {
@@ -107,7 +107,7 @@ namespace PAKNAPI.Controllers
             }
             catch(Exception ex)
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -171,7 +171,7 @@ namespace PAKNAPI.Controllers
                 return new ResultApi { Success = ResultCode.OK, Result = null , Message = "Không có dữ liệu"};
             }
             catch (Exception ex) {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }

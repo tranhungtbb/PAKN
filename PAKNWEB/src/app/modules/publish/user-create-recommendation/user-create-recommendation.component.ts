@@ -82,6 +82,7 @@ export class CreateRecommendationComponent implements OnInit {
 			this.builForm()
 		})
 		this.isLogin = this.storageService.getAccessToken()
+		$('[data-toggle="tooltip"]').tooltip()
 	}
 
 	searchRecommendation() {
@@ -371,13 +372,18 @@ export class CreateRecommendationComponent implements OnInit {
 				var nameWord = new RegExp(this.lstDictionariesWord[index].name, 'ig')
 				content = content.replace(
 					nameWord,
-					'<span class="txthighlight" title="' + this.lstDictionariesWord[index].description + '">' + this.lstDictionariesWord[index].name + '</span>'
+					'<span class="txthighlight wrapper" data-toggle="tooltip" data-placement="top" title="' +
+						this.lstDictionariesWord[index].description +
+						'">' +
+						this.lstDictionariesWord[index].name +
+						'</span>'
 				)
 			}
 			$('#contentRecommendation').addClass('show')
 			document.getElementById('contentRecommendation').style.height = document.getElementById('inputContent').style.height
 			$('#contentRecommendation').html(content)
 		}
+		$('[data-toggle="tooltip"]').tooltip()
 	}
 	showEditContent() {
 		$('#contentRecommendation').removeClass('show')

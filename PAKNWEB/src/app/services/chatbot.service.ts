@@ -18,17 +18,17 @@ export class ChatbotService {
 	UpdateChatbot(data: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_CHATBOX),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_CHATBOX + ' ' + data.question),
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.ChatbotUpdate, headers)
 	}
 	chatbotGetList(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.ChatbotGetList)
 	}
-	chatbotDelete(request: any): Observable<any> {
+	chatbotDelete(request: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_CHATBOX),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_CHATBOX + title),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.ChatbotDelete, headers)
 	}
@@ -38,14 +38,14 @@ export class ChatbotService {
 	chatbotUpdateStatus(data: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_CHATBOX),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_CHATBOX + ' ' + data.question),
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.ChatbotUpdate, headers)
 	}
 	chatbotInsertQuestion(data: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_CHATBOX),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_CHATBOX + ' ' + data.question),
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.ChatbotInsertQuestion, headers)
 	}

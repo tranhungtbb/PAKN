@@ -26,7 +26,7 @@ export class InvitationComponent implements OnInit {
 		private routes: Router,
 		private userService: UserService,
 		private BsLocaleService: BsLocaleService,
-		private _shareData: DataService,
+		private _shareData: DataService
 	) {
 		this.listItemUserSelected = []
 	}
@@ -71,16 +71,15 @@ export class InvitationComponent implements OnInit {
 	hisPageIndex: number = 1
 	hisPageSize: number = 10
 	hisTotalRecords: Number
-	hisInvitationId : Number
+	hisInvitationId: Number
 	listHis: any[]
 
 	// lts user
-	lstUser : any = []
-	pagination : any = []
-	totalRecordsUser : number
-	watchedDate : Date
-	queryLstUser : queryLstUser = new queryLstUser()
-
+	lstUser: any = []
+	pagination: any = []
+	totalRecordsUser: number
+	watchedDate: Date
+	queryLstUser: queryLstUser = new queryLstUser()
 
 	ngOnInit() {
 		this.getListPaged()
@@ -129,7 +128,8 @@ export class InvitationComponent implements OnInit {
 
 	onDelete() {
 		$('#modalConfirm').modal('hide')
-		this.invitationService.delete({ id: this.InvitationId }).subscribe((res) => {
+		let obj = this.listData.find((x) => x.id == this.InvitationId)
+		this.invitationService.delete({ id: this.InvitationId }, obj.title).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result > 0) {
 					this.toast.success(COMMONS.DELETE_SUCCESS)
@@ -158,39 +158,38 @@ export class InvitationComponent implements OnInit {
 		return
 	}
 
-	preUserWatched(id : number){
-		if(this.queryLstUser.InvitationId != 0 && this.queryLstUser.InvitationId != id){
+	preUserWatched(id: number) {
+		if (this.queryLstUser.InvitationId != 0 && this.queryLstUser.InvitationId != id) {
 			this.queryLstUser = new queryLstUser()
 		}
 		this.queryLstUser.InvitationId = id
 		this.queryLstUser.UserName = this.queryLstUser.UserName.trim()
-		this.watchedDate == null ? this.queryLstUser.WatchedDate ='' : this.queryLstUser.WatchedDate = this.watchedDate.toDateString()
+		this.watchedDate == null ? (this.queryLstUser.WatchedDate = '') : (this.queryLstUser.WatchedDate = this.watchedDate.toDateString())
 		$('#modalLstUser').modal('show')
-		this.invitationService.userReadedInvitationGetList(this.queryLstUser).subscribe(res =>{
-			if(res.success == RESPONSE_STATUS.success){
-				if(res.result.SYUserReadedInvitationGetAllOnPage.length > 0){
+		this.invitationService.userReadedInvitationGetList(this.queryLstUser).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				if (res.result.SYUserReadedInvitationGetAllOnPage.length > 0) {
 					this.lstUser = res.result.SYUserReadedInvitationGetAllOnPage
 					this.totalRecordsUser = res.result.TotalCount
-				}else{
+				} else {
 					this.lstUser = []
 					this.totalRecordsUser = 0
 					this.queryLstUser.PageIndex = 1
 					this.queryLstUser.PageSize = 20
 				}
 				this.padi()
-			}
-			else{
+			} else {
 				this.lstUser = []
 				this.totalRecordsUser = 0
 				this.queryLstUser.PageIndex = 1
 				this.queryLstUser.PageSize = 20
 				this.padi()
 			}
-		}), 
-		(error) => {
-			console.log(error)
-			alert(error)
-		}
+		}),
+			(error) => {
+				console.log(error)
+				alert(error)
+			}
 	}
 
 	sendDateChange(data) {
@@ -210,7 +209,6 @@ export class InvitationComponent implements OnInit {
 		}
 		this.getListPaged()
 	}
-
 
 	padi() {
 		this.pagination = []
@@ -238,7 +236,6 @@ export class InvitationComponent implements OnInit {
 
 	// his
 
-	
 	getHistory(id: Number) {
 		if (id == undefined) return
 		if (id != this.hisInvitationId) {
@@ -293,12 +290,11 @@ export class InvitationComponent implements OnInit {
 		this.getHistory(this.hisInvitationId)
 	}
 
-
 	onExport() {
 		let passingObj: any = {}
 		$('#modalLstUser').modal('hide')
-		let invitation = this.listData.find(x=>x.id == this.queryLstUser.InvitationId)
-		passingObj.TitleReport = "THỐNG KÊ NGƯỜI XEM THƯ MỜI : " + invitation.title.toUpperCase()
+		let invitation = this.listData.find((x) => x.id == this.queryLstUser.InvitationId)
+		passingObj.TitleReport = 'THỐNG KÊ NGƯỜI XEM THƯ MỜI : ' + invitation.title.toUpperCase()
 		passingObj.InvitationId = this.queryLstUser.InvitationId
 		this._shareData.setobjectsearch(passingObj)
 		this._shareData.sendReportUrl = 'UserReadedInvitationByInvitationId?' + JSON.stringify(passingObj)
@@ -306,13 +302,13 @@ export class InvitationComponent implements OnInit {
 	}
 }
 
-class queryLstUser{
-	InvitationId : number
-	UserName : string
-	WatchedDate : string
-	PageSize : number
-	PageIndex : number
-	constructor(){
+class queryLstUser {
+	InvitationId: number
+	UserName: string
+	WatchedDate: string
+	PageSize: number
+	PageIndex: number
+	constructor() {
 		this.InvitationId = 0
 		this.UserName = ''
 		this.WatchedDate = ''

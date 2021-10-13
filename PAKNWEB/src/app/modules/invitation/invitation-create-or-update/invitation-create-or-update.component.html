@@ -33,7 +33,7 @@
 						<div class="col-sm-6 padding-col">
 							<label class="control-label department">Thời gian bắt đầu<span class="text-danger">(*)</span></label>
 							<mat-form-field appearance="outline" style="width: 100%;">
-								<input matInput [ngxMatDatetimePicker]="startDate"
+								<input matInput [ngxMatDatetimePicker]="startDate" numbersOnly
 									placeholder="Chọn ngày" formControlName="startDate" [(ngModel)]="model.startDate"
 								>
 								<mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
@@ -59,7 +59,7 @@
 							<label class="control-label department">Thời gian kết thúc<span class="text-danger">(*)</span></label>
 							
 							<mat-form-field appearance="outline" style="width: 100%;">
-									<input matInput [ngxMatDatetimePicker]="endDate"
+									<input matInput [ngxMatDatetimePicker]="endDate" numbersOnly
 										placeholder="Chọn ngày" formControlName="endDate" [(ngModel)]="model.endDate"
 									>
 								<mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>

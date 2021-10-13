@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { COMMONS } from 'src/app/commons/commons'
 import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
+import { title } from 'process'
 
 declare var $: any
 
@@ -27,7 +28,7 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 		private _shareData: DataService
 	) {}
 	userLoginId: number = this.storeageService.getUserId()
-	listData = new Array<RecommendationObject>()
+	listData: any = []
 	listStatus: any = [
 		{ value: 3, text: 'Đã công bố' },
 		{ value: 2, text: 'Đã thu hồi' },
@@ -55,8 +56,8 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 		status: null,
 	}
 
-	idChangeStatus : any
-	statusChange : number
+	idChangeStatus: any
+	statusChange: number
 
 	ngOnInit() {
 		this.getDataForCreate()
@@ -162,6 +163,7 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
+		let obj = this.listData.find((x) => x.id == id)
 		this.afService.delete(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
@@ -176,21 +178,20 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 			}
 	}
 
-	preChangeStatus(id : number,  status : number){
+	preChangeStatus(id: number, status: number) {
 		this.idChangeStatus = id
 		this.statusChange = status
 		$('#modalConfirmChangeStatus').modal('show')
-
 	}
 
-	onChangeStatus(){
+	onChangeStatus() {
 		const request = {
 			Id: this.idChangeStatus,
 			Status: this.statusChange,
 		}
-		console.log(request)
+		let obj = this.listData.find((x) => x.administrationId == this.idChangeStatus)
 		$('#modalConfirmChangeStatus').modal('hide')
-		this.afService.updateShow(request).subscribe((response) => {
+		this.afService.updateShow(request, obj.name).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
 				this.getList()
@@ -201,6 +202,5 @@ export class ListAdministrativeFormalitiesComponent implements OnInit {
 			(err) => {
 				console.error(err)
 			}
-		
 	}
 }

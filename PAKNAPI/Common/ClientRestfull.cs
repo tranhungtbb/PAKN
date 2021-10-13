@@ -10,14 +10,14 @@ namespace PAKNAPI.Common
 {
     public class ClientRestfull
     {
-        public static void SSL()
-        {
-            ServicePointManager.Expect100Continue = true;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
-                   | SecurityProtocolType.Tls11
-                   | SecurityProtocolType.Tls12
-                   | SecurityProtocolType.Ssl3;
-        }
+        //public static void SSL()
+        //{
+        //    ServicePointManager.Expect100Continue = true;
+        //    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+        //           | SecurityProtocolType.Tls11
+        //           | SecurityProtocolType.Tls12
+        //           | SecurityProtocolType.Ssl3;
+        //}
         /// Get data
         public static HttpResponseMessage GetStringAsync(string url, string querry, HeaderRess header)
         {
@@ -38,7 +38,7 @@ namespace PAKNAPI.Common
         /// application/x-www-form-urlencoded
         public static HttpResponseMessage PostData(string url, string querry, HeaderRess header, IEnumerable<KeyValuePair<string, string>> postData)
         {
-            SSL();
+            //SSL();
             using (var client = new HttpClient())
             {
                 var content = new FormUrlEncodedContent(postData);

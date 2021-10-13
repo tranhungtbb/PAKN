@@ -25,3 +25,9 @@
 	/* font-style: italic; */
 	font-weight: 100;
 }
+
+.item-news-relate {
+	display: flex;
+	border-radius: 10px;
+	position: relative;
+}

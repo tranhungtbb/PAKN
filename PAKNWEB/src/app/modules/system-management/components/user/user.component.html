@@ -51,7 +51,7 @@
 										trim [ngSwitch]="'fullName'" (keydown.enter)="table.filter($event?.target.value.trim(), 'fullName', 'contains')"
 										placeholder="Nhập ...">
 								</th>
-								<th style="width: 130px;">
+								<th style="width: 120px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
 									[pSortableColumn]="'positionName'">
 										<strong>Chức vụ <p-sortIcon [field]="'positionName'"></p-sortIcon></strong>
@@ -63,21 +63,22 @@
 											[items]= 'positionsList'
 											[ngSwitch]="'positionName'"
 											(change)="table.filter($event?.text.toString(), 'positionName')"
+											style="width: 120px;"
 										>
 										</ng-select>
 									</div>
 								</th>
-								<th style="width: 130px;">
+								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
 									[pSortableColumn]="'phone'">
 										<strong>Điện thoại <p-sortIcon [field]="'phone'"></p-sortIcon></strong>
 										
 									</p>
-									<input type="text" class="form-control form-control-sm"
+									<input type="text" class="form-control form-control-sm" style="width: 130px;"
 									numbersOnly [ngSwitch]="'phone'" (keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')"
 									placeholder="Nhập...">
 								</th>
-								<th style="width: 140px;">
+								<th style="width: 150px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
 										[pSortableColumn]="'unitName'"
 									>
@@ -89,7 +90,7 @@
 											bindValue="value"
 											[ngSwitch]="'unitName'"
 											(change)="table.filter($event?.text.toString(), 'unitName')"
-											style="width: 160px !important;">
+											style="width: 150px">
 										</ng-select>
 										<!-- "table.filter($event?.text.toString(), 'unitName') "  onChange($event)"-->
 									</div>
@@ -299,7 +300,7 @@
 													<td>{{item.description}}</td>
 													<td style="width: 20%;">
 														<span *ngIf="item.status == 1" class="badge rounded-pill badge-success">Thành công</span>
-														<span *ngIf="item.status == 0" class="badge rounded-pill bg-red text-white">Thất bại</span>
+														<span *ngIf="item.status == 0" class="badge rounded-pill bg-red text-white" (click)="showMessageError(item.messageError)">Thất bại</span>
 													</td>
 												</tr>
 											</ng-template>
@@ -322,6 +323,24 @@
 					</div>
 				</div>
 			<!-- </form> -->
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modal-error-his">
+	<div class="modal-dialog modal-dialog-centered modal-md" style="min-width: 500px" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Thông tin</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-3 pt-3">
+				<span>
+					{{messageError}}
+				</span>
+			</div>
+			<div class="modal-footer border-top-0"></div>
 		</div>
 	</div>
 </div>

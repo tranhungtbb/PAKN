@@ -19,31 +19,35 @@ export class PositionService {
 	CreatePosition(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_POSITION),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_POSITION + ' ' + request.name),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.PositionInsert, headers)
 	}
 	UpdatePosition(data: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_POSITION),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_POSITION + ' ' + data.name),
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.PositionUpdate, headers)
 	}
 	positionGetList(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.PositionGetList)
 	}
-	positionDelete(request: any): Observable<any> {
+	positionDelete(request: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.CA_POSITION),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_POSITION + ' ' + title),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.PositionDelete, headers)
 	}
 	positionGetById(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.PositionGetById)
 	}
-	positionUpdateStatus(data: any): Observable<any> {
-		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.PositionUpdate)
+	positionUpdateStatus(data: any, title: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
+			logObject: encodeURIComponent(LOG_OBJECT.CA_POSITION + ' ' + title),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.PositionUpdate, headers)
 	}
 }

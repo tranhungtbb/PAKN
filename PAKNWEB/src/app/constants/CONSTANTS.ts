@@ -33,6 +33,7 @@ export class LOG_ACTION {
 	public static CHANGEPASSWORD = 'Đổi mật khẩu'
 	public static PUBLIC = 'Công bố'
 	public static WITHDRAW = 'Hủy công bố'
+	public static RECALL = 'Thu hồi'
 	public static SEND = 'Gửi'
 	public static ASYNC = 'Đồng bộ'
 

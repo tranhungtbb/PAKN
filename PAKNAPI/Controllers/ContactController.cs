@@ -195,7 +195,7 @@ namespace PAKNAPI.Controllers
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 				return new ResultApi { Success = ResultCode.ORROR, Message = "ERROR: " + ex.Message, };
 			}
 		}
@@ -237,7 +237,7 @@ namespace PAKNAPI.Controllers
 			{
 				//long? UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
 				
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 				//JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 				return new ResultApi { Success = ResultCode.OK };
 			}

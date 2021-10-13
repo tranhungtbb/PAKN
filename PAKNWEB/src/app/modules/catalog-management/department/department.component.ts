@@ -6,7 +6,7 @@ import { CatalogService } from 'src/app/services/catalog.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { SortEvent } from 'primeng/api';
+import { SortEvent } from 'primeng/api'
 
 declare var $: any
 
@@ -31,8 +31,8 @@ export class DepartmentComponent implements OnInit {
 	totalRecords: number = 0
 	idDelete: number = 0
 	dataUpdate: any
-	title : any
-	cols: any[];
+	title: any
+	cols: any[]
 	ngOnInit() {
 		this.buildForm()
 		this.getList()
@@ -52,11 +52,10 @@ export class DepartmentComponent implements OnInit {
 		})
 	}
 
-
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
 	}
-	
+
 	get f() {
 		return this.form.controls
 	}
@@ -89,7 +88,6 @@ export class DepartmentComponent implements OnInit {
 	}
 
 	getList() {
-		
 		this._service.departmentGetList({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
@@ -108,12 +106,14 @@ export class DepartmentComponent implements OnInit {
 			}
 	}
 
-
 	preCreate() {
 		this.model = new DepartmentObject()
 		this.rebuilForm()
 		this.submitted = false
 		this.title = 'Thêm mới sở ngành'
+		setTimeout(() => {
+			$('#title').focus()
+		}, 100)
 		$('#modal').modal('show')
 	}
 
@@ -197,7 +197,8 @@ export class DepartmentComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.departmentDelete(request).subscribe((response) => {
+		let obj = this.listData.find((x) => x.id == id)
+		this._service.departmentDelete(request, obj.name).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result > 0) {
 					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)

@@ -54,21 +54,20 @@
 							</button>
 						</div>
 						<div class="col-md-12 pr-0 pl-0">
-							<div class="btn btn-default p-2 border mb-2" style="position: relative; overflow-x: hidden;" *ngFor="let relateItem of newsRelatesSelected">
+							<div class="p-2 border mb-2 item-news-relate" *ngFor="let relateItem of newsRelatesSelected">
 								<img class="rounded border" style="min-height: 52px;" width="80" [src]="relateItem.imagePath" />
-								<span class="col-md-10" style="white-space: nowrap;
-								display: inline-block;
-								overflow: hidden;
-    						text-align: left;">
-									&nbsp;<strong>{{relateItem.title}}</strong>
+								<span class="col-md-10 p-1 ml-3">
+									<strong class="text-2line p-0">{{relateItem.title}}</strong>
 								</span>
-								<span class="mt-1 mr-1 relate-del-btn" (click)="removeRelate(relateItem.id)"><i class="bi bi-x"></i></span>
+								<span class="mt-1 mr-1 relate-del-btn" (click)="removeRelate(relateItem.id)">
+									<i class="bi bi-x" style="font-size: 20px;"></i>
+								</span>
 							</div>
 						</div>
 					</div>
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">Nội dung bài viết </span> <span class="cl-red">(*)</span></label>
-						<ckeditor id="editor" [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents" (ready)="onReady($event)" [config]="ckConfig"></ckeditor>
+						<ckeditor id="editor" [editor]="Editor" formControlName="contents" [(ngModel)]="model.contents" (ready)="onReady($event)"></ckeditor>
 						<div *ngIf="(submitted && f.contents.invalid)||(f.contents.invalid && (f.contents.dirty || f.contents.touched))" class="has-error m-b-12">
 							<div *ngIf="f.contents.errors?.required">
 								<span class="help-block">Trường dữ liệu này không được để trống</span>

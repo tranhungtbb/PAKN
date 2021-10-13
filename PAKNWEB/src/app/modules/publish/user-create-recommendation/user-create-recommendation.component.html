@@ -11,6 +11,7 @@
 					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id == 0">Tạo mới phản ánh, Kiến nghị</li>
 					<li class="breadcrumb-item font-weight-bold" *ngIf="model.id != 0">Cập nhật phản ánh, Kiến nghị</li>
 				</ol>
+				<div class="tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>
 				<p *ngIf="!isLogin || (isLogin && isLogin.trim() == '')" class="cl-red">Vui lòng đăng nhập để gửi phản ánh kiến nghị!</p>
 				<form class="form-row mb-3" [formGroup]="form">
 					<div class="col-12 form-group">
@@ -65,6 +66,7 @@
 							</ng-template>
 						</ng-select>
 					</div>
+					
 					<div class="col-12 col-lg form-group">
 						<label class="mb-1">Lĩnh vực</label>
 						<ng-select class="form-control" [items]="lstField" bindValue="value" bindLabel="text" 

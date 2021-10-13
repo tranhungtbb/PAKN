@@ -1,26 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-//import * as ClassicEditor from '../../../../ckeditor'
-
-//import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 
 import { Router, ActivatedRoute } from '@angular/router'
-import { RESPONSE_STATUS } from '../../../constants/CONSTANTS'
 import { NewsService } from '../../../services/news.service'
 import { CatalogService } from '../../../services/catalog.service'
 import { NotificationService } from '../../../services/notification.service'
 
 import { NewsRelateModalComponent } from '../news-relate-modal/news-relate-modal.component'
-import { CONSTANTS, STATUS_HISNEWS } from 'src/app/constants/CONSTANTS'
-import { COMMONS } from '../../../commons/commons'
 import { AppSettings } from '../../../constants/app-setting'
 import { NewsModel, HISNewsModel } from '../../../models/NewsObject'
-import { from } from 'rxjs'
-import { switchMap } from 'rxjs/operators'
 import { Api } from 'src/app/constants/api'
 import { UploadAdapter } from 'src/app/services/uploadAdapter'
 import { HttpClient } from '@angular/common/http'
@@ -139,7 +131,7 @@ export class NewsDetailComponent implements OnInit {
 		}
 	}
 
-	redirectUpdate(){
+	redirectUpdate() {
 		this.router.navigate(['/quan-tri/tin-tuc/chinh-sua/' + this.model.id])
 	}
 

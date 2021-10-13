@@ -8,7 +8,7 @@ import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { RecommendationService } from 'src/app/services/recommendation.service'
-import { Table } from 'primeng/components/table/table';
+import { Table } from 'primeng/components/table/table'
 
 declare var $: any
 
@@ -78,27 +78,19 @@ export class HashtagComponent implements OnInit {
 
 	// const FilterUtils = require('primeng/components/utils/filterutils').FilterUtils;
 
-
-
-	
-
 	ngOnInit() {
 		// form validate
 
 		this.buildForm()
 		this.GetListHashtag()
-
-		
 	}
-	
+
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
 		// $('#modal').on('keypress', function (e) {
 		// 	if (e.which == 13) e.preventDefault()
 		// })
 	}
-
-	
 
 	buildForm() {
 		this.fForm = this.formBuilder.group({
@@ -119,7 +111,6 @@ export class HashtagComponent implements OnInit {
 	}
 
 	GetListHashtag() {
-		
 		this.service.getAllPagedList({}).subscribe((res) => {
 			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 				if (res.result) {
@@ -133,8 +124,7 @@ export class HashtagComponent implements OnInit {
 	}
 
 	listRecommendationByHashtag(id: any) {
-		
-		if(id == undefined) return
+		if (id == undefined) return
 		this.mrrHashtagId = id
 		var obj = {
 			Code: this.mrrCode != null ? this.mrrCode : '',
@@ -147,7 +137,7 @@ export class HashtagComponent implements OnInit {
 			PageSize: this.mrrPageSize,
 			PageIndex: this.mrrPageIndex,
 		}
-		
+
 		this.service.recommendationGetByHashtagAllOnPage(obj).subscribe((res) => {
 			if ((res.success = RESPONSE_STATUS.success)) {
 				this.recommendationsGetByHashtag = res.result.MRRecommendationGetByHashtagAllOnPage
@@ -158,14 +148,11 @@ export class HashtagComponent implements OnInit {
 		})
 	}
 
-
 	onPageChange2(event: any) {
 		this.mrrPageSize = event.rows
 		this.mrrPageIndex = event.first / event.rows + 1
 		this.listRecommendationByHashtag(this.mrrHashtagId)
 	}
-
-
 
 	dataStateChange2() {
 		this.table.first = 0
@@ -273,7 +260,8 @@ export class HashtagComponent implements OnInit {
 
 	// delete
 	onDelete() {
-		this.service.delete({ id: this.IdDelete }).subscribe((res) => {
+		let obj = this.listHastag.find((x) => x.id == this.IdDelete)
+		this.service.delete({ id: this.IdDelete }, obj.name).subscribe((res) => {
 			$('#modalConfirmDelete').modal('hide')
 			if (res != 'undefined') {
 				if (res.success == RESPONSE_STATUS.success) {

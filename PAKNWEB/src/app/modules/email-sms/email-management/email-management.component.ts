@@ -112,7 +112,8 @@ export class EmailManagementComponent implements OnInit {
 
 	onDelete() {
 		$('#modalConfirm').modal('hide')
-		this.emailService.Delete(this.emailId).subscribe((res) => {
+		let obj = this.listData.find((x) => x.id == this.emailId)
+		this.emailService.Delete(this.emailId, obj.title).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this._toastr.success(COMMONS.DELETE_SUCCESS)
 				this.getPagedList()
@@ -133,7 +134,8 @@ export class EmailManagementComponent implements OnInit {
 
 	onUpdateStatusTypeSend() {
 		$('#modalConfirmChangeStatus').modal('hide')
-		this.emailService.SendEmail(this.emailId).subscribe((res) => {
+		let obj = this.listData.find((x) => x.id == this.emailId)
+		this.emailService.SendEmail(this.emailId, obj.title).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.getPagedList()
 			}
@@ -190,6 +192,8 @@ export class EmailManagementComponent implements OnInit {
 			this.hisPagedList = res.result.Data
 			if (this.hisPagedList[0] && this.hisPagedList[0]!.rowNumber > 0) {
 				this.hisTotalRecords = this.hisPagedList[0].rowNumber
+			} else {
+				this.hisTotalRecords = 0
 			}
 		})
 	}

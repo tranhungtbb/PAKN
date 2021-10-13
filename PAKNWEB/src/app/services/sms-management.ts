@@ -16,7 +16,7 @@ export class SMSManagementService {
 	Insert(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(request.model.status == 1 ? LOG_ACTION.INSERT : LOG_ACTION.INSERT_AND_SEND),
-			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL),
+			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL + ' ' + request.model.title),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.SMSManagementInsert, headers)
 	}
@@ -29,10 +29,10 @@ export class SMSManagementService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.SMSManagementUpdate)
 	}
 
-	UpdateStatusSend(request: any): Observable<any> {
+	UpdateStatusSend(request: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.SEND),
-			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL),
+			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL + ' ' + title),
 		}
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.SMSManagementUpdateStatusSend, headers)
 	}
@@ -40,16 +40,15 @@ export class SMSManagementService {
 	Update(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(request.model.status == 1 ? LOG_ACTION.UPDATE : LOG_ACTION.UPDATE_AND_SEND),
-			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL),
+			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL + ' ' + request.model.title),
 		}
-		debugger
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.SMSManagementUpdate, headers)
 	}
 
-	Delete(request: any): Observable<any> {
+	Delete(request: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL),
+			logObject: encodeURIComponent(LOG_OBJECT.SMS_EMAIL + ' ' + title),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.SMSManagementDelete, headers)
 	}

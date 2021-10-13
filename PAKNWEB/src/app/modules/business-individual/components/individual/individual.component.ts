@@ -48,7 +48,7 @@ export class IndividualComponent implements OnInit {
 	listDistrict: any[] = []
 	listVillage: any[] = []
 	listAllDiaDanh: any[] = []
-	titleAccess : any = ''
+	titleAccess: any = ''
 	userLoginId: number = this.storeageService.getUserId()
 	listData = new Array<IndividualObject>()
 	listStatus: any = [
@@ -63,7 +63,7 @@ export class IndividualComponent implements OnInit {
 
 	fileAccept = '.xls, .xlsx'
 	listInvPaged: any[] = []
-	validateDateOfIssue : any = true
+	validateDateOfIssue: any = true
 
 	form: FormGroup
 	model: IndividualObject = new IndividualObject()
@@ -81,7 +81,7 @@ export class IndividualComponent implements OnInit {
 	inSortField = 'ID'
 
 	isOtherNation = false
-	isIndividual : boolean = false
+	isIndividual: boolean = false
 
 	ngOnInit() {
 		// this.buildForm()
@@ -89,11 +89,10 @@ export class IndividualComponent implements OnInit {
 		this.localeService.use('vi')
 		this.loadFormBuilder()
 		this.onChangeNation()
-		if(localStorage.getItem('isIndividual') === 'true'){
+		if (localStorage.getItem('isIndividual') === 'true') {
 			this.isIndividual = true
 			$('#modal').modal('show')
 		}
-		
 	}
 
 	//event
@@ -183,12 +182,11 @@ export class IndividualComponent implements OnInit {
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
 		// $('#modal').on('hidden.bs.modal', function () {
-			
+
 		// });
 	}
 
-	close =()=>{
-	}
+	close = () => {}
 
 	onSortIndividual(fieldName: string) {
 		this.inSortDir = this.inSortDir == 'DESC' ? 'ASC' : 'DESC'
@@ -235,10 +233,9 @@ export class IndividualComponent implements OnInit {
 	modalConfirm_type = 'Status'
 	modelConfirm_itemId: number = 0
 	onOpenConfirmModal(id: any, type = 'Status') {
-		if(type == 'Status'){
+		if (type == 'Status') {
 			this.titleAccess = 'Anh/Chị có chắc chắn muốn thay đổi trạng thái của người dân này?'
-		}
-		else{
+		} else {
 			this.titleAccess = 'Anh/Chị có chắc chắn muốn xóa người dân này?'
 		}
 		this.modalConfirm_type = type
@@ -270,7 +267,8 @@ export class IndividualComponent implements OnInit {
 	}
 	/*end - chức năng xác nhận hành động xóa*/
 	onDeleteIndividual(id) {
-		this._service.individualDelete({ Id: id }).subscribe((res) => {
+		let obj = this.listData.find((x) => x.id == id)
+		this._service.individualDelete({ Id: id }, obj.fullName).subscribe((res) => {
 			if (res.success != RESPONSE_STATUS.success) {
 				if (res.message.includes(`REFERENCE constraint "PK_BI_Individual"`)) {
 					this._toastr.error(COMMONS.DELETE_FAILED)
@@ -319,7 +317,7 @@ export class IndividualComponent implements OnInit {
 		this.model.gender = true // Giới tính Nam
 		this.model.status = 1 // Hiệu lực
 		this.submitted = false
-		this.rebuidForm()
+		// this.rebuidForm()
 
 		if (this.isOtherNation) {
 			this.onChangeNation()
@@ -372,7 +370,6 @@ export class IndividualComponent implements OnInit {
 		})
 	}
 
-
 	onSave() {
 		this.submitted = true
 
@@ -380,7 +377,7 @@ export class IndividualComponent implements OnInit {
 			this.model.nation = ''
 		}
 		this.model.userId = this.userLoginId
-		if(!this.model.issuedPlace) this.model.issuedPlace = ''	
+		if (!this.model.issuedPlace) this.model.issuedPlace = ''
 		this.model.issuedPlace = this.model.issuedPlace.trim()
 		if (!this.model.email) this.model.email = ''
 
@@ -391,7 +388,6 @@ export class IndividualComponent implements OnInit {
 		if (this.form.invalid) {
 			return
 		}
-
 
 		if (this.model.dateOfIssue && this.model.dateOfIssue < this.model.birthDay) {
 			this.validateDateOfIssue = false
@@ -424,9 +420,9 @@ export class IndividualComponent implements OnInit {
 				}
 				this._toastr.success(COMMONS.ADD_SUCCESS)
 				$('#modal').modal('hide')
-				if(this.isIndividual){
+				if (this.isIndividual) {
 					this._router.navigate(['/quan-tri/kien-nghi/them-moi/0/1'])
-				}else{
+				} else {
 					this.getList()
 				}
 			})
@@ -485,7 +481,7 @@ export class IndividualComponent implements OnInit {
 
 				this.model.birthDay = this.model.birthDay == null ? null : new Date(this.model.birthDay)
 				this.model.dateOfIssue = this.model.dateOfIssue == null ? null : new Date(this.model.dateOfIssue)
-				
+
 				this.getProvince()
 				this.getDistrict(response.result.InvididualGetByID[0].provinceId)
 				this.getVillage(response.result.InvididualGetByID[0].provinceId, response.result.InvididualGetByID[0].districtId)

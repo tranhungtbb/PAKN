@@ -17,7 +17,7 @@ export class GroupWordComponent implements OnInit {
 	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) {}
 
 	listData = new Array<FieldObject>()
-	listWordByGroupId : any 
+	listWordByGroupId: any
 	listStatus: any = [
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
@@ -168,7 +168,8 @@ export class GroupWordComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.groupWordDelete(request).subscribe((response) => {
+		let obj = this.listData.find((x) => x.id == id)
+		this._service.groupWordDelete(request, obj.name).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result > 0) {
 					this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
@@ -215,17 +216,17 @@ export class GroupWordComponent implements OnInit {
 		$('#modalDetail').modal('show')
 	}
 
-	getListWordLibraryByGroupId(groupId : any){
-		this._service.wordGetListByGroupId({GroupId : groupId}).subscribe(res =>{
-			if(res.success == RESPONSE_STATUS.success){
+	getListWordLibraryByGroupId(groupId: any) {
+		this._service.wordGetListByGroupId({ GroupId: groupId }).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
 				this.listWordByGroupId = res.result.CAWordGetAllOnPageByGroupId
 				$('#modalLstWordByGroupId').modal('show')
-			}
-			else{
+			} else {
 				this.listWordByGroupId = []
 			}
-		}),(error)=>{
-			console.log(error)
-		}
+		}),
+			(error) => {
+				console.log(error)
+			}
 	}
 }

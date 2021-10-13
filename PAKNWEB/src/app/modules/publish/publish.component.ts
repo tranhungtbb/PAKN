@@ -10,8 +10,7 @@ import { ChatbotService } from 'src/app/services/chatbot.service'
 import { IndexSettingService } from 'src/app/services/index-setting.service'
 import { IndexSettingObjet, IndexBanner, IndexWebsite } from 'src/app/models/indexSettingObject'
 
-
-declare var $:any
+declare var $: any
 
 @Component({
 	selector: 'app-publish',
@@ -41,7 +40,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	isLogin: boolean = this.storageService.getIsHaveToken()
 	indexSettingObj: any = new IndexSettingObjet()
 
-	subMenu:any[]=[]
+	subMenu: any[] = []
 
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
@@ -70,22 +69,23 @@ export class PublishComponent implements OnInit, OnChanges {
 				console.log(error)
 				alert(error)
 			}
-		
-			this.subMenu = [
-				{path:['phan-anh-kien-nghi/da-tra-loi'],text:'Phản ánh- kiến nghị đã trả lời'},
-				{path:['phan-anh-kien-nghi/sync/cong-ttdt-tinh-khanh-hoa'],text:'Cổng thông tin điện tử tỉnh Khánh Hoà'},
-				{path:['phan-anh-kien-nghi/sync/cong-dv-hcc-tinh-khoanh-hoa'],text:'Cổng thông tin dịch vụ hành chính công trực tuyến tỉnh Khánh Hoà'},
-				{path:['phan-anh-kien-nghi/sync/he-thong-cu-tri-khanh-hoa'],text:'Hệ thống quản lý kiến nghị cử tri tỉnh Khánh Hoà'},
-				{path:['phan-anh-kien-nghi/sync/he-thong-pakn-quoc-gia'],text:'Hệ thống tiếp nhận, trả lời PAKN của Chính Phủ'}
-			]
+
+		this.subMenu = [
+			{ path: ['phan-anh-kien-nghi/da-tra-loi'], text: 'Phản ánh- kiến nghị đã trả lời' },
+			{ path: ['phan-anh-kien-nghi/sync/cong-ttdt-tinh-khanh-hoa'], text: 'Cổng thông tin điện tử tỉnh Khánh Hoà' },
+			{ path: ['phan-anh-kien-nghi/sync/cong-dv-hcc-tinh-khoanh-hoa'], text: 'Cổng thông tin dịch vụ hành chính công trực tuyến tỉnh Khánh Hoà' },
+			{ path: ['phan-anh-kien-nghi/sync/he-thong-cu-tri-khanh-hoa'], text: 'Hệ thống quản lý kiến nghị cử tri tỉnh Khánh Hoà' },
+			{ path: ['phan-anh-kien-nghi/sync/he-thong-pakn-quoc-gia'], text: 'Hệ thống tiếp nhận, trả lời PAKN của Chính Phủ' },
+		]
 	}
 
 	getListNotification(PageSize: any) {
 		this.ViewedCount = 0
 		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: PageSize, PageIndex: 1 }).subscribe((res) => {
-			if ((res.success = RESPONSE_STATUS.success)) {
+			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.syNotifications.length > 0) {
 					this.ViewedCount = res.result.syNotifications[0].viewedCount
+					this.viewedCountLate = res.result.syNotifications[0].viewedCount
 					this.notifications = res.result.syNotifications
 				} else {
 					this.notifications = []
@@ -94,11 +94,11 @@ export class PublishComponent implements OnInit, OnChanges {
 			return
 		})
 	}
-
+	viewedCountLate: number = 0
 	updateNotifications() {
+		this.viewedCountLate = 0
 		this.notificationService.updateIsViewedNotification({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				this.getListNotification(this.numberNotifications)
 			}
 			return
 		})
@@ -136,20 +136,20 @@ export class PublishComponent implements OnInit, OnChanges {
 			}
 		})
 	}
-	onClickNotification(id: number, type : number, typeSend : number) {
+	onClickNotification(id: number, type: number, typeSend: number) {
 		this.updateIsReadNotification(id)
 		if (type == TYPE_NOTIFICATION.NEWS) {
 			this._router.navigate(['cong-bo/tin-tuc-su-kien/' + id])
-		} else if(type == TYPE_NOTIFICATION.RECOMMENDATION){
+		} else if (type == TYPE_NOTIFICATION.RECOMMENDATION) {
 			if (typeSend == RECOMMENDATION_STATUS.FINISED) {
 				this._router.navigate(['/cong-bo/phan-anh-kien-nghi/' + id])
 			} else {
 				this._router.navigate(['/cong-bo/chi-tiet-kien-nghi/' + id])
 			}
-		}else if (type == TYPE_NOTIFICATION.INVITATION) {
+		} else if (type == TYPE_NOTIFICATION.INVITATION) {
 			this._router.navigate(['/quan-tri/thu-moi/chi-tiet/' + id])
-		}
-		else if (type == TYPE_NOTIFICATION.ADMINISTRATIVE) { // tthc
+		} else if (type == TYPE_NOTIFICATION.ADMINISTRATIVE) {
+			// tthc
 			// this.updateIsReadNotification(dataId)
 			this._router.navigate(['/quan-tri/thu-tuc-hanh-chinh/chi-tiet/' + id])
 		}
@@ -162,9 +162,6 @@ export class PublishComponent implements OnInit, OnChanges {
 
 	onScroll(event: any) {
 		if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 50) {
-			if(this.numberNotifications == 10){
-				this.notificationService.updateIsViewedNotification({}).subscribe()
-			}
 			this.numberNotifications = this.numberNotifications + 5
 			this.getListNotification(this.numberNotifications)
 		}

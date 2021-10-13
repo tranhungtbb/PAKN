@@ -7,15 +7,6 @@
 			</ol>
 			<!-- <div class="breadcrumb title-module px-0 bg-transparent" style="text-transform: uppercase; font-size: 18px;font-weight: 600;">Danh sách lĩnh vực</div> -->
 			<div class="btn-group group-button-table" role="group">
-				<!-- <button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
-						<path
-							d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
-						<path
-							d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
-					</svg>
-					Xuất excel
-				</button> -->
 				<button type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="redirectCreate()" *hasPermission="['3', 'A_X_1']">
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
 						<path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
@@ -179,11 +170,6 @@
 						(change)="onChangeLstItemUser()"
 					>
 					</ng-select>
-					<!-- <ng-select notFoundText="Không có dữ liệu"  class="form-control" placeholder="Chọn..." [closeOnSelect]="true" [(ngModel)]="listItem"  multiple="true">
-						<ng-option *ngFor="let nt of SYUserGetIsNotRole" [value]="nt.value">
-							{{nt.text}}
-						</ng-option>
-					</ng-select> -->
 				</div>
 				<div style="width: 10%;" class="text-center-x">
 					<button *hasPermission="['3', 'A_X_9']" type="button" (click)="onCreateUserRole()" class="btn grd-blue btn-sm rounded border-0 text-white text-center-x"

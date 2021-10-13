@@ -65,16 +65,16 @@ export class NewsPuslishComponent implements OnInit {
 				status: 1,
 			})
 			.subscribe((res) => {
-				if (res.success != 'OK'){
+				if (res.success != 'OK') {
 					this.listDataPaged = []
 					this.totalCount = 0
 					this.query.pageSize = 20
 					this.query.pageIndex = 1
-				}else{
-					if(res.result.NENewsGetAllOnPage.length > 0){
+				} else {
+					if (res.result.NENewsGetAllOnPage.length > 0) {
 						this.listDataPaged = res.result.NENewsGetAllOnPage
 						if (res.result.TotalCount) this.totalCount = res.result.TotalCount
-					}else{
+					} else {
 						this.listDataPaged = []
 						this.totalCount = 0
 						this.query.pageSize = 20
@@ -120,12 +120,14 @@ export class NewsPuslishComponent implements OnInit {
 	acceptConfirm() {
 		let item = this.listDataPaged.find((c) => c.id == this.modalConfirm_item_id)
 		if (this.modalConfirm_type == 'delete') {
-			this.newsService.delete({ id: item.id }).subscribe((res) => {
+			this.newsService.delete({ id: item.id }, item.title).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error(COMMONS.DELETE_FAILED)
 					return
 				}
 				this.toast.success(COMMONS.DELETE_SUCCESS)
+				this.query.pageSize = 20
+				this.query.pageIndex = 1
 				this.getListPaged()
 			})
 		} else if (this.modalConfirm_type == 'publish') {

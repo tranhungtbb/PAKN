@@ -260,7 +260,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 				_sYUserRoleMaps: listModel,
 				isCreated: isCreated,
 			}
-			this.userService.insertMultiUserRole(obj).subscribe((res) => {
+			this.userService.insertMultiUserRole(obj, this.model.name).subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
 					// this.redirectList()
 					return

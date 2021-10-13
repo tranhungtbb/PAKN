@@ -35,6 +35,9 @@ export class RecommendationsByUnitComponent implements OnInit {
 	year: any
 	timeline: any
 
+	minDate: Date
+	maxDate: Date
+
 	lstTimeline: any = [
 		{ value: 1, text: 'Quý I' },
 		{ value: 2, text: 'Quý II' },
@@ -126,6 +129,8 @@ export class RecommendationsByUnitComponent implements OnInit {
 			this.fromDate = new Date(this.year, 0, 1)
 			let tmp_date = new Date(this.year + 1, 0, 1)
 			this.toDate = this.minusDays(tmp_date, 1)
+			this.minDate = this.fromDate
+			this.maxDate = this.toDate
 			this.getList()
 		}
 	}
@@ -160,6 +165,8 @@ export class RecommendationsByUnitComponent implements OnInit {
 				let tmp_date = new Date(this.year + 1, 0, 1)
 				this.toDate = this.minusDays(tmp_date, 1)
 			}
+			this.minDate = this.fromDate
+			this.maxDate = this.toDate
 		}
 	}
 

@@ -65,23 +65,22 @@ export class NewsComponent implements OnInit {
 				status: this.query.status == null ? '' : this.query.status,
 			})
 			.subscribe((res) => {
-				if (res.success != 'OK'){
+				if (res.success != 'OK') {
 					this.listDataPaged = []
 					this.totalCount = 0
 					this.query.pageSize = 20
 					this.query.pageIndex = 1
-				}else{
-					if(res.result.NENewsGetAllOnPage.length > 0){
+				} else {
+					if (res.result.NENewsGetAllOnPage.length > 0) {
 						this.listDataPaged = res.result.NENewsGetAllOnPage
 						if (res.result.TotalCount) this.totalCount = res.result.TotalCount
-					}else{
+					} else {
 						this.listDataPaged = []
 						this.totalCount = 0
 						this.query.pageSize = 20
 						this.query.pageIndex = 1
 					}
 				}
-				
 			})
 	}
 
@@ -121,11 +120,13 @@ export class NewsComponent implements OnInit {
 	acceptConfirm() {
 		let item = this.listDataPaged.find((c) => c.id == this.modalConfirm_item_id)
 		if (this.modalConfirm_type == 'delete') {
-			this.newsService.delete({ id: item.id }).subscribe((res) => {
+			this.newsService.delete({ id: item.id }, item.title).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error(COMMONS.DELETE_FAILED)
 					return
 				}
+				this.query.pageSize = 20
+				this.query.pageIndex = 1
 				this.toast.success(COMMONS.DELETE_SUCCESS)
 				this.getListPaged()
 			})

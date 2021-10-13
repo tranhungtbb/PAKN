@@ -26,7 +26,7 @@ export class DepartmentGroupComponent implements OnInit {
 	model: any = new FieldObject()
 	submitted: boolean = false
 	title: string = ''
-	
+
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
@@ -166,7 +166,8 @@ export class DepartmentGroupComponent implements OnInit {
 		let request = {
 			Id: id,
 		}
-		this._service.departmentGroupDelete(request).subscribe((response) => {
+		let obj = this.listData.find((x) => x.id == id)
+		this._service.departmentGroupDelete(request, obj.name).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result == 0) {
 					this._toastr.error('Nhóm sở ngành này đang được sử dụng')
@@ -216,5 +217,5 @@ export class DepartmentGroupComponent implements OnInit {
 		this.model = data
 		$('#modalDetail').modal('show')
 	}
-	fruit : any
+	fruit: any
 }

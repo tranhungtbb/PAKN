@@ -40,7 +40,7 @@ export class EmailManagementService {
 			logAction: encodeURIComponent(
 				body.Data.id == 0 ? (body.Data.status == 1 ? LOG_ACTION.INSERT : LOG_ACTION.INSERT_AND_SEND) : body.Data.status == 1 ? LOG_ACTION.UPDATE : LOG_ACTION.UPDATE_AND_SEND
 			),
-			logObject: encodeURIComponent(LOG_OBJECT.EMAIL),
+			logObject: encodeURIComponent(LOG_OBJECT.EMAIL + ' ' + body.Data.title),
 		}
 
 		return this.serviceInvoker.postwithHeaders(form, `${AppSettings.API_ADDRESS}/${Api.EmailManagementUpdate}?userId=${this.currentUserId}`, headers)
@@ -52,17 +52,17 @@ export class EmailManagementService {
 	public getPagedList(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, `${AppSettings.API_ADDRESS}/${Api.EmailManagementGetPagedList}?userId=${this.currentUserId}`)
 	}
-	public Delete(id: number): Observable<any> {
+	public Delete(id: number, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.EMAIL),
+			logObject: encodeURIComponent(LOG_OBJECT.EMAIL + ' ' + title),
 		}
 		return this.serviceInvoker.getwithHeaders({ id }, `${AppSettings.API_ADDRESS}/${Api.EmailManagementDelete}?userId=${this.currentUserId}`, headers)
 	}
-	public SendEmail(id: number): Observable<any> {
+	public SendEmail(id: number, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.SEND),
-			logObject: encodeURIComponent(LOG_OBJECT.EMAIL),
+			logObject: encodeURIComponent(LOG_OBJECT.EMAIL + ' ' + title),
 		}
 		return this.serviceInvoker.getwithHeaders({ id }, `${AppSettings.API_ADDRESS}/${Api.EmailManagementSendEmail}?userId=${this.currentUserId}`, headers)
 	}

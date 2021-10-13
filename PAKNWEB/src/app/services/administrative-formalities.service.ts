@@ -138,17 +138,17 @@ export class AdministrativeFormalitiesService {
 		}
 		return this.http.post(AppSettings.API_ADDRESS + Api.AdministrativeFormalitiesUpdate, form, httpPackage)
 	}
-	updateShow(request: any): Observable<any> {
+	updateShow(request: any, title: any = null): Observable<any> {
 		let headers = {
-			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
-			logObject: encodeURIComponent(LOG_OBJECT.DAM_ADMINISTRATOR),
+			logAction: encodeURIComponent(request.Status == 3 ? LOG_ACTION.PUBLIC : LOG_ACTION.RECALL),
+			logObject: encodeURIComponent(LOG_OBJECT.DAM_ADMINISTRATOR + ' ' + title),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.AdministrativeFormalitiesUpdateShow, headers)
 	}
-	forward(request: any): Observable<any> {
+	forward(request: any, name: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.FORWARD),
-			logObject: encodeURIComponent(LOG_OBJECT.DAM_ADMINISTRATOR),
+			logObject: encodeURIComponent(LOG_OBJECT.DAM_ADMINISTRATOR + ' ' + name),
 		}
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.AdministrativeForward, headers)
 	}

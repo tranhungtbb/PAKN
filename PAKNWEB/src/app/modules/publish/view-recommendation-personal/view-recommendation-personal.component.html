@@ -23,14 +23,23 @@
 							</div>
 
 						</div>
-						<span>
+						<!-- <span>
 							<p class="my-0 h5">Đơn vị tiếp nhận :</p> {{model.unitName}}
 						</span>
 						<span>
 							<p class="my-0 h5">Lĩnh vực :</p> {{model.fieldName}}
-						</span>
+						</span> -->
 						<span>{{model.createdDate | date:'HH:mm dd/MM/yyyy'}}</span>
 					</div>
+					<div class="m-3">
+						<span class="pr-5">
+							<span class="my-0 h5">Đơn vị tiếp nhận :</span> {{model.unitName}}
+						</span>
+						<span *ngIf="model.fieldName">
+							<span class="my-0 h5">Lĩnh vực :</span> {{model.fieldName}}
+						</span>
+					</div>
+
 					<div class="media pb-4">
 						<div class="mr-3">
 							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-chat-right-text" viewBox="0 0 16 16">

@@ -19,21 +19,21 @@ export class SystemconfigService {
 	updateSystemTime(query: any, isUpdateStatus: boolean = false): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(isUpdateStatus == false ? LOG_ACTION.UPDATE : LOG_ACTION.UPDATESTATUS),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_TIME),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_TIME + ' ' + query.name),
 		}
 		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.TimeConfigUpdate, headers)
 	}
 	insertSystemTime(query: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_TIME),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_TIME + ' ' + query.name),
 		}
 		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.TimeConfigInsert, headers)
 	}
-	deleteSystemTime(query: any): Observable<any> {
+	deleteSystemTime(query: any, name: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.DELETE),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_TIME),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_TIME + ' ' + name),
 		}
 		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.TimeConfigDelete, headers)
 	}
@@ -52,7 +52,7 @@ export class SystemconfigService {
 	syConfigUpdate(query: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-			logObject: encodeURIComponent(LOG_OBJECT.SY_CONFIG),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_CONFIG + ' ' + query.title),
 		}
 		return this.serviceInvoker.postwithHeaders(query, AppSettings.API_ADDRESS + Api.SYConfigSystemUpdate, headers)
 	}

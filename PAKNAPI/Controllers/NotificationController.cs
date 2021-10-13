@@ -59,7 +59,7 @@ namespace PAKNAPI.Controllers
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -344,7 +344,7 @@ namespace PAKNAPI.Controllers
             }
             catch (Exception ex)
             {
-                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
@@ -456,13 +456,13 @@ namespace PAKNAPI.Controllers
                 int count = await new SYNotification(_appSetting).SYNotificationDelete(_syNotification);
                 if (count > 0)
                 {
-                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
                     return new ResultApi { Success = ResultCode.OK, Result = count };
                 }
                 else
                 {
-                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null);
+                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
 
                     return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
                 }
@@ -470,7 +470,7 @@ namespace PAKNAPI.Controllers
             catch (Exception ex)
             {
                 _bugsnag.Notify(ex);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }

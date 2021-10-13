@@ -59,7 +59,7 @@ namespace PAKNAPI.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -92,7 +92,7 @@ namespace PAKNAPI.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -113,10 +113,12 @@ namespace PAKNAPI.ControllerBase
 			{
 				SYSystemLogDeleteIN _sYSystemLogDeleteIN = new SYSystemLogDeleteIN();
 				_sYSystemLogDeleteIN.Id = Id;
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
 				return new ResultApi { Success = ResultCode.OK, Result = await new SYSystemLogDelete(_appSetting).SYSystemLogDeleteDAO(_sYSystemLogDeleteIN) };
 			}
 			catch (Exception ex)
 			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
