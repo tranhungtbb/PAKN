@@ -79,6 +79,22 @@
 										</div>
 									</div>
 								</div>
+								<div class="col-12 col-lg-8 form-group">
+									<label class="mb-1">Đơn vị <span class="cl-red">(*)</span></label>
+									<input *ngIf="!isAdmin && modelUser.id > 0" disabled value="{{modelUser.unitName}}" type="text" class="form-control">
+									<ng-select notFoundText="Không có dữ liệu" 
+										[ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" 
+										class="form-control" [items]="unitsList" placeholder="Chọn..." bindLabel="text" bindValue="value" 
+										[(ngModel)]="modelUser.unitId" (change)="changeUnit($event)"
+										formControlName="unitId" [closeOnSelect]="true">
+									</ng-select>
+									<div *ngIf="(userFormSubmitted && fUser.unitId.invalid)||(fUser.unitId.invalid && (fUser.unitId.dirty || fUser.unitId.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.unitId.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Chức vụ <span class="cl-red">(*)</span></label>
 									<input *ngIf="!isAdmin && modelUser.id > 0" disabled value="{{modelUser.positionName}}" type="text" class="form-control">
@@ -88,19 +104,6 @@
 									<div *ngIf="(userFormSubmitted && fUser.positionId.invalid)||(fUser.positionId.invalid && (fUser.positionId.dirty || fUser.positionId.touched))"
 										class="has-error m-b-12">
 										<div *ngIf="fUser.positionId.errors.required">
-											<span class="help-block">Trường dữ liệu này không được để trống</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-12 col-lg-4 form-group">
-									<label class="mb-1">Đơn vị <span class="cl-red">(*)</span></label>
-									<input *ngIf="!isAdmin && modelUser.id > 0" disabled value="{{modelUser.unitName}}" type="text" class="form-control">
-									<ng-select notFoundText="Không có dữ liệu" [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" class="form-control" [items]="unitsList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="modelUser.unitId"
-										formControlName="unitId" [closeOnSelect]="true">
-									</ng-select>
-									<div *ngIf="(userFormSubmitted && fUser.unitId.invalid)||(fUser.unitId.invalid && (fUser.unitId.dirty || fUser.unitId.touched))"
-										class="has-error m-b-12">
-										<div *ngIf="fUser.unitId.errors.required">
 											<span class="help-block">Trường dữ liệu này không được để trống</span>
 										</div>
 									</div>
@@ -118,19 +121,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-12 col-lg-4 form-group">
-									<label class="mb-1">Vai trò <span class="cl-red">(*)</span></label>
-									<input *ngIf="!isAdmin && modelUser.id > 0" disabled type="text" class="form-control" value="{{roleName}}">
-									<ng-select notFoundText="Không có dữ liệu"  [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" style="height: auto;" class="form-control" [items]="rolesList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="selectedRoles"
-										formControlName="roleId" hideSelected="true" [closeOnSelect]="true" [multiple]="true" (change)="onGroupUserChange()">
-									</ng-select>
-									<div *ngIf="(userFormSubmitted && fUser.roleId.invalid)||(fUser.roleId.invalid && (fUser.roleId.dirty || fUser.roleId.touched))"
-										class="has-error m-b-12">
-										<div *ngIf="fUser.roleId.errors.required">
-											<span class="help-block">Trường dữ liệu này không được để trống</span>
-										</div>
-									</div>
-								</div>
+								
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Trạng thái <span class="cl-red">(*)</span></label>
 									<input *ngIf="!isAdmin && modelUser.id > 0 && modelUser.isActived" disabled type="text" class="form-control" value="Hiệu lực">
@@ -141,6 +132,19 @@
 									<div *ngIf="(userFormSubmitted && fUser.isActived.invalid)||(fUser.isActived.invalid && (fUser.isActived.dirty || fUser.isActived.touched))"
 										class="has-error m-b-12">
 										<div *ngIf="fUser.isActived.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+									</div>
+								</div>
+								<div class="col-12 form-group">
+									<label class="mb-1">Vai trò <span class="cl-red">(*)</span></label>
+									<input *ngIf="!isAdmin && modelUser.id > 0" disabled type="text" class="form-control" value="{{roleName}}">
+									<ng-select notFoundText="Không có dữ liệu"  [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" style="height: auto;" class="form-control" [items]="rolesList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="selectedRoles"
+										formControlName="roleId" hideSelected="true" [closeOnSelect]="true" [multiple]="true" (change)="onGroupUserChange()">
+									</ng-select>
+									<div *ngIf="(userFormSubmitted && fUser.roleId.invalid)||(fUser.roleId.invalid && (fUser.roleId.dirty || fUser.roleId.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="fUser.roleId.errors.required">
 											<span class="help-block">Trường dữ liệu này không được để trống</span>
 										</div>
 									</div>

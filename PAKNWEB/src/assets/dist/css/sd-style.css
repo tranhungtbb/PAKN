@@ -990,7 +990,7 @@ transition: all .3s ease-in-out;
 	background: #fff;
 }
 [data-sidebar-style="full"][data-layout="vertical"] .menu-toggle .deznav .metismenu li > ul {
-	left: 65px !important;
+	left: 60px !important;
     top: 4px !important;
     padding-right: 0;
     padding-bottom: 0;
@@ -1748,5 +1748,7 @@ table thead .form-control ng-select {
 	pointer-events: none;
 	color: #aaa;
 	top: 23px;
-
+}
+.mh-32{
+	min-height: 32px;
 }

@@ -76,6 +76,8 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 								this.getUsersByRoleId(this.model.id)
 							}
 						})
+					} else {
+						this.getUsersIsSystem()
 					}
 					this.action = this.model.id == 0 ? 'Thêm mới vai trò' : 'Chỉnh sửa vai trò'
 				})
@@ -113,7 +115,6 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 							}
 							return x
 						})
-						console.log(this.listUserIsSystem)
 					}
 				} else {
 					this.listUserIsSystem = []
@@ -129,7 +130,6 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 				}
 				return x
 			})
-			console.log(this.listUserIsSystem)
 		}
 	}
 

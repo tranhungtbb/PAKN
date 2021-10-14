@@ -116,3 +116,11 @@
 :host ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
 	border: none !important;
 }
+
+:host ::ng-deep .cdk-text-field-autofill-monitored {
+	position: absolute;
+	top: -20px;
+	font-weight: 400;
+	font-size: 1rem;
+	color: #6e6e6e;
+}

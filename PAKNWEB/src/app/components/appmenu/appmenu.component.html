@@ -10,7 +10,7 @@
 					<span class="nav-text">Bảng điều khiển</span>
 				</a>
 			</li>
-			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+			<li *hasPermission="['2', 'E_I']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-file-earmark-medical"></i>
 					<span class="nav-text">Phản ánh, Kiến nghị</span>
@@ -31,7 +31,7 @@
 					<!-- <li *hasPermission="['3', 'E_XIII_0']"><a routerLinkActive="mm-active" routerLink="/quan-tri/kien-nghi/danh-sach-knct">Danh sách KNCT</a></li> -->
 				</ul>
 			</li>
-			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+			<li *hasPermission="['2', 'H_I']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-file-earmark-ruled"></i>
 					<span class="nav-text">Thủ tục hành chính</span>
@@ -42,7 +42,7 @@
 					<li *hasPermission="['3', 'H_I_2']"><a routerLink="/quan-tri/thu-tuc-hanh-chinh/thu-tuc-hanh-chinh-chuyen-tiep-tiep-nhan">Chuyển tiếp/Tiếp nhận thủ tục hành chính</a></li>
 				</ul>
 			</li>
-			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+			<li *hasPermission="['2', 'F_I']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-newspaper"></i>
 					<span class="nav-text">Tin tức, Sự kiện</span>
@@ -52,7 +52,7 @@
 					<li *hasPermission="['3', 'F_I_3']"><a routerLink="/quan-tri/tin-tuc/danh-sach-da-cong-bo">Đã công bố</a></li>
 				</ul>
 			</li>
-			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+			<li *hasPermission="['2', 'A_XVII']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-people"></i>
 					<span class="nav-text">Cá nhân, Doanh nghiệp</span>
@@ -68,8 +68,7 @@
 					<span class="nav-text">Thư mời</span>
 				</a>
 			</li>
-			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">  
-				<!-- *hasPermission="['1','B']" -->
+			<li *hasPermission="['1','B']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-chat-right-dots"></i>
 					<span class="nav-text">Email/SMS</span>
@@ -81,7 +80,7 @@
 					<li *hasPermission="['3', 'B_II_3']"><a routerLink="/quan-tri/email-sms/sms-da-gui">SMS đã gửi</a></li>
 				</ul>
 			</li>
-			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+			<li *hasPermission="['1','C']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-distribute-vertical"></i>
 					<span class="nav-text">Danh mục</span>
@@ -97,7 +96,7 @@
 					<li *hasPermission="['3', 'C_VIII_3']"><a routerLink="/quan-tri/danh-muc/hashtag">Hashtag</a></li>
 				</ul>
 			</li>
-			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+			<li *hasPermission="['1','A']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-diagram-2"></i>
 					<span class="nav-text">Hệ thống</span>
@@ -114,7 +113,7 @@
 					<li *hasPermission="['3', 'A_XIII_0']"><a routerLink="/quan-tri/he-thong/lich-su-he-thong">Lịch sử hệ thống</a></li>
 				</ul>
 			</li>
-			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+			<li *hasPermission="['1','D']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-pie-chart"></i>
 					<span class="nav-text">Báo cáo,Thống kê</span>
@@ -125,7 +124,7 @@
 					<li *hasPermission="['3', 'D_III_0']"><a routerLink="/quan-tri/bao-cao/phan-anh-kien-nghi-theo-nhom-tu-ngu">Thống kê Phản ánh, Kiến nghị theo nhóm từ</a></li>
 				</ul>
 			</li>
-			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+			<li *hasPermission="['1', 'A']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-layout-text-sidebar-reverse"></i>
 					<span class="nav-text">Thiết lập chung</span>
@@ -135,7 +134,7 @@
 					<li *hasPermission="['3', 'A_XIX_0']"><a routerLink="/quan-tri/he-thong/cau-hinh-trang-chu">Cấu hình trang chủ</a></li>
 				</ul>
 			</li>
-			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+			<li *hasPermission="['1', 'G']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-life-preserver"></i>
 					<span class="nav-text">Hỗ trợ</span>
@@ -145,17 +144,13 @@
 					<li *hasPermission="['3', 'G_II_3']"><a routerLink="/quan-tri/huong-dan-su-dung/video">Video hướng dẫn sử dụng</a></li>
 				</ul>
 			</li>
-			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+			<li *hasPermission="['3', 'A_XX_0']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a routerLink="/quan-tri/cuoc-goi/danh-sach-cuoc-goi" class="ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-phone"></i>
 					<span class="nav-text">Cuộc gọi</span>
 				</a>
-				<!-- <ul routerLinkActive="mm-show" aria-expanded="false">
-					<li><a routerLink="/quan-tri/cuoc-goi/danh-sach-cuoc-goi">Danh sách cuộc gọi</a></li>
-				</ul> -->
-
 			</li>
-			<li routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+			<li *hasPermission="['1', 'I']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-arrow-repeat"></i>
 					<span class="nav-text">Đồng bộ dữ liệu</span>

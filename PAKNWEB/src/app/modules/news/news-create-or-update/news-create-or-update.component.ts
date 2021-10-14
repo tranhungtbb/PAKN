@@ -241,7 +241,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		this.child_NewsRelate.openModal(this.model.newsRelateIds ? this.model.newsRelateIds.split(',').map(Number) : [], this.model.id)
 	}
 	onModalNewsRelate_Closed() {
-		this.model.newsRelateIds = this.child_NewsRelate.newsSelected.concat(this.model.newsRelateIds.split(',')).toString()
+		this.model.newsRelateIds = this.child_NewsRelate.newsSelected.concat(this.model.newsRelateIds != null ? this.model.newsRelateIds.split(',') : []).toString()
 
 		if (this.model.newsRelateIds != null && this.model.newsRelateIds != '') {
 			this.newsService

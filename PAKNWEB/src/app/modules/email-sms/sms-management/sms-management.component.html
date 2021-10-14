@@ -119,7 +119,8 @@
 												</a>
 											</span>
 											<span *hasPermission="['3', 'B_II_7']">
-												<a *ngIf="item.status == 1" (click)="redirectUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor">
+												<a *ngIf="item.status == 1" (click)="redirectUpdate(item.id)" 
+													class="btn-icon grd-brown text-brown mr-2 cursor" title="Cập nhập">
 													<i class="bi bi-pencil-square"></i>
 												</a>
 											</span>

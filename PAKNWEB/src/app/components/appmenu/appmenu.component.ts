@@ -10,17 +10,16 @@ import { Router } from '@angular/router'
 	templateUrl: './appmenu.component.html',
 	styleUrls: ['./appmenu.component.css'],
 })
-export class AppmenuComponent implements OnInit {
+export class AppmenuComponent implements OnInit, AfterViewInit {
 	isSuperAdmin: boolean = false
-	constructor(private userStorage: UserInfoStorageService, private _router: Router, private hasPermission : HasPermission) {}
+	constructor(private userStorage: UserInfoStorageService, private _router: Router, private hasPermission: HasPermission) {}
 	isMainMenu: boolean = this.userStorage.getIsMain()
 	isAdmin = this.userStorage.getIsAdmin()
-	ngOnInit() {
+	ngOnInit() {}
+	ngAfterViewInit() {
 		this.loadScriptMenus('assets/dist/js/custom.min.js')
 		this.loadScriptMenus('assets/dist/js/deznav-init.js')
-
 	}
-
 	public loadScriptMenus(url: string) {
 		$('script[src="' + url + '"]').remove()
 		$('<script>').attr('src', url).appendTo('body')

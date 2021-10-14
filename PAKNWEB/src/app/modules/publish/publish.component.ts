@@ -5,10 +5,8 @@ import { RESPONSE_STATUS, TYPE_NOTIFICATION, RECOMMENDATION_STATUS } from 'src/a
 import { AuthenticationService } from 'src/app/services/authentication.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { NotificationService } from 'src/app/services/notification.service'
-import { stat } from 'fs'
-import { ChatbotService } from 'src/app/services/chatbot.service'
 import { IndexSettingService } from 'src/app/services/index-setting.service'
-import { IndexSettingObjet, IndexBanner, IndexWebsite } from 'src/app/models/indexSettingObject'
+import { IndexSettingObjet } from 'src/app/models/indexSettingObject'
 
 declare var $: any
 
@@ -24,7 +22,6 @@ export class PublishComponent implements OnInit, OnChanges {
 		private authenService: AuthenticationService,
 		private sharedataService: DataService,
 		private notificationService: NotificationService,
-		private chatBotService: ChatbotService,
 		private indexSettingService: IndexSettingService
 	) {}
 
@@ -47,12 +44,6 @@ export class PublishComponent implements OnInit, OnChanges {
 		if (splitRouter.length > 2) {
 			this.activeUrl = splitRouter[2]
 		}
-
-		//this.loadScript('assets/dist/vendor/bootstrap/is/bootstrap.min.js')
-		//this.loadScript('assets/dist/vendor/chart.js/Chart.bundle.min.js')
-		//this.loadScript('assets/dist/vendor/apexchart/apexchart.js')
-		// this.loadScript('assets/dist/vendor/peity/jquery.peity.min.js')
-		//this.loadScript('assets/dist/js/dashboard/dashboard-1.js')
 		this.loadScript('assets/dist/js/owl.carousel.min.js')
 		this.loadScript('assets/dist/js/sd-js.js')
 		if (this.isLogin) {
@@ -61,8 +52,6 @@ export class PublishComponent implements OnInit, OnChanges {
 		this.indexSettingService.GetInfo({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.indexSettingObj = res.result.model
-				// this.lstIndexSettingBanner = res.result.lstIndexSettingBanner == null ? [] : res.result.lstIndexSettingBanner
-				// this.ltsIndexSettingWebsite = res.result.lstSYIndexWebsite == null ? [] : res.result.lstSYIndexWebsite
 			}
 		}),
 			(error) => {
@@ -81,6 +70,7 @@ export class PublishComponent implements OnInit, OnChanges {
 
 	getListNotification(PageSize: any) {
 		this.ViewedCount = 0
+		this.notifications = []
 		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: PageSize, PageIndex: 1 }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.syNotifications.length > 0) {
@@ -149,8 +139,6 @@ export class PublishComponent implements OnInit, OnChanges {
 		} else if (type == TYPE_NOTIFICATION.INVITATION) {
 			this._router.navigate(['/quan-tri/thu-moi/chi-tiet/' + id])
 		} else if (type == TYPE_NOTIFICATION.ADMINISTRATIVE) {
-			// tthc
-			// this.updateIsReadNotification(dataId)
 			this._router.navigate(['/quan-tri/thu-tuc-hanh-chinh/chi-tiet/' + id])
 		}
 	}

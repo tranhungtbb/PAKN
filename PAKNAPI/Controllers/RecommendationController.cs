@@ -1604,6 +1604,9 @@ namespace PAKNAPI.Controller
                         lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
 
                         var check = lstRMForward.Where(x => x.Step == 1).FirstOrDefault();
+                        unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
+                        listUserReceiveResolve = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(unitReceiveId);
+                        notification.Title = "PAKN ĐANG CHỜ GIẢI QUYẾT";
                         if (check == null)
                         {
                             // người dân doanh nghiệp gửi luôn PAKN cho đơn vị đã xác định thì phải tạo thông báo của status trước đó
@@ -1621,11 +1624,17 @@ namespace PAKNAPI.Controller
                             //// người gửi PAKN
                             //notification.ReceiveId = sender.Id;
                             //await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-                        }
+                            notification.Content = sender.FullName + " vừa gửi một PAKN";
+                            foreach (var item in listUserReceiveResolve)
+                            {
+                                notification.ReceiveId = item.Id;
+                                notification.ReceiveOrgId = item.UnitId;
+                                // insert notification
+                                await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
+                            }
+                            break;
 
-                        unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
-                        listUserReceiveResolve = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(unitReceiveId);
-                        notification.Title = "PAKN ĐANG CHỜ GIẢI QUYẾT";
+                        }
                         notification.Content = "PAKN số " + recommendation.Code + " yêu cầu giải quyết được gửi từ đơn vị " + unit.Name + " được gửi tới yêu cầu giải quyết";
 
                         foreach (var item in listUserReceiveResolve)

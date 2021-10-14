@@ -107,7 +107,7 @@
 								</tr>
 							</ng-template>
 							<ng-template pTemplate="body" let-rowData let-columns="columns">
-								<tr style="height: 34px">
+								<tr style="height: 35.4px">
 									<td *ngFor="let col of columns" style="width:200px" class="content-td pointer highlight {{col.cssClass}}" title="{{rowData[col.field]}}"
 										(click)="viewDetail(rowData.value,col.field)">
 										{{rowData[col.field]}}

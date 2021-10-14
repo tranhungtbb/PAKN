@@ -108,9 +108,9 @@
 								</td>
 								<td style="text-align: center;">
 									<div class="d-flex justify-content-end">
-										<a *hasPermission="['3', 'A_X_6']" (click)="showListUser(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i class="bi bi-person-plus"></i></a>
-										<a *hasPermission="['3', 'A_X_2']" (click)="redirectUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i class="bi bi-pencil-square"></i></a>
-										<a *hasPermission="['3', 'A_X_3']" (click)="confirm(item,'delete')" class="btn-icon grd-red text-white cursor" data-toggle="modal" data-target="#modal-tc-pakn"><i
+										<a *hasPermission="['3', 'A_X_6']" (click)="showListUser(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor" title="Xem danh sách người thuộc vai trò"><i class="bi bi-person-plus"></i></a>
+										<a *hasPermission="['3', 'A_X_2']" (click)="redirectUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor" title="Cập nhập"><i class="bi bi-pencil-square"></i></a>
+										<a *hasPermission="['3', 'A_X_3']" (click)="confirm(item,'delete')" class="btn-icon grd-red text-white cursor" title="Xóa" data-toggle="modal" data-target="#modal-tc-pakn"><i
 												class="bi bi-trash"></i></a>
 									</div>
 								</td>

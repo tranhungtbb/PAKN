@@ -11,7 +11,12 @@
 						<i class="bi bi-arrow-left"></i>&nbsp;
 						Quay lại
 					</a>
-					<button class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3 px-4" (click)="onSave(false)">{{action}}</button>
+					<span *ngIf="model.id && model.id > 0">
+						<button *hasPermission="['3', 'B_IV_1']" class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3 px-4" (click)="onSave(false)">{{action}}</button>
+					</span>
+					<span *ngIf="!model.id || model.id && model.id == 0">
+						<button *hasPermission="['3', 'B_IV_0']" class="btn btn-sm grd-xanhngoc text-white rounded border-0 mr-3 px-4" (click)="onSave(false)">{{action}}</button>
+					</span>
 					<button *hasPermission="['3', 'B_IV_4']" class="btn btn-sm grd-blue text-white rounded border-0 mr-3 px-4" (click)="onSave(true)">Gửi</button>
 				</div>
 			</div>
@@ -68,7 +73,7 @@
 									[color]="color" [enableMeridian]="enableMeridian">
 								</ngx-mat-datetime-picker>
 							</mat-form-field>
-							<div *ngIf="(submitted && f.endDate.invalid)" class="has-error">
+							<div *ngIf="(submitted && f.endDate.invalid) || (f.endDate.invalid && (f.endDate.dirty || f.endDate.touched))" class="has-error">
 								<div *ngIf="f.endDate.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
 								</div>

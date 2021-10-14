@@ -11,35 +11,35 @@ const routes: Routes = [
 		component: EmailSmsComponent,
 		children: [
 			{ path: 'sms', loadChildren: './sms-management/sms-management.module#SMSModule' },
-			{ 
+			{
 				path: 'sms-da-gui',
 				component: SMSSentComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'B_II_3'},
+				data: { role: 'B_II_3' },
 			},
-			{ 
+			{
 				path: 'email',
 				component: EmailManagementComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'B_I_2'},
+				data: { role: 'B_I_2' },
 			},
-			{ 
+			{
 				path: 'email/sent',
 				component: EmailManagementComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'B_I_2'},
+				data: { role: 'B_I_2' },
 			},
 			{
 				path: 'email/create',
 				component: EmailCreateComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'B_I_6'},
+				data: { role: 'B_I_6' },
 			},
-			{ 
+			{
 				path: 'email/edit/:id',
 				component: EmailCreateComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'B_I_7'}
+				data: { role: 'B_I_7' },
 			},
 		],
 	},

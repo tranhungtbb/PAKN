@@ -11,5 +11,6 @@
 		public string Text { get; set; }
 		public int ParentId { get; set; }
 		public int UnitLevel { get; set; }
+		public bool IsMain { get; set; }
 	}
 }

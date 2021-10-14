@@ -102,8 +102,8 @@
 								</td>
 								<td>
 									<div class="hover-active d-flex justify-content-end">
-										<a (click)="preUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-										<a (click)="preChangePassword(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i class="bi bi-key"></i></a>
+										<a (click)="preUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2" title="Cập nhập"><i class="bi bi-pencil-square"></i></a>
+										<a (click)="preChangePassword(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor" title="Đổi mật khẩu"><i class="bi bi-key"></i></a>
 										<a class="btn-icon mr-2 cursor" (click)="getHistory(item.id, item.userName, true)" title="Xem lịch sử"><i
 												class="bi bi-clock-history"></i></a>
 										<a (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
@@ -290,11 +290,11 @@
 					<div class="row mb-3">
 						<div class="col">
 							<p class="mb-1">Số điện thoại</p>
-							<p class="h4 mb-0 pb-2 border-bottom">{{model.phone}}</p>
+							<p class="h4 mb-0 pb-2 border-bottom mh-32">{{model.phone}}</p>
 						</div>
 						<div class="col">
 							<p class="mb-1">Giới tính</p>
-							<p class="h4 mb-0 pb-2 border-bottom">
+							<p class="h4 mb-0 pb-2 border-bottom mh-32">
 								<span *ngIf="model.gender">Nam</span>
 								<span *ngIf="!model.gender">Nữ</span>
 							</p>
@@ -303,11 +303,11 @@
 					<div class="row mb-3">
 						<div class="col">
 							<p class="mb-1">Email</p>
-							<p class="h4 mb-0 pb-2 border-bottom">{{model.email}}</p>
+							<p class="h4 mb-0 pb-2 border-bottom mh-32">{{model.email}}</p>
 						</div>
 						<div class="col">
 							<p class="mb-1">Trạng thái</p>
-							<p class="h4 mb-0 pb-2 border-bottom">
+							<p class="h4 mb-0 pb-2 border-bottom mh-32">
 								<span *ngIf="model.isActived == listStatus[0].value" style="color: seagreen;">{{listStatus[0].text}}</span>
 								<span *ngIf="model.isActived == listStatus[1].value">{{listStatus[1].text}}</span>
 							</p>
@@ -316,7 +316,7 @@
 					<div class="row mb-3">
 						<div class="col-lg-12">
 							<p class="mb-1">Địa chỉ</p>
-							<p class="h4 mb-0 pb-2 border-bottom">{{model.address}}</p>
+							<p class="h4 mb-0 pb-2 border-bottom mh-32">{{model.address}}</p>
 						</div>
 					</div>
 				</div>

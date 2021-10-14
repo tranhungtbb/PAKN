@@ -252,8 +252,6 @@ export class UserCreateOrUpdateComponent implements OnInit {
 					let output: any = $('#' + this.modalId + ' .user-avatar-view')
 					output.attr('src', this.userAvatar)
 				}
-				this.modelUser.positionName = this.unitsList.find((c) => c.value == this.modelUser.unitId).text
-				this.modelUser.unitName = this.unitsList.find((c) => c.value == this.modelUser.unitId).text
 				let rolesIds = this.modelUser.roleIds.split(',').map((c) => parseInt(c))
 				this.selectedRolesOld = [...rolesIds]
 				let rolesNames = this.rolesList.filter((c) => rolesIds.includes(c.value)).map((c) => c.text)
@@ -272,6 +270,10 @@ export class UserCreateOrUpdateComponent implements OnInit {
 			this.modelUser.positionId = null
 			this.modelUser.isActived = true
 			this.selectedRoles = []
+			let unit = this.unitsList.find((x) => x.value == this.modelUser.unitId)
+			if (unit && unit.isMain == true) {
+				this.listPermissionUserSelected = this.setAllPermission(true)
+			}
 			this.onGroupUserChange()
 		}
 
@@ -281,15 +283,37 @@ export class UserCreateOrUpdateComponent implements OnInit {
 		this.editByMyself = editByMyself
 	}
 
+	changeUnit = (event) => {
+		if (event && event.isMain == true) {
+			this.listPermissionUserSelected = this.setAllPermission(true)
+			return
+		} else {
+			if (this.selectedRoles) {
+				this.listPermissionUserSelected = []
+				this.onGroupUserChange()
+			} else {
+				this.listPermissionUserSelected = []
+				this.setAllPermission(false)
+			}
+		}
+	}
+
+	setAllPermission = (status) => {
+		var arr = []
+		for (let i = 0; i < this.listPermissionCategories.length; i++) {
+			this.listPermissionCategories[i].selected = status
+			for (let j = 0; j < this.listPermissionCategories[i].function.length; j++) {
+				this.listPermissionCategories[i].function[j].selected = status
+				for (let k = 0; k < this.listPermissionCategories[i].function[j].permission.length; k++) {
+					this.listPermissionCategories[i].function[j].permission[k].selected = status
+					arr.push(this.listPermissionCategories[i].function[j].permission[k].id)
+				}
+			}
+		}
+		return arr.filter((item, index) => arr.indexOf(item) === index)
+	}
+
 	userAvatar: any
-	// getUserAvatar(id: number) {
-	// 	this.userService.getAvatar(id).subscribe((res) => {
-	// 		if (res) {
-	// 			let objectURL = 'data:image/jpeg;base64,' + res
-	// 			this.userAvatar = this.sanitizer.bypassSecurityTrustUrl(objectURL)
-	// 		}
-	// 	})
-	// }
 	listPermissionUserSelectedByGroup: any[] = []
 	selectedRolesOld: any[] = []
 	onGroupUserChange(): void {
@@ -305,7 +329,6 @@ export class UserCreateOrUpdateComponent implements OnInit {
 				}
 			}
 		}
-		debugger
 		if (this.selectedRolesOld.length > 0) {
 			let arrRolesDelete = this.selectedRoles.filter((x) => {
 				return this.selectedRolesOld.includes(x)
