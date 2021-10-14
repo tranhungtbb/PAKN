@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators, FormGroupName } from '@angular/forms'
 import { SystemconfigService } from '../../../../services/systemconfig.service'
 import { ToastrService } from 'ngx-toastr'
-import {ActivatedRoute} from '@angular/router'
+import { ActivatedRoute } from '@angular/router'
 import { RESPONSE_STATUS, TYPECONFIG } from 'src/app/constants/CONSTANTS'
-import {SystemtConfig, ConfigEmail} from 'src/app/models/systemtConfigObject'
+import { SystemtConfig, ConfigEmail } from 'src/app/models/systemtConfigObject'
 import { COMMONS } from 'src/app/commons/commons'
+import { Router } from '@angular/router'
 @Component({
 	selector: 'app-email-setting',
 	templateUrl: './email-setting.component.html',
@@ -14,15 +15,15 @@ import { COMMONS } from 'src/app/commons/commons'
 export class EmailSettingComponent implements OnInit {
 	model: SystemtConfig = new SystemtConfig()
 	submitted: boolean = false
-	configEmail : ConfigEmail = new ConfigEmail()
-	
+	configEmail: ConfigEmail = new ConfigEmail()
+
 	form: FormGroup
-	constructor(private _service: SystemconfigService, private _toastr: ToastrService, private _fb: FormBuilder, private activatedRoute : ActivatedRoute) {}
+	constructor(private _service: SystemconfigService, private _toastr: ToastrService, private _fb: FormBuilder, private activatedRoute: ActivatedRoute, private _router: Router) {}
 
 	ngOnInit() {
 		this.activatedRoute.params.subscribe((params) => {
 			let id = +params['id']
-			if(!isNaN(id)){
+			if (!isNaN(id)) {
 				this.model.id = Number(id)
 				this.onCancel()
 			}
@@ -30,10 +31,10 @@ export class EmailSettingComponent implements OnInit {
 	}
 	onCancel() {
 		this.buildForm()
-		this._service.syConfigGetById({Id : this.model.id}).subscribe((response) => {
+		this._service.syConfigGetById({ Id: this.model.id }).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result.SYConfigGetByID.length > 0) {
-					this.model = {...response.result.SYConfigGetByID[0]}
+					this.model = { ...response.result.SYConfigGetByID[0] }
 					this.configEmail = JSON.parse(this.model.content)
 				}
 			} else {
@@ -51,8 +52,8 @@ export class EmailSettingComponent implements OnInit {
 	resd = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 	buildForm() {
 		this.form = this._fb.group({
-			title : [this.model.title , Validators.required],
-			description : [this.model.description , Validators.required],
+			title: [this.model.title, Validators.required],
+			description: [this.model.description, Validators.required],
 			password: [this.configEmail.password, Validators.required],
 			server: [this.configEmail.server, Validators.required],
 			port: [this.configEmail.port, Validators.required],
@@ -61,8 +62,8 @@ export class EmailSettingComponent implements OnInit {
 	}
 	rebuilForm() {
 		this.form.reset({
-			title : this.model.title,
-			description : this.model.description,
+			title: this.model.title,
+			description: this.model.description,
 			email: this.configEmail.email,
 			password: this.configEmail.password,
 			server: this.configEmail.server,
@@ -75,11 +76,11 @@ export class EmailSettingComponent implements OnInit {
 		if (this.form.invalid) {
 			return
 		}
-		debugger
 		this.model.content = JSON.stringify(this.configEmail)
 		this._service.syConfigUpdate(this.model).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
+				this._router.navigate(['quan-tri/he-thong/cau-hinh-he-thong'])
 			} else {
 				this._toastr.error(response.message)
 			}
@@ -89,8 +90,7 @@ export class EmailSettingComponent implements OnInit {
 				alert(error)
 			}
 	}
-	redirectHis(){
+	redirectHis() {
 		window.history.back()
 	}
 }
-

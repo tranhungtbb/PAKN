@@ -50,7 +50,7 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 	userId: any
 	public parent_BusinessComponent: BusinessComponent
 	public parentUser: UserComponent
-	userCurrent : any
+	userCurrent: any
 	ngOnInit() {
 		this.positionService
 			.positionGetList({
@@ -91,16 +91,16 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 						this.userAvatar = this.model.avatar
 					}
 
-					this.model.positionName = this.unitsList.find((c) => c.id == this.model.unitId).name
-					this.model.unitName = this.unitsList.find((c) => c.id == this.model.unitId).name
-					if(this.model.roleIds){
+					// this.model.positionName = this.unitsList.find((c) => c.id == this.model.po).name
+					// this.model.unitName = this.unitsList.find((c) => c.id == this.model.unitId).name
+					if (this.model.roleIds) {
 						let rolesIds = this.model.roleIds.split(',').map((c) => parseInt(c))
 						let rolesNames = this.rolesList.filter((c) => rolesIds.includes(c.id)).map((c) => c.name)
 						this.model.rolesNames = rolesNames.join('; ')
-					}else{
+					} else {
 						this.model.rolesNames = ''
 					}
-					
+
 					$('#' + this.modalId).modal('show')
 				} else {
 					this.userId = null
@@ -118,16 +118,16 @@ export class UserViewInfoComponent implements OnInit, AfterViewInit {
 						this.userAvatar = this.model.avatar
 					}
 
-					this.model.positionName = this.unitsList.find((c) => c.id == this.model.unitId).name
-					this.model.unitName = this.unitsList.find((c) => c.id == this.model.unitId).name
-					if(this.model.roleIds){
+					// this.model.positionName = this.unitsList.find((c) => c.id == this.model.unitId).name
+					// this.model.unitName = this.unitsList.find((c) => c.id == this.model.unitId).name
+					if (this.model.roleIds) {
 						let rolesIds = this.model.roleIds.split(',').map((c) => parseInt(c))
 						let rolesNames = this.rolesList.filter((c) => rolesIds.includes(c.id)).map((c) => c.name)
 						this.model.rolesNames = rolesNames.join('; ')
-					}else{
-						this.model.rolesNames =''
+					} else {
+						this.model.rolesNames = ''
 					}
-					
+
 					$('#' + this.modalId).modal('show')
 				}
 			})

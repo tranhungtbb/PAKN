@@ -34,15 +34,11 @@
 
 						</div>
 						<div class="col-md-12 pr-0 pl-0">
-							<div class="btn btn-default p-2 border mb-2" style="position: relative; overflow-x: hidden;" *ngFor="let relateItem of newsRelatesSelected">
+							<div class="p-2 border mb-2 item-news-relate" *ngFor="let relateItem of newsRelatesSelected">
 								<img class="rounded border" style="min-height: 52px;" width="80" [src]="relateItem.imagePath" />
-								<span class="col-md-10" style="white-space: nowrap;
-								display: inline-block;
-								overflow: hidden;
-    						text-align: left;">
-									&nbsp;<strong>{{relateItem.title}}</strong>
+								<span class="col-md-10 p-1 ml-3">
+									<strong class="text-2line p-0">{{relateItem.title}}</strong>
 								</span>
-
 							</div>
 						</div>
 					</div>

@@ -30,7 +30,7 @@
 
 					<div class="col-sm-12 padding-col">
 						<label class="control-label title-role">Số thứ tự hiển thị</label>
-						<input class="form-control" [(ngModel)]="model.orderNumber" formControlName="orderNumber" placeholder="Nhập..." />
+						<input class="form-control" [(ngModel)]="model.orderNumber" numbersOnly formControlName="orderNumber" placeholder="Nhập..." />
 						<div class="has-error m-b-12">
 							<div *ngIf="f.orderNumber.errors">
 								<span class="help-block">Vui lòng nhập định dạng Number</span>
@@ -54,11 +54,8 @@
 					</div>
 					<div class="col-sm-10 form-group padding-col">
 						<label class="mb-1 title-role">Thêm người dùng</label>
-						<ng-select notFoundText="Không có dữ liệu"  placeholder="Nhập..." class="form-control" [items]="listUserIsSystem" bindValue="value" bindLabel="text" formControlName="userId"
+						<ng-select notFoundText="Không có dữ liệu"  placeholder="Nhập..." class="form-control" [items]="listUserIsSystem" bindValue="id" bindLabel="userName" formControlName="userId"
 							[virtualScroll]="true" [(ngModel)]="userId">
-							<ng-template ng-option-tmp let-item="item">
-								<div title="{{item.text}}">{{item.text}}</div>
-							</ng-template>
 						</ng-select>
 					</div>
 					<div class="col-sm-2 form-group padding-col" style="display: flex;align-items: center;padding : 23px 0px 0px 0px;">

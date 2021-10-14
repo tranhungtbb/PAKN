@@ -113,6 +113,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 							}
 							return x
 						})
+						console.log(this.listUserIsSystem)
 					}
 				} else {
 					this.listUserIsSystem = []
@@ -128,6 +129,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 				}
 				return x
 			})
+			console.log(this.listUserIsSystem)
 		}
 	}
 
@@ -157,7 +159,7 @@ export class RoleCreateOrUpdateComponent implements OnInit {
 			this.roleService.insert(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					if (response.result == -1) {
-						this._toastr.error('Vai trò đã bị trùng tên')
+						this._toastr.error('Tên vai trò đã tồn tại')
 						return
 					} else {
 						this._toastr.success(COMMONS.ADD_SUCCESS)

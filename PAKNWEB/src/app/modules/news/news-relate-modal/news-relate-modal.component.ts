@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
-import { AppSettings } from 'src/app/constants/app-setting'
+import { ToastrService } from 'ngx-toastr'
 
 import { NewsService } from 'src/app/services/news.service'
 import { CatalogService } from 'src/app/services/catalog.service'
@@ -13,7 +13,7 @@ declare var $: any
 	styleUrls: ['./news-relate-modal.component.css'],
 })
 export class NewsRelateModalComponent implements OnInit {
-	constructor(private newsService: NewsService, private catalogService: CatalogService, private sanitizer: DomSanitizer) {}
+	constructor(private newsService: NewsService, private catalogService: CatalogService, private sanitizer: DomSanitizer, private _toa: ToastrService) {}
 
 	public newsCreateOrUpdateComponent: NewsCreateOrUpdateComponent
 	listNewsCategories: any[] = []
@@ -23,12 +23,13 @@ export class NewsRelateModalComponent implements OnInit {
 		pageSize: 15,
 		pageIndex: 1,
 		title: '',
-		newsType: null,
+		newsType: '',
 	}
 	modalTitle: string = ''
 	totalCount: number = 0
 	pageCount: number = 0
 	parentNews: number
+	newsRelate: any = []
 	ngOnInit() {
 		this.getListPaged()
 		this.catalogService
@@ -58,17 +59,25 @@ export class NewsRelateModalComponent implements OnInit {
 		}
 	}
 	onSave() {
+		if (this.newsSelected.length == 0) {
+			this._toa.error('Vui lòng chọn bài viết liên quan')
+			return
+		}
 		this.newsCreateOrUpdateComponent.onModalNewsRelate_Closed()
+		this._toa.success('Thêm bài viết liên quan thành công')
 		$('#modal-news-relate').modal('hide')
 	}
 	getListPaged() {
-		// this.query.newsType == null ? '' : this.query.newsType
+		this.query.title = this.query.title == null ? '' : this.query.title.trim()
+		this.query.newsType = this.query.newsType == null ? '' : this.query.newsType
 		this.newsService
-			.getAllPagedList({
-				pageSize: this.query.pageSize,
-				pageIndex: this.query.pageIndex,
-				title: this.query.title,
-				newsType: this.query.newsType == null ? '' : this.query.newsType,
+			.getAllNewsRelatesForCreate({
+				NewId: this.parentNews,
+				LstNewsId: this.newsRelate.join(','),
+				Title: this.query.title,
+				NewsType: this.query.newsType,
+				PageSize: this.query.pageSize,
+				PageIndex: this.query.pageIndex,
 			})
 			.subscribe((res) => {
 				if (res.success != 'OK') {
@@ -108,12 +117,12 @@ export class NewsRelateModalComponent implements OnInit {
 
 	//mở modal, được gọi từ comp cha
 	openModal(newsRelate: any[], parentNews: number) {
+		debugger
 		this.parentNews = parentNews
-		if (newsRelate) {
-			this.newsSelected = newsRelate.map((c) => parseInt(c))
-			this.listDataPaged = this.listDataPaged.filter((c) => c.id != this.parentNews)
-		}
-
+		this.newsRelate = newsRelate.concat(this.newsSelected)
+		this.newsRelate = this.newsRelate.filter((item, index) => this.newsRelate.indexOf(item) === index)
+		this.getListPaged()
+		// this.newsSelected = []
 		$('#modal-news-relate').modal('show')
 	}
 

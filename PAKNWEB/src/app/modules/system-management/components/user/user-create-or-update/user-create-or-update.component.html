@@ -95,7 +95,7 @@
 								<div class="col-12 col-lg-4 form-group">
 									<label class="mb-1">Đơn vị <span class="cl-red">(*)</span></label>
 									<input *ngIf="!isAdmin && modelUser.id > 0" disabled value="{{modelUser.unitName}}" type="text" class="form-control">
-									<ng-select notFoundText="Không có dữ liệu"  notFoundText="Không có dữ liệu" [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" class="form-control" [items]="unitsList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="modelUser.unitId"
+									<ng-select notFoundText="Không có dữ liệu" [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" class="form-control" [items]="unitsList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="modelUser.unitId"
 										formControlName="unitId" [closeOnSelect]="true">
 									</ng-select>
 									<div *ngIf="(userFormSubmitted && fUser.unitId.invalid)||(fUser.unitId.invalid && (fUser.unitId.dirty || fUser.unitId.touched))"
@@ -122,7 +122,7 @@
 									<label class="mb-1">Vai trò <span class="cl-red">(*)</span></label>
 									<input *ngIf="!isAdmin && modelUser.id > 0" disabled type="text" class="form-control" value="{{roleName}}">
 									<ng-select notFoundText="Không có dữ liệu"  [ngClass]="{ 'hide': (!isAdmin && modelUser.id > 0) }" style="height: auto;" class="form-control" [items]="rolesList" placeholder="Chọn..." bindLabel="text" bindValue="value" [(ngModel)]="selectedRoles"
-										formControlName="roleId" [closeOnSelect]="true" [multiple]="true" (change)="onGroupUserChange()">
+										formControlName="roleId" hideSelected="true" [closeOnSelect]="true" [multiple]="true" (change)="onGroupUserChange()">
 									</ng-select>
 									<div *ngIf="(userFormSubmitted && fUser.roleId.invalid)||(fUser.roleId.invalid && (fUser.roleId.dirty || fUser.roleId.touched))"
 										class="has-error m-b-12">

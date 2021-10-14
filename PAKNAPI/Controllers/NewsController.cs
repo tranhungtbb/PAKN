@@ -71,12 +71,12 @@ namespace PAKNAPI.Controller
 
 
 		[HttpGet]
-		[Route("get-list-news-othor")]
-		public async Task<ActionResult<object>> NENewsGetAllOnPageBase(string lstNewsId, int? PageSize, int? PageIndex, string Title, int? NewsType)
+		[Route("get-list-news-relates-forcreate-by-id")]
+		public async Task<ActionResult<object>> NENewsRelatesGetAllOnPageBase(int? NewId, string LstNewsId, string Title, int? NewsType, int? PageSize, int? PageIndex)
 		{
 			try
 			{
-				List<NENewsGetAllOnPage> rsNENewsGetAllOnPage = await new NENewsGetAllOnPage(_appSetting).NENewsGetAllOnPageDAO(lstNewsId, PageSize, PageIndex, Title, NewsType, null);
+				List<NENewsGetAllOnPage> rsNENewsGetAllOnPage = await new NENewsGetAllOnPage(_appSetting).NENewsRelatesGetAllOnPageDAO(NewId,LstNewsId, Title, NewsType, PageSize, PageIndex);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"NENewsGetAllOnPage", rsNENewsGetAllOnPage},
@@ -356,24 +356,21 @@ namespace PAKNAPI.Controller
 		}
 
 		/// <summary>
-		/// danh sách tin tức liên quan
+		/// thay đổi trạng thái bài viết
 		/// </summary>
 		/// <param name="NewsId"></param>
+		/// <param name="Status"></param>
 		/// <returns></returns>
 
 		[HttpGet]
 		[Authorize("ThePolicy")]
-		[Route("get-list-relates")]
-		public async Task<ActionResult<object>> NERelateGetAllBase(int? NewsId)
+		[Route("change-status-news")]
+		public async Task<ActionResult<object>> NERelateGetAllBase(int? NewsId, int? Status)
 		{
 			try
 			{
-				List<NERelateGetAll> rsNERelateGetAll = await new NERelateGetAll(_appSetting).NERelateGetAllDAO(NewsId);
-				IDictionary<string, object> json = new Dictionary<string, object>
-					{
-						{"NERelateGetAll", rsNERelateGetAll},
-					};
-				return new ResultApi { Success = ResultCode.OK, Result = json };
+				await new NENews(_appSetting).NENewsChangeIsPublish(NewsId, Status);
+				return new ResultApi { Success = ResultCode.OK, Message = ResultMessage.OK};
 			}
 			catch (Exception ex)
 			{

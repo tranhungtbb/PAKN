@@ -184,6 +184,15 @@ namespace PAKNAPI.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<NENews>("NE_NewsGetAll", DP)).ToList();
 		}
 
+		public async Task<int> NENewsChangeIsPublish(int? NewsId, int? Status)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("NewsId", NewsId);
+			DP.Add("Status", Status);
+			return await _sQLCon.ExecuteNonQueryDapperAsync("NE_NewsChangeIsPublish", DP);
+		}
+
+
 		public async Task<List<NENewsOnPage>> NENewsGetAllOnPage(int PageSize, int PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();

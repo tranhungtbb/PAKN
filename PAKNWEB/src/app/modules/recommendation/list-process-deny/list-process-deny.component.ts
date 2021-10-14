@@ -202,7 +202,8 @@ export class ListProcessDenyComponent implements OnInit {
 			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
 			IsList: true,
 		}
-		this._service.recommendationForward(request).subscribe((response) => {
+		let obj = this.listData.find((x) => x.id == this.modelForward.recommendationId)
+		this._service.recommendationForward(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modal-tc-pakn').modal('hide')
 				this.getList()

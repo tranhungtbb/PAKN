@@ -462,7 +462,7 @@ namespace PAKNAPI.Controllers
                 }
                 else
                 {
-                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
+                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,new Exception());
 
                     return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
                 }

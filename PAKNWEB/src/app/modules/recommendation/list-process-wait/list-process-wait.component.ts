@@ -55,7 +55,7 @@ export class ListProcessWaitComponent implements OnInit {
 	idDelete: number = 0
 	lstGroupWord: any = []
 	lstGroupWordSelected: any = []
-	titleAccept : any = ''
+	titleAccept: any = ''
 	ngOnInit() {
 		this.dataSearch.status = RECOMMENDATION_STATUS.PROCESS_WAIT
 		this.getDataForCreate()
@@ -196,7 +196,8 @@ export class ListProcessWaitComponent implements OnInit {
 			ReactionaryWord: this.modelProcess.reactionaryWord,
 			IsList: true,
 		}
-		this._service.recommendationProcess(request).subscribe((response) => {
+		let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
+		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
 				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
@@ -222,7 +223,8 @@ export class ListProcessWaitComponent implements OnInit {
 				ListGroupWordSelected: this.lstGroupWordSelected.join(','),
 				IsList: true,
 			}
-			this._service.recommendationProcess(request).subscribe((response) => {
+			let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
+			this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
 					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
@@ -239,8 +241,8 @@ export class ListProcessWaitComponent implements OnInit {
 	}
 
 	onProcessForward() {
-		this.contentForward = this.contentForward == null ? '' : this.contentForward.trim();
-		if(this.contentForward == ''){
+		this.contentForward = this.contentForward == null ? '' : this.contentForward.trim()
+		if (this.contentForward == '') {
 			this._toastr.error('Vui lòng nhập lí do từ chối')
 			return
 		}
@@ -252,7 +254,8 @@ export class ListProcessWaitComponent implements OnInit {
 			IsList: true,
 			IsForwardProcess: this.isForwardProcess,
 		}
-		this._service.recommendationProcess(request).subscribe((response) => {
+		let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
+		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalForward').modal('hide')
 				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})

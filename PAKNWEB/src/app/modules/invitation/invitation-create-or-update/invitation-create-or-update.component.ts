@@ -234,14 +234,21 @@ export class InvitationCreateOrUpdateComponent implements OnInit {
 			sendSMS: this.sendSMS,
 		})
 	}
-
+	checkDate: boolean
 	onSave(isSend: boolean) {
+		this.checkDate = true
 		this.model.status = isSend == false ? 1 : 2
 		this.submitted = true
 
 		this.model.title = this.model.title.trim()
 		this.model.content = this.model.content.trim()
 		this.model.place = this.model.place.trim()
+		if (this.model.startDate && this.model.endDate) {
+			if (this.model.startDate > this.model.endDate) {
+				this.checkDate = false
+				return
+			}
+		}
 		if (this.form.invalid) {
 			return
 		}

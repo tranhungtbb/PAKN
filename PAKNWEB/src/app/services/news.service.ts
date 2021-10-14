@@ -61,24 +61,24 @@ export class NewsService {
 		return this.http.post(AppSettings.API_ADDRESS + Api.NewsUpdate, formData, httpPackage)
 	}
 
-	changeStatus(data: any, file: any = null): Observable<any> {
-		let tempheaders = new HttpHeaders({
-			ipAddress: this.localStronageService.getIpAddress() && this.localStronageService.getIpAddress() != 'null' ? this.localStronageService.getIpAddress() : '',
-			macAddress: '',
-			logAction: data.status == 1 ? encodeURIComponent(LOG_ACTION.PUBLIC) : encodeURIComponent(LOG_ACTION.WITHDRAW),
-			logObject: encodeURIComponent(LOG_OBJECT.NE_NEWS + ' ' + data.title),
-		})
-		const httpPackage = {
-			headers: tempheaders,
-			reportProgress: true,
-		}
+	// changeStatus(data: any, file: any = null): Observable<any> {
+	// 	let tempheaders = new HttpHeaders({
+	// 		ipAddress: this.localStronageService.getIpAddress() && this.localStronageService.getIpAddress() != 'null' ? this.localStronageService.getIpAddress() : '',
+	// 		macAddress: '',
+	// 		logAction: data.status == 1 ? encodeURIComponent(LOG_ACTION.PUBLIC) : encodeURIComponent(LOG_ACTION.WITHDRAW),
+	// 		logObject: encodeURIComponent(LOG_OBJECT.NE_NEWS + ' ' + data.title),
+	// 	})
+	// 	const httpPackage = {
+	// 		headers: tempheaders,
+	// 		reportProgress: true,
+	// 	}
 
-		let formData = new FormData()
-		formData.append('data', JSON.stringify(data))
-		if (file) formData.append('files', file, file.name)
+	// 	let formData = new FormData()
+	// 	formData.append('data', JSON.stringify(data))
+	// 	if (file) formData.append('files', file, file.name)
 
-		return this.http.post(AppSettings.API_ADDRESS + Api.NewsUpdate, formData, httpPackage)
-	}
+	// 	return this.http.post(AppSettings.API_ADDRESS + Api.NewsUpdate, formData, httpPackage)
+	// }
 
 	delete(data: any, title: any): Observable<any> {
 		let headers = {
@@ -87,8 +87,21 @@ export class NewsService {
 		}
 		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.NewsDelete, headers)
 	}
+
+	changeStatus(data: any, title: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(data.status == 1 ? LOG_ACTION.PUBLIC : LOG_ACTION.WITHDRAW),
+			logObject: encodeURIComponent(LOG_OBJECT.NE_NEWS + ' ' + title),
+		}
+		return this.serviceInvoker.getwithHeaders(data, AppSettings.API_ADDRESS + Api.NewsChangeStatus, headers)
+	}
+
 	getAllNewsRelates(data: any): Observable<any> {
 		return this.serviceInvoker.post(data, AppSettings.API_ADDRESS + Api.NewsRelatesGetAll)
+	}
+
+	getAllNewsRelatesForCreate(data: any): Observable<any> {
+		return this.serviceInvoker.get(data, AppSettings.API_ADDRESS + Api.NewsRelatesGetAllForCreate)
 	}
 
 	hisNewsCreate(data: any): Observable<any> {

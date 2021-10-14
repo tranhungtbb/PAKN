@@ -288,6 +288,7 @@ export class UserComponent implements OnInit {
 	dataHisStateChange() {
 		this.hisPageIndex = 1
 		this.table2.first = 0
+		this.table2.reset()
 		this.getHistory(this.hisUserId, this.emailUser)
 	}
 	onChangeFromDate(event) {
@@ -296,6 +297,7 @@ export class UserComponent implements OnInit {
 		} else {
 			this.dataSearch2.fromDate = null
 		}
+		this.table2.reset()
 		this.getHistory(this.hisUserId, this.emailUser)
 	}
 
@@ -305,6 +307,7 @@ export class UserComponent implements OnInit {
 		} else {
 			this.dataSearch2.toDate = null
 		}
+		this.table2.reset()
 		this.getHistory(this.hisUserId, this.emailUser)
 	}
 

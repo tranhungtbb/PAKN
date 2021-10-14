@@ -287,7 +287,7 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
 			IsList: false,
 		}
-		this.recommendationService.recommendationForward(request).subscribe((response) => {
+		this.recommendationService.recommendationForward(request, this.model.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalForward').modal('hide')
 				this.getData()
@@ -343,7 +343,7 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 			ListHashTag: this.lstHashtagSelected,
 			IsList: false,
 		}
-		this.recommendationService.recommendationProcess(request).subscribe((response) => {
+		this.recommendationService.recommendationProcess(request, this.model.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
 				if (this.recommendationStatusProcess == RECOMMENDATION_STATUS.FINISED) {
@@ -371,7 +371,7 @@ export class ViewRecommendationPersonalComponent implements OnInit {
 				ListHashTag: this.lstHashtagSelected,
 				IsList: false,
 			}
-			this.recommendationService.recommendationProcess(request).subscribe((response) => {
+			this.recommendationService.recommendationProcess(request, this.model.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
 					this.toastr.success(COMMONS.DENY_SUCCESS)

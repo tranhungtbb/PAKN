@@ -85,6 +85,19 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<NENewsGetAllOnPage>("NE_NewsGetAllOnPage", DP)).ToList();
 		}
+
+		public async Task<List<NENewsGetAllOnPage>> NENewsRelatesGetAllOnPageDAO(int? NewId, string LstNewsId, string Title, int? NewsType, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("NewId", NewId);
+			DP.Add("Title", Title);
+			DP.Add("NewsType", NewsType);
+			DP.Add("LstNewsId", LstNewsId);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<NENewsGetAllOnPage>("NE_NewsRelatesForCreateGetAllOnPage", DP)).ToList();
+		}
 	}
 
 	public class NENewsGetAllRelates

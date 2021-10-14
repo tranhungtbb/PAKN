@@ -246,7 +246,8 @@ export class ListGeneralComponent implements OnInit {
 			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
 			IsList: true,
 		}
-		this._service.recommendationForward(request).subscribe((response) => {
+		let obj = this.listData.find((x) => x.id == this.modelForward.recommendationId)
+		this._service.recommendationForward(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modal-tc-pakn').modal('hide')
 				this.getList()
@@ -345,7 +346,8 @@ export class ListGeneralComponent implements OnInit {
 			ReactionaryWord: this.modelProcess.reactionaryWord,
 			IsList: true,
 		}
-		this._service.recommendationProcess(request).subscribe((response) => {
+		let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
+		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
 				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
@@ -374,7 +376,8 @@ export class ListGeneralComponent implements OnInit {
 			IsList: true,
 			IsForwardProcess: this.isForwardProcess,
 		}
-		this._service.recommendationProcess(request).subscribe((response) => {
+		let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
+		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalForward').modal('hide')
 				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
@@ -401,7 +404,8 @@ export class ListGeneralComponent implements OnInit {
 				ListGroupWordSelected: this.lstGroupWordSelected.join(','),
 				IsList: true,
 			}
-			this._service.recommendationProcess(request).subscribe((response) => {
+			let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
+			this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
 					$('#modalReject').modal('hide')

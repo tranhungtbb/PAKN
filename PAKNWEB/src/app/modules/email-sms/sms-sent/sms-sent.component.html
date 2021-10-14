@@ -95,8 +95,8 @@
 									</td>
 									<td style="text-align: center;">
 										<div class="d-flex justify-content-end">
-											<a *hasPermission="['3', 'B_II_5']" (click)="confirm(item.id)" class="btn-icon grd-red text-white cursor mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
-													class="bi bi-trash"></i></a>
+											<!-- <a *hasPermission="['3', 'B_II_5']" (click)="confirm(item.id)" class="btn-icon grd-red text-white cursor mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
+													class="bi bi-trash"></i></a> -->
 											<a *hasPermission="['3', 'B_II_6']" class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
 									</td>
@@ -218,9 +218,10 @@
 								<p>{{item.createdDate | date : 'dd/MM/yyyy HH:mm'}}</p>
 							</td>
 							<td>
-								<span *ngIf="item.status == 0" class="badge rounded-pill bg-blue2">Đã khởi tạo</span>
-								<span *ngIf="item.status == 1" class="badge rounded-pill badge-outline-green2">Đã cập nhập</span>
-								<span *ngIf="item.status == 2" class="badge rounded-pill bg-red">Đã gửi</span>
+								<span type="button" *ngIf="item.status == 0" class="badge rounded-pill bg-blue2">Đã khởi tạo</span>
+								<span type="button" *ngIf="item.status == 1" class="badge rounded-pill badge-outline-green2">Đã cập nhập</span>
+								<span type="button" *ngIf="item.status == 2" class="badge rounded-pill bg-blue-light">Đã gửi</span>
+								
 							</td>
 						</tr>
 					</ng-template>

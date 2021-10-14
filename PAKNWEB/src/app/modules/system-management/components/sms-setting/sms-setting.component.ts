@@ -1,11 +1,10 @@
 import { Component, OnInit, Pipe, Directive } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
-import { UserObject } from '../../../../models/UserObject'
 import { SystemconfigService } from '../../../../services/systemconfig.service'
 import { ToastrService } from 'ngx-toastr'
-import {ActivatedRoute} from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { RESPONSE_STATUS, TYPECONFIG } from 'src/app/constants/CONSTANTS'
-import {SystemtConfig,ConfigSMS } from 'src/app/models/systemtConfigObject'
+import { SystemtConfig, ConfigSMS } from 'src/app/models/systemtConfigObject'
 import { COMMONS } from 'src/app/commons/commons'
 
 @Component({
@@ -15,7 +14,7 @@ import { COMMONS } from 'src/app/commons/commons'
 })
 export class SmsSettingComponent implements OnInit {
 	model: SystemtConfig = new SystemtConfig()
-	configSMS : ConfigSMS = new ConfigSMS()
+	configSMS: ConfigSMS = new ConfigSMS()
 	submitted: boolean = false
 	form: FormGroup
 
@@ -24,12 +23,12 @@ export class SmsSettingComponent implements OnInit {
 		{ value: false, text: 'Tin nhắn nội dung không dấu' },
 	]
 
-	constructor(private _service: SystemconfigService, private _toastr: ToastrService, private _fb: FormBuilder, private activatedRoute : ActivatedRoute) {}
+	constructor(private _service: SystemconfigService, private _router: Router, private _toastr: ToastrService, private _fb: FormBuilder, private activatedRoute: ActivatedRoute) {}
 
 	ngOnInit() {
 		this.activatedRoute.params.subscribe((params) => {
 			let id = +params['id']
-			if(!isNaN(id)){
+			if (!isNaN(id)) {
 				this.model.id = Number(id)
 				this.onCancel()
 			}
@@ -37,7 +36,7 @@ export class SmsSettingComponent implements OnInit {
 	}
 	onCancel() {
 		this.buildForm()
-		this._service.syConfigGetById({Id : this.model.id}).subscribe((response) => {
+		this._service.syConfigGetById({ Id: this.model.id }).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result.SYConfigGetByID.length > 0) {
 					this.model = response.result.SYConfigGetByID[0]
@@ -58,8 +57,8 @@ export class SmsSettingComponent implements OnInit {
 	resd = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 	buildForm() {
 		this.form = this._fb.group({
-			title : [this.model.title, Validators.required],
-			description : [this.model.description, Validators.required],
+			title: [this.model.title, Validators.required],
+			description: [this.model.description, Validators.required],
 			linkwebservice: [this.configSMS.linkwebservice, Validators.required],
 			password: [this.configSMS.password, Validators.required],
 			user: [this.configSMS.user, Validators.required],
@@ -71,15 +70,15 @@ export class SmsSettingComponent implements OnInit {
 	}
 	rebuilForm() {
 		this.form.reset({
-			title : this.model.title,
-			description : this.model.description,
+			title: this.model.title,
+			description: this.model.description,
 			linkwebservice: this.configSMS.linkwebservice,
 			password: this.configSMS.password,
 			user: this.configSMS.user,
 			code: this.configSMS.code,
 			serviceID: this.configSMS.serviceID,
 			commandCode: this.configSMS.commandCode,
-			contentType: this.configSMS.contentType
+			contentType: this.configSMS.contentType,
 		})
 	}
 	onSave() {
@@ -89,10 +88,11 @@ export class SmsSettingComponent implements OnInit {
 			return
 		}
 		this.model.content = JSON.stringify(this.configSMS)
-		
+
 		this._service.syConfigUpdate(this.model).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)
+				this._router.navigate(['quan-tri/he-thong/cau-hinh-he-thong'])
 			} else {
 				this._toastr.error(response.message)
 			}
@@ -102,8 +102,7 @@ export class SmsSettingComponent implements OnInit {
 				alert(error)
 			}
 	}
-	redirectHis(){
+	redirectHis() {
 		window.history.back()
 	}
 }
-

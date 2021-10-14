@@ -66,8 +66,6 @@ export class Api {
 	public static PuRecommendationCountClick = 'pu-recommendation/recommendation-count-click'
 	public static PURecommendationStatisticsGetByUserId = 'pu-recommendation/recommendation-statistics-get-by-user-id'
 
-
-
 	//Field
 	public static FieldGetList = 'field/get-list-field-on-page'
 	public static FieldGetDropDown = 'field/get-drop-down'
@@ -100,8 +98,6 @@ export class Api {
 	public static UnitCheckExists = 'unit/check-exists'
 	public static UnitGetChildrenDropdown = 'unit/get-children-dropdown'
 
-	
-
 	//Position
 	public static PositionInsert = 'position/insert'
 	public static PositionGetList = 'position/get-list-position-on-page'
@@ -133,8 +129,6 @@ export class Api {
 	public static UserGetPagedListForChat = 'user/get-list-user-for-chat'
 	public static UserGetAllByIdQb = 'user/get-list-user-by-lst-id-qb'
 
-	
-
 	//tai khoan ca nhan, doanh nghiep
 	public static AccountGetInfo = 'user/user-get-info'
 	public static AccountChangePassword = 'user/user-change-password'
@@ -147,13 +141,9 @@ export class Api {
 	public static UserSystemUpdate = 'user/user-system-update'
 	public static UserSystemCreate = 'user/user-system-create'
 
-
 	public static SystemLogin = 'system-log/get-list-system-log-on-page'
 	public static SystemLoginAdmin = 'system-log/get-list-system-log-admin-on-page'
 	public static SystemLogDelete = 'system-log/delete'
-	
-	
-	
 
 	//SY_Role
 	public static RoleGetAll = 'role/get-list-role-base'
@@ -199,13 +189,15 @@ export class Api {
 	public static GroupWordGetListSuggest = 'group-word/get-list-suggest'
 
 	//tin tuc
-	public static NewsGetAllOnPage = 'news/get-list-news-on-page' 
+	public static NewsGetAllOnPage = 'news/get-list-news-on-page'
 	public static NewsGetListHomePage = 'news/get-list-news-on-home-page'
 	public static NewsGetById = 'news/get-by-id'
 	public static NewsInsert = 'news/insert'
 	public static NewsUpdate = 'news/update'
 	public static NewsDelete = 'news/delete'
+	public static NewsChangeStatus = 'news/change-status-news'
 	public static NewsRelatesGetAll = 'news/get-list-relates'
+	public static NewsRelatesGetAllForCreate = 'news/get-list-news-relates-forcreate-by-id'
 	public static HisNewsInsert = 'news/insert-his'
 	public static HisNewsGetListByNewsId = 'news/get-list-his-on-page'
 	public static NewsGetViewDetail = 'news/get-detail'
@@ -242,7 +234,7 @@ export class Api {
 	public static SMSManagementUpdateStatusSend = 'sms/update-status'
 	public static SMSManagementDelete = 'sms/delete'
 	public static SMSManagementGetById = 'sms/get-by-id'
-	public static HISSMSInsert = 'sms/insert-his' 
+	public static HISSMSInsert = 'sms/insert-his'
 
 	//dự thảo email
 	public static EmailManagementUpdate = 'email-management/update'
@@ -279,7 +271,6 @@ export class Api {
 
 	// //RequestRecommendation
 	public static RecommendationRequestGetListProcess = 'RecommandationSync/MR_Sync_CuTriTinhKhanhHoaGetListBase'
-	
 
 	//api dia danh
 	public static ProvinceGetAll = 'administrative/get-list-province'
@@ -291,10 +282,6 @@ export class Api {
 	//register
 	public static RegisterIndividual = 'user/individual-register'
 	public static RegisterOrganization = 'user/organization-register'
-
-
-
-
 
 	//Administrative Formalities
 	public static AdministrativeFormalitiesGetDropdown = 'administration-formalities/get-drop-down'
@@ -350,7 +337,6 @@ export class Api {
 	// public static InvididualCheckExists = 'Individual/IndividualCheckExistsBase'
 	public static IndividualCheckExists = 'individual/check-exists'
 
-
 	//Business
 	public static BusinessGetAllOnPage = 'business/get-list-business-on-page'
 	public static BusinessChangeStatus = 'business/change-status'
@@ -372,16 +358,11 @@ export class Api {
 	public static StatisticRecommendationByGroupWord = 'statistic/recommendation-by-group-word'
 	public static StatisticRecommendationByGroupWordDetail = 'statistic/recommendation-by-group-word-detail'
 
-	
-
 	//call history
 	public static CallHistoryGetPagedList = 'call-history/get-list-call-history-on-page'
 	public static CallHisDelete = 'call-history/delete'
 
-
-
-
-	// đồng bộ 
+	// đồng bộ
 	public static MrSyncCongThongTinDienTuTinhPagedList = 'sync-data/get-list-cong-thong-tin-dien-tu-tinh-on-page'
 	public static AsyncCongThongTinDienTu = 'sync-data/sync-gop-y-kien-nghi'
 	public static MrSyncCongThongTinDienTuTinhGetById = 'sync-data/cong-thong-tin-dien-tu-tinh-get-by-id'
@@ -402,6 +383,6 @@ export class Api {
 	public static PU_RecommandationSyncGetDetail = 'sync-data/PUGetGetById'
 
 	// Weather
-	public static Weather = 'weather/get' 
+	public static Weather = 'weather/get'
 	public static WeatherByQ = 'weather/get-by-q'
 }

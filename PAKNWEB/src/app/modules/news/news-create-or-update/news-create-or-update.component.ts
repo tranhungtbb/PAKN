@@ -238,10 +238,10 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 
 	onModalNewsRelate() {
 		this.child_NewsRelate.newsCreateOrUpdateComponent = this
-		this.child_NewsRelate.openModal(this.model.newsRelateIds ? this.model.newsRelateIds.split(',') : [], this.model.id)
+		this.child_NewsRelate.openModal(this.model.newsRelateIds ? this.model.newsRelateIds.split(',').map(Number) : [], this.model.id)
 	}
 	onModalNewsRelate_Closed() {
-		this.model.newsRelateIds = this.child_NewsRelate.newsSelected.toString()
+		this.model.newsRelateIds = this.child_NewsRelate.newsSelected.concat(this.model.newsRelateIds.split(',')).toString()
 
 		if (this.model.newsRelateIds != null && this.model.newsRelateIds != '') {
 			this.newsService
@@ -257,14 +257,14 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		} else {
 			this.newsRelatesSelected = []
 		}
+		this.child_NewsRelate.getListPaged()
 	}
 
 	removeRelate(id: number) {
-		let index = this.newsRelatesSelected.indexOf(this.newsRelatesSelected.find((c) => c.id == id))
-		if (index >= 0) {
-			this.newsRelatesSelected.splice(index, 1)
-			this.model.newsRelateIds = this.newsRelatesSelected.map((c) => c.id).toString()
-		}
+		let arr = this.model.newsRelateIds.split(',')
+		arr = arr.filter((x) => x != id)
+		this.model.newsRelateIds = arr.join(',')
+		this.newsRelatesSelected = this.newsRelatesSelected.filter((x) => x.id != id)
 	}
 
 	onChangeAvatar() {

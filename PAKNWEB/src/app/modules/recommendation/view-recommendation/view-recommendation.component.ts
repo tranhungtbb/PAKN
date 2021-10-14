@@ -387,7 +387,8 @@ export class ViewRecommendationComponent implements OnInit {
 			ListHashTag: this.lstHashtagSelected,
 			IsList: false,
 		}
-		this.recommendationService.recommendationForward(request).subscribe((response) => {
+
+		this.recommendationService.recommendationForward(request, this.model.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalForward').modal('hide')
 				this.getData()
@@ -456,7 +457,8 @@ export class ViewRecommendationComponent implements OnInit {
 			ListHashTag: this.lstHashtagSelected,
 			IsList: false,
 		}
-		this.recommendationService.recommendationProcess(request).subscribe((response) => {
+		let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
+		this.recommendationService.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
 				if (this.recommendationStatusProcess == RECOMMENDATION_STATUS.FINISED) {
@@ -487,7 +489,8 @@ export class ViewRecommendationComponent implements OnInit {
 				ListHashTag: this.lstHashtagSelected,
 				IsList: false,
 			}
-			this.recommendationService.recommendationProcess(request).subscribe((response) => {
+			let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
+			this.recommendationService.recommendationProcess(request, obj.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
 					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})

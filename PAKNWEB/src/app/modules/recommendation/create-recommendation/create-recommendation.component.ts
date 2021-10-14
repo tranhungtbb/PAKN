@@ -28,7 +28,7 @@ export class CreateRecommendationComponent implements OnInit {
 		{ value: 3, text: 'Trả đơn' },
 		{ value: 4, text: 'Từ chối xử lý' },
 	]
-	isIndividual :  boolean = true
+	isIndividual: boolean = true
 	title: string = 'Thêm mới'
 	spc: string = '-'
 	treeUnit: any[]
@@ -55,13 +55,13 @@ export class CreateRecommendationComponent implements OnInit {
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private notificationService: NotificationService,
-		private storeageService: UserInfoStorageService,
+		private storeageService: UserInfoStorageService
 	) {}
 	ngOnInit() {
 		this.model = new RecommendationObject()
 		this.activatedRoute.params.subscribe((params) => {
 			this.model.id = +params['id']
-			
+
 			if (this.model.id != 0) {
 				this.getData()
 				this.title = 'Sửa'
@@ -71,17 +71,16 @@ export class CreateRecommendationComponent implements OnInit {
 			}
 			debugger
 			let typeObject = params['typeObject']
-			if(typeObject){
+			if (typeObject) {
 				this.isIndividual = Number(typeObject) == 1 ? true : false
-				if(this.isIndividual){
+				if (this.isIndividual) {
 					this.changeTypeObject(1)
 					this.model.typeObject = 1
-				}
-				else{
+				} else {
 					this.changeTypeObject(2)
 					this.model.typeObject = 2
 				}
-			}else{
+			} else {
 				this.model.typeObject = 1
 			}
 			this.builForm()
@@ -99,7 +98,6 @@ export class CreateRecommendationComponent implements OnInit {
 			(error) => {
 				console.log(error)
 			}
-		
 	}
 
 	onCreateHashtag(e) {
@@ -159,8 +157,7 @@ export class CreateRecommendationComponent implements OnInit {
 		}
 		this.recommendationService.recommendationGetById(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-
-				if(this.model.createdBy != this.storeageService.getUserId() && this.model.status == 1) return;
+				if (this.model.createdBy != this.storeageService.getUserId() && this.model.status == 1) return
 
 				this.model = response.result.model
 				this.lstHashtagSelected = response.result.lstHashtag
@@ -197,19 +194,18 @@ export class CreateRecommendationComponent implements OnInit {
 					this.lstObject = response.result.lstIndividual
 					this.model.code = response.result.code
 					//
-					if(this.model.id == 0){
+					if (this.model.id == 0) {
 						// nếu thêm mới và data local stogate vẫn có thì lấy ra
 						let dataRecommetdation = JSON.parse(this.storeageService.getRecommentdationObjectRemember())
-						if(dataRecommetdation){
-							this.model = {...dataRecommetdation.model, 'code' : response.result.code, 'sendId' : null}
+						if (dataRecommetdation) {
+							this.model = { ...dataRecommetdation.model, code: response.result.code, sendId: null }
 							this.lstHashtagSelected = [...dataRecommetdation.lstHashtagSelected]
-							if(this.model.sendDate){
+							if (this.model.sendDate) {
 								this.model.sendDate = new Date(this.model.sendDate)
 							}
 						}
 					}
 				}
-				
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -304,7 +300,7 @@ export class CreateRecommendationComponent implements OnInit {
 		this.files.splice(index, 1)
 	}
 
-	onSave(onSend : any) {
+	onSave(onSend: any) {
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
 		this.builForm()
@@ -313,8 +309,8 @@ export class CreateRecommendationComponent implements OnInit {
 			return
 		}
 		this.changeObject()
-		
-		onSend == false ? this.model.status = RECOMMENDATION_STATUS.CREATED : this.model.status = RECOMMENDATION_STATUS.RECEIVE_APPROVED
+
+		onSend == false ? (this.model.status = RECOMMENDATION_STATUS.CREATED) : (this.model.status = RECOMMENDATION_STATUS.RECEIVE_APPROVED)
 		const request = {
 			Data: this.model,
 			Hashtags: this.lstHashtagSelected,
@@ -326,8 +322,6 @@ export class CreateRecommendationComponent implements OnInit {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.toastr.success(COMMONS.ADD_SUCCESS)
 					localStorage.removeItem('recommentdationObjRemember')
-					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: response.result }).subscribe((res) => {})
-
 					return this.router.navigate(['/quan-tri/kien-nghi/danh-sach-tong-hop'])
 				} else {
 					this.toastr.error(response.message)
@@ -351,36 +345,7 @@ export class CreateRecommendationComponent implements OnInit {
 				}
 		}
 	}
-	private unflatten(arr): any[] {
-		var tree = [],
-			mappedArr = {},
-			arrElem,
-			mappedElem
-
-		// First map the nodes of the array to an object -> create a hash table.
-		for (var i = 0, len = arr.length; i < len; i++) {
-			arrElem = arr[i]
-			mappedArr[arrElem.id] = arrElem
-			mappedArr[arrElem.id]['children'] = []
-		}
-
-		for (var id in mappedArr) {
-			if (mappedArr.hasOwnProperty(id)) {
-				mappedElem = mappedArr[id]
-				// If the element is not at the root level, add it to its parent array of children.
-				if (mappedElem.parentId) {
-					if (!mappedArr[mappedElem['parentId']]) continue
-					mappedArr[mappedElem['parentId']]['children'].push(mappedElem)
-				}
-				// If the element is at the root level, add it to first level elements array.
-				else {
-					tree.push(mappedElem)
-				}
-			}
-		}
-		return tree
-	}
-	back(){
+	back() {
 		localStorage.removeItem('isIndividual')
 		this.router.navigate(['/quan-tri/kien-nghi/danh-sach-tong-hop'])
 	}

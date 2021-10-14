@@ -29,7 +29,7 @@ export class NewsModel {
 	isPublished: boolean
 	status: number
 
-	newsRelateIds: string
+	newsRelateIds: any = []
 
 	//system field
 	createdAt: string

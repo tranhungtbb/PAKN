@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { NewsService } from 'src/app/services/news.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import {ViewRightComponent} from 'src/app/modules/publish/view-right/view-right.component'
+import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 
 @Component({
 	selector: 'app-news',
@@ -53,17 +53,17 @@ export class ViewNewsComponent implements OnInit {
 		this.router.navigateByUrl('/cong-bo/tin-tuc-su-kien?title=' + this.title)
 	}
 	getData(id) {
-		if(this.viewDemo){
+		if (this.viewDemo) {
 			this.newsService.getViewDetail({ id }).subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
 					this.model = res.result.NENewsViewDetail[0]
 				}
 			})
-		}else{
+		} else {
 			this.newsService.getViewDetailPublic({ id }).subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
 					this.model = res.result
-				}else{
+				} else {
 					this.model = null
 				}
 			})
@@ -74,10 +74,6 @@ export class ViewNewsComponent implements OnInit {
 		this.newsService.getAllRelates({ id }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.newsRelates = res.result.NENewsGetAllRelates
-				// .map((e) => {
-				// 	e.imagePath = `${AppSettings.API_DOWNLOADFILES}/${e.imagePath}`
-				// 	return e
-				// })
 			} else {
 				this.newsRelates = []
 			}

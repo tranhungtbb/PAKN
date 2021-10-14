@@ -50,7 +50,7 @@ export class ListApproveWaitComponent implements OnInit {
 	pageIndex: number = 1
 	pageSize: number = 20
 	lstHistories: any = []
-	titleAccept : any = ''
+	titleAccept: any = ''
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
@@ -169,7 +169,8 @@ export class ListApproveWaitComponent implements OnInit {
 			ReactionaryWord: this.modelProcess.reactionaryWord,
 			IsList: true,
 		}
-		this._service.recommendationProcess(request).subscribe((response) => {
+		let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
+		this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
 				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
@@ -193,7 +194,8 @@ export class ListApproveWaitComponent implements OnInit {
 				RecommendationStatus: RECOMMENDATION_STATUS.APPROVE_DENY,
 				IsList: true,
 			}
-			this._service.recommendationProcess(request).subscribe((response) => {
+			let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
+			this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
 					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})

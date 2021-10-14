@@ -1552,7 +1552,7 @@ namespace PAKNAPI.Controller
                             notification.Title = "PAKN CHỜ XỬ LÝ";
                             notification.Content =
                                 recommendation.SendId != item.Id ?
-                                sender.FullName + " vừa gửi một PAKN." : "Bạn vừa tạo một PAKN";
+                                sender.FullName + " vừa gửi một PAKN" : "Bạn vừa tạo một PAKN";
                             // insert notification
                             await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
                         }

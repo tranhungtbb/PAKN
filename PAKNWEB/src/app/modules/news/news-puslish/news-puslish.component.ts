@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import { ToastrService } from 'ngx-toastr'
 
@@ -38,10 +38,10 @@ export class NewsPuslishComponent implements OnInit {
 	totalCount: number = 0
 	pageCount: number = 0
 	listHisNews: any[]
+	@ViewChild('table', { static: false }) table: any
 
 	ngOnInit() {
 		this.getListPaged()
-		//get all news type
 		this.catalogService
 			.newsTypeGetList({
 				pageSize: 10000,
@@ -56,6 +56,7 @@ export class NewsPuslishComponent implements OnInit {
 	}
 
 	getListPaged() {
+		this.query.title = this.query.title == null ? '' : this.query.title.trim()
 		this.newsService
 			.getAllPagedList({
 				pageIndex: this.query.pageIndex,
@@ -126,25 +127,21 @@ export class NewsPuslishComponent implements OnInit {
 					return
 				}
 				this.toast.success(COMMONS.DELETE_SUCCESS)
+				this.table.reset()
 				this.query.pageSize = 20
 				this.query.pageIndex = 1
 				this.getListPaged()
 			})
 		} else if (this.modalConfirm_type == 'publish') {
 			item.isPublished = !item.isPublished
-			if (item.isPublished) item.status = 1
-			else item.status = 0
-			this.newsService.changeStatus(item).subscribe((res) => {
+			item.status = item.status == 1 ? 0 : 1
+			this.newsService.changeStatus({ NewsId: item.id, Status: item.status }, item.title).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error('Xảy ra lỗi trong quá trình xử lý')
 					return
 				}
-				this.hisNewsModel.objectId = this.modalConfirm_item_id
-				this.hisNewsModel.type = 1 // tin tức
-				this.hisNewsModel.status = item.isPublished ? STATUS_HISNEWS.PUBLIC : STATUS_HISNEWS.CANCEL
-				this.newsService.hisNewsCreate(this.hisNewsModel).subscribe((res) => console.log(res))
-				this.toast.success(item.isPublished ? 'Đã công bố' : 'Đã thu hồi')
-				// this.getListPaged()
+				this.toast.success(item.isPublished ? 'Đã công bố' : 'Đã hủy công bố')
+				this.getListPaged()
 			})
 		}
 		$('#modal-confirm').modal('hide')

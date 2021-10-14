@@ -141,7 +141,7 @@
 	<div class="col col-lg-8 form-group">
 		<label class="mr-3">Giới tính:</label>
 		<label *ngFor="let gen of listGender" class="radio-inline mr-3">
-			<input [(ngModel)]="model.RepresentativeGender" formControlName="Gender" [value]="gen.value" type="radio"> <span class="text-uppercase"> {{gen.text}}</span>
+			<input [(ngModel)]="model.RepresentativeGender" [checked]="model.representativeGender == gen.value" formControlName="Gender" [value]="gen.value" type="radio"> <span class="text-uppercase"> {{gen.text}}</span>
 		</label>
 	</div>
 </form>

@@ -68,13 +68,16 @@
 									[color]="color" [enableMeridian]="enableMeridian">
 								</ngx-mat-datetime-picker>
 							</mat-form-field>
-							<div *ngIf="(submitted && f.endDate.invalid) || (f.endDate.invalid && (f.endDate.dirty || f.endDate.touched))" class="has-error">
+							<div *ngIf="(submitted && f.endDate.invalid)" class="has-error">
 								<div *ngIf="f.endDate.errors.required">
 									<span class="help-block">Trường dữ liệu này không được để trống</span>
 								</div>
 								<div *ngIf="f.endDate.errors && !f.endDate.errors.required">
 									<span class="help-block">Định dạng ngày không đúng</span>
 								</div>
+							</div>
+							<div *ngIf="submitted && model.endDate && !checkDate">
+								<span class="help-block">Thời gian kết thúc không được nhỏ hơn Thời gian bắt đầu</span>
 							</div>
 
 						</div>

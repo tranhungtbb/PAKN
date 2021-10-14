@@ -50,7 +50,7 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 	nation_enable_type = false
 	userLoginId: number = this.storeageService.getUserId()
 	title: string = 'Thêm mới doanh nghiệp'
-	isBussiness : boolean = false
+	isBussiness: boolean = false
 	ngOnInit() {
 		this.localeService.use('vi')
 
@@ -66,7 +66,7 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 				this.title = 'Thêm mới doanh nghiệp'
 				//
 			}
-			if(localStorage.getItem('isIndividual') === 'false'){
+			if (localStorage.getItem('isIndividual') === 'false') {
 				this.isBussiness = true
 			}
 		})
@@ -163,16 +163,15 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 				this.model.WardsId = response.result.BusinessGetById[0].wardsId
 				this.model.phone = response.result.BusinessGetById[0].phone
 				this.model.Address = response.result.BusinessGetById[0].address
-				
+
 				// //Thông tin doanh nghiệp
 				this.model.Business = response.result.BusinessGetById[0].business
 				this.model.BusinessRegistration = response.result.BusinessGetById[0].businessRegistration
 				this.model.DecisionOfEstablishing = response.result.BusinessGetById[0].decisionOfEstablishing
-				this.model.DateOfIssue = response.result.BusinessGetById[0].dateOfIssue == null 
-					? null : new Date(response.result.BusinessGetById[0].dateOfIssue)
+				this.model.DateOfIssue = response.result.BusinessGetById[0].dateOfIssue == null ? null : new Date(response.result.BusinessGetById[0].dateOfIssue)
 				this.model.Tax = response.result.BusinessGetById[0].tax
-				this.model.RepresentativeBirthDay = response.result.BusinessGetById[0].representativeBirthDay == null
-					? null : new Date(response.result.BusinessGetById[0].representativeBirthDay)
+				this.model.RepresentativeBirthDay =
+					response.result.BusinessGetById[0].representativeBirthDay == null ? null : new Date(response.result.BusinessGetById[0].representativeBirthDay)
 
 				// Địa chỉ trụ sở / Văn phòng đại diện
 				this.model.OrgProvinceId = response.result.BusinessGetById[0].orgProvinceId
@@ -240,7 +239,6 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 			return
 		}
 
-
 		if (this.model.id != null && this.model.id > 0) {
 			localStorage.removeItem('isIndividual')
 			this.businessIndividualService.businessUpdate(this.model).subscribe((res) => {
@@ -272,10 +270,10 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 					this.toast.error(msg)
 					return
 				}
-				this.toast.success('Đăng ký doanh nghiệp thành công')
-				if(this.isBussiness){
+				this.toast.success('Thêm mới doanh nghiệp thành công')
+				if (this.isBussiness) {
 					this.router.navigate(['/quan-tri/kien-nghi/them-moi/0/2'])
-				}else{
+				} else {
 					this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/doanh-nghiep'])
 				}
 			})

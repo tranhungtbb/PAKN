@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import { ToastrService } from 'ngx-toastr'
 
@@ -38,6 +38,7 @@ export class NewsComponent implements OnInit {
 	totalCount: number = 0
 	pageCount: number = 0
 	listHisNews: any[]
+	@ViewChild('table', { static: false }) table: any
 
 	ngOnInit() {
 		this.getListPaged()
@@ -56,6 +57,7 @@ export class NewsComponent implements OnInit {
 	}
 
 	getListPaged() {
+		this.query.title = this.query.title == null ? '' : this.query.title.trim()
 		this.newsService
 			.getAllPagedList({
 				pageIndex: this.query.pageIndex,
@@ -125,6 +127,7 @@ export class NewsComponent implements OnInit {
 					this.toast.error(COMMONS.DELETE_FAILED)
 					return
 				}
+				this.table.reset()
 				this.query.pageSize = 20
 				this.query.pageIndex = 1
 				this.toast.success(COMMONS.DELETE_SUCCESS)
@@ -132,14 +135,15 @@ export class NewsComponent implements OnInit {
 			})
 		} else if (this.modalConfirm_type == 'publish') {
 			item.isPublished = !item.isPublished
-			if (item.isPublished) item.status = 1
-			else item.status = 0
-			this.newsService.changeStatus(item).subscribe((res) => {
+			// if (item.isPublished) item.status = 1
+			// else item.status = 0
+			item.status = item.status == 1 ? 0 : 1
+			this.newsService.changeStatus({ NewsId: item.id, Status: item.status }, item.title).subscribe((res) => {
 				if (res.success != 'OK') {
 					this.toast.error('Xảy ra lỗi trong quá trình xử lý')
 					return
 				}
-				this.toast.success(item.isPublished ? 'Đã công bố' : 'Đã thu hồi')
+				this.toast.success(item.isPublished ? 'Đã công bố' : 'Đã hủy công bố')
 			})
 		}
 		$('#modal-confirm').modal('hide')

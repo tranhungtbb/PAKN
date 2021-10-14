@@ -30,7 +30,7 @@
 											<strong>Tiêu đề</strong>
 											
 										</p>
-										<input [(ngModel)]="query.title" svTrim trim (change)="filterChange()" type="text" class="form-control form-control-sm" placeholder="Nhập ...">
+										<input [(ngModel)]="query.title" (change)="filterChange()" type="text" class="form-control form-control-sm" placeholder="Nhập ...">
 									</th>
 									<th style="width: 180px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">

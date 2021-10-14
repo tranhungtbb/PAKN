@@ -106,7 +106,7 @@ export class RecommendationService {
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION + ' ' + request.Data.title),
 		})
 		const form = new FormData()
 		form.append('Data', JSON.stringify(request.Data))
@@ -122,11 +122,6 @@ export class RecommendationService {
 			reportProgress: true,
 		}
 		return this.http.post(AppSettings.API_ADDRESS + Api.RecommendationInsert, form, httpPackage)
-		// let headers = {
-		// 	logAction: encodeURIComponent(LOG_ACTION.INSERT),
-		// 	logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
-		// }
-		// return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationInsert, headers)
 	}
 
 	recommendationUpdate(request: any): Observable<any> {
@@ -134,7 +129,7 @@ export class RecommendationService {
 			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
 			macAddress: '',
 			logAction: encodeURIComponent(request.Data.status == RECOMMENDATION_STATUS.CREATED ? LOG_ACTION.UPDATE : LOG_ACTION.SEND),
-			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION + ' ' + request.Data.title),
 		})
 		const form = new FormData()
 		form.append('Data', JSON.stringify(request.Data))
@@ -151,27 +146,21 @@ export class RecommendationService {
 			reportProgress: true,
 		}
 		return this.http.post(AppSettings.API_ADDRESS + Api.RecommendationUpdate, form, httpPackage)
-		// let headers = {
-		// 	logAction: encodeURIComponent(LOG_ACTION.UPDATE),
-		// 	logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
-		// }
-		// return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationUpdate, headers)
 	}
 
-	recommendationForward(request: any): Observable<any> {
+	recommendationForward(request: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.FORWARD),
-			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION + ' ' + title),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationForward, headers)
 	}
 
-	recommendationProcess(request: any): Observable<any> {
+	recommendationProcess(request: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.PROCESSED),
-			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION + ' ' + title),
 		}
-		debugger
 		switch (request.RecommendationStatus) {
 			case 2:
 				headers.logAction = encodeURIComponent(LOG_ACTION.FORWARD_TT)
@@ -201,10 +190,10 @@ export class RecommendationService {
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationProcess, headers)
 	}
 
-	recommendationUpdateStatus(request: any): Observable<any> {
+	recommendationUpdateStatus(request: any, title: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
-			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION + ' ' + title),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationUpdateStatus, headers)
 	}

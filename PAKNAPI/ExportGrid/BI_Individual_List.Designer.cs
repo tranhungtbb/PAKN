@@ -52,6 +52,7 @@ namespace PAKNAPI.ExportGrid {
 
             // Data Sources
             this.sqlDataSource2 = reportInitializer.GetDataSource<DevExpress.DataAccess.Sql.SqlDataSource>("sqlDataSource2");
+            this.sqlDataSource1 = reportInitializer.GetDataSource<DevExpress.DataAccess.Sql.SqlDataSource>("sqlDataSource1");
 
             // Styles
             this.Title = reportInitializer.GetStyle("Title");
@@ -100,5 +101,6 @@ namespace PAKNAPI.ExportGrid {
         private DevExpress.XtraReports.Parameters.Parameter Phone;
         private DevExpress.XtraReports.Parameters.Parameter Email;
         private DevExpress.XtraReports.Parameters.Parameter Status;
+        private DevExpress.DataAccess.Sql.SqlDataSource sqlDataSource1;
     }
 }

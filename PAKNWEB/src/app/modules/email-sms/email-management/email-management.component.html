@@ -115,9 +115,9 @@
 														class="bi bi-pencil-square"></i></a>
 											</ng-container>
 											
-											<a (click)="confirm(item.id)" style="cursor: pointer;" class="btn-icon grd-red text-white cursor mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
+											<a *ngIf="item.status == 1" (click)="confirm(item.id)" class="btn-icon grd-red text-white cursor mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
 													class="bi bi-trash"></i></a>
-											<a class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
+											<a class="btn-icon" (click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
 									</td>
 								</tr>
@@ -263,9 +263,9 @@
 								<p>{{item.createdDate | date : 'dd/MM/yyyy HH:mm'}}</p>
 							</td>
 							<td>
-								<span *ngIf="item.status == 0" class="badge rounded-pill bg-blue2">Đã khởi tạo</span>
-								<span *ngIf="item.status == 1" class="badge rounded-pill badge-outline-green2">Đã cập nhập</span>
-								<span *ngIf="item.status == 2" class="badge rounded-pill bg-red">Đã gửi</span>
+								<span type="button" *ngIf="item.status == 0" class="badge rounded-pill bg-blue2">Đã khởi tạo</span>
+								<span type="button" *ngIf="item.status == 1" class="badge rounded-pill badge-outline-green2">Đã cập nhập</span>
+								<span type="button" *ngIf="item.status == 2" class="badge rounded-pill bg-blue-light">Đã gửi</span>
 							</td>
 						</tr>
 					</ng-template>
@@ -280,42 +280,6 @@
 	</div>
 </div>
 
-<!-- <div class="modal fade" id="modalDetail">
-	<div class="modal-dialog modal-dialog-centered" style="max-width: 70%" role="document">
-		<div class="modal-content rounded">
-			<form class="form-horizontal">
-				<div class="panel panel-default no-margin">
-					<div class="modal-header" style="border: none;">
-						<button class="close btn-close-modal" data-dismiss="modal">
-							×
-						</button>
-						<p class="modal-title h3">{{model.title}}</p>
-					</div>
-					<div class="modal-body no-padding-bottom" style="padding: 1.1rem; padding-top: 0px;">
-						<div class="row" style="padding: 10px 0px;">
-							<div class="col-sm-12" style="border-top: 1px solid #EEEEEE; border-bottom: 1px solid #EEEEEE">
-								<p style="margin: 16px 0px;">{{model.content}}</p>
-							</div>
-							<div class="w-100"></div>
-							<div class="title-user-map">Cá nhân doanh nghiệp nhận SMS</div>
-							<div class="col-sm-3" style="padding: 5px !important;" *ngFor="let item of listItemUserSelected">
-								<div class="item-user">
-									<div class="info-user padding-item" style="padding-left: 0px;">
-										<div class="title">{{item.administrativeUnitName}}</div>
-
-										<div class="department">{{item.name}}</div>
-
-									</div>
-								</div>
-							</div>
-							<div class="w-100"></div>
-						</div>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-</div> -->
 
 
 

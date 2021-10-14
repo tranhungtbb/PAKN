@@ -147,7 +147,7 @@ namespace PAKNAPI
                     result.Parameters["Address"].Value = paramExportIndividual.Address;
                     result.Parameters["Phone"].Value = paramExportIndividual.Phone;
                     result.Parameters["Email"].Value = paramExportIndividual.Email;
-                    result.Parameters["Status"].Value = paramExportIndividual.Status;
+                    result.Parameters["Status"].Value = paramExportIndividual.Status == null ? -1 : paramExportIndividual.Status;
                     result.SaveLayoutToXml(ms);
                     // log
                     sYSystemLogInsertIN.UserId = paramExportIndividual.UserProcessId;

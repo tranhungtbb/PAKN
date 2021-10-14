@@ -120,16 +120,13 @@ export class IndividualComponent implements OnInit {
 				}
 			})
 		} else {
+			this.isOtherNation = true
 			if (this.model.nation == '#') {
-				this.isOtherNation = true
 				this.model.nation = ''
-
-				this.model.provinceId = 0
-				this.model.districtId = 0
-				this.model.wardsId = 0
-
-				// this.form.get('nation').setErrors(null)
 			}
+			this.model.provinceId = 0
+			this.model.districtId = 0
+			this.model.wardsId = 0
 		}
 	}
 	onResetNationValue(event: any) {
@@ -338,9 +335,9 @@ export class IndividualComponent implements OnInit {
 			gender: [this.model.gender, [Validators.required]],
 			birthDay: [this.model.birthDay, [Validators.required]],
 			nation: [this.model.nation, [Validators.required]],
-			province: [this.model.provinceId, [Validators.required]],
-			district: [this.model.districtId, [Validators.required]],
-			village: [this.model.wardsId, [Validators.required]],
+			province: [this.model.provinceId],
+			district: [this.model.districtId],
+			village: [this.model.wardsId],
 			phone: [this.model.phone, [Validators.required]],
 			email: [this.model.email, [Validators.email]],
 			address: [this.model.address, [Validators.required]],
@@ -372,7 +369,7 @@ export class IndividualComponent implements OnInit {
 
 	onSave() {
 		this.submitted = true
-
+		this.model.nation = this.model.nation == null ? '' : this.model.nation.trim()
 		if (this.model.nation == 'Nhập...') {
 			this.model.nation = ''
 		}
@@ -443,9 +440,9 @@ export class IndividualComponent implements OnInit {
 			})
 			.subscribe((res) => {
 				if (res.success == RESPONSE_STATUS.success) {
-					if (field == 'Phone') this.phone_exists = res.result.BIInvididualCheckExists[0].exists
-					else if (field == 'Email') this.email_exists = res.result.BIInvididualCheckExists[0].exists
-					else if (field == 'idCard') this.idCard_exists = res.result.BIInvididualCheckExists[0].exists
+					if (field == 'Phone') this.phone_exists = res.result.BIIndividualCheckExists[0].exists
+					else if (field == 'Email') this.email_exists = res.result.BIIndividualCheckExists[0].exists
+					else if (field == 'idCard') this.idCard_exists = res.result.BIIndividualCheckExists[0].exists
 				}
 			})
 	}
@@ -527,7 +524,7 @@ export class IndividualComponent implements OnInit {
 
 	onExport() {
 		let passingObj: any = {}
-		passingObj = this.dataSearch
+		passingObj = { ...this.dataSearch }
 		passingObj.TitleReport = 'DANH SÁCH CÁ NHÂN'
 		passingObj.UserProcessId = this.storeageService.getUserId()
 		passingObj.UserProcessName = this.storeageService.getFullName()
