@@ -18,18 +18,12 @@
 							<i class="pi pi-calendar"></i>&nbsp;
 							{{model.date | date:'HH:mm'}} <span class="text-uppercase">Ngày</span> {{model.date | date:'dd/MM/yyyy'}}
 						</time>
-						<!-- <a class="pull-right" href="{{model.src}}" download="file-name.pdf" target="_blank" style="cursor: pointer; font-size: 14pt;"
-							title="Tải xuống file hướng dẫn">
-							<i class="bi bi-download"></i>
-						</a> -->
 					</div>
 					<div>
 						<p style="font-weight: bold; text-align: justify;">
 						</p>
 					</div>
-					<!-- <div class="contents" [innerHTML]="model.contents" style="text-align: justify;" *ngIf="contentType == 0"></div> -->
 					<div class="contents" *ngIf="contentType == 0">
-						<!-- <iframe [src]="safe(model.src)" id="docView" #docView width="100%" height="600px"></iframe> -->
 						<embed [src]="model.src | safeUrl" id="docView" type="application/pdf" width="100%" height="600px" #docView>
 					</div>
 					<div class="contents" *ngIf="contentType == 1">
@@ -39,18 +33,15 @@
 						</div>
 					</div>
 				</div>
-				<!-- <div *ngIf="tabNum == 1">
-					videos content
-				</div> -->
 			</div>
 			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
 				<div class="border-bottom mb-2 mt-2 pb-2">
 					<p class="mb-0">
-						<a class="rlink" [ngClass]="{'active':title == 'người dân'}" (click)="title = 'người dân';changeDoc()">Người dân</a>
+						<a class="rlink" [ngClass]="{'active':title == 'người dân'}" (click)="loadDocView(contentType,2)">Người dân</a>
 					</p>
 				</div>
 				<p class="mb-0">
-					<a class="rlink" [ngClass]="{'active':title == 'doanh nghiệp'}" (click)="title = 'doanh nghiệp';changeDoc()">Doanh nghiệp</a>
+					<a class="rlink" [ngClass]="{'active':title == 'doanh nghiệp'}" (click)="loadDocView(contentType,3)">Doanh nghiệp</a>
 				</p>
 			</div>
 		</div>

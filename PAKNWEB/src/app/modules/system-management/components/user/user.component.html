@@ -68,7 +68,7 @@
 										</ng-select>
 									</div>
 								</th>
-								<th>
+								<th style="width: 130px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
 									[pSortableColumn]="'phone'">
 										<strong>Điện thoại <p-sortIcon [field]="'phone'"></p-sortIcon></strong>
@@ -78,7 +78,7 @@
 									numbersOnly [ngSwitch]="'phone'" (keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')"
 									placeholder="Nhập...">
 								</th>
-								<th style="width: 150px">
+								<th style="max-width: 170px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
 										[pSortableColumn]="'unitName'"
 									>
@@ -90,7 +90,7 @@
 											bindValue="value"
 											[ngSwitch]="'unitName'"
 											(change)="table.filter($event?.text.toString(), 'unitName')"
-											style="width: 150px">
+											>
 										</ng-select>
 										<!-- "table.filter($event?.text.toString(), 'unitName') "  onChange($event)"-->
 									</div>
@@ -109,7 +109,7 @@
 										</ng-select>
 									</div>
 								</th>
-								<th style="text-align: center; width: 168px !important;">
+								<th style="text-align: center; width: 100px !important;">
 									<strong>THAO TÁC</strong>
 								</th>
 							</tr>
@@ -143,9 +143,9 @@
 								</td>
 								<td>
 									<div class="hover-active d-flex justify-content-end">
-										<a *hasPermission="['3', 'A_IX_1']" title="Cập nhập" (click)="modalUserCreateOrUpdate(item.id)" class="btn-icon grd-brown text-brown mr-2"><i class="bi bi-pencil-square"></i></a>
-										<a *hasPermission="['3', 'A_IX_2']" title="Thay đổi mật khẩu" (click)="preChangePassword(item.id)" class="btn-icon grd-brown text-brown mr-2 cursor"><i class="bi bi-key"></i></a>
-										<a *hasPermission="['3', 'A_IX_7']" title="Lịch sử người dùng" class="btn-icon mr-2 cursor" (click)="getHistory(item.id, item.userName, true)" title="Xem lịch sử"><i
+										<a *hasPermission="['3', 'A_IX_1']" title="Cập nhập" (click)="modalUserCreateOrUpdate(item.id)" class="btn-icon grd-brown text-brown mr-1"><i class="bi bi-pencil-square"></i></a>
+										<a *hasPermission="['3', 'A_IX_2']" title="Thay đổi mật khẩu" (click)="preChangePassword(item.id)" class="btn-icon grd-brown text-brown mr-1 cursor"><i class="bi bi-key"></i></a>
+										<a *hasPermission="['3', 'A_IX_7']" title="Lịch sử người dùng" class="btn-icon mr-1 cursor" (click)="getHistory(item.id, item.userName, true)" title="Xem lịch sử"><i
 												class="bi bi-clock-history"></i></a>
 										<a *hasPermission="['3', 'A_IX_3']" title="Xóa người dùng" (click)="preDelete(item.id)" class="btn-icon grd-red text-white" data-toggle="modal" data-target="#modal-tc-pakn"><i
 												class="bi bi-trash"></i></a>
@@ -180,8 +180,8 @@
 				</span>
 			</div>
 			<div class="modal-footer border-top-0">
-				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="onDelete()">Xác nhận</button>
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onDelete()">Xác nhận</button>
 			</div>
 		</div>
 	</div>
@@ -202,8 +202,8 @@
 				</span>
 			</div>
 			<div class="modal-footer border-top-0">
-				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="onChangeUserStatus()">Xác nhận</button>
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onChangeUserStatus()">Xác nhận</button>
 			</div>
 		</div>
 	</div>

@@ -25,7 +25,7 @@ export class SupportComponent implements OnInit, AfterViewInit {
 		date: new Date(),
 	}
 	contentType = 0
-	title = 'người dân'
+	type = 2
 
 	@ViewChild('docView', { static: true }) docView: ElementRef
 
@@ -33,18 +33,20 @@ export class SupportComponent implements OnInit, AfterViewInit {
 		this._PuSupportService.getData({}).subscribe((res) => {
 			if (res) {
 				this.listDoc = res.result.ListData
-				this.loadDocView(this.contentType, this.title)
+				this.loadDocView(this.contentType, this.type)
 			}
 		})
 	}
 	changeDoc() {
-		this.loadDocView(this.contentType, this.title)
+		this.loadDocView(this.contentType, this.type)
 	}
 	currentFileName: string = ''
-	loadDocView(contentType: number, title: string) {
-		let item = this.listDoc.find((c) => c.category == contentType && c.title.toLowerCase() == title.toLowerCase())
+	loadDocView(contentType: number, type: number) {
+		this.type = type
+		debugger
+		let item = this.listDoc.find((c) => c.category == contentType && c.type == type)
 		this.model = { ...item }
-		this.model.src = `http://14.177.236.88:6160/${item.filePath}`
+		this.model.src = item.filePath
 		let splString = item.filePath.split('/')
 		this.currentFileName = splString[splString.length - 1]
 	}

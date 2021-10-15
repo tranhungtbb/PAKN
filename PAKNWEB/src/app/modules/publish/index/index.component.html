@@ -17,8 +17,12 @@
 						<div class="card-body position-absolute rounded-bottom"
 							style="width: 100%; bottom: 0; background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);">
 							<p *ngIf="firstNews" class="text-white mb-1">{{firstNews.createdDate | date : 'dd/MM/yyyy'}}</p>
-							<p><a *ngIf="firstNews" class="cl2 text-white text-uppercase text-3line h4" (click)="redirectDetailNews(firstNews.id)" style="line-height: 1.8rem"
-									href="javascript:void(0)">{{firstNews.title}}</a></p>
+							<p *ngIf="firstNews" 
+								class="cl2 text-white text-uppercase text-2line h4 cursor" 
+								title="{{firstNews.title}}" (click)="redirectDetailNews(firstNews.id)" 
+								style="line-height: 1.8rem">
+									{{firstNews.title}}
+							</p>
 							<p><a href="javascript:void(0)" class="text-white" (click)="redirectDetailNews(firstNews.id)">Xem chi tiết <i class="bi bi-arrow-right"></i></a></p>
 						</div>
 					</div>
@@ -35,8 +39,8 @@
 										</span>
 									</a>
 									<p class="card-text text-dark px-4 pt-3 py-0 mb-0">{{item.createdDate | date: 'dd/MM/yyyy'}}</p>
-									<div class="card-header px-4 pt-1 pb-0" style="height: 80px;">
-										<p class="card-title text-3line"><a href="javascript:void(0)" (click)="redirectDetailNews(item.id)">{{item.title}}</a></p>
+									<div class="card-header px-4 pt-1 pb-0 text-3line" style="height: 80px;">
+										<p class="card-title" (click)="redirectDetailNews(item.id)">{{item.title}}</p>
 									</div>
 									<div class="card-body px-4 pt-2 pb-3" style="height: 75px;">
 										<p class="card-text text-2line"><a href="javascript:void(0)" (click)="redirectDetailNews(item.id)">{{item.summary}}</a>

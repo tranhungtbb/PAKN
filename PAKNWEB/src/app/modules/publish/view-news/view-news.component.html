@@ -26,9 +26,7 @@
 							{{model.summary}}
 						</p>
 					</div>
-					<!-- [innerHTML]="model.contents" [innerHTML]="model.contents | oembed" -->
-					<div class="contents" [innerHTML]="model.contents" style="text-align: justify;">
-						<!-- <p>fghfhfg</p><p>dfgdfg</p><figure class="media"><div class="iframe-container"><iframe src="https://youtube.com/embed/dCMum2wlbgQ"></iframe></div></figure> -->
+					<div class="contents" [innerHTML]="model.contents | oembed" style="text-align: justify;">
 					</div>
 				</div>
 				<p *ngIf="(viewDemo && !model) || !model">Bài viết chưa được công bố</p>

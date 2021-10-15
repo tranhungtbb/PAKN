@@ -18,13 +18,14 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 
 	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		let isShowLoading = request.headers.get('isShowLoading')
-		if (isShowLoading != 'false') {
+		if (
+			isShowLoading != 'false' &&
+			request.url != AppSettings.API_ADDRESS + Api.NotificationGetList &&
+			request.url != AppSettings.API_ADDRESS + Api.NotificationUpdateIsViewed &&
+			request.url != AppSettings.API_ADDRESS + Api.UserGetAllByIdQb
+		) {
 			this.env.isContentLoading = true
 		}
-		// Retake Token
-		// if (request.url == AppSettings.API_ADDRESS + Api.GetNotification) {
-		//   this.env.isContentLoading = false;
-		// }
 		if (request.url != 'https://jsonip.com/' && request.url != AppSettings.API_ADDRESS + Api.GetFile) {
 			let logAction = request.headers.get('logAction') && request.headers.get('logAction') != 'null' ? request.headers.get('logAction') : ''
 			let logObject = request.headers.get('logObject') && request.headers.get('logObject') != 'null' ? request.headers.get('logObject') : ''
@@ -36,7 +37,7 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 					logAction: logAction,
 					logObject: logObject,
 					ipAddress: localStorage.getItem('IpAddress') && localStorage.getItem('IpAddress') != null ? localStorage.getItem('IpAddress') : '',
-					macAddress: macAddress
+					macAddress: macAddress,
 				}),
 			})
 		}

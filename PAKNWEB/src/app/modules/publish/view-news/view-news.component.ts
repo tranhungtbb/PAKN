@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core'
 
 import { Router, ActivatedRoute } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
@@ -11,11 +11,13 @@ import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-righ
 	templateUrl: './view-news.component.html',
 	styleUrls: ['./view-news.component.css'],
 })
-export class ViewNewsComponent implements OnInit {
+export class ViewNewsComponent implements OnInit, AfterViewInit {
 	constructor(private newsService: NewsService, private router: Router, private activatedRoute: ActivatedRoute, private userStorage: UserInfoStorageService) {
 		this.newsHightlight = []
 	}
 	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
+	@ViewChild('contents', { static: true }) contents: ElementRef
+
 	model: any = {}
 	newsRelates: any[] = []
 	viewDemo = false
@@ -45,6 +47,7 @@ export class ViewNewsComponent implements OnInit {
 			return
 		})
 	}
+	ngAfterViewInit() {}
 	changeKeySearch(event) {
 		this.title = event.target.value
 	}

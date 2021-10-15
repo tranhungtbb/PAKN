@@ -21,13 +21,19 @@ export class OembedPipe implements PipeTransform {
 				const oembed2 = oembed1.split('">')[0]
 				if (oembed2) {
 					const youtube = oembed2.split('https://www.youtube.com/watch?v=')[1]
-					debugger
 					if (youtube) {
 						body += '<div class="iframe-container">' + '<iframe src="https://youtube.com/embed/' + youtube + '"></iframe></div>'
 					}
 				}
 			}
 		})
-		return body
+		let div = document.createElement('div')
+		div.innerHTML = body
+		let scripts = div.getElementsByTagName('oembed')
+		var i = scripts.length
+		while (i--) {
+			scripts[i].parentNode.removeChild(scripts[i])
+		}
+		return div.innerHTML
 	}
 }

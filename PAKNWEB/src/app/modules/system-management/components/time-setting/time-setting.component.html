@@ -128,8 +128,8 @@
 		</div>
 	</div>
 </div>
-<div class="ui-g-12 ui-md-4 center mb-5" style="display: block;">
-	<h3 style="text-align: center;">Lịch làm việc</h3>
+<div class="ui-g-12 ui-md-4 mb-5 center" style="text-align: center;display: block;">
+	<h3>Lịch làm việc</h3>
 	<p-calendar [(ngModel)]="date1" [inline]="true" [locale]="vi">
 		<ng-template pTemplate="date" let-date>
 			<span [ngStyle]="{backgroundColor: getMarkedDays(date) ? '#81C784' : 'inherit'}"
@@ -285,8 +285,8 @@
 				</span>
 			</div>
 			<div class="modal-footer border-top-0">
-				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="onDelete(idDelete)">Xác nhận</button>
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onDelete(idDelete)">Xác nhận</button>
 			</div>
 		</div>
 	</div>
@@ -307,8 +307,8 @@
 				</span>
 			</div>
 			<div class="modal-footer border-top-0">
-				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="onUpdateStatus(dataUpdate)">Xác nhận</button>
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onUpdateStatus(dataUpdate)">Xác nhận</button>
 			</div>
 		</div>
 	</div>

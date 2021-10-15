@@ -97,3 +97,13 @@ p.content-remind {
 .inputfile-4 + label {
 	padding: 0px;
 }
+.alert-dismissible .close {
+	right: 21px;
+	top: 5px;
+	padding: 0px;
+}
+.alert-dark {
+	padding: 0 10px;
+	height: 100%;
+	flex-direction: column;
+}

@@ -12,10 +12,13 @@ export class UserInfoStorageService {
 	role: number
 
 	constructor() {}
-	clear = ()=>{
+	clear = () => {
+		debugger
 		var remember = this.getRecommentdationObjectRemember()
+		var satisfactionRecommendation = localStorage.getItem('satisfaction')
 		localStorage.clear()
-		if(remember && remember != null && remember != 'null'){
+		localStorage.setItem('satisfaction', satisfactionRecommendation)
+		if (remember && remember != null && remember != 'null') {
 			this.setRecommentdationObjectRemember(remember)
 		}
 	}
@@ -88,14 +91,14 @@ export class UserInfoStorageService {
 		localStorage.setItem('typeObject', value)
 	}
 
-	setRecommentdationObjectRemember = (value)=> {
+	setRecommentdationObjectRemember = (value) => {
 		localStorage.setItem('recommentdationObjRemember', value)
 	}
 	getIsAdmin(): boolean {
 		return localStorage.getItem('isAdmin') === 'true'
 	}
 
-	getRecommentdationObjectRemember = ()=>{
+	getRecommentdationObjectRemember = () => {
 		return localStorage.getItem('recommentdationObjRemember')
 	}
 

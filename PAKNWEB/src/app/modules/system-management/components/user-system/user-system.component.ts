@@ -53,6 +53,7 @@ export class UserSystemComponent implements OnInit {
 	model = new UserSystemObject()
 	submitted: boolean = false
 	isShowPassword: any = false
+	isShowRePassword: any = false
 
 	// view child
 	@ViewChild('table', { static: false }) table: any
@@ -145,6 +146,7 @@ export class UserSystemComponent implements OnInit {
 			Email: false,
 			Phone: false,
 		}
+		this.userAvatar = null
 		this.reBuildForm()
 		$('#modal').modal('show')
 	}
@@ -498,6 +500,9 @@ export class UserSystemComponent implements OnInit {
 	}
 	showPassword() {
 		this.isShowPassword = !this.isShowPassword
+	}
+	showRePassword() {
+		this.isShowRePassword = !this.isShowRePassword
 	}
 	onExport() {
 		$('#modalHis').modal('hide')

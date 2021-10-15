@@ -1752,3 +1752,11 @@ table thead .form-control ng-select {
 .mh-32{
 	min-height: 32px;
 }
+.w-127{
+	justify-content: center;
+	width: 127px;
+}
+.cursor{
+	cursor: pointer;
+}
+

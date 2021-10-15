@@ -70,7 +70,6 @@ export class PublishComponent implements OnInit, OnChanges {
 
 	getListNotification(PageSize: any) {
 		this.ViewedCount = 0
-		this.notifications = []
 		this.notificationService.getListNotificationOnPageByReceiveId({ PageSize: PageSize, PageIndex: 1 }).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.syNotifications.length > 0) {

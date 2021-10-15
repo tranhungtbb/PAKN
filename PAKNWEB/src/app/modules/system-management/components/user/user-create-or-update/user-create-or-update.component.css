@@ -27,7 +27,7 @@
 .color-brow {
 	color: #743f15;
 }
-.permision-category{
+.permision-category {
 	color: black;
 	font-weight: 600;
 }
@@ -60,9 +60,15 @@
 	z-index: 100 !important;
 }
 
-.width-96vw{
+.width-96vw {
 	min-width: 96vw;
 }
-.width-auto{
+.width-auto {
 	min-width: 50vw;
+}
+:host ::ng-deep .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+	line-height: 20px;
+}
+:host ::ng-deep .form-control.ng-select .ng-select-container {
+	padding-bottom: 0px;
 }

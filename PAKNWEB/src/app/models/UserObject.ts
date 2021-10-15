@@ -102,9 +102,8 @@ export class UserSystemObject {
 		this.phone = ''
 		this.isActived = true
 		this.isDeleted = false
-		this.gender = null
+		this.gender = true
 		this.isAdmin = true
-		this.address = ''
 	}
 
 	id: number
@@ -121,7 +120,6 @@ export class UserSystemObject {
 	avatar: string
 	address: string
 }
-
 
 export class UserInfoObject {
 	userName: string

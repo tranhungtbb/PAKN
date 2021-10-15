@@ -82,12 +82,12 @@
 								</p>
 								<div class="attach-file row">
 									<div class="col-2 mb-2">
-										<div class="alert alert-dark d-flex align-items-center h-80">
+										<div class="alert-dark d-flex align-items-center h-80">
 											<input type="file" style="display: none" #file id="file" (change)="onUpload($event)" class="inputfile inputfile-4 d-none" multiple
 												accept="{{fileAccept}}" />
 											<label for="file-5" (click)="file.click()">
-												<figure style="background-color: transparent;">
-													<i class="bi bi-file-earmark-arrow-up" style="font-size: 40px;"></i>
+												<figure style="background-color: transparent;text-align: center;">
+													<i class="bi bi-file-earmark-arrow-up" style="font-size: 35px;"></i>
 												</figure>
 												<span class="d-block text-center">Tải lên</span>
 											</label>
@@ -96,60 +96,60 @@
 									<ng-container *ngFor="let item of files">
 
 										<div class="col-2 mb-2" *ngIf="item.fileType == 1">
-											<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
+											<div class="alert-dark alert-dismissible fade show d-flex align-items-center h-80">
 												<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert" aria-label="Close"><span><i
 															class="mdi mdi-close"></i></span>
 												</button>
-												<a href="#" class="d-block text-center">
-													<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="">
-													<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+												<a href="javascript:void(0)" class="d-block text-center">
+													<img src="../../../../assets/dist/images/file-word.svg" class="mt-1" style="width: 45px" alt="">
+													<span class="mt-1 mb-1 text-dark text-wrap text-2line">{{item.name}}</span>
 												</a>
 											</div>
 										</div>
 
 										<div class="col-2 mb-2" *ngIf="item.fileType == 3">
-											<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
+											<div class="alert-dark alert-dismissible fade show d-flex align-items-center h-80">
 												<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert" aria-label="Close"><span><i
 															class="mdi mdi-close"></i></span>
 												</button>
-												<a href="#" class="d-block text-center">
-													<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 45px" alt="">
-													<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+												<a href="javascript:void(0)" class="d-block text-center">
+													<img src="../../../../assets/dist/images/file-pdf.svg" class="mt-1" style="width: 45px" alt="">
+													<span class="mt-1 mb-1 text-dark text-wrap text-2line">{{item.name}}</span>
 												</a>
 											</div>
 										</div>
 
 										<div class="col-2 mb-2" *ngIf="item.fileType == 4">
-											<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
+											<div class="alert-dark alert-dismissible fade show d-flex align-items-center h-80">
 												<button type="button" (click)="onRemoveFile(item)" class="close" (click)="onRemoveFile(item)"><span><i
 															class="mdi mdi-close"></i></span>
 												</button>
-												<a href="#" class="d-block text-center box-fileinput">
-													<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="">
-													<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+												<a href="javascript:void(0)" class="d-block text-center box-fileinput">
+													<img src="../../../../assets/dist/images/file-image.svg" class="mt-1" style="width: 45px" alt="">
+													<span class="mt-1 mb-1 text-dark text-wrap text-2line">{{item.name}}</span>
 												</a>
 											</div>
 										</div>
 
 										<div class="col-2 mb-2" *ngIf="item.fileType == 2">
-											<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
+											<div class="alert-dark alert-dismissible fade show d-flex align-items-center h-80">
 												<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert" aria-label="Close"><span><i
 															class="mdi mdi-close"></i></span>
 												</button>
-												<a href="#" class="d-block text-center">
-													<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="">
-													<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+												<a href="javascript:void(0)" class="d-block text-center">
+													<img src="../../../../assets/dist/images/file-excel.svg" class="mt-1" style="width: 45px" alt="">
+													<span class="mt-1 mb-1 text-dark text-wrap text-2line">{{item.name}}</span>
 												</a>
 											</div>
 										</div>
 										<div class="col-2 mb-2" *ngIf="item.fileType == 6">
-											<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90">
+											<div class="alert-dark alert-dismissible fade show d-flex align-items-center h-80">
 												<button type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert" aria-label="Close"><span><i
 															class="mdi mdi-close"></i></span>
 												</button>
-												<a href="#" class="d-block text-center">
-													<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="">
-													<span class="mt-3 text-dark text-wrap text-2line">{{item.name}}</span>
+												<a href="javascript:void(0)" class="d-block text-center">
+													<img src="../../../../assets/dist/images/file-powerpoint.svg" class="mt-1" style="width: 45px" alt="">
+													<span class="mt-1 mb-1 text-dark text-wrap text-2line">{{item.name}}</span>
 												</a>
 											</div>
 										</div>
