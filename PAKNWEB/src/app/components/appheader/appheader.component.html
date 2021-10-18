@@ -115,7 +115,9 @@
 								<div class="col-12 col-sm-2 col-lg-2 form-group">
 									<label class="mb-1 text-uppercase"><strong>Từ ngày</strong></label>
 									<div class="input-group">
-										<input class="form-control form-control-sm border-input" placeholder="Nhập..." bsDatepicker #fd="bsDatepicker" maxlength="10" id="fromDate"
+										<input class="form-control form-control-sm border-input" placeholder="Nhập..."
+										[maxDate]="dataSearch.toDate" 
+										bsDatepicker #fd="bsDatepicker" maxlength="10" id="fromDate"
 										formControlName="fromDate" [(ngModel)]="dataSearch.fromDate" (bsValueChange)="onChangeFromDate($event)" appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 										<div class="input-group-addon p-2">
@@ -126,7 +128,9 @@
 								<div class="col-12 col-sm-2 col-lg-2 form-group">
 									<label class="mb-1 text-uppercase"><strong>Đến ngày</strong></label>
 									<div class="input-group">
-										<input class="form-control form-control-sm border-input" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="toDate"
+										<input class="form-control form-control-sm border-input"
+										[minDate]="dataSearch.fromDate"
+										placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="toDate"
 										[(ngModel)]="dataSearch.toDate" formControlName="toDate" (bsValueChange)="onChangeToDate($event)"  appBsDatepickerInvalid
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
 										<div class="input-group-addon p-2">

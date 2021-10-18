@@ -22,7 +22,11 @@ namespace PAKNAPI.Common
 	{
 		private readonly IConfiguration Configuration;
 
-		public AppSetting(IConfiguration configuration)
+        public AppSetting()
+        {
+        }
+
+        public AppSetting(IConfiguration configuration)
 		{
 			Configuration = configuration;
 		}

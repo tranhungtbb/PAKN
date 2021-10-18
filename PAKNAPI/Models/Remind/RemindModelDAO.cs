@@ -117,6 +117,7 @@ namespace PAKNAPI.Models.Remind
         public int UnitReceiveId { get; set; }
         public int UnitSendId { get; set; }
         public int Step { get; set; }
+        public int Status { get; set; }
     }
 
 

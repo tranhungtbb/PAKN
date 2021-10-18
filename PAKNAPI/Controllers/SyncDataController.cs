@@ -27,24 +27,24 @@ using Bugsnag;
 
 namespace PAKNAPI.Controllers
 {
-	[Route("api/sync-data")]
-	[ApiController]
-	public class SyncDataController : BaseApiController
-	{
-		private readonly IAppSetting _appSetting;
+    [Route("api/sync-data")]
+    [ApiController]
+    public class SyncDataController : BaseApiController
+    {
+        private readonly IAppSetting _appSetting;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IClient _bugsnag;
 
         public SyncDataController(IAppSetting appSetting, IWebHostEnvironment hostingEnvironment, IClient bugsnag)
-		{
-			_appSetting = appSetting;
+        {
+            _appSetting = appSetting;
             _hostingEnvironment = hostingEnvironment;
             _bugsnag = bugsnag;
 
         }
 
-		[Route("sync-gop-y-kien-nghi")]
-		[HttpGet]
+        [Route("sync-gop-y-kien-nghi")]
+        [HttpGet]
         public async Task<ActionResult<object>> SyncKhanhHoa()
         {
             HtmlWeb htmlWeb = new HtmlWeb()
@@ -82,7 +82,7 @@ namespace PAKNAPI.Controllers
                 objectAdd.Reply = threadItemsChild.Descendants("div").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("feedback-traloi-content")).InnerHtml.Trim();
                 objectAdd.ReplyDate = documentDetail.Result.DocumentNode.Descendants("div")
                     .FirstOrDefault(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "feedback-traloi-bottom").InnerText.Split(":")[1];
-                
+
                 var id = await new RecommendationDAO(_appSetting).SyncKhanhHoaInsert(objectAdd);
                 if (Convert.ToInt32(id) < 0) { continue; };
 
@@ -111,7 +111,7 @@ namespace PAKNAPI.Controllers
                 }
 
             }
-            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
+            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
             return new ResultApi
             {
                 Success = ResultCode.OK
@@ -180,9 +180,9 @@ namespace PAKNAPI.Controllers
 
                         string[] info = documentDetail.Result.DocumentNode.Descendants("div")
                             .FirstOrDefault(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "post-info").InnerHtml.Trim().Split("-");
-                        
+
                         objectAdd.Questioner = HttpUtility.HtmlDecode(info[0]);
-                        objectAdd.CreatedDate = info[info.Length-1];
+                        objectAdd.CreatedDate = info[info.Length - 1];
                         objectAdd.QuestionContent = documentDetail.Result.DocumentNode.Descendants("textarea")
                             .FirstOrDefault(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "showContent").InnerHtml;
                         objectAdd.Status = "Đã trả lời";
@@ -195,7 +195,7 @@ namespace PAKNAPI.Controllers
                         else {
                             objectAdd.Reply = reply.InnerHtml;
                         }
-                        
+
                         objectAdd.ObjectId = Convert.ToInt32(id);
                         // lưu database
                         await new RecommendationDAO(_appSetting).SyncDichVuCongQuocGiaInsert(objectAdd);
@@ -268,7 +268,7 @@ namespace PAKNAPI.Controllers
                                 else {
                                     fileInsert.Type = 4;
                                 }
-                                
+
                                 fileInsert.FileName = HttpUtility.HtmlDecode(Path.GetFileName(file.InnerText).Replace("+", ""));
                                 fileInsert.FilePath = Path.Combine(folder, fileInsert.FileName);
                                 fileInsert.IsReply = true;
@@ -280,14 +280,14 @@ namespace PAKNAPI.Controllers
 
                     }
                 }
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
                 return new ResultApi
                 {
                     Success = ResultCode.OK
                 };
             }
             catch (Exception e) {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, e);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, e);
                 return new ResultApi
                 {
                     Success = ResultCode.ORROR
@@ -338,20 +338,20 @@ namespace PAKNAPI.Controllers
                     items.Add(objectAdd);
                 }
                 new RecommendationDAO(_appSetting).SyncHopThuGopYKhanhHoa(items);
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
                 return new ResultApi
                 {
                     Success = ResultCode.OK
                 };
             }
             catch (Exception ex) {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
                 return new ResultApi
                 {
                     Success = ResultCode.ORROR
                 };
             }
-            
+
         }
 
         [Route("sync-quan-ly-kien-nghi-cu-tri")]
@@ -368,33 +368,22 @@ namespace PAKNAPI.Controllers
                 var results = new HttpResponseMessage();
                 /// header
                 var TkeyHeader = new List<KeyValuePair<string, string>>();
-                //TkeyHeader.Add(new KeyValuePair<string, string>("Accept-Language", lang));
-                //TkeyHeader.Add(new KeyValuePair<string, string>("Authorization"," Bearer " + Access_Token.Access_Token));
                 HeaderRess header = new HeaderRess();
                 header.Tkey = TkeyHeader;
                 header.ContentType = "application/json";
                 var request = new RequestKienNghiCuTri();
                 if (objectTop != null)
                 {
-                    request.PageIndex = Convert.ToInt32(Math.Floor(Convert.ToDecimal(objectTop.TotalCount/request.PageSize)));
+                    request.PageIndex = Convert.ToInt32(Math.Floor(Convert.ToDecimal(objectTop.TotalCount / request.PageSize)));
                     request.PageIndex = request.PageIndex < 0 ? 0 : request.PageIndex;
                 }
                 else {
                     request.PageIndex = 0;
                 }
-                
+
                 string jsonData = "";
                 ResponseKienNghiCuTri model = new ResponseKienNghiCuTri();
-                // xóa hết
-                //await new MR_CuTriTinhKhanhHoa(_appSetting).MR_Sync_CuTriTinhKhanhHoaDeleteAllDAO();
-                // xóa file
-                //string[] files = Directory.GetFiles("Upload\\KienNghiCuTri\\");
-                //foreach (string file in files)
-                //{
-                //    Directory.Delete(file);
-                //}
-                
-                
+
                 while (true) {
                     request.PageIndex++;
                     jsonData = JsonConvert.SerializeObject(request);
@@ -448,7 +437,7 @@ namespace PAKNAPI.Controllers
                                         using (WebClient webClient = new WebClient()) {
                                             string[] s = file.name.Split(".");
                                             fileInsert.ObjectId = item.Id;
-                                            fileInsert.Type = GetFileTypes.GetFileTypeExtension("."+ s.FirstOrDefault(x=>x == s[s.Length -1]).ToString());
+                                            fileInsert.Type = GetFileTypes.GetFileTypeExtension("." + s.FirstOrDefault(x => x == s[s.Length - 1]).ToString());
                                             fileInsert.FileName = Path.GetFileName(file.name).Replace("+", "");
                                             fileInsert.FilePath = Path.Combine(folder, fileInsert.FileName);
                                             webClient.DownloadFileAsync(new Uri("https://kiennghicutri.khanhhoa.gov.vn:96/" + file.duongDan), Path.Combine(folderPath, fileInsert.FileName));
@@ -470,7 +459,7 @@ namespace PAKNAPI.Controllers
                         };
                     }
                 }
-                
+
                 return new ResultApi
                 {
                     Success = ResultCode.OK
@@ -485,6 +474,7 @@ namespace PAKNAPI.Controllers
                 };
             }
         }
+
 
 
         [Route("get-list-cong-thong-tin-dien-tu-tinh-on-page")]

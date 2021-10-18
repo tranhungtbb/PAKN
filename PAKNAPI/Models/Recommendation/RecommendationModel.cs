@@ -218,4 +218,279 @@ namespace PAKNAPI.Models.Recommendation
         public string text { get; set; }
         public int code { get; set; }
     }
+
+    public class RequestAdministrative {
+        public int PageIndex { get; set; }
+        public RequestAdministrative() {
+            this.PageIndex = 0;
+        }
+    }
+    public class ResponseListAdministrative
+    {
+        public List<thutuc> ThuTucs { get; set; }
+    }
+    public class thutuc
+    {
+        public int Id { get; set; }
+
+    }
+    public class DetailAdministrative
+    {
+        public int Id { get; set; }
+        public string Ten { get; set; }
+        public string Ma { get; set; }
+        public string TenCoQuanBanHanh { get; set; }
+        public string SoHoSo { get; set; }
+        public string CachThucThucHien { get; set; }
+        public double ThoiHanGiaiQuyet { get; set; }
+        public string MoTaThoiHanGiaiQuyet { get; set; }
+        public string DoiTuongThucHien { get; set; }
+        public string DiaChiTiepNhanHoSo { get; set; }
+        public string KetQuaThucHien { get; set; }
+        public string CoQuanCoThamQuyenQuyetDinh { get; set; }
+        public int CoQuanCoThamQuyenQuyetDinhId { get; set; }
+        public string CoQuanDuocUyQuyen { get; set; }
+        public string CoQuanGiaiQuyet { get; set; }
+        public string LuuY { get; set; }
+        public string ThongTinLienHe { get; set; }
+        public string CoQuanPhoiHop { get; set; }
+        public object CoPhi { get; set; }
+        public int TinhTrangId { get; set; }
+        public TinhTrang TinhTrang { get; set; }
+        public object HinhThuc { get; set; }
+        public int IdThayTheHoacBoSung { get; set; }
+        public object NgayCoHieuLuc { get; set; }
+        public object NgayHetHieuLuc { get; set; }
+        public object PhamViApDung { get; set; }
+        public object TrinhTuThucHien { get; set; }
+        public object ThanhPhanHoSo { get; set; }
+        public string SoBoHoSo { get; set; }
+        public string YeuCauDieuKien { get; set; }
+        public object HoSoLuu { get; set; }
+        public string CanCuPhapLy { get; set; }
+        public int MucDo { get; set; }
+        public bool? ThanhToanTrucTuyen { get; set; }
+        public bool? NopQuaBuuChinh { get; set; }
+        public int LinhVucId { get; set; }
+        public string MaQuanLy_QuocGia { get; set; }
+        public LinhVuc LinhVuc { get; set; }
+        public object LinhVucs { get; set; }
+        public List<CacBuocThucHien> CacBuocThucHiens { get; set; }
+        public List<object> GopYThuTucs { get; set; }
+        public List<HoSo> HoSoes { get; set; }
+        public List<PhiLePhi> PhiLePhis { get; set; }
+        public List<ThuTucDonViTiepNhan> ThuTucDonViTiepNhans { get; set; }
+        public List<DonViTiepNhan> DonViTiepNhans { get; set; }
+        public List<DanhSachCoQuanTiepNhan> DanhSachCoQuanTiepNhan { get; set; }
+        public List<object> ThuTucLienQuans { get; set; }
+        public List<object> ThuTucLienThongs { get; set; }
+        public List<object> ThuTucSuaDoiBoSungs { get; set; }
+        public List<HinhThucNop> HinhThucNops { get; set; }
+        public List<AllHinhThucNop> AllHinhThucNops { get; set; }
+        public List<object> DanhSachTepThuTuc { get; set; }
+        public bool? CheckSMS { get; set; }
+        public object CheckNhanDienThuTucLienThong { get; set; }
+        public bool? CheckKhongApDungMotCua { get; set; }
+        public string TenDonViTiepNhan { get; set; }
+        public string TenLinhVuc { get; set; }
+        public string TenCapTiepNhan { get; set; }
+        public object CheckThanhToanKhiNopHS { get; set; }
+        public object MaCSDLQuocGia { get; set; }
+        public object MaDVC_QuocGia { get; set; }
+        public string Href { get; set; }
+    }
+    public class TinhTrang
+    {
+        public int Ma { get; set; }
+        public string Ten { get; set; }
+        public List<object> ThuTucs { get; set; }
+        public string Href { get; set; }
+        public Errors Errors { get; set; }
+        public int Id { get; set; }
+        public bool IsValid { get; set; }
+    }
+
+    public class LinhVuc
+    {
+        public object Id { get; set; }
+        public object Ten { get; set; }
+        public int ThuTu { get; set; }
+        public object LinhVucChaId { get; set; }
+        public object MaDinhDanh { get; set; }
+        public object DonViPhuTrachLinhVuc { get; set; }
+        public List<object> NguoiPhuTrachLinhVucs { get; set; }
+        public List<object> DonViPhuTrachLinhVucs { get; set; }
+        public object MaQuanLy_QuocGia { get; set; }
+        public object Href { get; set; }
+    }
+
+    public class CacBuocThucHien
+    {
+        public int Id { get; set; }
+        public double Buoc { get; set; }
+        public string TenBuoc { get; set; }
+        public object CoQuanCaNhanThucHien { get; set; }
+        public double? ThoiGian { get; set; }
+        public string TrachNhiem { get; set; }
+        public string KetQua { get; set; }
+        public object ThuTuc { get; set; }
+        public int ThuTucId { get; set; }
+        public object TongThoiGianXuLyDuocGiao { get; set; }
+        public string Href { get; set; }
+    }
+
+    public class TepMauDonToKhai
+    {
+        public int Id { get; set; }
+        public object TenTep { get; set; }
+        public object MoRong { get; set; }
+        public object KichThuocTep { get; set; }
+        public object LoaiTep { get; set; }
+        public object DuongDan { get; set; }
+        public object ThumbnailURL { get; set; }
+        public object MauDonToKhaiId { get; set; }
+        public List<object> MauDonToKhais { get; set; }
+        public object Href { get; set; }
+    }
+    public class FileTepMauDonToKhai
+    {
+        public Errors Errors { get; set; }
+        public int Id { get; set; }
+        public string FileName { get; set; }
+        public string Extension { get; set; }
+        public string FileType { get; set; }
+        public string Size { get; set; }
+        public string Path { get; set; }
+        public object WeekOfYear { get; set; }
+        public object Year { get; set; }
+        public int ObjectId { get; set; }
+        public string ObjectType { get; set; }
+        public int Loai { get; set; }
+        public string ServerId { get; set; }
+        public bool IsValid { get; set; }
+    }
+
+    public class DonViPhuTrachLinhVuc
+    {
+        public int Id { get; set; }
+        public int LinhVucId { get; set; }
+        public int DonViPhuTrachId { get; set; }
+        public object LinhVuc { get; set; }
+        public string Href { get; set; }
+    }
+
+    public class MauDonToKhai
+    {
+        public int Id { get; set; }
+        public string Ten { get; set; }
+        public object KyHieu { get; set; }
+        public object VanBanQuyDinh { get; set; }
+        public object DuongDanTepMau { get; set; }
+        public object ToKhaiOnline { get; set; }
+        public object ChoPhepKhaiOnline { get; set; }
+        public object TrangThaiToKhaiOnline { get; set; }
+        public int? LinhVucId { get; set; }
+        public object CapThucHien { get; set; }
+        public LinhVuc LinhVuc { get; set; }
+        public TepMauDonToKhai TepMauDonToKhai { get; set; }
+        public List<object> ApiHoSos { get; set; }
+        public List<object> ApiLinhVucs { get; set; }
+        public List<object> TepMauDonToKhais { get; set; }
+        public List<FileTepMauDonToKhai> FileTepMauDonToKhais { get; set; }
+        public DonViPhuTrachLinhVuc DonViPhuTrachLinhVuc { get; set; }
+        public object IdFormOnline { get; set; }
+        public object Href { get; set; }
+    }
+
+    public class HoSo
+    {
+        public int Id { get; set; }
+        public string Ten { get; set; }
+        public string BanChinh { get; set; }
+        public string BanSao { get; set; }
+        public bool BatBuoc { get; set; }
+        public object MoTa { get; set; }
+        public int ThuTu { get; set; }
+        public object ThuTuc { get; set; }
+        public MauDonToKhai MauDonToKhai { get; set; }
+        public int ThuTucId { get; set; }
+        public int? MauDonToKhaiId { get; set; }
+        public string Href { get; set; }
+    }
+
+    public class PhiLePhi
+    {
+        public int Id { get; set; }
+        public int ThuTu { get; set; }
+        public string Ten { get; set; }
+        public double? MucPhi { get; set; }
+        public object TenSoKyHieuNgayThangNamVanBanQuyDinh { get; set; }
+        public string MoTa { get; set; }
+        public object Ma { get; set; }
+        public object ThuTuc { get; set; }
+        public int ThuTucId { get; set; }
+        public string Href { get; set; }
+    }
+
+    public class ThuTucDonViTiepNhan
+    {
+        public int Id { get; set; }
+        public object ThuTuc { get; set; }
+        public int ThuTucId { get; set; }
+        public int DonViTiepNhanId { get; set; }
+        public object CapTiepNhanId { get; set; }
+        public string Href { get; set; }
+    }
+
+    public class DonViTiepNhan
+    {
+        public int Id { get; set; }
+        public string Ten { get; set; }
+        public int? ThuTu { get; set; }
+        public string DiaChi { get; set; }
+        public string SoDT { get; set; }
+        public string Email { get; set; }
+        public object Photo { get; set; }
+        public int? PhongBanParentId { get; set; }
+        public string Loai { get; set; }
+        public object ThuocDonViId { get; set; }
+        public int CapTiepNhan { get; set; }
+        public object NhanViens { get; set; }
+        public object DonViPhuTrachLinhVucs { get; set; }
+        public object Href { get; set; }
+    }
+
+    public class DanhSachCoQuanTiepNhan
+    {
+        public int Id { get; set; }
+        public string Ten { get; set; }
+        public int? ThuTu { get; set; }
+        public string DiaChi { get; set; }
+        public string SoDT { get; set; }
+        public string Email { get; set; }
+        public string Photo { get; set; }
+        public int? PhongBanParentId { get; set; }
+        public string Loai { get; set; }
+        public object ThuocDonViId { get; set; }
+        public int CapTiepNhan { get; set; }
+        public object NhanViens { get; set; }
+        public object DonViPhuTrachLinhVucs { get; set; }
+        public object Href { get; set; }
+    }
+
+    public class HinhThucNop
+    {
+        public int Id { get; set; }
+        public string Ten { get; set; }
+        public object Href { get; set; }
+    }
+    public class Errors
+    {
+    }
+    public class AllHinhThucNop
+    {
+        public int Id { get; set; }
+        public string Ten { get; set; }
+        public object Href { get; set; }
+    }
 }

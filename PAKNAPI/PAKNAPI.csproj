@@ -52,7 +52,8 @@
     <PackageReference Include="MimeKit" Version="2.13.0" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.8.2" />
     <PackageReference Include="Pdfbox" Version="1.1.1" />
-    <PackageReference Include="Quartz" Version="3.3.2" />
+    <PackageReference Include="Quartz" Version="3.3.3" />
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.3.3" />
     <PackageReference Include="SimpleImpersonation" Version="3.0.0" />
     <PackageReference Include="Spire.PDF" Version="5.12.15" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />

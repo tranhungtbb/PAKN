@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-// import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 
@@ -64,6 +63,8 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	categoriesSelected: any[]
 	avatarUrl: any = 'assets/dist/images/no.jpg'
 
+	pageIndex: any = 1
+
 	ngOnInit() {
 		this.newsForm = this.formBuilder.group({
 			title: [this.model.title, [Validators.required, Validators.maxLength(500)]],
@@ -91,6 +92,9 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					//lay danh sach bai viet lien quan
 					this.getNewsRelatesInfo()
 				})
+			}
+			if (params['pageIndex']) {
+				this.pageIndex = Number(params['pageIndex'])
 			}
 		})
 
@@ -169,7 +173,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 
 		if (this.model.id && this.model.id > 0) {
 			if (published == true) {
-				this.newsService.changeStatus(this.model, this.filePost).subscribe((res) => {
+				this.newsService.update(this.model, this.filePost).subscribe((res) => {
 					if (res.success != 'OK') {
 						this.toast.error(COMMONS.UPDATE_FAILED)
 						return
@@ -180,7 +184,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					}
 
 					this.toast.success(COMMONS.UPDATE_SUCCESS)
-					this.router.navigate(['/quan-tri/tin-tuc/danh-sach-tong-hop'])
+					this.router.navigate(['/quan-tri/tin-tuc/danh-sach-tong-hop', this.pageIndex])
 				})
 			} else {
 				this.newsService.update(this.model, this.filePost).subscribe((res) => {
@@ -199,7 +203,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 						return
 					}
 					this.toast.success(COMMONS.UPDATE_SUCCESS)
-					this.router.navigate(['/quan-tri/tin-tuc/danh-sach-tong-hop'])
+					this.router.navigate(['/quan-tri/tin-tuc/danh-sach-tong-hop', this.pageIndex])
 				})
 			}
 		} else {

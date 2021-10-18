@@ -29,6 +29,9 @@ using System.Collections.Generic;
 using PAKNAPI.Services.EmailService;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Logging;
 
 namespace PAKNAPI
 {
@@ -166,13 +169,7 @@ namespace PAKNAPI
                     policy.Requirements.Add(new ThePolicyRequirement());
                 });
 			});
-
-
-			//services.AddSwaggerGen(c =>
-			//{
-			//	c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-			//	c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First()); //This line
-			//});
+			
 			services.AddSwaggerDocument();
 
 			// If using IIS:
@@ -185,6 +182,29 @@ namespace PAKNAPI
 			{
 				configuration.ApiKey = Configuration["BugsnagKey"];
 			});
+
+			// quart
+			var jobKey = new JobKey("notificationJob");
+			services.AddQuartz(q =>
+			{
+				q.SchedulerId = "Scheduler-Core";
+				q.UseMicrosoftDependencyInjectionScopedJobFactory();
+				q.UseSimpleTypeLoader();
+				q.UseInMemoryStore();
+				q.UseDefaultThreadPool(tp =>
+				{
+					tp.MaxConcurrency = 1;
+				});
+				q.AddJob<MyJob>(opts => opts.WithIdentity(jobKey));
+				// Create a trigger for the job
+				q.AddTrigger(opts => opts
+					.ForJob(jobKey) // link to the HelloWorldJob
+					.WithIdentity("HelloWorldJob-trigger") // give the trigger a unique name
+					.WithCalendarIntervalSchedule(s => s.WithIntervalInMonths(1))); //time
+			});
+
+			// ASP.NET Core hosting
+			services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

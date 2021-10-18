@@ -11,7 +11,7 @@
 				</div>
 				<div>
 					<h1 style="line-height: 1.5; font-weight: 500;font-size: 28px;line-height: 34px;">
-						Hướng dẫn sử dụng cho {{title}}
+						Hướng dẫn sử dụng cho {{type == 2 ? 'người dân' : 'doanh nghiệp'}}
 					</h1>
 					<div class="mt-3 mb-2">
 						<time style="font-size: 10pt;">
@@ -37,11 +37,11 @@
 			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
 				<div class="border-bottom mb-2 mt-2 pb-2">
 					<p class="mb-0">
-						<a class="rlink" [ngClass]="{'active':title == 'người dân'}" (click)="loadDocView(contentType,2)">Người dân</a>
+						<a class="rlink" [ngClass]="{'active':type == 2}" (click)="loadDocView(contentType,2)">Người dân</a>
 					</p>
 				</div>
 				<p class="mb-0">
-					<a class="rlink" [ngClass]="{'active':title == 'doanh nghiệp'}" (click)="loadDocView(contentType,3)">Doanh nghiệp</a>
+					<a class="rlink" [ngClass]="{'active':type == 3}" (click)="loadDocView(contentType,3)">Doanh nghiệp</a>
 				</p>
 			</div>
 		</div>

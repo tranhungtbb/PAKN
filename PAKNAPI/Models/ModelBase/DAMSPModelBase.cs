@@ -240,12 +240,19 @@ namespace PAKNAPI.ModelBase
 		public long? CreatedBy { get; set; }
 		public int? AdministrationId { get; set; }
 
+		public int? TotalCount { get; set; }
+
 		public async Task<List<DAMAdministrationGetById>> DAMAdministrationGetByIdDAO(int? Id)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", Id);
 
 			return (await _sQLCon.ExecuteListDapperAsync<DAMAdministrationGetById>("DAM_Administration_GetById", DP)).ToList();
+		}
+		public async Task<DAMAdministrationGetById> DAMAdministrationGetTopOrderByAdministrativeId()
+		{
+			DynamicParameters DP = new DynamicParameters();
+			return (await _sQLCon.ExecuteListDapperAsync<DAMAdministrationGetById>("DAM_Administration_GetTopOrderbyId", DP)).FirstOrDefault();
 		}
 	}
 

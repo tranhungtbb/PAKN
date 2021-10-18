@@ -405,6 +405,14 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("SMS_TinNhan_AdministrativeUnit_MapInsert", DP));
 		}
+		public Task<int> SMSTinNhanAdministrativeUnitMapInsertDAOX(SMSTinNhanAdministrativeUnitMapInsertIN _sMSTinNhanAdministrativeUnitMapInsertIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("SMSId", _sMSTinNhanAdministrativeUnitMapInsertIN.SMSId);
+			DP.Add("AdministrativeUnitId", _sMSTinNhanAdministrativeUnitMapInsertIN.AdministrativeUnitId);
+
+			return  _sQLCon.ExecuteNonQueryDapperAsync("SMS_TinNhan_AdministrativeUnit_MapInsert", DP);
+		}
 	}
 
 	public class SMSTinNhanAdministrativeUnitMapInsertIN

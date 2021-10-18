@@ -7,35 +7,47 @@ import { NewsDetailComponent } from './news-detail/news-detail.component'
 import { NewsPuslishComponent } from './news-puslish/news-puslish.component'
 
 const routes: Routes = [
-	{ 
+	{
 		path: 'danh-sach-tong-hop',
 		component: NewsComponent,
 		canActivate: [RoleGuardService],
-		data: { role: 'F_I_3'}
+		data: { role: 'F_I_3' },
 	},
-	{ 
+	{
+		path: 'danh-sach-tong-hop/:pageIndex',
+		component: NewsComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'F_I_3' },
+	},
+	{
 		path: 'them-moi',
 		component: NewsCreateOrUpdateComponent,
 		canActivate: [RoleGuardService],
-		data: { role: 'F_I_0'} 
+		data: { role: 'F_I_0' },
 	},
-	{ 
-		path: 'chinh-sua/:id', 
+	{
+		path: 'chinh-sua/:id',
 		component: NewsCreateOrUpdateComponent,
 		canActivate: [RoleGuardService],
-		data: { role: 'F_I_1'}
+		data: { role: 'F_I_1' },
 	},
-	{ 
+	{
+		path: 'chinh-sua/:id/:pageIndex',
+		component: NewsCreateOrUpdateComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'F_I_1' },
+	},
+	{
 		path: 'chi-tiet/:id',
 		component: NewsDetailComponent,
 		canActivate: [RoleGuardService],
-		data: { role: 'F_I_4'}
+		data: { role: 'F_I_4' },
 	},
-	{ 
+	{
 		path: 'danh-sach-da-cong-bo',
 		component: NewsPuslishComponent,
 		canActivate: [RoleGuardService],
-		data: { role: 'F_I_3'}
+		data: { role: 'F_I_3' },
 	},
 ]
 

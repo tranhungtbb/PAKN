@@ -81,7 +81,7 @@
 												<i class="bi bi-box-arrow-down text-dark" *ngIf="item.status ==1" title="Hủy công bố"></i>
 												<i class="bi bi-box-arrow-up" *ngIf="item.status == 0 || item.status == 2" title="Công bố"></i>
 											</button>
-											<a *hasPermission="['3', 'F_I_1']" [routerLink]="['../chinh-sua', item.id]" class="btn-icon mr-2 border-0" title="Cập nhật"><i class="bi bi-pencil-square"></i></a>
+											<a *hasPermission="['3', 'F_I_1']" [routerLink]="['/quan-tri/tin-tuc/chinh-sua/chinh-sua', item.id,query.pageIndex]" class="btn-icon mr-2 border-0" title="Cập nhật"><i class="bi bi-pencil-square"></i></a>
 											<button  *hasPermission="['3', 'F_I_2']" class="btn-icon mr-2 grd-red text-white border-0" data-toggle="modal" data-target="#modal-history-pakn"
 												(click)="onOpenModalConfirm(item.id,'delete')"><i class="bi bi-trash" title="Xóa"></i></button>
 											<a  *hasPermission="['3', 'F_I_6']" class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
@@ -117,8 +117,8 @@
 				</span>
 			</div>
 			<div class="modal-footer border-top-0">
-				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="acceptConfirm()">Xác nhận</button>
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="acceptConfirm()">Xác nhận</button>
 			</div>
 		</div>
 	</div>

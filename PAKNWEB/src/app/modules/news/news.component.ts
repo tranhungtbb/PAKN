@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import { ToastrService } from 'ngx-toastr'
+import { ActivatedRoute } from '@angular/router'
 
 import { NewsService } from 'src/app/services/news.service'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { RESPONSE_STATUS, STATUS_HISNEWS } from 'src/app/constants/CONSTANTS'
-import { AppSettings } from 'src/app/constants/app-setting'
 
 import { COMMONS } from 'src/app/commons/commons'
 import { NewsModel, HISNewsModel } from 'src/app/models/NewsObject'
@@ -17,7 +17,13 @@ declare var $: any
 })
 //acbd
 export class NewsComponent implements OnInit {
-	constructor(private newsService: NewsService, private catalogService: CatalogService, private toast: ToastrService, private sanitizer: DomSanitizer) {}
+	constructor(
+		private newsService: NewsService,
+		private catalogService: CatalogService,
+		private activatedRoute: ActivatedRoute,
+		private toast: ToastrService,
+		private sanitizer: DomSanitizer
+	) {}
 	hisNewsModel: HISNewsModel = new HISNewsModel()
 	query: any = {
 		pageSize: 20,
@@ -41,7 +47,12 @@ export class NewsComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 
 	ngOnInit() {
-		this.getListPaged()
+		this.activatedRoute.params.subscribe((params) => {
+			if (params['pageIndex']) {
+				this.query.pageIndex = Number(params['pageIndex'])
+			}
+			this.getListPaged()
+		})
 		//get all news type
 		this.catalogService
 			.newsTypeGetList({
@@ -55,8 +66,9 @@ export class NewsComponent implements OnInit {
 				this.listNewCategories = res.result.CANewsTypeGetAllOnPage
 			})
 	}
-
+	checkPageIndex: any = false
 	getListPaged() {
+		this.checkPageIndex = true
 		this.query.title = this.query.title == null ? '' : this.query.title.trim()
 		this.newsService
 			.getAllPagedList({

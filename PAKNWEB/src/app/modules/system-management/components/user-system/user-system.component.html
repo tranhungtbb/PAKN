@@ -393,7 +393,7 @@
 									<label class="mb-1 text-uppercase"><strong>Từ ngày</strong></label>
 									<div class="input-group">
 										<input class="form-control border-input" placeholder="Nhập..." 
-											[ngModelOptions]="{standalone: true}"
+											[ngModelOptions]="{standalone: true}" [maxDate]="dataSearch2.toDate"
 											bsDatepicker #fd="bsDatepicker" maxlength="10"
 											[(ngModel)]="dataSearch2.fromDate" (bsValueChange)="onChangeFromDate($event)" appBsDatepickerInvalid
 											[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" 
@@ -407,7 +407,7 @@
 									<label class="mb-1 text-uppercase"><strong>Đến ngày</strong></label>
 									<div class="input-group">
 										<input class="form-control border-input"
-											[ngModelOptions]="{standalone: true}"
+											[ngModelOptions]="{standalone: true}" [minDate]="dataSearch2.fromDate"
 											placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10"
 											[(ngModel)]="dataSearch2.toDate" (bsValueChange)="onChangeToDate($event)"  appBsDatepickerInvalid
 											[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}"

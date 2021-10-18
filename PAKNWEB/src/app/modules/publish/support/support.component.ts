@@ -43,7 +43,6 @@ export class SupportComponent implements OnInit, AfterViewInit {
 	currentFileName: string = ''
 	loadDocView(contentType: number, type: number) {
 		this.type = type
-		debugger
 		let item = this.listDoc.find((c) => c.category == contentType && c.type == type)
 		this.model = { ...item }
 		this.model.src = item.filePath
