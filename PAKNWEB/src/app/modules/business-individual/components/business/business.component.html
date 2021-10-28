@@ -66,6 +66,9 @@
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.representativeName" maxlength="100" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập ..." />
+										<button *ngIf="dataSearch.representativeName" class="btn bg-transparent btn-clear-input" (click)="dataSearch.representativeName=''">
+											<i class="fa fa-times"></i>
+										</button>
 								</th>
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -73,6 +76,9 @@
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.address" maxlength="100" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập ..." />
+										<button *ngIf="dataSearch.address" class="btn bg-transparent btn-clear-input" (click)="dataSearch.address=''">
+											<i class="fa fa-times"></i>
+										</button>
 								</th>
 								<th style="width: 150px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -80,6 +86,9 @@
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.phone" maxlength="11" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập ..." />
+										<button *ngIf="dataSearch.phone" class="btn bg-transparent btn-clear-input" (click)="dataSearch.phone=''">
+											<i class="fa fa-times"></i>
+										</button>
 								</th>
 								<th style="width: 250px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -87,6 +96,9 @@
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="this.dataSearch.email" maxlength="256" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập ..." />
+										<button *ngIf="dataSearch.email" class="btn bg-transparent btn-clear-input" (click)="dataSearch.email=''">
+											<i class="fa fa-times"></i>
+										</button>
 								</th>
 								<th style="width: 160px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">

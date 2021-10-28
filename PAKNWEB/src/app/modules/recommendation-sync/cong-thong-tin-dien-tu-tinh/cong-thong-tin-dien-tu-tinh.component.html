@@ -36,6 +36,9 @@
 										</p>
 										<input class="form-control form-control-sm" [(ngModel)]="query.questioner" maxlength="100" (keydown.enter)="dataStateChange()"
 											placeholder="Nhập..." />
+											<button *ngIf="query.questioner" class="btn bg-transparent btn-clear-input" (click)="query.questioner=''">
+												<i class="fa fa-times"></i>
+											</button>
 									</th>
 
 									<th>
@@ -45,6 +48,9 @@
 										</p>
 										<input class="form-control form-control-sm" [(ngModel)]="query.question" maxlength="100" (keydown.enter)="dataStateChange()"
 											  placeholder="Nhập..." />
+												<button *ngIf="query.question" class="btn bg-transparent btn-clear-input" (click)="query.question=''">
+													<i class="fa fa-times"></i>
+												</button>
 									</th>
 
 									<th style="width: 200px;">

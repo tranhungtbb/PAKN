@@ -279,7 +279,9 @@ export class UserCreateOrUpdateComponent implements OnInit {
 
 		// $('#' + this.modalId + ' .user-avatar-view').attr('src', '')
 		$('#' + this.modalId).modal('show')
-
+		setTimeout(() => {
+			$('#target').focus()
+		}, 400)
 		this.editByMyself = editByMyself
 	}
 

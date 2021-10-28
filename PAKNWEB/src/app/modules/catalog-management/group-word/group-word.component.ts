@@ -26,6 +26,8 @@ export class GroupWordComponent implements OnInit {
 	model: any = new FieldObject()
 	submitted: boolean = false
 	title: string = ''
+	name: string = ''
+	description: string = ''
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
@@ -36,9 +38,9 @@ export class GroupWordComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		// $('#modal').on('keypress', function (e) {
-		// 	if (e.which == 13) e.preventDefault()
-		// })
+		$('#modal').on('keypress', function (e) {
+			if (e.which == 13) e.preventDefault()
+		})
 	}
 
 	get f() {
@@ -89,6 +91,9 @@ export class GroupWordComponent implements OnInit {
 		this.submitted = false
 		this.title = 'Thêm mới nhóm thư viện từ ngữ'
 		$('#modal').modal('show')
+		setTimeout(() => {
+			$('#target').focus()
+		}, 400)
 	}
 
 	onSave() {
@@ -150,6 +155,9 @@ export class GroupWordComponent implements OnInit {
 				this.title = 'Chỉnh sửa nhóm thư viện từ ngữ'
 				this.model = response.result.CAGroupWordGetByID[0]
 				$('#modal').modal('show')
+				setTimeout(() => {
+					$('#target').focus()
+				}, 400)
 			} else {
 				this._toastr.error(response.message)
 			}

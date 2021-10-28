@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 import { FieldObject } from 'src/app/models/fieldObject'
 import { CatalogService } from 'src/app/services/catalog.service'
+import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
-import { saveAs as importedSaveAs } from 'file-saver'
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 
 // import { RemindComponent } from 'src/app/modules/recommendation/remind/remind.component'
@@ -17,7 +17,13 @@ declare var $: any
 	styleUrls: ['./field.component.css'],
 })
 export class FieldComponent implements OnInit, AfterViewInit {
-	constructor(private _service: CatalogService, private _toastr: ToastrService, private _fb: FormBuilder, private _shareData: DataService) {}
+	constructor(
+		private _service: CatalogService,
+		private _toastr: ToastrService,
+		private _fb: FormBuilder,
+		private _shareData: DataService,
+		private _serviceR: RecommendationService
+	) {}
 
 	// child
 
@@ -28,10 +34,14 @@ export class FieldComponent implements OnInit, AfterViewInit {
 		{ value: true, text: 'Hiệu lực' },
 		{ value: false, text: 'Hết hiệu lực' },
 	]
+	listUnit: any = []
+	listUnitSelected: any = []
 	form: FormGroup
 	model: any = new FieldObject()
 	submitted: boolean = false
 	title: string = ''
+	name: string = ''
+	description: string = ''
 
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
@@ -39,13 +49,20 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	ngOnInit() {
 		this.buildForm()
 		this.getList()
+		this._serviceR.recommendationGetDataForCreate({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.listUnit = res.result.lstUnit
+			} else {
+				this.listUnit = []
+			}
+		})
 	}
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		// $('#modal').on('keypress', function(e) {
-		// 	if (e.which == 13) e.preventDefault()
-		// })
+		$('#modal').on('keypress', function (e) {
+			if (e.which == 13) e.preventDefault()
+		})
 	}
 
 	get f() {
@@ -95,9 +112,13 @@ export class FieldComponent implements OnInit, AfterViewInit {
 	preCreate() {
 		this.model = new FieldObject()
 		this.rebuilForm()
+		this.listUnitSelected = []
 		this.submitted = false
 		this.title = 'Thêm mới lĩnh vực'
 		$('#modal').modal('show')
+		setTimeout(() => {
+			$('#target').focus()
+		}, 400)
 	}
 
 	onSave() {
@@ -107,6 +128,7 @@ export class FieldComponent implements OnInit, AfterViewInit {
 		if (this.form.invalid) {
 			return
 		}
+		this.model.listUnit = this.listUnitSelected.length == 0 ? null : this.listUnitSelected.join(',')
 		if (this.model.id == 0 || this.model.id == null) {
 			this._service.fieldInsert(this.model).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
@@ -158,7 +180,11 @@ export class FieldComponent implements OnInit, AfterViewInit {
 				this.rebuilForm()
 				this.title = 'Chỉnh sửa lĩnh vực'
 				this.model = response.result.CAFieldGetByID[0]
+				this.listUnitSelected = this.model.listUnit == null ? [] : this.model.listUnit.split(',').map(Number)
 				$('#modal').modal('show')
+				setTimeout(() => {
+					$('#target').focus()
+				}, 400)
 			} else {
 				this._toastr.error(response.message)
 			}

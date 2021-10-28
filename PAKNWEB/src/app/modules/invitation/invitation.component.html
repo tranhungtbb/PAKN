@@ -39,6 +39,9 @@
 										</p>
 										<input class="form-control form-control-sm" [(ngModel)]="title" maxlength="100" (keydown.enter)="dataStateChange()"
 											placeholder="Nhập tên..." />
+											<button *ngIf="title" class="btn bg-transparent btn-clear-input" (click)="title=''">
+												<i class="fa fa-times"></i>
+											</button>
 									</th>
 									<th style="width: 240px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -62,6 +65,9 @@
 										</p>
 										<input type="text" class="form-control form-control-sm" [(ngModel)]="place" (keydown.enter)="dataStateChange()"
 											placeholder="Nhập địa điểm...">
+											<button *ngIf="place" class="btn bg-transparent btn-clear-input" (click)="place=''">
+												<i class="fa fa-times"></i>
+											</button>
 									</th>
 									<th style="width: 180px;">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">

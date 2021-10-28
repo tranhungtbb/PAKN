@@ -3,16 +3,9 @@
 		<span class="text-uppercase">Video hướng dẫn sử dụng</span>
 	</div>
 
-	<!-- row -->
 	<div class="container-fluid p-0">
 		<div class="row ml-0">
 			<div class="col-auto treeView px-0" style="position: relative;">
-				<!-- <p class="p-3 h4 d-flex justify-content-between align-items-center shadow">
-				<span class="text-uppercase">Danh sách đơn vị</span>
-				<button type="button" class="btn grd-blue border-0 p-2 btn-sm text-white" (click)="modalCreateOrUpdate(0)">
-					<i class="pi pi-plus"></i>
-				</button>
-			</p> -->
 				<button type="button" title="Thêm mới video" class="btn grd-blue border-0 p-2 btn-sm text-white" style="position: absolute; top: 8px; right: 15px" (click)="preCreate()" *hasPermission="['3', 'G_II_0']">
 					<i class="pi pi-plus"></i>
 				</button>
@@ -45,7 +38,7 @@
 	<div class="modal fade" id="modal">
 		<div class="modal-dialog modal-dialog-centered" style="min-width: 40%" role="document">
 			<div class="modal-content rounded">
-				<form class="form-horizontal" [formGroup]="form" #formDir="ngForm">
+				<form class="form-horizontal" [formGroup]="form" #formDir="ngForm" (keydown.enter)="onSave()">
 					<div class="panel panel-default no-margin">
 						<div class="modal-header" style="border: none;">
 							<button class="close btn-close-modal" data-dismiss="modal">
@@ -57,7 +50,7 @@
 							<div class="row form-group">
 								<div class="col-sm-12">
 									<label> Tên chuyên mục <span class="cl-red">(*)</span></label>
-									<input class="form-control" svTrim style="border: 2px solid #E5E5E5; border-radius: 10px;" type="text" formControlName="title"
+									<input id="target" class="form-control" svTrim type="text" formControlName="title"
 										[(ngModel)]="model.title" placeholder="Nhập ...">
 									<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
 										<div *ngIf="f.title.errors.required">

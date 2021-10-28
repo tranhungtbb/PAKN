@@ -18,21 +18,20 @@ export class RecommendationRequestService {
 			return of(result as T)
 		}
 	}
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) { }
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
 
 	recommendationGetDataForCreate(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationRequestGetDataForCreate)
 	}
 
 	recommendationGetListProcess(request: any): Observable<any> {
-		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationRequestGetListProcess)
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.MrSyncHeThongQuanLyKienNghiCuTriPagedList)
 	}
-	asyncRecommentdationKNCT() : Observable<any>{
-		return this.serviceInvoker.get({},AppSettings.API_ADDRESS + Api.AsyncRecommendationKNCT)
+	asyncRecommentdationKNCT(): Observable<any> {
+		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.AsyncRecommendationKNCT)
 	}
 
 	recommendationGetByIdView(request: any): Observable<any> {
 		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationRequestGetByIdView)
 	}
-
 }

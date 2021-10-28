@@ -66,6 +66,9 @@
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.fullName" maxlength="100" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập ..." />
+										<button *ngIf="dataSearch.fullName" class="btn bg-transparent btn-clear-input" (click)="dataSearch.fullName=''">
+											<i class="fa fa-times"></i>
+										</button>
 								</th>
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -73,6 +76,9 @@
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.address" maxlength="100" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập ..." />
+										<button *ngIf="dataSearch.address" class="btn bg-transparent btn-clear-input" (click)="dataSearch.address=''">
+											<i class="fa fa-times"></i>
+										</button>
 								</th>
 								<th style="width: 150px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -81,6 +87,9 @@
 									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.phone" maxlength="11" 
 									(keydown.enter)="dataStateChange()"
 										placeholder="Nhập ..." />
+										<button *ngIf="dataSearch.phone" class="btn bg-transparent btn-clear-input" (click)="dataSearch.phone=''">
+											<i class="fa fa-times"></i>
+										</button>
 								</th>
 								<th style="width: 200px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -88,6 +97,9 @@
 									</p>
 									<input class="form-control form-control-sm" [(ngModel)]="dataSearch.email" maxlength="256" (keydown.enter)="dataStateChange()"
 										placeholder="Nhập ..." />
+										<button *ngIf="dataSearch.email" class="btn bg-transparent btn-clear-input" (click)="dataSearch.email=''">
+											<i class="fa fa-times"></i>
+										</button>
 								</th>
 								<th style="max-width: 160px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -158,10 +170,10 @@
 <div class="modal fade" id="modal">
 	<div class="modal-dialog modal-dialog-centered" style="min-width: 60%" role="document">
 		<div class="modal-content rounded">
-			<form class="form-horizontal" [formGroup]="form" #formDir="ngForm">
+			<form class="form-horizontal" [formGroup]="form" #formDir="ngForm" (keydown.enter)="onSave()">
 				<div class="panel panel-default no-margin">
 					<div class="modal-header">
-						<button class="close btn-close-modal" data-dismiss="modal" (click)="close()">
+						<button class="close btn-close-modal" data-dismiss="modal">
 							×
 						</button>
 						<p class="modal-title h3">{{title}}</p>
@@ -171,8 +183,7 @@
 							<!-- row 1 -->
 							<div class="col-12 col-lg-4 form-group">
 								<label class="mb-1">Họ và tên <span class="cl-red">(*)</span></label>
-								<!-- <input type="text" [hidden]="true" [(ngModel)]="model.id"> -->
-								<input svTrim maxlength="100" [(ngModel)]="model.fullName" formControlName="fullName" type="text" placeholder="Nhập..."
+								<input id="target" svTrim maxlength="100" [(ngModel)]="model.fullName" formControlName="fullName" type="text" placeholder="Nhập..."
 									class="form-control border-brown">
 								<div *ngIf="(submitted && f.fullName.invalid)||(f.fullName.invalid && (f.fullName.dirty || f.fullName.touched))" class="has-error m-b-12">
 									<div *ngIf="f.fullName.errors.required">

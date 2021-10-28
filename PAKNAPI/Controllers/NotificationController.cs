@@ -13,12 +13,13 @@ using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
-using Bugsnag;
 using PAKNAPI.Models.Remind;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using PAKNAPI.Models.Recommendation;
 using PAKNAPI.Models.ModelBase;
+using Microsoft.Extensions.Configuration;
+using Bugsnag;
 
 namespace PAKNAPI.Controllers
 {
@@ -29,11 +30,13 @@ namespace PAKNAPI.Controllers
     {
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;
+        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
 
-        public NotificationController(IAppSetting appSetting, IClient bugsnag)
+        public NotificationController(IAppSetting appSetting, IClient bugsnag, Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             _appSetting = appSetting;
             _bugsnag = bugsnag;
+            _configuration = configuration;
         }
 
 
@@ -66,292 +69,6 @@ namespace PAKNAPI.Controllers
         }
 
 
-        #region SYNotificationInsertTypeRecommendation
-        /// <summary>
-        /// thêm mới thông báo (pakn)
-        /// </summary>
-        /// <param name="recommendationId"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Authorize("ThePolicy")]
-        [Route("insert-type-recommendation")]
-        public async Task<object> SYNotificationInsertTypeRecommendation(int? recommendationId)
-        {
-            try
-            {
-                // thông tin PAKN
-                //var recommendation = new RecommendationDAO(_appSetting).RecommendationGetByID(recommendationId).Result.Model;
-
-                ////thông tin người gửi PAKN
-                //SYUser sender = await new SYUser(_appSetting).SYUserGetByID(recommendation.CreatedBy);
-
-                //// danh sách người thuộc đơn vị mà PAKN gửi đến
-                //List<SYUserGetByUnitId> lstUser = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO((int)recommendation.UnitId);
-
-                //List<RecommendationForward> lstRMForward = new List<RecommendationForward>();
-                //int unitReceiveId, receiveId;
-
-                //// danh sách người dùng thuộc đơn vị mà PAKN gửi đến đơn vị đó
-                //List<SYUserGetByUnitId> listUserReceiveResolve = new List<SYUserGetByUnitId>();
-
-                //// thông tin người giải quyết
-                //SYUser approver = new SYUser();
-
-                //// thông tin đơn vị giải quyết
-                //SYUnit unitReceive = new SYUnit();
-
-                //// thông tin đơn vị tiếp nhận PAKN
-                //SYUnit unit = await new SYUnit(_appSetting).SYUnitGetByID(recommendation.UnitId);
-
-                //// lấy thông tin đơn vị người đăng nhập
-                //SYUserGetByID userInfo = (await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext))).FirstOrDefault();
-
-                //// obj thông báo
-                //SYNotificationModel notification = new SYNotificationModel();
-                //notification.SenderId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
-                //if (sender.Id != userInfo.Id) {
-                //    notification.SendOrgId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-                //}
-                //notification.DataId = recommendation.Id;
-                //notification.SendDate = DateTime.Now;
-                //notification.Type = TYPENOTIFICATION.RECOMMENDATION;
-                //notification.TypeSend = recommendation.Status;
-                //notification.IsViewed = true;
-                //notification.IsReaded = true;
-
-
-                //switch (recommendation.Status)
-                //{
-                //    case STATUS_RECOMMENDATION.RECEIVE_WAIT: //2 Chờ xử lý
-
-                //        foreach (var item in lstUser) {
-
-                //            notification.ReceiveId = item.Id;
-                //            notification.ReceiveOrgId = item.UnitId;
-                //            notification.Title = "PAKN CHỜ XỬ LÝ";
-                //            notification.Content =
-                //                recommendation.SendId != item.Id ?
-                //                sender.FullName + " vừa gửi một PAKN." : "Bạn vừa tạo một PAKN.";
-                //            // insert notification
-                //            await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-                //        }
-
-                //        // người gửi PAKN
-                        
-                //        break;
-                //    case STATUS_RECOMMENDATION.RECEIVE_DENY: //3 Từ chối xử lý
-
-                //        //foreach (var item in lstUser)
-                //        //{
-                //        //    notification.ReceiveId = item.Id;
-                //        //    notification.ReceiveOrgId = item.UnitId;
-                //        //    notification.Title = "PAKN số " + recommendation.Code + " đã bị từ chối xử lý";
-                //        //    notification.Content =
-                //        //        recommendation.SendId != item.Id ?
-                //        //        sender.FullName + " vừa gửi một PAKN." : "Bạn vừa tạo một PAKN.";
-                //        //    // insert notification
-                //        //    await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-                //        //}
-
-                //        // người gửi PAKN
-
-                //        notification.ReceiveId = sender.Id;
-                //        notification.Title = "PAKN BỊ TỪ CHỐI";
-                //        notification.Content = "Phản ánh kiến nghị số " + recommendation.Code + " của bạn đã bị từ chối.";
-                //        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-
-                //        break;
-                //    case STATUS_RECOMMENDATION.RECEIVE_APPROVED: //4 Đã tiếp nhận
-
-                //        notification.Title = "PAKN ĐÃ TIẾP NHẬN";
-                //        notification.Content = "PAKN " + recommendation.Code + " đã được tiếp nhận giải quyết: đơn vị được yêu cầu giải quyết đã tiếp nhận PAKN";
-                //        foreach (var item in lstUser)
-                //        {
-                //            notification.ReceiveId = item.Id;
-                //            notification.ReceiveOrgId = item.UnitId;
-                //            // insert notification
-                //            await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-                //        }
-
-                //        // người gửi PAKN
-                //        notification.ReceiveId = sender.Id;
-                //        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-
-                //        break;
-                //    case STATUS_RECOMMENDATION.PROCESS_WAIT: //5 Chờ giải quyết
-
-                //        lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
-
-                //        var check = lstRMForward.Where(x => x.Step == 1).FirstOrDefault();
-                //        if (check == null)
-                //        {
-                //            // người dân doanh nghiệp gửi luôn PAKN cho đơn vị đã xác định thì phải tạo thông báo của status trước đó
-                //            // status 4
-                //            notification.Title = "PAKN ĐÃ TIẾP NHẬN";
-                //            notification.Content = "PAKN " + recommendation.Code + " đã được tiếp nhận giải quyết: đơn vị được yêu cầu giải quyết đã tiếp nhận PAKN";
-                //            foreach (var item in lstUser)
-                //            {
-                //                notification.ReceiveId = item.Id;
-                //                notification.ReceiveOrgId = item.UnitId;
-                //                // insert notification
-                //                await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-                //            }
-
-                //            // người gửi PAKN
-                //            notification.ReceiveId = sender.Id;
-                //            await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-                //        }
-
-                //        unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
-                //        listUserReceiveResolve = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(unitReceiveId);
-                //        notification.Title = "PAKN ĐANG CHỜ GIẢI QUYẾT";
-                //        notification.Content = "PAKN " + recommendation.Code + " từ đơn vị " + unit.Name + " được gửi tới yêu cầu giải quyết";
-
-                //        foreach (var item in listUserReceiveResolve)
-                //        {
-                //            notification.ReceiveId = item.Id;
-                //            notification.ReceiveOrgId = item.UnitId;
-                //            // insert notification
-                //            await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-                //        }
-
-                //        break;
-                //    case STATUS_RECOMMENDATION.PROCESS_DENY: //6 Từ chối giải quyết
-
-                //        lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
-
-                //        if (lstRMForward.FirstOrDefault(x => x.Step == 2) == null) {
-                //            unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 1).UnitReceiveId;
-                //        }
-                //        else {
-                //            unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
-                //        }
-                //        //unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
-                //        unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
-                //        // gửi cho đơn vị tiếp nhận ban đầu
-                //        notification.Title = "PAKN BỊ TỪ CHỐI GIẢI QUYẾT";
-                //        notification.Content = "PAKN số " + recommendation.Code +" đã bị " + unitReceive.Name + " từ chối giải quyết";
-                //        foreach (var item in lstUser)
-                //        {
-                //            notification.ReceiveId = item.Id;
-                //            notification.ReceiveOrgId = item.UnitId;
-                //            // insert notification
-                //            await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-                //        }
-
-                //        // người gửi PAKN
-                        
-                //        notification.Content = "PAKN của bạn đã bị " + unitReceive.Name + " từ chối giải quyết";
-                //        notification.ReceiveId = sender.Id;
-                //        notification.ReceiveOrgId = null;
-                //        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-
-                //        break;
-                //    case STATUS_RECOMMENDATION.PROCESSING: //7 Đang giải quyết
-                //        lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
-                //        unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
-                //        unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
-
-                //        notification.Title = "PAKN ĐANG GIẢI QUYẾT";
-                //        notification.Content = "PAKN của bạn đã được gửi cho " + unitReceive.Name + " giải quyết";
-                //        notification.ReceiveId = sender.Id;
-                //        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-                //        break;
-                //    case STATUS_RECOMMENDATION.APPROVE_WAIT: //8 Chờ phê duyệt
-                //        // bạn có 1 PAKN chờ phê duyệt
-                //        lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
-                //        receiveId = lstRMForward.FirstOrDefault(x => x.Step == 3).ReceiveId;
-                //        approver = await new SYUser(_appSetting).SYUserGetByID(receiveId);
-
-                //        // gửi cho lãnh đạo
-                //        notification.Title = "PAKN CHỜ PHÊ DUYỆT";
-                //        notification.Content = "Bạn có PAKN số " + recommendation.Code + " chờ phê duyệt";
-                //        notification.ReceiveId = approver.Id;
-                //        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-
-                //        break;
-                //    case STATUS_RECOMMENDATION.APPROVE_DENY: //9 Từ chối phê duyệt
-
-                //        lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
-                //        unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 3).UnitSendId;
-                //        unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
-
-                //        notification.Title = "PAKN ĐÃ BỊ TỪ CHỐI PHÊ DUYỆT";
-                //        notification.Content = "Lãnh đạo đơn vị " + unitReceive.Name + " đã từ chối kết quả giải quyết PAKN số" + recommendation.Code;
-                //        foreach (var item in lstUser)
-                //        {
-                //            notification.ReceiveId = item.Id;
-                //            notification.ReceiveOrgId = item.UnitId;
-                //            // insert notification
-                //            await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-                //        }
-                //        // gửi cho người tiếp nhận PAKN -chưa chắc là người giải quyết nhá
-
-                //        notification.ReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).ReceiveId;
-                //        notification.ReceiveOrgId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
-                //        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-
-                //        //người gửi PAKN
-                //        notification.ReceiveId = sender.Id;
-                //        notification.ReceiveOrgId = null;
-                //        notification.Content = "Lãnh đạo đơn vị " + unitReceive.Name + " đã từ chối phê duyệt PAKN số " + recommendation.Code + " của bạn";
-                //        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-
-                //        break;
-                //    case STATUS_RECOMMENDATION.FINISED: //10 Đã giải quyết
-
-                //        lstRMForward = (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId(recommendationId)).ToList();
-                //        unitReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
-                //        unitReceive = await new SYUnit(_appSetting).SYUnitGetByID(unitReceiveId);
-                        
-
-                //        notification.Title = "PAKN ĐÃ GIẢI QUYẾT XONG";
-                //        notification.Content = "Lãnh đạo đơn vị " + unitReceive.Name + " đã giải quyết PAKN số " + recommendation.Code;
-
-                //        foreach (var item in lstUser)
-                //        {
-                //            notification.ReceiveId = item.Id;
-                //            notification.ReceiveOrgId = item.UnitId;
-                //            // insert notification
-                //            await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-                //        }
-                //        if (recommendation.UnitId != unitReceiveId) {
-                //            var lstuserInunitReceive = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO(unitReceiveId);
-                //            foreach (var item in lstuserInunitReceive)
-                //            {
-                //                notification.ReceiveId = item.Id;
-                //                notification.ReceiveOrgId = item.UnitId;
-                //                // insert notification
-                //                await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-                //            }
-                //        }
-                        
-
-                //        // gửi cho người tiếp nhận PAKN -chưa chắc là người giải quyết nhá
-
-                //        notification.ReceiveId = lstRMForward.FirstOrDefault(x => x.Step == 2).ReceiveId;
-                //        notification.ReceiveOrgId = lstRMForward.FirstOrDefault(x => x.Step == 2).UnitReceiveId;
-                //        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-
-
-                //        // người gửi PAKN
-                //        notification.ReceiveId = sender.Id;
-                //        notification.ReceiveOrgId = null;
-                //        await new SYNotification(_appSetting).SYNotificationInsertDAO(notification);
-                //        break;
-                //}
-                return new ResultApi { Success = ResultCode.OK, Message = "Success" };
-            }
-            catch (Exception ex)
-            {
-                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
-
-                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-            }
-        }
-
-
-        #endregion SYNotificationInsertTypeRecommendation
         /// <summary>
         /// danh sách thông báo
         /// </summary>
@@ -453,7 +170,7 @@ namespace PAKNAPI.Controllers
         {
             try
             {
-                int count = await new SYNotification(_appSetting).SYNotificationDelete(_syNotification);
+                int count = await new SYNotification(_appSetting,_configuration).SYNotificationDelete(_syNotification);
                 if (count > 0)
                 {
                     new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
@@ -462,7 +179,7 @@ namespace PAKNAPI.Controllers
                 }
                 else
                 {
-                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,new Exception());
+                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, "Không tồn tại thông báo",new Exception());
 
                     return new ResultApi { Success = ResultCode.ORROR, Message = ResultMessage.ORROR };
                 }
@@ -472,6 +189,25 @@ namespace PAKNAPI.Controllers
                 _bugsnag.Notify(ex);
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
 
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [HttpPost]
+        [Authorize("ThePolicy")]
+        [Route("update-token-fire-base")]
+        public async Task<ActionResult<object>> UpdateTokenFireBase(UpdateTokenFireBaseRequest request)
+        {
+            try
+            {
+                var UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                var result = await new UpdateTokenFireBase(_appSetting).UpdateTokenFireBaseDAO(UserId, request);
+                return new ResultApi { Success = ResultCode.OK, Result = result };
+            }
+            catch (Exception ex)
+            {
+                //_bugsnag.Notify(ex);
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }

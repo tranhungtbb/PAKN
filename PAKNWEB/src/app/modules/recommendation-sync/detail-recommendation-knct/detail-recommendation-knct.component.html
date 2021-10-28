@@ -18,24 +18,9 @@
 						Kiến nghị về việc:
 					</p>
 					<p>{{modelData.content}}</p>
-					<div class="py-2 mb-4 d-flex justify-content-between align-items-center border-bottom border-top">
-						<!-- <div class="media align-items-center">
-							<div class="avatar-circle mr-2" style="background: #EBF2FF; color: #5D90F1">
-								KN
-							</div>
-							<div class="media-body">
-								<p class="my-0 h5">{{modelData.categoryName}}</p>
-							</div>
-						</div> -->
-						<span>
-							<p class="my-0 h5">Đơn vị tiếp nhận :</p> {{modelData.unitPreside}}
-						</span>
-						<span>
-							<p class="my-0 h5">Lĩnh vực :</p> {{modelData.fieldName}}
-						</span>
-						<!-- <span>{{model.createdDate | date:'HH:mm dd/MM/yyyy'}}</span> -->
-						<span *ngIf="modelData.endDate">{{modelData.endDate | date:'HH:mm'}} ngày {{modelData.endDate | date: 'dd/MM/yyyy'}}</span>
-					</div>
+					<!-- <div class="py-2 mb-4 d-flex justify-content-between align-items-center border-bottom border-top">
+						
+					</div> -->
 					<div class="media pb-4">
 						<div class="mr-3">
 							<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-chat-right-text" viewBox="0 0 16 16">
@@ -50,7 +35,7 @@
 						
 						<div class="media-body">
 							<p class="h4 font-italic font-weight-bold">{{modelData.unitPreside}} :</p>
-							<p innerHTML="{{modelData.response | Change}}">
+							<p innerHTML="{{modelData.response | RemoveTag}}">
 							</p>
 							<strong class="mb-2">File đính kèm</strong>
 							<p *ngIf="file.length ==0">Không có file đính kèm nào</p>
@@ -96,14 +81,11 @@
 				</div>
 			</div>
 			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct-ql pl-0 pt-4">
-				<div class="hashtags-box border-bottom px-4 ">
-				</div>
-
-				<div class="mb-4">
+				<div class="mb-4" style="position: fixed;">
 					<ul class="list-group list-group-flush">
-						<!-- <li class="list-group-item">
-							Mã số: <strong class="h4 font-weight-bold">{{modelData.code}}</strong>
-						</li> -->
+						<li class="list-group-item">
+							Đơn vị tiếp nhận: <strong class="h4 font-weight-bold">{{modelData.unitPreside}}</strong>
+						</li>
 						<li class="list-group-item">
 							Lĩnh Vực: <span class="font-weight-bold">{{modelData.fieldName}}</span>
 						</li>
@@ -116,8 +98,11 @@
 						</li>
 						<li class="list-group-item">
 							Nhiệm kỳ: <span class="font-weight-bold">{{modelData.term}}</span>
-							
 						</li>
+						<li class="list-group-item" *ngIf="modelData.endDate">
+							Ngày: <span class="font-weight-bold">{{modelData.endDate | date:'HH:mm'}} ngày {{modelData.endDate | date: 'dd/MM/yyyy'}}</span>
+						</li>
+
 					</ul>
 				</div>
 			</div>

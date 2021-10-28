@@ -30,7 +30,10 @@
 											<strong>Tiêu đề</strong>
 											
 										</p>
-										<input [(ngModel)]="query.title" (change)="filterChange()" type="text" class="form-control form-control-sm" placeholder="Nhập ...">
+										<input [(ngModel)]="query.title" (keydown.enter)="filterChange()" type="text" class="form-control form-control-sm" placeholder="Nhập ...">
+										<button *ngIf="query.title" class="btn bg-transparent btn-clear-input" (click)="query.title=''">
+											<i class="fa fa-times"></i>
+										</button>
 									</th>
 									<th style="width: 180px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">

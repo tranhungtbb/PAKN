@@ -55,6 +55,9 @@ export class UserComponent implements OnInit {
 	newPassword: string
 	rePassword: string
 	samePass = false
+	userName: any = ''
+	fullName: any = ''
+	phone: any = ''
 
 	// object User
 	modelUser: any = new UserObject2()

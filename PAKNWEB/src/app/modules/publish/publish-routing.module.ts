@@ -14,15 +14,15 @@ import { from, using } from 'rxjs'
 import { MyRecommendationComponent } from './my-recommendation/my-recommendation.component'
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
 import { ViewAdministrativeProceduresComponent } from './view-administrative-procedures/view-administrative-procedures.component'
-import  {ViewNotificationComponent} from './view-notification/view-notification.component'
+import { ViewNotificationComponent } from './view-notification/view-notification.component'
 import { DetailRecommendationKnctComponent } from './recommendations-sync/recommendation-knct-detail/recommendation-knct-detail.component'
-import {ListRecommendationKnct} from 'src/app/modules/publish/recommendations-sync/recommendation-knct/recommendation-knct.component'
+import { ListRecommendationKnct } from 'src/app/modules/publish/recommendations-sync/recommendation-knct/recommendation-knct.component'
 import { RecommendationsDvhhcComponent } from 'src/app/modules/publish/recommendations-sync/recommendations-dvhhc/recommendations-dvhhc.component'
-import {DetailRecommendationDvhhcComponent} from 'src/app/modules/publish/recommendations-sync/recommendations-dvhhc-detail/recommendations-dvhhc-detail.component'
-import {RecommendationsCttdtComponent} from './recommendations-sync/recommendations-cttdt/recommendations-cttdt.component'
-import {DetailRecommendationCttdtComponent} from './recommendations-sync/recommendations-cttdt-detail/recommendations-cttdt-detail.component'
-import {RecommendationsPaknCPComponent} from './recommendations-sync/recommendation-pakn-cp/recommendation-pakn-cp.component'
-import {DetailRecommendationPaknCPComponent} from './recommendations-sync/recommendation-pakn-cp-detail/recommendation-pakn-cp-detail.component'
+import { DetailRecommendationDvhhcComponent } from 'src/app/modules/publish/recommendations-sync/recommendations-dvhhc-detail/recommendations-dvhhc-detail.component'
+import { RecommendationsCttdtComponent } from './recommendations-sync/recommendations-cttdt/recommendations-cttdt.component'
+import { DetailRecommendationCttdtComponent } from './recommendations-sync/recommendations-cttdt-detail/recommendations-cttdt-detail.component'
+import { RecommendationsPaknCPComponent } from './recommendations-sync/recommendation-pakn-cp/recommendation-pakn-cp.component'
+import { DetailRecommendationPaknCPComponent } from './recommendations-sync/recommendation-pakn-cp-detail/recommendation-pakn-cp-detail.component'
 
 const routes: Routes = [
 	{
@@ -89,7 +89,7 @@ const routes: Routes = [
 				path: 'phan-anh-kien-nghi/:id',
 				component: ViewReflectionsRecommendationComponent,
 			},
-			
+
 			{
 				path: 'phan-anh-kien-nghi/sync/he-thong-cu-tri-khanh-hoa',
 				component: ListRecommendationKnct,
@@ -134,7 +134,7 @@ const routes: Routes = [
 				path: 'phan-anh-kien-nghi-cua-toi',
 				component: MyRecommendationComponent,
 			},
-		
+
 			{
 				path: 'tai-khoan',
 				loadChildren: './account/account.module#AccountModule', //() => import('./account/account.module').then((m) => m.AccountModule),

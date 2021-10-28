@@ -1,4 +1,4 @@
-import { Component, DebugElement, OnInit, ViewChild, ElementRef } from '@angular/core'
+import { Component, DebugElement, OnInit, ViewChild, ElementRef, AfterContentInit, AfterViewInit } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { saveAs as importedSaveAs } from 'file-saver'
 
@@ -23,7 +23,7 @@ declare var $: any
 	templateUrl: './individual.component.html',
 	styleUrls: ['./individual.component.css'],
 })
-export class IndividualComponent implements OnInit {
+export class IndividualComponent implements OnInit, AfterViewInit {
 	data: [][]
 	constructor(
 		private _service: BusinessIndividualService,
@@ -34,7 +34,7 @@ export class IndividualComponent implements OnInit {
 		private _shareData: DataService,
 		private localeService: BsLocaleService,
 		private _filesService: UploadFileService,
-		private diadanhService: DiadanhService // private registerService: RegisterService
+		private diadanhService: DiadanhService
 	) {
 		defineLocale('vi', viLocale)
 	}
@@ -178,12 +178,10 @@ export class IndividualComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		// $('#modal').on('hidden.bs.modal', function () {
-
-		// });
+		$('#modal').on('keypress', function (e) {
+			if (e.which == 13) e.preventDefault()
+		})
 	}
-
-	close = () => {}
 
 	onSortIndividual(fieldName: string) {
 		this.inSortDir = this.inSortDir == 'DESC' ? 'ASC' : 'DESC'
@@ -308,13 +306,13 @@ export class IndividualComponent implements OnInit {
 	}
 
 	preCreate() {
+		this.submitted = false
 		this.model = new IndividualObject()
 		this.model.nation = 'Việt Nam'
 		this.model.provinceId = 37 // Tỉnh Khánh Hòa
 		this.model.gender = true // Giới tính Nam
 		this.model.status = 1 // Hiệu lực
-		this.submitted = false
-		// this.rebuidForm()
+		this.rebuidForm()
 
 		if (this.isOtherNation) {
 			this.onChangeNation()
@@ -323,6 +321,9 @@ export class IndividualComponent implements OnInit {
 
 		this.title = 'Thêm mới cá nhân'
 		$('#modal').modal('show')
+		setTimeout(() => {
+			$('#target').focus()
+		}, 400)
 	}
 
 	get f() {
@@ -484,6 +485,9 @@ export class IndividualComponent implements OnInit {
 				this.getVillage(response.result.InvididualGetByID[0].provinceId, response.result.InvididualGetByID[0].districtId)
 				this.rebuidForm()
 				$('#modal').modal('show')
+				setTimeout(() => {
+					$('#target').focus()
+				}, 400)
 			} else {
 				this._toastr.error(response.message)
 			}

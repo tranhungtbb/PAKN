@@ -107,21 +107,35 @@ namespace PAKNAPI.Common
                 logObject = httpRequest.Headers["logObject"],
                 ipAddress = httpRequest.Headers["ipAddress"],
                 macAddress = httpRequest.Headers["macAddress"],
+                logTitle = httpRequest.Headers["logTitle"]
             };
         }
 
-        public void ProcessInsertLogAsync(HttpContext httpContext, string messageError,Exception ex)
+        public void ProcessInsertLogAsync(HttpContext httpContext, string messageError, Exception ex)
         {
             LogHelper logHelper = new LogHelper(_appSetting);
 
             BaseRequest baseRequest = logHelper.ReadHeaderFromRequest(httpContext.Request);
 
             if (baseRequest == null) return;
+            if (string.IsNullOrEmpty(baseRequest.logAction)) {
+                messageError = "LogAction is Empty";
+            }
+            if (string.IsNullOrEmpty(baseRequest.logObject)) {
+                messageError = "LogObject is Empty";
+            }
+            if (string.IsNullOrEmpty(baseRequest.logTitle))
+            {
+                messageError = "LogTitle is Empty";
+            }
 
             logHelper.InsertSystemLogging(new Logs
             {
-                logAction = System.Uri.UnescapeDataString(baseRequest.logAction),
-                logObject = System.Uri.UnescapeDataString(baseRequest.logObject),
+                logAction = 
+                    System.Uri.UnescapeDataString(string.IsNullOrEmpty(baseRequest.logAction) == true ? "" : baseRequest.logAction),
+                logObject = 
+                    System.Uri.UnescapeDataString(baseRequest.logObject == null ? "" : baseRequest.logObject) +
+                    System.Uri.UnescapeDataString(string.IsNullOrEmpty(baseRequest.logTitle) == true ? "" : ": " + baseRequest.logTitle),
                 ipAddress = baseRequest.ipAddress,
                 macAddress = baseRequest.macAddress,
                 messageError = messageError,
@@ -129,7 +143,7 @@ namespace PAKNAPI.Common
                 e = ex,
                 location = baseRequest.location,
                 claim = httpContext.User
-            });
+            });;
         }
 
         public string GetFullNameFromRequest2(HttpContext httpContext)

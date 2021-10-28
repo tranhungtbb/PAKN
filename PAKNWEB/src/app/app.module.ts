@@ -30,9 +30,10 @@ import { DxReportViewerModule } from 'devexpress-reporting-angular'
 import { TreeviewModule } from 'ngx-treeview'
 import { CarouselModule } from 'ngx-owl-carousel-o'
 import { TooltipModule } from 'ngx-bootstrap/tooltip'
+import { Index2Component } from 'src/app/modules/index2/index2.component'
 
 @NgModule({
-	declarations: [AppComponent, SvFocusDirective, ConfirmDialogComponent, ViewFileDialogComponent],
+	declarations: [AppComponent, SvFocusDirective, ConfirmDialogComponent, ViewFileDialogComponent, Index2Component],
 	entryComponents: [ConfirmDialogComponent, ViewFileDialogComponent],
 	imports: [
 		BrowserModule,

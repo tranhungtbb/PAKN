@@ -9,7 +9,7 @@
 			<div class="modal-body pb-0 mt-0 pt-0">
 				<div class="row">
 					<div [ngClass]="{'col-md-6': isAdmin == true, 'col-md-12': isAdmin == false}">
-						<form id="createUserForm" [formGroup]="createUserForm" (ngSubmit)="onSaveUser()">
+						<form id="createUserForm" [formGroup]="createUserForm" (keydown.enter)="onSaveUser()" (ngSubmit)="onSaveUser()">
 							<div class="align-items-center mb-4 avatar-bg">
 								<div class="avatar-frame">
 									<img class="user-avatar-view" [ngClass]="{ 'hide': userAvatar == null }" style="height: 100%; width: 100%; object-fit: cover;" />
@@ -32,7 +32,7 @@
 							<div class="form-row">
 								<div class="col-12 col-lg-8 form-group">
 									<label class="mb-1">Email <span class="cl-red">(*)</span></label>
-									<input svTrim formControlName="email" [(ngModel)]="modelUser.email" type="text" class="form-control" placeholder="Nhập..." maxlength="100"
+									<input id="target" svTrim formControlName="email" [(ngModel)]="modelUser.email" type="text" class="form-control" placeholder="Nhập..." maxlength="100"
 										[readonly]="modelUser.id != null && modelUser.id > 0" (change)="onCheckExist('Email',$event.target.value)">
 									<div *ngIf="(userFormSubmitted && fUser.email.invalid)||(fUser.email.invalid && (fUser.email.dirty || fUser.email.touched))"
 										class="has-error m-b-12">

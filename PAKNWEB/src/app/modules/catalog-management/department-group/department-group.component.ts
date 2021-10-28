@@ -26,6 +26,8 @@ export class DepartmentGroupComponent implements OnInit {
 	model: any = new FieldObject()
 	submitted: boolean = false
 	title: string = ''
+	name: string = ''
+	description: string = ''
 
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
@@ -37,9 +39,9 @@ export class DepartmentGroupComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		// $('#modal').on('keypress', function (e) {
-		// 	if (e.which == 13) e.preventDefault()
-		// })
+		$('#modal').on('keypress', function (e) {
+			if (e.which == 13) e.preventDefault()
+		})
 	}
 
 	get f() {
@@ -86,6 +88,9 @@ export class DepartmentGroupComponent implements OnInit {
 		this.submitted = false
 		this.title = 'Thêm mới nhóm sở ngành'
 		$('#modal').modal('show')
+		setTimeout(() => {
+			$('#target').focus()
+		}, 400)
 	}
 
 	onSave() {
@@ -148,6 +153,9 @@ export class DepartmentGroupComponent implements OnInit {
 				this.title = 'Chỉnh sửa nhóm sở ngành'
 				this.model = response.result.CADepartmentGroupGetByID[0]
 				$('#modal').modal('show')
+				setTimeout(() => {
+					$('#target').focus()
+				}, 400)
 			} else {
 				this._toastr.error(response.message)
 			}

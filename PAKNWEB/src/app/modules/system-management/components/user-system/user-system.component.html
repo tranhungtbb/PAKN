@@ -39,17 +39,24 @@
 										
 									</p>
 									<input class="form-control form-control-sm"
-										trim [ngSwitch]="'userName'" (keydown.enter)="table.filter($event?.target.value.trim(), 'userName', 'contains')"
+										trim [ngSwitch]="'userName'" [(ngModel)]="userName"
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'userName', 'contains')"
 									 	placeholder="Nhập ..." />
+									<button *ngIf="userName" class="btn bg-transparent btn-clear-input" (click)="userName=''">
+										<i class="fa fa-times"></i>
+									</button>
 								</th>
 								<th style="min-width: 180px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
 									[pSortableColumn]="'fullName'">
 										<strong>Họ và tên <p-sortIcon [field]="'fullName'"></p-sortIcon></strong>
 									</p>
-									<input type="text" class="form-control form-control-sm"
+									<input type="text" class="form-control form-control-sm" [(ngModel)]="fullName"
 										trim [ngSwitch]="'fullName'" (keydown.enter)="table.filter($event?.target.value.trim(), 'fullName', 'contains')"
 										placeholder="Nhập ...">
+									<button *ngIf="fullName" class="btn bg-transparent btn-clear-input" (click)="fullName=''">
+										<i class="fa fa-times"></i>
+									</button>
 								</th>
 								
 								<th style="width: 150px;">
@@ -57,9 +64,12 @@
 									[pSortableColumn]="'phone'">
 										<strong>Điện thoại <p-sortIcon [field]="'phone'"></p-sortIcon></strong>
 									</p>
-									<input type="text" class="form-control form-control-sm" 
-									numbersOnly [ngSwitch]="'phone'" (keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')"
-									 placeholder="Nhập...">
+									<input type="text" class="form-control form-control-sm" [(ngModel)]="phone"
+										numbersOnly [ngSwitch]="'phone'" (keydown.enter)="table.filter($event?.target.value.trim(), 'phone', 'contains')"
+									 	placeholder="Nhập...">
+									<button *ngIf="phone" class="btn bg-transparent btn-clear-input" (click)="phone=''">
+										<i class="fa fa-times"></i>
+									</button>
 								</th>
 								<th style="width: 160px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"

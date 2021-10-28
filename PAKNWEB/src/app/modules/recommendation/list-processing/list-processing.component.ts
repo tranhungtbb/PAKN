@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
-import { RecommendationObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
+import { RecommendationObject, RecommendationSearchObject, RecommendationForwardObject } from 'src/app/models/recommendationObject'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
-import { MESSAGE_COMMON, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { Router } from '@angular/router'
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { COMMONS } from 'src/app/commons/commons'
 declare var $: any
 
 @Component({
@@ -21,11 +22,15 @@ export class ListProcessingComponent implements OnInit {
 		private storeageService: UserInfoStorageService,
 		private _toastr: ToastrService,
 		private _shareData: DataService,
-		private _router: Router
+		private _router: Router,
+		private _fb: FormBuilder
 	) {}
 	userLoginId: number = this.storeageService.getUserId()
+	unitId: number = this.storeageService.getUnitId()
 	isMain: boolean = this.storeageService.getIsMain()
 	listData = new Array<RecommendationObject>()
+	formForward: FormGroup
+	dateNow: Date = new Date()
 	listStatus: any = [
 		{ value: 2, text: 'Chờ xử lý' },
 		{ value: 3, text: 'Từ chối xử lý' },
@@ -52,6 +57,7 @@ export class ListProcessingComponent implements OnInit {
 		this.dataSearch.status = RECOMMENDATION_STATUS.PROCESSING
 		this.getDataForCreate()
 		this.getList()
+		this.buildForm()
 	}
 
 	ngAfterViewInit() {
@@ -64,6 +70,7 @@ export class ListProcessingComponent implements OnInit {
 				if (response.result != null) {
 					this.lstUnit = response.result.lstUnit
 					this.lstField = response.result.lstField
+					this.lstUnitChild = response.result.lstUnitChild
 				}
 			} else {
 				this._toastr.error(response.message)
@@ -156,6 +163,63 @@ export class ListProcessingComponent implements OnInit {
 		}),
 			(error) => {
 				console.log(error)
+			}
+	}
+	modelForward: any = new RecommendationForwardObject()
+	lstUnitChild: any = []
+
+	buildForm() {
+		this.formForward = this._fb.group({
+			unitReceiveId: [this.modelForward.unitReceiveId, Validators.required],
+			expiredDate: [this.modelForward.expiredDate],
+			content: [this.modelForward.content],
+		})
+	}
+	get f() {
+		return this.formForward.controls
+	}
+
+	rebuilForm() {
+		this.formForward.reset({
+			unitReceiveId: this.modelForward.unitReceiveId,
+			expiredDate: this.modelForward.expiredDate,
+			content: this.modelForward.content,
+		})
+	}
+
+	preForward(id: number) {
+		this.modelForward = new RecommendationForwardObject()
+		this.modelForward.recommendationId = id
+		this.submitted = false
+		this.rebuilForm()
+		$('#modal-tc-pakn').modal('show')
+	}
+
+	onForward() {
+		this.modelForward.content = this.modelForward.content.trim()
+		this.submitted = true
+		if (this.formForward.invalid) {
+			return
+		}
+		this.modelForward.step = STEP_RECOMMENDATION.PROCESS
+		this.modelForward.status = PROCESS_STATUS_RECOMMENDATION.FORWARD
+		var request = {
+			_mRRecommendationForwardInsertIN: this.modelForward,
+			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
+			IsList: true,
+		}
+		let obj = this.listData.find((x) => x.id == this.modelForward.recommendationId)
+		this._service.recommendationForward(request, obj.title).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				$('#modal-tc-pakn').modal('hide')
+				this.getList()
+				this._toastr.success(COMMONS.FORWARD_SUCCESS)
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(err) => {
+				console.error(err)
 			}
 	}
 

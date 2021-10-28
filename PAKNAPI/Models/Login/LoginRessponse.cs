@@ -1,4 +1,5 @@
-﻿using PAKNAPI.ModelBase;
+﻿using PAKNAPI.Common;
+using PAKNAPI.ModelBase;
 using System;
 using System.Collections.Generic;
 
@@ -11,9 +12,7 @@ namespace PAKNAPI.Models.Results
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public string AccessToken { get; set; }
         public int? UnitId { get; set; }
-
         public bool? IsActive { get; set; }
         public int? TypeObject { get; set; }
         public string UnitName { get; set; }
@@ -24,5 +23,26 @@ namespace PAKNAPI.Models.Results
         public string Permissions { get; set; }
         public string PermissionFunctions { get; set; }
         public string PermissionCategories { get; set; }
+
+        public string AccessToken { get; set; }
+        public string RefreshToken { get; set; }
+
+        public LoginResponse(SYUSRLogin user, string accessToken, string refreshToken) {
+            Success = ResultCode.OK;
+            UserId = user.Id;
+            UserName = user.UserName;
+            FullName = user.FullName;
+            Email = user.Email;
+            IsActive = user.IsActived;
+            Phone = user.UserName;
+            UnitId = user.UnitId;
+            UnitName = user.UnitName;
+            IsMain = user.IsMain;
+            IsAdmin = user.IsAdmin;
+            TypeObject = user.TypeObject;
+            AccessToken = accessToken;
+            IsHaveToken = true;
+            RefreshToken = refreshToken; 
+        }
     }
 }

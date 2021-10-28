@@ -1496,8 +1496,7 @@ namespace PAKNAPI.Controllers
 		/// <summary>
 		/// cập nhập người dùng - công bố
 		/// </summary>
-		/// <param name="model"></param>7
-		/// <param name="AccountInfoModel"></param>
+		/// <param name="model"></param>
 		/// <returns></returns>
 
 		[HttpPost]

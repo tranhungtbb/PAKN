@@ -6,7 +6,6 @@ import { DashboardComponent } from './dash-board/dash-board.component'
 import { NotificationComponent } from './notification/notification.component'
 import { ReportViewerComponent } from './report-view/report-viewcomponent'
 import { DashboardChatBoxComponent } from './chatbox/dashboard/dashboard.component'
-import { from } from 'rxjs'
 
 const routes: Routes = [
 	{
@@ -25,16 +24,13 @@ const routes: Routes = [
 			{ path: 'email-sms', loadChildren: './email-sms/email-sms.module#EmailSmsModule' },
 			{ path: 'thong-ke', loadChildren: './statistic/statistic.module#StatisticModule' },
 			{ path: 'bao-cao', loadChildren: './report/report.module#ReportModule' },
-			{ path: 'thiet-lap-chung', loadChildren: './setting/setting.module#SettingModule' },
-			{ path: 'ho-tro', loadChildren: './support/support.module#SupportModule' },
 			{ path: 'huong-dan-su-dung', loadChildren: './support-management/support-management.module#SupportManagementModule' },
 			{ path: 'thu-tuc-hanh-chinh', loadChildren: './administrative-formalities/administrative-formalities.module#AdministrativeFormalitiesModule' },
 			{ path: 'thong-bao', component: NotificationComponent },
 			{ path: 'xuat-file', component: ReportViewerComponent },
 			{ path: 'bao-cao', loadChildren: './statistic/statistic.module#StatisticModule' },
-
 			{ path: 'cuoc-goi', loadChildren: 'src/app/modules/call-history/call-history.module#CallHistoryModule' },
-			{ path: 'dong-bo-du-lieu', loadChildren: 'src/app/modules/recommendation-sync/recommendation-sync.module#RecommendationSyncModule'},
+			{ path: 'dong-bo-du-lieu', loadChildren: 'src/app/modules/recommendation-sync/recommendation-sync.module#RecommendationSyncModule' },
 			{ path: 'tin-nhan', component: LoginChatBoxComponent },
 			{ path: 'chatbox', component: DashboardChatBoxComponent },
 		],

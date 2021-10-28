@@ -17,7 +17,7 @@ import { VirtualScrollerModule } from 'primeng/virtualscroller'
 import { DxDropDownBoxModule, DxTreeViewModule, DxDataGridModule } from 'devextreme-angular'
 import { DxReportViewerModule } from 'devexpress-reporting-angular'
 import { TreeviewModule } from 'ngx-treeview'
-import {  ChartModule } from 'primeng/chart'
+import { ChartModule } from 'primeng/chart'
 
 import { DashboardComponent } from './dash-board/dash-board.component'
 import { NotificationComponent } from './notification/notification.component'
@@ -33,7 +33,7 @@ import { MessageComponent } from './chatbox/dashboard/messages/message.component
 import { CreateDialogComponent } from './chatbox/dashboard/create-dialog/create-dialog.component'
 import { EditDialogComponent } from './chatbox/dashboard/edit-dialog/edit-dialog.component'
 import { DeleteDialogComponent } from './chatbox/dashboard/delete-dialog/delete-dialog.component'
-import { DropdownModule } from 'primeng/dropdown';
+import { DropdownModule } from 'primeng/dropdown'
 import { WeatherComponent } from './dash-board/weather/weather.component'
 @NgModule({
 	imports: [
@@ -56,7 +56,7 @@ import { WeatherComponent } from './dash-board/weather/weather.component'
 		TreeviewModule.forRoot(),
 		UserModule,
 		DropdownModule,
-		ChartModule
+		ChartModule,
 	],
 	declarations: [
 		BusinessComponent,

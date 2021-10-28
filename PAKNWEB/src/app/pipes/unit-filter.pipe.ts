@@ -16,10 +16,22 @@ export class UnitFilterPipe implements PipeTransform {
 })
 export class ChangePipe implements PipeTransform {
 	transform(data: string, data2: string): any {
-		if(data){
+		if (data) {
 			return data.split('\n').join('<br>')
 		}
-		return
-		
+		return ''
+	}
+}
+
+@Pipe({
+	name: 'RemoveTag',
+	pure: false,
+})
+export class RemoveTagPipe implements PipeTransform {
+	transform(data: string, data2: string): any {
+		if (data) {
+			return data.split('\n').join('')
+		}
+		return ''
 	}
 }

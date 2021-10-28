@@ -15,12 +15,12 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-4" style="padding: 20px 20px 0px 40px; border-right: 1px solid #e5e5e5;">
+		<div class="col-md-4 pt-3 pr-3 pl-4" style="border-right: 1px solid #e5e5e5;">
 			<form class="form-horizontal" [formGroup]="form">
 				<div class="row form-group">
 					<div class="col-sm-12 padding-col">
 						<label class="control-label title-role">Tên vai trò<span class="text-danger">(*)</span></label>
-						<input class="form-control" formControlName="name" [(ngModel)]="model.name" maxlength="100" placeholder="Nhập..." />
+						<input autofocus class="form-control" formControlName="name" [(ngModel)]="model.name" maxlength="100" placeholder="Nhập..." />
 						<div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))" class="has-error m-b-12">
 							<div *ngIf="f.name.errors.required">
 								<span class="help-block">Trường dữ liệu này không để trống</span>

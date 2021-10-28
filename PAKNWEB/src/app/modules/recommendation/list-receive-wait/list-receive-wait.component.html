@@ -7,7 +7,7 @@
 					<li class="breadcrumb-item active"><a class="font-weight-bold"> Chờ xử lý</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
-					<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()">
+					<button type="button" class="btn background-while btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
 							<path
 								d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
@@ -42,6 +42,9 @@
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.code" class="btn bg-transparent btn-clear-input" (click)="dataSearch.code=''">
+												<i class="fa fa-times"></i>
+											</button>
 									</th>
 									<th style="min-width: 150px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -50,6 +53,9 @@
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.name" class="btn bg-transparent btn-clear-input" (click)="dataSearch.name=''">
+												<i class="fa fa-times"></i>
+											</button>
 									</th>
 									<th style="min-width: 250px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -58,6 +64,9 @@
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.content" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.content" class="btn bg-transparent btn-clear-input" (click)="dataSearch.content=''">
+												<i class="fa fa-times"></i>
+											</button>
 									</th>
 									<th style="width: 200px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -153,8 +162,8 @@
 				</span>
 			</div>
 			<div class="modal-footer border-top-0">
-				<button type="button" class="btn btn-outline-secondary btn-sm border px-5" data-dismiss="modal">Hủy</button>
-				<button type="button" class="btn btn-danger border-0 px-5 grd-blue btn-sm" (click)="onProcessAccept()">Xác nhận</button>
+				<button type="button" class="btn btn-outline-secondary btn-sm border w-127" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="onProcessAccept()">Xác nhận</button>
 			</div>
 		</div>
 	</div>
@@ -170,7 +179,7 @@
 			</div>
 			<div class="modal-body">
 				<p class="h4 text-center mb-3">Bạn có chắc chắn từ chối <strong>Phản ánh, kiến nghị</strong> này?</p>
-				<textarea class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="modelProcess.reasonDeny" maxlength="500"></textarea>
+				<textarea id="targetReject" class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="modelProcess.reasonDeny" maxlength="500"></textarea>
 				<div class="custom-control custom-checkbox checkbox-danger mt-3 mb-3">
 					<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord" id="basic_checkbox_1">
 					<label class="custom-control-label" for="basic_checkbox_1">Chứa từ ngữ bị cấm</label>

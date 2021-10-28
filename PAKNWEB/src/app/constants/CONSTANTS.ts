@@ -212,6 +212,7 @@ export class TYPECONFIG {
 	public static CONFIG_EMAIL = 1
 	public static CONFIG_SMS = 2
 	public static CONFIG_SWITCHBOARD = 3
+	public static CONFIG_NUMBER_WARNING = 4
 }
 
 export class REGEX {

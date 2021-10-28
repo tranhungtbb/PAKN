@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using PAKNAPI.Common;
+using PAKNAPI.Model.ModelAuth;
 using PAKNAPI.Models.Results;
 using System;
 using System.Collections.Generic;

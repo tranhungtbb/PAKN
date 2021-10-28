@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { saveAs as importedSaveAs } from 'file-saver'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
@@ -15,7 +15,7 @@ declare var $: any
 	templateUrl: './support-list-video.component.html',
 	styleUrls: ['./support-list-video.component.css'],
 })
-export class SupportListVideoComponent implements OnInit {
+export class SupportListVideoComponent implements OnInit, AfterViewInit {
 	constructor(
 		private localStorage: UserInfoStorageService,
 		private fileService: UploadFileService,
@@ -51,6 +51,11 @@ export class SupportListVideoComponent implements OnInit {
 		this.form = this._fb.group({
 			title: [this.model.title, [Validators.required]],
 			content: [this.model.content],
+		})
+	}
+	ngAfterViewInit() {
+		$('#modal').on('keypress', function (e) {
+			if (e.which == 13) e.preventDefault()
 		})
 	}
 
@@ -132,6 +137,9 @@ export class SupportListVideoComponent implements OnInit {
 		this.files = []
 		this.rebuidForm()
 		$('#modal').modal('show')
+		setTimeout(() => {
+			$('#target').focus()
+		}, 400)
 	}
 
 	preUpdate(id: any) {
@@ -144,16 +152,19 @@ export class SupportListVideoComponent implements OnInit {
 		})
 		// this.rebuidForm()
 		$('#modal').modal('show')
+		setTimeout(() => {
+			$('#target').focus()
+		}, 400)
 	}
 	onSave() {
+		this.submitted = true
+		if (this.form.invalid) {
+			return
+		}
 		if (this.files.length == 0) {
 			this.toastr.error('Vui lòng chọn file đính kèm')
 			return
 		}
-		if (this.form.invalid) {
-			return
-		}
-		this.submitted = true
 		let obj = {
 			model: this.model,
 			files: this.files,

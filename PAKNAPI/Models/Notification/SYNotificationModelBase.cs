@@ -1,7 +1,10 @@
 ﻿using Dapper;
+using Microsoft.Extensions.Configuration;
+using PAKNAPI.App_Helper;
 using PAKNAPI.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,19 +46,36 @@ namespace PAKNAPI.Models.ModelBase
     public class SYNotification
     {
 		private SQLCon _sQLCon;
+		private readonly IConfiguration _configuration;
 
-		public SYNotification(IAppSetting appSetting)
+		public SYNotification(IAppSetting appSetting, IConfiguration configuration)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+			_configuration = configuration;
 		}
-
-		
 
 		public SYNotification()
 		{
 		}
 
-		public async Task<int?> SYNotificationInsertDAO(SYNotificationModel _syNotificationModel) {
+		public async Task<int> UpdateTokenFireBaseDAO(long userId, UpdateTokenFireBaseRequest request)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			if (!request.Remove)
+			{
+				DP.Add("UserId", userId);
+				DP.Add("TokenFireBase", request.Token);
+				return (await _sQLCon.ExecuteListDapperAsync<int>("SY_TokenNotification_Insert", DP)).First();
+			}
+			else
+			{
+				DP.Add("TokenFireBase", request.Token);
+				return (await _sQLCon.ExecuteListDapperAsync<int>("SY_TokenNotification_Delete", DP)).First();
+			}
+		}
+
+		public async Task<int> InsertNotification(SYNotificationModel _syNotificationModel)
+		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("@SenderId", _syNotificationModel.SenderId);
 			DP.Add("@SendOrgId", _syNotificationModel.SendOrgId);
@@ -69,8 +89,63 @@ namespace PAKNAPI.Models.ModelBase
 			DP.Add("@Content", _syNotificationModel.Content);
 			DP.Add("@IsViewed", _syNotificationModel.IsViewed);
 			DP.Add("@IsReaded", _syNotificationModel.IsReaded);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("SY_NotificationInsert", DP));
+			await _sQLCon.ExecuteNonQueryDapperAsync("[SY_NotificationInsert]", DP);
+			if (true)
+			{
+				DP = new DynamicParameters();
+				DP.Add("UserId", _syNotificationModel.ReceiveId);
+				var lstUserFireBase = (await _sQLCon.ExecuteListDapperAsync<string>("SY_TokenNotification_GetToken", DP)).ToList();
+				if (lstUserFireBase != null && lstUserFireBase.Count > 0)
+				{
+					NotifiDocumentJob(lstUserFireBase, _syNotificationModel);
+				}
+			}
+			return 1;
+		}
+		public void SendNotificationWithTopData(List<string> tokenNotifies, SYNotificationModel notificationData)
+		{
+			List<string> lstDataAdd = new List<string>();
+			var count = 0;
+			for (int i = 0; i < tokenNotifies.Count; i++)
+			{
+				if (count == 1000)
+				{
+					NotifiDocumentJob(lstDataAdd, notificationData);
+					lstDataAdd.Clear();
+					count = 0;
+				}
+				else
+				{
+					lstDataAdd.Add(tokenNotifies[i]);
+					count++;
+				}
+			}
+			if (lstDataAdd.Count > 0)
+			{
+				NotifiDocumentJob(lstDataAdd, notificationData);
+			}
+		}
+		public void NotifiDocumentJob(List<string> tokenNotifies, SYNotificationModel notificationData)
+		{
+			DateTime Created = DateTime.Now;
+			string url = "https://fcm.googleapis.com/fcm/send";
+			var notification = new NotificationMobileV2(new NotificationMobile
+			{
+				collapse_key = "type_a",
+				notification = new NotificationHeader
+				{
+					title = notificationData.Title,
+					body = notificationData.Content,
+				},
+				data = new NotificationData
+				{
+					Created = Created,
+					IdElement = (int)notificationData.DataId,
+					Type = (int)notificationData.Type,
+					DatasNotification = notificationData
+				}
+			}, tokenNotifies);
+			new WebRequestHelper(_configuration).SendTextFirebaseRequest(url, notification);
 		}
 
 		// delete
@@ -167,5 +242,80 @@ namespace PAKNAPI.Models.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYNotificationGetById>("SY_NotificationGetById", DP)).ToList();
 		}
+	}
+
+	public class UpdateTokenFireBase
+	{
+		private SQLCon _sQLCon;
+
+		public UpdateTokenFireBase(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public UpdateTokenFireBase()
+		{
+		}
+
+		public async Task<int> UpdateTokenFireBaseDAO(long userId, UpdateTokenFireBaseRequest request)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			if (!request.Remove)
+			{
+				DP.Add("UserId", userId);
+				DP.Add("TokenFireBase", request.Token);
+				return (await _sQLCon.ExecuteListDapperAsync<int>("SY_TokenNotification_Insert", DP)).First();
+			}
+			else
+			{
+				DP.Add("TokenFireBase", request.Token);
+				return (await _sQLCon.ExecuteListDapperAsync<int>("SY_TokenNotification_Delete", DP)).First();
+			}
+		}
+	}
+	public class UpdateTokenFireBaseRequest
+	{
+		[Required]
+		public string Token { set; get; }
+		public bool Remove { set; get; }
+	}
+
+	public class NotificationMobileV2
+	{
+		public string collapse_key { set; get; }
+		public NotificationHeader notification { set; get; }
+		public NotificationData data { set; get; }
+		public List<string> registration_ids { set; get; }
+		public string priority = "high";
+		public NotificationMobileV2(NotificationMobile notification, List<string> tokenNotifies)
+		{
+			this.notification = notification.notification;
+			this.collapse_key = notification.collapse_key;
+			this.data = notification.data;
+			this.registration_ids = tokenNotifies;
+		}
+
+	}
+	public class NotificationMobile
+	{
+		public string to { set; get; }
+		public string collapse_key { set; get; }
+		public bool content_available { get; set; }
+		public NotificationHeader notification { set; get; }
+		public NotificationData data { set; get; }
+	}
+	public class NotificationHeader
+	{
+		public string title { set; get; }
+		public string body { set; get; }
+	}
+	public class NotificationData
+	{
+		public int IdElement { set; get; }
+		public int Type { set; get; }
+		public Dictionary<string, object> Datas { set; get; }
+		public int UserId { set; get; }
+		public DateTime Created { set; get; }
+		public SYNotificationModel DatasNotification { get; set; }
 	}
 }

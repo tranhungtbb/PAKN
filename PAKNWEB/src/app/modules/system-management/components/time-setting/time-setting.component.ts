@@ -33,6 +33,9 @@ export class TimeSettingComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
+	title: any
+	name: any
+	description: any
 
 	vi: any
 	ngOnInit() {
@@ -135,13 +138,15 @@ export class TimeSettingComponent implements OnInit {
 		this.dataUpdate = data
 		$('#modalConfirmUpdateStatus').modal('show')
 	}
-	title: any
 	preCreate() {
 		this.model = new FieldObject()
 		this.rebuilForm()
 		this.submitted = false
 		this.title = 'Thêm mới ngày nghỉ'
 		$('#modal').modal('show')
+		setTimeout(() => {
+			$('#target').focus()
+		}, 400)
 	}
 
 	onSave() {
@@ -207,6 +212,9 @@ export class TimeSettingComponent implements OnInit {
 				this.model = response.result.SYTimeGetByID[0]
 				this.model.time = new Date(this.model.time)
 				$('#modal').modal('show')
+				setTimeout(() => {
+					$('#target').focus()
+				}, 400)
 			} else {
 				this._toastr.error(response.message)
 			}

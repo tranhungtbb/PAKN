@@ -27,6 +27,8 @@ export class NewsTypeComponent implements OnInit {
 	model: any = new FieldObject()
 	submitted: boolean = false
 	title: string = ''
+	name: string = ''
+	description: string = ''
 
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
@@ -38,9 +40,9 @@ export class NewsTypeComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		// $('#modal').on('keypress', function(e) {
-		// 	if (e.which == 13) e.preventDefault()
-		// })
+		$('#modal').on('keypress', function (e) {
+			if (e.which == 13) e.preventDefault()
+		})
 	}
 
 	get f() {
@@ -87,6 +89,9 @@ export class NewsTypeComponent implements OnInit {
 		this.submitted = false
 		this.title = 'Thêm mới loại tin tức'
 		$('#modal').modal('show')
+		setTimeout(() => {
+			$('#target').focus()
+		}, 400)
 	}
 
 	onSave() {
@@ -148,6 +153,9 @@ export class NewsTypeComponent implements OnInit {
 				this.title = 'Chỉnh sửa loại tin tức'
 				this.model = response.result.CANewsTypeGetByID[0]
 				$('#modal').modal('show')
+				setTimeout(() => {
+					$('#target').focus()
+				}, 400)
 			} else {
 				this._toastr.error(response.message)
 			}

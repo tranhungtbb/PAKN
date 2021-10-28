@@ -16,5 +16,6 @@ namespace PAKNAPI.Common
 		public string ipAddress { get; set; }
 		public string macAddress { get; set; }
 		public string location { get; set; }
+		public string logTitle { get; set; }
 	}
 }

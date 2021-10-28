@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
+using PAKNAPI.Models.Statistic;
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +17,7 @@ namespace PAKNAPI.Models.Recommendation
         public List<DropdownObject> lstBusiness { get; set; }
         public List<DropdownObject> lstHashTag { get; set; }
         public List<DropdownObject> lstGroupWord { get; set; }
+        public List<DropdownObject> lstUnitChild { get; set; }
     }
 
     public class RecommendationGetDataForForwardResponse
@@ -83,6 +85,7 @@ namespace PAKNAPI.Models.Recommendation
         public string ListGroupWordSelected { get; set; }
         public bool IsList { get; set; }
         public bool? IsForwardProcess { get; set; }
+        public bool? IsForwardUnitChild { get; set; }
     }
     public class RecommendationOnProcessConclusionProcess
     {
@@ -129,6 +132,7 @@ namespace PAKNAPI.Models.Recommendation
         private string keyWord = "";
         private int tinhTrangGiaiQuyet = -1;
         private int trangThai = 3;
+        private int pageIndex = 0;
         private int pageSize = 40;
         public int AccountId { get; set; }
         public int DeparmentId { get; set; }
@@ -153,7 +157,10 @@ namespace PAKNAPI.Models.Recommendation
         public string LinhVucId { get; set; }
         public string Nguon { get; set; }
         public string NhiemKy { get; set; }
-        public int PageIndex { get; set; }
+        public int PageIndex {
+            get { return this.pageIndex; }
+            set { this.pageIndex = value; }
+        }
         public int PageSize
         {
             get { return this.pageSize; }

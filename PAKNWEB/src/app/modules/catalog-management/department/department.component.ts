@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 import { DepartmentObject } from 'src/app/models/departmentObject'
@@ -28,10 +28,15 @@ export class DepartmentComponent implements OnInit {
 	submitted: boolean = false
 
 	@ViewChild('table', { static: false }) table: any
+	@ViewChild('target', { static: false }) target: ElementRef
 	totalRecords: number = 0
 	idDelete: number = 0
 	dataUpdate: any
 	title: any
+	name: any
+	email: any
+	phone: any
+
 	cols: any[]
 	ngOnInit() {
 		this.buildForm()
@@ -54,6 +59,9 @@ export class DepartmentComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
+		$('#modal').on('keypress', function (e) {
+			if (e.which == 13) e.preventDefault()
+		})
 	}
 
 	get f() {
@@ -111,10 +119,10 @@ export class DepartmentComponent implements OnInit {
 		this.rebuilForm()
 		this.submitted = false
 		this.title = 'Thêm mới sở ngành'
-		setTimeout(() => {
-			$('#title').focus()
-		}, 100)
 		$('#modal').modal('show')
+		setTimeout(() => {
+			$('#target').focus()
+		}, 400)
 	}
 
 	onSave() {
@@ -176,6 +184,9 @@ export class DepartmentComponent implements OnInit {
 				this.title = 'Chỉnh sửa sở ngành'
 				this.model = response.result.CADepartmentGetByID[0]
 				$('#modal').modal('show')
+				setTimeout(() => {
+					$('#target').focus()
+				}, 400)
 			} else {
 				this._toastr.error(response.message)
 			}

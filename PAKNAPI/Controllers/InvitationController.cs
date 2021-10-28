@@ -34,13 +34,16 @@ namespace PAKNAPI.Controllers
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;
         private readonly IWebHostEnvironment _hostingEnvironment;
+		private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
 
-        public InvitationController(IAppSetting appSetting, IClient bugsnag, IWebHostEnvironment hostEnvironment)
+		public InvitationController(IAppSetting appSetting, IClient bugsnag, IWebHostEnvironment hostEnvironment , Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             _appSetting = appSetting;
             _bugsnag = bugsnag;
             _hostingEnvironment = hostEnvironment;
-        }
+			_configuration = configuration;
+
+		}
 		/// <summary>
 		/// xóa thư mời
 		/// </summary>
@@ -252,7 +255,7 @@ namespace PAKNAPI.Controllers
 							model.IsViewed = true;
 							model.IsReaded = true;
 							// insert vào db-
-							await new SYNotification(_appSetting).SYNotificationInsertDAO(model);
+							await new SYNotification(_appSetting,_configuration).InsertNotification(model);
 
 							if (item.SendEmail == true) {
 								var userSend = await new SYUser(_appSetting).SYUserGetByID(item.UserId);
@@ -526,7 +529,7 @@ namespace PAKNAPI.Controllers
 								model.IsViewed = true;
 								model.IsReaded = true;
 								// insert vào db-
-								await new SYNotification(_appSetting).SYNotificationInsertDAO(model);
+								await new SYNotification(_appSetting, _configuration).InsertNotification(model);
 
 								if (item.SendEmail == true)
 								{

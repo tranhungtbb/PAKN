@@ -28,15 +28,15 @@ import { UnitComponent } from './components/unit/unit.component'
 import { UserCreateOrUpdateComponent } from './components/user/user-create-or-update/user-create-or-update.component'
 import { UnitFilterPipe } from 'src/app/pipes/unit-filter.pipe'
 import { ChatBotComponent } from './components/chat-bot/chat-bot.component'
-// import { RoleComponent } from './components/role/role.component'
 import { HistoryChatBotComponent } from './components/history-chat-bot/history-chat-bot.component'
 import { UserViewInfoComponent } from './components/user/user-view-info/user-view-info.component'
 import { BusinessModule } from '../business.module'
 import { IntroduceComponent } from './components/introduce/introduce.component'
 import { IndexSettingComponent } from './components/index-setting/index-setting.component'
-import {SystemConfigComponent} from './components/system-config/system-config.component'
-import {SwitchboardSettingComponent} from './components/switchboard-setting/switchboard-setting.component'
+import { SystemConfigComponent } from './components/system-config/system-config.component'
+import { SwitchboardSettingComponent } from './components/switchboard-setting/switchboard-setting.component'
 import { UserSystemComponent } from './components/user-system/user-system.component'
+import { NummerOfWarningSettingComponent } from './components/number-of-warning/number-of-warning.component'
 
 @NgModule({
 	imports: [
@@ -77,7 +77,8 @@ import { UserSystemComponent } from './components/user-system/user-system.compon
 		IntroduceComponent,
 		IndexSettingComponent,
 		SwitchboardSettingComponent,
-		UserSystemComponent
+		UserSystemComponent,
+		NummerOfWarningSettingComponent,
 	],
 	entryComponents: [UserCreateOrUpdateComponent, UserViewInfoComponent],
 })

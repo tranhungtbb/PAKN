@@ -44,8 +44,8 @@ export class PublishComponent implements OnInit, OnChanges {
 		if (splitRouter.length > 2) {
 			this.activeUrl = splitRouter[2]
 		}
-		this.loadScript('assets/dist/js/owl.carousel.min.js')
-		this.loadScript('assets/dist/js/sd-js.js')
+		// this.loadScript('assets/dist/js/owl.carousel.min.js')
+		// this.loadScript('assets/dist/js/sd-js.js')
 		if (this.isLogin) {
 			this.getListNotification(this.numberNotifications)
 		}

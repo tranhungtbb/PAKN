@@ -6,12 +6,10 @@ import { TreeviewI18n } from 'ngx-treeview'
 
 import { ToastrService } from 'ngx-toastr'
 import { RESPONSE_STATUS, FILETYPE } from 'src/app/constants/CONSTANTS'
-import { STATUS_HIS_SMS } from 'src/app/constants/CONSTANTS'
-import { COMMONS } from 'src/app/commons/commons'
 import { EmailManagementService } from 'src/app/services/email-management.service'
 import { SMSManagementService } from 'src/app/services/sms-management'
 import { SMSTreeviewI18n } from 'src/app/shared/sms-treeview-i18n'
-import { EmailAttachmentObject, EmailBusinessIndividualObject, EmailObject } from 'src/app/models/emailManagementObject'
+import { EmailBusinessIndividualObject, EmailObject } from 'src/app/models/emailManagementObject'
 
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 

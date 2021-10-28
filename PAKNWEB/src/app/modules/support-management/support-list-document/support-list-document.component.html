@@ -33,7 +33,7 @@
 	<div class="modal fade" id="modal">
 		<div class="modal-dialog modal-dialog-centered" style="min-width: 40%" role="document">
 			<div class="modal-content rounded">
-				<form class="form-horizontal" [formGroup]="form" #formDir="ngForm">
+				<form class="form-horizontal" [formGroup]="form" #formDir="ngForm" (keydown.enter)="onSave()">
 					<div class="panel panel-default no-margin">
 						<div class="modal-header" style="border: none;">
 							<button class="close btn-close-modal" data-dismiss="modal">
@@ -45,7 +45,7 @@
 							<div class="row form-group">
 								<div class="col-sm-12">
 									<label> Tên chuyên mục <span class="cl-red">(*)</span></label>
-									<input class="form-control" svTrim style="border: 2px solid #E5E5E5; border-radius: 10px;" type="text" formControlName="title"
+									<input id="target" class="form-control" svTrim type="text" formControlName="title"
 										[(ngModel)]="model.title" placeholder="Nhập ...">
 									<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
 										<div *ngIf="f.title.errors.required">

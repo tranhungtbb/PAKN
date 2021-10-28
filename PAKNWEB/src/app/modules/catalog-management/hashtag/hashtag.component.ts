@@ -37,6 +37,8 @@ export class HashtagComponent implements OnInit {
 	submitted: boolean = false
 	listData: any[]
 	recommendationsGetByHashtag: any[]
+	quantity: any = null
+	title: any = null
 
 	@ViewChild('table', { static: false }) table: Table
 	@ViewChild('tableMRR', { static: false }) tableMRR: any
@@ -87,9 +89,9 @@ export class HashtagComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		// $('#modal').on('keypress', function (e) {
-		// 	if (e.which == 13) e.preventDefault()
-		// })
+		$('#modal').on('keypress', function (e) {
+			if (e.which == 13) e.preventDefault()
+		})
 	}
 
 	buildForm() {
@@ -167,12 +169,18 @@ export class HashtagComponent implements OnInit {
 		this.submitted = false
 		this.rebuilForm()
 		$('#modal').modal('show')
+		setTimeout(() => {
+			$('#target').focus()
+		}, 400)
 	}
 
 	preUpdate(obj: any) {
 		this.hashtag = Object.assign(new HashtagObject(), obj)
 		this.Title = 'Chỉnh sửa hashtag'
 		$('#modal').modal('show')
+		setTimeout(() => {
+			$('#target').focus()
+		}, 400)
 	}
 
 	confirmChangeStatus(data) {

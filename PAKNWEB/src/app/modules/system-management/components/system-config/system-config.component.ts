@@ -4,7 +4,7 @@ import { SystemconfigService } from 'src/app/services/systemconfig.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { RESPONSE_STATUS, TYPE_CONFIG, TYPECONFIG } from 'src/app/constants/CONSTANTS'
 import { Router } from '@angular/router'
-import {SystemtConfig, ConfigSwitchboard, ConfigSMS, ConfigEmail} from 'src/app/models/systemtConfigObject'
+import { SystemtConfig, ConfigSwitchboard, ConfigSMS, ConfigEmail } from 'src/app/models/systemtConfigObject'
 declare var $: any
 @Component({
 	selector: 'app-system-config',
@@ -12,16 +12,18 @@ declare var $: any
 	styleUrls: ['./system-config.component.css'],
 })
 export class SystemConfigComponent implements OnInit {
-	constructor(private _service: SystemconfigService, private _toastr: ToastrService, private _shareData: DataService, private router : Router) {
+	constructor(private _service: SystemconfigService, private _toastr: ToastrService, private _shareData: DataService, private router: Router) {
 		this.listType = TYPE_CONFIG
 	}
-	listData : any = [] 
+	listData: any = []
 	listType: any = []
-	
+
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
-	model : SystemtConfig = new SystemtConfig()
-	config : any
+	model: SystemtConfig = new SystemtConfig()
+	config: any
+	title: any = null
+	description: any = null
 	ngOnInit() {
 		this.getList()
 	}
@@ -35,7 +37,7 @@ export class SystemConfigComponent implements OnInit {
 				if (response.result.SYConfigGetAllOnPageBase.length > 0) {
 					this.listData = response.result.SYConfigGetAllOnPageBase
 					this.totalRecords = response.result.TotalCount
-				}else{
+				} else {
 					this.totalRecords = 0
 					this.listData = []
 				}
@@ -51,29 +53,35 @@ export class SystemConfigComponent implements OnInit {
 			}
 	}
 
-	redirectUpdate(id : number , type : number){
-		if(type == TYPECONFIG.CONFIG_EMAIL){
-			this.router.navigate(['/quan-tri/he-thong/cau-hinh-email', id])
-		}else if(type == TYPECONFIG.CONFIG_SMS){
-			this.router.navigate(['/quan-tri/he-thong/cau-hinh-sms', id])
-
-		}else if(type == TYPECONFIG.CONFIG_SWITCHBOARD){
-			this.router.navigate(['/quan-tri/he-thong/cau-hinh-switchboard', id])
-
-		}else return
-
+	redirectUpdate(id: number, type: number) {
+		switch (type) {
+			case TYPECONFIG.CONFIG_EMAIL:
+				this.router.navigate(['/quan-tri/he-thong/cau-hinh-email', id])
+				break
+			case TYPECONFIG.CONFIG_SMS:
+				this.router.navigate(['/quan-tri/he-thong/cau-hinh-sms', id])
+				break
+			case TYPECONFIG.CONFIG_SWITCHBOARD:
+				this.router.navigate(['/quan-tri/he-thong/cau-hinh-switchboard', id])
+				break
+			case TYPECONFIG.CONFIG_NUMBER_WARNING:
+				this.router.navigate(['/quan-tri/he-thong/cau-hinh-number-warning', id])
+				break
+			default:
+				break
+		}
 	}
-	preDetail(id : number , type : number){
-		this._service.syConfigGetById({Id : id}).subscribe((response) => {
+	preDetail(id: number, type: number) {
+		this._service.syConfigGetById({ Id: id }).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result.SYConfigGetByID.length > 0) {
-					this.model = {...response.result.SYConfigGetByID[0]}
+					this.model = { ...response.result.SYConfigGetByID[0] }
 					this.config = JSON.parse(this.model.content)
-					if(this.model.type == TYPECONFIG.CONFIG_EMAIL){
+					if (this.model.type == TYPECONFIG.CONFIG_EMAIL) {
 						debugger
-						let s = this.config.password.split('').map(element => {
+						let s = this.config.password.split('').map((element) => {
 							return '*'
-						});
+						})
 						this.config.password = s.join('')
 					}
 					$('#modalDetail').modal('show')

@@ -1,0 +1,420 @@
+
+<div id="main-wrapper">
+
+	<!--**********************************
+            Header start
+        ***********************************-->
+	<div class="header-nd px-0"  style="border-bottom: 4px solid #1673D8;">
+		<div class="header-content container">
+			<nav class="navbar navbar-expand pt-4 px-0">
+				<div class="collapse navbar-collapse justify-content-between">
+					<div class="header-left d-flex justify-content-between">
+						<a href="/cong-bo/trang-chu">
+							<img class="img-fluid" src="../../../assets/dist/images/logo.png" alt="">
+						</a>
+						<h2 class="ml-3 title-system text-uppercase">HỆ THỐNG TIẾP NHẬN PHẢN ÁNH, KIẾN NGHỊ TỈNH KHÁNH HOÀ</h2>
+					</div>
+
+					<ul class="navbar-nav header-right align-items-center">
+						<li class="nav-item d-none d-lg-block">
+							<div class="header-info">
+								<span class="">Xin chào! <strong>Nguyễn Thị Liêm</strong></span>
+							</div>
+						</li>
+						<li class="nav-item dropdown notification_dropdown">
+							<a class="nav-link  bg-transparent" href="/quan-tri">
+								<i class="bi bi-grid"></i>
+							</a>
+						</li>
+						<li class="nav-item dropdown notification_dropdown">
+							<a class="nav-link  ai-icon bg-transparent" style="position: relative;" href="javascript:void(0)" role="button" data-toggle="dropdown">
+								<span class="count-notification">2</span>
+								<i class="bi bi-bell"></i>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right">
+								<div class="header-notification">
+									<div class="red-bar"></div>
+									<div class="title-notification">
+										<div style="font-weight: 500;
+										font-size: 16px; text-transform: uppercase;">Thông báo</div>
+										<div style="font-size: 12px;">có <span style="color: red;">2</span> thông báo mới</div>
+									</div>
+
+								</div>
+								<!-- <div id="DZ_W_Notification2" (scroll)="onScroll($event)" class="widget-media dz-scroll p-3" style="height: 550px;"
+									[ngClass]="{ 'height-auto': notifications && notifications.length < 4}">
+									<ul class="timeline" id="notificationScroll" *ngIf="notifications">
+										<li *ngFor="let item of notifications" class="item-notification">
+											<a href="javascript:void(0)" (click)="onClickNotification(item.dataId, item.type, item.typeSend)" class="timeline-panel">
+												<div class="media mr-2 grd-brown">
+													<i class="bi bi-file-earmark-medical cl-brown"></i>
+												</div>
+												<div class="media-body">
+													<small class="d-block" style="color: #222222;">{{item.sendDate | date : 'HH:mm dd/MM/yyyy'}}</small>
+													<p class="mb-0 text-uppercase" [ngClass]="{ 'red-title': checkDeny(item.typeSend) == true }">{{item.title}}</p>
+													<p class="mb-1 h4" [ngClass]="{ 'title-black': item.isReaded == true, 'title-gray': item.isReaded == false }">{{item.content}}
+													</p>
+												</div>
+											</a>
+										</li>
+									</ul>
+									<div *ngIf="notifications && notifications.length == 0" style="display: flex;
+									flex-direction: row;
+									justify-content: center;
+									align-items: center;">
+										<div>Bạn chưa có thông báo nào</div>
+									</div>
+								</div> -->
+							</div>
+						</li>
+						<li class="nav-item dropdown header-profile">
+							<a class="nav-link bg-transparent px-0" href="#" role="button" data-toggle="dropdown">
+								<div class="avatar-circle">
+									<i class="bi bi-person-fill cl-brown" style="font-size: 24px"></i>
+								</div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right">
+								<a [routerLink]="['/cong-bo/tai-khoan/thong-tin']" class="dropdown-item ai-icon">
+									<i class="bi bi-person-square"></i>
+									<span class="ml-2">Thông tin tài khoản </span>
+								</a>
+								<a routerLink="/cong-bo/phan-anh-kien-nghi-cua-toi" class="dropdown-item ai-icon">
+									<i class="bi bi-file-earmark-medical"></i>
+									<span class="ml-2">Phản ánh kiến nghị của tôi </span>
+								</a>
+								<a [routerLink]="['/cong-bo/tai-khoan/thay-doi-mat-khau']" class="dropdown-item ai-icon">
+									<i class="bi bi-key"></i>
+									<span class="ml-2">Đổi mật khẩu </span>
+								</a>
+
+								<a class="dropdown-item ai-icon">
+									<i class="bi bi-box-arrow-right"></i>
+									<span class="ml-2">Đăng xuất </span>
+								</a>
+							</div>
+						</li>
+					</ul>
+					<ul *ngIf="1!=1" class="navbar-nav header-right align-items-center">
+						<li class="nav-item dropdown header-profile">
+							<div class="header-info">
+								<a class="btn btn-login" title="Đăng nhập" routerLink="/dang-nhap" type="button">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+										<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+									</svg>
+									<span class="ml-2" style="text-transform: none;">Đăng nhập</span>
+								</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+			<nav class="navbar navbar-expand-lg navbar-light p-3 p-md-0">
+				<button class="navbar-toggler border-0 bg-white py-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse pt-3 pt-md-0" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link"  [ngClass]="{'active': (activeUrl == '' || activeUrl == 'trang-chu2')}" >Trang chủ</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link"  >giới thiệu</a>
+						</li>
+					
+						<li class="nav-item">
+							<a class="nav-link"  >Tin tức & sự kiện</a>
+						</li>
+						<li class="nav-item" style="position: relative;">
+							<a class="nav-link"  >phản ánh - kiến nghị</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link"  >Thủ tục hành chính</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link"  >hỗ trợ</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+
+	<div class="content-nd mt-5">
+		<div class="container">
+			<div class="row justify-content-between">
+				<div class="col main-ct pr-3 pr-lg-5">
+					<div class="box">
+						<div class="tt-v1 mb-3 d-flex justify-content-between">
+							<h4 class="text-uppercase">Danh sách phản ánh, kiến nghị tiêu biểu</h4>
+						</div>
+						<div class="card border" *ngFor="let i of [1,2,3]">
+								<div class="card-header pt-3 pb-0 align-items-center">
+									<p class="card-text mb-1">
+										<a class="h4" href="javascript:void(0)">
+											Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
+										</a>
+									</p>
+								</div>
+								<div class="card-body pt-1 pb-3">
+									<div class="d-flex align-items-center">
+										<div class="media align-items-center mr-4">
+											<div class="avatar-circle mr-2">
+												DL
+											</div>
+											<div class="media-body">
+												<p class="my-0 h5">Nguyễn Đức Lượng</p>
+											</div>
+										</div>
+										<span class="card-date">17:27 ngày 24/12/2020</span>
+									</div>
+									
+									<p class="card-text">
+										<a class="text-2line italic" href="javascript:void(0)">
+											Kính gửi: Bộ Thông Tin và Truyền Thông Tôi tên là Nguyễn Đức Lượng, là chủ thuê bao di động trả trước Mobifone: 0778231999 Sim này tôi ít sử dụng 
+										</a>
+									</p>
+								</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+
+					<!-- Phản ánh kiến nghị của tôi -->
+					<div class="sb-tk-pakn mb-4 card-my-recommentdation">
+						<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between">
+							<h4 class="text-uppercase">Phản ánh kiến nghị của tôi</h4>
+							<h4 class="counter">80</h4>
+						</div>
+						<div>
+							<div class="border-left-yellow mb-3 d-flex justify-content-between center">
+								<div class="pf-4">
+									<p class="title-status-rm ml-3 mb-0">Chờ xử lý</p>
+								</div>
+								<div class="circle bg-yellow center text-white">
+									20
+								</div>
+							</div>
+							<div class="border-left-blue2 mb-3 d-flex justify-content-between center">
+								<div class="pf-4">
+									<p class="title-status-rm ml-3 mb-0">Đã tiếp nhận</p>
+								</div>
+								<div class="circle bg-blue2 center text-white">
+									20
+								</div>
+							</div>
+							<div class="border-left-blue mb-3 d-flex justify-content-between center">
+								<div class="pf-4">
+									<p class="title-status-rm ml-3 mb-0">Đã trả lời</p>
+								</div>
+								<div class="circle bg-blue center text-white">
+									20
+								</div>
+							</div>
+							<div class="border-left-red mb-3 d-flex justify-content-between center">
+								<div class="pf-4">
+									<p class="title-status-rm ml-3 mb-0">Bị từ chối</p>
+								</div>
+								<div class="circle bg-red center text-white">
+									20
+								</div>
+							</div>
+							
+					
+						</div>
+					</div>
+
+					<a class="mb-4" href="javascript:void(0)">
+						<img class="img-fluid card shadow rounded img-hover" src="../../../../assets/dist/images/banner-left-3.PNG" alt="">
+					</a>
+				</div>
+				<a href="#"><img class="img-fluid card shadow img-hover"
+					style="width: 100%; height: 160px;"
+					src="../../../../assets/dist/images/banner2.PNG" alt=""></a>
+			</div>
+
+			<div class="row justify-content-between">
+				<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 main-ct pr-3 pr-lg-5 mt-3">
+					<div class="box">
+						<div class="tt-v1 pt-3 mb-3 d-flex justify-content-between">
+							<h4 class="text-uppercase">Danh sách phản ánh, kiến nghị đã trả lời</h4>
+							<a class="read-more" style="color: #1673D8; font-size: 22px;" href="javascript:void(0)"><i class="bi bi-arrow-right"></i></a>
+						</div>
+						<div class="card border" *ngFor="let i of [1,2,3,4,5]">
+								<div class="card-header pt-3 pb-0 justify-content-between">
+									<p class="card-text mb-1">
+										<a class="h4" href="javascript:void(0)">
+											Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
+										</a>
+									</p>
+								</div>
+								<div class="card-body pt-1 pb-3">
+									<div class="d-flex align-items-center justify-content-between">
+										<div class="media align-items-center mr-4">
+											<div class="avatar-circle mr-2">
+												DL
+											</div>
+											<div class="media-body">
+												<p class="my-0 h5">Nguyễn Đức Lượng</p>
+											</div>
+										</div>
+										<span class="card-date">17:27 ngày 24/12/2020</span>
+									</div>
+									
+									<p class="card-text">
+										<a class="text-2line italic" href="javascript:void(0)">
+											Kính gửi: Bộ Thông Tin và Truyền Thông Tôi tên là Nguyễn Đức Lượng, là chủ thuê bao di động trả trước Mobifone: 0778231999 Sim này tôi ít sử dụng 
+										</a>
+									</p>
+								</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 main-ct pr-3 pr-lg-5 mt-3">
+					<div class="box">
+						<div class="tt-v1 pt-3 mb-3 d-flex justify-content-between">
+							<h4 class="text-uppercase">thủ tục hành chính</h4>
+							<a class="read-more" style="color: #1673D8; font-size: 22px;" href="javascript:void(0)"><i class="bi bi-arrow-right"></i></a>
+						</div>
+						<div class="card border h-184" *ngFor="let i of [1,2,3,4,5]">
+							<div class="card-body pt-3 pb-0">
+								<p class="card-text">
+									<a class="h4" href="javascript:void(0)">
+										Cấp Giấy chứng nhận đăng ký đầu tư đối với dự án không thuộc diện quyết định chủ trương đầu tư
+									</a>
+									<a class="text-1line italic pb-2" href="javascript:void(0)">
+										(Thuộc thẩm quyền giải quyết của Ban Quản lý Khu kinh tế Vân Phong)
+									</a>
+								</p>
+							</div>
+							<div class="card-footer py-0 d-flex align-items-center">
+								<div class="card-footer-link mb-0 border-right py-1 f-4">
+									<p class="card-text text-dark d-inline">Mã số: <strong class="ml-2">2.000419</strong>
+									</p>
+								</div>
+								<div class="card-footer-link mb-0 pl-3 py-1 f-6">
+									<p class="card-text text-dark d-inline">Đối tượng thực hiện: <strong class="ml-2">Tổ chức, cá nhân</strong></p>
+								</div>
+							</div>
+							<div class="card-footer py-0 d-flex align-items-center mb-2">
+								<div class="card-footer-link mb-0 border-right py-1 f-4">
+									<p class="card-text text-dark d-inline">Lĩnh vực: <strong class="ml-2">Đầu tư tại Việt Nam</strong></p>
+								</div>
+								<div class="card-footer-link mb-0 pl-3 py-1 text-1line f-6">
+									<p class="card-text text-dark d-inline">Cơ quan thực hiện: <strong class="ml-2">BQL Khu Kinh tế Vân Phong</strong></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row justify-content-between">
+				<div class="col col-lg-9 main-ct pr-3 pr-lg-5 mt-3">
+					<div class="tt-v1 mb-3 d-flex justify-content-between">
+						<h4 class="text-uppercase">Tin tức & sự kiện</h4>
+					</div>
+					<div class="row">
+						<div class="col col-lg-12">
+							<div class="card mb-lg-0 bg-transparent shadow rounded-xl position-relative">
+								<a href="javascript:void(0)" style="max-height: 460px;" (click)="redirectDetailNews(firstNews.id)" class="image-box ratio-4-3 rounded">
+									<span class="image">
+										<img style="width: 100%; height: 100%; object-fit: cover;" src="../../../../assets/dist/images/article.png">
+									</span>
+								</a>
+		
+								<div class="card-body position-absolute rounded-bottom"
+									style="width: 100%; bottom: 0; background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);">
+									<p *ngIf="firstNews" class="text-white mb-1">{{firstNews.createdDate | date : 'dd/MM/yyyy'}}</p>
+									<p *ngIf="firstNews" 
+										class="cl2 text-white text-uppercase text-2line h4 cursor" 
+										title="{{firstNews.title}}" (click)="redirectDetailNews(firstNews.id)" 
+										style="line-height: 1.8rem">
+											{{firstNews.title}}
+									</p>
+									<p><a href="javascript:void(0)" class="text-white" (click)="redirectDetailNews(firstNews.id)">Xem chi tiết <i class="bi bi-arrow-right"></i></a></p>
+								</div>
+							</div>
+						</div>
+						<div class="center">
+							<div class="col col-lg-9 mt-4">
+								<owl-carousel-o [options]="customOptions">
+									<ng-container *ngFor="let item of news">
+										<ng-template carouselSlide [id]="item.id">
+											<div class="card mb-lg-0 ps-relative">
+												<a href="javascript:void(0)" (click)="redirectDetailNews(item.id)" class="image-box ratio-16-9 rounded">
+													<span class="image">
+														<img *ngIf="item" src="http://14.177.236.88:6160/Upload/News/28072021103101-Khanh-Hoa.jpg">
+													</span>
+												</a>
+												<div class="content-article ps-absolute">
+													<p class="card-text text-dark px-4 pt-3 py-0 mb-0">{{item.createdDate | date: 'dd/MM/yyyy'}}</p>
+													<div class="card-header px-4 pt-1 pb-0 text-3line" style="height: 80px;">
+														<p class="card-title" (click)="redirectDetailNews(item.id)">{{item.title}}</p>
+													</div>
+												</div>
+											</div>
+										</ng-template>
+									</ng-container>
+								</owl-carousel-o>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col col-lg-3 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+					<div class="sb-lkWeb mb-4">
+						<div class="tt-v1 pt-3">
+							<h4 class="text-uppercase">liên kết website</h4>
+						</div>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item px-0" *ngFor="let item of ltsIndexSettingWebsite">
+								<a class="h5" style="color: #222222;" target="_blank" href="{{item.urlWebsite}}">{{item.nameWebsite}}</a>
+							</li>
+						</ul>
+					</div>
+					<a class="mb-4 mt-3" href="javascript:void(0)">
+						<img class="img-fluid card shadow rounded img-hover" src="../../../../assets/dist/images/banner-left-1.PNG" alt="">
+					</a>
+					<a class="mb-4" href="javascript:void(0)">
+						<img class="img-fluid card shadow rounded img-hover" src="../../../../assets/dist/images/banner-left-2.PNG" alt="">
+					</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="footer px-0">
+		<div class="ct-footer pt-5 pb-4" style="background: #f6faff">
+			<div class="container">
+				<div class="row justify-content-between">
+					<div class="col-12 col-lg-5 pr-lg-5">
+						<a href="#"><img class="img-fluid" src="../../../assets/dist/images/logo-ft.png" alt=""></a>
+						<p class="mb-0 mt-3 h6">{{indexSettingObj.description}}</p>
+					</div>
+					<div class="col-auto pl-3 pl-lg-0 mt-3 mt-lg-0" style="width: 320px">
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item pb-2 pt-0 px-0 border-0"><i class="bi bi-telephone-fill mr-2"></i>{{indexSettingObj.phone}}</li>
+							<li class="list-group-item py-2 px-0 border-0"><i class="bi bi-envelope-open-fill mr-2"></i>{{indexSettingObj.email}}</li>
+							<li class="list-group-item py-2 px-0"><i class="bi bi-geo-alt-fill mr-2"></i>{{indexSettingObj.address}}</li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="copyright py-2" style="background: #E9F2FD">
+			<div class="container">
+				<p class="text-left">
+					<small class="fw600">{{indexSettingObj.license}}</small>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="call-now center">
+		<div class="call-content center">
+			<a href="tel:+0258 3563 531"><i style="font-size: 19px;color: #fff;" class="bi bi-telephone-fill"></i></a>
+		</div>
+	</div>
+</div>

@@ -41,7 +41,7 @@
 						</div>
 						<div class="media-body" *ngIf="modelData.response">
 							<p class="h4 font-italic font-weight-bold">{{modelData.unitPreside}}:</p>
-							<p innerHTML="{{modelData.response | Change}}">
+							<p innerHTML="{{modelData.response | RemoveTag}}">
 							</p>
 
 							<strong class="mb-2">File đính kèm</strong>

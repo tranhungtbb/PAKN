@@ -16,6 +16,7 @@ import { CaptchaService } from 'src/app/services/captcha-service'
 import { NotificationService } from 'src/app/services/notification.service'
 import { UnitService } from '../../../services/unit.service'
 import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
+declare var $: any
 
 @Component({
 	selector: 'app-user-create-recommendation',
@@ -185,6 +186,7 @@ export class CreateRecommendationComponent implements OnInit {
 			}
 	}
 	getDropdown() {
+		this.getListUnit()
 		let request = {}
 		this.recommendationService.recommendationGetDataForCreate(request).subscribe(
 			(response) => {
@@ -195,7 +197,7 @@ export class CreateRecommendationComponent implements OnInit {
 					this.lstIndividual = response.result.lstIndividual
 					this.lstObject = response.result.lstIndividual
 					this.model.code = response.result.code
-					this.lstUnit = response.result.lstUnit
+					// this.lstUnit = response.result.lstUnit
 				} else {
 					this.toastr.error(response.message)
 				}
@@ -218,11 +220,24 @@ export class CreateRecommendationComponent implements OnInit {
 		)
 	}
 
+	getListUnit() {
+		this.lstUnit = []
+		this.model.unitId = null
+		this.unitService.getChildrenDropdownByField({ FieldId: this.model.field }).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.lstUnit = res.result
+			} else {
+				this.lstUnit = []
+				this.toastr.error(res.message)
+			}
+		})
+	}
+
 	builForm() {
 		this.form = new FormGroup({
 			title: new FormControl(this.model.title, [Validators.required]),
 			content: new FormControl(this.model.content, [Validators.required]),
-			field: new FormControl(this.model.field),
+			field: new FormControl(this.model.field, [Validators.required]),
 			unitId: new FormControl(this.model.unitId),
 			hashtag: new FormControl(this.hashtagId),
 			captcha: new FormControl(this.captchaCode, [Validators.required]),

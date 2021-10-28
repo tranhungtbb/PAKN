@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using PAKNAPI.ModelBase;
+using PAKNAPI.Models.Statistic;
 
 namespace PAKNAPI.Models.Recommendation
 {
@@ -17,7 +18,7 @@ namespace PAKNAPI.Models.Recommendation
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public async Task<RecommendationGetDataForCreateResponse> RecommendationGetDataForCreate()
+		public async Task<RecommendationGetDataForCreateResponse> RecommendationGetDataForCreate(int? unitId)
 		{
 			RecommendationGetDataForCreateResponse data = new RecommendationGetDataForCreateResponse();
 			DynamicParameters DP = new DynamicParameters();
@@ -28,6 +29,9 @@ namespace PAKNAPI.Models.Recommendation
 			data.lstHashTag = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("CA_HashtagGetDropdown", DP)).ToList();
 			data.lstGroupWord = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("[CA_GroupWordGetListSuggest]", DP)).ToList();
 			data.Code = await _sQLCon.ExecuteScalarDapperAsync<string>("MR_Recommendation_GenCode_GetCode", DP);
+
+			DP.Add("Id", unitId);
+			data.lstUnitChild = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("[SY_UnitGetChildDropdown]", DP)).ToList();
 			return data;
 		}
 

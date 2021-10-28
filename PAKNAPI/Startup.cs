@@ -106,33 +106,6 @@ namespace PAKNAPI
 				options.SuppressModelStateInvalidFilter = true;
 			});
 
-
-			//services.Configure<MailSettings>();
-
-			//services.Configure<CsSetting>(Configuration.GetSection("Default"));
-
-			//services.AddCors(options =>
-			//{
-			//	options.AddPolicy("Policy",
-			//		builder =>
-			//		{
-			//			builder.WithOrigins("http://example.com",
-			//				"http://www.contoso.com");
-			//		});
-
-			//	options.AddPolicy("AnotherPolicy",
-			//		builder =>
-			//		{
-			//			builder.WithOrigins("*")
-			//				.AllowAnyHeader()
-			//				.AllowAnyMethod();
-			//		});
-			//});
-
-			//services.AddMvc(options => {
-			//	options.OutputFormatters.Insert(0, new XmlDataContractSerializerOutputFormatter());
-			//}).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
 			services.AddAuthentication(options =>
 			{
 				options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
@@ -184,23 +157,37 @@ namespace PAKNAPI
 			});
 
 			// quart
-			var jobKey = new JobKey("notificationJob");
+			var jobKeyTTHC = new JobKey("syncDataTTHC");
+			var jobKeyKNCT = new JobKey("syncDataKNCT");
+			var jobKeyHVHCC = new JobKey("syncDataDVHCC");
 			services.AddQuartz(q =>
 			{
 				q.SchedulerId = "Scheduler-Core";
-				q.UseMicrosoftDependencyInjectionScopedJobFactory();
 				q.UseSimpleTypeLoader();
 				q.UseInMemoryStore();
 				q.UseDefaultThreadPool(tp =>
 				{
-					tp.MaxConcurrency = 1;
+					tp.MaxConcurrency = 5;
 				});
-				q.AddJob<MyJob>(opts => opts.WithIdentity(jobKey));
+                q.AddJob<MyJobAdministrative>(opts => opts.WithIdentity(jobKeyTTHC));
+				q.AddJob<MyJobKienNghiCuTri>(opts => opts.WithIdentity(jobKeyKNCT));
+				q.AddJob<MyJobDichVuCongQuocGia>(opts => opts.WithIdentity(jobKeyHVHCC));
+
+
 				// Create a trigger for the job
 				q.AddTrigger(opts => opts
-					.ForJob(jobKey) // link to the HelloWorldJob
-					.WithIdentity("HelloWorldJob-trigger") // give the trigger a unique name
-					.WithCalendarIntervalSchedule(s => s.WithIntervalInMonths(1))); //time
+					.ForJob(jobKeyTTHC) // link to the syncData
+					.WithIdentity("syncDataTTHC-trigger") // give the trigger a unique name
+					.WithCalendarIntervalSchedule(s => s.WithIntervalInDays(2))); //time
+
+				q.AddTrigger(opts => opts
+					.ForJob(jobKeyKNCT) // link to the syncData
+					.WithIdentity("syncDataKNCT-trigger") // give the trigger a unique name
+					.WithCalendarIntervalSchedule(s => s.WithIntervalInDays(2))); //time
+				q.AddTrigger(opts => opts
+					.ForJob(jobKeyHVHCC) // link to the syncData
+					.WithIdentity("syncDataHVHCC-trigger") // give the trigger a unique name
+					.WithCalendarIntervalSchedule(s => s.WithIntervalInDays(1))); //time
 			});
 
 			// ASP.NET Core hosting

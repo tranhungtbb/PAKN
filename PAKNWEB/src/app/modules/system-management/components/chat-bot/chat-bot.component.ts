@@ -31,6 +31,8 @@ export class ChatBotComponent implements OnInit {
 	totalRecords: number = 0
 	idDelete: number = 0
 	categoryIdDelete: number = 0
+	question: any = ''
+	answer: any = ''
 
 	ngOnInit() {
 		this.buildForm()
@@ -39,6 +41,9 @@ export class ChatBotComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
+		$('#modal').on('keypress', function (e) {
+			if (e.which == 13) e.preventDefault()
+		})
 	}
 
 	get f() {
@@ -95,6 +100,9 @@ export class ChatBotComponent implements OnInit {
 		this.submitted = false
 		this.title = 'Thêm mới câu hỏi'
 		$('#modal').modal('show')
+		setTimeout(() => {
+			$('#target').focus()
+		}, 400)
 	}
 
 	onSave() {
@@ -156,6 +164,9 @@ export class ChatBotComponent implements OnInit {
 				this.title = 'Chỉnh sửa câu hỏi'
 				this.model = response.result.ChatbotGetByID[0]
 				$('#modal').modal('show')
+				setTimeout(() => {
+					$('#target').focus()
+				}, 400)
 			} else {
 				this._toastr.error(response.message)
 			}

@@ -257,7 +257,7 @@ namespace PAKNAPI.Models.Recommendation
             DP.Add("@Response", mr_CuTriTinhKhanhHoa.Response);
             DP.Add("@EndDate", mr_CuTriTinhKhanhHoa.EndDate);
 
-            return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Sync_CuTriTinhKhanhHoaInsert", DP));
+            return await _sQLCon.ExecuteNonQueryDapperAsync("MR_Sync_CuTriTinhKhanhHoaInsert", DP);
         }
 
 

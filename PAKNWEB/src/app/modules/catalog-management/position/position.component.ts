@@ -26,10 +26,13 @@ export class PositionComponent implements OnInit {
 	model: any = new FieldObject()
 	submitted: boolean = false
 	title: string = ''
+	name: string = ''
+	description: string = ''
 	@ViewChild('table', { static: false }) table: any
 	@ViewChild('target', { static: false }) titleFocus: ElementRef
 	totalRecords: number = 0
 	idDelete: number = 0
+
 	ngOnInit() {
 		this.buildForm()
 		this.getList()
@@ -37,9 +40,9 @@ export class PositionComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
-		// $('#modal').on('keypress', function (e) {
-		// 	if (e.which == 13) e.preventDefault()
-		// })
+		$('#modal').on('keypress', function (e) {
+			if (e.which == 13) e.preventDefault()
+		})
 	}
 
 	get f() {
@@ -91,7 +94,9 @@ export class PositionComponent implements OnInit {
 		this.submitted = false
 		this.title = 'Thêm mới chức vụ'
 		$('#modal').modal('show')
-		$('#target').focus()
+		setTimeout(() => {
+			$('#target').focus()
+		}, 400)
 	}
 
 	onSave() {
@@ -153,7 +158,9 @@ export class PositionComponent implements OnInit {
 				this.title = 'Chỉnh sửa chức vụ'
 				this.model = response.result.CAPositionGetByID[0]
 				$('#modal').modal('show')
-				this.titleFocus.nativeElement.focus()
+				setTimeout(() => {
+					$('#target').focus()
+				}, 400)
 			} else {
 				this._toastr.error(response.message)
 			}

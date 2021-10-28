@@ -7,7 +7,7 @@
 					<li class="breadcrumb-item active"><a class="font-weight-bold"> Đang giải quyết</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
-					<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()">
+					<button type="button" class="btn background-while btn-sm rounded border-0 mr-3 text-dark" (click)="onExport()">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel mr-1" viewBox="0 0 16 16">
 							<path
 								d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z" />
@@ -42,6 +42,9 @@
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.code" class="btn bg-transparent btn-clear-input" (click)="dataSearch.code=''">
+												<i class="fa fa-times"></i>
+											</button>
 									</th>
 									<th style="min-width: 150px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -50,6 +53,9 @@
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.name" class="btn bg-transparent btn-clear-input" (click)="dataSearch.name=''">
+												<i class="fa fa-times"></i>
+											</button>
 									</th>
 									<th style="min-width: 250px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -58,6 +64,9 @@
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.content" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.content" class="btn bg-transparent btn-clear-input" (click)="dataSearch.content=''">
+												<i class="fa fa-times"></i>
+											</button>
 									</th>
 									<th style="width: 200px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -120,9 +129,15 @@
 									</td>
 									<td>
 										<div class="d-flex justify-content-end">
-											<span *ngIf="item.status == 4 && item.createdBy == userLoginId">
-												<a *hasPermission="['3', 'E_I_1']" [routerLink]="['/quan-tri/kien-nghi/them-moi/', item.id]"
-												class="btn-icon grd-brown text-brown mr-2" title="Cập nhật"><i class="bi bi-pencil-square"></i></a>
+											<span *ngIf="item.status == 7 && item.unitReceiveId == unitId">
+												<a (click)="preForward(item.id)"
+												class="btn-icon grd-blue text-white mr-2 ng-star-inserted" title="Chuyển tiếp cho đơn vị cấp dưới">
+												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+													<path
+														d="M13.5938 0.125927L0.468823 7.69624C-0.205005 8.08589 -0.137622 9.07905 0.580151 9.37495L4.68757 11.0742V14.0625C4.68757 14.9472 5.795 15.331 6.34871 14.6572L8.12703 12.4951L11.8302 14.0244C12.3897 14.2558 13.0225 13.9013 13.1134 13.3007L14.9884 1.081C15.1085 0.298778 14.2677 -0.263722 13.5938 0.125927ZM5.62507 14.0625V11.4609L7.22175 12.1201L5.62507 14.0625ZM12.1876 13.1572L6.14656 10.6611L11.9913 3.75288C12.1319 3.58882 11.9063 3.36616 11.7423 3.50679L4.26277 9.88179L0.937573 8.51069L14.0626 0.93745L12.1876 13.1572Z"
+														fill="white"></path>
+												</svg>
+											</a>
 											</span>
 											<a *ngIf="item.status == 2" class="btn-icon grd-xanhngoc text-white mr-2" title="Tiếp nhận xử lý"><i
 													class="bi bi-file-earmark-check"></i></a>
@@ -191,6 +206,58 @@
 						</li>
 					</ul>
 				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modal-tc-pakn">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4">Gửi đơn vị giải quyết</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pt-3 pb-0">
+				<form class="form-horizontal" [formGroup]="formForward" #formDir="ngForm">
+					<div class="form-row">
+						<div class="col-12 col-lg-6 form-group">
+							<label class="mb-1">Đơn vị giải quyết <span class="cl-red">(*)</span></label>
+							<ng-select class="form-control border-input" [items]="lstUnitChild" bindLabel="text" bindValue="value"
+								notFoundText="Không có dữ liệu"
+								formControlName="unitReceiveId" placeholder="Chọn đơn vị giải quyết"
+								[(ngModel)]="modelForward.unitReceiveId" [closeOnSelect]="true"></ng-select>
+							<div *ngIf="(submitted && f.unitReceiveId.invalid) || (f.unitReceiveId.invalid && (f.unitReceiveId.dirty || f.unitReceiveId.touched))"
+								class="has-error m-b-12">
+								<div *ngIf="f.unitReceiveId.errors.required">
+									<span class="help-block">Trường dữ liệu này không để trống</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 col-lg-6 form-group">
+							<label class="mb-1">Hạn giải quyết</label>
+							<div class="input-group">
+								<input class="form-control border-input" placeholder="Chọn hạn giải quyết" bsDatepicker #n="bsDatepicker" maxlength="10" formControlName="expiredDate"
+									[(ngModel)]="modelForward.expiredDate" appBsDatepickerInvalid [minDate]="dateNow"
+									[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
+								<div class="input-group-addon p-2">
+									<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
+								</div>
+							</div>
+						</div>
+						<div class="col-12 form-group">
+							<label class="mb-1">Nội dung</label>
+							<textarea class="form-control" rows="6" [(ngModel)]="modelForward.content" formControlName="content" placeholder="Nhập nội dung..."
+								maxlength="500"></textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer border-top-0">
+				<button type="button" class="btn btn-outline-secondary border w-127 mr-3" data-dismiss="modal">Hủy</button>
+				<button type="button" class="btn text-white grd-blue border-0 w-127" (click)="onForward()">Gửi</button>
 			</div>
 		</div>
 	</div>

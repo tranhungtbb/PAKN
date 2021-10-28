@@ -37,9 +37,12 @@
 										<strong>Nhóm từ ngữ <p-sortIcon [field]="'name'"></p-sortIcon></strong>
 
 									</p>
-									<input class="form-control form-control-sm" maxlength="100" placeholder="Nhập tên..." trim
+									<input class="form-control form-control-sm" maxlength="100" placeholder="Nhập tên..." trim [(ngModel)]="name"
 										[ngSwitch]="'name'" (keydown.enter)="table.filter($event?.target.value.trim(), 'name', 'contains')"
 									 />
+									<button *ngIf="name" class="btn bg-transparent btn-clear-input" (click)="name=''">
+										<i class="fa fa-times"></i>
+									</button>
 								</th>
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
@@ -48,9 +51,12 @@
 										<strong>Mô tả <p-sortIcon [field]="'description'"></p-sortIcon></strong>
 
 									</p>
-									<input class="form-control form-control-sm" maxlength="100" trim
+									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="description"
 										[ngSwitch]="'description'" (keydown.enter)="table.filter($event?.target.value.trim(), 'description', 'contains')"
 										placeholder="Nhập mô tả..." />
+									<button *ngIf="description" class="btn bg-transparent btn-clear-input" (click)="description=''">
+										<i class="fa fa-times"></i>
+									</button>
 								</th>
 								<th style="width: 160px">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
@@ -123,7 +129,7 @@
 <div class="modal fade" id="modal">
 	<div class="modal-dialog modal-dialog-centered" style="min-width: 60%" role="document">
 		<div class="modal-content rounded">
-			<form class="form-horizontal" [formGroup]="form" #formDir="ngForm">
+			<form class="form-horizontal" [formGroup]="form" #formDir="ngForm" (keydown.enter)="onSave()">
 				<div class="panel panel-default no-margin">
 					<div class="modal-header">
 						<button class="close btn-close-modal" data-dismiss="modal">

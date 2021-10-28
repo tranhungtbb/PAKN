@@ -9,6 +9,7 @@ using System.Data;
 using PAKNAPI.Common;
 using PAKNAPI.Models.Results;
 using System.ComponentModel.DataAnnotations;
+using PAKNAPI.Model.ModelAuth;
 
 namespace PAKNAPI.ModelBase
 {
@@ -870,7 +871,6 @@ namespace PAKNAPI.ModelBase
 		public bool? IsMain { get; set; }
 		public bool? IsAdmin { get; set; }
 		public int TypeObject { get; set; }
-
 		public bool? IsActived { get; set; }
 
 		public async Task<List<SYUSRLogin>> SYUSRLoginDAO(string UserName)
@@ -879,6 +879,13 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UserName", UserName);
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUSRLogin>("SY_USR_Login", DP)).ToList();
+		}
+		public async Task<SYUSRLogin> GetInfoByRefreshToken(string refreshToken)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RefreshToken", refreshToken);
+
+			return (await _sQLCon.ExecuteListDapperAsync<SYUSRLogin>("SY_UserGetByRefreshToken", DP)).FirstOrDefault();
 		}
 	}
 }

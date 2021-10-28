@@ -1,13 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
+import { Component, OnInit, ViewChild, ElementRef, AfterContentInit, AfterViewInit } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
-import { saveAs as importedSaveAs } from 'file-saver'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import { AppSettings } from 'src/app/constants/app-setting'
-import { CONSTANTS, FILETYPE, RESPONSE_STATUS, MESSAGE_COMMON, RECOMMENDATION_STATUS, CATEGORY_SUPPORT } from 'src/app/constants/CONSTANTS'
+import { CONSTANTS, FILETYPE, RESPONSE_STATUS, CATEGORY_SUPPORT } from 'src/app/constants/CONSTANTS'
 import { SupportService } from 'src/app/services/support.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { COMMONS } from 'src/app/commons/commons'
+import { DataService } from 'src/app/services/sharedata.service'
 declare var $: any
 
 @Component({
@@ -15,12 +14,13 @@ declare var $: any
 	templateUrl: './support-list-document.component.html',
 	styleUrls: ['./support-list-document.component.css'],
 })
-export class SupportListDocumentComponent implements OnInit {
+export class SupportListDocumentComponent implements OnInit, AfterViewInit {
 	constructor(
 		private localStorage: UserInfoStorageService,
 		private fileService: UploadFileService,
 		private toastr: ToastrService,
 		private supportService: SupportService,
+		private _shareData: DataService,
 		private _fb: FormBuilder
 	) {
 		this.lstSupport = []
@@ -49,6 +49,12 @@ export class SupportListDocumentComponent implements OnInit {
 		this.getAllUnitShortInfo()
 		this.form = this._fb.group({
 			title: [this.model.title, [Validators.required]],
+		})
+	}
+	ngAfterViewInit() {
+		this._shareData.seteventnotificationDropdown()
+		$('#modal').on('keypress', function (e) {
+			if (e.which == 13) e.preventDefault()
 		})
 	}
 
@@ -129,6 +135,9 @@ export class SupportListDocumentComponent implements OnInit {
 		this.files = []
 		this.rebuidForm()
 		$('#modal').modal('show')
+		setTimeout(() => {
+			$('#target').focus()
+		}, 400)
 	}
 
 	preUpdate(id: any) {
@@ -141,6 +150,9 @@ export class SupportListDocumentComponent implements OnInit {
 		})
 		// this.rebuidForm()
 		$('#modal').modal('show')
+		setTimeout(() => {
+			$('#target').focus()
+		}, 400)
 	}
 	onSave() {
 		this.submitted = true

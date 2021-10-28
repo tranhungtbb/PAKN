@@ -37,9 +37,12 @@
 									>
 										<strong>Tên lĩnh vực <p-sortIcon [field]="'name'"></p-sortIcon></strong>
 									</p>
-									<input class="form-control form-control-sm" maxlength="100" trim
-									[ngSwitch]="'name'" (keydown.enter)="table.filter($event?.target.value.trim(), 'name', 'contains')"
-									 placeholder="Nhập tên..." />
+									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="name"
+										[ngSwitch]="'name'" (keydown.enter)="table.filter($event?.target.value.trim(), 'name', 'contains')"
+									 	placeholder="Nhập tên..." />
+									<button *ngIf="name" class="btn bg-transparent btn-clear-input" (click)="name=''">
+										<i class="fa fa-times"></i>
+									</button>
 								</th>
 								<th>
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
@@ -48,9 +51,12 @@
 										<strong>Mô tả <p-sortIcon [field]="'description'"></p-sortIcon></strong>
 										
 									</p>
-									<input type="text" class="form-control form-control-sm" trim
+									<input type="text" class="form-control form-control-sm" trim [(ngModel)]="description"
 										[ngSwitch]="'description'" (keydown.enter)="table.filter($event?.target.value.trim(), 'description', 'contains')"
 										placeholder="Nhập mô tả...">
+										<button *ngIf="description" class="btn bg-transparent btn-clear-input" (click)="description=''">
+											<i class="fa fa-times"></i>
+										</button>
 								</th>
 								<th style="width: 170px;">
 									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
@@ -111,7 +117,7 @@
 <div class="modal fade" id="modal">
 	<div class="modal-dialog modal-dialog-centered" style="min-width: 60%" role="document">
 		<div class="modal-content rounded">
-			<form class="form-horizontal" [formGroup]="form" #formDir="ngForm">
+			<form class="form-horizontal" [formGroup]="form" #formDir="ngForm" (keydown.enter)="onSave()">
 				<div class="panel panel-default no-margin">
 					<div class="modal-header" style="border: none;">
 						<button class="close btn-close-modal" data-dismiss="modal">
@@ -123,7 +129,7 @@
 						<div class="row form-group">
 							<div class="col-sm-8">
 								<label class="control-label">Tên lĩnh vực <span class="text-danger">(*)</span></label>
-								<input class="form-control" formControlName="name" [(ngModel)]="model.name" maxlength="100" placeholder="Nhập..." />
+								<input class="form-control" id="target" formControlName="name" [(ngModel)]="model.name" maxlength="100" placeholder="Nhập..." />
 								<div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))" class="has-error m-b-12">
 									<div *ngIf="f.name.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>
@@ -142,6 +148,18 @@
 								</div>
 							</div>
 						</div>
+						<div class="row form-group">
+							<div class="col-sm-12">
+								<label class="control-label">Đơn vị</label>
+								<ng-select [ngModelOptions]="{standalone: true}"
+									notFoundText="Không có dữ liệu" class="form-control" [items]="listUnit" 
+									bindValue="value" placeholder="Chọn đơn vị" bindLabel="text" 
+									multiple="true" virtualScroll ="true" hideSelected = "true"
+									[(ngModel)]="listUnitSelected" style="height: auto;">
+								</ng-select>
+							</div>
+						</div>
+
 						<div class="row form-group">
 							<div class="col-sm-12">
 								<label class="control-label">Mô tả</label>
@@ -178,6 +196,14 @@
 							</div>
 							<div class="col-sm-6">
 								<strong>{{model.name}}</strong>
+							</div>
+						</div>
+						<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 10px 0px;">
+							<div class="col-sm-12">
+								<label class="control-label lb600">Đơn vị</label>
+							</div>
+							<div class="col-sm-12">
+								<p>{{model.listUnit}}</p>
 							</div>
 						</div>
 						<div class="row" style="border-bottom: 1px solid #EEEEEE; padding: 10px 0px;">

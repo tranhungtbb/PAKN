@@ -42,6 +42,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	listUserPaged: any[] = []
 	unitFlatlist: any[] = []
 	lstField: any[] = []
+	listFieldSelected: any = []
 
 	createUnitFrom: FormGroup
 	titleConfirm: any = ''
@@ -60,6 +61,9 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		isActived: null,
 	}
 	titleSearch: any = ''
+	userName: any = ''
+	fullName: any = ''
+	phone: any = ''
 
 	//sort
 	unitSortDir = 'DESC'
@@ -99,7 +103,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			phone: [this.modelUnit.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
 			address: [this.modelUnit.address],
 			index: [this.modelUnit.index],
-			field: [this.modelUnit.field],
+			field: [this.modelUnit.listField],
 		})
 
 		this.unitService.getDataForCreate().subscribe((res) => {
@@ -161,6 +165,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		this.unitService.getById({ id }).subscribe((res) => {
 			if (res.success != 'OK') return
 			this.unitObject = res.result.CAUnitGetByID[0]
+			this.listFieldSelected = this.unitObject.listField == null ? [] : this.unitObject.listField.split(',').map(Number)
 			this.getUserPagedList()
 		})
 	}
@@ -268,7 +273,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			phone: [this.modelUnit.phone, [Validators.required, Validators.pattern('^(84|0[3|5|7|8|9])+([0-9]{8})$')]],
 			address: [this.modelUnit.address],
 			index: [this.modelUnit.index],
-			field: [this.modelUnit.field],
+			field: [this.modelUnit.listField],
 		})
 		this.checkExists = {
 			Phone: false,
@@ -284,14 +289,19 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			else {
 				this.modelUnit.parentId = 0
 			}
+			this.listFieldSelected = []
 		} else {
 			this.modalCreateOrUpdateTitle = 'Chỉnh sửa cơ quan, đơn vị'
 			this.unitService.getById({ id }).subscribe((res) => {
 				if (res.success != 'OK') return
 				this.modelUnit = res.result.CAUnitGetByID[0]
+				this.listFieldSelected = this.unitObject.listField.split(',').map(Number)
 			})
 		}
 		$('#modal-create-or-update').modal('show')
+		setTimeout(() => {
+			$('#unitId').focus()
+		}, 400)
 		this.modelUnit.unitLevel = level
 		if (parentId > 0) this.modelUnit.parentId = parentId
 	}
@@ -332,7 +342,7 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			return
 		}
 		if (this.checkExists['Phone'] || this.checkExists['Email']) return
-
+		this.modelUnit.listField = this.listFieldSelected.length == 0 ? null : this.listFieldSelected.join(',')
 		if (this.modelUnit.id != null && this.modelUnit.id > 0) {
 			this.unitService.update(this.modelUnit).subscribe((res) => {
 				if (res.success != 'OK') {

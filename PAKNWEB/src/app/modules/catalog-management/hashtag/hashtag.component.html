@@ -36,9 +36,12 @@
 									>
 										<strong>Tên Hashtag <p-sortIcon [field]="'name'"></p-sortIcon></strong>
 									</p>
-									<input class="form-control form-control-sm" [ngSwitch]="'name'" trim
+									<input class="form-control form-control-sm" [ngSwitch]="'name'" trim [(ngModel)]="title"
 										maxlength="100" (keydown.enter)="table.filter($event?.target.value.trim(), 'name', 'contains')"
 										placeholder="Nhập tên..." />
+									<button *ngIf="title" class="btn bg-transparent btn-clear-input" (click)="title=''">
+										<i class="fa fa-times"></i>
+									</button>
 								</th>
 
 								<th style="width: 230px;">
@@ -48,9 +51,12 @@
 										<strong>Số lượng kiến nghị <p-sortIcon [field]="'quantityUser'"></p-sortIcon></strong>
 										
 									</p>
-									<input class="form-control form-control-sm" maxlength="100" numbersOnly
+									<input class="form-control form-control-sm" maxlength="100" numbersOnly [(ngModel)]="quantity"
 										trim [ngSwitch]="'quantityUser'" (keydown.enter)="table.filter($event?.target.value.trim(), 'quantityUser', 'contains')"
 										placeholder="Nhập số lượng..." />
+									<button *ngIf="quantity" class="btn bg-transparent btn-clear-input" (click)="quantity=''">
+										<i class="fa fa-times"></i>
+									</button>
 								</th>
 
 								<th style="width: 150px;">
@@ -118,7 +124,7 @@
 <div class="modal fade" id="modal">
 	<div class="modal-dialog modal-dialog-centered" style="min-width: 60%" role="document">
 		<div class="modal-content rounded">
-			<form class="form-horizontal" [formGroup]="fForm" #formDir="ngForm">
+			<form class="form-horizontal" [formGroup]="fForm" #formDir="ngForm" (keydown.enter)="onSave()">
 				<div class="panel panel-default no-margin">
 					<div class="modal-header" style="border: none;">
 						<button class="close btn-close-modal" data-dismiss="modal">
@@ -131,7 +137,7 @@
 							<div class="col-sm-8">
 								<label class="control-label">Tên Hashtag<span class="text-danger">(*)</span></label>
 
-								<input class="form-control" formControlName="name" [(ngModel)]="hashtag.name" maxlength="100" placeholder="Nhập tên Hashtag..." />
+								<input id="target" class="form-control" formControlName="name" [(ngModel)]="hashtag.name" maxlength="100" placeholder="Nhập tên Hashtag..." />
 								<div *ngIf="(submitted && f.name.invalid) || (f.name.invalid && (f.name.dirty || f.name.touched))" class="has-error m-b-12">
 									<div *ngIf="f.name.errors.required">
 										<span class="help-block">Trường dữ liệu này không để trống</span>

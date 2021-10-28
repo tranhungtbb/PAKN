@@ -50,6 +50,9 @@
 								</p>
 								<input *hasPermission="['3', 'A_XIII_2']" placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.description" maxlength="100"
 									(keydown.enter)="dataStateChange()" />
+									<button *ngIf="dataSearch.description" class="btn bg-transparent btn-clear-input" (click)="dataSearch.description=''">
+										<i class="fa fa-times"></i>
+									</button>
 							</th>
 
 							<th style="width: 160px">

@@ -1,4 +1,4 @@
-import { Component, OnInit, Pipe, Directive } from '@angular/core'
+import { Component, OnInit, Pipe, Directive, AfterContentInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { SystemconfigService } from '../../../../services/systemconfig.service'
 import { ToastrService } from 'ngx-toastr'
@@ -7,12 +7,13 @@ import { RESPONSE_STATUS, TYPECONFIG } from 'src/app/constants/CONSTANTS'
 import { SystemtConfig, ConfigSMS } from 'src/app/models/systemtConfigObject'
 import { COMMONS } from 'src/app/commons/commons'
 
+declare var $: any
 @Component({
 	selector: 'app-sms-setting',
 	templateUrl: './sms-setting.component.html',
 	styleUrls: ['./sms-setting.component.css'],
 })
-export class SmsSettingComponent implements OnInit {
+export class SmsSettingComponent implements OnInit, AfterContentInit {
 	model: SystemtConfig = new SystemtConfig()
 	configSMS: ConfigSMS = new ConfigSMS()
 	submitted: boolean = false
@@ -34,6 +35,13 @@ export class SmsSettingComponent implements OnInit {
 			}
 		})
 	}
+
+	ngAfterContentInit() {
+		setTimeout(() => {
+			$('#target').focus()
+		}, 200)
+	}
+
 	onCancel() {
 		this.buildForm()
 		this._service.syConfigGetById({ Id: this.model.id }).subscribe((response) => {

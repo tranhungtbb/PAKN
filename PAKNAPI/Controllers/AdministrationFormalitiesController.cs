@@ -33,11 +33,13 @@ namespace PAKNAPI.Controller
         private readonly IAppSetting _appSetting;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IClient _bugsnag;
-        public AdministrationFormalitiesController(IWebHostEnvironment hostingEnvironment, IAppSetting appSetting, IClient bugsnag)
+        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
+        public AdministrationFormalitiesController(IWebHostEnvironment hostingEnvironment, IAppSetting appSetting, IClient bugsnag, Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             _appSetting = appSetting;
             _hostingEnvironment = hostingEnvironment;
             _bugsnag = bugsnag;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -679,7 +681,7 @@ namespace PAKNAPI.Controller
                         model.IsViewed = true;
                         model.IsReaded = true;
                         // insert vào db-
-                        await new SYNotification(_appSetting).SYNotificationInsertDAO(model);
+                        await new SYNotification(_appSetting,_configuration).InsertNotification(model);
                     });
                 }
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);

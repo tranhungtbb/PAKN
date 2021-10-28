@@ -428,6 +428,7 @@ namespace PAKNAPI.ModelBase
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
 		public string Description { get; set; }
+		public string ListUnit { get; set; }
 
 		public async Task<List<CAFieldGetAllOnPage>> CAFieldGetAllOnPageDAO()
 		{
@@ -455,6 +456,7 @@ namespace PAKNAPI.ModelBase
 		public bool IsActived { get; set; }
 		public bool IsDeleted { get; set; }
 		public string Description { get; set; }
+		public string ListUnit { get; set; }
 
 		public async Task<List<CAFieldGetByID>> CAFieldGetByIDDAO(int? Id)
 		{
@@ -485,6 +487,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsActived", _cAFieldInsertIN.IsActived);
 			DP.Add("IsDeleted", _cAFieldInsertIN.IsDeleted);
 			DP.Add("Description", _cAFieldInsertIN.Description);
+			DP.Add("ListUnit", _cAFieldInsertIN.ListUnit);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_FieldInsert", DP);
 		}
@@ -499,6 +502,7 @@ namespace PAKNAPI.ModelBase
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
+		public string ListUnit { get; set; }
 	}
 
 	public class CAFieldKNCTGetDropdown
@@ -582,6 +586,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsActived", _cAFieldUpdateIN.IsActived);
 			DP.Add("IsDeleted", _cAFieldUpdateIN.IsDeleted);
 			DP.Add("Description", _cAFieldUpdateIN.Description);
+			DP.Add("ListUnit", _cAFieldUpdateIN.ListUnit);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_FieldUpdate", DP);
 		}
@@ -598,6 +603,7 @@ namespace PAKNAPI.ModelBase
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 		public string Description { get; set; }
+		public string ListUnit { get; set; }
 	}
 
 	public class CAGroupWordDelete
@@ -1328,6 +1334,12 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAUnitGetAll>("CA_UnitGetAll", DP)).ToList();
 		}
+		public async Task<List<DropdownTree>> UnitGetDropByFieldIdDAO(int? FieldId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("FieldId", FieldId);
+			return (await _sQLCon.ExecuteListDapperAsync<DropdownTree>("[SY_UnitGetDropdownLevelByField]", DP)).ToList();
+		}
 	}
 
 	public class CAUnitGetAllOnPage
@@ -1401,7 +1413,8 @@ namespace PAKNAPI.ModelBase
 		public string Address { get; set; }
 		public bool IsMain { get; set; }
 		public int Index { get; set; }
-		public int? Field { get; set; }
+		public string ListField { get; set; }
+		public string ListFieldName { get; set; }
 
 		public async Task<List<CAUnitGetByID>> CAUnitGetByIDDAO(int? Id)
 		{
@@ -1468,7 +1481,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cAUnitInsertIN.IsDeleted);
 			DP.Add("IsMain", _cAUnitInsertIN.IsMain);
 			DP.Add("Index", _cAUnitInsertIN.Index);
-			DP.Add("Field", _cAUnitInsertIN.Field);
+			DP.Add("ListField", _cAUnitInsertIN.ListField);
 
 
 			return (await _sQLCon.ExecuteListDapperAsync<int>("CA_UnitInsert", DP)).FirstOrDefault();
@@ -1505,9 +1518,7 @@ namespace PAKNAPI.ModelBase
 
 		[Range(0, int.MaxValue, ErrorMessage = "Thứ tự hiển thị không đúng định dạng")]
 		public int Index { get; set; }
-
-		[Range(0, int.MaxValue, ErrorMessage = "Lĩnh vực không đúng định dạng")]
-		public int? Field { get; set; }
+		public string ListField { get; set; }
 	}
 
 	public class CAUnitUpdate
@@ -1538,7 +1549,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("IsDeleted", _cAUnitUpdateIN.IsDeleted);
 			DP.Add("IsMain", _cAUnitUpdateIN.IsMain);
 			DP.Add("Index", _cAUnitUpdateIN.Index);
-			DP.Add("Field", _cAUnitUpdateIN.Field);
+			DP.Add("ListField", _cAUnitUpdateIN.ListField);
 
 			return (await _sQLCon.ExecuteListDapperAsync<int>("CA_UnitUpdate", DP)).FirstOrDefault();
 		}
@@ -1574,8 +1585,7 @@ namespace PAKNAPI.ModelBase
 
 		[Range(0, int.MaxValue, ErrorMessage = "Thứ tự hiển thị không đúng định dạng")]
 		public int Index { get; set; }
-		[Range(0, int.MaxValue, ErrorMessage = "Lĩnh vực không đúng định dạng")]
-		public int? Field { get; set; }
+		public string ListField { get; set; }
 
 
 	}

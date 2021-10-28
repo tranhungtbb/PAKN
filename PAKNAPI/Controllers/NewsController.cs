@@ -29,12 +29,14 @@ namespace PAKNAPI.Controller
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;
 		private readonly IFileService _fileService;
+		private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
 
-		public NewsController(IAppSetting appSetting, IClient bugsnag, IFileService fileService)
+		public NewsController(IAppSetting appSetting, IClient bugsnag, IFileService fileService, Microsoft.Extensions.Configuration.IConfiguration configuration)
 		{
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
 			_fileService = fileService;
+			_configuration = configuration;
 		}
 		/// <summary>
 		/// danh sách tin tức
@@ -533,7 +535,7 @@ namespace PAKNAPI.Controller
 						model.IsViewed = true;
 						model.IsReaded = true;
 						// insert vào db-
-						var count = await new SYNotification(_appSetting).SYNotificationInsertDAO(model);
+						await new SYNotification(_appSetting,_configuration).InsertNotification(model);
 					}
 					return true;
 				}

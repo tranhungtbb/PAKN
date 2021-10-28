@@ -33,6 +33,30 @@ namespace PAKNAPI.Controllers.ControllerBase
             _appSetting = appSetting;
             _bugsnag = bugsnag;
         }
+		/// <summary>
+		/// drop đơn vị theo lĩnh vực
+		/// </summary>
+		/// <param name="FieldId"></param>
+		/// <returns></returns>
+
+		[HttpGet]
+		[Route("get-drop-unit-by-field")]
+		public async Task<ActionResult<object>> UnitGetDropByFieldId(int? FieldId)
+		{
+			try
+			{
+				if (FieldId == null) {
+					return new ResultApi { Success = ResultCode.OK, Result = null, Message = "Không có dữ liệu" };
+				}
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAUnitGetAll(_appSetting).UnitGetDropByFieldIdDAO(FieldId) };
+			}
+			catch (Exception ex)
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 
 		/// <summary>
 		/// danh sách đơn vị - all

@@ -24,6 +24,9 @@ export class UnitService {
 	getChildrenDropdown(): Observable<any> {
 		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.UnitGetChildrenDropdown)
 	}
+	getChildrenDropdownByField(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.UnitGetChildrenDropdownByField)
+	}
 	getDataForCreate(): Observable<any> {
 		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.UnitGetDataForCreate)
 	}

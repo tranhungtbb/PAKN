@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using PAKNAPI.Common;
 using PAKNAPI.Models.Results;
+using PAKNAPI.Model.ModelAuth;
 
 namespace PAKNAPI.ModelBase
 {
@@ -1374,6 +1375,9 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteDapperAsync<int>("SY_UserCount", DP));
 		}
+		
+
+
 	}
 
 	public class SYUserRoleMapOnPage

@@ -387,6 +387,7 @@ export class ViewRecommendationComponent implements OnInit {
 			ListHashTag: this.lstHashtagSelected,
 			IsList: false,
 		}
+		debugger
 
 		this.recommendationService.recommendationForward(request, this.model.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
@@ -457,8 +458,7 @@ export class ViewRecommendationComponent implements OnInit {
 			ListHashTag: this.lstHashtagSelected,
 			IsList: false,
 		}
-		let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
-		this.recommendationService.recommendationProcess(request, obj.title).subscribe((response) => {
+		this.recommendationService.recommendationProcess(request, this.model.title).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				$('#modalAccept').modal('hide')
 				if (this.recommendationStatusProcess == RECOMMENDATION_STATUS.FINISED) {

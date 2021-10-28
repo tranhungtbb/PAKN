@@ -7,10 +7,9 @@
 					<li class="breadcrumb-item active"><a class="font-weight-bold"> Danh sách Kiến nghị cử tri</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
-					<button *hasPermission="['3', 'I_II_2']" type="button" class="btn grd-blue btn-sm rounded border-0 text-white" click="requestSync()" title="Đồng bộ">
+					<button *hasPermission="['3', 'I_II_2']" type="button" class="btn grd-blue btn-sm rounded border-0 text-white" (click)="requestSync()" title="Đồng bộ">
 						<i class="bi bi-arrow-repeat"></i>
 					</button>
-					<!-- *hasPermission="['3', 'I_III_2']" -->
 				</div>
 			</div>
 		</div>
@@ -37,16 +36,19 @@
 										</p>
 										<input placeholder="Nhập nội dung..." class="form-control form-control-sm" [(ngModel)]="dataSearch.content" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.content" class="btn bg-transparent btn-clear-input" (click)="dataSearch.content=''">
+												<i class="fa fa-times"></i>
+											</button>
 									</th>
 									<th style="min-width: 200px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Đơn vị tiếp nhận</strong>
-											
 										</p>
-										<div class="dropdown bootstrap-select form-control form-control-sm">
-											<input placeholder="Nhập tên..." class="form-control form-control-sm" [(ngModel)]="dataSearch.unit" maxlength="100"
+										<input placeholder="Nhập tên..." class="form-control form-control-sm" [(ngModel)]="dataSearch.unit" maxlength="100"
 												(keydown.enter)="dataStateChange()" />
-										</div>
+										<button *ngIf="dataSearch.unit" class="btn bg-transparent btn-clear-input" (click)="dataSearch.unit=''">
+											<i class="fa fa-times"></i>
+										</button>
 									</th>
 									<th style="width: 200px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -67,6 +69,9 @@
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.place" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.place" class="btn bg-transparent btn-clear-input" (click)="dataSearch.place=''">
+												<i class="fa fa-times"></i>
+											</button>
 									</th>
 									<th style="width: 160px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">

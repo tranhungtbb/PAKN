@@ -15,6 +15,7 @@ export class FieldObject {
 	description: string
 	isActived: boolean
 	isDeleted: boolean
+	listUnit: string
 }
 export class WordObject {
 	constructor() {

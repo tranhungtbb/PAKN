@@ -161,6 +161,9 @@ export class ListReceiveWaitComponent implements OnInit {
 						this.lstGroupWord = response.result.lstGroupWord
 						this.lstGroupWordSelected = []
 						$('#modalReject').modal('show')
+						setTimeout(() => {
+							$('#targetReject').focus()
+						}, 400)
 					}
 				} else {
 					this._toastr.error(response.message)

@@ -27,6 +27,9 @@
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.code" class="btn bg-transparent btn-clear-input" (click)="dataSearch.code=''">
+												<i class="fa fa-times"></i>
+											</button>
 									</th>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -35,6 +38,9 @@
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.name" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.name" class="btn bg-transparent btn-clear-input" (click)="dataSearch.name=''">
+												<i class="fa fa-times"></i>
+											</button>
 									</th>
 									<th style="width: 150px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -43,6 +49,9 @@
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.object" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.object" class="btn bg-transparent btn-clear-input" (click)="dataSearch.object=''">
+												<i class="fa fa-times"></i>
+											</button>
 									</th>
 									<th style="width: 300px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -51,6 +60,9 @@
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.organization" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
+											<button *ngIf="dataSearch.organization" class="btn bg-transparent btn-clear-input" (click)="dataSearch.organization=''">
+												<i class="fa fa-times"></i>
+											</button>
 									</th>
 									<th style="width: 200px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">

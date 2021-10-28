@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { AfterContentInit, Component, OnInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators, FormGroupName } from '@angular/forms'
 import { SystemconfigService } from '../../../../services/systemconfig.service'
 import { ToastrService } from 'ngx-toastr'
@@ -7,12 +7,15 @@ import { RESPONSE_STATUS, TYPECONFIG } from 'src/app/constants/CONSTANTS'
 import { SystemtConfig, ConfigEmail } from 'src/app/models/systemtConfigObject'
 import { COMMONS } from 'src/app/commons/commons'
 import { Router } from '@angular/router'
+
+declare var $: any
+
 @Component({
 	selector: 'app-email-setting',
 	templateUrl: './email-setting.component.html',
 	styleUrls: ['./email-setting.component.css'],
 })
-export class EmailSettingComponent implements OnInit {
+export class EmailSettingComponent implements OnInit, AfterContentInit {
 	model: SystemtConfig = new SystemtConfig()
 	submitted: boolean = false
 	configEmail: ConfigEmail = new ConfigEmail()
@@ -28,6 +31,11 @@ export class EmailSettingComponent implements OnInit {
 				this.onCancel()
 			}
 		})
+	}
+	ngAfterContentInit() {
+		setTimeout(() => {
+			$('#target').focus()
+		}, 200)
 	}
 	onCancel() {
 		this.buildForm()

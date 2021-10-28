@@ -14,7 +14,7 @@ import { InputCodeDirective } from '../directives/sv-inputCode.directive'
 import { SvScanDirective } from '../directives/sv-scan.directive'
 import { OnlyNumberDirective } from '../directives/only-number'
 import { StopLengthDirective } from '../directives/stop-length.directive'
-import { ChangePipe } from 'src/app/pipes/unit-filter.pipe'
+import { ChangePipe, RemoveTagPipe } from 'src/app/pipes/unit-filter.pipe'
 import { DisabledSpaceKeyDirective } from 'src/app/directives/sv-disabled-space-key.directive'
 import { SvTextAreaTrimDirective } from '../directives/sv-textarea-trim.directive'
 import { HtmlToPlaintextPipe } from '../pipes/html-filter.pipe'
@@ -51,6 +51,7 @@ import { OembedPipe } from 'src/app/pipes/oembed.pipe'
 		SafeUrlPipe,
 		TrimDirective,
 		OembedPipe,
+		RemoveTagPipe,
 	],
 	exports: [
 		ConfirmClickDirective,
@@ -78,6 +79,7 @@ import { OembedPipe } from 'src/app/pipes/oembed.pipe'
 		SafeUrlPipe,
 		TrimDirective,
 		OembedPipe,
+		RemoveTagPipe,
 	],
 })
 export class SharedModule {}

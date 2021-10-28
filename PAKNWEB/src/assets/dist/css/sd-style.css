@@ -42,6 +42,9 @@ a:hover{
 .fw600{
 	font-weight: 600;
 }
+.background-while{
+	background-color: #fff !important;
+}
 .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
 	background-color: #337ab7;
 }
@@ -223,7 +226,7 @@ a:hover{
 	border-radius: 8px;
 	z-index: 10;
 }
-.navbar-light.bg-nav .navbar-nav .nav-link {
+.navbar-light .navbar-nav .nav-link {
     color: #fff;
     padding: 16px 18px;
     text-transform: uppercase;
@@ -735,6 +738,7 @@ transition: all .3s ease-in-out;
   display: flex;
   align-items: center;
   justify-content: center;
+	background-color: #CBE2FF;
 }
 
 .nav-qltknd .nav-link.active{
@@ -779,7 +783,7 @@ transition: all .3s ease-in-out;
 .dashboard .deznav{
 	position: relative !important;
 	float: left;
-	background: transparent;
+	background: #E9F2FF;
 }
 
 .header-ad{
@@ -797,12 +801,16 @@ transition: all .3s ease-in-out;
 	padding-top: 0;
 }
 .deznav{
-	background: #FFFFFF;
+	background: #E9F2FF;
 	filter: drop-shadow(2px 0px 6px rgba(0, 0, 0, 0.15));
 }
 .deznav .metismenu{
 	padding: 15px;
 }
+.nav-header{
+	background-color: #E9F2FF;	
+}
+
 .nav-header .brand-logo{
 	padding: 0 32px;
 }
@@ -932,7 +940,7 @@ transition: all .3s ease-in-out;
 }
 .header-ql .header-content{
 	background-image: none;
-	background: #FFFFFF;
+	background: #DDEDFF;
 	box-shadow: inset 0px -1px 0px #E5E5E5;
 }
 .nav-header{
@@ -1063,6 +1071,7 @@ transition: all .3s ease-in-out;
 .table>:not(:last-child)>:last-child>*{
 	border-color: #f0f1f5;
 	padding: 0.571em 0.557em;
+	position: relative;
 }
 .table>:not(caption)>*>*{
 	border-bottom: 0;
@@ -1142,7 +1151,7 @@ transition: all .3s ease-in-out;
 	}
 	.dashboard .deznav{
 		position: fixed !important;
-		background: #fff;
+		background: #E9F2FF;
 		z-index: 100;
 		top: 56px;
 	}
@@ -1346,10 +1355,13 @@ a:not([href]):not([tabindex]){
 	margin-left: 10px;
 	float: right;
 }
+body .ui-table .ui-table-tbody > tr:nth-child(even){
+	background-color: #f6f6f6 !important;
+}
 
 .table-sd thead,
 body .ui-table .ui-table-thead > tr > th{		
-	background-color: #EDF4FD !important;
+	background-color: #f6f6f6 !important;
 
 }
 .table tbody tr td, body .ui-paginator {
@@ -1758,5 +1770,32 @@ table thead .form-control ng-select {
 }
 .cursor{
 	cursor: pointer;
+}
+.call-now {
+	position: fixed;
+	width: 68px;
+	height: 68px;
+	right: 30px;
+	bottom: 30px;
+	background: #cde2fd;
+	border-radius: 50%;
+	z-index: 1000;
+}
+.call-content {
+	width: 48px;
+	height: 48px;
+	background: #1673d8;
+	border-radius: 50%;
+}
+.btn-clear-input{
+	z-index: 100;
+	position: absolute;
+	bottom: 16px;
+	right: 15px;
+	padding: 0px;
+}
+.btn-clear-input:focus ,.btn-clear-input:active{
+	outline:0;
+	border: none;
 }
 

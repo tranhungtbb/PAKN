@@ -169,6 +169,9 @@ export class ListProcessWaitComponent implements OnInit {
 							this.lstGroupWord = response.result.lstGroupWord
 							this.lstGroupWordSelected = []
 							$('#modalReject').modal('show')
+							setTimeout(() => {
+								$('#targetReject').focus()
+							}, 400)
 						}
 					} else {
 						this._toastr.error(response.message)
@@ -180,6 +183,9 @@ export class ListProcessWaitComponent implements OnInit {
 					}
 			} else {
 				$('#modalReject').modal('show')
+				setTimeout(() => {
+					$('#targetReject').focus()
+				}, 400)
 			}
 		} else if (status == PROCESS_STATUS_RECOMMENDATION.APPROVED) {
 			this.titleAccept = 'Anh/Chị có chắc chắn muốn giải quyết Phản ánh, Kiến nghị này?'
@@ -187,6 +193,9 @@ export class ListProcessWaitComponent implements OnInit {
 		} else if (status == PROCESS_STATUS_RECOMMENDATION.FORWARD) {
 			this.contentForward = ''
 			$('#modalForward').modal('show')
+			setTimeout(() => {
+				$('#targetForward').focus()
+			}, 400)
 		}
 	}
 	onProcessAccept() {

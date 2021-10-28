@@ -1,18 +1,3 @@
-// export class UnitObject {
-// 	ma: number
-// 	ten: string
-// 	code: string
-// 	moTa: string
-// 	kichHoat: boolean
-// 	xoa: boolean
-// 	soDienThoai: string
-// 	khuVucId: number
-// 	nguoiPhuTrachId: number
-// 	tinh: string
-// 	huyen: string
-// 	tenLoaiDonVi: string
-// 	diaChi: string
-// }
 export class UnitObject {
 	constructor() {
 		this.isDeleted = false
@@ -22,7 +7,7 @@ export class UnitObject {
 		this.isActived = true
 		this.id = 0
 		this.index = 0
-		this.field = null
+		this.listField = null
 	}
 	id: number
 	name: string
@@ -36,5 +21,5 @@ export class UnitObject {
 	address: string
 	isMain: boolean
 	index: number
-	field : number
+	listField: number
 }

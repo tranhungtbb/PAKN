@@ -39,6 +39,9 @@
 										</p>
 										<input class="form-control form-control-sm" [(ngModel)]="title" maxlength="100" (keydown.enter)="dataStateChange()"
 											placeholder="Nhập tên..." />
+										<button *ngIf="title" class="btn bg-transparent btn-clear-input" (click)="title =''">
+											<i class="fa fa-times"></i>
+										</button>
 									</th>
 									<th>
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
@@ -95,8 +98,6 @@
 									</td>
 									<td style="text-align: center;">
 										<div class="d-flex justify-content-end">
-											<!-- <a *hasPermission="['3', 'B_II_5']" (click)="confirm(item.id)" class="btn-icon grd-red text-white cursor mr-2" data-toggle="modal" data-target="#modal-tc-pakn"><i
-													class="bi bi-trash"></i></a> -->
 											<a *hasPermission="['3', 'B_II_6']" class="btn-icon" style="cursor: pointer;" (click)="getHistory(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
 									</td>

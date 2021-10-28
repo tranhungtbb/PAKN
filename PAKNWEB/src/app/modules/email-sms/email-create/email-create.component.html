@@ -22,7 +22,7 @@
 					<div class="row form-group">
 						<div class="col-sm-12 padding-col mb-3">
 							<label class="control-label department" style="font-weight: 500;">Tiêu đề<span class="text-danger"> (*)</span></label>
-							<input class="form-control" formControlName="title" [(ngModel)]="model.title" maxlength="50" placeholder="Nhập..." />
+							<input class="form-control" formControlName="title" autofocus [(ngModel)]="model.title" maxlength="50" placeholder="Nhập..." />
 							<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
 								<div *ngIf="f.title.errors.required">
 									<span class="help-block">Trường dữ liệu này không để trống</span>

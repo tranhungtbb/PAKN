@@ -49,6 +49,9 @@ export class UserSystemComponent implements OnInit {
 	rePassword: string
 	samePass = false
 
+	userName: any = ''
+	fullName: any = ''
+	phone: any = ''
 	// object User
 	model = new UserSystemObject()
 	submitted: boolean = false
@@ -194,6 +197,7 @@ export class UserSystemComponent implements OnInit {
 		}
 		this.model.countLock = 0
 		this.model.lockEndOut = ''
+		this.model.address = this.model.address == null ? '' : this.model.address.trim()
 		const user = {
 			login: this.model.email,
 			password: 'quickblox',

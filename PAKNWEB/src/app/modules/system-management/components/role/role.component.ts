@@ -32,6 +32,9 @@ export class RoleComponent implements OnInit {
 	mess: string
 	totalRecords: Number
 	listData: any[]
+	title: any = ''
+	description: any = ''
+	userCount: any = ''
 
 	// LIST USER
 	listUser: any[]

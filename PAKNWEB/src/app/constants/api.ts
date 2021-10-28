@@ -97,6 +97,7 @@ export class Api {
 	public static UnitChangeStatus = 'unit/change-status'
 	public static UnitCheckExists = 'unit/check-exists'
 	public static UnitGetChildrenDropdown = 'unit/get-children-dropdown'
+	public static UnitGetChildrenDropdownByField = 'unit/get-drop-unit-by-field'
 
 	//Position
 	public static PositionInsert = 'position/insert'
@@ -268,9 +269,6 @@ export class Api {
 	public static SYIndexSettingUpdate = 'index-setting/update'
 	public static SYIndexWebsiteInsert = 'index-setting/insert'
 	public static SYIndexWebsiteGetAll = 'index-setting/get-list-index-website'
-
-	// //RequestRecommendation
-	public static RecommendationRequestGetListProcess = 'RecommandationSync/MR_Sync_CuTriTinhKhanhHoaGetListBase'
 
 	//api dia danh
 	public static ProvinceGetAll = 'administrative/get-list-province'
