@@ -2,6 +2,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms' // <-- NgModel lives here
 import { BrowserXhr, HttpModule } from '@angular/http'
+import { ChartsModule } from 'ng2-charts'
+import { TableModule } from 'primeng/table'
 import { MatDialogModule } from '@angular/material'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { BrowserModule } from '@angular/platform-browser'
@@ -31,6 +33,7 @@ import { TreeviewModule } from 'ngx-treeview'
 import { CarouselModule } from 'ngx-owl-carousel-o'
 import { TooltipModule } from 'ngx-bootstrap/tooltip'
 import { Index2Component } from 'src/app/modules/index2/index2.component'
+// import { LightboxModule } from 'ngx-lightbox'
 
 @NgModule({
 	declarations: [AppComponent, SvFocusDirective, ConfirmDialogComponent, ViewFileDialogComponent, Index2Component],
@@ -68,6 +71,9 @@ import { Index2Component } from 'src/app/modules/index2/index2.component'
 		TreeviewModule.forRoot(),
 		CarouselModule,
 		TooltipModule.forRoot(),
+		ChartsModule,
+		TableModule,
+		// LightboxModule,
 	],
 	providers: [
 		{

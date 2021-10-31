@@ -215,15 +215,16 @@ namespace PAKNAPI.Controller
                     // người dân, doanh nghiệp gửi
                     if (request.Data.UnitId == null)
                     {
-                        var syUnitByField = await new SYUnitGetByField(_appSetting).SYUnitGetByFieldDAO(request.Data.Field);
-                        if (syUnitByField.Count == 0)
-                        {
-                            request.Data.UnitId = dataMain.Id;
-                        }
-                        else
-                        {
-                            request.Data.UnitId = syUnitByField.FirstOrDefault().Id;
-                        }
+                        //var syUnitByField = await new SYUnitGetByField(_appSetting).SYUnitGetByFieldDAO(request.Data.Field);
+                        //if (syUnitByField.Count == 0)
+                        //{
+                        //    request.Data.UnitId = dataMain.Id;
+                        //}
+                        //else
+                        //{
+                        //    request.Data.UnitId = syUnitByField.FirstOrDefault().Id;
+                        //}
+                        request.Data.UnitId = dataMain.Id;
                     }
                     if (request.Data.Status > 1 && dataMain != null && dataMain.Id != request.Data.UnitId && request.UserType != 1)
                     {
@@ -455,15 +456,16 @@ namespace PAKNAPI.Controller
                     // người dân, doanh nghiệp gửi
                     if (request.Data.UnitId == null)
                     {
-                        var syUnitByField = await new SYUnitGetByField(_appSetting).SYUnitGetByFieldDAO(request.Data.Field);
-                        if (syUnitByField.Count == 0)
-                        {
-                            request.Data.UnitId = dataMain.Id;
-                        }
-                        else
-                        {
-                            request.Data.UnitId = syUnitByField.FirstOrDefault().Id;
-                        }
+                        //var syUnitByField = await new SYUnitGetByField(_appSetting).SYUnitGetByFieldDAO(request.Data.Field);
+                        //if (syUnitByField.Count == 0)
+                        //{
+                        //    request.Data.UnitId = dataMain.Id;
+                        //}
+                        //else
+                        //{
+                        //    request.Data.UnitId = syUnitByField.FirstOrDefault().Id;
+                        //}
+                        request.Data.UnitId = dataMain.Id;
                     }
                     if (request.Data.Status > 1 && dataMain != null && dataMain.Id != request.Data.UnitId && request.UserType != 1)
                     {

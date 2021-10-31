@@ -37,3 +37,17 @@ export class InvitationUserMapObject {
 		this.positionName = ''
 	}
 }
+
+export class InvitationMapObject {
+	id: number
+	title: boolean
+	type: boolean
+	sendEmail: boolean
+	sendSMS: boolean
+	address: string
+	constructor() {
+		this.id = 0
+		this.sendEmail = false
+		this.sendSMS = false
+	}
+}

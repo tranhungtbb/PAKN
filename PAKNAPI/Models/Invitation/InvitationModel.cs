@@ -16,6 +16,8 @@ namespace PAKNAPI.Models.Invitation
         public IFormFileCollection Files { get; set; }
 
         public List<INVInvitationUserMapInsertIN> InvitationUserMap { get; set; }
+        public List<INVInvitationBIMapInsertIN> LstIndividualBussiness { get; set; }
+
     }
 
     public class INVInvitationUpdateModel
@@ -29,6 +31,8 @@ namespace PAKNAPI.Models.Invitation
         public IFormFileCollection Files { get; set; }
 
         public List<INVInvitationUserMapGetByInvitationId> InvitationUserMap { get; set; }
+
+        public List<INVInvitationBIMapInsertIN> LstIndividualBussiness { get; set; }
     }
 
     public class INVInvitationDetailModel

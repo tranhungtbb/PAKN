@@ -226,6 +226,7 @@ export class Api {
 	public static InnvitationDetail = 'invitation/get-detail'
 	public static UserReadedInvitationGetList = 'invitation/get-list-user-readed-invitation-on-page'
 	public static InnvitationGetListHisOnPage = 'invitation/get-list-his'
+	public static InnvitationGetDataForCreate = 'invitation/get-data-for-create'
 
 	//sms
 	public static SMSManagementGetOnPage = 'sms/get-list-sms-on-page'

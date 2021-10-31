@@ -12,6 +12,35 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PAKNAPI.ModelBase
 {
+
+	public class InvitationGetDataForCreate
+	{
+		private SQLCon _sQLCon;
+		public InvitationGetDataForCreate(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public async Task<InvitationGetDataForCreateResponse> InvitationGetDataForCreateDAO()
+		{
+			InvitationGetDataForCreateResponse data = new InvitationGetDataForCreateResponse();
+			DynamicParameters DP = new DynamicParameters();
+			data.ListBusiness = (await _sQLCon.ExecuteListDapperAsync<INVDropdownDataForCreate>("[BI_BusinessGetDropdownInfo]", DP)).ToList();
+			data.ListIndividual = (await _sQLCon.ExecuteListDapperAsync<INVDropdownDataForCreate>("[BI_IndividualGetDropdownInfo]", DP)).ToList();
+			return data;
+		}
+	}
+
+	public class InvitationGetDataForCreateResponse {
+		public List<INVDropdownDataForCreate> ListBusiness { get; set; }
+		public List<INVDropdownDataForCreate> ListIndividual { get; set; }
+	}
+	public class INVDropdownDataForCreate {
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Address { get; set; }
+		public int Type { get; set; }
+	}
 	public class INVFileAttachDeleteById
 	{
 		private SQLCon _sQLCon;
@@ -173,6 +202,8 @@ namespace PAKNAPI.ModelBase
 		public bool SendEmail { get; set; }
 		public bool SendSMS { get; set; }
 
+		public int? Type { get; set; }
+
 		public async Task<List<INVInvitationUserMapGetByInvitationId>> INVInvitationUserMapGetByInvitationIdDAO(int? InvitationId)
 		{
 			DynamicParameters DP = new DynamicParameters();
@@ -203,6 +234,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Watched", _iNVInvitationUserMapInsertIN.Watched);
 			DP.Add("SendEmail", _iNVInvitationUserMapInsertIN.SendEmail);
 			DP.Add("SendSMS", _iNVInvitationUserMapInsertIN.SendSMS);
+			DP.Add("Type", _iNVInvitationUserMapInsertIN.Type);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("INV_Invitation_User_MapInsert", DP);
 		}
@@ -215,6 +247,17 @@ namespace PAKNAPI.ModelBase
 		public bool? Watched { get; set; }
 		public bool? SendEmail { get; set; }
 		public bool? SendSMS { get; set; }
+		public int? Type { get; set; }
+	}
+
+	public class INVInvitationBIMapInsertIN
+	{
+		public int? Id { get; set; }
+		public int? InvitationId { get; set; }
+		public bool? Watched { get; set; }
+		public bool? SendEmail { get; set; }
+		public bool? SendSMS { get; set; }
+		public int Type { get; set; }
 	}
 
 	public class INVInvitationDelete

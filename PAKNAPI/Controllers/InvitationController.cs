@@ -44,6 +44,29 @@ namespace PAKNAPI.Controllers
 			_configuration = configuration;
 
 		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("get-data-for-create")]
+		public async Task<ActionResult<object>> GetDataForCreate()
+		{
+			try
+			{
+				InvitationGetDataForCreateResponse response = await new InvitationGetDataForCreate(_appSetting).InvitationGetDataForCreateDAO();
+				return new ResultApi { Success = ResultCode.OK, Result = response};
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
+
+
 		/// <summary>
 		/// xóa thư mời
 		/// </summary>
@@ -188,8 +211,8 @@ namespace PAKNAPI.Controllers
 
 				invInvitation.Model.CreateDate = DateTime.Now;
 				invInvitation.Model.UserCreateId = (int)new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
-
 				invInvitation.InvitationUserMap = JsonConvert.DeserializeObject<List<INVInvitationUserMapInsertIN>>(Request.Form["InvitationUserMap"].ToString());
+
 				invInvitation.Files = Request.Form.Files;
 
 				if (invInvitation.Model.Status == 2 && invInvitation.InvitationUserMap.Count == 0)
@@ -511,6 +534,7 @@ namespace PAKNAPI.Controllers
 							ins.SendEmail = item.SendEmail;
 							ins.UserId = item.UserId;
 							ins.Watched = item.Watched;
+							ins.Type = item.Type;
 							await new INVInvitationUserMapInsert(_appSetting).INVInvitationUserMapInsertDAO(ins);
 
 							// tạo thông báo

@@ -36,7 +36,6 @@ import { RecommendationsCttdtComponent } from './recommendations-sync/recommenda
 import { DetailRecommendationCttdtComponent } from './recommendations-sync/recommendations-cttdt-detail/recommendations-cttdt-detail.component'
 import { RecommendationsPaknCPComponent } from './recommendations-sync/recommendation-pakn-cp/recommendation-pakn-cp.component'
 import { DetailRecommendationPaknCPComponent } from './recommendations-sync/recommendation-pakn-cp-detail/recommendation-pakn-cp-detail.component'
-import { TooltipModule } from 'ng2-tooltip-directive'
 
 @NgModule({
 	declarations: [
@@ -75,7 +74,6 @@ import { TooltipModule } from 'ng2-tooltip-directive'
 		TableModule,
 		PaginatorModule,
 		BsDatepickerModule.forRoot(),
-		TooltipModule,
 		EditorModule,
 		CarouselModule,
 	],

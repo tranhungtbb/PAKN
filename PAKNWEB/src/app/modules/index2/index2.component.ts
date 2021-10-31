@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
 import { DomSanitizer } from '@angular/platform-browser'
 import { OwlOptions } from 'ngx-owl-carousel-o'
+import { ChartType, ChartOptions } from 'chart.js'
+import { Color, MultiDataSet, Label } from 'ng2-charts'
 
 import { PuRecommendation } from 'src/app/models/recommendationObject'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
@@ -12,6 +14,7 @@ import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTA
 import { IndexSettingService } from 'src/app/services/index-setting.service'
 import { IndexSettingObjet } from 'src/app/models/indexSettingObject'
 import { IndexBanner, IndexWebsite } from 'src/app/models/indexSettingObject'
+import { Lightbox } from 'ngx-lightbox'
 
 declare var $: any
 
@@ -27,8 +30,10 @@ export class Index2Component implements OnInit {
 		private _newsService: NewsService,
 		private _serviceAdministrative: AdministrativeFormalitiesService,
 		private sanitizer: DomSanitizer,
-		private indexSettingService: IndexSettingService
+		private indexSettingService: IndexSettingService,
+		private _lightbox: Lightbox
 	) {}
+	_album: any[] = []
 
 	RecommendationsOrderByCountClick: Array<PuRecommendation>
 	ReflectionsRecommendations: Array<PuRecommendation>
@@ -37,8 +42,8 @@ export class Index2Component implements OnInit {
 	Administrations: any[]
 	//
 	ltsIndexSettingWebsite: Array<IndexWebsite>
-	//
 
+	// owl carocel
 	customOptions: OwlOptions = {
 		loop: true,
 		dots: false,
@@ -63,6 +68,24 @@ export class Index2Component implements OnInit {
 		},
 		nav: true,
 	}
+
+	// chart
+	doughnutChartLabels: Label[] = ['Hồ sơ đã giải quyết', 'Hồ sơ đã tiếp nhận']
+	doughnutChartData: MultiDataSet = [[950, 350]]
+	doughnutChartType: ChartType = 'doughnut'
+	doughnutChartColors: Color[] = [
+		{
+			backgroundColor: ['#58A55C', '#73BCFF'],
+		},
+	]
+	doughnutChartOptions: ChartOptions = {
+		responsive: true,
+		legend: {
+			position: 'bottom',
+		},
+		cutoutPercentage: 75,
+	}
+
 	activeUrl: string = ''
 	routerHome = 'trang-chu2'
 	indexSettingObj = new IndexSettingObjet()
@@ -84,6 +107,19 @@ export class Index2Component implements OnInit {
 				alert(error)
 			}
 		)
+
+		for (let i = 1; i <= 4; i++) {
+			const src = 'demo/img/image' + i + '.jpg'
+			const caption = 'Image ' + i + ' caption here'
+			const thumb = 'demo/img/image' + i + '-thumb.jpg'
+			const album = {
+				src: src,
+				caption: caption,
+				thumb: thumb,
+			}
+
+			this._album.push(album)
+		}
 	}
 	routingMenu(pageRouting: string) {
 		this.activeUrl = pageRouting
@@ -182,5 +218,17 @@ export class Index2Component implements OnInit {
 
 	redirectAdministration() {
 		this._router.navigate(['/cong-bo/thu-tuc-hanh-chinh'])
+	}
+
+	//
+
+	open(index: number): void {
+		// open lightbox
+		this._lightbox.open(this._album, index)
+	}
+
+	close(): void {
+		// close lightbox programmatically
+		this._lightbox.close()
 	}
 }

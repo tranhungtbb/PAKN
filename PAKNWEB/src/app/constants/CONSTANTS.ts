@@ -169,6 +169,12 @@ export class CATEGORY_SUPPORT {
 	public static VIDEO = 1 //2 cap nhap
 }
 
+export class USER_TYPE {
+	public static SYSTEM = 1 // hệ thống
+	public static INDIVIDUAL = 2 // Người dân
+	public static BUSSINESS = 3 // Doanh nghiệp
+}
+
 export const FILETYPE = [
 	{ text: 'application/msword', value: 1 },
 	{ text: 'text/plain', value: 1 },

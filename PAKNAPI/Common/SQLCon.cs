@@ -43,7 +43,7 @@ namespace PAKNAPI.Common
 				cmd.CommandType = CommandType.Text;
 				cmd.Parameters.AddRange(param);
 
-				conn.Open();
+				// conn.Open();
 				return cmd.ExecuteNonQuery();
 			}
 		}
@@ -59,7 +59,7 @@ namespace PAKNAPI.Common
 				cmd.CommandType = cmdType;
 				cmd.Parameters.AddRange(param);
 
-				conn.Open();
+				// conn.Open();
 				da.Fill(dt);
 				return dt;
 			}
@@ -69,7 +69,7 @@ namespace PAKNAPI.Common
 		{
 			using (SqlConnection conn = GetConnection())
 			{
-				conn.Open();
+				// conn.Open();
 				IEnumerable<T> result = conn.Query<T>(commandText, DP, commandType: cmdType);
 				return result;
 			}
@@ -79,7 +79,7 @@ namespace PAKNAPI.Common
 		{
 			using (SqlConnection conn = GetConnection())
 			{
-				conn.Open();
+				// conn.Open();
 				return conn.Query<T>(commandText, DP, commandType: cmdType);
 			}
 		}
@@ -94,7 +94,7 @@ namespace PAKNAPI.Common
 				cmd.CommandType = CommandType.Text;
 				cmd.Parameters.AddRange(param);
 
-				conn.Open();
+				// conn.Open();
 				return (T)cmd.ExecuteScalar();
 			}
 		}
@@ -107,7 +107,7 @@ namespace PAKNAPI.Common
 				cmd.CommandType = CommandType.Text;
 				cmd.Parameters.AddRange(param);
 
-				conn.Open();
+				// conn.Open();
 				return cmd.ExecuteNonQuery();
 			}
 		}
@@ -120,7 +120,7 @@ namespace PAKNAPI.Common
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddRange(param);
 
-				conn.Open();
+				// conn.Open();
 				cmd.ExecuteNonQuery();
 			}
 		}
@@ -136,7 +136,7 @@ namespace PAKNAPI.Common
 				cmd.CommandType = CommandType.StoredProcedure;
 				cmd.Parameters.AddRange(param);
 
-				conn.Open();
+				// conn.Open();
 				da.Fill(dt);
 				return dt;
 			}
@@ -153,7 +153,7 @@ namespace PAKNAPI.Common
 				cmd.CommandType = CommandType.Text;
 				cmd.Parameters.AddRange(param);
 
-				conn.Open();
+				// conn.Open();
 				da.Fill(dt);
 				return dt;
 			}
@@ -163,7 +163,7 @@ namespace PAKNAPI.Common
 		{
 			using (SqlConnection conn = GetConnection())
 			{
-				conn.Open();
+				// conn.Open();
 				return conn.Execute(ProcedureName, DP, commandType: CommandType.StoredProcedure);
 			}
 		}
@@ -172,7 +172,7 @@ namespace PAKNAPI.Common
 		{
 			using (SqlConnection conn = GetConnection())
 			{
-				conn.Open();
+				// conn.Open();
 				return await conn.ExecuteAsync(ProcedureName, DP, commandType: CommandType.StoredProcedure);
 			}
 		}
@@ -181,7 +181,7 @@ namespace PAKNAPI.Common
 		{
 			using (SqlConnection conn = GetConnection())
 			{
-				conn.Open();
+				// conn.Open();
 				return (T)conn.ExecuteScalar(ProcedureName, DP, commandType: CommandType.StoredProcedure);
 			}
 		}
@@ -190,7 +190,7 @@ namespace PAKNAPI.Common
 		{
 			using (SqlConnection conn = GetConnection())
 			{
-				conn.Open();
+				// conn.Open();
 				return (T)await conn.ExecuteScalarAsync(ProcedureName, DP, commandType: CommandType.StoredProcedure);
 			}
 		}
@@ -199,7 +199,7 @@ namespace PAKNAPI.Common
 		{
 			using (SqlConnection conn = GetConnection())
 			{
-				conn.Open();
+				// conn.Open();
 				return (T)conn.ExecuteScalar(query, commandType: CommandType.Text);
 			}
 		}
@@ -208,7 +208,7 @@ namespace PAKNAPI.Common
 		{
 			using (SqlConnection conn = GetConnection())
 			{
-				conn.Open();
+				// conn.Open();
 				return conn.Query<T>(ProcedureName, DP, commandType: CommandType.StoredProcedure);
 			}
 		}
@@ -217,7 +217,7 @@ namespace PAKNAPI.Common
 		{
 			using (SqlConnection conn = GetConnection())
 			{
-				conn.Open();
+				// conn.Open();
 				return await conn.QueryAsync<T>(ProcedureName, DP, commandType: CommandType.StoredProcedure);
 			}
 		}
@@ -232,7 +232,7 @@ namespace PAKNAPI.Common
 
 			using (SqlConnection conn = GetConnection())
 			{
-				conn.Open();
+				// conn.Open();
 				return conn.Query<T>(query, DP, commandType: CommandType.Text);
 			}
 		}
@@ -246,7 +246,7 @@ namespace PAKNAPI.Common
 
 			using (SqlConnection conn = GetConnection())
 			{
-				conn.Open();
+				// conn.Open();
 				return await conn.QueryAsync<T>(query, DP, commandType: CommandType.Text);
 			}
 		}
@@ -260,7 +260,7 @@ namespace PAKNAPI.Common
 
 			using (SqlConnection conn = GetConnection())
 			{
-				conn.Open();
+				// conn.Open();
 
 				List<T> list = conn.Query<T>(query, DP, commandType: CommandType.Text).ToList();
 
@@ -277,7 +277,7 @@ namespace PAKNAPI.Common
 
 			using (SqlConnection conn = GetConnection())
 			{
-				conn.Open();
+				// conn.Open();
 
 				List<T> list = (await conn.QueryAsync<T>(query, DP, commandType: CommandType.Text)).ToList();
 
@@ -294,7 +294,7 @@ namespace PAKNAPI.Common
 
 			using (SqlConnection conn = GetConnection())
 			{
-				conn.Open();
+				// conn.Open();
 
 				List<T> list = conn.Query<T>(ProcedureName, DP, commandType: CommandType.StoredProcedure).ToList();
 
@@ -311,7 +311,7 @@ namespace PAKNAPI.Common
 
 			using (SqlConnection conn = GetConnection())
 			{
-				conn.Open();
+				// conn.Open();
 
 				List<T> list = (await conn.QueryAsync<T>(ProcedureName, DP, commandType: CommandType.StoredProcedure)).ToList();
 
@@ -328,7 +328,7 @@ namespace PAKNAPI.Common
 
 			using (SqlConnection conn = GetConnection())
 			{
-				conn.Open();
+				// conn.Open();
 
 				List<T> list = (await conn.QueryAsync<T>(query, DP, commandType: CommandType.Text)).ToList();
 
@@ -342,7 +342,7 @@ namespace PAKNAPI.Common
 		//	//List<object1> sYFunction1s = new List<object1>();
 		//	using (SqlConnection conn = GetConnection())
 		//	{
-		//		conn.Open();
+		//		// conn.Open();
 
 		//		(await conn.QueryAsync<T, T, T>(query, (sYFunction1, sYFunctionAction1) =>
 		//		{

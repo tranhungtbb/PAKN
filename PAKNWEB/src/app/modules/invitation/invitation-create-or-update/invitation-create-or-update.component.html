@@ -3,11 +3,10 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
-					<!-- <li class="breadcrumb-item"><a>Vai trò</a></li> -->
-					<li class="breadcrumb-item active"><a class="font-weight-bold">{{title}}</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold text-uppercase">{{title}}</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
-					<a class="btn btn-sm btn-default rounded mr-3" style="border: 1px solid gray;" (click)="redirectList()">
+					<a class="btn btn-sm rounded border-0 mr-3 text-dark background-while" (click)="redirectList()">
 						<i class="bi bi-arrow-left"></i>&nbsp;
 						Quay lại
 					</a>
@@ -22,7 +21,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-6 pt-3 pb-3 pl-5" style="border-right: 1px solid #e5e5e5;">
+			<div class="col-md-6 px-5" style="border-right: 1px solid #e5e5e5;">
 				<form class="form-horizontal" [formGroup]="form">
 					<div class="row form-group">
 						<div class="col-sm-12 padding-col">
@@ -135,7 +134,6 @@
 									</div>
 								</div>
 								<ng-container *ngFor="let item of files">
-
 									<div class="col-2 m-2 border-1" *ngIf="item.fileType == 1">
 										<div class="alert alert-dark alert-dismissible fade show d-flex align-items-center h-90" style="margin-bottom: 0.3rem;">
 											<button *ngIf="statusCurent != 2" type="button" (click)="onRemoveFile(item)" class="close" data-dismiss="alert"
@@ -201,22 +199,20 @@
 					</div>
 				</form>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-6 px-5">
 				<form class="form-horizontal" [formGroup]="form">
-					<div class="row form-group" style="padding-right: 10px;">
-						<div class="col-sm-12" style="padding: 0px 12px;">
+					<div class="row form-group pr-2">
+						<div class="col-sm-12 pr-2 pl-2">
 							<div class="title-user-map">Thành phần tham dự</div>
 							<div class="search-user" *ngIf="statusCurent != 2">
 								<div class="department">Họ và tên</div>
-								<div class="" style="display: flex;">
+								<div class="d-flex">
 									<div class="input-serach center" style="width: 60%;">
-
-										<div class="form-group" style="margin-bottom: 0px; width: 100%;">
+										<div class="form-group mb-0" style="width: 100%;">
 											<ngx-dropdown-treeview [config]="config" [items]="items" buttonClass="btn btn-outline-primary"
 												(selectedChange)="onSelectedChange($event)" (filterChange)="onFilterChange($event)">
 											</ngx-dropdown-treeview>
 										</div>
-
 									</div>
 									<div style="width: 35%; display: flex;" class="center">
 										<div class="form-check" style="margin: 5px;">
@@ -247,7 +243,7 @@
 						<div class="list-user">
 							<div class="title-user-map center" style="text-transform: none;" *ngIf="listItemUserSelected.length ==0">Chưa có thành phần tham dự</div>
 							<div class="col-sm-12 item-user" *ngFor="let item of listItemUserSelected">
-								<div class="info-user border-right padding-item" style="display: flex; padding-left: 0px;">
+								<div class="info-user border-right padding-item d-flex pl-0">
 									<span *ngIf="item.avatar == ''" class="no-avatar-view" style="width: 40px; height: 40px;">
 										<svg width="36" height="36" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
 											<path fill-rule="evenodd" clip-rule="evenodd"
@@ -255,7 +251,7 @@
 												fill="#743F15" />
 										</svg>
 									</span>
-									<img *ngIf="item.avatar !=''" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px; margin-right: 5px;" src="{{item.avatar}}"
+									<img *ngIf="item.avatar !=''" class="mr-1" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;" src="{{item.avatar}}"
 										alt="">
 									<div>
 										<div class="title">{{item.fullName}}</div>
@@ -283,6 +279,76 @@
 								<div class="action padding-item center" *ngIf="statusCurent != 2">
 									<button type="button" style="width: 40px; height: 40px; background: #E0E7FA; color: black;" class="btn btn-block border-0 px-3 center"
 										(click)="onRemoveUser(item)">
+										<i class="bi bi-person-dash"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row form-group pr-2">
+						<div class="col-sm-12 pr-2 pl-2">
+							<div class="search-user d-flex">
+								<div class="col-11 d-flex p-0">
+									<div class="col-12 col-lg-6 form-group">
+										<label class="mb-1 department">Cá nhân</label>
+										<ng-select notFoundText="Không có dữ liệu" class="form-control" 
+											[items]="lstIndividual" placeholder="Chọn ..." 
+											bindLabel="title" bindValue="id" [virtualScroll]="true"
+											[(ngModel)]="individualId"  [ngModelOptions]="{standalone: true}"
+											[closeOnSelect]="true">
+										</ng-select>
+									</div>
+									<div class="col-12 col-lg-6 form-group">
+										<label class="mb-1 department">Doanh nghiệp</label>
+										<ng-select notFoundText="Không có dữ liệu" class="form-control" 
+											[items]="lstBussiness" placeholder="Chọn ..." 
+											bindLabel="title" bindValue="id" [virtualScroll]="true"
+											[(ngModel)]="bussinessId"  [ngModelOptions]="{standalone: true}"
+											[closeOnSelect]="true">
+										</ng-select>
+									</div>
+								</div>
+								<div class="col-lg-1 action padding-item center">
+									<button type="button" style="width: 40px; height: 40px;" class="btn grd-blue btn-block border-0 px-3 text-white center"
+										(click)="onCreateBussiness()">
+										<i class="bi bi-person-plus"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="list-user">
+							<div class="title-user-map center" style="text-transform: none;" *ngIf="lstIndividualBussiness.length ==0">Chưa chọn cá nhân doanh nghiệp</div>
+							<div class="col-sm-12 item-user" *ngFor="let item of lstIndividualBussiness">
+								<div class="info-user border-right padding-item d-flex pl-0" style="flex: 1 0;">
+									<div class="avatar-circle mr-2">
+										{{getShortName(item.title)}}
+									</div>
+									<div>
+										<div class="title">{{item.title}}</div>
+										<div class="department">{{item.address}}</div>
+									</div>
+								</div>
+								<div class="type-send border-right padding-item">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" [checked]="item.sendSMS == true" [(ngModel)]="item.sendSMS"  [ngModelOptions]="{standalone: true}">
+										<label class="form-check-label">
+											Gửi SMS
+										</label>
+									</div>
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" [checked]="item.sendEmail == true" [(ngModel)]="item.sendEmail"  [ngModelOptions]="{standalone: true}">
+										<label class="form-check-label">
+											Gửi mail
+										</label>
+									</div>
+								</div>
+								<div class="action padding-item center" *ngIf="statusCurent != 2">
+									<button type="button" style="width: 40px; height: 40px; background: #E0E7FA; color: black;" class="btn btn-block border-0 px-3 center"
+										(click)="onRemoveIndividualBussiness(item)">
 										<i class="bi bi-person-dash"></i>
 									</button>
 								</div>

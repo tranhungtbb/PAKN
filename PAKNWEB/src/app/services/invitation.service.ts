@@ -23,7 +23,6 @@ export class InvitationService {
 		const form = new FormData()
 		form.append('Model', JSON.stringify(request.model))
 		form.append('InvitationUserMap', JSON.stringify(request.userMap))
-		debugger
 		if (request.Files) {
 			request.Files.forEach((item) => {
 				form.append('QD', item)
@@ -42,6 +41,10 @@ export class InvitationService {
 	}
 	invitationDetail(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.InnvitationDetail)
+	}
+
+	GetDataForCreate(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.InnvitationGetDataForCreate)
 	}
 
 	invitationUpdate(request: any): Observable<any> {

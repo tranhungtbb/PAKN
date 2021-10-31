@@ -3,11 +3,10 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
-					<!-- <li class="breadcrumb-item"><a>Vai trò</a></li> -->
-					<li class="breadcrumb-item active"><a class="font-weight-bold">{{title}}</a></li>
+					<li class="breadcrumb-item active"><a class="font-weight-bold text-uppercase">{{title}}</a></li>
 				</ol>
 				<div class="btn-group group-button-table" role="group">
-					<a class="btn btn-sm btn-default rounded mr-3" style="border: 1px solid gray;" [routerLink]="['/quan-tri/email-sms/email']">
+					<a class="btn btn-sm rounded bg-white text-dark border mr-3" [routerLink]="['/quan-tri/email-sms/email']">
 						<i class="bi bi-arrow-left"></i>&nbsp;
 						Quay lại
 					</a>
@@ -156,13 +155,11 @@
 			</div>
 			<div class="col-md-6">
 				<!-- <form class="form-horizontal"> -->
-					<div class="row form-group" style="padding-right: 10px;">
-						<div class="col-sm-12" style="padding: 0px 12px;">
-							<div class="title-user-map text-uppercase" style="font-weight: 500;
-							font-size: 18px;">Cá nhân doanh nghiệp nhận email</div>
+					<div class="row form-group pr-2">
+						<div class="col-sm-12 pr-2 pl-2">
+							<div class="title-user-map text-uppercase">Cá nhân doanh nghiệp nhận email</div>
 							<div class="border mt-2 ng-star-inserted p-3 rounded search-user" *ngIf="statusCurent != 2">
-
-								<div class="" style="display: flex;">
+								<div class="d-flex">
 									<div class="input-serach pr-2" style="flex:1 1;">
 										<div class="department">
 											<label>Đơn vị</label>
@@ -207,11 +204,6 @@
 										</button>
 									</div>
 								</div>
-								<!-- <div *ngIf="submitted" class="has-error m-b-12">
-									<div *ngIf="listBusinessIndividual.length ==0">
-										<span class="help-block">Chọn cá nhân doanh nghiệp nhận email</span>
-									</div>
-								</div> -->
 							</div>
 							
 						</div>
