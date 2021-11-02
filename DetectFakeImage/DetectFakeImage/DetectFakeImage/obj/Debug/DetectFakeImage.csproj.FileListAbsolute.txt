@@ -1,0 +1,9 @@
+E:\PROJECT_SOFT_VIET\DetectFakeImage\DetectFakeImage\DetectFakeImage\bin\Debug\DetectFakeImage.exe
+E:\PROJECT_SOFT_VIET\DetectFakeImage\DetectFakeImage\DetectFakeImage\bin\Debug\DetectFakeImage.pdb
+E:\PROJECT_SOFT_VIET\DetectFakeImage\DetectFakeImage\DetectFakeImage\obj\Debug\DetectFakeImage.csproj.AssemblyReference.cache
+E:\PROJECT_SOFT_VIET\DetectFakeImage\DetectFakeImage\DetectFakeImage\obj\Debug\DetectFakeImage.Form1.resources
+E:\PROJECT_SOFT_VIET\DetectFakeImage\DetectFakeImage\DetectFakeImage\obj\Debug\DetectFakeImage.Properties.Resources.resources
+E:\PROJECT_SOFT_VIET\DetectFakeImage\DetectFakeImage\DetectFakeImage\obj\Debug\DetectFakeImage.csproj.GenerateResource.cache
+E:\PROJECT_SOFT_VIET\DetectFakeImage\DetectFakeImage\DetectFakeImage\obj\Debug\DetectFakeImage.csproj.CoreCompileInputs.cache
+E:\PROJECT_SOFT_VIET\DetectFakeImage\DetectFakeImage\DetectFakeImage\obj\Debug\DetectFakeImage.exe
+E:\PROJECT_SOFT_VIET\DetectFakeImage\DetectFakeImage\DetectFakeImage\obj\Debug\DetectFakeImage.pdb
