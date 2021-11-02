@@ -25,7 +25,7 @@ import { ViewRecommendationComponent } from './view-recommendation/view-recommen
 import { ListApproveWaitComponent } from './list-approve-wait/list-approve-wait.component'
 import { ListApproveDenyComponent } from './list-approve-deny/list-approve-deny.component'
 import { ListApprovedComponent } from './list-approved/list-approved.component'
-
+import { ListFakeImageComponent } from './list-fake-image/list-fake-image.component'
 import { RemindComponent } from './remind/remind.component'
 
 import { ListReactionaryWordComponent } from './list-reactionary-word/list-reactionary-word.component'
@@ -62,6 +62,7 @@ import { ListReactionaryWordComponent } from './list-reactionary-word/list-react
 		ListApprovedComponent,
 		RemindComponent,
 		ListReactionaryWordComponent,
+		ListFakeImageComponent,
 	],
 })
 export class RecommendationModule {}

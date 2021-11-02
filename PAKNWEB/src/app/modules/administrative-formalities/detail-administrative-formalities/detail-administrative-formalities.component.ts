@@ -49,6 +49,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		{ value: false, text: 'Không' },
 	]
 	@ViewChild('file', { static: false }) public file: ElementRef
+	@ViewChild('iframeDownload', { static: false }) public iframeDownload: ElementRef
 
 	lstCompositionProfile: any[] = []
 	lstCharges: any[] = []
@@ -382,11 +383,7 @@ export class DetailAdministrativeFormalitiesComponent implements OnInit {
 		this.lstDelete.push(idDelete)
 	}
 
-	public getFileBin(path: string) {
-		this.fileService.downloadFile({ path }).subscribe((res) => {
-			console.log(res)
-		})
-	}
+	public getFileBin(path: string) {}
 }
 class itemSelected {
 	text: string

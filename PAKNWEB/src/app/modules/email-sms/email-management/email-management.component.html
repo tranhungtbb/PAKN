@@ -23,7 +23,7 @@
 					<div class="table-responsive">
 
 						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="query.pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="query.pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
@@ -210,7 +210,7 @@
 			</div>
 			<div class="modal-body pt-3 pb-3">
 				<p-table #table2 [value]="hisPagedList" [lazy]="true" (onLazyLoad)="onPageChangeHis($event)" [paginator]="true" [showCurrentPageReport]="true"
-					currentPageReportTemplate="Tổng số {{hisTotalRecords}}" [rows]="hisQuery.pageSize" [totalRecords]="hisTotalRecords" [responsive]="true" autoLayout="true"
+					currentPageReportTemplate="Tổng số {{hisTotalRecords}}" [rows]="hisQuery.pageSize" [totalRecords]="hisTotalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
 					tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 					<ng-template pTemplate="header" class="bg-thead">
 						<tr>

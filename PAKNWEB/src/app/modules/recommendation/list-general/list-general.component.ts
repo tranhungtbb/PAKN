@@ -424,6 +424,7 @@ export class ListGeneralComponent implements OnInit {
 				_mRRecommendationForwardProcessIN: this.modelProcess,
 				RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_DENY,
 				ReactionaryWord: this.modelProcess.reactionaryWord,
+				IsFakeImage: this.modelProcess.isFakeImage,
 				ListGroupWordSelected: this.lstGroupWordSelected.join(','),
 				IsList: true,
 			}

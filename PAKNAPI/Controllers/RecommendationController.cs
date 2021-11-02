@@ -775,6 +775,7 @@ namespace PAKNAPI.Controller
                 MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
                 _mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
                 _mRRecommendationUpdateStatusIN.Id = request._mRRecommendationForwardProcessIN.RecommendationId;
+                _mRRecommendationUpdateStatusIN.IsFakeImage = _mRRecommendationUpdateStatusIN.IsFakeImage == null ? false : request.IsFakeImage;
                 await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
 
                 if (!request.IsList)
@@ -1006,29 +1007,34 @@ namespace PAKNAPI.Controller
             }
         }
         /// <summary>
-        /// danh sách pakn - không dùng
+        /// danh sách pakn chứa ảnh giả
         /// </summary>
         /// <param name="Code"></param>
         /// <param name="SendName"></param>
         /// <param name="Content"></param>
         /// <param name="UnitId"></param>
         /// <param name="Field"></param>
-        /// <param name="Status"></param>
         /// <param name="PageSize"></param>
         /// <param name="PageIndex"></param>
         /// <returns></returns>
 
         [HttpGet]
         [Authorize("ThePolicy")]
-        [Route("get-list-recommentdation-on-page")]
-        public async Task<ActionResult<object>> MRRecommendationGetAllOnPageBase(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex)
+        [Route("get-list-recommentdation-fake-image")]
+        public async Task<ActionResult<object>> MRRecommendationFakeImage(string Code, string SendName, string Content, int? UnitId, int? Field, int? PageSize, int? PageIndex)
         {
             try
             {
-                List<MRRecommendationGetAllOnPage> rsMRRecommendationGetAllOnPage = await new MRRecommendationGetAllOnPage(_appSetting).MRRecommendationGetAllOnPageDAO(Code, SendName, Content, UnitId, Field, Status, PageSize, PageIndex);
+                var unitProcess = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                var userProcess = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                List<MRRecommendationGetAllOnPage> mrRecommendationFakeImage = await new MRRecommendationGetAllOnPage(_appSetting).MRRecommendationFakeImageDAO(Code, SendName, Content, UnitId, Field, STATUS_RECOMMENDATION.RECEIVE_DENY, userProcess ,unitProcess , PageSize, PageIndex);
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
-                        {"MRRecommendationGetAllOnPage", rsMRRecommendationGetAllOnPage},
+                        {"MRRecommendationFakeImage", mrRecommendationFakeImage},
+                        {"TotalCount", mrRecommendationFakeImage != null && mrRecommendationFakeImage.Count > 0 ? mrRecommendationFakeImage[0].RowNumber : 0},
+                        {"PageIndex", mrRecommendationFakeImage != null && mrRecommendationFakeImage.Count > 0 ? PageIndex : 0},
+                        {"PageSize", mrRecommendationFakeImage != null && mrRecommendationFakeImage.Count > 0 ? PageSize : 0},
+
                     };
                 return new ResultApi { Success = ResultCode.OK, Result = json };
             }

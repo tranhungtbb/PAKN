@@ -228,5 +228,115 @@ namespace PAKNAPI.Controllers
             }
         }
 
+
+        /// <summary>
+        /// thêm thư viện ảnh
+        /// </summary>
+        /// <returns></returns>
+
+        [HttpPost]
+        [Authorize("ThePolicy")]
+        [Route("gallery-insert")]
+        public async Task<object> SYGalleryInsert()
+        {
+            try
+            {
+                SYGallery model = new SYGallery();
+                IFormFileCollection File = Request.Form.Files;
+                if (File != null && File.Count > 0)
+                {
+                    string folder = "Upload\\Gallery\\";
+                    string folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+
+                    foreach (var file in File) {
+                        model = new SYGallery();
+                        model.FileName = Path.GetFileName(file.FileName).Replace("+", "");
+                        model.FilePath = Path.Combine(folder, model.FileName);
+                        model.FileType = GetFileTypes.GetFileTypeInt(file.ContentType);
+
+                        string filePath = Path.Combine(folderPath, model.FileName);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                           file.CopyTo(stream);
+                        }
+                        await new SYGallery(_appSetting).SYGalleryInsertDAO(model);
+                    }
+                    new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+                    return new ResultApi { Success = ResultCode.OK, Message = "Thêm mới thành công" };
+                }
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, "File rỗng", null);
+                return new ResultApi { Success = ResultCode.ORROR, Message = "Vui lòng chọn file để thêm mới" };
+            }
+            catch (Exception ex)
+            {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="syGalleryDelete"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize("ThePolicy")]
+        [Route("gallery-delete")]
+        public async Task<object> SYGalleryDelete(SYGalleryDelete syGalleryDelete)
+        {
+            try
+            {
+                await new SYGallery(_appSetting).SYSupportMenuDeleteDAO(syGalleryDelete);
+                // delete image from folder
+                deletefile(syGalleryDelete.FilePath);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+                return new ResultApi { Success = ResultCode.OK, Message = "Xóa thành công" };
+            }
+            catch (Exception ex)
+            {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+
+        
+
+        [HttpGet]
+        [Authorize("ThePolicy")]
+        [Route("gallery-get-all")]
+        public async Task<object> SYGalleryGetList()
+        {
+            try
+            {
+                List<SYGalleryResponse> galleries = await new SYGallery(_appSetting).SYGalleryGetListDAO();
+                return new ResultApi { Success = ResultCode.OK, Message = ResultMessage.OK, Result = galleries };
+            }
+            catch (Exception ex)
+            {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        private bool deletefile(string fname)
+        {
+            try
+            {
+                string _imageToBeDeleted = Path.Combine(_hostingEnvironment.WebRootPath, fname);
+                if ((System.IO.File.Exists(_imageToBeDeleted)))
+                {
+                    System.IO.File.Delete(_imageToBeDeleted);
+                }
+                return true;
+            }
+            catch (Exception ex) { return false; }
+        }
+
     }
 }

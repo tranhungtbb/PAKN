@@ -192,6 +192,64 @@ namespace PAKNAPI.ModelBase
 	}
 
 
+	public class SYGallery
+	{
+		private SQLCon _sQLCon;
+
+		public SYGallery(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public SYGallery()
+		{
+		}
+
+		public int Id { get; set; }
+		public string FilePath { get; set; }
+		public int? FileType { get; set; }
+		public string FileName { get; set; }
+		public int? Index { get; set; }
+		public async Task<int?> SYGalleryInsertDAO(SYGallery syGallery)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("FileName", syGallery.FileName);
+			DP.Add("FilePath", syGallery.FilePath);
+			DP.Add("FileType", syGallery.FileType);
+			DP.Add("Index", syGallery.Index);
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("[SY_GalleryInsert]", DP);
+		}
+
+		public async Task<List<SYGalleryResponse>> SYGalleryGetListDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+			return (await _sQLCon.ExecuteListDapperAsync<SYGalleryResponse>("[SY_GalleryGetAll]", DP)).ToList();
+		}
+
+		public async Task<int?> SYSupportMenuDeleteDAO(SYGalleryDelete model)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("@Id", model.Id);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_GalleryDelete", DP);
+		}
+	}
+
+	public class SYGalleryDelete {
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Id gallery không được để trống")]
+		public int Id { get; set; }
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Đường dẫn ảnh không được để trống")]
+		public string FilePath { get; set; }
+	}
+
+	public class SYGalleryResponse
+	{
+		public int Id { get; set; }
+		public string Src { get; set; }
+		public string Caption { get; set; }
+		public string Thumb { get; set; }
+	}
+
 	public class SYIntroduce
 	{
 		private SQLCon _sQLCon;

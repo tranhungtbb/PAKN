@@ -55,7 +55,7 @@ export class RecommendationSearchObject {
 	status: number
 	place: string
 	unit: string
-	groupWord : number
+	groupWord: number
 }
 export class RecommendationForwardObject {
 	id: number = 0
@@ -80,6 +80,7 @@ export class RecommendationProcessObject {
 	status: number = null
 	reasonDeny: string = ''
 	reactionaryWord: boolean = false
+	isFakeImage: boolean = false
 }
 export class RecommendationViewObject {
 	id: number

@@ -223,9 +223,15 @@ export class CreateRecommendationComponent implements OnInit {
 	getListUnit() {
 		this.lstUnit = []
 		this.model.unitId = null
-		this.unitService.getChildrenDropdownByField({ FieldId: this.model.field }).subscribe((res) => {
+		let obj = {
+			FieldId: this.model.field == null ? '' : this.model.field,
+		}
+		this.unitService.getChildrenDropdownByField(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				this.lstUnit = res.result
+				if (this.lstUnit.length === 1) {
+					this.model.unitId = this.lstUnit[0].value
+				}
 			} else {
 				this.lstUnit = []
 				this.toastr.error(res.message)
@@ -238,7 +244,7 @@ export class CreateRecommendationComponent implements OnInit {
 			title: new FormControl(this.model.title, [Validators.required]),
 			content: new FormControl(this.model.content, [Validators.required]),
 			field: new FormControl(this.model.field, [Validators.required]),
-			unitId: new FormControl(this.model.unitId),
+			unitId: new FormControl(this.model.unitId, [Validators.required]),
 			hashtag: new FormControl(this.hashtagId),
 			captcha: new FormControl(this.captchaCode, [Validators.required]),
 		})

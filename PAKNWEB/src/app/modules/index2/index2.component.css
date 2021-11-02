@@ -152,12 +152,6 @@
 .f-6 {
 	flex: 6;
 }
-.ps-relative {
-	position: relative;
-}
-.ps-absolute {
-	position: absolute;
-}
 .card-my-recommentdation {
 	padding: 15px;
 	background-color: #eff8ff;
@@ -233,12 +227,12 @@
 }
 :host ::ng-deep .owl-carousel .owl-nav .owl-prev {
 	position: absolute;
-	bottom: 90px;
+	bottom: 115px;
 	left: -100px;
 }
 :host ::ng-deep .owl-carousel .owl-nav .owl-next {
 	position: absolute;
-	bottom: 90px;
+	bottom: 115px;
 	right: -100px;
 }
 :host ::ng-deep .owl-carousel .owl-item img {
@@ -247,7 +241,7 @@
 :host ::ng-deep .owl-theme .owl-nav [class*='owl-'] {
 	width: 36px;
 	height: 36px;
-	background: rgba(22, 115, 216, 0.6);
+	background: #2e73d5;
 	border-radius: 36px;
 	display: flex;
 	flex-direction: row;
@@ -274,5 +268,47 @@
 	height: 22px;
 	background: #92486b;
 	border-radius: 27px;
+	color: #fff;
+}
+.border-radius-gallery {
+	border-radius: 12px;
+}
+
+.list-group-flush li i {
+	color: #2e73d5;
+	font-size: 15px;
+}
+
+.bg-cards-content-owl {
+	bottom: 0px;
+	border-bottom-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	background: linear-gradient(0deg, rgba(208, 206, 206, 1) 0%, rgba(255, 255, 255, 0.18280815744266454) 100%);
+}
+
+.search-bar input {
+	min-width: 280px;
+	border-radius: 4px;
+	background-color: rgba(255, 255, 255, 0.2);
+	border: none;
+	color: #fff;
+	padding-right: 45px;
+}
+.search_icon i {
+	font-size: 20px;
+	color: #fff;
+}
+::placeholder {
+	color: #fff;
+	opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+	/* Internet Explorer 10-11 */
+	color: #fff;
+}
+
+::-ms-input-placeholder {
+	/* Microsoft Edge */
 	color: #fff;
 }

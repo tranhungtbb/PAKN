@@ -110,19 +110,20 @@
 							</li>
 						</ul>
 
-						<div class="header-left">
-							<div class="search_bar dropdown show">
-								<div class="dropdown-menu p-0 m-0 show">
+						<div class="menu-left">
+							<div class="search-bar center ps-relative">
+								<div class="p-0 m-0 show">
 									<form>
-										<input class="form-control" type="search" placeholder="Tìm kiếm phản ánh kiến nghị..." aria-label="Search">
+										<input class="form-control" type="text" placeholder="Tìm kiếm phản ánh kiến nghị..." aria-label="Search">
 									</form>
 								</div>
-								<span class="search_icon p-3 c-pointer" data-toggle="dropdown">
-									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<span class="search_icon p-3 c-pointer ps-absolute" style="right: 0px;">
+									<!-- <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<path
 											d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z"
 											fill="#A4A4A4" />
-									</svg>
+									</svg> -->
+									<i class="bi bi-search"></i>
 								</span>
 							</div>
 						</div>
@@ -291,6 +292,7 @@
 						</div>
 						<div>
 							<p-table [value]="Administrations">
+								<!-- [value]="Administrations" -->
 								<ng-template pTemplate="header">
 										<tr>
 												<th style="width: 200px;">Mã quản lý quốc gia</th>
@@ -331,6 +333,28 @@
 
 			<!-- End TTHC -->
 
+			<div class="row justify-content-between mt-4">
+				<a href="#"><img class="img-fluid card shadow" style="width: 100%; object-fit: fill;" src="../../../assets/dist/images/banner2.PNG" alt=""></a>
+				<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 pb-1">
+					<a href="#">
+						<img class="img-fluid card shadow bd-20" style="width: 100%; height: 100%;"
+						src="../../../assets/dist/images/Rectangle 362.png" alt="">
+					</a>
+				</div>
+				<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 pb-1">
+					<a href="#">
+						<img class="img-fluid card shadow bd-20" style="width: 100%; height: 100%;"
+						src="../../../assets/dist/images/Rectangle 363.png" alt="">
+					</a>
+				</div>
+				<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 pb-1">
+					<a href="#">
+						<img class="img-fluid card shadow bd-20" style="width: 100%; height: 100%;"
+						src="../../../assets/dist/images/Rectangle 365.png" alt="">
+					</a>
+				</div>
+			</div>
+
 			
 
 			<div class="row justify-content-between">
@@ -343,7 +367,7 @@
 							<div class="card mb-lg-0 bg-transparent shadow rounded-xl position-relative">
 								<a href="javascript:void(0)" style="max-height: 460px;" (click)="redirectDetailNews(firstNews.id)" class="image-box ratio-4-3 rounded">
 									<span class="image">
-										<img style="width: 100%; height: 100%; object-fit: cover;" src="../../../../assets/dist/images/article.png">
+										<img style="width: 100%; height: 100%; object-fit: cover;" src="../../../assets/dist/images/article.png">
 									</span>
 								</a>
 		
@@ -363,18 +387,36 @@
 						<div class="center">
 							<div class="col col-lg-9 mt-4">
 								<owl-carousel-o [options]="customOptions">
-									<ng-container *ngFor="let item of news">
+									<ng-container *ngFor="let item of [1,2,3]">
 										<ng-template carouselSlide [id]="item.id">
-											<div class="card mb-lg-0 ps-relative">
-												<a href="javascript:void(0)" (click)="redirectDetailNews(item.id)" class="image-box ratio-16-9 rounded">
-													<span class="image">
-														<img *ngIf="item" src="http://14.177.236.88:6160/Upload/News/28072021103101-Khanh-Hoa.jpg">
-													</span>
-												</a>
-												<div class="content-article ps-absolute">
-													<p class="card-text text-dark px-4 pt-3 py-0 mb-0">{{item.createdDate | date: 'dd/MM/yyyy'}}</p>
-													<div class="card-header px-4 pt-1 pb-0 text-3line" style="height: 80px;">
-														<p class="card-title" (click)="redirectDetailNews(item.id)">{{item.title}}</p>
+											<div *ngIf="item ==1" class="card mb-lg-0 ps-relative" style="background-image: url(../../../assets/dist/images/Rectangle%20361.png); min-height: 260px; background-size: cover;">
+												<div class="content-article ps-absolute bg-cards-content-owl">
+													<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">14/01/2021</p>
+													<div class="card-header px-4 pt-0 pb-0" style="height: 80px;">
+														<p class="card-title text-2line" (click)="redirectDetailNews(item.id)">
+															Phê duyệt nhiệm vụ lập quy hoạch tỉnh Khánh Hòa Phê duyệt nhiệm vụ lập quy hoạch 
+															tỉnh Khánh Hòa Phê duyệt nhiệm vụ lập quy hoạch tỉnh Khánh Hòa
+														</p>
+													</div>
+												</div>
+											</div>
+											<div *ngIf="item ==2" class="card mb-lg-0 ps-relative" style="background-image: url(http://14.177.236.88:6160/Upload/News/28072021103101-Khanh-Hoa.jpg); min-height: 260px; background-size: cover;">
+												<div class="content-article ps-absolute bg-cards-content-owl">
+													<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">14/01/2021</p>
+													<div class="card-header px-4 pt-0 pb-0" style="height: 80px;">
+														<p class="card-title text-2line" (click)="redirectDetailNews(item.id)">
+															Khánh Hòa sẽ mở rộng vùng an toàn đến khu công nghiệp, du lịch và dịch vụ
+														</p>
+													</div>
+												</div>
+											</div>
+											<div *ngIf="item ==3" class="card mb-lg-0 ps-relative" style="background-image: url(http://14.177.236.88:6160/Upload/News/28072021102519-bien-nha-trang-4.jpg); min-height: 260px; background-size: cover;">
+												<div class="content-article ps-absolute bg-cards-content-owl">
+													<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">14/01/2021</p>
+													<div class="card-header px-4 pt-0 pb-0" style="height: 80px;">
+														<p class="card-title text-2line" (click)="redirectDetailNews(item.id)">
+															Khánh Hòa sẽ mở rộng vùng an toàn đến khu công nghiệp, du lịch và dịch vụ
+														</p>
 													</div>
 												</div>
 											</div>
@@ -386,52 +428,73 @@
 					</div>
 				</div>
 				<div class="col col-lg-3 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
-					<div class="sb-lkWeb mb-4">
+					<div class="sb-lkWeb mb-2">
 						<div class="tt-v1 pt-3">
 							<h4 class="text-uppercase">liên kết website</h4>
 						</div>
-						<ng-container *ngFor="let item of ltsIndexSettingWebsite; let i = index">
+						<ng-container *ngFor="let item of [1,2,3,4]; let i = index">
 							<a class="mb-4 mt-3" target="_blank" href="{{item.urlWebsite}}" title="{{item.nameWebsite}}">
-								<img class="img-fluid card shadow rounded mb-0 mt-4" style="width: 100%; height: 100px;" *ngIf="i==0" src="../../../assets/dist/images/cong dịch vụ công quốc gia.png">
-								<img class="img-fluid card shadow rounded mb-0 mt-4" style="width: 100%; height: 100px;" *ngIf="i==1" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công.png">
-								<img class="img-fluid card shadow rounded mb-0 mt-4" style="width: 100%; height: 100px;" *ngIf="i==2" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (1).png">
-								<img class="img-fluid card shadow rounded mb-0 mt-4" style="width: 100%; height: 100px;" *ngIf="i==3" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (2).png">
+								<img class="img-fluid card shadow rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==0" src="../../../assets/dist/images/cong dịch vụ công quốc gia.png">
+								<img class="img-fluid card shadow rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==1" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công.png">
+								<img class="img-fluid card shadow rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==2" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (1).png">
+								<img class="img-fluid card shadow rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==3" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (2).png">
 							</a>
 						</ng-container>
 					</div>
+
+					<div class="sb-lkWeb mb-3">
+						<div class="tt-v1 pt-3">
+							<h4 class="text-uppercase">thư viện ảnh</h4>
+						</div>
+						<div class="p-3 shadow border border-radius-gallery">
+							<div class="row p-2">
+								<div class="col-4 p-1" *ngFor="let image of _albums; let i=index">
+									<img [src]="image.thumb" style="object-fit: cover; width: 100%; height: 100%;" (click)="open(i)" />
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
+				<a href="#"><img class="img-fluid card shadow img-hover" style="width: 100%; object-fit: fill;" src="../../../assets/dist/images/Rectangle 360.png" alt=""></a>
 			</div>
-
 		</div>
-	</div>
-
-	<div *ngFor="let image of _albums; let i=index">
-		<img [src]="image.thumb" (click)="open(i)" />
 	</div>
 
 	<div class="footer px-0">
-		<div class="ct-footer pt-5 pb-4" style="background: #f6faff">
+		<div class="ct-footer pt-5 pb-4" style="background: #DDEDFF">
 			<div class="container">
 				<div class="row justify-content-between">
-					<div class="col-12 col-lg-5 pr-lg-5">
-						<a href="#"><img class="img-fluid" src="../../../assets/dist/images/logo-ft.png" alt=""></a>
-						<p class="mb-0 mt-3 h6">{{indexSettingObj.description}}</p>
+					<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+						<h4 class="text-uppercase">video giới thiệu</h4>
+						<video src="https://www.youtube.com/embed/hRvJ31HpWY4" controls></video>
+						
 					</div>
-					<div class="col-auto pl-3 pl-lg-0 mt-3 mt-lg-0" style="width: 320px">
+					<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 pl-3 pl-lg-0 mt-3 mt-lg-0">
+						<h4 class="text-uppercase">thông tin đường dây nóng,hỗ trợ kỹ thuật</h4>
 						<ul class="list-group list-group-flush">
-							<li class="list-group-item pb-2 pt-0 px-0 border-0"><i class="bi bi-telephone-fill mr-2"></i>{{indexSettingObj.phone}}</li>
-							<li class="list-group-item py-2 px-0 border-0"><i class="bi bi-envelope-open-fill mr-2"></i>{{indexSettingObj.email}}</li>
-							<li class="list-group-item py-2 px-0"><i class="bi bi-geo-alt-fill mr-2"></i>{{indexSettingObj.address}}</li>
+							<li class="list-group-item pb-2 pt-0 px-0 border-0"><i class="fas fa-home mr-2"></i>Trung tâm CNTT và dịch vụ hành chính công trực tuyến</li>
+							<li class="list-group-item py-2 px-0 border-0"><i class="fas fa-phone-square-alt mr-2"></i>1900.1023</li>
+							<li class="list-group-item py-2 px-0 border-0"><i class="fas fa-envelope-open mr-2"></i>hanhchinhcongkh@gmail.com</li>
+							<li class="list-group-item py-2 px-0 border-0"><i class="fas fa-map-marked-alt mr-2"></i>147 Thống Nhất, Nha Trang, Khánh Hòa</li>
+							<li class="list-group-item py-2 px-0 border-0"><i class="fab fa-facebook-square mr-2"></i>facebook.com/hanhchinhcongKH</li>
+						</ul>
+					</div>
+					<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 pl-3 pl-lg-0 mt-3 mt-lg-0">
+						<h4 class="text-uppercase">tiếp nhận phản ánh, kiến nghị về quy định hành chính</h4>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item pb-2 pt-0 px-0 border-0"><i class="fas fa-home mr-2"></i>Văn phòng UBND Tỉnh Khánh Hòa</li>
+							<li class="list-group-item py-2 px-0 border-0"><i class="fas fa-phone-square-alt mr-2"></i>0258.3563.531</li>
+							<li class="list-group-item py-2 px-0 border-0"><i class="fas fa-envelope-open mr-2"></i>pkstthc.vpub@khanhhoa.gov.vn</li>
+							<li class="list-group-item py-2 px-0 border-0"><i class="fas fa-map-marked-alt mr-2"></i>Số 01 Trần Phú, Nha Trang, Khánh Hòa</li>
 						</ul>
 					</div>
 				</div>
-
 			</div>
 		</div>
-		<div class="copyright py-2" style="background: #E9F2FD">
+		<div class="copyright py-2" style="background: #CDDEF1">
 			<div class="container">
 				<p class="text-left">
-					<small class="fw600">{{indexSettingObj.license}}</small>
+					<small class="fw600">Trung tâm Công nghệ thống tin và Dịch vụ hành chính công trực tuyến - Sở TTTT tỉnh Khánh Hòa</small>
 				</p>
 			</div>
 		</div>

@@ -98,6 +98,7 @@ export class LOG_OBJECT {
 	public static SY_SYSTEM = 'Lịch sử hệ thống'
 	public static CALL_HISTORY = 'Cuộc gọi'
 	public static SY_NOTIFICATION = 'Thông báo'
+	public static SY_GALLERY = 'Thư viện ảnh'
 }
 
 export class MESSAGE_COMMON {

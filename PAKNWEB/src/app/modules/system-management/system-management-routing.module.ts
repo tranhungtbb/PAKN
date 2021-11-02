@@ -16,6 +16,7 @@ import { SystemConfigComponent } from './components/system-config/system-config.
 import { SwitchboardSettingComponent } from './components/switchboard-setting/switchboard-setting.component'
 import { UserSystemComponent } from './components/user-system/user-system.component'
 import { NummerOfWarningSettingComponent } from './components/number-of-warning/number-of-warning.component'
+import { SupportGalleryComponent } from './components/support-gallery/support-gallery.component'
 
 const routes: Routes = [
 	{
@@ -110,6 +111,12 @@ const routes: Routes = [
 				component: UserSystemComponent,
 				canActivate: [RoleGuardService],
 				data: { role: 'C_I_0' },
+			},
+			{
+				path: 'thu-vien-anh',
+				component: SupportGalleryComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'G_II_3' },
 			},
 		],
 	},

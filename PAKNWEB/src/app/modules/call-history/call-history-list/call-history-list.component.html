@@ -13,7 +13,7 @@
 			<div class="col-lg-12">
 				<div class="card mb-0 shadow-none">
 					<div class="table-responsive">
-						<p-table #table [value]="listData" [rows]="query.pageSize" [totalRecords]="totalCount" currentPageReportTemplate="Tổng số {{totalCount}}"
+						<p-table #table [value]="listData" [rows]="query.pageSize" [totalRecords]="totalCount" [rowsPerPageOptions]="[20,30,50]" currentPageReportTemplate="Tổng số {{totalCount}}"
 							(onLazyLoad)="onPageChange($event)" [lazy]="true" [responsive]="true" [paginator]="true" [showCurrentPageReport]="true" autoLayout="true"
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">

@@ -1087,6 +1087,23 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetAllOnPage>("MR_RecommendationGetAllOnPage", DP)).ToList();
 		}
+
+		public async Task<List<MRRecommendationGetAllOnPage>> MRRecommendationFakeImageDAO(string Code, string SendName, string Content, int? UnitId, int? Field, int? Status, long UserProcess, int? UnitProcess, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Code", Code);
+			DP.Add("SendName", SendName);
+			DP.Add("Content", Content);
+			DP.Add("UnitId", UnitId);
+			DP.Add("Field", Field);
+			DP.Add("Status", Status);
+			DP.Add("UserProcessId", UserProcess);
+			DP.Add("UnitProcessId", UnitProcess);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetAllOnPage>("MR_RecommendationFakeImageGetOnPage", DP)).ToList();
+		}
 	}
 
 	public class MRRecommendationGetAllReactionaryWord
@@ -1850,19 +1867,25 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> MRRecommendationUpdateStatusDAO(MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _mRRecommendationUpdateStatusIN.Id);
-			DP.Add("Status", _mRRecommendationUpdateStatusIN.Status);
+        public async Task<int> MRRecommendationUpdateStatusDAO(MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("Id", _mRRecommendationUpdateStatusIN.Id);
+            DP.Add("Status", _mRRecommendationUpdateStatusIN.Status);
+            DP.Add("IsFakeImage", _mRRecommendationUpdateStatusIN.IsFakeImage);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateStatus", DP));
-		}
-	}
+            return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateStatus", DP));
+        }
+    }
 
 	public class MRRecommendationUpdateStatusIN
 	{
 		public int? Id { get; set; }
 		public byte? Status { get; set; }
+		public bool? IsFakeImage { get; set; }
+
+		public MRRecommendationUpdateStatusIN() {
+			this.IsFakeImage = false;
+		}
 	}
 }

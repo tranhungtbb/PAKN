@@ -33,6 +33,7 @@ export class Api {
 	public static RecommendationGetList = 'recommendation/get-list-recommentdation-on-page'
 	public static RecommendationGetListProcess = 'recommendation/get-list-recommentdation-process-on-page'
 	public static RecommendationGetListReactionaryWord = 'recommendation/get-list-recommentdation-reactionary-word'
+	public static RecommendationGetListFakeImage = 'recommendation/get-list-recommentdation-fake-image'
 	public static RecommendationGetById = 'recommendation/get-by-id'
 	public static RecommendationGetByIdView = 'recommendation/get-detail-by-id'
 	public static RecommendationGetByIdViewPublic = 'recommendation/get-detail-public-by-id'
@@ -263,6 +264,9 @@ export class Api {
 	public static SYSupportUpdate = 'support/update'
 	public static SYSupportDelete = 'support/delete'
 	public static PU_Support = 'support/support-public'
+	public static SYGalleryInsert = 'support/gallery-insert'
+	public static SYGalleryGetList = 'support/gallery-get-all'
+	public static SYGalleryDelete = 'support/gallery-delete'
 
 	// SYIndexSetting
 

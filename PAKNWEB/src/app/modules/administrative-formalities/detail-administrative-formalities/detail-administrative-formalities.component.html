@@ -6,11 +6,6 @@
 		<div class="col-lg-12">
 			<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
 				<li class="breadcrumb-item"><span>Trang chủ </span>/<strong> Thủ tục hành chính</strong></li>
-				<!-- <li class="breadcrumb-item active"><a class="font-weight-bold"> <strong
-							*ngIf="id && id > 0;else titleThemMoi">Cập
-							nhật</strong>
-						<ng-template #titleThemMoi><strong>Thêm mới</strong></ng-template>
-					</a></li> -->
 			</ol>
 			<div class="btn-group group-button-table" role="group">
 				<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" appSvBackButton><i class="bi bi-arrow-left mr-2"></i> quay lại</button>
@@ -23,6 +18,10 @@
 				<span *hasPermission="['3', 'H_I_4']">
 					<button *ngIf="model.status == 3" class="btn btn-sm grd-green rounded text-white border-0 mr-3" (click)="onSave(2)">Thu hồi</button>
 				</span>
+				<a class="btn text-white border-0 grd-xanhngoc mr-3 px-5" target="_blank" href="{{'https://hanhchinhcong.khanhhoa.gov.vn/#/nguoidung/soanhoso?thutucId='+ model.administrationId + '&donvitiepnhanId=-2'}}">
+					Nộp hồ sơ
+				</a>
+				
 				
 				<!-- <a class="btn btn-sm rounded text-dark border-0 grd-brown" [routerLink]="['../../cap-nhat',model.id]">Sửa</a> -->
 
@@ -116,19 +115,19 @@
 								<td class="font-weight-bold">Tài liệu đính kèm</td>
 								<td class="text-left">
 									<ng-container *ngFor="let item of files">
-										<a *ngIf="item.fileType == 1" href="javascript:void(0);" class="text-center box-fileinput">
+										<a *ngIf="item.fileType == 1" href="javascript:void(0);" class="text-center box-fileinput" (click)="getFileBin(item.attachFile)">
 											<img src="../../../../assets/dist/images/file-word.svg" style="width: 45px" alt="{{item.name}}" title="{{item.name}}">
 										</a>
 										<a *ngIf="item.fileType == 2" href="javascript:void(0);" class="text-center box-fileinput" (click)="getFileBin(item.attachFile)">
 											<img src="../../../../assets/dist/images/file-excel.svg" style="width: 45px" alt="{{item.name}}" title="{{item.name}}">
 										</a>
-										<a *ngIf="item.fileType == 4" href="javascript:void(0);" class="text-center box-fileinput">
+										<a *ngIf="item.fileType == 4" href="javascript:void(0);" class="text-center box-fileinput" (click)="getFileBin(item.attachFile)">
 											<img src="../../../../assets/dist/images/file-image.svg" style="width: 45px" alt="{{item.name}}" title="{{item.name}}">
 										</a>
-										<a *ngIf="item.fileType == 3" href="javascript:void(0);" class="text-center box-fileinput">
+										<a *ngIf="item.fileType == 3" href="javascript:void(0);" class="text-center box-fileinput" (click)="getFileBin(item.attachFile)">
 											<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 40px" alt="{{item.name}}" title="{{item.name}}">
 										</a>
-										<a *ngIf="item.fileType == 6" href="javascript:void(0);" class="text-center box-fileinput">
+										<a *ngIf="item.fileType == 6" href="javascript:void(0);" class="text-center box-fileinput" (click)="getFileBin(item.attachFile)">
 											<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 45px" alt="{{item.name}}" title="{{item.name}}">
 										</a>
 									</ng-container>
@@ -199,7 +198,7 @@
 											<div class="attach-file row">
 												<div class="col-auto mb-4" *ngIf="item.fileType == 1">
 													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
-														<a href="#" class="d-block text-center box-fileinput">
+														<a href="{{'https://' + item.fileAttach}}" target="_blank" class="d-block text-center box-fileinput">
 															<img src="../../../../assets/dist/images/file-word.svg" class="pull-left" alt="">
 															<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
 														</a>
@@ -207,7 +206,7 @@
 												</div>
 												<div class="col-auto mb-4" *ngIf="item.fileType == 2">
 													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
-														<a href="#" class="d-block text-center box-fileinput">
+														<a href="{{'https://' + item.fileAttach}}" target="_blank" class="d-block text-center box-fileinput">
 															<img src="../../../../assets/dist/images/file-excel.svg" class="pull-left" alt="">
 															<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
 														</a>
@@ -215,7 +214,7 @@
 												</div>
 												<div class="col-auto mb-4" *ngIf="item.fileType == 4">
 													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
-														<a href="#" class="d-block text-center box-fileinput">
+														<a href="{{'https://' + item.fileAttach}}" target="_blank" class="d-block text-center box-fileinput">
 															<img src="../../../../assets/dist/images/file-image.svg" class="pull-left" alt="">
 															<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
 														</a>
@@ -223,7 +222,7 @@
 												</div>
 												<div class="col-auto mb-4" *ngIf="item.fileType == 3">
 													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
-														<a href="#" class="d-block text-center box-fileinput">
+														<a href="{{'https://' + item.fileAttach}}" target="_blank" class="d-block text-center box-fileinput">
 															<img src="../../../../assets/dist/images/file-pdf.svg" class="pull-left" alt="">
 															<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
 														</a>
@@ -231,7 +230,7 @@
 												</div>
 												<div class="col-auto mb-4" *ngIf="item.fileType == 6">
 													<div class="alert alert-dark alert-dismissible fade show h-100 d-flex align-items-center">
-														<a href="#" class="d-block text-center box-fileinput">
+														<a href="{{'https://' + item.fileAttach}}" target="_blank" class="d-block text-center box-fileinput">
 															<img src="../../../../assets/dist/images/file-powerpoint.svg" class="pull-left" alt="">
 															<span class="mt-2 text-dark text-wrap text-2line">{{item.name}}</span>
 														</a>
@@ -391,21 +390,6 @@
 						<span class="font-weight-bold">Ngày công bố: </span><span class="pull-right">{{model.createdDate | date : 'dd/MM/yyyy' }}</span>
 					</p>
 				</div>
-				<!-- <div class="">
-					<div class="grd-ab p-3">
-						<button class="btn btn-sm grd-blue border-0 text-white"> <i class="pi pi-send"></i> Gửi đơn vị</button>
-					</div>
-					<div class="p-3" style="background-color: #f7fbff;">
-						<div class="border-bottom">
-							<h5>Đơn vị</h5>
-							<time>10:00 - 12/12/2021</time>
-							<p>
-								<span>Ghi chú: </span>
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sunt, dolor asperiores molestias dolores nesciunt vero repellat possimus ducimus
-							</p>
-						</div>
-					</div>
-				</div> -->
 			</div>
 		</div>
 	</div>

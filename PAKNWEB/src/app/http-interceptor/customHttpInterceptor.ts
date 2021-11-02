@@ -23,7 +23,8 @@ export class CustomHttpInterceptor implements HttpInterceptor {
 			request.url != AppSettings.API_ADDRESS + Api.NotificationGetList &&
 			request.url != AppSettings.API_ADDRESS + Api.NotificationUpdateIsViewed &&
 			request.url != AppSettings.API_ADDRESS + Api.UserUpdateQBId &&
-			request.url != AppSettings.API_ADDRESS + Api.UserGetAllByIdQb
+			request.url != AppSettings.API_ADDRESS + Api.UserGetAllByIdQb &&
+			request.url != AppSettings.API_ADDRESS + Api.UnitGetChildrenDropdownByField
 		) {
 			this.env.isContentLoading = true
 		}

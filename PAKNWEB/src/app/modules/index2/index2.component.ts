@@ -33,7 +33,54 @@ export class Index2Component implements OnInit {
 		private indexSettingService: IndexSettingService,
 		private _lightbox: Lightbox
 	) {}
-	_album: any[] = []
+	_albums: Array<Album> = [
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(117).jpg',
+			caption: 'Image 1 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(117).jpg',
+		},
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(98).jpg',
+			caption: 'Image 2 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(98).jpg',
+		},
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(131).jpg',
+			caption: 'Image 3 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(131).jpg',
+		},
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(123).jpg',
+			caption: 'Image 4 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(123).jpg',
+		},
+
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(118).jpg',
+			caption: 'Image 1 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(118).jpg',
+		},
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(128).jpg',
+			caption: 'Image 2 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(128).jpg',
+		},
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(132).jpg',
+			caption: 'Image 3 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(132).jpg',
+		},
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(115).jpg',
+			caption: 'Image 4 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(115).jpg',
+		},
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(133).jpg',
+			caption: 'Image 4 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(133).jpg',
+		},
+	]
 
 	RecommendationsOrderByCountClick: Array<PuRecommendation>
 	ReflectionsRecommendations: Array<PuRecommendation>
@@ -95,31 +142,18 @@ export class Index2Component implements OnInit {
 			this.activeUrl = splitRouter[2]
 		}
 		this.getData()
-		this.indexSettingService.GetInfo({}).subscribe(
-			(res) => {
-				if (res.success == RESPONSE_STATUS.success) {
-					this.indexSettingObj = res.result.model
-					this.ltsIndexSettingWebsite = res.result.lstSYIndexWebsite == null ? [] : res.result.lstSYIndexWebsite
-				}
-			},
-			(error) => {
-				console.log(error)
-				alert(error)
-			}
-		)
-
-		for (let i = 1; i <= 4; i++) {
-			const src = 'demo/img/image' + i + '.jpg'
-			const caption = 'Image ' + i + ' caption here'
-			const thumb = 'demo/img/image' + i + '-thumb.jpg'
-			const album = {
-				src: src,
-				caption: caption,
-				thumb: thumb,
-			}
-
-			this._album.push(album)
-		}
+		// this.indexSettingService.GetInfo({}).subscribe(
+		// 	(res) => {
+		// 		if (res.success == RESPONSE_STATUS.success) {
+		// 			this.indexSettingObj = res.result.model
+		// 			this.ltsIndexSettingWebsite = res.result.lstSYIndexWebsite == null ? [] : res.result.lstSYIndexWebsite
+		// 		}
+		// 	},
+		// 	(error) => {
+		// 		console.log(error)
+		// 		alert(error)
+		// 	}
+		// )
 	}
 	routingMenu(pageRouting: string) {
 		this.activeUrl = pageRouting
@@ -137,8 +171,7 @@ export class Index2Component implements OnInit {
 			this.activeUrl = ''
 		}
 	}
-	async getData() {
-		// list recommendation order by count click
+	getData() {
 		this._service.getListOrderByCountClick({ status: RECOMMENDATION_STATUS.FINISED }).subscribe((res) => {
 			if (res != undefined) {
 				if (res.result) {
@@ -224,11 +257,17 @@ export class Index2Component implements OnInit {
 
 	open(index: number): void {
 		// open lightbox
-		this._lightbox.open(this._album, index)
+		this._lightbox.open(this._albums, index)
 	}
 
 	close(): void {
 		// close lightbox programmatically
 		this._lightbox.close()
 	}
+}
+
+export interface Album {
+	src: string
+	caption?: string
+	thumb: string
 }

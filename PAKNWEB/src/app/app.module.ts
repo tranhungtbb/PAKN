@@ -33,7 +33,7 @@ import { TreeviewModule } from 'ngx-treeview'
 import { CarouselModule } from 'ngx-owl-carousel-o'
 import { TooltipModule } from 'ngx-bootstrap/tooltip'
 import { Index2Component } from 'src/app/modules/index2/index2.component'
-// import { LightboxModule } from 'ngx-lightbox'
+import { LightboxModule } from 'ngx-lightbox'
 
 @NgModule({
 	declarations: [AppComponent, SvFocusDirective, ConfirmDialogComponent, ViewFileDialogComponent, Index2Component],
@@ -73,7 +73,7 @@ import { Index2Component } from 'src/app/modules/index2/index2.component'
 		TooltipModule.forRoot(),
 		ChartsModule,
 		TableModule,
-		// LightboxModule,
+		LightboxModule,
 	],
 	providers: [
 		{

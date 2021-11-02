@@ -14,6 +14,7 @@ import { ViewRecommendationComponent } from './view-recommendation/view-recommen
 import { ListApproveDenyComponent } from './list-approve-deny/list-approve-deny.component'
 import { ListApprovedComponent } from './list-approved/list-approved.component'
 import { ListReactionaryWordComponent } from './list-reactionary-word/list-reactionary-word.component'
+import { ListFakeImageComponent } from './list-fake-image/list-fake-image.component'
 import { RoleGuardService } from '../../guards/role-guard.service'
 
 const routes: Routes = [
@@ -21,90 +22,96 @@ const routes: Routes = [
 		path: '',
 		component: RecommendationComponent,
 		children: [
-			{ 
+			{
 				path: 'them-moi/:id',
 				component: CreateRecommendationComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_I_0' }
+				data: { role: 'E_I_0' },
 			},
-			{ 
+			{
 				path: 'them-moi/:id/:typeObject',
 				component: CreateRecommendationComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_I_0' }
+				data: { role: 'E_I_0' },
 			},
-			{ 
+			{
 				path: 'danh-sach-tong-hop',
 				component: ListGeneralComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_I_3' }
+				data: { role: 'E_I_3' },
 			},
-			{ 
+			{
 				path: 'cho-xu-ly',
 				component: ListReceiveWaitComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_I_3' }
+				data: { role: 'E_I_3' },
 			},
 			{
 				path: 'tiep-nhan-xu-ly',
 				component: ListReceiveApprovedComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_I_3' }
+				data: { role: 'E_I_3' },
 			},
-			{ 
+			{
 				path: 'tu-choi-tiep-nhan',
 				component: ListReceiveDenyComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_I_3' }
+				data: { role: 'E_I_3' },
 			},
-			{ 
+			{
 				path: 'cho-giai-quyet',
 				component: ListProcessWaitComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_I_3' }
+				data: { role: 'E_I_3' },
 			},
-			{ 
+			{
 				path: 'dang-giai-quyet',
 				component: ListProcessingComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_I_3' }
+				data: { role: 'E_I_3' },
 			},
-			{ 
+			{
 				path: 'tu-choi-giai-quyet',
 				component: ListProcessDenyComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_I_3' }
+				data: { role: 'E_I_3' },
 			},
-			{ 
+			{
 				path: 'chi-tiet/:id',
 				component: ViewRecommendationComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_I_4' }
+				data: { role: 'E_I_4' },
 			},
 			{
 				path: 'cho-phe-duyet',
 				component: ListApproveWaitComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_I_3' }
+				data: { role: 'E_I_3' },
 			},
 			{
 				path: 'tu-choi-phe-duyet',
 				component: ListApproveDenyComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_I_3' }
+				data: { role: 'E_I_3' },
 			},
-			{ 
+			{
 				path: 'da-giai-quyet',
 				component: ListApprovedComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_I_3' }
+				data: { role: 'E_I_3' },
 			},
-			{ 
+			{
+				path: 'chua-anh-gia',
+				component: ListFakeImageComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'E_I_3' },
+			},
+			{
 				path: 'chua-tu-ngu-bi-cam',
 				component: ListReactionaryWordComponent,
 				canActivate: [RoleGuardService],
-				data: { role: 'E_XII_0' }
-			}
+				data: { role: 'E_XII_0' },
+			},
 		],
 	},
 ]

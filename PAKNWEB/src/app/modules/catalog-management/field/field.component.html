@@ -21,7 +21,7 @@
 			<div class="card mb-0 shadow-none">
 				<div class="table-responsive">
 
-					<p-table #table [value]="listData" [paginator]="true" [showCurrentPageReport]="true"
+					<p-table #table [value]="listData" [paginator]="true" [showCurrentPageReport]="true" [rowsPerPageOptions]="[20,30,50]"
 						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
 						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">

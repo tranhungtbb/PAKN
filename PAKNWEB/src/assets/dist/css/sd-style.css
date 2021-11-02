@@ -1805,4 +1805,10 @@ table thead .form-control ng-select {
 	outline:0;
 	border: none;
 }
+.ps-relative {
+	position: relative;
+}
+.ps-absolute {
+	position: absolute;
+}
 

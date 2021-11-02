@@ -68,6 +68,13 @@ export class RecommendationService {
 		}
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetListReactionaryWord, headers)
 	}
+	recommendationGetListFakeImage(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_RECOMMENDATION),
+		}
+		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetListFakeImage, headers)
+	}
 
 	recommendationGetById(request: any): Observable<any> {
 		let headers = {

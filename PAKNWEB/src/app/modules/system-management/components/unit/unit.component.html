@@ -89,7 +89,7 @@
 					</div>
 					<div id="bordered_no-gutter_collapseOne" class="accordion__body collapse show">
 						<div class="table-responsive">
-							<p-table #table [value]="listUserPaged" [rows]="20" [totalRecords]="totalCount_User"
+							<p-table #table [value]="listUserPaged" [rows]="20" [rowsPerPageOptions]="[20,30,50]" [totalRecords]="totalCount_User"
 								currentPageReportTemplate="Tổng số {{table.totalRecords}}" [responsive]="true" [paginator]="true"
 								[showCurrentPageReport]="true" autoLayout="true" tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 								<ng-template pTemplate="header" class="bg-thead">

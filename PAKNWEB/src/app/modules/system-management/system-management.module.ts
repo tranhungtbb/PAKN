@@ -37,6 +37,7 @@ import { SystemConfigComponent } from './components/system-config/system-config.
 import { SwitchboardSettingComponent } from './components/switchboard-setting/switchboard-setting.component'
 import { UserSystemComponent } from './components/user-system/user-system.component'
 import { NummerOfWarningSettingComponent } from './components/number-of-warning/number-of-warning.component'
+import { SupportGalleryComponent } from './components/support-gallery/support-gallery.component'
 
 @NgModule({
 	imports: [
@@ -79,6 +80,7 @@ import { NummerOfWarningSettingComponent } from './components/number-of-warning/
 		SwitchboardSettingComponent,
 		UserSystemComponent,
 		NummerOfWarningSettingComponent,
+		SupportGalleryComponent,
 	],
 	entryComponents: [UserCreateOrUpdateComponent, UserViewInfoComponent],
 })

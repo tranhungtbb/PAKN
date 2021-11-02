@@ -66,7 +66,7 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg form-group">
-						<label class="mb-1">Đơn vị tiếp nhận </label>
+						<label class="mb-1">Đơn vị tiếp nhận <span class="cl-red">(*)</span></label>
 						<ng-select class="form-control" [items]="lstUnit"
 							bindLabel="text" bindValue="value" notFoundText="Không tìm thấy dữ liệu"
 							placeholder="Chọn..." formControlName="unitId" [(ngModel)]="model.unitId">
@@ -81,6 +81,11 @@
 								</ul>
 							</ng-template>
 						</ng-select>
+						<div *ngIf="(submitted && f.unitId.invalid)" class="has-error">
+							<div *ngIf="f.unitId.errors.required">
+								<span class="help-block">Trường dữ liệu này không được để trống</span>
+							</div>
+						</div>
 					</div>
 					
 					

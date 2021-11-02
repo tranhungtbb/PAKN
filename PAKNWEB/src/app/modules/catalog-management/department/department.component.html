@@ -21,7 +21,7 @@
 			<div class="card mb-0 shadow-none">
 				<div class="table-responsive">
 					<p-table #table [value]="listData" [paginator]="true" [rows]="20" sortMode="multiple"
-						[showCurrentPageReport]="true"
+						[showCurrentPageReport]="true" [rowsPerPageOptions]="[20,30,50]"
 						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [totalRecords]="totalRecords"
 						[responsive]="true" 
 						autoLayout="true"

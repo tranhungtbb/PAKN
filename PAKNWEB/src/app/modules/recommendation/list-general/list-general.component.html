@@ -31,14 +31,18 @@
 					<div class="table-responsive">
 
 						<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
-							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+							currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
 							tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 							<ng-template pTemplate="header" class="bg-thead">
 								<tr>
+									<th style="width: 50px;">
+										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+											<strong>STT</strong>
+										</p>
+									</th>
 									<th style="width: 150px">
 										<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
 											<strong>Mã số</strong>
-											
 										</p>
 										<input placeholder="Nhập..." class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100"
 											(keydown.enter)="dataStateChange()" />
@@ -114,6 +118,7 @@
 							</ng-template>
 							<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
 								<tr>
+									<td class="text-center">{{rowIndex + 1}}</td>
 									<td>
 										<strong><a [routerLink]="['/quan-tri/kien-nghi/chi-tiet/',item.id]" class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
 									</td>
@@ -363,6 +368,10 @@
 				<p class="h4 text-center mb-3">Anh/Chị có chắc chắn từ chối <strong>Phản ánh, kiến nghị</strong> này?</p>
 				<textarea id="targetReject" class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="modelProcess.reasonDeny" maxlength="500"></textarea>
 				<ng-container *ngIf="recommendationStatusProcess == 3 || isForwardProcess == true">
+					<div class="custom-control custom-checkbox checkbox-danger mt-3 mb-3">
+						<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.isFakeImage" id="checkbox_fake_image">
+						<label class="custom-control-label" for="checkbox_fake_image">Chứa ảnh giả</label>
+					</div>
 					<div class="custom-control custom-checkbox checkbox-danger mt-3 mb-3">
 						<input type="checkbox" class="custom-control-input" [(ngModel)]="modelProcess.reactionaryWord" id="basic_checkbox_1">
 						<label class="custom-control-label" for="basic_checkbox_1">Chứa từ ngữ bị cấm</label>
