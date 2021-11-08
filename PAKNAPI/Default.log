@@ -1,0 +1,43 @@
+[2021-11-08 09:55:51] Attempting 'Pdfium' v2021.9.3626 deployment using 'D:\SV_2021\PhanAnhKienNghi\Source\pakn\PAKNAPI\bin\Debug\netcoreapp3.1\runtimes\win-x64\native'
+[2021-11-08 09:55:51] Failed to locate 'pdfium.vanilla' at 'D:\SV_2021\PhanAnhKienNghi\Source\pakn\PAKNAPI\bin\Debug\netcoreapp3.1\runtimes\win-x64\native'
+[2021-11-08 09:55:51] Attempting 'Pdfium' v2021.9.3626 deployment using 'D:\SV_2021\PhanAnhKienNghi\Source\pakn\PAKNAPI\bin\Debug\netcoreapp3.1\runtimes\win-x64\native'
+[2021-11-08 09:55:51] Failed to locate 'pdfium.vanilla' at 'D:\SV_2021\PhanAnhKienNghi\Source\pakn\PAKNAPI\bin\Debug\netcoreapp3.1\runtimes\win-x64\native'
+[2021-11-08 09:55:51] Attempting 'Pdfium' v2021.9.3626 deployment using 'NuGet packages (IronPdf.Native.WebKit.Windows(2021.9.3626)) with folder 'D:\SV_2021\PhanAnhKienNghi\Source\pakn\PAKNAPI\bin\Debug\netcoreapp3.1''
+[2021-11-08 09:55:51] Attempting NuGet package 'IronPdf.Native.WebKit' deployment using 'IronPdf.Native.WebKit.Windows(2021.9.3626)'
+[2021-11-08 09:55:51] Downloading NuGet package from 'https://www.nuget.org/api/v2/package/IronPdf.Native.WebKit.Windows/2021.9.3626'
+[2021-11-08 09:56:14] Extracting package contents 'D:\SV_2021\PhanAnhKienNghi\Source\pakn\PAKNAPI\bin\Debug\netcoreapp3.1\IronPdf.Native.WebKit.Windows.2021.9.3626.nupkg/runtimes/win-x64/native' to 'D:\SV_2021\PhanAnhKienNghi\Source\pakn\PAKNAPI\bin\Debug\netcoreapp3.1\runtimes\win-x64\native'
+[2021-11-08 09:56:16] Successfully deployed NuGet package 'IronPdf.Native.WebKit.Windows' to 'D:\SV_2021\PhanAnhKienNghi\Source\pakn\PAKNAPI\bin\Debug\netcoreapp3.1\runtimes\win-x64\native'
+[2021-11-08 09:56:16] Found 'pdfium.vanilla' at 'D:\SV_2021\PhanAnhKienNghi\Source\pakn\PAKNAPI\bin\Debug\netcoreapp3.1\runtimes\win-x64\native'
+[2021-11-08 09:56:16] Determining deployment commands for platform 'Windows' v6.2.9200.0
+[2021-11-08 09:56:16] Using deployment instructions for 'default' v
+[2021-11-08 09:56:16] Attempting to load Windows library 'D:\SV_2021\PhanAnhKienNghi\Source\pakn\PAKNAPI\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\pdfium.vanilla.dll'
+[2021-11-08 09:56:16] Successfully deployed 'Pdfium' using 'NuGet packages (IronPdf.Native.WebKit.Windows(2021.9.3626)) with folder 'D:\SV_2021\PhanAnhKienNghi\Source\pakn\PAKNAPI\bin\Debug\netcoreapp3.1''
+[2021-11-08 09:56:16] Pdfium extracted page 0 text ''
+[2021-11-08 09:56:16] Pdfium extracted page 0 text ''
+[2021-11-08 09:56:16] Pdfium extracted page 1 text ''
+[2021-11-08 09:56:16] Pdfium extracted page 1 text ''
+[2021-11-08 09:56:16] Pdfium extracted page 2 text ''
+[2021-11-08 09:56:16] Pdfium extracted page 2 text ''
+[2021-11-08 09:56:16] Pdfium extracted page 3 text ''
+[2021-11-08 09:56:16] Pdfium extracted page 3 text ''
+[2021-11-08 09:56:16] Pdfium extracted page 4 text ''
+[2021-11-08 09:56:16] Pdfium extracted page 4 text ''
+[2021-11-08 09:56:16] Pdfium extracted page 5 text ''
+[2021-11-08 09:56:16] Pdfium extracted page 5 text ''
+[2021-11-08 09:56:16] Text Extracting using Plan B.
+[2021-11-08 09:56:16] Text Extracting using Plan B.
+[2021-11-08 09:57:21] Attempting 'Pdfium' v2021.9.3626 deployment using 'D:\SV_2021\PhanAnhKienNghi\Source\pakn\PAKNAPI\bin\Debug\netcoreapp3.1\runtimes\win-x64\native'
+[2021-11-08 09:57:21] Found 'pdfium.vanilla' at 'D:\SV_2021\PhanAnhKienNghi\Source\pakn\PAKNAPI\bin\Debug\netcoreapp3.1\runtimes\win-x64\native'
+[2021-11-08 09:57:21] Determining deployment commands for platform 'Windows' v6.2.9200.0
+[2021-11-08 09:57:21] Using deployment instructions for 'default' v
+[2021-11-08 09:57:21] Attempting to load Windows library 'D:\SV_2021\PhanAnhKienNghi\Source\pakn\PAKNAPI\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\pdfium.vanilla.dll'
+[2021-11-08 09:57:21] Successfully deployed 'Pdfium' using 'D:\SV_2021\PhanAnhKienNghi\Source\pakn\PAKNAPI\bin\Debug\netcoreapp3.1\runtimes\win-x64\native'
+[2021-11-08 09:57:21] Pdfium extracted page 0 text ''
+[2021-11-08 09:57:22] Pdfium extracted page 1 text ''
+[2021-11-08 09:57:22] Pdfium extracted page 2 text ''
+[2021-11-08 09:57:22] Pdfium extracted page 3 text ''
+[2021-11-08 09:57:22] Pdfium extracted page 4 text ''
+[2021-11-08 09:57:22] Pdfium extracted page 5 text ''
+[2021-11-08 09:57:22] Text Extracting using Plan B.
+[2021-11-08 09:57:24] Pdfium extracted page 0 text ''
+[2021-11-08 09:57:24] Text Extracting using Plan B.

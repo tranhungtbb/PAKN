@@ -41,6 +41,7 @@
     <PackageReference Include="EPPlus" Version="4.5.3.3" />
     <PackageReference Include="Fizzler.Systems.HtmlAgilityPack" Version="1.2.1" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
+    <PackageReference Include="IronPdf" Version="2021.11.4183" />
     <PackageReference Include="iTextSharp" Version="5.5.13" />
     <PackageReference Include="MailKit" Version="2.13.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
@@ -52,10 +53,12 @@
     <PackageReference Include="MimeKit" Version="2.13.0" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.8.2" />
     <PackageReference Include="Pdfbox" Version="1.1.1" />
+    <PackageReference Include="PdfPig" Version="0.1.5" />
     <PackageReference Include="Quartz" Version="3.3.3" />
     <PackageReference Include="Quartz.Extensions.Hosting" Version="3.3.3" />
     <PackageReference Include="SimpleImpersonation" Version="3.0.0" />
     <PackageReference Include="Spire.PDF" Version="5.12.15" />
+    <PackageReference Include="Syncfusion.PDF.OCR.Net.Core" Version="19.3.0.48" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +229,23 @@
     <Compile Update="ExportGrid\UserReadedInvitation_ByInvitationId.Designer.cs">
       <DependentUpon>UserReadedInvitation_ByInvitationId.repx</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="wwwroot\Data\tessdata\eng.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Data\Tesseractbinaries\Windows\x64\liblept1753.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Data\Tesseractbinaries\Windows\x64\libSyncfusionTesseract.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Data\Tesseractbinaries\Windows\x86\liblept1753.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Data\Tesseractbinaries\Windows\x86\libSyncfusionTesseract.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Target Name="CreateAppDataFolder" AfterTargets="AfterPublish">
     <MakeDir Directories="$(PublishUrl)AppData" Condition="!Exists('$(PublishUrl)AppData')" />
