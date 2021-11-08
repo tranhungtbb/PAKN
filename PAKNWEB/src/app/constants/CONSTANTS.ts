@@ -136,6 +136,8 @@ export class STEP_RECOMMENDATION {
 	public static RECEIVE = 1 //Tiếp nhận
 	public static PROCESS = 2 //2 Giải quyết
 	public static APPROVE = 3 //3 Phê duyệt
+	// riêng biệt
+	public static FORWARD_MAIN = 4 // 4 chuyển trung tâm
 }
 
 export class TYPE_NOTIFICATION {
@@ -213,6 +215,7 @@ export const TYPE_CONFIG = [
 	{ text: 'Cấu hình email', value: 1 }, //Email hệ thống
 	{ text: 'Cấu hình sms', value: 2 }, //SMS hệ thống
 	{ text: 'Cấu hình tổng đài', value: 3 }, //Config tổng đài
+	{ text: 'Cấu hình chung', value: 4 }, // #
 ]
 
 export class TYPECONFIG {

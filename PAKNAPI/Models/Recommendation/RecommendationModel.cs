@@ -18,11 +18,13 @@ namespace PAKNAPI.Models.Recommendation
         public List<DropdownObject> lstHashTag { get; set; }
         public List<DropdownObject> lstGroupWord { get; set; }
         public List<DropdownObject> lstUnitChild { get; set; }
+        public GeneralSetting generalSetting { get; set; }
     }
 
     public class RecommendationGetDataForForwardResponse
     {
         public List<DropdownObject> lstUnitNotMain { get; set; }
+        public List<DropdownObject> lstUnitForward { get; set; }
     }
 
     public class RecommendationGetDataForProcessResponse
@@ -87,6 +89,7 @@ namespace PAKNAPI.Models.Recommendation
         public bool? IsForwardProcess { get; set; }
         public bool? IsForwardUnitChild { get; set; }
         public bool? IsFakeImage { get; set; }
+        public bool? IsForwardMain { get; set; }
     }
     public class RecommendationOnProcessConclusionProcess
     {

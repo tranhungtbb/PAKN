@@ -4,7 +4,7 @@ import { SystemconfigService } from '../../../../services/systemconfig.service'
 import { ToastrService } from 'ngx-toastr'
 import { ActivatedRoute } from '@angular/router'
 import { RESPONSE_STATUS, TYPECONFIG } from 'src/app/constants/CONSTANTS'
-import { SystemtConfig } from 'src/app/models/systemtConfigObject'
+import { SystemtConfig, GeneralSetting } from 'src/app/models/systemtConfigObject'
 import { COMMONS } from 'src/app/commons/commons'
 import { Router } from '@angular/router'
 @Component({
@@ -14,6 +14,7 @@ import { Router } from '@angular/router'
 })
 export class NummerOfWarningSettingComponent implements OnInit {
 	model: SystemtConfig = new SystemtConfig()
+	generalSetting: GeneralSetting = new GeneralSetting()
 	submitted: boolean = false
 
 	form: FormGroup
@@ -34,6 +35,10 @@ export class NummerOfWarningSettingComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result.SYConfigGetByID.length > 0) {
 					this.model = { ...response.result.SYConfigGetByID[0] }
+					this.generalSetting = JSON.parse(this.model.content)
+					if (typeof this.generalSetting != 'object') {
+						this.generalSetting = new GeneralSetting()
+					}
 				}
 			} else {
 				this._toastr.error(response.message)
@@ -44,6 +49,7 @@ export class NummerOfWarningSettingComponent implements OnInit {
 				alert(error)
 			}
 	}
+
 	get f() {
 		return this.form.controls
 	}
@@ -51,14 +57,18 @@ export class NummerOfWarningSettingComponent implements OnInit {
 		this.form = this._fb.group({
 			title: [this.model.title, Validators.required],
 			description: [this.model.description, Validators.required],
-			content: [this.model.content, Validators.required],
+			numberOfWarning: [this.generalSetting.numberOfWarning, Validators.required],
+			fileQuantity: [this.generalSetting.fileQuantity, Validators.required],
+			fileSize: [this.generalSetting.fileSize, Validators.required],
 		})
 	}
 	rebuilForm() {
 		this.form.reset({
 			title: this.model.title,
 			description: this.model.description,
-			content: this.model.content,
+			numberOfWarning: this.generalSetting.numberOfWarning,
+			fileQuantity: this.generalSetting.fileQuantity,
+			fileSize: this.generalSetting.fileSize,
 		})
 	}
 	onSave() {
@@ -67,6 +77,8 @@ export class NummerOfWarningSettingComponent implements OnInit {
 		if (this.form.invalid) {
 			return
 		}
+		debugger
+		this.model.content = JSON.stringify(this.generalSetting)
 		this._service.syConfigUpdate(this.model).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this._toastr.success(COMMONS.UPDATE_SUCCESS)

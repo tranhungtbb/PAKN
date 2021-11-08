@@ -16,6 +16,7 @@ export class RecommendationObject {
 		this.createdDate = null
 		this.updatedBy = null
 		this.updatedDate = null
+		this.address = null
 	}
 	id: number
 	code: string
@@ -33,6 +34,7 @@ export class RecommendationObject {
 	createdDate: Date
 	updatedBy: number
 	updatedDate: Date
+	address: string
 }
 export class RecommendationSearchObject {
 	constructor() {
@@ -81,6 +83,7 @@ export class RecommendationProcessObject {
 	reasonDeny: string = ''
 	reactionaryWord: boolean = false
 	isFakeImage: boolean = false
+	unitReceiveId: number = null
 }
 export class RecommendationViewObject {
 	id: number
@@ -93,6 +96,7 @@ export class RecommendationViewObject {
 	unitName: string
 	typeObject: number
 	sendId: number
+	biSendId: number
 	name: string
 	shortName: string
 	status: number
@@ -112,6 +116,8 @@ export class RecommendationViewObject {
 	processingDate: Date
 	approvedName: string
 	approvedDate: Date
+	phone: string
+	email: string
 }
 export class RecommendationConclusionObject {
 	id: number = 0

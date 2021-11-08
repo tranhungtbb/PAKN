@@ -66,6 +66,7 @@
 		"moment": "2.22.2",
 		"ng-chat": "1.0.15",
 		"ng-fullcalendar": "^2.0.3",
+		"ng-lazyload-image": "^7.0.1",
 		"ng2-charts": "^2.3.0",
 		"ng2-ckeditor": "1.2.2",
 		"ng2-image-viewer": "^3.0.5",

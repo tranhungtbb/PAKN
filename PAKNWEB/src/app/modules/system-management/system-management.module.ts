@@ -14,6 +14,7 @@ import { TableModule } from 'primeng/table'
 import { DropdownModule } from 'primeng/dropdown'
 import { TreeModule } from 'primeng/tree'
 import { CalendarModule } from 'primeng/calendar'
+import { LazyLoadImageModule, scrollPreset } from 'ng-lazyload-image'
 import { TooltipModule } from 'primeng/tooltip'
 import { GMapModule } from 'primeng/gmap'
 import { MatCheckboxModule } from '@angular/material/checkbox'
@@ -60,6 +61,9 @@ import { SupportGalleryComponent } from './components/support-gallery/support-ga
 		CKEditorModule,
 		MatDialogModule,
 		BusinessModule,
+		LazyLoadImageModule.forRoot({
+			preset: scrollPreset,
+		}),
 	],
 	declarations: [
 		SystemManagemenetComponent,

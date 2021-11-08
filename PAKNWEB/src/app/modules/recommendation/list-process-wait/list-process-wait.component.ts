@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
-import { RecommendationObject, RecommendationProcessObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
+import { RecommendationObject, RecommendationProcessObject, RecommendationSearchObject, RecommendationForwardObject } from 'src/app/models/recommendationObject'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 import { DataService } from 'src/app/services/sharedata.service'
 import { saveAs as importedSaveAs } from 'file-saver'
@@ -10,6 +10,7 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 import { COMMONS } from 'src/app/commons/commons'
 import { NotificationService } from 'src/app/services/notification.service'
 import { Router } from '@angular/router'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 declare var $: any
 
@@ -25,12 +26,15 @@ export class ListProcessWaitComponent implements OnInit {
 		private _toastr: ToastrService,
 		private _shareData: DataService,
 		private notificationService: NotificationService,
-		private _router: Router
+		private _router: Router,
+		private _fb: FormBuilder
 	) {}
 	userLoginId: number = this.storeageService.getUserId()
 	unitLoginId: number = this.storeageService.getUnitId()
 	isMain: boolean = this.storeageService.getIsMain()
 	listData = new Array<RecommendationObject>()
+	formForward: FormGroup
+	modelForward: RecommendationForwardObject = new RecommendationForwardObject()
 	listStatus: any = [
 		{ value: 2, text: 'Chờ xử lý' },
 		{ value: 3, text: 'Từ chối xử lý' },
@@ -57,6 +61,7 @@ export class ListProcessWaitComponent implements OnInit {
 	lstGroupWordSelected: any = []
 	titleAccept: any = ''
 	ngOnInit() {
+		this.buildForm()
 		this.dataSearch.status = RECOMMENDATION_STATUS.PROCESS_WAIT
 		this.getDataForCreate()
 		this.getList()
@@ -64,6 +69,26 @@ export class ListProcessWaitComponent implements OnInit {
 
 	ngAfterViewInit() {
 		this._shareData.seteventnotificationDropdown()
+	}
+
+	get f() {
+		return this.formForward.controls
+	}
+
+	buildForm() {
+		this.formForward = this._fb.group({
+			unitReceiveId: [this.modelForward.unitReceiveId, Validators.required],
+			expiredDate: [this.modelForward.expiredDate],
+			content: [this.modelForward.content],
+		})
+	}
+
+	rebuilForm() {
+		this.formForward.reset({
+			unitReceiveId: this.modelForward.unitReceiveId,
+			expiredDate: this.modelForward.expiredDate,
+			content: this.modelForward.content,
+		})
 	}
 
 	getDataForCreate() {
@@ -151,8 +176,11 @@ export class ListProcessWaitComponent implements OnInit {
 	}
 	modelProcess: RecommendationProcessObject = new RecommendationProcessObject()
 	isForwardProcess: boolean = false
-	contentForward: string = ''
-	preProcess(recommendationId, idProcess, status, isForwardProcess) {
+	isForwardMain: boolean = false // từ chối đơn vị và chuyển tiếp về trung tâm
+	unitForward: any[] = []
+	recommendationStatusProcess: number = 0
+
+	preProcess(recommendationId, idProcess, status, isForwardProcess, isForwardMain: boolean = false) {
 		this.modelProcess.status = status
 		this.modelProcess.id = idProcess
 		this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
@@ -160,6 +188,7 @@ export class ListProcessWaitComponent implements OnInit {
 		this.modelProcess.reactionaryWord = false
 		this.modelProcess.reasonDeny = ''
 		this.isForwardProcess = isForwardProcess
+		this.isForwardMain = isForwardMain
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
 			if (this.isForwardProcess) {
 				this._service.recommendationGetDataForProcess({}).subscribe((response) => {
@@ -191,8 +220,26 @@ export class ListProcessWaitComponent implements OnInit {
 			this.titleAccept = 'Anh/Chị có chắc chắn muốn giải quyết Phản ánh, Kiến nghị này?'
 			$('#modalAccept').modal('show')
 		} else if (status == PROCESS_STATUS_RECOMMENDATION.FORWARD) {
-			this.contentForward = ''
-			$('#modalForward').modal('show')
+			this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
+			this.modelProcess.step = STEP_RECOMMENDATION.FORWARD_MAIN
+			// this.contentForward = ''
+
+			this._service.recommendationGetDataForForward({}).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					if (response.result != null) {
+						this.unitForward = response.result.lstUnitForward
+						this.modelForward = new RecommendationForwardObject()
+						this.rebuilForm()
+						this.submitted = false
+						$('#modalForward').modal('show')
+					}
+				} else {
+					this._toastr.error(response.message)
+				}
+			}),
+				(error) => {
+					console.log(error)
+				}
 			setTimeout(() => {
 				$('#targetForward').focus()
 			}, 400)
@@ -220,23 +267,27 @@ export class ListProcessWaitComponent implements OnInit {
 				console.error(err)
 			}
 	}
+
 	onProcessDeny() {
 		if (this.modelProcess.reasonDeny == '' || this.modelProcess.reasonDeny.trim() == '') {
 			this._toastr.error('Vui lòng nhập lý do')
 			return
 		} else {
+			let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
 			var request = {
 				_mRRecommendationForwardProcessIN: this.modelProcess,
 				RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_DENY,
 				ReactionaryWord: this.modelProcess.reactionaryWord,
+				IsFakeImage: this.modelProcess.isFakeImage,
 				ListGroupWordSelected: this.lstGroupWordSelected.join(','),
+				IsForwardUnitChild: true,
 				IsList: true,
+				IsForwardMain: this.isForwardMain,
 			}
-			let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
+
 			this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
-					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
 					this._toastr.success(COMMONS.DENY_SUCCESS)
 					this.getList()
 				} else {
@@ -250,12 +301,13 @@ export class ListProcessWaitComponent implements OnInit {
 	}
 
 	onProcessForward() {
-		this.contentForward = this.contentForward == null ? '' : this.contentForward.trim()
-		if (this.contentForward == '') {
-			this._toastr.error('Vui lòng nhập lí do từ chối')
+		this.submitted = true
+		this.modelForward.content = this.modelForward.content == null ? '' : this.modelForward.content.trim()
+		if (this.formForward.invalid) {
 			return
 		}
-		this.modelProcess.reasonDeny = this.contentForward
+		this.modelProcess.reasonDeny = this.modelForward.content
+		this.modelProcess.unitReceiveId = this.modelForward.unitReceiveId
 		var request = {
 			_mRRecommendationForwardProcessIN: this.modelProcess,
 			RecommendationStatus: RECOMMENDATION_STATUS.RECEIVE_WAIT,

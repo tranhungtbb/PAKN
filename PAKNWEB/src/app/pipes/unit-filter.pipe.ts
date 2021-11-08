@@ -17,6 +17,8 @@ export class UnitFilterPipe implements PipeTransform {
 export class ChangePipe implements PipeTransform {
 	transform(data: string, data2: string): any {
 		if (data) {
+			debugger
+			data.split('\n')
 			return data.split('\n').join('<br>')
 		}
 		return ''

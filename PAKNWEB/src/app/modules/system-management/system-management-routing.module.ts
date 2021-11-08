@@ -48,7 +48,7 @@ const routes: Routes = [
 				data: { role: 'A_I_0' },
 			},
 			{
-				path: 'cau-hinh-number-warning/:id',
+				path: 'cau-hinh-chung/:id',
 				component: NummerOfWarningSettingComponent,
 				canActivate: [RoleGuardService],
 				data: { role: 'A_I_0' },

@@ -11,7 +11,6 @@ import { HashtagObject } from 'src/app/models/hashtagObject'
 import { CatalogService } from 'src/app/services/catalog.service'
 import { NotificationService } from 'src/app/services/notification.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import { debug } from 'console'
 
 @Component({
 	selector: 'app-create-recommendation',
@@ -66,7 +65,7 @@ export class CreateRecommendationComponent implements OnInit {
 				this.getData()
 				this.title = 'Sửa'
 			} else {
-				this.model.typeObject = 1
+				this.model.typeObject = 2
 				this.title = 'Thêm mới'
 			}
 			debugger
@@ -74,14 +73,12 @@ export class CreateRecommendationComponent implements OnInit {
 			if (typeObject) {
 				this.isIndividual = Number(typeObject) == 1 ? true : false
 				if (this.isIndividual) {
-					this.changeTypeObject(1)
-					this.model.typeObject = 1
-				} else {
 					this.changeTypeObject(2)
-					this.model.typeObject = 2
+				} else {
+					this.changeTypeObject(3)
 				}
 			} else {
-				this.model.typeObject = 1
+				this.model.typeObject = 2
 			}
 			this.builForm()
 		})
@@ -217,23 +214,23 @@ export class CreateRecommendationComponent implements OnInit {
 
 	changeTypeObject(typeObject: number) {
 		this.model.sendId = null
-		if (typeObject == 1) {
+		if (typeObject == 2) {
 			this.titleObject = 'Cá nhân'
 			this.isIndividual = true
-			this.model.typeObject = 1
+			this.model.typeObject = 2
 			this.lstObject = this.lstIndividual
 		} else {
 			this.titleObject = 'Doanh nghiệp'
 			this.isIndividual = false
-			this.model.typeObject = 2
+			this.model.typeObject = 3
 			this.lstObject = this.lstBusiness
 		}
 	}
 	redirectToCreateIndividualBusiness() {
-		if (this.model.typeObject == 1) {
+		if (this.model.typeObject == 2) {
 			localStorage.setItem('isIndividual', 'true')
 			this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/ca-nhan'])
-		} else if (this.model.typeObject == 2) {
+		} else if (this.model.typeObject == 3) {
 			localStorage.setItem('isIndividual', 'false')
 			this.router.navigate(['/quan-tri/ca-nhan-doanh-nghiep/them-moi/0'])
 		}

@@ -58,12 +58,12 @@ namespace PAKNAPI.Authorize
 
 				// check unit is Active
 				var unitId = context.User.Claims.FirstOrDefault(claim => claim.Type == "UnitId").Value;
-				if (Convert.ToInt32(unitId) != 0)
+				if (!string.IsNullOrEmpty(unitId))
 				{
 					var unit = new SYUnit(_appSetting).SYUnitGetByID(Convert.ToInt32(unitId));
 					if (unit != null)
 					{
-						if (!unit.Result.IsActived) {
+						if (unit.Result != null && !unit.Result.IsActived) {
 							_contextAccessor.HttpContext.Response.StatusCode = 401;
 							_contextAccessor.HttpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
 							return Task.CompletedTask;

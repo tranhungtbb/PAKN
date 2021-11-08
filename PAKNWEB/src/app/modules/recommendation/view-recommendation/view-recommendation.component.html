@@ -61,11 +61,13 @@
 					</p>
 					<div class="py-2 mb-4 d-flex justify-content-between align-items-center border-bottom border-top">
 						<div class="media align-items-center">
-							<div class="avatar-circle mr-2" style="background: #EBF2FF; color: #5D90F1">
+							<div class="avatar-circle mr-2 cursor" (click)="preViewInfo()">
 								{{model.shortName}}
 							</div>
-							<div class="media-body">
-								<p class="my-0 h5">{{model.name}}</p>
+							<div class="media-body d-flex">
+								<p class="my-0 h5 cursor" (click)="preViewInfo()">{{model.name}}</p>
+								<p *ngIf="model.phone" class="my-0 h5 ml-1">- Điện thoại: {{model.phone}}</p>
+								<p *ngIf="model.email" class="my-0 h5 ml-1">- Email: {{model.email}}</p>
 							</div>
 						</div>
 						<span>{{model.createdDate | date:'HH:mm dd/MM/yyyy'}}</span>
@@ -296,10 +298,10 @@
 					</div>
 					<div>
 						<div>
-							<p class="h3 text-uppercase mt-4" style="font-weight: normal;">Bình luận ({{total_Comments}})</p>
+							<p class="h3 text-uppercase mt-4" style="font-weight: normal;">Trao đổi ({{total_Comments}})</p>
 						</div>
 						<div class="p-4 rounded-xl mb-4" style="background-color: #ededed;">
-							<textarea class="form-control rounded mb-2" rows="4" maxlength="500" placeholder="Nhập bình luận..." [(ngModel)]="commentModel.contents"></textarea>
+							<textarea class="form-control rounded mb-2" rows="4" maxlength="500" placeholder="Nhập trao đổi..." [(ngModel)]="commentModel.contents"></textarea>
 							<button class="btn btn-sm grd-blue border-0 pl-4 pr-4 text-white" (click)="onSendComment()"> Gửi </button>
 						</div>
 						<div *ngFor="let item of listCommentsPaged" class="border-bottom mb-3">
@@ -572,6 +574,203 @@
 						</tr>
 					</ng-template>
 				</p-table>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="modalDetail">
+	<div class="modal-dialog modal-dialog-centered" style="min-width: 60%" role="document">
+		<div class="modal-content rounded">
+			<div class="panel panel-default no-margin">
+				<div class="modal-header">
+					<button class="close btn-close-modal" data-dismiss="modal">
+						×
+					</button>
+					<p class="modal-title h3">Thông tin chi tiết</p>
+				</div>
+				<div class="modal-body no-padding-bottom" *ngIf="model.typeObject == 2 && modelDetail">
+					<div class="row">
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Tên cá nhân</strong>
+							<p>{{modelDetail.fullName}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Email</strong>
+							<p>{{modelDetail.email}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Điện thoại</strong>
+							<p>{{modelDetail.phone}}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<strong class="control-label lb600">CMND</strong>
+							<p>{{modelDetail.idCard}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Nơi cấp</strong>
+							<p>{{modelDetail.issuedPlace}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Ngày cấp</strong>
+							<p>{{modelDetail.dateOfIssue | date: 'dd/MM/yyyy'}}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Quốc tịch</strong>
+							<p>{{modelDetail.nation}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Tỉnh thành phố</strong>
+							<p>{{modelDetail.proviceName}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Huyện/Thị xã</strong>
+							<p>{{modelDetail.districtName}}</p>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Phường/Thị trấn</strong>
+							<p>{{modelDetail.wardsName}}</p>
+						</div>
+						<div class="col-sm-8">
+							<strong class="control-label lb600">Địa chỉ cụ thể</strong>
+							<p>{{modelDetail.address}}</p>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Giới tính</strong>
+							<p *ngIf="modelDetail.gender == false">Nữ</p>
+							<p *ngIf="modelDetail.gender == true">Nam</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Ngày sinh</strong>
+							<p>{{modelDetail.birthDay | date: 'dd/MM/yyyy'}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Trạng thái</strong>
+							<p *ngIf="modelDetail.isActived == true">Hiệu lực</p>
+							<p *ngIf="modelDetail.isActived == false">Hết hiệu lực</p>
+						</div>
+					</div>
+				</div>
+				<div class="modal-body no-padding-bottom" *ngIf="model.typeObject == 3 && modelDetail">
+					<p class="modal-title h4" style="padding-bottom: 0.5rem;">Thông tin người đại diện</p>
+					<div class="row">
+						<div class="col-sm-3">
+							<strong class="control-label lb600">Tên người đại diện</strong>
+							<p>{{modelDetail.representativeName}}</p>
+						</div>
+						<div class="col-sm-3">
+							<strong class="control-label lb600">Email</strong>
+							<p>{{modelDetail.email}}</p>
+						</div>
+						<div class="col-sm-3">
+							<strong class="control-label lb600">Ngày sinh</strong>
+							<p>{{modelDetail.representativeBirthDay | date: 'dd/MM/yyyy'}}</p>
+						</div>
+						<div class="col-sm-3">
+							<strong class="control-label lb600">Số điện thoại</strong>
+							<p>{{modelDetail.phone}}</p>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-3">
+							<strong class="control-label lb600">Quốc tịch</strong>
+							<p>{{modelDetail.nation}}</p>
+						</div>
+						<div class="col-sm-3">
+							<strong class="control-label lb600">Tỉnh/Thành phố</strong>
+							<p>{{modelDetail.provinceName}}</p>
+						</div>
+						<div class="col-sm-3">
+							<strong class="control-label lb600">Huyện/Thị xã</strong>
+							<p>{{modelDetail.districtName}}</p>
+						</div>
+						<div class="col-sm-3">
+							<strong class="control-label lb600">Xã/Phường/Thị trấn</strong>
+							<p>{{modelDetail.wardsName}}</p>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-3">
+							<strong class="control-label lb600">Giới tính</strong>
+							<p *ngIf="modelDetail.representativeGender == true">Nam</p>
+							<p *ngIf="modelDetail.representativeGender == false">Nữ</p>
+						</div>
+						<div class="col-sm-9">
+							<strong class="control-label lb600">Địa chỉ cụ thể</strong>
+							<p>{{modelDetail.address}}</p>
+						</div>
+					</div>
+
+					<p class="modal-title h4 title-detail">Thông tin doanh nghiệp</p>
+
+					<div class="row">
+						<div class="col-sm-6">
+							<strong class="control-label lb600">Tên tổ chức, doanh nghiệp</strong>
+							<p>{{modelDetail.business}}</p>
+						</div>
+						<div class="col-sm-3">
+							<strong class="control-label lb600">Số chứng nhận ĐKKD</strong>
+							<p>{{modelDetail.businessRegistration}}</p>
+						</div>
+						<div class="col-sm-3">
+							<strong class="control-label lb600">Số quyết định thành lập</strong>
+							<p>{{modelDetail.decisionOfEstablishing}}</p>
+						</div>
+						<div class="col-sm-3">
+							<strong class="control-label lb600">Ngày cấp / Thành lập</strong>
+							<p>{{modelDetail.dateOfIssue | date: 'dd/MM/yyyy'}}</p>
+						</div>
+						<div class="col-sm-3">
+							<strong class="control-label lb600">Mã số thuế</strong>
+							<p>{{modelDetail.tax}}</p>
+						</div>
+					</div>
+
+					<p class="modal-title h4 title-detail">Địa chỉ cụ thể / Văn phòng đại diện</p>
+
+					<div class="row">
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Tỉnh thành phố</strong>
+							<p>{{modelDetail.orgProvinceName}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Quận / Huyện / Thị xã</strong>
+							<p>{{modelDetail.orgDistrictName}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Xã / Phường / Thị trấn</strong>
+							<p>{{modelDetail.orgWardsName}}</p>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Số điện thoại</strong>
+							<p>{{modelDetail.orgPhone}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Email</strong>
+							<p>{{modelDetail.orgEmail}}</p>
+						</div>
+						<div class="col-sm-4">
+							<strong class="control-label lb600">Địa chỉ cụ thể</strong>
+							<p>{{modelDetail.orgAddress}}</p>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

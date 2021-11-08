@@ -17,7 +17,7 @@ namespace PAKNAPI.Models.ModelBase
 		public int SendOrgId { get; set; }
 		public long ReceiveId { get; set; }
 		public int? ReceiveOrgId { get; set; }
-		public int DataId { get; set; }
+		public long? DataId { get; set; }
 		public DateTime SendDate { get; set; }
 		public int Type { get; set; }
 		public int? TypeSend { get; set; }

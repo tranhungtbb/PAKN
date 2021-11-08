@@ -144,6 +144,11 @@
 											<a class="btn-icon grd-red text-white mr-2" *ngIf="item.unitReceiveId == unitLoginId"
 												(click)="preProcess(item.id,item.processId,3,item.isForwardProcess)" title="Từ chối giải quyết">
 												<i class="bi bi-file-earmark-break"></i></a>
+
+												<a *ngIf="(item.status == 5 && item.unitReceiveId == unitLoginId && item.isForwardUnitChild)"
+												(click)="preProcess(item.id,item.processId,3,item.isForwardProcess,true)" class="btn-icon grd-red text-white mr-2" title="Từ chối giải quyết từ đơn vị"><i
+													class="bi bi-file-earmark-minus"></i></a>
+
 											<a *hasPermission="['3', 'E_I_5']" class="btn-icon" (click)="getHistories(item.id)" title="Xem lịch sử"><i class="bi bi-clock-history"></i></a>
 										</div>
 									</td>
@@ -151,7 +156,7 @@
 							</ng-template>
 							<ng-template pTemplate="emptymessage">
 								<tr>
-									<td class="text-center" colspan="7">Không có dữ liệu</td>
+									<td class="text-center" colspan="8">Không có dữ liệu</td>
 								</tr>
 							</ng-template>
 						</p-table>
@@ -193,9 +198,31 @@
 					</button>
 					<p class="modal-title h3">Xác nhận</p>
 				</div>
-				<div class="modal-body no-padding-bottom">
-					<p class="h4 text-center mb-3">Bạn có chắc chắn chuyển <strong>Phản ánh, kiến nghị</strong> này về trung tâm tiếp nhận?</p>
-					<textarea id="targetForward" class="form-control" rows="4" placeholder="Nhập lý do..." [(ngModel)]="contentForward" maxlength="500"></textarea>
+				<div class="modal-body no-padding-bottom form-horizontal">
+					<p class="h4 text-center mb-3">Anh/Chị có chắc chắn chuyển <strong>Phản ánh, kiến nghị</strong> này?</p>
+					
+					<form class="form-horizontal" [formGroup]="formForward" #formDir="ngForm">
+						<div class="form-row">
+							<div class="col-12 col-lg-12 form-group">
+								<label class="mb-1">Đơn vị giải quyết <span class="cl-red">(*)</span></label>
+								<ng-select class="form-control border-input" [items]="unitForward" bindLabel="text" bindValue="value"
+									notFoundText="Không có dữ liệu"
+									formControlName="unitReceiveId" placeholder="Chọn đơn vị giải quyết"
+									[(ngModel)]="modelForward.unitReceiveId" [closeOnSelect]="true"></ng-select>
+								<div *ngIf="(submitted && f.unitReceiveId.invalid) || (f.unitReceiveId.invalid && (f.unitReceiveId.dirty || f.unitReceiveId.touched))"
+									class="has-error m-b-12">
+									<div *ngIf="f.unitReceiveId.errors.required">
+										<span class="help-block">Trường dữ liệu này không để trống</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 form-group">
+								<label class="mb-1">Nội dung</label>
+								<textarea class="form-control" rows="6" [(ngModel)]="modelForward.content" formControlName="content" placeholder="Nhập nội dung..."
+									maxlength="500"></textarea>
+							</div>
+						</div>
+					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" data-dismiss="modal" class="btn btn-outline-secondary border px-5" data-dismiss="modal">Hủy</button>
@@ -275,7 +302,7 @@
 									<span *ngIf="item.status == 11" class="badge rounded-pill mb-0 badge-outline-light bg-white">Đã cập nhật</span>
 									<span class="text-dark mb-0">{{item.createdDate | date:'HH:mm | dd/MM/yyyy'}}</span>
 								</p>
-								<p class="mb-0 h5"><strong>{{item.content}}</strong></p>
+								<p class="mb-0 h5"><strong innerHTML="{{item.content | Change}}"></strong></p>
 							</div>
 						</li>
 					</ul>

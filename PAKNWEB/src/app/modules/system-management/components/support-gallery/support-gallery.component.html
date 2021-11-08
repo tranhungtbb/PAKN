@@ -22,7 +22,15 @@
 		<button class="close ng-star-inserted ps-absolute mt-1" style="right: 8px;" title="Xóa ảnh" type="button" (click)="preDelete(image.id)">
 			<span><i class="mdi mdi-close"></i></span>
 		</button>
-		<img [src]="image.thumb" style="object-fit: cover; width: 100%; height: 100%;" (click)="open(i)" />
+		<!-- <img [src]="image.thumb" style="object-fit: cover; width: 100%; height: 100%;" (click)="open(i)" /> -->
+		<img defaultImage="../../../../../assets/dist/images/banner.jpg"
+			errorImage="../../../../../assets/dist/images/error.png"
+			[lazyLoad]="image.thumb"
+			title="image.caption"
+			style="object-fit: cover; width: 100%; height: 100%;" (click)="open(i)"
+		/>
+
+		
 	</div>
 </div>
 

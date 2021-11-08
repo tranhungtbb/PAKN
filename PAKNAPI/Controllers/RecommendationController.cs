@@ -74,7 +74,8 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationGetDataForForward() };
+                var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationGetDataForForward(unitId) };
             }
             catch (Exception ex)
             {
@@ -248,6 +249,7 @@ namespace PAKNAPI.Controller
                 request.Files = Request.Form.Files;
                 request.Data.CreatedBy = request.UserId;
                 request.Data.CreatedDate = DateTime.Now;
+                request.Data.CreateByType = new LogHelper(_appSetting).GetTypeFromRequest(HttpContext);
                 MRRecommendationCheckExistedCode rsMRRecommendationCheckExistedCode = (await new MRRecommendationCheckExistedCode(_appSetting).MRRecommendationCheckExistedCodeDAO(request.Data.Code)).FirstOrDefault();
                 if (rsMRRecommendationCheckExistedCode.Total > 0)
                 {
@@ -756,6 +758,9 @@ namespace PAKNAPI.Controller
                 {
                     await new MRRecommendationForwardProcess(_appSetting).MRRecommendationForwardUpdateStatusForwardDAO(request._mRRecommendationForwardProcessIN.RecommendationId);
                 }
+                if (request.RecommendationStatus == STATUS_RECOMMENDATION.FINISED) {
+                    request._mRRecommendationForwardProcessIN.UnitReceiveId = UnitSendId;
+                }
                 await new MRRecommendationForwardProcess(_appSetting).MRRecommendationForwardProcessDAO(request._mRRecommendationForwardProcessIN);
                 // được chuyển tiếp từ đơn vị cấp trên
                 
@@ -793,25 +798,48 @@ namespace PAKNAPI.Controller
                         await new MRRecommendationHashtagInsert(_appSetting).MRRecommendationHashtagInsertDAO(_mRRecommendationHashtagInsertIN);
                     }
                 }
+                // từ chối và của đơn vị và chuyển về trung tâm
+                MRRecommendationForwardInsertIN _dataForward = new MRRecommendationForwardInsertIN();
+                _dataForward.RecommendationId = request._mRRecommendationForwardProcessIN.RecommendationId;
+                _dataForward.UserSendId = UserSendId;
+                _dataForward.SendDate = DateTime.Now;
+                if (request.RecommendationStatus == STATUS_RECOMMENDATION.PROCESS_DENY && request.IsForwardMain == true) {
+
+                    SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
+                    
+                    _dataForward.UnitReceiveId = dataMain.Id;
+                    _dataForward.Step = STEP_RECOMMENDATION.RECEIVE;
+                    _dataForward.Status = PROCESS_STATUS_RECOMMENDATION.WAIT;
+                    _mRRecommendationUpdateStatusIN.Status = STATUS_RECOMMENDATION.RECEIVE_WAIT;
+                    _dataForward.IsViewed = false;
+                    await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_dataForward);
+                    _mRRecommendationUpdateStatusIN.IsFakeImage = _mRRecommendationUpdateStatusIN.IsFakeImage == null ? false : request.IsFakeImage;
+                    await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
+                }
 
                 if(request.IsForwardProcess == true 
                     && request._mRRecommendationForwardProcessIN.Status == PROCESS_STATUS_RECOMMENDATION.FORWARD 
-                    && request._mRRecommendationForwardProcessIN.Step == STEP_RECOMMENDATION.PROCESS)
+                    && request._mRRecommendationForwardProcessIN.Step == STEP_RECOMMENDATION.FORWARD)
                 {
-                    SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
-                    MRRecommendationForwardInsertIN _dataForward = new MRRecommendationForwardInsertIN();
-
-                    _dataForward.RecommendationId = request._mRRecommendationForwardProcessIN.RecommendationId;
-                    _dataForward.UserSendId = UserSendId;
-                    _dataForward.SendDate = DateTime.Now;
-                    _dataForward.Step = STEP_RECOMMENDATION.RECEIVE;
-                    _dataForward.UnitReceiveId = dataMain.Id;
-                    _dataForward.Status = PROCESS_STATUS_RECOMMENDATION.APPROVED;
+                    var unit = (await new CAUnitGetByID(_appSetting).CAUnitGetByIDDAO(request._mRRecommendationForwardProcessIN.UnitReceiveId)).FirstOrDefault();
+                    
+                    _dataForward.UnitReceiveId = request._mRRecommendationForwardProcessIN.UnitReceiveId;
+                    if (unit.IsMain)
+                    {
+                        // chờ xl với trung tâm
+                        _dataForward.Step = STEP_RECOMMENDATION.RECEIVE;
+                        _dataForward.Status = PROCESS_STATUS_RECOMMENDATION.WAIT;
+                        _mRRecommendationUpdateStatusIN.Status = STATUS_RECOMMENDATION.RECEIVE_WAIT;
+                    }
+                    else {
+                        // chờ giải quyết với đơn vị khác
+                        _dataForward.Step = STEP_RECOMMENDATION.PROCESS;
+                        _dataForward.Status = PROCESS_STATUS_RECOMMENDATION.WAIT;
+                        _mRRecommendationUpdateStatusIN.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
+                    }
                     _dataForward.IsViewed = false;
                     await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_dataForward);
-
-                    // update status về Đã tiếp nhận
-                    _mRRecommendationUpdateStatusIN.Status = STATUS_RECOMMENDATION.RECEIVE_APPROVED;
+                    _mRRecommendationUpdateStatusIN.IsFakeImage = _mRRecommendationUpdateStatusIN.IsFakeImage == null ? false : request.IsFakeImage;
                     await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
 
                 }
@@ -823,12 +851,15 @@ namespace PAKNAPI.Controller
                 if (request.RecommendationStatus == STATUS_RECOMMENDATION.APPROVE_DENY || request.RecommendationStatus == STATUS_RECOMMENDATION.PROCESS_DENY || request.RecommendationStatus == STATUS_RECOMMENDATION.RECEIVE_DENY)
                 {
                     hisData.Content = "Với lý do: " + request._mRRecommendationForwardProcessIN.ReasonDeny;
-                } else if (request.IsForwardProcess == true
-                    && request._mRRecommendationForwardProcessIN.Status == PROCESS_STATUS_RECOMMENDATION.FORWARD
-                    && request._mRRecommendationForwardProcessIN.Step == STEP_RECOMMENDATION.PROCESS
-                    && request._mRRecommendationForwardProcessIN.ReasonDeny != "")
+                }
+                else if (request.IsForwardProcess == true
+                  && request._mRRecommendationForwardProcessIN.Status == PROCESS_STATUS_RECOMMENDATION.FORWARD
+                  && request._mRRecommendationForwardProcessIN.Step == STEP_RECOMMENDATION.FORWARD
+                  && request._mRRecommendationForwardProcessIN.ReasonDeny != "")
                 {
-                    hisData.Content = "Với nội dung: " + request._mRRecommendationForwardProcessIN.ReasonDeny;
+                    var unit = await new SYUnit(_appSetting).SYUnitGetByID(_dataForward.UnitReceiveId);
+                    hisData.Content = "Đến:" + unit.Name + " <br/ > "+
+                        "Với nội dung: " + request._mRRecommendationForwardProcessIN.ReasonDeny;
                 }
                 hisData.Status = request.RecommendationStatus;
                 hisData.CreatedBy = UserSendId;
@@ -1428,9 +1459,50 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
+                _mRCommnentInsertIN.UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                _mRCommnentInsertIN.FullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
 
-                return new ResultApi { Success = ResultCode.OK, Result = await new MRCommnentInsert(_appSetting).MRCommnentInsertDAO(_mRCommnentInsertIN) };
+                var result = await new MRCommnentInsert(_appSetting).MRCommnentInsertDAO(_mRCommnentInsertIN);
+
+                if (result == -1)
+                {
+                    return new ResultApi { Success = ResultCode.ORROR, Message = "Bạn không có quyền bình luận phản ánh kiến nghị này" };
+                }
+                // nếu người dân bình luận thì gửi thông báo cho đơn vị giải quyết
+                if (_mRCommnentInsertIN.IsPublish == true && new LogHelper(_appSetting).GetTypeFromRequest(HttpContext) != 1)
+                {
+                    var recommendation = new RecommendationDAO(_appSetting).RecommendationGetByID((int)_mRCommnentInsertIN.RecommendationId).Result.Model;
+                    
+                    RecommendationForward lstRMForward =
+                        (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId((int)_mRCommnentInsertIN.RecommendationId))
+                        .FirstOrDefault(x => x.Step == STEP_RECOMMENDATION.APPROVE && x.Status == PROCESS_STATUS_RECOMMENDATION.APPROVED);
+                    
+                    if (lstRMForward != null) {
+
+                        // danh sách người dùng
+                        List<SYUserGetByUnitId> lstUser = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO((int)lstRMForward.UnitSendId);
+                        var tasks = new List<Task>();
+                        SYNotificationModel notification = new SYNotificationModel();
+                        notification.SenderId = (long)_mRCommnentInsertIN.UserId;
+                        notification.DataId = _mRCommnentInsertIN.RecommendationId;
+                        notification.SendDate = DateTime.Now;
+                        notification.Type = TYPENOTIFICATION.RECOMMENDATION;
+                        notification.TypeSend = STATUS_RECOMMENDATION.FINISED;
+                        notification.IsViewed = true;
+                        notification.IsReaded = true;
+                        notification.ReceiveOrgId = lstRMForward.UnitSendId;
+                        notification.Title = "BÌNH LUẬN PHẢN ÁNH KIẾN NGHỊ";
+                        notification.Content = _mRCommnentInsertIN.FullName + " vừa bình luận PAKN số " + recommendation.Code;
+                        foreach (var item in lstUser) {
+                            notification.ReceiveId = item.Id;
+                            tasks.Add( new SYNotification(_appSetting, _configuration).InsertNotification(notification));
+                        }
+                        Task.WaitAll(tasks.ToArray());
+                    }
+                }
+
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
+                return new ResultApi { Success = ResultCode.OK, Result =  result};
             }
             catch (Exception ex)
             {

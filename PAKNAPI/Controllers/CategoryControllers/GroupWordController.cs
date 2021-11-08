@@ -59,11 +59,6 @@ namespace PAKNAPI.Controllers.ControllerBase
 		/// <summary>
 		/// danh sách nhóm thư viện từ
 		/// </summary>
-		/// <param name="PageSize"></param>
-		/// <param name="PageIndex"></param>
-		/// <param name="Name"></param>
-		/// <param name="Description"></param>
-		/// <param name="IsActived"></param>
 		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]

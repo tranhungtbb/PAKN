@@ -44,7 +44,7 @@ export class ListGeneralComponent implements OnInit {
 	]
 	lstGroupWord: any = []
 	lstGroupWordSelected: any = []
-	formForward: FormGroup
+	formForward: FormGroup // form chuyển từ trung tâm xuống đơn vị khác
 	lstUnitNotMain: any = []
 	listUnitChild: any = []
 	lstUnit: any = []
@@ -272,14 +272,17 @@ export class ListGeneralComponent implements OnInit {
 	modelProcess: RecommendationProcessObject = new RecommendationProcessObject()
 	recommendationStatusProcess: number = 0
 	isForwardProcess: boolean = false
-	contentForward: string = ''
-	preProcess(model: any, status: number) {
+	isForwardMain: boolean = false // từ chối đơn vị và chuyển tiếp về trung tâm
+	// contentForward: string = ''
+	unitForward: any[] = []
+	preProcess(model: any, status: number, isForwardMain: boolean = false) {
 		this.modelProcess.status = status
 		this.modelProcess.id = model.processId
 		this.modelProcess.recommendationId = model.id
 		this.isForwardProcess = model.isForwardProcess
 		this.modelProcess.reactionaryWord = false
 		this.modelProcess.reasonDeny = ''
+		this.isForwardMain = isForwardMain
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
 			if (model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
@@ -353,9 +356,25 @@ export class ListGeneralComponent implements OnInit {
 			$('#modalAccept').modal('show')
 		} else if (status == PROCESS_STATUS_RECOMMENDATION.FORWARD) {
 			this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESSING
-			this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
-			this.contentForward = ''
-			$('#modalForward').modal('show')
+			this.modelProcess.step = STEP_RECOMMENDATION.FORWARD_MAIN
+			// this.contentForward = ''
+
+			this._service.recommendationGetDataForForward({}).subscribe((response) => {
+				if (response.success == RESPONSE_STATUS.success) {
+					if (response.result != null) {
+						this.unitForward = response.result.lstUnitForward
+						this.modelForward = new RecommendationForwardObject()
+						this.rebuilForm()
+						this.submitted = false
+						$('#modalForward').modal('show')
+					}
+				} else {
+					this._toastr.error(response.message)
+				}
+			}),
+				(error) => {
+					console.log(error)
+				}
 			setTimeout(() => {
 				$('#targetForward').focus()
 			}, 400)
@@ -386,12 +405,13 @@ export class ListGeneralComponent implements OnInit {
 	}
 
 	onProcessForward() {
-		this.contentForward = this.contentForward == null ? '' : this.contentForward.trim()
-		if (this.contentForward == '') {
-			this._toastr.error('Vui lòng nhập lí do từ chối')
+		this.submitted = true
+		this.modelForward.content = this.modelForward.content == null ? '' : this.modelForward.content.trim()
+		if (this.formForward.invalid) {
 			return
 		}
-		this.modelProcess.reasonDeny = this.contentForward
+		this.modelProcess.reasonDeny = this.modelForward.content
+		this.modelProcess.unitReceiveId = this.modelForward.unitReceiveId
 		var request = {
 			_mRRecommendationForwardProcessIN: this.modelProcess,
 			RecommendationStatus: RECOMMENDATION_STATUS.RECEIVE_WAIT,
@@ -420,18 +440,20 @@ export class ListGeneralComponent implements OnInit {
 			this._toastr.error('Vui lòng nhập lý do')
 			return
 		} else {
+			let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
 			var request = {
 				_mRRecommendationForwardProcessIN: this.modelProcess,
 				RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_DENY,
 				ReactionaryWord: this.modelProcess.reactionaryWord,
 				IsFakeImage: this.modelProcess.isFakeImage,
 				ListGroupWordSelected: this.lstGroupWordSelected.join(','),
+				IsForwardUnitChild: true,
 				IsList: true,
+				IsForwardMain: this.isForwardMain,
 			}
-			let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
+
 			this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
-					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
 					$('#modalReject').modal('hide')
 					this._toastr.success(COMMONS.DENY_SUCCESS)
 					this.getList()

@@ -53,10 +53,13 @@
 
 							<div class="box" [ngClass]="{'mt-4': rowIndex == 0}">
 								<div class="card border">
-									<div class="card-body py-4">
+									<div class="card-body pt-3 pb-1">
 										<p class="card-text">
 											<a class="h4" [routerLink]="['/cong-bo/thu-tuc-hanh-chinh/',item.administrationId]" title="Xem chi tiết">
 												{{item.name}}
+											</a>
+											<a target="_blank" href="{{'https://hanhchinhcong.khanhhoa.gov.vn/#/nguoidung/soanhoso?thutucId='+ item.administrationId + '&donvitiepnhanId=-2'}}">
+												<p class="fs-italic mb-0 cl-red" style="font-weight: bold;">Nộp hồ sơ</p>
 											</a>
 										</p>
 									</div>

@@ -50,7 +50,6 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	ngOnInit() {
 		this.getRecommendationById()
 		this.setSatisfaction()
-		this.getCommentPaged()
 	}
 
 	getRecommendationById() {
@@ -58,19 +57,15 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 			this.id = +params['id']
 			if (this.id != 0) {
 				//update count click
+				this.getCommentPaged()
 				this.service.countClick({ RecommendationId: this.id }).subscribe()
-
-				// call api getRecommendation by id
-				// tạm thời fix status = 3, nhưng thực tế status success = 10
 				this.service.getById({ id: this.id, status: RECOMMENDATION_STATUS.FINISED }).subscribe((res) => {
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result.model != null) {
 							this.model = { ...res.result.model, shortName: this.getShortName(res.result.model.name) }
-							// console.log(this.model)
 							this.lstFiles = res.result.lstFiles
 							this.lstConclusion = res.result.lstConclusion
 							this.lstConclusionFiles = res.result.lstConclusionFiles
-							// console.log(this.lstConclusionFiles)
 						}
 					}
 				})
@@ -79,6 +74,9 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	}
 
 	getShortName(string) {
+		if (!string) {
+			return ''
+		}
 		var names = string.split(' '),
 			initials = names[0].substring(0, 1).toUpperCase()
 		if (names.length > 1) {
@@ -155,7 +153,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 		isPublish: true,
 	}
 	listCommentsPaged: any[] = []
-	commentFirst = new RecommnendationCommentObject()
+	// commentFirst = new RecommnendationCommentObject()
 	total_Comments = 0
 
 	onSendComment() {
@@ -163,10 +161,8 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 			this._toastr.error('Vui lòng đăng nhập để gửi bình luận')
 			return
 		}
-		this.commentModel.userId = this.storeageService.getUserId()
-		this.commentModel.fullName = this.storeageService.getFullName()
 		this.commentModel.recommendationId = this.model.id
-		this.commentModel.contents = this.commentModel.contents.trim()
+		this.commentModel.contents = this.commentModel.contents == null ? '' : this.commentModel.contents.trim()
 		this.commentModel.isPublish = true
 		if (this.commentModel.contents == null || this.commentModel.contents == '') {
 			this._toastr.error('Không bỏ trống nội dung bình luận')
@@ -175,7 +171,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 
 		this.commentService.insert(this.commentModel).subscribe((res) => {
 			if (res.success != RESPONSE_STATUS.success) {
-				this._toastr.error('Xảy ra lỗi trong quá trình xử lý')
+				this._toastr.error(res.message)
 				return
 			}
 			this._toastr.success('Thêm bình luận thành công')
@@ -185,22 +181,21 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	}
 
 	getCommentPaged() {
+		debugger
 		this.commentQuery.pageSize = this.pageSizeComment
 		this.commentQuery.recommendationId = this.id
 		this.commentService.getAllOnPage(this.commentQuery).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
+				debugger
 				if (res.result.MRCommnentGetAllOnPage.length > 0) {
-					this.commentFirst = res.result.MRCommnentGetAllOnPage.shift()
-					debugger
-					if (this.listCommentsPaged.length != 0 && this.listCommentsPaged.length == res.result.MRCommnentGetAllOnPage.length && res.result.TotalCount > 20) {
+					this.total_Comments = res.result.TotalCount
+					this.listCommentsPaged = res.result.MRCommnentGetAllOnPage
+					if (this.total_Comments == res.result.TotalCount && this.commentQuery.pageSize == 20) {
 						this.IsAllComment = true
-					} else {
-						this.listCommentsPaged = res.result.MRCommnentGetAllOnPage
-						this.total_Comments = res.result.TotalCount
 					}
 				} else {
 					this.listCommentsPaged = []
-					this.commentFirst = null
+					this.IsAllComment = true
 				}
 			}
 		})

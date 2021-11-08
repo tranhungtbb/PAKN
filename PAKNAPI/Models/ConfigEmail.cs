@@ -12,4 +12,10 @@ namespace PAKNAPI.Models
         public string server { get; set; }
         public int port { get; set; }
     }
+
+    public class GeneralSetting {
+        public int? numberOfWarning { get; set; }
+        public int? fileQuantity { get; set; }
+        public long? fileSize { get; set; }
+    }
 }

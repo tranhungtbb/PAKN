@@ -172,7 +172,7 @@
 							<button type="button" class="btn text-white grd-xanhngoc border-0 px-5 mt-3" (click)="onSendComment()">Gửi</button>
 						</div>
 					</div>
-					<div class="media" *ngIf="commentFirst">
+					<!-- <div class="media" *ngIf="commentFirst">
 						<div class="avatar-circle mr-2" style="background: #eae5ff; color: #4527a0">
 							{{getShortName(commentFirst.fullName)}}
 						</div>
@@ -183,7 +183,7 @@
 								{{commentFirst.contents}}
 							</p>
 						</div>
-					</div>
+					</div> -->
 					<ng-container *ngFor="let item of listCommentsPaged; let i = index">
 						<div class="media mt-3 border-top pt-3">
 							<div class="avatar-circle mr-2" style="background: #eae5ff; color: #4527a0">

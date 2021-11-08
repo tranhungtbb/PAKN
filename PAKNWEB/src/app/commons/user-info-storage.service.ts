@@ -86,6 +86,9 @@ export class UserInfoStorageService {
 	setIsMain(value): void {
 		localStorage.setItem('isMain', value)
 	}
+	setIsUnitMain(value): void {
+		localStorage.setItem('isUnitMain', value)
+	}
 
 	setTypeObject(value): void {
 		localStorage.setItem('typeObject', value)
@@ -120,6 +123,9 @@ export class UserInfoStorageService {
 
 	getIsMain(): boolean {
 		return localStorage.getItem('isMain') === 'true'
+	}
+	getIsUnitMain(): boolean {
+		return localStorage.getItem('isUnitMain') === 'true'
 	}
 
 	getReturnUrl(): string {

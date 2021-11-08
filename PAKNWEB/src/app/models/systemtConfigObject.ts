@@ -5,11 +5,11 @@ export class SystemtConfig {
 		this.description = ''
 		this.content = ''
 	}
-	id : number
-	title : string
-	description : string
-	type : number
-	content : string
+	id: number
+	title: string
+	description: string
+	type: number
+	content: string
 }
 
 export class ConfigSwitchboard {
@@ -17,8 +17,8 @@ export class ConfigSwitchboard {
 		this.link = ''
 		this.config = ''
 	}
-	link : string
-	config : string
+	link: string
+	config: string
 }
 
 export class ConfigSMS {
@@ -47,8 +47,19 @@ export class ConfigEmail {
 		this.server = ''
 		this.port = ''
 	}
-	email : string
-	password : string
-	server : string
-	port : string
+	email: string
+	password: string
+	server: string
+	port: string
+}
+
+export class GeneralSetting {
+	constructor() {
+		this.numberOfWarning = ''
+		this.fileQuantity = ''
+		this.fileSize = ''
+	}
+	numberOfWarning: string
+	fileQuantity: string
+	fileSize: string
 }

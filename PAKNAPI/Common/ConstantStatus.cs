@@ -22,6 +22,8 @@
 		public const int RECEIVE = 1;//Tiếp nhận
 		public const int PROCESS = 2;//2 Giải quyết
 		public const int APPROVE = 3;//3 Phê duyệt
+
+		public const int FORWARD = 4;//4 chuyển tiếp cho đơn vị cấp dưới hoặc trung tâm
 	}
 	public static class PROCESS_STATUS_RECOMMENDATION
 	{
@@ -44,6 +46,7 @@
 		public const int CONFIG_EMAIL = 1;
 		public const int CONFIG_SMS = 2;
 		public const int CONFIG_SWITCHBOARD = 3;
+		public const int GENERAL = 4;
 	}
 
 	public class STATUS_HISNEWS

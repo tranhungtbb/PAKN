@@ -1,8 +1,7 @@
 .form-control {
-  height: 56px;
+	height: 56px;
 }
 
-:host ::ng-deep .form-control.ng-select .ng-select-container{
-  padding-top: 16px;
+:host ::ng-deep .form-control.ng-select .ng-select-container {
+	padding-top: 16px;
 }
-

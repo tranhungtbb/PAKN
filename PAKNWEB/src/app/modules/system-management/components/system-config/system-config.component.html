@@ -84,7 +84,7 @@
 									<span *ngIf="item.type == 1" class="badge rounded-pill badge-success">Cấu hình email</span>
 									<span *ngIf="item.type == 2" class="badge rounded-pill badge-outline-blue">Cấu hình sms</span>
 									<span *ngIf="item.type == 3" class="badge rounded-pill badge-outline-green2">Cấu hình tổng đài</span>
-									<span *ngIf="item.type == 4" class="badge rounded-pill badge-outline-success">Cấu hình số lần cảnh báo</span>
+									<span *ngIf="item.type == 4" class="badge rounded-pill badge-outline-success">Cấu hình chung</span>
 								</td>
 								<td>
 									<div class="hover-active d-flex justify-content-end">
@@ -128,7 +128,7 @@
 							<span *ngIf="model.type == 1" class="badge rounded-pill badge-success">Cấu hình email</span>
 							<span *ngIf="model.type == 2" class="badge rounded-pill badge-outline-blue">Cấu hình sms</span>
 							<span *ngIf="model.type == 3" class="badge rounded-pill badge-outline-green2">Cấu hình tổng đài</span>
-							<span *ngIf="model.type == 4" class="badge rounded-pill badge-outline-success">Cấu hình số lần cảnh báo</span>
+							<span *ngIf="model.type == 4" class="badge rounded-pill badge-outline-success">Cấu hình chung</span>
 						</div>
 						<div class="col-sm-12">
 							<strong class="control-label lb600">Mô tả</strong>
@@ -199,7 +199,15 @@
 					<div class="row" *ngIf="model.type == 4">
 						<div class="col-sm-6">
 							<strong class="control-label lb600">Số lần cảnh báo</strong>
-							<p>{{model.content}}</p>
+							<p>{{config.numberOfWarning}}</p>
+						</div>
+						<div class="col-sm-6">
+							<strong class="control-label lb600">Số lượng file</strong>
+							<p>{{config.fileQuantity}}</p>
+						</div>
+						<div class="col-sm-6">
+							<strong class="control-label lb600">Dung lượng file</strong>
+							<p>{{config.fileSize}} MB</p>
 						</div>
 					</div>
 				</div>

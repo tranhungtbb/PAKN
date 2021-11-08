@@ -170,6 +170,7 @@ export class CreateRecommendationComponent implements OnInit {
 				this.model = response.result.model
 				this.lstHashtagSelected = response.result.lstHashtag
 				this.files = response.result.lstFiles
+				this.getListUnitDefault()
 				if (this.model.sendDate) {
 					this.model.sendDate = new Date(this.model.sendDate)
 					let unitItem = this.lstUnit.find((c) => c.id == this.model.unitId)
@@ -186,7 +187,6 @@ export class CreateRecommendationComponent implements OnInit {
 			}
 	}
 	getDropdown() {
-		this.getListUnit()
 		let request = {}
 		this.recommendationService.recommendationGetDataForCreate(request).subscribe(
 			(response) => {
@@ -234,7 +234,19 @@ export class CreateRecommendationComponent implements OnInit {
 				}
 			} else {
 				this.lstUnit = []
-				this.toastr.error(res.message)
+			}
+		})
+	}
+
+	getListUnitDefault = () => {
+		let obj = {
+			FieldId: this.model.field == null ? '' : this.model.field,
+		}
+		this.unitService.getChildrenDropdownByField(obj).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.lstUnit = res.result
+			} else {
+				this.lstUnit = []
 			}
 		})
 	}
@@ -247,6 +259,7 @@ export class CreateRecommendationComponent implements OnInit {
 			unitId: new FormControl(this.model.unitId, [Validators.required]),
 			hashtag: new FormControl(this.hashtagId),
 			captcha: new FormControl(this.captchaCode, [Validators.required]),
+			address: new FormControl(this.model.address),
 		})
 	}
 	get f() {

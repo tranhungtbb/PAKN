@@ -13,9 +13,11 @@ import { Router } from '@angular/router'
 export class AppmenuComponent implements OnInit, AfterViewInit {
 	isSuperAdmin: boolean = false
 	constructor(private userStorage: UserInfoStorageService, private _router: Router, private hasPermission: HasPermission) {}
-	isMainMenu: boolean = this.userStorage.getIsMain()
+	isMainMenu: boolean = false
 	isAdmin = this.userStorage.getIsAdmin()
-	ngOnInit() {}
+	ngOnInit() {
+		this.isMainMenu = this.userStorage.getIsUnitMain()
+	}
 	ngAfterViewInit() {
 		this.loadScriptMenus('assets/dist/js/custom.min.js')
 		this.loadScriptMenus('assets/dist/js/deznav-init.js')

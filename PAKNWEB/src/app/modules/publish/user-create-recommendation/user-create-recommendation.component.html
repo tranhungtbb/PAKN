@@ -15,8 +15,14 @@
 				<p *ngIf="!isLogin || (isLogin && isLogin.trim() == '')" class="cl-red">Vui lòng đăng nhập để gửi phản ánh kiến nghị!</p>
 				<form class="form-row mb-3" [formGroup]="form">
 					<div class="col-12 form-group">
-						<label class="mb-1">Phản ánh, kiến nghị về việc <span class="cl-red">(*)</span></label>
-						<input class="form-control" type="text" [(ngModel)]="model.title" maxlength="500" formControlName="title" (blur)="searchRecommendation()"
+						<div class="mb-1 d-flex">
+							<div class="label pl-0">Phản ánh, kiến nghị về việc</div>
+							<span class="cl-red">(*)</span>
+							<button class="btn btn-sm btn-voice p-0 ml-2" svVoice [target]="'title'">
+								<i style="font-size: 15px;" class="bi bi-mic-mute-fill"></i>
+							</button>
+						</div>
+						<input class="form-control" type="text" id="title" [(ngModel)]="model.title" maxlength="500" formControlName="title" (blur)="searchRecommendation()"
 							placeholder="Nhập..." />
 						<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error">
 							<div *ngIf="f.title.errors.required">
@@ -37,7 +43,13 @@
 						</div>
 					</div>
 					<div class="col-12 form-group">
-						<label class="mb-1">Nội dung <span class="cl-red">(*)</span></label>
+						<div class="mb-1 d-flex">
+							<div class="label pl-0">Nội dung</div>
+							<span class="cl-red">(*)</span>
+							<button class="btn btn-sm btn-voice p-0 ml-2" svVoice [target]="'inputContent'" (click)="hightLightText()">
+								<i style="font-size: 15px;" class="bi bi-mic-mute-fill"></i>
+							</button>
+						</div>
 						<div class="group-content-recommendation">
 							<textarea id="inputContent" class="form-control" [(ngModel)]="model.content" formControlName="content" style="height: 158px; border-radius: 0.75rem;" rows="6"
 								placeholder="Nhập nội dung..." (blur)="hightLightText()"></textarea>
@@ -50,7 +62,7 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg form-group">
-						<label class="mb-1">Lĩnh vực <span class="cl-red">(*)</span></label>
+						<div class="label pl-0 mb-1">Lĩnh vực <span class="cl-red">(*)</span></div>
 						<ng-select class="form-control" [items]="lstField" bindValue="value" bindLabel="text" 
 							placeholder="Chọn..." formControlName="field" notFoundText="Không tìm thấy dữ liệu"
 							(change)="getListUnit()"
@@ -66,7 +78,7 @@
 						</div>
 					</div>
 					<div class="col-12 col-lg form-group">
-						<label class="mb-1">Đơn vị tiếp nhận <span class="cl-red">(*)</span></label>
+						<div class="label pl-0 mb-1">Đơn vị tiếp nhận <span class="cl-red">(*)</span></div>
 						<ng-select class="form-control" [items]="lstUnit"
 							bindLabel="text" bindValue="value" notFoundText="Không tìm thấy dữ liệu"
 							placeholder="Chọn..." formControlName="unitId" [(ngModel)]="model.unitId">
@@ -77,6 +89,9 @@
 											<strong>{{item.text}}</strong>
 										</p>
 										<p class="bg-hover mb-0" *ngIf="item.unitLevel != 1">{{item.text}}</p>
+										<p *ngIf="item.isMain" class="cl-red" style="font-style: italic;">
+											(Trường hợp không chọn được đơn vị xử lý)
+										</p>
 									</li>
 								</ul>
 							</ng-template>
@@ -87,8 +102,16 @@
 							</div>
 						</div>
 					</div>
-					
-					
+					<div class="col-12 col-sm-12 form-group">
+						<div class="label pl-0 mb-1">Địa chỉ</div>
+						<input class="form-control" type="text" [(ngModel)]="model.address" maxlength="300" formControlName="address"
+							placeholder="Nhập..." />
+							<div *ngIf="(submitted && f.address.invalid) || (f.address.invalid && (f.address.dirty || f.address.touched))" class="has-error">
+								<div *ngIf="f.address.errors.required">
+									<span class="help-block">Trường dữ liệu này không được để trống</span>
+								</div>
+							</div>
+					</div>
 				</form>
 				<div class="box attach-ct">
 					<p class="h5 text-uppercase mb-3">

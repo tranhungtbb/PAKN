@@ -1579,6 +1579,7 @@ namespace PAKNAPI.ModelBase
 		}
 
 		public int Id { get; set; }
+		public string Name { get; set; }
 
 		public async Task<List<SYUnitGetMainId>> SYUnitGetMainIdDAO()
 		{

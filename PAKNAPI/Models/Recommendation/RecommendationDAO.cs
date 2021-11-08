@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using PAKNAPI.ModelBase;
 using PAKNAPI.Models.Statistic;
+using Newtonsoft.Json;
 
 namespace PAKNAPI.Models.Recommendation
 {
@@ -29,17 +30,26 @@ namespace PAKNAPI.Models.Recommendation
 			data.lstHashTag = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("CA_HashtagGetDropdown", DP)).ToList();
 			data.lstGroupWord = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("[CA_GroupWordGetListSuggest]", DP)).ToList();
 			data.Code = await _sQLCon.ExecuteScalarDapperAsync<string>("MR_Recommendation_GenCode_GetCode", DP);
-
 			DP.Add("Id", unitId);
 			data.lstUnitChild = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("[SY_UnitGetChildDropdown]", DP)).ToList();
+
+			DP = new DynamicParameters();
+			DP.Add("Type", TYPECONFIG.GENERAL);
+			var config = (await _sQLCon.ExecuteListDapperAsync<SYConfig>("SY_ConfigGetByType", DP)).FirstOrDefault();
+			if (config != null)
+			{
+				data.generalSetting = JsonConvert.DeserializeObject<GeneralSetting>(config.Content);
+			}
 			return data;
 		}
 
-		public async Task<RecommendationGetDataForForwardResponse> RecommendationGetDataForForward()
+		public async Task<RecommendationGetDataForForwardResponse> RecommendationGetDataForForward(int? unitId)
 		{
 			RecommendationGetDataForForwardResponse data = new RecommendationGetDataForForwardResponse();
 			DynamicParameters DP = new DynamicParameters();
 			data.lstUnitNotMain = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("SY_UnitGetDropdownNotMain", DP)).ToList();
+			DP.Add("UnitId", unitId);
+			data.lstUnitForward = (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("[SY_UnitGetDropdownForward]", DP)).ToList();
 			return data;
 		}
 

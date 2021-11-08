@@ -157,7 +157,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int> MRCommnentInsertDAO(MRCommnentInsertIN _mRCommnentInsertIN)
+		public async Task<int?> MRCommnentInsertDAO(MRCommnentInsertIN _mRCommnentInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Contents", _mRCommnentInsertIN.Contents);
@@ -166,16 +166,21 @@ namespace PAKNAPI.ModelBase
 			DP.Add("FullName", _mRCommnentInsertIN.FullName);
 			DP.Add("IsPublish", _mRCommnentInsertIN.IsPublish);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_Commnent_Insert", DP));
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("MR_Commnent_Insert", DP);
 		}
 	}
 
 	public class MRCommnentInsertIN
 	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung không được để trống")]
 		public string Contents { get; set; }
 		public long? UserId { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Mã PAKN không được để trống")]
 		public long? RecommendationId { get; set; }
 		public string FullName { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public bool IsPublish { get; set; }
 	}
 
@@ -631,6 +636,7 @@ namespace PAKNAPI.ModelBase
 		public string ReasonDeny { get; set; }
 		public DateTime? ProcessingDate { get; set; }
 		public long? UserId { get; set; }
+		public int? UnitReceiveId { get; set; }
 	}
 
 	public class MRRecommendationForwardUpdate
@@ -1284,6 +1290,7 @@ namespace PAKNAPI.ModelBase
 		public short? TypeObject { get; set; }
 		public long? SendId { get; set; }
 		public string Name { get; set; }
+		public string Address { get; set; }
 		public byte? Status { get; set; }
 		public DateTime? SendDate { get; set; }
 		public bool? ReactionaryWord { get; set; }
@@ -1322,7 +1329,10 @@ namespace PAKNAPI.ModelBase
 		public int? UnitId { get; set; }
 		public short? TypeObject { get; set; }
 		public long? SendId { get; set; }
+		public long? BISendId { get; set; }
 		public string Name { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
 		public byte? Status { get; set; }
 		public DateTime? SendDate { get; set; }
 		public bool? ReactionaryWord { get; set; }
@@ -1405,6 +1415,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Field", _mRRecommendationInsertIN.Field);
 			DP.Add("UnitId", _mRRecommendationInsertIN.UnitId);
 			DP.Add("TypeObject", _mRRecommendationInsertIN.TypeObject);
+			DP.Add("CreateByType", _mRRecommendationInsertIN.CreateByType);
 			DP.Add("SendId", _mRRecommendationInsertIN.SendId);
 			DP.Add("Name", _mRRecommendationInsertIN.Name);
 			DP.Add("Status", _mRRecommendationInsertIN.Status);
@@ -1414,6 +1425,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("CreatedDate", _mRRecommendationInsertIN.CreatedDate);
 			DP.Add("UpdatedBy", _mRRecommendationInsertIN.UpdatedBy);
 			DP.Add("UpdatedDate", _mRRecommendationInsertIN.UpdatedDate);
+			DP.Add("Address", _mRRecommendationInsertIN.Address);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("MR_RecommendationInsert", DP);
 		}
@@ -1437,8 +1449,10 @@ namespace PAKNAPI.ModelBase
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Kiểu đối tượng không được để trống")]
 		[Range(0, int.MaxValue, ErrorMessage = "Kiểu đối tượng không đúng định dạng")]
 		public short? TypeObject { get; set; }
+		public int CreateByType { get; set; }
 		public long? SendId { get; set; }
 		public string Name { get; set; }
+		public string Address { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		[Range(0, int.MaxValue, ErrorMessage = "Trạng thái không đúng định dạng")]
@@ -1786,6 +1800,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("CreatedDate", _mRRecommendationUpdateIN.CreatedDate);
 			DP.Add("UpdatedBy", _mRRecommendationUpdateIN.UpdatedBy);
 			DP.Add("UpdatedDate", _mRRecommendationUpdateIN.UpdatedDate);
+			DP.Add("Address", _mRRecommendationUpdateIN.Address);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdate", DP));
 		}
@@ -1813,6 +1828,7 @@ namespace PAKNAPI.ModelBase
 		public short? TypeObject { get; set; }
 		public long? SendId { get; set; }
 		public string Name { get; set; }
+		public string Address { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		[Range(0, int.MaxValue, ErrorMessage = "Trạng thái không đúng định dạng")]

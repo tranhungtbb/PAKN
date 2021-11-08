@@ -1071,6 +1071,13 @@ transition: all .3s ease-in-out;
 	border-color: #1673D8;
 	color: #1673D8;
 }
+.badge-forward{
+	color: rgba(255 ,151, 63);
+	border: solid 1px rgba(255 ,151, 63);
+}
+.fs-italic {
+	font-style: italic;
+}
 
 .table thead th{
 	vertical-align: top;

@@ -22,6 +22,7 @@ import { NotificationService } from 'src/app/services/notification.service'
 import { AppSettings } from 'src/app/constants/app-setting'
 import { RecommendationCommentService } from 'src/app/services/recommendation-comment.service'
 import { saveAs as importedSaveAs } from 'file-saver'
+import { BusinessIndividualService } from 'src/app/services/business-individual.service'
 
 declare var $: any
 
@@ -70,7 +71,8 @@ export class ViewRecommendationComponent implements OnInit {
 		private _fb: FormBuilder,
 		private activatedRoute: ActivatedRoute,
 		private notificationService: NotificationService,
-		private commentService: RecommendationCommentService
+		private commentService: RecommendationCommentService,
+		private biService: BusinessIndividualService
 	) {}
 
 	ngOnInit() {
@@ -467,7 +469,6 @@ export class ViewRecommendationComponent implements OnInit {
 					this.toastr.success(COMMONS.ACCEPT_SUCCESS)
 				}
 				this.getData()
-				this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
 			} else {
 				this.toastr.error(response.message)
 			}
@@ -503,6 +504,54 @@ export class ViewRecommendationComponent implements OnInit {
 				(err) => {
 					console.error(err)
 				}
+		}
+	}
+	modelDetail: any
+	// preView info
+	preViewInfo = () => {
+		switch (this.model.typeObject) {
+			// cá nhân
+			case 2:
+				this.biService.individualById({ Id: this.model.biSendId }).subscribe(
+					(res) => {
+						if (res.success == RESPONSE_STATUS.success) {
+							if (res.result.InvididualGetByID.length > 0) {
+								this.modelDetail = res.result.InvididualGetByID[0]
+								$('#modalDetail').modal('show')
+							} else {
+								this.toastr.error('Đã xảy ra lỗi trong quá trình xử lý')
+							}
+						} else {
+							this.toastr.error(res.message)
+						}
+					},
+					(err) => {
+						console.log(err)
+					}
+				)
+				break
+			// doanh nghiệp
+			case 3:
+				this.biService.businessGetByID({ Id: this.model.biSendId }).subscribe(
+					(res) => {
+						if (res.success == RESPONSE_STATUS.success) {
+							if (res.result.BusinessGetById.length > 0) {
+								this.modelDetail = res.result.BusinessGetById[0]
+								$('#modalDetail').modal('show')
+							} else {
+								this.toastr.error('Đã xảy ra lỗi trong quá trình xử lý')
+							}
+						} else {
+							this.toastr.error(res.message)
+						}
+					},
+					(err) => {
+						console.log(err)
+					}
+				)
+				break
+			default:
+				return
 		}
 	}
 

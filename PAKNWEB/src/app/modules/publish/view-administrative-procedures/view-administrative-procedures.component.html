@@ -8,6 +8,10 @@
 					<li class="breadcrumb-item active"><a class="font-weight-bold" href="javascript:void(0)">Chi tiết thủ tục hành chính</a></li>
 				</ol>
 				<p *ngIf="model && model.status != 3">Thủ tục hành chính chưa được công bố</p>
+				
+				<a target="_blank" href="{{'https://hanhchinhcong.khanhhoa.gov.vn/#/nguoidung/soanhoso?thutucId='+ model.administrationId + '&donvitiepnhanId=-2'}}">
+					<p class="fs-italic mb-2" style="font-weight: bold;">Nộp hồ sơ</p>
+				</a>
 				<div class="table-responsive" *ngIf="model && model.status== 3">
 					<table class="table table-tthc table-bordered table-striped rounded overflow-hidden mb-4">
 						<tbody>

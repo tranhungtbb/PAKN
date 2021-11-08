@@ -65,7 +65,7 @@ export class SystemConfigComponent implements OnInit {
 				this.router.navigate(['/quan-tri/he-thong/cau-hinh-switchboard', id])
 				break
 			case TYPECONFIG.CONFIG_NUMBER_WARNING:
-				this.router.navigate(['/quan-tri/he-thong/cau-hinh-number-warning', id])
+				this.router.navigate(['/quan-tri/he-thong/cau-hinh-chung', id])
 				break
 			default:
 				break
@@ -78,7 +78,6 @@ export class SystemConfigComponent implements OnInit {
 					this.model = { ...response.result.SYConfigGetByID[0] }
 					this.config = JSON.parse(this.model.content)
 					if (this.model.type == TYPECONFIG.CONFIG_EMAIL) {
-						debugger
 						let s = this.config.password.split('').map((element) => {
 							return '*'
 						})

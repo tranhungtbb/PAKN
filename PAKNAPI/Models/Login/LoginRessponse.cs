@@ -18,6 +18,7 @@ namespace PAKNAPI.Models.Results
         public string UnitName { get; set; }
         public bool? IsMain { get; set; }
         public bool? IsAdmin { get; set; }
+        public bool? IsUnitMain { get; set; }
         public bool? IsHaveToken { get; set; }
         public int Role { get; set; }
         public string Permissions { get; set; }
@@ -38,11 +39,12 @@ namespace PAKNAPI.Models.Results
             UnitId = user.UnitId;
             UnitName = user.UnitName;
             IsMain = user.IsMain;
+            IsUnitMain = user.IsUnitMain;
             IsAdmin = user.IsAdmin;
             TypeObject = user.TypeObject;
             AccessToken = accessToken;
             IsHaveToken = true;
-            RefreshToken = refreshToken; 
+            RefreshToken = refreshToken;
         }
     }
 }

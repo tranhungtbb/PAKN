@@ -46,9 +46,29 @@ namespace PAKNAPI.Controllers.ControllerBase
 			try
 			{
 				if (FieldId == null) {
-					return new ResultApi { Success = ResultCode.OK, Result = null, Message = "Không có dữ liệu" };
+					return new ResultApi { Success = ResultCode.ORROR, Result = null, Message = "Không có dữ liệu" };
 				}
-				return new ResultApi { Success = ResultCode.OK, Result = await new CAUnitGetAll(_appSetting).UnitGetDropByFieldIdDAO(FieldId) };
+
+				var listUnit = await new CAUnitGetAll(_appSetting).UnitGetDropByFieldIdDAO(FieldId);
+				if (listUnit.Count == 0) {
+					return new ResultApi { Success = ResultCode.OK, Result = await new CAUnitGetAll(_appSetting).UnitGetDropByFieldIdDAO(null) };
+				};
+				if (listUnit.Count == 1)
+				{
+					return new ResultApi { Success = ResultCode.OK, Result = listUnit };
+				};
+
+				SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
+				if (listUnit.Count > 1 && !listUnit.Any(es => es.Value == dataMain.Id)) {
+					var unitMain = new DropdownTree();
+					unitMain.Value = dataMain.Id;
+					unitMain.Text = dataMain.Name;
+					unitMain.IsMain = true;
+					unitMain.UnitLevel = 1;
+					listUnit.Add(unitMain);
+				}
+
+				return new ResultApi { Success = ResultCode.OK, Result = listUnit };
 			}
 			catch (Exception ex)
 			{
