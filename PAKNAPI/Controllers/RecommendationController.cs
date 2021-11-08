@@ -173,6 +173,25 @@ namespace PAKNAPI.Controller
             }
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("check-file")]
+        public async Task<ActionResult<object>> CheckFile()
+        {
+            try
+            {
+                var content = PdfTextExtractorCustom.PerformOCR("D:/SV_2021/PhanAnhKienNghi/Source/pakn/PAKNAPI/Upload/Recommendation/3369/undefined05112021082450.pdf", _hostingEnvironment);
+                return new ResultApi { Success = ResultCode.OK, Result = content };
+            }
+            catch (Exception ex)
+            {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+
         /// <summary>
         /// thêm mới pakn
         /// </summary>
