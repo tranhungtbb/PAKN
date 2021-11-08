@@ -1,0 +1,12 @@
+E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\DetectFakeImage\obj\Debug\FakeImageDetection.csproj.AssemblyReference.cache
+E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\DetectFakeImage\obj\Debug\TLI.FakeImage.Properties.Resources.resources
+E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\DetectFakeImage\obj\Debug\FakeImageDetection.csproj.GenerateResource.cache
+E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\DetectFakeImage\obj\Debug\FakeImageDetection.csproj.CoreCompileInputs.cache
+E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\DetectFakeImage\bin\Debug\FakeImageDetection.exe
+E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\DetectFakeImage\bin\Debug\FakeImageDetection.pdb
+E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\DetectFakeImage\obj\Debug\FakeImageDetection.exe
+E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\DetectFakeImage\obj\Debug\FakeImageDetection.pdb
+E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\bin\FakeImageDetection.exe
+E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\bin\FakeImageDetection.pdb
+E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\DetectFakeImage\obj\Debug\FakeImageDetection.FormMain.resources
+E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\DetectFakeImage\obj\Debug\TLI.FakeImage.UpdateDataConfirm.resources
