@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
+using PAKNAPI.Models.ModelBase;
 using PAKNAPI.Models.Recommendation;
 using PAKNAPI.Models.Results;
 using System;
@@ -21,13 +22,15 @@ namespace PAKNAPI.Controllers
 	{
 		private readonly IAppSetting _appSetting;
 		private readonly IClient _bugsnag;
+		private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
 
 		public static List<CaptchaObject> captChaCode = new List<CaptchaObject>();
 
-		public CaptchaController(IAppSetting appSetting, IClient bugsnag)
+		public CaptchaController(IAppSetting appSetting, IClient bugsnag, Microsoft.Extensions.Configuration.IConfiguration configuration)
 		{
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
+			_configuration = configuration;
 		}
 
 		/// <summary>
@@ -203,6 +206,5 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-
 	}
 }

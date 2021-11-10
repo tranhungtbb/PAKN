@@ -38,6 +38,14 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<SYUserCheckExists>("SY_User_CheckExists", DP)).ToList();
 		}
+
+		public async Task<int?> SYUserCheckExistsForgetDAO(string Phone)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Phone", Phone);
+
+			return (await _sQLCon.ExecuteScalarDapperAsync<int?>("SY_User_CheckExistsPhoneForget", DP));
+		}
 	}
 
 	public class SYUserRoleMapInsert

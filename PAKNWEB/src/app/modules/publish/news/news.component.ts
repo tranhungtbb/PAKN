@@ -31,12 +31,6 @@ export class NewsComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// this.activatedRoute.queryParams.subscribe((params) => {
-		// 	let title = +params['title']
-		// 	if (title) {
-		// 		this.query.title = title
-		// 	}
-		// })
 		this.activatedRoute.queryParams.subscribe((params) => {
 			let suggest = params['title']
 			if (suggest) {

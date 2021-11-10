@@ -22,12 +22,6 @@
 								<p class="my-0 h5">{{model.name}}</p>
 							</div>
 						</div>
-						<!-- <span>
-							<p class="my-0 h5">Đơn vị tiếp nhận :</p> {{model.unitName}}
-						</span>
-						<span>
-							<p class="my-0 h5">Lĩnh vực :</p> {{model.fieldName}}
-						</span> -->
 						<span>{{model.createdDate | date:'HH:mm'}} ngày {{model.createdDate | date: 'dd/MM/yyyy'}}</span>
 					</div>
 					<div class="m-3">
@@ -172,18 +166,6 @@
 							<button type="button" class="btn text-white grd-xanhngoc border-0 px-5 mt-3" (click)="onSendComment()">Gửi</button>
 						</div>
 					</div>
-					<!-- <div class="media" *ngIf="commentFirst">
-						<div class="avatar-circle mr-2" style="background: #eae5ff; color: #4527a0">
-							{{getShortName(commentFirst.fullName)}}
-						</div>
-						<div class="media-body">
-							<p class="mb-0 h5">{{commentFirst.fullName}}</p>
-							<p class="small mb-1">{{commentFirst.createdDate | date:'HH:mm - dd/MM/yyyy'}}</p>
-							<p class="mb-0">
-								{{commentFirst.contents}}
-							</p>
-						</div>
-					</div> -->
 					<ng-container *ngFor="let item of listCommentsPaged; let i = index">
 						<div class="media mt-3 border-top pt-3">
 							<div class="avatar-circle mr-2" style="background: #eae5ff; color: #4527a0">
@@ -191,7 +173,15 @@
 							</div>
 							<div class="media-body">
 								<p class="mb-0 h5">{{item.fullName}}</p>
-								<p class="small mb-1">{{item.createdDate | date:'HH:mm - dd/MM/yyyy'}}</p>
+								<div class="d-flex">
+									<p class="small mb-1">{{item.createdDate | date:'HH:mm - dd/MM/yyyy'}}</p>
+									<span class="ml-2 cursor"
+										[title]="item.isView ? 'Công bố bình luận' : 'Thu hồi bình luận'"
+										(click)="changeStatusComment(item)"
+										style="font-size: 16px;">
+										<i [ngClass]="item.isView ? 'bi bi-arrow-down-circle' : 'bi bi-arrow-up-circle'"></i>
+									</span>
+								</div>
 								<p class="mb-0">
 									{{item.contents}}
 								</p>

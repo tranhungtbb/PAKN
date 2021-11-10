@@ -19,7 +19,7 @@ import { SupportComponent } from './support/support.component'
 import { ViewReflectionsRecommendationComponent } from './view-reflections-recommendation/view-reflections-recommendation.component'
 import { CreateRecommendationComponent } from './user-create-recommendation/user-create-recommendation.component'
 import { MyRecommendationComponent } from './my-recommendation/my-recommendation.component'
-import { from } from 'rxjs'
+import { AgmCoreModule } from '@agm/core'
 import { EditorModule } from 'primeng/editor'
 import { TableModule } from 'primeng/table'
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
@@ -76,6 +76,11 @@ import { DetailRecommendationPaknCPComponent } from './recommendations-sync/reco
 		BsDatepickerModule.forRoot(),
 		EditorModule,
 		CarouselModule,
+		AgmCoreModule.forRoot({
+			apiKey: 'AIzaSyBriVbWgmHEE8CGaEJM6V47Bem3VoYCi0Q',
+			language: 'vi',
+			libraries: ['places'],
+		}),
 	],
 })
 export class PublishModule {}

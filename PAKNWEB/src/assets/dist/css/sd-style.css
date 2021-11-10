@@ -330,6 +330,7 @@ transition: all .3s ease-in-out;
 }
 .text-3line{
   display: -webkit-box;
+/* autoprefixer: off */
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
@@ -1817,5 +1818,30 @@ table thead .form-control ng-select {
 }
 .ps-absolute {
 	position: absolute;
+}
+.bg-menu-blue {
+	background-color: #2e73d5;
+}
+.list-group-flush li i {
+	color: #2e73d5;
+	font-size: 15px;
+}
+
+.img-cover{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.nav-item a.active {
+	background-color: #155bbf;
+}
+
+.full-with{
+	width: 100% !important;
+}
+
+.breadcrumb-item a{
+	color: #222;
 }
 

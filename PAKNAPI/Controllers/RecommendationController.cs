@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Http;
 using Bugsnag;
 using PAKNAPI.Models.ModelBase;
 using PAKNAPI.Models.Remind;
+using System.Threading;
 
 namespace PAKNAPI.Controller
 {
@@ -337,33 +338,37 @@ namespace PAKNAPI.Controller
                             string content = "";
                             contentType = FileContentType.GetTypeOfFile(filePath);
                             bool isHasFullText = false;
-                            switch (contentType)
-                            {
-                                case ".pdf":
-                                    // không đọc được từ file scan
-                                    //content = FileUtils.ExtractDataFromPDFFile(filePath);
-                                    content = PdfTextExtractorCustom.ReadPdfFile(filePath);
-                                    isHasFullText = true;
-                                    break;
+                            Thread t = new Thread(async () => {
+                                switch (contentType)
+                                {
+                                    case ".pdf":
+                                        // không đọc được từ file scan
+                                        //content = FileUtils.ExtractDataFromPDFFile(filePath);
+                                        //content = PdfTextExtractorCustom.ReadPdfFile(filePath);
+                                        content = PdfTextExtractorCustom.PerformOCR(filePath, _hostingEnvironment);
+                                        isHasFullText = true;
+                                        break;
 
-                                case ".docx":
-                                    content = FileUtils.ReadFileDocExtension(filePath);
-                                    isHasFullText = true;
-                                    break;
+                                    case ".docx":
+                                        content = FileUtils.ReadFileDocExtension(filePath);
+                                        isHasFullText = true;
+                                        break;
 
-                                case ".doc":
-                                    content = FileUtils.ExtractDocFile(filePath);
-                                    isHasFullText = true;
-                                    break;
-                            }
-                            if (isHasFullText)
-                            {
-                                MRRecommendationFullTextInsertIN fulltext = new MRRecommendationFullTextInsertIN();
-                                fulltext.RecommendationId = Id;
-                                fulltext.FileId = FileId;
-                                fulltext.FullText = content;
-                                await new MRRecommendationFullTextInsert(_appSetting).MRRecommendationFullTextInsertDAO(fulltext);
-                            }
+                                    case ".doc":
+                                        content = FileUtils.ExtractDocFile(filePath);
+                                        isHasFullText = true;
+                                        break;
+                                }
+                                if (isHasFullText)
+                                {
+                                    MRRecommendationFullTextInsertIN fulltext = new MRRecommendationFullTextInsertIN();
+                                    fulltext.RecommendationId = Id;
+                                    fulltext.FileId = FileId;
+                                    fulltext.FullText = content;
+                                    await new MRRecommendationFullTextInsert(_appSetting).MRRecommendationFullTextInsertDAO(fulltext);
+                                }
+                            });
+                            t.Start();
                         }
                     }
                     MRRecommendationHashtagInsertIN _mRRecommendationHashtagInsertIN = new MRRecommendationHashtagInsertIN();
@@ -608,32 +613,36 @@ namespace PAKNAPI.Controller
                         string content = "";
                         contentType = FileContentType.GetTypeOfFile(filePath);
                         bool isHasFullText = false;
-                        switch (contentType)
-                        {
-                            case ".pdf":
-                                //content = FileUtils.ExtractDataFromPDFFile(filePath);
-                                content = PdfTextExtractorCustom.ReadPdfFile(filePath);
-                                isHasFullText = true;
-                                break;
+                        Thread t = new Thread(async () => {
+                            switch (contentType)
+                            {
+                                case ".pdf":
+                                    //content = FileUtils.ExtractDataFromPDFFile(filePath);
+                                    //content = PdfTextExtractorCustom.ReadPdfFile(filePath);
+                                    content = PdfTextExtractorCustom.PerformOCR(filePath, _hostingEnvironment);
+                                    isHasFullText = true;
+                                    break;
 
-                            case ".docx":
-                                content = FileUtils.ReadFileDocExtension(filePath);
-                                isHasFullText = true;
-                                break;
+                                case ".docx":
+                                    content = FileUtils.ReadFileDocExtension(filePath);
+                                    isHasFullText = true;
+                                    break;
 
-                            case ".doc":
-                                content = FileUtils.ExtractDocFile(filePath);
-                                isHasFullText = true;
-                                break;
-                        }
-                        if (isHasFullText)
-                        {
-                            MRRecommendationFullTextInsertIN fulltext = new MRRecommendationFullTextInsertIN();
-                            fulltext.RecommendationId = request.Data.Id;
-                            fulltext.FileId = FileId;
-                            fulltext.FullText = content;
-                            await new MRRecommendationFullTextInsert(_appSetting).MRRecommendationFullTextInsertDAO(fulltext);
-                        }
+                                case ".doc":
+                                    content = FileUtils.ExtractDocFile(filePath);
+                                    isHasFullText = true;
+                                    break;
+                            }
+                            if (isHasFullText)
+                            {
+                                MRRecommendationFullTextInsertIN fulltext = new MRRecommendationFullTextInsertIN();
+                                fulltext.RecommendationId = request.Data.Id;
+                                fulltext.FileId = FileId;
+                                fulltext.FullText = content;
+                                await new MRRecommendationFullTextInsert(_appSetting).MRRecommendationFullTextInsertDAO(fulltext);
+                            }
+                        });
+                        t.Start();
                     }
                 }
                 MRRecommendationHashtagDeleteByRecommendationIdIN hashtagDeleteByRecommendationIdIN = new MRRecommendationHashtagDeleteByRecommendationIdIN();
@@ -1473,15 +1482,15 @@ namespace PAKNAPI.Controller
 
 
         [HttpPost]
-        [Route("insert-commnent")]
-        public async Task<ActionResult<object>> MRCommnentInsertBase(MRCommnentInsertIN _mRCommnentInsertIN)
+        [Route("insert-comment")]
+        public async Task<ActionResult<object>> MRCommentInsertBase(MRCommentInsertIN _mRCommnentInsertIN)
         {
             try
             {
                 _mRCommnentInsertIN.UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
                 _mRCommnentInsertIN.FullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
 
-                var result = await new MRCommnentInsert(_appSetting).MRCommnentInsertDAO(_mRCommnentInsertIN);
+                var result = await new MRCommentInsert(_appSetting).MRCommnentInsertDAO(_mRCommnentInsertIN);
 
                 if (result == -1)
                 {
@@ -1541,12 +1550,12 @@ namespace PAKNAPI.Controller
         /// <returns></returns>
 
         [HttpGet]
-        [Route("get-all-commnent")]
-        public async Task<ActionResult<object>> MRCommnentGetAllOnPageBase(int? PageSize, int? PageIndex, long? RecommendationId, bool IsPublish)
+        [Route("get-all-comment")]
+        public async Task<ActionResult<object>> MRCommentGetAllOnPageBase(int? PageSize, int? PageIndex, long? RecommendationId, bool IsPublish)
         {
             try
             {
-                List<MRCommnentGetAllOnPage> rsMRCommnentGetAllOnPage = await new MRCommnentGetAllOnPage(_appSetting).MRCommnentGetAllOnPageDAO(PageSize, PageIndex, RecommendationId, IsPublish);
+                List<MRCommentGetAllOnPage> rsMRCommnentGetAllOnPage = await new MRCommentGetAllOnPage(_appSetting).MRCommentGetAllOnPageDAO(PageSize, PageIndex, RecommendationId, IsPublish);
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"MRCommnentGetAllOnPage", rsMRCommnentGetAllOnPage},
@@ -1560,10 +1569,35 @@ namespace PAKNAPI.Controller
             {
                 _bugsnag.Notify(ex);
                 new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
-
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+
+
+        [HttpPost]
+        [Route("update-status-comment")]
+        public async Task<ActionResult<object>> MRCommentUpdateStatusBase(MRCommentUpdateIN _mRCommnentUpdateIN)
+        {
+            try
+            {
+                _mRCommnentUpdateIN.UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+
+                var result = await new MRCommentUpdateStatus(_appSetting).MRCommnentUpdateDAO(_mRCommnentUpdateIN);
+                if (result == -1)
+                {
+                    return new ResultApi { Success = ResultCode.ORROR, Message = "Bạn không có quyền công bố-thu hồi bình luận này" };
+                }
+                return new ResultApi { Success = ResultCode.OK, Result = result };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+
         /// <summary>
         /// tk pakn 7 ngày qua
         /// </summary>

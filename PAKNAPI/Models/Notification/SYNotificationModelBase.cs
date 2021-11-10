@@ -12,10 +12,10 @@ namespace PAKNAPI.Models.ModelBase
 {
 	public class SYNotificationModel
 	{
-		public long Id { get; set; }
-		public long SenderId { get; set; }
-		public int SendOrgId { get; set; }
-		public long ReceiveId { get; set; }
+		public long? Id { get; set; }
+		public long? SenderId { get; set; }
+		public int? SendOrgId { get; set; }
+		public long? ReceiveId { get; set; }
 		public int? ReceiveOrgId { get; set; }
 		public long? DataId { get; set; }
 		public DateTime SendDate { get; set; }
@@ -27,9 +27,6 @@ namespace PAKNAPI.Models.ModelBase
 		public bool IsReaded { get; set; }
 		public int RowNumber { get; set; }
 		public int ViewedCount { get; set; }
-
-		
-
 		public SYNotificationModel() { }
 	}
 
@@ -102,6 +99,29 @@ namespace PAKNAPI.Models.ModelBase
 			}
 			return 1;
 		}
+
+		//public async Task<int> InsertNotificationBase(SYNotificationModel _syNotificationModel, UpdateTokenFireBaseRequest request)
+		//{
+		//	DynamicParameters DP = new DynamicParameters();
+		//	DP.Add("@SenderId", _syNotificationModel.SenderId);
+		//	DP.Add("@SendOrgId", _syNotificationModel.SendOrgId);
+		//	DP.Add("@ReceiveId", _syNotificationModel.ReceiveId);
+		//	DP.Add("@ReceiveOrgId", _syNotificationModel.ReceiveOrgId);
+		//	DP.Add("@DataId", _syNotificationModel.DataId);
+		//	DP.Add("@SendDate", _syNotificationModel.SendDate);
+		//	DP.Add("@Type", _syNotificationModel.Type);
+		//	DP.Add("@TypeSend", _syNotificationModel.TypeSend);
+		//	DP.Add("@Title", _syNotificationModel.Title);
+		//	DP.Add("@Content", _syNotificationModel.Content);
+		//	DP.Add("@IsViewed", _syNotificationModel.IsViewed);
+		//	DP.Add("@IsReaded", _syNotificationModel.IsReaded);
+		//	await _sQLCon.ExecuteNonQueryDapperAsync("[SY_NotificationInsert]", DP);
+		//	List<string> token = new List<string>();
+		//	token.Add(request.Token);
+		//	NotifiDocumentJob(token, _syNotificationModel);
+		//	return 1;
+		//}
+
 		public void SendNotificationWithTopData(List<string> tokenNotifies, SYNotificationModel notificationData)
 		{
 			List<string> lstDataAdd = new List<string>();
@@ -140,7 +160,7 @@ namespace PAKNAPI.Models.ModelBase
 				data = new NotificationData
 				{
 					Created = Created,
-					IdElement = (int)notificationData.DataId,
+					IdElement = notificationData.DataId == null ? 0 : (int)notificationData.DataId,
 					Type = (int)notificationData.Type,
 					DatasNotification = notificationData
 				}
@@ -311,7 +331,7 @@ namespace PAKNAPI.Models.ModelBase
 	}
 	public class NotificationData
 	{
-		public int IdElement { set; get; }
+		public int? IdElement { set; get; }
 		public int Type { set; get; }
 		public Dictionary<string, object> Datas { set; get; }
 		public int UserId { set; get; }

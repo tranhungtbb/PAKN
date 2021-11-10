@@ -55,8 +55,9 @@ export class Api {
 	public static RecommendationGetDenyContents = 'recommendation/recommendation-get-deny-contents'
 	public static InsertHashtagForRecommentdation = 'recommendation/insert-hashtag-for-recommentdation'
 	public static DeleteHashtagForRecommentdation = 'recommendation/delete-hashtag-for-recommentdation'
-	public static MRRecommendationCommentInsert = 'recommendation/insert-commnent'
-	public static MRRecommendationCommentGetOnPage = 'recommendation/get-all-commnent'
+	public static MRRecommendationCommentInsert = 'recommendation/insert-comment'
+	public static MRRecommendationCommentUpdateStatus = 'recommendation/update-status-comment'
+	public static MRRecommendationCommentGetOnPage = 'recommendation/get-all-comment'
 	public static MR_Recommendation7dayGraph = 'recommendation/recommendation7daygraph'
 
 	public static PuRecommendationGetAllOnPage = 'pu-recommendation/get-list-recommentdation-on-page'

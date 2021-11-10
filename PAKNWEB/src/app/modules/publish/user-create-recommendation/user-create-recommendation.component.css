@@ -33,3 +33,6 @@ form .label {
 .tooltip {
 	background-color: brown !important;
 }
+agm-map {
+	height: 70vh;
+}

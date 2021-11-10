@@ -27,7 +27,7 @@ namespace PAKNAPI.Models
 
         public string Phone { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Quốc tịch không được để trống")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Quốc tịch không được để trống")]
         public string Nation { get; set; }
         public int? ProvinceId { get; set; }
         public int? DistrictId { get; set; }
@@ -122,15 +122,15 @@ namespace PAKNAPI.Models
         public string NativePlace { get; set; }
         public string PermanentPlace { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Quốc tịch không được để trống")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Quốc tịch không được để trống")]
         public string Nation { get; set; }
 
         public string BusinessRegistration { get; set; }
         public string DecisionOfEstablishing { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Mã số thuế không được để trống")]
-        [RegularExpression(ConstantRegex.NUMBER, ErrorMessage = "Mã số thuế không đúng định dạng")]
-        [StringLength(13, ErrorMessage = "Mã số thuế không vượt quá 13 kí tự")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Mã số thuế không được để trống")]
+        //[RegularExpression(ConstantRegex.NUMBER, ErrorMessage = "Mã số thuế không đúng định dạng")]
+        //[StringLength(13, ErrorMessage = "Mã số thuế không vượt quá 13 kí tự")]
         public string Tax { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Tỉnh/Thành phố văn phòng đại diện không được để trống")]
@@ -146,8 +146,8 @@ namespace PAKNAPI.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Địa chỉ văn phòng đại diện không được để trống")]
         public string OrgAddress { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại văn phòng đại diện không được để trống")]
-        [RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại văn phòng đại diện không đúng định dạng")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại văn phòng đại diện không được để trống")]
+        //[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại văn phòng đại diện không đúng định dạng")]
         public string OrgPhone { get; set; }
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail văn phòng đại diện không đúng định dạng")]
         public string OrgEmail { get; set; }

@@ -8,9 +8,7 @@
 .header-nd {
 	height: auto;
 }
-.bg-menu-blue {
-	background-color: #2e73d5;
-}
+
 .navbar-light .navbar-nav .nav-link {
 	padding: 15px 20px;
 	font-family: Inter;
@@ -272,11 +270,6 @@
 }
 .border-radius-gallery {
 	border-radius: 12px;
-}
-
-.list-group-flush li i {
-	color: #2e73d5;
-	font-size: 15px;
 }
 
 .bg-cards-content-owl {

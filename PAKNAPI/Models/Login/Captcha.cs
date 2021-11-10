@@ -10,13 +10,15 @@ using System.IO;
 using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace PAKNAPI.Models.Results
 {
     public class Captcha
     {
-        public static SQLCon _sQLCon ;
+        public static SQLCon _sQLCon;
         const string Letters = "12346789ABCDEFGHJKLMNPRTUVWXYZ";
+        const string LettersOTP = "123467890";
 
         public Captcha(IAppSetting appSetting)
         {
@@ -39,12 +41,28 @@ namespace PAKNAPI.Models.Results
             return sb.ToString();
         }
 
+        public string GenerateOTPCode()
+        {
+            Random rand = new Random();
+            int maxRand = LettersOTP.Length - 1;
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < 6; i++)
+            {
+                int index = rand.Next(maxRand);
+                sb.Append(LettersOTP[index]);
+            }
+
+            return sb.ToString();
+        }
+
         public bool ValidateCaptchaCode(string userInputCaptcha, List<CaptchaObject> context)
         {
             var isValid = false;
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Code", userInputCaptcha);
-            var result =  _sQLCon.ExecuteListDapper<int> ("SY_CaptChaValidator", parameters).FirstOrDefault();
+            var result = _sQLCon.ExecuteListDapper<int>("SY_CaptChaValidator", parameters).FirstOrDefault();
             if (result > 0)
             {
                 isValid = true;
@@ -262,5 +280,81 @@ namespace PAKNAPI.Models.Results
         public byte[] CaptchaByteData { get; set; }
         public string CaptchBase64Data => Convert.ToBase64String(CaptchaByteData);
         public DateTime Timestamp { get; set; }
+    }
+
+
+    public class SYOTP
+    {
+        public static SQLCon _sQLCon;
+
+        public SYOTP(IAppSetting appSetting)
+        {
+            _sQLCon = new SQLCon(appSetting.GetConnectstring());
+        }
+
+
+        public async Task<int?> InsertOTPDAO(OTP otp)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("Code", otp.Code);
+            parameters.Add("UserAgent", otp.UserAgent);
+            parameters.Add("CreatedDate", otp.CreatedDate);
+            parameters.Add("ExpireDate", otp.ExpireDate);
+            parameters.Add("IsUse", otp.IsUse);
+            return await _sQLCon.ExecuteNonQueryDapperAsync("SY_OTPInsert", parameters);
+        }
+
+        public async Task<int?> DeleteOTPDAO(string code)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Code", code);
+            return await _sQLCon.ExecuteNonQueryDapperAsync("SY_OTPDelete", parameters);
+        }
+
+        public async Task<OTP> GetOTPByCodeDAO(string code, string userAgent)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("Code", code);
+            parameters.Add("UserAgent", userAgent);
+            return (await _sQLCon.ExecuteListDapperAsync<OTP>("SY_OTPGetByCode", parameters)).FirstOrDefault();
+        }
+
+        public async Task<int?> UpdateOTPDAO(OTP otp)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("Id", otp.Id);
+            parameters.Add("IsUse", otp.IsUse);
+            return await _sQLCon.ExecuteNonQueryDapperAsync("SY_OTPRevoke", parameters);
+        }
+    }
+
+    public class OTP
+    {
+        public long Id { get; set; }
+        public string Code { get; set; }
+        public string UserAgent { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime ExpireDate { get; set; }
+        public bool IsUse { get; set; }
+
+        public OTP(string code, string userAgent) {
+            this.Code = code;
+            this.UserAgent = userAgent;
+            this.CreatedDate = DateTime.Now;
+            this.ExpireDate = DateTime.Now.AddMinutes(10);
+            this.IsUse = false;
+        }
+
+        public OTP() { }
+    }
+
+    public class OtpForgetPasswordRequest
+    {
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Token không được để trống")]
+        public string Token { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
+        public string Phone { get; set; }
     }
 }

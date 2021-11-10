@@ -297,8 +297,8 @@ namespace PAKNAPI.ModelBase
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại văn phòng đại diện không được để trống")]
-		[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại văn phòng đại diện không đúng định dạng")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại văn phòng đại diện không được để trống")]
+		//[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại văn phòng đại diện không đúng định dạng")]
 		public string OrgPhone { get; set; }
 		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail văn phòng đại diện không đúng định dạng")]
 		public string OrgEmail { get; set; }
@@ -321,9 +321,9 @@ namespace PAKNAPI.ModelBase
 		[DataType(DataType.DateTime, ErrorMessage = "Ngày cấp không đúng định dạng")]
 		public DateTime? DateOfIssue { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Mã số thuế không được để trống")]
-		[RegularExpression(ConstantRegex.NUMBER, ErrorMessage = "Mã số thuế không đúng định dạng")]
-		[StringLength(13, ErrorMessage = "Mã số thuế không vượt quá 13 kí tự")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Mã số thuế không được để trống")]
+		//[RegularExpression(ConstantRegex.NUMBER, ErrorMessage = "Mã số thuế không đúng định dạng")]
+		//[StringLength(13, ErrorMessage = "Mã số thuế không vượt quá 13 kí tự")]
 		public string Tax { get; set; }
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Tỉnh/Thành phố văn phòng đại diện không được để trống")]
 		[RegularExpression(ConstantRegex.NUMBER, ErrorMessage = "Tỉnh/Thành phố văn phòng đại diện không đúng định dạng")]
@@ -353,7 +353,7 @@ namespace PAKNAPI.ModelBase
 		public string NativePlace { get; set; }
 		public string PermanentPlace { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Quốc tịch không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Quốc tịch không được để trống")]
 		public string Nation { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên tổ chức doanh nghiệp không được để trống")]
@@ -586,7 +586,7 @@ namespace PAKNAPI.ModelBase
 		public string NativePlace { get; set; }
 		public string PermanentPlace { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Quốc tịch không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Quốc tịch không được để trống")]
 		public string Nation { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Ngày sinh không được để trống")]

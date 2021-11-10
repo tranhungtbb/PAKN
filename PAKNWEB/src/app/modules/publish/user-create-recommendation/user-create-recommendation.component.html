@@ -61,7 +61,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg form-group">
+					<div class="col-12 col-lg-6 form-group">
 						<div class="label pl-0 mb-1">Lĩnh vực <span class="cl-red">(*)</span></div>
 						<ng-select class="form-control" [items]="lstField" bindValue="value" bindLabel="text" 
 							placeholder="Chọn..." formControlName="field" notFoundText="Không tìm thấy dữ liệu"
@@ -77,7 +77,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-12 col-lg form-group">
+					<div class="col-12 col-lg-6 form-group">
 						<div class="label pl-0 mb-1">Đơn vị tiếp nhận <span class="cl-red">(*)</span></div>
 						<ng-select class="form-control" [items]="lstUnit"
 							bindLabel="text" bindValue="value" notFoundText="Không tìm thấy dữ liệu"
@@ -104,13 +104,15 @@
 					</div>
 					<div class="col-12 col-sm-12 form-group">
 						<div class="label pl-0 mb-1">Địa chỉ</div>
-						<input class="form-control" type="text" [(ngModel)]="model.address" maxlength="300" formControlName="address"
-							placeholder="Nhập..." />
-							<div *ngIf="(submitted && f.address.invalid) || (f.address.invalid && (f.address.dirty || f.address.touched))" class="has-error">
-								<div *ngIf="f.address.errors.required">
-									<span class="help-block">Trường dữ liệu này không được để trống</span>
-								</div>
+						<div class="ps-relative">
+							<input class="form-control" type="text" [(ngModel)]="model.address" maxlength="300" formControlName="address"
+								placeholder="Nhập..." />
+
+							<div class="input-group-customform pointer ps-absolute" style="right: 15px; top: 8px;" 
+								title="Chọn vị trí" (click)="showMaps()">
+								<i class="fas fa-map-marker-alt"></i>
 							</div>
+						</div>
 					</div>
 				</form>
 				<div class="box attach-ct">
@@ -230,13 +232,6 @@
 						<button type="button" class="btn text-white border-0 grd-xanhngoc mr-3 px-5" (click)="onSave(1)">Lưu</button>
 
 						<button type="button" class="btn text-white border-0 grd-blue px-5" (click)="onSave(2)">
-							<!-- <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
-								<path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z">
-								</path>
-								<path
-									d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z">
-								</path>
-							</svg> -->
 							<span class="ml-2">Gửi</span>
 						</button>
 					</div>
@@ -248,6 +243,30 @@
 		</div>
 	</div>
 </div>
-<!--**********************************
-          Content body end
-      ***********************************-->
+
+<div class="modal fade" id="modalMaps">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="min-width: 80%;">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h3">Chọn vị trí</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body pb-0 pt-0">  
+				<div class="row form-group">
+					<div class="col-md-12">
+						<agm-map [latitude]="markers?.lat" [longitude]="markers?.lng" [zoom]="zoom" [disableDefaultUI]="false" [zoomControl]="false"
+							(mapClick)="mapClicked($event)"> 
+							<agm-marker *ngIf="markers" [latitude]="markers.lat" [longitude]="markers.lng" [markerDraggable]="true"> 
+							</agm-marker>
+						</agm-map>
+					</div>
+				</div> 
+			</div>
+			<div class="modal-footer border-top-0">
+				<button class="btn btn-outline-secondary border px-5 mr-3" data-dismiss="modal" type="button">Hủy</button>
+				<button class="btn text-white grd-blue border-0 px-5 " type="button" (click)="onSaveMaps()">Xác nhận</button></div>
+
+		</div>
+	</div>
+</div>

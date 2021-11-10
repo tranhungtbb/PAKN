@@ -90,7 +90,7 @@
 					<div class="collapse navbar-collapse pt-3 pt-md-0" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 							<li class="nav-item">
-								<a class="nav-link"  [ngClass]="{'active': (activeUrl == '' || activeUrl == 'trang-chu2')}" >Trang chủ</a>
+								<a class="nav-link active" >Trang chủ</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link"  >Giới thiệu</a>
@@ -100,7 +100,8 @@
 								<a class="nav-link"  >Tin tức & sự kiện</a>
 							</li>
 							<li class="nav-item" style="position: relative;">
-								<a class="nav-link"  >Phản ánh - kiến nghị</a>
+								<!-- cong-bo/list-pakn -->
+								<a class="nav-link" href="/cong-bo/list-pakn">Phản ánh - kiến nghị</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link"  >Thủ tục hành chính</a>
@@ -118,11 +119,6 @@
 									</form>
 								</div>
 								<span class="search_icon p-3 c-pointer ps-absolute" style="right: 0px;">
-									<!-- <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<path
-											d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z"
-											fill="#A4A4A4" />
-									</svg> -->
 									<i class="bi bi-search"></i>
 								</span>
 							</div>
@@ -143,7 +139,8 @@
 							<a class="read-more" title="Xem thêm" href="javascript:void(0)"><i class="bi bi-arrow-right"></i></a>
 						</div>
 						<ng-container *ngFor="let i of [1,2,3,4,5]; let i = index">
-							<div class="card border mb-3" [ngClass]="{'bg-gray' : i % 2 == 0}">
+							<div class="card border mb-3">
+								<!-- [ngClass]="{'bg-gray' : i % 2 == 0}" -->
 								<div class="card-header pt-3 pb-0 align-items-center">
 									<p class="card-text mb-1">
 										<a class="h4" href="javascript:void(0)">

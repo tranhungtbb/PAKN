@@ -35,6 +35,8 @@ export class RecommendationObject {
 	updatedBy: number
 	updatedDate: Date
 	address: string
+	longitude: string
+	latitude: string
 }
 export class RecommendationSearchObject {
 	constructor() {

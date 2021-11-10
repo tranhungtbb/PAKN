@@ -111,16 +111,16 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate { get; set; }
 	}
 
-	public class MRCommnentGetAllOnPage
+	public class MRCommentGetAllOnPage
 	{
 		private SQLCon _sQLCon;
 
-		public MRCommnentGetAllOnPage(IAppSetting appSetting)
+		public MRCommentGetAllOnPage(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public MRCommnentGetAllOnPage()
+		public MRCommentGetAllOnPage()
 		{
 		}
 
@@ -131,8 +131,9 @@ namespace PAKNAPI.ModelBase
 		public string Contents { get; set; }
 		public long? RecommendationId { get; set; }
 		public DateTime? CreatedDate { get; set; }
+		public bool IsView { get; set; }
 
-		public async Task<List<MRCommnentGetAllOnPage>> MRCommnentGetAllOnPageDAO(int? PageSize, int? PageIndex, long? RecommendationId, bool isPublish)
+		public async Task<List<MRCommentGetAllOnPage>> MRCommentGetAllOnPageDAO(int? PageSize, int? PageIndex, long? RecommendationId, bool isPublish)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
@@ -140,24 +141,24 @@ namespace PAKNAPI.ModelBase
 			DP.Add("RecommendationId", RecommendationId);
 			DP.Add("IsPublish", isPublish);
 
-			return (await _sQLCon.ExecuteListDapperAsync<MRCommnentGetAllOnPage>("MR_Commnent_GetAllOnPage", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<MRCommentGetAllOnPage>("MR_Commnent_GetAllOnPage", DP)).ToList();
 		}
 	}
 
-	public class MRCommnentInsert
+	public class MRCommentInsert
 	{
 		private SQLCon _sQLCon;
 
-		public MRCommnentInsert(IAppSetting appSetting)
+		public MRCommentInsert(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
 		}
 
-		public MRCommnentInsert()
+		public MRCommentInsert()
 		{
 		}
 
-		public async Task<int?> MRCommnentInsertDAO(MRCommnentInsertIN _mRCommnentInsertIN)
+		public async Task<int?> MRCommnentInsertDAO(MRCommentInsertIN _mRCommnentInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Contents", _mRCommnentInsertIN.Contents);
@@ -170,7 +171,7 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
-	public class MRCommnentInsertIN
+	public class MRCommentInsertIN
 	{
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Nội dung không được để trống")]
 		public string Contents { get; set; }
@@ -182,6 +183,39 @@ namespace PAKNAPI.ModelBase
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public bool IsPublish { get; set; }
+	}
+
+	public class MRCommentUpdateStatus
+	{
+		private SQLCon _sQLCon;
+
+		public MRCommentUpdateStatus(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRCommentUpdateStatus()
+		{
+		}
+
+		public async Task<int?> MRCommnentUpdateDAO(MRCommentUpdateIN _mRCommnentUpdateIN)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", _mRCommnentUpdateIN.Id);
+			DP.Add("UserId", _mRCommnentUpdateIN.UserId);
+			DP.Add("IsView", _mRCommnentUpdateIN.IsView);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("MR_Commnent_UpdateStatus", DP);
+		}
+	}
+	public class MRCommentUpdateIN
+	{
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Mã bình luận không được để trống")]
+		public long Id { get; set; }
+		public long? UserId { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
+		public bool? IsView { get; set; }
 	}
 
 	public class MRRecommendationCheckExistedCode

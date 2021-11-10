@@ -92,12 +92,14 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 			return
 		} else {
 			this.satisfactions = JSON.parse(data)
-			this.satisfactions.forEach((item) => {
-				if (item.recommendationID == this.id) {
-					this.satisfactionCurrent = item.satisfaction
-					this.checkSatisfaction = true
-				}
-			})
+			if (this.satisfactions instanceof Array) {
+				this.satisfactions.forEach((item) => {
+					if (item.recommendationID == this.id) {
+						this.satisfactionCurrent = item.satisfaction
+						this.checkSatisfaction = true
+					}
+				})
+			}
 		}
 	}
 
@@ -203,6 +205,25 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	loadComment() {
 		this.pageSizeComment += 20
 		this.getCommentPaged()
+	}
+	changeStatusComment = (comment) => {
+		comment.isView = !comment.isView
+		let obj = {
+			Id: comment.id,
+			IsView: comment.isView,
+		}
+		this.commentService.updateStatus(obj).subscribe(
+			(res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this._toastr.success(comment.isView == true ? 'Công bố bình luận thành công' : 'Thu hồi bình luận thành công')
+				} else {
+					this._toastr.error(res.message)
+				}
+			},
+			(err) => {
+				console.log(err)
+			}
+		)
 	}
 	DownloadFile(file: any) {
 		var request = {

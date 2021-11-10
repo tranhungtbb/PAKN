@@ -32,11 +32,32 @@ import { DxReportViewerModule } from 'devexpress-reporting-angular'
 import { TreeviewModule } from 'ngx-treeview'
 import { CarouselModule } from 'ngx-owl-carousel-o'
 import { TooltipModule } from 'ngx-bootstrap/tooltip'
-import { Index2Component } from 'src/app/modules/index2/index2.component'
 import { LightboxModule } from 'ngx-lightbox'
 
+/// template 2
+
+import { StatisticsRightComponent } from 'src/app/modules/template-v2/statistics-right/statistics-right.component'
+import { Index2Component } from 'src/app/modules/index2/index2.component'
+import { ListRecommendation2Component } from 'src/app/modules/template-v2/list-recommendation/list-recommendation.component'
+import { GalleryComponent } from 'src/app/modules/template-v2/gallery/gallery.component'
+import { DetailRecommendation2Component } from 'src/app/modules/template-v2/detail-recommendation/detail-recommendation.component'
+import { ListNewsComponent } from './modules/template-v2/list-news/list-news.component'
+import { DetailNewsComponent } from './modules/template-v2/detail-news/detail-news.component'
+
 @NgModule({
-	declarations: [AppComponent, SvFocusDirective, ConfirmDialogComponent, ViewFileDialogComponent, Index2Component],
+	declarations: [
+		AppComponent,
+		SvFocusDirective,
+		ConfirmDialogComponent,
+		ViewFileDialogComponent,
+		Index2Component,
+		StatisticsRightComponent,
+		GalleryComponent,
+		ListRecommendation2Component,
+		DetailRecommendation2Component,
+		ListNewsComponent,
+		DetailNewsComponent,
+	],
 	entryComponents: [ConfirmDialogComponent, ViewFileDialogComponent],
 	imports: [
 		BrowserModule,

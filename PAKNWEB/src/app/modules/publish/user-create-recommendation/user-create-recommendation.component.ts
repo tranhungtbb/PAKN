@@ -1,7 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild, HostListener } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
+import { MouseEvent } from '@agm/core'
+
 import { COMMONS } from 'src/app/commons/commons'
-import { CONSTANTS, FILETYPE, RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { CONSTANTS, FILETYPE, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { RecommendationObject } from 'src/app/models/recommendationObject'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
@@ -16,6 +18,8 @@ import { CaptchaService } from 'src/app/services/captcha-service'
 import { NotificationService } from 'src/app/services/notification.service'
 import { UnitService } from '../../../services/unit.service'
 import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
+import { LocationService } from 'src/app/services/location.service'
+
 declare var $: any
 
 @Component({
@@ -51,6 +55,11 @@ export class CreateRecommendationComponent implements OnInit {
 	lstUnitTree: any[] = []
 	isLogin: any
 
+	// map
+	markers: any = null
+	private geoCoder
+	zoom: number = 15
+
 	constructor(
 		private unitService: UnitService,
 		private toastr: ToastrService,
@@ -62,7 +71,8 @@ export class CreateRecommendationComponent implements OnInit {
 		private captchaService: CaptchaService,
 		private activatedRoute: ActivatedRoute,
 		private notificationService: NotificationService,
-		private eRef: ElementRef
+		private eRef: ElementRef,
+		private locationService: LocationService
 	) {}
 
 	ngOnInit() {
@@ -84,6 +94,24 @@ export class CreateRecommendationComponent implements OnInit {
 		})
 		this.isLogin = this.storageService.getAccessToken()
 		$('[data-toggle="tooltip"]').tooltip()
+
+		// this.locationService
+		// 	.getPosition()
+		// 	.then((res) => {
+		// 		this.markers = { ...res }
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log(err)
+		// 	})
+		this.setCurrentLocation()
+	}
+
+	private setCurrentLocation() {
+		if ('geolocation' in navigator) {
+			navigator.geolocation.getCurrentPosition((position) => {
+				this.markers = { lat: position.coords.latitude, lng: position.coords.longitude }
+			})
+		}
 	}
 
 	searchRecommendation() {
@@ -298,7 +326,7 @@ export class CreateRecommendationComponent implements OnInit {
 		this.files.splice(index, 1)
 	}
 
-	onSave(status) {
+	async onSave(status) {
 		this.submitted = true
 		this.model.content = this.model.content.trim()
 		this.model.title = this.model.title.trim()
@@ -308,6 +336,15 @@ export class CreateRecommendationComponent implements OnInit {
 		if (this.model.title == null || this.model.title == '') {
 			return
 		}
+		this.model.address = this.model.address == null ? '' : this.model.address.trim()
+		if (!this.model.address) {
+			await this.getAddress(this.markers.lat, this.markers.lng).then((res) => {
+				this.model.address = String(res)
+			})
+		}
+
+		debugger
+
 		if (this.form.invalid) {
 			this.reloadImage()
 			return
@@ -424,34 +461,50 @@ export class CreateRecommendationComponent implements OnInit {
 		$('#inputContent').focus()
 	}
 
-	private unflatten(arr): any[] {
-		var tree = [],
-			mappedArr = {},
-			arrElem,
-			mappedElem
+	showMaps() {
+		console.log('markers :' + this.markers)
+		$('#modalMaps').modal('show')
+	}
 
-		// First map the nodes of the array to an object -> create a hash table.
-		for (var i = 0, len = arr.length; i < len; i++) {
-			arrElem = arr[i]
-			mappedArr[arrElem.id] = arrElem
-			mappedArr[arrElem.id]['children'] = []
+	async onSaveMaps() {
+		if (this.markers == null || this.markers.lat == null) {
+			return this.toastr.error('Vui lòng chọn vị trí')
+		} else {
+			this.model.latitude = this.markers.lat
+			this.model.longitude = this.markers.lng
+			await this.getAddress(this.model.latitude, this.model.longitude).then((res) => {
+				this.model.address = String(res)
+			})
+			$('#modalMaps').modal('hide')
+			$('#modal').modal('show')
 		}
-
-		for (var id in mappedArr) {
-			if (mappedArr.hasOwnProperty(id)) {
-				mappedElem = mappedArr[id]
-				// If the element is not at the root level, add it to its parent array of children.
-				if (mappedElem.parentId) {
-					if (!mappedArr[mappedElem['parentId']]) continue
-					mappedArr[mappedElem['parentId']]['children'].push(mappedElem)
+	}
+	async getAddress(latitude, longitude) {
+		this.geoCoder = new google.maps.Geocoder()
+		return new Promise((resolve, reject) => {
+			this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
+				if (status === 'OK') {
+					if (results[0]) {
+						resolve(results[0].formatted_address)
+					} else {
+						window.alert('No results found')
+						reject('No results found')
+					}
+				} else {
+					window.alert('Geocoder failed due to: ' + status)
+					reject('Geocoder failed due to: ' + status)
 				}
-				// If the element is at the root level, add it to first level elements array.
-				else {
-					tree.push(mappedElem)
-				}
-			}
-		}
-		return tree
+			})
+		})
+	}
+	mapClicked($event: MouseEvent) {
+		this.markers = {}
+		this.markers.lat = $event.coords.lat
+		this.markers.lng = $event.coords.lng
+		//console.log('clicked', $event)
+	}
+	markerDragEnd(m: any, $event: MouseEvent) {
+		console.log('dragEnd', m, $event)
 	}
 }
 

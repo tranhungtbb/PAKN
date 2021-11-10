@@ -233,3 +233,5 @@ export class PathSampleFiles {
 	public static PathSampleFilesIndividual = '/Upload/BusinessIndividual/Danh-sach-nguoi-dan.xlsx'
 	public static PathSampleFilesBusiness = '/Upload/BusinessIndividual/Danh-sach-doanh-nghiep.xlsx'
 }
+export const LocationURL = 'https://www.googleapis.com/geolocation/v1/geolocate'
+export const GoogleApiKey = 'AIzaSyBriVbWgmHEE8CGaEJM6V47Bem3VoYCi0Q'
