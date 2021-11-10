@@ -1,8 +1,6 @@
 ﻿
 using IronPdf;
 using System.Drawing;
-using org.apache.pdfbox.pdmodel;
-using org.apache.pdfbox.util;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -38,24 +36,6 @@ namespace PAKNAPI.Common
                 pdfReader.Close();
             }
             return text.ToString();
-        }
-        // SelectPdf
-        public static string ExtractTextFromPdf(string path)
-        {
-            PDDocument doc = null;
-            try
-            {
-                doc = PDDocument.load(path);
-              PDFTextStripper stripper = new PDFTextStripper();
-                return stripper.getText(doc);
-            }
-            finally
-            {
-                if (doc != null)
-                {
-                    doc.close();
-                }
-            }
         }
         public static string pdfText(string path)
         {

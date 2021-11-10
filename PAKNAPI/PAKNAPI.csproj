@@ -52,8 +52,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="MimeKit" Version="2.13.0" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.8.2" />
-    <PackageReference Include="Pdfbox" Version="1.1.1" />
-    <PackageReference Include="PdfPig" Version="0.1.5" />
     <PackageReference Include="Quartz" Version="3.3.3" />
     <PackageReference Include="Quartz.Extensions.Hosting" Version="3.3.3" />
     <PackageReference Include="SimpleImpersonation" Version="3.0.0" />
