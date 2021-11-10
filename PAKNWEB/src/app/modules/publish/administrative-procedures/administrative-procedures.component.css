@@ -5,3 +5,82 @@
 :host ::ng-deep .form-control.ng-select .ng-select-container {
 	padding-top: 16px;
 }
+
+.bg-administrative-left {
+	background: #f4f6fa;
+	padding: 30px 15px 15px;
+	width: 280px !important;
+}
+
+.group-search {
+	position: relative;
+}
+
+.group-search .form-control {
+	height: 40px;
+	border-radius: 7px;
+}
+
+.group-search .input-group-icon {
+	position: absolute;
+	right: 0;
+	top: 0;
+	margin-top: 9px;
+	margin-right: 12px;
+}
+
+.list-data {
+	margin: 0;
+	padding: 0;
+}
+
+.list-data li {
+	list-style: none;
+	padding: 10px 0;
+	box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.25);
+}
+
+.list-data li:last-child {
+	box-shadow: none;
+}
+
+.list-data li a {
+	color: #222222;
+	cursor: pointer;
+}
+
+.badge-custom {
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	text-align: center;
+	color: #ffffff;
+}
+
+.badge-custom.pink {
+	background: #92486B;
+}
+
+.badge-custom.danger {
+	background: #811E1E;
+}
+
+.text-black {
+	color: #222222;
+}
+
+.text-brown {
+	color: #595959;
+}
+
+.show2line {
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.text-blue {
+	color: #2E73D5;
+}

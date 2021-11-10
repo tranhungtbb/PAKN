@@ -299,6 +299,7 @@ export class Api {
 	public static AdministrativeFormalitiesDelete = 'administration-formalities/delete'
 	public static AdministrativeFormalitiesUpdateShow = 'administration-formalities/update-status'
 	public static AdministrativeFormalitiesCAFieldDAM = 'administration-formalities/get-drop-down'
+	public static AdministrativeFormalitiesCAUnitDAM = 'administration-formalities/get-drop-down-unit'
 	public static AdministrativeForward = 'administration-formalities/administration-forward'
 
 	// Notification

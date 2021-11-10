@@ -1,64 +1,130 @@
 <div class="content-nd">
 	<div class="container">
-		<div class="row justify-content-between pt-5">
+		<div class="row justify-content-between">
+			<div class="col-12 col-lg-auto d-none d-lg-block pl-3 bg-administrative-left">
+				<div class="row no-margin">
+					<div class="form-group mb-2">
+						<div class="radio d-inline mr-5">
+							<label><input type="radio" [value]="1" checked="checked" [(ngModel)]="typeSelected" name="optradio"> Đơn vị</label>
+						</div>
+						<div class="radio d-inline">
+							<label><input type="radio" [value]="2" [(ngModel)]="typeSelected" name="optradio"> Lĩnh vực</label>
+						</div>
+					</div>
+					<div class="form-group mb-2" *ngIf="typeSelected == 1">
+						<div class="group-search">
+							<input type="text" placeholder="Tìm đơn vị" [(ngModel)]="txtSearchDonVi" (keydown.enter)="getUnitDropdown()" class="form-control" name="optradio">
+							<div class="input-group-icon" (click)="getUnitDropdown()">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path
+										d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z"
+										fill="#A4A4A4"></path>
+								</svg>
+							</div>
+						</div>
+					</div>
+					<div class="form-group mb-2" *ngIf="typeSelected == 1">
+						<ul class="list-data">
+							<li *ngFor="let item of lstUnit">
+								<a (click)="changeUnit(item.value)">{{item.text}}</a>
+							</li>
+						</ul>
+					</div>
+					<div class="form-group mb-2" *ngIf="typeSelected == 2">
+						<ul class="list-data">
+							<li *ngFor="let item of lstField">
+								<a (click)="changeField(item.value)">{{item.text}}</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
 			<div class="col main-ct pr-3 pr-lg-5">
-				<div class="box mt-3 mb-4">
-					<div class="tt-v1 mb-3">
-						<h4 class="text-uppercase">Danh sách thủ tục hành chính</h4>
+				<div class="box mt-5 mb-4">
+					<div class="form-group">
+						<div class="d-flex">
+							<input placeholder="Nhập nội dung tìm kiếm..." class="form-control form-control" [(ngModel)]="dataSearch.name" maxlength="100"
+								(keydown.enter)="dataStateChange()" />
+							<button (click)="dataStateChange()" type="button" class="btn px-3 grd-blue" style="margin-left: -20px">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path
+										d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z"
+										fill="#fff"></path>
+								</svg>
+							</button>
+						</div>
+					</div>
+					<div id="accordion-one" class="mb-4">
+						<div>
+							<div class="pointer text-right collapsed text-blue" data-toggle="collapse" data-target="#default_collapseOne" aria-expanded="false">
+								<span class="accordion__header--text">Tìm kiếm nâng cao</span>
+							</div>
+							<div id="default_collapseOne" class="accordion__body collapse" data-parent="#accordion-one">
+								<div class="row form-group">
+									<div class="col-lg-3">
+										<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn cấp tiếp cận..." class="form-control border-brown" [items]="lstLevel"
+											bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.unitId" [closeOnSelect]="true" (change)="dataStateChange()"
+											[virtualScroll]="true">
+										</ng-select>
+									</div>
+									<div class="col-lg-3">
+										<input placeholder="Nhập..." class="form-control form-control" [(ngModel)]="dataSearch.organization" maxlength="100"
+											(keydown.enter)="dataStateChange()" />
+									</div>
+									<div class="col-lg-3">
+										<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn đơn vị tiếp nhận..." class="form-control border-brown" [items]="lstUnit"
+											bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.unitId" [closeOnSelect]="true" (change)="dataStateChange()"
+											[virtualScroll]="true">
+										</ng-select>
+									</div>
+									<div class="col-lg-3">
+										<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn lĩnh vực..." class="form-control border-brown" [items]="lstField"
+											bindLabel="text" bindValue="value" [(ngModel)]="dataSearch.field" [closeOnSelect]="true" (change)="dataStateChange()"
+											[virtualScroll]="true">
+										</ng-select>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 					<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
 						currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
 						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
-							<div class="form-row mx-0 p-3 rounded-xl border" style="background: #F9F9F9;">
-								<div class="col form-group">
-									<label class="mb-1">Lĩnh vực</label>
-									<ng-select notFoundText="Không có dữ liệu"  placeholder="Chọn..." class="form-control border-brown" [items]="lstField" bindLabel="text" bindValue="value"
-										[(ngModel)]="dataSearch.field" [closeOnSelect]="true" (change)="dataStateChange()" [virtualScroll]="true">
-									</ng-select>
-								</div>
-								<div class="col form-group">
-									<label class="mb-1">Cơ quan thực hiện</label>
-									<input placeholder="Nhập..." class="form-control form-control" [(ngModel)]="dataSearch.organization" maxlength="100"
-										(keydown.enter)="dataStateChange()" />
-								</div>
-								<div class="col form-group">
-									<label class="mb-1">Mã số</label>
-									<input placeholder="Nhập..." class="form-control form-control" [(ngModel)]="dataSearch.code" maxlength="100"
-										(keydown.enter)="dataStateChange()" />
-								</div>
-								<div class="w-100"></div>
-								<div class="col col-lg-4 form-group">
-									<label class="mb-1">Đối tượng thực hiện</label>
-									<input placeholder="Nhập..." class="form-control form-control" [(ngModel)]="dataSearch.object" maxlength="100"
-										(keydown.enter)="dataStateChange()" />
-								</div>
-								<div class="col form-group">
-									<label class="mb-1">Tên thủ tục</label>
-									<div class="d-flex">
-										<input placeholder="Nhập..." class="form-control form-control" [(ngModel)]="dataSearch.name" maxlength="100"
-											(keydown.enter)="dataStateChange()" />
-										<button (click)="dataStateChange()" type="button" class="btn px-3 grd-blue" style="margin-left: -20px">
-											<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-												<path
-													d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z"
-													fill="#fff"></path>
-											</svg>
-										</button>
-									</div>
-								</div>
-							</div>
+							<tr>
+								<th style="width: 50px">STT</th>
+								<th>Mã quản lý quốc gia</th>
+								<th>Thủ tục hành chính</th>
+								<th style="width: 150px">Lĩnh vực</th>
+							</tr>
 						</ng-template>
 						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex" class="mb-3">
-
-							<div class="box" [ngClass]="{'mt-4': rowIndex == 0}">
+							<tr>
+								<td>{{rowIndex + 1}}</td>
+								<td>{{item.countryCode}}</td>
+								<td>
+									<p class="mb-1 show2line"><a target="_blank" class="text-black" title="{{item.name}}"
+											href="{{'https://hanhchinhcong.khanhhoa.gov.vn/#/nguoidung/soanhoso?thutucId='+ item.administrationId + '&donvitiepnhanId=-2'}}">{{item.name}}</a>
+									</p>
+									<p class="small mb-1 text-brown">
+										<span class="mr-4"><b>Mã nội bộ:</b> {{item.code}}</span>
+										<span><b class="mr-1">Mức độ</b>
+											<label *ngIf="item.status == 2" class="badge-custom pink">{{item.status}}</label>
+											<label *ngIf="item.status == 3" class="badge-custom danger">{{item.status}}</label>
+										</span>
+									</p>
+								</td>
+								<td>{{item.fieldName}}</td>
+							</tr>
+							<!-- <div class="box" [ngClass]="{'mt-4': rowIndex == 0}">
 								<div class="card border">
 									<div class="card-body pt-3 pb-1">
 										<p class="card-text">
 											<a class="h4" [routerLink]="['/cong-bo/thu-tuc-hanh-chinh/',item.administrationId]" title="Xem chi tiết">
 												{{item.name}}
 											</a>
-											<a target="_blank" href="{{'https://hanhchinhcong.khanhhoa.gov.vn/#/nguoidung/soanhoso?thutucId='+ item.administrationId + '&donvitiepnhanId=-2'}}">
+											<a target="_blank"
+												href="{{'https://hanhchinhcong.khanhhoa.gov.vn/#/nguoidung/soanhoso?thutucId='+ item.administrationId + '&donvitiepnhanId=-2'}}">
 												<p class="fs-italic mb-0 cl-red" style="font-weight: bold;">Nộp hồ sơ</p>
 											</a>
 										</p>
@@ -80,7 +146,7 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							</div> -->
 						</ng-template>
 						<ng-template pTemplate="emptymessage">
 							<tr>
@@ -89,9 +155,6 @@
 						</ng-template>
 					</p-table>
 				</div>
-			</div>
-			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
-				<app-view-right></app-view-right>
 			</div>
 		</div>
 	</div>

@@ -277,6 +277,7 @@ namespace PAKNAPI.ModelBase
 		public byte? Status { get; set; }
 		public int AdministrationId { get; set; }
 		public string Organization { get; set; }
+		public string CountryCode { get; set; }
 
 		public async Task<List<DAMAdministrationGetList>> DAMAdministrationGetListDAO(string Code, string Name, string Object, string Organization, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex, int? TotalRecords)
 		{
