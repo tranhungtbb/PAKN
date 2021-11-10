@@ -84,3 +84,7 @@
 .text-blue {
 	color: #2E73D5;
 }
+
+.vertical-top {
+	vertical-align: top;
+}

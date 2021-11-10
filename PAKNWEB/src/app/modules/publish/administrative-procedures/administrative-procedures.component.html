@@ -100,9 +100,9 @@
 						</ng-template>
 						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex" class="mb-3">
 							<tr>
-								<td>{{rowIndex + 1}}</td>
-								<td>{{item.countryCode}}</td>
-								<td>
+								<td class="vertical-top">{{rowIndex + 1}}</td>
+								<td class="vertical-top">{{item.countryCode}}</td>
+								<td class="vertical-top">
 									<p class="mb-1 show2line"><a target="_blank" class="text-black" title="{{item.name}}"
 											href="{{'https://hanhchinhcong.khanhhoa.gov.vn/#/nguoidung/soanhoso?thutucId='+ item.administrationId + '&donvitiepnhanId=-2'}}">{{item.name}}</a>
 									</p>
@@ -114,7 +114,7 @@
 										</span>
 									</p>
 								</td>
-								<td>{{item.fieldName}}</td>
+								<td class="vertical-top">{{item.fieldName}}</td>
 							</tr>
 							<!-- <div class="box" [ngClass]="{'mt-4': rowIndex == 0}">
 								<div class="card border">
