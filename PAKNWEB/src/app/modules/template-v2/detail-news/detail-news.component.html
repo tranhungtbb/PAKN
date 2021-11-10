@@ -1,8 +1,5 @@
-<div id="main-wrapper">
 
-	<!--**********************************
-            Header start
-        ***********************************-->
+<div id="main-wrapper">
 	<div class="header-nd px-0">
 		<div class="header-content container">
 			<nav class="navbar navbar-expand pt-4 pb-4 px-0">
@@ -13,7 +10,7 @@
 					<ul class="navbar-nav header-right align-items-center">
 						<li class="nav-item d-none d-lg-block">
 							<div class="header-info">
-								<span class="">Xin chào! <strong>{{currentFullnName}}</strong></span>
+								<span class="">Xin chào! <strong>Nguyễn Thị Liêm</strong></span>
 							</div>
 						</li>
 						<li class="nav-item dropdown notification_dropdown">
@@ -22,8 +19,8 @@
 							</a>
 						</li>
 						<li class="nav-item dropdown notification_dropdown">
-							<a class="nav-link  ai-icon bg-transparent" style="position: relative;" href="javascript:void(0)" role="button" data-toggle="dropdown">
-								<span *ngIf="viewedCountLate > 0" class="count-notification">{{viewedCountLate}}</span>
+							<a class="nav-link ai-icon bg-transparent" style="position: relative;" href="javascript:void(0)" role="button" data-toggle="dropdown">
+								<span class="count-notification">2</span>
 								<i class="bi bi-bell"></i>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">
@@ -32,32 +29,7 @@
 									<div class="title-notification">
 										<div style="font-weight: 500;
 										font-size: 16px; text-transform: uppercase;">Thông báo</div>
-										<div style="font-size: 12px;">có <span style="color: red;">{{ViewedCount}}</span> thông báo mới</div>
-									</div>
-
-								</div>
-								<div id="DZ_W_Notification2" (scroll)="onScroll($event)" class="widget-media dz-scroll p-3" style="height: 550px;"
-									[ngClass]="{ 'height-auto': notifications && notifications.length < 4}">
-									<ul class="timeline" id="notificationScroll" *ngIf="notifications">
-										<li *ngFor="let item of notifications" class="item-notification">
-											<a href="javascript:void(0)" (click)="onClickNotification(item.dataId, item.type, item.typeSend)" class="timeline-panel">
-												<div class="media mr-2 grd-brown">
-													<i class="bi bi-file-earmark-medical cl-brown"></i>
-												</div>
-												<div class="media-body">
-													<small class="d-block" style="color: #222222;">{{item.sendDate | date : 'HH:mm dd/MM/yyyy'}}</small>
-													<p class="mb-0 text-uppercase" [ngClass]="{ 'red-title': checkDeny(item.typeSend) == true }">{{item.title}}</p>
-													<p class="mb-1 h4" [ngClass]="{ 'title-black': item.isReaded == true, 'title-gray': item.isReaded == false }">{{item.content}}
-													</p>
-												</div>
-											</a>
-										</li>
-									</ul>
-									<div *ngIf="notifications && notifications.length == 0" style="display: flex;
-									flex-direction: row;
-									justify-content: center;
-									align-items: center;">
-										<div>Bạn chưa có thông báo nào</div>
+										<div style="font-size: 12px;">có <span style="color: red;">2</span> thông báo mới</div>
 									</div>
 								</div>
 							</div>
@@ -89,7 +61,7 @@
 							</div>
 						</li>
 					</ul>
-					<ul *ngIf="!isHasToken" class="navbar-nav header-right align-items-center">
+					<ul *ngIf="1!=1" class="navbar-nav header-right align-items-center">
 						<li class="nav-item dropdown header-profile">
 							<div class="header-info">
 								<a class="btn btn-login" title="Đăng nhập" routerLink="/dang-nhap" type="button">
@@ -114,25 +86,23 @@
 					<div class="collapse navbar-collapse pt-3 pt-md-0" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 							<li class="nav-item">
-								<a class="nav-link" [ngClass]="{'active': (activeUrl == '' || activeUrl == 'trang-chu')}"
-								(click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./trang-chu']"
-								>Trang chủ</a>
+								<a class="nav-link">Trang chủ</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./gioi-thieu']" >Giới thiệu</a>
+								<a class="nav-link"  >Giới thiệu</a>
 							</li>
 						
 							<li class="nav-item">
-								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./tin-tuc-su-kien']">Tin tức & sự kiện</a>
+								<a class="nav-link active" href="/cong-bo/list-news">Tin tức & sự kiện</a>
 							</li>
 							<li class="nav-item" style="position: relative;">
-								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./phan-anh-kien-nghi']" >Phản ánh - kiến nghị</a>
+								<a class="nav-link" href="/cong-bo/list-pakn">Phản ánh - kiến nghị</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./thu-tuc-hanh-chinh']">Thủ tục hành chính</a>
+								<a class="nav-link"  >Thủ tục hành chính</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./ho-tro']">Hỗ trợ</a>
+								<a class="nav-link"  >Hỗ trợ</a>
 							</li>
 						</ul>
 
@@ -153,14 +123,84 @@
 			</div>
 		</div>
 	</div>
-	<!--**********************************
-            Header end ti-comment-alt
-        ***********************************-->
-	<router-outlet>
-	</router-outlet>
 
-	<!-- <div class="zalo-chat-widget" data-oaid="3231248114241019328" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="12" data-width="350" data-height="420"></div> -->
 
+	<div class="content-nd">
+		<div class="container">
+			<div class="row justify-content-between pt-4">
+				<div class="col main-ct pr-3 pr-lg-5">
+					<ol class="breadcrumb px-0 bg-transparent">
+						<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+						<li class="breadcrumb-item"><a href="#" class="font-weight-bold">Tin tức sự kiện</a></li>
+					</ol>
+
+					
+
+				</div>
+				<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+
+					<div class="sb-tk-pakn mb-4">
+						<div class="d-flex search-ct full-with mb-4">
+							<div class="search-bar center ps-relative search-article full-with">
+								<div class="p-0 m-0 show full-with">
+									<form>
+										<input class="form-control" type="text" placeholder="Nhập nội dung tìm kiếm..." aria-label="Search">
+									</form>
+								</div>
+								<span class="search_icon p-3 c-pointer ps-absolute" style="right: 0px;">
+									<i class="bi bi-search"></i>
+								</span>
+							</div>
+						</div>
+						<div class="h4 text-uppercase">
+							Tin tức nổi bật
+						</div>
+						<ul class="list-group list-group-flush">
+							<ng-container *ngFor="let item of newsHightlight;let i = index">
+								<li class="list-group-item px-0" *ngIf="i < 5">
+									<div class="media">
+										<a href="javascript:void(0)" (click)="redirectDetail(item.id)" class="image-box ratio-4-3 rounded mr-3" style="width: 6rem">
+											<img class="image" style="object-fit: cover; width: 100%; height: 100%;" [src]="item.imagePath">
+										</a>
+										<div class="media-body">
+											<small><span class="createDate" style="font-weight: 300; font-size: 13px; padding-left: 0px;">{{item.createdDate | date : 'HH:mm'}} ngày
+													{{item.createdDate | date : 'dd/MM/yy'}}</span></small>
+											<p class="h5 mb-0">
+												<a class="text-2line" style="font-size: 15px; color: #3c3c3c;" href="javascript:void(0)"
+													(click)="redirectDetail(item.id)">{{item.title}}</a>
+											</p>
+										</div>
+									</div>
+								</li>
+							</ng-container>
+						</ul>
+					</div>
+
+					<a href="#"><img class="img-fluid card shadow img-hover mt-5"
+						style="width: 100%; height: 250px;"
+						src="../../../../assets/dist/images/article/Rectangle 360.png" alt="">
+					</a>
+
+					<div class="sb-lkWeb mb-2">
+						<div class="tt-v1 pt-2">
+							<h4 class="text-uppercase">liên kết website</h4>
+						</div>
+						<ng-container *ngFor="let item of [1,2,3,4]; let i = index">
+							<a class="mb-4 mt-3" target="_blank" href="{{item.urlWebsite}}" title="{{item.nameWebsite}}">
+								<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==0" src="../../../assets/dist/images/cong dịch vụ công quốc gia.png">
+								<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==1" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công.png">
+								<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==2" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (1).png">
+								<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==3" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (2).png">
+							</a>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+
+		
+
+		</div>
+	</div>
 
 	<div class="footer px-0">
 		<div class="ct-footer pt-5 pb-4" style="background: #DDEDFF">
@@ -206,5 +246,4 @@
 			<a href="tel:+0258 3563 531"><i style="font-size: 19px;color: #fff;" class="bi bi-telephone-fill"></i></a>
 		</div>
 	</div>
-
 </div>

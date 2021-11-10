@@ -1,8 +1,5 @@
-<div id="main-wrapper">
 
-	<!--**********************************
-            Header start
-        ***********************************-->
+<div id="main-wrapper">
 	<div class="header-nd px-0">
 		<div class="header-content container">
 			<nav class="navbar navbar-expand pt-4 pb-4 px-0">
@@ -13,7 +10,7 @@
 					<ul class="navbar-nav header-right align-items-center">
 						<li class="nav-item d-none d-lg-block">
 							<div class="header-info">
-								<span class="">Xin chào! <strong>{{currentFullnName}}</strong></span>
+								<span class="">Xin chào! <strong>Nguyễn Thị Liêm</strong></span>
 							</div>
 						</li>
 						<li class="nav-item dropdown notification_dropdown">
@@ -23,7 +20,7 @@
 						</li>
 						<li class="nav-item dropdown notification_dropdown">
 							<a class="nav-link  ai-icon bg-transparent" style="position: relative;" href="javascript:void(0)" role="button" data-toggle="dropdown">
-								<span *ngIf="viewedCountLate > 0" class="count-notification">{{viewedCountLate}}</span>
+								<span class="count-notification">2</span>
 								<i class="bi bi-bell"></i>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">
@@ -32,32 +29,7 @@
 									<div class="title-notification">
 										<div style="font-weight: 500;
 										font-size: 16px; text-transform: uppercase;">Thông báo</div>
-										<div style="font-size: 12px;">có <span style="color: red;">{{ViewedCount}}</span> thông báo mới</div>
-									</div>
-
-								</div>
-								<div id="DZ_W_Notification2" (scroll)="onScroll($event)" class="widget-media dz-scroll p-3" style="height: 550px;"
-									[ngClass]="{ 'height-auto': notifications && notifications.length < 4}">
-									<ul class="timeline" id="notificationScroll" *ngIf="notifications">
-										<li *ngFor="let item of notifications" class="item-notification">
-											<a href="javascript:void(0)" (click)="onClickNotification(item.dataId, item.type, item.typeSend)" class="timeline-panel">
-												<div class="media mr-2 grd-brown">
-													<i class="bi bi-file-earmark-medical cl-brown"></i>
-												</div>
-												<div class="media-body">
-													<small class="d-block" style="color: #222222;">{{item.sendDate | date : 'HH:mm dd/MM/yyyy'}}</small>
-													<p class="mb-0 text-uppercase" [ngClass]="{ 'red-title': checkDeny(item.typeSend) == true }">{{item.title}}</p>
-													<p class="mb-1 h4" [ngClass]="{ 'title-black': item.isReaded == true, 'title-gray': item.isReaded == false }">{{item.content}}
-													</p>
-												</div>
-											</a>
-										</li>
-									</ul>
-									<div *ngIf="notifications && notifications.length == 0" style="display: flex;
-									flex-direction: row;
-									justify-content: center;
-									align-items: center;">
-										<div>Bạn chưa có thông báo nào</div>
+										<div style="font-size: 12px;">có <span style="color: red;">2</span> thông báo mới</div>
 									</div>
 								</div>
 							</div>
@@ -89,7 +61,7 @@
 							</div>
 						</li>
 					</ul>
-					<ul *ngIf="!isHasToken" class="navbar-nav header-right align-items-center">
+					<ul *ngIf="1!=1" class="navbar-nav header-right align-items-center">
 						<li class="nav-item dropdown header-profile">
 							<div class="header-info">
 								<a class="btn btn-login" title="Đăng nhập" routerLink="/dang-nhap" type="button">
@@ -114,25 +86,23 @@
 					<div class="collapse navbar-collapse pt-3 pt-md-0" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 							<li class="nav-item">
-								<a class="nav-link" [ngClass]="{'active': (activeUrl == '' || activeUrl == 'trang-chu')}"
-								(click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./trang-chu']"
-								>Trang chủ</a>
+								<a class="nav-link">Trang chủ</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./gioi-thieu']" >Giới thiệu</a>
+								<a class="nav-link"  >Giới thiệu</a>
 							</li>
 						
 							<li class="nav-item">
-								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./tin-tuc-su-kien']">Tin tức & sự kiện</a>
+								<a class="nav-link"  href="/cong-bo/list-news" >Tin tức & sự kiện</a>
 							</li>
 							<li class="nav-item" style="position: relative;">
-								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./phan-anh-kien-nghi']" >Phản ánh - kiến nghị</a>
+								<a class="nav-link active" href="/cong-bo/list-pakn">Phản ánh - kiến nghị</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./thu-tuc-hanh-chinh']">Thủ tục hành chính</a>
+								<a class="nav-link"  >Thủ tục hành chính</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./ho-tro']">Hỗ trợ</a>
+								<a class="nav-link"  >Hỗ trợ</a>
 							</li>
 						</ul>
 
@@ -144,6 +114,11 @@
 									</form>
 								</div>
 								<span class="search_icon p-3 c-pointer ps-absolute" style="right: 0px;">
+									<!-- <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path
+											d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z"
+											fill="#A4A4A4" />
+									</svg> -->
 									<i class="bi bi-search"></i>
 								</span>
 							</div>
@@ -153,14 +128,107 @@
 			</div>
 		</div>
 	</div>
-	<!--**********************************
-            Header end ti-comment-alt
-        ***********************************-->
-	<router-outlet>
-	</router-outlet>
 
-	<!-- <div class="zalo-chat-widget" data-oaid="3231248114241019328" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="12" data-width="350" data-height="420"></div> -->
-
+	<div class="content-nd mt-5 mb-5">
+		<div class="container">
+			<div class="row justify-content-between">
+				<div class="col main-ct pr-3 pr-lg-5">
+					<div class="box">
+						<div class="tt-v1 mb-3 d-flex justify-content-between">
+							<h4 class="text-uppercase">Danh sách phản ánh, kiến nghị</h4>
+							<a class="read-more" title="Xem thêm" href="javascript:void(0)"><i class="bi bi-arrow-right"></i></a>
+						</div>
+						<ng-container *ngFor="let i of [0,1,2,3,4,5,6,7,8,9]; let i = index">
+							<div class="card border mb-3">
+								<div class="card-header pt-3 pb-0 align-items-center">
+									<p class="card-text mb-1">
+										<a class="h4" href="/cong-bo/detail-pakn">
+											Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
+										</a>
+									</p>
+								</div>
+								<div class="card-body pt-1 pb-3">
+									<div class="d-flex align-items-center">
+										<div class="media align-items-center mr-4">
+											<div class="avatar-circle mr-2">
+												DL
+											</div>
+											<div class="media-body">
+												<p class="my-0 h5">Nguyễn Đức Lượng</p>
+											</div>
+										</div>
+										<span class="card-date">17:27 ngày 24/12/2020</span>
+									</div>
+									
+									<p class="card-text">
+										<a class="text-2line italic lh-20" href="/cong-bo/detail-pakn">
+											Kính gửi: Bộ Thông Tin và Truyền Thông Tôi tên là Nguyễn Đức Lượng, là chủ thuê bao di động trả trước Mobifone: 0778231999 Sim này tôi ít sử dụng 
+										</a>
+									</p>
+								</div>
+						</div>
+						</ng-container>
+					</div>
+				</div>
+				<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+					<app-statistics-right></app-statistics-right>
+					<app-gallery></app-gallery>
+				</div>
+			</div>
+			<div class="row justify-content-between">
+				<div class="col col-lg-12 main-ct pr-3 mt-3">
+					<div class="tt-v1 mb-3 d-flex justify-content-between">
+						<h4 class="text-uppercase">Tin tức nổi bật</h4>
+					</div>
+					<div class="row mt-4">
+						<div class="col col-lg-3" *ngFor="let item of [1,2,3,4]">
+								<div *ngIf="item ==1" class="card mb-lg-0 ps-relative" style="background-image: url(../../../assets/dist/images/Rectangle%20361.png); min-height: 260px; background-size: cover;">
+									<div class="content-article ps-absolute bg-cards-content-owl">
+										<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">14/01/2021</p>
+										<div class="card-header px-4 pt-0 pb-0" style="height: 80px;">
+											<p class="card-title text-2line" (click)="redirectDetailNews(item.id)">
+												Phê duyệt nhiệm vụ lập quy hoạch tỉnh Khánh Hòa Phê duyệt nhiệm vụ lập quy hoạch 
+												tỉnh Khánh Hòa Phê duyệt nhiệm vụ lập quy hoạch tỉnh Khánh Hòa
+											</p>
+										</div>
+									</div>
+								</div>
+								<div *ngIf="item ==2" class="card mb-lg-0 ps-relative" style="background-image: url(http://14.177.236.88:6160/Upload/News/28072021103101-Khanh-Hoa.jpg); min-height: 260px; background-size: cover;">
+									<div class="content-article ps-absolute bg-cards-content-owl">
+										<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">14/01/2021</p>
+										<div class="card-header px-4 pt-0 pb-0" style="height: 80px;">
+											<p class="card-title text-2line" (click)="redirectDetailNews(item.id)">
+												Khánh Hòa sẽ mở rộng vùng an toàn đến khu công nghiệp, du lịch và dịch vụ
+											</p>
+										</div>
+									</div>
+								</div>
+								<div *ngIf="item ==3" class="card mb-lg-0 ps-relative" style="background-image: url(http://14.177.236.88:6160/Upload/News/28072021102519-bien-nha-trang-4.jpg); min-height: 260px; background-size: cover;">
+									<div class="content-article ps-absolute bg-cards-content-owl">
+										<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">14/01/2021</p>
+										<div class="card-header px-4 pt-0 pb-0" style="height: 80px;">
+											<p class="card-title text-2line" (click)="redirectDetailNews(item.id)">
+												Khánh Hòa sẽ mở rộng vùng an toàn đến khu công nghiệp, du lịch và dịch vụ
+											</p>
+										</div>
+									</div>
+								</div>
+								<div *ngIf="item ==4" class="card mb-lg-0 ps-relative" style="background-image: url(http://14.177.236.88:6160/Upload/News/28072021102519-bien-nha-trang-4.jpg); min-height: 260px; background-size: cover;">
+									<div class="content-article ps-absolute bg-cards-content-owl">
+										<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">14/01/2021</p>
+										<div class="card-header px-4 pt-0 pb-0" style="height: 80px;">
+											<p class="card-title text-2line" (click)="redirectDetailNews(item.id)">
+												Khánh Hòa sẽ mở rộng vùng an toàn đến khu công nghiệp, du lịch và dịch vụ
+											</p>
+										</div>
+									</div>
+								</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="footer px-0">
 		<div class="ct-footer pt-5 pb-4" style="background: #DDEDFF">
@@ -206,5 +274,4 @@
 			<a href="tel:+0258 3563 531"><i style="font-size: 19px;color: #fff;" class="bi bi-telephone-fill"></i></a>
 		</div>
 	</div>
-
 </div>

@@ -6,6 +6,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { PublishRoutingModule } from './publish-routing.module'
 import { PaginatorModule } from 'primeng/paginator'
 import { CarouselModule } from 'ngx-owl-carousel-o'
+import { ChartsModule } from 'ng2-charts'
 
 import { PublishComponent } from './publish.component'
 import { SharedModule } from '../../shared/shared.module'
@@ -81,6 +82,7 @@ import { DetailRecommendationPaknCPComponent } from './recommendations-sync/reco
 			language: 'vi',
 			libraries: ['places'],
 		}),
+		ChartsModule,
 	],
 })
 export class PublishModule {}

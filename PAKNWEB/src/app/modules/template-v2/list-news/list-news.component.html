@@ -1,0 +1,381 @@
+
+<div id="main-wrapper">
+	<div class="header-nd px-0">
+		<div class="header-content container">
+			<nav class="navbar navbar-expand pt-4 pb-4 px-0">
+				<div class="collapse navbar-collapse justify-content-between">
+					<div class="header-left">
+						<a href="/cong-bo/trang-chu"><img class="img-fluid" src="../../../assets/dist/images/logo-nd.png" alt=""></a>
+					</div>
+					<ul class="navbar-nav header-right align-items-center">
+						<li class="nav-item d-none d-lg-block">
+							<div class="header-info">
+								<span class="">Xin chào! <strong>Nguyễn Thị Liêm</strong></span>
+							</div>
+						</li>
+						<li class="nav-item dropdown notification_dropdown">
+							<a class="nav-link  bg-transparent" href="/quan-tri">
+								<i class="bi bi-grid"></i>
+							</a>
+						</li>
+						<li class="nav-item dropdown notification_dropdown">
+							<a class="nav-link  ai-icon bg-transparent" style="position: relative;" href="/cong-bo/detail-news" role="button" data-toggle="dropdown">
+								<span class="count-notification">2</span>
+								<i class="bi bi-bell"></i>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right">
+								<div class="header-notification">
+									<div class="red-bar"></div>
+									<div class="title-notification">
+										<div style="font-weight: 500;
+										font-size: 16px; text-transform: uppercase;">Thông báo</div>
+										<div style="font-size: 12px;">có <span style="color: red;">2</span> thông báo mới</div>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="nav-item dropdown header-profile">
+							<a class="nav-link bg-transparent px-0" href="#" role="button" data-toggle="dropdown">
+								<div class="avatar-circle background-while">
+									<i class="bi bi-person-fill cl-dark"></i>
+								</div>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right">
+								<a [routerLink]="['/cong-bo/tai-khoan/thong-tin']" class="dropdown-item ai-icon">
+									<i class="bi bi-person-square"></i>
+									<span class="ml-2">Thông tin tài khoản </span>
+								</a>
+								<a routerLink="/cong-bo/phan-anh-kien-nghi-cua-toi" class="dropdown-item ai-icon">
+									<i class="bi bi-file-earmark-medical"></i>
+									<span class="ml-2">Phản ánh kiến nghị của tôi </span>
+								</a>
+								<a [routerLink]="['/cong-bo/tai-khoan/thay-doi-mat-khau']" class="dropdown-item ai-icon">
+									<i class="bi bi-key"></i>
+									<span class="ml-2">Đổi mật khẩu </span>
+								</a>
+
+								<a class="dropdown-item ai-icon">
+									<i class="bi bi-box-arrow-right"></i>
+									<span class="ml-2">Đăng xuất </span>
+								</a>
+							</div>
+						</li>
+					</ul>
+					<ul *ngIf="1!=1" class="navbar-nav header-right align-items-center">
+						<li class="nav-item dropdown header-profile">
+							<div class="header-info">
+								<a class="btn btn-login" title="Đăng nhập" routerLink="/dang-nhap" type="button">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+										<path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+									</svg>
+									<span class="ml-2" style="text-transform: none;">Đăng nhập</span>
+								</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+		<div class="container-fluid p-0 bg-menu-blue">
+			<div class="container">
+				<nav class="navbar navbar-expand-lg navbar-light p-3 p-md-0">
+					<button class="navbar-toggler border-0 bg-white py-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse pt-3 pt-md-0" id="navbarSupportedContent">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item">
+								<a class="nav-link">Trang chủ</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link"  >Giới thiệu</a>
+							</li>
+						
+							<li class="nav-item">
+								<a class="nav-link active" href="/cong-bo/list-news">Tin tức & sự kiện</a>
+							</li>
+							<li class="nav-item" style="position: relative;">
+								<a class="nav-link" href="/cong-bo/list-pakn">Phản ánh - kiến nghị</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link"  >Thủ tục hành chính</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link"  >Hỗ trợ</a>
+							</li>
+						</ul>
+
+						<div class="menu-left">
+							<div class="search-bar center ps-relative">
+								<div class="p-0 m-0 show">
+									<form>
+										<input class="form-control" type="text" placeholder="Tìm kiếm phản ánh kiến nghị..." aria-label="Search">
+									</form>
+								</div>
+								<span class="search_icon p-3 c-pointer ps-absolute" style="right: 0px;">
+									<!-- <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path
+											d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z"
+											fill="#A4A4A4" />
+									</svg> -->
+									<i class="bi bi-search"></i>
+								</span>
+							</div>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="content-nd">
+		<div class="container">
+			<div class="row justify-content-between pt-4">
+				<div class="col main-ct pr-3 pr-lg-5" style="box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.25);">
+					<div class="row">
+						<div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 pr-5">
+							<a href="#">
+								<img class="img-fluid card shadow mb-1 img-cover" style="height: 369px;"
+								src="../../../../assets//dist/images/article/Rectangle 366 (3).png" alt="">
+							</a>
+							<div class="h2 text-2line mt-3">
+								Khánh Hòa - TP. Hồ Chí Minh: Tăng cường liên kết, hợp tác du lịch
+							</div>
+							
+						</div>
+						<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+							<div class="box">
+								<div class="tt-v1 mb-0 d-flex justify-content-between pb-3">
+									<h4 class="text-uppercase">Tin tức sự KIện</h4>
+								</div>
+
+								<div class="list-article">
+									<ul>
+										<li class="border-top-none">
+											<a href="/cong-bo/detail-news">
+												Góp vốn, mua cổ phần, phần vốn góp vào tổ chức kinh tế của các nhà đầu tư nước ngoài
+											</a>
+										</li>
+										<li *ngFor="let item of [0,1,2,3,4]">
+											<a href="/cong-bo/detail-news">
+												Góp vốn, mua cổ phần, phần vốn góp vào tổ chức kinh tế của các nhà đầu tư nước ngoài
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="col-4 mt-5">
+							<div class="card mb-lg-0">
+								<a href="/cong-bo/detail-news"  class="image-box ratio-16-9" style="border-radius: 12px;">
+									<span class="image">
+										<img class="img-cover" src="../../../../assets/dist/images/article/Rectangle 366 (1).png">
+									</span>
+								</a>
+							</div>
+							<p class="title-article text-3line mt-3">
+									Thông báo công tác phòng, chống dịch bệnh Covid-19 trên địa bàn tỉnh Khánh Hòa...
+							</p>
+						</div>
+						<div class="col-4 mt-5">
+							<div class="card mb-lg-0">
+								<a href="/cong-bo/detail-news"  class="image-box ratio-16-9" style="border-radius: 12px;">
+									<span class="image">
+										<img class="img-cover" src="../../../../assets/dist/images/article/Rectangle 366 (2).png">
+									</span>
+								</a>
+							</div>
+							<p class="title-article text-3line mt-3">
+								Tóm tắt Hướng dẫn việc triển khai giai đoạn 2 Kế hoạch thích ứng an toàn ...
+							</p>
+						</div>
+						<div class="col-4 mt-5">
+							<div class="card mb-lg-0">
+								<a href="/cong-bo/detail-news"  class="image-box ratio-16-9" style="border-radius: 12px;">
+									<span class="image">
+										<img class="img-cover" src="../../../../assets/dist/images/article/Rectangle 360.png">
+									</span>
+								</a>
+							</div>
+							<p class="title-article text-3line mt-3">
+								Góp vốn, mua cổ phần, phần vốn góp vào tổ chức kinh tế của nhà đầu tư nước...
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+					<app-statistics-right></app-statistics-right>
+				</div>
+			</div>
+
+			<div class="row justify-content-between pt-5 pb-5">
+					<div class="col main-ct pr-3 pr-lg-5 box-gray">
+						<div class="box mt-4 mb-1">
+							<ul class="d-flex category-article">
+								<li>
+									<a class="text-uppercase h5 px-3 cursor active" >Xã hội</a>
+								</li>
+								<li>
+									<a class="text-uppercase h5 px-3 cursor">Chính trị</a>
+								</li>
+								<li>
+									<a class="text-uppercase h5 px-3 cursor">Văn hóa</a>
+								</li>
+								<li>
+									<a class="text-uppercase h5 px-3 cursor">Kinh tế</a>
+								</li>
+								<li>
+									<a class="text-uppercase h5 px-3 cursor">Thể thao</a>
+								</li>
+								<li>
+									<a class="text-uppercase h5 px-3 cursor">Thế giới</a>
+								</li>
+								<li>
+									<a class="text-uppercase h5 px-3 cursor">Lao động - Việc làm</a>
+								</li>
+							</ul>
+						</div>
+						<!-- list tin tức -->
+
+						<div class="box">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item px-0" *ngFor="let item of listData">
+									<div class="media">
+										<a href="/cong-bo/detail-news" class="image-box ratio-5-3 rounded mr-3" style="width: 12rem">
+											<img class="image" style="object-fit: cover; width: 100%; height: 100%;" [src]="item.imagePath">
+										</a>
+										<div class="media-body">
+											<div class="createDate">{{item.createdDate | date : 'HH:mm'}} ngày {{item.createdDate | date : 'dd/MM/yyyy'}}</div>
+											<p class="h3 my-2">
+												<a class="text-2line title-item-article" href="/cong-bo/detail-news">{{item.title}}</a>
+											</p>
+											<p class="mb-0 article-summary">
+												<a href="/cong-bo/detail-news" class="text-3line">{{item.summary}}</a>
+											</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<!-- justify-content-between -->
+						<nav aria-label="navigation" *ngIf="listData.length > 0">
+							<ul class="pagination pagination-lg justify-content-end align-items-center">
+								<li class="page-item center" [ngClass]="{ 'disabled': query.pageIndex == 1 }">
+									<a (click)="changePagination(query.pageIndex - 1)" class="page-link border rounded-pill p-1 pr-3" href="/cong-bo/detail-news" tabindex="-1"
+										aria-disabled="true">&nbsp;&nbsp;<i class="bi bi-chevron-left"></i>&nbsp;Trước</a>&nbsp;&nbsp;
+								</li>
+								<li class="d-flex justify-content-center align-items-center">
+									<a *ngIf="query.pageIndex > 4">...</a>
+									<p class="mb-0 page-item" *ngFor="let item of pagination; let i = index" [ngClass]="{ 'active': item.index === query.pageIndex }">
+										<a (click)="changePagination(item.index)" *ngIf="i - 3 < query.pageIndex && i + 5 > query.pageIndex" class="page-link"
+											href="/cong-bo/detail-news">{{item.index}}</a>
+									</p>
+									<a *ngIf="query.pageIndex < pagination.length -4">...</a>
+								</li>
+								<li class="page-item center" [ngClass]="{ 'disabled': query.pageIndex == totalRecords }">
+									<a (click)="changePagination(query.pageIndex + 1)" class="page-link border rounded-pill p-1" href="/cong-bo/detail-news">
+										&nbsp;&nbsp;&nbsp;&nbsp;Sau&nbsp;<i class="bi bi-chevron-right"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+									</a>
+								</li>
+							</ul>
+						</nav>
+
+					</div>
+					<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0 box-gray">
+						<div class="sb-lkWeb mb-2">
+							<div class="tt-v1 pt-5">
+								<h4 class="text-uppercase">liên kết website</h4>
+							</div>
+							<ng-container *ngFor="let item of [1,2,3,4]; let i = index">
+								<a class="mb-4 mt-3" target="_blank" href="{{item.urlWebsite}}" title="{{item.nameWebsite}}">
+									<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==0" src="../../../assets/dist/images/cong dịch vụ công quốc gia.png">
+									<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==1" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công.png">
+									<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==2" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (1).png">
+									<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==3" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (2).png">
+								</a>
+							</ng-container>
+						</div>
+
+						<a href="#"><img class="img-fluid card shadow img-hover mt-5"
+							style="width: 100%; height: 250px;"
+							src="../../../../assets/dist/images/article/Rectangle 360.png" alt=""></a>
+					</div>
+			</div>
+
+			<div class="row justify-content-between pb-5">
+				<a href="#"><img class="img-fluid card shadow mb-1" style="width: 100%; object-fit: fill;" src="../../../assets/dist/images/Rectangle 360.png" alt=""></a>
+				<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 pt-4">
+					<a href="#">
+						<img class="img-fluid card shadow bd-20 img-cover" 
+						src="../../../../assets/dist/images/child-banner-1.png" alt="">
+					</a>
+				</div>
+				<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 pt-4">
+					<a href="#">
+						<img class="img-fluid card shadow bd-20 img-cover" 
+						src="../../../../assets/dist/images/child-banner-2.png" alt="">
+					</a>
+				</div>
+				<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 pt-4">
+					<a href="#">
+						<img class="img-fluid card shadow bd-20 img-cover" 
+						src="../../../../assets/dist/images/child-banner-3.png" alt="">
+					</a>
+				</div>
+				<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 pt-4">
+					<a href="#">
+						<img class="img-fluid card shadow bd-20 img-cover" 
+						src="../../../../assets/dist/images/child-banner-4.png" alt="">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="footer px-0">
+		<div class="ct-footer pt-5 pb-4" style="background: #DDEDFF">
+			<div class="container">
+				<div class="row justify-content-between">
+					<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+						<h4 class="text-uppercase">video giới thiệu</h4>
+						<video src="https://www.youtube.com/embed/hRvJ31HpWY4" controls></video>
+						
+					</div>
+					<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 pl-3 pl-lg-0 mt-3 mt-lg-0">
+						<h4 class="text-uppercase">thông tin đường dây nóng,hỗ trợ kỹ thuật</h4>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item pb-2 pt-0 px-0 border-0"><i class="fas fa-home mr-2"></i>Trung tâm CNTT và dịch vụ hành chính công trực tuyến</li>
+							<li class="list-group-item py-2 px-0 border-0"><i class="fas fa-phone-square-alt mr-2"></i>1900.1023</li>
+							<li class="list-group-item py-2 px-0 border-0"><i class="fas fa-envelope-open mr-2"></i>hanhchinhcongkh@gmail.com</li>
+							<li class="list-group-item py-2 px-0 border-0"><i class="fas fa-map-marked-alt mr-2"></i>147 Thống Nhất, Nha Trang, Khánh Hòa</li>
+							<li class="list-group-item py-2 px-0 border-0"><i class="fab fa-facebook-square mr-2"></i>facebook.com/hanhchinhcongKH</li>
+						</ul>
+					</div>
+					<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 pl-3 pl-lg-0 mt-3 mt-lg-0">
+						<h4 class="text-uppercase">tiếp nhận phản ánh, kiến nghị về quy định hành chính</h4>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item pb-2 pt-0 px-0 border-0"><i class="fas fa-home mr-2"></i>Văn phòng UBND Tỉnh Khánh Hòa</li>
+							<li class="list-group-item py-2 px-0 border-0"><i class="fas fa-phone-square-alt mr-2"></i>0258.3563.531</li>
+							<li class="list-group-item py-2 px-0 border-0"><i class="fas fa-envelope-open mr-2"></i>pkstthc.vpub@khanhhoa.gov.vn</li>
+							<li class="list-group-item py-2 px-0 border-0"><i class="fas fa-map-marked-alt mr-2"></i>Số 01 Trần Phú, Nha Trang, Khánh Hòa</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="copyright py-2" style="background: #CDDEF1">
+			<div class="container">
+				<p class="text-left">
+					<small class="fw600">Trung tâm Công nghệ thống tin và Dịch vụ hành chính công trực tuyến - Sở TTTT tỉnh Khánh Hòa</small>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="call-now center">
+		<div class="call-content center">
+			<a href="tel:+0258 3563 531"><i style="font-size: 19px;color: #fff;" class="bi bi-telephone-fill"></i></a>
+		</div>
+	</div>
+</div>

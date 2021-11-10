@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
 import { DomSanitizer } from '@angular/platform-browser'
 import { OwlOptions } from 'ngx-owl-carousel-o'
+import { ChartType, ChartOptions } from 'chart.js'
+import { Color, MultiDataSet, Label } from 'ng2-charts'
 
 import { PuRecommendation } from 'src/app/models/recommendationObject'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
@@ -11,6 +13,7 @@ import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-righ
 import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { IndexSettingService } from 'src/app/services/index-setting.service'
 import { IndexSettingObjet } from 'src/app/models/indexSettingObject'
+import { Lightbox } from 'ngx-lightbox/lightbox.service'
 
 declare var $: any
 
@@ -26,7 +29,8 @@ export class IndexComponent implements OnInit {
 		private _newsService: NewsService,
 		private _serviceAdministrative: AdministrativeFormalitiesService,
 		private sanitizer: DomSanitizer,
-		private indexSettingService: IndexSettingService
+		private indexSettingService: IndexSettingService,
+		private _lightbox: Lightbox
 	) {}
 	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 
@@ -36,21 +40,68 @@ export class IndexComponent implements OnInit {
 	firstNews: any
 	Administrations: any[]
 
+	_albums: Array<Album> = [
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(117).jpg',
+			caption: 'Image 1 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(117).jpg',
+		},
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(98).jpg',
+			caption: 'Image 2 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(98).jpg',
+		},
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(131).jpg',
+			caption: 'Image 3 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(131).jpg',
+		},
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(123).jpg',
+			caption: 'Image 4 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(123).jpg',
+		},
+
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(118).jpg',
+			caption: 'Image 1 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(118).jpg',
+		},
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(128).jpg',
+			caption: 'Image 2 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(128).jpg',
+		},
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(132).jpg',
+			caption: 'Image 3 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(132).jpg',
+		},
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(115).jpg',
+			caption: 'Image 4 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(115).jpg',
+		},
+		{
+			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(133).jpg',
+			caption: 'Image 4 caption here',
+			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(133).jpg',
+		},
+	]
+
+	// owl carocel
 	customOptions: OwlOptions = {
-    loop: true,
-    // mouseDrag: false,
-    // touchDrag: false,
-    // pullDrag: false,
-    dots: true,
+		loop: true,
+		dots: false,
 		margin: 30,
-		lazyLoad : true,
-		autoplay : true,
+		lazyLoad: true,
+		autoplay: true,
 		autoplayTimeout: 5000,
-		autoplaySpeed : 1000,
-    dotsSpeed: 700,
-		dotsEach : true,
-    navText: ['', ''],
-    responsive: {
+		autoplaySpeed: 1000,
+		dotsSpeed: 700,
+		dotsEach: false,
+		navText: ['<i class="bi bi-arrow-left"></i>', '<i class="bi bi-arrow-right"></i>'],
+		responsive: {
 			0: {
 				items: 1,
 			},
@@ -61,8 +112,25 @@ export class IndexComponent implements OnInit {
 				items: 2,
 			},
 		},
-    nav: false
-  }
+		nav: true,
+	}
+
+	// chart
+	doughnutChartLabels: Label[] = ['Hồ sơ đã giải quyết', 'Hồ sơ đã tiếp nhận']
+	doughnutChartData: MultiDataSet = [[950, 350]]
+	doughnutChartType: ChartType = 'doughnut'
+	doughnutChartColors: Color[] = [
+		{
+			backgroundColor: ['#58A55C', '#73BCFF'],
+		},
+	]
+	doughnutChartOptions: ChartOptions = {
+		responsive: true,
+		legend: {
+			position: 'bottom',
+		},
+		cutoutPercentage: 75,
+	}
 
 	indexSettingObj = new IndexSettingObjet()
 	ngOnInit() {
@@ -128,9 +196,7 @@ export class IndexComponent implements OnInit {
 		})
 	}
 
-	ngAfterViewInit() {
-		
-	}
+	ngAfterViewInit() {}
 
 	getShortName(string) {
 		var names = string.split(' '),
@@ -163,4 +229,20 @@ export class IndexComponent implements OnInit {
 	redirectAdministration() {
 		this._router.navigate(['/cong-bo/thu-tuc-hanh-chinh'])
 	}
+
+	open(index: number): void {
+		// open lightbox
+		this._lightbox.open(this._albums, index)
+	}
+
+	close(): void {
+		// close lightbox programmatically
+		this._lightbox.close()
+	}
+}
+
+export interface Album {
+	src: string
+	caption?: string
+	thumb: string
 }

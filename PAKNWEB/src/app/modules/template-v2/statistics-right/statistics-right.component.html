@@ -1,0 +1,60 @@
+
+	<div class="sb-tk-pakn mb-4 card-my-recommentdation">
+		<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between">
+			<h4 class="text-uppercase">Phản ánh kiến nghị của tôi</h4>
+			<h4 class="counter">80</h4>
+		</div>
+		<div>
+			<div class="border-left-yellow mb-3 d-flex justify-content-between center">
+				<div class="pf-4">
+					<p class="title-status-rm ml-3 mb-0">Chờ xử lý</p>
+				</div>
+				<div class="circle bg-yellow center text-white">
+					20
+				</div>
+			</div>
+			<div class="border-left-blue2 mb-3 d-flex justify-content-between center">
+				<div class="pf-4">
+					<p class="title-status-rm ml-3 mb-0">Đã tiếp nhận</p>
+				</div>
+				<div class="circle bg-blue2 center text-white">
+					20
+				</div>
+			</div>
+			<div class="border-left-blue mb-3 d-flex justify-content-between center">
+				<div class="pf-4">
+					<p class="title-status-rm ml-3 mb-0">Đã trả lời</p>
+				</div>
+				<div class="circle bg-blue center text-white">
+					20
+				</div>
+			</div>
+			<div class="border-left-red mb-3 d-flex justify-content-between center">
+				<div class="pf-4">
+					<p class="title-status-rm ml-3 mb-0">Bị từ chối</p>
+				</div>
+				<div class="circle bg-red center text-white">
+					20
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="sb-tk-pakn text-center card-my-chart pb-4 mt-4">
+			<div class="tt-v1 pt-4 pb-3 mb-3 justify-content-between text-center">
+				<h4 class="text-uppercase">Phản ánh kiến nghị toàn tỉnh</h4>
+			</div>
+			<div class="position-relative">
+				<canvas baseChart height="100vh" width="100vw"
+					[data]="doughnutChartData"
+					[colors]="doughnutChartColors"
+					[labels]="doughnutChartLabels"
+					[options]="doughnutChartOptions"
+					[chartType]="doughnutChartType">
+				</canvas>
+				<div class="position-absolute" style="top: 80px; left: 100px;">
+					<div class="h1 number-chart number-chart-index pb-0">89%</div>
+					<p>hồ sơ đúng hạn</p>
+				</div>
+			</div>
+	</div>
