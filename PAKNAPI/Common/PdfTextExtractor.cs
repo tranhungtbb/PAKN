@@ -37,50 +37,6 @@ namespace PAKNAPI.Common
             }
             return text.ToString();
         }
-        public static string pdfText(string path)
-        {
-            //Initialize the OCR processor by providing the path of tesseract 
-            using (OCRProcessor processor = new OCRProcessor(@"TesseractBinaries\Windows"))
-            {
-                //Load a PDF document
-                FileStream stream = new FileStream(path, FileMode.Open);
-
-                PdfLoadedDocument document = new PdfLoadedDocument(stream);
-
-                // Sets Unicode font to preserve the Unicode characters in a PDF document.
-                FileStream fontStream = new FileStream(@"ARIALUNI.ttf", FileMode.Open);
-
-                processor.UnicodeFont = new PdfTrueTypeFont(fontStream, 8);
-
-                //Set OCR language to process
-                processor.Settings.Language = Languages.English;
-
-                //Process OCR by providing the PDF document, data dictionary, and language
-                processor.PerformOCR(document, @"tessdata\");
-
-
-                //Creating the stream object 
-                MemoryStream streamobj = new MemoryStream();
-
-                //Save the document into stream.
-                document.Save(streamobj);
-
-                //If the position is not set to '0' then the PDF will be empty. 
-                streamobj.Position = 0;
-
-                //Close the documents. 
-                document.Close(true);
-
-                //Defining the ContentType for pdf file.
-                string contentType = "application/pdf";
-
-                //Define the file name.
-                string fileName = "Output.pdf";
-
-                //Creates a FileContentResult object by using the file contents, content type, and file name. return File(stream, contentType, fileName);
-            }
-            return "";
-        }
         public static string PerformOCR(string path, IWebHostEnvironment _hostingEnvironment)
         {
             try
