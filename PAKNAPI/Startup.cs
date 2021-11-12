@@ -32,6 +32,8 @@ using System.ComponentModel.DataAnnotations;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Logging;
+using System;
+using PAKNAPI.Chat;
 
 namespace PAKNAPI
 {
@@ -72,8 +74,8 @@ namespace PAKNAPI
 					parts.Remove(reportingPart);
 				}
 			});
-			
 
+			
 			services.AddMvc().AddNewtonsoftJson();
 
             // cái này ảnh hưởng đến controller ko authorize @@
@@ -82,8 +84,6 @@ namespace PAKNAPI
             //    options.Filters.Add(new AuthorizeFilter("ThePolicy"));
             //});
 
-
-            services.AddMvc().AddNewtonsoftJson(); ;
 
 			services.AddMvc().AddNewtonsoftJson(options =>
 			{
@@ -192,6 +192,13 @@ namespace PAKNAPI
 
 			// ASP.NET Core hosting
 			services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+
+			services.AddSignalR(options =>
+			{
+				options.EnableDetailedErrors = true;
+				options.KeepAliveInterval = TimeSpan.FromMinutes(1);
+				options.ClientTimeoutInterval = TimeSpan.FromMinutes(1);
+			});
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -236,6 +243,7 @@ namespace PAKNAPI
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
+				endpoints.MapHub<ChatHub>("/signalr");
 			});
 		}
 	}

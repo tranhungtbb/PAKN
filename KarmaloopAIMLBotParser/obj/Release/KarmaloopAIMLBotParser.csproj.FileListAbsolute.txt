@@ -1,0 +1,6 @@
+C:\Users\PC\Desktop\Chat\WEBAPIProject_CE093\SignalR\karmaloop-aiml-bot-server-master\karmaloop-aiml-bot-server-master\KarmaloopAIMLBotParser\bin\Release\KarmaloopAIMLBotParser.dll
+C:\Users\PC\Desktop\Chat\WEBAPIProject_CE093\SignalR\karmaloop-aiml-bot-server-master\karmaloop-aiml-bot-server-master\KarmaloopAIMLBotParser\bin\Release\KarmaloopAIMLBotParser.pdb
+C:\Users\PC\Desktop\Chat\WEBAPIProject_CE093\SignalR\karmaloop-aiml-bot-server-master\karmaloop-aiml-bot-server-master\KarmaloopAIMLBotParser\obj\Release\KarmaloopAIMLBotParser.csprojAssemblyReference.cache
+C:\Users\PC\Desktop\Chat\WEBAPIProject_CE093\SignalR\karmaloop-aiml-bot-server-master\karmaloop-aiml-bot-server-master\KarmaloopAIMLBotParser\obj\Release\KarmaloopAIMLBotParser.csproj.CoreCompileInputs.cache
+C:\Users\PC\Desktop\Chat\WEBAPIProject_CE093\SignalR\karmaloop-aiml-bot-server-master\karmaloop-aiml-bot-server-master\KarmaloopAIMLBotParser\obj\Release\KarmaloopAIMLBotParser.dll
+C:\Users\PC\Desktop\Chat\WEBAPIProject_CE093\SignalR\karmaloop-aiml-bot-server-master\karmaloop-aiml-bot-server-master\KarmaloopAIMLBotParser\obj\Release\KarmaloopAIMLBotParser.pdb
