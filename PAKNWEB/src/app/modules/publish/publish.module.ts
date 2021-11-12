@@ -39,6 +39,7 @@ import { RecommendationsPaknCPComponent } from './recommendations-sync/recommend
 import { DetailRecommendationPaknCPComponent } from './recommendations-sync/recommendation-pakn-cp-detail/recommendation-pakn-cp-detail.component'
 import { StatisticsRightComponent } from './statistics-right/statistics-right.component'
 import { GalleryComponent } from './gallery/gallery.component'
+import { StatisticsComponent } from './statistics/statistics.component'
 
 @NgModule({
 	declarations: [
@@ -68,6 +69,7 @@ import { GalleryComponent } from './gallery/gallery.component'
 		DetailRecommendationPaknCPComponent,
 		StatisticsRightComponent,
 		GalleryComponent,
+		StatisticsComponent,
 	],
 	imports: [
 		CommonModule,

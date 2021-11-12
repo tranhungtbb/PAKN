@@ -40,3 +40,13 @@
 ul.category-article li a.active {
 	color: #2e73d5;
 }
+
+.box .card:hover{
+	box-shadow: none;
+}
+.card-custom{
+	border-radius: 0px;
+}
+.border-bottom{
+	border-bottom: 2px solid #EEEEEE !important;
+}

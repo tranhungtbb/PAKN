@@ -5,9 +5,7 @@ import { ToastrService } from 'ngx-toastr'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { RESPONSE_STATUS, RECOMMENDATION_STATUS } from 'src/app/constants/CONSTANTS'
 import { PuRecommendation } from 'src/app/models/recommendationObject'
-import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
-import { RecommendationCommentService } from 'src/app/services/recommendation-comment.service'
-import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
+import { RecommendationService } from 'src/app/services/recommendation.service'
 
 @Component({
 	selector: 'app-reflections-recommendations',
@@ -16,31 +14,47 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 })
 export class ReflectionsRecommendationsComponent implements OnInit {
 	// property
-	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	public KeySearch: string = ''
+	public unitId: number = null
+	public field: number = null
 	public PageSize = 20
 	public PageIndex = 1
 	public Total = 0
 
 	pagination = []
-
 	// arr
+	lstUnit: [] = []
+	lstField: [] = []
 
 	ReflectionsRecommendations = new Array<PuRecommendation>()
-	RecommendationsOrderByCountClick: any[]
 
-	constructor(private service: PuRecommendationService, private routers: Router, private userService : UserInfoStorageService) {}
+	constructor(private service: PuRecommendationService, private routers: Router, private recommendationService: RecommendationService, private _toas: ToastrService) {}
 
 	ngOnInit() {
 		this.getList()
+		this.recommendationService.recommendationGetDataForCreate({}).subscribe(
+			(res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.lstUnit = res.result.lstUnit
+					this.lstField = res.result.lstField
+				} else {
+					this.lstField = []
+					this.lstUnit = []
+					this._toas.error(res.message)
+				}
+			},
+			(err) => {
+				console.log(err)
+			}
+		)
 	}
 
 	redirect(id: any) {
 		this.routers.navigate(['/cong-bo/phan-anh-kien-nghi/' + id])
 	}
 
-	changeKeySearch(event) {
-		this.KeySearch = event.target.value
+	dataStateChange = () => {
+		this.getList()
 	}
 
 	getList() {
@@ -70,14 +84,6 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 				this.ReflectionsRecommendations = this.pagination = []
 				this.PageIndex = 1
 				this.Total = 0
-			}
-		})
-
-		this.service.getListOrderByCountClick({ status: RECOMMENDATION_STATUS.FINISED }).subscribe((res) => {
-			if (res != undefined) {
-				if (res.result) {
-					this.RecommendationsOrderByCountClick = res.result
-				}
 			}
 		})
 	}

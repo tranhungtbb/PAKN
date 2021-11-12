@@ -1,0 +1,92 @@
+<!--**********************************
+            Content body start
+        ***********************************-->
+<div class="content-nd">
+	<div class="container">
+		<div class="row justify-content-between">
+			<div class="col-12 col-ms-12">
+				<div class="box">
+					<div class="tt-v1 pt-3 mb-3 d-flex justify-content-between">
+						<h4 class="statistic-title">Tổng hợp số liệu</h4>
+					</div>
+					<div class="card mb-0 shadow-none">
+						<div class="table-responsive">
+							<p-table #dataTable [value]="statistics" [lazy]="true" [responsive]="true"
+								tableStyleClass="table table-sd table-responsive-md table-striped mb-0"
+							>
+								<ng-template pTemplate="header">
+									<tr>
+										<th rowspan="2" class="text-center middle" style="width: 60px;">STT</th>
+										<th rowspan="2" colspan="3" class="text-center middle">Tên đơn vị</th>
+										<th rowspan="1" colspan="5" class="text-center middle">Kết quả xử lý</th>
+										<th rowspan="1" colspan="3" class="text-center middle">Người dân đánh giá</th>
+									</tr>
+									<tr>
+										<th rowspan="1" colspan="1" class="text-center middle">Tổng số</th>
+										<th rowspan="1" colspan="1" class="text-center middle">Tiếp nhận</th>
+										<th rowspan="1" colspan="1" class="text-center middle">Đã xử lý</th>
+										<th rowspan="1" colspan="1" class="text-center middle">Đang xử lý</th>
+										<th rowspan="1" colspan="1" class="text-center middle">Quá hạn</th>
+
+										<th rowspan="1" colspan="1" class="text-center middle">Hài lòng</th>
+										<th rowspan="1" colspan="1" class="text-center middle">Bình thường</th>
+										<th rowspan="1" colspan="1" class="text-center middle">Không hài lòng</th>
+									</tr>
+								</ng-template>
+								<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+									<tr>
+										<td class="text-center">{{ rowIndex + 1 }}</td>
+										<td rowspan="1" colspan="3" class="text-left">{{ item.unitName }}</td>
+										<td class="text-center">{{ item.totalResult }}</td>
+										<td class="text-center blue">{{ item.receive }}</td>
+										<td class="text-center green">{{ item.approved }}</td>
+
+										<td class="text-center blue">{{ item.process }}</td>
+										<td class="text-center red">{{ item.expired }}</td>
+										<td class="text-center green">{{ item.satisfaction }}</td>
+										<td class="text-center blue">{{ item.common }}</td>
+										<td class="text-center red">{{ item.unsatisfaction }}</td>
+									</tr>
+								</ng-template>
+								<ng-template pTemplate="emptymessage">
+									<tr>
+										<td [attr.colspan]="10">
+											Không có dữ liệu hiển thị
+										</td>
+									</tr>
+									</ng-template>
+							</p-table>
+						</div>
+					</div>
+				</div>
+
+
+				<!-- chart -->
+
+				<div class="box my-4">
+					<div class="tt-v1 pt-3 mb-3 d-flex justify-content-between">
+						<h4 class="statistic-title">Biểu đồ tình hình xử lý</h4>
+					</div>
+					<div>
+						<canvas #myCanvas baseChart height="30vh" width="80vw"
+							[datasets]="barChartData"
+							[labels]="barChartLabels"
+							[options]="barChartOptions"
+							[plugins]="barChartPlugins"
+							[legend]="barChartLegend"
+							[colors]="barChartColors"
+							[chartType]="barChartType">
+					</canvas>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!--**********************************
+          Content body end
+      ***********************************-->
+
+
+			

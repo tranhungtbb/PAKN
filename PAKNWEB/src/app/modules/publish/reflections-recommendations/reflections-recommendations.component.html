@@ -4,8 +4,8 @@
 			<div class="col main-ct pr-3 pr-lg-5">
 				<div class="box">
 					<div class="tt-v1 mb-3 d-flex justify-content-between center">
-						<h4 class="text-uppercase">Danh sách phản ánh, kiến nghị</h4>
-						<button type="button" class="btn text-white border-0 grd-blue">
+						<h4 class="text-uppercase">Phản ánh, kiến nghị</h4>
+						<button type="button" class="btn text-white border-0 no-grd-blue border-radius-4">
 							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
 								<path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z" />
 								<path
@@ -15,12 +15,32 @@
 						</button>
 					</div>
 					<div class="d-flex justify-content-between">
-						
+						<div class="col-5 form-group p-0 pr-2">
+								<input placeholder="Nhập tên phản ánh, kiến nghị..." class="form-control form-control border-radius-4" [(ngModel)]="KeySearch" maxlength="100"
+									(keydown.enter)="dataStateChange()" />
+						</div>
+						<div class="col-3 form-group px-2">
+							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn đơn vị xử lý..." class="form-control border-brown border-radius-4" [items]="lstUnit"
+								bindLabel="text" bindValue="value" [(ngModel)]="unitId" [closeOnSelect]="true" (change)="dataStateChange()"
+								[virtualScroll]="true">
+							</ng-select>
+						</div>
+						<div class="col-3 form-group px-2">
+							<ng-select notFoundText="Không có dữ liệu" placeholder="Chọn lĩnh vực..." class="form-control border-brown border-radius-4" [items]="lstField"
+									bindLabel="text" bindValue="value" [(ngModel)]="field" [closeOnSelect]="true" (change)="dataStateChange()"
+									[virtualScroll]="true">
+								</ng-select>
+						</div>
+						<div class="col-1 form-group px-2">
+							<button type="button" class="btn text-white border-0 no-grd-blue border-radius-4 h-38px">
+								<i class="bi bi-search"></i>
+							</button>
+						</div>
 					</div>
 				</div>
 				<div class="box">
-					<ng-container *ngFor="let item of ReflectionsRecommendations">
-						<div class="card border mb-3">
+					<ng-container *ngFor="let item of ReflectionsRecommendations;let i = index">
+						<div class="card card-custom mb-0 border-bottom" [ngClass]="{'bg-gray' : i % 2 != 0}">
 							<div class="card-header pt-3 pb-0 align-items-center">
 								<p class="card-text mb-1">
 									<a class="h4" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
@@ -30,14 +50,14 @@
 							</div>
 							<div class="card-body pt-1 pb-3">
 								<div class="d-flex align-items-center">
-									<div class="media align-items-center mr-4">
+									<!-- <div class="media align-items-center mr-4">
 										<div class="avatar-circle mr-2">
 											{{item.shortName}}
 										</div>
 										<div class="media-body">
 											<p class="my-0 h5">{{item.name}}</p>
 										</div>
-									</div>
+									</div> -->
 									<span class="card-date">{{item.createdDate | date : 'HH:mm'}} ngày {{item.createdDate | date : 'dd/MM/yyyy'}}</span>
 								</div>
 								
@@ -49,7 +69,13 @@
 							</div>
 					</div>
 					</ng-container>
-					<nav aria-label="navigation" *ngIf="ReflectionsRecommendations.length > 0">
+					<p class="text-center pt-2" *ngIf="!ReflectionsRecommendations || ReflectionsRecommendations.length == 0">
+						Không tìm thấy phản ánh kiến nghị nào
+					</p>
+					<nav aria-label="navigation" class="mt-4 ps-relative">
+						<span class="justify-content-start align-items-center ps-absolute">
+							<strong>Tổng số: {{Total}}</strong> <span class="ml-2">phản ánh kiến nghị</span>
+						</span>
 						<ul class="pagination pagination-lg justify-content-end align-items-center">
 							<li class="page-item center" [ngClass]="{ 'disabled':PageIndex == 1 }">
 								<a (click)="changePagination(PageIndex - 1)" class="page-link border rounded-pill p-1 pr-3"  tabindex="-1"
@@ -63,7 +89,7 @@
 								</p>
 								<a *ngIf="PageIndex < pagination.length -4">...</a>
 							</li>
-							<li class="page-item center" [ngClass]="{ 'disabled':PageIndex == totalRecords }">
+							<li class="page-item center" [ngClass]="{ 'disabled':PageIndex == Total }">
 								<a (click)="changePagination(PageIndex + 1)" class="page-link border rounded-pill p-1" >
 									&nbsp;&nbsp;&nbsp;&nbsp;Sau&nbsp;<i class="bi bi-chevron-right"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 								</a>
@@ -80,7 +106,7 @@
 		<div class="row justify-content-between">
 			<div class="col col-lg-12 main-ct pr-3 mt-3">
 				<div class="tt-v1 mb-3 d-flex justify-content-between">
-					<h4 class="text-uppercase">Tin tức nổi bật</h4>
+					<h4 class="text-uppercase">Tin tức nổi bật</h4>
 				</div>
 				<div class="row mt-4">
 					<div class="col col-lg-3" *ngFor="let item of [1,2,3,4]">

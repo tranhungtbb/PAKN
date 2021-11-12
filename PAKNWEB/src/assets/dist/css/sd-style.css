@@ -1659,7 +1659,7 @@ ngx-dropdown-treeview button.dropdown-toggle{
 	height: 48px;
 }
 .h-38px{
-	height: 38x;
+	height: 38px;
 }
 .h-34px{
 	height: 34px;
@@ -1850,6 +1850,19 @@ table thead .form-control ng-select {
 }
 .content-article{
 	bottom: 0px;
+}
+
+.no-grd-blue{
+	background-color: #2E73D5;
+}
+.border-radius-4{
+	border-radius: 4px;
+}
+.btn{
+	padding: 0.638rem 1.5rem;
+}
+.bg-gray{
+	background-color: #F6F6F6;
 }
 
 

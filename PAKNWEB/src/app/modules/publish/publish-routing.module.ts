@@ -23,6 +23,7 @@ import { RecommendationsCttdtComponent } from './recommendations-sync/recommenda
 import { DetailRecommendationCttdtComponent } from './recommendations-sync/recommendations-cttdt-detail/recommendations-cttdt-detail.component'
 import { RecommendationsPaknCPComponent } from './recommendations-sync/recommendation-pakn-cp/recommendation-pakn-cp.component'
 import { DetailRecommendationPaknCPComponent } from './recommendations-sync/recommendation-pakn-cp-detail/recommendation-pakn-cp-detail.component'
+import { StatisticsComponent } from './statistics/statistics.component'
 
 const routes: Routes = [
 	{
@@ -126,6 +127,11 @@ const routes: Routes = [
 				path: 'ho-tro',
 				component: SupportComponent,
 			},
+			{
+				path: 'tong-hop-so-lieu',
+				component: StatisticsComponent,
+			},
+
 			{
 				path: 'phan-anh-kien-nghi-cua-toi/:id',
 				component: MyRecommendationComponent,

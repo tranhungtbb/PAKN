@@ -202,6 +202,10 @@ export class IndexComponent implements OnInit {
 		this._router.navigate(['/cong-bo/thu-tuc-hanh-chinh/' + id])
 	}
 
+	redirectDetailNews(id: any) {
+		this._router.navigate(['/cong-bo/tin-tuc-su-kien/' + id])
+	}
+
 	open(index: number): void {
 		// open lightbox
 		this._lightbox.open(this._albums, index)
