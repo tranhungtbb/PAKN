@@ -142,6 +142,13 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAFieldDAMGetDropdown>("CA_FieldDAMGetDropdown", DP)).ToList();
 		}
+
+		public async Task<List<CAFieldDAMGetDropdown>> CAUnitDAMGetDropdownDAO(string Keyword)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Keyword", Keyword);
+			return (await _sQLCon.ExecuteListDapperAsync<CAFieldDAMGetDropdown>("CA_UnitDAMGetDropdown", DP)).ToList();
+		}
 	}
 
 	public class CAFieldDAMInsert

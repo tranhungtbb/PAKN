@@ -33,6 +33,12 @@ export class AdministrativeProceduresComponent implements OnInit {
 		{ value: 3, text: 'Đã công bố' },
 		{ value: 2, text: 'Đã thu hồi' },
 	]
+	lstLevel: any = [
+		{ value: 'Cơ quan chuyên môn', text: 'Cơ quan chuyên môn' },
+		{ value: 'Cấp tỉnh', text: 'Cấp tỉnh' },
+		{ value: 'Cấp huyện', text: 'Cấp huyện' },
+		{ value: 'Cấp xã', text: 'Cấp xã' },
+	]
 	formForward: FormGroup
 	lstUnitNotMain: any = []
 	lstUnit: any = []
@@ -44,7 +50,8 @@ export class AdministrativeProceduresComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0
-
+	typeSelected: number = 1
+	txtSearchDonVi: string = ''
 	dataSearch = {
 		code: '',
 		name: '',
@@ -70,6 +77,22 @@ export class AdministrativeProceduresComponent implements OnInit {
 			if (response.success == RESPONSE_STATUS.success) {
 				if (response.result != null) {
 					this.lstField = response.result.CAFieldDAMGetDropdown
+					this.lstUnit = response.result.CAUnitDAMGetDropdown
+				}
+			} else {
+				this._toastr.error(response.message)
+			}
+		}),
+			(error) => {
+				console.log(error)
+			}
+	}
+
+	getUnitDropdown() {
+		this.afService.getCAUnitDAM({ Keyword: this.txtSearchDonVi }).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if (response.result != null) {
+					this.lstUnit = response.result.CAUnitDAMGetDropdown
 				}
 			} else {
 				this._toastr.error(response.message)
@@ -115,6 +138,22 @@ export class AdministrativeProceduresComponent implements OnInit {
 				console.log(error)
 				alert(error)
 			}
+	}
+
+	changeTypeSelected(type) {
+		this.typeSelected = type
+	}
+
+	changeField(field: number) {
+		this.dataSearch.unitId = null
+		this.dataSearch.field = field
+		this.dataStateChange()
+	}
+
+	changeUnit(unit: number) {
+		this.dataSearch.field = null
+		this.dataSearch.unitId = unit
+		this.dataStateChange()
 	}
 
 	onPageChange(event: any) {

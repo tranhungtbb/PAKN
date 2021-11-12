@@ -33,7 +33,10 @@
 	"[json]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
-	"editor.defaultFormatter": "esbenp.prettier-vscode"
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[css]": {
+		"editor.defaultFormatter": "HookyQR.beautify"
+	}
 	// "emmet.extensionsPath": "",
 	// "html.format.contentUnformatted": "",
 	// "html.format.extraLiners": "head, body, /html",

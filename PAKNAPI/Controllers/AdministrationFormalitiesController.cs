@@ -708,9 +708,33 @@ namespace PAKNAPI.Controller
             try
             {
                 List<CAFieldDAMGetDropdown> rsCAFieldDAMGetDropdown = await new CAFieldDAMGetDropdown(_appSetting).CAFieldDAMGetDropdownDAO();
+                List<CAFieldDAMGetDropdown> rsCAUnitDAMGetDropdown = await new CAFieldDAMGetDropdown(_appSetting).CAUnitDAMGetDropdownDAO("");
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"CAFieldDAMGetDropdown", rsCAFieldDAMGetDropdown},
+                        {"CAUnitDAMGetDropdown", rsCAUnitDAMGetDropdown},
+                    };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [HttpGet]
+        [Route("get-drop-down-unit")]
+        public async Task<ActionResult<object>> CAUnitDAMGetDropdownBase(string Keyword)
+        {
+            try
+            {
+                List<CAFieldDAMGetDropdown> rsCAUnitDAMGetDropdown = await new CAFieldDAMGetDropdown(_appSetting).CAUnitDAMGetDropdownDAO(Keyword);
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"CAUnitDAMGetDropdown", rsCAUnitDAMGetDropdown},
                     };
                 return new ResultApi { Success = ResultCode.OK, Result = json };
             }

@@ -2,7 +2,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms' // <-- NgModel lives here
 import { BrowserXhr, HttpModule } from '@angular/http'
-import { ChartsModule } from 'ng2-charts'
+import { ChartsModule, ThemeService } from 'ng2-charts'
 import { TableModule } from 'primeng/table'
 import { MatDialogModule } from '@angular/material'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
@@ -91,6 +91,7 @@ import { DetailNewsComponent } from './modules/template-v2/detail-news/detail-ne
 		LightboxModule,
 	],
 	providers: [
+		ThemeService,
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: CustomHttpInterceptor,
