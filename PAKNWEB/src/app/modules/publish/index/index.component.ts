@@ -34,7 +34,6 @@ export class IndexComponent implements OnInit {
 	) {}
 	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 
-	RecommendationsOrderByCountClick: Array<PuRecommendation>
 	ReflectionsRecommendations: Array<PuRecommendation>
 	news: any[]
 	firstNews: any
@@ -148,14 +147,6 @@ export class IndexComponent implements OnInit {
 		)
 	}
 	async getData() {
-		// list recommendation order by count click
-		this._service.getListOrderByCountClick({ status: RECOMMENDATION_STATUS.FINISED }).subscribe((res) => {
-			if (res != undefined) {
-				if (res.result) {
-					this.RecommendationsOrderByCountClick = res.result
-				}
-			}
-		})
 		// list recommendation index
 		let obj = {
 			Status: RECOMMENDATION_STATUS.FINISED,
@@ -207,27 +198,8 @@ export class IndexComponent implements OnInit {
 		return initials
 	}
 
-	redirectDetailRecommendaton(id: any) {
-		this._router.navigate(['/cong-bo/phan-anh-kien-nghi/' + id])
-	}
-
-	redirectReflectionsRecommendations() {
-		this._router.navigate(['/cong-bo/phan-anh-kien-nghi'])
-	}
-
-	redirectDetailNews(id: any) {
-		this._router.navigate(['/cong-bo/tin-tuc-su-kien/' + id])
-	}
-	redirectNews() {
-		this._router.navigate(['/cong-bo/tin-tuc-su-kien'])
-	}
-
 	redirectDetailAdministration(id: any) {
 		this._router.navigate(['/cong-bo/thu-tuc-hanh-chinh/' + id])
-	}
-
-	redirectAdministration() {
-		this._router.navigate(['/cong-bo/thu-tuc-hanh-chinh'])
 	}
 
 	open(index: number): void {

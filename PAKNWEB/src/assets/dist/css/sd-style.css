@@ -1845,4 +1845,11 @@ table thead .form-control ng-select {
 	color: #222;
 }
 
+.full-width {
+	width: 100% !important;
+}
+.content-article{
+	bottom: 0px;
+}
+
 

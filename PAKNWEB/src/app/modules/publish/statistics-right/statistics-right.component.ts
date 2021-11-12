@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { DomSanitizer } from '@angular/platform-browser'
-import { OwlOptions } from 'ngx-owl-carousel-o'
 import { ChartType, ChartOptions } from 'chart.js'
 import { Color, MultiDataSet, Label } from 'ng2-charts'
 

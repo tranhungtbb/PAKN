@@ -16,7 +16,7 @@ export class NewsComponent implements OnInit {
 	listData: any[] = []
 	newsHightlight: any
 	query: any = {
-		pageSize: 10,
+		pageSize: 5,
 		pageIndex: 1,
 		title: '',
 		status: null,
@@ -64,14 +64,14 @@ export class NewsComponent implements OnInit {
 					this.listData = []
 					this.totalRecords = 0
 					this.query.pageIndex = 1
-					this.query.pageSize = 10
+					this.query.pageSize = 5
 					return
 				} else {
 					if (res.result.NENewsGetAllOnPage.length == 0) {
 						this.listData = []
 						this.totalRecords = 0
 						this.query.pageIndex = 1
-						this.query.pageSize = 10
+						this.query.pageSize = 5
 					} else {
 						this.listData = res.result.NENewsGetAllOnPage
 						this.query.pageIndex = res.result.PageIndex

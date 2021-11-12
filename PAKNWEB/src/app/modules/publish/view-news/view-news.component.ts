@@ -74,16 +74,39 @@ export class ViewNewsComponent implements OnInit, AfterViewInit {
 	}
 
 	getNewsRelates(id) {
-		this.newsService.getAllRelates({ id }).subscribe((res) => {
-			if (res.success == RESPONSE_STATUS.success) {
-				this.newsRelates = res.result.NENewsGetAllRelates
-			} else {
-				this.newsRelates = []
-			}
-		})
+		// this.newsService.getAllRelates({ id }).subscribe((res) => {
+		// 	if (res.success == RESPONSE_STATUS.success) {
+		// 		this.newsRelates = res.result.NENewsGetAllRelates
+		// 	} else {
+		// 		this.newsRelates = []
+		// 	}
+		// })
+		let obj = {
+			PageSize: 5,
+			PageIndex: 1,
+		}
+		this.newsService
+			.getAllPagedList({
+				pageIndex: 1,
+				pageSize: 5,
+				title: '',
+				newsType: '',
+				status: 1,
+			})
+			.subscribe((res) => {
+				if (res.success != RESPONSE_STATUS.success) {
+					this.newsRelates = []
+					return
+				} else {
+					if (res.result.NENewsGetAllOnPage.length == 0) {
+						this.newsRelates = []
+					} else {
+						this.newsRelates = res.result.NENewsGetAllOnPage
+					}
+				}
+			})
 	}
 	redirectDetail(id: any) {
-		debugger
 		this.router.navigate(['/cong-bo/tin-tuc-su-kien/' + id])
 	}
 }

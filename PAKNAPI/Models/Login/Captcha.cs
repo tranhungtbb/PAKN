@@ -357,4 +357,26 @@ namespace PAKNAPI.Models.Results
         [Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
         public string Phone { get; set; }
     }
+
+    public class OtpRegisterRequest
+    {
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Token không được để trống")]
+        public string Token { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại không được để trống")]
+        public string Phone { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Type không được để trống")]
+        public int Type { get; set; }
+
+        public string IdCard { get; set; }
+        [DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
+        public string Email { get; set; }
+        [DataType(DataType.EmailAddress, ErrorMessage = "E-mail văn phòng đại diện không đúng định dạng")]
+        public string OrgEmail { get; set; }
+
+        public string BusinessRegistration { get; set; }
+
+    }
 }

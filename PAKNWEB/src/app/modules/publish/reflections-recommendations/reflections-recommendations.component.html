@@ -1,23 +1,10 @@
-<div class="content-nd">
+<div class="content-nd mt-5 mb-5">
 	<div class="container">
-		<div class="row justify-content-between pt-5">
+		<div class="row justify-content-between">
 			<div class="col main-ct pr-3 pr-lg-5">
-				<div class="box mt-3 mb-4">
-					<div class="tt-v1 mb-3">
+				<div class="box">
+					<div class="tt-v1 mb-3 d-flex justify-content-between center">
 						<h4 class="text-uppercase">Danh sách phản ánh, kiến nghị</h4>
-					</div>
-					<div class="d-flex justify-content-between">
-						<div class="d-flex search-ct">
-							<input (keyup)="changeKeySearch($event)" [(ngModel)]="KeySearch" (keydown.enter)="getList()" class="form-control pr-5" style="height: 56px;" type="text"
-								placeholder="Nhập mã số Phản ánh, kiến nghị/ Tên người gửi..." aria-label="Search">
-							<button type="button" class="btn px-3 grd-blue" style="margin-left: -20px" (click)="getList()">
-								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path
-										d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z"
-										fill="#fff"></path>
-								</svg>
-							</button>
-						</div>
 						<button type="button" class="btn text-white border-0 grd-blue">
 							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
 								<path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z" />
@@ -27,59 +14,119 @@
 							<span class="ml-2" style="text-transform: none;" (click)="redirectCreateRecommendation()">Gửi phản ánh kiến nghị</span>
 						</button>
 					</div>
+					<div class="d-flex justify-content-between">
+						
+					</div>
 				</div>
 				<div class="box">
-					<div *ngIf="ReflectionsRecommendations.length == 0" style="text-align: center;">
-						<strong>Không tìm thấy dữ liệu</strong>
-					</div>
-					<div class="card border" *ngFor="let item of ReflectionsRecommendations">
-						<div class="card-header pt-3 pb-0 d-flex align-items-center">
-							<div class="media align-items-center">
-								<div class="avatar-circle mr-2" style="background: #EBF2FF; color: #5D90F1">
-									{{item.shortName}}
-								</div>
-								<div class="media-body">
-									<p class="my-0 h5">{{item.name}}</p>
-								</div>
+					<ng-container *ngFor="let item of ReflectionsRecommendations">
+						<div class="card border mb-3">
+							<div class="card-header pt-3 pb-0 align-items-center">
+								<p class="card-text mb-1">
+									<a class="h4" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
+										{{item.title}}
+									</a>
+								</p>
 							</div>
-							<span>{{item.createdDate | date:'HH:mm'}} ngày {{item.createdDate | date: 'dd/MM/yyyy'}}</span>
-						</div>
-						<div class="card-body py-3">
-							<p class="card-text mb-1">
-								<a class="h4" href="javascrip:void(0)" (click)="redirect(item.id)">
-									{{item.title}}
-								</a>
-							</p>
-							<p class="card-text">
-								<a class="text-2line" href="javascrip:void(0)" style="color: #222;" (click)="redirect(item.id)" innerHTML="{{item.content | Change}}">
-								</a>
-							</p>
-						</div>
+							<div class="card-body pt-1 pb-3">
+								<div class="d-flex align-items-center">
+									<div class="media align-items-center mr-4">
+										<div class="avatar-circle mr-2">
+											{{item.shortName}}
+										</div>
+										<div class="media-body">
+											<p class="my-0 h5">{{item.name}}</p>
+										</div>
+									</div>
+									<span class="card-date">{{item.createdDate | date : 'HH:mm'}} ngày {{item.createdDate | date : 'dd/MM/yyyy'}}</span>
+								</div>
+								
+								<p class="card-text">
+									<a class="text-2line italic lh-20" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}" [innerHTML]="item.content | Change">
+										
+									</a>
+								</p>
+							</div>
 					</div>
+					</ng-container>
+					<nav aria-label="navigation" *ngIf="ReflectionsRecommendations.length > 0">
+						<ul class="pagination pagination-lg justify-content-end align-items-center">
+							<li class="page-item center" [ngClass]="{ 'disabled':PageIndex == 1 }">
+								<a (click)="changePagination(PageIndex - 1)" class="page-link border rounded-pill p-1 pr-3"  tabindex="-1"
+									aria-disabled="true">&nbsp;&nbsp;<i class="bi bi-chevron-left"></i>&nbsp;Trước</a>&nbsp;&nbsp;
+							</li>
+							<li class="d-flex justify-content-center align-items-center">
+								<a *ngIf="PageIndex > 4">...</a>
+								<p class="mb-0 page-item" *ngFor="let item of pagination; let i = index" [ngClass]="{ 'active': item.index ===PageIndex }">
+									<a (click)="changePagination(item.index)" *ngIf="i - 3 < PageIndex && i + 5 >PageIndex" class="page-link"
+										>{{item.index}}</a>
+								</p>
+								<a *ngIf="PageIndex < pagination.length -4">...</a>
+							</li>
+							<li class="page-item center" [ngClass]="{ 'disabled':PageIndex == totalRecords }">
+								<a (click)="changePagination(PageIndex + 1)" class="page-link border rounded-pill p-1" >
+									&nbsp;&nbsp;&nbsp;&nbsp;Sau&nbsp;<i class="bi bi-chevron-right"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+								</a>
+							</li>
+						</ul>
+					</nav>
 				</div>
-				<nav aria-label="navigation">
-					<ul class="pagination pagination-lg justify-content-between align-items-center">
-						<li class="page-item" [ngClass]="{ 'disabled': PageIndex === 1 }">
-							<a (click)="changePagination(PageIndex - 1)" class="page-link border text-uppercase rounded-pill" href="javascript:void(0)" tabindex="-1"
-								aria-disabled="true"><i class="bi bi-chevron-left mr-2"></i>Trước</a>
-						</li>
-						<li class="d-flex justify-content-center align-items-center">
-							<a *ngIf="PageIndex > 4">...</a>
-							<p class="mb-0 page-item" *ngFor="let item of pagination; let i = index" [ngClass]="{ 'active': item.index === PageIndex }">
-								<a (click)="changePagination(item.index)" *ngIf="i - 3 < PageIndex && i + 5 > PageIndex" class="page-link"
-									href="javascript:void(0)">{{item.index}}</a>
-							</p>
-							<a *ngIf="PageIndex < pagination.length -4">...</a>
-						</li>
-						<li class="page-item" [ngClass]="{ 'disabled': PageIndex === Total }">
-							<a (click)="changePagination(PageIndex + 1)" class="page-link border text-uppercase rounded-pill" href="javascript:void(0)">Sau<i
-									class="bi bi-chevron-right ml-2"></i></a>
-						</li>
-					</ul>
-				</nav>
 			</div>
 			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
-				<app-view-right></app-view-right>
+				<app-statistics-right></app-statistics-right>
+				<app-gallery></app-gallery>
+			</div>
+		</div>
+		<div class="row justify-content-between">
+			<div class="col col-lg-12 main-ct pr-3 mt-3">
+				<div class="tt-v1 mb-3 d-flex justify-content-between">
+					<h4 class="text-uppercase">Tin tức nổi bật</h4>
+				</div>
+				<div class="row mt-4">
+					<div class="col col-lg-3" *ngFor="let item of [1,2,3,4]">
+							<div *ngIf="item ==1" class="card mb-lg-0 ps-relative" style="background-image: url(../../../assets/dist/images/Rectangle%20361.png); min-height: 260px; background-size: cover;">
+								<div class="content-article ps-absolute bg-cards-content-owl">
+									<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">14/01/2021</p>
+									<div class="card-header px-4 pt-0 pb-0" style="height: 80px;">
+										<p class="card-title text-2line" (click)="redirectDetailNews(item.id)">
+											Phê duyệt nhiệm vụ lập quy hoạch tỉnh Khánh Hòa Phê duyệt nhiệm vụ lập quy hoạch 
+											tỉnh Khánh Hòa Phê duyệt nhiệm vụ lập quy hoạch tỉnh Khánh Hòa
+										</p>
+									</div>
+								</div>
+							</div>
+							<div *ngIf="item ==2" class="card mb-lg-0 ps-relative" style="background-image: url(http://14.177.236.88:6160/Upload/News/28072021103101-Khanh-Hoa.jpg); min-height: 260px; background-size: cover;">
+								<div class="content-article ps-absolute bg-cards-content-owl">
+									<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">14/01/2021</p>
+									<div class="card-header px-4 pt-0 pb-0" style="height: 80px;">
+										<p class="card-title text-2line" (click)="redirectDetailNews(item.id)">
+											Khánh Hòa sẽ mở rộng vùng an toàn đến khu công nghiệp, du lịch và dịch vụ
+										</p>
+									</div>
+								</div>
+							</div>
+							<div *ngIf="item ==3" class="card mb-lg-0 ps-relative" style="background-image: url(http://14.177.236.88:6160/Upload/News/28072021102519-bien-nha-trang-4.jpg); min-height: 260px; background-size: cover;">
+								<div class="content-article ps-absolute bg-cards-content-owl">
+									<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">14/01/2021</p>
+									<div class="card-header px-4 pt-0 pb-0" style="height: 80px;">
+										<p class="card-title text-2line" (click)="redirectDetailNews(item.id)">
+											Khánh Hòa sẽ mở rộng vùng an toàn đến khu công nghiệp, du lịch và dịch vụ
+										</p>
+									</div>
+								</div>
+							</div>
+							<div *ngIf="item ==4" class="card mb-lg-0 ps-relative" style="background-image: url(http://14.177.236.88:6160/Upload/News/28072021102519-bien-nha-trang-4.jpg); min-height: 260px; background-size: cover;">
+								<div class="content-article ps-absolute bg-cards-content-owl">
+									<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">14/01/2021</p>
+									<div class="card-header px-4 pt-0 pb-0" style="height: 80px;">
+										<p class="card-title text-2line" (click)="redirectDetailNews(item.id)">
+											Khánh Hòa sẽ mở rộng vùng an toàn đến khu công nghiệp, du lịch và dịch vụ
+										</p>
+									</div>
+								</div>
+							</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

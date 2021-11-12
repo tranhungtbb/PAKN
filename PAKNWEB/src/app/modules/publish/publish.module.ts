@@ -37,6 +37,8 @@ import { RecommendationsCttdtComponent } from './recommendations-sync/recommenda
 import { DetailRecommendationCttdtComponent } from './recommendations-sync/recommendations-cttdt-detail/recommendations-cttdt-detail.component'
 import { RecommendationsPaknCPComponent } from './recommendations-sync/recommendation-pakn-cp/recommendation-pakn-cp.component'
 import { DetailRecommendationPaknCPComponent } from './recommendations-sync/recommendation-pakn-cp-detail/recommendation-pakn-cp-detail.component'
+import { StatisticsRightComponent } from './statistics-right/statistics-right.component'
+import { GalleryComponent } from './gallery/gallery.component'
 
 @NgModule({
 	declarations: [
@@ -64,6 +66,8 @@ import { DetailRecommendationPaknCPComponent } from './recommendations-sync/reco
 		DetailRecommendationCttdtComponent,
 		RecommendationsPaknCPComponent,
 		DetailRecommendationPaknCPComponent,
+		StatisticsRightComponent,
+		GalleryComponent,
 	],
 	imports: [
 		CommonModule,

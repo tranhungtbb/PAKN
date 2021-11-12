@@ -1086,7 +1086,7 @@ namespace PAKNAPI.Controllers
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
 				}
 
-				///check ton tai
+				//check ton tai
 				var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone", model.Phone, 0);
 				if (checkExists[0].Exists.Value) {
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
@@ -1102,15 +1102,15 @@ namespace PAKNAPI.Controllers
 				if (checkExists[0].Exists.Value) {
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 				}
-				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgPhone", model.OrgPhone, 0);
-				if (checkExists[0].Exists.Value) {
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại doanh nghiệp đã tồn tại" };
-				}
+				//checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgPhone", model.OrgPhone, 0);
+				//if (checkExists[0].Exists.Value) {
+				//	return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại doanh nghiệp đã tồn tại" };
+				//}
 
-				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Tax", model.Tax, 0);
-				if (checkExists[0].Exists.Value) {
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế đã tồn tại" };
-				}
+				//checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Tax", model.Tax, 0);
+				//if (checkExists[0].Exists.Value) {
+				//	return new ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế đã tồn tại" };
+				//}
 
 				if (!string.IsNullOrEmpty(model.OrgEmail))
 				{
@@ -1203,8 +1203,8 @@ namespace PAKNAPI.Controllers
 
 				var accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Phone", model.Phone, 0);
 				if (accCheckExist[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
-				accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Email", model.Email, 0);
-				if (accCheckExist[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
+				//accCheckExist = await new SYUserCheckExists(_appSetting).SYUserCheckExistsDAO("Email", model.Email, 0);
+				//if (accCheckExist[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Email đã tồn tại" };
 
 				///Phone,Email,IDCard
 				///check ton tai

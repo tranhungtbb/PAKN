@@ -249,9 +249,11 @@
 .search-article input {
 	color: #707c97;
 	border: 1px solid rgba(214, 214, 214, 0.8);
+	border-radius: 4px !important;
 }
 .search-article i {
 	color: #707c97;
+	font-size: 19px;
 }
 
 .search-article ::placeholder {
