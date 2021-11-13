@@ -22,12 +22,12 @@ namespace PAKNAPI.Models.ModelBase
 		public int Id { get; set; }
 		public string UserName { get; set; }
 
-		public async Task<int> BOTAnonymousUserInsertDAO(string UserName)
+		public async Task<decimal?> BOTAnonymousUserInsertDAO(string UserName)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("UserName", UserName);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("BOT_AnonymousUserInsert", DP));
+			return (await _sQLCon.ExecuteScalarDapperAsync<decimal?>("BOT_AnonymousUserInsert", DP));
 		}
 		public async Task<BOTAnonymousUser> BOTAnonymousUserGetByUserName(string UserName)
 		{
@@ -59,13 +59,13 @@ namespace PAKNAPI.Models.ModelBase
 		public string Name { get; set; }
 		public int Type { get; set; }
 
-		public async Task<int> BOTRoomInsertDAO(BOTRoom _bOTRoom)
+		public async Task<decimal?> BOTRoomInsertDAO(BOTRoom _bOTRoom)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("UserName", _bOTRoom.Name);
+			DP.Add("Name", _bOTRoom.Name);
 			DP.Add("Type", _bOTRoom.Type);
 
-			return await _sQLCon.ExecuteNonQueryDapperAsync("BOT_RoomInsert", DP);
+			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("BOT_RoomInsert", DP);
 		}
 	}
 
@@ -96,7 +96,7 @@ namespace PAKNAPI.Models.ModelBase
 			DP.Add("AnonymousId", _bOTRoomUserLink.AnonymousId);
 			DP.Add("UserId", _bOTRoomUserLink.UserId);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("BOT_RoomUserLinkInsert", DP));
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("[BOT_RoomUserLinkInsert]", DP));
 		}
 	}
 
@@ -136,11 +136,8 @@ namespace PAKNAPI.Models.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("RoomId", _bOTMessage.RoomId);
-			DP.Add("FromUserId", _bOTMessage.FromUserId);
-			DP.Add("MessageContent", _bOTMessage.MessageContent);
-			DP.Add("DateSend", _bOTMessage.DateSend);
 
-			return (await _sQLCon.ExecuteListDapperAsync<BOTMessage>("BOT_MessageInsert", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<BOTMessage>("BOT_MessageGetAll", DP)).ToList();
 		}
 	}
 

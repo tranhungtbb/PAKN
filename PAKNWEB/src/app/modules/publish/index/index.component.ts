@@ -36,7 +36,7 @@ export class IndexComponent implements OnInit {
 	news: any[]
 	firstNews: any
 	Administrations: any[]
-	isGrid: boolean = true
+	isGrid: boolean = false
 	// owl carocel
 	customOptions: OwlOptions = {
 		loop: true,

@@ -35,14 +35,14 @@ namespace PAKNAPI.Controllers
             try
             {
                 // create user
-                Guid guid = new Guid();
-                var id = await new BOTAnonymousUser(_appSetting).BOTAnonymousUserInsertDAO(guid.ToString());
+                var guid = Guid.NewGuid().ToString();
+                var id = Int32.Parse((await new BOTAnonymousUser(_appSetting).BOTAnonymousUserInsertDAO(guid)).ToString());
 
                 if (id > 0)
                 {
                     // create room
 
-                    var roomId = await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom("Room_" + guid.ToString(), 1));
+                    var roomId =Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom("Room_" + guid, 1))).ToString());
                     SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
                     var botRoomUserLink = new BOTRoomUserLink();
                     botRoomUserLink.AnonymousId = id;
@@ -50,7 +50,14 @@ namespace PAKNAPI.Controllers
                     botRoomUserLink.UserId = dataMain.Id;
                     await new BOTRoomUserLink(_appSetting).BOTRoomUserLinkInsertDAO(botRoomUserLink);
 
-                    return new Models.Results.ResultApi { Success = ResultCode.OK, Result = 1 };
+                    IDictionary<string, string> json = new Dictionary<string, string>
+                    {
+                        {"AnonymousId",  id.ToString()},
+                        {"AnonymousName", guid},
+                        {"RoomId", roomId.ToString()},
+                    };
+
+                    return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json};
                 }
                 else {
                     return new Models.Results.ResultApi { Success = ResultCode.OK,  Message = "Đã có lỗi xảy ra"};

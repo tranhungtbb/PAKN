@@ -586,8 +586,9 @@ div.bubble.reply {
 	justify-content: center;
 	align-items: center;
 }
-.active {
+a.nav-link.active{
 	background-color: #155bbf;
+	font-weight: 600 !important;
 }
 
 .number-lever {
@@ -637,11 +638,10 @@ div.bubble.reply {
 	padding: 15px 20px;
 	font-family: Inter;
 	font-style: normal;
-	text-transform: none;
-	font-weight: 600;
+	font-weight: normal;
 	font-size: 16px;
 	line-height: 19px;
-	display: flex;
+	text-transform: none;
 	align-items: center;
 	cursor: pointer;
 	color: #fff;

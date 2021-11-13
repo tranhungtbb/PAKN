@@ -1,6 +1,6 @@
 <div *hasPermission="['3', 'E_I_3']">
-	<div *ngIf="listData && listData.length > 0" class="card-header" style="background: #F2F7FB">
-		<h5 class="card-title">{{title}}</h5>
+	<div *ngIf="listData && listData.length > 0" class="card-header" style="background: #DDEDFF">
+		<h5 class="card-title title-list-rm">{{title}}</h5>
 		<span class="badge badge-rounded bg-white text-dark" style="font-size: 1.2rem; cursor: pointer;" (click)="redirectList()">{{totalRecords}}</span>
 	</div>
 	<div *ngIf="listData && listData.length > 0" class="card-body pb-2">

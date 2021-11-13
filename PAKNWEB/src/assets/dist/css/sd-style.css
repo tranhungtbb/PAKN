@@ -5,6 +5,9 @@
 /* @import url('../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.carousel.scss');
 @import url('../../../../node_modules/ngx-owl-carousel-o/lib/styles/scss/owl.theme.default.scss'); */
 
+*{
+	font-family: 'Inter', sans-serif;
+}
 .cdk-overlay-pane {
   max-width: 98vw !important;
 }
@@ -77,8 +80,8 @@ a:hover{
 .card{
 	height: auto;
 	box-shadow: none;
-	border: 1px solid rgba(214, 214, 214, 0.8);
-	border-radius: 12px !important;
+	border: none;
+	border-radius: 12px;
 }
 .card-header{
 	border-bottom: 0;
@@ -1857,18 +1860,24 @@ table thead .form-control ng-select {
 .border-radius-4{
 	border-radius: 4px;
 }
-.btn{
+.btn-index{
 	padding: 0.638rem 1.5rem;
 }
 .bg-gray{
 	background-color: #F6F6F6;
 }
+.bd-12{
+	border-radius: 12px;
+}
 
 .title-sm{
 	font-family: Inter;
 	font-weight: 500;
-	font-size: 14px;
-	line-height: 17px;
+	font-size: 16px;
+	line-height: 19px;
 }
 
+.color-dark{
+	color: #222 !important;
+}
 

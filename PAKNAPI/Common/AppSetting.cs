@@ -15,6 +15,7 @@ namespace PAKNAPI.Common
 	public interface IAppSetting
 	{
 		public string GetConnectstring();
+		public string GetConnectstringFeedBack();
 		public UrlFileSupport GetUrlFileSupports();
 	}
 
@@ -34,6 +35,11 @@ namespace PAKNAPI.Common
 		public string GetConnectstring()
 		{
 			return Configuration["ConnectionStrings:Default"];
+		}
+
+		public string GetConnectstringFeedBack()
+		{
+			return Configuration["ConnectionStrings:Feedback"];
 		}
 
 		public UrlFileSupport GetUrlFileSupports()
