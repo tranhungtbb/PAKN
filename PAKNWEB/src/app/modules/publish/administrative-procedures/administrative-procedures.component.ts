@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
-import { RecommendationForwardObject, RecommendationObject, RecommendationProcessObject, RecommendationSearchObject } from 'src/app/models/recommendationObject'
+import { RecommendationObject } from 'src/app/models/recommendationObject'
 import { DataService } from 'src/app/services/sharedata.service'
-import { saveAs as importedSaveAs } from 'file-saver'
-import { MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { COMMONS } from 'src/app/commons/commons'
+import { FormBuilder, FormGroup } from '@angular/forms'
 import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 
@@ -20,9 +18,7 @@ declare var $: any
 export class AdministrativeProceduresComponent implements OnInit {
 	constructor(
 		private afService: AdministrativeFormalitiesService,
-		private recommendationService: RecommendationService,
 		private storeageService: UserInfoStorageService,
-		private _fb: FormBuilder,
 		private _toastr: ToastrService,
 		private _shareData: DataService
 	) {}
@@ -33,11 +29,17 @@ export class AdministrativeProceduresComponent implements OnInit {
 		{ value: 3, text: 'Đã công bố' },
 		{ value: 2, text: 'Đã thu hồi' },
 	]
+	lstGrant: any = [
+		{ value: 1, text: 'Cơ quan chuyên môn' },
+		{ value: 2, text: 'Cấp tỉnh' },
+		{ value: 3, text: 'Cấp huyện' },
+		{ value: 4, text: 'Cấp xã' },
+	]
 	lstLevel: any = [
-		{ value: 'Cơ quan chuyên môn', text: 'Cơ quan chuyên môn' },
-		{ value: 'Cấp tỉnh', text: 'Cấp tỉnh' },
-		{ value: 'Cấp huyện', text: 'Cấp huyện' },
-		{ value: 'Cấp xã', text: 'Cấp xã' },
+		{ value: 1, text: '1' },
+		{ value: 2, text: '2' },
+		{ value: 3, text: '3' },
+		{ value: 4, text: '4' },
 	]
 	formForward: FormGroup
 	lstUnitNotMain: any = []
@@ -53,14 +55,11 @@ export class AdministrativeProceduresComponent implements OnInit {
 	typeSelected: number = 1
 	txtSearchDonVi: string = ''
 	dataSearch = {
-		code: '',
 		name: '',
-		title: '',
-		object: '',
-		organization: '',
-		field: null,
+		rankReceiveId: null,
+		level: null,
 		unitId: null,
-		status: null,
+		field: null,
 	}
 
 	ngOnInit() {
@@ -108,18 +107,13 @@ export class AdministrativeProceduresComponent implements OnInit {
 	}
 
 	getList() {
-		this.dataSearch.code = this.dataSearch.code.trim()
 		this.dataSearch.name = this.dataSearch.name.trim()
-		this.dataSearch.object = this.dataSearch.object.trim()
-		this.dataSearch.organization = this.dataSearch.organization.trim()
 		let request = {
-			Code: this.dataSearch.code,
 			Name: this.dataSearch.name,
-			Object: this.dataSearch.object,
-			Organization: this.dataSearch.organization,
+			RankReceiveId: this.dataSearch.rankReceiveId != null ? this.dataSearch.rankReceiveId : '',
+			Level: this.dataSearch.level != null ? this.dataSearch.level : '',
 			UnitId: this.dataSearch.unitId != null ? this.dataSearch.unitId : '',
 			Field: this.dataSearch.field != null ? this.dataSearch.field : '',
-			Status: 3, // đã công bố
 			PageIndex: this.pageIndex,
 			PageSize: this.pageSize,
 		}
@@ -186,28 +180,5 @@ export class AdministrativeProceduresComponent implements OnInit {
 			this.pageSize = 20
 			this.getList()
 		}
-	}
-
-	preDelete(id: number) {
-		this.idDelete = id
-		$('#modalConfirmDelete').modal('show')
-	}
-
-	onDelete(id: number) {
-		let request = {
-			Id: id,
-		}
-		this.afService.delete(request).subscribe((response) => {
-			if (response.success == RESPONSE_STATUS.success) {
-				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
-				$('#modalConfirmDelete').modal('hide')
-				this.getList()
-			} else {
-				this._toastr.error(response.message)
-			}
-		}),
-			(error) => {
-				console.error(error)
-			}
 	}
 }

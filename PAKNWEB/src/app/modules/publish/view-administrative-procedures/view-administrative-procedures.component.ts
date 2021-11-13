@@ -52,6 +52,8 @@ export class ViewAdministrativeProceduresComponent implements OnInit {
 	typeDelete: number
 	itemDelete: any
 	lstDelete: any[] = [] //list id , type tp hồ sơ, trình tự thực hiện, lệ phí
+	typeSelected: number = 1
+	txtSearchDonVi: string = ''
 	constructor(
 		private toastr: ToastrService,
 		private fileService: UploadFileService,
@@ -64,8 +66,8 @@ export class ViewAdministrativeProceduresComponent implements OnInit {
 
 	ngOnInit() {
 		this.model = new AdministrativeFormalitiesObject()
-		this.getDropdown()
-		this.activatedRoute.params.subscribe(params => {
+		this.getDataForCreate()
+		this.activatedRoute.params.subscribe((params) => {
 			this.model.administrationId = params['id']
 			if (this.model.administrationId != 0) {
 				this.getData()
@@ -78,7 +80,7 @@ export class ViewAdministrativeProceduresComponent implements OnInit {
 		let request = {
 			Id: this.model.administrationId,
 		}
-		this.afService.getByAdmintrativeId(request).subscribe(response => {
+		this.afService.getByAdmintrativeId(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.data
 				this.files = response.result.files
@@ -89,31 +91,38 @@ export class ViewAdministrativeProceduresComponent implements OnInit {
 				this.toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
 				console.log(error)
 			}
 	}
-	getDropdown() {
-		let request = {}
-		this.recommendationService.recommendationGetDataForCreate(request).subscribe(response => {
+
+	getDataForCreate() {
+		this.afService.getCAFieldDAM({}).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this.lstUnit = response.result.lstUnit
-				this.lstField = response.result.lstField
-				var defaultValueUnit = {
-					text: '-- Chọn đơn vị tiếp nhận --',
-					value: null,
+				if (response.result != null) {
+					this.lstField = response.result.CAFieldDAMGetDropdown
+					this.lstUnit = response.result.CAUnitDAMGetDropdown
 				}
-				var defaultValueField = {
-					text: '-- Chọn lĩnh vực --',
-					value: null,
-				}
-				this.lstUnit.unshift(defaultValueUnit)
-				this.lstField.unshift(defaultValueField)
 			} else {
 				this.toastr.error(response.message)
 			}
 		}),
-			error => {
+			(error) => {
+				console.log(error)
+			}
+	}
+
+	getUnitDropdown() {
+		this.afService.getCAUnitDAM({ Keyword: this.txtSearchDonVi }).subscribe((response) => {
+			if (response.success == RESPONSE_STATUS.success) {
+				if (response.result != null) {
+					this.lstUnit = response.result.CAUnitDAMGetDropdown
+				}
+			} else {
+				this.toastr.error(response.message)
+			}
+		}),
+			(error) => {
 				console.log(error)
 			}
 	}
@@ -155,7 +164,7 @@ export class ViewAdministrativeProceduresComponent implements OnInit {
 		const check = this.fileService.checkFileWasExitsted(event, this.files)
 		if (check === 1) {
 			for (let item of event.target.files) {
-				FILETYPE.forEach(fileType => {
+				FILETYPE.forEach((fileType) => {
 					if (item.type == fileType.text) {
 						item.fileType = fileType.value
 						this.files.push(item)
@@ -187,7 +196,7 @@ export class ViewAdministrativeProceduresComponent implements OnInit {
 		const check = this.fileService.checkFileWasExitsted(event, it.files)
 		if (check === 1) {
 			for (let item of event.target.files) {
-				FILETYPE.forEach(fileType => {
+				FILETYPE.forEach((fileType) => {
 					if (item.type == fileType.text) {
 						item.fileType = fileType.value
 						it.files.push(item)
@@ -220,7 +229,7 @@ export class ViewAdministrativeProceduresComponent implements OnInit {
 			Status: this.model.status,
 		}
 		if (this.model.id != 0) {
-			this.afService.updateShow(request).subscribe(response => {
+			this.afService.updateShow(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					this.toastr.success(COMMONS.UPDATE_SUCCESS)
 					return this.router.navigate(['/quan-tri/thu-tuc-hanh-chinh'])
@@ -228,7 +237,7 @@ export class ViewAdministrativeProceduresComponent implements OnInit {
 					this.toastr.error(response.message)
 				}
 			}),
-				err => {
+				(err) => {
 					console.error(err)
 				}
 		}
@@ -315,8 +324,12 @@ export class ViewAdministrativeProceduresComponent implements OnInit {
 	}
 
 	public getFileBin(path: string) {
-		this.fileService.downloadFile({ path }).subscribe(res => {
+		this.fileService.downloadFile({ path }).subscribe((res) => {
 			console.log(res)
 		})
 	}
+
+	changeField(field: number) {}
+
+	changeUnit(unit: number) {}
 }
