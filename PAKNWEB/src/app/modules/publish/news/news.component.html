@@ -132,19 +132,19 @@
 						<nav aria-label="navigation" *ngIf="listData.length > 0">
 							<ul class="pagination pagination-lg justify-content-end align-items-center">
 								<li class="page-item center" [ngClass]="{ 'disabled': query.pageIndex == 1 }">
-									<a (click)="changePagination(query.pageIndex - 1)" class="page-link border rounded-pill p-1 pr-3" href="/cong-bo/detail-news" tabindex="-1"
+									<a (click)="changePagination(query.pageIndex - 1)" class="page-link border rounded-pill p-1 pr-3 cursor" tabindex="-1"
 										aria-disabled="true">&nbsp;&nbsp;<i class="bi bi-chevron-left"></i>&nbsp;Trước</a>&nbsp;&nbsp;
 								</li>
 								<li class="d-flex justify-content-center align-items-center">
 									<a *ngIf="query.pageIndex > 4">...</a>
 									<p class="mb-0 page-item" *ngFor="let item of pagination; let i = index" [ngClass]="{ 'active': item.index === query.pageIndex }">
-										<a (click)="changePagination(item.index)" *ngIf="i - 3 < query.pageIndex && i + 5 > query.pageIndex" class="page-link"
-											href="/cong-bo/detail-news">{{item.index}}</a>
+										<a (click)="changePagination(item.index)" *ngIf="i - 3 < query.pageIndex && i + 5 > query.pageIndex" class="page-link cursor"
+											>{{item.index}}</a>
 									</p>
 									<a *ngIf="query.pageIndex < pagination.length -4">...</a>
 								</li>
 								<li class="page-item center" [ngClass]="{ 'disabled': query.pageIndex == totalRecords }">
-									<a (click)="changePagination(query.pageIndex + 1)" class="page-link border rounded-pill p-1" href="/cong-bo/detail-news">
+									<a (click)="changePagination(query.pageIndex + 1)" class="page-link border rounded-pill p-1 cursor">
 										&nbsp;&nbsp;&nbsp;&nbsp;Sau&nbsp;<i class="bi bi-chevron-right"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 									</a>
 								</li>

@@ -76,17 +76,16 @@ a:hover{
 }
 .card{
 	height: auto;
-	box-shadow: 0px 14px 18px rgba(0, 0, 0, 0.12);
+	box-shadow: none;
+	border: 1px solid rgba(214, 214, 214, 0.8);
+	border-radius: 12px !important;
 }
 .card-header{
 	border-bottom: 0;
 }
-.box .card{
-	box-shadow: none;
-}
-.box .card:hover{
+/* .box .card:hover{
 	box-shadow: 0px 10px 18px rgba(0, 0, 0, 0.12);
-}
+} */
 
 .cl-brown{
 	color: #5581B0;
@@ -1863,6 +1862,13 @@ table thead .form-control ng-select {
 }
 .bg-gray{
 	background-color: #F6F6F6;
+}
+
+.title-sm{
+	font-family: Inter;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 17px;
 }
 
 

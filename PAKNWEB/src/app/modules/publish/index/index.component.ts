@@ -13,7 +13,6 @@ import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-righ
 import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { IndexSettingService } from 'src/app/services/index-setting.service'
 import { IndexSettingObjet } from 'src/app/models/indexSettingObject'
-import { Lightbox } from 'ngx-lightbox/lightbox.service'
 
 declare var $: any
 
@@ -29,8 +28,7 @@ export class IndexComponent implements OnInit {
 		private _newsService: NewsService,
 		private _serviceAdministrative: AdministrativeFormalitiesService,
 		private sanitizer: DomSanitizer,
-		private indexSettingService: IndexSettingService,
-		private _lightbox: Lightbox
+		private indexSettingService: IndexSettingService
 	) {}
 	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 
@@ -38,56 +36,7 @@ export class IndexComponent implements OnInit {
 	news: any[]
 	firstNews: any
 	Administrations: any[]
-
-	_albums: Array<Album> = [
-		{
-			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(117).jpg',
-			caption: 'Image 1 caption here',
-			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(117).jpg',
-		},
-		{
-			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(98).jpg',
-			caption: 'Image 2 caption here',
-			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(98).jpg',
-		},
-		{
-			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(131).jpg',
-			caption: 'Image 3 caption here',
-			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(131).jpg',
-		},
-		{
-			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(123).jpg',
-			caption: 'Image 4 caption here',
-			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(123).jpg',
-		},
-
-		{
-			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(118).jpg',
-			caption: 'Image 1 caption here',
-			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(118).jpg',
-		},
-		{
-			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(128).jpg',
-			caption: 'Image 2 caption here',
-			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(128).jpg',
-		},
-		{
-			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(132).jpg',
-			caption: 'Image 3 caption here',
-			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(132).jpg',
-		},
-		{
-			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(115).jpg',
-			caption: 'Image 4 caption here',
-			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(115).jpg',
-		},
-		{
-			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(133).jpg',
-			caption: 'Image 4 caption here',
-			thumb: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(133).jpg',
-		},
-	]
-
+	isGrid: boolean = true
 	// owl carocel
 	customOptions: OwlOptions = {
 		loop: true,
@@ -205,20 +154,4 @@ export class IndexComponent implements OnInit {
 	redirectDetailNews(id: any) {
 		this._router.navigate(['/cong-bo/tin-tuc-su-kien/' + id])
 	}
-
-	open(index: number): void {
-		// open lightbox
-		this._lightbox.open(this._albums, index)
-	}
-
-	close(): void {
-		// close lightbox programmatically
-		this._lightbox.close()
-	}
-}
-
-export interface Album {
-	src: string
-	caption?: string
-	thumb: string
 }

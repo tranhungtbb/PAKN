@@ -95,9 +95,11 @@
 	color: #222222;
 }
 
-.read-more {
-	color: #222222;
+
+.border-bottom-blue{
+	border-bottom: 2px solid #2E73D5;
 }
+
 .owl-item .card {
 	width: 350px;
 }
@@ -168,7 +170,6 @@
 }
 .read-more {
 	color: #1673d8;
-	font-size: 22px;
 }
 .number-chart-index {
 	font-family: Inter;
@@ -311,4 +312,17 @@
 ::-ms-input-placeholder {
 	/* Microsoft Edge */
 	color: #fff;
+}
+
+
+.btn-girl{
+	height: 40px;
+	text-transform: none;
+}
+
+.btn-girl span{
+	font-family: Inter;
+	font-size: 16px;
+	line-height: 19px;
+	color: #222222;
 }
