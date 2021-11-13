@@ -1,19 +1,53 @@
 <div class="content-nd">
 	<div class="container">
-		<div class="row justify-content-between pt-5">
-			<div class="col main-ct pr-3 pr-lg-5">
+		<div class="row justify-content-between">
+			<div class="col-12 col-lg-auto d-none d-lg-block pl-3 bg-administrative-left">
+				<div class="row no-margin">
+					<div class="form-group mb-2">
+						<div class="radio d-inline mr-5">
+							<label><input type="radio" [value]="1" checked="checked" [(ngModel)]="typeSelected" name="optradio"> Đơn vị</label>
+						</div>
+						<div class="radio d-inline">
+							<label><input type="radio" [value]="2" [(ngModel)]="typeSelected" name="optradio"> Lĩnh vực</label>
+						</div>
+					</div>
+					<div class="form-group mb-2" *ngIf="typeSelected == 1">
+						<div class="group-search">
+							<input type="text" placeholder="Tìm đơn vị" [(ngModel)]="txtSearchDonVi" (keydown.enter)="getUnitDropdown()" class="form-control" name="optradio">
+							<div class="input-group-icon" (click)="getUnitDropdown()">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path
+										d="M23.7871 22.7761L17.9548 16.9437C19.5193 15.145 20.4665 12.7982 20.4665 10.2333C20.4665 4.58714 15.8741 0 10.2333 0C4.58714 0 0 4.59246 0 10.2333C0 15.8741 4.59246 20.4665 10.2333 20.4665C12.7982 20.4665 15.145 19.5193 16.9437 17.9548L22.7761 23.7871C22.9144 23.9255 23.1007 24 23.2816 24C23.4625 24 23.6488 23.9308 23.7871 23.7871C24.0639 23.5104 24.0639 23.0528 23.7871 22.7761ZM1.43149 10.2333C1.43149 5.38004 5.38004 1.43681 10.2279 1.43681C15.0812 1.43681 19.0244 5.38537 19.0244 10.2333C19.0244 15.0812 15.0812 19.035 10.2279 19.035C5.38004 19.035 1.43149 15.0865 1.43149 10.2333Z"
+										fill="#A4A4A4"></path>
+								</svg>
+							</div>
+						</div>
+					</div>
+					<div class="form-group mb-2" *ngIf="typeSelected == 1">
+						<ul class="list-data">
+							<li *ngFor="let item of lstUnit">
+								<a (click)="changeUnit(item.value)">{{item.text}}</a>
+							</li>
+						</ul>
+					</div>
+					<div class="form-group mb-2" *ngIf="typeSelected == 2">
+						<ul class="list-data">
+							<li *ngFor="let item of lstField">
+								<a (click)="changeField(item.value)">{{item.text}}</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col main-ct pr-3 pr-lg-5 pt-3">
 				<ol class="breadcrumb px-0 bg-transparent">
 					<li class="breadcrumb-item"><a href="/cong-bo/trang-chu">Trang chủ</a></li>
 					<li class="breadcrumb-item"><a routerLink="/cong-bo/thu-tuc-hanh-chinh">Danh sách thủ tục hành chính</a></li>
 					<li class="breadcrumb-item active"><a class="font-weight-bold" href="javascript:void(0)">Chi tiết thủ tục hành chính</a></li>
 				</ol>
 				<p *ngIf="model && model.status != 3">Thủ tục hành chính chưa được công bố</p>
-				
-				<a target="_blank" href="{{'https://hanhchinhcong.khanhhoa.gov.vn/#/nguoidung/soanhoso?thutucId='+ model.administrationId + '&donvitiepnhanId=-2'}}">
-					<p class="fs-italic mb-2" style="font-weight: bold;">Nộp hồ sơ</p>
-				</a>
 				<div class="table-responsive" *ngIf="model && model.status== 3">
-					<table class="table table-tthc table-bordered table-striped rounded overflow-hidden mb-4">
+					<table class="table table-tthc table-bordered rounded overflow-hidden mb-4">
 						<tbody>
 							<tr>
 								<th scope="row">Tên thủ tục</th>
@@ -33,7 +67,10 @@
 							</tr>
 							<tr>
 								<th scope="row">Mức độ trực tuyến</th>
-								<td><input disabled value="{{model.typeSend}}" type="checkbox" [checked]="model.typeSend"></td>
+								<td>
+									<span *ngIf="model.typeSend == true">Nộp trực tiếp</span>
+									<span *ngIf="model.typeSend == false">Nộp trực tuyến</span>
+								</td>
 							</tr>
 							<tr>
 								<th scope="row">Số bộ hồ sơ</th>
@@ -100,7 +137,36 @@
 							<tr>
 								<th scope="row">Thành phần hồ sơ</th>
 								<td>
-									<div class="tphs mb-3" *ngFor="let item of lstCompositionProfile; index as i">
+									<table class="table table-tthc table-bordered rounded mb-1 mt-1">
+										<thead>
+											<tr>
+												<th style="width: 50px">STT</th>
+												<th style="min-width: 150px">Tên giấy tờ</th>
+												<th style="width: 80px">Bản chính</th>
+												<th style="width: 80px">Bản sao</th>
+												<th style="width: 80px">Bắt buộc</th>
+											</tr>
+										</thead>
+										<tbody *ngFor="let item of lstCompositionProfile; index as i">
+											<tr>
+												<td class="text-right">{{i+1}}</td>
+												<td>
+													<p class="m-0">{{item.nameExhibit}}</p>
+													<p *ngIf="item.fileAttach" class="m-0">
+														<a href="{{item.fileAttach}}" target="_blank" class="d-block box-fileinput" title="{{item.name}}">
+															<span class="text-wrap text-1line">{{item.name}}</span>
+														</a>
+													</p>
+												</td>
+												<td class="text-right">{{item.originalForm}}</td>
+												<td class="text-right">{{item.copyForm}}</td>
+												<td class="text-center">
+													<p-checkbox label="" binary="true" disabled="true" [(ngModel)]="item.isBind"></p-checkbox>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<!-- <div class="tphs mb-3" *ngFor="let item of lstCompositionProfile; index as i">
 										<p>
 											<strong>{{i+1}}.</strong>{{item.nameExhibit}}<br>
 											- SL bản chính: {{item.originalForm}}<br>
@@ -154,47 +220,72 @@
 												</div>
 											</div>
 										</div>
-									</div>
+									</div> -->
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">Trình tự thực hiện</th>
 								<td>
-									<p *ngFor="let item of lstImplementationProcess; index as i">
+									<div class="content">
+										<table class="table table-tthc table-bordered rounded mb-1 mt-1">
+											<thead>
+												<tr>
+													<th style="width: 50px">STT</th>
+													<th style="width: 150px">Tên công việc</th>
+													<th style="min-width: 180px">Cơ quan/cá nhân thực hiện</th>
+													<th style="width: 80px">Thời gian</th>
+													<th style="width: 80px">Kết quả</th>
+												</tr>
+											</thead>
+											<tbody *ngFor="let item of lstImplementationProcess; index as i">
+												<tr>
+													<td class="text-right">{{i+1}}</td>
+													<td>{{item.name}}</td>
+													<td>{{item.unit}}</td>
+													<td class="text-right">{{item.time}}</td>
+													<td>{{item.result}}</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<!-- <p *ngFor="let item of lstImplementationProcess; index as i">
 										<strong>{{i+1}}.</strong> Công việc: {{item.name}}<br>
 										- Cơ quan thực hiện: {{item.unit}}<br>
 										- Thời gian: {{item.time}}<br>
 										- Kết quả: {{item.result}}
-									</p>
+									</p> -->
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">Phí, Lệ phí</th>
 								<td>
-									<p *ngFor="let item of lstCharges; index as i">
+									<div class="content">
+										<table class="table table-tthc table-bordered rounded mb-1 mt-1">
+											<thead>
+												<tr>
+													<th style="width: 50px">STT</th>
+													<th style="width: 150px">Mức phí</th>
+													<th style="min-width: 180px">Mô tả</th>
+												</tr>
+											</thead>
+											<tbody *ngFor="let item of lstCharges; index as i">
+												<tr>
+													<td class="text-right">{{i+1}}</td>
+													<td>{{item.charges}}</td>
+													<td>{{item.description}}</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<!-- <p *ngFor="let item of lstCharges; index as i">
 										<strong>{{i+1}}.</strong> Mức phí: {{item.charges}} đồng/hồ sơ<br>
 										Mô tả: {{item.description}}
-									</p>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">Tài liệu đính kèm</th>
-								<td>
-									<div class="btn-group" role="group" aria-label="Basic example">
-										<button type="button" class="btn py-0 px-3"><img src="images/file-pdf.svg" alt=""></button>
-										<button type="button" class="btn py-0 px-3"><img src="images/file-word.svg" alt=""></button>
-										<button type="button" class="btn py-0 px-3"><img src="images/file-excel.svg" alt=""></button>
-										<button type="button" class="btn py-0 px-3"><img src="images/file-powerpoint.svg" alt=""></button>
-										<button type="button" class="btn py-0 px-3"><img src="images/file-image.svg" alt=""></button>
-									</div>
+									</p> -->
 								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-			</div>
-			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
-				<app-view-right></app-view-right>
 			</div>
 		</div>
 	</div>

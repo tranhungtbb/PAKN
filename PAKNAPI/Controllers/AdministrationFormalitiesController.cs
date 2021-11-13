@@ -486,11 +486,11 @@ namespace PAKNAPI.Controller
 
         [HttpGet]
         [Route("get-list-administration-formalities-on-page")]
-        public async Task<ActionResult<object>> DAMAdministrationGetListBase(string Code, string Name, string Object, string Organization, int? UnitId, int? Field, int? Status, int? PageSize, int? PageIndex, int? TotalRecords)
+        public async Task<ActionResult<object>> DAMAdministrationGetListBase(string Name, int? RankReceiveId, int? Level, int? UnitId, int? Field, int? PageSize, int? PageIndex, int? TotalRecords)
         {
             try
             {
-                List<DAMAdministrationGetList> rsDAMAdministrationGetList = await new DAMAdministrationGetList(_appSetting).DAMAdministrationGetListDAO(Code, Name, Object, Organization, UnitId, Field, Status, PageSize, PageIndex, TotalRecords);
+                List<DAMAdministrationGetList> rsDAMAdministrationGetList = await new DAMAdministrationGetList(_appSetting).DAMAdministrationGetListDAO(Name, RankReceiveId, Level, UnitId, Field, PageSize, PageIndex, TotalRecords);
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"DAMAdministrationGetList", rsDAMAdministrationGetList},

@@ -23,6 +23,7 @@ import { MyRecommendationComponent } from './my-recommendation/my-recommendation
 import { AgmCoreModule } from '@agm/core'
 import { EditorModule } from 'primeng/editor'
 import { TableModule } from 'primeng/table'
+import { CheckboxModule } from 'primeng/checkbox'
 import { ViewRecommendationPersonalComponent } from './view-recommendation-personal/view-recommendation-personal.component'
 import { ViewNewsComponent } from './view-news/view-news.component'
 import { ViewAdministrativeProceduresComponent } from './view-administrative-procedures/view-administrative-procedures.component'
@@ -79,6 +80,7 @@ import { StatisticsComponent } from './statistics/statistics.component'
 		FormsModule,
 		SharedModule,
 		TableModule,
+		CheckboxModule,
 		PaginatorModule,
 		BsDatepickerModule.forRoot(),
 		EditorModule,
