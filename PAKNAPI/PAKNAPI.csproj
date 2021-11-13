@@ -147,6 +147,9 @@
     <None Include="Upload\Recommendation\Conclusion\31\Danh mục lĩnh vực.docx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KarmaloopAIMLBotParser\KarmaloopAIMLBotParser.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="Aspose.Pdf">
       <HintPath>Libs\Aspose.Pdf.dll</HintPath>
     </Reference>
