@@ -1,7 +1,7 @@
 ﻿
 namespace TLI.FakeImage
 {
-    partial class UpdateDataConfirm
+    partial class LearningConfirmDialog
     {
         /// <summary> 
         /// Required designer variable.
@@ -77,7 +77,7 @@ namespace TLI.FakeImage
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(95, 30);
             this.btnOK.TabIndex = 1;
-            this.btnOK.Text = "OK";
+            this.btnOK.Text = "&Update";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
             // btnCance
@@ -99,18 +99,20 @@ namespace TLI.FakeImage
             this.label1.TabIndex = 3;
             this.label1.Text = "Các ảnh trên đều là:";
             // 
-            // UpdateDataConfirm
+            // LearningConfirmDialog
             // 
+            this.AcceptButton = this.btnCance;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.CancelButton = this.btnCance;
             this.ClientSize = new System.Drawing.Size(401, 180);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCance);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "UpdateDataConfirm";
+            this.Name = "LearningConfirmDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cập nhật dữ liệu huấn luyện";
             this.groupBox1.ResumeLayout(false);

@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -53,17 +56,18 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="TLI\FakeImage\FakeImageDetection.cs" />
     <Compile Include="TLI\FakeImage\FakeImageDAO.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TLI\ConfigFile.cs" />
     <Compile Include="TLI\Data\SqlExtensions.cs" />
     <Compile Include="TLI\WinForm\OnpenFolderDialog.cs" />
-    <Compile Include="UpdateDataConfirm.cs">
+    <Compile Include="LearningConfirmDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UpdateDataConfirm.Designer.cs">
-      <DependentUpon>UpdateDataConfirm.cs</DependentUpon>
+    <Compile Include="LearningConfirmDialog.Designer.cs">
+      <DependentUpon>LearningConfirmDialog.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
@@ -78,9 +82,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UpdateDataConfirm.resx">
-      <DependentUpon>UpdateDataConfirm.cs</DependentUpon>
+    <EmbeddedResource Include="LearningConfirmDialog.resx">
+      <DependentUpon>LearningConfirmDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

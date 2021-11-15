@@ -41,6 +41,7 @@ id int primary key identity(1,1),
 attrId int,
 valueText ntext,
 fakeCount int,
+isCombine bit,
 parentId int
 )
 

@@ -9,4 +9,5 @@ E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\DetectFakeImage\obj\Debug\FakeI
 E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\bin\FakeImageDetection.exe
 E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\bin\FakeImageDetection.pdb
 E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\DetectFakeImage\obj\Debug\FakeImageDetection.FormMain.resources
-E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\DetectFakeImage\obj\Debug\TLI.FakeImage.UpdateDataConfirm.resources
+E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\DetectFakeImage\obj\Debug\TLI.FakeImage.LearningConfirmDialog.resources
+E:\PROJECT_SOFT_VIET\PAKN\webapp\DetectFakeImage\DetectFakeImage\obj\Debug\FakeImageDetection.csproj.CopyComplete

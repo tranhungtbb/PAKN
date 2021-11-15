@@ -115,19 +115,33 @@ namespace TLI.Data
 			obj = Activator.CreateInstance<T>();
 			foreach (var p in obj.GetType().GetProperties())
 			{
-				string name =  p.Name;
-				if (!object.Equals(dr[name], DBNull.Value))
+				try
 				{
-					p.SetValue(obj, dr[name], null);
+					string name = p.Name;
+					if (!object.Equals(dr[name], DBNull.Value))
+					{
+						p.SetValue(obj, dr[name], null);
+					}
 				}
+				catch(Exception)
+                {
+
+                }
 			}
 			foreach (var p in obj.GetType().GetFields())
 			{
-				string name =  p.Name;
-				if (!object.Equals(dr[name], DBNull.Value))
+				try
 				{
-					p.SetValue(obj, dr[name]);
+					string name = p.Name;
+					if (!object.Equals(dr[name], DBNull.Value))
+					{
+						p.SetValue(obj, dr[name]);
+					}
 				}
+                catch (Exception)
+                {
+
+                }
 			}
 			return obj;
 		}
@@ -154,7 +168,7 @@ namespace TLI.Data
 		}
 
 		///<inheritdoc cref = "SQLConn" />
-		public static IEnumerable<T> ExecuteList<T>(this SqlCommand cmd)
+		public static List<T> ExecuteList<T>(this SqlCommand cmd)
 		{
 			using (SqlDataReader dr = cmd.ExecuteReader())
 			{
@@ -303,7 +317,7 @@ namespace TLI.Data
 			}
 		}
 		///<inheritdoc cref = "SQLConn" />
-		public static  IEnumerable<T> ExecuteList<T>(this SqlConnection conn, string sqlText, params SqlParameter[] param)
+		public static  List<T> ExecuteList<T>(this SqlConnection conn, string sqlText, params SqlParameter[] param)
 		{
 			
 			using (SqlCommand cmd = GetCommandText(conn, sqlText, null, param))
@@ -379,8 +393,7 @@ namespace TLI.Data
 			
 			using (SqlCommand cmd = GetCommandProc(conn, ProcedureName, null, param))
 			{
-				//conn.Open();
-				return cmd.ExecuteNonQuery();
+                return cmd.ExecuteNonQuery();
 			}
 		}
 		///<inheritdoc cref = "SQLConn" />

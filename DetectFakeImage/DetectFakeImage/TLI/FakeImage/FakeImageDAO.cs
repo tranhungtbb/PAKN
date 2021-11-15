@@ -1,4 +1,7 @@
-﻿using System;
+﻿
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -8,15 +11,25 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Windows.Media.Imaging;
 using TLI.Data;
 
 namespace TLI.FakeImage
 {
-    public class FakeImageDAO : IDisposable
+    public class FakeImageDAO : FakeImageDetection
     {
         const string CONNECTION_STRING = "data source=14.177.236.88,1434;initial catalog=pakn_test2;user id=sv_pakn3;password=12345678@a";
-        System.Text.ASCIIEncoding asciiEncoding = new System.Text.ASCIIEncoding();
+
+        public new Dictionary<long, FakeResult> SampleData
+        {
+            get
+            {
+                return base.SampleData;
+            }
+            set
+            {
+                base.SampleData = value;
+            }
+        }
 
         private static Hashtable _props;
         private SqlConnection conn;
@@ -40,12 +53,12 @@ namespace TLI.FakeImage
             }
         }
 
-        string getPropName(string name, string def)
+        protected override string getPropName(string name, string def)
         {
             return _props.Contains(name) ? _props[name].ToString() : def;
         }
 
-        void OpenSql()
+        private void OpenSql()
         {
             if (conn == null)
             {
@@ -54,152 +67,55 @@ namespace TLI.FakeImage
             }
         }
 
-        public class MetaInfo
+        public Dictionary<long, FakeResult> CreateSampleData()
         {
-            public string filePath;
-            public Bitmap bitmap;
-            public int attrCount;
-            public Dictionary<int, FakeAttrs> attrs;
-            public Dictionary<int, FakeImageAttrs> values;
-            public Exception error;
-        }
-        public MetaInfo GetInfo(string filePath)
-        {
-            var metaInfo = new MetaInfo
+            OpenSql();
+            var list = conn.ExecuteList<FakeResult>($"select * from FakeResults order by parentId asc");
+            var rsMap = new Dictionary<long, FakeResult>();
+            var hasChange = true;
+            while (hasChange)
             {
-                filePath = filePath,
-                attrCount= 0,
-                attrs = new Dictionary<int, FakeAttrs>(),
-                values = new Dictionary<int, FakeImageAttrs>(), 
-            };
-
-            try
-            {
-                metaInfo.bitmap = new Bitmap(filePath);
-
-                PropertyItem[] propItems = metaInfo.bitmap.PropertyItems;
-                foreach (PropertyItem pi in propItems)
+                hasChange = false;
+                for (var i = 0; i < list.Count; i++)
                 {
                     try
                     {
-                        string valueText = "";
-                        var valueType = (FakeValueTypes)pi.Type;
-                        try
+                        var x = list[i];
+                        var isAdd = false;
+                        if (x.parentId <= 0)
                         {
-                            switch (valueType)
-                            {
-                                case FakeValueTypes.Byte:
-                                    valueText = BitConverter.ToSingle(pi.Value, 0).ToString() ?? "0";
-                                    break;
-                                case FakeValueTypes.ASCII:
-                                    valueText = asciiEncoding.GetString(pi.Value).Trim().ToLower().Replace("\0", "");
-                                    break;
-                                case FakeValueTypes.Int16:
-                                    valueText = BitConverter.ToInt16(pi.Value, 0).ToString();
-                                    break;
-                                case FakeValueTypes.Int32:
-                                    valueText = BitConverter.ToInt32(pi.Value, 0).ToString();
-                                    break;
-                                case FakeValueTypes.Rational:
-                                case FakeValueTypes.NotUsed6:
-                                case FakeValueTypes.Undefined:
-                                case FakeValueTypes.NotUsed8:
-                                case FakeValueTypes.SRational:
-                                case FakeValueTypes.SLong:
-                                    valueText = BitConverter.ToString(pi.Value, 0).Replace("-", " ");
-                                    if (valueText.Length > 255)
-                                        valueText = valueText.Substring(0, 250) + "...";
-                                    valueText = valueText.Replace("\0", "");
-                                    break;
-                            }
+                            rsMap.Add(x.id, x);
+                            isAdd = true;
                         }
-                        catch (Exception e)
+                        else
+                        if (rsMap.ContainsKey(x.parentId))
                         {
-                            Console.WriteLine(e);
+                            rsMap[x.parentId].childs.Add(x);
+                            isAdd = true;
                         }
 
-                        string id = pi.Id.ToString();
-                        var valueTypeString = $"{valueType.ToString().ToLower()}[{pi.Len}]";
-                        string name = getPropName(id, id) + $" {valueTypeString}";
-                        metaInfo.attrCount++;
-                        metaInfo.attrs[pi.Id] = new FakeAttrs
+                        if (isAdd)
                         {
-                            id= pi.Id,
-                            name = name,
-                            status = 0
-                        };
-                        metaInfo.values[pi.Id] = new FakeImageAttrs
-                        {
-                            attrId = pi.Id,
-                            fileId = 0,
-                            valueLength = pi.Len,
-                            valueText = valueText,
-                            valueType = valueType
-                        };
+                            hasChange = true;
+                            list.RemoveAt(i);
+                            i--;
+                        }
                     }
-                    catch (Exception ex)
+                    catch (Exception e)
                     {
-                        Console.WriteLine(ex.ToString());
+                        Console.WriteLine(e);
                     }
                 }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                metaInfo.error = e;
-            }
-            return metaInfo;
+            return rsMap;
         }
-        public class FakeDetection : MetaInfo
-        {
-            public bool isNewFile;
-            public bool isFake;
-            public string fileSha;
-            public long fileId;
-        }
-        public class FakeResult
-        {
-            public long attrId;
-            public string valueText;
-            public int fakeCount;
-            public long parentId;
-        }
-        public class CheckImageParams
-        {
-            public int attrId;
-            public int valueType;
-            public int valueLength;
-            public string valueText;
-        }
-        public CheckImageParams CheckImage(List<CheckImageParams> param)
-        {
-            var map = new Dictionary<long, CheckImageParams>();
-            var ps = new Dictionary<string, SqlParameter>();
-            foreach (var x in param)
-            {
-                x.valueText = x.valueText.Trim().ToLower();
-                map.Add(x.attrId, x);
-                string name = $"@v{ps.Count}";
-                ps.Add(name, new SqlParameter(name, x.valueText));
-            }
 
-            OpenSql();
-            var info = conn.ExecuteList<FakeResult>($"select * from FakeResults WHERE parentId=0");
-            var parentIds = new List<long>();
-            foreach(var x in info)
-            {
-                var vi = map.ContainsKey(x.attrId)
-                    ? map[x.attrId] 
-                    : new CheckImageParams { attrId = (int)x.attrId, valueText = "" };
-                if (x.valueText== vi.valueText)
-                    if (x.parentId > 0)
-                        parentIds.Add(x.parentId);
-                else
-                    return vi;
-            }
-            return null;
+        public class ResultMapItem
+        {
+            public FakeResult info;
+            public Dictionary<int, ResultMapItem> childs = new Dictionary<int, ResultMapItem>();
         }
-        string GetSHA256(Bitmap bitmap)
+        private string GetSHA256(Bitmap bitmap)
         {
             using (var mySHA256 = SHA256.Create())
             {
@@ -218,13 +134,26 @@ namespace TLI.FakeImage
             }
             return "";
         }
-        public class FakeLearn : FakeDetection
+        public class FakeImages
         {
-            
+            public long id;
+            public string fileName;
+            public string sha256;
+            public bool isFake;
+            public DateTime createTime;
+            public DateTime lastModify;
+            public FakeStatus status;
+        }
+        public class FakeLearn : FakeImageInfo
+        {
+            public bool isNewFile;
+            public bool isFake;
+            public string fileSha;
+            public long fileId;
             public int newAttrCount;
         }
         public FakeLearn Learn(string filePath, bool isFake) { return Learn(GetInfo(filePath), isFake); }
-        public FakeLearn Learn(MetaInfo mi, bool isFake)
+        public FakeLearn Learn(FakeImageInfo mi, bool isFake)
         {
             var li = new FakeLearn
             {
@@ -341,9 +270,9 @@ namespace TLI.FakeImage
         public int UpdateLearnData()
         {
             OpenSql();
-            return conn.ExecuteNonQueryProc("FakeImage_DataMining");
+            return conn.ExecuteNonQuery("EXEC FakeImage_DataMining");
         }
-        public void Dispose()
+        public override void Dispose()
         {
             try
             {
@@ -353,7 +282,7 @@ namespace TLI.FakeImage
             this.conn = null;
         }
 
-        const string PropNames =
+        private const string PropNames =
 @"0x0320  ImageTitle
 0x010F  EquipmentManufacturer
 0x0110  EquipmentModel
@@ -580,55 +509,9 @@ namespace TLI.FakeImage
 0xA302  ExifCfaPattern";
     }
 
-    public enum FakeStatus { DEFAULT, DISABLE=-1 }
-    public class FakeImages
-    {
-        public long id;
-        public string fileName;
-        public string sha256;
-        public bool isFake;
-        public DateTime createTime;
-        public DateTime lastModify;
-        public FakeStatus status;
-    }
-
-    public class FakeAttrs
-    {
-        public long id;
-        public string name;
-        public string desc;
-        public FakeStatus status;
-    }
-
-    public class FakeImageAttrs
-    {
-        public long fileId;
-        public int attrId;
-        public FakeValueTypes valueType;
-        public int valueLength;
-        public string valueText;
-    }
-    public enum FakeValueTypes
-    {
-        Byte = 1,
-        /// <summary>
-        /// An array of Byte objects encoded as ASCII
-        /// </summary>
-        ASCII = 2, // 
-        Int16 = 3,
-        Int32 = 4,
-        NotUsed6 = 6,
-        Undefined = 7,
-        NotUsed8 = 8,
-        /// <summary>
-        ///  An array of two Byte objects that represent a rational number
-        /// </summary>           
-        Rational = 5,
-        SLong = 9,
-        SRational = 10
-    }
 
 
-    
-    
+
+
+
 }

@@ -9,10 +9,10 @@ using System.Windows.Forms;
 
 namespace TLI.FakeImage
 {
-    public partial class UpdateDataConfirm : Form
+    public partial class LearningConfirmDialog : Form
     {
         public bool IsFake { get { return this.radioFake.Checked;  }  }
-        public UpdateDataConfirm()
+        public LearningConfirmDialog()
         {
             InitializeComponent();
         }

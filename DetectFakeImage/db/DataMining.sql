@@ -35,8 +35,6 @@ begin
 end
 CLOSE cur
 
---delete from @t where attrId<=0
-
 delete from @files
 if(@test= 1) select '' as N'Thuộc tính đơn', * from @t order by attrId asc -- test only
 
@@ -49,48 +47,54 @@ select attrId, valueText,
 	from @t as t
 	group by attrId, valueText
 
-insert into FakeResults(attrId, valueText, fakeCount, parentId)
-select attrId, valueText, fakeCount, 0 as parentId from @rs where fakeCount>0 and realCount=0
+-- FakeResults (level 1)
+insert into FakeResults(attrId, valueText, fakeCount, isCombine, parentId)
+select attrId, valueText, fakeCount, 0 as isCombine, 0 as parentId from @rs where fakeCount>0 and realCount=0
+
+delete from @t where attrId in (select attrId from FakeResults)
 
 if(@test=1) select '' as N'FakeResults (Ảnh giả - 100%)', * from FakeResults order by attrId asc -- test only
-
-delete from @t where attrId in (select attrId from @rs where fakeCount>0 and realCount=0)
-
 if(@test= 1)  select '' as N'Nghi là giả',* from @rs where fakeCount>0 and realCount>0 order by attrId asc -- test only
 
 -- Combine attributes
-declare @attrId int
-declare @tblAttrIds table(attrId int)
-insert into @tblAttrIds SELECT attrId FROM @rs where fakeCount>0 and realCount>0
+declare @attrId int, @valueText varchar(255), @fakeCount int, @parentId int
+declare @stacks table(attrId int, valueText varchar(255), fakeCount int)
+declare @tblAttrIds table(attrId int, valueText varchar(255), fakeCount int)
+insert into @tblAttrIds SELECT attrId, valueText, fakeCount FROM @rs where fakeCount>0 and realCount>0
 
-
-while (select count(1) from @tblAttrIds)>0
+declare cur2 CURSOR FOR SELECT  attrId, valueText, fakeCount FROM @tblAttrIds
+OPEN cur2 FETCH NEXT FROM cur2 into  @attrId, @valueText, @fakeCount
+WHILE @@FETCH_STATUS = 0
 	begin
-		set @attrId = (select top 1 attrId from @tblAttrIds)
-		delete from @tblAttrIds where attrId= @attrId
-		delete from @t where attrId = @attrId
-		
 		delete from @rs
 		insert into @rs
 		select attrId, valueText,
 			sum(case when isFake=1 then 1 else 0 end) as fakeCount,
 			sum(case when isFake=0 then 1 else 0 end) as realCount
-			from @t where  attrId!= @attrId and fileId in (select distinct fileId from FakeImageAttrs as fia where fia.attrId= @attrId)
+			from @t where fileId in (select distinct fileId from @t as t2 where t2.attrId= @attrId and valueText= @valueText)
 			group by attrId, valueText
-			order by realCount asc
-
-		insert into FakeResults(attrId, valueText, fakeCount, parentId)
-		select attrId, valueText, fakeCount, @attrId as parentId from @rs where fakeCount>0 and realCount=0
-
-		if(@test=1) select '' as N'FakeResults (Ảnh giả - 100%)', * from FakeResults order by attrId asc -- test only
 
 		if(@test= 1) select concat(@attrId,'') as N'Thuộc tính kết hợp', * from @rs order by realCount asc -- test only
 
-		insert into @tblAttrIds SELECT attrId FROM @rs where fakeCount>0 and realCount>0
+		if((select count(1) from @rs where fakeCount>0 and realCount= 0)>0)
+		begin
+			insert into FakeResults(attrId, valueText, fakeCount, isCombine, parentId)
+			values(@attrId, @valueText, @fakeCount, 1, 0);
+
+			select @parentId= SCOPE_IDENTITY()
+
+			insert into FakeResults(attrId, valueText, fakeCount, isCombine, parentId)
+			select attrId, valueText, fakeCount, 1 as isCombine, @parentId as parentId from @rs where fakeCount>0 and realCount=0;
+		end
+
+		--if(@test=1) select '' as N'FakeResults (Ảnh giả - 100%)', * from FakeResults order by attrId asc -- test only
+
+		insert into @tblAttrIds SELECT attrId, valueText, fakeCount FROM @rs where fakeCount>0 and realCount>0
+		FETCH NEXT FROM cur2 into @attrId, @valueText, @fakeCount
 	end
+
+CLOSE cur
 end
-
-
 
 --- test
 go
