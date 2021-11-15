@@ -36,6 +36,7 @@ using Quartz.Logging;
 using System;
 using PAKNAPI.Chat;
 using PAKNAPI.Job;
+using SignalR.Hubs;
 
 namespace PAKNAPI
 {
@@ -63,7 +64,17 @@ namespace PAKNAPI
 				options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-GB");
 				options.SupportedCultures = new List<CultureInfo> { new CultureInfo("en-GB"), new CultureInfo("en-GB") };
 			});
-			services.AddCors();
+			services.AddCors(o =>
+			{
+
+				o.AddPolicy("CorsPolicy", b =>
+				{
+					b.AllowAnyMethod()
+						.AllowAnyHeader()
+						.AllowCredentials()
+						.SetIsOriginAllowed(_ => true);
+				});
+			});
 			services.AddMvc().AddDefaultReportingControllers();
 
 			services.AddMvc().ConfigureApplicationPartManager(x =>
@@ -224,18 +235,7 @@ namespace PAKNAPI
 
 			app.UseMiddleware<CustomMiddleware>();
 
-			app.UseCors(
-				options => 
-				options.WithOrigins("http://localhost:8081",
-				"http://localhost:51046", 
-				"http://14.177.236.88:6160/",
-				"http://14.177.236.88:6161/",
-				"http://localhost:8080/")
-				.AllowAnyOrigin()
-				.AllowAnyMethod()
-				.AllowAnyHeader()
-				.AllowCredentials()
-			) ;
+			app.UseCors("CorsPolicy");
 			app.UseOpenApi();
 			app.UseSwaggerUi3();
 
