@@ -270,6 +270,7 @@ namespace PAKNAPI.Controller
                 request.Data.CreatedBy = request.UserId;
                 request.Data.CreatedDate = DateTime.Now;
                 request.Data.CreateByType = new LogHelper(_appSetting).GetTypeFromRequest(HttpContext);
+                request.Data.IsClone = false;
                 MRRecommendationCheckExistedCode rsMRRecommendationCheckExistedCode = (await new MRRecommendationCheckExistedCode(_appSetting).MRRecommendationCheckExistedCodeDAO(request.Data.Code)).FirstOrDefault();
                 if (rsMRRecommendationCheckExistedCode.Total > 0)
                 {

@@ -39,7 +39,7 @@ namespace PAKNAPI.Common
 
 		public string GetConnectstringFeedBack()
 		{
-			return Configuration["ConnectionStrings:Feedback"];
+			return Configuration["ConnectionStrings:connectionStringFeedback"];
 		}
 
 		public UrlFileSupport GetUrlFileSupports()

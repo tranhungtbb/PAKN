@@ -4,3 +4,9 @@ C:\Users\PC\Desktop\Chat\WEBAPIProject_CE093\SignalR\karmaloop-aiml-bot-server-m
 C:\Users\PC\Desktop\Chat\WEBAPIProject_CE093\SignalR\karmaloop-aiml-bot-server-master\karmaloop-aiml-bot-server-master\KarmaloopAIMLBotParser\obj\Release\KarmaloopAIMLBotParser.csproj.CoreCompileInputs.cache
 C:\Users\PC\Desktop\Chat\WEBAPIProject_CE093\SignalR\karmaloop-aiml-bot-server-master\karmaloop-aiml-bot-server-master\KarmaloopAIMLBotParser\obj\Release\KarmaloopAIMLBotParser.dll
 C:\Users\PC\Desktop\Chat\WEBAPIProject_CE093\SignalR\karmaloop-aiml-bot-server-master\karmaloop-aiml-bot-server-master\KarmaloopAIMLBotParser\obj\Release\KarmaloopAIMLBotParser.pdb
+D:\TL.inc\PAKN_\pakn\KarmaloopAIMLBotParser\bin\Release\KarmaloopAIMLBotParser.dll
+D:\TL.inc\PAKN_\pakn\KarmaloopAIMLBotParser\bin\Release\KarmaloopAIMLBotParser.pdb
+D:\TL.inc\PAKN_\pakn\KarmaloopAIMLBotParser\obj\Release\KarmaloopAIMLBotParser.csprojAssemblyReference.cache
+D:\TL.inc\PAKN_\pakn\KarmaloopAIMLBotParser\obj\Release\KarmaloopAIMLBotParser.csproj.CoreCompileInputs.cache
+D:\TL.inc\PAKN_\pakn\KarmaloopAIMLBotParser\obj\Release\KarmaloopAIMLBotParser.dll
+D:\TL.inc\PAKN_\pakn\KarmaloopAIMLBotParser\obj\Release\KarmaloopAIMLBotParser.pdb

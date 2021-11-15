@@ -17,6 +17,7 @@ import { SwitchboardSettingComponent } from './components/switchboard-setting/sw
 import { UserSystemComponent } from './components/user-system/user-system.component'
 import { NummerOfWarningSettingComponent } from './components/number-of-warning/number-of-warning.component'
 import { SupportGalleryComponent } from './components/support-gallery/support-gallery.component'
+import { IndexTypeSettingComponent } from './components/index-type-setting/index-type-setting.component'
 
 const routes: Routes = [
 	{
@@ -50,6 +51,13 @@ const routes: Routes = [
 			{
 				path: 'cau-hinh-chung/:id',
 				component: NummerOfWarningSettingComponent,
+				canActivate: [RoleGuardService],
+				data: { role: 'A_I_0' },
+			},
+
+			{
+				path: 'cau-hinh-hien-thi-trang-chu/:id',
+				component: IndexTypeSettingComponent,
 				canActivate: [RoleGuardService],
 				data: { role: 'A_I_0' },
 			},

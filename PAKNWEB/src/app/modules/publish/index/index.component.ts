@@ -13,6 +13,7 @@ import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-righ
 import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { IndexSettingService } from 'src/app/services/index-setting.service'
 import { IndexSettingObjet } from 'src/app/models/indexSettingObject'
+import { SystemconfigService } from 'src/app/services/systemconfig.service'
 
 declare var $: any
 
@@ -27,8 +28,8 @@ export class IndexComponent implements OnInit {
 		private _router: Router,
 		private _newsService: NewsService,
 		private _serviceAdministrative: AdministrativeFormalitiesService,
-		private sanitizer: DomSanitizer,
-		private indexSettingService: IndexSettingService
+		private indexSettingService: IndexSettingService,
+		private _syService: SystemconfigService
 	) {}
 	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 
@@ -37,6 +38,7 @@ export class IndexComponent implements OnInit {
 	firstNews: any
 	Administrations: any[]
 	isGrid: boolean = false
+	isHomeMain: boolean = false
 	// owl carocel
 	customOptions: OwlOptions = {
 		loop: true,
@@ -134,6 +136,20 @@ export class IndexComponent implements OnInit {
 			}
 			return
 		})
+
+		this._syService.syConfigGetByType({ Type: 5 }).subscribe(
+			(res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					if (res.result.SYConfigGetByType) {
+						this.isHomeMain = res.result.SYConfigGetByType.content == '1' ? true : false
+					}
+				} else {
+				}
+			},
+			(err) => {
+				console.log(err)
+			}
+		)
 	}
 
 	ngAfterViewInit() {}

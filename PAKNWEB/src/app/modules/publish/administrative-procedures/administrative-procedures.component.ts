@@ -41,6 +41,8 @@ export class AdministrativeProceduresComponent implements OnInit {
 		{ value: 3, text: '3' },
 		{ value: 4, text: '4' },
 	]
+	isBuuChinh: boolean
+	isTTTT: boolean
 	formForward: FormGroup
 	lstUnitNotMain: any = []
 	lstUnit: any = []

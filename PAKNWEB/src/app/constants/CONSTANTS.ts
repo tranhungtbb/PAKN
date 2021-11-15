@@ -216,6 +216,7 @@ export const TYPE_CONFIG = [
 	{ text: 'Cấu hình sms', value: 2 }, //SMS hệ thống
 	{ text: 'Cấu hình tổng đài', value: 3 }, //Config tổng đài
 	{ text: 'Cấu hình chung', value: 4 }, // #
+	{ text: 'Cấu hình trang chủ', value: 5 }, // #
 ]
 
 export class TYPECONFIG {
@@ -223,6 +224,7 @@ export class TYPECONFIG {
 	public static CONFIG_SMS = 2
 	public static CONFIG_SWITCHBOARD = 3
 	public static CONFIG_NUMBER_WARNING = 4
+	public static TYPE_INDEX = 5
 }
 
 export class REGEX {

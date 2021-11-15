@@ -39,6 +39,7 @@ import { SwitchboardSettingComponent } from './components/switchboard-setting/sw
 import { UserSystemComponent } from './components/user-system/user-system.component'
 import { NummerOfWarningSettingComponent } from './components/number-of-warning/number-of-warning.component'
 import { SupportGalleryComponent } from './components/support-gallery/support-gallery.component'
+import { IndexTypeSettingComponent } from './components/index-type-setting/index-type-setting.component'
 
 @NgModule({
 	imports: [
@@ -85,6 +86,7 @@ import { SupportGalleryComponent } from './components/support-gallery/support-ga
 		UserSystemComponent,
 		NummerOfWarningSettingComponent,
 		SupportGalleryComponent,
+		IndexTypeSettingComponent,
 	],
 	entryComponents: [UserCreateOrUpdateComponent, UserViewInfoComponent],
 })

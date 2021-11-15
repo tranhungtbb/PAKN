@@ -77,19 +77,19 @@
 							<strong>Tổng số: {{Total}}</strong> <span class="ml-2">phản ánh kiến nghị</span>
 						</span>
 						<ul class="pagination pagination-lg justify-content-end align-items-center">
-							<li class="page-item center" [ngClass]="{ 'disabled':PageIndex == 1 }">
+							<li class="page-item center cursor" [ngClass]="{ 'disabled':PageIndex == 1 }">
 								<a (click)="changePagination(PageIndex - 1)" class="page-link border rounded-pill p-1 pr-3"  tabindex="-1"
 									aria-disabled="true">&nbsp;&nbsp;<i class="bi bi-chevron-left"></i>&nbsp;Trước</a>&nbsp;&nbsp;
 							</li>
 							<li class="d-flex justify-content-center align-items-center">
-								<a *ngIf="PageIndex > 4">...</a>
-								<p class="mb-0 page-item" *ngFor="let item of pagination; let i = index" [ngClass]="{ 'active': item.index ===PageIndex }">
+								<a *ngIf="PageIndex > 4" class="cursor">...</a>
+								<p class="mb-0 page-item cursor" *ngFor="let item of pagination; let i = index" [ngClass]="{ 'active': item.index ===PageIndex }">
 									<a (click)="changePagination(item.index)" *ngIf="i - 3 < PageIndex && i + 5 >PageIndex" class="page-link"
 										>{{item.index}}</a>
 								</p>
-								<a *ngIf="PageIndex < pagination.length -4">...</a>
+								<a *ngIf="PageIndex < pagination.length -4" class="mr-2 cursor">...</a>
 							</li>
-							<li class="page-item center" [ngClass]="{ 'disabled':PageIndex == Total }">
+							<li class="page-item center cursor" [ngClass]="{ 'disabled':PageIndex == Total }">
 								<a (click)="changePagination(PageIndex + 1)" class="page-link border rounded-pill p-1" >
 									&nbsp;&nbsp;&nbsp;&nbsp;Sau&nbsp;<i class="bi bi-chevron-right"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 								</a>

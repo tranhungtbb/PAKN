@@ -32,8 +32,10 @@ using System.ComponentModel.DataAnnotations;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Logging;
+
 using System;
 using PAKNAPI.Chat;
+using PAKNAPI.Job;
 
 namespace PAKNAPI
 {
@@ -160,18 +162,21 @@ namespace PAKNAPI
 			var jobKeyTTHC = new JobKey("syncDataTTHC");
 			var jobKeyKNCT = new JobKey("syncDataKNCT");
 			var jobKeyHVHCC = new JobKey("syncDataDVHCC");
+			var jobKeyFeedBack = new JobKey("syncDataFeedBack");
 			services.AddQuartz(q =>
 			{
+				q.UseMicrosoftDependencyInjectionScopedJobFactory();
 				q.SchedulerId = "Scheduler-Core";
 				q.UseSimpleTypeLoader();
 				q.UseInMemoryStore();
 				q.UseDefaultThreadPool(tp =>
 				{
-					tp.MaxConcurrency = 5;
+					tp.MaxConcurrency = 10;
 				});
                 q.AddJob<MyJobAdministrative>(opts => opts.WithIdentity(jobKeyTTHC));
 				q.AddJob<MyJobKienNghiCuTri>(opts => opts.WithIdentity(jobKeyKNCT));
 				q.AddJob<MyJobDichVuCongQuocGia>(opts => opts.WithIdentity(jobKeyHVHCC));
+				q.AddJob<MyJobFeedBack>(opts => opts.WithIdentity(jobKeyFeedBack));
 
 
 				// Create a trigger for the job
@@ -188,6 +193,10 @@ namespace PAKNAPI
 					.ForJob(jobKeyHVHCC) // link to the syncData
 					.WithIdentity("syncDataHVHCC-trigger") // give the trigger a unique name
 					.WithCalendarIntervalSchedule(s => s.WithIntervalInDays(1))); //time
+				q.AddTrigger(opts => opts
+					.ForJob(jobKeyFeedBack) // link to the syncData
+					.WithIdentity("syncDataFeedBack-trigger") // give the trigger a unique name
+					.WithCalendarIntervalSchedule(s => s.WithIntervalInDays(5))); //time
 			});
 
 			// ASP.NET Core hosting

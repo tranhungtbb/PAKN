@@ -323,6 +323,7 @@ export class Api {
 	//systemConfig
 	public static SYConfigSystemGetAllOnPage = 'system-config/get-list-system-config-on-page'
 	public static SYConfigSystemGetById = 'system-config/get-by-id'
+	public static SYConfigSystemGetByType = 'system-config/get-by-type'
 	public static SYConfigSystemUpdate = 'system-config/update'
 	public static TimeConfigInsert = 'system-config/sys-time-insert'
 	public static TimeConfigUpdate = 'system-config/sys-time-update'

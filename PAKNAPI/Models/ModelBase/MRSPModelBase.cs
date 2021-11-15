@@ -9,6 +9,7 @@ using System.Data;
 using PAKNAPI.Common;
 using PAKNAPI.Models.Results;
 using System.ComponentModel.DataAnnotations;
+using PAKNAPI.Models.SyncData;
 
 namespace PAKNAPI.ModelBase
 {
@@ -1074,6 +1075,12 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationDelete", DP));
 		}
+
+		public async Task<int> MRRecommendationDeleteByIsCloneDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("[MR_RecommendationDeleteByIsClone]", DP));
+		}
 	}
 
 	public class MRRecommendationDeleteIN
@@ -1460,6 +1467,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UpdatedBy", _mRRecommendationInsertIN.UpdatedBy);
 			DP.Add("UpdatedDate", _mRRecommendationInsertIN.UpdatedDate);
 			DP.Add("Address", _mRRecommendationInsertIN.Address);
+			DP.Add("IsClone", _mRRecommendationInsertIN.IsClone);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("MR_RecommendationInsert", DP);
 		}
@@ -1497,6 +1505,24 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate { get; set; }
 		public long? UpdatedBy { get; set; }
 		public DateTime? UpdatedDate { get; set; }
+		public bool IsClone { get; set; }
+
+		public MRRecommendationInsertIN(){}
+
+		public MRRecommendationInsertIN(FeedBackModel model) {
+			this.Code = model.FeedBackId.ToString();
+			this.Title = model.FeedBackTitle;
+			this.Content = model.FeedBackContent;
+			this.Name = model.NameSender;
+			this.Status = STATUS_RECOMMENDATION.FINISED;
+			this.SendDate = model.CreatedOn != null ? model.CreatedOn : (model.ChangedOn != null ? model.ChangedOn : DateTime.Now);
+			this.CreatedDate = model.CreatedOn != null ? model.CreatedOn : (model.ChangedOn != null ? model.ChangedOn : DateTime.Now);
+			this.ReactionaryWord = false;
+			this.Address = model.FeedBackAdress;
+			this.UpdatedDate = model.ChangedOn;
+			this.IsClone = true;
+
+		}
 	}
 
 	public class MRRecommendationKNCTCheckExistedId

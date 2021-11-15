@@ -25,7 +25,7 @@
 						<span>{{model.createdDate | date:'HH:mm'}} ngày {{model.createdDate | date: 'dd/MM/yyyy'}}</span>
 					</div>
 					<div class="m-3">
-						<span class="pr-5">
+						<span class="pr-5" *ngIf="model.unitName">
 							<span class="my-0 h5">Đơn vị tiếp nhận :</span> {{model.unitName}}
 						</span>
 						<span *ngIf="model.fieldName">
@@ -91,7 +91,7 @@
 							</svg>
 						</div>
 						<div class="media-body">
-							<p class="h4 font-italic font-weight-bold">{{model.processUnitName}}:</p>
+							<p class="h4 font-italic font-weight-bold">{{model.processUnitName != null ? model.processUnitName : 'Cơ quan chức năng trả lời'}}:</p>
 							<p *ngIf="lstConclusion" innerHTML="{{lstConclusion.content | Change}}">
 							</p>
 

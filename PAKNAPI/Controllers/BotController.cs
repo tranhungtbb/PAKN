@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
 using PAKNAPI.Models.ModelBase;
+using PAKNAPI.Models.Results;
+using PAKNAPI.Models.SyncData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +36,7 @@ namespace PAKNAPI.Controllers
         public async Task<ActionResult<object>> CreateRoom() {
             try
             {
+                //return new ResultApi { Success = ResultCode.OK, Result = await new FeedBackSync(_appSetting).SyncFeedBack()};
                 // create user
                 var guid = Guid.NewGuid().ToString();
                 var id = Int32.Parse((await new BOTAnonymousUser(_appSetting).BOTAnonymousUserInsertDAO(guid)).ToString());

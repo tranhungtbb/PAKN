@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="row justify-content-between">
 			<div class="col main-ct pr-3 pr-lg-5">
-				<!-- <div class="box">
+				<div class="box" *ngIf="isHomeMain">
 					<div class="tt-v1 mb-3 d-flex justify-content-between">
 						<h4 class="text-uppercase">Danh sách phản ánh, kiến nghị đã được xử lý</h4>
 						<a class="read-more" title="Xem thêm" routerLink="/cong-bo/phan-anh-kien-nghi"><i class="bi bi-arrow-right"></i></a>
@@ -37,10 +37,10 @@
 							</div>
 					</div>
 					</ng-container>
-				</div> -->
+				</div>
 			
 
-				<div class="box">
+				<div class="box" *ngIf="!isHomeMain">
 					<div class="tt-v1 mb-3 d-flex justify-content-between">
 						<h4 class="text-uppercase">Danh sách phản ánh, kiến nghị đã được xử lý</h4>
 						<button  class="btn text-dark border border-radius-4 btn-girl" type="button" (click)="isGrid =!isGrid">
@@ -268,7 +268,7 @@
 								<div class="card mb-lg-0">
 									<a routerLink="/cong-bo/phan-anh-kien-nghi"  class="image-box ratio-16-9 bd-12">
 										<span class="image">
-											<img class="img-cover" src="../../../../assets/dist/images/no-image.png">
+											<img class="img-cover" src="../../../../assets/dist/images/index/Frame 2184.png">
 										</span>
 									</a>
 								</div>
@@ -477,7 +477,7 @@
 			</div>
 			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
 				<app-statistics-right></app-statistics-right>
-				<a href="#"><img class="img-fluid card mt-4"
+				<a href="javascript:void(0)" *ngIf="!isHomeMain"><img class="img-fluid card mt-4"
 					style="width: 100%; height: 250px;"
 					src="../../../assets/dist/images/banner-left-3.PNG" alt="">
 				</a>
@@ -636,8 +636,9 @@
 						<div class="col col-lg-9 mt-4">
 							<owl-carousel-o [options]="customOptions">
 								<ng-container *ngFor="let item of news">
-									<ng-template carouselSlide [id]="item.id">
-										<div class="card mb-lg-0 ps-relative" [style.background-image]="'url(' + item.imagePath + ')'"  style="min-height: 260px; background-size: cover;">
+									<ng-template carouselSlide [id]="item.id"> 
+										<!-- imagePath -->
+										<div class="card mb-lg-0 ps-relative" [style.background-image]="'url(/' + item.imagePath + ')'" style="min-height: 260px; background-size: cover;">
 											<!-- ../../../assets/dist/images/Rectangle%20361.png -->
 											<div class="content-article ps-absolute bg-cards-content-owl full-width">
 												<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">{{item.createdDate | date : 'dd/MM/yyyy'}}</p>

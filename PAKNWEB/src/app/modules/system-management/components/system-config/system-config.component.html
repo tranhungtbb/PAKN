@@ -59,9 +59,9 @@
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
 										<ng-select notFoundText="Không có dữ liệu"  [items]="listType" placeholder="Loại cấu hình ..." bindLabel="text" bindValue="value"
-										[ngSwitch]="'type'"
-										(change)="table.filter($event?.value.toString(), 'type')"
-										[closeOnSelect]="true">
+											[ngSwitch]="'type'"
+											(change)="table.filter($event?.value.toString(), 'type')"
+											[closeOnSelect]="true">
 										</ng-select>
 									</div>
 								</th>
@@ -85,6 +85,7 @@
 									<span *ngIf="item.type == 2" class="badge rounded-pill badge-outline-blue">Cấu hình sms</span>
 									<span *ngIf="item.type == 3" class="badge rounded-pill badge-outline-green2">Cấu hình tổng đài</span>
 									<span *ngIf="item.type == 4" class="badge rounded-pill badge-outline-success">Cấu hình chung</span>
+									<span *ngIf="item.type == 5" class="badge rounded-pill bg-red ng-star-inserted">Cấu hình hiển thị trang chủ</span>
 								</td>
 								<td>
 									<div class="hover-active d-flex justify-content-end">
@@ -129,6 +130,7 @@
 							<span *ngIf="model.type == 2" class="badge rounded-pill badge-outline-blue">Cấu hình sms</span>
 							<span *ngIf="model.type == 3" class="badge rounded-pill badge-outline-green2">Cấu hình tổng đài</span>
 							<span *ngIf="model.type == 4" class="badge rounded-pill badge-outline-success">Cấu hình chung</span>
+							<span *ngIf="model.type == 5" class="badge rounded-pill bg-red ng-star-inserted">Cấu hình hiển thị trang chủ</span>
 						</div>
 						<div class="col-sm-12">
 							<strong class="control-label lb600">Mô tả</strong>
@@ -207,7 +209,14 @@
 						</div>
 						<div class="col-sm-6">
 							<strong class="control-label lb600">Dung lượng file</strong>
-							<p>{{config.fileSize}} MB</p>
+							<p>{{config.fileSize}} KB</p>
+						</div>
+					</div>
+					<div class="row" *ngIf="model.type == 5">
+						<div class="col-sm-6">
+							<strong class="control-label lb600">Loại trang chủ</strong>
+							<p *ngIf="model.content == '1'">Trang chủ mặc định</p>
+							<p *ngIf="model.content == '0'">Trang chủ dạng lưới</p>
 						</div>
 					</div>
 				</div>

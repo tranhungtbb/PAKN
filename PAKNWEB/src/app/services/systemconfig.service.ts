@@ -59,4 +59,8 @@ export class SystemconfigService {
 	syConfigGetById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.SYConfigSystemGetById)
 	}
+
+	syConfigGetByType(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.SYConfigSystemGetByType)
+	}
 }

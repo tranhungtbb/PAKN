@@ -41,11 +41,6 @@ namespace PAKNAPI.Controllers
 		/// <summary>
 		/// danh sách cấu hình hệ thống
 		/// </summary>
-		/// <param name="Title"></param>
-		/// <param name="Description"></param>
-		/// <param name="Type"></param>
-		/// <param name="PageSize"></param>
-		/// <param name="PageIndex"></param>
 		/// <returns></returns>
 		[HttpGet]
 		[Authorize("ThePolicy")]
@@ -99,6 +94,37 @@ namespace PAKNAPI.Controllers
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		/// <summary>
+		/// chi tiết cấu hình hệ thống by type
+		/// </summary>
+		/// <param name="Type"></param>
+		/// <returns></returns>
+
+		[HttpGet]
+		[Route("get-by-type")]
+		public async Task<ActionResult<object>> SYConfigGetByTypeBase(int? Type)
+		{
+			try
+			{
+				SYConfig rsSYConfigGetByType = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(Type)).FirstOrDefault();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"SYConfigGetByType", rsSYConfigGetByType},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
+
 		/// <summary>
 		/// cập nhập cấu hình hệ thống
 		/// </summary>
@@ -151,13 +177,6 @@ namespace PAKNAPI.Controllers
 		/// <summary>
 		/// danh sách cấu hình thời gian
 		/// </summary>
-		/// <param name="PageSize"></param>
-		/// <param name="PageIndex"></param>
-		/// <param name="Name"></param>
-		/// <param name="Code"></param>
-		/// <param name="Time"></param>
-		/// <param name="Description"></param>
-		/// <param name="IsActived"></param>
 		/// <returns></returns>
 
 		[HttpGet]
