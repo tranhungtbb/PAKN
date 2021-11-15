@@ -436,6 +436,13 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<CAFieldGetAllOnPage>("CA_FieldGetAllOnPage", DP)).ToList();
 		}
+
+		public async Task<List<CAFieldGetAllOnPage>> CAFieldGetAllShowHome()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<CAFieldGetAllOnPage>("CA_FieldGetAllShowHome", DP)).ToList();
+		}
 	}
 
 	public class CAFieldGetByID
