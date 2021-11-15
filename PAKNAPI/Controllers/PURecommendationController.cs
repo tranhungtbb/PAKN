@@ -36,17 +36,18 @@ namespace PAKNAPI.ControllerBase
 		/// danh sách pakn đã giải quyết
 		/// </summary>
 		/// <param name="KeySearch"></param>
-		/// <param name="Status"></param>
+		/// <param name="FieldId"></param>
+		/// <param name="UnitId"></param>
 		/// <param name="PageSize"></param>
 		/// <param name="PageIndex"></param>
 		/// <returns></returns>
 		[HttpGet]
 		[Route("get-list-recommentdation-on-page")]
-		public async Task<ActionResult<object>> PURecommendationAllOnPage(string? KeySearch, int Status, int PageSize, int PageIndex)
+		public async Task<ActionResult<object>> PURecommendationAllOnPage(string KeySearch, int? FieldId , int? UnitId, int PageSize, int PageIndex)
 		{
 			try
 			{
-				var rsPURecommendationOnPage = await new PURecommendation(_appSetting).PURecommendationAllOnPage(KeySearch, Status, PageSize, PageIndex);
+				var rsPURecommendationOnPage = await new PURecommendation(_appSetting).PURecommendationAllOnPage(KeySearch, FieldId, UnitId, PageSize, PageIndex);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"PURecommendation", rsPURecommendationOnPage},
@@ -65,6 +66,42 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 		/// <summary>
+		/// danh sách pakn đã giải quyết trang chủ group by field
+		/// </summary>
+		/// <returns></returns>
+
+
+		[HttpGet]
+		[Route("get-list-recommentdation-group-by-field")]
+		public async Task<ActionResult<object>> PURecommendationAllOnPageByField()
+		{
+			try
+			{
+				// list filed show home
+				List<CAFieldGetAllOnPage> lstFieldHome = await new CAFieldGetAllOnPage(_appSetting).CAFieldGetAllShowHome();
+
+				List<RecommendationGroupByFieldResponse> result = new List<RecommendationGroupByFieldResponse>();
+
+				foreach (var field in lstFieldHome) {
+					var lstRecommendation =  await new PURecommendationByField(_appSetting).RecommendationGetByField(field.Id);
+ 					result.Add(new RecommendationGroupByFieldResponse(field.Id, field.Name, lstRecommendation));
+				}
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"PURecommendation", result},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		/// <summary>
 		/// danh sách pakn của tôi
 		/// </summary>
 		/// <param name="userId"></param>
@@ -76,7 +113,7 @@ namespace PAKNAPI.ControllerBase
 
 		[HttpGet]
 		[Route("get-list-my-recommentdation-on-page")]
-		public async Task<ActionResult<object>> MyRecommendationAllOnPage(int? userId ,string LtsStatus, string Title , int PageSize, int PageIndex)
+		public async Task<ActionResult<object>> MyRecommendationAllOnPage(int? userId, string LtsStatus, string Title, int PageSize, int PageIndex)
 		{
 			try
 			{
@@ -99,7 +136,7 @@ namespace PAKNAPI.ControllerBase
 			}
 		}
 
-		
+
 
 		#endregion PURecommendationAllOnPage
 		/// <summary>
@@ -124,7 +161,7 @@ namespace PAKNAPI.ControllerBase
 			catch (Exception ex)
 			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
@@ -197,7 +234,7 @@ namespace PAKNAPI.ControllerBase
 		/// <returns></returns>
 		[HttpGet]
 		[Route("get-by-id")]
-		public async Task<ActionResult<object>> PURecommendationGetById(int? Id, int?Status)
+		public async Task<ActionResult<object>> PURecommendationGetById(int? Id, int? Status)
 		{
 			try
 			{
@@ -257,15 +294,12 @@ namespace PAKNAPI.ControllerBase
 			}
 			catch (Exception ex) {
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
 
 		#endregion ChangeSatisfaction
-
-
-
 	}
 }

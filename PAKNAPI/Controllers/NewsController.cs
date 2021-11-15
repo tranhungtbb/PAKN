@@ -106,11 +106,8 @@ namespace PAKNAPI.Controller
 		{
 			try
 			{
-				List<NENewsGetListHomePage> rsPUNewsGetListHomePage = await new NENewsGetListHomePage(_appSetting).PU_NewsGetListHomePage(true);
-				if (rsPUNewsGetListHomePage.Count < 4)
-				{
-					rsPUNewsGetListHomePage = await new NENewsGetListHomePage(_appSetting).PU_NewsGetListHomePage(false);
-				}
+				List<NENewsGetListHomePage> rsPUNewsGetListHomePage = await new NENewsGetListHomePage(_appSetting).PU_NewsGetListHomePage();
+				
 				return new ResultApi { Success = ResultCode.OK, Result = rsPUNewsGetListHomePage };
 			}
 			catch (Exception ex)

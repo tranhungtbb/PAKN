@@ -61,6 +61,7 @@ export class Api {
 	public static MR_Recommendation7dayGraph = 'recommendation/recommendation7daygraph'
 
 	public static PuRecommendationGetAllOnPage = 'pu-recommendation/get-list-recommentdation-on-page'
+	public static PuRecommendationGetGroupByField = 'pu-recommendation/get-list-recommentdation-group-by-field'
 	public static PuRecomentdationGetListOrderByCountClick = 'pu-recommendation/recommendation-get-list-order-by-count-click'
 	public static MyRecommendationGetAllOnPage = 'pu-recommendation/get-list-my-recommentdation-on-page'
 	public static PuRecommendationGetById = 'pu-recommendation/get-by-id'
@@ -166,6 +167,7 @@ export class Api {
 	public static NewsTypeUpdate = 'news-type/update'
 	public static NewsTypeUpdateStatus = 'news-type/update'
 	public static NewsTypeDelete = 'news-type/delete'
+	public static NewsTypeGetDrop = 'news-type/get-drop-down'
 	//DepartmentGroup
 	public static DepartmentGroupGetList = 'department-group/get-list-department-group-on-page'
 	public static DepartmentGroupGetById = 'department-group/get-by-id'

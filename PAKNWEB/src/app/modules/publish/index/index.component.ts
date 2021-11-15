@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { DomSanitizer } from '@angular/platform-browser'
 import { OwlOptions } from 'ngx-owl-carousel-o'
@@ -14,6 +14,7 @@ import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTA
 import { IndexSettingService } from 'src/app/services/index-setting.service'
 import { IndexSettingObjet } from 'src/app/models/indexSettingObject'
 import { SystemconfigService } from 'src/app/services/systemconfig.service'
+import { resolve } from 'url'
 
 declare var $: any
 
@@ -22,7 +23,7 @@ declare var $: any
 	templateUrl: './index.component.html',
 	styleUrls: ['./index.component.css'],
 })
-export class IndexComponent implements OnInit {
+export class IndexComponent implements OnInit, AfterViewInit {
 	constructor(
 		private _service: PuRecommendationService,
 		private _router: Router,
@@ -97,23 +98,63 @@ export class IndexComponent implements OnInit {
 			}
 		)
 	}
-	async getData() {
-		// list recommendation index
-		let obj = {
-			Status: RECOMMENDATION_STATUS.FINISED,
-			PageSize: 4,
-			PageIndex: 1,
-		}
-		this._service.getAllPagedList(obj).subscribe((res) => {
-			if (res != undefined) {
-				if (res.result) {
-					this.ReflectionsRecommendations = res.result.PURecommendation.map((item) => {
-						item.shortName = this.getShortName(item.name)
-						return item
-					})
+
+	async syConfigGetByType() {
+		return new Promise((resolve, reject) => {
+			this._syService.syConfigGetByType({ Type: 5 }).subscribe(
+				(res) => {
+					if (res.success == RESPONSE_STATUS.success) {
+						if (res.result.SYConfigGetByType) {
+							let isHomeMain = res.result.SYConfigGetByType.content == '1' ? true : false
+							resolve(isHomeMain)
+						}
+					} else {
+						reject(false)
+					}
+				},
+				(err) => {
+					reject(false)
 				}
-			}
+			)
 		})
+	}
+
+	async getData() {
+		await this.syConfigGetByType()
+			.then((res) => {
+				if (res === 'true') {
+					this.isHomeMain = true
+				} else {
+					this.isHomeMain = false
+				}
+			})
+			.catch((err) => {})
+
+		if (this.isHomeMain) {
+			let obj = {
+				Status: RECOMMENDATION_STATUS.FINISED,
+				PageSize: 5,
+				PageIndex: 1,
+			}
+			this._service.getAllPagedList(obj).subscribe((res) => {
+				if (res != undefined) {
+					if (res.result) {
+						this.ReflectionsRecommendations = res.result.PURecommendation.map((item) => {
+							item.shortName = this.getShortName(item.name)
+							return item
+						})
+					}
+				}
+			})
+		} else {
+			this._service.getByGroupByField({}).subscribe((res) => {
+				if (res != undefined) {
+					if (res.result) {
+						this.ReflectionsRecommendations = res.result.PURecommendation
+					}
+				}
+			})
+		}
 
 		//list news
 		this._newsService.getListHomePage({}).subscribe((res) => {
@@ -136,20 +177,6 @@ export class IndexComponent implements OnInit {
 			}
 			return
 		})
-
-		this._syService.syConfigGetByType({ Type: 5 }).subscribe(
-			(res) => {
-				if (res.success == RESPONSE_STATUS.success) {
-					if (res.result.SYConfigGetByType) {
-						this.isHomeMain = res.result.SYConfigGetByType.content == '1' ? true : false
-					}
-				} else {
-				}
-			},
-			(err) => {
-				console.log(err)
-			}
-		)
 	}
 
 	ngAfterViewInit() {}

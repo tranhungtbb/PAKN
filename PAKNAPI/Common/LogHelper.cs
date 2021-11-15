@@ -149,16 +149,16 @@ namespace PAKNAPI.Common
         public string GetFullNameFromRequest2(HttpContext httpContext)
         {
             var s = httpContext.User.Identities.FirstOrDefault().Claims;
-            return httpContext.User.Claims.FirstOrDefault(c => c.Type == "FullName").Value;
+            return httpContext.User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value;
         }
         public string GetFullNameFromRequest(HttpContext httpContext)
         {
-            return httpContext.User.Claims.FirstOrDefault(c => c.Type == "FullName").Value;
+            return httpContext.User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value;
         }
 
         public long GetUserIdFromRequest(HttpContext httpContext)
         {
-            return long.Parse(httpContext.User.Claims.FirstOrDefault(c => c.Type == "Id").Value);
+            return long.Parse(httpContext.User.Claims.FirstOrDefault(c => c.Type == "Id")?.Value);
         }
 
         public int GetUnitIdFromRequest(HttpContext httpContext)
@@ -168,12 +168,12 @@ namespace PAKNAPI.Common
 
         public bool GetIsMainFromRequest(HttpContext httpContext)
         {
-            return bool.Parse(httpContext.User.Claims.FirstOrDefault(c => c.Type == "IsMain").Value);
+            return bool.Parse(httpContext.User.Claims.FirstOrDefault(c => c.Type == "IsMain")?.Value);
         }
 
         public int GetTypeFromRequest(HttpContext httpContext)
         {
-            return int.Parse(httpContext.User.Claims.FirstOrDefault(c => c.Type == "Type").Value);
+            return int.Parse(httpContext.User.Claims.FirstOrDefault(c => c.Type == "Type")?.Value);
         }
     }
 

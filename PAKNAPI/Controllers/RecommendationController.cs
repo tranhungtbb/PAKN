@@ -65,6 +65,26 @@ namespace PAKNAPI.Controller
         }
 
         /// <summary>
+        /// get data for search public
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("get-data-for-search")]
+        public async Task<ActionResult<object>> RecommendationGetDataForSearch()
+        {
+            try
+            {
+                return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationGetDataForSearch() };
+            }
+            catch (Exception ex)
+            {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        /// <summary>
         /// get data for chuyển tiếp pakn
         /// </summary>
         /// <returns></returns>

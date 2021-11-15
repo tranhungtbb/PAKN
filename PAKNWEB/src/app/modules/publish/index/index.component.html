@@ -49,428 +49,54 @@
 						</button>
 					</div>
 					<div class="row" *ngIf="!isGrid">
-						<div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+						<div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6" *ngFor="let item of ReflectionsRecommendations">
 							<div class="card border p-3">
 								<div class="tt-v1 mb-3 d-flex justify-content-between border-bottom-blue">
-									<h4 class="text-uppercase">XÃ HỘI</h4>
-									<a class="read-more title-sm" title="Xem thêm" routerLink="/cong-bo/phan-anh-kien-nghi">Xem thêm</a>
+									<h4 class="text-uppercase">{{item.fieldName}}</h4>
+									<a class="read-more title-sm" title="Xem thêm" routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi/{{item.fieldId}}">Xem thêm</a>
 								</div>
 	
-								<div class="mt-3 border-bottom">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-
-								<div class="mt-3 border-bottom">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Không nhận được tiền hỗ trợ covid
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-
-								<div class="mt-3 border-bottom">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Chưa nhận được trợ cấp thất nghiệp NQ116
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-
-								<div class="mt-3 border-bottom">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Nhận căn cước công dân phải đến nhà văn hóa xã lấy
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-
-								<div class="mt-3">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Hỗ trợ NLĐ không đủ điều kiện hưởng bảo hiểm thất nghiệp
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-							<div class="card border p-3">
-								<div class="tt-v1 mb-3 d-flex justify-content-between border-bottom-blue">
-									<h4 class="text-uppercase">bưu chính viễn thông</h4>
-									<a class="read-more title-sm" title="Xem thêm" routerLink="/cong-bo/phan-anh-kien-nghi">Xem thêm</a>
-								</div>
-	
-								<div class="mt-3 border-bottom">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Phản ánh về việc chậm căn cước công dân
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-
-								<div class="mt-3 border-bottom">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Hỗ trợ tiền đợt 3 của Phường Hiệp Bình Phước, Thủ Đức còn nhiều bất cập
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-
-								<div class="mt-3 border-bottom">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Hỗ trợ người lao động nghỉ không lương
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-
-								<div class="mt-3 border-bottom">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Làm Xác Nhận Căn Cước Công Dân và CMND
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-
-								<div class="mt-3">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Làm rõ quy định về quản lý ngoại hối đối với hoạt động đầu tư trực tiếp nước ngoài vào Việt Nam
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-							<div class="card border p-3">
-								<div class="tt-v1 mb-3 d-flex justify-content-between border-bottom-blue">
-									<h4 class="text-uppercase">y tế</h4>
-									<a class="read-more title-sm" title="Xem thêm" routerLink="/cong-bo/phan-anh-kien-nghi">Xem thêm</a>
-								</div>
-	
-								<div class="mt-3 border-bottom">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Cấp giấy khám sức khỏe cho người từ đủ 18 tuổi trở lên
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-
-								<div class="mt-3 border-bottom">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Trong thời gian chờ đổi thẻ tôi phải xuất trình giấy tờ gì khi đi khám, chữa bệnh?
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-
-								<div class="mt-3 border-bottom">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Cấp giấy khám sức khỏe cho người từ đủ 18 tuổi trở lên
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-
-								<div class="mt-3 border-bottom">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Khám giám định để hưởng bảo hiểm xã hội một lần
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-
-								<div class="mt-3">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Trong thời gian chờ đổi thẻ tôi phải xuất trình giấy tờ gì khi đi khám, chữa bệnh?
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-
+								<ng-container *ngFor="let mr of item.listRecommendation;let i = index">
+									<div class="mt-3" [ngClass]="{ 'border-bottom': (i + 1) != item.listRecommendation.length }">
+										<p class="align-items-center mb-1">
+											<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}">
+												{{mr.recommendation.title}}
+											</a>
+										</p>
+										<p class="card-date">{{mr.recommendation.createdDate | date : 'dd/MM/yyyy'}}</p>
+									</div>
+								</ng-container>
 								
-							</div>
-						</div>
-						<div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-							<div class="card border p-3">
-								<div class="tt-v1 mb-3 d-flex justify-content-between border-bottom-blue">
-									<h4 class="text-uppercase">văn hóa - du lịch</h4>
-									<a class="read-more title-sm" title="Xem thêm" routerLink="/cong-bo/phan-anh-kien-nghi">Xem thêm</a>
-								</div>
-	
-								<div class="mt-3 border-bottom">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Hỗ trợ người lao động tạm hoãn hợp đồng không hưởng lương do dịch Covid-19
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-
-								<div class="mt-3 border-bottom">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Công văn xin phép làm thêm giờ từ trên 200 giờ đến 300 giờ/năm
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-
-								<div class="mt-3 border-bottom">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
-
-								<div class="mt-3">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-											Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-										</a>
-									</p>
-									<p class="card-date">24/12/2020</p>
-								</div>
 							</div>
 						</div>
 					</div>
 
 					<div *ngIf="isGrid">
-						<div class="row">
+						<div class="row" *ngFor="let item of ReflectionsRecommendations">
 							<div class="col-12">
 								<div class="tt-v1 mb-3 d-flex justify-content-between border-bottom-blue mt-1">
-									<h4 class="text-uppercase">XÃ HỘI</h4>
-									<a class="read-more title-sm" title="Xem thêm" routerLink="/cong-bo/phan-anh-kien-nghi">Xem thêm</a>
+									<h4 class="text-uppercase">{{item.fieldName}}</h4>
+									<a class="read-more title-sm" title="Xem thêm" routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi/{{item.fieldId}}">Xem thêm</a>
 								</div>
 							</div>
-							<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-								<div class="card mb-lg-0">
-									<a routerLink="/cong-bo/phan-anh-kien-nghi"  class="image-box ratio-16-9 bd-12">
-										<span class="image">
-											<img class="img-cover" src="../../../../assets/dist/images/index/Frame 2184.png">
-										</span>
-									</a>
+							<ng-container *ngFor="let mr of item.listRecommendation;let i = index">
+								<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4" *ngIf="i < 3">
+									<div class="card mb-lg-0">
+										<a routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}"  class="image-box ratio-16-9 bd-12">
+											<span class="image">
+												<img class="img-cover" *ngIf="!mr.recommendation.filePath" src="../../../../assets/dist/images/index/Frame 2184.png">
+												<img class="img-cover" *ngIf="mr.recommendation.filePath" src="{{mr.recommendation.filePath}}">
+											</span>
+										</a>
+									</div>
+									<p class="align-items-center mb-0 mt-2">
+										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}">
+											{{mr.recommendation.title}}
+										</a>
+									</p>
+									<p class="card-date">{{mr.recommendation.createdDate | date : 'dd/MM/yyyy'}}</p>
 								</div>
-								<p class="align-items-center mb-0 mt-2">
-									<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-										Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-									</a>
-								</p>
-								<p class="card-date">24/12/2020</p>
-							</div>
-							<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-								<div class="card mb-lg-0">
-									<a routerLink="/cong-bo/phan-anh-kien-nghi"  class="image-box ratio-16-9 bd-12">
-										<span class="image">
-											<img class="img-cover" src="../../../../assets/dist/images/index/Rectangle 1297 (1).png">
-										</span>
-									</a>
-								</div>
-								<p class="align-items-center mb-0 mt-2">
-									<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-										Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-									</a>
-								</p>
-								<p class="card-date">24/12/2020</p>
-							</div>
-							<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-								<div class="card mb-lg-0">
-									<a routerLink="/cong-bo/phan-anh-kien-nghi"  class="image-box ratio-16-9 bd-12">
-										<span class="image">
-											<img class="img-cover" src="../../../../assets/dist/images/index/Rectangle 1297 (2).png">
-										</span>
-									</a>
-								</div>
-								<p class="align-items-center mb-0 mt-2">
-									<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-										Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-									</a>
-								</p>
-								<p class="card-date">24/12/2020</p>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-12">
-								<div class="tt-v1 mb-3 d-flex justify-content-between border-bottom-blue mt-1">
-									<h4 class="text-uppercase">bưu chính viễn thông</h4>
-									<a class="read-more title-sm" title="Xem thêm" routerLink="/cong-bo/phan-anh-kien-nghi">Xem thêm</a>
-								</div>
-							</div>
-							<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-								<div class="card mb-lg-0">
-									<a routerLink="/cong-bo/phan-anh-kien-nghi"  class="image-box ratio-16-9 bd-12">
-										<span class="image">
-											<img class="img-cover" src="../../../../assets/dist/images/index/Rectangle 1297 (3).png">
-										</span>
-									</a>
-								</div>
-								<p class="align-items-center mb-0 mt-2">
-									<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-										Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-									</a>
-								</p>
-								<p class="card-date">24/12/2020</p>
-							</div>
-							<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-								<div class="card mb-lg-0">
-									<a routerLink="/cong-bo/phan-anh-kien-nghi"  class="image-box ratio-16-9 bd-12">
-										<span class="image">
-											<img class="img-cover" src="../../../../assets/dist/images/index/Rectangle 1297 (2).png">
-										</span>
-									</a>
-								</div>
-								<p class="align-items-center mb-0 mt-2">
-									<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-										Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-									</a>
-								</p>
-								<p class="card-date">24/12/2020</p>
-							</div>
-							<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-								<div class="card mb-lg-0">
-									<a routerLink="/cong-bo/phan-anh-kien-nghi"  class="image-box ratio-16-9 bd-12">
-										<span class="image">
-											<img class="img-cover" src="../../../../assets/dist/images/index/Rectangle 1297 (5).png">
-										</span>
-									</a>
-								</div>
-								<p class="align-items-center mb-0 mt-2">
-									<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-										Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-									</a>
-								</p>
-								<p class="card-date">24/12/2020</p>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-12">
-								<div class="tt-v1 mb-3 d-flex justify-content-between border-bottom-blue mt-1">
-									<h4 class="text-uppercase">y tế</h4>
-									<a class="read-more title-sm" title="Xem thêm" routerLink="/cong-bo/phan-anh-kien-nghi">Xem thêm</a>
-								</div>
-							</div>
-							<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-								<div class="card mb-lg-0">
-									<a routerLink="/cong-bo/phan-anh-kien-nghi"  class="image-box ratio-16-9 bd-12">
-										<span class="image">
-											<img class="img-cover" src="../../../../assets/dist/images/index/Rectangle 1297 (4).png">
-										</span>
-									</a>
-								</div>
-								<p class="align-items-center mb-0 mt-2">
-									<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-										Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-									</a>
-								</p>
-								<p class="card-date">24/12/2020</p>
-							</div>
-							<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-								<div class="card mb-lg-0">
-									<a routerLink="/cong-bo/phan-anh-kien-nghi"  class="image-box ratio-16-9 bd-12">
-										<span class="image">
-											<img class="img-cover" src="../../../../assets/dist/images/index/Rectangle 1297 (1).png">
-										</span>
-									</a>
-								</div>
-								<p class="align-items-center mb-0 mt-2">
-									<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-										Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-									</a>
-								</p>
-								<p class="card-date">24/12/2020</p>
-							</div>
-							<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-								<div class="card mb-lg-0">
-									<a routerLink="/cong-bo/phan-anh-kien-nghi"  class="image-box ratio-16-9 bd-12">
-										<span class="image">
-											<img class="img-cover" src="../../../../assets/dist/images/index/Rectangle 1297ew.png">
-										</span>
-									</a>
-								</div>
-								<p class="align-items-center mb-0 mt-2">
-									<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-										Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-									</a>
-								</p>
-								<p class="card-date">24/12/2020</p>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-12">
-								<div class="tt-v1 mb-3 d-flex justify-content-between border-bottom-blue mt-1">
-									<h4 class="text-uppercase">giao thông</h4>
-									<a class="read-more title-sm" title="Xem thêm" routerLink="/cong-bo/phan-anh-kien-nghi">Xem thêm</a>
-								</div>
-							</div>
-							<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-								<div class="card mb-lg-0">
-									<a routerLink="/cong-bo/phan-anh-kien-nghi"  class="image-box ratio-16-9 bd-12">
-										<span class="image">
-											<img class="img-cover" src="../../../../assets/dist/images/index/Rectangle 1297 (5).png">
-										</span>
-									</a>
-								</div>
-								<p class="align-items-center mb-0 mt-2">
-									<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-										Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-									</a>
-								</p>
-								<p class="card-date">24/12/2020</p>
-							</div>
-							<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-								<div class="card mb-lg-0">
-									<a routerLink="/cong-bo/phan-anh-kien-nghi"  class="image-box ratio-16-9 bd-12">
-										<span class="image">
-											<img class="img-cover" src="../../../../assets/dist/images/index/Rectangle 1297 (6).png">
-										</span>
-									</a>
-								</div>
-								<p class="align-items-center mb-0 mt-2">
-									<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-										Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-									</a>
-								</p>
-								<p class="card-date">24/12/2020</p>
-							</div>
-							<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-								<div class="card mb-lg-0">
-									<a routerLink="/cong-bo/phan-anh-kien-nghi"  class="image-box ratio-16-9 bd-12">
-										<span class="image">
-											<img class="img-cover" src="../../../../assets/dist/images/index/Rectangle 1297 (7).png">
-										</span>
-									</a>
-								</div>
-								<p class="align-items-center mb-0 mt-2">
-									<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi">
-										Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-									</a>
-								</p>
-								<p class="card-date">24/12/2020</p>
-							</div>
+							</ng-container>
 						</div>
 					</div>
 				</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
@@ -28,10 +28,24 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 
 	ReflectionsRecommendations = new Array<PuRecommendation>()
 
-	constructor(private service: PuRecommendationService, private routers: Router, private recommendationService: RecommendationService, private _toas: ToastrService) {}
+	constructor(
+		private activatedRoute: ActivatedRoute,
+		private service: PuRecommendationService,
+		private routers: Router,
+		private recommendationService: RecommendationService,
+		private _toas: ToastrService
+	) {}
 
 	ngOnInit() {
+		this.activatedRoute.params.subscribe((params) => {
+			let s = +params['field']
+			if (s) {
+				this.field = s
+			}
+		})
+
 		this.getList()
+
 		this.recommendationService.recommendationGetDataForCreate({}).subscribe(
 			(res) => {
 				if (res.success == RESPONSE_STATUS.success) {
@@ -61,7 +75,8 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 		this.KeySearch = this.KeySearch.trim()
 		var obj = {
 			KeySearch: this.KeySearch,
-			Status: RECOMMENDATION_STATUS.FINISED, //FINISED
+			UnitId: this.unitId == null ? '' : this.unitId,
+			FieldId: this.field == null ? '' : this.field,
 			PageSize: this.PageSize,
 			PageIndex: this.PageIndex,
 		}

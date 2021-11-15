@@ -6,72 +6,47 @@
 					<div class="row">
 						<div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 pr-5">
 							<a href="#">
-								<img class="img-fluid card shadow mb-1 img-cover" style="height: 369px;"
-								src="../../../../assets//dist/images/article/Rectangle 366 (3).png" alt="">
+								<img class="img-fluid card shadow mb-1 img-cover" *ngIf="newHighLight" style="height: 369px;"
+								src="{{newHighLight.imagePath}}" alt="{{newHighLight.title}}">
 							</a>
 							<div class="h2 text-2line mt-3">
-								Khánh Hòa - TP. Hồ Chí Minh: Tăng cường liên kết, hợp tác du lịch
+								{{newHighLight.title}}
 							</div>
 							
 						</div>
 						<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
 							<div class="box">
 								<div class="tt-v1 mb-0 d-flex justify-content-between pb-3">
-									<h4 class="text-uppercase">Tin tức sự KIện</h4>
+									<h4 class="text-uppercase">TIN TỨC SỰ KIỆN</h4>
 								</div>
 
 								<div class="list-article">
 									<ul>
-										<li class="border-top-none">
-											<a href="/cong-bo/detail-news">
-												Góp vốn, mua cổ phần, phần vốn góp vào tổ chức kinh tế của các nhà đầu tư nước ngoài
-											</a>
-										</li>
-										<li *ngFor="let item of [0,1,2,3,4]">
-											<a href="/cong-bo/detail-news">
-												Góp vốn, mua cổ phần, phần vốn góp vào tổ chức kinh tế của các nhà đầu tư nước ngoài
-											</a>
-										</li>
+										<ng-container *ngFor="let item of listNewHighLight; let i = index">
+											<li *ngIf="i > 2 && i < 9" [ngClass]="{'border-top-none' : i == 3}">
+												<a routerLink="/cong-bo/tin-tuc-su-kien/{{item.id}}">
+													{{item.title}}
+												</a>
+											</li>
+										</ng-container>
 									</ul>
 								</div>
 							</div>
 						</div>
-						<div class="col-4 mt-5">
-							<div class="card mb-lg-0">
-								<a href="/cong-bo/detail-news"  class="image-box ratio-16-9 bd-12">
-									<span class="image">
-										<img class="img-cover" src="../../../../assets/dist/images/article/Rectangle 366 (1).png">
-									</span>
-								</a>
+						<ng-container *ngFor="let item of listNewHighLight; let i = index">
+							<div class="col-4 mt-5" *ngIf="i < 3">
+								<div class="card mb-lg-0">
+									<a routerLink="/cong-bo/tin-tuc-su-kien/{{item.id}}"  class="image-box ratio-16-9 bd-12">
+										<span class="image">
+											<img class="img-cover" src="{{item.imagePath}}" title="{{item.title}}">
+										</span>
+									</a>
+								</div>
+								<p class="title-article text-3line mt-3">
+										{{item.title}}
+								</p>
 							</div>
-							<p class="title-article text-3line mt-3">
-									Thông báo công tác phòng, chống dịch bệnh Covid-19 trên địa bàn tỉnh Khánh Hòa...
-							</p>
-						</div>
-						<div class="col-4 mt-5">
-							<div class="card mb-lg-0">
-								<a href="/cong-bo/detail-news"  class="image-box ratio-16-9 bd-12">
-									<span class="image">
-										<img class="img-cover" src="../../../../assets/dist/images/article/Rectangle 366 (2).png">
-									</span>
-								</a>
-							</div>
-							<p class="title-article text-3line mt-3">
-								Tóm tắt Hướng dẫn việc triển khai giai đoạn 2 Kế hoạch thích ứng an toàn ...
-							</p>
-						</div>
-						<div class="col-4 mt-5">
-							<div class="card mb-lg-0">
-								<a href="/cong-bo/detail-news"  class="image-box ratio-16-9 bd-12">
-									<span class="image">
-										<img class="img-cover" src="../../../../assets/dist/images/article/Rectangle 360.png">
-									</span>
-								</a>
-							</div>
-							<p class="title-article text-3line mt-3">
-								Góp vốn, mua cổ phần, phần vốn góp vào tổ chức kinh tế của nhà đầu tư nước...
-							</p>
-						</div>
+						</ng-container>
 					</div>
 				</div>
 				<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
@@ -83,26 +58,10 @@
 					<div class="col main-ct pr-3 pr-lg-5 box-gray">
 						<div class="box mt-4 mb-1">
 							<ul class="d-flex category-article">
-								<li>
-									<a class="text-uppercase h5 px-3 cursor active" >Xã hội</a>
-								</li>
-								<li>
-									<a class="text-uppercase h5 px-3 cursor">Chính trị</a>
-								</li>
-								<li>
-									<a class="text-uppercase h5 px-3 cursor">Văn hóa</a>
-								</li>
-								<li>
-									<a class="text-uppercase h5 px-3 cursor">Kinh tế</a>
-								</li>
-								<li>
-									<a class="text-uppercase h5 px-3 cursor">Thể thao</a>
-								</li>
-								<li>
-									<a class="text-uppercase h5 px-3 cursor">Thế giới</a>
-								</li>
-								<li>
-									<a class="text-uppercase h5 px-3 cursor">Lao động - Việc làm</a>
+								<li *ngFor="let item of listNewsType">
+									<a class="text-uppercase h5 px-3 cursor"
+										(click) ="dataStateChange(item.value)"
+										[ngClass]="{'active' : query.newsType == item.value}" >{{item.text}}</a>
 								</li>
 							</ul>
 						</div>
@@ -113,12 +72,12 @@
 								<li class="list-group-item px-0" *ngFor="let item of listData">
 									<div class="media">
 										<a routerLink="/cong-bo/tin-tuc-su-kien/{{item.id}}" class="image-box ratio-5-3 rounded mr-3" style="width: 12rem">
-											<img class="image" style="object-fit: cover; width: 100%; height: 100%;" [src]="item.imagePath">
+											<img class="image" style="object-fit: cover; width: 100%; height: 100%;" title="{{item.title}}" [src]="item.imagePath">
 										</a>
 										<div class="media-body">
 											<div class="createDate">{{item.createdDate | date : 'HH:mm'}} ngày {{item.createdDate | date : 'dd/MM/yyyy'}}</div>
 											<p class="h3 my-2">
-												<a class="text-2line title-item-article" routerLink="/cong-bo/tin-tuc-su-kien/{{item.id}}">{{item.title}}</a>
+												<a class="text-2line title-item-article"  routerLink="/cong-bo/tin-tuc-su-kien/{{item.id}}">{{item.title}}</a>
 											</p>
 											<p class="mb-0 article-summary">
 												<a routerLink="/cong-bo/tin-tuc-su-kien/{{item.id}}" class="text-3line">{{item.summary}}</a>

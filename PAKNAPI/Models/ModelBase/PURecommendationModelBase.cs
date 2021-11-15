@@ -52,19 +52,29 @@ namespace PAKNAPI.Models.ModelBase
         {
         }
 
-        public async Task<List<PURecommendation>> PURecommendationAllOnPage(string? KeySearch, int Status, int PageSize, int PageIndex)
+        public async Task<List<PURecommendation>> PURecommendationAllOnPage(string KeySearch, int? FieldId, int? UnitId, int PageSize, int PageIndex)
         {
             DynamicParameters DP = new DynamicParameters();
 
             DP.Add("KeySearch", KeySearch);
-            DP.Add("Status", Status);
+            DP.Add("FieldId", FieldId);
+            DP.Add("UnitId", UnitId);
+            DP.Add("Status", STATUS_RECOMMENDATION.FINISED);
             DP.Add("PageSize", PageSize);
             DP.Add("PageIndex", PageIndex);
 
             return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetAllOnPage", DP)).ToList();
         }
 
-        public async Task<List<MyRecommendation>> MyRecommendationAllOnPage(int?CreateBy, string LtsStatus, string Title,int PageSize, int PageIndex)
+
+        public async Task<List<PURecommendation>> PURecommendationByField(int fieldId)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("FieldId", fieldId);
+            return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetByField", DP)).ToList();
+        }
+
+        public async Task<List<MyRecommendation>> MyRecommendationAllOnPage(int? CreateBy, string LtsStatus, string Title, int PageSize, int PageIndex)
         {
             DynamicParameters DP = new DynamicParameters();
             DP.Add("CreateBy", CreateBy);
@@ -122,12 +132,62 @@ namespace PAKNAPI.Models.ModelBase
         // files
         public List<MRRecommendationFilesGetByRecommendationId> lstFiles { get; set; }
         //Conclusion
-        public MRRecommendationConclusionGetByRecommendationId lstConclusion {get; set;}
+        public MRRecommendationConclusionGetByRecommendationId lstConclusion { get; set; }
         //ConclusionFile - file đính kèm giải quyết
         public List<MRRecommendationConclusionFilesGetByConclusionId> lstConclusionFiles { get; set; }
-        
+
     }
 
 
+    public class PURecommendationByField
+    {
 
+
+        private SQLCon _sQLCon;
+        public PURecommendationByField(IAppSetting appSetting)
+        {
+            _sQLCon = new SQLCon(appSetting.GetConnectstring());
+        }
+
+
+        public async Task<List<PURecommendationByFieldModel>> RecommendationGetByField(int? fieldId)
+        {
+            List<PURecommendationByFieldModel> data = new List<PURecommendationByFieldModel>();
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("FieldId", fieldId);
+            List<PURecommendation> recommendations = (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetByField", DP)).ToList();
+
+            recommendations.ForEach(async item =>
+            {
+                var dataItem = new PURecommendationByFieldModel();
+                dataItem.Recommendation = item;
+                DP = new DynamicParameters();
+                DP.Add("Id", item.Id);
+                var file = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationFilesGetByRecommendationId>("MR_Recommendation_FilesGetByRecommendationId", DP)).Where(x=>x.FileType == 4).FirstOrDefault();
+                if (file != null) {
+                    dataItem.filePath = file.FilePath;
+                }
+                data.Add(dataItem);
+            });
+            return data;
+        }
+
+    }
+
+    public class PURecommendationByFieldModel{
+        public PURecommendation Recommendation { get; set; }
+        public string filePath { get; set; }
+    }
+
+    public class RecommendationGroupByFieldResponse {
+        public int FieldId { get; set; }
+        public string FieldName { get; set; }
+        public List<PURecommendationByFieldModel> ListRecommendation { get; set; }
+
+        public RecommendationGroupByFieldResponse(int fieldId, string fieldName, List<PURecommendationByFieldModel> pURecommendation) {
+            this.FieldId = fieldId;
+            this.FieldName = fieldName;
+            this.ListRecommendation = pURecommendation;
+        }
+    }
 }

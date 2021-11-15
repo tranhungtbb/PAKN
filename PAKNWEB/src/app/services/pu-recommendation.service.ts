@@ -13,6 +13,9 @@ export class PuRecommendationService {
 	getAllPagedList(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PuRecommendationGetAllOnPage)
 	}
+	getByGroupByField(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PuRecommendationGetGroupByField)
+	}
 
 	getMyRecommentdation(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.MyRecommendationGetAllOnPage)

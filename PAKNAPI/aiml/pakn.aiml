@@ -41,43 +41,108 @@
 				
 <category>
       <pattern> Tra cứu thủ tục * </pattern>
-      <template>Đường dẫn danh sách thủ tục hành chính </template>
-<pakn>
-				[{"link":"http://google.com",
-				"image":""}]
-				
-			</pakn>
+      <template>Đường dẫn danh sách thủ tục hành chính
+	  <pakn>
+		  json{"type":"link",
+		  "data":[
+		  {"link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/searching/?tieuchi=1",
+		  "title":"null"},
+		  ]}
+
+	  </pakn>
+	  </template>
+
    </category>
 
 <category>
       <pattern> * Tra cứu thủ tục  </pattern>
-      <template>Đường dẫn danh sách thủ tục hành chính </template>
-   </category>
+	<template>
+		Đường dẫn danh sách thủ tục hành chính
+		<pakn>
+			json{"type":"link",
+			"data":[
+			{"link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/searching/?tieuchi=1",
+			"title":"null"},
+			]}
+
+		</pakn>
+	</template>
+</category>
    
    <category>
       <pattern> Tra cứu thủ tục  </pattern>
-      <template>Đường dẫn danh sách thủ tục hành chính </template>
+	   <template>
+		   Đường dẫn danh sách thủ tục hành chính
+		   <pakn>
+			   json{"type":"link",
+			   "data":[
+			   {"link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/searching/?tieuchi=1",
+			   "title":"null"},
+			   ]}
+
+		   </pakn>
+	   </template>
    </category>
    
    <category>
       <pattern> * thủ tục *</pattern>
-      <template>Đường dẫn danh sách thủ tục hành chính </template>
+	   <template>
+		   Đường dẫn danh sách thủ tục hành chính
+		   <pakn>
+			   json{"type":"link",
+			   "data":[
+			   {"link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/searching/?tieuchi=1",
+			   "title":"null"},
+			   ]}
+
+		   </pakn>
+	   </template>
    </category>
    
   
    
   <category>
       <pattern>  Tra cứu hồ sơ * </pattern>
-       <template>Đường dẫn tra cứu hồ sơ hành chính </template>
+	  <template>
+		  Đường dẫn danh sách thủ tục hành chính
+		  <pakn>
+			  json{"type":"link",
+			  "data":[
+			  {"link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/searching/?tieuchi=1",
+			  "title":"null"},
+			  ]}
+
+		  </pakn>
+	  </template>
    </category>
 <category>
       <pattern>  Tra cứu hồ sơ   </pattern>
-  <template>Đường dẫn tra cứu hồ sơ hành chính </template>
+	<template>
+		Đường dẫn danh sách thủ tục hành chính
+		<pakn>
+			json{"type":"link",
+			"data":[
+			{"link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/searching/?tieuchi=1",
+			"title":"null"},
+			]}
+
+		</pakn>
+	</template>
    </category>
    
    <category>
       <pattern>* hồ sơ *</pattern>
-      <template>Đường dẫn tra cứu hồ sơ hành chính </template>
+	   <template>
+		   Đường dẫn danh sách thủ tục hành chính
+		   <pakn>
+			   json{"type":"link",
+			   "data":[
+			   {"link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/searching/?tieuchi=1",
+			   "title":"null"},
+			   ]}
+
+		   </pakn>
+	   </template>
    </category>
    
 

@@ -83,14 +83,17 @@ const routes: Routes = [
 				component: ReflectionsRecommendationsComponent,
 			},
 			{
-				path: 'phan-anh-kien-nghi',
+				path: 'danh-sach-phan-anh-kien-nghi',
+				component: ReflectionsRecommendationsComponent,
+			},
+			{
+				path: 'danh-sach-phan-anh-kien-nghi/:field',
 				component: ReflectionsRecommendationsComponent,
 			},
 			{
 				path: 'phan-anh-kien-nghi/:id',
 				component: ViewReflectionsRecommendationComponent,
 			},
-
 			{
 				path: 'phan-anh-kien-nghi/sync/he-thong-cu-tri-khanh-hoa',
 				component: ListRecommendationKnct,
