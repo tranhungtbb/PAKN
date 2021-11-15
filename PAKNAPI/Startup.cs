@@ -77,14 +77,14 @@ namespace PAKNAPI
 				}
 			});
 
-			
+
 			services.AddMvc().AddNewtonsoftJson();
 
-            // cái này ảnh hưởng đến controller ko authorize @@
-            //services.AddMvc(options =>
-            //{
-            //    options.Filters.Add(new AuthorizeFilter("ThePolicy"));
-            //});
+			// cái này ảnh hưởng đến controller ko authorize @@
+			//services.AddMvc(options =>
+			//{
+			//    options.Filters.Add(new AuthorizeFilter("ThePolicy"));
+			//});
 
 
 			services.AddMvc().AddNewtonsoftJson(options =>
@@ -134,17 +134,17 @@ namespace PAKNAPI
 			{
 				var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
 				defaultAuthorizationPolicyBuilder = defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
-                options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
-				
+				options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
+
 
 				options.AddPolicy("ThePolicy", policy =>
-                {
-                    policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-                    policy.RequireAuthenticatedUser().Build();
-                    policy.Requirements.Add(new ThePolicyRequirement());
-                });
+				{
+					policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+					policy.RequireAuthenticatedUser().Build();
+					policy.Requirements.Add(new ThePolicyRequirement());
+				});
 			});
-			
+
 			services.AddSwaggerDocument();
 
 			// If using IIS:
@@ -173,7 +173,7 @@ namespace PAKNAPI
 				{
 					tp.MaxConcurrency = 10;
 				});
-                q.AddJob<MyJobAdministrative>(opts => opts.WithIdentity(jobKeyTTHC));
+				q.AddJob<MyJobAdministrative>(opts => opts.WithIdentity(jobKeyTTHC));
 				q.AddJob<MyJobKienNghiCuTri>(opts => opts.WithIdentity(jobKeyKNCT));
 				q.AddJob<MyJobDichVuCongQuocGia>(opts => opts.WithIdentity(jobKeyHVHCC));
 				q.AddJob<MyJobFeedBack>(opts => opts.WithIdentity(jobKeyFeedBack));
@@ -225,24 +225,18 @@ namespace PAKNAPI
 			app.UseMiddleware<CustomMiddleware>();
 
 			app.UseCors(
-				options => 
-				options.WithOrigins("http://localhost:8081",
-				"http://localhost:51046", 
-				"http://14.177.236.88:6160/",
-				"http://14.177.236.88:6161/",
-				"http://localhost:8080/")
+				options => options.WithOrigins("http://localhost:8081", "http://localhost:51046", "http://14.177.236.88:6160/", "http://localhost:8080/")
 				.AllowAnyOrigin()
 				.AllowAnyMethod()
 				.AllowAnyHeader()
-				.AllowCredentials()
-			) ;
+			);
 			app.UseOpenApi();
 			app.UseSwaggerUi3();
 
 			app.UseHttpsRedirection();
 
-            // Dev
-            DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension.RegisterExtensionGlobal(new ReportStorageWebExtension1(new AppSetting(Configuration)));
+			// Dev
+			DevExpress.XtraReports.Web.Extensions.ReportStorageWebExtension.RegisterExtensionGlobal(new ReportStorageWebExtension1(new AppSetting(Configuration)));
 			DevExpress.XtraReports.Configuration.Settings.Default.UserDesignerOptions.DataBindingMode = DevExpress.XtraReports.UI.DataBindingMode.Bindings;
 			app.UseDevExpressControls();
 			app.UseStaticFiles();
@@ -251,7 +245,7 @@ namespace PAKNAPI
 			app.UseRouting();
 
 			//app.UseCors("AnotherPolicy");
-			
+
 			app.UseAuthorization();
 			app.UseAuthentication();
 

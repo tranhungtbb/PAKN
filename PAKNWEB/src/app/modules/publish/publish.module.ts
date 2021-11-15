@@ -41,6 +41,7 @@ import { DetailRecommendationPaknCPComponent } from './recommendations-sync/reco
 import { StatisticsRightComponent } from './statistics-right/statistics-right.component'
 import { GalleryComponent } from './gallery/gallery.component'
 import { StatisticsComponent } from './statistics/statistics.component'
+import { NewsHightLightComponent } from './news-hight-light/news-hight-light.component'
 
 @NgModule({
 	declarations: [
@@ -71,6 +72,7 @@ import { StatisticsComponent } from './statistics/statistics.component'
 		StatisticsRightComponent,
 		GalleryComponent,
 		StatisticsComponent,
+		NewsHightLightComponent,
 	],
 	imports: [
 		CommonModule,

@@ -183,7 +183,6 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	}
 
 	getCommentPaged() {
-		debugger
 		this.commentQuery.pageSize = this.pageSizeComment
 		this.commentQuery.recommendationId = this.id
 		this.commentService.getAllOnPage(this.commentQuery).subscribe((res) => {

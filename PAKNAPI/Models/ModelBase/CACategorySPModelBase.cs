@@ -996,6 +996,12 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<CANewsTypeGetAllOnPage>("CA_NewsTypeGetAllOnPage", DP)).ToList();
 		}
+
+		public async Task<List<DropdownObject>> CANewsTypeGetDropdownDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+			return (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("CA_NewsTypeGetDropdown", DP)).ToList();
+		}
 	}
 
 	public class CANewsTypeGetByID

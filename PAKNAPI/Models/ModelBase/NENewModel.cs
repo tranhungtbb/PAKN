@@ -33,10 +33,9 @@ namespace PAKNAPI.Models.ModelBase
 		public DateTime CreatedDate { get; set; }
 
 
-		public async Task<List<NENewsGetListHomePage>> PU_NewsGetListHomePage(bool? check)
+		public async Task<List<NENewsGetListHomePage>> PU_NewsGetListHomePage()
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Check", check);
 			return (await _sQLCon.ExecuteListDapperAsync<NENewsGetListHomePage>("[PU_NewsGetList]", DP)).ToList();
 		}
 

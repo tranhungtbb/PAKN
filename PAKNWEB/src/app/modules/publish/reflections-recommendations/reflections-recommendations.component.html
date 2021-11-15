@@ -103,57 +103,6 @@
 				<app-gallery></app-gallery>
 			</div>
 		</div>
-		<div class="row justify-content-between">
-			<div class="col col-lg-12 main-ct pr-3 mt-3">
-				<div class="tt-v1 mb-3 d-flex justify-content-between">
-					<h4 class="text-uppercase">Tin tức nổi bật</h4>
-				</div>
-				<div class="row mt-4">
-					<div class="col col-lg-3" *ngFor="let item of [1,2,3,4]">
-							<div *ngIf="item ==1" class="card mb-lg-0 ps-relative" style="background-image: url(../../../assets/dist/images/Rectangle%20361.png); min-height: 260px; background-size: cover;">
-								<div class="content-article ps-absolute bg-cards-content-owl">
-									<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">14/01/2021</p>
-									<div class="card-header px-4 pt-0 pb-0" style="height: 80px;">
-										<p class="card-title text-2line" (click)="redirectDetailNews(item.id)">
-											Phê duyệt nhiệm vụ lập quy hoạch tỉnh Khánh Hòa Phê duyệt nhiệm vụ lập quy hoạch 
-											tỉnh Khánh Hòa Phê duyệt nhiệm vụ lập quy hoạch tỉnh Khánh Hòa
-										</p>
-									</div>
-								</div>
-							</div>
-							<div *ngIf="item ==2" class="card mb-lg-0 ps-relative" style="background-image: url(http://14.177.236.88:6160/Upload/News/28072021103101-Khanh-Hoa.jpg); min-height: 260px; background-size: cover;">
-								<div class="content-article ps-absolute bg-cards-content-owl">
-									<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">14/01/2021</p>
-									<div class="card-header px-4 pt-0 pb-0" style="height: 80px;">
-										<p class="card-title text-2line" (click)="redirectDetailNews(item.id)">
-											Khánh Hòa sẽ mở rộng vùng an toàn đến khu công nghiệp, du lịch và dịch vụ
-										</p>
-									</div>
-								</div>
-							</div>
-							<div *ngIf="item ==3" class="card mb-lg-0 ps-relative" style="background-image: url(http://14.177.236.88:6160/Upload/News/28072021102519-bien-nha-trang-4.jpg); min-height: 260px; background-size: cover;">
-								<div class="content-article ps-absolute bg-cards-content-owl">
-									<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">14/01/2021</p>
-									<div class="card-header px-4 pt-0 pb-0" style="height: 80px;">
-										<p class="card-title text-2line" (click)="redirectDetailNews(item.id)">
-											Khánh Hòa sẽ mở rộng vùng an toàn đến khu công nghiệp, du lịch và dịch vụ
-										</p>
-									</div>
-								</div>
-							</div>
-							<div *ngIf="item ==4" class="card mb-lg-0 ps-relative" style="background-image: url(http://14.177.236.88:6160/Upload/News/28072021102519-bien-nha-trang-4.jpg); min-height: 260px; background-size: cover;">
-								<div class="content-article ps-absolute bg-cards-content-owl">
-									<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">14/01/2021</p>
-									<div class="card-header px-4 pt-0 pb-0" style="height: 80px;">
-										<p class="card-title text-2line" (click)="redirectDetailNews(item.id)">
-											Khánh Hòa sẽ mở rộng vùng an toàn đến khu công nghiệp, du lịch và dịch vụ
-										</p>
-									</div>
-								</div>
-							</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<app-news-hight-light></app-news-hight-light>
 	</div>
 </div>

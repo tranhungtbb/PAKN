@@ -57,14 +57,33 @@ namespace PAKNAPI.Controllers.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
+
+		/// <summary>
+		/// get drop down
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet]
+		[Route("get-drop-down")]
+		public async Task<ActionResult<object>> CANewsTypeGetDropdown()
+		{
+			try
+			{
+				List<DropdownObject> cANewsTypeGetDropdownDAO = await new CANewsTypeGetAllOnPage(_appSetting).CANewsTypeGetDropdownDAO();
+				
+				return new ResultApi { Success = ResultCode.OK, Result = cANewsTypeGetDropdownDAO };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 		/// <summary>
 		/// danh sách kiểu bài viết
 		/// </summary>
-		/// <param name="PageSize"></param>
-		/// <param name="PageIndex"></param>
-		/// <param name="Name"></param>
-		/// <param name="Description"></param>
-		/// <param name="IsActived"></param>
 		/// <returns></returns>
 
 		[HttpGet]

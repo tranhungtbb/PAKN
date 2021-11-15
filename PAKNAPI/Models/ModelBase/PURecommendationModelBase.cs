@@ -163,7 +163,10 @@ namespace PAKNAPI.Models.ModelBase
                 dataItem.Recommendation = item;
                 DP = new DynamicParameters();
                 DP.Add("Id", item.Id);
-                dataItem.lstFiles = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationFilesGetByRecommendationId>("MR_Recommendation_FilesGetByRecommendationId", DP)).Where(x=>x.FileType == 4).ToList();
+                var file = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationFilesGetByRecommendationId>("MR_Recommendation_FilesGetByRecommendationId", DP)).Where(x=>x.FileType == 4).FirstOrDefault();
+                if (file != null) {
+                    dataItem.filePath = file.FilePath;
+                }
                 data.Add(dataItem);
             });
             return data;
@@ -173,7 +176,7 @@ namespace PAKNAPI.Models.ModelBase
 
     public class PURecommendationByFieldModel{
         public PURecommendation Recommendation { get; set; }
-        public List<MRRecommendationFilesGetByRecommendationId> lstFiles { get; set; }
+        public string filePath { get; set; }
     }
 
     public class RecommendationGroupByFieldResponse {
