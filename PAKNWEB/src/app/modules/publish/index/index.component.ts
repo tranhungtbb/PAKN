@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { DomSanitizer } from '@angular/platform-browser'
+import { ToastrService } from 'ngx-toastr'
 import { OwlOptions } from 'ngx-owl-carousel-o'
 import { ChartType, ChartOptions } from 'chart.js'
 import { Color, MultiDataSet, Label } from 'ng2-charts'
@@ -14,7 +14,6 @@ import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTA
 import { IndexSettingService } from 'src/app/services/index-setting.service'
 import { IndexSettingObjet } from 'src/app/models/indexSettingObject'
 import { SystemconfigService } from 'src/app/services/systemconfig.service'
-import { resolve } from 'url'
 
 declare var $: any
 
@@ -30,7 +29,8 @@ export class IndexComponent implements OnInit, AfterViewInit {
 		private _newsService: NewsService,
 		private _serviceAdministrative: AdministrativeFormalitiesService,
 		private indexSettingService: IndexSettingService,
-		private _syService: SystemconfigService
+		private _syService: SystemconfigService,
+		private _toa: ToastrService
 	) {}
 	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 
@@ -84,8 +84,8 @@ export class IndexComponent implements OnInit, AfterViewInit {
 	}
 
 	indexSettingObj = new IndexSettingObjet()
-	ngOnInit() {
-		this.getData()
+	async ngOnInit() {
+		await this.getData()
 		this.indexSettingService.GetInfo({}).subscribe(
 			(res) => {
 				if (res.success == RESPONSE_STATUS.success) {
@@ -98,64 +98,23 @@ export class IndexComponent implements OnInit, AfterViewInit {
 			}
 		)
 	}
-
-	async syConfigGetByType() {
-		return new Promise((resolve, reject) => {
-			this._syService.syConfigGetByType({ Type: 5 }).subscribe(
-				(res) => {
-					if (res.success == RESPONSE_STATUS.success) {
-						if (res.result.SYConfigGetByType) {
-							let isHomeMain = res.result.SYConfigGetByType.content == '1' ? true : false
-							resolve(isHomeMain)
-						}
-					} else {
-						reject(false)
+	getData() {
+		this._service.getHomePage({}).subscribe(
+			(res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					if (res.result) {
+						this.isHomeMain = res.result.IsHomeDefault
+						this.ReflectionsRecommendations = [...res.result.PURecommendation]
 					}
-				},
-				(err) => {
-					reject(false)
-				}
-			)
-		})
-	}
-
-	async getData() {
-		await this.syConfigGetByType()
-			.then((res) => {
-				if (res === 'true') {
-					this.isHomeMain = true
 				} else {
-					this.isHomeMain = false
+					this.ReflectionsRecommendations = []
+					this._toa.error(res.message)
 				}
-			})
-			.catch((err) => {})
-
-		if (this.isHomeMain) {
-			let obj = {
-				Status: RECOMMENDATION_STATUS.FINISED,
-				PageSize: 5,
-				PageIndex: 1,
+			},
+			(err) => {
+				console.log(err)
 			}
-			this._service.getAllPagedList(obj).subscribe((res) => {
-				if (res != undefined) {
-					if (res.result) {
-						this.ReflectionsRecommendations = res.result.PURecommendation.map((item) => {
-							item.shortName = this.getShortName(item.name)
-							return item
-						})
-					}
-				}
-			})
-		} else {
-			this._service.getByGroupByField({}).subscribe((res) => {
-				if (res != undefined) {
-					if (res.result) {
-						this.ReflectionsRecommendations = res.result.PURecommendation
-					}
-				}
-			})
-		}
-
+		)
 		//list news
 		this._newsService.getListHomePage({}).subscribe((res) => {
 			if (res.success != RESPONSE_STATUS.success) {

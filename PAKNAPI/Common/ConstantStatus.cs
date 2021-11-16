@@ -47,6 +47,7 @@
 		public const int CONFIG_SMS = 2;
 		public const int CONFIG_SWITCHBOARD = 3;
 		public const int GENERAL = 4;
+		public const int VIEWHOME = 5;
 	}
 
 	public class STATUS_HISNEWS

@@ -28,6 +28,7 @@ export class Api {
 
 	//Recommendation
 	public static RecommendationGetDataForCreate = 'recommendation/get-data-for-create'
+	public static RecommendationGetDataForSearch = 'recommendation/get-data-for-search'
 	public static RecommendationGetDataForForward = 'recommendation/get-data-for-forward'
 	public static RecommendationGetDataForProcess = 'recommendation/get-data-for-process'
 	public static RecommendationGetList = 'recommendation/get-list-recommentdation-on-page'
@@ -61,7 +62,7 @@ export class Api {
 	public static MR_Recommendation7dayGraph = 'recommendation/recommendation7daygraph'
 
 	public static PuRecommendationGetAllOnPage = 'pu-recommendation/get-list-recommentdation-on-page'
-	public static PuRecommendationGetGroupByField = 'pu-recommendation/get-list-recommentdation-group-by-field'
+	public static PuRecommendationHomePage = 'pu-recommendation/get-list-recommentdation-home-page'
 	public static PuRecomentdationGetListOrderByCountClick = 'pu-recommendation/recommendation-get-list-order-by-count-click'
 	public static MyRecommendationGetAllOnPage = 'pu-recommendation/get-list-my-recommentdation-on-page'
 	public static PuRecommendationGetById = 'pu-recommendation/get-by-id'

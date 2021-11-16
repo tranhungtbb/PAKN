@@ -30,8 +30,10 @@ namespace PAKNAPI.Models.ModelBase
         public string Title { get; set; }
         public string Content { get; set; }
         public DateTime CreatedDate { get; set; }
-        public int QuantityLike { get; set; }
-        public int QuantityDislike { get; set; }
+        public int? QuantityLike { get; set; }
+        public int? QuantityDislike { get; set; }
+        public int? QuantityAccept { get; set; }
+        public int? QuantityType { get; set; }
 
         public int CountClick { get; set; }
 
@@ -104,13 +106,25 @@ namespace PAKNAPI.Models.ModelBase
             return (await _sQLCon.ExecuteNonQueryDapperAsync("[PU_RecommendationUpdateCountClick]", DP));
         }
 
+        public async Task<int?> PURecommendationSatisfationInsert(long? recommendationId, long? userId , int satisfaction )
+        {
+            DynamicParameters DP = new DynamicParameters();
+
+            DP.Add("RecommendationId", recommendationId);
+            DP.Add("UserId", userId);
+            DP.Add("Satisfaction", satisfaction);
+
+            return (await _sQLCon.ExecuteNonQueryDapperAsync("[MR_Recommendation_SatisfactionInsert]", DP));
+        }
 
 
-        public async Task<PURecommendation> PURecommendationGetById(int? id, int? status)
+
+        public async Task<PURecommendation> PURecommendationGetById(int? id, int? status, long? userId)
         {
             DynamicParameters DP = new DynamicParameters();
             DP.Add("Id", id);
             DP.Add("Status", status);
+            DP.Add("UserId", userId);
             return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetByID", DP)).ToList().FirstOrDefault();
         }
 
@@ -157,13 +171,14 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("FieldId", fieldId);
             List<PURecommendation> recommendations = (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetByField", DP)).ToList();
 
-            recommendations.ForEach(async item =>
+            recommendations.ForEach( item =>
             {
                 var dataItem = new PURecommendationByFieldModel();
                 dataItem.Recommendation = item;
                 DP = new DynamicParameters();
                 DP.Add("Id", item.Id);
-                var file = (await _sQLCon.ExecuteListDapperAsync<MRRecommendationFilesGetByRecommendationId>("MR_Recommendation_FilesGetByRecommendationId", DP)).Where(x=>x.FileType == 4).FirstOrDefault();
+                var file = (_sQLCon.ExecuteListDapperAsync<MRRecommendationFilesGetByRecommendationId>("MR_Recommendation_FilesGetByRecommendationId", DP)).Result
+                .Where(x => x.FileType == 4).FirstOrDefault();
                 if (file != null) {
                     dataItem.filePath = file.FilePath;
                 }

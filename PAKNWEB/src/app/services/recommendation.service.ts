@@ -29,6 +29,10 @@ export class RecommendationService {
 		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.RecommendationGetDataForCreate, headers)
 	}
 
+	recommendationGetDataForSearch(request: any): Observable<any> {
+		return this.serviceInvoker.get(request, AppSettings.API_ADDRESS + Api.RecommendationGetDataForSearch)
+	}
+
 	recommendationGetDataForForward(request: any): Observable<any> {
 		let headers = {
 			logAction: encodeURIComponent(LOG_ACTION.GETDATACREATE),

@@ -2171,6 +2171,11 @@ table thead .form-control ng-select {
 	background-color: #2E73D5;
 }
 
+.btn-outline-blue{
+	color: #2E73D5;
+	border-color: #2E73D5;
+}
+
 .border-radius-4 {
 	border-radius: 4px;
 }

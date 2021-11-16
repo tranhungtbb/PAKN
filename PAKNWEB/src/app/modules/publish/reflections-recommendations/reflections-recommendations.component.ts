@@ -46,7 +46,7 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 
 		this.getList()
 
-		this.recommendationService.recommendationGetDataForCreate({}).subscribe(
+		this.recommendationService.recommendationGetDataForSearch({}).subscribe(
 			(res) => {
 				if (res.success == RESPONSE_STATUS.success) {
 					this.lstUnit = res.result.lstUnit

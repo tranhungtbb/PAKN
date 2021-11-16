@@ -69,6 +69,7 @@ namespace PAKNAPI.Controller
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+
         [Route("get-data-for-search")]
         public async Task<ActionResult<object>> RecommendationGetDataForSearch()
         {

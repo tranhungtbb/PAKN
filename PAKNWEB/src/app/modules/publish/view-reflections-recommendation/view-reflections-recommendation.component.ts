@@ -27,7 +27,6 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	public lstConclusion: any
 	public lstConclusionFiles: any
 	public satisfactions: Array<satisfaction>
-	satisfactionCurrent: boolean
 	checkSatisfaction: boolean
 	pageSizeComment: any = 20
 	IsAllComment: boolean = false
@@ -49,7 +48,6 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	ngOnInit() {
 		this.getRecommendationById()
-		this.setSatisfaction()
 	}
 
 	getRecommendationById() {
@@ -58,11 +56,13 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 			if (this.id != 0) {
 				//update count click
 				this.getCommentPaged()
-				this.service.countClick({ RecommendationId: this.id }).subscribe()
 				this.service.getById({ id: this.id, status: RECOMMENDATION_STATUS.FINISED }).subscribe((res) => {
 					if (res.success == RESPONSE_STATUS.success) {
 						if (res.result.model != null) {
 							this.model = { ...res.result.model, shortName: this.getShortName(res.result.model.name) }
+							if (this.model.quantityType && this.model.quantityType != 0) {
+								this.checkSatisfaction = true
+							}
 							this.lstFiles = res.result.lstFiles
 							this.lstConclusion = res.result.lstConclusion
 							this.lstConclusionFiles = res.result.lstConclusionFiles
@@ -84,52 +84,45 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 		}
 		return initials
 	}
-	setSatisfaction() {
-		var data = localStorage.getItem('satisfaction')
-		if (data == null || data == undefined) {
-			this.satisfactions = []
-			localStorage.setItem('satisfaction', JSON.stringify(this.satisfactions))
-			return
-		} else {
-			this.satisfactions = JSON.parse(data)
-			if (this.satisfactions instanceof Array) {
-				this.satisfactions.forEach((item) => {
-					if (item.recommendationID == this.id) {
-						this.satisfactionCurrent = item.satisfaction
-						this.checkSatisfaction = true
-					}
-				})
-			}
-		}
-	}
+	// setSatisfaction() {
+	// 	var data = localStorage.getItem('satisfaction')
+	// 	if (data == null || data == undefined) {
+	// 		this.satisfactions = []
+	// 		localStorage.setItem('satisfaction', JSON.stringify(this.satisfactions))
+	// 		return
+	// 	} else {
+	// 		this.satisfactions = JSON.parse(data)
+	// 		if (this.satisfactions instanceof Array) {
+	// 			this.satisfactions.forEach((item) => {
+	// 				if (item.recommendationID == this.id) {
+	// 					this.satisfactionCurrent = item.satisfaction
+	// 					this.checkSatisfaction = true
+	// 				}
+	// 			})
+	// 		}
+	// 	}
+	// }
 
 	changeSatisfaction(status: any) {
-		if (this.satisfactionCurrent == null || this.satisfactionCurrent == undefined) {
+		if (this.isLogin) {
 			// chưa like hoặc dislike lần nào
 			if (this.checkSatisfaction == false) {
-				this.satisfactionCurrent = status
 				// call api
 				this.service.changeSatisfaction({ RecommendationId: this.id, Satisfaction: status }).subscribe((res) => {
 					if (res.success == RESPONSE_STATUS.success) {
 						this._toastr.success('Đánh giá thành công!')
-						let check = false
-						this.satisfactions.forEach((item) => {
-							if (item.recommendationID == this.id) {
-								check = true
-							}
-						})
-						if (check == false) {
-							let obj = {
-								recommendationID: this.id,
-								satisfaction: status,
-							}
-							this.satisfactions.push(obj)
-							localStorage.setItem('satisfaction', JSON.stringify(this.satisfactions))
-						}
-						if (status) {
-							this.model.quantityLike = this.model.quantityLike + 1
-						} else {
-							this.model.quantityDislike = this.model.quantityDislike + 1
+
+						this.model.quantityType = status
+						switch (status) {
+							case 1:
+								this.model.quantityLike = this.model.quantityLike + 1
+								break
+							case 2:
+								this.model.quantityDislike = this.model.quantityDislike + 1
+								break
+							case 3:
+								this.model.quantityAccept = this.model.quantityAccept + 1
+								break
 						}
 					} else {
 						this._toastr.error('Đánh giá thất bại!')
@@ -141,7 +134,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 				return
 			}
 		} else {
-			this._toastr.error('Bạn đã đánh giá Phản ánh, kiến nghị này!')
+			this._toastr.info('Vui lòng đăng nhập để đánh giá Phản ánh, Kiến nghị!')
 			return
 		}
 	}
@@ -187,7 +180,6 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 		this.commentQuery.recommendationId = this.id
 		this.commentService.getAllOnPage(this.commentQuery).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				debugger
 				if (res.result.MRCommnentGetAllOnPage.length > 0) {
 					this.total_Comments = res.result.TotalCount
 					this.listCommentsPaged = res.result.MRCommnentGetAllOnPage

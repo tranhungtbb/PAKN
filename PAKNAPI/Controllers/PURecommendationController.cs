@@ -72,22 +72,43 @@ namespace PAKNAPI.ControllerBase
 
 
 		[HttpGet]
-		[Route("get-list-recommentdation-group-by-field")]
-		public async Task<ActionResult<object>> PURecommendationAllOnPageByField()
+		[Route("get-list-recommentdation-home-page")]
+		public async Task<ActionResult<object>> PURecommendationHomePage()
 		{
 			try
 			{
+				IDictionary<string, object> json = new Dictionary<string, object>{ };
+				// check setting
+				SYConfig rsSYConfigGetByType = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(TYPECONFIG.VIEWHOME)).FirstOrDefault();
+
+				if (rsSYConfigGetByType == null || rsSYConfigGetByType.Content == "1") {
+
+					var rsPURecommendationOnPage = await new PURecommendation(_appSetting).PURecommendationAllOnPage("", null, null, 5, 1);
+					json = new Dictionary<string, object>
+					{
+						{"IsHomeDefault", true},
+						{"PURecommendation", rsPURecommendationOnPage},
+					};
+					return new ResultApi { Success = ResultCode.OK, Result = json };
+				}
+
 				// list filed show home
 				List<CAFieldGetAllOnPage> lstFieldHome = await new CAFieldGetAllOnPage(_appSetting).CAFieldGetAllShowHome();
 
 				List<RecommendationGroupByFieldResponse> result = new List<RecommendationGroupByFieldResponse>();
 
-				foreach (var field in lstFieldHome) {
-					var lstRecommendation =  await new PURecommendationByField(_appSetting).RecommendationGetByField(field.Id);
- 					result.Add(new RecommendationGroupByFieldResponse(field.Id, field.Name, lstRecommendation));
-				}
-				IDictionary<string, object> json = new Dictionary<string, object>
+				//foreach (var field in lstFieldHome) {
+				//	var lstRecommendation =  await new PURecommendationByField(_appSetting).RecommendationGetByField(field.Id);
+ 			//		result.Add(new RecommendationGroupByFieldResponse(field.Id, field.Name, lstRecommendation));
+				//}
+				lstFieldHome.ForEach((field) =>
+				{
+					var lstRecommendation = new PURecommendationByField(_appSetting).RecommendationGetByField(field.Id).Result;
+					result.Add(new RecommendationGroupByFieldResponse(field.Id, field.Name, lstRecommendation));
+				});
+				json = new Dictionary<string, object>
 					{
+						{"IsHomeDefault", false},
 						{"PURecommendation", result},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
@@ -166,64 +187,7 @@ namespace PAKNAPI.ControllerBase
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-		/// <summary>
-		/// pakn phổ biến
-		/// </summary>
-		/// <param name="Status"></param>
-		/// <returns></returns>
-
-		#region PURecommendationGetListOrderByCountClick
-		[HttpGet]
-		[Route("recommendation-get-list-order-by-count-click")]
-		public async Task<ActionResult<object>> PURecommendationGetListOrderByCountClick(int? Status)
-		{
-			try
-			{
-				var rsPURecommendationOnPage = await new PURecommendation(_appSetting).PURecommendationGetListOrderByCountClick(Status);
-				return new ResultApi { Success = ResultCode.OK, Result = rsPURecommendationOnPage.Take(3).ToList() };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		#endregion PURecommendationGetListOrderByCountClick
-		/// <summary>
-		/// cập nhập lượt click pakn
-		/// </summary>
-		/// <param name="RecommendationId"></param>
-		/// <returns></returns>
-		#region
-		[HttpGet]
-		[Route("recommendation-count-click")]
-		public async Task<ActionResult<object>> PURecommendationCountClick(int? RecommendationId)
-		{
-			try
-			{
-				int? count = await new PURecommendation(_appSetting).PURecommendationCountClick(RecommendationId);
-				if (count > 0)
-				{
-					return new ResultApi { Success = ResultCode.OK, Result = count };
-				}
-				else {
-					return new ResultApi { Success = ResultCode.ORROR, Result = count };
-				}
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
-
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-		#endregion
-
-
+		
 
 		#region PURecommendationgetById
 		/// <summary>
@@ -241,7 +205,15 @@ namespace PAKNAPI.ControllerBase
 				Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
 				PURecommendationGetByIdViewResponse result = new PURecommendationGetByIdViewResponse();
 				// detail
-				result.Model = await new PURecommendation(_appSetting).PURecommendationGetById(Id, Status);
+				long UserId = 0;
+				try {
+					UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				}
+				catch (Exception ex) {
+
+				}
+
+				result.Model = await new PURecommendation(_appSetting).PURecommendationGetById(Id, Status, UserId);
 				// file đính kèm
 				result.lstFiles = await new MRRecommendationFilesGetByRecommendationId(_appSetting).MRRecommendationFilesGetByRecommendationIdDAO(Id);
 				foreach (var item in result.lstFiles)
@@ -279,22 +251,28 @@ namespace PAKNAPI.ControllerBase
 		/// <param name="Satisfaction"></param>
 		/// <returns></returns>
 		[HttpGet]
+		[Authorize("ThePolicy")]
 		[Route("change-satisfaction")]
-		public async Task<object> ChangeSatisfaction(int? RecommendationId, bool? Satisfaction)
+		public async Task<ActionResult<object>> PURecommendationSactifaction(long RecommendationId, int Satisfaction)
 		{
-			try {
-				var result = await new PURecommendation(_appSetting).MR_RecommendationUpdateSatisfaction(RecommendationId, Satisfaction);
-				if (result > 0)
+			try
+			{
+				var userId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				int? count = await new PURecommendation(_appSetting).PURecommendationSatisfationInsert(RecommendationId, userId, Satisfaction);
+
+				if (count > 0)
 				{
-					return new ResultApi { Success = ResultCode.OK };
+					return new ResultApi { Success = ResultCode.OK, Result = count };
 				}
-				else {
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Error" };
+				else
+				{
+					return new ResultApi { Success = ResultCode.ORROR, Result = count };
 				}
 			}
-			catch (Exception ex) {
+			catch (Exception ex)
+			{
 				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
 
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}

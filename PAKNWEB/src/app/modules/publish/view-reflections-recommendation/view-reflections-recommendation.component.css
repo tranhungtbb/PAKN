@@ -9,6 +9,15 @@
 	color: #fff;
 	background-color: #3e4954;
 }
+
+.accept{
+	color: #fff;
+	background-color : #2E73D5;
+}
+.btn-outline-blue:hover{
+	color: #fff;
+	background-color : #2E73D5;
+}
 .card-date {
 	font-size: 16px;
 	line-height: 19px;
