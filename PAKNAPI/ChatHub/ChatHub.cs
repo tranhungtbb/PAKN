@@ -47,6 +47,7 @@ namespace SignalR.Hubs
             var senderUserName = httpContext.Request.Query["userName"];
             DateTime foo = DateTime.Now;
             ResultBot res = bots.Response(senderUserName, message);
+           
             Message messageViewModel = new Message()
             {
                 Content = Regex.Replace(res.Answer, @"(?i)<(?!img|a|/a|/img).*?>", string.Empty),
