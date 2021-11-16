@@ -589,8 +589,8 @@ namespace PAKNAPI.ModelBase
 		//[Required(AllowEmptyStrings = false, ErrorMessage = "Quốc tịch không được để trống")]
 		public string Nation { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Ngày sinh không được để trống")]
-		[DataType(DataType.DateTime, ErrorMessage = "Ngày sinh không đúng định dạng")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Ngày sinh không được để trống")]
+		//[DataType(DataType.DateTime, ErrorMessage = "Ngày sinh không đúng định dạng")]
 
 		public DateTime? BirthDay { get; set; }
 

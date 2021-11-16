@@ -8,28 +8,20 @@
 							<a href="/cong-bo"><img class="img-fluid" src="assets/dist/images/login-new.svg" alt=""></a>
 						</div>
 						<div class="col-12 col-md-6 d-flex justify-content-center">
-							<div class="auth-form p-0" style="max-width: 400px">
+							<div class="auth-form p-0" style="width: 400px">
 								<div class="custom-tab-1">
-									<ul class="nav nav-tabs nav-tabs-register bg-transparent border-bottom-0 justify-content-between">
-										<li class="nav-item mr-4">
-											<a class="nav-link text-uppercase px-0 pb-3 bg-transparent active" data-toggle="tab" href="#login-cndn">Cá nhân, Doanh nghiệp</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link px-0 pb-3 bg-transparent text-uppercase" data-toggle="tab" href="#login-cbql">Cán bộ quản lý</a>
-										</li>
-									</ul>
 									<div class="tab-content pt-3">
 										<div class="tab-pane fade show active" id="login-cndn" role="tabpanel">
 											<div class="row">
 												<div class="col">
 													<div class="auth-form p-0">
-														<p class="text-center cl-brown">Đăng nhập và sử dụng hệ thống dành cho cá nhân và các tổ chức, doanh
-															nghiệp.</p>
+														<!-- <p class="text-center cl-brown">Đăng nhập và sử dụng hệ thống dành cho cá nhân và các tổ chức, doanh
+															nghiệp.</p> -->
 														<form [formGroup]="loginFormProduct" #formDir="ngForm" (ngSubmit)="loginProduct()">
 															<div class="form-group mb-4">
-																<input class="form-control rounded-8px h-50px px-4 border-brown" style="font-size: 20px" placeholder="Nhập số điện thoại..."
+																<input class="form-control rounded-8px h-50px px-4 border-brown" style="font-size: 20px" placeholder="Nhập CMND..."
 																	maxlength="10" id="productname" type="text" formControlName="name" [(ngModel)]="userProduct.UserName" required
-																	onlyNumber="true" pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$"
+																	onlyNumber="true"
 																	(change)="userProduct.UserName=userProduct.UserName.trim()">
 																<div *ngIf="floginFormProduct.name.invalid && (floginFormProduct.name.dirty || floginFormProduct.name.touched || submitted)"
 																	class="has-error m-b-12">
@@ -55,7 +47,7 @@
 															</div>
 															<div class="form-group captcha-form bg-white rounded-xl pt-4 border border-brown position-relative">
 																<div class="bg-white captcha d-flex justify-content-between align-items-center rounded-8px h-50px shadow position-absolute">
-																	<img class="img-fluid rounded-xl mr-4 pl-3" style="max-height: 70px; max-width: 70%;" id="img-captcha"
+																	<img class="img-fluid rounded-xl mr-2 pl-3" id="img-captcha"
 																		[src]="captchaImage" />
 																	<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl ml-5"><i class="bi bi-arrow-repeat"
 																			style="font-size: 34px"></i></button>
@@ -84,90 +76,28 @@
 															</div>
 															<div class="text-center">
 																<button type="submit"
-																	class="btn btn-blue text-white text-uppercase font-weight-normal btn-block border-0 rounded-10px"
+																	class="btn text-white text-uppercase font-weight-normal btn-block border-0 rounded-10px no-grd-blue"
 																	style="font-size: 20px">Đăng nhập
-																</button>
-																<button type="button" class="btn rounded-10px bg-white text-dark border mt-3" style="font-size: 20px" (click)="backToHome()">
-																		<i class="bi bi-arrow-left"></i> Về lại trang chủ
 																</button>
 															</div>
 														</form>
-														<div class="new-account mt-3">
+														<div class="new-account my-3" style="font-size: 17px;">
 															<p class="text-right">Chưa có tài khoản? <a class="cl-blue2 pointer hight-light" (click)="register()">Đăng ký</a>
 															</p>
 														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="tab-pane fade" id="login-cbql">
-											<div class="row">
-												<div class="col">
-
-													<div class="auth-form p-0">
-														<p class="text-center cl-brown">Đăng nhập và sử dụng hệ thống dành cho cán bộ, người có thẩm quyền.</p>
-														<form [formGroup]="loginForm" #formDir="ngForm" (ngSubmit)="login()">
-															<div class="form-group mb-4">
-																<input class="form-control rounded-8px h-50px px-4 border-brown" (change)="user.UserName=user.UserName.trim()"
-																	style="font-size: 20px" placeholder="Nhập email..." type="text" id="username" formControlName="name"
-																	[(ngModel)]="user.UserName" required>
-																<div *ngIf="name.invalid && (name.dirty || name.touched || submitted)" class="has-error m-b-12">
-																	<div *ngIf="name.errors.email">
-																		<span class="help-block">Email không hợp lệ</span>
-																	</div>
-																	<div *ngIf="name.errors.required">
-																		<span class="help-block">Trường này không được để trống</span>
-																	</div>
+														<div class="text-center">
+															<button type="button" class="btn rounded-10px bg-white text-dark border mt-3" style="font-size: 20px" (click)="backToHome()">
+																<i class="bi bi-arrow-left"></i> Về lại trang chủ
+															</button>
+															<div class="mt-4">
+																<div class="d-flex justify-content-center center">
+																	<i class="fas fa-phone-square-alt mr-2 cl-blue"></i><p class="info mb-0">1900.1023</p>
+																</div>
+																<div class="d-flex justify-content-center center mt-2">
+																	<i class="fas fa-envelope-open mr-2 cl-blue"></i> <p class="info mb-0">pkstthc.vpub@khanhhoa.gov.vn</p>
 																</div>
 															</div>
-															<div class="form-group" style="position: relative;">
-																<input class="form-control rounded-8px h-50px px-4 border-brown"  [type]="isShowPassword ? 'text' : 'password'"  style="font-size: 20px" id="userpass"
-																	(change)="user.Password=user.Password.trim()" placeholder="Nhập mật khẩu..." formControlName="pass"
-																	[(ngModel)]="user.Password" required>
-																	<i class="custom-show-pass" [ngClass]="{ 'bi bi-eye': isShowPassword, 'bi bi-eye-slash': !isShowPassword}" (click)="showPassword()"></i>
-																<div *ngIf="pass.invalid && (pass.dirty || pass.touched || submitted)" class="has-error m-b-12">
-																	<div *ngIf="pass.errors.required">
-																		<span class="help-block">Trường này không được để trống</span>
-																	</div>
-																</div>
-															</div>
-															<div class="form-group captcha-form bg-white rounded-xl pt-4 border border-brown position-relative">
-																<div class="bg-white captcha d-flex justify-content-between align-items-center rounded-8px h-50px shadow position-absolute">
-																	<img class="img-fluid rounded-xl mr-4 pl-3" style="max-height: 70px; max-width: 70%;" id="img-captcha"
-																		[src]="captchaImage" />
-																	<button type="button" (click)="reloadImage()" class="btn p-2 rounded-10px ml-5"><i class="bi bi-arrow-repeat"
-																			style="font-size: 34px"></i></button>
-																</div>
-																<input type="text" formControlName="captcha" [(ngModel)]="captchaCode" maxlength="5" style="font-size: 20px"
-																(change)="captchaCode=captchaCode.trim()"
-																	placeholder="Nhập mã xác thực..." class="form-control bg-transparent px-4 border-0" value="">
-															</div>
-															<div *ngIf="(submitted && captcha.invalid)||(captcha.invalid && (captcha.dirty || captcha.touched))" class="has-error m-b-12">
-																<div *ngIf="captcha.errors.required">
-																	<span class="help-block">Vui lòng nhập mã xác thực</span>
-																</div>
-															</div>
-															<div class="form-row d-flex justify-content-between align-items-center mt-4 mb-2 ml-0 mr-0">
-																<div class="form-group">
-																	<div class="custom-control custom-checkbox ml-1">
-																		<input hidden type="checkbox" class="custom-control-input" id="basic_checkbox_2" formControlName="isRemember"
-																			[(ngModel)]="isSaveLogin">
-																		<label class="custom-control-label hight-light pointer" for="basic_checkbox_2">Nhớ tài khoản</label>
-																	</div>
-																</div>
-																<div class="form-group hight-light pointer">
-																	<a (click)="forgetPassWordUser()">Quên mật khẩu?</a>
-																</div>
-															</div>
-															<div class="text-center">
-																<button type="submit"
-																	class="btn btn-blue text-white text-uppercase font-weight-normal btn-block border-0 rounded-10px"
-																	style="font-size: 20px">Đăng nhập</button>
-																	<button type="button" class="btn rounded-10px bg-white text-dark border mt-3" style="font-size: 20px" (click)="backToHome()">
-																		<i class="bi bi-arrow-left"></i> Về lại trang chủ
-																</button>
-															</div>
-														</form>
+														</div>
 													</div>
 												</div>
 											</div>

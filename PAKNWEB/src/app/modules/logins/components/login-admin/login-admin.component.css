@@ -7,9 +7,6 @@
 	display: block;
 	width: 100%;
 }
-a.hight-light,i.bg-blue{
-	color: #2E73D5;
-}
 
 .hight-light:hover {
 	color: #ee5454;
@@ -22,7 +19,7 @@ a.hight-light:hover {
 	width: 100%;
 	height: 100%;
 	max-height: 100vh;
-	object-fit: fill;
+	object-fit: cover;
 }
 .custom-tab-1 {
 	padding-top: calc((100vh - 610px) / 2);
@@ -30,7 +27,7 @@ a.hight-light:hover {
 .custom-show-pass{
 	position: absolute;
 	top: 12px;
-	right: 17px;
+	right: 26px;
 	font-size: 20px;
 }
 
@@ -43,9 +40,13 @@ a.hight-light:hover {
 	background-color: #c8c8c8;
 	font-size: 20px;
 }
-p.info{
-	font-family: 'Roboto';
-	font-size: 17px;
-	line-height: 23px;
-}
 
+.form-login{
+	background: rgba(255, 255, 255, 0.9);
+	border-radius: 20px;
+}
+.img-fluid{
+	height: 30px;
+	width: 105px;
+	object-fit: fill;
+}

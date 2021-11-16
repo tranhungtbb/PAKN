@@ -50,8 +50,9 @@ export class IndividualComponent implements OnInit {
 
 	ngOnInit() {
 		this.localeService.use('vi')
+		this.model = new IndividualObject()
 		this.loadFormBuilder()
-		this.onChangeNation()
+		// this.onChangeNation()
 	}
 
 	//get req
@@ -95,7 +96,7 @@ export class IndividualComponent implements OnInit {
 		} else {
 			if (this.model.nation == '#') {
 				this.isOtherNation = true
-				this.model.nation = "Nhập..."
+				this.model.nation = 'Nhập...'
 				this.formInfo.controls['province'].setValue(0)
 				this.formInfo.controls['district'].setValue(0)
 				this.formInfo.controls['village'].setValue(0)
@@ -133,7 +134,7 @@ export class IndividualComponent implements OnInit {
 		} else {
 		}
 	}
-	validateDateOfIssue : any = true
+	validateDateOfIssue: any = true
 
 	onReset() {
 		this.formLogin.reset()
@@ -195,7 +196,7 @@ export class IndividualComponent implements OnInit {
 		//form thông tin đăng nhập
 		this.formLogin = this.formBuilder.group(
 			{
-				phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
+				iDCard: [this.model.iDCard, [Validators.required]],
 				password: [this.model.password, [Validators.required]], //, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)
 				rePassword: [this.model.rePassword, [Validators.required]],
 			},
@@ -206,15 +207,15 @@ export class IndividualComponent implements OnInit {
 		this.formInfo = this.formBuilder.group({
 			fullName: [this.model.fullName, [Validators.required, Validators.maxLength(100)]],
 			gender: [this.model.gender, [Validators.required]],
-			dob: [this.model.birthDay, [Validators.required]],
-			nation: [this.model.nation, [Validators.required]],
-			province: [this.model.provinceId, [Validators.required]],
-			district: [this.model.districtId, [Validators.required]],
-			village: [this.model.wardsId, [Validators.required]],
+			dob: [this.model.birthDay],
+			nation: [this.model.nation],
+			province: [this.model.provinceId],
+			district: [this.model.districtId],
+			village: [this.model.wardsId],
 
 			email: [this.model.email, [Validators.email]],
 			address: [this.model.address, [Validators.required]],
-			iDCard: [this.model.iDCard, [Validators.required]], //, Validators.pattern(/^([0-9]){8,12}$/g)
+			phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]], //, Validators.pattern(/^([0-9]){8,12}$/g)
 			placeIssue: [this.model.issuedPlace, []],
 			dateIssue: [this.model.dateOfIssue, []],
 		})

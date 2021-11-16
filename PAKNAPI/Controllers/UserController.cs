@@ -1222,7 +1222,7 @@ namespace PAKNAPI.Controllers
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 
 
-				///mod loginInfo
+				//mod loginInfo
 				///
 				var pwd = GeneratePassword.generatePassword(model.Password);
 				var account = new SYUserInsertIN
@@ -1231,7 +1231,7 @@ namespace PAKNAPI.Controllers
 					Salt = pwd["Salt"],
 					Phone = model.Phone,
 					Email = model.Email,
-					UserName = model.Phone,
+					UserName = model.IDCard,
 					FullName = model.FullName,
 					Gender = model.Gender,
 					Address = model.Address,

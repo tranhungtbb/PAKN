@@ -16,11 +16,15 @@ import { UserServiceChatBox } from 'src/app/modules/chatbox/user/user.service'
 declare var $: any
 
 @Component({
-	selector: 'app-login',
-	templateUrl: './login.component.html',
-	styleUrls: ['./login.component.css'],
+	selector: 'app-login-admin',
+	templateUrl: './login-admin.component.html',
+	styleUrls: ['./login-admin.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginAdminComponent implements OnInit {
+	user: LoginUserObject = {
+		UserName: '',
+		Password: '',
+	}
 	userProduct: LoginUserObject = {
 		UserName: '',
 		Password: '',
@@ -29,6 +33,7 @@ export class LoginComponent implements OnInit {
 	typeInput: any = 'text'
 	isAbleCaptcha: any = ''
 	isSaveLogin: boolean = false
+	loginForm: FormGroup
 	loginFormProduct: FormGroup
 	lang: any = 'vi'
 	theme: any = 'light'
@@ -56,6 +61,12 @@ export class LoginComponent implements OnInit {
 		private shareData: DataService,
 		private _userServiceChat: UserServiceChatBox
 	) {
+		this.loginForm = new FormGroup({
+			name: new FormControl(this.user.UserName, [Validators.email]),
+			pass: new FormControl(this.user.Password, [Validators.required]),
+			captcha: new FormControl(this.captchaCode, [Validators.required]),
+			isRemember: new FormControl(this.isSaveLogin, []),
+		})
 		this.loginFormProduct = new FormGroup({
 			name: new FormControl(this.userProduct.UserName, [Validators.required]),
 			pass: new FormControl(this.userProduct.Password, [Validators.required]),
@@ -87,6 +98,11 @@ export class LoginComponent implements OnInit {
 		this.submittedProduct = false
 		this.reloadImage()
 	}
+
+	get floginForm() {
+		return this.loginForm.controls
+	}
+
 	rebuildFormProduct() {
 		this.loginFormProduct.reset({
 			name: this.userProduct.UserName,
@@ -94,6 +110,121 @@ export class LoginComponent implements OnInit {
 			captcha: this.captchaCodeProduct,
 			isRemember: this.isSaveLogin,
 		})
+	}
+	rebuildForm() {
+		this.loginForm.reset({
+			name: this.user.UserName,
+			pass: this.user.Password,
+			captcha: this.captchaCode,
+			isRemember: this.isSaveLogin,
+		})
+	}
+
+	login() {
+		this.submitted = true
+		this.user.UserName = this.user.UserName.trim()
+		this.user.Password = this.user.Password.trim()
+		if (this.loginForm.invalid) {
+			if (this.loginForm.controls.name.status == 'INVALID') {
+				$("input[id='username']").focus()
+				return
+			}
+			if (this.loginForm.controls.pass.status == 'INVALID') {
+				$("input[id='userpass']").focus()
+				return
+			}
+
+			return
+		} else {
+			var constdata = {
+				CaptchaCode: this.captchaCode,
+			}
+			this.captchaService.send(constdata).subscribe((result) => {
+				if (result.success === RESPONSE_STATUS.success) {
+					this.authenService.login(this.user).subscribe(
+						(data) => {
+							if (data.success === RESPONSE_STATUS.success) {
+								//QB
+								this.storeageService.clear()
+								const user = {
+									login: this.user.UserName,
+									password: 'quickblox',
+								}
+								this._userServiceChat
+									.createUserForApp(user, null, true)
+									.then((r) => {
+										console.log(r)
+									})
+									.catch((e) => {
+										console.log(e)
+									})
+
+								this.shareData.setIsLogin(true)
+								this.storeageService.setAccessToken(data.accessToken)
+								this.storeageService.setUserId(data.userId)
+								this.storeageService.setPermissionCategories(data.permissionCategories)
+								this.storeageService.setFunctions(data.permissionFunctions)
+								this.storeageService.setPermissions(data.permissions)
+								this.storeageService.setUnitId(data.unitId)
+								this.storeageService.setUnitName(data.unitName)
+								this.storeageService.setIsMain(data.isMain)
+								this.storeageService.setSaveLogin(this.isSaveLogin)
+								this.storeageService.setIsSession(true)
+								this.storeageService.setIsHaveToken(data.isHaveToken)
+								this.storeageService.setRole(data.role)
+								this.storeageService.setFullName(data.fullName)
+								this.storeageService.setIsAdmin(data.isAdmin)
+								this.storeageService.setTypeObject(data.typeObject)
+								this.storeageService.setIsUnitMain(data.isUnitMain)
+								this.http.get<{ ip: string }>('https://jsonip.com/').subscribe((dataIP) => {
+									if (dataIP != null) {
+										this.storeageService.setIpAddress(dataIP.ip)
+									}
+								})
+								if (this.isSaveLogin) {
+									this.storeageService.setKeyRemember(btoa(this.user.Password))
+								} else {
+									this.storeageService.setKeyRemember('')
+								}
+								if (data.typeObject && data.typeObject == 1) {
+									location.href = '/quan-tri'
+								} else {
+									location.href = '/quan-tri'
+									// this.toastr.error(data.message, 'Tài khoản cá nhân, doanh nghiệp không thể đăng nhập hệ thống dành cho cán bộ quản lý')
+									// localStorage.clear();
+								}
+								// if(this.storeageService.getRecommentdationObjectRemember() != null){
+								// 	location.href='/cong-bo/them-moi-kien-nghi'
+								// }
+								// else{
+								// 	location.href = '/quan-tri'
+								// }
+							} else {
+								this.toastr.error(data.message)
+								this.reloadImage()
+								this.captchaCode = ''
+								this.submitted = false
+								this.rebuildForm()
+							}
+						},
+						(error) => {
+							console.error(error)
+							this.reloadImage()
+							this.captchaCode = ''
+							this.submitted = false
+							this.rebuildForm()
+						}
+					)
+				} else {
+					this.toastr.error('Vui lòng nhập lại mã xác thực')
+					this.reloadImage()
+					this.submitted = false
+					this.rebuildForm()
+					this.captchaCode = ''
+					//   this.captchaEl.nativeElement.focus();
+				}
+			})
+		}
 	}
 
 	backToHome() {
@@ -144,6 +275,11 @@ export class LoginComponent implements OnInit {
 										this.storeageService.setIpAddress(dataIP.ip)
 									}
 								})
+								if (this.isSaveLogin) {
+									this.storeageService.setKeyRemember(btoa(this.user.Password))
+								} else {
+									this.storeageService.setKeyRemember('')
+								}
 								//this._router.navigate(['/quan-tri'])
 								if (data.typeObject && data.typeObject == 1) {
 									this.submittedProduct = false
@@ -189,6 +325,19 @@ export class LoginComponent implements OnInit {
 	showPassword() {
 		this.isShowPassword = !this.isShowPassword
 	}
+
+	get name() {
+		return this.loginForm.get('name')
+	}
+
+	get pass() {
+		return this.loginForm.get('pass')
+	}
+
+	get captcha() {
+		return this.loginForm.get('captcha')
+	}
+
 	get nameProduct() {
 		return this.loginFormProduct.get('name')
 	}

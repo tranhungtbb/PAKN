@@ -14,23 +14,6 @@ const routes: Routes = [
 	{ path: 'quan-tri', loadChildren: './modules/business.module#BusinessModule' },
 	{ path: 'cong-bo', loadChildren: './modules/publish/publish.module#PublishModule' },
 	{ path: 'dang-ky', loadChildren: './modules/register/register.module#RegisterModule' },
-
-	{
-		path: 'cong-bo/list-pakn',
-		component: ListRecommendation2Component,
-	},
-	{
-		path: 'cong-bo/detail-pakn',
-		component: DetailRecommendation2Component,
-	},
-	{
-		path: 'cong-bo/list-news',
-		component: ListNewsComponent,
-	},
-	{
-		path: 'cong-bo/detail-news',
-		component: DetailNewsComponent,
-	},
 ]
 
 @NgModule({
