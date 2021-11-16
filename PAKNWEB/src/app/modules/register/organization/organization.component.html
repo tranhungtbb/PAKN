@@ -4,20 +4,21 @@
 			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin đăng nhập</span></h4>
 			<form class="px-3" [formGroup]="formLogin">
 				<div class="form-group">
-					<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
-					<input onlyNumber="true" maxlength="10" [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." autocomplete="off"
-						class="form-control border-brown h-34px rounded-6px" (change)="onCheckExist('Phone',$event.target.value)">
-					<div *ngIf="(fLoginSubmitted && fLogin.phone.invalid)||(fLogin.phone.invalid && (fLogin.phone.dirty || fLogin.phone.touched))" class="has-error m-b-12">
-						<div *ngIf="fLogin.phone.errors.required">
+					<label class="mb-1">Số chứng nhận ĐKKD/Số quyết định thành lập</label>
+					<input svTrim onlyNumber [(ngModel)]="model.BusinessRegistration" formControlName="RegistrationNum" type="text" placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown"
+						(change)="onCheckExist('BusinessRegistration',$event.target.value)">
+					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.RegistrationNum.invalid)||(fOrgInfo.RegistrationNum.invalid && (fOrgInfo.RegistrationNum.dirty || fOrgInfo.RegistrationNum.touched))"
+						class="has-error m-b-12">
+						<div *ngIf="fOrgInfo.RegistrationNum.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
-						<div *ngIf="fLogin.phone.errors.pattern">
-							<span class="help-block">Định dạng số điện thoại không đúng</span>
+						<div *ngIf="fOrgInfo.RegistrationNum.errors.maxlength">
+							<span class="help-block">Chỉ nhập tối đa 20 ký tự</span>
 						</div>
 					</div>
-					<div *ngIf="checkExists['Phone'] && fLogin.phone.valid" class="has-error m-b-12">
-						<div *ngIf="checkExists['Phone']">
-							<span class="help-block">Số điện thoại đã tồn tại</span>
+					<div *ngIf="checkExists['BusinessRegistration'] && fOrgInfo.RegistrationNum.valid" class="has-error m-b-12">
+						<div *ngIf="checkExists['BusinessRegistration']">
+							<span class="help-block">Số chứng nhận ĐKKD đã tồn tại</span>
 						</div>
 					</div>
 				</div>
