@@ -458,6 +458,154 @@ namespace PAKNAPI.Controller
                 return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
             }
         }
+
+        /// <summary>
+        /// thêm mới pakn by chat bot
+        /// </summary>
+        /// <returns></returns>
+
+        [HttpPost]
+        [Route("insert-recommendation")]
+        public async Task<ActionResult<object>> RecommendationInsertNotAuthorize()
+        {
+            try
+            {
+                var jss = new JsonSerializerSettings
+                {
+                    DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                    DateTimeZoneHandling = DateTimeZoneHandling.Local,
+                    DateParseHandling = DateParseHandling.DateTimeOffset,
+                };
+                SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
+                RecommendationInsertRequest request = new RecommendationInsertRequest();
+                request.UserId = 0;
+                request.UserType = 0;
+                //request.UserFullName = ;
+                request.Data = JsonConvert.DeserializeObject<MRRecommendationInsertIN>(Request.Form["Data"].ToString(), jss);
+
+                var ErrorMessage = ValidationForFormData.validObject(request.Data);
+                if (ErrorMessage != null)
+                {
+                    return StatusCode(400, new ResultApi
+                    {
+                        Success = ResultCode.ORROR,
+                        Result = 0,
+                        Message = ErrorMessage
+                    });
+                }
+                //var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                var unitSend = request.Data.UnitId;
+                if (request.Data.UnitId == null)
+                {
+                    request.Data.UnitId = dataMain.Id;
+                }
+                if (request.Data.Status > 1 && dataMain != null && dataMain.Id != request.Data.UnitId && request.UserType != 1)
+                {
+                    request.Data.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
+                }
+                request.Data.CreatedBy = request.UserId;
+                request.Data.CreatedDate = DateTime.Now;
+                request.Data.CreateByType = 2;
+                request.Data.IsClone = false;
+                MRRecommendationCheckExistedCode rsMRRecommendationCheckExistedCode = (await new MRRecommendationCheckExistedCode(_appSetting).MRRecommendationCheckExistedCodeDAO(request.Data.Code)).FirstOrDefault();
+                if (rsMRRecommendationCheckExistedCode.Total > 0)
+                {
+                    request.Data.Code = await new MRRecommendationGenCodeGetCode(_appSetting).MRRecommendationGenCodeGetCodeDAO();
+                }
+
+                int? Id = Int32.Parse((await new MRRecommendationInsert(_appSetting).MRRecommendationInsertDAO(request.Data)).ToString());
+                if (Id > 0)
+                {
+                    await new MRRecommendationGenCodeUpdateNumber(_appSetting).MRRecommendationGenCodeUpdateNumberDAO();
+                    if (request.Data.Status > 1)
+                    {
+                        MRRecommendationForwardInsertIN _mRRecommendationForwardInsertIN = new MRRecommendationForwardInsertIN();
+
+                        _mRRecommendationForwardInsertIN.RecommendationId = Id;
+                        _mRRecommendationForwardInsertIN.UserSendId = request.UserId;
+                        _mRRecommendationForwardInsertIN.SendDate = DateTime.Now;
+                        if (request.UserType != 1)
+                        {
+                            if (dataMain != null && dataMain.Id != request.Data.UnitId)
+                            {
+                                _mRRecommendationForwardInsertIN.Step = STEP_RECOMMENDATION.PROCESS;
+                            }
+                            else
+                            {
+                                _mRRecommendationForwardInsertIN.Step = STEP_RECOMMENDATION.RECEIVE;
+                            }
+                            _mRRecommendationForwardInsertIN.UnitReceiveId = request.Data.UnitId;
+                            _mRRecommendationForwardInsertIN.Status = PROCESS_STATUS_RECOMMENDATION.WAIT;
+                            _mRRecommendationForwardInsertIN.IsViewed = false;
+                        }
+                        else
+                        {
+                            _mRRecommendationForwardInsertIN.Step = STEP_RECOMMENDATION.PROCESS;
+                            _mRRecommendationForwardInsertIN.UnitReceiveId = unitSend;
+                            _mRRecommendationForwardInsertIN.Status = PROCESS_STATUS_RECOMMENDATION.APPROVED;
+                            _mRRecommendationForwardInsertIN.UserSendId = request.UserId;
+                            _mRRecommendationForwardInsertIN.ProcessingDate = DateTime.Now;
+                            _mRRecommendationForwardInsertIN.IsViewed = true;
+                            _mRRecommendationForwardInsertIN.UnitSendId = request.Data.UnitId != null ? request.Data.UnitId : dataMain.Id;
+                        }
+                        await new MRRecommendationForwardInsert(_appSetting).MRRecommendationForwardInsertDAO(_mRRecommendationForwardInsertIN);
+                    }
+                    
+                    MRRecommendationHashtagInsertIN _mRRecommendationHashtagInsertIN = new MRRecommendationHashtagInsertIN();
+                    
+
+                    HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
+                    hisData.ObjectId = Id;
+                    hisData.Type = 1;
+                    hisData.Content = "";
+                    hisData.Status = STATUS_RECOMMENDATION.CREATED;
+                    hisData.CreatedBy = request.UserId;
+                    hisData.CreatedDate = DateTime.Now;
+                    await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+                    if (request.UserType != 1 && request.Data.Status != STATUS_RECOMMENDATION.CREATED)
+                    {
+                        hisData = new HISRecommendationInsertIN();
+                        hisData.ObjectId = Id;
+                        hisData.Type = 1;
+                        hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByIdDAO(request.Data.UnitId)).FirstOrDefault().Name;
+                        hisData.Status = request.Data.Status;
+                        hisData.CreatedBy = request.UserId;
+                        hisData.CreatedDate = DateTime.Now;
+                        await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+                        await SYNotificationInsertTypeRecommendation(Id);
+                    }
+                    else
+                    {
+                        if (request.Data.Status != STATUS_RECOMMENDATION.CREATED)
+                        {
+                            hisData = new HISRecommendationInsertIN();
+                            hisData.ObjectId = Id;
+                            hisData.Type = 1;
+                            hisData.Content = "";
+                            hisData.Status = STATUS_RECOMMENDATION.RECEIVE_APPROVED;
+                            hisData.CreatedBy = request.UserId;
+                            hisData.CreatedDate = DateTime.Now;
+                            await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+
+                            // đã chuyển đến xxx
+
+                            hisData.Content = "Đến: " + (await new SYUnitGetNameById(_appSetting).SYUnitGetNameByIdDAO(unitSend)).FirstOrDefault().Name;
+                            hisData.Status = STATUS_RECOMMENDATION.PROCESS_WAIT;
+                            await new HISRecommendationInsert(_appSetting).HISRecommendationInsertDAO(hisData);
+                            await SYNotificationInsertTypeRecommendation(Id);
+                        }
+
+                    }
+                }
+                return new ResultApi { Success = ResultCode.OK, Result = Id };
+            }
+            catch (Exception ex)
+            {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
         /// <summary>
         /// cập nhập pakn
         /// </summary>

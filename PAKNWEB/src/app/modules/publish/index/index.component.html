@@ -264,7 +264,7 @@
 								<ng-container *ngFor="let item of news">
 									<ng-template carouselSlide [id]="item.id"> 
 										<!-- imagePath -->
-										<div class="card mb-lg-0 ps-relative" [style.background-image]="'url(/' + item.imagePath + ')'" style="min-height: 260px; background-size: cover;">
+										<div class="card mb-lg-0 ps-relative" [style.backgroundImage]="'url('+ item.imagePath +')'" style="min-height: 260px; background-size: cover;">
 											<!-- ../../../assets/dist/images/Rectangle%20361.png -->
 											<div class="content-article ps-absolute bg-cards-content-owl full-width">
 												<p class="card-text text-dark px-4 pb-1 pt-3 py-0 mb-0">{{item.createdDate | date : 'dd/MM/yyyy'}}</p>
