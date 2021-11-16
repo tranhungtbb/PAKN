@@ -52,7 +52,7 @@ namespace SignalR.Hubs
             {
                 Content = Regex.Replace(res.Answer, @"(?i)<(?!img|a|/a|/img).*?>", string.Empty),
                 From = "Bot",
-                SubTags = JsonConvert.SerializeObject(res.SubTags),
+                SubTags = (res.SubTags),
                 FromId = "Bot",
                 To = senderUserName,
                 ToId = connectId,
