@@ -523,6 +523,53 @@ namespace PAKNAPI.Controllers
                 return null;
             }
         }
+        /// <summary>
+        /// sync lĩnh vực thủ tục hành chính
+        /// </summary>
+        /// <returns></returns>
+        [Route("sync-field-tthc")]
+        [HttpGet]
+        public async Task<ActionResult<object>> SyncFieldTTHCAsync()
+        {
+            try
+            {
+                var results = new HttpResponseMessage();
+                /// header
+                var TkeyHeader = new List<KeyValuePair<string, string>>();
+                HeaderRess header = new HeaderRess();
+                header.Tkey = TkeyHeader;
+                header.ContentType = "application/json";
+                results = GetStringAsync("https://tthckhapi.azurewebsites.net", "/api/v1/LinhVucs/GetTree?page=1&pageSize=10&sort=Ma+ASC", header);
+
+                if (results.StatusCode == HttpStatusCode.OK)
+                {
+                    var responseModel = JsonConvert.DeserializeObject<LinhVucTTHCResponse>(results.Content.ReadAsStringAsync().Result);
+                    if (responseModel.DanhSachLinhVuc.Count > 0)
+                    {
+                        // xóa hết
+                        await new CAFieldDAMDeleteAll(_appSetting).CAFieldDAMDeleteAllDAO();
+                        foreach (var item in responseModel.DanhSachLinhVuc)
+                        {
+                            CAFieldDAMInsertIN fieldInsert = new CAFieldDAMInsertIN();
+                            fieldInsert.Name = item.Ten.Replace("-", string.Empty).Replace("|", string.Empty);
+                            fieldInsert.FieldDAMId = item.Id;
+                            fieldInsert.ParentId = item.LinhVucChaId;
+                            await new CAFieldDAMInsert(_appSetting).CAFieldDAMInsertDAO(fieldInsert);
+                        }
+                    }
+
+                    return responseModel.DanhSachLinhVuc;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
 
     }
 }

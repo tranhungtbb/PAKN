@@ -124,11 +124,9 @@ namespace PAKNAPI.Models.AdministrativeSync
                         damAdministrationInsertIN.CountryCode = obj.MaQuanLy_QuocGia;
                         damAdministrationInsertIN.Field = obj.LinhVucId;
                         damAdministrationInsertIN.UnitReceive = obj.DonViTiepNhans.Count > 0 ? obj.DonViTiepNhans.FirstOrDefault().Id : -1;
-                        //CAFieldDAMInsertIN fieldDAM = new CAFieldDAMInsertIN();
-                        //fieldDAM.Name = obj.TenLinhVuc;
-                        //fieldDAM.FieldDAMId = obj.LinhVucId;
-                        //await new CAFieldDAMInsert(_appSetting).CAFieldDAMInsertDAO(fieldDAM);
-                        damAdministrationInsertIN.RankReceive = obj.TenCapTiepNhan;
+                        
+                        //damAdministrationInsertIN.RankReceiveId = obj.TenCapTiepNhan;
+                        damAdministrationInsertIN.Lever = obj.MucDo;
                         damAdministrationInsertIN.TypeSend = obj.NopQuaBuuChinh;
                         damAdministrationInsertIN.FileNum = String.IsNullOrEmpty(obj.SoBoHoSo) ? "" : obj.SoBoHoSo;
                         damAdministrationInsertIN.AmountTime = obj.ThoiHanGiaiQuyet.ToString();

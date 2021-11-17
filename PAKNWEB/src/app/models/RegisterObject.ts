@@ -46,28 +46,28 @@ export class OrganizationObject {
 	constructor() {
 		this.phone = null
 		this.password = null
-		this.RepresentativeGender = true
+		this.representativeGender = true
 
 		//
-		this.RepresentativeName = ''
-		this.Address = ''
-		this.Nation = 'Việt Nam'
-		this.ProvinceId = null
-		this.DistrictId = null
-		this.WardsId = null
+		this.representativeName = ''
+		this.address = ''
+		this.nation = 'Việt Nam'
+		this.provinceId = null
+		this.districtId = null
+		this.wardsId = null
 
-		this.Business = ''
-		this.BusinessRegistration = ''
-		this.DecisionOfEstablishing = ''
-		this.OrgProvinceId = null
-		this.OrgDistrictId = null
-		this.OrgWardsId = null
-		this.OrgEmail = ''
-		this.OrgAddress = ''
-		this.OrgPhone = ''
-		this.Tax = ''
+		this.business = ''
+		this.businessRegistration = ''
+		this.decisionOfEstablishing = ''
+		this.orgProvinceId = null
+		this.orgDistrictId = null
+		this.orgWardsId = null
+		this.orgEmail = ''
+		this.orgAddress = ''
+		this.orgPhone = ''
+		this.tax = ''
 
-		this.Status = 1
+		this.status = 1
 		this.isActived = true
 	}
 	//----thông tin tài khoản đăng nhập
@@ -76,33 +76,33 @@ export class OrganizationObject {
 	rePassword: string
 
 	//----thông tin người đại diện
-	RepresentativeName: string // RepresentativeName tên người đại diện
-	RepresentativeGender: boolean
+	representativeName: string // RepresentativeName tên người đại diện
+	representativeGender: boolean
 	_RepresentativeBirthDay: string
 	//RepresentativePhone:string
-	Email: string
-	Nation: any
-	ProvinceId: any //int
-	DistrictId: any // int
-	WardsId: any // int
-	Address: string
-	PermanentPlace: string // nơi thường trú
-	NativePlace: string // nguyên quán
+	email: string
+	nation: any
+	provinceId: any //int
+	districtId: any // int
+	wardsId: any // int
+	address: string
+	permanentPlace: string // nơi thường trú
+	nativePlace: string // nguyên quán
 
 	//---thông tin doanh nghiệp
-	Business: string // tên tổ chức
-	Tax: string //Mã số thuế
-	OrgProvinceId: any //int
-	OrgDistrictId: any //int
-	OrgWardsId: any //int
-	OrgAddress: string
-	OrgPhone: string
-	OrgEmail: string
+	business: string // tên tổ chức
+	tax: string //Mã số thuế
+	orgProvinceId: any //int
+	orgDistrictId: any //int
+	orgWardsId: any //int
+	orgAddress: string
+	orgPhone: string
+	orgEmail: string
 
-	BusinessRegistration: string //Số ĐKKD
-	DecisionOfEstablishing: string //Quyết định thành lập
+	businessRegistration: string //Số ĐKKD
+	decisionOfEstablishing: string //Quyết định thành lập
 	_DateOfIssue: string //Ngày cấp/thành lập
 
-	Status: number //
+	status: number //
 	isActived: boolean
 }
