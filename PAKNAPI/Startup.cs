@@ -32,10 +32,8 @@ using System.ComponentModel.DataAnnotations;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Logging;
-
 using System;
 using PAKNAPI.Chat;
-using PAKNAPI.Job;
 using SignalR.Hubs;
 
 namespace PAKNAPI
@@ -64,17 +62,7 @@ namespace PAKNAPI
 				options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-GB");
 				options.SupportedCultures = new List<CultureInfo> { new CultureInfo("en-GB"), new CultureInfo("en-GB") };
 			});
-			services.AddCors(o =>
-			{
-
-				o.AddPolicy("CorsPolicy", b =>
-				{
-					b.AllowAnyMethod()
-						.AllowAnyHeader()
-						.AllowCredentials()
-						.SetIsOriginAllowed(_ => true);
-				});
-			});
+			services.AddCors();
 			services.AddMvc().AddDefaultReportingControllers();
 
 			services.AddMvc().ConfigureApplicationPartManager(x =>
@@ -173,21 +161,18 @@ namespace PAKNAPI
 			var jobKeyTTHC = new JobKey("syncDataTTHC");
 			var jobKeyKNCT = new JobKey("syncDataKNCT");
 			var jobKeyHVHCC = new JobKey("syncDataDVHCC");
-			var jobKeyFeedBack = new JobKey("syncDataFeedBack");
 			services.AddQuartz(q =>
 			{
-				q.UseMicrosoftDependencyInjectionScopedJobFactory();
 				q.SchedulerId = "Scheduler-Core";
 				q.UseSimpleTypeLoader();
 				q.UseInMemoryStore();
 				q.UseDefaultThreadPool(tp =>
 				{
-					tp.MaxConcurrency = 10;
+					tp.MaxConcurrency = 5;
 				});
 				q.AddJob<MyJobAdministrative>(opts => opts.WithIdentity(jobKeyTTHC));
 				q.AddJob<MyJobKienNghiCuTri>(opts => opts.WithIdentity(jobKeyKNCT));
 				q.AddJob<MyJobDichVuCongQuocGia>(opts => opts.WithIdentity(jobKeyHVHCC));
-				q.AddJob<MyJobFeedBack>(opts => opts.WithIdentity(jobKeyFeedBack));
 
 
 				// Create a trigger for the job
@@ -204,10 +189,6 @@ namespace PAKNAPI
 					.ForJob(jobKeyHVHCC) // link to the syncData
 					.WithIdentity("syncDataHVHCC-trigger") // give the trigger a unique name
 					.WithCalendarIntervalSchedule(s => s.WithIntervalInDays(1))); //time
-				q.AddTrigger(opts => opts
-					.ForJob(jobKeyFeedBack) // link to the syncData
-					.WithIdentity("syncDataFeedBack-trigger") // give the trigger a unique name
-					.WithCalendarIntervalSchedule(s => s.WithIntervalInDays(5))); //time
 			});
 
 			// ASP.NET Core hosting
@@ -234,13 +215,13 @@ namespace PAKNAPI
 			}
 
 			app.UseMiddleware<CustomMiddleware>();
-			//app.UseCors(
-			//	options => options.WithOrigins("http://localhost:8081", "http://localhost:51046", "http://14.177.236.88:6160/", "http://localhost:4200", "http://localhost:8080/")
-			//	.AllowAnyOrigin()
-			//	.AllowAnyMethod()
-			//	.AllowAnyHeader()
-			//);
-			app.UseCors("CorsPolicy");
+
+			app.UseCors(
+				options => options.WithOrigins("http://localhost:8081", "http://localhost:51046", "http://14.177.236.88:6160/", "http://localhost:8080/")
+				.AllowAnyOrigin()
+				.AllowAnyMethod()
+				.AllowAnyHeader()
+			);
 			app.UseOpenApi();
 			app.UseSwaggerUi3();
 
