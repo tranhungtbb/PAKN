@@ -115,14 +115,23 @@
   <template>Mời nhập mã số </template>
    </category>
 
-
+<category>
+      <pattern>Gửi phản ánh, kiến nghị</pattern>
+      <template>Có phải bạn muốn gửi <star/> Bạn điền thông tin <set name = "topic">phản ánh kiến nghị</set>
+	  <pakn>json{"type":"form","data":[{"id":"1"}]}</pakn>
+	  </template>  
+   </category>
+	
+	<category>
+      <pattern>Client Đã gửi xong phản ánh kiến nghị</pattern>
+      <template>Cảm ơn <set name = "topic">chúng tôi đã tiếp nhận phản ánh kiến nghị</set>
+	  </template>  
+   </category>
 
 <category>
-      <pattern>Gửi pakn *</pattern>
-      <template>Có phải bạn muốn gửi <star/> Bạn điền thông tin cá nhân. Họ tên của bạn? <set name = "topic">pakn</set>
-	  <pakn>
-				[{"prefix":"Tôi là "}]
-			</pakn>
+      <pattern>* Gửi phản ánh *</pattern>
+      <template>Có phải bạn muốn gửi <star/> Bạn điền thông tin <set name = "topic">phản ánh kiến nghị</set>
+	  <pakn>json{"type":"form","data":[{"id":"1"}]}</pakn>
 	  </template>  
    </category>
    
