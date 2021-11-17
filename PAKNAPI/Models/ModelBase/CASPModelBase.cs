@@ -182,6 +182,27 @@ namespace PAKNAPI.ModelBase
 		public int? ParentId { get; set; }
 	}
 
+	public class CAFieldDAMDeleteAll
+	{
+		private SQLCon _sQLCon;
+
+		public CAFieldDAMDeleteAll(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAFieldDAMDeleteAll()
+		{
+		}
+
+		public async Task<int?> CAFieldDAMDeleteAllDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldDAMDeleteAll", DP);
+		}
+	}
+
 	public class CAFieldGetDropdown
 	{
 		private SQLCon _sQLCon;

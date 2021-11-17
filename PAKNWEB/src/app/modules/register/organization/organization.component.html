@@ -4,19 +4,19 @@
 			<h4 class="text-uppercase tt-sd1"><span class="py-2 p-3 d-inline-block">Thông tin đăng nhập</span></h4>
 			<form class="px-3" [formGroup]="formLogin">
 				<div class="form-group">
-					<label class="mb-1">Số chứng nhận ĐKKD/Số quyết định thành lập</label>
-					<input svTrim onlyNumber [(ngModel)]="model.BusinessRegistration" formControlName="RegistrationNum" type="text" placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown"
+					<label class="mb-1">Số chứng nhận ĐKKD/Số quyết định thành lập <span class="cl-red">(*)</span></label>
+					<input onlyNumber [(ngModel)]="model.businessRegistration" formControlName="businessRegistration" type="text" placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown"
 						(change)="onCheckExist('BusinessRegistration',$event.target.value)">
-					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.RegistrationNum.invalid)||(fOrgInfo.RegistrationNum.invalid && (fOrgInfo.RegistrationNum.dirty || fOrgInfo.RegistrationNum.touched))"
+					<div *ngIf="(fOrgInfoSubmitted && fLogin.businessRegistration.invalid)||(fLogin.businessRegistration.invalid && (fLogin.businessRegistration.dirty || fLogin.businessRegistration.touched))"
 						class="has-error m-b-12">
-						<div *ngIf="fOrgInfo.RegistrationNum.errors.required">
+						<div *ngIf="fLogin.businessRegistration.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
-						<div *ngIf="fOrgInfo.RegistrationNum.errors.maxlength">
+						<div *ngIf="fLogin.businessRegistration.errors.maxlength">
 							<span class="help-block">Chỉ nhập tối đa 20 ký tự</span>
 						</div>
 					</div>
-					<div *ngIf="checkExists['BusinessRegistration'] && fOrgInfo.RegistrationNum.valid" class="has-error m-b-12">
+					<div *ngIf="checkExists['BusinessRegistration'] && fLogin.businessRegistration.valid" class="has-error m-b-12">
 						<div *ngIf="checkExists['BusinessRegistration']">
 							<span class="help-block">Số chứng nhận ĐKKD đã tồn tại</span>
 						</div>
@@ -64,79 +64,30 @@
 			<form class="px-3" [formGroup]="formOrgInfo">
 				<div class="form-group">
 					<label class="mb-1">Tên tổ chức, doanh nghiệp <span class="cl-red">(*)</span></label>
-					<input [svTrim] [(ngModel)]="model.Business" formControlName="Business" type="text" placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown">
-					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.Business.invalid)||(fOrgInfo.Business.invalid && (fOrgInfo.Business.dirty || fOrgInfo.Business.touched))"
+					<input [svTrim] [(ngModel)]="model.business" formControlName="business" type="text" placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown">
+					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.business.invalid)||(fOrgInfo.business.invalid && (fOrgInfo.business.dirty || fOrgInfo.business.touched))"
 						class="has-error m-b-12">
-						<div *ngIf="fOrgInfo.Business.errors.required">
+						<div *ngIf="fOrgInfo.business.errors.required">
 							<span class="help-block">Trường dữ liệu này không được để trống</span>
 						</div>
-						<div *ngIf="fOrgInfo.Business.errors.maxlength">
+						<div *ngIf="fOrgInfo.business.errors.maxlength">
 							<span class="help-block">Chỉ nhập tối đa 200 ký tự</span>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="mb-1">Số chứng nhận ĐKKD </label>
-					<input [svTrim] [(ngModel)]="model.BusinessRegistration" formControlName="RegistrationNum" type="text" placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown"
-						(change)="onCheckExist('BusinessRegistration',$event.target.value)">
-					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.RegistrationNum.invalid)||(fOrgInfo.RegistrationNum.invalid && (fOrgInfo.RegistrationNum.dirty || fOrgInfo.RegistrationNum.touched))"
+					<label class="mb-1">Điện thoại</label>
+					<input onlyNumber="true" maxlength="10" [(ngModel)]="model.orgPhone" pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$" formControlName="orgPhone" type="text" placeholder="Nhập..."
+						class="form-control border-brown h-34px rounded-6px" (change)="onCheckExist('OrgPhone',$event.target.value)">
+					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.orgPhone.invalid)||(fOrgInfo.orgPhone.invalid && (fOrgInfo.orgPhone.dirty || fOrgInfo.orgPhone.touched))"
 						class="has-error m-b-12">
-						<div *ngIf="fOrgInfo.RegistrationNum.errors.required">
-							<span class="help-block">Trường dữ liệu này không được để trống</span>
-						</div>
-						<div *ngIf="fOrgInfo.RegistrationNum.errors.maxlength">
-							<span class="help-block">Chỉ nhập tối đa 20 ký tự</span>
+						<div *ngIf="fOrgInfo.orgPhone.errors.pattern">
+							<span class="help-block">Định dạng số điện thoại không hợp lệ</span>
 						</div>
 					</div>
-					<div *ngIf="checkExists['BusinessRegistration'] && fOrgInfo.RegistrationNum.valid" class="has-error m-b-12">
-						<div *ngIf="checkExists['BusinessRegistration']">
-							<span class="help-block">Số chứng nhận ĐKKD đã tồn tại</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="mb-1">Số quyết định thành lập </label>
-					<input [svTrim] [(ngModel)]="model.DecisionOfEstablishing" formControlName="DecisionFoundation" type="text" placeholder="Nhập..."
-						class="form-control border-brown h-34px rounded-6px" (change)="onCheckExist('DecisionOfEstablishing',$event.target.value)">
-					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.DecisionFoundation.invalid)||(fOrgInfo.DecisionFoundation.invalid && (fOrgInfo.DecisionFoundation.dirty || fOrgInfo.DecisionFoundation.touched))"
-						class="has-error m-b-12">
-						<div *ngIf="fOrgInfo.DecisionFoundation.errors.required">
-							<span class="help-block">Trường dữ liệu này không được để trống</span>
-						</div>
-					</div>
-					<div *ngIf="checkExists['DecisionOfEstablishing'] && fOrgInfo.DecisionFoundation.valid" class="has-error m-b-12">
-						<div *ngIf="checkExists['DecisionOfEstablishing']">
-							<span class="help-block">Số quyết định thành lập đã tồn tại</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="mb-1">Ngày cấp / Thành lập </label>
-					<div class="input-group">
-						<input class="form-control h-34px rounded-6px" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_IsDate" [(ngModel)]="model._DateOfIssue"
-							formControlName="DateIssue" appBsDatepickerInvalid
-							[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" [maxDate]="dateNow" />
-						<div class="input-group-addon p-1 pr-2 xs">
-							<i class="bi bi-calendar-date" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
-						</div>
-					</div>
-
-					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.DateIssue.invalid)||(fOrgInfo.DateIssue.invalid && (fOrgInfo.DateIssue.dirty || fOrgInfo.DateIssue.touched))"
-						class="has-error m-b-12">
-						<div *ngIf="fOrgInfo.DateIssue.errors.required">
-							<span class="help-block">Trường dữ liệu này không được để trống</span>
-						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="mb-1">Mã số thuế <span class="cl-red">(*)</span></label>
-					<input [svTrim] onlyNumber="true" maxlength="13" [(ngModel)]="model.Tax" formControlName="Tax" type="text" placeholder="Nhập..." class="form-control border-brown h-34px rounded-6px">
-					<div *ngIf="(fOrgInfoSubmitted && fOrgInfo.Tax.invalid)||(fOrgInfo.Tax.invalid && (fOrgInfo.Tax.dirty || fOrgInfo.Tax.touched))" class="has-error m-b-12">
-						<div *ngIf="fOrgInfo.Tax.errors.required">
-							<span class="help-block">Trường dữ liệu này không được để trống</span>
-						</div>
-						<div *ngIf="fOrgInfo.Tax.errors.maxlength">
-							<span class="help-block">Chỉ nhập tối đa 13 ký tự</span>
+					<div *ngIf="checkExists['OrgPhone'] && fOrgInfo.orgPhone.valid" class="has-error m-b-12">
+						<div *ngIf="checkExists['OrgPhone']">
+							<span class="help-block">Số điện thoại đã tồn tại</span>
 						</div>
 					</div>
 				</div>

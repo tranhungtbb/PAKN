@@ -457,6 +457,8 @@ namespace PAKNAPI.ModelBase
 		public bool? IsShow { get; set; }
 		public int? CreatedBy { get; set; }
 		public int? AdministrationId { get; set; }
+		public int? Lever { get; set; }
+		public int? RankReceiveId { get; set; }
 	}
 
 	public class DAMAdministrationUpdate

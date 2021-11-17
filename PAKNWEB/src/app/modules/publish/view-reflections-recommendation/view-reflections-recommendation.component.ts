@@ -111,7 +111,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 				this.service.changeSatisfaction({ RecommendationId: this.id, Satisfaction: status }).subscribe((res) => {
 					if (res.success == RESPONSE_STATUS.success) {
 						this._toastr.success('Đánh giá thành công!')
-
+						this.checkSatisfaction = true
 						this.model.quantityType = status
 						switch (status) {
 							case 1:

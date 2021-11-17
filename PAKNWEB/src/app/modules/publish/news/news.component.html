@@ -5,7 +5,7 @@
 				<div class="col main-ct pr-3 pr-lg-5" style="box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.25);">
 					<div class="row">
 						<div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 pr-5">
-							<a href="#">
+							<a *ngIf="newHighLight" routerLink="/cong-bo/tin-tuc-su-kien/{{newHighLight.id}}">
 								<img class="img-fluid card shadow mb-1 img-cover" *ngIf="newHighLight" style="height: 369px;"
 								src="{{newHighLight.imagePath}}" alt="{{newHighLight.title}}">
 							</a>

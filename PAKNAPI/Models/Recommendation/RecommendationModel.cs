@@ -321,12 +321,19 @@ namespace PAKNAPI.Models.Recommendation
         public bool IsValid { get; set; }
     }
 
+    public class LinhVucTTHCResponse
+    {
+        public string totalRowLinhVuc { get; set; }
+        public List<LinhVuc> DanhSachLinhVuc { get; set; }
+        public List<object> DanhSachCoQuanTiepNhan { get; set; }
+    }
+
     public class LinhVuc
     {
-        public object Id { get; set; }
-        public object Ten { get; set; }
+        public int? Id { get; set; }
+        public string Ten { get; set; }
         public int ThuTu { get; set; }
-        public object LinhVucChaId { get; set; }
+        public int? LinhVucChaId { get; set; }
         public object MaDinhDanh { get; set; }
         public object DonViPhuTrachLinhVuc { get; set; }
         public List<object> NguoiPhuTrachLinhVucs { get; set; }

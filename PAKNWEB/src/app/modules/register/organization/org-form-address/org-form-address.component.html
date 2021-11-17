@@ -1,5 +1,5 @@
 <form class="form-row px-3" [formGroup]="formOrgAddress">
-	<div class="col-12 form-group">
+	<!-- <div class="col-12 form-group">
 		<label class="mb-1">Tỉnh / Thành Phố <span class="cl-red">(*)</span></label>
 		<ng-select notFoundText="Không có dữ liệu"  [disabled]="isOtherNation" [(ngModel)]="model.OrgProvinceId" formControlName="OrgProvince" class="form-control h-34px rounded-6px" id="_OrgDistrictId" placeholder="Chọn..."
 			[closeOnSelect]="true" (change)="onChangeProvince()" (click)="onClickProvince()">
@@ -36,41 +36,17 @@
 				<span class="help-block">Trường dữ liệu này không được để trống</span>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<div class="col-12 form-group">
-		<label class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></label>
-		<input [svTrim] [(ngModel)]="model.OrgAddress" formControlName="OrgAddress" type="text" placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown">
-		<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgAddress.invalid)||(fOrgAdr.OrgAddress.invalid && (fOrgAdr.OrgAddress.dirty || fOrgAdr.OrgAddress.touched))"
-			class="has-error m-b-12">
-			<div *ngIf="fOrgAdr.OrgAddress.errors.required">
-				<span class="help-block">Trường dữ liệu này không được để trống</span>
-			</div>
-		</div>
-	</div>
-	<div class="col form-group">
-		<label class="mb-1">Địện thoại <span class="cl-red">(*)</span></label>
-		<input onlyNumber="true" maxlength="10" [(ngModel)]="model.OrgPhone" pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$" formControlName="OrgPhone" type="text" placeholder="Nhập..."
-			class="form-control border-brown h-34px rounded-6px" (change)="onCheckExist('OrgPhone',$event.target.value)">
-		<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgPhone.invalid)||(fOrgAdr.OrgPhone.invalid && (fOrgAdr.OrgPhone.dirty || fOrgAdr.OrgPhone.touched))"
-			class="has-error m-b-12">
-			<div *ngIf="fOrgAdr.OrgPhone.errors.required">
-				<span class="help-block">Trường dữ liệu này không được để trống</span>
-			</div>
-			<div *ngIf="fOrgAdr.OrgPhone.errors.pattern">
-				<span class="help-block">Định dạng số điện thoại không hợp lệ</span>
-			</div>
-		</div>
-		<div *ngIf="checkExists['OrgPhone'] && fOrgAdr.OrgPhone.valid" class="has-error m-b-12">
-			<div *ngIf="checkExists['OrgPhone']">
-				<span class="help-block">Số điện thoại đã tồn tại</span>
-			</div>
-		</div>
+		<label class="mb-1">Địa chỉ cụ thể </label>
+		<input [svTrim] [(ngModel)]="model.orgAddress" formControlName="orgAddress" type="text" placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown">
+		
 	</div>
 	<div class="col form-group">
 		<label class="mb-1">Email </label>
-		<input [svTrim] [(ngModel)]="model.OrgEmail" formControlName="OrgEmail" type="text" placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown"
+		<input [svTrim] [(ngModel)]="model.orgEmail" formControlName="orgEmail" type="text" placeholder="Nhập..." class="form-control h-34px rounded-6px border-brown"
 			(change)="onCheckExist('OrgEmail',$event.target.value)">
-		<div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgEmail.invalid)||(fOrgAdr.OrgEmail.invalid && (fOrgAdr.OrgEmail.dirty || fOrgAdr.OrgEmail.touched))"
+		<!-- <div *ngIf="(fOrgAddressSubmitted && fOrgAdr.OrgEmail.invalid)||(fOrgAdr.OrgEmail.invalid && (fOrgAdr.OrgEmail.dirty || fOrgAdr.OrgEmail.touched))"
 			class="has-error m-b-12">
 			<div *ngIf="fOrgAdr.OrgEmail.errors.required">
 				<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -78,8 +54,8 @@
 			<div *ngIf="fOrgAdr.OrgEmail.errors.email">
 				<span class="help-block">Định dạng email không hợp lệ</span>
 			</div>
-		</div>
-		<div *ngIf="checkExists['OrgEmail'] && fOrgAdr.OrgEmail.valid" class="has-error m-b-12">
+		</div> -->
+		<div *ngIf="checkExists['OrgEmail'] && fOrgAdr.orgEmail.valid" class="has-error m-b-12">
 			<div *ngIf="checkExists['OrgEmail']">
 				<span class="help-block">Email đã tồn tại</span>
 			</div>

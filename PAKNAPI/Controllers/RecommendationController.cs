@@ -53,7 +53,14 @@ namespace PAKNAPI.Controller
         {
             try
             {
-                var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                var unitId = 0;
+                try
+                {
+                    unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                }
+                catch (Exception e) {
+                }
+                
                 return new ResultApi { Success = ResultCode.OK, Result = await new RecommendationDAO(_appSetting).RecommendationGetDataForCreate(unitId) };
             }
             catch (Exception ex)

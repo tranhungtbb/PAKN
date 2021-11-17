@@ -71,26 +71,20 @@ export class OrganizationComponent implements OnInit {
 		this.model = new OrganizationObject()
 		this.model._RepresentativeBirthDay = ''
 		this.model._DateOfIssue = ''
-		this.model.RepresentativeGender = true
+		this.model.representativeGender = true
 	}
 	onSave() {
 		this.fLoginSubmitted = true
 		this.child_OrgRepreForm.fInfoSubmitted = true
 		this.fOrgInfoSubmitted = true
 		this.child_OrgAddressForm.fOrgAddressSubmitted = true
-		let fDob: any = document.querySelector('#_dob')
-		let fIsDate: any = document.querySelector('#_IsDate')
-		this.model._RepresentativeBirthDay = fDob.value
-		this.model._DateOfIssue = fIsDate.value
 
 		if (
 			this.checkExists['Phone'] ||
 			this.checkExists['BusinessRegistration'] ||
-			this.checkExists['DecisionOfEstablishing'] ||
 			this.child_OrgAddressForm.checkExists['OrgEmail'] ||
 			this.child_OrgAddressForm.checkExists['OrgPhone'] ||
-			this.child_OrgRepreForm.checkExists['Email'] ||
-			this.child_OrgRepreForm.checkExists['IDCard']
+			this.child_OrgRepreForm.checkExists['Email']
 		) {
 			//this.toast.error('Dữ liệu không hợp lệ')
 			return
@@ -139,7 +133,7 @@ export class OrganizationComponent implements OnInit {
 		//form thông tin đăng nhập
 		this.formLogin = this.formBuilder.group(
 			{
-				phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/)]],
+				businessRegistration: [this.model.businessRegistration, [Validators.required]],
 				password: [this.model.password, [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)]],
 				rePassword: [this.model.rePassword, [Validators.required]],
 			},
@@ -148,11 +142,8 @@ export class OrganizationComponent implements OnInit {
 
 		this.formOrgInfo = this.formBuilder.group({
 			//---thông tin doanh nghiệp
-			Business: [this.model.Business, [Validators.required, Validators.maxLength(200)]], // tên tổ chức
-			RegistrationNum: [this.model.BusinessRegistration, [Validators.maxLength(20)]], //Số ĐKKD
-			DecisionFoundation: [this.model.DecisionOfEstablishing, [Validators.maxLength(20)]], //Quyết định thành lập
-			DateIssue: [this.model._DateOfIssue, []], //Ngày cấp/thành lập
-			Tax: [this.model.Tax, [Validators.required, Validators.maxLength(13)]], //Mã số thuế
+			business: [this.model.business, [Validators.required, Validators.maxLength(200)]], // tên tổ chức
+			orgPhone: [this.model.orgPhone, [Validators.maxLength(20)]], //Số ĐKKD
 		})
 	}
 
@@ -161,6 +152,7 @@ export class OrganizationComponent implements OnInit {
 		Phone: false,
 		BusinessRegistration: false,
 		DecisionOfEstablishing: false,
+		OrgPhone: false,
 	}
 	onCheckExist(field: string, value: string) {
 		if (value == null || value == '') {
