@@ -482,7 +482,7 @@ export class AppheaderComponent implements OnInit {
 				this.sharedataService.setIsLogin(false)
 				this.storageService.setReturnUrl('')
 				this.storageService.clear()
-				this._router.navigate(['/dang-nhap'])
+				this._router.navigate(['/dang-nhap-quan-tri'])
 				//location.href = "/dang-nhap";
 			}
 		})

@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using Bugsnag;
 using PAKNAPI.Models.ModelBase;
+using PAKNAPI.Models.Statistic;
 
 namespace PAKNAPI.ControllerBase
 {
@@ -279,5 +280,61 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		#endregion ChangeSatisfaction
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet]
+		[Route("recommendation-statistic-by-province")]
+		public async Task<ActionResult<object>> RecommendationStatisticByProvince()
+		{
+			try
+			{
+				List<StatisticByProvince> statisticByProvinces = await new StatisticByProvince(_appSetting).StatisticByProvinceDAO();
+				var titles = new List<string>();
+				var values = new List<int?>();
+				statisticByProvinces.ForEach(item => {
+					values.Add(item.Value);
+					titles.Add(item.Title);
+				});
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"RecommendationStatisticByProvince", statisticByProvinces},
+						{"Titles", titles },
+						{"Values", values }
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		/// <summary>
+		/// thống kê tổng hợp trang công bố
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet]
+		[Route("recommendation-statistic-by-unit-parent")]
+		public async Task<ActionResult<object>> RecommendationStatisticByUnitParent(int? ParentId = 0)
+		{
+			try
+			{
+				List<StatisticByByUnitParent> statisticByByUnitParent = await new StatisticByByUnitParent(_appSetting).StatisticByUnitParentDAO(ParentId);
+				
+				return new ResultApi { Success = ResultCode.OK, Result = statisticByByUnitParent };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 	}
 }

@@ -121,8 +121,19 @@
 							<li class="nav-item">
 								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./gioi-thieu']" >Giới thiệu</a>
 							</li>
-							<li class="nav-item">
+							<!-- <li class="nav-item">
 								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./danh-sach-phan-anh-kien-nghi']" >Phản ánh - kiến nghị</a>
+							</li> -->
+							<li class="nav-item ps-relative">
+								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./danh-sach-phan-anh-kien-nghi']">Phản ánh - kiến nghị</a>
+								<ul class="bg-white rounded sub-nav border" style="z-index: 100000;">
+									<ng-container *ngFor="let item of subMenu;let i = index">
+										<li class="p-3 rounded sub-item" title="{{item.text}}">
+											<a class="text-1line text-black" [routerLink]="item.path" routerLinkActive="sub-menu-active">{{item.text}}</a>
+										</li>
+										<li class="border-bottom" *ngIf="i+1 < subMenu.length"></li>
+									</ng-container>
+								</ul>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active" [routerLink]="['./thu-tuc-hanh-chinh']">Thủ tục hành chính</a>

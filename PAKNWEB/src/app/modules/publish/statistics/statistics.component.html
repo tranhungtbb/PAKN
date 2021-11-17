@@ -38,14 +38,14 @@
 										<td class="text-center">{{ rowIndex + 1 }}</td>
 										<td rowspan="1" colspan="3" class="text-left">{{ item.unitName }}</td>
 										<td class="text-center">{{ item.totalResult }}</td>
-										<td class="text-center blue">{{ item.receive }}</td>
-										<td class="text-center green">{{ item.approved }}</td>
+										<td class="text-center blue">{{ item.receiveApproved }}</td>
+										<td class="text-center green">{{ item.finised }}</td>
 
-										<td class="text-center blue">{{ item.process }}</td>
+										<td class="text-center blue">{{ item.processing }}</td>
 										<td class="text-center red">{{ item.expired }}</td>
 										<td class="text-center green">{{ item.satisfaction }}</td>
-										<td class="text-center blue">{{ item.common }}</td>
-										<td class="text-center red">{{ item.unsatisfaction }}</td>
+										<td class="text-center blue">{{ item.accept }}</td>
+										<td class="text-center red">{{ item.unSatisfaction }}</td>
 									</tr>
 								</ng-template>
 								<ng-template pTemplate="emptymessage">

@@ -9,7 +9,7 @@
 								<img class="img-fluid card shadow mb-1 img-cover" *ngIf="newHighLight" style="height: 369px;"
 								src="{{newHighLight.imagePath}}" alt="{{newHighLight.title}}">
 							</a>
-							<div class="h2 text-2line mt-3">
+							<div class="h2 text-2line mt-3 cursor" (click)="redirectDetail(item.id)">
 								{{newHighLight.title}}
 							</div>
 							
@@ -42,7 +42,7 @@
 										</span>
 									</a>
 								</div>
-								<p class="title-article text-3line mt-3">
+								<p class="title-article text-3line mt-3 cursor" (click)="redirectDetail(item.id)">
 										{{item.title}}
 								</p>
 							</div>
@@ -116,7 +116,7 @@
 							<div class="tt-v1 pt-5">
 								<h4 class="text-uppercase">liên kết website</h4>
 							</div>
-							<ng-container *ngFor="let item of [1,2,3,4]; let i = index">
+							<ng-container *ngFor="let item of ltsIndexSettingWebsite; let i = index">
 								<a class="mb-4 mt-3" target="_blank" href="{{item.urlWebsite}}" title="{{item.nameWebsite}}">
 									<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==0" src="../../../assets/dist/images/cong dịch vụ công quốc gia.png">
 									<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==1" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công.png">

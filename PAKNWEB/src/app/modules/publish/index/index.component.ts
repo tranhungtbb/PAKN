@@ -14,6 +14,7 @@ import { RECOMMENDATION_STATUS, RESPONSE_STATUS } from 'src/app/constants/CONSTA
 import { IndexSettingService } from 'src/app/services/index-setting.service'
 import { IndexSettingObjet } from 'src/app/models/indexSettingObject'
 import { SystemconfigService } from 'src/app/services/systemconfig.service'
+import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
 declare var $: any
 
@@ -30,10 +31,11 @@ export class IndexComponent implements OnInit, AfterViewInit {
 		private _serviceAdministrative: AdministrativeFormalitiesService,
 		private indexSettingService: IndexSettingService,
 		private _syService: SystemconfigService,
-		private _toa: ToastrService
+		private _toa: ToastrService,
+		private storageService: UserInfoStorageService
 	) {}
 	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
-
+	isLogin: boolean = this.storageService.getIsHaveToken()
 	ReflectionsRecommendations: Array<PuRecommendation>
 	news: any[]
 	firstNews: any

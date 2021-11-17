@@ -1,8 +1,21 @@
 
-	<div class="sb-tk-pakn mb-4 card-my-recommentdation">
+
+	<div class="" *ngIf="!isLogin">
+		<a href="javascript:void(0)">
+			<img class="img-fluid card img-cover"
+				src="../../../../assets/dist/images/banner-index-1.png" alt="">
+		</a>
+		<a href="javascript:void(0)">
+			<img class="img-fluid card mt-3 img-cover"
+				src="../../../../assets/dist/images/banner-index-2.png" alt="">
+		</a>
+	</div>
+	
+	
+	<div class="sb-tk-pakn mb-4 card-my-recommentdation" *ngIf="isLogin && (typeObject == 2 || typeObject == 3)">
 		<div class="tt-v1 pt-3 pb-3 d-flex justify-content-between">
 			<h4 class="text-uppercase">Phản ánh kiến nghị của tôi</h4>
-			<h4 class="counter">80</h4>
+			<h4 class="counter">{{totalRecommentdation}}</h4>
 		</div>
 		<div>
 			<div class="border-left-yellow mb-3 d-flex justify-content-between center">
@@ -10,7 +23,7 @@
 					<p class="title-status-rm ml-3 mb-0">Chờ xử lý</p>
 				</div>
 				<div class="circle bg-yellow center text-white">
-					20
+					{{recommendationStatistics.receiveWait}}
 				</div>
 			</div>
 			<div class="border-left-blue2 mb-3 d-flex justify-content-between center">
@@ -18,7 +31,7 @@
 					<p class="title-status-rm ml-3 mb-0">Đã tiếp nhận</p>
 				</div>
 				<div class="circle bg-blue2 center text-white">
-					20
+					{{recommendationStatistics.receiveApproved}}
 				</div>
 			</div>
 			<div class="border-left-blue mb-3 d-flex justify-content-between center">
@@ -26,7 +39,7 @@
 					<p class="title-status-rm ml-3 mb-0">Đã trả lời</p>
 				</div>
 				<div class="circle bg-blue center text-white">
-					20
+					{{recommendationStatistics.finised}}
 				</div>
 			</div>
 			<div class="border-left-red mb-3 d-flex justify-content-between center">
@@ -34,13 +47,13 @@
 					<p class="title-status-rm ml-3 mb-0">Bị từ chối</p>
 				</div>
 				<div class="circle bg-red center text-white">
-					20
+					{{recommendationStatistics.approve}}
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<div class="sb-tk-pakn text-center card-my-chart pb-4 mt-4">
+	<div class="sb-tk-pakn text-center card-my-chart pb-4" [ngClass]="{'mt-4' : typeObject == 2 || typeObject == 3}">
 			<div class="tt-v1 pt-4 pb-3 mb-3 justify-content-between text-center">
 				<h4 class="text-uppercase">Phản ánh kiến nghị toàn tỉnh</h4>
 			</div>

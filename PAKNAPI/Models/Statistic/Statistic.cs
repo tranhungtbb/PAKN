@@ -235,4 +235,60 @@ namespace PAKNAPI.Models.Statistic
 			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationByGroupWordDetail>("TK_ListRecommendationByGroupWord_Detail", DP)).ToList();
 		}
 	}
+
+	public class StatisticByProvince
+	{
+		private SQLCon _sQLCon;
+
+		public string Title { get; set; }
+		public int? Value { get; set; }
+		public StatisticByProvince(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public StatisticByProvince()
+		{
+		}
+
+		public async Task<List<StatisticByProvince>> StatisticByProvinceDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticByProvince>("TK_RecommendationByProvince", DP)).ToList();
+		}
+	}
+
+
+	public class StatisticByByUnitParent
+	{
+		private SQLCon _sQLCon;
+
+		public int Id { get; set; }
+		public string UnitName { get; set; }
+		public int? TotalResult { get; set; }
+		public int? ReceiveApproved { get; set; }
+		public int? Finised { get; set; }
+		public int? Processing { get; set; }
+		public int? Expired { get; set; }
+		public int? Satisfaction { get; set; }
+		public int? Accept { get; set; }
+		public int? UnSatisfaction { get; set; }
+		public StatisticByByUnitParent(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public StatisticByByUnitParent()
+		{
+		}
+
+		public async Task<List<StatisticByByUnitParent>> StatisticByUnitParentDAO(int? ParentId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("ParentId", ParentId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticByByUnitParent>("TK_RecommendationPublicByUnit", DP)).ToList();
+		}
+	}
 }

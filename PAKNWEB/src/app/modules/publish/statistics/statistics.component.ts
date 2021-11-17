@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js'
 import { Label } from 'ng2-charts'
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
 	selector: 'app-statistics',
@@ -10,152 +12,8 @@ import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 })
 export class StatisticsComponent implements OnInit {
 	// property
-	statistics: any = [
-		{
-			unitName: 'Sở y tế',
-			totalResult: 8,
-			receive: 6,
-			approved: 1,
-			process: 1,
-			expired: 0,
-			satisfaction: 120,
-			common: 50,
-			unsatisfaction: 9,
-		},
-		{
-			unitName: 'Sở Giao thông - Vận tải',
-			totalResult: 8,
-			receive: 6,
-			approved: 1,
-			process: 1,
-			expired: 0,
-			satisfaction: 120,
-			common: 50,
-			unsatisfaction: 9,
-		},
-		{
-			unitName: 'Sở Tài nguyên - Môi trường',
-			totalResult: 8,
-			receive: 6,
-			approved: 1,
-			process: 1,
-			expired: 0,
-			satisfaction: 120,
-			common: 50,
-			unsatisfaction: 9,
-		},
-		{
-			unitName: 'Sở công thương',
-			totalResult: 8,
-			receive: 6,
-			approved: 1,
-			process: 1,
-			expired: 0,
-			satisfaction: 120,
-			common: 50,
-			unsatisfaction: 9,
-		},
-		{
-			unitName: 'Sở Giáo dục - Đào tạo',
-			totalResult: 8,
-			receive: 6,
-			approved: 1,
-			process: 1,
-			expired: 0,
-			satisfaction: 120,
-			common: 50,
-			unsatisfaction: 9,
-		},
-		{
-			unitName: 'Sở Kế hoạch và Đầu tư',
-			totalResult: 8,
-			receive: 6,
-			approved: 1,
-			process: 1,
-			expired: 0,
-			satisfaction: 120,
-			common: 50,
-			unsatisfaction: 9,
-		},
-		{
-			unitName: 'Sở Khoa học và Công nghệ',
-			totalResult: 8,
-			receive: 6,
-			approved: 1,
-			process: 1,
-			expired: 0,
-			satisfaction: 120,
-			common: 50,
-			unsatisfaction: 9,
-		},
-		{
-			unitName: 'Sở Lao động - Thương binh và Xã hội',
-			totalResult: 8,
-			receive: 6,
-			approved: 1,
-			process: 1,
-			expired: 0,
-			satisfaction: 120,
-			common: 50,
-			unsatisfaction: 9,
-		},
-		{
-			unitName: 'Sở Ngoại vụ',
-			totalResult: 8,
-			receive: 6,
-			approved: 1,
-			process: 1,
-			expired: 0,
-			satisfaction: 120,
-			common: 50,
-			unsatisfaction: 9,
-		},
-		{
-			unitName: 'Sở Nội vụ',
-			totalResult: 8,
-			receive: 6,
-			approved: 1,
-			process: 1,
-			expired: 0,
-			satisfaction: 120,
-			common: 50,
-			unsatisfaction: 9,
-		},
-		{
-			unitName: 'Sở Tài chính',
-			totalResult: 8,
-			receive: 6,
-			approved: 1,
-			process: 1,
-			expired: 0,
-			satisfaction: 120,
-			common: 50,
-			unsatisfaction: 9,
-		},
-		{
-			unitName: 'Sở Thông tin - Truyền thông',
-			totalResult: 8,
-			receive: 6,
-			approved: 1,
-			process: 1,
-			expired: 0,
-			satisfaction: 120,
-			common: 50,
-			unsatisfaction: 9,
-		},
-		{
-			unitName: 'Sở Văn hóa và Thể thao',
-			totalResult: 8,
-			receive: 6,
-			approved: 1,
-			process: 1,
-			expired: 0,
-			satisfaction: 120,
-			common: 50,
-			unsatisfaction: 9,
-		},
-	]
-	constructor() {}
+	statistics: any = []
+	constructor(private _service: PuRecommendationService, private _toastr: ToastrService) {}
 
 	// chart
 
@@ -208,5 +66,18 @@ export class StatisticsComponent implements OnInit {
 		{ data: [64, 10, 27, 5, 37, 27, 1, 20, 10, 27, 19, 21, 45, 23], label: 'Quá hạn' },
 	]
 
-	ngOnInit() {}
+	ngOnInit() {
+		this._service.recommendationStatisticsByUnitParentId({}).subscribe(
+			(res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.statistics = res.result
+				} else {
+					this._toastr.error(res.message)
+				}
+			},
+			(err) => {
+				console.log(err)
+			}
+		)
+	}
 }

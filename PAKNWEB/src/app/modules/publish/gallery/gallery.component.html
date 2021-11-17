@@ -2,12 +2,12 @@
 	<div class="tt-v1 pt-3">
 		<h4 class="text-uppercase">liên kết website</h4>
 	</div>
-	<ng-container *ngFor="let item of [1,2,3,4]; let i = index">
+	<ng-container *ngFor="let item of ltsIndexSettingWebsite; let i = index">
 		<a class="mb-4 mt-3" target="_blank" href="{{item.urlWebsite}}" title="{{item.nameWebsite}}">
-			<img class="img-fluid card shadow rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==0" src="../../../assets/dist/images/cong dịch vụ công quốc gia.png">
-			<img class="img-fluid card shadow rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==1" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công.png">
-			<img class="img-fluid card shadow rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==2" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (1).png">
-			<img class="img-fluid card shadow rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==3" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (2).png">
+			<img class="img-fluid card rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==0" src="../../../assets/dist/images/cong dịch vụ công quốc gia.png">
+			<img class="img-fluid card rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==1" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công.png">
+			<img class="img-fluid card rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==2" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (1).png">
+			<img class="img-fluid card rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==3" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (2).png">
 		</a>
 	</ng-container>
 </div>

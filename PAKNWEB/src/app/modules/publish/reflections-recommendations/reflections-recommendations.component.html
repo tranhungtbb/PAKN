@@ -32,7 +32,7 @@
 								</ng-select>
 						</div>
 						<div class="col-1 form-group px-2">
-							<button type="button" class="btn text-white border-0 no-grd-blue border-radius-4 h-38px">
+							<button type="button" class="btn text-white border-0 no-grd-blue border-radius-4 h-38px" (click)="dataStateChange()">
 								<i class="bi bi-search"></i>
 							</button>
 						</div>
@@ -50,14 +50,6 @@
 							</div>
 							<div class="card-body pt-1 pb-3">
 								<div class="d-flex align-items-center">
-									<!-- <div class="media align-items-center mr-4">
-										<div class="avatar-circle mr-2">
-											{{item.shortName}}
-										</div>
-										<div class="media-body">
-											<p class="my-0 h5">{{item.name}}</p>
-										</div>
-									</div> -->
 									<span class="card-date">{{item.createdDate | date : 'HH:mm'}} ngày {{item.createdDate | date : 'dd/MM/yyyy'}}</span>
 								</div>
 								

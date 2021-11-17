@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
+using PAKNAPI.Models.Recommendation;
 using PAKNAPI.Models.Results;
 using System;
 using System.Collections.Generic;
@@ -24,22 +25,17 @@ namespace PAKNAPI.Models.SyncData
             try
             {
                 var listFeedBack = await new FeedBackDAO(_appSetting).FeedBackGetAll();
-                if (listFeedBack.Count > 0) {
-                    await new MRRecommendationDelete(_appSetting).MRRecommendationDeleteByIsCloneDAO();
-                }
+                //if (listFeedBack.Count > 0) {
+                //    //await new RecommendationDAO(_appSetting).SyncKhanhHoaDeleteAll();
+                //    //await new MRRecommendationDelete(_appSetting).MRRecommendationDeleteByIsCloneDAO();
+                //}
                 // insert vào db
 
-                var mRRecommendationInsertIN = new MRRecommendationInsertIN();
+                CongThongTinTinh modelInsert = new CongThongTinTinh();
                 foreach (var item in listFeedBack)
                 {
-                    mRRecommendationInsertIN = new MRRecommendationInsertIN(item);
-                    var id = Int32.Parse((await new MRRecommendationInsert(_appSetting).MRRecommendationInsertDAO(mRRecommendationInsertIN)).ToString());
-
-                    // insert Conclusion
-                    MRRecommendationConclusionInsertIN conclusionInsertIN = new MRRecommendationConclusionInsertIN();
-                    conclusionInsertIN.Content = item.FeedBackContentReply;
-                    conclusionInsertIN.RecommendationId = id;
-                    await new MRRecommendationConclusionInsert(_appSetting).MRRecommendationConclusionInsertDAO(conclusionInsertIN);
+                    modelInsert = new CongThongTinTinh(item);
+                    await new RecommendationDAO(_appSetting).SyncKhanhHoaInsert(modelInsert);
                 }
 
                 return new ResultApi { Success = ResultCode.OK};

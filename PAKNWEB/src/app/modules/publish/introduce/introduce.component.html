@@ -15,7 +15,7 @@
 						</div>
 						<div class="current-time">
 							<i class="bi bi-calendar"></i>
-							17:27 ngày 24/12/2021
+							{{ currentDate |  date : 'HH:mm'}} ngày {{ currentDate |  date : 'dd/MM/yyyy'}}
 						</div>
 						<div class="content-intro">
 							<p class="content-intro-p">

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace PAKNAPI.Job
 {
+    /// <summary>
+    /// cổng thông tin điện tử tỉnh
+    /// </summary>
     public class MyJobFeedBack : IJob
     {
         private readonly IAppSetting _appSetting;

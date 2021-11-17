@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
 import { DomSanitizer } from '@angular/platform-browser'
 import { Lightbox } from 'ngx-lightbox'
+import { IndexSettingService } from 'src/app/services/index-setting.service'
+import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 
 declare var $: any
 
@@ -11,8 +13,9 @@ declare var $: any
 	styleUrls: ['./gallery.component.css'],
 })
 export class GalleryComponent implements OnInit {
-	constructor(private _router: Router, private sanitizer: DomSanitizer, private _lightbox: Lightbox) {}
+	constructor(private _router: Router, private sanitizer: DomSanitizer, private _lightbox: Lightbox, private indexSettingService: IndexSettingService) {}
 
+	ltsIndexSettingWebsite: any = []
 	_albums: Array<Album> = [
 		{
 			src: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(117).jpg',
@@ -62,7 +65,17 @@ export class GalleryComponent implements OnInit {
 		},
 	]
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.indexSettingService.GetInfo({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.ltsIndexSettingWebsite = res.result.lstSYIndexWebsite == null ? [] : res.result.lstSYIndexWebsite
+			}
+		}),
+			(error) => {
+				console.log(error)
+				alert(error)
+			}
+	}
 
 	ngAfterViewInit() {}
 

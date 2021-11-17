@@ -590,6 +590,9 @@ a.nav-link.active{
 	background-color: #155bbf;
 	font-weight: 600 !important;
 }
+a.text-1line.text-black.sub-menu-active{
+	color: #155bbf !important;
+}
 
 .number-lever {
 	font-size: 10px;

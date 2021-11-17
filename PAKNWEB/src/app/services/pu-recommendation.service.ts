@@ -39,4 +39,12 @@ export class PuRecommendationService {
 	recommendationStatisticsGetByUserId(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PURecommendationStatisticsGetByUserId)
 	}
+
+	recommendationStatisticsProvince(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PURecommendationStatisticsProvince)
+	}
+
+	recommendationStatisticsByUnitParentId(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PURecommendationStatisticsByUnitParentId)
+	}
 }

@@ -69,6 +69,8 @@ export class Api {
 	public static PuChangeSatisfaction = 'pu-recommendation/change-satisfaction'
 	public static PuRecommendationCountClick = 'pu-recommendation/recommendation-count-click'
 	public static PURecommendationStatisticsGetByUserId = 'pu-recommendation/recommendation-statistics-get-by-user-id'
+	public static PURecommendationStatisticsProvince = 'pu-recommendation/recommendation-statistic-by-province'
+	public static PURecommendationStatisticsByUnitParentId = 'pu-recommendation/recommendation-statistic-by-unit-parent'
 
 	//Field
 	public static FieldGetList = 'field/get-list-field-on-page'

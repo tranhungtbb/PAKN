@@ -49,76 +49,78 @@ namespace PAKNAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<object>> SyncKhanhHoa()
         {
-            HtmlWeb htmlWeb = new HtmlWeb()
-            {
-                AutoDetectEncoding = false,
-                OverrideEncoding = Encoding.UTF8  //Set UTF8 để hiển thị tiếng Việt
-            };//Load trang web, nạp html vào document
-            Task<HtmlDocument> document = htmlWeb.LoadFromWebAsync("https://www.khanhhoa.gov.vn/module/gop-y");
+            return await new FeedBackSync(_appSetting).SyncFeedBack();
 
-            var items = new List<GopYKienNghi>();
-            var threadItems = document.Result.DocumentNode.Descendants("div")
-                .First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "content-feedback")
-                .ChildNodes.Where(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "row").First()
-                .ChildNodes.Where(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "item col-xs-12 col-sm-6 col-md-4").ToList();
-            // delete all
-            //await new RecommendationDAO(_appSetting).SyncKhanhHoaDeleteAll();
-            foreach (var item in threadItems)
-            {
-                var objectAdd = new GopYKienNghi();
-                var linkNode = item.Descendants("a").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("title"));
-                var link = linkNode.Attributes["href"].Value;
-                var textHead = linkNode.InnerText.Split("\r\n");
-                string[] s = textHead[0].Trim().Split(" ");
-                objectAdd.Questioner = string.Join(" ", s.Where(x => x != s[s.Length - 1]).ToArray());
-                if (textHead.Length > 1)
-                {
-                    objectAdd.Question = textHead[1].Trim();
-                }
-                objectAdd.CreatedDate = item.Descendants("span").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("feedday")).InnerText;
-                Task<HtmlDocument> documentDetail = htmlWeb.LoadFromWebAsync("https://www.khanhhoa.gov.vn/" + link);
+            //HtmlWeb htmlWeb = new HtmlWeb()
+            //{
+            //    AutoDetectEncoding = false,
+            //    OverrideEncoding = Encoding.UTF8  //Set UTF8 để hiển thị tiếng Việt
+            //};//Load trang web, nạp html vào document
+            //Task<HtmlDocument> document = htmlWeb.LoadFromWebAsync("https://www.khanhhoa.gov.vn/module/gop-y");
 
-                var threadItemsChild = documentDetail.Result.DocumentNode.Descendants("div")
-                .First(node => node.Attributes.Contains("id") && node.Attributes["id"].Value == "print-chitiet");
-                objectAdd.QuestionContent = threadItemsChild.Descendants("div").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("chitietbaiviet")).InnerHtml;
-                objectAdd.Reply = threadItemsChild.Descendants("div").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("feedback-traloi-content")).InnerHtml.Trim();
-                objectAdd.ReplyDate = documentDetail.Result.DocumentNode.Descendants("div")
-                    .FirstOrDefault(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "feedback-traloi-bottom").InnerText.Split(":")[1];
+            ////var items = new List<GopYKienNghi>();
+            //var threadItems = document.Result.DocumentNode.Descendants("div")
+            //    .First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "content-feedback")
+            //    .ChildNodes.Where(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "row").First()
+            //    .ChildNodes.Where(node => node.Attributes.Contains("class") && node.Attributes["class"].Value == "item col-xs-12 col-sm-6 col-md-4").ToList();
+            //// delete all
+            ////await new RecommendationDAO(_appSetting).SyncKhanhHoaDeleteAll();
+            //foreach (var item in threadItems)
+            //{
+            //    var objectAdd = new GopYKienNghi();
+            //    var linkNode = item.Descendants("a").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("title"));
+            //    var link = linkNode.Attributes["href"].Value;
+            //    var textHead = linkNode.InnerText.Split("\r\n");
+            //    string[] s = textHead[0].Trim().Split(" ");
+            //    objectAdd.Questioner = string.Join(" ", s.Where(x => x != s[s.Length - 1]).ToArray());
+            //    if (textHead.Length > 1)
+            //    {
+            //        objectAdd.Question = textHead[1].Trim();
+            //    }
+            //    objectAdd.CreatedDate = item.Descendants("span").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("feedday")).InnerText;
+            //    Task<HtmlDocument> documentDetail = htmlWeb.LoadFromWebAsync("https://www.khanhhoa.gov.vn/" + link);
 
-                var id = await new RecommendationDAO(_appSetting).SyncKhanhHoaInsert(objectAdd);
-                if (Convert.ToInt32(id) < 0) { continue; };
+            //    var threadItemsChild = documentDetail.Result.DocumentNode.Descendants("div")
+            //    .First(node => node.Attributes.Contains("id") && node.Attributes["id"].Value == "print-chitiet");
+            //    objectAdd.QuestionContent = threadItemsChild.Descendants("div").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("chitietbaiviet")).InnerHtml;
+            //    objectAdd.Reply = threadItemsChild.Descendants("div").First(node => node.Attributes.Contains("class") && node.Attributes["class"].Value.Contains("feedback-traloi-content")).InnerHtml.Trim();
+            //    objectAdd.ReplyDate = documentDetail.Result.DocumentNode.Descendants("div")
+            //        .FirstOrDefault(x => x.Attributes.Contains("class") && x.Attributes["class"].Value == "feedback-traloi-bottom").InnerText.Split(":")[1];
 
-                var files = documentDetail.Result.GetElementbyId("ctl38_ctl03_pnTep");
-                if (files != null)
-                {
-                    string url = files.ChildNodes.Descendants("a").FirstOrDefault().Attributes["href"].Value;
-                    string fileName = url.Split("/")[url.Split("/").Length - 1];
-                    MR_SyncFileAttach fileInsert = new MR_SyncFileAttach();
+            //    var id = await new RecommendationDAO(_appSetting).SyncKhanhHoaInsert(objectAdd);
+            //    if (Convert.ToInt32(id) < 0) { continue; };
 
-                    string folder = "Upload\\CongThongTinDienTu\\" + id;
-                    string folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
-                    if (!Directory.Exists(folderPath))
-                    {
-                        Directory.CreateDirectory(folderPath);
-                    }
-                    using (WebClient webClient = new WebClient())
-                    {
-                        string[] fileNameArr = url.Split(".");
-                        fileInsert.ObjectId = Convert.ToInt32(id);
-                        fileInsert.Type = GetFileTypes.GetFileTypeExtension("." + fileNameArr.FirstOrDefault(x => x == fileNameArr[fileNameArr.Length - 1]).ToString());
-                        fileInsert.FileName = Path.GetFileName(fileName).Replace("+", "");
-                        fileInsert.FilePath = Path.Combine(folder, fileInsert.FileName);
-                        webClient.DownloadFileAsync(new Uri("https://www.khanhhoa.gov.vn/" + url), Path.Combine(folderPath, fileInsert.FileName));
-                        await new MR_SyncFileAttach(_appSetting).RecommentdationSyncFileAttachInsertDAO(fileInsert);
-                    }
-                }
+            //    var files = documentDetail.Result.GetElementbyId("ctl38_ctl03_pnTep");
+            //    if (files != null)
+            //    {
+            //        string url = files.ChildNodes.Descendants("a").FirstOrDefault().Attributes["href"].Value;
+            //        string fileName = url.Split("/")[url.Split("/").Length - 1];
+            //        MR_SyncFileAttach fileInsert = new MR_SyncFileAttach();
 
-            }
-            new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
-            return new ResultApi
-            {
-                Success = ResultCode.OK
-            };
+            //        string folder = "Upload\\CongThongTinDienTu\\" + id;
+            //        string folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
+            //        if (!Directory.Exists(folderPath))
+            //        {
+            //            Directory.CreateDirectory(folderPath);
+            //        }
+            //        using (WebClient webClient = new WebClient())
+            //        {
+            //            string[] fileNameArr = url.Split(".");
+            //            fileInsert.ObjectId = Convert.ToInt32(id);
+            //            fileInsert.Type = GetFileTypes.GetFileTypeExtension("." + fileNameArr.FirstOrDefault(x => x == fileNameArr[fileNameArr.Length - 1]).ToString());
+            //            fileInsert.FileName = Path.GetFileName(fileName).Replace("+", "");
+            //            fileInsert.FilePath = Path.Combine(folder, fileInsert.FileName);
+            //            webClient.DownloadFileAsync(new Uri("https://www.khanhhoa.gov.vn/" + url), Path.Combine(folderPath, fileInsert.FileName));
+            //            await new MR_SyncFileAttach(_appSetting).RecommentdationSyncFileAttachInsertDAO(fileInsert);
+            //        }
+            //    }
+
+            //}
+            //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+            //return new ResultApi
+            //{
+            //    Success = ResultCode.OK
+            //};
         }
 
         [Route("sync-cong-dich-vu-cong-quoc-gia")] // sync-cong-dich-vu-cong-quoc-gia

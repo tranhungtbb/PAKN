@@ -21,6 +21,8 @@ export class IntroduceComponent implements OnInit {
 		this.lstIntroduceFunction = []
 	}
 
+	currentDate = new Date()
+
 	ngOnInit() {
 		this._service.GetInfo({}).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {

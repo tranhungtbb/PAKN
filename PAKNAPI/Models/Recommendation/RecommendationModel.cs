@@ -2,6 +2,7 @@
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
 using PAKNAPI.Models.Statistic;
+using PAKNAPI.Models.SyncData;
 using System;
 using System.Collections.Generic;
 
@@ -113,6 +114,35 @@ namespace PAKNAPI.Models.Recommendation
         public string Reply { get; set; }
         public string CreatedDate { get; set; }
         public string ReplyDate { get; set; }
+
+        public GopYKienNghi() { }
+
+    }
+
+    public class CongThongTinTinh
+    {
+        public int Id { get; set; }
+        public string Questioner { get; set; }
+        public string Question { get; set; }
+        public string QuestionContent { get; set; }
+        public string Reply { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? ReplyDate { get; set; }
+        public long? ObjectId { get; set; }
+
+        public CongThongTinTinh() { }
+
+        public CongThongTinTinh(FeedBackModel model)
+        {
+            this.Questioner = model.NameSender;
+            this.Question = model.FeedBackTitle;
+            this.QuestionContent = model.FeedBackContent;
+            this.Reply = model.FeedBackContentReply;
+            this.CreatedDate = model.CreatedOn != null ? model.CreatedOn : model.ChangedOn;
+            this.ReplyDate = model.FeedBackDate;
+            this.ObjectId = model.Id;
+
+        }
     }
 
     public class DichViCongQuocGia

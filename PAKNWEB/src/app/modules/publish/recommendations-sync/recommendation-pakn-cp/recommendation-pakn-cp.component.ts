@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import {RecommandationSyncService} from 'src/app/services/recommandation-sync.service'
+import { RecommandationSyncService } from 'src/app/services/recommandation-sync.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
 @Component({
@@ -20,9 +20,9 @@ export class RecommendationsPaknCPComponent implements OnInit {
 
 	// arr
 
-	listData : any = []
+	listData: any = []
 
-	constructor(private service: RecommandationSyncService, private routers: Router, private userService : UserInfoStorageService) {}
+	constructor(private service: RecommandationSyncService, private routers: Router, private userService: UserInfoStorageService) {}
 
 	ngOnInit() {
 		this.getList()
@@ -38,7 +38,7 @@ export class RecommendationsPaknCPComponent implements OnInit {
 
 	getList() {
 		this.KeySearch = this.KeySearch.trim()
-	
+
 		var obj = {
 			questioner: '',
 			question: this.KeySearch,
@@ -46,14 +46,9 @@ export class RecommendationsPaknCPComponent implements OnInit {
 			pageIndex: this.PageIndex,
 		}
 		this.service.getHeThongPANKChinhPhuPagedList(obj).subscribe((res) => {
-			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
+			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.Data.length > 0) {
 					this.listData = res.result.Data
-					.map((item) => {
-						item.shortName = this.getShortName(item.questioner)
-						return item
-					})
-					console.log(this.listData)
 					this.Total = res.result.TotalCount
 					this.padi()
 				} else {
@@ -67,7 +62,6 @@ export class RecommendationsPaknCPComponent implements OnInit {
 				this.Total = 0
 			}
 		})
-
 	}
 	getShortName(string) {
 		var names = string.split(' '),

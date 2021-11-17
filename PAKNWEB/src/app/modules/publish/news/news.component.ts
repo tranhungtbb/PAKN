@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { ViewRightComponent } from 'src/app/modules/publish/view-right/view-right.component'
 import { CatalogService } from 'src/app/services/catalog.service'
+import { IndexSettingService } from 'src/app/services/index-setting.service'
 import { NewsService } from 'src/app/services/news.service'
 
 @Component({
@@ -29,12 +30,16 @@ export class NewsComponent implements OnInit {
 	Status: number = 1 // trạng thái đã công bố
 	totalRecords: number = 0
 
+	//
+	ltsIndexSettingWebsite: any = []
+
 	constructor(
 		private _toastr: ToastrService,
 		private newsService: NewsService,
 		private _router: Router,
 		private activatedRoute: ActivatedRoute,
-		private _catalogService: CatalogService
+		private _catalogService: CatalogService,
+		private indexSettingService: IndexSettingService
 	) {
 		this.listNewHighLight = []
 	}
@@ -75,6 +80,15 @@ export class NewsComponent implements OnInit {
 			}
 			return
 		})
+		this.indexSettingService.GetInfo({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.ltsIndexSettingWebsite = res.result.lstSYIndexWebsite == null ? [] : res.result.lstSYIndexWebsite
+			}
+		}),
+			(error) => {
+				console.log(error)
+				alert(error)
+			}
 	}
 
 	// get type news

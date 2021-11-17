@@ -175,7 +175,7 @@ namespace PAKNAPI.Models.Recommendation
 			return data;
 		}
 
-		public async Task<int?> SyncKhanhHoaInsert(GopYKienNghi item)
+		public async Task<int?> SyncKhanhHoaInsert(CongThongTinTinh item)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Questioner", item.Questioner);
@@ -184,13 +184,14 @@ namespace PAKNAPI.Models.Recommendation
 			DP.Add("Reply", item.Reply);
 			DP.Add("CreatedDate", item.CreatedDate);
 			DP.Add("ReplyDate", item.ReplyDate);
-			return (await _sQLCon.ExecuteListDapperAsync<int>("MR_RecommendationSync_Insert", DP)).FirstOrDefault();
+			DP.Add("ObjectId", item.ObjectId);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationSync_Insert", DP));
 		}
 
 		public async Task<int?> SyncKhanhHoaDeleteAll()
 		{
 			DynamicParameters DP = new DynamicParameters();
-			return _sQLCon.ExecuteNonQueryDapper("MR_RecommendationSync_DeleteAll", DP);
+			return await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationSync_DeleteAll", DP);
 		}
 
 		public void SyncHopThuGopYKhanhHoa(List<GopYKienNghi> lstData)
