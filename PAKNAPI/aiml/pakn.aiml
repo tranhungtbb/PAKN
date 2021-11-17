@@ -23,7 +23,7 @@
 		Xin chào <get name="xname"/> Tôi tên là <bot name="name"/> luôn sẵn sàng 24/7 hỗ trợ bạn tốt nhất. 
 		Cho mình biết bạn muốn hỏi về vấn đề nào dưới đây
 			<pakn>
-				json{"type":"carousel","data":[{"title":"Tra cứu thủ tục hành chính và Dịch vụ công trực tuyến","image":""},{"title":"Tra cứu hồ sơ giải quyết Thủ tục hành chính","image":""},{"title":"Gửi phản ánh, kiến nghị","image":""},{"title":"Tra cứu kết quả xử lý PAKN","image":""}]}
+				json{"type":"carousel","data":[{"title":"Tra cứu thủ tục hành chính và Dịch vụ công trực tuyến","image":""},{"title":"Tra cứu hồ sơ giải quyết Thủ tục hành chính","image":""},{"title":"Gửi phản ánh, kiến nghị","image":""}]}
 			</pakn>
 		</template>
 	</category>
