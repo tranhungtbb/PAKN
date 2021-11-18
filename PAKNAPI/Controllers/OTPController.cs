@@ -70,11 +70,13 @@ namespace PAKNAPI.Controllers
 				// doanh nghiệp
 				else
 				{
-
+					if (string.IsNullOrEmpty(request.Phone)) {
+						return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại người đại diện không được để trống" };
+					}
 					var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone", request.Phone, 0);
 					if (checkExists[0].Exists.Value)
 					{
-						return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+						return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại người đại diện đã tồn tại" };
 					}
 					
 					if (!string.IsNullOrEmpty(request.Email))
@@ -93,6 +95,7 @@ namespace PAKNAPI.Controllers
 							return new ResultApi { Success = ResultCode.ORROR, Message = "Email doanh nghiệp đã tồn tại" };
 						}
 					}
+					
 					if (!string.IsNullOrEmpty(request.BusinessRegistration))
 					{
 						checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("BusinessRegistration", request.BusinessRegistration, 0);

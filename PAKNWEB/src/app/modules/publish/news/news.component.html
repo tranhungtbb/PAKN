@@ -9,7 +9,7 @@
 								<img class="img-fluid card shadow mb-1 img-cover" *ngIf="newHighLight" style="height: 369px;"
 								src="{{newHighLight.imagePath}}" alt="{{newHighLight.title}}">
 							</a>
-							<div class="h2 text-2line mt-3 cursor" (click)="redirectDetail(item.id)">
+							<div class="h2 text-2line mt-3 cursor" (click)="redirectDetail(newHighLight.id)">
 								{{newHighLight.title}}
 							</div>
 							

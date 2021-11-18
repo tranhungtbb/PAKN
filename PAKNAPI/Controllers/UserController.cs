@@ -1083,7 +1083,7 @@ namespace PAKNAPI.Controllers
 				//check ton tai
 				var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone", model.Phone, 0);
 				if (checkExists[0].Exists.Value) {
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại người đại diện đã tồn tại" };
 				}
 				if (!string.IsNullOrEmpty(model.Email))
 				{

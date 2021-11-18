@@ -23,7 +23,6 @@ import { ViewFileDialogComponent } from './directives/viewfile-dialog/viewfile-d
 import { CustomHttpInterceptor } from './http-interceptor/customHttpInterceptor'
 import { ForbidenPageModule } from './modules/forbiden-page/forbiden-page.module'
 import { LoginsModule } from './modules/logins/logins.module'
-import { TreeModule } from 'primeng/tree'
 import { CalendarModule } from 'primeng/calendar'
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer'
 import { ImageViewerModule } from 'ng2-image-viewer'
@@ -33,6 +32,8 @@ import { TreeviewModule } from 'ngx-treeview'
 import { CarouselModule } from 'ngx-owl-carousel-o'
 import { TooltipModule } from 'ngx-bootstrap/tooltip'
 import { LightboxModule } from 'ngx-lightbox'
+import { TreeModule } from 'primeng/tree'
+import { TreeTableModule } from 'primeng/treetable'
 
 /// template 2
 
@@ -67,6 +68,7 @@ import { DetailNewsComponent } from './modules/template-v2/detail-news/detail-ne
 		ForbidenPageModule,
 		AppRoutingModule,
 		RouterModule,
+		TreeTableModule,
 		ToastrModule.forRoot({
 			timeOut: 2000,
 			positionClass: 'toast-bottom-right',

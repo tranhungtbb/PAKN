@@ -11,13 +11,13 @@
 					</div>
 					<div class="card mb-0 shadow-none">
 						<div class="table-responsive">
-							<p-table #dataTable [value]="statistics" [lazy]="true" [responsive]="true"
+							<p-treeTable  #dataTable [value]="statistics" (onNodeExpand)="onNodeExpand($event)" [lazy]="true"
 								tableStyleClass="table table-sd table-responsive-md table-striped mb-0"
 							>
 								<ng-template pTemplate="header">
 									<tr>
 										<th rowspan="2" class="text-center middle" style="width: 60px;">STT</th>
-										<th rowspan="2" colspan="3" class="text-center middle">Tên đơn vị</th>
+										<th rowspan="2" colspan="4" class="text-center middle">Tên đơn vị</th>
 										<th rowspan="1" colspan="5" class="text-center middle">Kết quả xử lý</th>
 										<th rowspan="1" colspan="3" class="text-center middle">Người dân đánh giá</th>
 									</tr>
@@ -33,21 +33,25 @@
 										<th rowspan="1" colspan="1" class="text-center middle">Không hài lòng</th>
 									</tr>
 								</ng-template>
-								<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+								<ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-rowIndex="rowIndex">
 									<tr>
-										<td class="text-center">{{ rowIndex + 1 }}</td>
-										<td rowspan="1" colspan="3" class="text-left">{{ item.unitName }}</td>
-										<td class="text-center">{{ item.totalResult }}</td>
-										<td class="text-center blue">{{ item.receiveApproved }}</td>
-										<td class="text-center green">{{ item.finised }}</td>
+										<td class="text-center">{{ rowData.index }}</td>
+										<td rowspan="1" colspan="4" class="text-left">
+											<p-treeTableToggler [rowNode]="rowNode" ></p-treeTableToggler>
+											<span class="mb-0">{{ rowData.unitName }}</span>
+										</td>
+										<td class="text-center">{{ rowData.totalResult }}</td>
+										<td class="text-center blue">{{ rowData.receiveApproved }}</td>
+										<td class="text-center green">{{ rowData.finised }}</td>
 
-										<td class="text-center blue">{{ item.processing }}</td>
-										<td class="text-center red">{{ item.expired }}</td>
-										<td class="text-center green">{{ item.satisfaction }}</td>
-										<td class="text-center blue">{{ item.accept }}</td>
-										<td class="text-center red">{{ item.unSatisfaction }}</td>
+										<td class="text-center blue">{{ rowData.processing }}</td>
+										<td class="text-center red">{{ rowData.expired }}</td>
+										<td class="text-center green">{{ rowData.satisfaction }}</td>
+										<td class="text-center blue">{{ rowData.accept }}</td>
+										<td class="text-center red">{{ rowData.unSatisfaction }}</td>
 									</tr>
 								</ng-template>
+								
 								<ng-template pTemplate="emptymessage">
 									<tr>
 										<td [attr.colspan]="10">
@@ -55,7 +59,7 @@
 										</td>
 									</tr>
 									</ng-template>
-							</p-table>
+							</p-treeTable>
 						</div>
 					</div>
 				</div>

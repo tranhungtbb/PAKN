@@ -166,12 +166,12 @@ namespace PAKNAPI.Services
             {
                 var handler = new JwtSecurityTokenHandler();
                 var token = handler.ReadToken(model.AccessToken) as JwtSecurityToken;
-                var tokenExpiryDate = token.ValidTo;
+                //var tokenExpiryDate = token.ValidTo;
 
-                if (tokenExpiryDate > DateTime.Now)
-                {
-                    return new ResultApi { Success = ResultCode.ORROR, Message = "Không thể refresh với token vẫn còn hạn" };
-                }
+                //if (tokenExpiryDate > DateTime.Now)
+                //{
+                //    return new ResultApi { Success = ResultCode.ORROR, Message = "Không thể refresh với token vẫn còn hạn" };
+                //}
 
                 // Check the token we got if its saved in the db
                 var refreshToken = await new RefreshTokens(_appSetting).GetByToken(model.RefreshToken);

@@ -4,6 +4,8 @@ import { Label } from 'ng2-charts'
 import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { PuRecommendationService } from 'src/app/services/pu-recommendation.service'
 import { ToastrService } from 'ngx-toastr'
+import { TreeNode } from 'primeng/api'
+import { TreeTableModule } from 'primeng/treetable'
 
 @Component({
 	selector: 'app-statistics',
@@ -12,7 +14,7 @@ import { ToastrService } from 'ngx-toastr'
 })
 export class StatisticsComponent implements OnInit {
 	// property
-	statistics: any = []
+	statistics: TreeNode[]
 	constructor(private _service: PuRecommendationService, private _toastr: ToastrService) {}
 
 	// chart
@@ -70,6 +72,14 @@ export class StatisticsComponent implements OnInit {
 		this._service.recommendationStatisticsByUnitParentId({}).subscribe(
 			(res) => {
 				if (res.success == RESPONSE_STATUS.success) {
+					this.statistics = []
+					for (var item of res.result) {
+						let itemDefault = item
+						item.children = []
+						item.label = item.unitName
+						item.leaf = false
+						item.data = { ...itemDefault, expanded: false, leaf: true, children: [] }
+					}
 					this.statistics = res.result
 				} else {
 					this._toastr.error(res.message)
@@ -79,5 +89,21 @@ export class StatisticsComponent implements OnInit {
 				console.log(err)
 			}
 		)
+	}
+
+	onNodeExpand(event) {
+		this._service.recommendationStatisticsByUnitParentId({ ParentId: event.node.id }).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				for (var item of res.result) {
+					let itemDefault = item
+					item.children = []
+					item.label = item.unitName
+					item.leaf = false
+					item.data = { ...itemDefault, index: event.node.data.index + '.' + item.index, expanded: false, leaf: true, children: [] }
+				}
+				event.node.children = res.result
+				this.statistics = [...this.statistics]
+			}
+		})
 	}
 }

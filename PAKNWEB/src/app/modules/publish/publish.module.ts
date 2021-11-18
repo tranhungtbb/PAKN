@@ -7,7 +7,7 @@ import { PublishRoutingModule } from './publish-routing.module'
 import { PaginatorModule } from 'primeng/paginator'
 import { CarouselModule } from 'ngx-owl-carousel-o'
 import { ChartsModule } from 'ng2-charts'
-
+import { TreeTableModule } from 'primeng/treetable'
 import { PublishComponent } from './publish.component'
 import { SharedModule } from '../../shared/shared.module'
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
@@ -87,6 +87,7 @@ import { NewsHightLightComponent } from './news-hight-light/news-hight-light.com
 		BsDatepickerModule.forRoot(),
 		EditorModule,
 		CarouselModule,
+		TreeTableModule,
 		AgmCoreModule.forRoot({
 			apiKey: 'AIzaSyBriVbWgmHEE8CGaEJM6V47Bem3VoYCi0Q',
 			language: 'vi',

@@ -263,7 +263,7 @@ namespace PAKNAPI.Models.Statistic
 	public class StatisticByByUnitParent
 	{
 		private SQLCon _sQLCon;
-
+		public int Index { get; set; }
 		public int Id { get; set; }
 		public string UnitName { get; set; }
 		public int? TotalResult { get; set; }
