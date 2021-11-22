@@ -121,6 +121,7 @@ namespace SignalR.Hubs
             {
                 _ConnectionsMap.Remove(userName + "x_x" + id);
             }
+            bots.RemoveBot(userName);
             //var user = _userRepository.GetByKey(nameof(User.userName), userName.ToString());
             //try
             //{
