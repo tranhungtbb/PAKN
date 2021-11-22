@@ -16,6 +16,7 @@ import { RecommendationsByGroupwordDetailComponent } from './recommendations-by-
 import { RecommendationsByUnitDetailComponent } from './recommendations-by-unit-detail/recommendations-by-unit-detail.component'
 import { RecommendationsByFieldDetailComponent } from './recommendations-by-field-detail/recommendations-by-field-detail.component'
 import { ProcessingStatusComponent } from './processing-status/processing-status.component'
+import { ProcessingResultsComponent } from './processing-results/processing-results.component'
 
 @NgModule({
 	declarations: [
@@ -27,6 +28,7 @@ import { ProcessingStatusComponent } from './processing-status/processing-status
 		RecommendationsByGroupwordComponent,
 		RecommendationsByGroupwordDetailComponent,
 		ProcessingStatusComponent,
+		ProcessingResultsComponent,
 	],
 	imports: [CommonModule, StatisticRoutingModule, FormsModule, MultiSelectModule, ReactiveFormsModule, SharedModule, TableModule, BsDatepickerModule.forRoot(), NgSelectModule],
 })

@@ -8,11 +8,11 @@ import { StatisticService } from 'src/app/services/statistic.service'
 
 declare var $: any
 @Component({
-	selector: 'app-statistic-processing-status',
-	templateUrl: './processing-status.component.html',
-	styleUrls: ['./processing-status.component.css'],
+	selector: 'app-statistic-processing-results',
+	templateUrl: './processing-results.component.html',
+	styleUrls: ['./processing-results.component.css'],
 })
-export class ProcessingStatusComponent implements OnInit {
+export class ProcessingResultsComponent implements OnInit {
 	constructor(
 		private _service: StatisticService,
 		private _router: Router,
@@ -34,7 +34,6 @@ export class ProcessingStatusComponent implements OnInit {
 	quarter: number
 	fromDate: Date
 	toDate: Date
-	listData: any = []
 
 	maxDateValue = new Date()
 	@ViewChild('myCanvas', { static: false }) canvas: any
@@ -55,7 +54,6 @@ export class ProcessingStatusComponent implements OnInit {
 			this.listYear.push({ value: i, text: 'Năm ' + i })
 		}
 		if (1 <= curMonth && curMonth <= 3) {
-			//1-3
 			this.quarter = 1
 		} else if (4 <= curMonth && curMonth <= 6) {
 			this.quarter = 2
@@ -111,9 +109,8 @@ export class ProcessingStatusComponent implements OnInit {
 			FromDate: this.fromDate == null ? '' : this.fromDate.toDateString(),
 			ToDate: this.toDate == null ? '' : this.toDate.toDateString(),
 		}
-		this._service.getProcessingStatus(request).subscribe((response) => {
+		this._service.getProcessingResult(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this.listData = response.result
 			} else {
 			}
 		}),

@@ -26,8 +26,8 @@
 					</div>
 
 					<div>
-						<div class="mb-4">
-							<b *ngIf="!files || files.length == 0">Chưa có file media nào</b>
+						<div class="mb-4" *ngIf="files">
+							<!-- <b *ngIf="!files || files.length == 0">Chưa có file media nào</b> -->
 							<ng-container>
 								<div *ngFor="let file of files" class="file-att">
 									<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">

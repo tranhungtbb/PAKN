@@ -8,6 +8,7 @@ import { RecommendationsByUnitDetailComponent } from './recommendations-by-unit-
 import { RecommendationsByFieldDetailComponent } from './recommendations-by-field-detail/recommendations-by-field-detail.component'
 import { RoleGuardService } from 'src/app/guards/role-guard.service'
 import { ProcessingStatusComponent } from './processing-status/processing-status.component'
+import { ProcessingResultsComponent } from './processing-results/processing-results.component'
 
 const routes: Routes = [
 	{
@@ -72,7 +73,7 @@ const routes: Routes = [
 	},
 	{
 		path: 'ket-qua-xu-ly-pakn',
-		component: ProcessingStatusComponent,
+		component: ProcessingResultsComponent,
 		canActivate: [RoleGuardService],
 		data: { role: 'D_III_0' },
 	},

@@ -15,3 +15,4 @@ D:\TL.inc\PAKN_\pakn\KarmaloopAIMLBotParser\bin\Debug\KarmaloopAIMLBotParser.pdb
 D:\TL.inc\PAKN_\pakn\KarmaloopAIMLBotParser\obj\Debug\KarmaloopAIMLBotParser.csproj.CoreCompileInputs.cache
 D:\TL.inc\PAKN_\pakn\KarmaloopAIMLBotParser\obj\Debug\KarmaloopAIMLBotParser.dll
 D:\TL.inc\PAKN_\pakn\KarmaloopAIMLBotParser\obj\Debug\KarmaloopAIMLBotParser.pdb
+D:\TL.inc\PAKN_\pakn\KarmaloopAIMLBotParser\obj\Debug\KarmaloopAIMLBotParser.csprojAssemblyReference.cache

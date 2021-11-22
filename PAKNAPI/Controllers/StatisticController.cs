@@ -359,12 +359,12 @@ namespace PAKNAPI.Controllers
 		[HttpGet]
 		[Authorize("ThePolicy")]
 		[Route("recommendation-processing-status")]
-		public async Task<ActionResult<object>> RecommendationProcessStatus(DateTime? FromDate , DateTime? ToDate)
+		public async Task<ActionResult<object>> RecommendationProcessStatus(DateTime? FromDate , DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			try
 			{
 				var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
-				List<StatisticRecommendationProcessStatus> result = await new StatisticRecommendationProcessStatus(_appSetting).StatisticRecommendationProcessStatusDAO(FromDate,ToDate, unitId);
+				List<StatisticRecommendationProcessStatus> result = await new StatisticRecommendationProcessStatus(_appSetting).StatisticRecommendationProcessStatusDAO(FromDate,ToDate, unitId,PageSize, PageIndex);
 
 				return new ResultApi { Success = ResultCode.OK, Result = result };
 			}
@@ -383,7 +383,8 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				List<StatisticRecommendationProcessResults> result = await new StatisticRecommendationProcessResults(_appSetting).StatisticRecommendationProcessResultsDAO(FromDate, ToDate);
+				var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+				List<StatisticRecommendationProcessResults> result = await new StatisticRecommendationProcessResults(_appSetting).StatisticRecommendationProcessResultsDAO(FromDate, ToDate, unitId);
 
 				return new ResultApi { Success = ResultCode.OK, Result = result };
 			}
