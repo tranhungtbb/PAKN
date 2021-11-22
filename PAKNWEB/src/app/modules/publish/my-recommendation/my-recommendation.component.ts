@@ -33,6 +33,7 @@ export class MyRecommendationComponent implements OnInit {
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	listData = new Array<RecommendationObject>()
+	typeUserLoginPublish: number = this.storageService.getTypeObject()
 
 	recommendationStatistics: any = new RecommendationStatistics()
 	totalRecommentdation: number = 0

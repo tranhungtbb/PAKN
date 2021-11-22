@@ -2207,3 +2207,78 @@ table thead .form-control ng-select {
 	border-bottom-left-radius: 12px;
 	background: linear-gradient(0deg, rgba(208, 206, 206, 1) 0%, rgba(255, 255, 255, 0.18280815744266454) 100%);
 }
+
+
+.card-my-recommentdation {
+	padding: 15px;
+	background-color: #eff8ff;
+	border-radius: 12px;
+}
+.lh-20 {
+	line-height: 20px;
+}
+.bd-20 {
+	border-radius: 20px;
+}
+.bg-gray {
+	background-color: #f6f6f6;
+}
+.read-more {
+	color: #1673d8;
+	font-size: 22px;
+}
+.number-chart-index {
+	font-family: Inter;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 48px;
+	line-height: 58px;
+}
+.card-my-chart {
+	border-radius: 12px;
+	border: 1px solid #eeeeee;
+}
+.circle {
+	width: 40px;
+	height: 40px;
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 20px;
+	border-radius: 50%;
+}
+.title-status-rm {
+	font-size: 16px;
+	line-height: 20px;
+	color: #000;
+}
+
+.border-left-yellow {
+	border-left: 3px solid #db8e3f;
+}
+.border-left-blue2 {
+	border-left: 3px solid #25a7d0;
+}
+.border-left-blue {
+	border-left: 3px solid #22a246;
+}
+.border-left-red {
+	border-left: 3px solid #da2222;
+}
+.bg-yellow {
+	background-color: #db8e3f;
+}
+.bg-blue2 {
+	background-color: #25a7d0;
+}
+.bg-blue {
+	background-color: #22a246 !important;
+}
+.bg-red {
+	background-color: #da2222;
+}
+.h-184 {
+	height: 184.4px;
+}
+.middle{
+	vertical-align: middle !important;
+}

@@ -143,18 +143,18 @@ export class AccountUpdateInfoComponent implements OnInit {
 		this.formData = this.formBuider.group({
 			//userName: [this.model.userName, [Validators.required]],
 			fullName: [this.model.fullName, [Validators.required]],
-			dateOfBirth: [this.model.dateOfBirth, [Validators.required]],
+			// dateOfBirth: [this.model.dateOfBirth, [Validators.required]],
 			email: [this.model.email, [Validators.email]],
-			//phone: [this.model.phone, [Validators.required,Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
-			nation: [this.model.nation, [Validators.required]],
-			provinceId: [this.model.provinceId, []],
-			districtId: [this.model.districtId, []],
-			wardsId: [this.model.wardsId, []],
+			phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
+			// nation: [this.model.nation, [Validators.required]],
+			// provinceId: [this.model.provinceId, []],
+			// districtId: [this.model.districtId, []],
+			// wardsId: [this.model.wardsId, []],
 			address: [this.model.address, [Validators.required]],
 			idCard: [this.model.idCard, [Validators.required]],
-			issuedPlace: [this.model.issuedPlace],
-			issuedDate: [this.model.issuedDate],
-			gender: [this.model.gender, [Validators.required]],
+			// issuedPlace: [this.model.issuedPlace],
+			// issuedDate: [this.model.issuedDate],
+			// gender: [this.model.gender, [Validators.required]],
 		})
 	}
 
@@ -183,34 +183,26 @@ export class AccountUpdateInfoComponent implements OnInit {
 	submitted = false
 	onSave() {
 		this.submitted = true
-		// if (this.model.nation == 'Nhập...') {
-		// 	this.model.nation = ''
-		// }
-		this.model.nation = this.model.nation == null ? '' : this.model.nation.trim()
-		if(this.model.nation == ''){
-			return
-		}
-		if (!this.model.email) this.model.email = ''
-		if (!this.model.issuedPlace) this.model.issuedPlace = ''
-		if(this.model.nation.trim())
+
 		if (this.formData.invalid) {
-			// this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
 
-		this.accountService.updateInfoIndividualCurrent(this.model).subscribe((res) => {
-			if (res.success != 'OK') {
-				this.toast.error(res.message)
-				return
+		this.accountService.updateInfoIndividualCurrent(this.model).subscribe(
+			(res) => {
+				if (res.success != 'OK') {
+					this.toast.error(res.message)
+					return
+				}
+				this.userLocal.setFullName(this.model.fullName)
+				this.toast.success(COMMONS.UPDATE_SUCCESS)
+				setTimeout(() => {
+					window.location.href = '/cong-bo/tai-khoan/thong-tin'
+				}, 1000)
+			},
+			(error) => {
+				console.error(error)
 			}
-			this.userLocal.setFullName(this.model.fullName)
-			this.toast.success(COMMONS.UPDATE_SUCCESS)
-			setTimeout(()=>{
-				window.location.href = '/cong-bo/tai-khoan/thong-tin';
-			},1000)
-			
-		},(error) => {
-			console.error(error)
-		})
+		)
 	}
 }

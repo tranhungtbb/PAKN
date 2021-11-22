@@ -359,7 +359,7 @@ export class Api {
 	public static OrganizationCheckExists = 'business/check-exists'
 	public static BusinessImportFile = 'business/import-data-business?folder=BusinessIndividual'
 
-	//Statistic
+	//Statistic admin
 
 	public static StatisticRecommendationByUnit = 'statistic/recommendation-by-unit'
 	public static StatisticRecommendationByUnitDetail = 'statistic/recommendation-by-unit-detail'
@@ -367,6 +367,9 @@ export class Api {
 	public static StatisticRecommendationByFieldDetail = 'statistic/recommendation-by-field-detail'
 	public static StatisticRecommendationByGroupWord = 'statistic/recommendation-by-group-word'
 	public static StatisticRecommendationByGroupWordDetail = 'statistic/recommendation-by-group-word-detail'
+	public static StatisticRecommendationProcessingStatus = 'statistic/recommendation-processing-status'
+
+	//statstic public
 	public static StatisticsByUnitParentId = 'statistic/recommendation-statistic-by-unit-parent'
 	public static StatisticsForChart = 'statistic/recommendation-statistic-for-chart'
 

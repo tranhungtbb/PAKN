@@ -15,51 +15,22 @@
 							<p class="h4 mb-0 pb-3 border-bottom set-height">{{model.fullName}}</p>
 						</div>
 						<div class="col">
-							<p class="mb-1">Ngày tháng năm sinh</p>
-							<p class="h4 mb-0 pb-3 border-bottom set-height">{{model.dateOfBirth | date : 'dd/MM/yyyy'}}</p>
+							<p class="mb-1">Số CMND / CCCD / Hộ chiếu</p>
+							<p class="h4 mb-0 pb-3 border-bottom set-height">{{model.idCard}}</p>
+						</div>
+						<div class="w-100 mb-3"></div>
+						<div class="col">
+							<p class="mb-1">Số điện thoại</p>
+							<p class="h4 mb-0 pb-3 border-bottom set-height">{{model.phone}}</p>
 						</div>
 						<div class="col">
 							<p class="mb-1">Email</p>
 							<p class="h4 mb-0 pb-3 border-bottom set-height">{{model.email}}</p>
 						</div>
 						<div class="w-100 mb-3"></div>
-						<div class="col">
-							<p class="mb-1">Quốc tịch</p>
-							<p class="h4 mb-0 pb-3 border-bottom set-height">{{model.nation}}</p>
-						</div>
-						<div class="col">
-							<p class="mb-1">Tỉnh / Thành phố</p>
-							<p class="h4 mb-0 pb-3 border-bottom set-height">{{getProvinceName}}</p>
-						</div>
-						<div class="col">
-							<p class="mb-1">Huyện / Quận / Thị xã ...</p>
-							<p class="h4 mb-0 pb-3 border-bottom set-height">{{getDistrictName}}</p>
-						</div>
-						<div class="w-100 mb-3"></div>
-						<div class="col">
-							<p class="mb-1">Xã / Phường / Thị trấn</p>
-							<p class="h4 mb-0 pb-3 border-bottom set-height">{{getWardsName}}</p>
-						</div>
-						<div class="col col-lg-8">
+						<div class="col col-lg-12">
 							<p class="mb-1">Địa chỉ cụ thể</p>
 							<p class="h4 mb-0 pb-3 border-bottom set-height">{{model.address}}</p>
-						</div>
-						<div class="w-100 mb-3"></div>
-						<div class="col">
-							<p class="mb-1">Số CMND / CCCD / Hộ chiếu</p>
-							<p class="h4 mb-0 pb-3 border-bottom set-height">{{model.idCard}}</p>
-						</div>
-						<div class="col">
-							<p class="mb-1">Nơi cấp</p>
-							<p class="h4 mb-0 pb-3 border-bottom set-height">{{model.issuedPlace}}</p>
-						</div>
-						<div class="col">
-							<p class="mb-1">Ngày cấp</p>
-							<p class="h4 mb-0 pb-3 border-bottom set-height">{{model.issuedDate | date : 'dd/MM/yyyy'}}</p>
-						</div>
-						<div class="w-100 mb-3"></div>
-						<div class="col">
-							<p class="mb-1">Giới tính: <span class="h4" *ngIf="!model.gender">Nữ</span><span class="h4" *ngIf="model.gender">Nam</span></p>
 						</div>
 					</div>
 

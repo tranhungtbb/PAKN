@@ -32,4 +32,8 @@ export class StatisticService {
 	getStatisticRecommendationByGroupWordDetail(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationByGroupWordDetail)
 	}
+
+	getProcessingStatus(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationProcessingStatus)
+	}
 }

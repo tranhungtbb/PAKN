@@ -3,7 +3,7 @@
 		<h4 class="text-uppercase">Thông tin tài khoản</h4>
 	</div>
 	<form [formGroup]="formData" class="form-row align-items-center" autocomplete="off">
-		<div class="col-12 col-lg-4 form-group">
+		<div class="col-12 col-lg-6 form-group">
 			<label class="mb-1">Họ và Tên <span class="cl-red">(*)</span></label>
 			<input [svTrim] maxlength="50" [(ngModel)]="model.fullName" formControlName="fullName" type="text" placeholder="Nhập..." class="form-control border-brown">
 			<div *ngIf="(submitted && f.fullName.invalid)||(f.fullName.invalid && (f.fullName.dirty || f.fullName.touched))" class="has-error m-b-12">
@@ -12,7 +12,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 col-lg-4 form-group">
+		<!-- <div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Ngày tháng năm sinh <span class="cl-red">(*)</span></label>
 			<div class="input-group">
 				<input class="form-control" placeholder="Nhập..." bsDatepicker #n="bsDatepicker" maxlength="10" id="_dateOfBirth" [(ngModel)]="model.dateOfBirth"
@@ -27,8 +27,21 @@
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
 				</div>
 			</div>
+		</div> -->
+
+		<div class="col-12 col-lg-6 form-group">
+			<label class="mb-1">Số điện thoại <span class="cl-red">(*)</span></label>
+			<input onlyNumber="true" maxlength="10" maxlength="10" [(ngModel)]="model.phone" formControlName="phone" type="text" placeholder="Nhập..." class="form-control border-brown">
+			<div *ngIf="(submitted && f.phone.invalid)||(f.phone.invalid && (f.phone.dirty || f.phone.touched))" class="has-error m-b-12">
+				<div *ngIf="f.phone.errors.required">
+					<span class="help-block">Trường dữ liệu này không được để trống</span>
+				</div>
+				<div *ngIf="f.phone.errors.pattern">
+					<span class="help-block">Số điện thoại không đúng</span>
+				</div>
+			</div>
 		</div>
-		<div class="col-12 col-lg-4 form-group">
+		<div class="col-12 col-lg-6 form-group">
 			<label class="mb-1">Email</label>
 			<input [svTrim] maxlength="50" [(ngModel)]="model.email" formControlName="email" type="text" placeholder="Nhập..." class="form-control border-brown">
 			<div *ngIf="(submitted && f.email.invalid)||(f.email.invalid && (f.email.dirty || f.email.touched))" class="has-error m-b-12">
@@ -40,8 +53,34 @@
 				</div>
 			</div>
 		</div>
-		<!-- row2 -->
-		<div class="col-12 col-lg-4 form-group">
+
+		<div class="col-12 col-lg-6 form-group">
+			<label class="mb-1">Số CMND / CCCD / Hộ chiếu <span class="cl-red">(*)</span></label>
+			<input [svTrim] maxlength="12" [(ngModel)]="model.idCard" formControlName="idCard" type="text" placeholder="Nhập..." class="form-control border-brown"
+			pattern="^(\w{1}[0-9]{7}|[0-9]{8}|[0-9]{9}|[0-9]{12})$">
+			<div *ngIf="(submitted && f.idCard.invalid)||(f.idCard.invalid && (f.idCard.dirty || f.idCard.touched))" class="has-error m-b-12">
+				<div *ngIf="f.idCard.errors.required">
+					<span class="help-block">Trường dữ liệu này không được để trống</span>
+				</div>
+				<div *ngIf="f.idCard.errors.pattern">
+					<span class="help-block">Số CMND/CCCD không hợp lệ!</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-12 col-lg-12 form-group">
+			<label class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></label>
+			<input [svTrim] maxlength="200" [(ngModel)]="model.address" formControlName="address" type="text" placeholder="Nhập..." class="form-control border-brown">
+
+			<div *ngIf="(submitted && f.address.invalid)||(f.address.invalid && (f.address.dirty || f.address.touched))" class="has-error m-b-12">
+				<div *ngIf="f.address.errors.required">
+					<span class="help-block">Trường dữ liệu này không được để trống</span>
+				</div>
+			</div>
+		</div>
+		
+
+		<!-- <div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Quốc tịch <span class="cl-red">(*)</span></label>
 			<ng-select notFoundText="Không có dữ liệu"  *ngIf="!nation_enable_type" [(ngModel)]="model.nation" formControlName="nation" class="form-control" placeholder="Chọn..." [closeOnSelect]="true"
 				(change)="onChangeNation(true)">
@@ -89,7 +128,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- row 3 -->
 		<div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Xã / Phường / Thị trấn <span class="cl-red">(*)</span></label>
 			<select *ngIf="nation_enable_type" disabled [(ngModel)]="model.wardsId" formControlName="wardsId" class="form-control" placeholder="Chọn...">
@@ -104,32 +142,10 @@
 					<span class="help-block">Trường dữ liệu này không được để trống</span>
 				</div>
 			</div>
-		</div>
-		<div class="col-12 col-lg-8 form-group">
-			<label class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></label>
-			<input [svTrim] maxlength="200" [(ngModel)]="model.address" formControlName="address" type="text" placeholder="Nhập..." class="form-control border-brown">
+		</div> -->
 
-			<div *ngIf="(submitted && f.address.invalid)||(f.address.invalid && (f.address.dirty || f.address.touched))" class="has-error m-b-12">
-				<div *ngIf="f.address.errors.required">
-					<span class="help-block">Trường dữ liệu này không được để trống</span>
-				</div>
-			</div>
-		</div>
-		<!-- row 4 -->
-		<div class="col-12 col-lg-4 form-group">
-			<label class="mb-1">Số CMND / CCCD / Hộ chiếu <span class="cl-red">(*)</span></label>
-			<input [svTrim] maxlength="12" [(ngModel)]="model.idCard" formControlName="idCard" type="text" placeholder="Nhập..." class="form-control border-brown"
-				pattern="^(\w{7}|\w{8}|\w{9}|\w{12})$">
-			<div *ngIf="(submitted && f.idCard.invalid)||(f.idCard.invalid && (f.idCard.dirty || f.idCard.touched))" class="has-error m-b-12">
-				<div *ngIf="f.idCard.errors.required">
-					<span class="help-block">Trường dữ liệu này không được để trống</span>
-				</div>
-				<div *ngIf="f.idCard.errors.pattern">
-					<span class="help-block">Số CMND/CCCD không hợp lệ!</span>
-				</div>
-			</div>
-		</div>
-		<div class="col-12 col-lg-4 form-group">
+		
+		<!-- <div class="col-12 col-lg-4 form-group">
 			<label class="mb-1">Nơi cấp</label>
 			<input [svTrim] maxlength="200" [(ngModel)]="model.issuedPlace" formControlName="issuedPlace" type="text" placeholder="Nhập..." class="form-control border-brown">
 
@@ -162,7 +178,7 @@
 			<label *ngFor="let gen of listGender" class="radio-inline mr-3">
 				<input [(ngModel)]="model.gender" formControlName="gender" [value]="gen.value" type="radio"> <span class="text-uppercase"> {{gen.text}}</span>
 			</label>
-		</div>
+		</div> -->
 	</form>
 
 	<div class="row mb-4">

@@ -1481,29 +1481,14 @@ namespace PAKNAPI.Controllers
             {
 				var users = _httpContextAccessor.HttpContext.User.Identities.FirstOrDefault().Claims; //FindFirst(ClaimTypes.NameIdentifier);
 
-				var userId = users.FirstOrDefault(c => c.Type.Equals("Id", StringComparison.OrdinalIgnoreCase)).Value;
-				var accInfo = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(long.Parse(userId));
+				var userId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+				var accInfo = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(userId);
 
                 if (accInfo == null || !accInfo.Any())
                 {
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Tài khoản không tồn tại" };
 				}
 
-				
-
-				if (model.DateOfBirth >= DateTime.Now)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn hoặc bằng ngày hiện tại" };
-				}
-
-				if (model.IssuedDate != null && model.IssuedDate < model.DateOfBirth)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn ngày thành lập" };
-				}
-
-				///Phone,Email,IDCard
-				///check ton tai
-				///
 				accInfo[0].FullName = model.FullName;
 				var info = await new BIIndividualGetByUserId(_appSetting).BIIndividualGetByUserIdDAO(accInfo[0].Id);
 
@@ -1542,8 +1527,9 @@ namespace PAKNAPI.Controllers
 				var rsUpdateAcc = new SYUserUpdateInfo(_appSetting).SYUserUpdateInfoDAO(new SYUserUpdateInfoIN
 				{
 					Id = accInfo[0].Id,
-					FullName = accInfo[0].FullName,
-					Address = accInfo[0].Address,
+					FullName = model.FullName,
+					Address =model.Address,
+					UserName = model.IdCard,
 				});
 
 				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);

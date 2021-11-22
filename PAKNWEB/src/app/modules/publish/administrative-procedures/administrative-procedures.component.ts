@@ -6,7 +6,6 @@ import { MESSAGE_COMMON, RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { AdministrativeFormalitiesService } from 'src/app/services/administrative-formalities.service'
-import { RecommendationService } from 'src/app/services/recommendation.service'
 
 declare var $: any
 
@@ -50,7 +49,7 @@ export class AdministrativeProceduresComponent implements OnInit {
 	submitted: boolean = false
 	isActived: boolean
 	pageIndex: number = 1
-	pageSize: number = 10
+	pageSize: number = 20
 	@ViewChild('table', { static: false }) table: any
 	totalRecords: number = 0
 	idDelete: number = 0

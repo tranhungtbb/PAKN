@@ -306,4 +306,68 @@ namespace PAKNAPI.Models.Statistic
 		}
 		public RecommendationStatisticForChart() { }
 	}
+
+	public class StatisticRecommendationProcessStatus
+	{
+		private SQLCon _sQLCon;
+		public int Id { get; set; }
+		public int UnitLevel { get; set; }
+		public bool ExistChild { get; set; }
+		public string UnitName { get; set; }
+		public int? TotalResult { get; set; }
+		public int? ReceiveApproved { get; set; }
+		public int? Finised { get; set; }
+		public int? Processing { get; set; }
+		public int? Expired { get; set; }
+		public int? Satisfaction { get; set; }
+		public int? Accept { get; set; }
+		public int? UnSatisfaction { get; set; }
+		public StatisticRecommendationProcessStatus(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public StatisticRecommendationProcessStatus()
+		{
+		}
+
+		public async Task<List<StatisticRecommendationProcessStatus>> StatisticRecommendationProcessStatusDAO(DateTime? FromDate, DateTime? ToDate, int? UnitId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("FromDate", FromDate);
+			DP.Add("ToDate", ToDate);
+			DP.Add("UnitProcessId", UnitId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationProcessStatus>("TK_RecommendationPublicByUnit", DP)).ToList();
+		}
+	}
+
+	public class StatisticRecommendationProcessResults
+	{
+		private SQLCon _sQLCon;
+		public int Index { get; set; }
+		public int Id { get; set; }
+		public int UnitLevel { get; set; }
+		public bool ExistChild { get; set; }
+		public string UnitName { get; set; }
+		public int? TotalResult { get; set; }
+		public StatisticRecommendationProcessResults(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public StatisticRecommendationProcessResults()
+		{
+		}
+
+		public async Task<List<StatisticRecommendationProcessResults>> StatisticRecommendationProcessResultsDAO(DateTime? FromDate, DateTime? ToDate)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("FromDate", FromDate);
+			DP.Add("ToDate", ToDate);
+
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationProcessResults>("TK_RecommendationPublicByUnit", DP)).ToList();
+		}
+	}
+
 }

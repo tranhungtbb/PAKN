@@ -4,64 +4,77 @@ import { RecommendationsByUnitComponent } from 'src/app/modules/statistic/recomm
 import { RecommendationsByFieldComponent } from 'src/app/modules/statistic/recommendations-by-field/recommendations-by-field.component'
 import { RecommendationsByGroupwordComponent } from './recommendations-by-groupword/recommendations-by-groupword.component'
 import { RecommendationsByGroupwordDetailComponent } from './recommendations-by-groupword-detail/recommendations-by-groupword-detail.component'
-import {RecommendationsByUnitDetailComponent} from './recommendations-by-unit-detail/recommendations-by-unit-detail.component'
-import {RecommendationsByFieldDetailComponent} from './recommendations-by-field-detail/recommendations-by-field-detail.component'
+import { RecommendationsByUnitDetailComponent } from './recommendations-by-unit-detail/recommendations-by-unit-detail.component'
+import { RecommendationsByFieldDetailComponent } from './recommendations-by-field-detail/recommendations-by-field-detail.component'
 import { RoleGuardService } from 'src/app/guards/role-guard.service'
+import { ProcessingStatusComponent } from './processing-status/processing-status.component'
 
 const routes: Routes = [
-	{ 
+	{
 		path: '',
-		component: RecommendationsByUnitComponent ,
+		component: RecommendationsByUnitComponent,
 		canActivate: [RoleGuardService],
-		data: { role: 'D_I_0' }
+		data: { role: 'D_I_0' },
 	},
-	{ 
+	{
 		path: 'phan-anh-kien-nghi-theo-don-vi',
 		component: RecommendationsByUnitComponent,
 		canActivate: [RoleGuardService],
-		data: { role: 'D_I_0' }
+		data: { role: 'D_I_0' },
 	},
-	{ 
-		path: 'phan-anh-kien-nghi-theo-don-vi-chi-tiet/:unitId/:fromDate/:toDate', 
+	{
+		path: 'phan-anh-kien-nghi-theo-don-vi-chi-tiet/:unitId/:fromDate/:toDate',
 		component: RecommendationsByUnitDetailComponent,
 		canActivate: [RoleGuardService],
-		data: { role: 'D_I_1' }
+		data: { role: 'D_I_1' },
 	},
-	{ 
+	{
 		path: 'phan-anh-kien-nghi-theo-don-vi-chi-tiet/:unitId/:fromDate/:toDate/:status',
 		component: RecommendationsByUnitDetailComponent,
 		canActivate: [RoleGuardService],
-		data: { role: 'D_I_1' }
+		data: { role: 'D_I_1' },
 	},
-	{ 
+	{
 		path: 'phan-anh-kien-nghi-theo-linh-vuc',
-		component: RecommendationsByFieldComponent ,
+		component: RecommendationsByFieldComponent,
 		canActivate: [RoleGuardService],
-		data: { role: 'D_II_0' }
+		data: { role: 'D_II_0' },
 	},
-	{ 
+	{
 		path: 'phan-anh-kien-nghi-theo-linh-vuc-chi-tiet/:fieldId/:lstUnitId/:fromDate/:toDate/:status',
 		component: RecommendationsByFieldDetailComponent,
 		canActivate: [RoleGuardService],
-		data: { role: 'D_II_1' }
+		data: { role: 'D_II_1' },
 	},
-	{ 
+	{
 		path: 'phan-anh-kien-nghi-theo-linh-vuc-chi-tiet/:fieldId/:lstUnitId/:fromDate/:toDate',
 		component: RecommendationsByFieldDetailComponent,
 		canActivate: [RoleGuardService],
-		data: { role: 'D_II_1' } 
+		data: { role: 'D_II_1' },
 	},
-	{ 
+	{
 		path: 'phan-anh-kien-nghi-theo-nhom-tu-ngu',
 		component: RecommendationsByGroupwordComponent,
 		canActivate: [RoleGuardService],
-		data: { role: 'D_III_0' }
+		data: { role: 'D_III_0' },
 	},
 	{
 		path: 'phan-anh-kien-nghi-theo-nhom-tu-ngu-chi-tiet/:unitId/:groupWordId/:fromDate/:toDate',
-		component: RecommendationsByGroupwordDetailComponent ,
+		component: RecommendationsByGroupwordDetailComponent,
 		canActivate: [RoleGuardService],
-		data: { role: 'D_III_1' }
+		data: { role: 'D_III_1' },
+	},
+	{
+		path: 'tinh-trang-xu-ly-pakn',
+		component: ProcessingStatusComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
+	},
+	{
+		path: 'ket-qua-xu-ly-pakn',
+		component: ProcessingStatusComponent,
+		canActivate: [RoleGuardService],
+		data: { role: 'D_III_0' },
 	},
 ]
 

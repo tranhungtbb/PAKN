@@ -5,6 +5,7 @@ using PAKNAPI.Models.Statistic;
 using PAKNAPI.Models.SyncData;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PAKNAPI.Models.Recommendation
 {
@@ -35,6 +36,13 @@ namespace PAKNAPI.Models.Recommendation
         public List<DropdownObject> lstGroupWord { get; set; }
         public List<DropdownObject> lstUsersProcess { get; set; }
     }
+
+    public class RecommendationCheckCaptcha {
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Mã captcha không được để trống")]
+        public string Captcha { get; set; }
+    }
+
     public class RecommendationInsertRequest
     {
         public long? UserId { get; set; }

@@ -355,5 +355,46 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("recommendation-processing-status")]
+		public async Task<ActionResult<object>> RecommendationProcessStatus(DateTime? FromDate , DateTime? ToDate)
+		{
+			try
+			{
+				var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+				List<StatisticRecommendationProcessStatus> result = await new StatisticRecommendationProcessStatus(_appSetting).StatisticRecommendationProcessStatusDAO(FromDate,ToDate, unitId);
+
+				return new ResultApi { Success = ResultCode.OK, Result = result };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("recommendation-processing-results")]
+		public async Task<ActionResult<object>> RecommendationProcessResults(DateTime? FromDate, DateTime? ToDate)
+		{
+			try
+			{
+				List<StatisticRecommendationProcessResults> result = await new StatisticRecommendationProcessResults(_appSetting).StatisticRecommendationProcessResultsDAO(FromDate, ToDate);
+
+				return new ResultApi { Success = ResultCode.OK, Result = result };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
 	}
 }

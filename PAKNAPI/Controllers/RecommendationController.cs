@@ -36,6 +36,8 @@ namespace PAKNAPI.Controller
         private readonly IClient _bugsnag;
         private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
 
+        public static List<CaptchaObject> captChaCode = new List<CaptchaObject>();
+
         public RecommendationController(IWebHostEnvironment hostingEnvironment, IAppSetting appSetting, IClient bugsnag, Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             _appSetting = appSetting;
@@ -224,6 +226,76 @@ namespace PAKNAPI.Controller
         }
 
 
+        [HttpPost]
+        [Authorize("ThePolicy")]
+        [Route("check-recommendation")]
+
+        public async Task<ActionResult<object>> RecommendationCheckFakeImage([FromForm] RecommendationCheckCaptcha model)
+        {
+            try
+            {
+                if (!new Captcha(_appSetting).ValidateCaptchaCode(model.Captcha, captChaCode))
+                {
+                    await new Captcha(_appSetting).DeleteCaptcha("");
+                    return new ResultApi { Success = ResultCode.ORROR, Message = "Vui lòng nhập lại mã captcha" };
+                }
+                else
+                {
+                    await new Captcha(_appSetting).DeleteCaptcha(model.Captcha);
+
+                    var json = System.IO.File.ReadAllText("fake-images.json");
+                    var sampleData = JsonConvert.DeserializeObject<Dictionary<long, FakeResult>>(json);
+                    var fakeImage = new FakeImageDetection(sampleData);
+
+                    string folder = "Upload\\Recommendation\\Image";
+                    string folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+                    bool isFakeImage = false;
+                    List<string> filesNameError = new List<string>();
+                    foreach (var item in Request.Form.Files)
+                    {
+                        string fileName = Path.GetFileName(item.FileName).Replace("+", "");
+                        string filePath = Path.Combine(folderPath, fileName);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            item.CopyTo(stream);
+                            var s = new System.Drawing.Bitmap(stream);
+                            if (fakeImage.IsFake(s))
+                            {
+                                isFakeImage = true;
+                                filesNameError.Add(item.FileName);
+                            }
+                        }
+                    }
+                    if (isFakeImage)
+                    {
+                        return new ResultApi { Success = ResultCode.INCORRECT, Message = "Ảnh " + string.Join(", ", filesNameError) + " đã qua chỉnh sửa" };
+                    }
+                    else
+                    {
+                        return new ResultApi { Success = ResultCode.OK };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+            finally {
+                System.IO.DirectoryInfo di = new DirectoryInfo("Upload\\Recommendation\\Image");
+
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+            }
+        }
+
+
         /// <summary>
         /// thêm mới pakn
         /// </summary>
@@ -266,15 +338,6 @@ namespace PAKNAPI.Controller
                     // người dân, doanh nghiệp gửi
                     if (request.Data.UnitId == null)
                     {
-                        //var syUnitByField = await new SYUnitGetByField(_appSetting).SYUnitGetByFieldDAO(request.Data.Field);
-                        //if (syUnitByField.Count == 0)
-                        //{
-                        //    request.Data.UnitId = dataMain.Id;
-                        //}
-                        //else
-                        //{
-                        //    request.Data.UnitId = syUnitByField.FirstOrDefault().Id;
-                        //}
                         request.Data.UnitId = dataMain.Id;
                     }
                     if (request.Data.Status > 1 && dataMain != null && dataMain.Id != request.Data.UnitId && request.UserType != 1)
@@ -348,14 +411,9 @@ namespace PAKNAPI.Controller
                     {
 
                         // fake image
-
                         var json = System.IO.File.ReadAllText("fake-images.json");
-                        //StreamReader r = new StreamReader("fake-image.json");
-                        //string json = r.ReadToEnd();
                         var sampleData = JsonConvert.DeserializeObject<Dictionary<long, FakeResult>>(json);
                         var fakeImage = new FakeImageDetection(sampleData);
-
-                        
 
                         string folder = "Upload\\Recommendation\\" + Id;
                         string folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
