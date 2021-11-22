@@ -112,12 +112,16 @@
 									</p>
 									<p class="small mb-1 text-brown">
 										<span class="mr-4"><b>Mã nội bộ:</b> {{item.code}}</span>
-										<span><b class="mr-1">Mức độ</b>
+										<span *ngIf="item.level"><b class="mr-1">Mức độ</b>
 											<label *ngIf="item.level == 1" class="badge-custom orange">{{item.level}}</label>
 											<label *ngIf="item.level == 2" class="badge-custom pink">{{item.level}}</label>
 											<label *ngIf="item.level == 3" class="badge-custom danger">{{item.level}}</label>
-											<label *ngIf="item.level == 3" class="badge-custom danger-bold">{{item.level}}</label>
+											<label *ngIf="item.level == 4" class="badge-custom danger-bold">{{item.level}}</label>
 										</span>
+										<span *ngIf="item.level == 4 || item.level == 3" style="float: right;">
+											<a target="_blank" href="{{'https://hanhchinhcong.khanhhoa.gov.vn/#/nguoidung/soanhoso?thutucId='+ item.administrationId + '&donvitiepnhanId=-2'}}"
+											class="btn btn-outline-dark btn-submit-administration border-radius-4" href="">Nộp đơn</a>
+										</span>	
 									</p>
 								</td>
 								<td class="vertical-top">{{item.fieldName}}</td>

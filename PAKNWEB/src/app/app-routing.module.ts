@@ -3,10 +3,6 @@ import { CommonModule } from '@angular/common'
 import { RouterModule, Routes } from '@angular/router'
 
 // template 2
-import { ListRecommendation2Component } from 'src/app/modules/template-v2/list-recommendation/list-recommendation.component'
-import { DetailRecommendation2Component } from 'src/app/modules/template-v2/detail-recommendation/detail-recommendation.component'
-import { ListNewsComponent } from './modules/template-v2/list-news/list-news.component'
-import { DetailNewsComponent } from './modules/template-v2/detail-news/detail-news.component'
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'cong-bo', pathMatch: 'full' },

@@ -37,7 +37,8 @@
 									<tr>
 										<td class="text-center">{{ rowData.index }}</td>
 										<td rowspan="1" colspan="4" class="text-left">
-											<p-treeTableToggler [rowNode]="rowNode" ></p-treeTableToggler>
+											<p-treeTableToggler *ngIf="rowData.existChild" [rowNode]="rowNode" ></p-treeTableToggler>
+											<span *ngIf="!rowData.existChild" [style.marginLeft.px]="rowData.unitLevel * 20" style="margin-left:  'rowData.unitLevel' px;"></span>
 											<span class="mb-0">{{ rowData.unitName }}</span>
 										</td>
 										<td class="text-center">{{ rowData.totalResult }}</td>

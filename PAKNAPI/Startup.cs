@@ -35,6 +35,7 @@ using Quartz.Logging;
 using System;
 using PAKNAPI.Chat;
 using SignalR.Hubs;
+using PAKNAPI.Job;
 
 namespace PAKNAPI
 {
@@ -161,18 +162,21 @@ namespace PAKNAPI
 			var jobKeyTTHC = new JobKey("syncDataTTHC");
 			var jobKeyKNCT = new JobKey("syncDataKNCT");
 			var jobKeyHVHCC = new JobKey("syncDataDVHCC");
+			var jobKeyCTTDT = new JobKey("syncDataCTTDT");
 			services.AddQuartz(q =>
 			{
 				q.SchedulerId = "Scheduler-Core";
+				q.UseMicrosoftDependencyInjectionScopedJobFactory();
 				q.UseSimpleTypeLoader();
 				q.UseInMemoryStore();
 				q.UseDefaultThreadPool(tp =>
 				{
-					tp.MaxConcurrency = 5;
+					tp.MaxConcurrency = 10;
 				});
 				q.AddJob<MyJobAdministrative>(opts => opts.WithIdentity(jobKeyTTHC));
 				q.AddJob<MyJobKienNghiCuTri>(opts => opts.WithIdentity(jobKeyKNCT));
 				q.AddJob<MyJobDichVuCongQuocGia>(opts => opts.WithIdentity(jobKeyHVHCC));
+				q.AddJob<MyJobFeedBack>(opts => opts.WithIdentity(jobKeyCTTDT));
 
 
 				// Create a trigger for the job
@@ -189,6 +193,12 @@ namespace PAKNAPI
 					.ForJob(jobKeyHVHCC) // link to the syncData
 					.WithIdentity("syncDataHVHCC-trigger") // give the trigger a unique name
 					.WithCalendarIntervalSchedule(s => s.WithIntervalInDays(1))); //time
+
+				// job cong thong tin dien tu tinh
+				q.AddTrigger(opts => opts
+					.ForJob(jobKeyCTTDT) // link to the syncData
+					.WithIdentity("syncDataCTTDT-trigger") // give the trigger a unique name
+					.WithCalendarIntervalSchedule(s => s.WithIntervalInDays(3))); //time
 			});
 
 			// ASP.NET Core hosting

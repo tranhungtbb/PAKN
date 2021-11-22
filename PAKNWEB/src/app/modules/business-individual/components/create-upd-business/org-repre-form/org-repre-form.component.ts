@@ -42,13 +42,13 @@ export class OrgRepreFormComponent implements OnInit, AfterViewInit {
 	backToSelectBox() {
 		this.nation_enable_type = false
 		this.model.Nation = 'Việt Nam'
-		this.onChangeNation()
-		this.model.ProvinceId = null
-		this.model.DistrictId = null
-		this.model.WardsId = null
-		this.model.OrgProvinceId = null
-		this.model.OrgDistrictId = null
-		this.model.OrgWardsId = null
+		// this.onChangeNation()
+		// this.model.ProvinceId = null
+		// this.model.DistrictId = null
+		// this.model.WardsId = null
+		// this.model.OrgProvinceId = null
+		// this.model.OrgDistrictId = null
+		// this.model.OrgWardsId = null
 	}
 	resetNationField() {
 		if (this.model.Nation == 'Nhập...') this.model.Nation = ''
@@ -121,13 +121,13 @@ export class OrgRepreFormComponent implements OnInit, AfterViewInit {
 			//----thông tin người đại diện
 			RepresentativeName: [this.model.RepresentativeName, [Validators.required, Validators.maxLength(100)]], // tên người đại diện
 			Email: [this.model.Email, [Validators.email]],
-			Gender: [this.model.RepresentativeGender, [Validators.required]],
-			DOB: [this.model.RepresentativeBirthDay, []],
-			Nation: [this.model.Nation, [Validators.required]],
-			Province: [this.model.ProvinceId, [Validators.required]], //int
-			District: [this.model.DistrictId, [Validators.required]], // int
-			Village: [this.model.WardsId, [Validators.required]], // int
-			Address: [this.model.Address, []],
+			// Gender: [this.model.RepresentativeGender, [Validators.required]],
+			// DOB: [this.model.RepresentativeBirthDay, []],
+			// Nation: [this.model.Nation, [Validators.required]],
+			// Province: [this.model.ProvinceId, [Validators.required]], //int
+			// District: [this.model.DistrictId, [Validators.required]], // int
+			// Village: [this.model.WardsId, [Validators.required]], // int
+			Address: [this.model.Address, [Validators.required]],
 			phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/)]],
 		})
 	}

@@ -24,7 +24,47 @@
 					</div> -->
 					<div class="contents" [innerHTML]="model.contents | oembed" style="text-align: justify;">
 					</div>
+
+					<div>
+						<div class="mb-4">
+							<b *ngIf="!files || files.length == 0">Chưa có file media nào</b>
+							<ng-container>
+								<div *ngFor="let file of files" class="file-att">
+									<a *ngIf="file.fileType == 1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 2" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 3" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 4" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 6" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 7" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;padding-right: 5px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 15? file.name.slice(0,14) + "..." : file.name}}</span>
+									</a>
+									<span *ngIf="file.fileType != 6 && file.fileType != 5" class="pointer" appViewFile [linkfile]="file.filePath" [namefile]="file.name"
+										title="Xem file">
+										<i class="bi bi-eye"></i>
+									</span>
+								</div>
+							</ng-container>
+							<!-- bi bi-x -->
+						</div>
+					</div>
 				</div>
+				
 				<p *ngIf="(viewDemo && !model) || !model">Bài viết chưa được công bố</p>
 				<div *ngIf="viewDemo || model">
 					<div class="mb-4">
@@ -61,8 +101,9 @@
 							<div class="search-bar center ps-relative search-article full-with">
 								<div class="p-0 m-0 show full-with">
 									<form>
-										<input class="form-control" type="text" placeholder="Nhập nội dung tìm kiếm..." aria-label="Search">
+										<input class="form-control" type="text" (keyup)="changeKeySearch($event)" placeholder="Nhập nội dung tìm kiếm..." aria-label="Search">
 									</form>
+									<!-- (keydown.enter)="redirectNews()" -->
 								</div>
 								<span class="search_icon p-3 c-pointer ps-absolute" style="right: 0px;">
 									<i class="bi bi-search"></i>
@@ -99,15 +140,15 @@
 					</a>
 
 					<div class="sb-lkWeb mb-2">
-						<div class="tt-v1 pt-2">
+						<div class="tt-v1 pt-3">
 							<h4 class="text-uppercase">liên kết website</h4>
 						</div>
-						<ng-container *ngFor="let item of [1,2,3,4]; let i = index">
+						<ng-container *ngFor="let item of ltsIndexSettingWebsite; let i = index">
 							<a class="mb-4 mt-3" target="_blank" href="{{item.urlWebsite}}" title="{{item.nameWebsite}}">
-								<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==0" src="../../../assets/dist/images/cong dịch vụ công quốc gia.png">
-								<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==1" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công.png">
-								<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==2" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (1).png">
-								<img class="img-fluid card shadow rounded mb-0 mt-3 img-cover" *ngIf="i==3" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (2).png">
+								<img class="img-fluid card rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==0" src="../../../assets/dist/images/cong dịch vụ công quốc gia.png">
+								<img class="img-fluid card rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==1" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công.png">
+								<img class="img-fluid card rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==2" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (1).png">
+								<img class="img-fluid card rounded mb-0 mt-3" style="width: 100%; height: 100px;" *ngIf="i==3" src="../../../assets/dist/images/trung tâm dịch vụ hành chính công (2).png">
 							</a>
 						</ng-container>
 					</div>

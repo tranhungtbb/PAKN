@@ -149,6 +149,11 @@ namespace PAKNAPI.ModelBase
 			DP.Add("Keyword", Keyword);
 			return (await _sQLCon.ExecuteListDapperAsync<CAFieldDAMGetDropdown>("CA_UnitDAMGetDropdown", DP)).ToList();
 		}
+		public async Task<int?> CAUnitDAMDeleteAllDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_UnitDAMDeleteAll", DP));
+		}
 	}
 
 	public class CAFieldDAMInsert
@@ -202,6 +207,31 @@ namespace PAKNAPI.ModelBase
 			return await _sQLCon.ExecuteNonQueryDapperAsync("CA_FieldDAMDeleteAll", DP);
 		}
 	}
+
+	public class CAUnitDAMInsert
+	{
+		private SQLCon _sQLCon;
+		public int UnitId { get; set; }
+		public string Name { get; set; }
+		public CAUnitDAMInsert(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAUnitDAMInsert()
+		{
+		}
+
+		public async Task<int?> CAUnitDAMInsertDAO(CAUnitDAMInsert cAUnitDAMInsert)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UnitId", cAUnitDAMInsert.UnitId);
+			DP.Add("Name", cAUnitDAMInsert.Name);
+
+			return await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_UnitDAMInsert", DP);
+		}
+	}
+
 
 	public class CAFieldGetDropdown
 	{

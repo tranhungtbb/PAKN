@@ -89,6 +89,21 @@ export class StatisticsComponent implements OnInit {
 				console.log(err)
 			}
 		)
+
+		/// data for chart
+		this._service.recommendationStatisticsForChart({}).subscribe(
+			(res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.barChartLabels = res.result.Titles
+					this.barChartData = res.result.Values
+				} else {
+					this._toastr.error(res.message)
+				}
+			},
+			(err) => {
+				console.log(err)
+			}
+		)
 	}
 
 	onNodeExpand(event) {

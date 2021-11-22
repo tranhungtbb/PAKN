@@ -5,10 +5,10 @@
 				<div class="box" *ngIf="isHomeMain">
 					<div class="tt-v1 mb-3 d-flex justify-content-between">
 						<h4 class="text-uppercase">Danh sách phản ánh, kiến nghị đã được xử lý</h4>
-						<a class="read-more" title="Xem thêm" routerLink="/cong-bo/phan-anh-kien-nghi"><i class="bi bi-arrow-right"></i></a>
+						<a class="read-more" style="font-size: 1.5rem;" title="Xem thêm" routerLink="/cong-bo/phan-anh-kien-nghi"><i class="bi bi-arrow-right"></i></a>
 					</div>
 					<ng-container *ngFor="let item of ReflectionsRecommendations; let i = index">
-						<div class="card border mb-3">
+						<div class="card border mb-3" [ngClass]="{'bg-gray' : i % 2 != 0}">
 							<div class="card-header pt-3 pb-0 align-items-center">
 								<p class="card-text mb-1">
 									<a class="h4" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
@@ -20,13 +20,13 @@
 								<div class="d-flex align-items-center">
 									<div class="media align-items-center mr-4">
 										<div class="avatar-circle mr-2">
-											{{item.shortName}}
+											{{getShortName(item.name)}}
 										</div>
 										<div class="media-body">
 											<p class="my-0 h5">{{item.name}}</p>
 										</div>
 									</div>
-									<span class="card-date">{{item.createdDate | date : 'HH:mm'}} ngày {{item.createdDate | date : 'dd/MM/yyyy'}}</span>
+									<span class="card-date">{{item.createdDate | date : 'dd/MM/yyyy'}}</span>
 								</div>
 								
 								<p class="card-text">

@@ -227,15 +227,15 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public string IssuedPlace { get; set; }
 		public string NativePlace { get; set; }
 		public string PermanentPlace { get; set; }
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Quốc tịch không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Quốc tịch không được để trống")]
 		public string Nation { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Ngày sinh không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Ngày sinh không được để trống")]
 		[DataType(DataType.DateTime, ErrorMessage = "Ngày sinh không đúng định dạng")]
 
 		public DateTime? BirthDay { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Giới tính không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Giới tính không được để trống")]
 		public bool? Gender { get; set; }
 		public long? UserId { get; set; }
 	}
@@ -302,7 +302,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 
 		public string Address { get; set; }
 
-		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail người đại diện không đúng định dạng")]
+		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail không đúng định dạng")]
 		public string Email { get; set; }
 		
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại người đại diện không được để trống")]
@@ -319,10 +319,10 @@ namespace PAKNAPI.Models.BusinessIndividual
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Quốc tịch không được để trống")]
 		public string Nation { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Ngày sinh không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Ngày sinh không được để trống")]
 		[DataType(DataType.DateTime, ErrorMessage = "Ngày sinh không đúng định dạng")]
 		public DateTime? BirthDay { get; set; }
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Giới tính không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Giới tính không được để trống")]
 		public bool? Gender { get; set; }
 		public long? UserId { get; set; }
 	}

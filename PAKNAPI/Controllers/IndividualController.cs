@@ -372,20 +372,20 @@ namespace PAKNAPI.Controllers
 				// validate
 
 
-				if (model.BirthDay >= DateTime.Now)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn hoặc bằng ngày hiện tại" };
-				}
+				//if (model.BirthDay >= DateTime.Now)
+				//{
+				//	return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn hoặc bằng ngày hiện tại" };
+				//}
 
-				if (model.DateOfIssue != null && model.DateOfIssue < model.BirthDay)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn ngày thành lập" };
-				}
+				//if (model.DateOfIssue != null && model.DateOfIssue < model.BirthDay)
+				//{
+				//	return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn ngày thành lập" };
+				//}
 
-				var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
-				if (hasOne != null && hasOne.Any()) {
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
-				}
+				//var hasOne = await new SYUserGetByUserName(_appSetting).SYUserGetByUserNameDAO(model.Phone);
+				//if (hasOne != null && hasOne.Any()) {
+				//	return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
+				//}
 
 				// check exist:Phone,Email,IDCard
 				var checkExists = await new BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", model.Phone, 0);
@@ -414,7 +414,7 @@ namespace PAKNAPI.Controllers
 					Salt = pwd.Salt,
 					Phone = model.Phone,
 					Email = model.Email,
-					UserName = model.Phone,
+					UserName = model.IDCard,
 					FullName = model.FullName,
 					Gender = model.Gender,
 					Address = model.Address,//
@@ -466,15 +466,15 @@ namespace PAKNAPI.Controllers
 			{
 				// validate
 				
-				if (_bI_InvididualUpdateIN.BirthDay >= DateTime.Now)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn hoặc bằng ngày hiện tại" };
-				}
+				//if (_bI_InvididualUpdateIN.BirthDay >= DateTime.Now)
+				//{
+				//	return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn hoặc bằng ngày hiện tại" };
+				//}
 
-				if (_bI_InvididualUpdateIN.DateOfIssue != null && _bI_InvididualUpdateIN.DateOfIssue < _bI_InvididualUpdateIN.BirthDay)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn ngày thành lập" };
-				}
+				//if (_bI_InvididualUpdateIN.DateOfIssue != null && _bI_InvididualUpdateIN.DateOfIssue < _bI_InvididualUpdateIN.BirthDay)
+				//{
+				//	return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh không được lớn hơn ngày thành lập" };
+				//}
 
 				// check exist:Phone,Email,IDCard
 				var checkExists = await new Models.BusinessIndividual.BI_IndividualCheckExists(_appSetting).BIIndividualCheckExistsDAO("Phone", _bI_InvididualUpdateIN.Phone, _bI_InvididualUpdateIN.Id);

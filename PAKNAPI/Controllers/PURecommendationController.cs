@@ -84,7 +84,7 @@ namespace PAKNAPI.ControllerBase
 
 				if (rsSYConfigGetByType == null || rsSYConfigGetByType.Content == "1") {
 
-					var rsPURecommendationOnPage = await new PURecommendation(_appSetting).PURecommendationAllOnPage("", null, null, 5, 1);
+					var rsPURecommendationOnPage = await new PURecommendation(_appSetting).PURecommendationAllOnPage("", null, null, 10, 1);
 					json = new Dictionary<string, object>
 					{
 						{"IsHomeDefault", true},
@@ -306,28 +306,6 @@ namespace PAKNAPI.ControllerBase
 						{"Values", values }
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-
-		/// <summary>
-		/// thống kê tổng hợp trang công bố
-		/// </summary>
-		/// <returns></returns>
-		[HttpGet]
-		[Route("recommendation-statistic-by-unit-parent")]
-		public async Task<ActionResult<object>> RecommendationStatisticByUnitParent(int? ParentId = 0)
-		{
-			try
-			{
-				List<StatisticByByUnitParent> statisticByByUnitParent = await new StatisticByByUnitParent(_appSetting).StatisticByUnitParentDAO(ParentId);
-				
-				return new ResultApi { Success = ResultCode.OK, Result = statisticByByUnitParent };
 			}
 			catch (Exception ex)
 			{

@@ -153,7 +153,7 @@
 												<td>
 													<p class="m-0">{{item.nameExhibit}}</p>
 													<p *ngIf="item.fileAttach" class="m-0">
-														<a href="{{item.fileAttach}}" target="_blank" class="d-block box-fileinput" title="{{item.name}}">
+														<a href="{{'https://' + item.fileAttach}}" target="_blank" class="d-block box-fileinput" title="{{item.name}}">
 															<span class="text-wrap text-1line">{{item.name}}</span>
 														</a>
 													</p>

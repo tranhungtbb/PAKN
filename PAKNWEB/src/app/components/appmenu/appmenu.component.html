@@ -73,7 +73,7 @@
 					<span class="nav-text">Thư mời</span>
 				</a>
 			</li>
-			<li *hasPermission="['1','B']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
+			<!-- <li *hasPermission="['1','B']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 					<i class="bi bi-chat-right-dots"></i>
 					<span class="nav-text">Email/SMS</span>
@@ -84,6 +84,12 @@
 					<li *hasPermission="['3', 'B_II_3']"><a routerLinkActive="mm-active" routerLink="/quan-tri/email-sms/sms">Dự thảo SMS</a></li>
 					<li *hasPermission="['3', 'B_II_3']"><a routerLinkActive="mm-active" routerLink="/quan-tri/email-sms/sms-da-gui">SMS đã gửi</a></li>
 				</ul>
+			</li> -->
+			<li *hasPermission="['3', 'B_II_3']" routerLinkActive="mm-active active">
+				<a routerLink="/quan-tri/email-sms/sms" class="ai-icon" aria-expanded="false">
+					<i class="bi bi-chat-right-dots"></i>
+					<span class="nav-text">SMS</span>
+				</a>
 			</li>
 			<li *hasPermission="['1','C']" routerLinkActive="mm-active active" [routerLinkActiveOptions]="{exact: false}">
 				<a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">

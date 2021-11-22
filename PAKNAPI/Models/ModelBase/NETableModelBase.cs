@@ -38,76 +38,39 @@ namespace PAKNAPI.ModelBase
 		public int? NewsId { get; set; }
 		public string FileAttach { get; set; }
 		public string Name { get; set; }
-		public byte? FileType { get; set; }
+		public short? FileType { get; set; }
 
-		public async Task<NEFileAttach> NEFileAttachGetByID(int? Id)
+		public async Task<int?> NENewsFileInsertDAO(NEFileAttach _file)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
-
-			return (await _sQLCon.ExecuteListDapperAsync<NEFileAttach>("NE_FileAttachGetByID", DP)).ToList().FirstOrDefault();
+			DP.Add("NewsId", _file.NewsId);
+			DP.Add("FileAttach", _file.FileAttach);
+			DP.Add("Name", _file.Name);
+			DP.Add("FileType", _file.FileType);
+			return await _sQLCon.ExecuteNonQueryDapperAsync("[NE_FileAttachInsert]", DP);
 		}
 
-		public async Task<List<NEFileAttach>> NEFileAttachGetAll()
+		public async Task<List<NEFileAttach>> NENewsFileGetByNewsIdDAO(int? newsId)
 		{
 			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteListDapperAsync<NEFileAttach>("NE_FileAttachGetAll", DP)).ToList();
+			DP.Add("NewsId", newsId);
+			return (await _sQLCon.ExecuteListDapperAsync<NEFileAttach>("[NE_FileAttachGetByNewsId]", DP)).ToList();
 		}
 
-		public async Task<List<NEFileAttachOnPage>> NEFileAttachGetAllOnPage(int PageSize, int PageIndex)
+		public async Task<int?> NENewsFileDeleteDAO(int? idNewsFile)
 		{
 			DynamicParameters DP = new DynamicParameters();
-
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
-			return (await _sQLCon.ExecuteListDapperAsync<NEFileAttachOnPage>("NE_FileAttachGetAllOnPage", DP)).ToList();
+			DP.Add("Id", idNewsFile);
+			return await _sQLCon.ExecuteNonQueryDapperAsync("[NE_FileAttachDeleteById]", DP);
 		}
-
-		public async Task<int?> NEFileAttachInsert(NEFileAttach _nEFileAttach)
+		public async Task<int?> NENewsFileDeleteByNewIdDAO(int? idNews)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("NewsId", _nEFileAttach.NewsId);
-			DP.Add("FileAttach", _nEFileAttach.FileAttach);
-			DP.Add("Name", _nEFileAttach.Name);
-			DP.Add("FileType", _nEFileAttach.FileType);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("NE_FileAttachInsert", DP));
+			DP.Add("IdNews", idNews);
+			return await _sQLCon.ExecuteNonQueryDapperAsync("[NE_FileAttachDeleteByNewsId]", DP);
 		}
 
-		public async Task<int> NEFileAttachUpdate(NEFileAttach _nEFileAttach)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _nEFileAttach.Id);
-			DP.Add("NewsId", _nEFileAttach.NewsId);
-			DP.Add("FileAttach", _nEFileAttach.FileAttach);
-			DP.Add("Name", _nEFileAttach.Name);
-			DP.Add("FileType", _nEFileAttach.FileType);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("NE_FileAttachUpdate", DP));
-		}
-
-		public async Task<int> NEFileAttachDelete(NEFileAttach _nEFileAttach)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", _nEFileAttach.Id);
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("NE_FileAttachDelete", DP));
-		}
-
-		public async Task<int> NEFileAttachDeleteAll()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("NE_FileAttachDeleteAll", DP));
-		}
-
-		public async Task<int> NEFileAttachCount()
-		{
-			DynamicParameters DP = new DynamicParameters();
-
-			return (await _sQLCon.ExecuteDapperAsync<int>("NE_FileAttachCount", DP));
-		}
+		
 	}
 
 	public class NENewsOnPage

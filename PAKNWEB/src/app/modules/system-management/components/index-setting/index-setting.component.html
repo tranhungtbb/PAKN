@@ -126,7 +126,7 @@
 		</div>
 		<div class="col-md-3" style="padding-top: 20px; border: 1px solid #E5E5E5;">
 			<div class="col-sm-12 no-padding">
-				<div style="display: flex;">
+				<div class="d-flex">
 					<label class="control-label department">Banner Slidebar</label>
 					<a *hasPermission="['3', 'A_XIX_2']" class="btn btn-sm grd-blue text-white rounded border-0 ml-3" (click)="preInsertBanner()">
 						<i class="bi bi-upload"></i>&nbsp;
@@ -175,11 +175,11 @@
 				</form>
 
 
-				<div class="lstWebsite" style="margin-bottom: 20px;">
+				<div class="lstWebsite mb-4">
 					<div *ngIf="!ltsIndexSettingWebsite || ltsIndexSettingWebsite.length == 0">Chưa có liên kết website nào</div>
 					<div class="item-website" *ngFor="let item of ltsIndexSettingWebsite">
 						<div class="title-website" style="text-align: left;">{{item.nameWebsite}}</div>
-						<div style="display: flex;">
+						<div class="d-flex">
 							<i class="bi bi-paperclip"></i>
 							<a src="" class="text-1line">{{item.urlWebsite}}</a>
 						</div>

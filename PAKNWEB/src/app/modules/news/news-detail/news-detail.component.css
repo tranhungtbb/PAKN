@@ -35,3 +35,9 @@
 	border-radius: 10px;
 	position: relative;
 }
+.br-8px{
+	border-radius: 8px;
+}
+.br-15px{
+	border-radius: 15px;
+}

@@ -112,9 +112,9 @@
 									<td>
 										<strong><a [routerLink]="['/quan-tri/kien-nghi/chi-tiet/',item.id]" class="ellipsis" title="Xem chi tiết">{{item.code}}</a></strong>
 									</td>
-									<td><a class="ellipsis">{{item.name}}</a></td>
+									<td><a class="ellipsis" [ngClass]="{ 'red' : item.isFakeImages}">{{item.name}}</a></td>
 									<td>
-										<p class="text-2line mb-0">{{item.title}}</p>
+										<p class="text-2line mb-0" [ngClass]="{ 'red' : item.isFakeImages}">{{item.title}}</p>
 									</td>
 									<td>{{item.unitName}}</td>
 									<td>{{item.fieldName}}</td>

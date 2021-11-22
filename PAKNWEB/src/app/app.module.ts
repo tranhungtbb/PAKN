@@ -37,22 +37,8 @@ import { TreeTableModule } from 'primeng/treetable'
 
 /// template 2
 
-import { ListRecommendation2Component } from 'src/app/modules/template-v2/list-recommendation/list-recommendation.component'
-import { DetailRecommendation2Component } from 'src/app/modules/template-v2/detail-recommendation/detail-recommendation.component'
-import { ListNewsComponent } from './modules/template-v2/list-news/list-news.component'
-import { DetailNewsComponent } from './modules/template-v2/detail-news/detail-news.component'
-
 @NgModule({
-	declarations: [
-		AppComponent,
-		SvFocusDirective,
-		ConfirmDialogComponent,
-		ViewFileDialogComponent,
-		ListRecommendation2Component,
-		DetailRecommendation2Component,
-		ListNewsComponent,
-		DetailNewsComponent,
-	],
+	declarations: [AppComponent, SvFocusDirective, ConfirmDialogComponent, ViewFileDialogComponent],
 	entryComponents: [ConfirmDialogComponent, ViewFileDialogComponent],
 	imports: [
 		BrowserModule,

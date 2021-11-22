@@ -69,12 +69,52 @@
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">ảnh đại diện</span></label>
 						<input type="file" [hidden]="true" id="avatar-image" accept=".png, .jpg, .jpeg">
-						<div class="news-avatar border">
-							<img [src]="model.imagePath" alt="">
+						<div class="news-avatar border br-15px">
+							<img [src]="model.imagePath" class="br-15px" alt="">
 
 						</div>
 
 					</div>
+
+					
+					<div class="col-sm-12 no-padding">
+						<div class="tt-v1 mb-3 d-flex justify-content-between center">
+							<h4 class="text-uppercase title-upload mb-0">file media</h4>
+						</div>
+						<div class="mb-4">
+							<div *ngIf="!files || files.length == 0">Chưa có file media nào</div>
+							<ng-container>
+								<p class="mb-2 d-flex border p-2 br-8px" *ngFor="let file of files; let i = index">
+									<a *ngIf="file.fileType == 1" class="d-flex flex-1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-word.svg" style="width: 30px;margin-right: 17px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 2" class="d-flex flex-1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-excel.svg" style="width: 30px;margin-right: 17px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 3" class="d-flex flex-1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-pdf.svg" style="width: 30px;margin-right: 17px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 4" class="d-flex flex-1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-image.svg" style="width: 30px;margin-right: 17px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 6" class="d-flex flex-1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/file-powerpoint.svg" style="width: 30px;margin-right: 17px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." : file.name}}</span>
+									</a>
+									<a *ngIf="file.fileType == 7" class="d-flex flex-1" download href="javascript:void(0)" (click)="DownloadFile(file)" style="color: #333;">
+										<img src="../../../../assets/dist/images/mp4-svgrepo-com.svg" style="width: 30px;margin-right: 17px;" alt="">
+										<span class="small text-truncate">{{file.name.length > 35? file.name.slice(0,34) + "..." : file.name}}</span>
+									</a>
+								</p>
+							</ng-container>
+							<!-- bi bi-x -->
+						</div>
+					</div>
+
 					<div class="col-12 col-lg-12 form-group">
 						<label class="mb-1"><span class="text-uppercase">thông báo</span></label>
 						<div class="checkbox">

@@ -293,7 +293,6 @@ namespace PAKNAPI.ModelBase
 
 		public bool? IsNotification { get; set; }
 	}
-
 	public class NENewsUpdate
 	{
 		private SQLCon _sQLCon;

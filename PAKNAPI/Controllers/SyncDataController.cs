@@ -26,6 +26,7 @@ using System.Text.RegularExpressions;
 using Bugsnag;
 using PAKNAPI.Models.SyncData;
 using System.Threading;
+using PAKNAPI.Models.AdministrativeSync;
 
 namespace PAKNAPI.Controllers
 {
@@ -128,6 +129,13 @@ namespace PAKNAPI.Controllers
         public async Task<ActionResult<object>> SyncCongDichVuCongQuocGia()
         {
             return await new DichVuCongQuocGiaSync(_appSetting, _hostingEnvironment).SyncDichVuCongQuocGia();
+        }
+
+        [Route("sync-thu-tuc-hanh-chinh")] // sync-cong-dich-vu-cong-quoc-gia
+        [HttpGet]
+        public async Task<ActionResult<object>> SyncThuTucHanhChinh()
+        {
+            return await new AdministrativeSync(_appSetting).SyncThuTucHanhChinh();
         }
 
         [Route("sync-hop-thu-gop-y-khanh-hoa")]
@@ -558,6 +566,58 @@ namespace PAKNAPI.Controllers
                             fieldInsert.ParentId = item.LinhVucChaId;
                             await new CAFieldDAMInsert(_appSetting).CAFieldDAMInsertDAO(fieldInsert);
                         }
+                    }
+
+                    return responseModel.DanhSachLinhVuc;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+
+        /// <summary>
+        /// sync đơn vị tục hành chính
+        /// </summary>
+        /// <returns></returns>
+        [Route("sync-unit-tthc")]
+        [HttpGet]
+        public async Task<ActionResult<object>> SyncUnitTTHCAsync()
+        {
+            try
+            {
+                var results = new HttpResponseMessage();
+                /// header
+                var TkeyHeader = new List<KeyValuePair<string, string>>();
+                HeaderRess header = new HeaderRess();
+                header.Tkey = TkeyHeader;
+                header.ContentType = "application/json";
+                results = GetStringAsync("https://tthckhapi.azurewebsites.net", "api/v1/LinhVucs/GetDonViTiepNhan", header);
+
+                if (results.StatusCode == HttpStatusCode.OK)
+                {
+                    var responseModel = JsonConvert.DeserializeObject<LinhVucTTHCResponse>(results.Content.ReadAsStringAsync().Result);
+                    if (responseModel.DanhSachCoQuanTiepNhan.Count > 0)
+                    {
+                        // xóa hết
+                        await new CAFieldDAMGetDropdown(_appSetting).CAUnitDAMDeleteAllDAO();
+                        List<Task> tasks = new List<Task>(); 
+                        foreach (var item in responseModel.DanhSachCoQuanTiepNhan)
+                        {
+                            if (item.Loai == "donvi") {
+                                CAUnitDAMInsert cAUnitDAMInsert = new CAUnitDAMInsert();
+                                cAUnitDAMInsert.Name = item.Ten;
+                                cAUnitDAMInsert.UnitId = item.Id;
+                                tasks.Add(new CAUnitDAMInsert(_appSetting).CAUnitDAMInsertDAO(cAUnitDAMInsert));
+                            }
+                        }
+                        await Task.WhenAll(tasks);
                     }
 
                     return responseModel.DanhSachLinhVuc;

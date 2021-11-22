@@ -35,7 +35,7 @@ namespace PAKNAPI.Models.Statistic
 
 		public int Finised { get; set; }
 
-		public async Task<List<StatisticRecommendationByUnitGetAllOnPage>> StatisticRecommendationByUnitGetAllOnPageDAO(string LtsUnitId, int UnitProcessId, long UserProcessId, DateTime? FromDate,DateTime? ToDate)
+		public async Task<List<StatisticRecommendationByUnitGetAllOnPage>> StatisticRecommendationByUnitGetAllOnPageDAO(string LtsUnitId, int UnitProcessId, long UserProcessId, DateTime? FromDate, DateTime? ToDate)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("LtsUnitId", LtsUnitId);
@@ -69,7 +69,7 @@ namespace PAKNAPI.Models.Statistic
 		{
 		}
 
-		public async Task<List<StatisticRecommendationByUnitDetailGetAllOnPage>> StatisticRecommendationByUnitDetailGetAllOnPageDAO(int UnitId,int UnitProcessId , long UserProcessId, string Code, string CreateName, string Title, int? Field, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		public async Task<List<StatisticRecommendationByUnitDetailGetAllOnPage>> StatisticRecommendationByUnitDetailGetAllOnPageDAO(int UnitId, int UnitProcessId, long UserProcessId, string Code, string CreateName, string Title, int? Field, int? Status, DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("UnitId", UnitId);
@@ -265,6 +265,8 @@ namespace PAKNAPI.Models.Statistic
 		private SQLCon _sQLCon;
 		public int Index { get; set; }
 		public int Id { get; set; }
+		public int UnitLevel { get; set; }
+		public bool ExistChild { get; set; }
 		public string UnitName { get; set; }
 		public int? TotalResult { get; set; }
 		public int? ReceiveApproved { get; set; }
@@ -290,5 +292,18 @@ namespace PAKNAPI.Models.Statistic
 
 			return (await _sQLCon.ExecuteListDapperAsync<StatisticByByUnitParent>("TK_RecommendationPublicByUnit", DP)).ToList();
 		}
+	}
+
+	public class RecommendationStatisticForChart
+	{
+		public string label { get; set; }
+		public List<int?> data { get; set; }
+
+		public RecommendationStatisticForChart(string label, List<int?> data)
+		{
+			this.label = label;
+			this.data = data;
+		}
+		public RecommendationStatisticForChart() { }
 	}
 }

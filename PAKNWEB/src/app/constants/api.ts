@@ -70,7 +70,6 @@ export class Api {
 	public static PuRecommendationCountClick = 'pu-recommendation/recommendation-count-click'
 	public static PURecommendationStatisticsGetByUserId = 'pu-recommendation/recommendation-statistics-get-by-user-id'
 	public static PURecommendationStatisticsProvince = 'pu-recommendation/recommendation-statistic-by-province'
-	public static PURecommendationStatisticsByUnitParentId = 'pu-recommendation/recommendation-statistic-by-unit-parent'
 
 	//Field
 	public static FieldGetList = 'field/get-list-field-on-page'
@@ -368,6 +367,8 @@ export class Api {
 	public static StatisticRecommendationByFieldDetail = 'statistic/recommendation-by-field-detail'
 	public static StatisticRecommendationByGroupWord = 'statistic/recommendation-by-group-word'
 	public static StatisticRecommendationByGroupWordDetail = 'statistic/recommendation-by-group-word-detail'
+	public static StatisticsByUnitParentId = 'statistic/recommendation-statistic-by-unit-parent'
+	public static StatisticsForChart = 'statistic/recommendation-statistic-for-chart'
 
 	//call history
 	public static CallHistoryGetPagedList = 'call-history/get-list-call-history-on-page'

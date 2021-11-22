@@ -40,21 +40,27 @@ namespace PAKNAPI.Models.AdministrativeSync
 
                 ResponseListAdministrative model = new ResponseListAdministrative();
                 DAMAdministrationGetById objectTop = await new DAMAdministrationGetById(_appSetting).DAMAdministrationGetTopOrderByAdministrativeId();
+                if (objectTop != null && objectTop.TotalCount != 0) {
+                    request.PageIndex = Convert.ToInt32(Math.Floor(Convert.ToDecimal(objectTop.TotalCount / request.PageSize)));
+                    request.PageIndex = request.PageIndex < 0 ? 0 : request.PageIndex;
+                }
+
+
                 while (true)
                 {
                     request.PageIndex++;
                     results = GetStringAsync("https://tthckhapi.azurewebsites.net",
-                        "/api/v1/ThuTucs?expand=&filter=+1%3D1++AND+TinhTrangId%3D3&sort=Id+Desc&pageSize=20&page=" + request.PageIndex, header);
+                        "/api/v1/ThuTucs?expand=&filter=+1%3D1++AND+TinhTrangId%3D3&sort=Id+Desc&pageSize="+ request.PageSize +"&page=" + request.PageIndex, header);
                     if (results.StatusCode == HttpStatusCode.OK)
                     {
                         model = JsonConvert.DeserializeObject<ResponseListAdministrative>(results.Content.ReadAsStringAsync().Result);
                         if (model.ThuTucs.Count > 0)
                         {
-                            if ((objectTop != null && model.ThuTucs.Exists(x => x.Id > objectTop.AdministrationId)) || objectTop == null)
+                            if (true)
                             {
                                 foreach (var item in model.ThuTucs)
                                 {
-                                    if (objectTop != null && item.Id <= objectTop.AdministrationId)
+                                    if (objectTop != null && item.Id >= objectTop.AdministrationId)
                                     {
                                         continue;
                                     }
@@ -123,10 +129,13 @@ namespace PAKNAPI.Models.AdministrativeSync
                         damAdministrationInsertIN.Code = obj.Ma;
                         damAdministrationInsertIN.CountryCode = obj.MaQuanLy_QuocGia;
                         damAdministrationInsertIN.Field = obj.LinhVucId;
+
                         damAdministrationInsertIN.UnitReceive = obj.DonViTiepNhans.Count > 0 ? obj.DonViTiepNhans.FirstOrDefault().Id : -1;
                         
-                        //damAdministrationInsertIN.RankReceiveId = obj.TenCapTiepNhan;
+                        damAdministrationInsertIN.RankReceiveId = obj.DonViTiepNhans.Count > 0 ? obj.DonViTiepNhans.FirstOrDefault().CapTiepNhan : -1;
                         damAdministrationInsertIN.Lever = obj.MucDo;
+                        damAdministrationInsertIN.RankReceive = damAdministrationInsertIN.RankReceiveId.ToString();
+
                         damAdministrationInsertIN.TypeSend = obj.NopQuaBuuChinh;
                         damAdministrationInsertIN.FileNum = String.IsNullOrEmpty(obj.SoBoHoSo) ? "" : obj.SoBoHoSo;
                         damAdministrationInsertIN.AmountTime = obj.ThoiHanGiaiQuyet.ToString();

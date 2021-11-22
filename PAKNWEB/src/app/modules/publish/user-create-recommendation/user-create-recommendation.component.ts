@@ -343,8 +343,6 @@ export class CreateRecommendationComponent implements OnInit {
 			})
 		}
 
-		debugger
-
 		if (this.form.invalid) {
 			this.reloadImage()
 			return

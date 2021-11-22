@@ -88,7 +88,7 @@ export class IndividualComponent implements OnInit, AfterViewInit {
 		this.getList()
 		this.localeService.use('vi')
 		this.loadFormBuilder()
-		this.onChangeNation()
+		// this.onChangeNation()
 		if (localStorage.getItem('isIndividual') === 'true') {
 			this.isIndividual = true
 			$('#modal').modal('show')
@@ -98,8 +98,8 @@ export class IndividualComponent implements OnInit, AfterViewInit {
 	//event
 	backToSelectBox() {
 		this.isOtherNation = false
-		this.model.nation = 'Việt Nam'
-		this.onChangeNation()
+		// this.model.nation = 'Việt Nam'
+		// this.onChangeNation()
 
 		this.model.provinceId = null
 		this.model.districtId = null
@@ -333,18 +333,18 @@ export class IndividualComponent implements OnInit, AfterViewInit {
 	private loadFormBuilder() {
 		this.form = this._fb.group({
 			fullName: [this.model.fullName, [Validators.required, Validators.maxLength(100)]],
-			gender: [this.model.gender, [Validators.required]],
-			birthDay: [this.model.birthDay, [Validators.required]],
-			nation: [this.model.nation, [Validators.required]],
-			province: [this.model.provinceId],
-			district: [this.model.districtId],
-			village: [this.model.wardsId],
+			// gender: [this.model.gender, [Validators.required]],
+			// birthDay: [this.model.birthDay, [Validators.required]],
+			// nation: [this.model.nation, [Validators.required]],
+			// province: [this.model.provinceId],
+			// district: [this.model.districtId],
+			// village: [this.model.wardsId],
 			phone: [this.model.phone, [Validators.required]],
 			email: [this.model.email, [Validators.email]],
 			address: [this.model.address, [Validators.required]],
 			idCard: [this.model.idCard, [Validators.required]],
-			placeIssue: [this.model.issuedPlace],
-			dateIssue: [this.model.dateOfIssue],
+			// placeIssue: [this.model.issuedPlace],
+			// dateIssue: [this.model.dateOfIssue],
 			status: [this.model.status, [Validators.required]],
 		})
 	}
@@ -352,28 +352,24 @@ export class IndividualComponent implements OnInit, AfterViewInit {
 	rebuidForm() {
 		this.form.reset({
 			fullName: this.model.fullName,
-			gender: this.model.gender,
-			birthDay: this.model.birthDay,
-			nation: this.model.nation,
-			province: this.model.provinceId,
-			district: this.model.districtId,
-			village: this.model.wardsId,
+			// gender: this.model.gender,
+			// birthDay: this.model.birthDay,
+			// nation: this.model.nation,
+			// province: this.model.provinceId,
+			// district: this.model.districtId,
+			// village: this.model.wardsId,
 			phone: this.model.phone,
 			email: this.model.email,
 			address: this.model.address,
 			idCard: this.model.idCard,
-			placeIssue: this.model.issuedPlace,
-			dateIssue: this.model.dateOfIssue,
+			// placeIssue: this.model.issuedPlace,
+			// dateIssue: this.model.dateOfIssue,
 			status: this.model.status,
 		})
 	}
 
 	onSave() {
 		this.submitted = true
-		this.model.nation = this.model.nation == null ? '' : this.model.nation.trim()
-		if (this.model.nation == 'Nhập...') {
-			this.model.nation = ''
-		}
 		this.model.userId = this.userLoginId
 		if (!this.model.issuedPlace) this.model.issuedPlace = ''
 		this.model.issuedPlace = this.model.issuedPlace.trim()
@@ -387,10 +383,10 @@ export class IndividualComponent implements OnInit, AfterViewInit {
 			return
 		}
 
-		if (this.model.dateOfIssue && this.model.dateOfIssue < this.model.birthDay) {
-			this.validateDateOfIssue = false
-			return
-		}
+		// if (this.model.dateOfIssue && this.model.dateOfIssue < this.model.birthDay) {
+		// 	this.validateDateOfIssue = false
+		// 	return
+		// }
 
 		if (this.model.id != null && this.model.id > 0) {
 			localStorage.removeItem('isIndividual')

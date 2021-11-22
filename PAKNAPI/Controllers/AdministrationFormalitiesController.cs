@@ -472,13 +472,11 @@ namespace PAKNAPI.Controller
         /// <summary>
         /// danh sách thủ tục hành chính
         /// </summary>
-        /// <param name="Code"></param>
         /// <param name="Name"></param>
-        /// <param name="Object"></param>
-        /// <param name="Organization"></param>
+        /// <param name="RankReceiveId"></param>
+        /// <param name="Level"></param>
         /// <param name="UnitId"></param>
         /// <param name="Field"></param>
-        /// <param name="Status"></param>
         /// <param name="PageSize"></param>
         /// <param name="PageIndex"></param>
         /// <param name="TotalRecords"></param>

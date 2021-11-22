@@ -16,6 +16,8 @@ import { NewsModel, HISNewsModel } from '../../../models/NewsObject'
 import { Api } from 'src/app/constants/api'
 import { UploadAdapter } from 'src/app/services/uploadAdapter'
 import { HttpClient } from '@angular/common/http'
+import { saveAs as importedSaveAs } from 'file-saver'
+import { UploadFileService } from 'src/app/services/uploadfiles.service'
 
 declare var $: any
 
@@ -33,9 +35,8 @@ export class NewsDetailComponent implements OnInit {
 		private catalogService: CatalogService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		private sanitizer: DomSanitizer,
 		private http: HttpClient,
-		private notificationService: NotificationService
+		private fileService: UploadFileService
 	) {}
 	allowImageExtend = ['image/jpeg', 'image/png']
 	public Editor = ClassicEditor
@@ -46,6 +47,7 @@ export class NewsDetailComponent implements OnInit {
 	}
 
 	model: NewsModel = new NewsModel()
+	files: any = []
 	newsForm: FormGroup
 	listNewsTypes: any[]
 	postTypes: any[] = [
@@ -97,6 +99,7 @@ export class NewsDetailComponent implements OnInit {
 						return
 					}
 					this.model = res.result.NENewsGetByID[0]
+					this.files = res.result.NENewsFiles
 					this.hisPublic = this.model.isPublished
 					this.postTypeSelected = this.model.postType.trim().split(',')
 					let type = this.listNewsTypes.find((x) => x.id == this.model.newsType)
@@ -129,6 +132,21 @@ export class NewsDetailComponent implements OnInit {
 					// })
 				})
 		}
+	}
+	DownloadFile(file: any) {
+		var request = {
+			Path: file.filePath,
+			Name: file.name,
+		}
+		this.fileService.downloadFile(request).subscribe(
+			(response) => {
+				var blob = new Blob([response], { type: response.type })
+				importedSaveAs(blob, file.name)
+			},
+			(error) => {
+				this.toast.error('Không tìm thấy file trên hệ thống')
+			}
+		)
 	}
 
 	redirectUpdate() {

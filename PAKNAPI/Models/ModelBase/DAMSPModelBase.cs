@@ -279,6 +279,7 @@ namespace PAKNAPI.ModelBase
 		public string Organization { get; set; }
 		public string CountryCode { get; set; }
 		public byte? Level { get; set; }
+		public DateTime? CreatedDate { get; set; }
 
 		public async Task<List<DAMAdministrationGetList>> DAMAdministrationGetListDAO(string Name, int? RankReceiveId, int? Level, int? UnitId, int? Field, int? PageSize, int? PageIndex, int? TotalRecords)
 		{
@@ -324,6 +325,11 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UnitReceive", _dAMAdministrationInsertIN.UnitReceive);
 			DP.Add("Field", _dAMAdministrationInsertIN.Field);
 			DP.Add("RankReceive", _dAMAdministrationInsertIN.RankReceive);
+
+			DP.Add("UnitReceive", _dAMAdministrationInsertIN.UnitReceive);
+			DP.Add("RankReceiveId", _dAMAdministrationInsertIN.RankReceiveId);
+			DP.Add("Lever", _dAMAdministrationInsertIN.Lever);
+
 			DP.Add("TypeSend", _dAMAdministrationInsertIN.TypeSend);
 			DP.Add("FileNum", _dAMAdministrationInsertIN.FileNum);
 			DP.Add("AmountTime", _dAMAdministrationInsertIN.AmountTime);

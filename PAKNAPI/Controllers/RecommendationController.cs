@@ -21,6 +21,8 @@ using Bugsnag;
 using PAKNAPI.Models.ModelBase;
 using PAKNAPI.Models.Remind;
 using System.Threading;
+using static PAKNAPI.Common.FakeImageDetection;
+using System.Text;
 
 namespace PAKNAPI.Controller
 {
@@ -344,12 +346,24 @@ namespace PAKNAPI.Controller
                     }
                     if (request.Files != null && request.Files.Count > 0)
                     {
+
+                        // fake image
+
+                        var json = System.IO.File.ReadAllText("fake-images.json");
+                        //StreamReader r = new StreamReader("fake-image.json");
+                        //string json = r.ReadToEnd();
+                        var sampleData = JsonConvert.DeserializeObject<Dictionary<long, FakeResult>>(json);
+                        var fakeImage = new FakeImageDetection(sampleData);
+
+                        
+
                         string folder = "Upload\\Recommendation\\" + Id;
                         string folderPath = Path.Combine(_hostingEnvironment.ContentRootPath, folder);
                         if (!Directory.Exists(folderPath))
                         {
                             Directory.CreateDirectory(folderPath);
                         }
+                        bool isFakeImage = false;
                         foreach (var item in request.Files)
                         {
                             MRRecommendationFilesInsertIN file = new MRRecommendationFilesInsertIN();
@@ -367,6 +381,12 @@ namespace PAKNAPI.Controller
                             string content = "";
                             contentType = FileContentType.GetTypeOfFile(filePath);
                             bool isHasFullText = false;
+
+                            if (fakeImage.IsFake(file.FilePath) && file.FileType == 4)
+                            {
+                                isFakeImage = true;
+                            }
+
                             Thread t = new Thread(async () => {
                                 switch (contentType)
                                 {
@@ -398,6 +418,13 @@ namespace PAKNAPI.Controller
                                 }
                             });
                             t.Start();
+                        }
+                        if (isFakeImage) {
+                            MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
+                            _mRRecommendationUpdateStatusIN.Status = request.Data.Status;
+                            _mRRecommendationUpdateStatusIN.Id = Id;
+                            _mRRecommendationUpdateStatusIN.IsFakeImage = true;
+                            await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
                         }
                     }
                     MRRecommendationHashtagInsertIN _mRRecommendationHashtagInsertIN = new MRRecommendationHashtagInsertIN();

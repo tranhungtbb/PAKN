@@ -184,7 +184,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public bool? IsActived { get; set; }
 		public bool? IsDeleted { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại văn phòng đại diện không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Số điện thoại văn phòng đại diện không được để trống")]
 		[RegularExpression(ConstantRegex.PHONE, ErrorMessage = "Số điện thoại văn phòng đại diện không đúng định dạng")]
 		public string OrgPhone { get; set; }
 		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail văn phòng đại diện không đúng định dạng")]
@@ -200,7 +200,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public int? Status { get; set; }
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Giới tính không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Giới tính không được để trống")]
 		public bool? RepresentativeGender { get; set; }
 
 		[StringLength(20, ErrorMessage = "Số chứng nhận đăng kí không vượt quá 20 kí tự")]
@@ -210,20 +210,20 @@ namespace PAKNAPI.Models.BusinessIndividual
 		[DataType(DataType.DateTime, ErrorMessage = "Ngày cấp không đúng định dạng")]
 		public DateTime? DateOfIssue { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Mã số thuế không được để trống")]
-		[RegularExpression(ConstantRegex.NUMBER, ErrorMessage = "Mã số thuế không đúng định dạng")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Mã số thuế không được để trống")]
+		//[RegularExpression(ConstantRegex.NUMBER, ErrorMessage = "Mã số thuế không đúng định dạng")]
 		[StringLength(13, ErrorMessage = "Mã số thuế không vượt quá 13 kí tự")]
 		public string Tax { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Tỉnh/Thành phố văn phòng đại diện không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Tỉnh/Thành phố văn phòng đại diện không được để trống")]
 		[RegularExpression(ConstantRegex.NUMBER, ErrorMessage = "Tỉnh/Thành phố văn phòng đại diện không đúng định dạng")]
 		public int? OrgProvinceId { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Quận/Huyện/Thị xã văn phòng đại diện không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Quận/Huyện/Thị xã văn phòng đại diện không được để trống")]
 		[RegularExpression(ConstantRegex.NUMBER, ErrorMessage = "Quận/Huyện/Thị xã văn phòng đại diện không đúng định dạng")]
 		public int? OrgDistrictId { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Xã phường/Thị trấn văn phòng đại diện không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Xã phường/Thị trấn văn phòng đại diện không được để trống")]
 		[RegularExpression(ConstantRegex.NUMBER, ErrorMessage = "Xã phường/Thị trấn văn phòng đại diện không đúng định dạng")]
 		public int? OrgWardsId { get; set; }
 
@@ -281,7 +281,6 @@ namespace PAKNAPI.Models.BusinessIndividual
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
 		public int? Status { get; set; }
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Giới tính không được để trống")]
 		public bool? RepresentativeGender { get; set; }
 		[StringLength(20, ErrorMessage = "Số chứng nhận đăng kí không vượt quá 20 kí tự")]
 		public string BusinessRegistration { get; set; }
@@ -289,23 +288,23 @@ namespace PAKNAPI.Models.BusinessIndividual
 		[DataType(DataType.DateTime, ErrorMessage = "Ngày cấp không đúng định dạng")]
 		public DateTime? DateOfIssue { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Mã số thuế không được để trống")]
-		[RegularExpression(ConstantRegex.NUMBER, ErrorMessage = "Mã số thuế không đúng định dạng")]
-		[StringLength(13, ErrorMessage = "Mã số thuế không vượt quá 13 kí tự")]
 		public string Tax { get; set; }
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Tỉnh/Thành phố văn phòng đại diện không được để trống")]
-		[RegularExpression(ConstantRegex.NUMBER, ErrorMessage = "Tỉnh/Thành phố văn phòng đại diện không đúng định dạng")]
+
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Tỉnh/Thành phố văn phòng đại diện không được để trống")]
+		//[RegularExpression(ConstantRegex.NUMBER, ErrorMessage = "Tỉnh/Thành phố văn phòng đại diện không đúng định dạng")]
 		public int? OrgProvinceId { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Quận/Huyện/Thị xã văn phòng đại diện không được để trống")]
-		[RegularExpression(ConstantRegex.NUMBER, ErrorMessage = "Quận/Huyện/Thị xã văn phòng đại diện không đúng định dạng")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Quận/Huyện/Thị xã văn phòng đại diện không được để trống")]
+		//[RegularExpression(ConstantRegex.NUMBER, ErrorMessage = "Quận/Huyện/Thị xã văn phòng đại diện không đúng định dạng")]
 		public int? OrgDistrictId { get; set; }
 
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Xã phường/Thị trấn văn phòng đại diện không được để trống")]
-		[RegularExpression(ConstantRegex.NUMBER, ErrorMessage = "Xã phường/Thị trấn văn phòng đại diện không đúng định dạng")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Xã phường/Thị trấn văn phòng đại diện không được để trống")]
+		//[RegularExpression(ConstantRegex.NUMBER, ErrorMessage = "Xã phường/Thị trấn văn phòng đại diện không đúng định dạng")]
 		public int? OrgWardsId { get; set; }
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Địa chỉ văn phòng đại diện không được để trống")]
 		public string OrgAddress { get; set; }
+
+		[Required(AllowEmptyStrings = false, ErrorMessage = "Địa chỉ người đại diện không được để trống")]
 		public string Address { get; set; }
 		[DataType(DataType.EmailAddress, ErrorMessage = "E-mail người đại diện không đúng định dạng")]
 		public string Email { get; set; }
@@ -317,7 +316,7 @@ namespace PAKNAPI.Models.BusinessIndividual
 		public string Place { get; set; }
 		public string NativePlace { get; set; }
 		public string PermanentPlace { get; set; }
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Quốc tịch không được để trống")]
+		//[Required(AllowEmptyStrings = false, ErrorMessage = "Quốc tịch không được để trống")]
 		public string Nation { get; set; }
 
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Tên tổ chức doanh nghiệp không được để trống")]

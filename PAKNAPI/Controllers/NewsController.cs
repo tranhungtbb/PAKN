@@ -18,6 +18,8 @@ using PAKNAPI.Services.FileUpload;
 using Microsoft.AspNetCore.Http;
 using PAKNAPI.Models.ModelBase;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace PAKNAPI.Controller
 {
@@ -30,13 +32,15 @@ namespace PAKNAPI.Controller
 		private readonly IClient _bugsnag;
 		private readonly IFileService _fileService;
 		private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
+		private readonly IWebHostEnvironment _hostEnvironment;
 
-		public NewsController(IAppSetting appSetting, IClient bugsnag, IFileService fileService, Microsoft.Extensions.Configuration.IConfiguration configuration)
+		public NewsController(IAppSetting appSetting, IClient bugsnag, IFileService fileService, Microsoft.Extensions.Configuration.IConfiguration configuration, IWebHostEnvironment hostEnvironment)
 		{
 			_appSetting = appSetting;
 			_bugsnag = bugsnag;
 			_fileService = fileService;
 			_configuration = configuration;
+			_hostEnvironment = hostEnvironment;
 		}
 		/// <summary>
 		/// danh sách tin tức
@@ -131,9 +135,11 @@ namespace PAKNAPI.Controller
 			try
 			{
 				List<NENewsGetByID> rsNENewsGetByID = await new NENewsGetByID(_appSetting).NENewsGetByIDDAO(Id);
+				var files = await new NEFileAttach(_appSetting).NENewsFileGetByNewsIdDAO(Id);
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"NENewsGetByID", rsNENewsGetByID},
+						{"NENewsFiles" , files }
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
@@ -160,6 +166,9 @@ namespace PAKNAPI.Controller
 			try
 			{
 				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, null);
+				// delete file
+				await new NEFileAttach(_appSetting).NENewsFileDeleteByNewIdDAO(_nENewsDeleteIN.Id);
+				// delete folder
 				return new ResultApi { Success = ResultCode.OK, Result = await new NENewsDelete(_appSetting).NENewsDeleteDAO(_nENewsDeleteIN) };
 			}
 			catch (Exception ex)
@@ -178,7 +187,7 @@ namespace PAKNAPI.Controller
 		[HttpPost]
 		[Authorize("ThePolicy")]
 		[Route("insert"), DisableRequestSizeLimit]
-		public async Task<ActionResult<object>> NENewsInsertBase() // [FromForm] NENewsInsertIN _nENewsInsertIN
+		public async Task<ActionResult<object>> NENewsInsertBase()
 		{
 			try
 			{
@@ -200,23 +209,62 @@ namespace PAKNAPI.Controller
 					});
                 }
 
-				var files = Request.Form.Files;
-				if (files.Count == 0) {
+				var fileAvatar = Request.Form.Files.Where(x=>x.Name == "avatar").ToList();
+				if (fileAvatar.Count == 0) {
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Ảnh đại diện bài viết không được để trống" };
 				}
-				string avatarFilePath = null;
-				if (files != null && files.Any())
-				{
-					var listFile = await _fileService.Save(files, $"News");
-					avatarFilePath = listFile[0]?.Path;
+				
 
-				}
+				// insert avatar
 
-				if (!string.IsNullOrEmpty(avatarFilePath))
+				string folder = "Upload\\News\\Avatar";
+				var folderPath = Path.Combine(_hostEnvironment.ContentRootPath, folder);
+				if (!Directory.Exists(folderPath))
 				{
-					_nENewsInsertIN.ImagePath = avatarFilePath;
+					Directory.CreateDirectory(folderPath);
 				}
+				string filePath = Path.Combine(folder, Path.GetFileName(fileAvatar[0].FileName.Replace("+", "")));
+
+
+				using (var stream = new FileStream(filePath, FileMode.Create))
+				{
+					fileAvatar[0].CopyTo(stream);
+				}
+				_nENewsInsertIN.ImagePath = filePath;
+
+				// insert news
 				int res = Int32.Parse((await new NENewsInsert(_appSetting).NENewsInsertDAO(_nENewsInsertIN)).ToString());
+
+				// copy for folder upload
+				folder = "Upload\\News\\Media\\" + res;
+
+				if (!Directory.Exists(folderPath))
+				{
+					Directory.CreateDirectory(folderPath);
+				}
+
+				List<Task> tasks = new List<Task>();
+				foreach (var item in Request.Form.Files.Where(x => x.Name == "files"))
+				{
+					NEFileAttach file = new NEFileAttach();
+					file.NewsId = res;
+					file.Name = Path.GetFileName(item.FileName).Replace("+", "");
+					filePath = Path.Combine(folderPath, file.Name);
+					file.FileAttach = Path.Combine(folder, file.Name);
+					file.FileType = GetFileTypes.GetFileTypeInt(item.ContentType);
+					using (var stream = new FileStream(filePath, FileMode.Create))
+					{
+						item.CopyTo(stream);
+					}
+					tasks.Add(new NEFileAttach(_appSetting).NENewsFileInsertDAO(file));
+				}
+				await Task.WhenAll(tasks);
+
+
+				// file media
+
+
+
 				if (res > 0)
 				{
 					// lịch sử
@@ -278,8 +326,6 @@ namespace PAKNAPI.Controller
 					DateTimeZoneHandling = DateTimeZoneHandling.Local,
 					DateParseHandling = DateParseHandling.DateTimeOffset,
 				};
-
-				var files = Request.Form.Files;
 				NENewsUpdateIN _nENewsUpdateIN = JsonConvert.DeserializeObject<NENewsUpdateIN>(Request.Form["data"].ToString(), jss);
 
 				var ErrorMessage = ValidationForFormData.validObject(_nENewsUpdateIN);
@@ -293,22 +339,67 @@ namespace PAKNAPI.Controller
 					});
 				}
 
-				string avatarFilePath = null;
-				if (files != null && files.Any())
-				{
-					var listFile = await _fileService.Save(files, $"News/{_nENewsUpdateIN.Id}");
-					avatarFilePath = listFile[0]?.Path;
+				var fileAvatar = Request.Form.Files.Where(x => x.Name == "avatar").ToList();
+				string folder = "Upload\\News\\Avatar";
+				var folderPath = Path.Combine(_hostEnvironment.ContentRootPath, folder);
+				string filePath = string.Empty;
 
-				}
+				// avatar
+				if (fileAvatar.Count() > 0) {
 
-				if (!string.IsNullOrEmpty(avatarFilePath))
-				{
-					var rs = await _fileService.Remove(_nENewsUpdateIN.ImagePath);
-					_nENewsUpdateIN.ImagePath = avatarFilePath;
+					deletefile(_nENewsUpdateIN.ImagePath);
+					if (!Directory.Exists(folderPath))
+					{
+						Directory.CreateDirectory(folderPath);
+					}
+					filePath = Path.Combine(folder, Path.GetFileName(fileAvatar[0].FileName.Replace("+", "")));
+					using (var stream = new FileStream(filePath, FileMode.Create))
+					{
+						fileAvatar[0].CopyTo(stream);
+					}
+					_nENewsUpdateIN.ImagePath = filePath;
 				}
 
 				int res = Int32.Parse((await new NENewsUpdate(_appSetting).NENewsUpdateDAO(_nENewsUpdateIN)).ToString());
-				
+
+				// delete file remove
+				List<NEFileAttach> filesDelete = JsonConvert.DeserializeObject<List<NEFileAttach>>(Request.Form["fileDelete"].ToString(), jss);
+				foreach (var item in filesDelete) {
+					await new NEFileAttach(_appSetting).NENewsFileDeleteDAO(item.Id);
+					deletefile(item.FileAttach);
+				}
+
+				// insert file
+
+
+				folder = "Upload\\News\\Media\\" + res;
+
+				if (!Directory.Exists(folderPath))
+				{
+					Directory.CreateDirectory(folderPath);
+				}
+
+				List<Task> tasks = new List<Task>();
+				foreach (var item in Request.Form.Files.Where(x => x.Name == "files"))
+				{
+					NEFileAttach file = new NEFileAttach();
+					file.NewsId = res;
+					file.Name = Path.GetFileName(item.FileName).Replace("+", "");
+					filePath = Path.Combine(folderPath, file.Name);
+					file.FileAttach = Path.Combine(folder, file.Name);
+					file.FileType = GetFileTypes.GetFileTypeInt(item.ContentType);
+					using (var stream = new FileStream(filePath, FileMode.Create))
+					{
+						item.CopyTo(stream);
+					}
+					tasks.Add(new NEFileAttach(_appSetting).NENewsFileInsertDAO(file));
+				}
+				await Task.WhenAll(tasks);
+
+
+
+
+
 				if (res > 0)
 				{
 					var his = new HISNews();
@@ -379,42 +470,49 @@ namespace PAKNAPI.Controller
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-		/// <summary>
-		/// chi tiết tin tức 
-		/// </summary>
-		/// <param name="Id"></param>
-		/// <returns></returns>
+        /// <summary>
+        /// chi tiết tin tức 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
 
-		[HttpGet]
-		[Route("get-detail")]
-		public async Task<ActionResult<object>> NENewsViewDetailBase(long? Id)
-		{
-			try
-			{
-				List<NENewsViewDetail> rsNENewsViewDetail = await new NENewsViewDetail(_appSetting).NENewsViewDetailDAO(Id);
+        [HttpGet]
+        [Route("get-detail")]
+        public async Task<ActionResult<object>> NENewsViewDetailBase(int? Id)
+        {
+            try
+            {
+				NENewsViewDetail rsNENewsViewDetail = (await new NENewsViewDetail(_appSetting).NENewsViewDetailDAO(Id)).FirstOrDefault();
+				Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
+				var files = await new NEFileAttach(_appSetting).NENewsFileGetByNewsIdDAO(Id);
+				files.ForEach(item =>
+				{
+					item.FileAttach = decrypt.EncryptData(item.FileAttach);
+				});
 				IDictionary<string, object> json = new Dictionary<string, object>
 					{
 						{"NENewsViewDetail", rsNENewsViewDetail},
+						{"Files", files},
 					};
 				return new ResultApi { Success = ResultCode.OK, Result = json };
-			}
-			catch (Exception ex)
-			{
-				_bugsnag.Notify(ex);
-				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
 
-				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-			}
-		}
-		/// <summary>
-		/// chi tiết tin tức trang chủ
-		/// </summary>
-		/// <param name="Id"></param>
-		/// <returns></returns>
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+        /// <summary>
+        /// chi tiết tin tức trang chủ
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
 
-		[HttpGet]
+        [HttpGet]
 		[Route("get-detail-public")]
-		public async Task<ActionResult<object>> NENewsViewDetailPublicBase(long? Id)
+		public async Task<ActionResult<object>> NENewsViewDetailPublicBase(int? Id)
 		{
 			try
 			{
@@ -429,7 +527,18 @@ namespace PAKNAPI.Controller
 				}
 				else
 				{
-					return new ResultApi { Success = ResultCode.OK, Result = rsNENewsViewDetail };
+					Base64EncryptDecryptFile decrypt = new Base64EncryptDecryptFile();
+					var files = await new NEFileAttach(_appSetting).NENewsFileGetByNewsIdDAO(Id);
+					files.ForEach(item =>
+					{
+						item.FileAttach = decrypt.EncryptData(item.FileAttach);
+					});
+					IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"NENewsViewDetail", rsNENewsViewDetail},
+                        {"Files", files},
+                    };
+                    return new ResultApi { Success = ResultCode.OK, Result = json };
 				}
 
 			}
@@ -570,7 +679,21 @@ namespace PAKNAPI.Controller
 				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
 			}
 		}
-		
+
+		private bool deletefile(string fname)
+		{
+			try
+			{
+				string _imageToBeDeleted = Path.Combine(_hostEnvironment.WebRootPath, fname);
+				if ((System.IO.File.Exists(_imageToBeDeleted)))
+				{
+					System.IO.File.Delete(_imageToBeDeleted);
+				}
+				return true;
+			}
+			catch (Exception ex) { return false; }
+		}
+
 	}
 
 }

@@ -56,8 +56,6 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 
 		// set
 		this.activatedRoute.params.subscribe((params) => {
-			// this.child_OrgAddressForm.model = this.model
-			// this.child_OrgRepreForm.model = this.model
 			this.model.id = +params['id']
 			if (this.model.id != 0) {
 				this.getData()
@@ -181,13 +179,13 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 				this.model.OrgPhone = response.result.BusinessGetById[0].orgPhone
 				this.model.OrgEmail = response.result.BusinessGetById[0].orgEmail
 
-				this.getProvinceOrgRepre()
-				this.getDistrictOrgRepre(this.model.ProvinceId)
-				this.getVillageOrgRepre(this.model.ProvinceId, this.model.DistrictId)
+				// this.getProvinceOrgRepre()
+				// this.getDistrictOrgRepre(this.model.ProvinceId)
+				// this.getVillageOrgRepre(this.model.ProvinceId, this.model.DistrictId)
 
-				this.getProvinceOrgAddress()
-				this.getDistrictOrgAddress(response.result.BusinessGetById[0].orgProvinceId)
-				this.getVillageOrgAddress(response.result.BusinessGetById[0].orgProvinceId, response.result.BusinessGetById[0].orgDistrictId)
+				// this.getProvinceOrgAddress()
+				// this.getDistrictOrgAddress(response.result.BusinessGetById[0].orgProvinceId)
+				// this.getVillageOrgAddress(response.result.BusinessGetById[0].orgProvinceId, response.result.BusinessGetById[0].orgDistrictId)
 
 				if (this.model.Nation != this.listNation[0].id) {
 					this.nation_enable_type = true
@@ -206,29 +204,28 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 		if (this.model.Nation == 'Nhập...') this.model.Nation = ''
 	}
 	onSave() {
+		debugger
 		this.child_OrgRepreForm.fInfoSubmitted = true
 		this.fOrgInfoSubmitted = true
 		this.child_OrgAddressForm.fOrgAddressSubmitted = true
 		this.model.userId = this.userLoginId
-		if (this.model.Nation == 'Nhập...') {
-			this.model.Nation = ''
-		}
+
 		//set model
-		if (this.nation_enable_type) {
-			this.model.ProvinceId = null
-			this.model.DistrictId = null
-			this.model.WardsId = null
-		}
+		// if (this.nation_enable_type) {
+		// 	this.model.ProvinceId = null
+		// 	this.model.DistrictId = null
+		// 	this.model.WardsId = null
+		// }
 
 		if (
 			this.checkExists['Phone'] ||
 			this.checkExists['BusinessRegistration'] ||
-			this.checkExists['DecisionOfEstablishing'] ||
-			this.checkExists['Tax'] ||
+			// this.checkExists['DecisionOfEstablishing'] ||
+			// this.checkExists['Tax'] ||
 			this.child_OrgAddressForm.checkExists['OrgEmail'] ||
 			this.child_OrgAddressForm.checkExists['OrgPhone'] ||
-			this.child_OrgRepreForm.checkExists['Email'] ||
-			this.child_OrgRepreForm.checkExists['IDCard']
+			this.child_OrgRepreForm.checkExists['Email']
+			// this.child_OrgRepreForm.checkExists['IDCard']
 		) {
 			//this.toast.error('Dữ liệu không hợp lệ')
 			return
@@ -290,9 +287,9 @@ export class CreateUpdBusinessComponent implements OnInit, AfterViewInit {
 			//---thông tin doanh nghiệp
 			Business: [this.model.Business, [Validators.required, Validators.maxLength(200)]], // tên tổ chức
 			RegistrationNum: [this.model.BusinessRegistration, [Validators.maxLength(20)]], //Số ĐKKD
-			DecisionFoundation: [this.model.DecisionOfEstablishing, [Validators.maxLength(20)]], //Quyết định thành lập
-			DateIssue: [this.model.DateOfIssue, []], //Ngày cấp/thành lập
-			Tax: [this.model.Tax, [Validators.required, Validators.maxLength(13)]], //Mã số thuế
+			OrgPhone: [this.model.OrgPhone, []], // số điện thoại doanh ng
+			// DateIssue: [this.model.DateOfIssue, []], //Ngày cấp/thành lập
+			// Tax: [this.model.Tax, [Validators.required, Validators.maxLength(13)]], //Mã số thuế
 		})
 	}
 	//kiểm tra dữ liệu đã tồn tại

@@ -271,5 +271,89 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+
+		/// <summary>
+		/// thống kê tổng hợp trang công bố
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet]
+		[Route("recommendation-statistic-by-unit-parent")]
+		public async Task<ActionResult<object>> RecommendationStatisticByUnitParent(int? ParentId = 0)
+		{
+			try
+			{
+				List<StatisticByByUnitParent> statisticByByUnitParent = await new StatisticByByUnitParent(_appSetting).StatisticByUnitParentDAO(ParentId);
+
+				return new ResultApi { Success = ResultCode.OK, Result = statisticByByUnitParent };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
+		/// <summary>
+		/// thống kê tổng hợp cho biểu đồ
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet]
+		[Route("recommendation-statistic-for-chart")]
+		public async Task<ActionResult<object>> RecommendationStatisticForChart()
+		{
+			try
+			{
+				List<StatisticByByUnitParent> statisticByUnitParent = await new StatisticByByUnitParent(_appSetting).StatisticByUnitParentDAO(0);
+
+				
+				var titles = new List<string>();
+				var itemObjectResponse = new RecommendationStatisticForChart();
+				var values = new List<RecommendationStatisticForChart>();
+
+
+				for (int i = 0; i < statisticByUnitParent.Count; i++)
+				{
+					titles.Add(statisticByUnitParent[i].UnitName);
+					switch (i)
+					{
+						case 0:
+							// tổng
+							values.Add(new RecommendationStatisticForChart("Tổng", statisticByUnitParent.Select(x => x.TotalResult).ToList()));
+							break;
+						case 1:
+							values.Add(new RecommendationStatisticForChart("Đã xử lý", statisticByUnitParent.Select(x => x.Finised).ToList()));
+							break;
+						case 2:
+							values.Add(new RecommendationStatisticForChart("Đang xử lý", statisticByUnitParent.Select(x => x.Processing).ToList()));
+							break;
+						case 3:
+							values.Add(new RecommendationStatisticForChart("Quá hạn", statisticByUnitParent.Select(x => x.Expired).ToList()));
+							break;
+						default: 
+							break;
+					}
+
+				}
+
+
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"Titles", titles },
+						{"Values", values },
+						{"statisticForChart",statisticByUnitParent }
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
 	}
 }

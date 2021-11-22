@@ -170,7 +170,7 @@
 						Bình luận <span>({{total_Comments}})</span>
 					</h3>
 					<div class="py-3 px-4 rounded-xl mb-4 border" style="background: #FEFEFE">
-						<p>Hãy <a class="cl-blue2" routerLink="/dang-nhap">đăng nhập</a> hoặc <a class="cl-blue" routerLink="/dang-ky/ca-nhan">tạo tài khoản</a> để gửi bình luận
+						<p *ngIf="!isLogin">Hãy <a class="cl-blue2" routerLink="/dang-nhap">đăng nhập</a> hoặc <a class="cl-blue" routerLink="/dang-ky/ca-nhan">tạo tài khoản</a> để gửi bình luận
 						</p>
 						<div class="form-group mb-0">
 							<textarea class="form-control px-4 py-3" [(ngModel)]="commentModel.contents" rows="3" placeholder="Nhập bình luận..." id="comment"
@@ -187,12 +187,12 @@
 								<p class="mb-0 h5">{{item.fullName}}</p>
 								<div class="d-flex">
 									<p class="small mb-1">{{item.createdDate | date:'HH:mm - dd/MM/yyyy'}}</p>
-									<span class="ml-2 cursor"
+									<!-- <span class="ml-2 cursor"
 										[title]="item.isView ? 'Công bố bình luận' : 'Thu hồi bình luận'"
 										(click)="changeStatusComment(item)"
 										style="font-size: 16px;">
 										<i [ngClass]="item.isView ? 'bi bi-arrow-down-circle' : 'bi bi-arrow-up-circle'"></i>
-									</span>
+									</span> -->
 								</div>
 								<p class="mb-0">
 									{{item.contents}}

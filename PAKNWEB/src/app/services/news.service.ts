@@ -26,23 +26,30 @@ export class NewsService {
 	getById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.NewsGetById)
 	}
-	create(data: any, file: any = null): Observable<any> {
+	create(data: any): Observable<any> {
 		let tempheaders = new HttpHeaders({
 			ipAddress: this.localStronageService.getIpAddress() && this.localStronageService.getIpAddress() != 'null' ? this.localStronageService.getIpAddress() : '',
 			macAddress: '',
 			logAction: encodeURIComponent(LOG_ACTION.INSERT),
-			logObject: encodeURIComponent(LOG_OBJECT.NE_NEWS + ' ' + data.title),
+			logObject: encodeURIComponent(LOG_OBJECT.NE_NEWS + ' ' + data.model.title),
 		})
 		const httpPackage = {
 			headers: tempheaders,
 			reportProgress: true,
 		}
 		let formData = new FormData()
-		formData.append('data', JSON.stringify(data))
-		if (file) formData.append('files', file, file.name)
+		formData.append('data', JSON.stringify(data.model))
+		formData.append('fileDelete', JSON.stringify(data.fileDelete))
+		if (data.filePost) formData.append('avatar', data.filePost)
+		if (data.files && Array.isArray(data.files)) {
+			data.files.forEach((item) => {
+				formData.append('files', item)
+			})
+		}
+
 		return this.http.post(AppSettings.API_ADDRESS + Api.NewsInsert, formData, httpPackage)
 	}
-	update(data: any, file: any = null): Observable<any> {
+	update(data: any): Observable<any> {
 		let tempheaders = new HttpHeaders({
 			ipAddress: this.localStronageService.getIpAddress() && this.localStronageService.getIpAddress() != 'null' ? this.localStronageService.getIpAddress() : '',
 			macAddress: '',
@@ -55,8 +62,14 @@ export class NewsService {
 		}
 
 		let formData = new FormData()
-		formData.append('data', JSON.stringify(data))
-		if (file) formData.append('files', file, file.name)
+		formData.append('data', JSON.stringify(data.model))
+		formData.append('fileDelete', JSON.stringify(data.filesDelete))
+		if (data.filePost) formData.append('avatar', data.filePost)
+		if (data.files && Array.isArray(data.files)) {
+			data.files.forEach((item) => {
+				formData.append('files', item)
+			})
+		}
 
 		return this.http.post(AppSettings.API_ADDRESS + Api.NewsUpdate, formData, httpPackage)
 	}

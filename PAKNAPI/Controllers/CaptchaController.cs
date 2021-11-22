@@ -185,18 +185,18 @@ namespace PAKNAPI.Controllers
 		/// <returns></returns>
 		[Route("validator-captcha")]
 		[HttpGet]
-		public ActionResult<object> ValidatorCaptcha(string CaptchaCode)
+		public async Task<ActionResult<object>> ValidatorCaptchaAsync(string CaptchaCode)
 		{
 			try
 			{
 				if (!new Captcha(_appSetting).ValidateCaptchaCode(CaptchaCode, captChaCode))
 				{
-					new Captcha(_appSetting).DeleteCaptcha("");
+					await new Captcha(_appSetting).DeleteCaptcha("");
 					return new ResultApi { Success = ResultCode.ORROR };
 				}
 				else
 				{
-					new Captcha(_appSetting).DeleteCaptcha(CaptchaCode);
+					await new Captcha(_appSetting).DeleteCaptcha(CaptchaCode);
 					return new ResultApi { Success = ResultCode.OK };
 				}
 			}

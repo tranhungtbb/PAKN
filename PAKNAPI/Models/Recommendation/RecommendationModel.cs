@@ -262,8 +262,10 @@ namespace PAKNAPI.Models.Recommendation
 
     public class RequestAdministrative {
         public int PageIndex { get; set; }
+        public int PageSize { get; set; }
         public RequestAdministrative() {
             this.PageIndex = 0;
+            this.PageSize = 20;
         }
     }
     public class ResponseListAdministrative
@@ -355,7 +357,7 @@ namespace PAKNAPI.Models.Recommendation
     {
         public string totalRowLinhVuc { get; set; }
         public List<LinhVuc> DanhSachLinhVuc { get; set; }
-        public List<object> DanhSachCoQuanTiepNhan { get; set; }
+        public List<DanhSachCoQuanTiepNhan> DanhSachCoQuanTiepNhan { get; set; }
     }
 
     public class LinhVuc

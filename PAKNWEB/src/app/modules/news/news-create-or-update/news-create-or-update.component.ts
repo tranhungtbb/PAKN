@@ -1,14 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 
 import { Router, ActivatedRoute } from '@angular/router'
-import { RESPONSE_STATUS } from '../../../constants/CONSTANTS'
+import { FILETYPE, RESPONSE_STATUS } from '../../../constants/CONSTANTS'
 import { NewsService } from '../../../services/news.service'
 import { CatalogService } from '../../../services/catalog.service'
-import { NotificationService } from '../../../services/notification.service'
 
 import { NewsRelateModalComponent } from '../news-relate-modal/news-relate-modal.component'
 import { COMMONS } from '../../../commons/commons'
@@ -17,6 +16,8 @@ import { NewsModel, HISNewsModel } from '../../../models/NewsObject'
 import { Api } from 'src/app/constants/api'
 import { UploadAdapter } from 'src/app/services/uploadAdapter'
 import { HttpClient } from '@angular/common/http'
+import { UploadFileService } from 'src/app/services/uploadfiles.service'
+import { saveAs as importedSaveAs } from 'file-saver'
 
 declare var $: any
 
@@ -27,6 +28,7 @@ declare var $: any
 })
 export class NewsCreateOrUpdateComponent implements OnInit {
 	@ViewChild(NewsRelateModalComponent, { static: false }) child_NewsRelate: NewsRelateModalComponent
+	@ViewChild('file', { static: false }) file: ElementRef
 	constructor(
 		private toast: ToastrService,
 		private formBuilder: FormBuilder,
@@ -36,7 +38,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		private activatedRoute: ActivatedRoute,
 		private sanitizer: DomSanitizer,
 		private http: HttpClient,
-		private notificationService: NotificationService
+		private fileService: UploadFileService
 	) {}
 	allowImageExtend = ['image/jpeg', 'image/png']
 	public Editor = ClassicEditor
@@ -47,6 +49,8 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 	}
 
 	model: NewsModel = new NewsModel()
+	files: any = []
+	fileDelete: any = []
 	newsForm: FormGroup
 	listNewsTypes: any[]
 	postTypes: any[] = [
@@ -61,7 +65,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 
 	newsRelatesSelected: any[] = []
 	categoriesSelected: any[]
-	avatarUrl: any = 'assets/dist/images/no.jpg'
+	avatarUrl: any = '/assets/dist/images/index/Frame 2184.png'
 
 	pageIndex: any = 1
 
@@ -86,6 +90,7 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					}
 					this.rebuidForm()
 					this.model = res.result.NENewsGetByID[0]
+					this.files = res.result.NENewsFiles
 					this.hisPublic = this.model.isPublished
 					this.postTypeSelected = this.model.postType.trim().split(',')
 
@@ -171,9 +176,16 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 			this.model.status = 2
 		}
 
+		let request = {
+			model: this.model,
+			filePost: this.filePost,
+			files: this.files,
+			filesDelete: this.fileDelete,
+		}
+
 		if (this.model.id && this.model.id > 0) {
 			if (published == true) {
-				this.newsService.update(this.model, this.filePost).subscribe((res) => {
+				this.newsService.update(request).subscribe((res) => {
 					if (res.success != 'OK') {
 						this.toast.error(COMMONS.UPDATE_FAILED)
 						return
@@ -184,10 +196,10 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 					}
 
 					this.toast.success(COMMONS.UPDATE_SUCCESS)
-					this.router.navigate(['/quan-tri/tin-tuc/danh-sach-tong-hop', this.pageIndex])
+					this.router.navigate(['/quan-tri/tin-tuc/danh-sach-tong-hop'])
 				})
 			} else {
-				this.newsService.update(this.model, this.filePost).subscribe((res) => {
+				this.newsService.update(request).subscribe((res) => {
 					if (res.success != 'OK') {
 						let result = Number(res.result)
 						if (result && result == -1) {
@@ -203,11 +215,11 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 						return
 					}
 					this.toast.success(COMMONS.UPDATE_SUCCESS)
-					this.router.navigate(['/quan-tri/tin-tuc/danh-sach-tong-hop', this.pageIndex])
+					this.router.navigate(['/quan-tri/tin-tuc/danh-sach-tong-hop'])
 				})
 			}
 		} else {
-			this.newsService.create(this.model, this.filePost).subscribe((res) => {
+			this.newsService.create(request).subscribe((res) => {
 				if (res.success != 'OK') {
 					let result = Number(res.result)
 					if (result && result == -1) {
@@ -293,6 +305,59 @@ export class NewsCreateOrUpdateComponent implements OnInit {
 		this.filePost = file
 		this.model.imagePath = URL.createObjectURL(file)
 		this.avatarLocalChange = true
+	}
+
+	// upload media
+
+	uploadMedia() {
+		this.file.nativeElement.click()
+	}
+	onInsertMedia(event: any) {
+		if (event.target.files.length == 0) {
+			return
+		}
+		const check = this.fileService.checkFileWasExitsted(event, this.files)
+		if (check === 1) {
+			for (let item of event.target.files) {
+				FILETYPE.forEach((fileType) => {
+					if (item.type == fileType.text) {
+						item.fileType = fileType.value
+						this.files.push(item)
+					}
+				})
+				if (!item.fileType) {
+					this.toast.error('Định dạng không được hỗ trợ')
+				}
+			}
+		} else if (check === 2) {
+			this.toast.error('Không được phép đẩy trùng tên file lên hệ thống')
+		} else {
+			this.toast.error('File tải lên vượt quá dung lượng cho phép 10MB')
+		}
+		this.file.nativeElement.value = ''
+		console.log(this.files)
+	}
+
+	onDeleteMedia(args) {
+		const index = this.files.indexOf(args)
+		const file = this.files[index]
+		this.fileDelete.push(file)
+		this.files.splice(index, 1)
+	}
+	DownloadFile(file: any) {
+		var request = {
+			Path: file.filePath,
+			Name: file.name,
+		}
+		this.fileService.downloadFile(request).subscribe(
+			(response) => {
+				var blob = new Blob([response], { type: response.type })
+				importedSaveAs(blob, file.name)
+			},
+			(error) => {
+				this.toast.error('Không tìm thấy file trên hệ thống')
+			}
+		)
 	}
 
 	public onReady(editor) {

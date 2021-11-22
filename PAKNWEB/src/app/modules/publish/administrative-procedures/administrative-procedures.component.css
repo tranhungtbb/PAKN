@@ -115,3 +115,13 @@
 	font-size: 22px;
 	color: #707C97
 }
+
+.btn-submit-administration{
+	padding: 0.438rem 1.2rem;
+	font-family: Noto Sans;
+	font-weight: 500;
+	font-size: 12px;
+	line-height: 16px;
+	text-transform: inherit;
+	color: #222222;
+}

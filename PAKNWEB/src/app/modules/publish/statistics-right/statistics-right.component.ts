@@ -67,5 +67,9 @@ export class StatisticsRightComponent implements OnInit {
 		}
 	}
 
+	redirectMyRecommendaton(status: any) {
+		this._router.navigate(['/cong-bo/phan-anh-kien-nghi-cua-toi/' + status])
+	}
+
 	ngAfterViewInit() {}
 }
