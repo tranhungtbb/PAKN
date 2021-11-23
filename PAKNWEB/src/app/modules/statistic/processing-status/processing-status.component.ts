@@ -34,6 +34,7 @@ export class ProcessingStatusComponent implements OnInit {
 	quarter: number
 	fromDate: Date
 	toDate: Date
+	listData: any = []
 
 	maxDateValue = new Date()
 	@ViewChild('myCanvas', { static: false }) canvas: any
@@ -112,6 +113,7 @@ export class ProcessingStatusComponent implements OnInit {
 		}
 		this._service.getProcessingStatus(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
+				this.listData = response.result
 			} else {
 			}
 		}),

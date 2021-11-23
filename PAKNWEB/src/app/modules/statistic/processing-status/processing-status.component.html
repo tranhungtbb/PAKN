@@ -113,22 +113,40 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									
+									<p class="text-2line mb-0">{{item.content}}</p>
 								</td>
 								<td>
-									<a class="ellipsis text-dark" type="button">{{item.groupName}}</a>
+									<p class="mb-0">item.fieldName</p>
 								</td>
 								<td>
-									<a class="ellipsis text-dark" type="button">{{item.phone}}</a>
+									<p class="mb-0">item.phone</p>
 								</td>
 								<td>
-									<a class="ellipsis text-dark" type="button">{{item.email}}</a>
+									<p class="mb-0">item.unitName</p>
+								</td>
+
+								<td>
+									<p class="mb-0">item.userProcessName</p>
 								</td>
 								<td>
-									
+									<p class="mb-0">item.receivedDate</p>
 								</td>
-								<td style="text-align: center;">
-									
+								
+								<td>
+									<p class="mb-0">item.conclusionDate</p>
+								</td>
+								<td>
+									<span *ngIf="item.status == 1">Đang soạn thảo</span>
+									<span *ngIf="item.status == 2">Chờ xử lý</span>
+									<span *ngIf="item.status == 3">Từ chối tiếp nhận</span>
+									<span *ngIf="item.status == 4">Đã tiếp nhận</span>
+									<span *ngIf="item.status == 5">Chờ giải quyết</span>
+									<span *ngIf="item.status == 6">Từ chối giải quyết</span>
+									<span *ngIf="item.status == 7">Đang giải quyết</span>
+									<span *ngIf="item.status == 8">Chờ phê duyệt</span>
+									<span *ngIf="item.status == 9">Từ chối phê duyệt</span>
+									<span *ngIf="item.status == 10">Đã giải quyết</span>
+									<span *ngIf="item.status == 11">Đã chuyển</span>
 								</td>
 							</tr>
 						</ng-template>

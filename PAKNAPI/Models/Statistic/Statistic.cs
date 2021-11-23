@@ -310,18 +310,22 @@ namespace PAKNAPI.Models.Statistic
 	public class StatisticRecommendationProcessStatus
 	{
 		private SQLCon _sQLCon;
-		public int Id { get; set; }
-		public int UnitLevel { get; set; }
-		public bool ExistChild { get; set; }
+		public long Id { get; set; }
+		public string Code { get; set; }
+		public string Title { get; set; }
+		public string Content { get; set; }
+		public int? Field { get; set; }
+		public int? UnitId { get; set; }
+		public string Name { get; set; }
+		public DateTime CreatedDate { get; set; }
+		public DateTime ReceivedDate { get; set; }
+		public int? Status { get; set; }
+		public long? RowNumber { get; set; }
+		public string FieldName { get; set; }
 		public string UnitName { get; set; }
-		public int? TotalResult { get; set; }
-		public int? ReceiveApproved { get; set; }
-		public int? Finised { get; set; }
-		public int? Processing { get; set; }
-		public int? Expired { get; set; }
-		public int? Satisfaction { get; set; }
-		public int? Accept { get; set; }
-		public int? UnSatisfaction { get; set; }
+		public DateTime? ConclusionDate { get; set; }
+		public string UserProcessName { get; set; }
+		public string Phone { get; set; }
 		public StatisticRecommendationProcessStatus(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
@@ -331,14 +335,16 @@ namespace PAKNAPI.Models.Statistic
 		{
 		}
 
-		public async Task<List<StatisticRecommendationProcessStatus>> StatisticRecommendationProcessStatusDAO(DateTime? FromDate, DateTime? ToDate, int? UnitId)
+		public async Task<List<StatisticRecommendationProcessStatus>> StatisticRecommendationProcessStatusDAO(DateTime? FromDate, DateTime? ToDate, int? UnitId, int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("FromDate", FromDate);
 			DP.Add("ToDate", ToDate);
 			DP.Add("UnitProcessId", UnitId);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
 
-			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationProcessStatus>("TK_RecommendationPublicByUnit", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationProcessStatus>("[TK_RecommendationProcessStatus]", DP)).ToList();
 		}
 	}
 
@@ -360,13 +366,14 @@ namespace PAKNAPI.Models.Statistic
 		{
 		}
 
-		public async Task<List<StatisticRecommendationProcessResults>> StatisticRecommendationProcessResultsDAO(DateTime? FromDate, DateTime? ToDate)
+		public async Task<List<StatisticRecommendationProcessResults>> StatisticRecommendationProcessResultsDAO(DateTime? FromDate, DateTime? ToDate, int? UnitId)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("FromDate", FromDate);
 			DP.Add("ToDate", ToDate);
+			DP.Add("UnitProcessId", UnitId);
 
-			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationProcessResults>("TK_RecommendationPublicByUnit", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationProcessResults>("TK_RecommendationProcessStatus", DP)).ToList();
 		}
 	}
 

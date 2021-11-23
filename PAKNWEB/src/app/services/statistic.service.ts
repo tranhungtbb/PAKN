@@ -36,4 +36,7 @@ export class StatisticService {
 	getProcessingStatus(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationProcessingStatus)
 	}
+	getProcessingResult(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationProcessingResults)
+	}
 }
