@@ -76,6 +76,7 @@ namespace TLI.FakeImage
                 attrCount = 0,
                 attrs = new Dictionary<int, FakeAttrs>(),
                 values = new Dictionary<int, FakeImageAttrs>(),
+                bitmap= b
             };
 
             try
