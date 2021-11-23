@@ -96,6 +96,9 @@ namespace FakeImageDetection
                     + sb.ToString().Replace('\0', ' ').Replace("\n", "</br>")
                     + "</html>";
             setEnable(true);
+
+
+            
         }
         private void onCheckImage()
         {
@@ -125,7 +128,10 @@ namespace FakeImageDetection
         }
         StringBuilder buildInfo(StringBuilder sb, FakeImageDAO dao, FakeImageInfo li, bool checkImage)
         {
+            int maxLevel = 0;
+
             sb.AppendLine();
+            double timing = 0;
             if (checkImage)
             {
                 var outResults = new List<FakeResult>();
@@ -142,7 +148,9 @@ namespace FakeImageDetection
                     } );
                 }
 
-                var isFake = dao.IsFake(la, ref outResults);
+                var time = new DateTime(); 
+                var isFake = dao.IsFake(la, ref outResults, maxLevel);
+                timing = new DateTime().Subtract(time).TotalMilliseconds;
                 if (isFake)
                 {
                     sb.AppendLine($"<span style='color:#800000'><b>Fake image by {string.Join(", ", outResults.ConvertAll(x => $"{x.attrId}= '{x.valueText}'"))}</b>");
@@ -156,7 +164,7 @@ namespace FakeImageDetection
             }
 
             sb.AppendLine($"<b>{li.filePath}</b>");
-            sb.AppendLine($"Total: <b>{li.attrCount}</b> attributes");
+            sb.AppendLine($"Total: <b>{li.attrCount}</b> attributes, timing (level " + maxLevel + "): " + timing + " ms");
 
             foreach (var x in li.attrs)
             {
