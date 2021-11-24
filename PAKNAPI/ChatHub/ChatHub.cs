@@ -6,6 +6,7 @@ using PAKNAPI.Chat;
 using PAKNAPI.Chat.ResponseModel;
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
+using PAKNAPI.Models.ModelBase;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -48,7 +49,16 @@ namespace SignalR.Hubs
             var httpContext = Context.GetHttpContext();
             var connectId = httpContext.Request.Query["id"];
             var senderUserName = httpContext.Request.Query["userName"];
+
+            var id = Context.ConnectionId;
+            string roomName = "Room_" + id;
+            BOTAnonymousUser ress = await new BOTAnonymousUser(_appSetting).BOTAnonymousUserGetByUserName(id);
+            var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
+
+       
+               
             DateTime foo = DateTime.Now;
+            var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, ress.Id, room.Id, foo);
             ResultBot res = bots.Response(senderUserName, message);
             DateTime foooo = DateTime.Now;
             double totall = (foooo - foo).TotalMilliseconds;
@@ -63,9 +73,10 @@ namespace SignalR.Hubs
                 ToId = connectId,
                 Timestamp = ((DateTimeOffset)foo).ToUnixTimeSeconds().ToString()
             };
-            var config = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(TYPECONFIG.CONFIG_EMAIL));
-
+            //var config = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(TYPECONFIG.CONFIG_EMAIL));
+           
             await Clients.Caller.ReceiveMessageToGroup(messageViewModel);
+            var messageIdd = await new BOTMessage(_appSetting).BOTMessageInsertDAO(JsonConvert.SerializeObject(messageViewModel), 0, room.Id, foo);
             DateTime fooo = DateTime.Now;
             double total = (fooo - foo).TotalMilliseconds;
             System.Diagnostics.Debug.WriteLine("ChatWithBot 1 "+ total);
