@@ -365,8 +365,14 @@ namespace PAKNAPI.Controllers
 			{
 				var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
 				List<StatisticRecommendationProcessStatus> result = await new StatisticRecommendationProcessStatus(_appSetting).StatisticRecommendationProcessStatusDAO(FromDate,ToDate, unitId,PageSize, PageIndex);
-
-				return new ResultApi { Success = ResultCode.OK, Result = result };
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"StatisticRecommendationProcessStatus", result},
+						{"TotalCount", result != null && result.Count > 0 ? result[0].RowNumber : 0},
+						{"PageIndex", result != null && result.Count > 0 ? PageIndex : 0},
+						{"PageSize", result != null && result.Count > 0 ? PageSize : 0},
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
 			}
 			catch (Exception ex)
 			{

@@ -151,20 +151,28 @@ export class PuRecommendation {
 	shortName: string
 }
 
-// export class PuRecommendationSearch {
-// 	keyseach: string = ''
-// 	code: number
-// 	pagesize: number
-// 	pageindex: number
-// }
 export class RecommnendationCommentObject {
 	constructor() {
 		this.contents = ''
+		this.isPublish = false
 	}
 	contents: string
 	userId: number
 	recommendationId: number
 	fullName: string
+	isPublish: boolean
+}
+
+export class RecommnendationInfomationExchange {
+	constructor() {
+		this.contents = ''
+	}
+	id : number
+	contents: string
+	userId: number
+	recommendationId: number
+	fullName: string
+	createdDate : Date
 	isPublish: boolean
 }
 

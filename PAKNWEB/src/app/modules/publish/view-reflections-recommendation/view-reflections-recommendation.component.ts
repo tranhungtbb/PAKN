@@ -31,6 +31,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	pageSizeComment: any = 20
 	IsAllComment: boolean = false
 	isLogin: boolean = this.storeageService.getIsHaveToken()
+	typeObject : number = this.storeageService.getTypeObject()
 	APIADDRESS: any
 	constructor(
 		private service: PuRecommendationService,
@@ -145,7 +146,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 		pageSize: this.pageSizeComment,
 		pageIndex: 1,
 		recommendationId: 0,
-		isPublish: true,
+		isPublish: false,
 	}
 	listCommentsPaged: any[] = []
 	// commentFirst = new RecommnendationCommentObject()
@@ -158,7 +159,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 		}
 		this.commentModel.recommendationId = this.model.id
 		this.commentModel.contents = this.commentModel.contents == null ? '' : this.commentModel.contents.trim()
-		this.commentModel.isPublish = true
+		this.commentModel.isPublish = false
 		if (this.commentModel.contents == null || this.commentModel.contents == '') {
 			this._toastr.error('Không bỏ trống nội dung bình luận')
 			return
@@ -169,7 +170,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 				this._toastr.error(res.message)
 				return
 			}
-			this._toastr.success('Thêm bình luận thành công')
+			this._toastr.success('Gửi bình luận thành công')
 			this.commentModel = new RecommnendationCommentObject()
 			this.getCommentPaged()
 		})
@@ -198,15 +199,16 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 		this.getCommentPaged()
 	}
 	changeStatusComment = (comment) => {
-		comment.isView = !comment.isView
 		let obj = {
 			Id: comment.id,
-			IsView: comment.isView,
+			IsPublish: !comment.isPublish,
 		}
 		this.commentService.updateStatus(obj).subscribe(
 			(res) => {
 				if (res.success == RESPONSE_STATUS.success) {
-					this._toastr.success(comment.isView == true ? 'Công bố bình luận thành công' : 'Thu hồi bình luận thành công')
+					comment.isPublish = !comment.isPublish
+					this._toastr.success(comment.isPublish == true ? 'Công bố bình luận thành công' : 'Thu hồi bình luận thành công')
+					
 				} else {
 					this._toastr.error(res.message)
 				}

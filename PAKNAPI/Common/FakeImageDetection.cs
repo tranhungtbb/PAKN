@@ -4,11 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
 
-<<<<<<< HEAD
 namespace PAKNAPI.Common
-=======
-namespace TLI.FakeImage
->>>>>>> feature/DetectFakeImage
 {
     public class FakeImageDetection : IDisposable
     {
@@ -20,7 +16,7 @@ namespace TLI.FakeImage
                 throw new ArgumentNullException("sampleData");
             this.SampleData = sampleData;
         }
-        
+
         protected virtual string getPropName(string name, string def)
         {
             return def;
@@ -71,7 +67,6 @@ namespace TLI.FakeImage
             SLong = 9,
             SRational = 10
         }
-<<<<<<< HEAD
 
         public FakeImageInfo GetInfo(Bitmap b)
         {
@@ -82,25 +77,10 @@ namespace TLI.FakeImage
                 attrs = new Dictionary<int, FakeAttrs>(),
                 values = new Dictionary<int, FakeImageAttrs>(),
                 bitmap = b,
-=======
-        public FakeImageInfo GetInfo(string filePath)
-        {
-            var metaInfo = new FakeImageInfo
-            {
-                filePath = filePath,
-                attrCount = 0,
-                attrs = new Dictionary<int, FakeAttrs>(),
-                values = new Dictionary<int, FakeImageAttrs>(),
->>>>>>> feature/DetectFakeImage
             };
 
             try
             {
-<<<<<<< HEAD
-=======
-                metaInfo.bitmap = new Bitmap(filePath);
-
->>>>>>> feature/DetectFakeImage
                 PropertyItem[] propItems = metaInfo.bitmap.PropertyItems;
                 foreach (PropertyItem pi in propItems)
                 {
@@ -174,8 +154,8 @@ namespace TLI.FakeImage
             }
             return metaInfo;
         }
-<<<<<<< HEAD
-        public FakeImageInfo GetInfo(string filePath) {
+        public FakeImageInfo GetInfo(string filePath)
+        {
 
             var rs = GetInfo(new Bitmap(filePath));
             rs.filePath = filePath;
@@ -186,13 +166,6 @@ namespace TLI.FakeImage
             var info = this.GetInfo(bitmap);
             var rs = new List<FakeImageMetadata>();
             foreach (var x in info.values)
-=======
-        public List<FakeImageMetadata> GetMetadata(string filePath)
-        {
-            var info = this.GetInfo(filePath);
-            var rs = new List<FakeImageMetadata>();
-            foreach(var x in info.values)
->>>>>>> feature/DetectFakeImage
             {
                 rs.Add(new FakeImageMetadata
                 {
@@ -204,13 +177,10 @@ namespace TLI.FakeImage
             }
             return rs;
         }
-<<<<<<< HEAD
         public List<FakeImageMetadata> GetMetadata(string filePath)
         {
             return GetMetadata(new Bitmap(filePath));
         }
-=======
->>>>>>> feature/DetectFakeImage
         public class FakeResult
         {
             public long id;
@@ -230,7 +200,6 @@ namespace TLI.FakeImage
         }
         public Dictionary<long, FakeResult> SampleData { get; protected set; }
 
-<<<<<<< HEAD
         public bool IsFake(Bitmap b, ref List<FakeResult> outResults, int maxLevel = 0)
         {
             return IsFake(GetMetadata(b), ref outResults, maxLevel);
@@ -247,10 +216,7 @@ namespace TLI.FakeImage
         {
             return IsFake(GetMetadata(filePath), maxLevel);
         }
-        public bool IsFake(List<FakeImageMetadata> param, ref List<FakeResult> outResults, int maxLevel=0)
-=======
-        public bool IsFake(List<FakeImageMetadata> param, ref List<FakeResult> outResults)
->>>>>>> feature/DetectFakeImage
+        public bool IsFake(List<FakeImageMetadata> param, ref List<FakeResult> outResults, int maxLevel = 0)
         {
             var map = new Dictionary<long, FakeImageMetadata>();
             foreach (var x in param)
@@ -287,14 +253,10 @@ namespace TLI.FakeImage
                             return true;
                         }
 
-<<<<<<< HEAD
                         if (maxLevel > 0 && outResults.Count >= maxLevel)
                             continue;
                         else
                             rs.childs.ForEach(c => stacks.Push(c));
-=======
-                        rs.childs.ForEach(c => stacks.Push(c));
->>>>>>> feature/DetectFakeImage
                     }
                 }
 
@@ -302,18 +264,11 @@ namespace TLI.FakeImage
 
             return false;
         }
-      
-<<<<<<< HEAD
-        public bool IsFake(List<FakeImageMetadata> param, int maxLevel=0)
+
+        public bool IsFake(List<FakeImageMetadata> param, int maxLevel = 0)
         {
             var outResults = new List<FakeResult>();
-            return IsFake(param,ref outResults, maxLevel);
-=======
-        public bool IsFake(List<FakeImageMetadata> param)
-        {
-            var outResults = new List<FakeResult>();
-            return IsFake(param,ref outResults);
->>>>>>> feature/DetectFakeImage
+            return IsFake(param, ref outResults, maxLevel);
         }
         public virtual void Dispose()
         {

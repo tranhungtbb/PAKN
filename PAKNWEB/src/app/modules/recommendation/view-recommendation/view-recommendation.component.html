@@ -298,13 +298,13 @@
 					</div>
 					<div>
 						<div>
-							<p class="h3 text-uppercase mt-4" style="font-weight: normal;">Trao đổi ({{total_Comments}})</p>
+							<p class="h3 text-uppercase mt-4" style="font-weight: normal;">Trao đổi ({{totalInfomationExchange}})</p>
 						</div>
 						<div class="p-4 rounded-xl mb-4" style="background-color: #ededed;">
-							<textarea class="form-control rounded mb-2" rows="4" maxlength="500" placeholder="Nhập trao đổi..." [(ngModel)]="commentModel.contents"></textarea>
-							<button class="btn btn-sm grd-blue border-0 pl-4 pr-4 text-white" (click)="onSendComment()"> Gửi </button>
+							<textarea class="form-control rounded mb-2" rows="4" maxlength="500" placeholder="Nhập trao đổi..." [(ngModel)]="infoExchangeModel.contents"></textarea>
+							<button class="btn btn-sm grd-blue border-0 pl-4 pr-4 text-white" (click)="onInsertInfomationExchange()"> Gửi </button>
 						</div>
-						<div *ngFor="let item of listCommentsPaged" class="border-bottom mb-3">
+						<div *ngFor="let item of listInfomationExchange" class="border-bottom mb-3">
 							<header class="clearfix">
 								<div class="cmt-avatar pull-left avatar-circle mr-2" style="background: #EBF2FF; color: #5D90F1">
 									{{getShortName(item.fullName)}}
@@ -320,8 +320,8 @@
 								</p>
 							</div>
 						</div>
-						<div *ngIf="total_Comments > listCommentsPaged.length">
-							<p class="text-black"><a href="javascript:void(0);" (click)="getCommentPaged(commentQuery.pageIndex + 1)">Xem thêm bình luân khác <i
+						<div *ngIf="listInfomationExchange && (totalInfomationExchange > listInfomationExchange.length)">
+							<p class="text-black"><a href="javascript:void(0);" (click)="onInsertInfomationExchange(infomationExchangeQuery.pageIndex + 1)">Xem thêm trao đổi khác <i
 										class="bi bi-arrow-right"></i></a></p>
 						</div>
 					</div>

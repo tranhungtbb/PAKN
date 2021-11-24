@@ -61,6 +61,10 @@ export class Api {
 	public static MRRecommendationCommentGetOnPage = 'recommendation/get-all-comment'
 	public static MR_Recommendation7dayGraph = 'recommendation/recommendation7daygraph'
 
+	// infomationChange
+	public static MRInfomationExchangeGetOnPage = 'recommendation/get-all-infomation-exchange'
+	public static MRInfomationExchangeInsert = 'recommendation/insert-infomation-exchange'
+
 	public static PuRecommendationGetAllOnPage = 'pu-recommendation/get-list-recommentdation-on-page'
 	public static PuRecommendationHomePage = 'pu-recommendation/get-list-recommentdation-home-page'
 	public static PuRecomentdationGetListOrderByCountClick = 'pu-recommendation/recommendation-get-list-order-by-count-click'

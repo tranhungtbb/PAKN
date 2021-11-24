@@ -34,6 +34,8 @@ export class ProcessingResultsComponent implements OnInit {
 	quarter: number
 	fromDate: Date
 	toDate: Date
+	totalRecords : number
+	listData : any [] = []
 
 	maxDateValue = new Date()
 	@ViewChild('myCanvas', { static: false }) canvas: any

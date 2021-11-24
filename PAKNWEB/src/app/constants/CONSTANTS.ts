@@ -86,6 +86,7 @@ export class LOG_OBJECT {
 	public static SY_INTRODUCE = 'Cấu hình trang giới thiệu'
 	public static SY_INDEXSETTING = 'Cấu hình trang chủ'
 	public static MR_COMMENT = 'Bình luận Phản ánh kiến nghị'
+	public static MR_INFOMATIONCHANGE = 'Bình luận Phản ánh kiến nghị'
 	public static BI_INDIVIDUAL = 'Cá nhân'
 	public static BI_BUSINESS = 'Doanh nghiệp'
 	public static SY_TIME = 'Cấu hình thời gian làm việc'

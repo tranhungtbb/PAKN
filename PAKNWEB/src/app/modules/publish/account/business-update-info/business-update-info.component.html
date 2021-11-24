@@ -25,7 +25,7 @@
 								</div>
 
 							</div>
-							<div class="col">
+							<!-- <div class="col">
 								<p class="mb-1">Ngày tháng năm sinh</p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model._representativeBirthDay | date : 'dd/MM/yyyy'}}</p>
 								<div class="form-group" *ngIf="editable">
@@ -39,7 +39,23 @@
 									</div>
 								
 								</div>
+							</div> -->
+							<div class="col">
+								<p class="mb-1">Số điện thoại</p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.phone}}</p>
+								<div class="form-group" *ngIf="editable">
+									<input type="text" class="form-control" [(ngModel)]="model.phone" formControlName="phone" placeholder="Nhập">
+									<div *ngIf="(submitted && f.phone.invalid)||(f.phone.invalid && (f.phone.dirty || f.phone.touched))" class="has-error m-b-12">
+										<div *ngIf="f.phone.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+										<div *ngIf="f.phone.errors.pattern">
+											<span class="help-block">Số điện thoại không đúng</span>
+										</div>
+									</div>
+								</div>
 							</div>
+							<div class="w-100 mb-3"></div>
 							<div class="col">
 								<p class="mb-1">Email</p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.email}}</p>
@@ -54,17 +70,14 @@
 										</div>
 									</div>
 								</div>
-
 							</div>
-							<div class="w-100 mb-3"></div>
-							<div class="col">
+							
+							<!-- <div class="col">
 								<p class="mb-1">Quốc tịch <span class="cl-red">(*)</span></p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.nation}}</p>
 								<div class="form-group" *ngIf="editable">
-									<!--  -->
 									<ng-select notFoundText="Không có dữ liệu"  [(ngModel)]="model.nation" *ngIf="!nation_enable_type" formControlName="nation" class="form-control" placeholder="Chọn..."
 										[clearable]="false" [closeOnSelect]="true" (change)="onChangeNation(true)">
-										<!-- <ng-option value="">Chọn...</ng-option> -->
 										<ng-option *ngFor="let nation of listNation" [value]="nation.id">{{nation.name}}</ng-option>
 										<ng-option value="#">Khác</ng-option>
 									</ng-select>
@@ -73,7 +86,6 @@
 									<span *ngIf="nation_enable_type" class="select-caret-icon" style="top: 30pt;" (click)="backToDfVal()">
 										<i class="bi bi-caret-down-fill"></i>
 									</span>
-									<!--  -->
 									<div *ngIf="(submitted && f.nation.invalid)||(f.nation.invalid && (f.nation.dirty || f.nation.touched))" class="has-error m-b-12">
 										<div *ngIf="f.nation.errors.required">
 											<span class="help-block">Trường dữ liệu này không được để trống</span>
@@ -141,9 +153,9 @@
 								</div>
 								</div>
 
-							</div>
+							</div> -->
 							<div class="col col-lg-8">
-								<p class="mb-1">Địa chỉ cụ thể</p>
+								<p class="mb-1">Địa chỉ cụ thể </p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.address}}</p>
 								<div class="form-group" *ngIf="editable">
 									<input type="text" class="form-control" [(ngModel)]="model.address" formControlName="address" placeholder="Nhập">
@@ -153,9 +165,9 @@
 										</div>
 									</div>
 								</div>
-
 							</div>
-							<div class="w-100 mb-3"></div>
+						</div>
+							<!-- <div class="w-100 mb-3"></div>
 							<div class="col-12">
 								<p class="mb-1" *ngIf="!editable">Giới tính: <span class="h4" *ngIf="!model.representativeGender">Nữ</span><span class="h4"
 										*ngIf="model.representativeGender">Nam</span>
@@ -167,13 +179,12 @@
 											class="text-uppercase"> {{gen.text}}</span>
 									</label>
 								</div>
-							</div>
-						</div>
+							</div> -->
 						<div class="tt-v1 pt-3 mb-3">
 							<h4 class="text-uppercase">Thông tin doanh nghiệp</h4>
 						</div>
 						<div class="row">
-							<div class="col col-lg-8">
+							<div class="col col-lg-12">
 								<p class="mb-1">Tên tổ chức, doanh nghiệp <span class="cl-red">(*)</span></p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.business}}</p>
 								<div class="form-group" *ngIf="editable">
@@ -185,22 +196,38 @@
 									</div>
 								</div>
 							</div>
-							<div class="col">
-								<p class="mb-1">Số chứng nhận đăng ký kinh doanh</p>
+							<div class="col col-lg-6">
+								<p class="mb-1">Số chứng nhận đăng ký kinh doanh <span class="cl-red">(*)</span></p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.businessRegistration}}</p>
 								<div class="form-group" *ngIf="editable">
 									<input type="text" class="form-control" placeholder="Nhập" [(ngModel)]="model.businessRegistration" formControlName="businessRegistration">
 								</div>
 							</div>
-							<div class="w-100 mb-3"></div>
+							<div class="col col-lg-6">
+								<p class="mb-1">Điện thoại <span class="cl-red">(*)</span></p>
+								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.orgPhone}}</p>
+								<div class="form-group" *ngIf="editable">
+									<input type="text" class="form-control" placeholder="Nhập" [(ngModel)]="model.orgPhone" formControlName="orgPhone" maxlength="10" numbersOnly
+										pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$">
+									<div *ngIf="(submitted && f.orgPhone.invalid)||(f.orgPhone.invalid && (f.orgPhone.dirty || f.orgPhone.touched))" class="has-error m-b-12">
+										<div *ngIf="f.orgPhone.errors.required">
+											<span class="help-block">Trường dữ liệu này không được để trống</span>
+										</div>
+										<div *ngIf="f.orgPhone.errors.pattern">
+											<span class="help-block">Định dạng số điện thoại không đúng</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- <div class="w-100 mb-3"></div>
 							<div class="col">
 								<p class="mb-1">Số quyết định thành lập</p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.decisionOfEstablishing}}</p>
 								<div class="form-group" *ngIf="editable">
 									<input type="text" class="form-control" placeholder="Nhập" [(ngModel)]="model.decisionOfEstablishing" formControlName="decisionOfEstablishing">
 								</div>
-							</div>
-							<div class="col">
+							</div> -->
+							<!-- <div class="col">
 								<p class="mb-1">Ngày cấp / Thành lập</p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model._dateOfIssue | date : 'dd/MM/yyyy'}}</p>
 								<div class="form-group" *ngIf="editable">
@@ -214,8 +241,8 @@
 									</div>
 								
 								</div>
-							</div>
-							<div class="col">
+							</div> -->
+							<!-- <div class="col">
 								<p class="mb-1">Mã số thuế <span class="cl-red">(*)</span></p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.tax}}</p>
 								<div class="form-group" *ngIf="editable">
@@ -226,13 +253,13 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							</div> -->
 						</div>
 						<div class="tt-v1 pt-3 mb-3">
 							<h4 class="text-uppercase">Địa chỉ trụ sở / văn phòng đại điện</h4>
 						</div>
 						<div class="row">
-							<div class="col">
+							<!-- <div class="col">
 								<p class="mb-1">Tỉnh / Thành phố <span class="cl-red">(*)</span></p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{listProvince | getLocalUnitName:model.orgProvinceId}}</p>
 								<div class="form-group" *ngIf="editable">
@@ -278,9 +305,8 @@
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="w-100 mb-3"></div>
-							<div class="col col-lg-12">
+							</div> -->
+							<div class="col col-lg-8">
 								<p class="mb-1">Địa chỉ cụ thể <span class="cl-red">(*)</span></p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.orgAddress}}</p>
 								<div class="form-group" *ngIf="editable">
@@ -292,26 +318,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="w-100 mb-3"></div>
-							<div class="col">
-								<p class="mb-1">Điện thoại <span class="cl-red">(*)</span></p>
-								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.orgPhone}}</p>
-								<div class="form-group" *ngIf="editable">
-									<input type="text" class="form-control" placeholder="Nhập" [(ngModel)]="model.orgPhone" formControlName="orgPhone" maxlength="10" numbersOnly
-										pattern="^(84|0[3|5|7|8|9])+([0-9]{8})$">
-									<div *ngIf="(submitted && f.orgPhone.invalid)||(f.orgPhone.invalid && (f.orgPhone.dirty || f.orgPhone.touched))" class="has-error m-b-12">
-										<div *ngIf="f.orgPhone.errors.required">
-											<span class="help-block">Trường dữ liệu này không được để trống</span>
-										</div>
-										<div *ngIf="f.orgPhone.errors.pattern">
-											<span class="help-block">Định dạng số điện thoại không đúng</span>
-										</div>
-									</div>
-								</div>
-
-
-							</div>
-							<div class="col col-lg-8">
+							<div class="col col-lg-4">
 								<p class="mb-1">Email</p>
 								<p class="h4 mb-0 pb-3 border-bottom set-height" *ngIf="!editable">{{model.orgEmail}}</p>
 								<div class="form-group" *ngIf="editable">
@@ -322,7 +329,6 @@
 										</div>
 									</div>
 								</div>
-
 							</div>
 						</div>
 						<div class="row">
