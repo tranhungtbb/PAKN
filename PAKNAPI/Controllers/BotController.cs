@@ -32,20 +32,20 @@ namespace PAKNAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("bot-create-room")]
-        [HttpGet]
-        public async Task<ActionResult<object>> CreateRoom() {
+        [HttpPost]
+        public async Task<ActionResult<object>> CreateRoom(string UserName) {
             try
             {
                 //return new ResultApi { Success = ResultCode.OK, Result = await new FeedBackSync(_appSetting).SyncFeedBack()};
                 // create user
-                var guid = Guid.NewGuid().ToString();
+                var guid = UserName;
                 var id = Int32.Parse((await new BOTAnonymousUser(_appSetting).BOTAnonymousUserInsertDAO(guid)).ToString());
 
                 if (id > 0)
                 {
                     // create room
 
-                    var roomId =Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom("Room_" + guid, 1))).ToString());
+                    var roomId = Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom("Room_" + guid, 1))).ToString());
                     SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
                     var botRoomUserLink = new BOTRoomUserLink();
                     botRoomUserLink.AnonymousId = id;

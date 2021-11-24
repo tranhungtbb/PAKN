@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using PAKNAPI.Chat;
 using PAKNAPI.Chat.ResponseModel;
 using PAKNAPI.Common;
+using PAKNAPI.ModelBase;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -18,15 +19,17 @@ namespace SignalR.Hubs
         public readonly static List<User> _Connections = new List<User>();
         public readonly static List<Room> _Rooms = new List<Room>();
         private readonly static Dictionary<string, string> _ConnectionsMap = new Dictionary<string, string>();
-
+        private readonly IAppSetting _appSetting;
         public ChatHub(
-     //IUserRepository userRepository,
-     //IRoomRepository roomRepository,
-     //IMessageRepository messageRepository,
-     //IRoomLinkRepository roomLinkRepository
-     )
+            IAppSetting appSetting
+        //IUserRepository userRepository,
+        //IRoomRepository roomRepository,
+        //IMessageRepository messageRepository,
+        //IRoomLinkRepository roomLinkRepository
+        )
         {
             bots = new ManageBots();
+            _appSetting = appSetting;
             //_userRepository = userRepository;
             //_roomLinkRepository = roomLinkRepository;
             //_roomRepository = roomRepository;
@@ -60,7 +63,7 @@ namespace SignalR.Hubs
                 ToId = connectId,
                 Timestamp = ((DateTimeOffset)foo).ToUnixTimeSeconds().ToString()
             };
-
+            var config = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(TYPECONFIG.CONFIG_EMAIL));
 
             await Clients.Caller.ReceiveMessageToGroup(messageViewModel);
             DateTime fooo = DateTime.Now;
@@ -82,7 +85,7 @@ namespace SignalR.Hubs
                 {
                     _ConnectionsMap.Add(userName + "x_x" + id, id);
                 }
-
+                
                 //if (user == null)
                 //{
                 //    User u = new User();

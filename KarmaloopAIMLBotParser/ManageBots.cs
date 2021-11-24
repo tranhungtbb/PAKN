@@ -44,13 +44,10 @@ namespace KarmaloopAIMLBotParser
 
         public void RemoveBot(string botname)
         {
-      
             if (!_ConnectionsMap.ContainsKey(botname))
             {
                 _ConnectionsMap.Remove(botname);
             }
-            
-      
         }
     }
 }
