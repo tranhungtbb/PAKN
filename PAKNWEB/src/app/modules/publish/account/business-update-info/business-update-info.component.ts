@@ -63,24 +63,25 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		this.getUserInfo()
 		this.formUpdateAccountInfo = this.formBuider.group({
 			representativeName: [this.model.representativeName, [Validators.required]],
-			representativeBirthDay: [this.model.representativeBirthDay],
-			email: [this.model.email, [Validators.email]],
-			nation: [this.model.nation, [Validators.required]],
-			provinceId: [this.model.provinceId],
-			districtId: [this.model.districtId],
-			wardsId: [this.model.wardsId],
+			// representativeBirthDay: [this.model.representativeBirthDay],
+			email: [this.model.email],
+			phone: [this.model.phone, [Validators.required, Validators.pattern(/^(84|0[3|5|7|8|9])+([0-9]{8})$/g)]],
+			// nation: [this.model.nation, [Validators.required]],
+			// provinceId: [this.model.provinceId],
+			// districtId: [this.model.districtId],
+			// wardsId: [this.model.wardsId],
 			address: [this.model.address],
-			representativeGender: [this.model.representativeGender],
-			businessRegistration: [this.model.businessRegistration],
-			decisionOfEstablishing: [this.model.decisionOfEstablishing],
-			dateOfIssue: [this.model.dateOfIssue],
-			tax: [this.model.tax, [Validators.required]],
-			orgProvinceId: [this.model.orgProvinceId, [Validators.required]],
-			orgDistrictId: [this.model.orgDistrictId , [Validators.required]],
-			orgWardsId: [this.model.orgWardsId, [Validators.required]],
-			orgAddress: [this.model.orgAddress, [Validators.required]],
-			orgPhone: [this.model.orgPhone, [Validators.required]],
-			orgEmail: [this.model.orgEmail, [Validators.email]],
+			// representativeGender: [this.model.representativeGender],
+			businessRegistration: [this.model.businessRegistration, [Validators.required]],
+			// decisionOfEstablishing: [this.model.decisionOfEstablishing],
+			// dateOfIssue: [this.model.dateOfIssue],
+			// tax: [this.model.tax, [Validators.required]],
+			// orgProvinceId: [this.model.orgProvinceId, [Validators.required]],
+			// orgDistrictId: [this.model.orgDistrictId , [Validators.required]],
+			// orgWardsId: [this.model.orgWardsId, [Validators.required]],
+			orgAddress: [this.model.orgAddress],
+			orgPhone: [this.model.orgPhone],
+			orgEmail: [this.model.orgEmail],
 			business: [this.model.business, [Validators.required]],
 		})
 	}
@@ -117,9 +118,9 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		this.submitted = true
 		// let fDob: any = document.querySelector('#_dateOfBirth')
 		// let fDateIssue: any = document.querySelector('#_dateOfIssue')
-		if (this.model.nation == 'Nhập...') {
-			this.model.nation = ''
-		}
+		// if (this.model.nation == 'Nhập...') {
+		// 	this.model.nation = ''
+		// }
 		// this.model.dateOfBirth = fDob.value
 		// this.model.dateOfIssue = fDateIssue.value
 		this.model.fullName = this.model.business
@@ -134,10 +135,10 @@ export class BusinessUpdateInfoComponent implements OnInit {
 		if (this.formUpdateAccountInfo.invalid) {
 			return
 		}
-		if(!this.nation_enable_type && (!this.model.wardsId || !this.model.provinceId || !this.model.districtId ))
-		{
-			return
-		}
+		// if(!this.nation_enable_type && (!this.model.wardsId || !this.model.provinceId || !this.model.districtId ))
+		// {
+		// 	return
+		// }
 
 		this.model.wardsId = this.model.wardsId == null ? '' : this.model.wardsId;
 		this.model.provinceId = this.model.provinceId == null ? '' : this.model.provinceId;

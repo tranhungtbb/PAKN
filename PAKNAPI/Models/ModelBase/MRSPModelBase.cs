@@ -112,6 +112,56 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate { get; set; }
 	}
 
+	public class MRInfomationExchange
+	{
+		private SQLCon _sQLCon;
+
+		public MRInfomationExchange(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public MRInfomationExchange()
+		{
+		}
+
+		public long ID { get; set; }
+		public long? UserId { get; set; }
+		public string FullName { get; set; }
+		public string Contents { get; set; }
+		public long? RecommendationId { get; set; }
+		public DateTime? CreatedDate { get; set; }
+
+		public long? RowNumber { get; set; }
+
+		public bool? IsPublish { get; set; }
+
+		public async Task<List<MRInfomationExchange>> MRInfomationExchangeGetAllOnPage(long? RecommendationId,bool? IsPublish ,int? PageIndex, int? PageSize)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RecommendationId", RecommendationId);
+			DP.Add("IsPublish", IsPublish);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("PageSize", PageSize);
+
+			return (await _sQLCon.ExecuteListDapperAsync<MRInfomationExchange>("MR_Recommendation_InfomationExchangeGetAllOnPage", DP)).ToList();
+		}
+
+		public async Task<int> MRInfomationExchangeInsertDAO(MRInfomationExchange model)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", model.UserId);
+			DP.Add("CreatedDate", model.CreatedDate);
+			DP.Add("FullName", model.FullName);
+			DP.Add("Contents", model.Contents);
+			DP.Add("RecommendationId", model.RecommendationId);
+			DP.Add("IsPublish", model.IsPublish);
+
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("[MR_Recommendation_InfomationExchange_Insert]", DP));
+		}
+	}
+
+
 	public class MRCommentGetAllOnPage
 	{
 		private SQLCon _sQLCon;
@@ -132,15 +182,15 @@ namespace PAKNAPI.ModelBase
 		public string Contents { get; set; }
 		public long? RecommendationId { get; set; }
 		public DateTime? CreatedDate { get; set; }
-		public bool IsView { get; set; }
+		public bool IsPublish { get; set; }
 
-		public async Task<List<MRCommentGetAllOnPage>> MRCommentGetAllOnPageDAO(int? PageSize, int? PageIndex, long? RecommendationId, bool isPublish)
+		public async Task<List<MRCommentGetAllOnPage>> MRCommentGetAllOnPageDAO(int? PageSize, int? PageIndex, long? RecommendationId, bool? IsPublish)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("PageSize", PageSize);
 			DP.Add("PageIndex", PageIndex);
 			DP.Add("RecommendationId", RecommendationId);
-			DP.Add("IsPublish", isPublish);
+			DP.Add("IsPublish", IsPublish);
 
 			return (await _sQLCon.ExecuteListDapperAsync<MRCommentGetAllOnPage>("MR_Commnent_GetAllOnPage", DP)).ToList();
 		}
@@ -159,7 +209,7 @@ namespace PAKNAPI.ModelBase
 		{
 		}
 
-		public async Task<int?> MRCommnentInsertDAO(MRCommentInsertIN _mRCommnentInsertIN)
+		public async Task<decimal?> MRCommnentInsertDAO(MRCommentInsertIN _mRCommnentInsertIN)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Contents", _mRCommnentInsertIN.Contents);
@@ -168,7 +218,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("FullName", _mRCommnentInsertIN.FullName);
 			DP.Add("IsPublish", _mRCommnentInsertIN.IsPublish);
 
-			return await _sQLCon.ExecuteScalarDapperAsync<int?>("MR_Commnent_Insert", DP);
+			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("MR_Commnent_Insert", DP);
 		}
 	}
 
@@ -204,7 +254,7 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Id", _mRCommnentUpdateIN.Id);
 			DP.Add("UserId", _mRCommnentUpdateIN.UserId);
-			DP.Add("IsView", _mRCommnentUpdateIN.IsView);
+			DP.Add("IsPublish", _mRCommnentUpdateIN.IsPublish);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<int?>("MR_Commnent_UpdateStatus", DP);
 		}
@@ -214,9 +264,7 @@ namespace PAKNAPI.ModelBase
 		[Required(AllowEmptyStrings = false, ErrorMessage = "Mã bình luận không được để trống")]
 		public long Id { get; set; }
 		public long? UserId { get; set; }
-
-		[Required(AllowEmptyStrings = false, ErrorMessage = "Trạng thái không được để trống")]
-		public bool? IsView { get; set; }
+		public bool? IsPublish { get; set; }
 	}
 
 	public class MRRecommendationCheckExistedCode

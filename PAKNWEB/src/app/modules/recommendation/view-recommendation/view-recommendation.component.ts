@@ -1,14 +1,14 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
 import { COMMONS } from 'src/app/commons/commons'
-import { CONSTANTS, FILETYPE, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
+import { CONSTANTS, FILETYPE, MESSAGE_COMMON, PROCESS_STATUS_RECOMMENDATION, RECOMMENDATION_STATUS, RESPONSE_STATUS, STEP_RECOMMENDATION } from 'src/app/constants/CONSTANTS'
 import {
 	RecommendationConclusionObject,
 	RecommendationForwardObject,
 	RecommendationProcessObject,
 	RecommendationViewObject,
 	RecommendationSuggestObject,
-	RecommnendationCommentObject,
+	RecommnendationInfomationExchange,
 } from 'src/app/models/recommendationObject'
 import { UploadFileService } from 'src/app/services/uploadfiles.service'
 import { RecommendationService } from 'src/app/services/recommendation.service'
@@ -18,7 +18,6 @@ import { CatalogService } from 'src/app/services/catalog.service'
 import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { RemindComponent } from 'src/app/modules/recommendation/remind/remind.component'
-import { NotificationService } from 'src/app/services/notification.service'
 import { AppSettings } from 'src/app/constants/app-setting'
 import { RecommendationCommentService } from 'src/app/services/recommendation-comment.service'
 import { saveAs as importedSaveAs } from 'file-saver'
@@ -70,7 +69,6 @@ export class ViewRecommendationComponent implements OnInit {
 		private router: Router,
 		private _fb: FormBuilder,
 		private activatedRoute: ActivatedRoute,
-		private notificationService: NotificationService,
 		private commentService: RecommendationCommentService,
 		private biService: BusinessIndividualService
 	) {}
@@ -114,6 +112,7 @@ export class ViewRecommendationComponent implements OnInit {
 		let request = {
 			Id: this.model.id,
 		}
+		this.getAllInfomationExchange(1)
 		this.recommendationService.recommendationGetByIdView(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.model = response.result.model
@@ -130,9 +129,6 @@ export class ViewRecommendationComponent implements OnInit {
 					this.model.sendDate = new Date(this.model.sendDate)
 				}
 				this.remindComponent.getListRemind()
-
-				this.commentQuery.recommendationId = this.model.id
-				this.getCommentPaged()
 				this.sugestText()
 				this.enableEdit = this.model.status == 1 && this.model.createdBy == this.storeageService.getUserId()
 			} else {
@@ -319,7 +315,6 @@ export class ViewRecommendationComponent implements OnInit {
 			this.recommendationService.recommendationProcessConclusion(request).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
-					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.model.id }).subscribe((res) => {})
 					this.toastr.success(COMMONS.PROCESS_SUCCESS)
 					return this.router.navigate(['/quan-tri/kien-nghi/dang-giai-quyet'])
 				} else {
@@ -490,12 +485,10 @@ export class ViewRecommendationComponent implements OnInit {
 				ListHashTag: this.lstHashtagSelected,
 				IsList: false,
 			}
-			let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
-			this.recommendationService.recommendationProcess(request, obj.title).subscribe((response) => {
+			this.recommendationService.recommendationProcess(request, this.model.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')
-					this.notificationService.insertNotificationTypeRecommendation({ recommendationId: this.modelProcess.recommendationId }).subscribe((res) => {})
-					this.toastr.success(COMMONS.DENY_SUCCESS)
+						this.toastr.success(COMMONS.DENY_SUCCESS)
 					this.getData()
 				} else {
 					this.toastr.error(response.message)
@@ -555,50 +548,52 @@ export class ViewRecommendationComponent implements OnInit {
 		}
 	}
 
-	//comment area
-	commentModel: RecommnendationCommentObject = new RecommnendationCommentObject()
-	commentQuery: any = {
-		pageSize: 20,
-		pageIndex: 1,
-		recommendationId: 0,
-		isPublish: false,
+	//infomationExchange area
+	infoExchangeModel: RecommnendationInfomationExchange = new RecommnendationInfomationExchange()
+	infomationExchangeQuery : any = {
+		pageIndex : 1,
+		pageSize : 20,
+		recommendationId : 0,
+		isPublish : false
 	}
-	listCommentsPaged: any[] = []
-	total_Comments = 0
+	listInfomationExchange: any[] = []
+	totalInfomationExchange = 0
 
-	onSendComment() {
-		this.commentModel.userId = this.storeageService.getUserId()
-		this.commentModel.fullName = this.storeageService.getFullName()
-		this.commentModel.recommendationId = this.model.id
-		this.commentModel.contents = this.commentModel.contents.trim()
-		this.commentModel.isPublish = false
-		if (this.commentModel.contents == null || this.commentModel.contents == '') {
-			this.toastr.error('Không bỏ trống nội dung bình luận')
+	onInsertInfomationExchange() {
+		this.infoExchangeModel.fullName = this.storeageService.getFullName()
+		this.infoExchangeModel.createdDate = new Date()
+		this.infoExchangeModel.recommendationId = this.model.id
+		this.infoExchangeModel.isPublish = false
+		this.infoExchangeModel.contents = this.infoExchangeModel.contents == null ? '' : this.infoExchangeModel.contents.trim()
+		if (!this.infoExchangeModel.contents) {
+			this.toastr.error('Nội dung trao đổi không được để trống')
 			return
 		}
 
-		this.commentService.insert(this.commentModel).subscribe((res) => {
+		this.commentService.insertInfomationExchange(this.infoExchangeModel).subscribe((res) => {
 			if (res.success != RESPONSE_STATUS.success) {
-				this.toastr.error('Xảy ra lỗi trong quá trình xử lý')
+				this.toastr.error(res.message)
 				return
 			}
-			this.toastr.success('Thêm bình luận thành công')
-			this.commentModel = new RecommnendationCommentObject()
-			this.getCommentPaged()
+			this.toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
+			this.listInfomationExchange.push(this.infoExchangeModel)
+			this.totalInfomationExchange += 1
+			this.infoExchangeModel = new RecommnendationInfomationExchange()
+			
 		})
 	}
 
-	getCommentPaged(pageindex = 1) {
-		this.commentQuery.pageIndex = pageindex
-		this.listCommentsPaged = []
-		this.commentService.getAllOnPage(this.commentQuery).subscribe((res) => {
+	getAllInfomationExchange(pageIndex : any) {
+		this.infomationExchangeQuery.pageIndex = pageIndex
+		this.infomationExchangeQuery.recommendationId = this.model.id
+		this.commentService.getAllInfomationChangeOnPage(this.infomationExchangeQuery).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
-				this.listCommentsPaged = this.listCommentsPaged.concat(res.result.MRCommnentGetAllOnPage)
-				if (res.result.TotalCount != null && res.result.TotalCount > 0) this.total_Comments = res.result.TotalCount
+				this.listInfomationExchange = res.result.MRInfomationExchangeAllOnPage
+				this.totalInfomationExchange = res.result.TotalCount
 			}
 		})
 	}
-	//end comment area
+
 
 	// sugest
 	sugestText = () => {

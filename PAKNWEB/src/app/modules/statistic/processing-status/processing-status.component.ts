@@ -34,7 +34,10 @@ export class ProcessingStatusComponent implements OnInit {
 	quarter: number
 	fromDate: Date
 	toDate: Date
+	pageSize : number = 20
+	pageIndex : number = 1
 	listData: any = []
+	totalRecords : number = 0
 
 	maxDateValue = new Date()
 	@ViewChild('myCanvas', { static: false }) canvas: any
@@ -110,11 +113,18 @@ export class ProcessingStatusComponent implements OnInit {
 		let request = {
 			FromDate: this.fromDate == null ? '' : this.fromDate.toDateString(),
 			ToDate: this.toDate == null ? '' : this.toDate.toDateString(),
+			PageSize : this.pageSize,
+			PageIndex : this.pageIndex
 		}
 		this._service.getProcessingStatus(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
-				this.listData = response.result
+				this.listData = response.result.StatisticRecommendationProcessStatus
+				this.totalRecords = response.result.TotalCount
 			} else {
+				this.listData = []
+				this.pageIndex = 1
+				this.pageSize = 20
+				this.totalRecords = 0
 			}
 		}),
 			(error) => {
@@ -124,6 +134,12 @@ export class ProcessingStatusComponent implements OnInit {
 	}
 
 	dataStateChange() {
+		this.getList()
+	}
+
+	onPageChange(event: any) {
+		this.pageSize = event.rows
+		this.pageIndex = event.first / event.rows + 1
 		this.getList()
 	}
 

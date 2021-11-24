@@ -32,4 +32,19 @@ export class RecommendationCommentService {
 	public updateStatus(req: any): Observable<any> {
 		return this.serviceInvoker.post(req, AppSettings.API_ADDRESS + Api.MRRecommendationCommentUpdateStatus)
 	}
+
+
+	// infomation Exchange
+
+	public insertInfomationExchange(body: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.MR_INFOMATIONCHANGE),
+		}
+		return this.serviceInvoker.postwithHeaders(body, AppSettings.API_ADDRESS + Api.MRInfomationExchangeInsert, headers)
+	}
+
+	public getAllInfomationChangeOnPage(req: any): Observable<any> {
+		return this.serviceInvoker.get(req, AppSettings.API_ADDRESS + Api.MRInfomationExchangeGetOnPage)
+	}
 }

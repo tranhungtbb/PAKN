@@ -1736,6 +1736,7 @@ namespace PAKNAPI.Controller
             }
         }
 
+
         /// <summary>
         /// thêm bình luận theo pakn
         /// </summary>
@@ -1756,36 +1757,113 @@ namespace PAKNAPI.Controller
 
                 if (result == -1)
                 {
-                    return new ResultApi { Success = ResultCode.ORROR, Message = "Bạn không có quyền bình luận phản ánh kiến nghị này" };
+                    return new ResultApi { Success = ResultCode.ORROR, Message = "Lỗi khi thêm bình luận" };
                 }
-                // nếu người dân bình luận thì gửi thông báo cho đơn vị giải quyết
-                if (_mRCommnentInsertIN.IsPublish == true && new LogHelper(_appSetting).GetTypeFromRequest(HttpContext) != 1)
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+                return new ResultApi { Success = ResultCode.OK, Result = result };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        /// <summary>
+        /// danh sách trao đổi theo pakn
+        /// </summary>
+        /// <param name="RecommendationId"></param>
+        /// <param name="PageIndex"></param>
+        /// <param name="PageSize"></param>
+        /// <param name="IsPublish"></param>
+        /// <returns></returns>
+
+        [HttpGet]
+        [Route("get-all-infomation-exchange")]
+        [Authorize("ThePolicy")]
+        public async Task<ActionResult<object>> MRInfomationExchangeGetAllOnPageBase(long? RecommendationId,bool? IsPublish, int? PageIndex, int? PageSize)
+        {
+            try
+            {
+                List<MRInfomationExchange> _results = 
+                    await new MRInfomationExchange(_appSetting).MRInfomationExchangeGetAllOnPage(RecommendationId, IsPublish, PageIndex, PageSize);
+
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"MRInfomationExchangeAllOnPage", _results},
+                        {"TotalCount", _results != null && _results.Count > 0 ? _results[0].RowNumber : 0}
+                    };
+
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+
+        /// <summary>
+        /// thêm trao đổi theo pakn
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+
+
+        [HttpPost]
+        [Route("insert-infomation-exchange")]
+        [Authorize("ThePolicy")]
+        public async Task<ActionResult<object>> MRInfomationExchangeInsertBase(MRInfomationExchange model)
+        {
+            try
+            {
+                model.UserId = new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext);
+                model.FullName = new LogHelper(_appSetting).GetFullNameFromRequest(HttpContext);
+                var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+                model.CreatedDate = DateTime.Now;
+
+                var result = await new MRInfomationExchange(_appSetting).MRInfomationExchangeInsertDAO(model);
+
+                if (result < 0)
                 {
-                    var recommendation = new RecommendationDAO(_appSetting).RecommendationGetByID((int)_mRCommnentInsertIN.RecommendationId).Result.Model;
-                    
+                    return new ResultApi { Success = ResultCode.ORROR, Message = "Thêm trao đổi thất bại" };
+                }
+
+                if (new LogHelper(_appSetting).GetTypeFromRequest(HttpContext) != 1)
+                {
+                    var recommendation = new RecommendationDAO(_appSetting).RecommendationGetByID((int) model.RecommendationId).Result.Model;
+
                     RecommendationForward lstRMForward =
-                        (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId((int)_mRCommnentInsertIN.RecommendationId))
+                        (await new MR_RecommendationForward(_appSetting).MRRecommendationForwardGetByRecommendationId((int)model.RecommendationId))
                         .FirstOrDefault(x => x.Step == STEP_RECOMMENDATION.APPROVE && x.Status == PROCESS_STATUS_RECOMMENDATION.APPROVED);
-                    
-                    if (lstRMForward != null) {
+
+                    if (lstRMForward != null)
+                    {
 
                         // danh sách người dùng
                         List<SYUserGetByUnitId> lstUser = await new SYUserGetByUnitId(_appSetting).SYUserGetByUnitIdDAO((int)lstRMForward.UnitSendId);
                         var tasks = new List<Task>();
                         SYNotificationModel notification = new SYNotificationModel();
-                        notification.SenderId = (long)_mRCommnentInsertIN.UserId;
-                        notification.DataId = _mRCommnentInsertIN.RecommendationId;
+                        notification.SenderId = (long)model.UserId;
+                        notification.SendOrgId = unitId;
+                        notification.DataId = model.RecommendationId;
                         notification.SendDate = DateTime.Now;
                         notification.Type = TYPENOTIFICATION.RECOMMENDATION;
                         notification.TypeSend = STATUS_RECOMMENDATION.FINISED;
                         notification.IsViewed = true;
                         notification.IsReaded = true;
                         notification.ReceiveOrgId = lstRMForward.UnitSendId;
-                        notification.Title = "BÌNH LUẬN PHẢN ÁNH KIẾN NGHỊ";
-                        notification.Content = _mRCommnentInsertIN.FullName + " vừa bình luận PAKN số " + recommendation.Code;
-                        foreach (var item in lstUser) {
+                        notification.Title = "TRAO ĐỔI PHẢN ÁNH KIẾN NGHỊ";
+                        notification.Content = model.FullName + " vừa thêm trao đổi của PAKN số " + recommendation.Code;
+                        foreach (var item in lstUser)
+                        {
                             notification.ReceiveId = item.Id;
-                            tasks.Add( new SYNotification(_appSetting, _configuration).InsertNotification(notification));
+                            tasks.Add(new SYNotification(_appSetting, _configuration).InsertNotification(notification));
                         }
                         Task.WaitAll(tasks.ToArray());
                     }
@@ -1808,16 +1886,18 @@ namespace PAKNAPI.Controller
         /// <param name="PageSize"></param>
         /// <param name="PageIndex"></param>
         /// <param name="RecommendationId"></param>
-        /// <param name="IsPublish"></param>
         /// <returns></returns>
 
         [HttpGet]
         [Route("get-all-comment")]
-        public async Task<ActionResult<object>> MRCommentGetAllOnPageBase(int? PageSize, int? PageIndex, long? RecommendationId, bool IsPublish)
+        public async Task<ActionResult<object>> MRCommentGetAllOnPageBase(int? PageSize, int? PageIndex, long? RecommendationId)
         {
             try
             {
-                List<MRCommentGetAllOnPage> rsMRCommnentGetAllOnPage = await new MRCommentGetAllOnPage(_appSetting).MRCommentGetAllOnPageDAO(PageSize, PageIndex, RecommendationId, IsPublish);
+                var type = new LogHelper(_appSetting).GetTypeFromRequest(HttpContext);
+                List<MRCommentGetAllOnPage> rsMRCommnentGetAllOnPage = type == 1 ?
+                    await new MRCommentGetAllOnPage(_appSetting).MRCommentGetAllOnPageDAO(PageSize, PageIndex, RecommendationId, null)
+                    : await new MRCommentGetAllOnPage(_appSetting).MRCommentGetAllOnPageDAO(PageSize, PageIndex, RecommendationId, true);
                 IDictionary<string, object> json = new Dictionary<string, object>
                     {
                         {"MRCommnentGetAllOnPage", rsMRCommnentGetAllOnPage},

@@ -187,12 +187,13 @@
 								<p class="mb-0 h5">{{item.fullName}}</p>
 								<div class="d-flex">
 									<p class="small mb-1">{{item.createdDate | date:'HH:mm - dd/MM/yyyy'}}</p>
-									<!-- <span class="ml-2 cursor"
-										[title]="item.isView ? 'Công bố bình luận' : 'Thu hồi bình luận'"
-										(click)="changeStatusComment(item)"
-										style="font-size: 16px;">
-										<i [ngClass]="item.isView ? 'bi bi-arrow-down-circle' : 'bi bi-arrow-up-circle'"></i>
-									</span> -->
+									<span class="ml-3 cursor my-0 h5 center cl-blue" style="font-size: 12px;" *ngIf="typeObject == 1"
+										[title]="!item.isPublish ? 'Công bố bình luận' : 'Thu hồi bình luận'"
+										
+										[ngClass]="{'red': item.isPublish == true}"
+										(click)="changeStatusComment(item)">
+											{{ item.isPublish == true ? 'Thu hồi' : 'Công bố'}}
+									</span>
 								</div>
 								<p class="mb-0">
 									{{item.contents}}

@@ -53,12 +53,9 @@
 					</div>
 				</div>
 				<div class="table-responsive">
-					<p-table #table [value]="listData" [paginator]="true" [rows]="20" sortMode="multiple"
-						[showCurrentPageReport]="true" [rowsPerPageOptions]="[20,30,50]"
-						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [totalRecords]="totalRecords"
-						[responsive]="true" 
-						autoLayout="true"
-						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+					<p-table #table [value]="listData" [lazy]="true" (onLazyLoad)="onPageChange($event)" [paginator]="true" [showCurrentPageReport]="true"
+					currentPageReportTemplate="Tổng số {{totalRecords}}" [rows]="pageSize" [totalRecords]="totalRecords" [responsive]="true" autoLayout="true"
+					tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
 								<th style="width: 50px" class="text-center middle">
@@ -81,7 +78,7 @@
 										<strong>Số điện thoại phản ánh</strong>
 									</p>
 								</th>
-								<th style="max-width: 170px" class="text-center middle">
+								<th style="max-width: 180px; width: 160px" class="text-center middle">
 									<p class="mb-0">
 										<strong>Đơn vị tiếp nhận</strong>
 									</p>
@@ -113,27 +110,29 @@
 							<tr>
 								<td class="text-center">{{rowIndex + 1}}</td>
 								<td>
-									<p class="text-2line mb-0">{{item.content}}</p>
+									<p class="text-2line mb-0 cursor">
+										<a routerLink="/quan-tri/kien-nghi/chi-tiet/{{item.id}}">{{item.content}}</a>
+									</p>
 								</td>
 								<td>
-									<p class="mb-0">item.fieldName</p>
+									<p class="mb-0">{{item.fieldName}}</p>
 								</td>
 								<td>
-									<p class="mb-0">item.phone</p>
+									<p class="mb-0">{{item.phone}}</p>
 								</td>
 								<td>
-									<p class="mb-0">item.unitName</p>
+									<p class="mb-0 text-2line">{{item.unitName}}</p>
 								</td>
 
 								<td>
-									<p class="mb-0">item.userProcessName</p>
+									<p class="mb-0">{{item.userProcessName}}</p>
 								</td>
 								<td>
-									<p class="mb-0">item.receivedDate</p>
+									<p class="mb-0">{{item.receivedDate | date : 'dd/MM/yyyy'}}</p>
 								</td>
 								
 								<td>
-									<p class="mb-0">item.conclusionDate</p>
+									<p class="mb-0">{{item.conclusionDate | date : 'dd/MM/yyyy'}}</p>
 								</td>
 								<td>
 									<span *ngIf="item.status == 1">Đang soạn thảo</span>

@@ -1551,22 +1551,19 @@ namespace PAKNAPI.Controllers
 		{
 			try
 			{
-				var users = _httpContextAccessor.HttpContext.User.Identities.FirstOrDefault().Claims; //FindFirst(ClaimTypes.NameIdentifier);
-
-				var userId = users.FirstOrDefault(c => c.Type.Equals("Id", StringComparison.OrdinalIgnoreCase)).Value;
-				var accInfo = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(long.Parse(userId));
+				var accInfo = await new SYUserGetByID(_appSetting).SYUserGetByIDDAO(new LogHelper(_appSetting).GetUserIdFromRequest(HttpContext));
 
 				if (accInfo == null || !accInfo.Any())
 				{
 					return new ResultApi { Success = ResultCode.ORROR, Message = "Tài khoản không tồn tại" };
 				}
-				if (businessModel.RepresentativeBirthDay != null && businessModel.RepresentativeBirthDay >= DateTime.Now)
-				{
-					return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh người đại diện không được lớn hơn ngày hiện tại" };
-				}
+				//if (businessModel.RepresentativeBirthDay != null && businessModel.RepresentativeBirthDay >= DateTime.Now)
+				//{
+				//	return new ResultApi { Success = ResultCode.ORROR, Message = "Ngày sinh người đại diện không được lớn hơn ngày hiện tại" };
+				//}
 
-				///check ton tai
-				///
+				//check ton tai
+				//
 				var info = await new BIBusinessGetByUserId(_appSetting).BIBusinessGetByUserIdDAO(accInfo[0].Id);
 				var checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Phone", businessModel.Phone, info[0].Id);
 				if (checkExists[0].Exists.Value && businessModel.Phone != null) return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại đã tồn tại" };
@@ -1575,8 +1572,6 @@ namespace PAKNAPI.Controllers
 					checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Email", businessModel.Email, info[0].Id);
 					if (checkExists[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Email người đại diện đã tồn tại" };
 				}
-				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("IDCard", businessModel.IDCard, info[0].Id);
-				if (checkExists[0].Exists.Value && businessModel.IDCard != null) return new ResultApi { Success = ResultCode.ORROR, Message = "Số CMND / CCCD đã tồn tại" };
 				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("OrgPhone", businessModel.OrgPhone, info[0].Id);
 				if (checkExists[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Số điện thoại doanh nghiệp đã tồn tại" };
 				if (!string.IsNullOrEmpty(businessModel.OrgEmail))
@@ -1587,12 +1582,7 @@ namespace PAKNAPI.Controllers
 				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("BusinessRegistration", businessModel.BusinessRegistration, info[0].Id);
 				if (checkExists[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Số đăng ký kinh doanh đã tồn tại" };
 
-				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("Tax", businessModel.Tax, info[0].Id);
-				if (checkExists[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Mã số thuế đã tồn tại" };
-
-				checkExists = await new BIBusinessCheckExists(_appSetting).BIBusinessCheckExistsDAO("DecisionOfEstablishing", businessModel.DecisionOfEstablishing, info[0].Id);
-				if (checkExists[0].Exists.Value) return new ResultApi { Success = ResultCode.ORROR, Message = "Số quyết định thành lập đã tồn tại" };
-
+				
 
 				accInfo[0].FullName = businessModel.RepresentativeName;
 
