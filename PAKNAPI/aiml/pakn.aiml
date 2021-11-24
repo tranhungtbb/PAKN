@@ -34,7 +34,7 @@
       <pattern> Tra cứu thủ tục * </pattern>
       <template>Đường dẫn danh sách thủ tục hành chính
 	  <pakn>
-		  json{"type":"carousel","data":[{"title":"Gửi phản ánh, kiến nghị","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/procedure/?pageSize=10"}]}
+		  json{"type":"carousel","data":[{"title":"","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/procedure/?pageSize=10"}]}
 	  </pakn>
 	  </template>
 
@@ -45,7 +45,7 @@
 	<template>
 		Đường dẫn danh sách thủ tục hành chính
 		<pakn>
-			json{"type":"carousel","data":[{"title":"Gửi phản ánh, kiến nghị","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/procedure/?pageSize=10"}]}
+			json{"type":"carousel","data":[{"title":"","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/procedure/?pageSize=10"}]}
 		</pakn>
 	</template>
 </category>
@@ -55,7 +55,7 @@
 	   <template>
 		   Đường dẫn danh sách thủ tục hành chính
 		   <pakn>
-			   json{"type":"carousel","data":[{"title":"Gửi phản ánh, kiến nghị","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/procedure/?pageSize=10"}]}
+			   json{"type":"carousel","data":[{"title":","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/procedure/?pageSize=10"}]}
 		   </pakn>
 	   </template>
    </category>
@@ -65,7 +65,7 @@
 	   <template>
 		   Đường dẫn danh sách thủ tục hành chính
 		   <pakn>
-			   json{"type":"carousel","data":[{"title":"Gửi phản ánh, kiến nghị","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/procedure/?pageSize=10"}]}
+			   json{"type":"carousel","data":[{"title":"","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/procedure/?pageSize=10"}]}
 		   </pakn>
 	   </template>
    </category>
@@ -77,7 +77,7 @@
 	  <template>
 		  Đường dẫn danh sách thủ tục hành chính
 		  <pakn>
-			  json{"type":"carousel","data":[{"title":"Gửi phản ánh, kiến nghị","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/searching/?tieuchi=1"}]}
+			  json{"type":"carousel","data":[{"title":"","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/searching/?tieuchi=1"}]}
 		  </pakn>
 	  </template>
    </category>
@@ -86,7 +86,7 @@
 	<template>
 		Đường dẫn danh sách thủ tục hành chính
 		<pakn>
-			json{"type":"carousel","data":[{"title":"Gửi phản ánh, kiến nghị","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/searching/?tieuchi=1"}]}
+			json{"type":"carousel","data":[{"title":"","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/searching/?tieuchi=1"}]}
 		</pakn>
 	</template>
    </category>
@@ -96,7 +96,7 @@
 	   <template>
 		   Đường dẫn danh sách thủ tục hành chính
 		   <pakn>
-			   json{"type":"carousel","data":[{"title":"Gửi phản ánh, kiến nghị","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/searching/?tieuchi=1"}]}
+			   json{"type":"carousel","data":[{"title":"","image":"","link":"https://hanhchinhcong.khanhhoa.gov.vn/#/app/searching/?tieuchi=1"}]}
 		   </pakn>
 	   </template>
    </category>
