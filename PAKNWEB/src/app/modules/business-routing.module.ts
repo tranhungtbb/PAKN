@@ -6,6 +6,7 @@ import { DashboardComponent } from './dash-board/dash-board.component'
 import { NotificationComponent } from './notification/notification.component'
 import { ReportViewerComponent } from './report-view/report-viewcomponent'
 import { DashboardChatBoxComponent } from './chatbox/dashboard/dashboard.component'
+import { DashboardChatBotComponent } from './chatbot/chatbot.component'
 
 const routes: Routes = [
 	{
@@ -33,6 +34,7 @@ const routes: Routes = [
 			{ path: 'dong-bo-du-lieu', loadChildren: 'src/app/modules/recommendation-sync/recommendation-sync.module#RecommendationSyncModule' },
 			{ path: 'tin-nhan', component: LoginChatBoxComponent },
 			{ path: 'chatbox', component: DashboardChatBoxComponent },
+			{ path: 'chat-bot', component: DashboardChatBotComponent },
 		],
 	},
 ]

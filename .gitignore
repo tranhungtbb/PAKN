@@ -15,3 +15,5 @@
 /PAKNAPI/bin
 Chatbot/.vs/KarmaloopAIMLBotServer/v16/.suo
 PAKNWEB/wwwroot.zip
+KarmaloopAIMLBotServer/bin
+KarmaloopAIMLBotServer/obj

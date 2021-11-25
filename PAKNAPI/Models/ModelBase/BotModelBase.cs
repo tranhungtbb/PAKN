@@ -45,6 +45,39 @@ namespace PAKNAPI.Models.ModelBase
 			
 		}
 	}
+	public class BOTRoomGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public BOTRoomGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public BOTRoomGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+
+		public int? AnonymousId { get; set; }
+		public string Name { get; set; }
+
+		public int? Type { get; set; }
+
+
+		public async Task<List<BOTRoomGetAllOnPage>> SYUserGetByRoleIdAllOnPageDAO(int? PageSize, int? PageIndex, int? RoleId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			
+
+			return (await _sQLCon.ExecuteListDapperAsync<BOTRoomGetAllOnPage>("BOT_RoomGetAllOnPage", DP)).ToList();
+		}
+	}
+
 
 	public class BOTRoom
 	{
