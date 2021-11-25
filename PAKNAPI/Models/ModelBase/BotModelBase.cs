@@ -31,10 +31,18 @@ namespace PAKNAPI.Models.ModelBase
 		}
 		public async Task<BOTAnonymousUser> BOTAnonymousUserGetByUserName(string UserName)
 		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("UserName", UserName);
+            try
+            {
+				DynamicParameters DP = new DynamicParameters();
+				DP.Add("UserName", UserName);
+				return (await _sQLCon.ExecuteListDapperAsync<BOTAnonymousUser>("BOT_AnonymousUserGetByUserName", DP)).FirstOrDefault();
+			}
+            catch (Exception ex)
+            {
 
-			return (await _sQLCon.ExecuteListDapperAsync<BOTAnonymousUser>("BOT_AnonymousUserGetByUserName", DP)).FirstOrDefault();
+				return null;
+            }
+			
 		}
 	}
 

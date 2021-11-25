@@ -51,35 +51,38 @@ namespace SignalR.Hubs
             var senderUserName = httpContext.Request.Query["userName"];
 
             var id = Context.ConnectionId;
-            string roomName = "Room_" + id;
-            BOTAnonymousUser ress = await new BOTAnonymousUser(_appSetting).BOTAnonymousUserGetByUserName(id);
+            string roomName = "Room_" + senderUserName;
+            BOTAnonymousUser ress = await new BOTAnonymousUser(_appSetting).BOTAnonymousUserGetByUserName(senderUserName);
             var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
+            if (ress != null && room!= null) {
+                
 
-       
-               
-            DateTime foo = DateTime.Now;
-            var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, ress.Id, room.Id, foo);
-            ResultBot res = bots.Response(senderUserName, message);
-            DateTime foooo = DateTime.Now;
-            double totall = (foooo - foo).TotalMilliseconds;
-            System.Diagnostics.Debug.WriteLine("ChatWithBot 0 "+ totall);
-            Message messageViewModel = new Message()
-            {
-                Content = Regex.Replace(res.Answer, @"(?i)<(?!img|a|/a|/img).*?>", string.Empty),
-                From = "Bot",
-                SubTags = (res.SubTags),
-                FromId = "Bot",
-                To = senderUserName,
-                ToId = connectId,
-                Timestamp = ((DateTimeOffset)foo).ToUnixTimeSeconds().ToString()
-            };
-            //var config = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(TYPECONFIG.CONFIG_EMAIL));
-           
-            await Clients.Caller.ReceiveMessageToGroup(messageViewModel);
-            var messageIdd = await new BOTMessage(_appSetting).BOTMessageInsertDAO(JsonConvert.SerializeObject(messageViewModel), 0, room.Id, foo);
-            DateTime fooo = DateTime.Now;
-            double total = (fooo - foo).TotalMilliseconds;
-            System.Diagnostics.Debug.WriteLine("ChatWithBot 1 "+ total);
+
+
+                DateTime foo = DateTime.Now;
+                var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, ress.Id, room.Id, foo);
+                ResultBot res = bots.Response(senderUserName, message);
+                DateTime foooo = DateTime.Now;
+                double totall = (foooo - foo).TotalMilliseconds;
+                System.Diagnostics.Debug.WriteLine("ChatWithBot 0 " + totall);
+                Message messageViewModel = new Message()
+                {
+                    Content = Regex.Replace(res.Answer, @"(?i)<(?!img|a|/a|/img).*?>", string.Empty),
+                    From = "Bot",
+                    SubTags = (res.SubTags),
+                    FromId = "Bot",
+                    To = senderUserName,
+                    ToId = connectId,
+                    Timestamp = ((DateTimeOffset)foo).ToUnixTimeSeconds().ToString()
+                };
+                //var config = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(TYPECONFIG.CONFIG_EMAIL));
+
+                await Clients.Caller.ReceiveMessageToGroup(messageViewModel);
+                var messageIdd = await new BOTMessage(_appSetting).BOTMessageInsertDAO(JsonConvert.SerializeObject(messageViewModel), 0, room.Id, foo);
+                DateTime fooo = DateTime.Now;
+                double total = (fooo - foo).TotalMilliseconds;
+                System.Diagnostics.Debug.WriteLine("ChatWithBot 1 " + total);
+            }
         }
 
         public override async Task OnConnectedAsync()

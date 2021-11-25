@@ -1,8 +1,10 @@
 ﻿using Bugsnag;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
+using PAKNAPI.Models.Chatbot;
 using PAKNAPI.Models.ModelBase;
 using PAKNAPI.Models.Results;
 using PAKNAPI.Models.SyncData;
@@ -33,15 +35,15 @@ namespace PAKNAPI.Controllers
         /// <returns></returns>
         [Route("bot-create-room")]
         [HttpPost]
-        public async Task<ActionResult<object>> CreateRoom(string UserName) {
+        public async Task<ActionResult<object>> CreateRoom(CreateRoomBot roomBot) {
             try
             {
-                //return new ResultApi { Success = ResultCode.OK, Result = await new FeedBackSync(_appSetting).SyncFeedBack()};
+
                 // create user
-                var guid = UserName;
+                var guid = roomBot.UserName;
                 string roomName = "Room_" + guid;
                 BOTAnonymousUser res = await new BOTAnonymousUser(_appSetting).BOTAnonymousUserGetByUserName(guid);
-                if (res!= null && res.Id > 0)
+                if (res != null && res.Id > 0)
                 {
                     var id = res.Id;
 
@@ -49,8 +51,9 @@ namespace PAKNAPI.Controllers
                     {
                         // create room
                         var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
-                        if (room.Id>0) {
-                           
+                        if (room.Id > 0)
+                        {
+
                             SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
                             //var botRoomUserLink = new BOTRoomUserLink();
                             //botRoomUserLink.AnonymousId = id;
@@ -67,7 +70,8 @@ namespace PAKNAPI.Controllers
 
                             return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
                         }
-                        else {
+                        else
+                        {
                             var roomId = Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom(roomName, id, 1))).ToString());
                             SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
                             //var botRoomUserLink = new BOTRoomUserLink();
@@ -85,7 +89,7 @@ namespace PAKNAPI.Controllers
 
                             return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
                         }
-                        
+
                     }
                     else
                     {
@@ -116,11 +120,12 @@ namespace PAKNAPI.Controllers
 
                         return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
                     }
-                    else {
+                    else
+                    {
                         return new Models.Results.ResultApi { Success = ResultCode.OK, Message = "Đã có lỗi xảy ra" };
                     }
                 }
-                
+
             }
             catch (Exception ex) {
                 return new Models.Results.ResultApi { Success = ResultCode.OK , Message = ex.Message};
