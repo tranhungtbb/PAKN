@@ -284,6 +284,7 @@ export class ListGeneralComponent implements OnInit {
 		this.modelProcess.reactionaryWord = false
 		this.modelProcess.reasonDeny = ''
 		this.isForwardMain = isForwardMain
+		debugger
 		if (status == PROCESS_STATUS_RECOMMENDATION.DENY) {
 			if (model.status == RECOMMENDATION_STATUS.RECEIVE_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.RECEIVE_DENY
@@ -308,6 +309,7 @@ export class ListGeneralComponent implements OnInit {
 			} else if (model.status == RECOMMENDATION_STATUS.PROCESS_WAIT) {
 				this.recommendationStatusProcess = RECOMMENDATION_STATUS.PROCESS_DENY
 				this.modelProcess.step = STEP_RECOMMENDATION.PROCESS
+				debugger
 				if (this.isForwardProcess) {
 					this._service.recommendationGetDataForProcess({}).subscribe((response) => {
 						if (response.success == RESPONSE_STATUS.success) {
@@ -444,15 +446,15 @@ export class ListGeneralComponent implements OnInit {
 			let obj = this.listData.find((x) => x.id == this.modelProcess.recommendationId)
 			var request = {
 				_mRRecommendationForwardProcessIN: this.modelProcess,
-				RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_DENY,
+				RecommendationStatus: this.recommendationStatusProcess,
 				ReactionaryWord: this.modelProcess.reactionaryWord,
 				IsFakeImage: this.modelProcess.isFakeImage,
 				ListGroupWordSelected: this.lstGroupWordSelected.join(','),
-				IsForwardUnitChild: true,
+				IsForwardUnitChild: obj.isForwardUnitChild && !obj.isForwardForUnit ? true : false,
 				IsList: true,
 				IsForwardMain: this.isForwardMain,
 			}
-
+			debugger
 			this._service.recommendationProcess(request, obj.title).subscribe((response) => {
 				if (response.success == RESPONSE_STATUS.success) {
 					$('#modalReject').modal('hide')

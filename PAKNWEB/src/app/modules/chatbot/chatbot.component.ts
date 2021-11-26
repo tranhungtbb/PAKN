@@ -13,7 +13,7 @@ import { UserServiceChatBox } from '../chatbox/user/user.service'
 })
 export class DashboardChatBotComponent implements OnInit {
 	title = 'angular-chat'
-	// channel: ChannelData
+	channel: any
 	// username = ''
 	// messages: Message[] = []
 	// newMessage = ''

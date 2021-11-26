@@ -159,7 +159,7 @@
 												(click)="preProcess(item, 3)" class="btn-icon grd-red text-white mr-2" title="Từ chối tiếp nhận"><i
 													class="bi bi-file-earmark-break"></i></a>
 
-											<a *ngIf="(item.status == 5 && item.unitReceiveId == unitLoginId && item.isForwardUnitChild)"
+											<a *ngIf="(item.status == 5 && item.unitReceiveId == unitLoginId && !item.isForwardUnitChild  && item.isForwardForUnit)"
 												(click)="preProcess(item, 3, true)" class="btn-icon grd-red text-white mr-2" title="Từ chối giải quyết từ đơn vị"><i
 													class="bi bi-file-earmark-minus"></i></a>
 											

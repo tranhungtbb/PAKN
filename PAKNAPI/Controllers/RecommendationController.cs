@@ -345,7 +345,7 @@ namespace PAKNAPI.Controller
                 request.Data.CreatedBy = request.UserId;
                 request.Data.CreatedDate = DateTime.Now;
                 request.Data.CreateByType = new LogHelper(_appSetting).GetTypeFromRequest(HttpContext);
-                request.Data.IsClone = false;
+                request.Data.IsForwardChild = false;
                 MRRecommendationCheckExistedCode rsMRRecommendationCheckExistedCode = (await new MRRecommendationCheckExistedCode(_appSetting).MRRecommendationCheckExistedCodeDAO(request.Data.Code)).FirstOrDefault();
                 if (rsMRRecommendationCheckExistedCode.Total > 0)
                 {
@@ -580,7 +580,7 @@ namespace PAKNAPI.Controller
                 request.Data.CreatedBy = request.UserId;
                 request.Data.CreatedDate = DateTime.Now;
                 request.Data.CreateByType = 2;
-                request.Data.IsClone = false;
+                request.Data.IsForwardChild = false;
                 MRRecommendationCheckExistedCode rsMRRecommendationCheckExistedCode = (await new MRRecommendationCheckExistedCode(_appSetting).MRRecommendationCheckExistedCodeDAO(request.Data.Code)).FirstOrDefault();
                 if (rsMRRecommendationCheckExistedCode.Total > 0)
                 {
@@ -993,6 +993,7 @@ namespace PAKNAPI.Controller
                 MRRecommendationUpdateStatusIN _mRRecommendationUpdateStatusIN = new MRRecommendationUpdateStatusIN();
                 _mRRecommendationUpdateStatusIN.Status = request.RecommendationStatus;
                 _mRRecommendationUpdateStatusIN.Id = request._mRRecommendationForwardInsertIN.RecommendationId;
+                _mRRecommendationUpdateStatusIN.IsForwardChild = request.IsForwardUnitChild == null ? false : request.IsForwardUnitChild;
                 await new MRRecommendationUpdateStatus(_appSetting).MRRecommendationUpdateStatusDAO(_mRRecommendationUpdateStatusIN);
                 HISRecommendationInsertIN hisData = new HISRecommendationInsertIN();
                 hisData.ObjectId = request._mRRecommendationForwardInsertIN.RecommendationId;
@@ -1078,7 +1079,7 @@ namespace PAKNAPI.Controller
                 if (request.RecommendationStatus == STATUS_RECOMMENDATION.PROCESS_DENY && request.IsForwardMain == true) {
 
                     SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
-                    
+                    _dataForward.UnitSendId = UnitSendId;
                     _dataForward.UnitReceiveId = dataMain.Id;
                     _dataForward.Step = STEP_RECOMMENDATION.RECEIVE;
                     _dataForward.Status = PROCESS_STATUS_RECOMMENDATION.WAIT;
