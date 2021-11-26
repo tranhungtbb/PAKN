@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core'
-import { DashboardService } from '../chatbox/dashboard/dashboard.service'
-import { DialogService } from '../chatbox/dashboard/dialogs/dialog.service'
-import { MessageService } from '../chatbox/dashboard/messages/message.service'
-import { UserServiceChatBox } from '../chatbox/user/user.service'
+import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
+import { BotRoom } from 'src/app/models/chatbotObject'
+import { ChatBotService } from './chatbot.service'
 //import { StreamChat, ChannelData, Message, User } from 'stream-chat'
 //import axios from 'axios'
 
@@ -17,17 +16,26 @@ export class DashboardChatBotComponent implements OnInit {
 	// username = ''
 	// messages: Message[] = []
 	// newMessage = ''
-	// channelList: ChannelData[]
+	rooms: BotRoom[]
 	// chatClient: any
 	// currentUser: User
-	ngOnInit() {}
-	constructor(
-		private dashboardService: DashboardService,
-		public dialogService: DialogService,
-		private userService: UserServiceChatBox,
+	constructor(private botService: ChatBotService) {}
+	ngOnInit() {
+		console.log('getRooms 0')
+		this.botService.getRooms({}).subscribe((res) => {
+			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
+				if (res.result) {
+					console.log('getRooms ', res)
+					this.rooms = res.result.Data
+					console.log('getRooms ', this.rooms)
+					// this.totalRecord = res.result.TotalCount
+				}
+			} else {
+				//this._toastr.error(res.message)
+			}
+		})
+	}
 
-		private messageService: MessageService
-	) {}
 	async joinChat() {
 		// const { username } = this
 		// try {

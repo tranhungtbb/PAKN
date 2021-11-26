@@ -14,3 +14,8 @@ export class ChatbotObject {
 	isActived: boolean
 	isDeleted: boolean
 }
+
+export class BotRoom {
+	name: string
+	id: number
+}
