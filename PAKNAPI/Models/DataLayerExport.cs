@@ -146,4 +146,13 @@ namespace PAKNAPI.Models
         public long? UserProcessId { get; set; }
         public string UserProcessName { get; set; }
     }
+
+    public class ExportRecomdationProcessByFieldsAndRecetion
+    {
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
+        public long? UserProcessId { get; set; }
+        public long? UnitProcessId { get; set; }
+        public string UserProcessName { get; set; }
+    }
 }
