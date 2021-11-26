@@ -411,4 +411,7 @@ export class Api {
 	// Weather
 	public static Weather = 'weather/get'
 	public static WeatherByQ = 'weather/get-by-q'
+
+	//chatbot
+	public static BotRooms = 'bot/rooms'
 }

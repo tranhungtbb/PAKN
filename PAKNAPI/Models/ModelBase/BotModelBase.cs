@@ -67,11 +67,11 @@ namespace PAKNAPI.Models.ModelBase
 		public int? Type { get; set; }
 
 
-		public async Task<List<BOTRoomGetAllOnPage>> SYUserGetByRoleIdAllOnPageDAO(int? PageSize, int? PageIndex, int? RoleId)
+		public async Task<List<BOTRoomGetAllOnPage>> SYUserGetByRoleIdAllOnPageDAO(int? PageSize, int? PageIndex)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("PageSize", PageSize);
-			DP.Add("PageIndex", PageIndex);
+			//DP.Add("PageSize", PageSize);
+			//DP.Add("PageIndex", PageIndex);
 			
 
 			return (await _sQLCon.ExecuteListDapperAsync<BOTRoomGetAllOnPage>("BOT_RoomGetAllOnPage", DP)).ToList();

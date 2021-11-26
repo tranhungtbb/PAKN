@@ -28,6 +28,29 @@ namespace PAKNAPI.Controllers
             this._bugsnag = bugsnag;
         }
 
+        
+            [HttpGet]
+        [Route("rooms")]
+        public async Task<ActionResult<object>> BOTRoomGetAllOnPageBase(int? PageSize, int? PageIndex)
+        {
+            try
+            {
+                List<BOTRoomGetAllOnPage> rsNENewsGetAllOnPage = await new BOTRoomGetAllOnPage(_appSetting).SYUserGetByRoleIdAllOnPageDAO(PageSize, PageIndex);
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"Data", rsNENewsGetAllOnPage},
+                        {"TotalCount", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? rsNENewsGetAllOnPage[0].RowNumber : 0},
+                        {"PageIndex", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageIndex : 0},
+                        {"PageSize", rsNENewsGetAllOnPage != null && rsNENewsGetAllOnPage.Count > 0 ? PageSize : 0},
+                    };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
 
         /// <summary>
         /// create room

@@ -32,30 +32,30 @@
     </form>
   </div> -->
 
-  <div *ngIf="channel" class="container">
-    <h3 class=" text-center">Stream Messaging</h3>
+  <div *ngIf="rooms" class="container">
+    <h3 class=" text-center"></h3>
     <div class="messaging">
       <div class="inbox_msg">
         <div class="inbox_people">
           <div class="headind_srch">
             <div class="channel_heading">
-              <h4>Channels</h4>
+              <h4></h4>
             </div>
           </div>
           <div class="inbox_chat">
-            <div class="channels" *ngFor="let channel of channelList">
+            <div class="channels" *ngFor="let room of rooms">
               <div class="chat_list">
                 <div class="chat_people">
                   <div class="chat_ib">
                     <h5>
-                      {{ channel.data.name }}
+                      {{ room.name }}
                     </h5>
                     <p>
-                      {{
+                      <!-- {{
                         channel.state.messages[
                           channel.state.messages.length - 1
                         ].text
-                      }}
+                      }} -->
                     </p>
                   </div>
                 </div>
