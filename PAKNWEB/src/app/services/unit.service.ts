@@ -66,4 +66,29 @@ export class UnitService {
 		let url = AppSettings.API_ADDRESS + Api.UnitCheckExists
 		return this.serviceInvoker.get(req, url)
 	}
+
+	insertUnitPermission(data: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_UNIT + ' ' + data.name),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.UnitPermissionSMSInsert, headers)
+	}
+	getAllUnitPermission(data: any): Observable<any> {
+		return this.serviceInvoker.get(data, AppSettings.API_ADDRESS + Api.UnitPermissionSMSGetPageList)
+	}
+	getDropUnitPermission(data: any): Observable<any> {
+		return this.serviceInvoker.get(data, AppSettings.API_ADDRESS + Api.UnitNotPermissionSMSGetDrop)
+	}
+	deleteUnitPermission(data: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.UPDATESTATUS),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_UNIT + ' ' + data.name),
+		}
+		return this.serviceInvoker.postwithHeaders(data, AppSettings.API_ADDRESS + Api.UnitPermissionSMSDelete, headers)
+	}
+	hasPermissionSMS(data: any): Observable<any> {
+		return this.serviceInvoker.get(data, AppSettings.API_ADDRESS + Api.UnitHasPermissionSMS)
+	}
+
 }

@@ -146,8 +146,15 @@ export class IndividualComponent implements OnInit {
 		this.model.gender = true
 		this.formInfo.get('gender').setValue(this.model.gender)
 	}
-
-	onSave() {
+	phoneHide : any = ''
+	otp_1 : any = ''
+	otp_2 : any = ''
+	otp_3 : any = ''
+	otp_4 : any = ''
+	otp_5 : any = ''
+	otp_6 : any = ''
+	onPreShowOtp(){
+		this.clearOTP()
 		this.fLoginSubmitted = true
 		this.fInfoSubmitted = true
 
@@ -164,6 +171,49 @@ export class IndividualComponent implements OnInit {
 			this.validateDateOfIssue = false
 			return
 		}
+		this.phoneHide = this.model.phone
+			.split('')
+			.map((item, index) => {
+				if (index > 3 && index < 7) {
+					return '*'
+				}
+				return item
+			})
+			.join('')
+		$('#modal-otp').modal('show')
+		setTimeout(() => {
+			$('#input_1').focus()	
+		}, 400);
+	}
+
+	onChange =(event, index) =>{
+		debugger
+		if(event.target.value){
+			setTimeout(() => {
+				$('#input_' + String(index +1)).focus()	
+			}, 1);
+		}else{
+			setTimeout(() => {
+				$('#input_' + String(index -1)).focus()	
+			}, 1);
+			
+		}
+	}
+	clearOTP = () =>{
+		this.otp_1 = null
+		this.otp_2 = null
+		this.otp_3 = null
+		this.otp_4 = null
+		this.otp_5 = null
+		this.otp_6 = null
+	}
+
+	onSave() {
+		if(!this.otp_1 || !this.otp_2 || !this.otp_3 || !this.otp_4 || !this.otp_5 || !this.otp_6){
+			this.toast.error('Vui lòng nhập otp!')
+			return
+		}
+		$('#modal-otp').modal('hide')
 
 		// req to server
 		this.registerService.registerIndividual(this.model).subscribe((res) => {

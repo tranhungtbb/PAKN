@@ -1401,6 +1401,65 @@ namespace PAKNAPI.ModelBase
 		}
 	}
 
+	public class CAUnitPermissionSMS
+	{
+		private SQLCon _sQLCon;
+
+		public CAUnitPermissionSMS(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public CAUnitPermissionSMS()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public int UnitId { get; set; }
+		public string Name { get; set; }
+		public string Email { get; set; }
+		public string Phone { get; set; }
+		public string Address { get; set; }
+		public async Task<List<CAUnitPermissionSMS>> CAUnitPermissionSMSGetAllDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+			return (await _sQLCon.ExecuteListDapperAsync<CAUnitPermissionSMS>("CA_UnitPermissionGetAllOnPage", DP)).ToList();
+		}
+
+		public async Task<decimal?> CAUnitPermissionSMSInsertDAO(int? UnitId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UnitId", UnitId);
+			return (await _sQLCon.ExecuteScalarDapperAsync<decimal?>("CA_UnitPermissionInsert", DP));
+		}
+		public async Task<decimal?> CAUnitPermissionSMSDeleteDAO(CAUnitPermissionDelete model)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UnitId", model.UnitId);
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("CA_UnitPermissionDelete", DP));
+		}
+
+		public async Task<List<DropdownObject>> CAUnitNotPermissionSMSGetDropdownDAO()
+		{
+			DynamicParameters DP = new DynamicParameters();
+			return (await _sQLCon.ExecuteListDapperAsync<DropdownObject>("CA_UnitPermissionGetDropdown", DP)).ToList();
+		}
+		public async Task<int?> CAUnitCheckPermissionSMSDAO(int? unitId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UnitId", unitId);
+			return (await _sQLCon.ExecuteScalarDapperAsync<int?>("CA_UnitHasPermissionSMS", DP));
+		}
+	}
+
+	public class CAUnitPermissionDelete {
+		public int? UnitId { get; set; }
+	}
+	public class CAUnitPermissionInsert
+	{
+		public List<int?> ListUnit { get; set; }
+	}
+
 	public class CAUnitGetByID
 	{
 		private SQLCon _sQLCon;

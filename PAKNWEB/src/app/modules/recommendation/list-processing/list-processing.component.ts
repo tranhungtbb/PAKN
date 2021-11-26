@@ -206,6 +206,7 @@ export class ListProcessingComponent implements OnInit {
 		var request = {
 			_mRRecommendationForwardInsertIN: this.modelForward,
 			RecommendationStatus: RECOMMENDATION_STATUS.PROCESS_WAIT,
+			IsForwardUnitChild : true,
 			IsList: true,
 		}
 		let obj = this.listData.find((x) => x.id == this.modelForward.recommendationId)

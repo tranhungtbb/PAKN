@@ -67,6 +67,9 @@ export class PublishComponent implements OnInit, OnChanges {
 			{ path: ['phan-anh-kien-nghi/sync/he-thong-pakn-quoc-gia'], text: 'Hệ thống tiếp nhận, trả lời PAKN của Chính Phủ' },
 		]
 	}
+	onActivate(event) {
+    window.scroll(0,0);
+}
 
 	getListNotification(PageSize: any) {
 		this.ViewedCount = 0

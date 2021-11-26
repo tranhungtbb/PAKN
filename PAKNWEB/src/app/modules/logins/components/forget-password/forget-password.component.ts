@@ -72,5 +72,22 @@ export class ForgetPasswordComponent implements OnInit {
 			})
 			.join('')
 		$('#modal-otp').modal('show')
+		setTimeout(() => {
+			$('#input_1').focus()	
+		}, 400);
+	}
+
+	onChange =(event, index) =>{
+		debugger
+		if(event.target.value){
+			setTimeout(() => {
+				$('#input_' + String(index +1)).focus()	
+			}, 1);
+		}else{
+			setTimeout(() => {
+				$('#input_' + String(index -1)).focus()	
+			}, 1);
+			
+		}
 	}
 }

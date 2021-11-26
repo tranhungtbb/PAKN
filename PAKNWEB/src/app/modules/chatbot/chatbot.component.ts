@@ -14,7 +14,7 @@ import { AppSettings } from 'src/app/constants/app-setting'
 })
 export class DashboardChatBotComponent implements OnInit {
 	title = 'angular-chat'
-	// channel: ChannelData
+	channel: any
 	// username = ''
 	// messages: Message[] = []
 	// newMessage = ''

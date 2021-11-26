@@ -4,3 +4,12 @@
 .cl-blue{
 	color: #2E73D5;
 }
+.title-otp{
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 22px;
+}
+
+.red{
+	color: #DA2222 !important;
+}

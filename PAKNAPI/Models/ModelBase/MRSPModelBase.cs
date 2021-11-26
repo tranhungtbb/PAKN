@@ -706,7 +706,7 @@ namespace PAKNAPI.ModelBase
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("RecommendationId", RecommendationId);
 
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("MRRecommendationForwardUpdateStatusForwardDAO", DP));
+			return (await _sQLCon.ExecuteNonQueryDapperAsync("[MR_RecommendationForwardUpdateStatusForwardDAO]", DP));
 		}
 	}
 
@@ -1123,12 +1123,6 @@ namespace PAKNAPI.ModelBase
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationDelete", DP));
 		}
-
-		public async Task<int> MRRecommendationDeleteByIsCloneDAO()
-		{
-			DynamicParameters DP = new DynamicParameters();
-			return (await _sQLCon.ExecuteNonQueryDapperAsync("[MR_RecommendationDeleteByIsClone]", DP));
-		}
 	}
 
 	public class MRRecommendationDeleteIN
@@ -1291,6 +1285,7 @@ namespace PAKNAPI.ModelBase
 		public long? ReceiveId { get; set; }
 		public int? UnitReceiveId { get; set; }
 		public bool? IsForwardProcess { get; set; }
+		public bool? IsForwardForUnit { get; set; }
 		public bool? IsForwardUnitChild { get; set; }
 		public bool? IsFakeImages { get; set; }
 
@@ -1516,7 +1511,7 @@ namespace PAKNAPI.ModelBase
 			DP.Add("UpdatedBy", _mRRecommendationInsertIN.UpdatedBy);
 			DP.Add("UpdatedDate", _mRRecommendationInsertIN.UpdatedDate);
 			DP.Add("Address", _mRRecommendationInsertIN.Address);
-			DP.Add("IsClone", _mRRecommendationInsertIN.IsClone);
+			DP.Add("IsForwardChild", _mRRecommendationInsertIN.IsForwardChild);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("MR_RecommendationInsert", DP);
 		}
@@ -1554,7 +1549,7 @@ namespace PAKNAPI.ModelBase
 		public DateTime? CreatedDate { get; set; }
 		public long? UpdatedBy { get; set; }
 		public DateTime? UpdatedDate { get; set; }
-		public bool IsClone { get; set; }
+		public bool IsForwardChild { get; set; }
 
 		public MRRecommendationInsertIN(){}
 
@@ -1569,7 +1564,7 @@ namespace PAKNAPI.ModelBase
 			this.ReactionaryWord = false;
 			this.Address = model.FeedBackAdress;
 			this.UpdatedDate = model.ChangedOn;
-			this.IsClone = true;
+			this.IsForwardChild = false;
 
 		}
 	}
@@ -1998,6 +1993,7 @@ namespace PAKNAPI.ModelBase
             DP.Add("Id", _mRRecommendationUpdateStatusIN.Id);
             DP.Add("Status", _mRRecommendationUpdateStatusIN.Status);
             DP.Add("IsFakeImage", _mRRecommendationUpdateStatusIN.IsFakeImage);
+            DP.Add("IsForwardChild", _mRRecommendationUpdateStatusIN.IsForwardChild);
 
             return (await _sQLCon.ExecuteNonQueryDapperAsync("MR_RecommendationUpdateStatus", DP));
         }
@@ -2008,9 +2004,11 @@ namespace PAKNAPI.ModelBase
 		public int? Id { get; set; }
 		public byte? Status { get; set; }
 		public bool? IsFakeImage { get; set; }
+		public bool? IsForwardChild { get; set; }
 
 		public MRRecommendationUpdateStatusIN() {
 			this.IsFakeImage = false;
+			this.IsForwardChild = false;
 		}
 	}
 }

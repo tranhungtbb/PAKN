@@ -122,6 +122,7 @@ export class RECOMMENDATION_STATUS {
 	public static CREATED = 1 // đang soạn thảo
 	public static RECEIVE_WAIT = 2 //2 Chờ xử lý
 	public static RECEIVE_DENY = 3 //3 Từ chối xử lý
+	
 	public static RECEIVE_APPROVED = 4 //4 Đã tiếp nhận
 	public static PROCESS_WAIT = 5 //5 Chờ giải quyết
 	public static PROCESS_DENY = 6 //6 Từ chối giải quyết
@@ -130,7 +131,7 @@ export class RECOMMENDATION_STATUS {
 	public static APPROVE_DENY = 9 //9 Từ chối phê duyệt
 	public static FINISED = 10 //10 Đã giải quyết
 
-	public static UPDATED = 11 //11 Chỉ để lưu log
+	public static UPDATED = 11 //đã chuyển
 }
 
 export class STEP_RECOMMENDATION {

@@ -86,6 +86,8 @@ namespace PAKNAPI.Models.Recommendation
         public List<DropdownObject> ListHashTag { get; set; }
         public byte RecommendationStatus { get; set; }
         public bool IsList { get; set; }
+
+        public bool? IsForwardUnitChild { get; set; }
     }
     public class RecommendationForwardProcess
     {
