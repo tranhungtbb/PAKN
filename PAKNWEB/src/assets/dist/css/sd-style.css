@@ -160,10 +160,12 @@ a:hover {
 .grd-xanhngoc {
 	/* background: linear-gradient(180deg, #42A4FF 0%, #2A5494 100%); */
 	background: linear-gradient(180deg, #41D1FF 0%, #216277 100%);
+	/* background-color: #038CB8; */
 }
 
 .grd-blue {
-	background: linear-gradient(180deg, #42A4FF 0%, #2A5494 100%);
+	/* background: linear-gradient(180deg, #42A4FF 0%, #2A5494 100%); */
+	background-color: #2E73D5;
 }
 
 .grd-brown {

@@ -22,7 +22,7 @@
 															nghiệp.</p> -->
 														<form [formGroup]="loginFormProduct" #formDir="ngForm" (ngSubmit)="loginProduct()">
 															<div class="form-group mb-4">
-																<input class="form-control rounded-8px h-50px px-4 border-brown" style="font-size: 20px" placeholder="Nhập CMND..."
+																<input class="form-control rounded-8px h-50px px-4 border-brown" style="font-size: 20px" placeholder="Nhập CMND,CCCD,Số ĐKKD.."
 																	maxlength="10" id="productname" type="text" formControlName="name" [(ngModel)]="userProduct.UserName" required
 																	onlyNumber="true"
 																	(change)="userProduct.UserName=userProduct.UserName.trim()">

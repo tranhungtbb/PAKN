@@ -136,3 +136,28 @@ body .ui-tree .ui-tree-container .ui-treenode .ui-treenode-content .ui-tree-togg
 /* :host ::ng-deep .form-control.ng-select .ng-select-container {
 	padding-bottom: 0px;
 } */
+strong.highlight:hover {
+	color: #42a4ff;
+	cursor: pointer;
+}
+
+.text-center-x {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+.cursor {
+	cursor: pointer;
+}
+
+:host ::ng-deep .ng-clear-wrapper{
+	z-index: 100;
+}
+:host ::ng-deep .ui-state-highlight, :host ::ng-deep .ui-sortable-column:hover {
+	background-color: transparent !important;
+	color: #333333 !important;
+}
+:host ::ng-deep .ui-table .ui-sortable-column.ui-state-highlight .ui-sortable-column-icon{
+	color: #111 !important;
+}

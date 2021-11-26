@@ -108,6 +108,12 @@ export class Api {
 	public static UnitGetChildrenDropdown = 'unit/get-children-dropdown'
 	public static UnitGetChildrenDropdownByField = 'unit/get-drop-unit-by-field'
 
+	public static UnitPermissionSMSGetPageList = 'unit/get-list-unit-permission-on-page'
+	public static UnitPermissionSMSDelete = 'unit/unit-permission-delete'
+	public static UnitPermissionSMSInsert = 'unit/unit-permission-insert'
+	public static UnitNotPermissionSMSGetDrop = 'unit/get-unit-dropdown-not-permission'
+	public static UnitHasPermissionSMS = 'unit/unit-has-permission'
+
 	//Position
 	public static PositionInsert = 'position/insert'
 	public static PositionGetList = 'position/get-list-position-on-page'

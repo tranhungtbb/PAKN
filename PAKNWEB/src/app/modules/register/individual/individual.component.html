@@ -128,7 +128,41 @@
 				Quay lại
 			</a>
 			<button type="button" class="btn btn-outline-light px-5 mr-3 rounded-10px h-48px text-dark" (click)="onReset()">Hủy</button>
-			<button type="button" class="btn text-white border-light no-grd-blue px-5 rounded-10px h-48px" (click)="onSave()">Đăng ký</button>
+			<button type="button" class="btn text-white border-light no-grd-blue px-5 rounded-10px h-48px" (click)="onPreShowOtp()">Đăng ký</button>
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="modal-otp">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block">
+				<h3 class="modal-title text-center text-uppercase">xác thực mã otp</h3>
+				<p class="text-center">Mã xác thực đã được gửi về SĐT:</p>
+				<p class="text-center mb-0 font-weight-bold" style="font-size: 22px">{{phoneHide}}</p>
+				<button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" style="background: #F8FBFF">
+				<div class="otp-code">
+					<p class="text-center title-otp">Nhập mã OTP</p>
+					<div class="input-group-otp d-flex justify-content-center">
+						<input type="text" id="input_1" (keyup)="onChange($event,1)" [(ngModel)]="otp_1" numbersOnly maxlength="1" class="form-control border-brown text-center mr-2">
+						<input type="text" id="input_2" (keyup)="onChange($event,2)" [(ngModel)]="otp_2" numbersOnly maxlength="1" class="form-control border-brown text-center mr-2">
+						<input type="text" id="input_3" (keyup)="onChange($event,3)" [(ngModel)]="otp_3" numbersOnly maxlength="1" class="form-control border-brown text-center mr-2">
+						<input type="text" id="input_4" (keyup)="onChange($event,4)" [(ngModel)]="otp_4" numbersOnly maxlength="1" class="form-control border-brown text-center mr-2">
+						<input type="text" id="input_5" (keyup)="onChange($event,5)" [(ngModel)]="otp_5" numbersOnly maxlength="1" class="form-control border-brown text-center mr-2">
+						<input type="text" id="input_6" (keyup)="onChange($event,6)" [(ngModel)]="otp_6" numbersOnly maxlength="1" class="form-control border-brown text-center">
+					</div>
+				</div>
+			</div>
+			<div class="text-center mt-2">
+				<p class="mr-2">Bạn chưa nhận được mã? <a (click)="clearOTP()" class="red">Gửi lại OTP</a></p>
+			</div>
+			<div class="modal-footer justify-content-center border-0">
+				<button type="button" class="btn no-grd-blue text-white rounded-xl border-0 text-uppercase my-3" (click)="onSave()">Xác thực</button>
+			</div>
+		</div>
+	</div>
+</div>
+

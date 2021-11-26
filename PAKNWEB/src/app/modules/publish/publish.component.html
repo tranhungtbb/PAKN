@@ -169,7 +169,7 @@
 	<!--**********************************
             Header end ti-comment-alt
         ***********************************-->
-	<router-outlet>
+	<router-outlet (activate)="onActivate($event)">
 	</router-outlet>
 
 	<!-- <div class="zalo-chat-widget" data-oaid="3231248114241019328" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="12" data-width="350" data-height="420"></div> -->

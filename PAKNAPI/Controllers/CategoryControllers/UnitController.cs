@@ -201,28 +201,6 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
-		//[HttpGet]
-		//[Authorize("ThePolicy")]
-		//[Route("CAUnitGetTreeBase")]
-		//public async Task<ActionResult<object>> CAUnitGetTreeBase()
-		//{
-		//	try
-		//	{
-		//		List<CAUnitGetTree> rsCAUnitGetTree = await new CAUnitGetTree(_appSetting).CAUnitGetTreeDAO();
-		//		IDictionary<string, object> json = new Dictionary<string, object>
-		//			{
-		//				{"CAUnitGetTree", rsCAUnitGetTree},
-		//			};
-		//		return new ResultApi { Success = ResultCode.OK, Result = json };
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		_bugsnag.Notify(ex);
-		//		new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
-
-		//		return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
-		//	}
-		//}
 		/// <summary>
 		/// thêm mới đơn vị
 		/// </summary>
@@ -379,6 +357,116 @@ namespace PAKNAPI.Controllers.ControllerBase
 			}
 		}
 
+
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("get-list-unit-permission-on-page")]
+		public async Task<ActionResult<object>> CAUnitPermissionGetAllOnPageBase()
+		{
+			try
+			{
+				List<CAUnitPermissionSMS> cAUnitPermissionSMs = await new CAUnitPermissionSMS(_appSetting).CAUnitPermissionSMSGetAllDAO();
+				IDictionary<string, object> json = new Dictionary<string, object>
+					{
+						{"CAUnitPermissionSMs", cAUnitPermissionSMs},
+						{"TotalCount", cAUnitPermissionSMs != null && cAUnitPermissionSMs.Count > 0 ? cAUnitPermissionSMs[0].RowNumber : 0}
+					};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("unit-permission-insert")]
+		public async Task<ActionResult<object>> CAUnitPermissionInsertBase(CAUnitPermissionInsert model)
+		{
+			try
+			{
+				List<Task> tasks = new List<Task>();
+				foreach (var item in model.ListUnit) {
+					tasks.Add(new CAUnitPermissionSMS(_appSetting).CAUnitPermissionSMSInsertDAO(item));
+				}
+				await Task.WhenAll(tasks);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+				return new ResultApi { Success = ResultCode.OK};
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+
+
+		[HttpPost]
+		[Authorize("ThePolicy")]
+		[Route("unit-permission-delete")]
+		public async Task<ActionResult<object>> CAUnitPermissionDeleteBase(CAUnitPermissionDelete _cAUnitDeleteIN)
+		{
+			try
+			{
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+
+				return new ResultApi { Success = ResultCode.OK, Result = await new CAUnitPermissionSMS(_appSetting).CAUnitPermissionSMSDeleteDAO(_cAUnitDeleteIN) };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("get-unit-dropdown-not-permission")]
+		public async Task<ActionResult<object>> CAUnitNotPermissionGetDropdownBase()
+		{
+			try
+			{
+				var list = await new CAUnitPermissionSMS(_appSetting).CAUnitNotPermissionSMSGetDropdownDAO();
+				return new ResultApi { Success = ResultCode.OK, Result = list };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("unit-has-permission")]
+		public async Task<ActionResult<object>> CAUnitCheckPermission()
+		{
+			try
+			{
+				var unit = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+				var list = await new CAUnitPermissionSMS(_appSetting).CAUnitCheckPermissionSMSDAO(unit);
+				return new ResultApi { Success = ResultCode.OK, Result = list > 0 ? true : false };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 
 
 	}

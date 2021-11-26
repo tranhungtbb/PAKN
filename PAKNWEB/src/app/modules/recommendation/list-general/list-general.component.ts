@@ -41,6 +41,7 @@ export class ListGeneralComponent implements OnInit {
 		{ value: 8, text: 'Chờ phê duyệt' },
 		{ value: 9, text: 'Từ chối phê duyệt' },
 		{ value: 10, text: 'Đã giải quyết' },
+		{ value: 11, text: 'Đã chuyển' },
 	]
 	lstGroupWord: any = []
 	lstGroupWordSelected: any = []

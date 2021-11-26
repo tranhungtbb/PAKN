@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr'
 import { Router } from '@angular/router'
 
 import { DataService } from 'src/app/services/sharedata.service'
-import { REGEX } from 'src/app/constants/CONSTANTS'
+import { MESSAGE_COMMON, REGEX } from 'src/app/constants/CONSTANTS'
 import { UnitService } from '../../../../services/unit.service'
 import { UserService } from '../../../../services/user.service'
 import { PositionService } from '../../../../services/position.service'
@@ -15,6 +15,7 @@ import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 import { COMMONS } from 'src/app/commons/commons'
 import { UnitObject } from 'src/app/models/unitObject'
 import { UserServiceChatBox } from 'src/app/modules/chatbox/user/user.service'
+import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
 declare var $: any
 @Component({
@@ -78,6 +79,8 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	totalCount_User: number = 0
 	userPageCount: number = 0
 
+	@ViewChild('tableUnit', { static: false }) tableUnit: any
+
 	constructor(
 		private unitService: UnitService,
 		private userService: UserService,
@@ -87,7 +90,8 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		private _shareData: DataService,
 		private _router: Router,
 		private roleService: RoleService,
-		private _userServiceChat: UserServiceChatBox
+		private _userServiceChat: UserServiceChatBox,
+		private _storageService : UserInfoStorageService
 	) {}
 
 	ngOnInit() {
@@ -104,6 +108,13 @@ export class UnitComponent implements OnInit, AfterViewInit {
 			address: [this.modelUnit.address],
 			index: [this.modelUnit.index],
 			field: [this.modelUnit.listField],
+		})
+
+		this.getDropListUnitPermission()
+		this.unitService.getDataForCreate().subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.lstField = res.result.lstField
+			}
 		})
 
 		this.unitService.getDataForCreate().subscribe((res) => {
@@ -131,15 +142,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 	}
 	onCollapsed(item: string) {
 		this.collapsed_checked[item] = !this.collapsed_checked[item]
-	}
-
-	onSortUnit(fieldName: string) {
-		this.unitSortField = fieldName
-		this.unitSortDir = this.unitSortDir == 'DESC' ? 'ASC' : 'DESC'
-		//this.getUnitPagedList()
-	}
-	unitFilterChange(): void {
-		//this.getUnitPagedList()
 	}
 	onPageChange(event): void {
 		this.query.pageSize = event.rows
@@ -537,6 +539,90 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		let unitId = this.unitObject.id
 	}
 
+
+	// unit permission sms
+
+	listUnitNotPermission : any  [] = []
+	listUnitPermission : any [] = []
+	listUnitAdd : any [] = []
+	isUnitMain : boolean = this._storageService.getIsUnitMain()
+
+	totalCount : number = 0
+
+	unitListSearch : any ={
+		name : '',
+		email : '',
+		phone : '',
+		address : ''
+	}
+
+	onOpenModalListUnit = ()=>{
+		this.listUnitAdd = []
+		this.getListUnitPermission()
+		$('#modalUnitsPermissionSMS').modal('show')
+		this.tableUnit.reset()
+	}
+
+	getDropListUnitPermission = () =>{
+		this.unitService.getDropUnitPermission({}).subscribe(res =>{
+			if(res.success == RESPONSE_STATUS.success){
+				this.listUnitNotPermission = res.result
+			}
+			else{
+				this._toastr.error(res.message)
+			}
+		},(err) =>{
+			console.log(err)
+		})
+	}
+
+	getListUnitPermission = () =>{
+		this.unitService.getAllUnitPermission({}).subscribe(res=>{
+			if(res.success == RESPONSE_STATUS.success){
+				this.listUnitPermission = res.result.CAUnitPermissionSMs
+				this.totalCount = res.result.TotalCount
+			}
+			else{
+				this._toastr.error(res.message)
+			}
+		},(err) =>{
+			console.log(err)
+		})
+	}
+
+	onAddUnitPermission = () =>{
+		if(!this.listUnitAdd || this.listUnitAdd.length == 0){
+			this._toastr.error('Vui lòng chọn đơn vị')
+			return
+		}
+		this.unitService.insertUnitPermission({ ListUnit : this.listUnitAdd}).subscribe(res=>{
+			if(res.success == RESPONSE_STATUS.success){
+				this.listUnitAdd = []
+				this.getListUnitPermission()
+				this.getDropListUnitPermission()
+				this._toastr.success(MESSAGE_COMMON.ADD_SUCCESS)
+			}else{
+				this._toastr.error(res.message)
+			}
+		}, (err) =>{
+			console.log(err)
+		})
+	}
+
+	onDeleteUnitPermission = (unitId : number) =>{
+		this.unitService.deleteUnitPermission({ UnitId : unitId}).subscribe(res =>{
+			if(res.success == RESPONSE_STATUS.success){
+				this.getListUnitPermission()
+				this.getDropListUnitPermission()
+				this._toastr.success(MESSAGE_COMMON.DELETE_SUCCESS)
+			}else{
+				this._toastr.error(res.message)
+			}
+		},(err) =>{
+			console.log(err)
+		})
+	}
+
 	private unflatten(arr): any[] {
 		var tree = [],
 			mappedArr = {},
@@ -591,7 +677,6 @@ export class UnitComponent implements OnInit, AfterViewInit {
 		tree = tree.sort((x, y) => {
 			return x.index - y.index
 		})
-		console.log(tree)
 		return tree
 	}
 }

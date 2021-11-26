@@ -45,7 +45,7 @@
 											<strong>Mã số</strong>
 											
 										</p>
-										<input class="form-control form-control-sm" [(ngModel)]="dataSearch.code" maxlength="100" (keydown.enter)="dataStateChange()" />
+										<input class="form-control form-control-sm" placeholder="Nhập..." [(ngModel)]="dataSearch.code" maxlength="100" (keydown.enter)="dataStateChange()" />
 										<button *ngIf="dataSearch.code" class="btn bg-transparent btn-clear-input" (click)="dataSearch.code=''">
 											<i class="fa fa-times"></i>
 										</button>

@@ -42,6 +42,11 @@
 						<span *hasPermission="['3', 'A_VII_1']">{{unitObject.name}}</span>
 					</p>
 					<div class="d-flex align-items-center">
+						<button *ngIf="isUnitMain" type="button" title="Danh sách đơn vị được cấp quyền"
+							class="btn grd-brown text-dark border-0 mr-3 py-2 px-3 cursor-hand"
+							(click)="onOpenModalListUnit()"><i class="bi bi-person"></i>
+							
+						</button>
 						<button *hasPermission="['3', 'A_VII_2']" type="button" title="Sửa đơn vị"
 							class="btn grd-brown text-dark border-0 mr-3 py-2 px-3 cursor-hand"
 							(click)="modalCreateOrUpdate(unitObject.id,unitObject.unitLevel)"><i class="bi bi-pencil-square mr-2"></i>
@@ -356,5 +361,135 @@
 				<button type="button" class="btn btn-danger border-0 w-127 grd-blue btn-sm" (click)="acceptConfirm()">Xác nhận</button>
 			</div>
 		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalUnitsPermissionSMS">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="min-width: 90%;">
+		<div class="modal-content rounded">
+			<div class="modal-header border-bottom-0">
+				<p class="modal-title h4">Danh sách đơn vị được cấp quyền gửi SMS</p>
+				<button class="close btn-close-modal" data-dismiss="modal">
+					×
+				</button>
+			</div>
+			<div style="display: flex; margin: 10px 20px;">
+				<div style="width: 15%;" class="text-center-x h4">Chọn đơn vị</div>
+				<div style="width: 75%;">
+					<ng-select notFoundText="Không có dữ liệu"  class="form-control" 
+						[items]="listUnitNotPermission" style="height: auto;" 
+						multiple="true" bindValue="value" bindLabel="text" 
+						[(ngModel)]="listUnitAdd" [hideSelected]="true"
+					>
+					</ng-select>
+				</div>
+				<div style="width: 10%;" class="text-center-x">
+					<button type="button" (click)="onAddUnitPermission()" class="btn grd-blue btn-sm rounded border-0 text-white text-center-x"
+						style="width: 60%;">Thêm</button>
+				</div>
+			</div>
+			<div class="modal-body pt-3 pb-3">
+				<p-table #tableUnit [value]="listUnitPermission" [paginator]="true" [rows]="10" sortMode="multiple"
+						[showCurrentPageReport]="true" [rowsPerPageOptions]="[20,30,50]"
+						currentPageReportTemplate="Tổng số {{tableUnit.totalRecords}}" [totalRecords]="totalCount"
+						[responsive]="true" 
+						autoLayout="true"
+						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
+						<ng-template pTemplate="header" class="bg-thead">
+							<tr>
+								<th style="width: 50px">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>STT</strong>
+									</p>
+								</th>
+								<th>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead" 
+										[pSortableColumn]="'name'">
+										<strong>Tên đơn vị <p-sortIcon [field]="'name'"></p-sortIcon></strong>
+									</p>
+									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="unitListSearch.name"
+										[ngSwitch]="'name'" (keydown.enter)="tableUnit.filter($event?.target.value.trim(), 'name', 'contains')"
+									 	placeholder="Nhập..." />
+									<button *ngIf="unitListSearch.name" class="btn bg-transparent btn-clear-input" (click)="unitListSearch.name=''">
+										<i class="fa fa-times"></i>
+									</button>
+								</th>
+								<th>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'email'">
+										<strong>Email<p-sortIcon [field]="'email'"></p-sortIcon></strong>
+									</p>
+									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="unitListSearch.email"
+										[ngSwitch]="'email'" (keydown.enter)="tableUnit.filter($event?.target.value.trim(), 'email', 'contains')"
+									 	placeholder="Nhập..." />
+									<button *ngIf="unitListSearch.email" class="btn bg-transparent btn-clear-input" (click)="unitListSearch.email=''">
+										<i class="fa fa-times"></i>
+									</button>
+								</th>
+								<th>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'phone'">
+										<strong>Điện thoại <p-sortIcon [field]="'phone'"></p-sortIcon></strong>
+									</p>
+									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="unitListSearch.phone"
+										[ngSwitch]="'phone'" (keydown.enter)="tableUnit.filter($event?.target.value.trim(), 'phone', 'contains')"
+									 	placeholder="Nhập..." />
+									<button *ngIf="unitListSearch.phone" class="btn bg-transparent btn-clear-input" (click)="unitListSearch.phone=''">
+										<i class="fa fa-times"></i>
+									</button>
+								</th>
+								<th>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
+									[pSortableColumn]="'address'">
+										<strong>Địa chỉ<p-sortIcon [field]="'address'"></p-sortIcon></strong>
+									</p>
+									<input class="form-control form-control-sm" maxlength="100" trim [(ngModel)]="unitListSearch.address"
+										[ngSwitch]="'address'" (keydown.enter)="tableUnit.filter($event?.target.value.trim(), 'address', 'contains')"
+									 	placeholder="Nhập..." />
+									<button *ngIf="unitListSearch.address" class="btn bg-transparent btn-clear-input" (click)="unitListSearch.address=''">
+										<i class="fa fa-times"></i>
+									</button>
+								</th>
+								
+								<th class="text-right" style="width: 100px;">
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead">
+										<strong>Thao tác</strong>
+									</p>
+								</th>
+							</tr>
+						</ng-template>
+						<ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+							<tr>
+								<td class="text-center">{{rowIndex + 1}}</td>
+								<td>
+									<strong class="highlight">{{item.name}}</strong>
+								</td>
+								<td>
+									<a class="ellipsis text-dark" type="button">{{item.email}}</a>
+								</td>
+								<td>
+									<a class="ellipsis text-dark" type="button">{{item.phone}}</a>
+								</td>
+								<td>
+									<a class="ellipsis text-dark" type="button">{{item.address}}</a>
+								</td>
+							
+								<td style="text-align: center;">
+									<div class="d-flex justify-content-end">
+										<a type="button"  (click)="onDeleteUnitPermission(item.unitId)" class="btn-icon grd-red text-white"><i
+												class="bi bi-trash"></i></a>
+									</div>
+								</td>
+							</tr>
+						</ng-template>
+						<ng-template pTemplate="emptymessage">
+							<tr>
+								<td class="text-center" colspan="7">Không có dữ liệu</td>
+							</tr>
+						</ng-template>
+					</p-table>
+			</div>
+		</div>
+
 	</div>
 </div>

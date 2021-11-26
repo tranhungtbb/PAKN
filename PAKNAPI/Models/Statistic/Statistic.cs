@@ -351,12 +351,21 @@ namespace PAKNAPI.Models.Statistic
 	public class StatisticRecommendationProcessResults
 	{
 		private SQLCon _sQLCon;
-		public int Index { get; set; }
 		public int Id { get; set; }
-		public int UnitLevel { get; set; }
-		public bool ExistChild { get; set; }
 		public string UnitName { get; set; }
-		public int? TotalResult { get; set; }
+		public int RecommendationDVC { get; set; }
+		public int RecommendationKTXH { get; set; }
+		public int? Total { get; set; }
+		public int? ProcessOnTime { get; set; }
+		public int? ProcessExpire { get; set; }
+		public int? Process { get; set; }
+		public int? FinisedOnTime { get; set; }
+		public int? FinisedExpire { get; set; }
+		public int? Finised { get; set; }
+		public int? Satisfaction { get; set; }
+		public int? Accept { get; set; }
+		public int? UnSatisfaction { get; set; }
+		public int? SatisfactionTotal { get; set; }
 		public StatisticRecommendationProcessResults(IAppSetting appSetting)
 		{
 			_sQLCon = new SQLCon(appSetting.GetConnectstring());
@@ -371,9 +380,9 @@ namespace PAKNAPI.Models.Statistic
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("FromDate", FromDate);
 			DP.Add("ToDate", ToDate);
-			DP.Add("UnitProcessId", UnitId);
+			DP.Add("UnitId", UnitId);
 
-			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationProcessResults>("TK_RecommendationProcessStatus", DP)).ToList();
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationProcessResults>("[TK_RecommendationProcessResults]", DP)).ToList();
 		}
 	}
 

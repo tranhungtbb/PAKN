@@ -73,7 +73,17 @@ export class OrganizationComponent implements OnInit {
 		this.model._DateOfIssue = ''
 		this.model.representativeGender = true
 	}
-	onSave() {
+
+	phoneHide : any = ''
+	otp_1 : any = ''
+	otp_2 : any = ''
+	otp_3 : any = ''
+	otp_4 : any = ''
+	otp_5 : any = ''
+	otp_6 : any = ''
+	
+	onPreShowOtp(){
+		this.clearOTP()
 		this.fLoginSubmitted = true
 		this.child_OrgRepreForm.fInfoSubmitted = true
 		this.fOrgInfoSubmitted = true
@@ -94,6 +104,49 @@ export class OrganizationComponent implements OnInit {
 			//this.toast.error('Dữ liệu không hợp lệ')
 			return
 		}
+		this.phoneHide = this.model.phone
+			.split('')
+			.map((item, index) => {
+				if (index > 3 && index < 7) {
+					return '*'
+				}
+				return item
+			})
+			.join('')
+		$('#modal-otp').modal('show')
+		setTimeout(() => {
+			$('#input_1').focus()	
+		}, 400);
+	}
+
+	onChange =(event, index) =>{
+		if(event.target.value){
+			setTimeout(() => {
+				$('#input_' + String(index +1)).focus()	
+			}, 1);
+		}else{
+			setTimeout(() => {
+				$('#input_' + String(index -1)).focus()	
+			}, 1);
+			
+		}
+	}
+	clearOTP = () =>{
+		this.otp_1 = null
+		this.otp_2 = null
+		this.otp_3 = null
+		this.otp_4 = null
+		this.otp_5 = null
+		this.otp_6 = null
+	}
+
+	onSave() {
+		debugger
+		if(!this.otp_1 || !this.otp_2 || !this.otp_3 || !this.otp_4 || !this.otp_5 || !this.otp_6){
+			this.toast.error('Vui lòng nhập otp!')
+			return
+		}
+		$('#modal-otp').modal('hide')
 
 		this.registerService.registerOrganization(this.model).subscribe((res) => {
 			if (res.success != 'OK') {

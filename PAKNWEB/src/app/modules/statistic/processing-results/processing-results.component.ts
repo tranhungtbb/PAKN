@@ -113,7 +113,9 @@ export class ProcessingResultsComponent implements OnInit {
 		}
 		this._service.getProcessingResult(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
+				this.listData = response.result
 			} else {
+				this._toastr.error(response.message)
 			}
 		}),
 			(error) => {

@@ -85,7 +85,8 @@
 					<li *hasPermission="['3', 'B_II_3']"><a routerLinkActive="mm-active" routerLink="/quan-tri/email-sms/sms-da-gui">SMS đã gửi</a></li>
 				</ul>
 			</li> -->
-			<li *hasPermission="['3', 'B_II_3']" routerLinkActive="mm-active active">
+			<!-- *hasPermission="['3', 'B_II_3']" -->
+			<li *ngIf="hasPermissionSMS" routerLinkActive="mm-active active">
 				<a routerLink="/quan-tri/email-sms/sms" class="ai-icon" aria-expanded="false">
 					<i class="bi bi-chat-right-dots"></i>
 					<span class="nav-text">SMS</span>

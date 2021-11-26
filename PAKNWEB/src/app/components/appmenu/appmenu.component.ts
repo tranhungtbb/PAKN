@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core'
 import { UserInfoStorageService } from '../../commons/user-info-storage.service'
 import { HasPermission } from 'src/app/guards/has-permission.service'
+import { UnitService } from 'src/app/services/unit.service'
 
 declare var $: any
 import { Router } from '@angular/router'
+import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
 
 @Component({
 	selector: 'app-appmenu',
@@ -12,11 +14,17 @@ import { Router } from '@angular/router'
 })
 export class AppmenuComponent implements OnInit, AfterViewInit {
 	isSuperAdmin: boolean = false
-	constructor(private userStorage: UserInfoStorageService, private _router: Router, private hasPermission: HasPermission) {}
+	constructor(private userStorage: UserInfoStorageService, private _router: Router, private unitService : UnitService) {}
 	isMainMenu: boolean = false
 	isAdmin = this.userStorage.getIsAdmin()
+	hasPermissionSMS : boolean = false
 	ngOnInit() {
 		this.isMainMenu = this.userStorage.getIsUnitMain()
+		this.unitService.hasPermissionSMS({}).subscribe(res =>{
+			if(res.success == RESPONSE_STATUS.success){
+				this.hasPermissionSMS = res.result
+			}
+		})
 	}
 	ngAfterViewInit() {
 		this.loadScriptMenus('assets/dist/js/custom.min.js')
