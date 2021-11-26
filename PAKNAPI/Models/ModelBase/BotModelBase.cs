@@ -31,12 +31,53 @@ namespace PAKNAPI.Models.ModelBase
 		}
 		public async Task<BOTAnonymousUser> BOTAnonymousUserGetByUserName(string UserName)
 		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("UserName", UserName);
+            try
+            {
+				DynamicParameters DP = new DynamicParameters();
+				DP.Add("UserName", UserName);
+				return (await _sQLCon.ExecuteListDapperAsync<BOTAnonymousUser>("BOT_AnonymousUserGetByUserName", DP)).FirstOrDefault();
+			}
+            catch (Exception ex)
+            {
 
-			return (await _sQLCon.ExecuteListDapperAsync<BOTAnonymousUser>("BOT_AnonymousUserGetByUserName", DP)).FirstOrDefault();
+				return null;
+            }
+			
 		}
 	}
+	public class BOTRoomGetAllOnPage
+	{
+		private SQLCon _sQLCon;
+
+		public BOTRoomGetAllOnPage(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public BOTRoomGetAllOnPage()
+		{
+		}
+
+		public int? RowNumber { get; set; }
+		public long Id { get; set; }
+
+		public int? AnonymousId { get; set; }
+		public string Name { get; set; }
+
+		public int? Type { get; set; }
+
+
+		public async Task<List<BOTRoomGetAllOnPage>> SYUserGetByRoleIdAllOnPageDAO(int? PageSize, int? PageIndex, int? RoleId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+			
+
+			return (await _sQLCon.ExecuteListDapperAsync<BOTRoomGetAllOnPage>("BOT_RoomGetAllOnPage", DP)).ToList();
+		}
+	}
+
 
 	public class BOTRoom
 	{
@@ -51,22 +92,33 @@ namespace PAKNAPI.Models.ModelBase
 		{
 		}
 
-		public BOTRoom(string Name, int Type) {
+		public BOTRoom(string Name,int AnonymousId, int Type) {
 			this.Name = Name;
 			this.Type = Type;
+			this.AnonymousId = AnonymousId;
 		}
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public int Type { get; set; }
 
+		public int AnonymousId { get; set; }
 		public async Task<decimal?> BOTRoomInsertDAO(BOTRoom _bOTRoom)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", _bOTRoom.Name);
+			DP.Add("AnonymousId", _bOTRoom.AnonymousId);
 			DP.Add("Type", _bOTRoom.Type);
 
 			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("BOT_RoomInsert", DP);
 		}
+		public async Task<BOTAnonymousUser> BOTRoomGetByName(string roomName)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Name", roomName);
+
+			return (await _sQLCon.ExecuteListDapperAsync<BOTAnonymousUser>("BOT_RoomGetByName", DP)).FirstOrDefault();
+		}
+		
 	}
 
 
@@ -85,7 +137,7 @@ namespace PAKNAPI.Models.ModelBase
 
 		public int Id { get; set; }
 		public int RoomId { get; set; }
-		public int AnonymousId { get; set; }
+		
 		public int UserId { get; set; }
 		
 
@@ -93,7 +145,7 @@ namespace PAKNAPI.Models.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("RoomId", _bOTRoomUserLink.RoomId);
-			DP.Add("AnonymousId", _bOTRoomUserLink.AnonymousId);
+			//DP.Add("AnonymousId", _bOTRoomUserLink.AnonymousId);
 			DP.Add("UserId", _bOTRoomUserLink.UserId);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("[BOT_RoomUserLinkInsert]", DP));
@@ -121,13 +173,16 @@ namespace PAKNAPI.Models.ModelBase
 		public DateTime DateSend { get; set; }
 
 
-		public async Task<int> BOTMessageInsertDAO(BOTMessage _bOTMessage)
+		public async Task<int> BOTMessageInsertDAO(string MessageContent,
+			 int FromUserId,
+			 int RoomId,
+			  DateTime DateSend)
 		{
 			DynamicParameters DP = new DynamicParameters();
-			DP.Add("RoomId", _bOTMessage.RoomId);
-			DP.Add("FromUserId", _bOTMessage.FromUserId);
-			DP.Add("MessageContent", _bOTMessage.MessageContent);
-			DP.Add("DateSend", _bOTMessage.DateSend);
+			DP.Add("RoomId", RoomId);
+			DP.Add("FromUserId", FromUserId);
+			DP.Add("MessageContent", MessageContent);
+			DP.Add("DateSend", DateSend);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("BOT_MessageInsert", DP));
 		}

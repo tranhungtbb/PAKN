@@ -13,6 +13,10 @@ using System.Xml.Linq;
 
 namespace PAKNAPI.Models.Chatbot
 {
+	public class CreateRoomBot
+	{
+		public string UserName { get; set; }
+	}
 
 	#region ChatbotDelete
 	public class ChatbotDelete

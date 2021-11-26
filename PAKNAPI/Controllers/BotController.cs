@@ -1,8 +1,10 @@
 ﻿using Bugsnag;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
+using PAKNAPI.Models.Chatbot;
 using PAKNAPI.Models.ModelBase;
 using PAKNAPI.Models.Results;
 using PAKNAPI.Models.SyncData;
@@ -32,39 +34,98 @@ namespace PAKNAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("bot-create-room")]
-        [HttpGet]
-        public async Task<ActionResult<object>> CreateRoom() {
+        [HttpPost]
+        public async Task<ActionResult<object>> CreateRoom(CreateRoomBot roomBot) {
             try
             {
-                //return new ResultApi { Success = ResultCode.OK, Result = await new FeedBackSync(_appSetting).SyncFeedBack()};
+
                 // create user
-                var guid = Guid.NewGuid().ToString();
-                var id = Int32.Parse((await new BOTAnonymousUser(_appSetting).BOTAnonymousUserInsertDAO(guid)).ToString());
-
-                if (id > 0)
+                var guid = roomBot.UserName;
+                string roomName = "Room_" + guid;
+                BOTAnonymousUser res = await new BOTAnonymousUser(_appSetting).BOTAnonymousUserGetByUserName(guid);
+                if (res != null && res.Id > 0)
                 {
-                    // create room
+                    var id = res.Id;
 
-                    var roomId =Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom("Room_" + guid, 1))).ToString());
-                    SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
-                    var botRoomUserLink = new BOTRoomUserLink();
-                    botRoomUserLink.AnonymousId = id;
-                    botRoomUserLink.RoomId = roomId;
-                    botRoomUserLink.UserId = dataMain.Id;
-                    await new BOTRoomUserLink(_appSetting).BOTRoomUserLinkInsertDAO(botRoomUserLink);
-
-                    IDictionary<string, string> json = new Dictionary<string, string>
+                    if (id > 0)
                     {
-                        {"AnonymousId",  id.ToString()},
-                        {"AnonymousName", guid},
-                        {"RoomId", roomId.ToString()},
-                    };
+                        // create room
+                        var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
+                        if (room.Id > 0)
+                        {
 
-                    return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json};
+                            SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
+                            //var botRoomUserLink = new BOTRoomUserLink();
+                            //botRoomUserLink.AnonymousId = id;
+                            //botRoomUserLink.RoomId = room.Id;
+                            //botRoomUserLink.UserId = dataMain.Id;
+                            //await new BOTRoomUserLink(_appSetting).BOTRoomUserLinkInsertDAO(botRoomUserLink);
+
+                            IDictionary<string, string> json = new Dictionary<string, string>
+                        {
+                            {"AnonymousId",  id.ToString()},
+                            {"AnonymousName", guid},
+                            {"RoomId", room.Id.ToString()},
+                        };
+
+                            return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
+                        }
+                        else
+                        {
+                            var roomId = Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom(roomName, id, 1))).ToString());
+                            SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
+                            //var botRoomUserLink = new BOTRoomUserLink();
+                            //botRoomUserLink.AnonymousId = id;
+                            //botRoomUserLink.RoomId = roomId;
+                            //botRoomUserLink.UserId = dataMain.Id;
+                            //await new BOTRoomUserLink(_appSetting).BOTRoomUserLinkInsertDAO(botRoomUserLink);
+
+                            IDictionary<string, string> json = new Dictionary<string, string>
+                        {
+                            {"AnonymousId",  id.ToString()},
+                            {"AnonymousName", guid},
+                            {"RoomId", roomId.ToString()},
+                        };
+
+                            return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
+                        }
+
+                    }
+                    else
+                    {
+                        return new Models.Results.ResultApi { Success = ResultCode.OK, Message = "Đã có lỗi xảy ra" };
+                    }
                 }
-                else {
-                    return new Models.Results.ResultApi { Success = ResultCode.OK,  Message = "Đã có lỗi xảy ra"};
+                else
+                {
+                    var id = Int32.Parse((await new BOTAnonymousUser(_appSetting).BOTAnonymousUserInsertDAO(guid)).ToString());
+                    if (id > 0)
+                    {
+                        // create room
+
+                        var roomId = Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom(roomName, id, 1))).ToString());
+                        SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
+                        //var botRoomUserLink = new BOTRoomUserLink();
+                        //botRoomUserLink.AnonymousId = id;
+                        //botRoomUserLink.RoomId = roomId;
+                        //botRoomUserLink.UserId = dataMain.Id;
+                        //await new BOTRoomUserLink(_appSetting).BOTRoomUserLinkInsertDAO(botRoomUserLink);
+
+                        IDictionary<string, string> json = new Dictionary<string, string>
+                        {
+                            {"AnonymousId",  id.ToString()},
+                            {"AnonymousName", guid},
+                            {"RoomId", roomId.ToString()},
+                        };
+
+                        return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
+                    }
+                    else
+                    {
+                        return new Models.Results.ResultApi { Success = ResultCode.OK, Message = "Đã có lỗi xảy ra" };
+                    }
                 }
+
             }
             catch (Exception ex) {
                 return new Models.Results.ResultApi { Success = ResultCode.OK , Message = ex.Message};
