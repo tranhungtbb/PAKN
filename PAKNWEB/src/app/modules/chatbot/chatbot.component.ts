@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core'
 import { RESPONSE_STATUS } from 'src/app/constants/CONSTANTS'
-import { BotRoom } from 'src/app/models/chatbotObject'
+import { BotRoom, CustomHttpClient } from 'src/app/models/chatbotObject'
 import { ChatBotService } from './chatbot.service'
 //import { StreamChat, ChannelData, Message, User } from 'stream-chat'
 //import axios from 'axios'
-import * as signalR from '@aspnet/signalr'
+import * as signalR from '@aspnet/signalr/'
 import { AppSettings } from 'src/app/constants/app-setting'
 
 @Component({
@@ -21,38 +21,60 @@ export class DashboardChatBotComponent implements OnInit {
 	rooms: BotRoom[]
 	// chatClient: any
 	// currentUser: User
-	connection: signalR.HubConnection
+	//connection: signalR.HubConnection
 	constructor(private botService: ChatBotService) {}
 	ngOnInit() {
-		console.log('SignalR ngOnInit 0')
-		this.connection = new signalR.HubConnectionBuilder().configureLogging(signalR.LogLevel.Information).withUrl(AppSettings.SIGNALR_ADDRESS).build()
-
-		this.connection
-			.start()
-			.then(function () {
-				console.log('SignalR Connected!')
+		const connection = new signalR.HubConnectionBuilder()
+			.withUrl(AppSettings.SIGNALR_ADDRESS + '?userName=123', {
+				skipNegotiation: true,
+				transport: signalR.HttpTransportType.WebSockets,
 			})
-			.catch(function (err) {
-				return console.error(err.toString())
-			})
-
-		this.connection.on('ReceiveMessageToGroup', (data: any) => {
-			console.log('SignalR ReceiveMessageToGroup ', data)
-		})
-
-		console.log('SignalR 1')
-		this.botService.getRooms({}).subscribe((res) => {
-			if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
-				if (res.result) {
-					console.log('getRooms ', res)
-					this.rooms = res.result.Data
-					console.log('getRooms ', this.rooms)
-					// this.totalRecord = res.result.TotalCount
-				}
-			} else {
-				//this._toastr.error(res.message)
+			.configureLogging(signalR.LogLevel.Information)
+			.build()
+		connection.keepAliveIntervalInMilliseconds = 60
+		connection.serverTimeoutInMilliseconds = 60
+		async function start() {
+			try {
+				await connection.start()
+				connection.off('ReceiveMessageToGroup')
+				connection.on('ReceiveMessageToGroup', (data: any) => {
+					console.log('SignalR ReceiveMessageToGroup ', data)
+				})
+				console.log('SignalR Connected.')
+			} catch (err) {
+				console.log(err)
+				//setTimeout(start, 5000)
 			}
+		}
+
+		connection.onclose(async () => {
+			await start()
 		})
+
+		// Start the connection.
+		start()
+	}
+
+	handleConnect = async () => {
+		console.log('SignalR ngOnInit 0')
+
+		try {
+			console.log('SignalR 1')
+			this.botService.getRooms({}).subscribe((res) => {
+				if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
+					if (res.result) {
+						console.log('getRooms ', res)
+						this.rooms = res.result.Data
+						console.log('getRooms ', this.rooms)
+						// this.totalRecord = res.result.TotalCount
+					}
+				} else {
+					//this._toastr.error(res.message)
+				}
+			})
+		} catch (error) {
+			console.log('handleConnect ', error)
+		}
 	}
 
 	async joinChat() {
@@ -108,9 +130,9 @@ export class DashboardChatBotComponent implements OnInit {
 	}
 
 	ngOnDestroy() {
-		if (this.connection) {
-			console.log('SignalR ngOnDestroy 0')
-			this.connection.off('ReceiveMessageToGroup')
-		}
+		// if (this.connection) {
+		// 	console.log('SignalR ngOnDestroy 0')
+		// 	this.connection.off('ReceiveMessageToGroup')
+		// }
 	}
 }
