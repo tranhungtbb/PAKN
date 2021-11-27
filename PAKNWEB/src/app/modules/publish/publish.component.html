@@ -153,10 +153,10 @@
 							<div class="search-bar center ps-relative">
 								<div class="p-0 m-0 show">
 									<form>
-										<input class="form-control" type="text" placeholder="Tìm kiếm phản ánh kiến nghị..." aria-label="Search">
+										<input class="form-control" type="text" [(ngModel)]="keySearch" [ngModelOptions]="{standalone: true}" (keydown.enter)="searchRecommendation()" placeholder="Tìm kiếm phản ánh kiến nghị..." aria-label="Search">
 									</form>
 								</div>
-								<span class="search_icon p-3 c-pointer ps-absolute" style="right: 0px;">
+								<span class="search_icon p-3 c-pointer ps-absolute" style="right: 0px;" (click)="searchRecommendation()">
 									<i class="bi bi-search"></i>
 								</span>
 							</div>

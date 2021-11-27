@@ -42,7 +42,7 @@
 						<span *hasPermission="['3', 'A_VII_1']">{{unitObject.name}}</span>
 					</p>
 					<div class="d-flex align-items-center">
-						<button *ngIf="isUnitMain" type="button" title="Danh sách đơn vị được cấp quyền"
+						<button *ngIf="isUnitMain" type="button" title="Cấp quyền tin nhắn thương hiệu"
 							class="btn grd-brown text-dark border-0 mr-3 py-2 px-3 cursor-hand"
 							(click)="onOpenModalListUnit()"><i class="bi bi-person"></i>
 							
@@ -368,7 +368,7 @@
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="min-width: 90%;">
 		<div class="modal-content rounded">
 			<div class="modal-header border-bottom-0">
-				<p class="modal-title h4">Danh sách đơn vị được cấp quyền gửi SMS</p>
+				<p class="modal-title h4">Cấp quyền tin nhắn thương hiệu</p>
 				<button class="close btn-close-modal" data-dismiss="modal">
 					×
 				</button>
