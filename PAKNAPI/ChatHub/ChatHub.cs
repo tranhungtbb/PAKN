@@ -18,9 +18,6 @@ namespace SignalR.Hubs
 {
     public class ChatHub : Hub<IChatHub>
     {
-
-        public readonly static List<User> _Connections = new List<User>();
-        public readonly static List<Room> _Rooms = new List<Room>();
         private readonly static Dictionary<string, string> _ConnectionsMap = new Dictionary<string, string>();
         private readonly IAppSetting _appSetting;
         private readonly IManageBots _bots;
@@ -61,27 +58,36 @@ namespace SignalR.Hubs
 
         public async Task EnableBot(string roomName, bool isEnableBot)
         {
-
+            var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
+            if (room != null)
+            {
+                BotStatus status = isEnableBot == true ? BotStatus.Enable : BotStatus.Disable;
+                await new BOTRoom(_appSetting).BOTRoomEnableBot(roomName, (int)status);
+            }
         }
 
         public async Task SendToRoom(string roomName, string message)
         {
-            var httpContext = Context.GetHttpContext();
+            if (!string.IsNullOrEmpty(message)) {
+                var httpContext = Context.GetHttpContext();
 
-            var senderUserName = GetUserName(httpContext);
-            var senderUserId = await GetUserIdByUserName(httpContext);
-            var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
-            DateTime dateSent = DateTime.Now;
-            Message messageModel = new Message()
-            {
-                Content = Regex.Replace(message, @"(?i)<(?!img|a|/a|/img).*?>", string.Empty),
-                From = senderUserName,
-                FromId = senderUserId.ToString(),
-                To = senderUserName,
-
-                Timestamp = ((DateTimeOffset)dateSent).ToUnixTimeSeconds().ToString()
-            };
-            await Clients.Group(room.Name).ReceiveMessageToGroup(messageModel);
+                var senderUserName = GetUserName(httpContext);
+                var senderUserId = await GetUserIdByUserName(httpContext);
+                var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
+                DateTime dateSent = DateTime.Now;
+                Message messageModel = new Message()
+                {
+                    Content = message,
+                    From = senderUserName,
+                    FromId = senderUserId.ToString(),
+                    To = roomName,
+                    Timestamp = ((DateTimeOffset)dateSent).ToUnixTimeSeconds().ToString(),
+                    Type = MessageTypes.Conversation
+                };
+                var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, senderUserId, room.Id, dateSent);
+                await Clients.Group(room.Name).ReceiveMessageToGroup(messageModel);
+            }
+            
         }
 
         public async Task AnonymousChatWithBot(string message)
@@ -91,26 +97,27 @@ namespace SignalR.Hubs
 
             var id = Context.ConnectionId;
             string roomName = "Room_" + senderUserName;
-            BOTAnonymousUser ress = await new BOTAnonymousUser(_appSetting).BOTAnonymousUserGetByUserName(senderUserName);
+            BOTAnonymousUser senderUser = await new BOTAnonymousUser(_appSetting).BOTAnonymousUserGetByUserName(senderUserName);
             var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
 
-            if (ress != null && room != null)
+            if (senderUser != null && room != null && room.Type == (int)BotStatus.Enable )
             {
 
                 DateTime foo = DateTime.Now;
-                var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, ress.Id, room.Id, foo);
+                var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, senderUser.Id, room.Id, foo);
                 ResultBot res = _bots.Response(senderUserName, message);
                 DateTime foooo = DateTime.Now;
                 double totall = (foooo - foo).TotalMilliseconds;
                 System.Diagnostics.Debug.WriteLine("ChatWithBot 0 " + totall);
                 Message messageModel = new Message()
                 {
-                    Content = Regex.Replace(res.Answer, @"(?i)<(?!img|a|/a|/img).*?>", string.Empty),
+                    Content = res.Answer,
                     From = "Bot",
                     SubTags = (res.SubTags),
                     FromId = "Bot",
-                    To = senderUserName,
-                    Timestamp = ((DateTimeOffset)foo).ToUnixTimeSeconds().ToString()
+                    To = roomName,
+                    Timestamp = ((DateTimeOffset)foo).ToUnixTimeSeconds().ToString(),
+                    Type = MessageTypes.Conversation
                 };
                 await Clients.Group(roomName).ReceiveMessageToGroup(messageModel);
                 var messageIdd = await new BOTMessage(_appSetting).BOTMessageInsertDAO(JsonConvert.SerializeObject(messageModel), 0, room.Id, foo);
@@ -164,9 +171,6 @@ namespace SignalR.Hubs
                 //}
                 //else
                 //{
-
-
-
                 //    List<Room> rooms = _roomRepository.GetRoomsByUserId(user.Id);
                 //    List<Task> joinGroupTasks = new List<Task>();
                 //    foreach (var item in rooms)

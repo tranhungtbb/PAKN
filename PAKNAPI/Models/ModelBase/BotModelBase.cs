@@ -118,6 +118,15 @@ namespace PAKNAPI.Models.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<BOTRoom>("BOT_RoomGetByName", DP)).FirstOrDefault();
 		}
+
+		public async Task<BOTRoom> BOTRoomEnableBot(string roomName,int type)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Type", type);
+			DP.Add("Name", roomName);
+			return (await _sQLCon.ExecuteListDapperAsync<BOTRoom>("BOT_RoomEnableBot", DP)).FirstOrDefault();
+		}
+
 		public async Task<BOTRoom> BOTRoomGetById(int roomId)
 		{
 			DynamicParameters DP = new DynamicParameters();

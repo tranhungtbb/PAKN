@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iis": {
-      "applicationUrl": "http://localhost/PAKNAPI",
+      "applicationUrl": "http://192.168.0.45/PAKNAPI",
       "sslPort": 0
     },
     "iisExpress": {
@@ -14,7 +14,7 @@
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
     "IIS Express": {
-      "commandName": "IISExpress",
+      "commandName": "IIS",
       "launchBrowser": true,
       "launchUrl": "/swagger",
       "environmentVariables": {

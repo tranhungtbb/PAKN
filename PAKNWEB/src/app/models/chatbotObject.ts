@@ -20,6 +20,16 @@ export class BotRoom {
 	name: string
 	id: number
 }
+
+export class BotMessage {
+	content: string
+	timeStamp: string
+	from: string
+	fromId: string
+	subTags: any
+	type: 'Conversation' | 'All'
+}
+
 export class CustomHttpClient extends signalR.DefaultHttpClient {
 	public send(request: signalR.HttpRequest): Promise<signalR.HttpResponse> {
 		request.headers = { ...request.headers, 'Access-Control-Allow-Origin': '*', "'Access-Control-Allow-Credentials": 'true' }
