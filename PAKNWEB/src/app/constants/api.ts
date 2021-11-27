@@ -380,6 +380,8 @@ export class Api {
 	public static StatisticRecommendationProcessingStatus = 'statistic/recommendation-processing-status'
 	public static StatisticRecommendationProcessingResults = 'statistic/recommendation-processing-results'
 	public static StatisticRecommendationProcessingResultsByFeildAndReception = 'statistic/recommendation-processing-results-by-feild-and-reception'
+	public static StatisticRecommendationProcessingResultsByFeild = 'statistic/recommendation-processing-results-by-feild'
+	public static StatisticRecommendationProcessingResultsByUnit = 'statistic/recommendation-processing-results-by-unit'
 
 	//statstic public
 	public static StatisticsByUnitParentId = 'statistic/recommendation-statistic-by-unit-parent'

@@ -410,6 +410,46 @@ namespace PAKNAPI
                         return ms.ToArray();
                     }
                     break;
+                case "processing_results_by_feild":
+                    var queryParamsProcessResultByFeild = JsonConvert.DeserializeObject<ExportRecomdationProcessByFieldsAndRecetion>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.ProcessingResultByFeild.repx");
+                    result = XtraReport.FromStream(resource);
+                    if (queryParamsProcessResultByFeild.FromDate != null)
+                    {
+                        result.Parameters["fromDate"].Value = queryParamsProcessResultByFeild.FromDate;
+                    }
+
+                    if (queryParamsProcessResultByFeild.ToDate != null)
+                    {
+                        result.Parameters["toDate"].Value = queryParamsProcessResultByFeild.ToDate;
+                    }
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
+                        return ms.ToArray();
+                    }
+                    break;
+                case "processing_results_by_unit":
+                    var queryParamsProcessResultByUnit = JsonConvert.DeserializeObject<ExportRecomdationProcessByFieldsAndRecetion>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.ProcessingResultByUnit.repx");
+                    result = XtraReport.FromStream(resource);
+                    if (queryParamsProcessResultByUnit.FromDate != null)
+                    {
+                        result.Parameters["fromDate"].Value = queryParamsProcessResultByUnit.FromDate;
+                    }
+
+                    if (queryParamsProcessResultByUnit.ToDate != null)
+                    {
+                        result.Parameters["toDate"].Value = queryParamsProcessResultByUnit.ToDate;
+                    }
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
+                        return ms.ToArray();
+                    }
+                    break;
             }
             sYSystemLogInsertIN.Status = 0;
             new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);

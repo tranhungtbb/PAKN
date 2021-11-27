@@ -74,7 +74,9 @@
     <None Remove="ExportGrid\BI_Business_List.repx" />
     <None Remove="ExportGrid\BI_Individual_List.repx" />
     <None Remove="ExportGrid\HIS_SystemLog.repx" />
+    <None Remove="ExportGrid\ProcessingResultByFeild.repx" />
     <None Remove="ExportGrid\ProcessingResultByFeildAndReception.repx" />
+    <None Remove="ExportGrid\ProcessingResultByUnit.repx" />
     <None Remove="ExportGrid\recommendation_by_fields.repx" />
     <None Remove="ExportGrid\recommendation_by_GroupWordExport.repx" />
     <None Remove="ExportGrid\recommendation_by_unit.repx" />
@@ -86,6 +88,8 @@
     <None Remove="ExportGrid\UserReadedInvitation_ByInvitationId.repx" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ExportGrid\ProcessingResultByUnit.repx" />
+    <EmbeddedResource Include="ExportGrid\ProcessingResultByFeild.repx" />
     <EmbeddedResource Include="ExportGrid\ProcessingResultByFeildAndReception.repx" />
     <EmbeddedResource Include="ExportGrid\recommendation_by_fields.repx" />
     <EmbeddedResource Include="ExportGrid\recommendation_by_GroupWordExport.repx" />
@@ -129,6 +133,20 @@
     </Compile>
     <Compile Update="ExportGrid\HIS_SystemLog.Designer.cs">
       <DependentUpon>HIS_SystemLog.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\ProcessingResultByUnit.cs">
+      <SubType>Component</SubType>
+      <DependentUpon>ProcessingResultByUnit.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\ProcessingResultByUnit.Designer.cs">
+      <DependentUpon>ProcessingResultByUnit.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\ProcessingResultByFeild.cs">
+      <SubType>Component</SubType>
+      <DependentUpon>ProcessingResultByFeild.repx</DependentUpon>
+    </Compile>
+    <Compile Update="ExportGrid\ProcessingResultByFeild.Designer.cs">
+      <DependentUpon>ProcessingResultByFeild.repx</DependentUpon>
     </Compile>
     <Compile Update="ExportGrid\ProcessingResultByFeildAndReception.cs">
       <DependentUpon>ProcessingResultByFeildAndReception.repx</DependentUpon>
