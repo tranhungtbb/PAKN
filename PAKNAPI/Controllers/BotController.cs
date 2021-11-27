@@ -154,5 +154,22 @@ namespace PAKNAPI.Controllers
                 return new Models.Results.ResultApi { Success = ResultCode.OK , Message = ex.Message};
             }
         }
+
+        [HttpGet]
+        [Route("get-message")]
+        public async Task<object> ChatbotGetByRoomIdDAO(int RoomId, int PageIndex, int PageSize)
+        {
+            try
+            {
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null,null);
+                return new Models.Results.ResultApi { Success = ResultCode.OK, Result = await new ChatbotGetByRoomId(_appSetting).ChatbotGetByRoomIdDAO(RoomId, PageIndex, PageSize) };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                //new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext,null, ex);
+                return new Models.Results.ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
     }
 }

@@ -11,8 +11,8 @@ import { DialogsComponent } from '../dialogs/dialogs.component'
 })
 export class MessageComponent implements AfterViewInit {
 	@Input() message: any = []
-	@Input() dialog_name : any
-	@Input() dialog : any
+	@Input() dialog_name: any
+	@Input() dialog: any
 	@ViewChild('element', { static: false }) el: ElementRef
 	public CONSTANTS = CONSTANTS
 
@@ -20,7 +20,7 @@ export class MessageComponent implements AfterViewInit {
 	statusAcc: boolean = true
 
 	idUser: number
-	constructor(private messageService: MessageService, private dialogService: DialogService, private dialogsComponent : DialogsComponent) {
+	constructor(private messageService: MessageService, private dialogService: DialogService, private dialogsComponent: DialogsComponent) {
 		this.User = JSON.parse(localStorage.loggedinUser)
 		this.idUser = this.User.id
 		//this.classNameMess()
@@ -88,16 +88,19 @@ export class MessageComponent implements AfterViewInit {
 		this.statusAcc = true
 	}
 
-	deleteMessage(id){
+	deleteMessage(id) {
 		const self = this
-		this.messageService.deleteMessage(id)
-		.then(res => {
-			this.dialogsComponent.getMessage()
-		})
-		.catch(err =>{console.log(err)})
+		this.messageService
+			.deleteMessage(id)
+			.then((res) => {
+				this.dialogsComponent.getMessage()
+			})
+			.catch((err) => {
+				console.log(err)
+			})
 	}
 	getShortName(string) {
-		if(!string){
+		if (!string) {
 			return
 		}
 		var names = string.split(' '),
@@ -107,26 +110,23 @@ export class MessageComponent implements AfterViewInit {
 		}
 		return initials
 	}
-	getTimeMessage(date : any){
+	getTimeMessage(date: any) {
 		let result = ''
 		let currentDate = new Date()
 		let sendDate = new Date(date)
-		if(sendDate.getFullYear() != currentDate.getFullYear()){
-			result = String(sendDate.getHours() +':'+ sendDate.getMinutes() + ' ' + sendDate.getDate() + '/' + sendDate.getMonth() + '/' + sendDate.getFullYear())
-		}else{
-			if(sendDate.getMonth() != currentDate.getMonth()){
-				result = String(sendDate.getHours() +':'+ sendDate.getMinutes() + ' ' + sendDate.getDate() + '/' + sendDate.getMonth() + '/' + sendDate.getFullYear())
-			}
-			else{
-				if(sendDate.getDate() != currentDate.getDate()){
-					result = String(sendDate.getHours() +':'+ sendDate.getMinutes() + ' ' + sendDate.getDate() + '/' + sendDate.getMonth() + '/' + sendDate.getFullYear())
-				}
-				else{
-					result = String(sendDate.getHours() +':'+ sendDate.getMinutes())
+		if (sendDate.getFullYear() != currentDate.getFullYear()) {
+			result = String(sendDate.getHours() + ':' + sendDate.getMinutes() + ' ' + sendDate.getDate() + '/' + sendDate.getMonth() + '/' + sendDate.getFullYear())
+		} else {
+			if (sendDate.getMonth() != currentDate.getMonth()) {
+				result = String(sendDate.getHours() + ':' + sendDate.getMinutes() + ' ' + sendDate.getDate() + '/' + sendDate.getMonth() + '/' + sendDate.getFullYear())
+			} else {
+				if (sendDate.getDate() != currentDate.getDate()) {
+					result = String(sendDate.getHours() + ':' + sendDate.getMinutes() + ' ' + sendDate.getDate() + '/' + sendDate.getMonth() + '/' + sendDate.getFullYear())
+				} else {
+					result = String(sendDate.getHours() + ':' + sendDate.getMinutes())
 				}
 			}
 		}
 		return result
 	}
-
 }
