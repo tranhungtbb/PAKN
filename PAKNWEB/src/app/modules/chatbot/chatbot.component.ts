@@ -64,6 +64,7 @@ export class DashboardChatBotComponent implements OnInit {
 
 	handleConnect = async () => {
 		console.log('SignalR ngOnInit 0')
+
 		try {
 			console.log('SignalR 1')
 			this.botService.getRooms({}).subscribe((res) => {

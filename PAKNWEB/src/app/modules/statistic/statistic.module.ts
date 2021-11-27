@@ -19,6 +19,7 @@ import { ProcessingStatusComponent } from './processing-status/processing-status
 import { ProcessingResultsComponent } from './processing-results/processing-results.component'
 import { ProcessingResultsByFeildComponent } from './processing-results-by-feild/processing-results-by-feild.component'
 import { ProcessingResultsByFeildAndReceptionComponent } from './processing-results-by-feild-and-reception/processing-results-by-feild-and-reception.component'
+import { ProcessingResultsByUnitComponent } from './processing-results-by-unit/processing-results-by-unit.component'
 
 @NgModule({
 	declarations: [
@@ -32,7 +33,8 @@ import { ProcessingResultsByFeildAndReceptionComponent } from './processing-resu
 		ProcessingStatusComponent,
 		ProcessingResultsComponent,
 		ProcessingResultsByFeildComponent,
-		ProcessingResultsByFeildAndReceptionComponent
+		ProcessingResultsByFeildAndReceptionComponent,
+		ProcessingResultsByUnitComponent
 	],
 	imports: [CommonModule, StatisticRoutingModule, FormsModule, MultiSelectModule, ReactiveFormsModule, SharedModule, TableModule, BsDatepickerModule.forRoot(), NgSelectModule],
 })

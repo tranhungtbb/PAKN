@@ -19,6 +19,9 @@
     <Compile Update="ExportGrid\ProcessingResultByFeildAndReception.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="ExportGrid\ProcessingResultByUnit.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="ExportGrid\recommendation_by_fields.cs">
       <SubType>Component</SubType>
     </Compile>

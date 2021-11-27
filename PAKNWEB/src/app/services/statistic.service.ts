@@ -42,4 +42,10 @@ export class StatisticService {
 	getProcessingResultByFeildAndReception(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationProcessingResultsByFeildAndReception)
 	}
+	getProcessingResultByFeild(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationProcessingResultsByFeild)
+	}
+	getProcessingResultByUnit(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticRecommendationProcessingResultsByUnit)
+	}
 }

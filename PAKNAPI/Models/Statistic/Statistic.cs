@@ -430,4 +430,90 @@ namespace PAKNAPI.Models.Statistic
 			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationProcessStatusByFeildAndReception>("[TK_RecommendationProcessByFeildAndReception]", DP)).ToList();
 		}
 	}
+
+	public class StatisticRecommendationProcessStatusByFeild
+	{
+		private SQLCon _sQLCon;
+		public int? STT { get; set; }
+		public string FeildName { get; set; }
+		public int? Received { get; set; }
+		public int? RecommendationPublicService { get; set; }
+		public int? RecommendationSocioeconomic { get; set; }
+		public int? ProcessedTotal { get; set; }
+		public int? ProcessedOnTime { get; set; }
+		public int? ProcessedOutOfDate { get; set; }
+		public int? ProcessTotal { get; set; }
+		public int? ProcessOnTime { get; set; }
+		public int? ProcessOutOfDate { get; set; }
+		public int? Evaluate { get; set; }
+		public int? Like { get; set; }
+		public int? Dislike { get; set; }
+		public int? Accept { get; set; }
+		public int? PublicQuantity { get; set; }
+		public long? RowNumber { get; set; }
+
+		public StatisticRecommendationProcessStatusByFeild(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public StatisticRecommendationProcessStatusByFeild()
+		{
+		}
+
+		public async Task<List<StatisticRecommendationProcessStatusByFeild>> StatisticRecommendationProcessStatusByFeildDAO(DateTime? FromDate, DateTime? ToDate, int? UnitId, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("FromDate", FromDate);
+			DP.Add("ToDate", ToDate);
+			DP.Add("UnitProcessId", UnitId);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationProcessStatusByFeild>("[TK_RecommendationProcessByFeild]", DP)).ToList();
+		}
+	}
+
+	public class StatisticRecommendationProcessStatusByUnit
+	{
+		private SQLCon _sQLCon;
+		public int? STT { get; set; }
+		public string UnitName { get; set; }
+		public int? Received { get; set; }
+		public int? RecommendationPublicService { get; set; }
+		public int? RecommendationSocioeconomic { get; set; }
+		public int? ProcessedTotal { get; set; }
+		public int? ProcessedOnTime { get; set; }
+		public int? ProcessedOutOfDate { get; set; }
+		public int? ProcessTotal { get; set; }
+		public int? ProcessOnTime { get; set; }
+		public int? ProcessOutOfDate { get; set; }
+		public int? Evaluate { get; set; }
+		public int? Like { get; set; }
+		public int? Dislike { get; set; }
+		public int? Accept { get; set; }
+		public int? PublicQuantity { get; set; }
+		public long? RowNumber { get; set; }
+
+		public StatisticRecommendationProcessStatusByUnit(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public StatisticRecommendationProcessStatusByUnit()
+		{
+		}
+
+		public async Task<List<StatisticRecommendationProcessStatusByUnit>> StatisticRecommendationProcessStatusByUnitDAO(DateTime? FromDate, DateTime? ToDate, int? UnitId, int? PageSize, int? PageIndex)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("FromDate", FromDate);
+			DP.Add("ToDate", ToDate);
+			DP.Add("UnitProcessId", UnitId);
+			DP.Add("PageSize", PageSize);
+			DP.Add("PageIndex", PageIndex);
+
+			return (await _sQLCon.ExecuteListDapperAsync<StatisticRecommendationProcessStatusByUnit>("[TK_RecommendationProcessByUnit]", DP)).ToList();
+		}
+	}
 }
