@@ -85,7 +85,7 @@
 					<div class="card-body contacts_body p-0">
 						<ul class="contacts">
 							<li *ngFor="let room of rooms" class="dz-chat-user">
-								<div class="d-flex" (click)="resetGetMessage(room.id)">
+								<div class="d-flex" (click)="resetGetMessage(room.id,room.name)">
 									<div class="img_cont">
 										<i _ngcontent-sbt-c2="" class="bi bi-person-fill cl-brown" style="font-size: 24px"></i>
 									</div>
@@ -114,8 +114,8 @@
 									</g>
 								</svg></a>
 							<ul class="dropdown-menu dropdown-menu-right">
-								<li class="dropdown-item" click="enabledBot()"><i class="fa fa-user-circle text-primary mr-2"></i> Bật bot</li>
-								<li class="dropdown-item" click="disabedBot()"><i class="fa fa-users text-primary mr-2"></i> Tắt bot</li>
+								<li class="dropdown-item" (click)="enabledBot()"><i class="fa fa-user-circle text-primary mr-2"></i> Bật bot</li>
+								<li class="dropdown-item" (click)="disabedBot()"><i class="fa fa-users text-primary mr-2"></i> Tắt bot</li>
 							</ul>
 						</div>
 					</div>
@@ -136,12 +136,12 @@
 						</ng-container>
 					</div>
 					<div class="card-footer type_msg">
-						<form class="input-group" (ngSubmit)="sendMessage()">
+						<div class="input-group"  (click)="sendMessage()">
 							<textarea class="form-control" placeholder="Type your message..." name="newMessage" [(ngModel)]="newMessage"></textarea>
 							<div class="input-group-append" type="button">
 								<button type="button" class="btn btn-primary"><i class="fa fa-location-arrow"></i></button>
 							</div>
-						</form>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -1,13 +1,17 @@
 ﻿using Bugsnag;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
+using PAKNAPI.Chat;
+using PAKNAPI.Chat.ResponseModel;
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
 using PAKNAPI.Models.Chatbot;
 using PAKNAPI.Models.ModelBase;
 using PAKNAPI.Models.Results;
 using PAKNAPI.Models.SyncData;
+using SignalR.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,14 +26,17 @@ namespace PAKNAPI.Controllers
 
         private readonly IAppSetting _appSetting;
         private readonly IClient _bugsnag;
+        private readonly IHubContext<ChatHub, IChatHub> _hubContext;
 
-        public BotController(IAppSetting appSetting, IClient bugsnag) {
+        public BotController(IAppSetting appSetting, IClient bugsnag, IHubContext<ChatHub, IChatHub> hubContext)
+        {
             this._appSetting = appSetting;
             this._bugsnag = bugsnag;
+            _hubContext = hubContext;
         }
 
-        
-            [HttpGet]
+
+        [HttpGet]
         [Route("rooms")]
         public async Task<ActionResult<object>> BOTRoomGetAllOnPageBase(int? PageSize, int? PageIndex)
         {
@@ -56,9 +63,12 @@ namespace PAKNAPI.Controllers
         /// create room
         /// </summary>
         /// <returns></returns>
-        [Route("bot-create-room")]
+        /// 
         [HttpPost]
-        public async Task<ActionResult<object>> CreateRoom(CreateRoomBot roomBot) {
+        [Route("bot-create-room")]
+
+        public async Task<ActionResult<object>> CreateRoom([FromBody] CreateRoomBot roomBot)
+        {
             try
             {
 
@@ -74,42 +84,39 @@ namespace PAKNAPI.Controllers
                     {
                         // create room
                         var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
-                        if (room.Id > 0)
+                        if (room  !=null && room.Id > 0)
                         {
 
                             SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
-                            //var botRoomUserLink = new BOTRoomUserLink();
-                            //botRoomUserLink.AnonymousId = id;
-                            //botRoomUserLink.RoomId = room.Id;
-                            //botRoomUserLink.UserId = dataMain.Id;
-                            //await new BOTRoomUserLink(_appSetting).BOTRoomUserLinkInsertDAO(botRoomUserLink);
-
                             IDictionary<string, string> json = new Dictionary<string, string>
                         {
                             {"AnonymousId",  id.ToString()},
                             {"AnonymousName", guid},
                             {"RoomId", room.Id.ToString()},
+                             {"RoomName", roomName}
                         };
 
                             return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
                         }
                         else
                         {
-                            var roomId = Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom(roomName, id, 1))).ToString());
+                            var roomId = Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom(roomName, id, (int)BotStatus.Enable))).ToString());
                             SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
-                            //var botRoomUserLink = new BOTRoomUserLink();
-                            //botRoomUserLink.AnonymousId = id;
-                            //botRoomUserLink.RoomId = roomId;
-                            //botRoomUserLink.UserId = dataMain.Id;
-                            //await new BOTRoomUserLink(_appSetting).BOTRoomUserLinkInsertDAO(botRoomUserLink);
 
                             IDictionary<string, string> json = new Dictionary<string, string>
                         {
                             {"AnonymousId",  id.ToString()},
                             {"AnonymousName", guid},
                             {"RoomId", roomId.ToString()},
+                             {"RoomName", roomName}
                         };
+                            Message messageModel = new Message()
+                            {
+                               
+                                Type = MessageTypes.All
+                            };
 
+                            _hubContext.Clients.All.BroadcastMessage(messageModel);
                             return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
                         }
 
@@ -126,13 +133,9 @@ namespace PAKNAPI.Controllers
                     {
                         // create room
 
-                        var roomId = Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom(roomName, id, 1))).ToString());
+                        var roomId = Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom(roomName, id, (int)BotStatus.Enable))).ToString());
                         SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
-                        //var botRoomUserLink = new BOTRoomUserLink();
-                        //botRoomUserLink.AnonymousId = id;
-                        //botRoomUserLink.RoomId = roomId;
-                        //botRoomUserLink.UserId = dataMain.Id;
-                        //await new BOTRoomUserLink(_appSetting).BOTRoomUserLinkInsertDAO(botRoomUserLink);
+
 
                         IDictionary<string, string> json = new Dictionary<string, string>
                         {
@@ -140,7 +143,13 @@ namespace PAKNAPI.Controllers
                             {"AnonymousName", guid},
                             {"RoomId", roomId.ToString()},
                         };
+                        Message messageModel = new Message()
+                        {
 
+                            Type = MessageTypes.All
+                        };
+
+                        _hubContext.Clients.All.BroadcastMessage(messageModel);
                         return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
                     }
                     else
@@ -150,8 +159,9 @@ namespace PAKNAPI.Controllers
                 }
 
             }
-            catch (Exception ex) {
-                return new Models.Results.ResultApi { Success = ResultCode.OK , Message = ex.Message};
+            catch (Exception ex)
+            {
+                return new Models.Results.ResultApi { Success = ResultCode.OK, Message = ex.Message };
             }
         }
 
