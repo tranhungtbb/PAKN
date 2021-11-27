@@ -75,8 +75,8 @@
 							<ng-template pTemplate="header">
 								<tr>
 									<th rowspan="6" class="text-center middle" style="width: 50px;">STT</th>
-									<th rowspan="6" colspan="1" class="text-center middle text-uppercase">Lĩnh vực</th>
-									<th rowspan="2" colspan="5" class="text-center middle text-uppercase">Số PAKN được tiếp nhận</th>
+									<th rowspan="6" colspan="1" class="text-center middle text-uppercase">Đơn vị xử lý</th>
+									<th rowspan="2" colspan="3" class="text-center middle text-uppercase">Số PAKN được tiếp nhận</th>
 									<th rowspan="2" colspan="6" class="text-center middle text-uppercase">Kết quả xử lý PAKN</th>
 									<th rowspan="3" colspan="4" class="text-center middle text-uppercase">Đánh giá</th>
 									<th rowspan="6" colspan="1" class="text-center middle text-uppercase" style="width: 100px;">Số lượng PAKN Đăng tải công khai kết quả xử lý</th>
@@ -84,15 +84,13 @@
 								<tr></tr>
 								<tr>
 									<th rowspan="5" colspan="1" class="text-center middle" style="width: 60px;">Tổng số</th>
-									<th rowspan="1" colspan="4" class="text-center middle">Chia ra</th>
+									<th rowspan="1" colspan="2" class="text-center middle">Chia ra</th>
 									<th rowspan="1" colspan="3" class="text-center middle">Đã xử lý</th>
 									<th rowspan="1" colspan="3" class="text-center middle">Đang xử lý</th>
 								</tr>
 								<tr>
-									<th rowspan="2" colspan="1" class="text-center middle"  style="width: 60px;">Qua điện thoại</th>
-									<th rowspan="2" colspan="1" class="text-center middle"  style="width: 60px;">Qua email, Văn bản</th>
-									<th rowspan="2" colspan="1" class="text-center middle"  style="width: 60px;">Qua web</th>
-									<th rowspan="2" colspan="1" class="text-center middle"  style="width: 60px;">Qua app</th>
+									<th rowspan="2" colspan="1" class="text-center middle"  style="width: 60px;">PAKN về dịch vụ công</th>
+									<th rowspan="2" colspan="1" class="text-center middle"  style="width: 60px;">PAKN về KTXH</th>
 									<th rowspan="2" colspan="1" class="text-center middle" style="width: 60px;">Tổng số</th>
 									<th rowspan="2" colspan="1" class="text-center middle" style="width: 60px;">Đúng hạn</th>
 									<th rowspan="2" colspan="1" class="text-center middle" style="width: 60px;">Quá hạn</th>
@@ -111,55 +109,50 @@
 								<tr>
 									<td class="text-center">{{item.stt}}</td>
 									<td>
-										<p class="text-2line mb-0">{{item.feildName}}</p>
+										<p class="text-2line mb-0">{{item.unitName}}</p>
 									</td>
 									<td>
-										<p class="mb-0 text-right">{{item.received}}</p>
+										<p class="mb-0 text-right">{{item.received | number}}</p>
 									</td>
 									<td>
-										<p class="mb-0 text-right">{{item.recommendationMobile}}</p>
+										<p class="mb-0 text-right">{{item.recommendationPublicService | number}}</p>
 									</td>
 									<td>
-										<p class="mb-0 text-right">{{item.recommendationEmail}}</p>
+										<p class="mb-0 text-right">{{item.recommendationSocioeconomic | number}}</p>
 									</td>
 									<td>
-										<p class="mb-0 text-right">{{item.recommendationWeb}}</p>
+										<p class="mb-0 text-right">{{item.processedTotal | number}}</p>
 									</td>
 									<td>
-										<p class="mb-0 text-right">{{item.recommendationApp}}</p>
-									</td>
-									<td>
-										<p class="mb-0 text-right">{{item.processedTotal}}</p>
-									</td>
-									<td>
-										<p class="mb-0 text-right">{{item.processedOnTime}}</p>
+										<p class="mb-0 text-right">{{item.processedOnTime | number}}</p>
 									</td>	
 									<td>
-										<p class="mb-0 text-right">{{item.processedOutOfDate}}</p>
+										<p class="mb-0 text-right">{{item.processedOutOfDate | number}}</p>
 									</td>	
 									<td>
-										<p class="mb-0 text-right">{{item.processTotal}}</p>
+										<p class="mb-0 text-right">{{item.processTotal | number}}</p>
 									</td>	
 									<td>
-										<p class="mb-0 text-right">{{item.processOnTime}}</p>
+										<p class="mb-0 text-right">{{item.processOnTime | number}}</p>
 									</td>	
 									<td>
-										<p class="mb-0 text-right">{{item.processOutOfDate}}</p>
+										<p class="mb-0 text-right">{{item.processOutOfDate | number}}</p>
 									</td>	
 									<td>
-										<p class="mb-0 text-right">{{item.evaluate}}</p>
+										<p class="mb-0 text-right">{{item.evaluate | number}}</p>
 									</td>
 									<td>
-										<p class="mb-0 text-right">{{item.like}}</p>
+										<p class="mb-0 text-right">{{item.like | number}}</p>
 									</td>
 									<td>
-										<p class="mb-0 text-right">{{item.dislike}}</p>
+										<p class="mb-0 text-right">{{item.accept | number}}</p>
 									</td>
 									<td>
-										<p class="mb-0 text-right">{{item.accept}}</p>
+										<p class="mb-0 text-right">{{item.dislike | number}}</p>
 									</td>
+								
 									<td>
-										<p class="mb-0 text-right">{{item.publicQuantity}}</p>
+										<p class="mb-0 text-right">{{item.publicQuantity | number}}</p>
 									</td>
 								</tr>
 							</ng-template>

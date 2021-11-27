@@ -178,6 +178,12 @@ export class ProcessingResultsByUnitComponent implements OnInit {
 
 	onExport() {
 		let passingObj: any = {}
+		if(this.fromDate){
+			this.fromDate.setHours(0,0,0,0);
+		}
+		if(this.toDate){
+			this.toDate.setHours(0,0,0,0);
+		}
 		passingObj.FromDate = this.fromDate;
 		passingObj.ToDate = this.toDate;
 		this._shareData.setobjectsearch(passingObj)

@@ -10,9 +10,9 @@
 
 namespace PAKNAPI.ExportGrid {
     
-    public partial class ProcessingResultByFeildAndReception : DevExpress.XtraReports.UI.XtraReport {
+    public partial class ProcessingResultByUnit : DevExpress.XtraReports.UI.XtraReport {
         private void InitializeComponent() {
-            DevExpress.XtraReports.ReportInitializer reportInitializer = new DevExpress.XtraReports.ReportInitializer(this, "PAKNAPI.ExportGrid.ProcessingResultByFeildAndReception.repx");
+            DevExpress.XtraReports.ReportInitializer reportInitializer = new DevExpress.XtraReports.ReportInitializer(this, "PAKNAPI.ExportGrid.ProcessingResultByUnit.repx");
 
             // Controls
             this.topMarginBand1 = reportInitializer.GetControl<DevExpress.XtraReports.UI.TopMarginBand>("topMarginBand1");
@@ -24,8 +24,6 @@ namespace PAKNAPI.ExportGrid {
             this.tableRow6 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableRow>("tableRow6");
             this.tableCell14 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell14");
             this.tableCell44 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell44");
-            this.tableCell46 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell46");
-            this.tableCell47 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell47");
             this.tableCell49 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell49");
             this.tableCell50 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell50");
             this.tableCell55 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell55");
@@ -64,8 +62,6 @@ namespace PAKNAPI.ExportGrid {
             this.tableCell11 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell11");
             this.tableCell12 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell12");
             this.tableCell18 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell18");
-            this.tableCell21 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell21");
-            this.tableCell15 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell15");
             this.tableCell24 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell24");
             this.tableCell27 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell27");
             this.tableCell30 = reportInitializer.GetControl<DevExpress.XtraReports.UI.XRTableCell>("tableCell30");
@@ -94,8 +90,6 @@ namespace PAKNAPI.ExportGrid {
         private DevExpress.XtraReports.UI.XRTableRow tableRow6;
         private DevExpress.XtraReports.UI.XRTableCell tableCell14;
         private DevExpress.XtraReports.UI.XRTableCell tableCell44;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell46;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell47;
         private DevExpress.XtraReports.UI.XRTableCell tableCell49;
         private DevExpress.XtraReports.UI.XRTableCell tableCell50;
         private DevExpress.XtraReports.UI.XRTableCell tableCell55;
@@ -134,8 +128,6 @@ namespace PAKNAPI.ExportGrid {
         private DevExpress.XtraReports.UI.XRTableCell tableCell11;
         private DevExpress.XtraReports.UI.XRTableCell tableCell12;
         private DevExpress.XtraReports.UI.XRTableCell tableCell18;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell21;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell15;
         private DevExpress.XtraReports.UI.XRTableCell tableCell24;
         private DevExpress.XtraReports.UI.XRTableCell tableCell27;
         private DevExpress.XtraReports.UI.XRTableCell tableCell30;
