@@ -2206,10 +2206,10 @@ namespace PAKNAPI.Controller
                         await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
 
                         //người gửi PAKN
-                        notification.ReceiveId = sender.Id;
-                        notification.ReceiveOrgId = null;
-                        notification.Content = "Lãnh đạo đơn vị " + unitReceive.Name + " đã từ chối phê duyệt PAKN số " + recommendation.Code + " của bạn";
-                        await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
+                        //notification.ReceiveId = sender.Id;
+                        //notification.ReceiveOrgId = null;
+                        //notification.Content = "Lãnh đạo đơn vị " + unitReceive.Name + " đã từ chối phê duyệt PAKN số " + recommendation.Code + " của bạn";
+                        //await new SYNotification(_appSetting, _configuration).InsertNotification(notification);
 
                         break;
                     case STATUS_RECOMMENDATION.FINISED: //10 Đã giải quyết

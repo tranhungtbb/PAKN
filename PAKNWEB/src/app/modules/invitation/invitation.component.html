@@ -303,11 +303,11 @@
 									<strong>Ngày tạo</strong>
 									
 								</p>
-								<div class="dropdown bootstrap-select form-control form-control-sm">
+								<div class="dropdown bootstrap-select form-control form-control-sm ps-relative">
 									<input class="form-control form-control-sm" placeholder="Chọn ngày" bsDatepicker #n="bsDatepicker" maxlength="10" [(ngModel)]="hisCreateDate"
 										appBsDatepickerInvalid (bsValueChange)="sendDateChange($event)"
 										[bsConfig]="{dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue', adaptivePosition: true}" />
-									<div class="input-group-addon">
+									<div class="input-group-addon ps-absolute" style="top: 5px; right: 10px;">
 										<i class="far fa-calendar-alt" (click)="n.toggle()" [attr.aria-expanded]="n.isOpen"></i>
 									</div>
 								</div>
@@ -335,10 +335,10 @@
 							</td>
 
 							<td>
-								<p>{{item.createName}}</p>
+								<p class="mb-0">{{item.createName}}</p>
 							</td>
 							<td>
-								<p>{{item.createdDate | date : 'dd/MM/yyyy HH:mm'}}</p>
+								<p class="mb-0">{{item.createdDate | date : 'dd/MM/yyyy HH:mm'}}</p>
 							</td>
 							<td>
 								<span type="button" *ngIf="item.status == 0" class="badge rounded-pill bg-blue2">Đã khởi tạo</span>

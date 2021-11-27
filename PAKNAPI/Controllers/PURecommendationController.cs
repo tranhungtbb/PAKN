@@ -84,7 +84,7 @@ namespace PAKNAPI.ControllerBase
 
 				if (rsSYConfigGetByType == null || rsSYConfigGetByType.Content == "1") {
 
-					var rsPURecommendationOnPage = await new PURecommendation(_appSetting).PURecommendationAllOnPage("", null, null, 10, 1);
+					var rsPURecommendationOnPage = await new PURecommendation(_appSetting).PURecommendationAllOnPage("", null, null, 20, 1);
 					json = new Dictionary<string, object>
 					{
 						{"IsHomeDefault", true},

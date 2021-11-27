@@ -36,11 +36,15 @@ export class ReflectionsRecommendationsComponent implements OnInit {
 		private _toas: ToastrService
 	) {}
 
-	ngOnInit() {
-		this.activatedRoute.params.subscribe((params) => {
+	async ngOnInit() {
+		await this.activatedRoute.params.subscribe((params) => {
 			let s = +params['field']
 			if (s) {
 				this.field = s
+			}
+			let key = params['keysearch']
+			if(key){
+				this.KeySearch = key
 			}
 		})
 

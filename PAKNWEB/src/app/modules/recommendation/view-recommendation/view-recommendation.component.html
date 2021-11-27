@@ -331,7 +331,7 @@
 				<div class="hashtags-box border-bottom px-4 ">
 					<div class="form-row align-items-end">
 						<div class="col form-group pr-0">
-							<label class="mb-1"><i class="bi bi-tags mr-2"></i>Hashtags <span class="cl-red">(*)</span></label>
+							<label class="mb-1"><i class="bi bi-tags mr-2"></i>Hashtags</label>
 							<ng-select class="form-control" [items]="lstHashtag" bindValue="value" bindLabel="text" (keydown.enter)="onCreateHashtag($event)"
 								[(ngModel)]="hashtagId" [virtualScroll]="true">
 								<ng-template ng-option-tmp let-item="item">
@@ -371,8 +371,8 @@
 						</li>
 						<li class="list-group-item">
 							Đối tượng:
-							<strong *ngIf="model.typeObject == 1" class="h4 font-weight-bold">Người dân</strong>
-							<strong *ngIf="model.typeObject == 2" class="h4 font-weight-bold">Doanh nghiệp</strong>
+							<strong *ngIf="model.typeObject == 2" class="h4 font-weight-bold">Người dân</strong>
+							<strong *ngIf="model.typeObject == 3" class="h4 font-weight-bold">Doanh nghiệp</strong>
 						</li>
 						<li class="list-group-item">
 							Lĩnh vực: <strong class="h4 font-weight-bold">{{model.fieldName}}</strong>

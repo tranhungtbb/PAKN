@@ -25,10 +25,10 @@ export class ProcessingResultsByFeildComponent implements OnInit {
 
 	// list active status
 	listQuarter: any = [
-		{ value: 1, text: 'Quý 1' },
-		{ value: 2, text: 'Quý 2' },
-		{ value: 3, text: 'Quý 3' },
-		{ value: 4, text: 'Quý 4' },
+		{ value: 1, text: 'Quý I' },
+		{ value: 2, text: 'Quý II' },
+		{ value: 3, text: 'Quý III' },
+		{ value: 4, text: 'Quý IV' },
 	]
 	year: number
 	quarter: number
@@ -36,6 +36,8 @@ export class ProcessingResultsByFeildComponent implements OnInit {
 	toDate: Date
 	totalRecords : number
 	listData : any [] = []
+	pageIndex: number = 1
+	pageSize: number = 10
 
 	maxDateValue = new Date()
 	@ViewChild('myCanvas', { static: false }) canvas: any
@@ -110,9 +112,15 @@ export class ProcessingResultsByFeildComponent implements OnInit {
 		let request = {
 			FromDate: this.fromDate == null ? '' : this.fromDate.toDateString(),
 			ToDate: this.toDate == null ? '' : this.toDate.toDateString(),
+			PageSize: this.pageSize,
+			PageIndex: this.pageIndex
 		}
-		this._service.getProcessingResult(request).subscribe((response) => {
+		this._service.getProcessingResultByFeild(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
+				this.listData = response.result;
+				if(response.result && response.result.length > 0){
+					this.totalRecords = response.result[0].rowNumber;
+				}
 			} else {
 			}
 		}),
@@ -160,5 +168,26 @@ export class ProcessingResultsByFeildComponent implements OnInit {
 			return date
 		}
 		return null
+	}
+
+	onPageChange(event: any) {
+		this.pageSize = event.rows
+		this.pageIndex = event.first / event.rows + 1
+		this.getList()
+	}
+
+	onExport() {
+		let passingObj: any = {}
+		if(this.fromDate){
+			this.fromDate.setHours(0,0,0,0);
+		}
+		if(this.toDate){
+			this.toDate.setHours(0,0,0,0);
+		}
+		passingObj.FromDate = this.fromDate;
+		passingObj.ToDate = this.toDate;
+		this._shareData.setobjectsearch(passingObj)
+		this._shareData.sendReportUrl = 'processing_results_by_feild?' + JSON.stringify(passingObj)
+		this._router.navigate(['quan-tri/xuat-file'])
 	}
 }
