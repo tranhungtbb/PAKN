@@ -224,3 +224,41 @@ img {
 .message {
 	list-style-type: none;
 }
+
+.chatbox {
+	top: 0px;
+	height: calc(100vh - 70px);
+	width: 100%;
+	display: block;
+	position: relative;
+	right: 0;
+	padding: 15px;
+}
+
+.card.contacts_card {
+	width: 300px;
+	margin-right: 15px;
+	height: 100%;
+}
+
+.card.chat {
+	width: calc(100% - 300px);
+}
+
+.chatbox .contacts_body {
+	height: calc(100vh - 155px);
+	overflow: auto;
+}
+
+.chatbox .msg_card_body {
+	height: calc(100vh - 228px);
+	overflow: auto;
+}
+
+.chatbox .type_msg {
+	background: #fff;
+}
+
+.chatbox .type_msg .form-control {
+	background: transparent;
+}

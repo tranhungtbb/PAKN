@@ -77,7 +77,8 @@ namespace SignalR.Hubs
                 };
                 //var config = (await new SYConfig(_appSetting).SYConfigGetByTypeDAO(TYPECONFIG.CONFIG_EMAIL));
 
-                await Clients.Caller.ReceiveMessageToGroup(messageViewModel);
+                //await Clients.Caller.ReceiveMessageToGroup(messageViewModel);
+                await Clients.All.ReceiveMessageToGroup(messageViewModel);
                 var messageIdd = await new BOTMessage(_appSetting).BOTMessageInsertDAO(JsonConvert.SerializeObject(messageViewModel), 0, room.Id, foo);
                 DateTime fooo = DateTime.Now;
                 double total = (fooo - foo).TotalMilliseconds;

@@ -379,6 +379,7 @@ export class Api {
 	public static StatisticRecommendationByGroupWordDetail = 'statistic/recommendation-by-group-word-detail'
 	public static StatisticRecommendationProcessingStatus = 'statistic/recommendation-processing-status'
 	public static StatisticRecommendationProcessingResults = 'statistic/recommendation-processing-results'
+	public static StatisticRecommendationProcessingResultsByFeildAndReception = 'statistic/recommendation-processing-results-by-feild-and-reception'
 
 	//statstic public
 	public static StatisticsByUnitParentId = 'statistic/recommendation-statistic-by-unit-parent'
@@ -414,4 +415,5 @@ export class Api {
 
 	//chatbot
 	public static BotRooms = 'bot/rooms'
+	public static GetMessages = 'bot/get-message'
 }

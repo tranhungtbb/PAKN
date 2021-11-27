@@ -402,6 +402,24 @@ namespace PAKNAPI.Controllers
 			}
 		}
 
+		[HttpGet]
+		[Authorize("ThePolicy")]
+		[Route("recommendation-processing-results-by-feild-and-reception")]
+		public async Task<ActionResult<object>> RecommendationProcessResultsByFeildAndReception(DateTime? FromDate, DateTime? ToDate, int? PageSize, int? PageIndex)
+		{
+			try
+			{
+				var unitId = new LogHelper(_appSetting).GetUnitIdFromRequest(HttpContext);
+				List<StatisticRecommendationProcessStatusByFeildAndReception> result = await new StatisticRecommendationProcessStatusByFeildAndReception(_appSetting).StatisticRecommendationProcessStatusByFeildAndReceptionDAO(FromDate, ToDate, unitId, PageSize, PageIndex);
 
+				return new ResultApi { Success = ResultCode.OK, Result = result };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
 	}
 }

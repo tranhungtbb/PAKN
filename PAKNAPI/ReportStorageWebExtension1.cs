@@ -390,6 +390,26 @@ namespace PAKNAPI
                         return ms.ToArray();
                     }
                     break;
+                case "processing_results_by_feild_and_reception":
+                    var queryParamsProcessResultByFeildAndReception = JsonConvert.DeserializeObject<ExportRecomdationProcessByFieldsAndRecetion>(objectReport, jss);
+                    resource = assembly.GetManifestResourceStream("PAKNAPI.ExportGrid.ProcessingResultByFeildAndReception.repx");
+                    result = XtraReport.FromStream(resource);
+                    if (queryParamsProcessResultByFeildAndReception.FromDate != null)
+                    {
+                        result.Parameters["fromDate"].Value = queryParamsProcessResultByFeildAndReception.FromDate;
+                    }
+
+                    if (queryParamsProcessResultByFeildAndReception.ToDate != null)
+                    {
+                        result.Parameters["toDate"].Value = queryParamsProcessResultByFeildAndReception.ToDate;
+                    }
+                    result.SaveLayoutToXml(ms);
+                    if (ms != null)
+                    {
+                        new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);
+                        return ms.ToArray();
+                    }
+                    break;
             }
             sYSystemLogInsertIN.Status = 0;
             new SYLOGInsert(_appSetting).SYLOGInsertDAO(sYSystemLogInsertIN);

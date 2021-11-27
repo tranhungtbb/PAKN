@@ -1,3 +1,4 @@
+import * as signalR from '@aspnet/signalr'
 export class ChatbotObject {
 	constructor() {
 		this.id = 0
@@ -18,4 +19,10 @@ export class ChatbotObject {
 export class BotRoom {
 	name: string
 	id: number
+}
+export class CustomHttpClient extends signalR.DefaultHttpClient {
+	public send(request: signalR.HttpRequest): Promise<signalR.HttpResponse> {
+		request.headers = { ...request.headers, 'Access-Control-Allow-Origin': '*', "'Access-Control-Allow-Credentials": 'true' }
+		return super.send(request)
+	}
 }
