@@ -2105,13 +2105,31 @@ table thead .form-control ng-select {
 	border-radius: 50%;
 	z-index: 1000;
 }
-
 .call-content {
 	width: 48px;
 	height: 48px;
 	background: #1673d8;
 	border-radius: 50%;
 }
+
+
+.message-now {
+	position: fixed;
+	width: 68px;
+	height: 68px;
+	right: 30px;
+	bottom: 105px;
+	background: #cde2fd;
+	border-radius: 50%;
+	z-index: 1000;
+}
+.message-content {
+	width: 48px;
+	height: 48px;
+	background: #1673d8;
+	border-radius: 50%;
+}
+
 
 .btn-clear-input {
 	z-index: 100;

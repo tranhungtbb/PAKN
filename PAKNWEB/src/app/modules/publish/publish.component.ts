@@ -38,7 +38,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	indexSettingObj: any = new IndexSettingObjet()
 
 	subMenu: any[] = []
-
+	textMessage = null;
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
@@ -170,4 +170,47 @@ export class PublishComponent implements OnInit, OnChanges {
 		}
 		return false
 	}
+
+	showHideMessage(){
+		var message = document.getElementById("message");
+		if(message){
+			if(message.classList.contains("show")){
+				message.classList.remove("show")
+				message.style.display ="none"
+			}else {
+				message.classList.add("show");
+				message.style.display ="block"
+			};
+		}
+	}
+
+	onKeyDown(event){
+		console.log(event);
+    if (event.shiftKey && event.key === 'Enter') {
+       var text = document.getElementById("type_msg");
+      //  text.value += '\n';
+    } else if (event.key === 'Enter') {
+       event.preventDefault();
+			 console.log(this.textMessage);
+			this.sendMessageToApi();
+    }
+	}
+
+	onSend(){
+		console.log(this.textMessage);
+	
+		this.sendMessageToApi();
+	}
+
+	sendMessageToApi(){
+		if(this.textMessage){
+			this.textMessage = this.textMessage.trim();
+		}
+
+		setTimeout(() => {
+			$('#type_msg').focus()
+		}, 100)
+		this.textMessage = null;
+	}
+
 }
