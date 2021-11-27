@@ -111,12 +111,12 @@ namespace PAKNAPI.Models.ModelBase
 
 			return await _sQLCon.ExecuteScalarDapperAsync<decimal?>("BOT_RoomInsert", DP);
 		}
-		public async Task<BOTAnonymousUser> BOTRoomGetByName(string roomName)
+		public async Task<BOTRoom> BOTRoomGetByName(string roomName)
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("Name", roomName);
 
-			return (await _sQLCon.ExecuteListDapperAsync<BOTAnonymousUser>("BOT_RoomGetByName", DP)).FirstOrDefault();
+			return (await _sQLCon.ExecuteListDapperAsync<BOTRoom>("BOT_RoomGetByName", DP)).FirstOrDefault();
 		}
 		
 	}
@@ -145,11 +145,20 @@ namespace PAKNAPI.Models.ModelBase
 		{
 			DynamicParameters DP = new DynamicParameters();
 			DP.Add("RoomId", _bOTRoomUserLink.RoomId);
-			//DP.Add("AnonymousId", _bOTRoomUserLink.AnonymousId);
 			DP.Add("UserId", _bOTRoomUserLink.UserId);
 
 			return (await _sQLCon.ExecuteNonQueryDapperAsync("[BOT_RoomUserLinkInsert]", DP));
 		}
+
+		public async Task<int> BOTCheckUserExistInRoom(int userId,int roomId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("UserId", userId);
+			DP.Add("RoomId", roomId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<int>("BOT_CheckUserExistInRoom", DP)).FirstOrDefault();
+		}
+
 	}
 
 

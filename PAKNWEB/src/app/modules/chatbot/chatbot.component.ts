@@ -6,6 +6,8 @@ import { ChatBotService } from './chatbot.service'
 //import axios from 'axios'
 import * as signalR from '@aspnet/signalr/'
 import { AppSettings } from 'src/app/constants/app-setting'
+import * as uuid from 'uuid'
+import { UserInfoStorageService } from 'src/app/commons/user-info-storage.service'
 
 @Component({
 	selector: 'app-dashboard',
@@ -13,26 +15,18 @@ import { AppSettings } from 'src/app/constants/app-setting'
 	styleUrls: ['./chatbot.component.css'],
 })
 export class DashboardChatBotComponent implements OnInit {
-	title = 'angular-chat'
-	channel: any
-	// username = ''
-	// messages: Message[] = []
-	// newMessage = ''
 	rooms: BotRoom[]
-	// chatClient: any
-	// currentUser: User
-	//connection: signalR.HubConnection
-	constructor(private botService: ChatBotService) {}
+	constructor(private botService: ChatBotService, private user: UserInfoStorageService) {}
 	ngOnInit() {
+		const userId = this.user.getUserId()
 		const connection = new signalR.HubConnectionBuilder()
-			.withUrl(AppSettings.SIGNALR_ADDRESS + '?userName=123', {
+			.withUrl(`${AppSettings.SIGNALR_ADDRESS}?sysUserName=${userId}`, {
 				skipNegotiation: true,
 				transport: signalR.HttpTransportType.WebSockets,
 			})
 			.configureLogging(signalR.LogLevel.Information)
 			.build()
-		connection.keepAliveIntervalInMilliseconds = 60
-		connection.serverTimeoutInMilliseconds = 60
+
 		async function start() {
 			try {
 				await connection.start()
@@ -43,7 +37,7 @@ export class DashboardChatBotComponent implements OnInit {
 				console.log('SignalR Connected.')
 			} catch (err) {
 				console.log(err)
-				//setTimeout(start, 5000)
+				setTimeout(start, 5000)
 			}
 		}
 
@@ -51,13 +45,12 @@ export class DashboardChatBotComponent implements OnInit {
 			await start()
 		})
 
-		// Start the connection.
 		start()
+		this.handleConnect()
 	}
 
 	handleConnect = async () => {
 		console.log('SignalR ngOnInit 0')
-
 		try {
 			console.log('SignalR 1')
 			this.botService.getRooms({}).subscribe((res) => {
@@ -75,64 +68,5 @@ export class DashboardChatBotComponent implements OnInit {
 		} catch (error) {
 			console.log('handleConnect ', error)
 		}
-	}
-
-	async joinChat() {
-		// const { username } = this
-		// try {
-		// 	const response = await axios.post('http://localhost:5500/join', {
-		// 		username,
-		// 	})
-		// 	const { token } = response.data
-		// 	const apiKey = response.data.api_key
-		// 	this.chatClient = new StreamChat(apiKey)
-		// 	this.currentUser = await this.chatClient.setUser(
-		// 		{
-		// 			id: username,
-		// 			name: username,
-		// 		},
-		// 		token
-		// 	)
-		// 	const channel = this.chatClient.channel('team', 'talkshop')
-		// 	await channel.watch()
-		// 	this.channel = channel
-		// 	this.messages = channel.state.messages
-		// 	this.channel.on('message.new', (event) => {
-		// 		this.messages = [...this.messages, event.message]
-		// 	})
-		// 	const filter = {
-		// 		type: 'team',
-		// 		members: { $in: [`${this.currentUser.me.id}`] },
-		// 	}
-		// 	const sort = { last_message_at: -1 }
-		// 	this.channelList = await this.chatClient.queryChannels(filter, sort, {
-		// 		watch: true,
-		// 		state: true,
-		// 	})
-		// } catch (err) {
-		// 	console.log(err)
-		// 	return
-		// }
-	}
-
-	async sendMessage() {
-		// if (this.newMessage.trim() === '') {
-		// 	return
-		// }
-		// try {
-		// 	await this.channel.sendMessage({
-		// 		text: this.newMessage,
-		// 	})
-		// 	this.newMessage = ''
-		// } catch (err) {
-		// 	console.log(err)
-		// }
-	}
-
-	ngOnDestroy() {
-		// if (this.connection) {
-		// 	console.log('SignalR ngOnDestroy 0')
-		// 	this.connection.off('ReceiveMessageToGroup')
-		// }
 	}
 }

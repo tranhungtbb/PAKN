@@ -1,13 +1,16 @@
 ﻿using Bugsnag;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
+using PAKNAPI.Chat;
 using PAKNAPI.Common;
 using PAKNAPI.ModelBase;
 using PAKNAPI.Models.Chatbot;
 using PAKNAPI.Models.ModelBase;
 using PAKNAPI.Models.Results;
 using PAKNAPI.Models.SyncData;
+using SignalR.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +29,7 @@ namespace PAKNAPI.Controllers
         public BotController(IAppSetting appSetting, IClient bugsnag) {
             this._appSetting = appSetting;
             this._bugsnag = bugsnag;
+          
         }
 
         
@@ -56,9 +60,11 @@ namespace PAKNAPI.Controllers
         /// create room
         /// </summary>
         /// <returns></returns>
-        [Route("bot-create-room")]
+        /// 
         [HttpPost]
-        public async Task<ActionResult<object>> CreateRoom(CreateRoomBot roomBot) {
+        [Route("bot-create-room")]
+       
+        public async Task<ActionResult<object>> CreateRoom([FromBody] CreateRoomBot roomBot) {
             try
             {
 
@@ -78,17 +84,15 @@ namespace PAKNAPI.Controllers
                         {
 
                             SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
-                            //var botRoomUserLink = new BOTRoomUserLink();
-                            //botRoomUserLink.AnonymousId = id;
-                            //botRoomUserLink.RoomId = room.Id;
-                            //botRoomUserLink.UserId = dataMain.Id;
-                            //await new BOTRoomUserLink(_appSetting).BOTRoomUserLinkInsertDAO(botRoomUserLink);
+
 
                             IDictionary<string, string> json = new Dictionary<string, string>
                         {
                             {"AnonymousId",  id.ToString()},
                             {"AnonymousName", guid},
                             {"RoomId", room.Id.ToString()},
+                             {"RoomName", roomName
+                                }
                         };
 
                             return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };
@@ -97,17 +101,13 @@ namespace PAKNAPI.Controllers
                         {
                             var roomId = Int32.Parse((await new BOTRoom(_appSetting).BOTRoomInsertDAO(new BOTRoom(roomName, id, 1))).ToString());
                             SYUnitGetMainId dataMain = (await new SYUnitGetMainId(_appSetting).SYUnitGetMainIdDAO()).FirstOrDefault();
-                            //var botRoomUserLink = new BOTRoomUserLink();
-                            //botRoomUserLink.AnonymousId = id;
-                            //botRoomUserLink.RoomId = roomId;
-                            //botRoomUserLink.UserId = dataMain.Id;
-                            //await new BOTRoomUserLink(_appSetting).BOTRoomUserLinkInsertDAO(botRoomUserLink);
 
                             IDictionary<string, string> json = new Dictionary<string, string>
                         {
                             {"AnonymousId",  id.ToString()},
                             {"AnonymousName", guid},
                             {"RoomId", roomId.ToString()},
+                             {"RoomName", roomName}
                         };
 
                             return new Models.Results.ResultApi { Success = ResultCode.OK, Result = json };

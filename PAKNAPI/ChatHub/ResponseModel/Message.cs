@@ -14,7 +14,7 @@ namespace PAKNAPI.Chat.ResponseModel
 
         public string FromId { get; set; }
         public string To { get; set; }
-        public string ToId { get; set; }
+
 
         public List<string> SubTags { get; set; }
     }
