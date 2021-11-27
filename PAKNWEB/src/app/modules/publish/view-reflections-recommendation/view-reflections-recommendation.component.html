@@ -1,7 +1,7 @@
 <div class="content-nd mb-5">
 	<div class="container">
 		<div class="row justify-content-between pt-5">
-			<div class="col main-ct pr-3 pr-lg-5">
+			<div class="col-8 col-lg-8 col-md-8">
 				<ol class="breadcrumb px-0 bg-transparent">
 					<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
 					<li class="breadcrumb-item active"><a href="#" class="font-weight-bold">Phản ánh, Kiến nghị</a></li>
@@ -203,7 +203,7 @@
 					</ng-container>
 
 					<p class="border-top pt-3 mt-3" *ngIf="IsAllComment == false">
-						<a href="javascript:void(0)" (click)="loadComment()">Xem thêm 20 bình luận khác
+						<a href="javascript:void(0)" (click)="loadComment()">Xem thêm 10 bình luận khác
 							<span class="ml-2">
 								<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
 									<path fill-rule="evenodd"
@@ -214,8 +214,8 @@
 					</p>
 				</div>
 			</div>
-			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
-				<app-statistics-right></app-statistics-right>
+			<div class="col-4 col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+				<app-statistics-right [isShowSatisfationChart]="true"></app-statistics-right>
 				<app-gallery></app-gallery>
 			</div>
 		</div>

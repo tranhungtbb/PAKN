@@ -8,7 +8,9 @@
 				<li class="breadcrumb-item"><span>Trang chủ </span>/<strong> Thủ tục hành chính</strong></li>
 			</ol>
 			<div class="btn-group group-button-table" role="group">
-				<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" appSvBackButton><i class="bi bi-arrow-left mr-2"></i> quay lại</button>
+				<span>
+					<button type="button" class="btn btn-sm rounded bg-white text-dark border mr-3" appSvBackButton><i class="bi bi-arrow-left mr-2"></i> quay lại</button>
+				</span>
 				<span *hasPermission="['3', 'H_I_2']">
 					<button class="btn grd-blue btn-sm rounded border-0 text-white mr-3" (click)="preForward()">Gửi cơ quan đơn vị</button>
 				</span>
@@ -18,9 +20,6 @@
 				<span *hasPermission="['3', 'H_I_4']">
 					<button *ngIf="model.status == 3" class="btn btn-sm grd-green rounded text-white border-0 mr-3" (click)="onSave(2)">Thu hồi</button>
 				</span>
-				<a class="btn text-white border-0 grd-xanhngoc mr-3 px-5" target="_blank" href="{{'https://hanhchinhcong.khanhhoa.gov.vn/#/nguoidung/soanhoso?thutucId='+ model.administrationId + '&donvitiepnhanId=-2'}}">
-					Nộp hồ sơ
-				</a>
 				
 				
 				<!-- <a class="btn btn-sm rounded text-dark border-0 grd-brown" [routerLink]="['../../cap-nhat',model.id]">Sửa</a> -->
@@ -438,7 +437,9 @@
 					<div class="form-row">
 						<div class="col-12 col-lg-12 form-group">
 							<label class="mb-2">Đơn vị được chuyển tiếp<span class="cl-red">(*)</span></label>
-							<ng-select notFoundText="Không có dữ liệu" class="form-control border-input" multiple="true" hideSelected="true" [ngModelOptions]="{standalone: true}" [items]="lstUnitForward" bindLabel="text" bindValue="value" placeholder="Chọn đơn vị giải quyết"
+							<ng-select notFoundText="Không có dữ liệu" class="form-control border-input" multiple="true" hideSelected="true" 
+								[ngModelOptions]="{standalone: true}" [items]="lstUnitForward" bindLabel="text" bindValue="value" 
+								placeholder="Chọn đơn vị"
 								[(ngModel)]="modelForward.lstUnitId" [closeOnSelect]="true" ></ng-select>
 							
 						</div>

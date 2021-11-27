@@ -42,11 +42,13 @@ import { StatisticsRightComponent } from './statistics-right/statistics-right.co
 import { GalleryComponent } from './gallery/gallery.component'
 import { StatisticsComponent } from './statistics/statistics.component'
 import { NewsHightLightComponent } from './news-hight-light/news-hight-light.component'
+import { Index2Component } from './index2/index2.component'
 
 @NgModule({
 	declarations: [
 		PublishComponent,
 		IndexComponent,
+		Index2Component,
 		AdministrativeProceduresComponent,
 		NewsComponent,
 		ViewNewsComponent,

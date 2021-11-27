@@ -28,7 +28,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	public lstConclusionFiles: any
 	public satisfactions: Array<satisfaction>
 	checkSatisfaction: boolean
-	pageSizeComment: any = 20
+	pageSizeComment: any = 10
 	IsAllComment: boolean = false
 	isLogin: boolean = this.storeageService.getIsHaveToken()
 	typeObject : number = this.storeageService.getTypeObject()
@@ -184,7 +184,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 				if (res.result.MRCommnentGetAllOnPage.length > 0) {
 					this.total_Comments = res.result.TotalCount
 					this.listCommentsPaged = res.result.MRCommnentGetAllOnPage
-					if (this.total_Comments == res.result.TotalCount && this.commentQuery.pageSize == 20) {
+					if (this.listCommentsPaged.length == res.result.TotalCount) {
 						this.IsAllComment = true
 					}
 				} else {
@@ -195,7 +195,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 		})
 	}
 	loadComment() {
-		this.pageSizeComment += 20
+		this.pageSizeComment += 10
 		this.getCommentPaged()
 	}
 	changeStatusComment = (comment) => {

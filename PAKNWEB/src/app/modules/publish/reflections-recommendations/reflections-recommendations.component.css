@@ -44,3 +44,10 @@ ul.category-article li a.active {
 .border-bottom{
 	border-bottom: 2px solid #EEEEEE !important;
 }
+.read-more{
+	color: #707C97;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 17px;
+}

@@ -24,6 +24,7 @@ import { DetailRecommendationCttdtComponent } from './recommendations-sync/recom
 import { RecommendationsPaknCPComponent } from './recommendations-sync/recommendation-pakn-cp/recommendation-pakn-cp.component'
 import { DetailRecommendationPaknCPComponent } from './recommendations-sync/recommendation-pakn-cp-detail/recommendation-pakn-cp-detail.component'
 import { StatisticsComponent } from './statistics/statistics.component'
+import { Index2Component } from './index2/index2.component'
 
 const routes: Routes = [
 	{
@@ -32,11 +33,11 @@ const routes: Routes = [
 		children: [
 			{
 				path: '',
-				component: IndexComponent,
+				component: Index2Component,
 			},
 			{
 				path: 'trang-chu',
-				component: IndexComponent,
+				component: Index2Component,
 			},
 			{
 				path: 'gioi-thieu',
@@ -88,6 +89,10 @@ const routes: Routes = [
 			},
 			{
 				path: 'danh-sach-phan-anh-kien-nghi/:field',
+				component: ReflectionsRecommendationsComponent,
+			},
+			{
+				path: 'danh-sach-phan-anh-kien-nghi/:field/:keysearch',
 				component: ReflectionsRecommendationsComponent,
 			},
 			{

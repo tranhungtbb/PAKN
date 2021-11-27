@@ -69,7 +69,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	}
 	onActivate(event) {
     window.scroll(0,0);
-}
+	}
 
 	getListNotification(PageSize: any) {
 		this.ViewedCount = 0
@@ -97,6 +97,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	}
 
 	ngOnChanges() {
+		this.keySearch = null
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
 			if (splitRouter[2] != this.routerHome) {
@@ -154,6 +155,13 @@ export class PublishComponent implements OnInit, OnChanges {
 		if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight - 50) {
 			this.numberNotifications = this.numberNotifications + 5
 			this.getListNotification(this.numberNotifications)
+		}
+	}
+	keySearch : any 
+	searchRecommendation(){
+		this.keySearch = this.keySearch == null ? '' : this.keySearch.trim()
+		if(this.keySearch){
+			this._router.navigate(['/cong-bo/danh-sach-phan-anh-kien-nghi/0/',this.keySearch])
 		}
 	}
 	checkDeny(status: any) {

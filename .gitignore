@@ -13,6 +13,7 @@
 /PAKNAPI/.vs/PAKNAPI/v16/.suo~c5bee701cd9f4abdf2bac91c44f7bb38412a519c
 /PAKNAPI/obj
 /PAKNAPI/bin
+/PAKNAPI/Upload
 Chatbot/.vs/KarmaloopAIMLBotServer/v16/.suo
 PAKNWEB/wwwroot.zip
 KarmaloopAIMLBotServer/bin
@@ -23,5 +24,6 @@ KarmaloopAIMLBotParser/obj/Debug/KarmaloopAIMLBotParser.csproj.FileListAbsolute.
 KarmaloopAIMLBotParser/obj/Debug/KarmaloopAIMLBotParser.csprojAssemblyReference.cache
 KarmaloopAIMLBotParser/obj/Debug/KarmaloopAIMLBotParser.dll
 KarmaloopAIMLBotParser/obj/Debug/KarmaloopAIMLBotParser.pdb
+PAKNAPI/web.config
 PAKNAPI/web.config
 PAKNAPI/Properties/PublishProfiles/FolderProfile.pubxml.user

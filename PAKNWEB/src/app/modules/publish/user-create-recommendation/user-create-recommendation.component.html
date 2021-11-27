@@ -4,7 +4,7 @@
 <div class="content-nd">
 	<div class="container">
 		<div class="row justify-content-between pt-5">
-			<div class="col main-ct pr-3 pr-lg-5">
+			<div class="col-8 col-lg-8 col-md-8">
 				<ol class="breadcrumb px-0 bg-transparent">
 					<li class="breadcrumb-item"><a [routerLink]="['/cong-bo/trang-chu']">Trang chủ</a></li>
 					<li class="breadcrumb-item"><a [routerLink]="['/cong-bo/phan-anh-kien-nghi']">Phản ánh, Kiến nghị</a></li>
@@ -103,7 +103,7 @@
 						</div>
 					</div>
 					<div class="col-12 col-sm-12 form-group">
-						<div class="label pl-0 mb-1">Địa chỉ</div>
+						<div class="label pl-0 mb-1">ĐỊA ĐIỂM PHẢN ÁNH HIỆN TRƯỜNG</div>
 						<div class="ps-relative">
 							<input class="form-control" type="text" [(ngModel)]="model.address" maxlength="300" formControlName="address"
 								placeholder="Nhập..." />
@@ -207,14 +207,14 @@
 					</div>
 				</div>
 				<form class="form-row mb-3 align-items-end" [formGroup]="form">
-					<div class="col-12 col-lg">
+					<div class="col-12 col-lg-4">
 						<label class="mb-1">Mã số xác thực</label>
 						<div class="bg-white captcha border d-flex justify-content-between align-items-center rounded-xl shadow position-absolute">
 							<img class="img-fluid rounded-xl" style="max-height: 56px; max-width: 70%;" id="img-captcha" [src]="captchaImage" />
 							<button type="button" (click)="reloadImage()" class="btn p-2 rounded-xl"><i class="bi bi-arrow-repeat" style="font-size: 24px"></i></button>
 						</div>
 					</div>
-					<div class="col-12 col-lg-3">
+					<div class="col-12 col-lg-4">
 						<label class="mb-1">Nhập mã xác thực <span class="cl-red">(*)</span></label>
 						<input type="text" placeholder="Nhập..." class="form-control" [(ngModel)]="captchaCode" style="height: 56px;" formControlName="captcha" maxlength="5">
 						<div *ngIf="(submitted && f.captcha.invalid) || (f.captcha.invalid && (f.captcha.dirty || f.captcha.touched))" class="has-error">
@@ -224,11 +224,11 @@
 						</div>
 					</div>
 
-					<div class="col-12 col-lg-auto d-flex justify-content-end align-items-center">
-						<button type="button" class="btn border mr-3" (click)="reloadForm()">
+					<div class="col-4 col-lg-4 d-flex justify-content-end align-items-center" style="margin-top: 22px;">
+						<!-- <button type="button" class="btn border mr-3" (click)="reloadForm()">
 							<i class="bi bi-arrow-repeat d-flex" style="font-size: 24px"></i>
 							<span class="ml-2">Nhập lại</span>
-						</button>
+						</button> -->
 						<button type="button" class="btn text-white border-0 grd-xanhngoc mr-3 px-5" (click)="onSave(1)">Lưu</button>
 
 						<button type="button" class="btn text-white border-0 grd-blue px-5" (click)="onSave(2)">
@@ -237,8 +237,8 @@
 					</div>
 				</form>
 			</div>
-			<div class="col-12 col-lg-auto d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
-				<app-statistics-right></app-statistics-right>
+			<div class="col-4 col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
+				<app-statistics-right [isShowSatisfationChart]="true"></app-statistics-right>
 			</div>
 		</div>
 	</div>

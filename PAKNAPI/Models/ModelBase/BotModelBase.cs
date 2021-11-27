@@ -65,7 +65,7 @@ namespace PAKNAPI.Models.ModelBase
 		public string Name { get; set; }
 
 		public int? Type { get; set; }
-
+		public DateTime? CreatedDate { get; set; }
 
 		public async Task<List<BOTRoomGetAllOnPage>> SYUserGetByRoleIdAllOnPageDAO(int? PageSize, int? PageIndex)
 		{
@@ -118,7 +118,13 @@ namespace PAKNAPI.Models.ModelBase
 
 			return (await _sQLCon.ExecuteListDapperAsync<BOTRoom>("BOT_RoomGetByName", DP)).FirstOrDefault();
 		}
-		
+		public async Task<BOTRoom> BOTRoomGetById(int roomId)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RoomId", roomId);
+
+			return (await _sQLCon.ExecuteListDapperAsync<BOTRoom>("BOT_RoomGetById", DP)).FirstOrDefault();
+		}
 	}
 
 
@@ -204,8 +210,34 @@ namespace PAKNAPI.Models.ModelBase
 			return (await _sQLCon.ExecuteListDapperAsync<BOTMessage>("BOT_MessageGetAll", DP)).ToList();
 		}
 	}
+	public class ChatbotGetByRoomId
+	{
+		private SQLCon _sQLCon;
+		private readonly IAppSetting _appSetting;
 
+		public ChatbotGetByRoomId(IAppSetting appSetting)
+		{
+			_appSetting = appSetting;
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
 
+		public ChatbotGetByRoomId()
+		{
+		}
+		public int Id { get; set; }
+		public string MessageContent { get; set; }
+		public int RoomId { get; set; }
+		public int FromUserId { get; set; }
+		public DateTime DateSend { get; set; }
+		public int? RowNumber { get; set; }
 
-
+		public async Task<List<ChatbotGetByRoomId>> ChatbotGetByRoomIdDAO(int RoomId, int PageIndex, int PageSize)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("RoomId", RoomId);
+			DP.Add("PageIndex", PageIndex);
+			DP.Add("PageSize", PageSize);
+			return (await _sQLCon.ExecuteListDapperAsync<ChatbotGetByRoomId>("BOT_Message_GetByRoomId", DP)).ToList();
+		}
+	}
 }

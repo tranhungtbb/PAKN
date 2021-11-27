@@ -337,11 +337,11 @@ export class CreateRecommendationComponent implements OnInit {
 			return
 		}
 		this.model.address = this.model.address == null ? '' : this.model.address.trim()
-		if (!this.model.address) {
-			await this.getAddress(this.markers.lat, this.markers.lng).then((res) => {
-				this.model.address = String(res)
-			})
-		}
+		// if (!this.model.address) {
+		// 	await this.getAddress(this.markers.lat, this.markers.lng).then((res) => {
+		// 		this.model.address = String(res)
+		// 	})
+		// }
 
 		if (this.form.invalid) {
 			this.reloadImage()
