@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css"
+	rel="stylesheet" />
 <div class="content-body">
 	<div class="content" role="main">
 		<!-- <div *ngIf="rooms" class="container">
@@ -104,8 +105,9 @@
 							<h6 class="mb-1">Tin nhắn</h6>
 						</div>
 						<div class="dropdown">
-							<a href="#" data-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px"
-									height="18px" viewBox="0 0 24 24" version="1.1">
+							<a href="#" data-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg"
+									xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24"
+									version="1.1">
 									<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 										<rect x="0" y="0" width="24" height="24" />
 										<circle fill="#000000" cx="5" cy="12" r="2" />
@@ -114,12 +116,15 @@
 									</g>
 								</svg></a>
 							<ul class="dropdown-menu dropdown-menu-right">
-								<li class="dropdown-item" (click)="enabledBot()"><i class="fa fa-user-circle text-primary mr-2"></i> Bật bot</li>
-								<li class="dropdown-item" (click)="disabedBot()"><i class="fa fa-users text-primary mr-2"></i> Tắt bot</li>
+								<li class="dropdown-item" (click)="enabledBot()"><i class="fa fa-user-circle text-primary mr-2"></i> Bật
+									bot</li>
+								<li class="dropdown-item" (click)="disabedBot()"><i class="fa fa-users text-primary mr-2"></i> Tắt bot
+								</li>
 							</ul>
 						</div>
 					</div>
-					<div #boxChat class="card-body msg_card_body" [scrollTop]="boxChat.scrollHeight" (scroll)="onScrollBoxChat($event)">
+					<div #boxChat class="card-body msg_card_body" [scrollTop]="boxChat.scrollHeight"
+						(scroll)="onScrollBoxChat($event)">
 						<ng-container *ngFor="let message of messages">
 							<div *ngIf="message.fromUserId != 0" class="d-flex justify-content-start mb-4">
 								<div class="msg_cotainer">
@@ -129,15 +134,25 @@
 							</div>
 							<div *ngIf="message.fromUserId == 0" class="d-flex justify-content-end mb-4">
 								<div class="msg_cotainer_send">
-									{{message.messageContent}}
+									<!-- {{message.messageContent}} -->
+									{{message.messageContent.Content}}
+									<ng-container *ngFor="let tag of message.messageContent.SubTags.data">
+										<div *ngIf="tag.title" class="msg_cotainer_child">
+											<span class="item p-2">{{tag.title}}</span>
+										</div>
+										<a *ngIf="tag.link" routerLink="tag.link">
+											{{tag.link}}
+										</a>
+									</ng-container>
 									<span class="msg_time_send">{{message.dateSend | date:'HH:mm:ss dd/MM/yyyy'}}</span>
 								</div>
 							</div>
 						</ng-container>
 					</div>
 					<div class="card-footer type_msg">
-						<div class="input-group"  (click)="sendMessage()">
-							<textarea class="form-control" placeholder="Type your message..." name="newMessage" [(ngModel)]="newMessage"  (keydown)="onKeyDown($event)"></textarea>
+						<div class="input-group" (click)="sendMessage()">
+							<textarea class="form-control" placeholder="Type your message..." name="newMessage"
+								[(ngModel)]="newMessage" (keydown)="onKeyDown($event)"></textarea>
 							<div class="input-group-append" type="button">
 								<button type="button" class="btn btn-primary"><i class="fa fa-location-arrow"></i></button>
 							</div>
