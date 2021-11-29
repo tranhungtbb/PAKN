@@ -8,11 +8,11 @@ import { StatisticService } from 'src/app/services/statistic.service'
 
 declare var $: any
 @Component({
-	selector: 'app-statistic-processing-results-by-feild-and-reception',
-	templateUrl: './processing-results-by-feild-and-reception.component.html',
-	styleUrls: ['./processing-results-by-feild-and-reception.component.css'],
+	selector: 'app-statistic-processing-results-by-unit',
+	templateUrl: './processing-results-by-unit.component.html',
+	styleUrls: ['./processing-results-by-unit.component.css'],
 })
-export class ProcessingResultsByFeildAndReceptionComponent implements OnInit {
+export class ProcessingResultsByUnitComponent implements OnInit {
 	constructor(
 		private _service: StatisticService,
 		private _router: Router,
@@ -115,7 +115,7 @@ export class ProcessingResultsByFeildAndReceptionComponent implements OnInit {
 			PageSize: this.pageSize,
 			PageIndex: this.pageIndex
 		}
-		this._service.getProcessingResultByFeildAndReception(request).subscribe((response) => {
+		this._service.getProcessingResultByUnit(request).subscribe((response) => {
 			if (response.success == RESPONSE_STATUS.success) {
 				this.listData = response.result;
 				if(response.result && response.result.length > 0){
@@ -187,7 +187,7 @@ export class ProcessingResultsByFeildAndReceptionComponent implements OnInit {
 		passingObj.FromDate = this.fromDate;
 		passingObj.ToDate = this.toDate;
 		this._shareData.setobjectsearch(passingObj)
-		this._shareData.sendReportUrl = 'processing_results_by_feild_and_reception?' + JSON.stringify(passingObj)
+		this._shareData.sendReportUrl = 'processing_results_by_unit?' + JSON.stringify(passingObj)
 		this._router.navigate(['quan-tri/xuat-file'])
 	}
 }

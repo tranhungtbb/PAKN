@@ -5,6 +5,19 @@ using System.Threading.Tasks;
 
 namespace PAKNAPI.Chat.ResponseModel
 {
+    public enum BotStatus
+    {
+        Enable = 1,
+        Disable = 2,
+       
+    }
+
+    public class MessageTypes
+    {
+        public static string Conversation { get { return "Conversation"; } }
+        public static string All { get { return "All"; } }
+       
+    }
     public class Message
     {
 
@@ -14,8 +27,10 @@ namespace PAKNAPI.Chat.ResponseModel
 
         public string FromId { get; set; }
         public string To { get; set; }
-        public string ToId { get; set; }
+
 
         public List<string> SubTags { get; set; }
+
+        public string Type { get; set; }
     }
 }

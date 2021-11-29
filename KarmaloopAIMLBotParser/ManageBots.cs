@@ -12,30 +12,39 @@ namespace KarmaloopAIMLBotParser
         public string Answer { get; set; }
         public List<string> SubTags { get; set; }
     }
+    public interface IManageBots
+    {
+        ResultBot Response(string botname, string UserInput);
+        void RemoveBot(string botname);
+    }
 
-        public class ManageBots
+    public class ManageBots : IManageBots
     {
         AIMLBot AI;
         private readonly static Dictionary<string, BotUser> _ConnectionsMap = new Dictionary<string, BotUser>();
-        public ManageBots() {
+        public ManageBots()
+        {
             AI = new AIMLBot();
             AI.LoadSettings();
             AI.LoadAIMLFromFiles();
         }
 
-        public ResultBot Response(string botname,string UserInput)
+        public ResultBot Response(string botname, string UserInput)
         {
-            BotUser bot; 
-            if (!_ConnectionsMap.ContainsKey(botname)) {
+            BotUser bot;
+            if (!_ConnectionsMap.ContainsKey(botname))
+            {
                 bot = new BotUser(Guid.NewGuid(), AI);
                 _ConnectionsMap.Add(botname, bot);
             }
-            else {
+            else
+            {
                 bot = _ConnectionsMap[botname];
             }
             Request r = new Request(UserInput, bot, AI); //With This Code it will Request The Response From AIML Folders
             Result res = AI.Chat(r);
-            ResultBot resl = new ResultBot() {
+            ResultBot resl = new ResultBot()
+            {
                 Answer = res.Output,
                 SubTags = res.subTags
             };

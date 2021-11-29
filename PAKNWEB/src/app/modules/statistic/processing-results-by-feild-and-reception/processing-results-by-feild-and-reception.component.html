@@ -84,7 +84,7 @@
 							<tr></tr>
 							<tr>
 								<th rowspan="5" colspan="1" class="text-center middle" style="width: 60px;">Tổng số</th>
-								<th rowspan="1" colspan="4" class="text-center middle">Chia ra</th>
+								<th rowspan="1" colspan="4" class="text-center middle">Chia theo phương thức tiếp nhận</th>
 								<th rowspan="1" colspan="3" class="text-center middle">Đã xử lý</th>
 								<th rowspan="1" colspan="3" class="text-center middle">Đang xử lý</th>
 							</tr>
@@ -114,52 +114,53 @@
 									<p class="text-2line mb-0">{{item.feildName}}</p>
 								</td>
 								<td>
-									<p class="mb-0 text-right">{{item.received}}</p>
+									<p class="mb-0 text-right">{{item.received | number}}</p>
 								</td>
 								<td>
-									<p class="mb-0 text-right">{{item.recommendationMobile}}</p>
+									<p class="mb-0 text-right">{{item.recommendationMobile | number}}</p>
 								</td>
 								<td>
-									<p class="mb-0 text-right">{{item.recommendationEmail}}</p>
+									<p class="mb-0 text-right">{{item.recommendationEmail | number}}</p>
 								</td>
 								<td>
-									<p class="mb-0 text-right">{{item.recommendationWeb}}</p>
+									<p class="mb-0 text-right">{{item.recommendationWeb | number}}</p>
 								</td>
 								<td>
-									<p class="mb-0 text-right">{{item.recommendationApp}}</p>
+									<p class="mb-0 text-right">{{item.recommendationApp | number}}</p>
 								</td>
 								<td>
-									<p class="mb-0 text-right">{{item.processedTotal}}</p>
+									<p class="mb-0 text-right">{{item.processedTotal | number}}</p>
 								</td>
 								<td>
-									<p class="mb-0 text-right">{{item.processedOnTime}}</p>
+									<p class="mb-0 text-right">{{item.processedOnTime | number}}</p>
 								</td>	
 								<td>
-									<p class="mb-0 text-right">{{item.processedOutOfDate}}</p>
+									<p class="mb-0 text-right">{{item.processedOutOfDate | number}}</p>
 								</td>	
 								<td>
-									<p class="mb-0 text-right">{{item.processTotal}}</p>
+									<p class="mb-0 text-right">{{item.processTotal | number}}</p>
 								</td>	
 								<td>
-									<p class="mb-0 text-right">{{item.processOnTime}}</p>
+									<p class="mb-0 text-right">{{item.processOnTime | number}}</p>
 								</td>	
 								<td>
-									<p class="mb-0 text-right">{{item.processOutOfDate}}</p>
+									<p class="mb-0 text-right">{{item.processOutOfDate | number}}</p>
 								</td>	
 								<td>
-									<p class="mb-0 text-right">{{item.evaluate}}</p>
+									<p class="mb-0 text-right">{{item.evaluate | number}}</p>
 								</td>
 								<td>
-									<p class="mb-0 text-right">{{item.like}}</p>
+									<p class="mb-0 text-right">{{item.like | number}}</p>
 								</td>
 								<td>
-									<p class="mb-0 text-right">{{item.dislike}}</p>
+									<p class="mb-0 text-right">{{item.accept | number}}</p>
 								</td>
 								<td>
-									<p class="mb-0 text-right">{{item.accept}}</p>
+									<p class="mb-0 text-right">{{item.dislike | number}}</p>
 								</td>
+							
 								<td>
-									<p class="mb-0 text-right">{{item.publicQuantity}}</p>
+									<p class="mb-0 text-right">{{item.publicQuantity | number}}</p>
 								</td>
 							</tr>
 						</ng-template>
