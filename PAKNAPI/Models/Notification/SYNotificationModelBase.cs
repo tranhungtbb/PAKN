@@ -338,4 +338,72 @@ namespace PAKNAPI.Models.ModelBase
 		public DateTime Created { set; get; }
 		public SYNotificationModel DatasNotification { get; set; }
 	}
+	public class PublishNotificationObject
+    {
+		public int Id { get; set; }
+		public string Title { get; set; }
+		public string Content { get; set; }
+		public byte? Status { get; set; }
+		public DateTime? CreatedDate { get; set; }
+		public int? CreatedBy { get; set; }
+		public int? RowNumber { get; set; }
+	}
+	public class PublishNotificationDeleteObject
+	{
+		public int Id { get; set; }
+	}
+
+	public class PublishNotification
+	{
+		private SQLCon _sQLCon;
+
+		public PublishNotification(IAppSetting appSetting)
+		{
+			_sQLCon = new SQLCon(appSetting.GetConnectstring());
+		}
+
+		public PublishNotification()
+		{
+		}
+
+		public async Task<List<PublishNotificationObject>> PublishNotificationGetAllOnPage()
+		{
+			DynamicParameters DP = new DynamicParameters();
+			return (await _sQLCon.ExecuteListDapperAsync<PublishNotificationObject>("SY_PublishNotificationGetAllOnPage", DP)).ToList();
+		}
+		public async Task<List<PublishNotificationObject>> PublishNotificationGetByIDDAO(int? Id)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", Id);
+			return (await _sQLCon.ExecuteListDapperAsync<PublishNotificationObject>("SY_PublishNotificationGetByID", DP)).ToList();
+		}
+
+		public async Task<int?> PublishNotificationInsertDAO(PublishNotificationObject data)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Title", data.Title);
+			DP.Add("Content", data.Content);
+			DP.Add("Status", data.Status);
+			DP.Add("CreatedDate", DateTime.Now);
+			DP.Add("CreatedBy", data.CreatedBy);
+			return (await _sQLCon.ExecuteListDapperAsync<int?>("SY_PublishNotificationInsert", DP)).FirstOrDefault();
+		}
+
+		public async Task<int?> PublishNotificationUpdateDAO(PublishNotificationObject data)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", data.Id);
+			DP.Add("Title", data.Title);
+			DP.Add("Content", data.Content);
+			DP.Add("Status", data.Status);
+			return (await _sQLCon.ExecuteListDapperAsync<int?>("SY_PublishNotificationUpdate", DP)).FirstOrDefault();
+		}
+
+		public async Task<int?> PublishNotificationDeleteDAO(PublishNotificationDeleteObject data)
+		{
+			DynamicParameters DP = new DynamicParameters();
+			DP.Add("Id", data.Id);
+			return (await _sQLCon.ExecuteListDapperAsync<int?>("SY_PublishNotificationDelete", DP)).FirstOrDefault();
+		}
+	}
 }

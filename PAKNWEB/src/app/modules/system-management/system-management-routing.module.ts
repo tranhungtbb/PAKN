@@ -20,6 +20,7 @@ import { SupportGalleryComponent } from './components/support-gallery/support-ga
 import { IndexTypeSettingComponent } from './components/index-type-setting/index-type-setting.component'
 import { ApplicationSettingComponent } from './components/application-setting/application-setting.component'
 import { SyncSettingComponent } from './components/sync-setting/sync-setting.component'
+import { PublishNotificationComponent } from './components/publish-notification/publish-notification.component'
 
 const routes: Routes = [
 	{
@@ -141,6 +142,10 @@ const routes: Routes = [
 				component: SupportGalleryComponent,
 				canActivate: [RoleGuardService],
 				data: { role: 'G_II_3' },
+			},
+			{
+				path: 'thong-bao',
+				component: PublishNotificationComponent,
 			},
 		],
 	},

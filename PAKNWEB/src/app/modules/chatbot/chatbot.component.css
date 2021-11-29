@@ -262,3 +262,19 @@ img {
 .chatbox .type_msg .form-control {
 	background: transparent;
 }
+
+
+.msg_cotainer_child{
+	/* background-color: #fff;
+	padding: 0.5rem;
+	margin-top: 0.5rem;
+	border-radius: 10px;
+	cursor: pointer;
+	border: 1px solid #c8c8c8; */
+	margin-top: 0.5rem;
+	cursor: pointer;
+	padding: 0.5rem 0 0.5rem 0.5rem;
+	background-color: #fff;
+	border-radius: 10px;
+	border: 1px solid #c8c8c8;
+}

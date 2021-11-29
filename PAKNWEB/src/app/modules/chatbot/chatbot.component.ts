@@ -46,6 +46,8 @@ export class DashboardChatBotComponent implements OnInit {
 					this.messages = [...this.messages, { messageContent: data.content }]
 					console.log('ngOnInit SignalR ReceiveMessageToGroup 2', this.messages)
 				}
+				
+				this.convertMessageToObjectList();
 			})
 			this.connection.on('BroadcastMessage', (data: any) => {
 				console.log('ngOnInit SignalR BroadcastMessage ', data)
@@ -103,6 +105,8 @@ export class DashboardChatBotComponent implements OnInit {
 						if (this.messages != null && this.messages.length > 0) {
 							this.totalMessage = this.messages[0].rowNumber
 						}
+						
+						this.convertMessageToObjectList();
 						this.scrollToBottom()
 					}
 				} else {
@@ -126,6 +130,7 @@ export class DashboardChatBotComponent implements OnInit {
 			this.connection.invoke('SendToRoom', this.roomNameSelected, this.newMessage)
 			this.messages = [...this.messages, { messageContent: this.newMessage, fromUserId: this.userId }]
 			this.newMessage = ''
+			this.convertMessageToObjectList();
 		}
 	}
 
@@ -166,5 +171,30 @@ export class DashboardChatBotComponent implements OnInit {
 		// 		this.getMessage(this.roomActive, this.roomNameSelected)
 		// 	}
 		// }
+	}
+
+	convertMessageToObjectList(){
+		if(this.messages){
+			for (let index = 0; index < this.messages.length; index++) {
+				const element = this.messages[index];
+				if(element.fromUserId == 0){
+						element.messageContent = this.stringToObject(element.messageContent);
+						if(element.messageContent && element.messageContent.SubTags){
+							element.messageContent.SubTags = this.stringToObject(element.messageContent.SubTags);
+							for (let j = 0; j < element.messageContent.SubTags.length; j++) {
+								var subtag = element.messageContent.SubTags[index];
+								subtag = this.stringToObject(subtag);
+							}
+
+						}
+				}
+			}
+		}
+	}
+	stringToObject(string){
+		if(string){
+			return JSON.parse(string);
+
+		}
 	}
 }

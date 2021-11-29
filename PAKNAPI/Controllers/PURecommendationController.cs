@@ -439,6 +439,24 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Route("notification-getdashboard")]
+		public async Task<ActionResult<object>> PUNotificationGetDashboard()
+		{
+			try
+			{
+				var data = await new PURecommendation(_appSetting).PUNotificationGetDashboard();
+				return new ResultApi { Success = ResultCode.OK, Result = data };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
 		[Route("statistics-satisfaction-recommentdation")]
 		public async Task<ActionResult<object>> PURecommendationStatisticsSatisfaction()
 		{

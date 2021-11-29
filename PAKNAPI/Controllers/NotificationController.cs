@@ -212,7 +212,116 @@ namespace PAKNAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize("ThePolicy")]
+        [Route("publish-get-all")]
+        public async Task<ActionResult<object>> PublishNotificationGetAll()
+        {
+            try
+            {
+                var data = await new PublishNotification(_appSetting).PublishNotificationGetAllOnPage();
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"data", data},
+                        {"TotalCount", data != null && data.Count > 0 ? data[0].RowNumber : 0}
+                    };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+        [HttpGet]
+        [Authorize("ThePolicy")]
+        [Route("publish-get-by-id")]
+        public async Task<ActionResult<object>> PublishNotificationGetByIDBase(int? Id)
+        {
+            try
+            {
+                List<PublishNotificationObject> data = await new PublishNotification(_appSetting).PublishNotificationGetByIDDAO(Id);
+                IDictionary<string, object> json = new Dictionary<string, object>
+                    {
+                        {"data", data},
+                    };
+                return new ResultApi { Success = ResultCode.OK, Result = json };
+            }
+            catch (Exception ex)
+            {
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+        [HttpPost]
+        [Authorize("ThePolicy")]
+        [Route("publish-insert")]
+        public async Task<ActionResult<object>> PublishNotificationInsertBase()
+        {
+            try
+            {
+                var jss = new JsonSerializerSettings
+                {
+                    DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                    DateTimeZoneHandling = DateTimeZoneHandling.Local,
+                    DateParseHandling = DateParseHandling.DateTimeOffset,
+                };
+                PublishNotificationObject data = JsonConvert.DeserializeObject<PublishNotificationObject>(Request.Form["Data"].ToString(), jss);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
 
+                return new ResultApi { Success = ResultCode.OK, Result = await new PublishNotification(_appSetting).PublishNotificationInsertDAO(data) };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
 
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+        [HttpPost]
+        [Authorize("ThePolicy")]
+        [Route("publish-update")]
+        public async Task<ActionResult<object>> PublishNotificationUpdateBase()
+        {
+            try
+            {
+                var jss = new JsonSerializerSettings
+                {
+                    DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                    DateTimeZoneHandling = DateTimeZoneHandling.Local,
+                    DateParseHandling = DateParseHandling.DateTimeOffset,
+                };
+                PublishNotificationObject data = JsonConvert.DeserializeObject<PublishNotificationObject>(Request.Form["Data"].ToString(), jss);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+
+                return new ResultApi { Success = ResultCode.OK, Result = await new PublishNotification(_appSetting).PublishNotificationUpdateDAO(data) };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
+
+        [HttpPost]
+        [Authorize("ThePolicy")]
+        [Route("publish-delete")]
+        public async Task<ActionResult<object>> PublishNotificationDeleteBase(PublishNotificationDeleteObject data)
+        {
+            try
+            {
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, null);
+
+                return new ResultApi { Success = ResultCode.OK, Result = await new PublishNotification(_appSetting).PublishNotificationDeleteDAO(data) };
+            }
+            catch (Exception ex)
+            {
+                _bugsnag.Notify(ex);
+                new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, null, ex);
+
+                return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+            }
+        }
     }
 }
