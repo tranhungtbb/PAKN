@@ -234,28 +234,10 @@
 						</div>
 						<div class="pl-3 pr-3 mb-2">
 							<ul>
-								<li>
+								<li *ngFor="let item of unitDissatisfactionRate">
 									<div class="tt-v1 d-flex justify-content-between">
-										<p class="mb-0">Bộ Công an</p>
-										<div class="statistic">90%</div>
-									</div>
-								</li>
-								<li>
-									<div class="tt-v1 d-flex justify-content-between">
-										<p class="mb-0">Công an tỉnh Khánh Hòa</p>
-										<div class="statistic">100%</div>
-									</div>
-								</li>
-								<li>
-									<div class="tt-v1 d-flex justify-content-between">
-										<p class="mb-0">Văn phòng UBND tỉnh Khánh Hoà</p>
-										<div class="statistic">100%</div>
-									</div>
-								</li>
-								<li>
-									<div class="tt-v1 d-flex justify-content-between">
-										<p class="mb-0">Phòng Cải cách hành chính – Sở Nội vụ</p>
-										<div class="statistic">80%</div>
+										<p class="mb-0">{{item.unitName}}</p>
+										<div class="statistic">{{item.percent}}%</div>
 									</div>
 								</li>
 							</ul>
@@ -270,35 +252,17 @@
 					</div>
 				</div>
 				
-				<div class="mt-4">
+				<div class="mt-4" *ngIf="lateProcessingUnit">
 					<div class="card border pt-4 p-3 bg-notification">
 						<div class="tt-v1 mb-3 d-flex justify-content-between">
 							<h4 class="text-uppercase mb-0 ">đơn vị xử lý trễ hạn</h4>
 						</div>
 						<div class="pl-3 pr-3 mb-2">
 							<ul>
-								<li>
+								<li *ngFor="let item of lateProcessingUnit">
 									<div class="tt-v1 d-flex justify-content-between">
-										<p class="mb-0">Viettel Khánh Hòa</p>
-										<div class="statistic">5</div>
-									</div>
-								</li>
-								<li>
-									<div class="tt-v1 d-flex justify-content-between">
-										<p class="mb-0">VTVcab tại Khánh Hòa</p>
-										<div class="statistic">15</div>
-									</div>
-								</li>
-								<li>
-									<div class="tt-v1 d-flex justify-content-between">
-										<p class="mb-0">Công an tỉnh</p>
-										<div class="statistic">25</div>
-									</div>
-								</li>
-								<li>
-									<div class="tt-v1 d-flex justify-content-between">
-										<p class="mb-0">FPT Khánh Hòa</p>
-										<div class="statistic">10</div>
+										<p class="mb-0">{{item.unitName}}</p>
+										<div class="statistic">{{item.quantity}}</div>
 									</div>
 								</li>
 							</ul>
@@ -306,7 +270,7 @@
 						
 						<div class="tt-v1 mb-3 d-flex justify-content-end mr-3">
 							<a class="read-more" title="Xem thêm" 
-								routerLink="/cong-bo/don-vi-tre-han"
+								routerLink="/cong-bo/don-vi-xu-ly-tre-han"
 							> Xem thêm
 							</a>
 						</div>

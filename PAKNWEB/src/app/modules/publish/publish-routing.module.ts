@@ -28,6 +28,7 @@ import { Index2Component } from './index2/index2.component'
 import { ReceiveDenyRecommendationsComponent } from './receive-deny-recommendations/receive-deny-recommendations.component'
 import { InfomationPublicComponent } from './infomation-public/infomation-public.component'
 import { UnitDissatisfactionRateComponent } from './unit-dissatisfaction-rate/unit-dissatisfaction-rate.component'
+import { LateProcessingUnitComponent } from './late-processing-unit/late-processing-unit.component'
 
 const routes: Routes = [
 	{
@@ -163,8 +164,10 @@ const routes: Routes = [
 				path: 'ti-le-khong-hai-long',
 				component: UnitDissatisfactionRateComponent,
 			},
-			
-			//UnitDissatisfactionRateComponent
+			{
+				path: 'don-vi-xu-ly-tre-han',
+				component: LateProcessingUnitComponent,
+			},
 			{
 				path: 'tai-khoan',
 				loadChildren: './account/account.module#AccountModule', //() => import('./account/account.module').then((m) => m.AccountModule),

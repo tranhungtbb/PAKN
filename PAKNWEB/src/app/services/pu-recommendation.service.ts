@@ -65,4 +65,7 @@ export class PuRecommendationService {
 	getUnitDissatisfactionRatePagedList(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PUUnitdissatisfactionRate)
 	}
+	getLateProcessingUnitPagedList(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PULateProcessingUnit)
+	}
 }

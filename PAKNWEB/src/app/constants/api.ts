@@ -78,6 +78,7 @@ export class Api {
 	public static PURecommendationStatisticsProvince = 'pu-recommendation/recommendation-statistic-by-province'
 	public static PURecommendationStatisticsSatisfaction = 'pu-recommendation/statistics-satisfaction-recommentdation'
 	public static PUUnitdissatisfactionRate = 'pu-recommendation/unit-dissatisfaction-rate-on-page'
+	public static PULateProcessingUnit = 'pu-recommendation/late-processing-unit-on-page'
 
 	//Field
 	public static FieldGetList = 'field/get-list-field-on-page'
