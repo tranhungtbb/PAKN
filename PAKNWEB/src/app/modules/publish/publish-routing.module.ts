@@ -25,6 +25,9 @@ import { RecommendationsPaknCPComponent } from './recommendations-sync/recommend
 import { DetailRecommendationPaknCPComponent } from './recommendations-sync/recommendation-pakn-cp-detail/recommendation-pakn-cp-detail.component'
 import { StatisticsComponent } from './statistics/statistics.component'
 import { Index2Component } from './index2/index2.component'
+import { ReceiveDenyRecommendationsComponent } from './receive-deny-recommendations/receive-deny-recommendations.component'
+import { InfomationPublicComponent } from './infomation-public/infomation-public.component'
+import { UnitDissatisfactionRateComponent } from './unit-dissatisfaction-rate/unit-dissatisfaction-rate.component'
 
 const routes: Routes = [
 	{
@@ -96,6 +99,10 @@ const routes: Routes = [
 				component: ReflectionsRecommendationsComponent,
 			},
 			{
+				path: 'phan-anh-kien-nghi-khong-tiep-nhan',
+				component: ReceiveDenyRecommendationsComponent,
+			},
+			{
 				path: 'phan-anh-kien-nghi/:id',
 				component: ViewReflectionsRecommendationComponent,
 			},
@@ -148,7 +155,16 @@ const routes: Routes = [
 				path: 'phan-anh-kien-nghi-cua-toi',
 				component: MyRecommendationComponent,
 			},
-
+			{
+				path: 'thong-tin-cong-bo',
+				component: InfomationPublicComponent,
+			},
+			{
+				path: 'ti-le-khong-hai-long',
+				component: UnitDissatisfactionRateComponent,
+			},
+			
+			//UnitDissatisfactionRateComponent
 			{
 				path: 'tai-khoan',
 				loadChildren: './account/account.module#AccountModule', //() => import('./account/account.module').then((m) => m.AccountModule),

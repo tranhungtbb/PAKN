@@ -43,6 +43,9 @@ import { GalleryComponent } from './gallery/gallery.component'
 import { StatisticsComponent } from './statistics/statistics.component'
 import { NewsHightLightComponent } from './news-hight-light/news-hight-light.component'
 import { Index2Component } from './index2/index2.component'
+import { ReceiveDenyRecommendationsComponent } from './receive-deny-recommendations/receive-deny-recommendations.component'
+import { InfomationPublicComponent } from './infomation-public/infomation-public.component'
+import { UnitDissatisfactionRateComponent } from './unit-dissatisfaction-rate/unit-dissatisfaction-rate.component'
 
 @NgModule({
 	declarations: [
@@ -75,6 +78,9 @@ import { Index2Component } from './index2/index2.component'
 		GalleryComponent,
 		StatisticsComponent,
 		NewsHightLightComponent,
+		ReceiveDenyRecommendationsComponent,
+		InfomationPublicComponent,
+		UnitDissatisfactionRateComponent
 	],
 	imports: [
 		CommonModule,
