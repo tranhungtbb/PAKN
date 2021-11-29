@@ -302,4 +302,8 @@ export class PublishComponent implements OnInit, OnChanges {
 		this.sendMessage(this.textMessage)
 		this.textMessage = null
 	}
+
+	goToLink(url: string){
+    window.open(url, "_blank");
+}
 }

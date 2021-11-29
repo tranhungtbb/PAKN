@@ -137,7 +137,8 @@
 							</li> -->
 							<li class="nav-item ps-relative">
 								<a class="nav-link" (click)="ngOnChanges()" routerLinkActive="active"
-									[routerLink]="['./danh-sach-phan-anh-kien-nghi']">Phản ánh - kiến nghị <i class="fas fa-caret-down ml-2"></i></a>
+									[routerLink]="['./danh-sach-phan-anh-kien-nghi']">Phản ánh - kiến nghị <i
+										class="fas fa-caret-down ml-2"></i></a>
 								<ul class="bg-white rounded sub-nav border" style="z-index: 100000;">
 									<ng-container *ngFor="let item of subMenu;let i = index">
 										<li class="p-3 rounded sub-item" title="{{item.text}}">
@@ -237,8 +238,10 @@
 
 						<h4>Tải app</h4>
 						<div>
-							<img style="width: 127px; border-radius: 6px;" class="img-cover pointer mr-3" src="../../../assets/dist/images/ios.png">
-							<img style="width: 127px; border-radius: 6px;" class="img-cover pointer" src="../../../assets/dist/images/google-play.png">
+							<img style="width: 127px; border-radius: 6px;" class="img-cover pointer mr-3"
+								src="../../../assets/dist/images/ios.png">
+							<img style="width: 127px; border-radius: 6px;" class="img-cover pointer"
+								src="../../../assets/dist/images/google-play.png">
 						</div>
 					</div>
 				</div>
@@ -253,7 +256,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="message-now center">
+	<div class="message-now center pointer">
 		<div class="message-content center" (click)="showHideMessage()">
 			<div>
 				<svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#fff" class="bi bi-messenger"
@@ -299,29 +302,29 @@
 												<div *ngIf="tag.title" class="msg_cotainer_child" (click)="sendMessage(tag.title,true)">
 													{{tag.title}}
 												</div>
-												<a *ngIf="tag.link" routerLink="tag.link">
+												<a *ngIf="tag.link" class="pointer" (click)="goToLink(tag.link)">
 													{{tag.link}}
 												</a>
 											</ng-container>
 											<span class="msg_time">{{message.dateSent}}</span>
 										</div>
 									</div>
-									
+
 
 									<div *ngIf="message.fromId == 0" class="d-flex justify-content-end mb-4">
-									
+
 										<div class="msg_cotainer_send">
 											{{message.title}}
 											<span class="msg_time_send">{{message.dateSent}}</span>
 										</div>
 										<div class="img_cont_msg">
-											<div class="rounded-circle user_img_msg" ></div>
+											<div class="rounded-circle user_img_msg"></div>
 										</div>
 									</div>
-									
+
 								</ng-container>
-						
-								<div  *ngIf="loading == true" style="display: none;" class="chat-bubble">
+
+								<div *ngIf="loading == true" style="display: none;" class="chat-bubble">
 									<div class="typing">
 										Bot is typing
 										<div class="ml-2 dot"></div>
@@ -347,7 +350,7 @@
 		</div>
 	</div>
 
-	<div class="call-now center">
+	<div class="call-now center  pointer">
 		<div class="call-content center">
 			<a href="tel:+0258 3563 531"><i style="font-size: 19px;color: #fff;" class="bi bi-telephone-fill"></i></a>
 		</div>
