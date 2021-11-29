@@ -6,6 +6,7 @@ import { AppSettings } from '../constants/app-setting'
 import { Api } from '../constants/api'
 import { catchError, tap } from 'rxjs/operators'
 import { LOG_ACTION, LOG_OBJECT } from '../constants/CONSTANTS'
+import { UserInfoStorageService } from '../commons/user-info-storage.service'
 
 @Injectable({
 	providedIn: 'root',
@@ -17,7 +18,7 @@ export class CatalogService {
 			return of(result as T)
 		}
 	}
-	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService) {}
+	constructor(private http: HttpClient, private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService) {}
 
 	fieldGetList(request: any): Observable<any> {
 		let headers = {
@@ -365,5 +366,61 @@ export class CatalogService {
 			logObject: encodeURIComponent(LOG_OBJECT.CA_DEPARTMENT + ' ' + title),
 		}
 		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.DepartmentDelete, headers)
+	}
+
+	publishNotificationGetList(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETLIST),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_PublishNotification),
+		}
+		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.PublishNotificationGetList, headers)
+	}
+
+	publishNotificationGetById(request: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.GETINFO),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_PublishNotification),
+		}
+		return this.serviceInvoker.getwithHeaders(request, AppSettings.API_ADDRESS + Api.PublishNotificationGetById, headers)
+	}
+
+	publishNotificationInsert(request: any): Observable<any> {
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
+			macAddress: '',
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_PublishNotification + ' ' + request.name),
+		})
+		const form = new FormData()
+		form.append('Data', JSON.stringify(request))
+		const httpPackage = {
+			headers: tempheaders,
+			reportProgress: true,
+		}
+		return this.http.post(AppSettings.API_ADDRESS + Api.PublishNotificationInsert, form, httpPackage)
+	}
+
+	publishNotificationUpdate(request: any): Observable<any> {
+		let tempheaders = new HttpHeaders({
+			ipAddress: this.storeageService.getIpAddress() && this.storeageService.getIpAddress() != 'null' ? this.storeageService.getIpAddress() : '',
+			macAddress: '',
+			logAction: encodeURIComponent(LOG_ACTION.INSERT),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_PublishNotification + ' ' + request.name),
+		})
+		const form = new FormData()
+		form.append('Data', JSON.stringify(request))
+		const httpPackage = {
+			headers: tempheaders,
+			reportProgress: true,
+		}
+		return this.http.post(AppSettings.API_ADDRESS + Api.PublishNotificationUpdate, form, httpPackage)
+	}
+
+	publishNotificationDelete(request: any, title: any): Observable<any> {
+		let headers = {
+			logAction: encodeURIComponent(LOG_ACTION.DELETE),
+			logObject: encodeURIComponent(LOG_OBJECT.SY_PublishNotification + ' ' + title),
+		}
+		return this.serviceInvoker.postwithHeaders(request, AppSettings.API_ADDRESS + Api.PublishNotificationDelete, headers)
 	}
 }

@@ -126,13 +126,13 @@
 					<div #boxChat class="card-body msg_card_body" [scrollTop]="boxChat.scrollHeight"
 						(scroll)="onScrollBoxChat($event)">
 						<ng-container *ngFor="let message of messages">
-							<div *ngIf="message.fromUserId != 0" class="d-flex justify-content-start mb-4">
+							<div *ngIf="message.fromUserId != userId" class="d-flex justify-content-start mb-4">
 								<div class="msg_cotainer">
 									{{message.messageContent}}
 									<span class="msg_time">{{message.dateSend | date:'HH:mm:ss dd/MM/yyyy'}}</span>
 								</div>
 							</div>
-							<div *ngIf="message.fromUserId == 0" class="d-flex justify-content-end mb-4">
+							<div *ngIf="message.fromUserId == userId" class="d-flex justify-content-end mb-4">
 								<div class="msg_cotainer_send">
 									<!-- {{message.messageContent}} -->
 									{{message.messageContent.Content}}

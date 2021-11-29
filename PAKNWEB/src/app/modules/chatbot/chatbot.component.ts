@@ -22,14 +22,15 @@ export class DashboardChatBotComponent implements OnInit {
 	pageSize: number = 10
 	totalMessage: number = 0
 	roomActive: number = 0
+	userId: number
 	@ViewChild('boxChat', { static: true }) private boxChat: ElementRef
 
 	constructor(private botService: ChatBotService, private user: UserInfoStorageService) {}
 	ngOnInit() {
 		console.log('ngOnInit 0')
-		const userId = this.user.getUserId()
+		this.userId = this.user.getUserId()
 		this.connection = new signalR.HubConnectionBuilder()
-			.withUrl(`${AppSettings.SIGNALR_ADDRESS}?sysUserName=${userId}`, {
+			.withUrl(`${AppSettings.SIGNALR_ADDRESS}?sysUserName=${this.userId}`, {
 				skipNegotiation: true,
 				transport: signalR.HttpTransportType.WebSockets,
 			})
@@ -40,9 +41,10 @@ export class DashboardChatBotComponent implements OnInit {
 		this.connection.keepAliveIntervalInMilliseconds = 180000
 		this.connection.start().then(() => {
 			this.connection.on('ReceiveMessageToGroup', (data: any) => {
-				console.log('ngOnInit SignalR ReceiveMessageToGroup ', data)
-				if (data.type === 'Conversation' && this.roomNameSelected && this.roomNameSelected === data.from) {
-					this.messages = [{ messageContent: data.content }, ...this.messages].reverse()
+				console.log('ngOnInit SignalR ReceiveMessageToGroup 1', data, this.roomNameSelected, this.userId)
+				if (data.type === 'Conversation' && this.roomNameSelected && this.roomNameSelected === data.to && `${this.userId}` !== data.from) {
+					this.messages = [...this.messages, { messageContent: data.content }]
+					console.log('ngOnInit SignalR ReceiveMessageToGroup 2', this.messages)
 				}
 				
 				this.convertMessageToObjectList();
@@ -126,7 +128,7 @@ export class DashboardChatBotComponent implements OnInit {
 		if (this.newMessage !== '') {
 			console.log('sendMessage ', this.newMessage)
 			this.connection.invoke('SendToRoom', this.roomNameSelected, this.newMessage)
-			this.messages = [...this.messages, { messageContent: this.newMessage }]
+			this.messages = [...this.messages, { messageContent: this.newMessage, fromUserId: this.userId }]
 			this.newMessage = ''
 			this.convertMessageToObjectList();
 		}

@@ -13,14 +13,15 @@ import { RecommendationService } from 'src/app/services/recommendation.service'
 	styleUrls: ['./infomation-public.component.css'],
 })
 export class InfomationPublicComponent implements OnInit {
-	constructor(
-		private service: PuRecommendationService,
-		private routers: Router,
-		private _toas: ToastrService
-	) {}
+	dataNotification: any = {}
+	constructor(private service: PuRecommendationService, private routers: Router, private _toas: ToastrService) {}
 
 	currentDate = new Date()
 	async ngOnInit() {
-		
+		this.service.notificationGetDashboard({}).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				this.dataNotification = res.result
+			}
+		})
 	}
 }

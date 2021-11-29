@@ -1395,13 +1395,6 @@ namespace PAKNAPI.ModelBase
 
 	public class MRRecommendationGetByIDView
 	{
-		private SQLCon _sQLCon;
-
-		public MRRecommendationGetByIDView(IAppSetting appSetting)
-		{
-			_sQLCon = new SQLCon(appSetting.GetConnectstring());
-		}
-
 		public MRRecommendationGetByIDView()
 		{
 		}
@@ -1418,7 +1411,7 @@ namespace PAKNAPI.ModelBase
 		public string Name { get; set; }
 		public string Email { get; set; }
 		public string Phone { get; set; }
-		public byte? Status { get; set; }
+		public int? Status { get; set; }
 		public DateTime? SendDate { get; set; }
 		public bool? ReactionaryWord { get; set; }
 		public long? CreatedBy { get; set; }
@@ -1442,13 +1435,13 @@ namespace PAKNAPI.ModelBase
 		public int? UnitReceiveId { get; set; }
 		public bool? IsForwardProcess { get; set; }
 
-		public async Task<List<MRRecommendationGetByIDView>> MRRecommendationGetByIDViewDAO(int? Id)
-		{
-			DynamicParameters DP = new DynamicParameters();
-			DP.Add("Id", Id);
+		//public async Task<List<MRRecommendationGetByIDView>> MRRecommendationGetByIDViewDAO(int? Id)
+		//{
+		//	DynamicParameters DP = new DynamicParameters();
+		//	DP.Add("Id", Id);
 
-			return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByIDView>("MR_RecommendationGetByIDView", DP)).ToList();
-		}
+		//	return (await _sQLCon.ExecuteListDapperAsync<MRRecommendationGetByIDView>("MR_RecommendationGetByIDView", DP)).ToList();
+		//}
 	}
 
 	public class MRRecommendationGetDataGraph

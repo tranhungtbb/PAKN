@@ -2,20 +2,15 @@
 	<div class="container">
 		<div class="row justify-content-between">
 			<p class="col-12 h4 red-title mb-2" *ngIf="isPreview">(Xem trước)</p>
-			<div class="col-8 col-lg-8 col-md-8"> 
-				
+			<div class="col-8 col-lg-8 col-md-8">
 				<div class="box">
 					<div class="row">
 						<div class="col col-sm-6 col-md-6 col-lg-6">
-							<a href="javascript:void(0)"><img class="img-fluid card"
-								style="width: 100%;"
-								src="../../../../assets/dist/images/index2/Frame 3558.png" alt="">
+							<a href="javascript:void(0)"><img class="img-fluid card" style="width: 100%;" src="../../../../assets/dist/images/index2/Frame 3558.png" alt="">
 							</a>
 						</div>
 						<div class="col col-sm-6 col-md-6 col-lg-6">
-							<a href="javascript:void(0)"><img class="img-fluid card"
-								style="width: 100%;"
-								src="../../../../assets/dist/images/index2/Frame 3559.png" alt="">
+							<a href="javascript:void(0)"><img class="img-fluid card" style="width: 100%;" src="../../../../assets/dist/images/index2/Frame 3559.png" alt="">
 							</a>
 						</div>
 
@@ -35,9 +30,7 @@
 									</ng-container>
 								</div>
 								<div class="tt-v1 d-flex justify-content-end">
-									<a class="read-more" title="Xem thêm" 
-										routerLink="/cong-bo/phan-anh-kien-nghi-khong-tiep-nhan"
-									> Xem thêm
+									<a class="read-more" title="Xem thêm" routerLink="/cong-bo/phan-anh-kien-nghi-khong-tiep-nhan"> Xem thêm
 									</a>
 								</div>
 							</div>
@@ -71,27 +64,26 @@
 										</div>
 									</div>
 									<span class="card-date">{{item.createdDate | date : 'dd/MM/yyyy'}}</span>
-									<a class="read-more" *ngIf="item.totalComment"
-										routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}"
-										><i class="bi bi-chat-right-fill cl-blue"></i> {{item.totalComment}}
+									<a class="read-more" *ngIf="item.totalComment" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}"><i
+											class="bi bi-chat-right-fill cl-blue"></i> {{item.totalComment}}
 									</a>
 								</div>
-								
+
 								<p class="card-text">
 									<a class="text-2line italic lh-20" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}" [innerHTML]="item.content | Change">
-										
+
 									</a>
 								</p>
 							</div>
-					</div>
+						</div>
 					</ng-container>
 				</div>
-			
+
 
 				<div class="box" *ngIf="!isHomeMain">
 					<div class="tt-v1 mb-3 d-flex justify-content-between">
 						<h4 class="text-uppercase">Danh sách phản ánh, kiến nghị đã được xử lý</h4>
-						<button  class="btn text-dark border border-radius-4 btn-girl" type="button" (click)="isGrid =!isGrid">
+						<button class="btn text-dark border border-radius-4 btn-girl" type="button" (click)="isGrid =!isGrid">
 							<i class="bi bi-list-ul"></i>
 							<span class="ml-2">{{ isGrid ? 'Xem dạng danh sách' : 'Xem dạng lưới'}}</span>
 						</button>
@@ -100,32 +92,24 @@
 						<ng-container *ngFor="let item of ReflectionsRecommendations; let i = index">
 							<div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6" *ngIf="i < 8">
 								<div class="card border">
-									<img class="img-fluid img-cover img-field" *ngIf="i== 2"
-										style="width: 100%;"
-										src="../../../../assets/dist/images/index2/Rectangle 1303.png" alt="">
+									<img class="img-fluid img-cover img-field" *ngIf="i== 2" style="width: 100%;" src="../../../../assets/dist/images/index2/Rectangle 1303.png"
+										alt="">
 
-									<img class="img-fluid img-cover img-field" *ngIf="i== 1"
-										style="width: 100%;"
-										src="../../../../assets/dist/images/index2/Rectangle 1303 (1).png" alt="">
+									<img class="img-fluid img-cover img-field" *ngIf="i== 1" style="width: 100%;" src="../../../../assets/dist/images/index2/Rectangle 1303 (1).png"
+										alt="">
 
-									<img class="img-fluid img-cover img-field" *ngIf="i== 0"
-										style="width: 100%;"
-										src="../../../../assets/dist/images/index2/Rectangle 1303 (2).png" alt="">
-									<img class="img-fluid img-cover img-field" *ngIf="i== 3"
-										style="width: 100%;"
-										src="../../../../assets/dist/images/index2/Rectangle 1303 (3).png" alt="">
-									<img class="img-fluid img-cover img-field" *ngIf="i== 4"
-										style="width: 100%;"
-										src="../../../../assets/dist/images/index2/Rectangle 1303 (4).png" alt="">
-									<img class="img-fluid img-cover img-field" *ngIf="i== 5"
-										style="width: 100%;"
-										src="../../../../assets/dist/images/index2/Rectangle 1303 (5).png" alt="">
-									<img class="img-fluid img-cover img-field" *ngIf="i== 6"
-										style="width: 100%;"
-										src="../../../../assets/dist/images/index2/Rectangle 1303 (6).png" alt="">
-									<img class="img-fluid img-cover img-field" *ngIf="i== 7"
-										style="width: 100%;"
-										src="../../../../assets/dist/images/index2/Rectangle 1303 (7).png" alt="">
+									<img class="img-fluid img-cover img-field" *ngIf="i== 0" style="width: 100%;" src="../../../../assets/dist/images/index2/Rectangle 1303 (2).png"
+										alt="">
+									<img class="img-fluid img-cover img-field" *ngIf="i== 3" style="width: 100%;" src="../../../../assets/dist/images/index2/Rectangle 1303 (3).png"
+										alt="">
+									<img class="img-fluid img-cover img-field" *ngIf="i== 4" style="width: 100%;" src="../../../../assets/dist/images/index2/Rectangle 1303 (4).png"
+										alt="">
+									<img class="img-fluid img-cover img-field" *ngIf="i== 5" style="width: 100%;" src="../../../../assets/dist/images/index2/Rectangle 1303 (5).png"
+										alt="">
+									<img class="img-fluid img-cover img-field" *ngIf="i== 6" style="width: 100%;" src="../../../../assets/dist/images/index2/Rectangle 1303 (6).png"
+										alt="">
+									<img class="img-fluid img-cover img-field" *ngIf="i== 7" style="width: 100%;" src="../../../../assets/dist/images/index2/Rectangle 1303 (7).png"
+										alt="">
 
 									<div class="tt-v1 mb-3 d-flex justify-content-between no-grd-blue title-field pl-3 center">
 										<h4 class="text-uppercase mb-0  text-white">{{item.fieldName}}</h4>
@@ -140,27 +124,24 @@
 												</p>
 												<div class="tt-v1 mb-3 d-flex justify-content-between">
 													<p class="card-date">{{mr.recommendation.createdDate | date : 'dd/MM/yyyy'}}</p>
-													<a class="read-more" *ngIf="mr.recommendation.totalComment"
-														routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}"
-													> <i class="bi bi-chat-right-fill cl-blue"></i> {{mr.recommendation.totalComment}}
+													<a class="read-more" *ngIf="mr.recommendation.totalComment" routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}">
+														<i class="bi bi-chat-right-fill cl-blue"></i> {{mr.recommendation.totalComment}}
 													</a>
 												</div>
-												
+
 											</div>
 										</ng-container>
 									</div>
 
 									<div class="tt-v1 mb-3 d-flex justify-content-end mr-3">
-										<a class="read-more" title="Xem thêm" 
-											routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi/{{item.fieldId}}"
-										> Xem thêm
+										<a class="read-more" title="Xem thêm" routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi/{{item.fieldId}}"> Xem thêm
 										</a>
 									</div>
 								</div>
-								
+
 							</div>
 						</ng-container>
-						
+
 					</div>
 
 					<div *ngIf="isGrid">
@@ -174,7 +155,7 @@
 							<ng-container *ngFor="let mr of item.listRecommendation;let i = index">
 								<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4" *ngIf="i < 3">
 									<div class="card mb-lg-0">
-										<a routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}"  class="image-box ratio-16-9 bd-12">
+										<a routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}" class="image-box ratio-16-9 bd-12">
 											<span class="image">
 												<img class="img-cover" *ngIf="!mr.filePath" src="../../../../assets/dist/images/no-img.png">
 												<img class="img-cover" *ngIf="mr.filePath" src="{{mr.filePath}}">
@@ -189,9 +170,8 @@
 									<!-- <p class="card-date">{{mr.recommendation.createdDate | date : 'dd/MM/yyyy'}}</p> -->
 									<div class="tt-v1 mb-3 d-flex justify-content-between">
 										<p class="card-date">{{mr.recommendation.createdDate | date : 'dd/MM/yyyy'}}</p>
-										<a class="read-more" *ngIf="mr.recommendation.totalComment"
-											routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}"
-										> <i class="bi bi-chat-right-fill cl-blue"></i> {{mr.recommendation.totalComment}}
+										<a class="read-more" *ngIf="mr.recommendation.totalComment" routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}"> <i
+												class="bi bi-chat-right-fill cl-blue"></i> {{mr.recommendation.totalComment}}
 										</a>
 									</div>
 								</div>
@@ -202,26 +182,18 @@
 			</div>
 			<div class="col-4 col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
 				<a href="javascript:void(0)">
-					<img class="img-fluid card" style="height: 200px; width: 100%;"
-						src="../../../../assets/dist/images/index2/Frame 3482.png" alt="">
+					<img class="img-fluid card" style="height: 200px; width: 100%;" src="../../../../assets/dist/images/index2/Frame 3482.png" alt="">
 				</a>
-				
+
 				<div class="mt-4">
 					<div class="card border pt-4 p-3 bg-notification">
 						<div class="tt-v1 mb-3 d-flex justify-content-between">
 							<h4 class="text-uppercase mb-0 ">thông báo</h4>
 						</div>
-						<div class="title-notification mb-2">Công khai vi phạm</div>
-						<p class="content-notification">
-							Thời gian qua, trong quá trình thực tiễn triển khai phản ánh hiện trường đã xuất hiện những bất cập từ công tác xử lý. 
-							Nhằm nâng cao hiệu quả trong thời gian tới, UBND tỉnh chỉ đạo công khai các vấn đề vi phạm qua đó để tuyên truyền nâng
-								cao nhận thức, ý thức chấp hành giao thông của người dân. Bên cạnh đó, những vi phạm đã được tiếp nhận nhưng do chưa 
-								có sự phối...
-						</p>
+						<div class="title-notification mb-2">{{dataNotification.title}}</div>
+						<p class="content-notification">{{dataNotification.content}}</p>
 						<div class="tt-v1 mb-3 d-flex justify-content-end mr-3">
-							<a class="read-more" title="Xem thêm" 
-								routerLink="/cong-bo/thong-tin-cong-bo"
-							> Xem thêm
+							<a class="read-more" title="Xem thêm" routerLink="/cong-bo/thong-tin-cong-bo"> Xem thêm
 							</a>
 						</div>
 					</div>
@@ -243,16 +215,14 @@
 								</li>
 							</ul>
 						</div>
-						
+
 						<div class="tt-v1 mb-3 d-flex justify-content-end mr-3">
-							<a class="read-more" title="Xem thêm" 
-								routerLink="/cong-bo/ti-le-khong-hai-long"
-							> Xem thêm
+							<a class="read-more" title="Xem thêm" routerLink="/cong-bo/ti-le-khong-hai-long"> Xem thêm
 							</a>
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="mt-4" *ngIf="lateProcessingUnit">
 					<div class="card border pt-4 p-3 bg-notification">
 						<div class="tt-v1 mb-3 d-flex justify-content-between">
@@ -268,17 +238,15 @@
 								</li>
 							</ul>
 						</div>
-						
+
 						<div class="tt-v1 mb-3 d-flex justify-content-end mr-3">
-							<a class="read-more" title="Xem thêm" 
-								routerLink="/cong-bo/don-vi-xu-ly-tre-han"
-							> Xem thêm
+							<a class="read-more" title="Xem thêm" routerLink="/cong-bo/don-vi-xu-ly-tre-han"> Xem thêm
 							</a>
 						</div>
 					</div>
 				</div>
-				
-				
+
+
 				<div class="mt-4" *ngIf="recommendationsHighLight">
 					<div class="card border pt-4 p-3">
 						<div class="tt-v1 mb-3 d-flex justify-content-between">
@@ -293,17 +261,16 @@
 								</p>
 								<div class="tt-v1 mb-3 d-flex justify-content-between">
 									<p class="card-date">{{mr.createdDate | date : 'dd/MM/yyyy'}}</p>
-									<a class="read-more" *ngIf="mr.totalComment"
-										routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.id}}"
-									> <i class="bi bi-chat-right-fill cl-blue"></i> {{mr.totalComment}}
+									<a class="read-more" *ngIf="mr.totalComment" routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.id}}"> <i class="bi bi-chat-right-fill cl-blue"></i>
+										{{mr.totalComment}}
 									</a>
 								</div>
 							</div>
 						</ng-container>
 					</div>
 				</div>
-				
-				
+
+
 				<div class="mt-4" *ngIf="recommendationsProcessing">
 					<div class="card border pt-4 p-3">
 						<div class="tt-v1 mb-3 d-flex justify-content-between title-field center">
@@ -318,21 +285,18 @@
 								</p>
 								<div class="tt-v1 mb-3 d-flex justify-content-between">
 									<p class="card-date">{{mr.createdDate | date : 'dd/MM/yyyy'}}</p>
-									<a class="read-more" *ngIf="mr.totalComment"
-										routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.id}}"
-									> <i class="bi bi-chat-right-fill cl-blue"></i> {{mr.totalComment}}
+									<a class="read-more" *ngIf="mr.totalComment" routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.id}}"> <i class="bi bi-chat-right-fill cl-blue"></i>
+										{{mr.totalComment}}
 									</a>
 								</div>
-								
+
 							</div>
 						</ng-container>
-						
+
 					</div>
 				</div>
-				
-				<a href="javascript:void(0)"><img class="img-fluid card mt-4"
-					style="width: 100%; height: 150px;"
-					src="../../../../assets/dist/images/Rectangle 365.png" alt="">
+
+				<a href="javascript:void(0)"><img class="img-fluid card mt-4" style="width: 100%; height: 150px;" src="../../../../assets/dist/images/Rectangle 365.png" alt="">
 				</a>
 			</div>
 		</div>
@@ -341,13 +305,11 @@
 
 		<div class="row justify-content-between" *ngIf="isLogin">
 			<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 pt-4">
-				<a href="#"><img class="img-fluid card bd-20" style="width: 100%; height: 100%;"
-					src="../../../../assets/dist/images/banner-index-1.png" alt="">
+				<a href="#"><img class="img-fluid card bd-20" style="width: 100%; height: 100%;" src="../../../../assets/dist/images/banner-index-1.png" alt="">
 				</a>
 			</div>
 			<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 pt-4">
-				<a href="#"><img class="img-fluid card bd-20" style="width: 100%; height: 100%;"
-					src="../../../../assets/dist/images/banner-index-2.png" alt="">
+				<a href="#"><img class="img-fluid card bd-20" style="width: 100%; height: 100%;" src="../../../../assets/dist/images/banner-index-2.png" alt="">
 				</a>
 			</div>
 		</div>
@@ -355,26 +317,22 @@
 		<div class="row justify-content-between" *ngIf="!isLogin">
 			<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 pt-4">
 				<a href="#">
-					<img class="img-fluid card bd-12" style="width: 100%; height: 100%;"
-					src="../../../../assets/dist/images/child-banner-1.png" alt="">
+					<img class="img-fluid card bd-12" style="width: 100%; height: 100%;" src="../../../../assets/dist/images/child-banner-1.png" alt="">
 				</a>
 			</div>
 			<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 pt-4">
 				<a href="#">
-					<img class="img-fluid card bd-12" style="width: 100%; height: 100%;"
-					src="../../../../assets/dist/images/child-banner-2.png" alt="">
+					<img class="img-fluid card bd-12" style="width: 100%; height: 100%;" src="../../../../assets/dist/images/child-banner-2.png" alt="">
 				</a>
 			</div>
 			<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 pt-4">
 				<a href="#">
-					<img class="img-fluid card bd-12" style="width: 100%; height: 100%;"
-					src="../../../../assets/dist/images/child-banner-3.png" alt="">
+					<img class="img-fluid card bd-12" style="width: 100%; height: 100%;" src="../../../../assets/dist/images/child-banner-3.png" alt="">
 				</a>
 			</div>
 			<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 pt-4">
 				<a href="#">
-					<img class="img-fluid card bd-12" style="width: 100%; height: 100%;"
-					src="../../../../assets/dist/images/child-banner-4.png" alt="">
+					<img class="img-fluid card bd-12" style="width: 100%; height: 100%;" src="../../../../assets/dist/images/child-banner-4.png" alt="">
 				</a>
 			</div>
 		</div>
@@ -388,44 +346,41 @@
 				<div class="box">
 					<div class="tt-v1 pt-3 mb-3 d-flex justify-content-between">
 						<h4 class="text-uppercase">thủ tục hành chính</h4>
-						<a class="read-more" style="color: #1673D8; font-size: 22px;" 
-							routerLink="/cong-bo/thu-tuc-hanh-chinh" ><i class="bi bi-arrow-right"></i></a>
+						<a class="read-more" style="color: #1673D8; font-size: 22px;" routerLink="/cong-bo/thu-tuc-hanh-chinh"><i class="bi bi-arrow-right"></i></a>
 					</div>
 					<div>
 						<p-table [value]="Administrations">
 							<ng-template pTemplate="header">
-									<tr>
-											<th style="width: 200px;">Mã quản lý quốc gia</th>
-											<th>Thủ tục hành chính</th>
-											<th style="width: 180px;">Lĩnh vực</th>
-									</tr>
+								<tr>
+									<th style="width: 200px;">Mã quản lý quốc gia</th>
+									<th>Thủ tục hành chính</th>
+									<th style="width: 180px;">Lĩnh vực</th>
+								</tr>
 							</ng-template>
 							<ng-template pTemplate="body" let-item>
-									<tr>
-											<td>{{item.code}}</td>
-											<td>
-												<strong class="text-2line cursor" (click)="redirectDetailAdministration(item.administrationId)">
-													{{item.name}}
-												</strong>
-												<div class="d-flex pt-2">
-													<p class="mb-0">Mã nội bộ: {{item.code}}</p>
-													<p class="mb-0 ml-4">Mức độ</p>
-													<span class="ml-2 number-lever center">{{ item.level}}</span>
-												</div>
-											</td>
-											<td>{{item.fieldName}}</td>
-									</tr>
+								<tr>
+									<td>{{item.code}}</td>
+									<td>
+										<strong class="text-2line cursor" (click)="redirectDetailAdministration(item.administrationId)">
+											{{item.name}}
+										</strong>
+										<div class="d-flex pt-2">
+											<p class="mb-0">Mã nội bộ: {{item.code}}</p>
+											<p class="mb-0 ml-4">Mức độ</p>
+											<span class="ml-2 number-lever center">{{ item.level}}</span>
+										</div>
+									</td>
+									<td>{{item.fieldName}}</td>
+								</tr>
 							</ng-template>
-					</p-table>
+						</p-table>
 					</div>
 				</div>
 			</div>
 			<div class="col-4 col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
 				<app-gallery></app-gallery>
 				<a href="javascript:void(0)">
-					<img class="img-fluid card mt-4"
-						style="width: 100%; height: 150px;"
-						src="../../../../assets/dist/images/child-banner-3.png" alt="">
+					<img class="img-fluid card mt-4" style="width: 100%; height: 150px;" src="../../../../assets/dist/images/child-banner-3.png" alt="">
 				</a>
 			</div>
 		</div>

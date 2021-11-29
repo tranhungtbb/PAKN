@@ -94,10 +94,7 @@ namespace SignalR.Hubs
                 var messageId = await new BOTMessage(_appSetting).BOTMessageInsertDAO(message, senderUserId, room.Id, dateSent);
                 await Clients.Group(room.Name).ReceiveMessageToGroup(messageModel);
             }
-            
         }
-
-        
 
         public async Task AnonymousChatWithBot(string message)
         {
@@ -108,7 +105,7 @@ namespace SignalR.Hubs
             string roomName = "Room_" + senderUserName;
             BOTAnonymousUser senderUser = await new BOTAnonymousUser(_appSetting).BOTAnonymousUserGetByUserName(senderUserName);
             var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
-
+            await SendToRoom(roomName, message);
             if (senderUser != null && room != null && room.Type == (int)BotStatus.Enable )
             {
 
@@ -136,7 +133,7 @@ namespace SignalR.Hubs
             }
             else
             {
-                //await SendToRoom(roomName, message);
+                
             }
         }
 

@@ -70,6 +70,7 @@ export class Api {
 	public static RecommendationReceiveDeny = 'pu-recommendation/get-list-recommentdation-receive-deny'
 	public static PuRecomentdationHightLight = 'pu-recommendation/recommendations-hight-light'
 	public static PuRecomentdationProcessing = 'pu-recommendation/recommendations-processing'
+	public static PuNotificationGetDashboard = 'pu-recommendation/notification-getdashboard'
 	public static MyRecommendationGetAllOnPage = 'pu-recommendation/get-list-my-recommentdation-on-page'
 	public static PuRecommendationGetById = 'pu-recommendation/get-by-id'
 	public static PuChangeSatisfaction = 'pu-recommendation/change-satisfaction'
@@ -301,6 +302,13 @@ export class Api {
 	public static VillageGetAll = 'administrative/get-list-village'
 	public static GetAllByProvinceId = 'administrative/get-list-province-by-province-id'
 	public static AdministrativeUnits = 'administrative/get-drop-down'
+
+	//PublishNotification
+	public static PublishNotificationGetList = 'notification/publish-get-all'
+	public static PublishNotificationGetById = 'notification/publish-get-by-id'
+	public static PublishNotificationInsert = 'notification/publish-insert'
+	public static PublishNotificationUpdate = 'notification/publish-update'
+	public static PublishNotificationDelete = 'notification/publish-delete'
 
 	//register
 	public static RegisterIndividual = 'user/individual-register'
