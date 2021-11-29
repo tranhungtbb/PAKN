@@ -48,7 +48,7 @@ export class ViewRightComponent implements OnInit {
 	}
 	async getData() {
 		// list recommendation order by count click
-		this._service.getListOrderByCountClick({ status: RECOMMENDATION_STATUS.FINISED }).subscribe((res) => {
+		this._service.getListHightLight({ status: RECOMMENDATION_STATUS.FINISED }).subscribe((res) => {
 			if (res != undefined) {
 				if (res.result) {
 					this.RecommendationsOrderByCountClick = res.result

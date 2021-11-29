@@ -37,6 +37,10 @@ export class Index2Component implements OnInit, AfterViewInit {
 	@ViewChild(ViewRightComponent, { static: true }) viewRightComponent: ViewRightComponent
 	isLogin: boolean = this.storageService.getIsHaveToken()
 	ReflectionsRecommendations: Array<PuRecommendation>
+	recommendationsReceiveDeny : Array<PuRecommendation>
+	recommendationsHighLight : Array<PuRecommendation>
+	recommendationsProcessing : Array<PuRecommendation>
+
 	news: any[]
 	firstNews: any
 	Administrations: any[]
@@ -100,17 +104,44 @@ export class Index2Component implements OnInit, AfterViewInit {
 				console.log(err)
 			}
 		)
+
+		this._service.getRecommendationReceiveDeny({
+			PageSize : 6,
+			PageIndex : 1
+		}).subscribe(res =>{
+			if(res.success == RESPONSE_STATUS.success){
+				if(res.result.RecommendationReceiveDeny){
+					this.recommendationsReceiveDeny = res.result.RecommendationReceiveDeny
+				}
+			}
+			else{
+				this._toa.error(res.message)
+			}
+		},(err) =>{
+			console.log(err)
+		})
 		//list news
-		this._newsService.getListHomePage({}).subscribe((res) => {
-			if (res.success != RESPONSE_STATUS.success) {
-				return
+		// this._newsService.getListHomePage({}).subscribe((res) => {
+		// 	if (res.success != RESPONSE_STATUS.success) {
+		// 		return
+		// 	}
+		// 	if (res.result.length > 0) {
+		// 		this.firstNews = res.result[0]
+		// 		res.result.shift()
+		// 		this.news = res.result
+		// 	}
+		// 	return
+		// })
+		this._service.getListHightLight({}).subscribe(res =>{
+			if(res.success == RESPONSE_STATUS.success){
+				this.recommendationsHighLight = res.result
 			}
-			if (res.result.length > 0) {
-				this.firstNews = res.result[0]
-				res.result.shift()
-				this.news = res.result
+		})
+
+		this._service.getListProcessing({}).subscribe(res =>{
+			if(res.success == RESPONSE_STATUS.success){
+				this.recommendationsProcessing = res.result
 			}
-			return
 		})
 		// list thủ tục hành chính
 		this._serviceAdministrative.getListHomePage({}).subscribe((res) => {

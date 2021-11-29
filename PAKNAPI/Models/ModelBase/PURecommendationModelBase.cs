@@ -44,6 +44,7 @@ namespace PAKNAPI.Models.ModelBase
         public string UnitName { get; set; }
 
         public string FieldName { get; set; }
+        public int TotalComment { get; set; }
 
         public PURecommendation(IAppSetting appSetting)
         {
@@ -66,6 +67,17 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("PageIndex", PageIndex);
 
             return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetAllOnPage", DP)).ToList();
+        }
+        public async Task<List<PURecommendation>> PURecommendationReceiveDeny(string KeySearch, int? FieldId, int? UnitId, int PageSize, int PageIndex)
+        {
+            DynamicParameters DP = new DynamicParameters();
+            DP.Add("KeySearch", KeySearch);
+            DP.Add("FieldId", FieldId);
+            DP.Add("UnitId", UnitId);
+            DP.Add("PageSize", PageSize);
+            DP.Add("PageIndex", PageIndex);
+
+            return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_Recommendation_ReceiveDeny", DP)).ToList();
         }
 
 
@@ -95,6 +107,13 @@ namespace PAKNAPI.Models.ModelBase
             DP.Add("Status", Status);
 
             return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationGetListOrderByCountClick", DP)).ToList();
+        }
+
+        public async Task<List<PURecommendation>> PURecommendationProcessing()
+        {
+            DynamicParameters DP = new DynamicParameters();
+
+            return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationProcessingGetList", DP)).ToList();
         }
 
         public async Task<int?> PURecommendationCountClick(int? recommendationId)

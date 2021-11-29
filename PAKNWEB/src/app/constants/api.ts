@@ -67,13 +67,17 @@ export class Api {
 
 	public static PuRecommendationGetAllOnPage = 'pu-recommendation/get-list-recommentdation-on-page'
 	public static PuRecommendationHomePage = 'pu-recommendation/get-list-recommentdation-home-page'
-	public static PuRecomentdationGetListOrderByCountClick = 'pu-recommendation/recommendation-get-list-order-by-count-click'
+	public static RecommendationReceiveDeny = 'pu-recommendation/get-list-recommentdation-receive-deny'
+	public static PuRecomentdationHightLight = 'pu-recommendation/recommendations-hight-light'
+	public static PuRecomentdationProcessing = 'pu-recommendation/recommendations-processing'
 	public static MyRecommendationGetAllOnPage = 'pu-recommendation/get-list-my-recommentdation-on-page'
 	public static PuRecommendationGetById = 'pu-recommendation/get-by-id'
 	public static PuChangeSatisfaction = 'pu-recommendation/change-satisfaction'
 	public static PuRecommendationCountClick = 'pu-recommendation/recommendation-count-click'
 	public static PURecommendationStatisticsGetByUserId = 'pu-recommendation/recommendation-statistics-get-by-user-id'
 	public static PURecommendationStatisticsProvince = 'pu-recommendation/recommendation-statistic-by-province'
+	public static PURecommendationStatisticsSatisfaction = 'pu-recommendation/statistics-satisfaction-recommentdation'
+	public static PUUnitdissatisfactionRate = 'pu-recommendation/unit-dissatisfaction-rate-on-page'
 
 	//Field
 	public static FieldGetList = 'field/get-list-field-on-page'

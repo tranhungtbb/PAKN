@@ -29,6 +29,7 @@ export class StatisticsRightComponent implements OnInit {
 	chartOptions: ChartOptions = {
     responsive: true,
 		legend: {
+			display : false,
 			position: 'bottom',
 		},
   };
@@ -61,6 +62,19 @@ export class StatisticsRightComponent implements OnInit {
 				if (res.success == RESPONSE_STATUS.success) {
 					this.pieChartLabels = res.result.Titles
 					this.pieChartData = res.result.Values
+				} else {
+					this._toastr.error(res.message)
+				}
+			},
+			(err) => {
+				console.log(err)
+			}
+		)
+
+		this._service.recommendationStatisticsSatisfaction().subscribe(
+			(res) => {
+				if (res.success == RESPONSE_STATUS.success) {
+					this.satisfactionChartData = res.result.Values
 				} else {
 					this._toastr.error(res.message)
 				}

@@ -1,0 +1,50 @@
+.text-3line a,
+.text-2line {
+	color: #222222;
+}
+
+.card-date {
+	font-size: 16px;
+	line-height: 19px;
+	color: #666666;
+}
+.italic {
+	font-style: italic;
+}
+.f-4 {
+	flex: 4;
+}
+.f-6 {
+	flex: 6;
+}
+
+.middle{
+	vertical-align: middle;
+}
+
+:host ::ng-deep .table-sd thead, :host ::ng-deep .ui-table .ui-table-thead > tr > th{
+	background-color: #2E73D5 !important;
+	color: #fff;
+	font-family: Inter;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 19px;
+	padding: 0.571em 0.557em;
+	border: 1.5px solid rgba(214, 214, 214, 0.8);
+}
+:host ::ng-deep .ui-table .ui-table-tbody > tr > td{
+	color: #222;
+	font-family: Inter;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 17px;
+	padding: 0.571em 0.857em;
+	background-color: inherit;
+	border: 1px solid #f0f1f5!important;
+}
+:host ::ng-deep .ui-table .ui-table-tbody>tr{
+	background-color: #fff;
+}
+:host ::ng-deep .ui-table .ui-table-tbody>tr:nth-child(even){
+	background-color: #FDFCFC  !important;
+}

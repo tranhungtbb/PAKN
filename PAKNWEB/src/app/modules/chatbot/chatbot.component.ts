@@ -25,6 +25,7 @@ export class DashboardChatBotComponent implements OnInit {
 	pageSize: number = 10
 	totalMessage: number = 0
 	roomActive: number = 0
+	newMessage : string
 	@ViewChild('boxChat', { static: true }) private boxChat: ElementRef
 
 	constructor(private botService: ChatBotService, private user: UserInfoStorageService) {}

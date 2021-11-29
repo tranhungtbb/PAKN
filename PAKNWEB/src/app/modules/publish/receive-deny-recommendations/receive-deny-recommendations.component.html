@@ -4,7 +4,7 @@
 			<div class="col-8 col-lg-8 col-md-8">
 				<div class="box">
 					<div class="tt-v1 mb-3 d-flex justify-content-between center">
-						<h4 class="text-uppercase">Phản ánh, kiến nghị</h4>
+						<h4 class="text-uppercase">phản ánh kiến nghị không đủ điều kiện tiếp nhận</h4>
 						<button type="button" class="btn text-white border-0 no-grd-blue btn-index border-radius-4">
 							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
 								<path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z" />
@@ -39,7 +39,7 @@
 					</div>
 				</div>
 				<div class="box">
-					<ng-container *ngFor="let item of ReflectionsRecommendations;let i = index">
+					<ng-container *ngFor="let item of listRecommendation;let i = index">
 						<div class="card card-custom mb-0 border-bottom" [ngClass]="{'bg-gray' : i % 2 != 0}">
 							<div class="card-header pt-3 pb-0 align-items-center">
 								<p class="card-text mb-1">
@@ -51,10 +51,6 @@
 							<div class="card-body pt-1 pb-3">
 								<div class="d-flex align-items-center justify-content-between">
 									<span class="card-date">{{item.createdDate | date : 'dd/MM/yyyy'}}</span>
-									<a class="read-more" *ngIf="item.totalComment"
-											routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi"
-										> <i class="bi bi-chat-right-fill cl-blue"></i> {{item.totalComment}}
-										</a>
 								</div>
 								
 								<p class="card-text">
@@ -65,7 +61,7 @@
 							</div>
 					</div>
 					</ng-container>
-					<p class="text-center pt-2" *ngIf="!ReflectionsRecommendations || ReflectionsRecommendations.length == 0">
+					<p class="text-center pt-2" *ngIf="!listRecommendation || listRecommendation.length == 0">
 						Không tìm thấy phản ánh kiến nghị nào
 					</p>
 					<nav aria-label="navigation" class="mt-4 ps-relative">

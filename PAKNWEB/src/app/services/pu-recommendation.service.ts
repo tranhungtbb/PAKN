@@ -16,13 +16,19 @@ export class PuRecommendationService {
 	getHomePage(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PuRecommendationHomePage)
 	}
+	getRecommendationReceiveDeny(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.RecommendationReceiveDeny)
+	}
 
 	getMyRecommentdation(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.MyRecommendationGetAllOnPage)
 	}
 
-	getListOrderByCountClick(query: any): Observable<any> {
-		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PuRecomentdationGetListOrderByCountClick)
+	getListHightLight(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PuRecomentdationHightLight)
+	}
+	getListProcessing(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PuRecomentdationProcessing)
 	}
 
 	getById(query: any): Observable<any> {
@@ -44,11 +50,19 @@ export class PuRecommendationService {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PURecommendationStatisticsProvince)
 	}
 
+	recommendationStatisticsSatisfaction(): Observable<any> {
+		return this.serviceInvoker.get({}, AppSettings.API_ADDRESS + Api.PURecommendationStatisticsSatisfaction)
+	}
+
 	recommendationStatisticsByUnitParentId(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticsByUnitParentId)
 	}
 
 	recommendationStatisticsForChart(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.StatisticsForChart)
+	}
+
+	getUnitDissatisfactionRatePagedList(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PUUnitdissatisfactionRate)
 	}
 }

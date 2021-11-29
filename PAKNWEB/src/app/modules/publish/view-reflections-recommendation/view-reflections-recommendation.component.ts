@@ -28,7 +28,7 @@ export class ViewReflectionsRecommendationComponent implements OnInit {
 	public lstConclusionFiles: any
 	public satisfactions: Array<satisfaction>
 	checkSatisfaction: boolean
-	pageSizeComment: any = 10
+	pageSizeComment: any = 4
 	IsAllComment: boolean = false
 	isLogin: boolean = this.storeageService.getIsHaveToken()
 	typeObject : number = this.storeageService.getTypeObject()

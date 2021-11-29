@@ -22,11 +22,11 @@
 							<div class="card bg-xam px-4" style="padding: 1.9rem 0rem;">
 								<h4 class="text-uppercase mb-3">phản ánh kiến nghị không đủ điều kiện tiếp nhận</h4>
 								<div class="row">
-									<ng-container *ngFor="let i of [1,2,3,4,5,6]">
+									<ng-container *ngFor="let item of recommendationsReceiveDeny">
 										<div class="col-6">
-											<p class="align-items-center mb-1">
-												<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi">
-													Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
+											<p class="align-items-center mb-1" style="min-height: 38px;">
+												<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}">
+													{{item.title}}
 												</a>
 											</p>
 											<hr style="height: 0px; margin-bottom: 1.2rem;">
@@ -35,7 +35,7 @@
 								</div>
 								<div class="tt-v1 mb-3 d-flex justify-content-end">
 									<a class="read-more" title="Xem thêm" 
-										routerLink="/cong-bo/phan-anh-kien-nghi"
+										routerLink="/cong-bo/phan-anh-kien-nghi-khong-tiep-nhan"
 									> Xem thêm
 									</a>
 								</div>
@@ -70,9 +70,9 @@
 										</div>
 									</div>
 									<span class="card-date">{{item.createdDate | date : 'dd/MM/yyyy'}}</span>
-									<a class="read-more"
+									<a class="read-more" *ngIf="item.totalComment"
 										routerLink="/cong-bo/phan-anh-kien-nghi/{{item.id}}"
-										><i class="bi bi-chat-right-fill cl-blue"></i> 5
+										><i class="bi bi-chat-right-fill cl-blue"></i> {{item.totalComment}}
 									</a>
 								</div>
 								
@@ -97,7 +97,7 @@
 					</div>
 					<div class="row" *ngIf="!isGrid">
 						<ng-container *ngFor="let item of ReflectionsRecommendations; let i = index">
-							<div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6" *ngIf="i < 9">
+							<div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6" *ngIf="i < 8">
 								<div class="card border">
 									<img class="img-fluid img-cover img-field" *ngIf="i== 2"
 										style="width: 100%;"
@@ -139,9 +139,9 @@
 												</p>
 												<div class="tt-v1 mb-3 d-flex justify-content-between">
 													<p class="card-date">{{mr.recommendation.createdDate | date : 'dd/MM/yyyy'}}</p>
-													<a class="read-more"
+													<a class="read-more" *ngIf="mr.recommendation.totalComment"
 														routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}"
-													> <i class="bi bi-chat-right-fill cl-blue"></i> 5
+													> <i class="bi bi-chat-right-fill cl-blue"></i> {{mr.recommendation.totalComment}}
 													</a>
 												</div>
 												
@@ -155,9 +155,6 @@
 										> Xem thêm
 										</a>
 									</div>
-
-									
-									
 								</div>
 								
 							</div>
@@ -188,7 +185,14 @@
 											{{mr.recommendation.title}}
 										</a>
 									</p>
-									<p class="card-date">{{mr.recommendation.createdDate | date : 'dd/MM/yyyy'}}</p>
+									<!-- <p class="card-date">{{mr.recommendation.createdDate | date : 'dd/MM/yyyy'}}</p> -->
+									<div class="tt-v1 mb-3 d-flex justify-content-between">
+										<p class="card-date">{{mr.recommendation.createdDate | date : 'dd/MM/yyyy'}}</p>
+										<a class="read-more" *ngIf="mr.recommendation.totalComment"
+											routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.recommendation.id}}"
+										> <i class="bi bi-chat-right-fill cl-blue"></i> {{mr.recommendation.totalComment}}
+										</a>
+									</div>
 								</div>
 							</ng-container>
 						</div>
@@ -197,7 +201,7 @@
 			</div>
 			<div class="col-4 col-lg-4 d-none d-lg-block sidebar-ct pl-3 pl-lg-0">
 				<a href="javascript:void(0)">
-					<img class="img-fluid card" style="height: 200px;"
+					<img class="img-fluid card" style="height: 200px; width: 100%;"
 						src="../../../../assets/dist/images/index2/Frame 3482.png" alt="">
 				</a>
 				
@@ -215,7 +219,7 @@
 						</p>
 						<div class="tt-v1 mb-3 d-flex justify-content-end mr-3">
 							<a class="read-more" title="Xem thêm" 
-								routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi"
+								routerLink="/cong-bo/thong-tin-cong-bo"
 							> Xem thêm
 							</a>
 						</div>
@@ -259,7 +263,7 @@
 						
 						<div class="tt-v1 mb-3 d-flex justify-content-end mr-3">
 							<a class="read-more" title="Xem thêm" 
-								routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi"
+								routerLink="/cong-bo/ti-le-khong-hai-long"
 							> Xem thêm
 							</a>
 						</div>
@@ -302,7 +306,7 @@
 						
 						<div class="tt-v1 mb-3 d-flex justify-content-end mr-3">
 							<a class="read-more" title="Xem thêm" 
-								routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi"
+								routerLink="/cong-bo/don-vi-tre-han"
 							> Xem thêm
 							</a>
 						</div>
@@ -310,66 +314,54 @@
 				</div>
 				
 				
-				<div class="mt-4">
+				<div class="mt-4" *ngIf="recommendationsHighLight">
 					<div class="card border pt-4 p-3">
 						<div class="tt-v1 mb-3 d-flex justify-content-between">
 							<h4 class="text-uppercase mb-0 ">phản ánh kiến nghị tiêu biểu</h4>
 						</div>
-							<ng-container *ngFor="let mr of [1,2,3];let i = index">
-								<div class="mt-3" [ngClass]="{ 'border-bottom': mr != 3}">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi">
-											Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-										</a>
-									</p>
-									<div class="tt-v1 mb-3 d-flex justify-content-between">
-										<p class="card-date">24/12/2020</p>
-										<a class="read-more"
-											routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi"
-										> <i class="bi bi-chat-right-fill cl-blue"></i> 5
-										</a>
-									</div>
-									
+						<ng-container *ngFor="let mr of recommendationsHighLight;let i = index">
+							<div class="mt-3" [ngClass]="{ 'border-bottom': i != recommendationsHighLight.length}">
+								<p class="align-items-center mb-1">
+									<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi/{{mr.id}}">
+										{{ mr.title }}
+									</a>
+								</p>
+								<div class="tt-v1 mb-3 d-flex justify-content-between">
+									<p class="card-date">{{mr.createdDate | date : 'dd/MM/yyyy'}}</p>
+									<a class="read-more" *ngIf="mr.totalComment"
+										routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi"
+									> <i class="bi bi-chat-right-fill cl-blue"></i> {{mr.totalComment}}
+									</a>
 								</div>
-							</ng-container>
-						<div class="tt-v1 mb-3 d-flex justify-content-end mr-3">
-							<a class="read-more" title="Xem thêm" 
-								routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi"
-							> Xem thêm
-							</a>
-						</div>
+							</div>
+						</ng-container>
 					</div>
 				</div>
 				
 				
-				<div class="mt-4">
+				<div class="mt-4" *ngIf="recommendationsProcessing">
 					<div class="card border pt-4 p-3">
 						<div class="tt-v1 mb-3 d-flex justify-content-between title-field center">
 							<h4 class="text-uppercase mb-0 ">phản ánh kiến nghị đang xử lý</h4>
 						</div>
-							<ng-container *ngFor="let mr of [1,2,3,4,5];let i = index">
-								<div class="mt-3" [ngClass]="{ 'border-bottom': mr != 5}">
-									<p class="align-items-center mb-1">
-										<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi">
-											Nhà mạng Mobifone tự ý gán cam kết, không cho chuyển mạng giữ số
-										</a>
-									</p>
-									<div class="tt-v1 mb-3 d-flex justify-content-between">
-										<p class="card-date">24/12/2020</p>
-										<a class="read-more"
-											routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi"
-										> <i class="bi bi-chat-right-fill cl-blue"></i> 5
-										</a>
-									</div>
-									
+						<ng-container *ngFor="let mr of recommendationsProcessing;let i = index">
+							<div class="mt-3" [ngClass]="{ 'border-bottom': i != recommendationsProcessing.length}">
+								<p class="align-items-center mb-1">
+									<a class="h4 title-sm color-dark text-2line" routerLink="/cong-bo/phan-anh-kien-nghi//{{mr.id}}">
+										{{ mr.title }}
+									</a>
+								</p>
+								<div class="tt-v1 mb-3 d-flex justify-content-between">
+									<p class="card-date">{{mr.createdDate | date : 'dd/MM/yyyy'}}</p>
+									<a class="read-more" *ngIf="mr.totalComment"
+										routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi"
+									> <i class="bi bi-chat-right-fill cl-blue"></i> {{mr.totalComment}}
+									</a>
 								</div>
-							</ng-container>
-						<div class="tt-v1 mb-3 d-flex justify-content-end mr-3">
-							<a class="read-more" title="Xem thêm" 
-								routerLink="/cong-bo/danh-sach-phan-anh-kien-nghi"
-							> Xem thêm
-							</a>
-						</div>
+								
+							</div>
+						</ng-container>
+						
 					</div>
 				</div>
 				
@@ -436,7 +428,6 @@
 					</div>
 					<div>
 						<p-table [value]="Administrations">
-							<!-- [value]="Administrations" -->
 							<ng-template pTemplate="header">
 									<tr>
 											<th style="width: 200px;">Mã quản lý quốc gia</th>
@@ -452,9 +443,9 @@
 													{{item.name}}
 												</strong>
 												<div class="d-flex pt-2">
-													<p class="mb-0">Mã nội bộ: 007.03.025.2</p>
+													<p class="mb-0">Mã nội bộ: {{item.code}}</p>
 													<p class="mb-0 ml-4">Mức độ</p>
-													<span class="ml-2 number-lever center">2</span>
+													<span class="ml-2 number-lever center">{{ item.level}}</span>
 												</div>
 											</td>
 											<td>{{item.fieldName}}</td>
