@@ -227,6 +227,7 @@ export class TYPECONFIG {
 	public static CONFIG_SWITCHBOARD = 3
 	public static CONFIG_NUMBER_WARNING = 4
 	public static TYPE_INDEX = 5
+	public static APPLICATION = 7
 }
 
 export class REGEX {

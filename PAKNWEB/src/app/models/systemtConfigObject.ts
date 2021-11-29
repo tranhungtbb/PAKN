@@ -63,3 +63,13 @@ export class GeneralSetting {
 	fileQuantity: string
 	fileSize: string
 }
+
+
+export class ConfigApplication {
+	constructor() {
+		this.urlIOS = ''
+		this.urlAndroid = ''
+	}
+	urlIOS: string
+	urlAndroid: string
+}

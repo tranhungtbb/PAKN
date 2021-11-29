@@ -40,6 +40,7 @@ import { UserSystemComponent } from './components/user-system/user-system.compon
 import { NummerOfWarningSettingComponent } from './components/number-of-warning/number-of-warning.component'
 import { SupportGalleryComponent } from './components/support-gallery/support-gallery.component'
 import { IndexTypeSettingComponent } from './components/index-type-setting/index-type-setting.component'
+import { ApplicationSettingComponent } from './components/application-setting/application-setting.component'
 
 @NgModule({
 	imports: [
@@ -87,6 +88,7 @@ import { IndexTypeSettingComponent } from './components/index-type-setting/index
 		NummerOfWarningSettingComponent,
 		SupportGalleryComponent,
 		IndexTypeSettingComponent,
+		ApplicationSettingComponent
 	],
 	entryComponents: [UserCreateOrUpdateComponent, UserViewInfoComponent],
 })

@@ -70,6 +70,9 @@ export class SystemConfigComponent implements OnInit {
 			case TYPECONFIG.TYPE_INDEX:
 				this.router.navigate(['/quan-tri/he-thong/cau-hinh-hien-thi-trang-chu', id])
 				break
+			case TYPECONFIG.APPLICATION:
+			this.router.navigate(['/quan-tri/he-thong/cau-hinh-ung-dung', id])
+				break
 			default:
 				break
 		}
