@@ -81,7 +81,6 @@ export class PublishComponent implements OnInit, OnChanges {
 
 	async onConnectChatBot() {
 		const myGuid = uuidv4()
-		console.log('onConnectChatBot 0 ', myGuid)
 		this.connection = new signalR.HubConnectionBuilder()
 			.withUrl(`${AppSettings.SIGNALR_ADDRESS}?userName=${myGuid}`, {
 				skipNegotiation: true,
@@ -89,6 +88,8 @@ export class PublishComponent implements OnInit, OnChanges {
 			})
 			.withAutomaticReconnect()
 			.build()
+		this.connection.serverTimeoutInMilliseconds = 180000
+		this.connection.keepAliveIntervalInMilliseconds = 180000
 
 		const resConnect = await this.connection.start()
 		const resCreate = await this.botService
@@ -96,12 +97,12 @@ export class PublishComponent implements OnInit, OnChanges {
 				userName: myGuid,
 			})
 			.toPromise()
-		console.log('resCreate ', resCreate)
+		//console.log('resCreate ', resCreate)
 		if (resCreate.success === 'OK') {
 			this.connection.invoke('JoinToRoom', resCreate.result.RoomName)
 			this.connection.on('ReceiveMessageToGroup', (data: any) => {
 				this.loading = false
-				console.log('receiveMessage 0', this.messages, data)
+				//console.log('receiveMessage 0', this.messages, data)
 
 				let link = ''
 				let subTags
@@ -130,7 +131,7 @@ export class PublishComponent implements OnInit, OnChanges {
 					this.messages = [newMessage]
 				}
 
-				console.log('receiveMessage 1', this.messages)
+				//console.log('receiveMessage 1', this.messages)
 			})
 			this.sendMessage('Xin chào', false)
 		}
@@ -278,7 +279,7 @@ export class PublishComponent implements OnInit, OnChanges {
 	}
 
 	onKeyDown(event) {
-		console.log(event)
+		//console.log(event)
 		if (event.shiftKey && event.key === 'Enter') {
 			var text = document.getElementById('type_msg')
 			//  text.value += '\n';

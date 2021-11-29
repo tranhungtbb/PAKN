@@ -36,15 +36,19 @@ export class DashboardChatBotComponent implements OnInit {
 			.configureLogging(signalR.LogLevel.Information)
 			.withAutomaticReconnect()
 			.build()
-
+		this.connection.serverTimeoutInMilliseconds = 180000
+		this.connection.keepAliveIntervalInMilliseconds = 180000
 		this.connection.start().then(() => {
 			this.connection.on('ReceiveMessageToGroup', (data: any) => {
 				console.log('ngOnInit SignalR ReceiveMessageToGroup ', data)
 				if (data.type === 'Conversation' && this.roomNameSelected && this.roomNameSelected === data.from) {
 					this.messages = [{ messageContent: data.content }, ...this.messages].reverse()
-				} else if (data.type === 'All') {
-					this.fetchRooms()
 				}
+			})
+			this.connection.on('BroadcastMessage', (data: any) => {
+				console.log('ngOnInit SignalR BroadcastMessage ', data)
+
+				this.fetchRooms()
 			})
 		})
 		this.fetchRooms()
@@ -85,9 +89,7 @@ export class DashboardChatBotComponent implements OnInit {
 				PageSize: this.pageSize,
 			}
 			console.log('getMessage ', roomName)
-			//if (this.connection.state === signalR.HubConnectionState.Connected) {
 			this.connection.invoke('JoinToRoom', roomName)
-			//}
 			this.botService.getMessages(request).subscribe((res) => {
 				if (res != 'undefined' && res.success == RESPONSE_STATUS.success) {
 					if (res.result && res.result.length > 0) {
@@ -120,15 +122,27 @@ export class DashboardChatBotComponent implements OnInit {
 		if (this.newMessage !== '') {
 			console.log('sendMessage ', this.newMessage)
 			this.connection.invoke('SendToRoom', this.roomNameSelected, this.newMessage)
-			this.messages = [...this.messages, { messageContent: this.newMessage }].reverse()
+			this.messages = [...this.messages, { messageContent: this.newMessage }]
 			this.newMessage = ''
 		}
 	}
 
+	onKeyDown(event) {
+		//console.log(event)
+		if (event.shiftKey && event.key === 'Enter') {
+			var text = document.getElementById('type_msg')
+			//  text.value += '\n';
+		} else if (event.key === 'Enter') {
+			event.preventDefault()
+			//console.log(this.newMessage)
+			this.sendMessage()
+		}
+	}
 	ngOnDestroy() {
 		if (this.connection) {
 			console.log('SignalR ngOnDestroy 0')
 			this.connection.off('ReceiveMessageToGroup')
+			this.connection.off('BroadcastMessage')
 		}
 	}
 

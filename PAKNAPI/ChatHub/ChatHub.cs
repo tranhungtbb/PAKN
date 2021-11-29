@@ -58,11 +58,18 @@ namespace SignalR.Hubs
 
         public async Task EnableBot(string roomName, bool isEnableBot)
         {
-            var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
-            if (room != null)
+            try
             {
-                BotStatus status = isEnableBot == true ? BotStatus.Enable : BotStatus.Disable;
-                await new BOTRoom(_appSetting).BOTRoomEnableBot(roomName, (int)status);
+                var room = await new BOTRoom(_appSetting).BOTRoomGetByName(roomName);
+                if (room != null)
+                {
+                    BotStatus status = isEnableBot == true ? BotStatus.Enable : BotStatus.Disable;
+                    await new BOTRoom(_appSetting).BOTRoomEnableBot(roomName, (int)status);
+                }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
 
@@ -89,6 +96,8 @@ namespace SignalR.Hubs
             }
             
         }
+
+        
 
         public async Task AnonymousChatWithBot(string message)
         {
@@ -124,6 +133,10 @@ namespace SignalR.Hubs
                 DateTime fooo = DateTime.Now;
                 double total = (fooo - foo).TotalMilliseconds;
                 System.Diagnostics.Debug.WriteLine("ChatWithBot 1 " + total);
+            }
+            else
+            {
+                //await SendToRoom(roomName, message);
             }
         }
 
