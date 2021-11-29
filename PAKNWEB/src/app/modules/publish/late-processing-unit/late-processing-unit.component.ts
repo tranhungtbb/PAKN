@@ -8,11 +8,11 @@ import { PuRecommendation } from 'src/app/models/recommendationObject'
 import { RecommendationService } from 'src/app/services/recommendation.service'
 
 @Component({
-	selector: 'app-unit-dissatisfaction-rate',
-	templateUrl: './unit-dissatisfaction-rate.component.html',
-	styleUrls: ['./unit-dissatisfaction-rate.component.css'],
+	selector: 'app-late-processing-unit',
+	templateUrl: './late-processing-unit.component.html',
+	styleUrls: ['./late-processing-unit.component.css'],
 })
-export class UnitDissatisfactionRateComponent implements OnInit {
+export class LateProcessingUnitComponent implements OnInit {
 	// property
 	public keySearch: string = ''
 	public pageSize = 20
@@ -52,7 +52,7 @@ export class UnitDissatisfactionRateComponent implements OnInit {
 			PageSize: this.pageSize,
 			PageIndex: this.pageIndex,
 		}
-		this.service.getUnitDissatisfactionRatePagedList(obj).subscribe((res) => {
+		this.service.getLateProcessingUnitPagedList(obj).subscribe((res) => {
 			if (res.success == RESPONSE_STATUS.success) {
 				if (res.result.listUnit.length > 0) {
 					this.listData = res.result.listUnit

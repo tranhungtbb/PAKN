@@ -35,7 +35,7 @@ namespace PAKNAPI.Models.ModelBase
         public int? QuantityAccept { get; set; }
         public int? QuantityType { get; set; }
 
-        public int CountClick { get; set; }
+        public int Status { get; set; }
 
         public int RowNumber { get; set; }
 
@@ -222,6 +222,69 @@ namespace PAKNAPI.Models.ModelBase
             this.FieldId = fieldId;
             this.FieldName = fieldName;
             this.ListRecommendation = pURecommendation;
+        }
+    }
+
+
+    public class UnitDissatisfactionRateOnPage
+    {
+
+        private SQLCon _sQLCon;
+
+        public int RowNumber { get; set; }
+        public int Id { get; set; }
+        public string UnitName { get; set; }
+        public int Percent { get; set; }
+
+        public UnitDissatisfactionRateOnPage(IAppSetting appSetting)
+        {
+            _sQLCon = new SQLCon(appSetting.GetConnectstring());
+        }
+
+        public UnitDissatisfactionRateOnPage()
+        {
+        }
+
+        public async Task<List<UnitDissatisfactionRateOnPage>> UnitDissatisfactionRateOnPageDAO(string KeySearch, int? PageSize, int PageIndex)
+        {
+            DynamicParameters DP = new DynamicParameters();
+
+            DP.Add("KeySearch", KeySearch);
+            DP.Add("PageSize", PageSize);
+            DP.Add("PageIndex", PageIndex);
+
+            return (await _sQLCon.ExecuteListDapperAsync<UnitDissatisfactionRateOnPage>("PU_UnitDissatisfactionRateOnPage", DP)).ToList();
+        }
+    }
+
+    public class LateProcessingUnitOnPage
+    {
+
+        private SQLCon _sQLCon;
+
+        public int RowNumber { get; set; }
+        public int Id { get; set; }
+        public string UnitName { get; set; }
+        public int Quantity { get; set; }
+
+        public LateProcessingUnitOnPage(IAppSetting appSetting)
+        {
+            _sQLCon = new SQLCon(appSetting.GetConnectstring());
+        }
+
+        public LateProcessingUnitOnPage()
+        {
+        }
+
+        public async Task<List<LateProcessingUnitOnPage>> LateProcessingUnitOnPageDAO(string KeySearch, int? PageSize, int PageIndex)
+        {
+            DynamicParameters DP = new DynamicParameters();
+
+            DP.Add("KeySearch", KeySearch);
+            DP.Add("PageSize", PageSize);
+            DP.Add("PageIndex", PageIndex);
+
+            return (await _sQLCon.ExecuteListDapperAsync<LateProcessingUnitOnPage>("PU_LateProcessingUnitOnPage", DP)).ToList();
         }
     }
 }

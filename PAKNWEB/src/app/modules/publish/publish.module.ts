@@ -46,6 +46,7 @@ import { Index2Component } from './index2/index2.component'
 import { ReceiveDenyRecommendationsComponent } from './receive-deny-recommendations/receive-deny-recommendations.component'
 import { InfomationPublicComponent } from './infomation-public/infomation-public.component'
 import { UnitDissatisfactionRateComponent } from './unit-dissatisfaction-rate/unit-dissatisfaction-rate.component'
+import { LateProcessingUnitComponent } from './late-processing-unit/late-processing-unit.component'
 
 @NgModule({
 	declarations: [
@@ -80,7 +81,8 @@ import { UnitDissatisfactionRateComponent } from './unit-dissatisfaction-rate/un
 		NewsHightLightComponent,
 		ReceiveDenyRecommendationsComponent,
 		InfomationPublicComponent,
-		UnitDissatisfactionRateComponent
+		UnitDissatisfactionRateComponent,
+		LateProcessingUnitComponent
 	],
 	imports: [
 		CommonModule,

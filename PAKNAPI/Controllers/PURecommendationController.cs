@@ -367,6 +367,60 @@ namespace PAKNAPI.ControllerBase
 		}
 
 		[HttpGet]
+		[Route("unit-dissatisfaction-rate-on-page")]
+		public async Task<ActionResult<object>> PUUnitDissatisfactionRateOnPage(string KeySearch , int? PageSize, int PageIndex)
+		{
+			try
+			{
+				var listUnit = await new UnitDissatisfactionRateOnPage(_appSetting).UnitDissatisfactionRateOnPageDAO(KeySearch, PageSize, PageIndex);
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+				{
+					{"listUnit", listUnit},
+					{"TotalCount", listUnit != null && listUnit.Count > 0 ? listUnit[0].RowNumber : 0},
+					{"PageIndex", listUnit != null && listUnit.Count > 0 ? PageIndex : 0},
+					{"PageSize", listUnit != null && listUnit.Count > 0 ? PageSize : 0},
+				};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		[HttpGet]
+		[Route("late-processing-unit-on-page")]
+		public async Task<ActionResult<object>> PULateProcessingUnitOnPage(string KeySearch, int? PageSize, int PageIndex)
+		{
+			try
+			{
+				var listUnit = await new LateProcessingUnitOnPage(_appSetting).LateProcessingUnitOnPageDAO(KeySearch, PageSize, PageIndex);
+
+				IDictionary<string, object> json = new Dictionary<string, object>
+				{
+					{"listUnit", listUnit},
+					{"TotalCount", listUnit != null && listUnit.Count > 0 ? listUnit[0].RowNumber : 0},
+					{"PageIndex", listUnit != null && listUnit.Count > 0 ? PageIndex : 0},
+					{"PageSize", listUnit != null && listUnit.Count > 0 ? PageSize : 0},
+				};
+				return new ResultApi { Success = ResultCode.OK, Result = json };
+			}
+			catch (Exception ex)
+			{
+				_bugsnag.Notify(ex);
+				//new LogHelper(_appSetting).ProcessInsertLogAsync(HttpContext, ex);
+
+				return new ResultApi { Success = ResultCode.ORROR, Message = ex.Message };
+			}
+		}
+
+		
+
+		[HttpGet]
 		[Route("recommendations-processing")]
 		public async Task<ActionResult<object>> PURecommendationProcessing()
 		{

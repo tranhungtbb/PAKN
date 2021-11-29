@@ -40,6 +40,8 @@ export class Index2Component implements OnInit, AfterViewInit {
 	recommendationsReceiveDeny : Array<PuRecommendation>
 	recommendationsHighLight : Array<PuRecommendation>
 	recommendationsProcessing : Array<PuRecommendation>
+	unitDissatisfactionRate : any [] = []
+	lateProcessingUnit : any [] = []
 
 	news: any[]
 	firstNews: any
@@ -120,18 +122,6 @@ export class Index2Component implements OnInit, AfterViewInit {
 		},(err) =>{
 			console.log(err)
 		})
-		//list news
-		// this._newsService.getListHomePage({}).subscribe((res) => {
-		// 	if (res.success != RESPONSE_STATUS.success) {
-		// 		return
-		// 	}
-		// 	if (res.result.length > 0) {
-		// 		this.firstNews = res.result[0]
-		// 		res.result.shift()
-		// 		this.news = res.result
-		// 	}
-		// 	return
-		// })
 		this._service.getListHightLight({}).subscribe(res =>{
 			if(res.success == RESPONSE_STATUS.success){
 				this.recommendationsHighLight = res.result
@@ -142,6 +132,38 @@ export class Index2Component implements OnInit, AfterViewInit {
 			if(res.success == RESPONSE_STATUS.success){
 				this.recommendationsProcessing = res.result
 			}
+		})
+		let obj = {
+				KeySearch: '',
+				PageSize: 4,
+				PageIndex: 1
+		}
+		this._service.getUnitDissatisfactionRatePagedList(obj).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				if (res.result.listUnit.length > 0) {
+					this.unitDissatisfactionRate = res.result.listUnit
+				} else {
+					this.unitDissatisfactionRate = []
+				}
+			} else {
+				this._toa.error(res.message)
+			}
+		}, (err) =>{
+			console.log(err)
+		})
+
+		this._service.getLateProcessingUnitPagedList(obj).subscribe((res) => {
+			if (res.success == RESPONSE_STATUS.success) {
+				if (res.result.listUnit.length > 0) {
+					this.lateProcessingUnit = res.result.listUnit
+				} else {
+					this.lateProcessingUnit = []
+				}
+			} else {
+				this._toa.error(res.message)
+			}
+		}, (err) =>{
+			console.log(err)
 		})
 		// list thủ tục hành chính
 		this._serviceAdministrative.getListHomePage({}).subscribe((res) => {
