@@ -22,12 +22,12 @@ export class BotRoom {
 }
 
 export class BotMessage {
-	content: string
-	timeStamp: string
-	from: string
-	fromId: string
-	subTags: any
-	type: 'Conversation' | 'All'
+	content?: string
+	timeStamp?: string
+	from?: string
+	fromId?: string
+	subTags?: any
+	type?: 'Conversation' | 'All'
 }
 
 export class CustomHttpClient extends signalR.DefaultHttpClient {

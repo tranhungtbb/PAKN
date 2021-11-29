@@ -7,6 +7,11 @@ import { DataService } from 'src/app/services/sharedata.service'
 import { NotificationService } from 'src/app/services/notification.service'
 import { IndexSettingService } from 'src/app/services/index-setting.service'
 import { IndexSettingObjet } from 'src/app/models/indexSettingObject'
+import * as signalR from '@aspnet/signalr/'
+import { AppSettings } from 'src/app/constants/app-setting'
+import { v4 as uuidv4 } from 'uuid'
+import { ChatBotService } from '../chatbot/chatbot.service'
+import { BotMessage } from 'src/app/models/chatbotObject'
 
 declare var $: any
 
@@ -22,7 +27,8 @@ export class PublishComponent implements OnInit, OnChanges {
 		private authenService: AuthenticationService,
 		private sharedataService: DataService,
 		private notificationService: NotificationService,
-		private indexSettingService: IndexSettingService
+		private indexSettingService: IndexSettingService,
+		private botService: ChatBotService
 	) {}
 
 	activeUrl: string = ''
@@ -36,9 +42,11 @@ export class PublishComponent implements OnInit, OnChanges {
 	routerHome = 'trang-chu'
 	isLogin: boolean = this.storageService.getIsHaveToken()
 	indexSettingObj: any = new IndexSettingObjet()
-
+	connection: signalR.HubConnection
 	subMenu: any[] = []
-	textMessage = null;
+	textMessage = null
+	messages: any[] = []
+
 	ngOnInit() {
 		let splitRouter = this._router.url.split('/')
 		if (splitRouter.length > 2) {
@@ -59,6 +67,7 @@ export class PublishComponent implements OnInit, OnChanges {
 				alert(error)
 			}
 
+		console.log('receiveMessage 3', this.messages)
 		this.subMenu = [
 			{ path: ['phan-anh-kien-nghi/da-tra-loi'], text: 'Phản ánh- kiến nghị đã trả lời' },
 			{ path: ['phan-anh-kien-nghi/sync/cong-ttdt-tinh-khanh-hoa'], text: 'Cổng thông tin điện tử tỉnh Khánh Hoà' },
@@ -67,8 +76,62 @@ export class PublishComponent implements OnInit, OnChanges {
 			{ path: ['phan-anh-kien-nghi/sync/he-thong-pakn-quoc-gia'], text: 'Hệ thống tiếp nhận, trả lời PAKN của Chính Phủ' },
 		]
 	}
+
+	async onConnectChatBot() {
+		const myGuid = uuidv4()
+		console.log('onConnectChatBot 0 ', myGuid)
+		this.connection = new signalR.HubConnectionBuilder()
+			.withUrl(`${AppSettings.SIGNALR_ADDRESS}?userName=${myGuid}`, {
+				skipNegotiation: true,
+				transport: signalR.HttpTransportType.WebSockets,
+			})
+			.withAutomaticReconnect()
+			.build()
+
+		const resConnect = await this.connection.start()
+		const resCreate = await this.botService
+			.createRoom({
+				userName: myGuid,
+			})
+			.toPromise()
+		console.log('resCreate ', resCreate)
+		if (resCreate.success === 'OK') {
+			this.connection.invoke('JoinToRoom', resCreate.result.RoomName)
+			this.connection.on('ReceiveMessageToGroup', (data: any) => {
+				console.log('receiveMessage 0', this.messages, data)
+				if (this.messages) {
+					this.messages = [...this.messages, data]
+				} else {
+					this.messages = [data]
+				}
+
+				console.log('receiveMessage 1', this.messages)
+			})
+			this.sendMessage('Xin chào', false)
+		}
+	}
+
+	sendMessage(text: string, append: boolean = true) {
+		this.connection.invoke('AnonymousChatWithBot', text)
+		if (append) {
+			this.messages = [
+				...this.messages,
+				{
+					content: text,
+					fromId: 0,
+				},
+			]
+		}
+	}
+
+	onDisconnectChatBot() {
+		if (this.connection) {
+			this.connection.stop()
+		}
+	}
+
 	onActivate(event) {
-    window.scroll(0,0);
+		window.scroll(0, 0)
 	}
 
 	getListNotification(PageSize: any) {
@@ -157,11 +220,11 @@ export class PublishComponent implements OnInit, OnChanges {
 			this.getListNotification(this.numberNotifications)
 		}
 	}
-	keySearch : any 
-	searchRecommendation(){
+	keySearch: any
+	searchRecommendation() {
 		this.keySearch = this.keySearch == null ? '' : this.keySearch.trim()
-		if(this.keySearch){
-			this._router.navigate(['/cong-bo/danh-sach-phan-anh-kien-nghi/0/',this.keySearch])
+		if (this.keySearch) {
+			this._router.navigate(['/cong-bo/danh-sach-phan-anh-kien-nghi/0/', this.keySearch])
 		}
 	}
 	checkDeny(status: any) {
@@ -171,46 +234,43 @@ export class PublishComponent implements OnInit, OnChanges {
 		return false
 	}
 
-	showHideMessage(){
-		var message = document.getElementById("message");
-		if(message){
-			if(message.classList.contains("show")){
-				message.classList.remove("show")
-				message.style.display ="none"
-			}else {
-				message.classList.add("show");
-				message.style.display ="block"
-			};
+	showHideMessage() {
+		var message = document.getElementById('message')
+		if (message) {
+			if (message.classList.contains('show')) {
+				message.classList.remove('show')
+				message.style.display = 'none'
+				this.onDisconnectChatBot()
+			} else {
+				message.classList.add('show')
+				message.style.display = 'block'
+				this.onConnectChatBot()
+			}
 		}
 	}
 
-	onKeyDown(event){
-		console.log(event);
-    if (event.shiftKey && event.key === 'Enter') {
-       var text = document.getElementById("type_msg");
-      //  text.value += '\n';
-    } else if (event.key === 'Enter') {
-       event.preventDefault();
-			 console.log(this.textMessage);
-			this.sendMessageToApi();
-    }
+	onKeyDown(event) {
+		console.log(event)
+		if (event.shiftKey && event.key === 'Enter') {
+			var text = document.getElementById('type_msg')
+			//  text.value += '\n';
+		} else if (event.key === 'Enter') {
+			event.preventDefault()
+			console.log(this.textMessage)
+			this.sendMessageToApi()
+		}
 	}
 
-	onSend(){
-		console.log(this.textMessage);
-	
-		this.sendMessageToApi();
+	onSend() {
+		this.sendMessageToApi()
 	}
 
-	sendMessageToApi(){
-		if(this.textMessage){
-			this.textMessage = this.textMessage.trim();
+	sendMessageToApi() {
+		if (this.textMessage) {
+			this.textMessage = this.textMessage.trim()
 		}
 
-		setTimeout(() => {
-			$('#type_msg').focus()
-		}, 100)
-		this.textMessage = null;
+		this.sendMessage(this.textMessage)
+		this.textMessage = null
 	}
-
 }
