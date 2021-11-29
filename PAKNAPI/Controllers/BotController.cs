@@ -142,6 +142,7 @@ namespace PAKNAPI.Controllers
                             {"AnonymousId",  id.ToString()},
                             {"AnonymousName", guid},
                             {"RoomId", roomId.ToString()},
+                             {"RoomName", roomName}
                         };
                         Message messageModel = new Message()
                         {

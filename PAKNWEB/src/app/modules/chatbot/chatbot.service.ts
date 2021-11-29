@@ -12,11 +12,6 @@ import { tap, catchError } from 'rxjs/operators'
 	providedIn: 'root',
 })
 export class ChatBotService {
-	// public currentDialog: any = {}
-	// public dialogs: any = {}
-	// dialogsEvent: EventEmitter<any> = new EventEmitter()
-	// currentDialogEvent: EventEmitter<any> = new EventEmitter()
-
 	constructor(private serviceInvoker: ServiceInvokerService, private storeageService: UserInfoStorageService, private http: HttpClient) {}
 
 	getRooms(query: any): Observable<any> {
@@ -25,5 +20,9 @@ export class ChatBotService {
 
 	getMessages(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.GetMessages)
+	}
+
+	createRoom(body: any) {
+		return this.serviceInvoker.post(body, AppSettings.API_ADDRESS + Api.CreateRoom)
 	}
 }
