@@ -40,7 +40,8 @@ import { UserSystemComponent } from './components/user-system/user-system.compon
 import { NummerOfWarningSettingComponent } from './components/number-of-warning/number-of-warning.component'
 import { SupportGalleryComponent } from './components/support-gallery/support-gallery.component'
 import { IndexTypeSettingComponent } from './components/index-type-setting/index-type-setting.component';
-import { SyncSettingComponent } from './components/sync-setting/sync-setting.component'
+import { SyncSettingComponent } from './components/sync-setting/sync-setting.component';
+import { PublishNotificationComponent } from './components/publish-notification/publish-notification.component'
 
 @NgModule({
 	imports: [
@@ -89,6 +90,7 @@ import { SyncSettingComponent } from './components/sync-setting/sync-setting.com
 		SupportGalleryComponent,
 		IndexTypeSettingComponent,
 		SyncSettingComponent,
+		PublishNotificationComponent,
 	],
 	entryComponents: [UserCreateOrUpdateComponent, UserViewInfoComponent],
 })

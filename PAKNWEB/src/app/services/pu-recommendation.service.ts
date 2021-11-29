@@ -30,6 +30,9 @@ export class PuRecommendationService {
 	getListProcessing(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PuRecomentdationProcessing)
 	}
+	notificationGetDashboard(query: any): Observable<any> {
+		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PuNotificationGetDashboard)
+	}
 
 	getById(query: any): Observable<any> {
 		return this.serviceInvoker.get(query, AppSettings.API_ADDRESS + Api.PuRecommendationGetById)

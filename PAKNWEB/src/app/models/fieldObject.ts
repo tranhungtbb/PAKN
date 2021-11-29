@@ -35,3 +35,17 @@ export class WordObject {
 	isActived: boolean
 	isDeleted: boolean
 }
+export class PublishNotificationObject {
+	constructor() {
+		this.id = 0
+		this.title = ''
+		this.content = ''
+		this.status = 1
+	}
+	id: number
+	title: string
+	content: string
+	status: number
+	createdDate: Date
+	createdBy: number
+}

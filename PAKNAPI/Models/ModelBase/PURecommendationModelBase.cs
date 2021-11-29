@@ -116,6 +116,12 @@ namespace PAKNAPI.Models.ModelBase
             return (await _sQLCon.ExecuteListDapperAsync<PURecommendation>("PU_RecommendationProcessingGetList", DP)).ToList();
         }
 
+        public async Task<PublishNotificationObject> PUNotificationGetDashboard()
+        {
+            DynamicParameters DP = new DynamicParameters();
+            return (await _sQLCon.ExecuteListDapperAsync<PublishNotificationObject>("SY_PublishNotificationGetPublish", DP)).FirstOrDefault();
+        }
+
         public async Task<int?> PURecommendationCountClick(int? recommendationId)
         {
             DynamicParameters DP = new DynamicParameters();
