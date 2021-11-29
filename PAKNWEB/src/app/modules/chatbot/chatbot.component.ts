@@ -12,14 +12,11 @@ import { UserInfoStorageService } from 'src/app/commons/user-info-storage.servic
 	styleUrls: ['./chatbot.component.css'],
 })
 export class DashboardChatBotComponent implements OnInit {
-	title = 'angular-chat'
 	channel: any
 	roomNameSelected: string
 	messages: any = []
 	newMessage = ''
 	rooms: BotRoom[]
-	// chatClient: any
-	// currentUser: User
 	connection: signalR.HubConnection
 	pageIndex: number = 1
 	pageSize: number = 10
