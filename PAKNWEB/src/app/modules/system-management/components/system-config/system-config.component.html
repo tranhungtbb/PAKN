@@ -14,9 +14,8 @@
 			<div class="card mb-0 shadow-none">
 				<div class="table-responsive">
 
-					<p-table #table [value]="listData" [paginator]="true" [showCurrentPageReport]="true"
-						currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20" [totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]"
-						[responsive]="true" autoLayout="true"
+					<p-table #table [value]="listData" [paginator]="true" [showCurrentPageReport]="true" currentPageReportTemplate="Tổng số {{table.totalRecords}}" [rows]="20"
+						[totalRecords]="totalRecords" [rowsPerPageOptions]="[20,30,50]" [responsive]="true" autoLayout="true"
 						tableStyleClass="table table-sd table-responsive-md table-striped mb-0">
 						<ng-template pTemplate="header" class="bg-thead">
 							<tr>
@@ -26,42 +25,32 @@
 									</p>
 								</th>
 								<th style="width: 250px">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
-									[pSortableColumn]="'title'"
-									>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead" [pSortableColumn]="'title'">
 										<strong>Tên cấu hình <p-sortIcon [field]="'title'"></p-sortIcon></strong>
 									</p>
-									<input class="form-control form-control-sm" maxlength="100" [(ngModel)]="title"
-										trim [ngSwitch]="'title'" (keydown.enter)="table.filter($event?.target.value.trim(), 'title', 'contains')"
-										placeholder="Nhập tên..." />
+									<input class="form-control form-control-sm" maxlength="100" [(ngModel)]="title" trim [ngSwitch]="'title'"
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'title', 'contains')" placeholder="Nhập tên..." />
 									<button *ngIf="title" class="btn bg-transparent btn-clear-input" (click)="title=''">
 										<i class="fa fa-times"></i>
 									</button>
 								</th>
 								<th style="width: 350px">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
-									[pSortableColumn]="'description'"
-									>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead" [pSortableColumn]="'description'">
 										<strong>Mô tả <p-sortIcon [field]="'description'"></p-sortIcon></strong>
 									</p>
-									<input class="form-control form-control-sm" maxlength="100" [(ngModel)]="description"
-										trim [ngSwitch]="'description'" (keydown.enter)="table.filter($event?.target.value.trim(), 'description', 'contains')"
-										placeholder="Nhập mô tả..." />
+									<input class="form-control form-control-sm" maxlength="100" [(ngModel)]="description" trim [ngSwitch]="'description'"
+										(keydown.enter)="table.filter($event?.target.value.trim(), 'description', 'contains')" placeholder="Nhập mô tả..." />
 									<button *ngIf="description" class="btn bg-transparent btn-clear-input" (click)="description=''">
 										<i class="fa fa-times"></i>
 									</button>
 								</th>
 								<th style="width: 170px;">
-									<p class="mb-1 d-flex justify-content-between align-items-center label-thead"
-										[pSortableColumn]="'type'"
-									>
+									<p class="mb-1 d-flex justify-content-between align-items-center label-thead" [pSortableColumn]="'type'">
 										<strong>Loại cấu hình <p-sortIcon [field]="'type'"></p-sortIcon></strong>
 									</p>
 									<div class="dropdown bootstrap-select form-control form-control-sm">
-										<ng-select notFoundText="Không có dữ liệu"  [items]="listType" placeholder="Loại cấu hình ..." bindLabel="text" bindValue="value"
-											[ngSwitch]="'type'"
-											(change)="table.filter($event?.value.toString(), 'type')"
-											[closeOnSelect]="true">
+										<ng-select notFoundText="Không có dữ liệu" [items]="listType" placeholder="Loại cấu hình ..." bindLabel="text" bindValue="value"
+											[ngSwitch]="'type'" (change)="table.filter($event?.value.toString(), 'type')" [closeOnSelect]="true">
 										</ng-select>
 									</div>
 								</th>
@@ -86,10 +75,12 @@
 									<span *ngIf="item.type == 3" class="badge rounded-pill badge-outline-green2">Cấu hình tổng đài</span>
 									<span *ngIf="item.type == 4" class="badge rounded-pill badge-outline-success">Cấu hình chung</span>
 									<span *ngIf="item.type == 5" class="badge rounded-pill bg-red ng-star-inserted">Cấu hình hiển thị trang chủ</span>
+									<span *ngIf="item.type == 6" class="badge rounded-pill badge-warning">Cấu hình đồng bộ</span>
 								</td>
 								<td>
 									<div class="hover-active d-flex justify-content-end">
-										<a *hasPermission="['3', 'A_I_1']" (click)="redirectUpdate(item.id, item.type)" class="btn-icon grd-brown text-brown mr-2" title="Cập nhập"><i class="bi bi-pencil-square"></i></a>
+										<a *hasPermission="['3', 'A_I_1']" (click)="redirectUpdate(item.id, item.type)" class="btn-icon grd-brown text-brown mr-2"
+											title="Cập nhập"><i class="bi bi-pencil-square"></i></a>
 									</div>
 								</td>
 							</tr>

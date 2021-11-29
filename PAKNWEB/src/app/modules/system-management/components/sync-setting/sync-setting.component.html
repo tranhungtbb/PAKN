@@ -1,0 +1,209 @@
+<div class="row">
+	<div class="col-lg-12">
+		<ol class="breadcrumb title-module px-0 bg-transparent mb-0">
+			<li class="breadcrumb-item"><a>Hệ thống</a></li>
+			<li class="breadcrumb-item active"><a class="font-weight-bold"> Cấu hình đồng bộ, tích hợp</a></li>
+		</ol>
+		<div class="btn-group group-button-table" role="group">
+			<a class="btn btn-sm rounded bg-white text-dark border mr-3" (click)="redirectHis()">
+				<i class="bi bi-arrow-left"></i>&nbsp;
+				Quay lại
+			</a>
+			<button type="button" class="btn grd-brown3 btn-sm rounded border-0 mr-3 text-dark" (click)="onCancel()">
+				Hủy
+			</button>
+			<button type="button" class="btn grd-xanhngoc btn-sm rounded border-0 text-white" (click)="onSave()">
+				Lưu
+			</button>
+		</div>
+	</div>
+</div>
+<div class="row" style="margin: 50px 0px;">
+	<form class="form-horizontal" [formGroup]="form" #formDir="ngForm">
+		<div class="col-lg-12">
+			<div class="card mb-0 shadow-none">
+				<div class="row center">
+					<div class="col-md-8 col-md-offset-2 border rounded">
+						<div class="modal-body no-padding-bottom">
+							<div class="row form-group">
+								<div class="col-sm-12">
+									<label class="control-label">Tiêu đề <span class="text-danger">(*)</span></label>
+									<input id="target" placeholder="Nhập..." svTrim class="form-control" formControlName="title" [(ngModel)]="model.title" maxlength="100" />
+									<div *ngIf="(submitted && f.title.invalid) || (f.title.invalid && (f.title.dirty || f.title.touched))" class="has-error m-b-12">
+										<div *ngIf="f.title.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-sm-12">
+									<label class="control-label">Mô tả <span class="text-danger">(*)</span></label>
+									<textarea placeholder="Nhập..." svTrim class="form-control" formControlName="description" rows="4" [(ngModel)]="model.description"
+										maxlength="200"></textarea>
+									<div *ngIf="(submitted && f.description.invalid) || (f.description.invalid && (f.description.dirty || f.description.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.description.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<h5 class="sync-title">Cấu hình đồng bộ Cơ sở dữ liệu Khách hàng</h5>
+							<div class="row form-group">
+								<div class="col-sm-3">
+									<label class="control-label">Đường dẫn API <span class="text-danger">(*)</span></label>
+								</div>
+								<div class="col-sm-9">
+									<input placeholder="Nhập..." svTrim class="form-control" formControlName="cskhLinkApi" [(ngModel)]="configSync.cskhLinkApi" maxlength="100" />
+									<div *ngIf="(submitted && f.cskhLinkApi.invalid) || (f.cskhLinkApi.invalid && (f.cskhLinkApi.dirty || f.cskhLinkApi.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.cskhLinkApi.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-sm-3">
+									<label class="control-label">Phương thức <span class="text-danger">(*)</span></label>
+								</div>
+								<div class="col-sm-3">
+									<ng-select class="form-control " [items]="lstMethod" bindValue="value" placeholder="Chọn..." bindLabel="text" formControlName="cskhMethod"
+										[(ngModel)]="configSync.cskhMethod">
+									</ng-select>
+									<div *ngIf="(submitted && f.cskhMethod.invalid) || (f.cskhMethod.invalid && (f.cskhMethod.dirty || f.cskhMethod.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.cskhMethod.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<h5 class="sync-title">Cấu hình đồng bộ tổng đài</h5>
+							<div class="row form-group">
+								<div class="col-sm-3">
+									<label class="control-label">Đường dẫn API <span class="text-danger">(*)</span></label>
+								</div>
+								<div class="col-sm-9">
+									<input placeholder="Nhập..." svTrim class="form-control" formControlName="tdLinkApi" [(ngModel)]="configSync.tdLinkApi" maxlength="100" />
+									<div *ngIf="(submitted && f.tdLinkApi.invalid) || (f.tdLinkApi.invalid && (f.tdLinkApi.dirty || f.tdLinkApi.touched))" class="has-error m-b-12">
+										<div *ngIf="f.tdLinkApi.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-sm-3">
+									<label class="control-label">Phương thức <span class="text-danger">(*)</span></label>
+								</div>
+								<div class="col-sm-3">
+									<ng-select class="form-control " [items]="lstMethod" bindValue="value" placeholder="Chọn..." bindLabel="text" formControlName="tdMethod"
+										[(ngModel)]="configSync.tdMethod">
+									</ng-select>
+									<div *ngIf="(submitted && f.tdMethod.invalid) || (f.tdMethod.invalid && (f.tdMethod.dirty || f.tdMethod.touched))" class="has-error m-b-12">
+										<div *ngIf="f.tdMethod.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<h5 class="sync-title">Cấu hình SMS</h5>
+							<div class="row form-group">
+								<div class="col-sm-3">
+									<label class="control-label">Đường dẫn API <span class="text-danger">(*)</span></label>
+								</div>
+								<div class="col-sm-9">
+									<input placeholder="Nhập..." svTrim class="form-control" formControlName="smsLinkApi" [(ngModel)]="configSync.smsLinkApi" maxlength="100" />
+									<div *ngIf="(submitted && f.smsLinkApi.invalid) || (f.smsLinkApi.invalid && (f.smsLinkApi.dirty || f.smsLinkApi.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.smsLinkApi.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-sm-3">
+									<label class="control-label">Phương thức <span class="text-danger">(*)</span></label>
+								</div>
+								<div class="col-sm-3">
+									<ng-select class="form-control " [items]="lstMethod" bindValue="value" placeholder="Chọn..." bindLabel="text" formControlName="smsMethod"
+										[(ngModel)]="configSync.smsMethod">
+									</ng-select>
+									<div *ngIf="(submitted && f.smsMethod.invalid) || (f.smsMethod.invalid && (f.smsMethod.dirty || f.smsMethod.touched))" class="has-error m-b-12">
+										<div *ngIf="f.smsMethod.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<h5 class="sync-title">Cấu hình Tích hợp với Cổng thông tin dịch vụ hành chính công trực tuyến tỉnh Khánh Hòa</h5>
+							<div class="row form-group">
+								<div class="col-sm-3">
+									<label class="control-label">Đường dẫn API <span class="text-danger">(*)</span></label>
+								</div>
+								<div class="col-sm-9">
+									<input placeholder="Nhập..." svTrim class="form-control" formControlName="cttLinkApi" [(ngModel)]="configSync.cttLinkApi" maxlength="100" />
+									<div *ngIf="(submitted && f.cttLinkApi.invalid) || (f.cttLinkApi.invalid && (f.cttLinkApi.dirty || f.cttLinkApi.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.cttLinkApi.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-sm-3">
+									<label class="control-label">Phương thức <span class="text-danger">(*)</span></label>
+								</div>
+								<div class="col-sm-3">
+									<ng-select class="form-control " [items]="lstMethod" bindValue="value" placeholder="Chọn..." bindLabel="text" formControlName="cttMethod"
+										[(ngModel)]="configSync.cttMethod">
+									</ng-select>
+									<div *ngIf="(submitted && f.cttMethod.invalid) || (f.cttMethod.invalid && (f.cttMethod.dirty || f.cttMethod.touched))" class="has-error m-b-12">
+										<div *ngIf="f.cttMethod.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<h5 class="sync-title">Cấu hình Tích hợp với Hệ thống tiếp nhận, trả lời phản ánh, kiến nghị của người dân của Chính phủ</h5>
+							<div class="row form-group">
+								<div class="col-sm-3">
+									<label class="control-label">Đường dẫn API <span class="text-danger">(*)</span></label>
+								</div>
+								<div class="col-sm-9">
+									<input placeholder="Nhập..." svTrim class="form-control" formControlName="httnLinkApi" [(ngModel)]="configSync.httnLinkApi" maxlength="100" />
+									<div *ngIf="(submitted && f.httnLinkApi.invalid) || (f.httnLinkApi.invalid && (f.httnLinkApi.dirty || f.httnLinkApi.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.httnLinkApi.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-sm-3">
+									<label class="control-label">Phương thức <span class="text-danger">(*)</span></label>
+								</div>
+								<div class="col-sm-3">
+									<ng-select class="form-control " [items]="lstMethod" bindValue="value" placeholder="Chọn..." bindLabel="text" formControlName="httnMethod"
+										[(ngModel)]="configSync.httnMethod">
+									</ng-select>
+									<div *ngIf="(submitted && f.httnMethod.invalid) || (f.httnMethod.invalid && (f.httnMethod.dirty || f.httnMethod.touched))"
+										class="has-error m-b-12">
+										<div *ngIf="f.httnMethod.errors.required">
+											<span class="help-block">Trường dữ liệu này không để trống</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

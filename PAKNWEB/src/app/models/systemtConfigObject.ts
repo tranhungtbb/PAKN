@@ -63,3 +63,16 @@ export class GeneralSetting {
 	fileQuantity: string
 	fileSize: string
 }
+
+export class ConfigSync {
+	cskhLinkApi: string = ''
+	cskhMethod: number = null
+	tdLinkApi: string = ''
+	tdMethod: number = null
+	cttLinkApi: string = ''
+	cttMethod: number = null
+	httnLinkApi: string = ''
+	httnMethod: number = null
+	smsLinkApi: string = ''
+	smsMethod: number = null
+}
